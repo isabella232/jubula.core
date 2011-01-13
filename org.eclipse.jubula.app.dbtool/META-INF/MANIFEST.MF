@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Database Tool (Incubation)
+Bundle-SymbolicName: org.eclipse.jubula.app.dbtool;singleton:=true
+Bundle-Version: 0.4.0
+Bundle-Activator: org.eclipse.jubula.app.dbtool.bundle.Activator
+Bundle-Vendor: Eclipse Jubula
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.jubula.client.core,
+ org.eclipse.jubula.client.cmd,
+ org.eclipse.jubula.client.archive
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: org.eclipse.jubula.app.dbtool.jar,
+ .
