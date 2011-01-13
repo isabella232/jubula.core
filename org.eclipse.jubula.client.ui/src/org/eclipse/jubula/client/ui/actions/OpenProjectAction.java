@@ -1,0 +1,602 @@
+/*******************************************************************************
+ * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package org.eclipse.jubula.client.ui.actions;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
+import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
+import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.PMReadException;
+import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.core.persistence.TestResultPM;
+import org.eclipse.jubula.client.core.utils.StringHelper;
+import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.businessprocess.ToolkitBP;
+import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
+import org.eclipse.jubula.client.ui.dialogs.NagDialog;
+import org.eclipse.jubula.client.ui.dialogs.ProjectDialog;
+import org.eclipse.jubula.client.ui.utils.DialogUtils;
+import org.eclipse.jubula.client.ui.utils.GDThread;
+import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
+import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.ToolkitConstants;
+import org.eclipse.jubula.tools.exception.GDConfigXmlException;
+import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.ui.PlatformUI;
+
+
+/**
+ * @author BREDEX GmbH
+ * @created 18.04.2005
+ */
+public class OpenProjectAction extends AbstractAction {
+    /**
+     * @author BREDEX GmbH
+     * @created Jan 2, 2008
+     */
+    public static class OpenProjectOperation implements IRunnableWithProgress {
+        /**
+         * <code>TESTRESULT_DETAIL_JOB_CLEANUP_DELAY</code> is 10 minutes
+         */
+        private static final int TESTRESULT_DETAIL_JOB_CLEANUP_DELAY = 600000;
+        
+        /** The project to open */
+        private IProjectPO m_selectedProject;
+
+        /**
+         * @param selectedProject The project that is being opened.
+         */
+        public OpenProjectOperation(IProjectPO selectedProject) {
+            m_selectedProject = selectedProject;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void run(IProgressMonitor monitor) 
+            throws InterruptedException {
+
+            IProjectPO clearedProject = 
+                GeneralStorage.getInstance().getProject();
+            if (clearedProject != null) {
+                Utils.clearGuidancer();
+                GeneralStorage.getInstance().setProject(null);
+                DataEventDispatcher.getInstance()
+                    .fireDataChangedListener(clearedProject, DataState.Deleted,
+                        UpdateState.all);
+            }
+
+            int totalWork = getTotalWork();
+            ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
+            
+            monitor.beginTask(
+                I18n.getString("OpenProjectOperation.OpeningProject", //$NON-NLS-1$
+                    new Object[] {m_selectedProject.getName(),
+                                  m_selectedProject.getMajorProjectVersion(),
+                                  m_selectedProject.getMinorProjectVersion()}), 
+                totalWork);
+            try {
+                if (!checkProjectToolkits(m_selectedProject)) {
+                    throw new InterruptedException();
+                }
+                checkToolkitAvailable(m_selectedProject.getToolkit());
+                try {
+                    EntityManager s = Hibernator.instance().openSession();
+                    EntityTransaction tx = 
+                        Hibernator.instance().getTransaction(s);
+                    IProjectPO proj = (IProjectPO)s.find(NodeMaker
+                            .getProjectPOClass(), m_selectedProject.getId());
+                    
+                    ProjectPM.initAttributeDescriptions(s, proj);
+                    ProjectPM.initAttributes(proj);
+
+                    Hibernator.instance().commitTransaction(s, tx);
+                    Hibernator.instance().dropSessionWithoutLockRelease(s);
+
+                    NodePM.getInstance().setUseCache(true);
+                    load(m_selectedProject, monitor);
+                    if (monitor.isCanceled()) {
+                        throw new InterruptedException();
+                    }
+
+                } catch (GDConfigXmlException ce) {
+                    handleCapDataNotFound(ce);
+                }
+                DataEventDispatcher.getInstance().fireProjectLoadedListener(
+                        monitor);
+                // re-init the string helper in case of a toolkit change during
+                // load
+                StringHelper.getInstance();
+                startCleanTestresultsJob(GeneralStorage.getInstance()
+                        .getProject());
+                if (monitor.isCanceled()) {
+                    throw new InterruptedException();
+                }
+            } catch (final GDException e) {
+                errorOccured();
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
+                        Utils.createMessageDialog(e, null, null);
+                    }
+                });
+            } finally {
+                ProgressMonitorTracker.getInstance().setProgressMonitor(null);
+                NodePM.getInstance().setUseCache(false);
+                monitor.done();
+                DataEventDispatcher.getInstance().
+                    fireProjectOpenedListener();
+            }
+        }
+        
+        /**
+         * set persisted values for cleaning testresults in database
+         * 
+         * @param project
+         *            the project to clean the test results for
+         */
+        public static void startCleanTestresultsJob(final IProjectPO project) {
+            final int cleanupInterval = project.getTestResultCleanupInterval();
+            final String projGUID = String.valueOf(project.getGuid());
+            final int projMajVer = project.getMajorProjectVersion().intValue();
+            final int projMinVer = project.getMinorProjectVersion().intValue();
+            if (cleanupInterval > 0) {
+                Job job = new Job(I18n.getString(
+                        "UIJob.cleaningTestResultFromDB", //$NON-NLS-1$
+                        new String[] { project.getName() })) {
+                    public IStatus run(IProgressMonitor monitor) {
+                        TestResultPM.cleanTestresultDetails(cleanupInterval,
+                                projGUID, projMajVer, projMinVer);
+                        monitor.done();
+                        return Status.OK_STATUS;
+                    }
+                };
+                job.schedule(TESTRESULT_DETAIL_JOB_CLEANUP_DELAY);
+            }
+        }
+
+        /**
+         * Checks whether the given toolkit is available. If the given toolkit
+         * is not available, a warning is displayed.
+         * 
+         * @param toolkitId
+         *            The id of the toolkit to check.
+         */
+        private void checkToolkitAvailable(String toolkitId) {
+            try {
+                if (!ComponentBuilder.getInstance()
+                        .getLevelToolkitIds().contains(toolkitId)
+                    && ToolkitConstants.LEVEL_TOOLKIT.equals(
+                        ToolkitSupportBP.getToolkitLevel(toolkitId))) {
+                    Utils.createMessageDialog(
+                            MessageIDs.W_PROJECT_TOOLKIT_NOT_AVAILABLE);
+                }
+            } catch (ToolkitPluginException e) {
+                Utils.createMessageDialog(
+                        MessageIDs.W_PROJECT_TOOLKIT_NOT_AVAILABLE);
+            }
+        }
+
+        /**
+         * @return the amount of work required to complete the operation. This
+         *         value can then be used when creating a progress monitor.
+         */
+        private int getTotalWork() {
+            int totalWork = 0;
+            EntityManager masterSession = 
+                GeneralStorage.getInstance().getMasterSession();
+            long selectedProjectId = m_selectedProject.getId();
+            
+            // (node=1)
+            totalWork += NodePM.getNumNodes(selectedProjectId, 
+                    masterSession);
+
+            // (tdMan=1)
+            totalWork += NodePM.getNumTestDataManagers(
+                    selectedProjectId, 
+                    masterSession);
+            
+            // (execTC=1 [each corresponding specTC needs to be fetched])
+            totalWork += NodePM.getNumExecTestCases(
+                    selectedProjectId, 
+                    masterSession);
+            
+            for (IReusedProjectPO reused 
+                    : m_selectedProject.getUsedProjects()) {
+                
+                try {
+                    IProjectPO reusedProject = 
+                        ProjectPM.loadReusedProject(reused);
+                    if (reusedProject != null) {
+                        long reusedId = reusedProject.getId();
+                        
+                        // (node=1)
+                        totalWork += NodePM.getNumNodes(reusedId, 
+                                masterSession);
+
+                        // (tdMan=1)
+                        totalWork += NodePM.getNumTestDataManagers(
+                                reusedId, 
+                                masterSession);
+
+                        // (execTC=1 [each corresponding specTC needs to be fetched])
+                        totalWork += NodePM.getNumExecTestCases(
+                                reusedId, 
+                                masterSession);
+                    }
+                } catch (GDException e) {
+                    // Do nothing
+                }
+            }
+            return totalWork;
+        }
+        
+        /**
+         * 
+         * @param proj the project to open.
+         * @param monitor The progress monitor for this operation.
+         * @throws InterruptedException if the operation was canceled.
+         */
+        private void load(IProjectPO proj, IProgressMonitor monitor) 
+            throws InterruptedException {
+            
+            if (proj == null) {
+                Plugin.stopLongRunning();
+                showErrorDialog(I18n.getString("OpenProjectAction.InternalError")); //$NON-NLS-1$
+                return;
+            }
+
+            try {
+                Plugin.getDisplay().syncExec(new Runnable() {
+                    public void run() {
+                        Plugin.closeAllOpenedGDEditors();
+                    }
+                });
+                IProjectPO prevProj = GeneralStorage.getInstance().getProject();
+                ProjectPM.loadProjectInROSession(proj);
+                try {
+                    final IProjectPO project = 
+                        GeneralStorage.getInstance().getProject();
+                    try {
+                        UsedToolkitBP.getInstance().refreshToolkitInfo(project);
+                    } catch (PMException e1) {
+                        PMExceptionHandler.handlePMExceptionForMasterSession(
+                            e1);
+                    } catch (GDProjectDeletedException e1) {
+                        PMExceptionHandler.handleGDProjectDeletedException();
+                    }
+                    if (monitor.isCanceled()) {
+                        throw new InterruptedException();
+                    }
+                } catch (GDConfigXmlException ce) {
+                    if (prevProj == null) {
+                        GeneralStorage.getInstance().reset();
+                    } else {
+                        ProjectPM.loadProjectInROSession(prevProj);
+                    }
+                    
+                    throw ce;
+                }
+            } catch (PMReadException e) {
+                showErrorDialog(I18n.getString("ErrorMessage.CANT_READ_PROJECT")); //$NON-NLS-1$
+            } catch (OperationCanceledException oce) {
+                Utils.clearGuidancer();
+            } finally {
+                Plugin.stopLongRunning();
+            }
+        }
+        
+        /**
+         * Handles an exception thrown while opening a project.
+         */
+        public void handleOperationException() {
+            // Clear all current project data
+            IProjectPO clearedProject = 
+                GeneralStorage.getInstance().getProject();
+            if (clearedProject != null) {
+                Utils.clearGuidancer();
+                GeneralStorage.getInstance().setProject(null);
+                DataEventDispatcher.getInstance()
+                    .fireDataChangedListener(clearedProject, DataState.Deleted,
+                        UpdateState.all);
+            }
+        }
+
+        /**
+         * Checks that the toolkits and toolkit versions are correct enough to 
+         * be able to load the project.
+         * 
+         * @param proj the project for which to check the toolkits
+         * @return <code>true</code> if project can be loaded. Otherwise 
+         *         <code>false</code>.
+         */
+        private boolean checkProjectToolkits(IProjectPO proj) 
+            throws PMException {
+            
+            final Set<IUsedToolkitPO> usedToolkits = 
+                UsedToolkitBP.getInstance().readUsedToolkitsFromDB(proj);
+            return ToolkitBP.getInstance().checkXMLVersion(usedToolkits);
+        }
+
+        /**
+         * Create an appropriate error dialog.
+         * 
+         * @param ce The exception that prevented the loading of 
+         *           project.
+         */
+        private void handleCapDataNotFound(GDConfigXmlException ce) {
+            Utils.createMessageDialog(
+                MessageIDs.E_LOAD_PROJECT_CONFIG_CONFLICT, null, 
+                new String[] {ce.getMessage()});
+        }
+        
+        /**
+         * Opens an error dialog.
+         * @param message the messag eto show in the dialog.
+         */
+        private void showErrorDialog(String message) {
+            Utils.createMessageDialog(new GDException(message, 
+                    MessageIDs.E_UNEXPECTED_EXCEPTION), null, new String[]{
+                        message});
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        protected void errorOccured() {
+            Plugin.stopLongRunning();
+        }
+
+    }
+
+    /** the action */
+    private static IAction handleAction;
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void init(IAction action) {
+        handleAction = action;
+        handleAction.setEnabled(true); 
+        
+    }
+    
+    /**
+     * @param enabled The Action to set enabled.
+     */
+    public static void setEnabled(boolean enabled) {
+        handleAction.setEnabled(enabled);
+    }
+
+    /**
+     * @return Returns the Action.
+     */
+    public static IAction getAction() {
+        return handleAction;
+    }
+
+    /**
+     * {@inheritDoc}
+     * + check unsaved editors
+     */
+    public void runWithEvent(IAction action, Event event) {
+        if (action != null && !action.isEnabled()) {
+            return;
+        }
+        
+        new Loader().start();
+    }
+
+    /**
+     * Runnable to load Projects from DB
+     * @author BREDEX GmbH
+     *
+     */
+    private static class Loader extends GDThread {
+        
+        /**
+         * run method
+         */
+        public void run() {
+            Plugin.startLongRunning();
+            if (Hibernator.init()) {
+                Display.getDefault().syncExec(new Runnable() {
+                    public void run() {
+                        try {
+                            selectProjects();
+                        } finally {
+                            Plugin.stopLongRunning();
+                        }
+                    }
+                });
+            } else {
+                Plugin.stopLongRunning();
+            }
+        }
+        
+        /**
+         * Opens a dialog to select a project to open.
+         */
+        void selectProjects() {
+            if (GeneralStorage.getInstance().getProject() != null
+                && Plugin.getDefault().anyDirtyStar() 
+                && !Plugin.getDefault().showSaveEditorDialog()) {
+
+                Plugin.stopLongRunning();
+                return;
+            }
+            List <IProjectPO> projList = null;
+            try {
+                projList = ProjectPM.findAllProjects();
+                if (projList.isEmpty()) {
+                    Display.getDefault().asyncExec(new Runnable() {
+                        public void run() {
+                            Utils.createMessageDialog(
+                                    MessageIDs.I_NO_PROJECT_IN_DB);
+                        }
+                    });
+                    Plugin.stopLongRunning();
+                    return;
+                }
+
+                SortedMap<String, List<String>> projNameToVersionMap = 
+                    new TreeMap<String, List<String>>();
+                for (IProjectPO proj : projList) {
+                    String projName = proj.getName();
+                    String projVersion = proj.getVersionString();
+                    if (!projNameToVersionMap.containsKey(projName)) {
+                        projNameToVersionMap.put(
+                            projName, new ArrayList<String>());
+                    }
+                    projNameToVersionMap.get(projName).add(projVersion);
+                }
+                ProjectDialog dialog = 
+                    openProjectSelectionDialog(
+                        projList);
+                if (dialog.getReturnCode() == Window.CANCEL) {
+                    Plugin.stopLongRunning();
+                    return;
+                }
+                final IProjectPO selectedProject = dialog.getSelection();
+
+                OpenProjectOperation openOperation = 
+                    new OpenProjectOperation(selectedProject);
+                try {
+                    PlatformUI.getWorkbench().getProgressService()
+                        .busyCursorWhile(openOperation);
+
+                    Plugin.getDisplay().syncExec(new Runnable() {
+                        public void run() {
+                            Plugin.setProjectNameInTitlebar(
+                                    selectedProject.getName(),
+                                    selectedProject.getMajorProjectVersion(),
+                                    selectedProject.getMinorProjectVersion());
+                        }
+                    });
+                    checkAndNagForMissingProjects();
+                } catch (InvocationTargetException ite) {
+                    openOperation.handleOperationException();
+                } catch (InterruptedException ie) {
+                    openOperation.handleOperationException();
+                }
+                
+            } catch (final GDException e) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
+                        Utils.createMessageDialog(e, null, null);
+                    }
+                });
+                return;
+            }
+
+        }
+
+        /**
+         * checks for missing reused projects after project loading
+         */
+        private void checkAndNagForMissingProjects() {
+            List<String> missingProjects = new LinkedList<String>();
+            final IProjectPO project = GeneralStorage
+                    .getInstance().getProject();
+            if (project != null) {
+                final Set<IReusedProjectPO> usedProjects = project
+                        .getUsedProjects();
+                if (usedProjects != null) {
+                    for (IReusedProjectPO rProjects : usedProjects) {
+                        if (!ProjectPM.doesProjectVersionExist(rProjects
+                                .getProjectGuid(), rProjects.getMajorNumber(),
+                                rProjects.getMinorNumber())) {
+                            missingProjects.add(rProjects.getProjectGuid());
+                        }
+                    }
+                }
+            }
+            if (!missingProjects.isEmpty()) {
+                NagDialog.runNagDialog(Plugin.getShell(), 
+                        "InfoNagger.ImportAllRequiredProjects",  //$NON-NLS-1$
+                        ContextHelpIds.IMPORT_ALL_REQUIRED_PROJECTS);
+            }
+        }
+        
+        /**
+         * @param projList the list of projects in the database
+         * @return the dialog
+         */
+        private ProjectDialog 
+        openProjectSelectionDialog(List<IProjectPO> projList) {
+            
+            final ProjectDialog dialog = 
+                new ProjectDialog(
+                    Plugin.getShell(), projList,
+                    I18n.getString("OpenProjectAction.message"), //$NON-NLS-1$
+                    I18n.getString("OpenProjectAction.title"), //$NON-NLS-1$
+                    IconConstants.OPEN_PROJECT_DIALOG_IMAGE, 
+                    I18n.getString("OpenProjectAction.caption"), false); //$NON-NLS-1$
+            // set up help for dialog, with link
+            dialog.setHelpAvailable(true);
+            dialog.create();
+            DialogUtils.setWidgetNameForModalDialog(dialog);
+            Plugin.getHelpSystem().setHelp(dialog.getShell(),
+                ContextHelpIds.OPEN_PROJECT);
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    Plugin.startLongRunning(I18n.getString("OpenProjectAction.loadProjectWaitMessage")); //$NON-NLS-1$
+                    dialog.open();
+                }
+            });
+            return dialog;
+        }
+                
+        /**
+         * {@inheritDoc}
+         */
+        protected void errorOccured() {
+            Plugin.stopLongRunning();
+        }
+        
+    }
+}
