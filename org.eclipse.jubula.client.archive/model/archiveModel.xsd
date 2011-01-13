@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" xml:lang="EN" targetNamespace="http://www.bredexsw.com/guidancer/client/importer/gdschema" xmlns:gd="http://www.bredexsw.com/guidancer/client/importer/gdschema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="en"> Schema for GUIdancer test projects. Used for
+			export/import and optional external generators. Copyright 2005 BREDEX GmbH.
+			All rights reserved.
+		</xs:documentation>
+  </xs:annotation>
+  <xs:element name="content">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="project" type="gd:project" minOccurs="1" maxOccurs="1">
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="node">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0" nillable="true" />
+      <xs:element name="comment" type="xs:string" minOccurs="0" nillable="true" default="" />
+      <xs:element name="GUID" type="xs:string" minOccurs="0" nillable="true" />
+      <xs:element name="attribute" type="gd:attribute" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="generated" type="xs:boolean" minOccurs="0" nillable="false" default="false" />
+      <xs:element name="active" type="xs:boolean" minOccurs="0" nillable="false" default="true" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="project">
+    <!--checked-->
+    <xs:complexContent>
+      <xs:extension base="gd:node">
+        <xs:sequence>
+        	<xs:element name="defaultLanguage" type="gd:locale" />
+        	<xs:element name="projectLanguage" type="gd:locale"
+        		maxOccurs="unbounded" />
+        	<xs:element name="namedTestData" id="id" type="gd:namedTestData" minOccurs="0"
+        		maxOccurs="unbounded" />
+        	<xs:element name="aut" type="gd:aut" minOccurs="0"
+        		maxOccurs="unbounded" />
+        	<xs:choice minOccurs="0" maxOccurs="unbounded">
+        		<xs:element name="testcase" type="gd:testCase" />
+        		<xs:element name="category" type="gd:category" />
+        	</xs:choice>
+        	<xs:element name="testsuite" type="gd:testSuite"
+        		minOccurs="0" maxOccurs="unbounded" />
+        	<xs:element name="xmlConfMajorVersion" type="xs:int"
+        		minOccurs="0" maxOccurs="1" />
+        	<xs:element name="xmlConfMinorVersion" type="xs:int"
+        		minOccurs="0" maxOccurs="1" />
+        	<xs:element name="metaDataVersion" type="xs:int"
+        		minOccurs="0" maxOccurs="1" />
+        	<xs:element name="autToolKit" type="xs:string" minOccurs="0"
+        		maxOccurs="1" />
+        	<xs:element name="majorNumber" type="xs:int" minOccurs="0"
+        		maxOccurs="1" default="1" />
+        	<xs:element name="majorProjectVersion" type="xs:int"
+        		minOccurs="0" maxOccurs="1" default="1" />
+        	<xs:element name="minorNumber" type="xs:int" minOccurs="0"
+        		maxOccurs="1" default="0" />
+        	<xs:element name="minorProjectVersion" type="xs:int"
+        		minOccurs="0" maxOccurs="1" default="0" />
+       		<xs:element name="testResultDetailsCleanupInterval" type="xs:int"
+       			minOccurs="0" maxOccurs="1" default="-1" />
+        	<xs:element name="isReusable" type="xs:boolean"
+        		minOccurs="0" maxOccurs="1" default="false" />
+       		<xs:element name="isProtected" type="xs:boolean"
+       			minOccurs="0" maxOccurs="1" default="false" />
+        	<xs:element name="reusedProjects" type="gd:reusedProject"
+        		minOccurs="0" maxOccurs="unbounded" />
+        	<xs:element name="usedToolkit" type="gd:usedToolkit"
+        		minOccurs="0" maxOccurs="unbounded" />
+        	<xs:element name="testJobs" type="gd:testJobs"
+        		minOccurs="0" maxOccurs="unbounded"/>
+        	<xs:element name="componentNames" type="gd:componentName" 
+        		minOccurs="0" maxOccurs="unbounded" />
+        	<xs:element name="testresultSummaries" type="gd:testresultSummaries"
+        		minOccurs="0" maxOccurs="1" />
+        	<xs:element name="checkConfiguration" type="gd:checkConfiguration" 
+        		minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="aut">
+    <!--checked-->
+    <xs:sequence>
+    	<xs:element name="name" type="xs:string" />
+    	<xs:element name="config" type="gd:autConfig" minOccurs="0"
+    		maxOccurs="unbounded" />
+    	<xs:element name="language" type="gd:locale" minOccurs="0"
+    		maxOccurs="unbounded" />
+    	<xs:element name="objectMapping" type="gd:objectMapping" />
+    	<xs:element name="autToolkit" type="xs:string" 
+    		minOccurs="0" maxOccurs="1"></xs:element>
+        <xs:element name="GUID" type="xs:string" minOccurs="0" maxOccurs="1" 
+      		nillable="true" />
+        <xs:element name="generateNames" type="xs:boolean" minOccurs="0" nillable="false" default="false" />
+        <xs:element name="autId" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="objectMappingProfile">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" 
+      		nillable="true" />
+      <xs:element name="contextFactor" type="xs:double" />
+      <xs:element name="nameFactor" type="xs:double" />
+      <xs:element name="pathFactor" type="xs:double" />
+      <xs:element name="generatedNamePenalty" minOccurs="0" maxOccurs="1" nillable="true" type="xs:double" />
+      <xs:element name="threshold" type="xs:double" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="autConfig">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" />
+      <xs:element name="classname" type="xs:string" default="" />
+      <xs:element name="classpath" type="xs:string" default="" />
+      <xs:element name="jarfile" type="xs:string" default="" />
+      <xs:element name="parameter" type="xs:string" default="" />
+      <xs:element name="workingDir" type="xs:string" default="" />
+      <xs:element name="jreDir" type="xs:string" default="" />
+      <xs:element name="jreParameter" type="xs:string" default="" />
+      <xs:element name="server" type="xs:string" default="" />
+      <xs:element name="environment" type="xs:string" default="" />
+      <xs:element name="activateApp" type="xs:boolean" minOccurs="0"
+          default="false" />
+      <xs:element name="activationMethod"
+          type="gd:activationMethodEnum" minOccurs="0" default="none" />
+      <xs:element name="confAttrMapEntry" type="gd:mapEntry" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="GUID" type="xs:string" minOccurs="0" maxOccurs="1" 
+      	  nillable="true" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="attribute">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="value" type="xs:string" default="" nillable="true" />
+      <xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="subAttribute" type="gd:attribute" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="objectMapping">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="profile" type="gd:objectMappingProfile" minOccurs="0" maxOccurs="1" 
+      		nillable="true" />
+      <!-- Import compatibility pre-3.0 -->
+      <xs:choice minOccurs="1" maxOccurs="1">
+         <xs:group ref="gd:omTopLevelCategories" minOccurs="1" maxOccurs="1"></xs:group>
+	     <xs:element name="entry" type="gd:omEntry" minOccurs="0" maxOccurs="unbounded" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="omCategory">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="association" type="gd:omEntry" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="category" type="gd:omCategory" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="omEntry">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="technicalName" type="gd:technicalName" minOccurs="0" maxOccurs="1" nillable="true" />
+      <xs:element name="type" type="xs:string" nillable="true" />
+      <xs:element name="logicalName" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <!-- Import compatibility pre-3.0 -->
+      <xs:element name="category" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="technicalName">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="neighbour" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="componentClassName" type="xs:string" />
+      <xs:element name="supportedClassName" type="xs:string" />
+      <xs:element name="hierarchyName" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="alternativeDisplayName" type="xs:string" nillable="true" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="testSuite">
+    <!--checked-->
+    <xs:complexContent>
+      <xs:extension base="gd:node">
+        <xs:sequence>
+          <xs:element name="selectedAut" type="xs:string" nillable="true" />
+          <xs:element name="selectedAutConfig" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="stepDelay" type="xs:int" default="0" />
+          <xs:element name="language" type="gd:locale" minOccurs="0" />
+          <xs:element name="commandLineParameter" type="xs:string" nillable="true" default="" />
+          <xs:element name="usedTestcase" type="gd:refTestCase" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="eventHandler" type="gd:eventHandler" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="testCase">
+    <!--checked-->
+    <xs:complexContent>
+      <xs:extension base="gd:parameter">
+        <xs:sequence>
+          <xs:element name="teststep" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+              <xs:choice>
+                <xs:element name="cap" type="gd:cap" />
+                <xs:element name="usedTestcase" type="gd:refTestCase" />
+              </xs:choice>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="eventTestcase" type="gd:eventTestCase" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="interfaceLocked" type="xs:boolean" minOccurs="0" default="false" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="category">
+    <!--checked-->
+    <xs:complexContent>
+      <xs:extension base="gd:node">
+        <xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="testcase" type="gd:testCase" />
+            <xs:element name="category" type="gd:category" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="refTestCase">
+    <!--checked-->
+    <xs:complexContent>
+      <xs:extension base="gd:parameter">
+        <xs:sequence>
+          <xs:element name="testcaseRef" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="testcaseGuid" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="projectGuid" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="hasOwnTestdata" type="xs:boolean" />
+          <xs:element name="overriddenNames" type="gd:compNames" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="compNames">
+    <!--checked-->
+    <xs:sequence>
+    	<xs:element name="propagated" type="xs:boolean" />
+    	<xs:element name="originalName" type="xs:string" />
+    	<xs:element name="newName" type="xs:string" />
+    	<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eventTestCase">
+    <!--checked-->
+    <xs:complexContent>
+      <xs:extension base="gd:refTestCase">
+        <xs:sequence>
+          <xs:element name="eventType" type="xs:string" />
+          <xs:element name="reentryProperty" type="gd:reentryProperty" />
+          <xs:element name="maxRetries" type="xs:int" minOccurs="0"
+          	maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="reentryProperty">
+    <!--checked-->
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="continue" />
+      <xs:enumeration value="repeat" />
+      <xs:enumeration value="break" />
+      <xs:enumeration value="goto" />
+      <xs:enumeration value="return" />
+      <xs:enumeration value="stop" />
+      <xs:enumeration value="exit" />
+      <xs:enumeration value="retry" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="activationMethodEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none" />
+      <xs:enumeration value="titlebar" />
+      <xs:enumeration value="ne" />
+      <xs:enumeration value="nw" />
+      <xs:enumeration value="se" />
+      <xs:enumeration value="sw" />
+      <xs:enumeration value="center" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="eventHandler">
+    <!--checked-->
+    <xs:sequence>
+    	<xs:element name="event" type="xs:string" />
+    	<xs:element name="reentryProperty" type="gd:reentryProperty" />
+    	<xs:element name="maxRetries" type="xs:int" minOccurs="0"
+    		maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="parameter">
+    <!--checked-->
+    <xs:complexContent>
+      <xs:extension base="gd:node">
+        <xs:sequence>
+          <xs:element name="parameterDescription" type="gd:paramDescription" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="testdata" type="gd:testData" minOccurs="0" maxOccurs="1" />
+          <xs:element name="datafile" type="xs:string" minOccurs="0" maxOccurs="1" nillable="true" default="" />
+	      <!-- this is a reference by name to a Named Test Data instance -->
+		  <xs:element name="referencedTestData" type="xs:string" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="paramDescription">
+    <!--checked-->
+    <xs:sequence>
+    	<xs:element name="name" type="xs:string" />
+    	<xs:element name="type" type="xs:string" />
+    	<xs:element name="uniqueId" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="testData">
+    <!--checked-->
+    <xs:sequence>
+    	<xs:element name="row" type="gd:testDataRow" minOccurs="0"
+    		maxOccurs="unbounded" />
+    	<xs:element name="uniqueIds" type="xs:string" minOccurs="0"
+    		maxOccurs="unbounded">
+    	</xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="namedTestData">
+	<!--checked-->
+    <xs:sequence>
+       	<xs:element name="testData" type="gd:testData" minOccurs="1"
+       			maxOccurs="1" />
+        <xs:element name="parameterDescription" type="gd:paramDescription" 
+        		minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+	<xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="testDataRow">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="data" type="gd:testDataCell" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="rowCount" type="xs:int" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="testDataCell">
+    <!--checked-->
+    <xs:choice minOccurs="0" maxOccurs="1">
+      <xs:element name="reference" type="xs:string" />
+      <xs:element name="function" type="xs:string" />
+      <xs:element name="data" type="gd:i18nString" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+    </xs:choice>
+    <xs:attribute name="columnCount" type="xs:int" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="i18nString">
+    <!--checked-->
+    <xs:sequence>
+      <xs:element name="language" type="gd:locale" />
+      <xs:element name="value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cap">
+    <!--checked-->
+    <xs:complexContent>
+      <xs:extension base="gd:parameter">
+        <xs:sequence>
+          <xs:element name="actionName" type="xs:string" />
+          <xs:element name="componentName" type="xs:string" />
+          <xs:element name="componentType" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="locale">
+    <!--checked-->
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z]{1,8}(_[a-zA-Z0-9]{1,8})*" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="mapEntry">
+  	<xs:sequence>
+  		<xs:element name="key" type="xs:string"></xs:element>
+  		<xs:element name="value" type="xs:string"></xs:element>
+  	</xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="reusedProject">
+  	<xs:sequence>
+  		<xs:element name="projectName" type="xs:string" nillable="true"></xs:element>
+  		<xs:element name="projectGUID" type="xs:string"></xs:element>
+  		<xs:element name="majorNumber" type="xs:int" minOccurs="0"
+        		maxOccurs="1"></xs:element>
+  		<xs:element name="majorProjectVersion" type="xs:int" minOccurs="0"
+        		maxOccurs="1"></xs:element>
+  		<xs:element name="minorNumber" type="xs:int" minOccurs="0"
+        		maxOccurs="1"></xs:element>
+        <xs:element name="minorProjectVersion" type="xs:int" minOccurs="0"
+        		maxOccurs="1"></xs:element>
+  	</xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="usedToolkit">
+  	<xs:sequence>
+  		<xs:element name="name" type="xs:string"></xs:element>
+  		<xs:element name="majorVersion" type="xs:int"></xs:element>
+  		<xs:element name="minorVersion" type="xs:int"></xs:element>
+  	</xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="refTestSuite">
+	<xs:complexContent>
+		<xs:extension base="gd:node">
+			<xs:sequence>
+				<xs:element name="tsGuid" type="xs:string" />
+				<xs:element name="autId" type="xs:string" nillable="true" />
+			</xs:sequence>
+		</xs:extension>
+	</xs:complexContent>
+  </xs:complexType>
+	<xs:complexType name="testJobs">
+		<xs:complexContent>
+			<xs:extension base="gd:node">
+				<xs:sequence>
+					<xs:element name="refTestSuite" type="gd:refTestSuite"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="componentName">
+  	<xs:sequence>
+  		<xs:element name="compType" type="xs:string"
+  			nillable="false">
+  		</xs:element>
+  		<xs:element name="GUID" type="xs:string" nillable="false"></xs:element>
+  		<xs:element name="creationContext" type="xs:string" nillable="false"></xs:element>
+  		<xs:element name="refGuid" type="xs:string" nillable="true"></xs:element>
+  		<xs:element name="compName" type="xs:string" nillable="true"></xs:element>
+  	</xs:sequence>
+  </xs:complexType>
+  <xs:group name="omTopLevelCategories">
+     <xs:sequence>
+        <xs:element name="mapped" type="gd:omCategory" minOccurs="1" maxOccurs="1"></xs:element>
+        <xs:element name="unmappedComponent" type="gd:omCategory" minOccurs="1" maxOccurs="1"></xs:element>
+        <xs:element name="unmappedTechnical" type="gd:omCategory" minOccurs="1" maxOccurs="1"></xs:element>
+     </xs:sequence>
+  </xs:group>
+
+	<xs:complexType name="testresultSummaries">
+		<xs:sequence>
+			<xs:element name="testresultSummary" type="gd:testresultSummary" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	 <xs:complexType name="testresultSummary">
+ 		<xs:sequence>
+			<xs:element name="attribute" type="gd:summaryAttribute" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="monitoringValue" type="gd:monitoringValues" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	 </xs:complexType>
+	<xs:complexType name="summaryAttribute">
+		<xs:sequence>
+			<xs:element name="key" type="xs:string"></xs:element>
+			<xs:element name="value" type="xs:string" nillable="true"></xs:element>
+			<xs:element name="type" type="xs:string"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+    <xs:complexType name="monitoringValues">
+        <xs:sequence>
+            <xs:element name="key" type="xs:string"></xs:element>
+            <xs:element name="value" type="xs:string"></xs:element>
+            <xs:element name="type" type="xs:string" nillable="true"></xs:element>
+            <xs:element name="category" type="xs:string"></xs:element>
+            <xs:element name="isSignificant" type="xs:boolean"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+	
+		<xs:complexType name="checkConfiguration">
+		<!--checked-->
+		<xs:sequence>
+			<xs:element name="checkId" type="xs:string" />
+			<xs:element name="activated" type="xs:boolean" />
+			<xs:element name="severity" type="xs:string" />
+			<xs:element name="checkAttribute" type="gd:checkAttribute" 
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="activeContext" type="gd:checkActivatedContext" 
+				minOccurs="0" maxOccurs="unbounded" />
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="checkAttribute">
+		<!--checked-->
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="value" type="xs:string" />
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="checkActivatedContext">
+		<!--checked-->
+		<xs:sequence>
+			<xs:element name="class" type="xs:string" />
+			<xs:element name="active" type="xs:boolean" />
+    	</xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>

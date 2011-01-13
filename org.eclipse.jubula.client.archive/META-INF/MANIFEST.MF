@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Archive (Incubation)
+Bundle-SymbolicName: org.eclipse.jubula.client.archive;singleton:=true
+Bundle-Version: 0.4.0
+Bundle-ClassPath: .,
+ org.eclipse.jubula.client.archive.jar,
+ lib/archiveModel.jar,
+ lib/xbean.jar,
+ lib/stax-api-1.0.1.jar
+Bundle-Vendor: Eclipse Jubula
+Export-Package: org.eclipse.jubula.client.archive;
+  uses:="org.eclipse.jubula.client.core.model,
+   org.eclipse.core.runtime,
+   org.eclipse.jubula.client.core.businessprocess",
+ org.eclipse.jubula.client.archive.businessprocess,
+ org.eclipse.jubula.client.archive.errorhandling,
+ org.eclipse.jubula.client.archive.output
+Require-Bundle: org.eclipse.jubula.client.core,
+ org.eclipse.core.runtime,
+ org.apache.commons.beanutils;bundle-version="1.7.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-BundleShape: jar
