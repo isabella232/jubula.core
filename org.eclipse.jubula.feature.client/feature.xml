@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<feature
+      id="org.eclipse.jubula.feature.client"
+      label="Jubula UI Client (Incubation)"
+      version="0.4.0"
+      provider-name="Eclipse Jubula"
+      plugin="org.eclipse.jubula.client.ui">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.junit4"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.cheatsheets"/>
+      <import plugin="org.eclipse.help.webapp"/>
+      <import plugin="org.eclipse.help.ui"/>
+      <import plugin="org.eclipse.ui.intro"/>
+      <import plugin="org.eclipse.ui.intro.universal"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.ui.console"/>
+      <import plugin="org.eclipse.jface.databinding"/>
+      <import plugin="org.eclipse.core.databinding"/>
+      <import plugin="org.eclipse.core.databinding.beans"/>
+      <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.eclipse.core.databinding.property"/>
+      <import plugin="org.eclipse.search"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.jubula.client.archive"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.core"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.inspector.ui"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.ua.cheatsheets"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.ua.help"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.ua.welcome"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.ui"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.communication"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.toolkit.common"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.toolkit.provider.base"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.toolkit.provider.concrete"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.toolkit.provider.html"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.toolkit.provider.rcp"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.toolkit.provider.rcp.gef"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.toolkit.provider.swing"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.toolkit.provider.swt"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.tools"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.app"
+         download-size="0"
+         install-size="0"
+         version="0.4.0"
+         unpack="false"/>
+
+</feature>
