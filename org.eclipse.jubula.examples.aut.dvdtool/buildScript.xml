@@ -1,0 +1,64 @@
+<!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<project name="DVDTool" basedir="." default="build">
+
+	<!-- properties -->
+	<property name="srcdir" 		value="src"/>
+	<property name="resourcedir" 	value="resources"/>
+	<property name="build" 			value="build"/>
+	<property name="classes" 		value="${build}/classes/DVD" />
+	<property name="jars" 			value="${build}/jars"/>
+	<property name="javac.debug" 	value="off"/>
+	<property name="lib" 			value="lib"/>
+
+	<!-- internal properties -->
+	<property name="app.name" value="DVDTool" />
+	<property name="javac" value="javac"/>
+
+	<!-- compilation -->
+	<target name="compile" depends="clean, mkdir" description="compile">
+		<javac 	srcdir="${srcdir}" 
+				destdir="${classes}" 	  			 		
+				includes="**/*.java"
+				excludes="**/test/*"
+				source="1.4"
+				target="1.4"
+				debug="${javac.debug}"
+	   			fork="true"
+	   			executable="${javac}"/>
+	</target>
+
+	<!-- create directories, if not existing -->
+	<target name="mkdir">
+		<mkdir dir="${build}"/>
+		<mkdir dir="${classes}"/>
+		<mkdir dir="${jars}"/>
+	</target>
+
+	<!-- cleaning -->
+	<target name="clean" description="clean">
+		<delete dir="${build}"/>
+	</target>
+
+	<!-- create a jar -->
+	<target name="build" depends="compile">
+		<jar basedir="${classes}" destfile="${jars}/${app.name}.jar">
+			<fileset dir="${srcdir}"
+	  			 		includes="**/*"
+			            excludes="**/*.java"
+			  />
+			<fileset dir="${srcdir}"
+				includes="${resourcedir}/*"
+			/>
+			<manifest>
+				<attribute name="Main-Class" value="org.eclipse.jubula.examples.aut.dvdtool.DVDTool"/>
+			</manifest>
+		</jar>
+	</target>
+</project>
+
