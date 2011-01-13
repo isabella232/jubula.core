@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<introContent>
+  	<extensionContent id="GDWelcome-migrateExtension" style="css/guidancer.css" name="How to migrate from an earlier version of GUIdancer" path="migrate/@">
+		<group style-id="content-group" id="GDWelcome-migrateLink-group">
+       		<link label="Migrate to the new GUIdancer version" url="html/migrate.html" id="GDWelcome-introLink" style-id="content-link">
+          		<text>Click to get more information about updating to new GUIdancer versions!</text>
+       		</link>
+       	</group>
+  	</extensionContent>
+</introContent>
