@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name.0
+Bundle-SymbolicName: org.eclipse.jubula.examples.extension.swing.toolkit;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.eclipse.jubula.examples.extension.swing.toolkit.Activator
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.jubula.toolkit.common,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: %Bundle-Provider.0
+Bundle-ClassPath: .,
+ org.eclipse.jubula.examples.extension.swing.toolkit.jar
