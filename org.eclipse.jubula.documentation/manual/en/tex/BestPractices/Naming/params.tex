@@ -1,0 +1,11 @@
+Entering meaningful reference names for parameters in a \gdcase{}  helps the readability of your tests. If you are creating a utility module which doesn't as yet have a set function \bxpref{BPKeywordsUtility}, then you should reference the parameter with a reasonably abstract name. 
+
+For example, if you are creating a \gdcase{} that will select an entry from any combo box, you could name the parameter \bxname{=ENTRY} as the function of the \gdcase{} is not set yet. 
+
+Once you have a keyword that executes a specific action, you should try to name the parameters according to what data they need. 
+
+If you have a keyword to select a language from the combo box in the login dialog, you could name the parameter \bxname{=LANGUAGE}. In combination with the \gdcase{} name, this makes it easy to understand what a keyword does and what data it needs. 
+
+This is especially important in keywords which contain \gdcases{} with the same parameter names. If you have two \bxname{=TEXTPATH} parameters in your \gdcases{}, for example, you could name one of them \bxname{=TEXTPATH\_TREE} and one of them \bxname{TEXTPATH\_CONTEXTMENU} so that you and other testers using your keywords know what to enter where. 
+
+\bxtipp{Parameter names cannot contain spaces.}

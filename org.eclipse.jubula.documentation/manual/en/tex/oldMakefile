@@ -1,0 +1,80 @@
+# $Id: oldMakefile 1720 2006-03-02 12:25:33Z dennis $
+#
+
+DOC=MANUAL
+
+default:
+	@echo
+	@echo This makefile is called from a master makefile
+	@echo
+	@echo You can use it by hand with the following targets:
+	@echo "    make manual       - to create the pdf user documentatin"
+	@echo "    make dvi          - to create the ps file for testing"
+	@echo "    make ps           - to create the ps file for testing"
+	@echo "    make clean        - clean up"
+	@echo
+
+
+checkHelpIds:
+	getHelpIDs.pl /projects/guidancer/Workspace/snapshot/release/ .
+
+images:
+	find . -type d -name "PS" -print -exec psd2latex {} \;
+	psd2icon ../../PS
+	find . -type d -name "PS" -print -exec ${SEMINARE}/bin/prn2eps {} \;
+
+manual: images
+	if [ "X${TAG}" = "X" ] ;\
+	then   pdflatex -shell-escape ${DOC} ;\
+		makeindex ${DOC} ;\
+		pdflatex -shell-escape ${DOC} ;\
+		pdflatex -shell-escape ${DOC} ;\
+	else  checkout.sh ${TAG} ${GDSRCSDIR} ;\
+	      cd ../tmp_tex ;\
+	      pdflatex -shell-escape ${DOC} ;\
+	      makeindex ${DOC} ;\
+	      pdflatex -shell-escape ${DOC} ;\
+	      pdflatex -shell-escape ${DOC} ;\
+	      cp ${DOC}.pdf ../tex ;\
+	      cd ../tex ;\
+	      rm -rf ../tmp_tex ;\
+	fi
+
+html: images
+	if [ "X${TAG}" = "X" ] ;\
+	then  rm -rf ../html ;\
+	      latex -shell-escape ${DOC} ;\
+	      makeindex ${DOC} ;\
+	      latex -shell-escape ${DOC} ;\
+	else  checkout.sh ${TAG} ${GDSRCSDIR} ;\
+	      cd ../tmp_tex ;\
+	      rm -rf ../html ;\
+	      latex -shell-escape ${DOC} ;\
+	      makeindex ${DOC} ;\
+	      latex -shell-escape ${DOC} ;\
+	      cd ../tex ;\
+	fi ;\
+	latex2eclipse.sh ${TAG} ;\
+	rm -rf ../tmp_tex ;\
+	rm -f ../html/core ../html/images.* ../html/WARNINGS ../html/*.pl  ../tmp_tex
+
+# test-targets for faster working
+
+dvi: images
+	latex -shell-escape ${DOC} ;\
+	makeindex ${DOC} ;\
+	latex -shell-escape ${DOC} ;\
+	latex -shell-escape ${DOC} ;\
+
+ps: dvi
+	dvips -o ${DOC}.ps ${DOC}.dvi
+
+
+# clean-up
+
+clean:
+	rm -rf ${DOC}.aux ${DOC}.pdf ${DOC}.aux ${DOC}.log ${DOC}.idx ${DOC}.out ${DOC}.toc ${DOC}.dvi ${DOC}.ps ${DOC}.toc ${DOC}.ilg ${DOC}.ind
+
+clobber: clean
+	rm -rf *.aux *.pdf *.aux *.log *.idx *.out *.toc *.dvi *.ps *.toc *.ilg *.ind *.bbl *.blg ../tmp_tex
+	rm -rf ../html ../*.xml

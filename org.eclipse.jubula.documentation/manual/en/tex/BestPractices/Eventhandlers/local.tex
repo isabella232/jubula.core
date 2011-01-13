@@ -1,0 +1,8 @@
+Often, there are errors that occasionally occur at specific points in the test. A good example of this is a warning dialog that sometimes occurs when saving, for example. For errors that can be expected in some way, you can add \gdehandlers{} to the \gdcases{} that cause the error to deal with the error and carry on with the test without activating the global \gdehandlers{}.
+
+\subsubsection{Dealing with occasional dialogs}
+In the case of occasional dialogs, your \gdcase{} in the test should contain an action which checks that a certain component in the dialog does \bxname{not} exist on the screen (e.g.\bxname{Check Existence of Component in Warning Dialog}). If the component is indeed not visible, the test will continue normally. 
+
+If the component is visible, an error occurs. Add an \gdehandler{} to the \bxname{Check Existence of Component in Warning Dialog} \gdcase{} that clicks e.g. the cancel button in the window and waits for the window to close. The \gdehandler{} should react to a \bxname{check failed} event, and should use \bxname{retry} as the reentry property. Once the window has closed, the failed \gdstep{} (check existence) will be carried out again. This time, the check will succeed, and the test will continue. The \gdstep{} will be marked as successful on retry. 
+
+

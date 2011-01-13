@@ -1,0 +1,1726 @@
+% $Id: releaseNotes.tex 13466 2010-12-02 12:47:38Z marcell $
+% Local IspellDict: english
+% --------------------------------------------------------
+% release notes
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+\documentclass[en,a4paper,twoside,manual,guidancer]{bxreport}
+\begin{document}
+\title{\GDr{} Release Notes}
+\author*{\GD-Team}{}
+\bxbanner{../../../share/PS/splash}
+\maketitle
+% ----------------------------------------------------------------------
+\input{../../../share/version}
+\bxdocinfo{RELEASE}{BREDEX GmbH}{\today}{}
+%\bxdocinfo{RELEASE}{BREDEX GmbH}{\today}{}
+\setcounter{secnumdepth}{0}
+
+\clearpage
+\section{\gd Release Notes}
+This document presents the relevant differences between versions and updates, and provides an account of any developments or known issues with the current release. 
+
+For up-to-date information on a release, it is worth looking in the FAQ's on the \gd{} website. 
+
+The release notes are presented in chronological order, with the most recent at the beginning of the document. The release notes for older versions of \gd{}  will no longer be published once they are no longer relevant. 
+
+\section{Important advice for migrating to new \gd{} versions}
+Existing customers who wish to update to a new version of \gd{} should follow the steps described in the installation manual to ensure a problem-free migration.
+
+% improved speed of test execution: according to system. can lower if problems with synchronization or add more synchronization
+
+\makeatletter
+\section{Release Notes for \gd{} \@bxversion}
+\makeatother
+\subsection{Information}
+This release is a patch to fix a problem that occurred in the \bxname{unbound modules concrete} whereby the \bxname{tree} component had a false component type. The database and license are the same as in version 4.3.01105. 
+
+\makeatletter
+\section{Release Notes for \gd{} 4.3.01105}
+\makeatother
+\subsection{Information}
+This release is a patch to fix a problem that occurred in the \bxname{unbound modules concrete} whereby the \bxname{tree} component had a false component type. The database and license are the same as in version 4.3.01105. 
+
+\makeatletter
+\section{Release Notes for \gd{} 4.3.01105}
+\makeatother
+\subsection{New features and developments}
+\textbf{Mylyn integration}
+\begin{itemize}
+\item The Mylyn plugin is now available for use within \gd{}. 
+\item You can connect to repositories (e.g. bug-tracking systems) to work on testing tasks directly in \gd{}.
+\item You can also create your own local tasks, and reduce the amount of \gdcases{} visible to only those required for the current task.
+\end{itemize}
+\textbf{Central test data}
+\begin{itemize}
+\item \gd{} has a new editor for managing data centrally for a \gdproject{}
+\item The \gddataeditor{} can be opened via a button on the toolbar.
+\item Within the editor, you can add data sets which can then be referenced in \gdcases{}. 
+\end{itemize}
+
+\textbf{New data option and display in \gdpropview{}}
+\begin{itemize}
+\item The \gdpropview{} now shows what type of data is currently being used for a \gdcase{}.
+\item The possible data sources are:
+\begin{description}
+\item [Referenced Test Case]{the data being used have come directly from the original specification of this \gdcase{}. }
+\item [Local Test Case]{the data being used were entered for this \gdcase{}. You can change from \bxname{local} to \bxname{referenced} test data using the combo box to reset the default value from the referenced \gdcase{}.}
+\item [Central test data set]{the data have come from a central test data set.}
+\item [Excel data file]{an Excel file has been entered as the data source.}
+\end{description}
+\end{itemize}
+
+\textbf{New search dialog and options}
+\begin{itemize}
+\item \gd{} has new options to search for items and test data within a \gdproject{}.
+\item The search dialog can be opened from the toolbar and offers searches for:
+\begin{description}
+\item [Keywords]{Names of \gdsteps{}, \gdcases{}, \gdsuites{}, \gdjobs{} and categories in the \gdproject{}}
+\item [Test data]{Data contained in \gdcases{}, \gdsteps{} and central data sets}
+\item [Files]{File types and contents in the workspace}
+\item [Tasks]{Tasks from repositories connected to \gd{}.}
+\end{description}
+\item Search results are shown in the \gdsearchresultview{}. Items can be opened in their editors by double-clicking the specific search result. 
+\end{itemize}
+
+\textbf{Manual \gdsteps{}}
+\begin{itemize}
+\item \gd{} now allows the definition of manual \gdcases{}
+\item There is a new module for a manual \gdstep{}.
+\item Manual \gdcases{} can be combined into \gdsuites{} and executed.
+\item During execution, a dialog appears to inform the manual tester which steps to perform.
+\item The tester can mark the action as \bxname{passed} or \bxname{failed} and can write comments about the \gdstep{}.
+\item The result reports from manual tests can be examined and analyzed just like result reports for automated tests.
+\end{itemize}
+
+\textbf{Testing \gdauts{} started by other \gdauts{}}
+\begin{itemize}
+\item It is now possible to test an \gdaut{} that was started by another \gdaut{}. 
+\item There is a new mode for the \gdagent{} to allow this, the \bxname{lenient mode}.
+\item \gdauts{} started in this way must be of the same toolkit as the original \gdaut{}.
+\item For each newly started \gdaut{}, a new \gdaut{} ID is generated with a running number. 
+\end{itemize}
+\textbf{Test results}
+\begin{itemize}
+\item Test results that are reopened from the \gdtestsummaryview{} now contain complete information about each \gdstep{}.
+\item Test results can also be exported from the \gdtestsummaryview{} in HTML and XML format.
+\item The option to automatically clean up test result details is now part of the \gdproject{} properties, and no longer a user preference.
+\item In the \gdtestsummaryview{}, you can now enter comments about each test run to document the reason for failing or passing. 
+\end{itemize}
+\textbf{New split pane view for the \gdomeditor{}}
+\begin{itemize}
+\item The \gdomeditor{} has a new view -- the split view.
+\item In the split view, each category (\bxname{assigned names, unassigned component names} and \bxname{unassigned technical names}) has a different pane.
+\item This allows you to navigate to the place you require in each category separately to make mapping in large \gdprojects{} more comfortable.
+\end{itemize}
+\textbf{New actions}
+\begin{itemize}
+\item Check existence of window by title
+\item Check text at mouse position in trees
+\item Store value at mouse position on trees
+\item Store value on selected node in trees
+\item Store value at mouse position in tables
+\end{itemize}
+
+\textbf{New parameters for existing actions}
+\begin{itemize}
+\item The action for selecting a node from a tree now also has the parameter \bxname{extend selection} so that multiple nodes can be selected in trees.
+\item The parameters for actions requiring modifiers (control, alt etc.) have been changed so that a space-separated list of modifiers can be entered. Content assist is available for the modifier parameters.
+\end{itemize}
+
+\textbf{Protection for reused \gdprojects{}}
+\begin{itemize}
+\item There is a new option in the \gdproject{} wizard and \gdproject{} properties to \bxname{protect} a \gdproject{}. 
+\item We recommend marking a \gdproject{} as protected if you are using it as a library (referenced) \gdproject{} for another \gdproject{}.
+\item In protected \gdprojects{}, \gdcases{} cannot be deleted, and the \bxname{edit parameters} dialog cannot be opened. 
+\item This is to stop any irrevocable changes being made that would affect the \gdprojects{} that reuse the protected \gdproject{}.
+\item The protected status of \gdprojects{} can be altered in the \gdproject{} properties.
+\end{itemize}
+\textbf{Viewing BIRT reports in embedded database}
+\begin{itemize}
+\item BIRT reports generated from the \gdtestsummaryview{} can now be viewed when using the  embedded \gddb{}.
+\end{itemize}
+\textbf{Show where used on \gdsuite{}}
+\begin{itemize}
+\item The action \bxname{Show where used} (\bxkey{F6}) is now also possible on \gdsuites{} that have been reused in \gdjobs{}.
+\end{itemize}
+\textbf{Open specification action}
+\begin{itemize}
+\item There is a new action available on \gdcases{} and \gdsuites{} which have been reused (in other \gdcases{} or in \gdjobs{}). 
+\item Use \bxkey{Ctrl+F6} to open the specification of the selected \gdcase{} or \gdsuite{} in the relevant editor.
+\item This action is possible even if the \gdcase{} or \gdsuite{} to open is hidden due to an active filter. 
+\end{itemize}
+\textbf{Open \gdcase{} action}
+\begin{itemize}
+\item There is a new dialog to open an existing \gdcase{} or multiple \gdcases{} in their editors.
+\item Use \bxkey{Ctrl+Shift+T} to open the dialog and select the \gdcases{} to be opened.
+\item This action is possible even if the \gdcase{} or \gdsuite{} to open is hidden due to an active filter. 
+\end{itemize}
+
+
+\textbf{Show corresponding specification in \gdomeditor{}}
+\begin{itemize}
+\item In the \gdomeditor{} there is a new option to show the corresponding specification of a component name.
+\item You can use this option when a component name appears in the \gdomeditor{} that you should have overwritten. 
+\item The \gdsearchresultview{} only shows places which could have lead to this component name appearing in the \gdomeditor{}, not all places in the test where it has been used.
+\end{itemize}
+
+\textbf{Key combination to switch views in the client}
+\begin{itemize}
+\item We have introduced shortcuts to switch to specific views in the specification perspective.
+\item To switch to the \gdtestsuitebrowser{}, use \bxkey{Alt+Shift+1}
+\item To switch to the \gdtestcasebrowser{}, use \bxkey{Alt+Shift+2}
+\item To switch to the \gdpropview{}, use \bxkey{Alt+1}
+\item To switch to the \gddatasetsview{}, use \bxkey{Alt+2}
+\item To switch to the \gdcompnamesview{}, use \bxkey{Alt+3}
+\item To switch to editor, use \bxkey{F12}
+\end{itemize}
+The key combinations can be changed in the preferences. 
+
+\textbf{Support for custom renderers in Swing}
+\begin{itemize}
+\item Custom renderers in Swing \gdauts{} can now be tested with \gd{} as long as the renderer implements either getText() or getTestableText(). 
+\item The method signatures you implement must be:
+\begin{quote}
+public String getTestableText();
+public String getText();
+\end{quote}
+\item If you don't have a getText() method, then we recommend using the getTestableText() option to avoid conflicts. 
+\end{itemize}
+
+\textbf{Dropping \gdcases{} directly into the editor area}
+\begin{itemize}
+\item You can now drop \gdcases{} directly into the editor, without having to place the \gdcase{} before or after another \gdcase{} in the editor.
+\item The \gdcase{} is placed at the bottom of the tree in the editor.
+\end{itemize}
+
+\subsection{Other information}
+\textbf{New workspace recommended for 4.3}
+\begin{itemize}
+\item We recommend setting up a new workspace for version 4.3 of \gd{}. 
+\end{itemize}
+\textbf{Object mapping in RCP \gdauts{} that do not use GEF}
+\begin{itemize}
+\item We have fixed an issue with automatic component naming in RCP \gdauts{}.
+\item Customers testing RCP \gdauts{} where \textbf{no} GEF bundles are present are advised to remap their components. 
+\end{itemize}
+\makeatletter
+\section{Release Notes for \gd{} 4.2.01053}
+\makeatother
+\subsection{New features and developments}
+
+\textbf{Eclipse 3.6 supported}
+\begin{itemize}
+\item \gd{} is compatible with Eclipse applications that are written in 3.6
+\end{itemize}
+
+\textbf{Viewing test results in \gd{}}
+\begin{itemize}
+\item Full test result details that are still in the \gddb{} can now be opened in the \gdtestresultview{} from the \gdtestsummaryview{}. 
+\item This lets you review tests that ran overnight directly in the \gd{} client. 
+\end{itemize}
+
+\textbf{Automatic \gddb{} migration}
+\begin{itemize}
+\item \gd{} now contains a \gddb{} migration wizard.
+\item When a connection to a \gddb{} is made in a new version, \gd{} automatically recognizes whether the \gddb{} version is incompatile. 
+\item If so, you can start the migration wizard. You specify which \gdprojects{} \gd{} should import into the new \gddb{} (the \gdprojects must have been exported from the previous version).
+\item The migration wizard converts the \gddb{} automatically to the new version.
+\end{itemize}
+
+\textbf{Commenting out \gdcases{}}
+\begin{itemize}
+\item You can now comment out \gdcases{} and \gdsteps{} in editors. 
+\item Items that have been commented out are inactive and are neither validated for \gdsuite{} completeness, nor executed.
+\end{itemize}
+
+\textbf{New parameters for table actions}
+\begin{itemize}
+\item Actions on tables now have new parameters for \bxname{row operator} and \bxname{column operator}.
+\item You can now select rows and columns based on their title and also determine how you want the selection to occur (equals, matches, simple match, not equals).
+\end{itemize}
+
+\textbf{New parameter for select actions}
+\begin{itemize}
+\item Actions that select items from tables, lists and trees have a new parameter for \bxname{mouse button}.
+\item You can now define which mouse button should be used to select the item.
+\end{itemize}
+
+\textbf{Number of failed \gdsteps{} shown}
+\begin{itemize}
+\item The \gdtestsummaryview{} now also has the information about how many \gdsteps{} failed in a test run.
+\end{itemize}
+
+\textbf{Information about whether test result details are available}
+\begin{itemize}
+\item The \gdtestsummaryview{} now also has the information about whether the details for a test run are still in the \gddb{}.
+\item If the results are still available, then the \gdtestresultview{} can be reopened.
+\end{itemize}
+
+\textbf{Spring to next/previous error}
+\begin{itemize}
+\item In the \gdtestresultview{} which opens when you open the results for a test run from the \gdtestsummaryview{}, you can use two new toolbar buttons to spring to the next/previous error.
+\end{itemize}
+
+\textbf{Showing comments for \gdcases{}}
+\begin{itemize}
+\item Any comments you write on \gdcases{} are now visible as a tooltip when you hover over the \gdcase{} in the browsers or in the search result view.
+\end{itemize}
+
+\textbf{Pause on error}
+\begin{itemize}
+\item There is a new button on the toolbar to pause the test execution if an error occurs.
+\item This can be switched on and off during a test run and allows you to easily stop the test to see what went wrong.
+\item The test can be continued by clicking the \bxname{pause test execution} button on the toolbar.
+\end{itemize}
+
+\textbf{Using running \gdaut{} details to define an \gdaut{}}
+\begin{itemize}
+\item \gdauts{} that have been started using the \bxname{gdrun} command can now be automatically defined in the \gd{} client.
+\item You can select the option to create an \gdaut{} definition from the running \gdauts{} view for any \gdaut{} that is currently unknown to \gd{}.
+\end{itemize}
+
+\textbf{Show referenced children}
+\begin{itemize}
+\item There is a new option in the preferences to show referenced children in \gdcases{} in the \gdtestcasebrowser{}.
+\item This preference is activated by default. 
+\item Deactivating the preference means that any children of referenced \gdcases{} are not displayed in the \gdtestcasebrowser{}. 
+\item This can help in particularly large \gdprojects{} to inprove performance.
+\end{itemize}
+
+
+\textbf{New action}
+\begin{itemize}
+\item There is a new action to wait for the menu component.
+\end{itemize}
+
+\subsection{Other information}
+\textbf{XML and HTML reports scheduled for removal}
+\begin{itemize}
+\item The XML and HTML reports that can be generated by \gd{} (configurable in the preferences) are scheduled for removal in the next versions. 
+\item There will be an alternative feature to create a HTML report from the test result report in \gd{}, as long as the test details are still in the \gddb{}.
+\item For queries about this plan, please contact the support team.
+\end{itemize}
+
+\textbf{Deprecated unbound modules earlier than 3.0 scheduled for removal}
+\begin{itemize}
+\item The unbound modules that have been deprecated in versions earlier than 3.0 are also scheduled for removal in the upcoming version. 
+\item We always recommend updating to the latest version of the unbound modules and removing any references to deprecated modules in your tests. 
+\end{itemize}
+
+\textbf{New unbound modules for tables and for select actions on lists, trees and tree-tables}
+\begin{itemize}
+\item Because we have added new parameters to actions on these components, there are new unbound modules for the actions.
+\item The old unbound modules have been set to deprecated. 
+\item We recommend updating any deprecated modules in your tests with the new modules.
+\item You can see what the new module is by looking in the deprecated module - these now contain the new actions. 
+\end{itemize}
+
+\textbf{Merging in the \gdomeditor}
+\begin{itemize}
+\item The option to merge components in the \gdomeditor{} has been temporarily deactivated for this release. 
+\end{itemize}
+
+\makeatletter
+\section{Release Notes for \gd{} 4.1.01039}
+\makeatother
+\subsection{New features and developments}
+\textbf{New option in delete \gdproject{} dialog}
+\begin{itemize}
+\item When you delete a \gdproject{}, you can now decide whether you want to keep the test results for the \gdproject{} or delete them as well.
+\end{itemize}
+\textbf{Performance improvements}
+\begin{itemize}
+\item We have further improved the performance for the saving and loading of \gdprojects{}. The validation of \gdsuites{} now runs as a background job so that test specification can continue while the tests are being validated.
+\item \gdsuites{} must be validated before they can be executed. 
+\end{itemize}
+\textbf{Generated names penalty removed}
+\begin{itemize}
+\item The generated names penalty has been removed from the object mapping configuration area and from the object recognition calculation.
+\end{itemize}
+\textbf{Optional automatic screenshots when errors occur}
+\begin{itemize}
+\item You can now define whether or not \gd{} should automatically take a screenshot when an error occurs. 
+\item Screenshots taken in this manner are saved into the \gddb{} and can be viewed in the \gdimgview{} in \gd{} by clicking on the failed \gdstep{}. 
+\item You can alter this preference in the Test Result preference page. 
+\item In the command line client, screenshots are automatically taken unless you include the parameter \bxshell{-s}. 
+\end{itemize}
+\textbf{New relevance flag for test results}
+\begin{itemize}
+\item You can now specify at the beginning of each test execution whether the test results are relevant for your test reports. 
+\item You can alter this preference in the Test Results preference page. 
+\item In the command line client, test executions are automatically relevant unless you include the parameter \bxshell{-r}. 
+\end{itemize}
+\textbf{MAC OSX no longer in BETA}
+\begin{itemize}
+\item We have now removed the BETA status of our MAC support. 
+\item Please be aware that pure SWT tests are not supported on MAC systems. 
+\item Testing RCP \gdauts{} also has some limitations on MAC, e.g. the action to select a value from a combo box does not work, and there are problems with the selection of tabs by their values. 
+\item The license server will now run on MAC machines, as long as the development kit for the environment is installed. 
+\end{itemize}
+
+\subsection{Other information}
+\textbf{Compatibility with 4.0}
+\begin{itemize}
+\item The \gddb{} is compatible with version 4.0, so your 4.0 \gddb{} can continue to be used with 4.1.
+%\item We do, however, recommend exporting all \gdprojects{} with the old version and reimporting them into the new version.
+\item The server and client components have been changed, so these will need to be reinstalled for 4.1.
+\item There have been no changes to the license mechnism or license administrator - you do not need to reinstall your license server. 
+\end{itemize}
+\textbf{Eclipse plugin removed}
+\begin{itemize}
+\item The functionality to run \gd{} as an Eclipse plugin has been removed.
+\end{itemize}
+\textbf{HTML actions deprecated}
+\begin{itemize}
+\item The action \bxname{follow link} in HTML is deprecated. Use the action \bxname{click} on \bxname{Graphics Component} instead to follow links. 
+\item The action \bxname{select window} is also deprecated, and has not yet been replaced with a new action in this release. 
+\end{itemize}
+\textbf{New \gddb{} configurations in DB Configuration}
+\begin{itemize}
+\item We have added separate \gddb{} configurations in the DB Configuration Tool for Oracle 8,9 and 10 as well as the embedded \gddb{} and Oracle XE. 
+\item There are also two new options: MySQl and Postgresql. These are shown as unsupported: we have tested that \gd{} can connect to them and open \gdprojects{}, but do not let our full tests run on them at this time. 
+\end{itemize}
+\textbf{New colors for \gdcases{}}
+\begin{itemize}
+\item The unbound modules are now colored blue to make them easier to distinguish from other \gdcases{}.
+\item We have also made \gdcases{} that cannot be directly edited slightly grayer to make it easier to see which \gdcases{} are editable. 
+\end{itemize}
+
+\subsection{Known issues}
+
+\textbf{Console output for DBTool}
+\begin{itemize}
+\item The DBTool does not yet produce an output when parameters are false or when errors occur.
+\end{itemize}
+
+\textbf{Edit parameters dialog}
+\begin{itemize}
+\item When editing parameters via the edit parameters dialog, it is currently necessary to save the \gdcase{} and reopen it to see the changes in the \gdpropview{}.
+\end{itemize}
+\textbf{Merging component names in the \gdomeditor{}}
+\begin{itemize}
+\item At the moment, the merging of component names does not work in the \gdomeditor{}. 
+\item You can use the \gdcompnamebrowser{} to merge component names instead.
+\end{itemize}
+
+\makeatletter
+\section{Release Notes for \gd{} 4.0.01205}
+\makeatother
+\subsection{New features and developments}
+\textbf{New implementation for HTML testing}
+\begin{itemize}
+\item We have a new implementation for the testing of HTML \gdauts{}.
+\item The new HTML toolkit is multi-browser compatible and has been tested for Windows (for IE6 and higher and for Firefox 2 and higher), Linux (Firefox 2 and higher) and Mac (Firefox 2 and higher and Safari 3 and higher).
+\item Firefox 3.6 is not yet supported.
+\item The new implementation also supports the testing of dynamic components. 
+\item Please be aware that Frames and IFrames are not yet supported in this new implementation. 
+
+\end{itemize}
+
+\textbf{New handling for starting \gdauts{} from within \gd{}}
+\begin{itemize}
+\item It is now possible to start multiple \gdauts{} from \gd{}. 
+\item Each \gdaut{} now receives an ID which can be used to differentiate between various \gdauts{} (or instances of the same \gdaut{}) for object mapping, observation, and test execution. 
+\item Some buttons that were previously on the toolbar have been moved to the \gdtestsuitebrowser{} and the new \gdrunautview{}. 
+\end{itemize}
+
+\textbf{New gdrun option to start \gdauts{} independently of \gd{}}
+\begin{itemize}
+\item \gdauts{} can now be started in one of two ways. 
+\item They can be started as in previous versions via an \gdaut{} configuration. There is also a new option to start an \gdaut{} without an \gdaut{} configiration, independently of \gd{}. 
+\item For this, you can use the command \bxname{gdrun} with parameters for toolkit, \gdaut{} ID etc.
+\item This option is not currently available for HTML or SWT \gdauts{}.
+\end{itemize}
+
+\textbf{New running \gdauts{} view}
+\begin{itemize}
+\item There is a new view in the specification perspective which shows a list of running \gdauts{}.
+\item The \gdauts{} are shown using their ID.
+\item Via this view, you can start \gdsuites{} and stop \gdauts{}.
+\end{itemize}
+
+\textbf{Testing different \gdauts{} in one test}
+\begin{itemize}
+\item Being able to start multiple \gdauts{} and the new \bxname{gdrun} command mean that it is now possible to test multiple \gdauts{} (or instances of the same \gdaut{}) in one test.
+\item \gdsuites{} can now be combined to \gdjobs{}. A \gdjob{} executes each \gdsuite{} on the specified \gdaut{}.
+\item This feature is currently only available for \gdauts{} that are written with the same toolkit (e.g. Swing) or when the \gdproject{} toolkit is set to concrete (i.e. no specific actions for particular toolkits are used in the test).
+\item All \gdauts{} to be tested in a \gdjob{} must have been started using the \bxname{gdrun} command.
+\end{itemize}
+\textbf{New \gd{} reporting perspective}
+\begin{itemize}
+\item \gd{} has a new reporting perspective. After every test run, the test results are now stored in the \gddb{}. Both detailed results and a test result summary are saved.
+\item The test result summaries are shown in the new \gdtestsummaryview{}. You can use this view to sort and filter your test results. 
+\item The test result details can be automatically removed from the \gddb{} after a specified number of days. This feature can be activated and configured in the preferences.
+\end{itemize}
+\textbf{Generation of test result statistics}
+\begin{itemize}
+\item From the \gdtestsummaryview{}, you can create \gd{} BIRT reports of your test runs. 
+\item There is a selection of example reports available in the \gdtestsummaryview{}.
+\item You can also use a BIRT designer to create your own reports.
+\item The built-in BIRT reports can currently only be used with an Oracle Database. 
+\end{itemize}
+
+\textbf{Duplicate \gdaut{} configuration}
+\begin{itemize}
+\item To ease the configuration of multiple \gdauts{}, there is now the option to duplicate an existing \gdaut{} configuration.
+\end{itemize}
+\textbf{New action: take screenshot of active window}
+\begin{itemize}
+\item There is a new action in the concrete toolkit to take a screenshot not of the whole screen, but of the currently active window.
+\end{itemize}
+\textbf{New action: check property on figure}
+\begin{itemize}
+\item For the RCP toolkit, there is a new action to check the property of a figure in GEF editors.
+\end{itemize}
+\textbf{Timestamps in test result reports}
+\begin{itemize}
+\item The HTML and XML test reports have been extended so that timestamps for each step are documented.
+\end{itemize}
+\textbf{Mac BETA Support}
+\begin{itemize}
+\item The Mac Version is still in beta status.
+\item Pure SWT \gdauts{} cannot be started by \gd{} on Mac systems. RCP \gdauts{}, however, can be. 
+\end{itemize}
+\textbf{New options for the DBTool}
+\begin{itemize}
+\item The DBTool has two new options: \bxshell{-deleteall} deletes all \gdprojects{} (and test results) in the \gddb{}. \bxshell{-keepsummary} leaves the test result summaries in the \gddb{} when a \gdproject{} is deleted.
+
+\end{itemize}
+
+\subsection{Information}
+\textbf{Altered XML Scheme for extensions to \gd{}}
+\begin{itemize}
+\item We have made a small change to the XML scheme for \gd{} extensions. 
+\item In the \bxname{ComponentConfiguration.xml} the tag \bxshell{componentClass} has changed.
+\item Instead of specifying your component class as:
+\begin{quote}
+\verb+<componentClass>javax.swing.JComboBox+
+
+\verb+</componentClass>+
+\end{quote}
+Use the following:
+\begin{quote}
+\verb+<componentClass name="javax.swing.JComboBox"/>+
+\end{quote}
+\end{itemize}
+\textbf{AUT Starter renamed AUT Agent}
+\begin{itemize}
+\item To reflect the change in behavior of the \gd{} server component, we have renamed the AUT Starter to AUT Agent.
+\item The commands to start and stop the Agent have also changed. See the user manual for more details.
+\end{itemize}
+\textbf{Fix for GEF Editor figure recognition}
+\begin{itemize}
+\item We have fixed an error for figure recognition in multi-page GEF editors.
+\item Figures are now correctly found if an editor has multiple tabs.
+\end{itemize}
+\textbf{New licenses}
+\begin{itemize}
+\item \gd{} 4.0 requires new licenses. You can request your new license from the support team.
+\end{itemize}
+\textbf{New support service available}
+\begin{itemize}
+\item We have updated our support service so that customers can also purchase premium support for questions relating to test environment, process etc.
+\item Full details about the new support service are in the license agreement and in the \gd{} shop.
+\end{itemize}
+
+\textbf{Alternative classloading}
+\begin{itemize}
+\item We have made some changes to the classloading for \gdauts{} started with \gd{}.
+\item Should you notice any problems when starting your \gdauts{} with the new version, you can switch to the old classloading mechanism by performing one of the following:
+\begin{itemize}
+\item Setting an environment variable \bxshell{GD\_USE\_CLASSIC\_CL=true}
+\item Setting the Java property \bxshell{-DGD\_USE\_CLASSIC\_CL=true}
+\end{itemize}
+\end{itemize}
+
+\textbf{Running the License Server on Windows 7}
+\begin{itemize}
+\item When starting the License Server as a Service (for example, after installing GUIdancer with administrator access rights), the firewall must be explicitly configured to allow incoming traffic for the License Server process. 
+\end{itemize}
+
+\subsection{Known issues}
+\textbf{Refresh problem in the \gdcompnamebrowser{} when renaming components in the \gdomeditor{}}
+\begin{itemize}
+\item After renaming a component name in the \gdomeditor{}, the \gdcompnamebrowser{} is not refreshed until the \gdproject{} is re-opened. 
+\item We recommend renaming component names in the \gdcompnamebrowser{} until this issue is resolved. 
+\end{itemize}
+
+\textbf{Incorrect display of technical component name}
+\begin{itemize}
+\item In some cases, a technical name may be collected from the \gdaut{} in the form \bxname{guidancer.concrete.button} instead of \bxname{Button/Radio Button/Checkbox}, for example. 
+\item This is a problem with the display of the component name and does not in any way affect the object recognition or mapping.
+\end{itemize}
+
+\textbf{Pausing and stopping test execution during restart \gdaut{}}
+\begin{itemize}
+\item There is a known issue which occurs when a test is paused or stopped while the action \bxname{restart \gdaut{}} is being executed. 
+\item Doing this leads to the buttons on the toolbar being incorrectly disabled. Please wait until the action is finished before stopping or pausing the test, to avoid this problem.
+\end{itemize}
+
+\textbf{Start Incomplete Test Suite is no longer supported}
+\begin{itemize}
+\item The action to start an incomplete Test Suite is no longer supported. 
+\end{itemize}
+
+\textbf{Closing an \gdaut{} in the observation mode}
+\begin{itemize}
+\item \gd{} cannot currently stop an \gdaut{} during a test. 
+\item If the observation mode is running, and you close the \gdaut{} (e.g. via File-Close), this leads to the object mapping for the \gdcase{} being falsely marked as incomplete. 
+\end{itemize}
+
+\textbf{Default \gdehandlers{} in \gdsuites{}: RETURN}
+\begin{itemize}
+\item The \bxname{return} default \gdehandler{} in \gdsuites{} does not yet exist, although this is documented.
+\end{itemize}
+
+\textbf{Automatically ending Check Mode}
+\begin{itemize}
+\item When recording a verification step in Observation Mode, the button \bxname{Ok, but stop Checking} does not end the Check Mode. The mode must be ended manually.
+\end{itemize}
+
+\clearpage
+\makeatletter
+\section{Release Notes for \gd{} 3.2.02004}
+\makeatother
+This release is a patch for version 3.2.01081 which contains updates to the documentation. 
+\subsection{Information}
+\textbf{New software license version}
+\begin{itemize}
+\item The software license that you agree to when you download or install \gd{} has been updated.
+\item You can read the new license in the installation directory in the \bxname{guidancer} folder. 
+\end{itemize}
+
+
+\textbf{New object mapping shortcut}
+\begin{itemize}
+\item The standard shortcut to collect objects from an \gdaut{} in the \gdomm{} is now: \bxkey{Ctrl+Shift+Q}. You can see and change this shortcut in the preferences. 
+\end{itemize}
+
+\makeatletter
+\section{Release Notes for \gd{} 3.2.01081}
+\makeatother
+
+\subsection{New features and developments}
+\textbf{New actions}
+\begin{itemize}
+\item This version of \gd{} contains a variety of new actions to:
+\begin{itemize}
+\item Check enablement, existence and selection of items in context-menus. 
+\item Open context menus with any button (right, left or middle).
+\item Check the existence of tabs.
+\item Check the value of a specific tab.
+\item Check the existence of a value in a row or column in a table. 
+\item Check the editability of a selected cell in a table.
+\item Check the editability of a cell at a specific mouse position. 
+\item Refresh components in a web application.
+\end{itemize}
+\end{itemize}
+
+\textbf{Collecting components using clicks}
+\begin{itemize}
+\item Customers whose \gdauts{} cannot accept keystrokes can now set the object mapping preferences to collect components using clicks. 
+\end{itemize}
+\textbf{Improvement for dynamic web testing}
+\begin{itemize}
+\item \gd{} now contains a new option in the object mapping preferences to refresh components in a web application. This can be used during object mapping to recognize newly added components since the last refresh.
+\item This action is also available as a \gdstep{} to achieve the same effect during a test. 
+\end{itemize}
+\textbf{Switching \gddb{} and \gddb{} configurations}
+\begin{itemize}
+\item There is a new \gddb{} configuration tool to select, add and configure \gddb{}s for use with \gd{}. More information on this is available in the Installation Manual.
+\item It is now possible to switch between \gddb{}s or \gddb{} users in the \gd{} client. This saves having to restart the client to switch the \gddb{}. 
+\end{itemize}
+
+\textbf{Windows 7 supported}
+\begin{itemize}
+\item \gd{} 3.2 has been tested with Windows 7 as well as XP and Vista. 
+\end{itemize}
+
+\subsection{Other information}
+
+\textbf{Administrator privileges required for configuration tools and license administrator}
+\begin{itemize}
+\item The configuration tool, the \gddb{} configuration tool and the license administrator may require administrative privileges. 
+\item Run these tools as an administrator to be able to configure your \gd{} installation. 
+\end{itemize}
+
+\textbf{New \gdserver{} commands under Linux}
+\begin{itemize}
+\item The \gdserver{} commands under Linux have changed. 
+\item To start the \gdserver{}, enter: \bxshell{./AutStarter (-p <port number>)}
+\item To stop the \gdserver{}, enter: \bxshell{stopAutStarter.sh}
+\end{itemize}
+
+\textbf{Fixed issue with a component name}
+\begin{itemize}
+\item We have fixed a falsely calculated component name in the unbound modules for dragging and dropping list items. 
+\item The affected component names are: \bxname{nn\_dragSource\_lst} and \bxname{nn\_dropTarget\_lst}. 
+\item Customers who have used unbound modules containing these component names should take the following steps to update their \gdprojects{}:
+\begin{enumerate}
+\item Open the \gdproject{} and switch the version of the unbound modules from 3.1 to 3.2. 
+\item Find the places where the affected component names were used in the test by using F7 on the unbound modules for dragging and dropping in lists. 
+\item Any affected places will display a message in the \gdcompnamesview{}: \bxname{no component type exists!}. 
+\item Make a note of the component name that you used here. 
+\item Make a small change in the \gdtestcaseeditor{} to make the editor ''dirty'' and save the editor. 
+\item Add the component name that you previously used in this \gdcase{} and save the editor again. 
+\end{enumerate}
+\end{itemize}
+\subsection{Known issues}
+\textbf{Selection of multiple SWT list items under Linux}
+\begin{itemize}
+\item There is an issue in some versions of GTK and the selection of multiple list items.
+\item Items further down in the list may be clicked falsely. This is a known error in GTK. 
+\end{itemize}
+
+\section{Release Notes for \gd{} 3.1.2003}
+This release is a patch for the previous 3.1.01019 version. For more information about the 3.1 version, see the previous release notes. 
+\subsection{New features and developments}
+\textbf{New timer actions}
+\begin{itemize}
+\item \bxname{Application - Start Timer} - This action allows you to start a timer with a given name. In addition to the timer name this action requires a variable in which to store the start time.
+\item \bxname{Application - Read Timer} - Use this action to read the current value of a timer you have started and store this value in a given variable.
+\item \bxname{Application - Check Numeric Values} - With this action two numeric values can be compared. Valid comparison methods are e.g. "less-than" or "greater-or-equal-than".
+\end{itemize}
+
+\subsection{Other information}
+\textbf{Fix for GEF figure recognition}
+\begin{itemize}
+\item The figure recognition in the GEF toolkit has been corrected.
+\item Figure positions will now be correctly calculated regardless of which side the palette is on.  
+\end{itemize}
+
+\textbf{Connect to \gdserver{}}
+\begin{itemize}
+\item The issue in the previous release with connecting to the \gdserver{} and then disconnecting before a \gdproject{} was open has now been fixed. 
+\end{itemize}
+
+\textbf{Wait for Window actions}
+\begin{itemize}
+\item The Swing implementation for the \bxname{Application - Wait for Window...} actions has been modified. 
+\item The modification fixes an issue with the occasional incorrect evaluation of the window status. 
+\item Affected actions are: \bxname{Wait for Window}, \bxname{Wait for Window to Close} and \bxname{Wait for Window Activation}
+\end{itemize}
+
+\makeatletter
+\section{Release Notes for \gd{} 3.1.01019}
+\makeatother
+
+\subsection{New features and developments}
+
+\textbf{GEF support}
+\begin{itemize}
+\item We have added support for the figure canvas and figure testing for RCP applications. 
+\item See the section in the user manual on GEF testing and the reference manual for details on testing applications with GEF components. %\bxextref{\gduserman}{user,gefaccess}. 
+\item GEF actions can not be recorded using the observation mode. 
+\end{itemize}
+
+\textbf{Eclipse 3.5 compatibility - important information}
+\begin{itemize}
+\item \gd{} is now compatible with Eclipse 3.5 and can test applications written in 3.5. 
+\item Existing customers wishing to test Eclipse applications on more than one platform should activate the new \bxname{generate names} option in the \gdaut{} settings.  %\bxextref{\gduserman}{user,Defineaut}. 
+\item This option improves the generated names and object recognition for buttons in RCP wizards and dialogs. It is deactivated in existing \gdprojects{} and activated in new ones. Activating this option will mean remapping affected components from the \gdaut{}.
+\item The affected components can easily be found by filtering the \gdomeditor{} using this text: \\
+\bxshell{*swt.widgets.button}. \\
+Delete the affected components and then refresh the \gdomeditor{}. You will then see the component names which need to be remapped. 
+\end{itemize}
+
+\textbf{Mac OSX BETA support}
+\begin{itemize}
+\item Testers wishing to try out the BETA for Mac support are invited to do so. 
+\item The license manager cannot run on a Mac system; it must be installed on a Windows or Linux system. 
+\end{itemize}
+
+\textbf{New actions}
+\begin{itemize}
+\item The action \bxname{Copy to clipboard} has been added to the \bxname{Application} component. This can be used on  native dialogs during the test, to enter filepaths etc. 
+\item We have updated the actions on tables to allow selection and checking of cells by the header value as well as the column index. Entering an integer will result in the column being found based on its position. Entering a string will mean that the column is found based on its header text. Header texts currently only support the \bxname{equals} operator. Old table actions are now deprecated and should be exchanged for the new actions. 
+\item \gd{} can now select and check the selection of checkboxes on SWT Trees. 
+\end{itemize}
+
+\textbf{RCP component name generation}
+\begin{itemize}
+\item In the \gdaut{} settings, there is a new option for RCP \gdauts{} to generate unique names for buttons in dialogs and wizards. %\bxextref{\gduserman}{user,Defineaut}.
+\item This option is automatically on for new \gdprojects{} and deactivated in existing \gdprojects{}. 
+\item If your tests must be platform independent, we recommend activating this option for your existing \gdprojects{}. Information on how to easily remap the affected components is available above in the section on Eclipse 3.5. 
+\end{itemize}
+
+\textbf{Filter in \gdomeditor{}}
+\begin{itemize}
+\item The \gdomeditor{} now has a text filter like the browsers. 
+\item Unlike the browsers, the \gdomeditor{} filter searches based on both the text and the technical component type in the editor. 
+\end{itemize}
+
+\textbf{Control decoration}
+\begin{itemize}
+\item We have added control decoration to various components in the user interface to help new users understand some of the more advanced options with \gd{}. 
+\end{itemize}
+
+\textbf{New cheat sheet}
+\begin{itemize}
+\item A new cheat sheet on using \gdehandlers{} is available in the help menu. 
+\end{itemize}
+
+\textbf{Show unused \gdcases{}}
+\begin{itemize}
+\item There is a new filter in the \gdtestcasebrowser{} -- show unused \gdcases{}.
+\item Use this filter to refactor and clean up your tests by identifying which \gdcases{} are no longer referenced. 
+\end{itemize}
+
+\textbf{Show where used on \gdcases{}}
+\begin{itemize}
+\item This action now also works on \gdcases{} from reused \gdprojects{}. 
+\item This means that you can easily search for references to deprecated unbound modules from our \gdcase{} library in your \gdproject{} to switch them. 
+\end{itemize}
+
+\textbf{New preferences}
+\begin{itemize}
+\item In the \gd{} preferences, you can choose to hide the information behind \gdstep{} names.% \bxextref{\gduserman}{user,gdprefs}. 
+\item You can also deactivate the option to show the original \gdcase{} name behind a new name when you rename a reused \gdcase{}. %\bxextref{\gduserman}{user,gdprefs}. 
+\end{itemize}
+
+\subsection{Other Information}
+
+\textbf{Coolbars and Toolbars in Eclipse}
+\begin{itemize}
+\item To fix an issue with the recognition of coolbars in Eclipse, we have introduced better component recognition for coolbars and toolbars. 
+\item Customers testing RCP applications will have to remap their toolbar and coolbar buttons unless these have been given names by the development team. 
+\end{itemize}
+
+
+\textbf{Whitespaces in commands}
+\begin{itemize}
+\item The action \bxname{execute external command} has been changed to allow whitespaces in commands and in parameters. 
+\item Relative paths can be written simply with the white spaces included. You will need to use quotes (") around the path or command if you are using path fragments (e.g. \bxshell{./} or \bxshell{../}) for the relative path.  
+\item When using absolute paths, use quotes (") around the command or parameter containing the whitespaces. 
+
+\end{itemize}
+For example, instead of: \\
+\verb+C:\Program Files\guidancer\guidancer.exe +
+\newline
+\verb+-data C:\Program Files\guidancer\ws +
+\newline
+enter:\\
+\verb+"C:\Program Files\guidancer\guidancer.exe" +
+\newline
+\verb+ -data "C:\Program Files\guidancer\ws" +
+\begin{itemize}
+\item In Linux, quotes may be placed around the command and the parameter. Windows cmd.exe can only accept quotes in either the parameter or the command. 
+\item Please bear in mind that strings within the quotes are not checked for validity. 
+
+\end{itemize}
+
+\textbf{Absolute and relative searches in tables}
+\begin{itemize}
+\item The relative search in tables now searches starting from the next item after the selected item.
+\item Move actions in the table search relative to the mouse position. 
+\end{itemize}
+
+\textbf{Keyboard mappings}
+\begin{itemize}
+\item We have added documentation how to add keyboard mapping files to the RCP accessor. 
+\end{itemize}
+
+\textbf{New parameters for the keyboard modifiers}
+\begin{itemize}
+\item The parameters \bxkey{Cmd} and \bxkey{Mod} have been added to actions for key combinations to allow testing on MAC systems, and to ensure platform-independent testing across Windows, Unix and MAC systems.
+\end{itemize}
+
+\subsection{Known issues}
+
+\textbf{Connecting to the \gdserver{}}
+\begin{itemize}
+\item When no \gdproject{} is open, connecting to the \gdserver{} and disconnecting again results in no longer being able to connect to the \gdserver{} until \gd{} is restarted. 
+\end{itemize}
+
+\textbf{Exit Code 11}
+\begin{itemize}
+\item Restarting an RCP \gdaut{} may cause an error in Eclipse which displays an error code 11. 
+\item This can be hindered by updating the launcher to Eclipse version 3.3 and using the parameter \verb+ --launcher.supressErrors (Executable) +. 
+\end{itemize}
+
+\textbf{Click in component}
+\begin{itemize}
+\item We do not recommend using the percentages 0 and 100 for click in component when scrollbars surround the component. 
+\end{itemize}
+
+\textbf{GIJ and OpenJDK}
+\begin{itemize}
+\item These are not supported by \gd{}. 
+\end{itemize}
+
+
+
+
+
+% older notes under this line ---------------------------------------------------------
+
+%% \clearpage
+%% \makeatletter
+%% \section{Release Notes for \gd{} 3.0.2001}
+%% \subsection{New features and developments}
+%% \makeatother
+%% \textbf{Model-based testing}
+%% \begin{itemize}
+%% \item \gd{} has a new modeling perspective. 
+%% \item In this perspective, \gdcase{} models can be created or imported from UML2 diagrams and then generated to form \gdcase{} structures complete with reused \gdcases{}, parameter definitions and categories.  
+%% \item  This feature will be useful to teams who have such models available to them and want to structure and design their tests based on these models. 
+%% \end{itemize}
+
+%% \textbf{Observation mode}
+%% \begin{itemize}
+%% \item The observation mode for Java \gdauts{} has been drastically reworked. 
+%% \item You can now record actions directly from a running \gdaut{}. The actions are stored as \gd{} \gdsteps{} and can be easily combined with each other to make reusable modules. 
+%% \item The observation mode for HTML \gdauts{} still works with the previous mechanism -- components are highlighted and a dialog appears on a key press to choose the desired action from. 
+%% \end{itemize}
+
+%% \textbf{New execution licenses}
+%% \begin{itemize}
+%% \item The \gd{} license mechanism has been changed. 
+%% \item The main effect of this is that test executions started from the command line client now no longer need a full \gd{} license. 
+%% \item Instead, they require \bxname{execution licenses}. Execution licenses are delivered with every full license, and more can be sent upon request.  
+%% \item Testers working with the \gd{} client (i.e. creating tests) still need \bxname{specification licenses}, which correspond to the old full licenses. 
+%% \item However, as many tests can be running at one time as required, without needing full licenses. 
+%% \end{itemize}
+
+%% \textbf{New tool for importing and exporting \gdprojects{}}
+%% \begin{itemize}
+%% \item It is now possible to import and export \gdprojects{} fromt he \gddb{} without starting the \gd{} client. 
+%% \item We have a new command line tool, the DB-Tool, for this purpose. 
+%% \item This can be esepcially useful for exporting \gdprojects{} into version control, or for importing \gdprojects{} from the version control for automated build and test processes. 
+%% \end{itemize}
+
+%% \textbf{Component names handling}
+%% \begin{itemize}
+%% \item We have improved and expanded the handling of component names in \gdprojects{}. 
+%% \item There is a new \gdcompnamebrowser{}, in which you can:
+%% \begin{itemize}
+%% \item see all component names in this \gdproject{} and in any reused \gdprojects{}. 
+%% \item delete unused component names from the \gdproject{}
+%% \item rename component names
+%% \item merge two or more component names with each other
+%% \item create new component names
+%% \end{itemize}
+%% \item Many of these actions are also available in the \gdomeditor{}. 
+%% \item In addition, the component name handling has been made more dynamic. Component types are now always set to the most abstract type possible to increase the reusability options. The type setting is dynamic and changes according to each use of the component name. 
+%% \end{itemize}
+
+%% \textbf{\gdomeditor{}}
+%% \begin{itemize}
+%% \item The \gdomeditor{} has been updated. It now has three tabs:
+%% \begin{description}
+%% \item [The tree view]{ is the \gdomeditor{} known from other versions of \gd{}.}
+%% \item [The table view ]{lets you organise and view your mappings based on the component names and types.}
+%% \item [The configuration view ]{lets you see and alter the heuristic for the \gdomeditor{}. This has moved from the preference pages to the \gdomeditor{}.}
+%% \end{description}
+%% \end{itemize}
+
+
+%% \textbf{Content assist}
+%% \begin{itemize}
+%% \item We have added content assist to the \gdpropview{}. 
+%% \item Now you can see what parameter options are available to you, and also see what reference names you have previously used.  
+%% \end{itemize}
+
+%% \textbf{New action: Store value on application}
+%% \begin{itemize}
+%% \item We have added a new action: \bxname{Store Value} on the \bxname{application} component. 
+%% \item This lets you define a variable and its value without having to read the value from the \gdaut{}. 
+%% \end{itemize}
+
+%% \textbf{Workspace support and in-place support for HTML and Excel files}
+%% \begin{itemize}
+%% \item In the \gdnavview{} in the workspace perspective, you can create and organize Projects in your workspace. 
+%% \item If you save Excel data files and HTML result reports to your workspace, you will be able to view (and edit) them directly in \gd{} using the in-place editor. 
+%% \end{itemize}
+
+
+%% \textbf{Mail button in error messages}
+%% \begin{itemize}
+%% \item All error messages now contain a \bxname{mail} button which lets you mail your questions to the support team. 
+%% \item You have the option of adding various files to the mail to help with the problem solving. 
+%% \end{itemize}
+
+%% \textbf{New example \gdaut{} and new cheat sheets}
+%% \begin{itemize}
+%% \item We have added an RCP \gdaut{} and tests for it to the \bxname{Samples} \gdproject{} to allow customers working with RCP to view and try out tests for these \gdauts{}. 
+%% \item There are also some new cheat sheets in the help menu.
+%% \end{itemize}
+
+%% \textbf{New section in the documentation}
+%% \begin{itemize}
+%% \item We have added a new chapter to the documentation on best practices for working with \gd{}.  
+%% \end{itemize}
+
+
+%% \subsection{Other Information}
+%% \textbf{Replace text}
+%% \begin{itemize}
+%% \item The implementation for \bxname{replace text} has been changed so that the text selection is not done by clicks, but by programmatic selection. 
+%% \item This will make replace text actions more reliable. 
+%% \end{itemize}
+
+%% \textbf{Observing actions in Java}
+%% \begin{itemize}
+%% \item The new observation mode has been thoroughly tested, however, there are still some actions that are not recordable, or where parameters must be corrected by hand in the \gdsteps{}. 
+%% \item Click counts on trees and in tables, for example, must be entered by hand as they are set by default to 0. 
+%% \item We are working on a full list of supported actions for the observation mode and will make this available as soon as possible. 
+%% \end{itemize}
+
+%% \textbf{Selecting items from lists}
+%% \begin{itemize}
+%% \item In \gd{}, you can select multiple items from a list by comma-separating them. 
+%% \item In previous versions, spaces were allowed between the list items, e.g. \bxshell{blue, orange, green}.
+%% \item In this version, spaces are not allowed between list items for multiple selections. The same list must now be entered as: \bxshell{blue,orange,green}.
+%% \end{itemize}
+
+%% \clearpage
+%% \section{Release Notes for \gd{} Version 2.2.01013}
+%% \subsection{New features and developments}
+
+%% \textbf{Cheat sheets}
+%% \begin{itemize}
+%% \item The tutorials in the user manual have been replaced with Cheat Sheets.
+%% \item The Cheat Sheets can be opened from the Help menu in the \gd{} client. 
+%% \item We recommend that new users of \gd{} start with these Cheat Sheets. 
+%% \end{itemize}
+
+%% \textbf{Library of \gdcases{}}
+%% \begin{itemize}
+%% \item The installed library of \gdcases{} has been restructured so that \gdcases{} are ordered first according to their action, and then according to the component. 
+%% \item The library of \gdcases{} is also reused as standard in all new \gdprojects{} to speed up test creation, and to encourage reusability of \gdcases{}. 
+%% \item Using the \gdcases{} from the library also means that tests can be created using drag and drop. 
+%% \item Refer to the reference manual for information on the parameter values required by the library \gdcases{}. 
+%% \end{itemize}
+
+%% \textbf{Starting Swing and SWT \gdauts{} with executable files}
+%% \begin{itemize}
+%% \item Starting \gdauts{} has been made easier. 
+%% \item Swing and SWT \gdauts{} can now be started with executable files (e.g. .exe, .bat, .cmd, and .sh files). 
+%% \item To use this feature, you must use a SUN VM and Java 1.5 or higher. 
+%% \end{itemize}
+
+%% \textbf{New Retry \gdehandler{}}
+%% \begin{itemize}
+%% \item \gd{} has a new \gdehandler{}. 
+%% \item The \bxname{retry} \gdehandler{} carries out the \gdstep{} that failed again, up to a maximum amount of retries, specified in the test. 
+%% \item This effectively enables the creation of \bxname{while} loops in your test: you can specify specific \gdsteps{} to be carried out if an error occurs, and then retry the failed \gdstep{}. 
+%% \end{itemize}
+
+%% \textbf{\gd{} variables for use in \gdsuites{}}
+%% \begin{itemize}
+%% \item \gd{} now contains pre-defined test execution variables, which can be used in tests. 
+%% \item The variables are automatically initialized when the \gdsuite{} starts. 
+%% \item See the user manual section on variables for more information on the variables and how to use them. 
+%% \end{itemize}
+
+%% \textbf{Eclipse 3.4 support}
+%% \begin{itemize}
+%% \item \gd{} has migrated to Eclipse 3.4. 
+%% \item The \gd{} plugin can be run in Eclipse 3.4 or Eclipse 3.3. 
+%% \end{itemize}
+
+%% \textbf{Support emails}
+%% \begin{itemize}
+%% \item In the Help menu in \gd{}, emails to our support team can now be generated. 
+%% \item You can choose which information to automatically attach to the email, including the \gdproject{} and any dependent \gdprojects{}, the logs, and the configuration details. 
+%% \item This information helps our support team to answer your questions as quickly as possible. 
+%% \end{itemize}
+
+%% \textbf{More freedom to change parameters in \gdcases{}}
+%% \begin{itemize}
+%% \item It is now possible to change the parameters in reused \gdcases{} without having to remove the \gdcases{} from the places where they were reused. 
+%% \item Adding parameters can be done using the \gdpropview{}. 
+%% \item Parameters can be changed and deleted using the \bxname{Edit parameters} dialog. 
+%% \item This allows you more freedom to change your tests, and makes it easier to create reusable units from already existing \gdcases{}. 
+%% \end{itemize}
+
+%% \textbf{Object mapping improvements}
+%% \begin{itemize}
+%% \item When technical names are collected from the \gdaut{}, they now display information about the collected component.
+%% \item For example, the label on buttons will be shown, the entries in a combo box will be listed etc. 
+%% \item This helps you when you are assigning technical names to your component names, as it is easier to see which technical name fits with each component name. 
+%% \end{itemize}
+
+%% \textbf{Welcome page}
+%% \begin{itemize}
+%% \item \gd{} now has a welcome page containing information on the example projects, the cheat sheets as well as general information about the program. 
+%% \item The welcome screen can be viewed using the Help menu. 
+%% \end{itemize}
+
+%% \textbf{Updated example \gdprojects{}}
+%% \begin{itemize}
+%% \item The example \gdprojects{} have been updated to reflect the best way of working with \gd{}. 
+%% \item They are described in chapter 2 of the user manual. 
+%% \item You can import the sample \gdprojects{} from the \bxname{aut} directory in the \gd{} installtion. 
+%% \end{itemize}
+
+%% \subsection{Other Information}
+%% \textbf{Enter after replace text in combo boxes}
+%% \begin{itemize}
+%% \item The implementation for \bxname{replace text} on combo boxes has been changed so that \bxkey{Enter} is not automatically pressed after the replace text action. 
+%% \item If your \gdaut{} requires an \bxkey{Enter} press at this point, you may have to insert a \gdcase{} to do this in your test. 
+%% \end{itemize}
+
+%% \textbf{Opening context menus on Unix systems}
+%% \begin{itemize}
+%% \item There is a known issue with the opening of context menus with \gd{} on Unix systems. 
+%% \item If the relevant e.g. node is first selected with a click, and the context menu is then opened, then this is interpreted as a double click and the action fails. 
+%% \item We recommend therefore selecting the node with zero clicks. This moves the cursor over the node, but does not click. 
+%% \item If your \gdaut{} requires a click to select the node, we recommend creating a \gdcase{} to:
+%% \begin{itemize}
+%% \item Select the node with one click.
+%% \item Wait a short amount of time (10ms for example).
+%% \item Open the context menu. 
+%% \end{itemize}
+%% \end{itemize}
+
+%% \textbf{Eclipse and Firefox 3}
+%% \begin{itemize}
+%% \item There are some known problems when using Eclipse and Firefox version 3. 
+%% \item We do not recommend using this version of Firefox as the browser for Eclipse.
+%% \end{itemize}
+
+
+%% \section{Release Notes for \gd{} Version 2.1.01018}
+
+
+%% \subsection{New features and developments}
+%% \textbf{Eclipse 3.3 support}
+%% \begin{itemize}
+%% \item \gd{} now supports Eclipse 3.3. 
+%% \item The \gd{} plugin can be used with the Eclipse 3.2 or 3.3 releases. 
+%% \item Java 1.5 or higher is required for the plugin version.
+%% \end{itemize}
+
+%% \textbf{Drag and drop actions}
+%% \begin{itemize}
+%% \item \gd{} now supports drag and drop actions on various components. 
+%% \item Refer to the reference manual for more information on drag and drop actions. 
+%% \end{itemize}
+
+%% \textbf{Improved viewing of reused projects}
+%% \begin{itemize}
+%% \item You can now see to the \gdstep{} level in reused \gdprojects{}. 
+%% \end{itemize}
+
+%% \textbf{Server renamed to \gdserver}
+%% \begin{itemize}
+%% \item The \gd{}-server has been renamed to the \gdserver{} to make its role clearer. 
+%% \end{itemize}
+
+%% \textbf{New \gdcase library}
+%% \begin{itemize}
+%% \item We have improved and expanded the \gdcase{} library installed with \gd{}. 
+%% \item Duplicate actions have been removed from lower-level components when the action is also available on an abstract component. 
+%% \item There are also \gdcases{} for the drag and drop actions. 
+%% \item \gdprojects{} which currently use the older \gdcase{} libraries (unbound\_modules) can also reuse the new \gdprojects{} to gain access to the drag and drop actions and/or to migrate from the older version to the newer library. 
+%% \end{itemize}
+
+%% \textbf{CreateDB step removed from installation}
+%% \begin{itemize}
+%% \item In order to make the installation process easier, we have removed the createDB step from the installation. 
+%% \item For the internal \gddb{}, no configuration or login to the \gddb{} is necessary. This makes running \gd{} easier in the evaluation stages. 
+%% \item For the multi-user \gddb{}, the \gd{} database scheme is automatically created for the user account at the first login to the \gddb{}. 
+%% \end{itemize}
+
+%% %\subsection{Bug fixes and workarounds}
+%% \subsection{Other Information}
+%% \begin{description}
+%% \item [Configuring an SWT \gdaut{}:]{There are two different ways of starting SWT \gdauts{}. At the moment, \gd{} cannot start SWT \gdauts{} via \bxname{java.library.path}. Please use \bxname{-Djava.ext.dirs} as a JRE argument in the \gdaut{} configuration to start your SWT \gdaut{}. }
+%% \item [Speed in some configurations:]{In some configurations of Linux and RemoteX, Eclipse runs extremely slowly. As \gd{} is based on Eclipse, on particular configurations it may also run slowly. }
+%% \item []{}
+%% \end{description}
+%% \section{Release Notes for \gd Version 2.0.01052}
+%% \subsection{Important advice}
+%% It is, as always, strongly recommended that you back up all projects (by exporting to XML) as well as any Implementation Classes you may have (both source and guidancerConfig.xml) before upgrading to this version of \gd.
+
+%% \subsection{New Features and Developments}
+%% \textbf{SWT/RCP and Web/HTML}
+%% \begin{itemize}
+%% \item The range of toolkits testable with \gd{} has been extended. 
+%% \item \gd{} can now test Swing, SWT, RCP and Web (HTML) \gdauts{}. 
+%% \item For RCP and Web \gdauts{}, certain steps are necessary to configure either \gd{} or the \gdaut{} before testing. Refer to the installation manual and the user manual for more details. 
+%% \end{itemize}
+%% \textbf{Concatenation of parameters}
+%% \begin{itemize}
+%% \item Parameter values can now be concatenated so that a value can be put together from referenced parameters, variables and concrete values.
+%% \item Refer to the user manual and reference manual for information on how to concatenate parameters. 
+%% \end{itemize}
+%% \textbf{Reusable \gdprojects{}}
+%% \begin{itemize}
+%% \item You can now reuse \gdprojects{} in other \gdprojects{}. 
+%% \item This allows you to have a centrally maintained library of \gdcases{} which can be referenced in other \gdprojects{}. 
+%% \end{itemize}
+%% \textbf{\gdproject{} versions}
+%% \begin{itemize}
+%% \item It is now possible to create new versions of a \gdproject{}. 
+%% \end{itemize}
+%% \textbf{Multiple Import/Export}
+%% \begin{itemize}
+%% \item You can now import multiple \gdprojects{} into the \gddb{}. 
+%% \item You can also perform an \bxname{export all} on the \gddb{}. 
+%% \end{itemize}
+%% \textbf{UTF-16}
+%% \begin{itemize}
+%% \item \gd{} now supports UTF-16 encoding. 
+%% \item Refer to the installation manual for recommendations on a \gddb{} for UTF-16.
+%% \end{itemize}
+%% \textbf{Show log}
+%% \begin{itemize}
+%% \item If you have configured \gd{} to create log files, you can show these in the client via the help menu. 
+%% \end{itemize}
+
+
+
+%% \subsection{Other Information}
+%% \begin{description}
+%% \item[Conversion of Object Mapping]{In previous versions of \gd, it was possible (although not recommended) to reassign the component of a \gdstep to a component with an incompatible type (for example, reassigning a Graphics Component to a Menu). This is no longer possible, and can result in these components needing to be reassigned again after import and conversion of the containing \gdproject.}
+%% \item[Component Hierarchy]{The component hierarchy has been modified since the previous release. Where possible, \gd will perform all necessary \gdproject modificatations during the import/conversion process. This will result in, for example, all components that were previously Clickable Components being converted to Graphics Components, as the type Clickable Component no longer exists. Please refer to the Reference Manual for the updated component hierarchy.}
+%% \item[Default Mapping for Menu Bar]{The Menu Bar component now has a
+%%   default mapping (the menu bar of the currently active window) called
+%%   "Menu". This means that all Menu Bar components will be modified
+%%   during import/conversion to use the default mapping. Also, any
+%%   component that has the name "Menu" before import will be given a new
+%%   unique name during the conversion process.}
+%% \item [Editing and deleting referenced parameters]{References can still be added via the \gdpropview{}. However, editing and deleting references is now only possible via an \bxname{edit parameters} dialog at the \gdcase{} level. Refer to the user manual for more information.}
+%% \item [Changed action names]{The action names have been changed to make them easier to understand. They will be converted automatically from your 1.2 \gdprojects{} on import. }
+%% \item [New license system]{The license system has been updated to work on a floating license basis. Accordingly, there is now a license server and a license server manager to deal with concurrent use of licenses. Refer to the installation manual for details. }
+%% \item [Extending \gd{}]{There are new procedures for extending components and creating your own new components. Refer to the extension manual for details. }
+%% %\item [Web testing]{Some environments experience problems with web testing. We are working on identifying and resolving these problems. }
+%% \item [Decorator]{Occasionally, complete \gdsuites{} are marked as incomplete when a \gdproject{} is opened. Performing a refresh will restore the correct decoration. }
+%% \item[RCP applications - Restart action]{It is currently not possible to use the restart action with RCP \gdauts{} if the \gdaut{} was started via an .exe file.}
+%% \item[Replace/Input text (Linux)]{There are some issues with the Replace/Input Text and Key combination actions under Linux systems. At the moment, umlauts and the \ss{}-symbol cannot be entered.}
+%% \item[Deprecated Actions]{
+%%   \input{deprecated}
+%% }
+%% \end{description}
+
+
+%% \section{Release Notes for \gd Version 1.2.02026}
+%% \subsection{New Features and Developments}
+%% \textbf{Vastly Improved Performance}
+%% \begin{itemize}
+%% \item Amount of time required for various operations (such as opening and saving of \gdcases) has been greatly reduced.
+%% \end{itemize}
+
+%% \subsection{Bug fixes and workarounds}
+%% \textbf{'Component must be showing...' Action Error}
+
+%% In the previous version, GUI components that were simply made invisible rather than being disposed could under certain circumstances lead to a 'Component must be showing on the screen to determine its location' Action Error. This defect has been fixed. 
+
+%% \subsection{Other Information}
+%% \begin{description}
+%% \item[Implementation Classes]{No new test components/actions have been added in this release. This means that if you have written custom Implementation Classes, you can use your modified Version 1.1.02016 \emph{guidancerConfig.xml} file. In this case, we recommend creating a secure copy of your \emph{guidancerConfig.xml}, installing the new version, and finally overwriting the installed \emph{guidancerConfig.xml} with your secure copy.}
+%% \end{description}
+
+
+%% \section{Release Notes for \gd Version 1.2.01031}
+%% \subsection{Important advice}
+%% It is, as always, strongly recommended that you back up all projects (by exporting to XML) as well as any Implementation Classes you may have (both source and guidancerConfig.xml) before upgrading to this version of \gd.
+%% \subsection{New Features and Developments}
+%% \textbf{Simplified Installation}
+%% \begin{itemize}
+%% \item Tools such as the \GD Configuration tool and the License Manager can now be started directly from the installer.
+%% \end{itemize}
+%% \textbf{Simplified AUT Configuration}
+%% \begin{itemize}
+%% \item AUT startup information can be read directly from startup scripts.
+%% \item Advanced configuration options can be hidden, which makes the configuration screen easier to quickly read and understand.
+%% \end{itemize}
+%% \textbf{New Server Actions/Parameters}
+%% \begin{itemize}
+%% \item New Wait actions have been introduced, including Wait for Window Activation and Wait for Window to Close.
+%% \item New Verify Component Exists action.
+%% \item New Take Screenschot action.
+%% \item New parameters that allow relative operations within Tables.
+%% \end{itemize}
+%% \textbf{Additional Reporting Option}
+%% \begin{itemize}
+%% \item Simplified HTML reporting option hides successful test steps, displaying only the point where the test failed.
+%% \item Reporting options can be accessed by selecting \bxmenu{Window}{Preferences}{} and selecting the \bxname{Test Result Report} section.
+%% \end{itemize}
+%% \textbf{Simplified Access to Logs}
+%% \begin{itemize}
+%% \item Log files can now be accessed directly from the \gdclient.
+%% \item This feature is only available when file-based logging is enabled.
+%% \item Both Client and Server (when connected to a GDServer) logs are available from the \gd \bxname{Help} menu.
+%% \end{itemize}
+%% \textbf{Eclipse 3.2}
+%% \begin{itemize}
+%% \item \gd now uses and supports Eclipse 3.2.
+%% \item This plugin version does not support Eclipse 3.1 or lower.
+%% \end{itemize}
+%% \textbf{Testcase Template and Guide}
+%% \begin{itemize}
+%% \item Reusable Testcases and a usage Guide are now included in the \gd installation.
+%% \item The Testcase Template Guide can be found with the rest of the \gd documentation.
+%% \item Consult this guide for information regarding the location and usage of the Testcase Templates.
+%% \end{itemize}
+%% \textbf{Refresh Project}
+%% \begin{itemize}
+%% \item You can reload the data in a project by simply performing a Refresh action on the project.
+%% \item This ensures that the most up-to-date data is displayed in a multi-user environment.
+%% \end{itemize}
+%% \textbf{Save As...}
+%% \begin{itemize}
+%% \item You can now save a copy of the current project in the database.
+%% \item This action is available under \bxmenu{Project}{Save As...}{}
+%% \end{itemize}
+%% \textbf{Shortcuts Standardized}
+%% \begin{itemize}
+%% \item Some keyboard shortcuts have been changed to better follow keyboard shortcut conventions.
+%% \item The Delete action is now accessed via the \bxshell{Delete} key, rather than \bxshell{Ctrl+D}
+%% \item The Refresh action is now accessed via \bxshell{F5}.
+%% \item See the \bxname{Shortcuts} section of the \gd Reference Manual.
+%% \end{itemize}
+%% \textbf{Improved Problem View}
+%% \begin{itemize}
+%% \item The \gd Problem View has additional support for identification and resolution of common problems, such as connection to a GDServer for which no AUT Configuration is currently defined.
+%% \end{itemize}
+
+%% \subsection{Other Information}
+%% \begin{description}
+%% \item[Implementation Classes and Internationalization]{Internationalization strings for \gd have been separated into compSystemStrings.properties (which contains all strings related to the component system) and guidancerStrings.properties (which contains strings specifically related to \gd). This separation will require users with their own Implementation Classes to move all internationalization strings for these classes to \emph{compSystemStrings.properties}.}
+%% \end{description}
+%% \begin{description}
+%% \item["Could not restore workbench layout." Error]{You may encounter this error if you use the same workspace for \gd 1.2 as you did for \gd 1.1. If you receive this error message, click \bxshell{OK} to close the message window, then click \bxmenu{Window}{Reset Perspective}{} to solve the problem.}
+%% \end{description}
+%% \begin{description}
+%% \item[Separation of User Manual and Reference Manual]{The \bxname{References} section of the \gd User Manual has been removed and is now available as a separate document: The \gd Reference Manual.}
+%% \end{description}
+%% \begin{description}
+%% \item[Verbose output from Commandline Client]{The Commandline Client now produces additional output to describe the current test step as it is executed. This output can be silenced by adding \bxshell{-q} to the command line.}
+%% \end{description}
+
+%% \section{Release Notes for \gd Version 1.1.02026}
+%% \subsection{New Features and Developments}
+%% \textbf{Vastly Improved Performance}
+%% \begin{itemize}
+%% \item Amount of time required for various operations (such as opening and saving of \gdcases) has been greatly reduced.
+%% \end{itemize}
+
+%% \subsection{Bug fixes and workarounds}
+%% \textbf{'Component must be showing...' Action Error}
+
+%% In the previous version, GUI components that were simply made invisible rather than being disposed could under certain circumstances lead to a 'Component must be showing on the screen to determine its location' Action Error. This defect has been fixed. 
+
+%% \subsection{Other Information}
+%% \begin{description}
+%% \item[Implementation Classes]{No new test components/actions have been added in this release. This means that if you have written custom Implementation Classes, you can use your modified Version 1.1.02016 \emph{guidancerConfig.xml} file. In this case, we recommend creating a secure copy of your \emph{guidancerConfig.xml}, installing the new version, and finally overwriting the installed \emph{guidancerConfig.xml} with your secure copy.}
+%% \end{description}
+
+
+
+
+%% \section{Release Notes for \gd Version 1.1.02016}
+%% \subsection{New Features and Developments}
+%% \textbf{Read Classpath from Manifest}
+%% \begin{itemize}
+%% \item If there is a manifest file in the \gdaut JAR, the information about the Main-Class and ClassPath will be read automatically from this file.
+%% \item This means that if your \gdaut JAR has a manifest file, you can leave the Classpath and Classname fields in the \gdaut Configuration blank.
+%% \end{itemize}
+
+%% \textbf{New action parameters}
+%% \begin{itemize}
+%% \item You can now enter relative, as well as absolute, tree paths for several tree actions. 
+%% \item See the \emph{References -> Actions And Parameters} section of the \gd Manual for specific information.
+%% \end{itemize}
+
+%% \textbf{New Server Actions}
+%% \begin{itemize}
+%% \item A ''move'' action has been added to move the current selection in a tree.
+%% \item See the \emph{References -> Actions And Parameters} section of the \gd Manual for specific information.
+%% \end{itemize}
+
+%% \textbf{Improved performance of \gdtestresultview}
+%% \begin{itemize}
+%% \item Test results are now displayed at the \gdstep level only when the corresponding \gdstep is reached.
+%% \item This reduces loading time when running \gdsuites.
+%% \end{itemize}
+
+%% \textbf{Improved matching for actions}
+%% \begin{itemize}
+%% \item ''not equals'' operator now available wherever Regular Expressions can be used.
+%% \item New operator ''simple match'' available.
+%% \item See the \emph{References -> Actions And Parameters} section of the \gd Manual for specific information.
+%% \end{itemize}
+
+%% \textbf{Implementation Class hierarchy created automatically during installation}
+%% \begin{itemize}
+%% \item When creating Implementation Classes, you no longer have to create the \bxshell{server/lib/extImplClasses}, as it is created automatically during the installation of \gd.
+%% \end{itemize}
+
+%% \textbf{Command Line Client syntax}
+%% \begin{itemize}
+%% \item The command to start the Command Line Client has been changed.
+%% \item See the \emph{Tasks -> Testing without the user interface} section of the \gd Manual for further information.
+%% \end{itemize}
+
+%% \textbf{Supported Java versions}
+%% \begin{itemize}
+%% \item \gd now officially supports strictly \gdaut{}s compiled with Java 1.4.1 or higher.
+%% \item \gd is also not officially tested with Java 1.6.
+%% \end{itemize}
+
+%% \subsection{Bug fixes}
+%% \textbf{Tree nodes with dynamically generated children}
+
+%% The previous problem of being unable to find dynamically generated, lazy-loaded children of tree nodes has been corrected.
+
+
+%% \textbf{Empty strings in Excel datasheets}
+
+%% An empty string can now be indicated in an Excel datasheet cell by entering only a backslash ('$\backslash$') in the cell.
+
+
+%% \section{Release Notes for \gd Version 1.1.02002}
+%% \subsection{Bug fixes and workarounds}
+%% \textbf{Long 'Wait' \gdstep}
+
+%% Previously, a 'Wait' \gdstep (performed on the 'Application' component) that lasted longer than 30 seconds resulted
+%% in the error '5006: Timeout occured.' This has been fixed. 
+
+%% \textbf{'Restart' \gdstep}
+
+%% If the first \gdstep in a \gdsuite is a 'Restart' action, the test will not proceed past this \gdstep. A workaround
+%% for this defect has been established: \\
+%% You must place a 'Wait' \gdstep before the 'Restart' \gdstep, with a timeout value of 1 second (1000 milliseconds).
+
+%% \section{Release Notes for \gd{} Version 1.1}
+
+%% \subsection{Important advice}
+%% If you have previously used \gd{} and wish to continue using your \gdprojects{} and database, please follow these instructions to ensure that your \gdprojects{} can be used in the new version. 
+%% \begin{enumerate}
+%% \item In your old \gd{} client, export your \gdprojects{} out of the database. 
+%% \item Once you have done this, delete all the \gdprojects{} from the database \textbf{from within the old client}. 
+%% \item In the new client, import your \gdprojects{} into the empty database. 
+%% \end{enumerate}
+%% These steps are necessary due to changes in the \gd{} client which will not otherwise be compatible between versions. 
+
+%% \subsection{New Features and Developments}
+%% \textbf{Running an incomplete \gdsuite{}}
+%% \begin{itemize}
+%% \item You can now run incomplete \gdsuites{}. 
+%% \item The option to do this is in the context-sensitive menu for the \gdsuite{} in the \gdtestsuitebrowser{}. 
+%% \item The \gdsuite{} will run until an error occurs, or until the test data or object mapping is missing. 
+%% \end{itemize}
+
+
+%% \textbf{New icons}
+
+%% \gd{} has undergone some changes to the user interface. The icons have been improved. For information on any new icons, and to see what they mean, consult the \bxcaption{Icons} section in the References chapter of the handbook.
+
+%% \textbf{Changes to preference pages}
+
+%% \begin{itemize}
+%% \item The preferences pages have been extended to include more preferences. 
+%% \item See the \gd{} handbook and the preference pages themselves for more information. 
+%% \end{itemize}
+
+%% \textbf{New actions}
+
+%% \begin{itemize}
+%% \item New actions in this release include the ''restart application'' action, in the component ''application''. This stops the \gdaut{} and restarts it. 
+%% \item There is also a new action for some components called ''store value''. With this action, you can read values from components to use at other points in your test. 
+%% \item You can also set environment variables to be used in \gd{}. 
+%% \item A ''move'' action has been added to move the cursor in tables from the currently selected cell to other cells, defined by an amount of cells to move, and in which direction. 
+%% \end{itemize}
+
+%% \textbf{Empty strings}
+
+%% You can enter an empty string as a variable now, using a backslash. 
+
+%% \textbf{Escape symbol}
+
+%% The escape symbol can also be used to escape forward slashes in menu paths for example.  
+
+%% \textbf{Toolbar buttons}
+
+%% The toolbar buttons for \bxcaption{start \gdaut{}} and \bxcaption{start \gdsuite{}} have been updated so they also use drop-down menus. Details on using the new buttons can be found in the user manual. 
+
+%% \textbf{Deprecated actions}
+
+%% Some unnecessary actions have been removed. These will still work in your old \gdprojects{}, but they will be marked with a symbol to show that they are deprecated. We recommend changing these actions to the new, updated actions. 
+
+%% \textbf{Refactoring}
+
+%% You can now extract \gdcases{} both from within the \gdtestsuitebrowser{} and the \gdtestcasebrowser{}. 
+
+%% \textbf{Observation mode}
+
+%% The observation mode now lets you map the ''application'' component. The default key combination to map the application component during observing is \bxkey{Ctrl+Shift+S} and can be changed via the preferences. 
+
+%% \textbf{Reused \gdcases{}}
+
+%% When a \gdcase{} is reused, the name originally appears in angle brackets (\bxshell{< >}. The \bxcaption{\gdcase{} name} field in the \gdpropview{} for this \gdcase{} is empty. You can overwrite the name for the reused \gdcase{} by entering a name into this \bxcaption{\gdcase name} field. 
+
+%% If you want to use the original name again, delete the name you entered from the \bxcaption{\gdcase{} name} field and save. The \gdcase{} will be named the same as its specification \gdcase{}. 
+
+%% \textbf{Result View}
+
+%% There is a button to clear the \gdtestresultview{} in the tab for this view. 
+
+%% \subsection{Functional Issues}
+
+%% \textbf{Event Handlers}
+
+%% Customized \gdehandlers{} cannot yet move any parameters they contain to the level above the \gdehandler{} (i.e. to the \gdcase{} the \gdehandler{} is nested in).  If you use references in the \gdcases{} and \gdsteps{} in an \gdehandler{}, please specify the values for these parameters at the \gdehandler{} level. 
+ 
+%% \textbf{Test Suite names}
+
+%% \gdsuite{} names are not yet checked for ambiguity -- i.e. it is possible to give two or more \gdsuites{} the same name. We advise against this, however, as this will lead to problems when using the command line client. 
+
+%% \clearpage 
+%% \section{Release Notes for \gd{} Version 1.0.64}
+%% \begin{itemize}
+%% \item This release contains a variety of new features.
+%% \item The most important ones are listed below.
+%% \item Consult the handbook or the context-sensitive help (\bxkey{F1}) for more information on individual features.
+%% \end{itemize}
+
+%% \subsection{New Features and Developments}
+%% \textbf{Multilingual testing}
+%% \begin{itemize}
+%% \item Multilingual testing is now possible with \gd{}.
+%% \item In addition to the \gdproject{} and \gdaut{} langauges, there is now a working language. 
+%% \item The working language specifies which language the \gdaut{} should be started in, and which language data is being entered in.
+%% \item There is a button to change the  working language, and you can see the current working language in the status bar.
+%% \item \gdsuites{} are now uneditable if their \gdaut{} does not support the working language. 
+%% \item The \gddatasetsview{} has also been adapted to accommodate multilingual testing. 
+%% \item It now has three combo boxes to change how the data sets, languages, parameters and data are portrayed. 
+%% \end{itemize}
+
+%% \textbf{Command Line Interface and Ant Task}
+%% \begin{itemize}
+%% \item \gd{} now allows you to execute tests without the user interface.
+%% \item Tests can be run from the command line, or as a part of the build process using an Ant Task.
+%% \end{itemize}
+
+%% \textbf{Changes to ''start server'' button and server preferences}
+%% \begin{itemize}
+%% \item The ''start server'' button now has a drop-down menu next to it.
+%% \item From the menu, you can choose a server/port number to start.
+%% \item For more information, please refer to the user manual.
+%% \item The server preferences have also been changed, to improve usability. 
+%% \item You can now add, delete and edit servers, port numbers and JRE binaries from one preference page. 
+%% \end{itemize}
+
+%% \textbf{Yellow and red background for text fields}
+%% \begin{itemize}
+%% \item Text fields in \gd{} (e.g. in the \gdpropview{}) now offer help when you are entering values.
+%% \item A red background means that you have entered an incorrect value.
+%% \item A yellow background means that the value \emph{may} be wrong, depending on the circumstances. 
+%% \end{itemize}
+
+%% \textbf{New actions and parameters}
+%% \begin{itemize}
+%% \item \gd{} now supports more actions and offers more parameters. 
+%% \item You can use the context-sensitive help in the \gdpropview{} (select a component, action or parameter and press \bxkey{F1}) or refer to the \bxcaption{References} section in the manual for information on the changes. 
+%% \end{itemize}
+
+
+%% \textbf{Context-sensitive help}
+%% \begin{itemize}
+%% \item The context-sensitive help has been updated to include more topics when you press \bxkey{F1} in a view or editor.
+%% \item There is also a new context-sensitive help feature.
+%% \item Selecting a component, action or parameter in the \gdpropview{} and pressing \bxkey{F1} will let you see details about this particular item. 
+%% \end{itemize}
+
+%% \textbf{Locating component names}
+%% \begin{itemize}
+%% \item In the \gdomeditor{}, you can now locate the places where a component name was used.
+%% \item Select the component name you want to find and select \bxcaption{Show where used} from the context-sensitive menu. 
+%% \item A list of the places where this component name is used will appear in the search result view. 
+%% \item Double-click on an entry to be taken to the place where this \gdcase{} is used. 
+%% \end{itemize}
+
+%% \textbf{Search function}
+%% \begin{itemize}
+%% \item You can now search \gd{} browsers and editors via:\\
+%% \bxmenu{Edit}{Search}{}.
+%% \end{itemize}
+
+%% \textbf{Adding/inserting}
+%% \begin{itemize}
+%% \item \gdcases{} (and \gdsteps{}, \gdehandlers{}, where applicable) can now be added to \gdcases{} and \gdsuites{} either using \bxcaption{add} or \bxcaption{insert}.
+%% \item These options are available in the context-sensitive menu and in the main menu.
+%% \item \bxcaption{Add} places the item after all other items, i.e. at the end.
+%% \item \bxcaption{Insert} places the item \emph{before} the currently selected item.
+%% \item Double-clicking on the root node in the \gdtestcasebrowser{} displays a dialog to add a \gdstep{}.
+%% \item Double-clicking on the root node in the \gdtestsuitebrowser{} displays a dialog to add a \gdcase{}.
+%% \end{itemize}
+
+%% \textbf{Deleting component names}
+%% \begin{itemize}
+%% \item If you change or delete a component name which you have overwritten at another place, the \gdcompnamesview{} now offers help.
+%% \item It shows the component name which no longer has a component.
+%% \item It displays the new component name (if there is one). You can overwrite this with the same name as you used for the old component, or leave it as it is. 
+%% \item The warning disappears after saving. 
+%% \end{itemize}
+
+%% \textbf{Mapping in categories}
+%% \begin{itemize}
+%% \item You can now choose which category to map into when you are in the \gdomm{}.
+%% \item You can also change mapping categories.
+%% \item Select the category you want to map into with a single-click.
+%% \item Choose \bxcaption{Set category for Mapping Mode} from the context-sensitive menu in the \gdomeditor{}. 
+%% \end{itemize}
+
+%% \textbf{Status Bar}
+%% \begin{itemize}
+%% \item The status bar is now at the bottom right of the \gd{} client.  
+%% \end{itemize}
+
+%% \clearpage
+%% \section{Release Notes for \gd Version 1.0.03}
+%% \subsection{New Features and Developments}
+%% \begin{description}
+%% \item[Working with more than one \gdaut]{The previous problem with creating a \gdsuite when a \gdproject has more than one 
+%% \gdaut has been fixed. }
+%% \item [\gdomm and Observation Mode]{In the previous release, am error sometimes occurred when using the \gdomm or Observation Mode. This error has been fixed.}
+%% \end{description}
+
+%% \subsection{Other Information}
+%% \begin{description}
+%% \item[Java Policies]{If the \gdaut uses a security manager (or, in some cases, a Java Policy), please be aware that the \gd service component requires permission to create and use ClassLoader instances. Most policies will not permit this action for security reasons. The service component uses the ClassLoader to separate the program code used to inspect the \gdaut from the \gdaut itself as much as possible. 
+
+%% To grant the necessary permission, please use the following policy snippet (please use a personal installation directory instead of  the \gd installation directory). Please also be aware that additional line breaks have been inserted in the following snippet. 
+
+%% \begin{verbatim}
+%% grant {
+%%   permission java.io.FilePermission "<<ALL FILES>>",
+%%              "read, write, delete, execute";
+%%   permission java.lang.RuntimePermission "getClassLoader";
+%%   permission java.lang.RuntimePermission "createClassLoader";
+%%   permission java.lang.RuntimePermission "setContextClassLoader";
+%%   permission java.lang.RuntimePermission "accessDeclaredMembers";
+%%   permission java.lang.RuntimePermission "modifyThreadGroup";
+%%   permission java.lang.RuntimePermission "exitVM";
+%%   permission java.lang.reflect.ReflectPermission 
+%%              "suppressAccessChecks";
+%%   permission java.util.logging.LoggingPermission "control";
+%%   permission java.util.PropertyPermission "*", "read, write";
+%%   permission java.net.SocketPermission "*", 
+%%              "accept, connect, listen, resolve";
+%%   permission java.awt.AWTPermission "listenToAllAWTEvents";
+%%   permission java.awt.AWTPermission "showWindowWithoutWarningBanner";
+%%   permission java.awt.AWTPermission "createRobot";
+%%   permission java.awt.AWTPermission "accessClipboard";
+%%   permission java.awt.AWTPermission "accessEventQueue";
+%% }; 
+ 
+%% \end{verbatim}
+
+%% If these permissions are not granted, a SecurityException will be thrown when the \gdaut is started. This means that the \gdaut cannot be tested by GUIdancer. 
+
+%% }
+
+%% \end{description}
+
+
+%% \section{Release Notes for \gd Version 1.0.02}
+
+%% \subsection{New Features and Developments}
+%% \begin{description}
+%% \item[Mac OS and Unix Platforms]{\gd on Mac OS and Unix has now been tested; the installation for these operating systems is included in this release. } 
+%% \item [Eclipse Plugin License Error fixed]{In Version 1.0, starting the \gd 
+%% plugin with an expired license resulted in Eclipse closing. This issue has now been fixed: trying to start the plugin with an invalid license produces the appropriate error message.  }
+
+%% \end{description}
+
+%% \subsection{Functional Issues}
+%% \begin{description}
+%% \item [Minimizing \gd Client in Eclipse]{In the Eclipse Plugin, there is an issue with the option to automatically minimize the client window when test execution begins. We recommend installing the server on a separate machine. If the client and the server are installed on the same machine, ensure that the \gdaut is visible before starting a \gdsuite{}.   }
+%% \item[Error 5006]{This error occurs when an \gdaut is closed while the \gdsuite is paused. To avoid this, ensure that the \gdsuite has been stopped or is complete before closing an \gdaut{}. }
+%% \item [Activating the \gdaut in Mac OS]{There is an issue with \gdauts not being activated when a \gdsuite begins. This happens when the \gdaut is running on the same machine as the client on  Mac OS. To avoid this, use the \gdaut configuration dialog to select the option to activate the \gdaut when a \gdsuite begins, then select an activation method. The \gdaut configuration  dialog appears during \gdproject creation and can also be seen and edited via:\\ \bxmenu{Project}{Settings}{}. }
+
+%% \end{description}
+
+%% \subsection{Other Information}
+%% \begin{description}
+%%  \item [Help Shortcut in Unix]{In Unix systems, the help function is activated using \bxkey{Shift+F1}. }
+%% \item [Opening Context-Sensitive Menus using the Keyboard]{As an alternative to performing a right-click, \gd supports standard keyboard-shortcuts to open context-sensitive menus, e.g. \bxkey{Shift+F10} in Windows, and \bxkey{Ctrl+Space} in Mac OS.  }
+
+%% \end{description}
+
+%% \section{Release Notes for Version 1.0}
+
+
+%% \subsection{New Features and Developments}
+%% \begin{description}
+%% \item[AUT Activation Option]{Some \gdauts may need activating before testing can begin, especially those running on the same machine as the \gd client. \gd 
+%% now offers a variety of options to activate an \gdaut{}. In the \gdaut configuration dialog (which appears during \gdproject creation or as part of the \gdproject settings), a checkbox can be selected to activate all \gdauts before the test starts. A combo box offers the choice of activation. These settings are valid for this whole \gdaut unless otherwise specified in individual \gdsteps{}.
+
+%% There is also a new action in the \bxcaption{Application} component: \bxname{Activate}. This allows a \gdstep to be created to activate the \gdaut{}, with a choice of activation methods as parameters. There is also the option to use the activation method defined in the \gdaut configuration. This increases the maintainability of tests, as the settings for all \gdcases containing this action can be changed centrally. }
+%% \end{description}
+
+%% \subsection{Functional Issues}
+%% \begin{description}
+%% \item[Mac OS and Unix Support]{As support for \GD on Mac OS and Unix operating systems is still under
+%% testing, we cannot officially support these platforms at this time. We
+%% will release a version supporting these systems in the near future.
+%% }
+%% \item[From RC to 1.0] {We currently have no option to upgrade from the release candidate (RC)
+%% to \GD 1.0. We therefore advise the user to uninstall \GD{}
+%% completely, then reinstall the new version.}
+%% \item[Starting 1.0 after uninstalling RC]{An internal error may be produced when the \gd-client (version 1.0) is started  after having uninstalled the RC version. This happens when the same workspace is used for version 1.0 as for the RC version, and it contains an old .metadata directory. Delete the .metadata directory in the workspace and restart \gd{}.  }
+%% \item[Porting Projects]{Because of some changes and improvements in
+%%   the \gddb and the
+%% import/export format, it is unfortunately not possible to import
+%%   \gdcases from the release candidate into the new version. Future
+%%   versions, however, will support portation of user data.
+%% As compensation for any resulting difficulties, we have reset
+%%   all previously granted demo licenses, therefore anyone who has
+%%   received a 30-day license may renew it now.}
+%% \item [Save As...]{In Version 1.0, there is no  \bxcaption{Save as...}
+%%  function. Saving a \gdproject under a different name can be achieved
+%%  by exporting the \gdproject with \bxmenu{File}{Export...}{} , then
+%%  re-importing it into the \gddb{}. As the \gdproject already exists in
+%%  the \gddb, a dialog will appear prompting the user for a new name. }
+%% \item [Java on Windows] {
+%%   There is an issue with our \bxcaption{Key Combination} action for the
+%%   \bxcaption{Graphic Application} component. Due to a bug in
+%%   \bxname{Sun}'s implementation, this action may not function when
+%%   using the arrow keys in combination with one or more modifiers. For
+%%   this to work properly, please ensure that the keyboard's Numlock is
+%%   de-activated while carrying out a test. See \bxname{Sun}'s bug
+%%   description at
+%%   \href{http://bugs.sun.com/bugdatabase/view\_bug.do?bug\_id=4342184}
+%%   {http://bugs.sun.com/\~bugdatabase/\~view\_bug.do?bug\_id=4342184} 
+%%   for more information.
+%% }
+
+
+%% \end{description}
+
+\end{document}
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

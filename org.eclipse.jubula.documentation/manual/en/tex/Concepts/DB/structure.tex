@@ -1,0 +1,28 @@
+% $Id: structure.tex 6958 2008-06-06 06:10:42Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+\index{Database}
+\GD{} possesses a \gddb{}-independent data storage scheme using the
+ \bxname{Hibernate} service for \bxname{Java} objects.
+\bxname{Hibernate} provides a layer of abstraction between the application
+ and the underlying storage mechanism, allowing for portability 
+and simplified upgradability.
+
+\bxname{HSQL DB} and  \bxname{Oracle 9i} have been thoroughly
+ tested to work  with \GD{}; \bxname{HSQL DB} for the single-user \gddb{}, 
+and \bxname{Oracle 9i} for the multi-user \gddb{}. 
+Other \gddb{} solutions supported by \bxname{Hibernate} may also be 
+used as a  \gddb{}, though these have not been tested by our team. 
+See
+    \htmladdnormallink{http://www.hibernate.org}{http://www.hibernate.org}
+for a detailed list of  \bxname{Hibernate}-supported databases. 
+
+
+
+

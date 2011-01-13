@@ -1,0 +1,12 @@
+\begin{enumerate}
+\item Open the \gdproject{} you just created:\\ \bxmenu{Project}{Open}{}. 
+\item When you specified the \bxcaption{First Test} \gdcase{}, you  used references when you created the \gdsteps{}. This means that any data entered for a \gdcase{} can be overwritten.  
+\item The \gdcase{} was reused in the \gdsuite{}. Open the \gdtestsuiteeditor{} by double-clicking on the node for the \gdsuite{} in the \gdtestsuitebrowser{}. 
+\item Single-click the \gdcase{} in this editor. 
+%\item In the \gddatasetsview{}, select the last line of data, and press \bxcaption{delete}. 
+\item Enter new values for the data sets. 
+\item Press \bxcaption{save}. 
+\item In the \gdtestcasebrowser{}, single-click on the \bxname{First Test} \gdcase{}. In the \gddatasetsview{}, you can still see the default values for this \gdcase{}. If you added this \gdcase{} to another \gdcase{} or to a \gdsuite{}, it would still use these values until you changed them. 
+\item Execute the test again, with the new values. 
+\item The values in the \gdcase{} reused in the \gdsuite{} will now no longer be affected if the values in the specification change. Until values in a reused \gdcase{} are overwritten, they will change when the specification changes. This stops as soon as you overwrite the values in the reused \gdcase{}. 
+\end{enumerate}

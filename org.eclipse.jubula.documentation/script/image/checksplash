@@ -1,0 +1,14 @@
+#!/bin/bash
+source checksplash.properties
+
+echo Checking to see if splashscreen image is up-to-date...
+
+BASE=`basename $SPLASHFILE .bmp`
+if [ $SPLASHFILE -nt $OUTDIR/$BASE.jpg -o $SPLASHFILE -nt $OUTDIR/$BASE.eps ]; then
+    echo converting updated file to latex-friendly files
+    rm $OUTDIR/$BASE.*
+    ./bmp2eps_jpg $SPLASHFILE $OUTDIR
+    echo done.
+else
+    echo no conversion necessary
+fi

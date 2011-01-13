@@ -1,0 +1,28 @@
+The meters application is a piece of software designed to manage meter readings for different flats in a building complex. The building complex is displayed on the left hand side in a tree, which contains nodes showing the flats and their meters. 
+
+The most basic use case for this application is to take a meter reading. Taking a meter reading is also a part of the other two use cases shown in this example, moving a tenant in and moving a tenant out of the complex. 
+
+The Excel files needed for this \gdproject{} can be found in: \\
+\bxname{/examples/Samples.zip}\\
+You will need to take the following steps to be able to run the meters tests:
+\begin{enumerate}
+\item Open the \gd{} Workspace Perspective:\\
+\bxmenu{Window}{Open Perspective}{\gd{}Workspace}
+\item Right-click in the \gdnavview{} and select:\\
+\bxmenu{Import}{}{}\\
+from the context-sensitive menu. 
+\item In the dialog that appears, select \bxname{Existing Projects into Workspace} from the \bxname{General} category. 
+\item Press \bxcaption{Next}.
+\item In the next dialog, activate the \bxname{Select archive file} option.
+\item Browse to the \gd{} installation directory and then to the
+\bxname{examples} directory. 
+\item Select the \bxname{Samples.zip}. 
+\item Click \bxcaption{Finish} in the dialog. The Excel files for the meters tests will appear in the \gdnavview{}. 
+\item If you do not have write privileges in the \gd{} installation directory, you must also create a workspace for the meters application and enter this workspace in the \gdaut{} configuration for meters. In the \bxname{AUT Arguments} field, enter: \bxshell{-data <path to workspace>}.
+\end{enumerate}
+
+
+\subsection{Sample 5: Tests with the Meters tool}
+\input{Samples/Meters/test}
+
+

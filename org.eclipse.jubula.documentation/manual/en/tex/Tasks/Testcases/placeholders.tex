@@ -1,0 +1,39 @@
+%% % $Id: placeholders.tex 2243 2006-06-12 13:50:53Z alexandra $
+%% % Local Variables:
+%% % ispell-check-comments: nil
+%% % Local IspellDict: american
+%% % End:
+%% % --------------------------------------------------------
+%% % User documentation
+%% % copyright by BREDEX GmbH 2005
+%% % --------------------------------------------------------
+%% % this command can be inserted multiple times
+%% \gdhelpid{}
+%% % 
+%% \begin{bxdescription}
+%% \end{bxdescription}
+%% %
+%% \begin{bxsteps}
+%% % use the \item command for single steps
+%% \end{bxsteps}
+%% % change <FILE> to the same filename you are editing
+%% \bxinput{Links/<FILE>}
+%% %
+%% % other usefull commands are
+%% %   \bxhint{}        to create a hint
+%% %   \bxwarn{}        to describe a warning
+
+
+\index{Test Case!Empty}
+\index{Empty Test Case}
+\index{Top-Down Specification}
+\index{Specification!Approaches!Top-Down}
+\begin{itemize}
+\item If it helps you to structure your test, you can leave \gdcases{} empty.
+\item You can then add \gdsteps{} and \gdcases{} later and/or use the \gdcase{} as an \gdehandler{}.
+\item In this way, you can develop the structure of a test before you know exactly what the individual steps will be. 
+\item Empty \gdcases{} in a \gdsuite{} do not disrupt the execution, they are simply marked as ''successful'' in the \gdtestresultview{}. 
+\end{itemize}
+
+ 
+

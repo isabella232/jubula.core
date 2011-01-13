@@ -1,0 +1,48 @@
+\index{Object Mapping!Collect components}
+
+Once your test specification is ready, you can  \bxname{collect} components (technical names) from the \gdaut{} to \bxname{map} (assign) to the component names you used in your tests. 
+
+To collect components from the \gdaut{}, you must have: 
+
+\begin{itemize}
+\item started the \gdserver{} \bxpref{otherportnumber}
+\item created a \gdcase{} containing \gdsteps{} \bxpref{TasksCreateTC}
+\item added \gdcases to a \gdsuite{} \bxpref{WorkingWithSuites}
+\item specified an \gdaut{} \bxpref{Defineaut} 
+\item configured an \gdaut{} \bxpref{configuringaut} if you want to start the \gdaut{} via \gd{}
+\item chosen an \gdaut{} for the \gdsuite{} \bxpref{confsuite}
+\item checked that your current working language is supported by the chosen \gdaut{}. 
+\item connected to the \gdserver{} \bxpref{connectserv}
+\item started the \gdaut{} to be mapped \bxpref{startaut}
+\item opened the object mapping editor \bxpref{TasksOpenOME}
+\end{itemize}
+
+
+\begin{enumerate}
+\item Start the \gdomm{} by clicking the arrow next to the\bxname{Start \gdomm{}} on the toolbar and selecting which \gdaut{} (based on the \gdaut{} ID) you want to map. \gdmarpar{../../../share/PS/startOM}{start \gdomm}
+
+\bxtipp{If you have the same \gdaut{} running more than once, you will only be able to collect components from the \gdaut{} whose ID you chose. The object map for \gdauts{} that are the same is, however, identical.}
+
+The status bar will show that the \gdomm{} is active. 
+\item Bring the \gdaut{} into focus by clicking on its titlebar. 
+
+\textbf{For Java \gdauts{}}
+\begin{itemize}
+\item In the \gdaut{} for which the \gdomm{} was started, move the cursor over components. They will be highlighted with a green border (see \bxfigref{greenborders}). 
+\item To collect a technical name for a component, hover the cursor over the component whose name you want to collect. 
+\item Press \bxkey{Ctrl+Shift+Q}.
+\bxtipp{You can change the key combination for the object mapping in the object mapping preferences \bxpref{TasksPrefsOMM}. This is a good idea if the current key combination has a specific meaning in your \gdaut{}. You can also set the object mapping combination to a mouse click if your \gdaut{} does not accept key combinations.}
+\end{itemize}
+\textbf{For HTML \gdauts{}}
+\begin{itemize}
+%\item In the \gdaut{} for which the \gdomm{} was started, the components will be highlighted red.
+\item While the \gdomm{} is active, the \gdaut{} cannot be used. 
+\item To collect a technical name for a component, click the component whose name you want to collect. 
+\end{itemize}
+
+\item In the \gdomeditor{}, the technical name for this component will appear in the \bxname{unassigned technical names} category. 
+\bxtipp{If you have already mapped this component, it will be highlighted in the \gdomeditor{}.}
+\item Collect all the names you need from the \gdaut{} and then click the \bxname{Stop \gdomm{}} button on the toolbar. 
+\gdmarpar{../../../share/PS/stopOM}{ stop \gdomm}
+\item You can now map (assign) the component names you used in your \gdcases{} to the technical names you have collected from the \gdaut{} \bxpref{TasksOMMap}.
+\end{enumerate}

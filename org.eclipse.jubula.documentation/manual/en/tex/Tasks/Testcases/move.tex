@@ -1,0 +1,17 @@
+I
+
+If you are reusing a \gdproject{} or \gdprojects{} in your currently opened \gdproject{} \bxpref{reuseproject}, you can move \gdcases{} you create to these reused \gdprojects{} to make them a part of that \gdproject{}. 
+
+This lets you add useful \gdcases{} to external libraries to be reused in other \gdprojects{}. 
+
+
+\begin{enumerate}
+\item In the \gdtestcasebrowser{}, select the \gdcase{}, \gdcases{} or categories you want to move to an external \gdproject{} that you are currently reusing in the open \gdproject{}. 
+\item Right click on the selected items and select:\\
+\bxmenu{Move to external Project}{}{}\\
+from the context-sensitive menu. 
+\item From the dialog which appears, select which reused \gdproject{} to move them to. 
+\item The items you selected will appear in the grayed-out category of the reused \gdproject{} you selected and will disappear from their original place. 
+\item The structure of your \gdproject{} stays the same -- the moved \gdcases{} are not deleted from places where you have reused them, for example. 
+\end{enumerate}
+\bxwarn{If you move \gdcases{} containing referenced \gdcases{} from other \gdprojects{}, make sure that the \gdproject{} the \gdcases{} are dependent on is also reused in your external \gdproject{}.}

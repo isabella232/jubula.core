@@ -1,0 +1,20 @@
+
+When you enter a reference in a \gdstep{} instead of a concrete value, the parameter you write the reference for is  automatically \emph{moved up} to the 
+\gdcase{} containing the \gdstep{} (the \bxname{parent \gdcase{}}). 
+
+You can see this parameter behind the \gdcase{} name in the \gdtestcaseeditor{}. If you select the \gdcase{} node from within the \gdtestcaseeditor{} you can also see the parameter in the \gdpropview{}. This parameter is now a parameter of this \gdcase{}. You can move this parameter higher up from this \gdcase{} by entering another reference in the \gdpropview{} for this \gdcase{}. The parameter will then automatically appear in the next parent \gdcase{} and so on. 
+
+It is important to remember, however, that parameters (and component names) 
+are only moved up one level at a time. That is, to be able to enter 
+parameter values in the highest \gdcase{} in a hierarchy, references must 
+have been entered for each nested \gdcase{} beneath it. 
+
+This is especially important in the \gdtestsuiteeditor{}, since only 
+the top-level \gdcase{} is accessible to be edited at this point. To be able 
+to enter parameter values for lower \gdcases{} at this point, their parameters 
+must have been moved up using references. 
+
+
+
+
+

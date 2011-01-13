@@ -1,0 +1,11 @@
+Once you have created a manual \gdcase{} \bxpref{TasksManualCreate}, you can execute it.
+
+\begin{enumerate}
+\item Start the \gdaut{} \bxpref{startaut}.
+\item Start the \gdsuite{} containing the manual \gdsteps{} \bxpref{TasksStartExec}.
+\item For each manual \gdstep{} in the test, a dialog will appear with the descriptions and data you entered for the \bxname{action to perform} and the \bxname{expected behavior}. 
+\item Execute the \gdstep{} as described, enter a comment if necessary, then click either \bxcaption{passed} or \bxcaption{failed} in the dialog to move to the next \gdstep{}.
+\bxtipp{If the \gdstep{} fails, then an automatic screenshot will be taken \bxpref{testresprefs}, and any \gdehandlers{} \bxref{customizedehandler} for this \gdcase{} will be activated.}
+\item Once the dialog has been closed, the next \gdstep{} dialog will appear.
+\item At the end of the test, you can see the test result report like any other automated test \bxpref{testresultview}.
+\end{enumerate}

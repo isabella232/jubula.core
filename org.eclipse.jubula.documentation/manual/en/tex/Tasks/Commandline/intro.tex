@@ -1,0 +1,27 @@
+% BREDEX LaTeX Template
+%  \documentclass is either ``bxreport'' or ``bxarticle''
+%                 option is bxpaper
+%% \documentclass{bxarticle}
+%% % ----------------------------------------------------------------------
+%% \begin{document}
+%% \title{}
+%% \author{}
+%% % \author*{Hauptautor}{Liste der Nebenautoren}
+%% \maketitle
+%% % ----------------------------------------------------------------------
+%% \bxversion{0.1}
+%% %\bxdocinfo{STATUS}{freigegeben durch}{freigegeben am}{Verteilerliste}
+%% \bxdocinfo{DRAFT}{}{}{}
+%% % ----------------------------------------------------------------------
+
+%% \end{document}
+
+You can also run tests using the command line client. From the command line interface, you can select and start multiple \gdsuites{} from a \gdproject{}.
+
+%You can also write an ANT file to execute various \gdsuites{} from different \gdprojects{}.
+
+\bxtipp{As with any test, it is a good idea to make sure that the first
+ action is a \bxcaption{wait for component} action, which waits for
+ the first component you want to test. The timeout should be
+ relatively long.
+ This gives your \gdaut{} the chance to start up before the test starts.}

@@ -1,0 +1,93 @@
+%% % ----------------------------------------------------------------------
+%% \bxversion{0.1}
+%% %\bxdocinfo{STATUS}{freigegeben durch}{freigegeben am}{Verteilerliste}
+%% \bxdocinfo{DRAFT}{}{}{}
+%% % ----------------------------------------------------------------------
+
+%% \end{document}
+
+\index{gdrun command!Define AUT}
+\index{Define AUT!gdrun command}
+
+The \bxname{gdrun} command can be used as an alternative to starting your \gdaut{} via \gd{} (i.e. with an \gdaut{} configuration \bxpref{configuringaut}). It can only be used if your \gdaut{} can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Sun VM. 
+
+
+\bxwarn{The \bxname{gdrun} command cannot be used for HTML or pure SWT \gdauts{}.}
+
+The command allows you to start your \gdaut{} independently of \gd{}, on a machine where the \gdserver{} is running. The \gd{} client, when connected to this \gdserver{} will then recognize the running \gdaut{} as a testable application. 
+
+To use the \bxname{gdrun} command:
+\begin{enumerate}
+\item Ensure that the \gdserver{} is installed on the machine where you will be starting the \gdaut{}. 
+\item Start your \gdaut{} via the command line by entering \bxshell{gdrun.exe} then the following parameters: 
+\begin{table}[h]
+\label{gdrunparams}
+	\centering
+	\begin{tabular}{|l|l|}
+
+	\hline
+	\textbf{Detail}&\textbf{Parameter}%&\textbf{Example}
+\\
+		\hline
+                -h 
+                &\bxshell{-h}\\
+                & Gives parameter help\\
+                \hline
+                -w, \verb+--+workingdir
+                  & \bxshell{-w <directory>}\\
+		  &Enter the working directory for the \gdaut{}\\
+                  \hline
+                  -a, \verb+--+autagenthost
+                  & \bxshell{-a <hostname>}\\
+		  &Enter the hostname for the \gdserver{}\\
+                  \hline
+                  -p, \verb+--+autagentport
+                  & \bxshell{-p <port number>}\\
+		  &Enter the port number for the \gdserver{}\\
+                  \hline
+                  -swing
+                  & \\
+		  &If the \gdaut{} is a Swing \gdaut{}\\
+                  \hline
+                  -rcp
+                  & \\
+		  &If the \gdaut{} is an RCP \gdaut{}\\
+                  \hline
+                  -swt
+                  & \\
+		  &If the \gdaut{} is an SWT \gdaut{}\\
+                  \hline
+                  -k, \verb+--+kblayout
+                  & \bxshell{-k <en\_US>}\\
+		  &Enter the keyboard layout for SWT/RCP \gdauts{}\\
+                  \hline
+                  -i, \verb+--+autid
+                  & \bxshell{-i <ID>}\\
+		  &Enter the ID to give to this \gdaut{}\\
+                  \hline
+                  -e, \verb+--+exec
+                  & \bxshell{-e <AUT.exe>}\\
+		  &Enter the executable file for the \gdaut{}\\
+                  \hline
+                  -g, \verb+--+generatenames (optional)
+                  & \bxshell{-g <true/false>}\\
+		  &For RCP \gdauts{}, enter whether \\& to generate technical names.                  \bxpref{Defineaut}\\
+                  \hline
+                 
+	\end{tabular}
+	\caption{Parameters for gdrun command}
+	\label{paramscmd}
+\end{table}
+\end{enumerate}
+
+\subsubsection{Creating an \gdaut{} definition from a running \gdaut{}}
+\label{createAUTDef}
+Once you have started an \gdaut{} using the \bxname{gdrun} command, you can automatically generate an \gdaut{} definition \bxpref{Defineaut} for this \gdaut{}:
+
+\begin{itemize}
+\item In the \gdrunautview{}, select the \gdaut{} you want to define (it will be marked as an unknown \gdaut{} ID).
+\item Select:\\
+ \bxmenu{Create AUT Definition}{}{}\\
+from the context menu.
+\item The \gdaut{} definition window will appear. Complete the dialog \bxpref{Defineaut} and click \bxcaption{OK}.
+\end{itemize}

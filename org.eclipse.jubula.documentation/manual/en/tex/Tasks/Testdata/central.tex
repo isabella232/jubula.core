@@ -1,0 +1,85 @@
+\gd{} lets you create and manage central test data sets for a \gdproject{} which can be reused in \gdcases{}. 
+
+\subsubsection{Creating and editing central test data sets}
+\gdhelpid{guidancerCentralTestDataEditorContextId}{Central Test Data}
+\gdhelpid{newTestDataCubeNameContextId}{New Central Data Set}
+\label{TasksCentralDataCreate}
+
+To create a central test data set:
+\begin{enumerate}
+\item Open the  \gddataeditor{} by clicking the \bxcaption{Central Test Data Editor} button on the toolbar or selecting:\\
+\bxmenu{Open with}{Central Test Data Editor}{}\\
+from the \gdtestsuitebrowser{}.
+\item In the \gddataeditor{}, select:\\
+\bxmenu{Add new Data Set}{}{}\\
+from the context-sensitive menu or press \bxkey{Insert}.
+\item In the dialog that appears, enter a name for the new data set and click \bxcaption{OK}.
+\item The new data set appears in the \gddataeditor{}. You can now add parameters to the data set \bxpref{TasksCentralDataEditParams}.
+\item You can rename the data set by pressing\bxkey{F2} or selecting:\\
+\bxmenu{Rename}{}{}\\
+from the context sensitive menu.
+\end{enumerate}
+
+\subsubsection{Deleting central test data sets}
+\gdhelpid{guidancerCentralTestDataEditorContextId}{Central Test Data}
+You can delete a central test data set if the data set has not yet been reused (referenced) in a \gdcase{} \bxpref{TasksCentralDataReference}. 
+\begin{enumerate}
+\item Select:\\
+\bxmenu{Delete}{}{}\\
+from the context-sensitive menu or press \bxpref{DELETE}.
+
+\item A dialog will appear if the data set has been reused and cannot be deleted.
+\item You can use the search \bxpref{TasksShowWhereUsedDataSet} to show where the data set has been used.
+\end{enumerate}
+
+\subsubsection{Adding and modifying parameters for central test data sets}
+\gdhelpid{guidancerCentralTestDataEditorContextId}{Central Test Data}
+\label{TasksCentralDataEditParams}
+
+Once you have created a central test data set \bxpref{TasksCentralDataCreate}, you can add parameters to the data set using the \bxname{Edit Parameters} dialog. 
+\begin{enumerate}
+\item Open the edit parameters dialog for the central data set by right-clicking on the data set in the \gddataeditor{} and selecting \bxmenu{Edit parameters}{}{} from the context-sensitive menu. 
+\item In the dialog, you can see any parameters you have already added for this data set, and what type of parameters they are. 
+\item Use the \bxcaption{Add} button to create a new parameter for the data set. 
+\item Enter a name for the parameter and select the type of parameter it should be (e.g. String, Integer). The type of parameter it should be will depend on which actions are using it. A list of actions and their parameters (and types) is available in the reference manual.
+\bxtipp{Names for referenced parameters may only consist of letters, numbers and underscores. You cannot use spaces.}
+
+\item You can also change the order the parameters appear in, edit their types and names, and delete them completely using this dialog. 
+
+\end{enumerate}
+
+
+\subsubsection{Entering data for central test data sets}
+\gdhelpid{guidancerCentralTestDataEditorContextId}{Central Test Data}
+\label{TasksDSVCentral}
+
+Once you have created a central test data set \bxpref{TasksCentralDataCreate} and have added parameters to the central test data set \bxpref{TasksCentralDataEditparams} then you can enter data for these parameters in the \gddatasetsview{}.
+
+To enter data sets for a central test data set:
+\begin{enumerate}
+\item Open the  \gddataeditor{} by clicking the \bxcaption{Central Test Data Editor} on the toolbar or selecting:\\
+\bxmenu{Open with}{Central Test Data Editor}{}\\
+from the \gdtestsuitebrowser{}.
+\item In the editor, single-click the central test data set you want to add data to.
+\item In the \gddatasetsview{}, make sure the language in the combo box on the right is the right language for your data. 
+\item Select \bxcaption{Add} to add a row. 
+\item Enter the values for the parameters in the row. 
+\bxtipp{You cannot currently add referenced parameters in the \gddatasetsview{} for a central test data set.}
+\item Use the buttons in the \gddatasetsview{} to  add more rows, delete rows and insert rows above the currently selected row. 
+\end{enumerate}
+
+\subsubsection{Reusing central test data sets in \gdcases{}}
+\gdhelpid{guidancerCentralTestDataEditorContextId}{Central Test Data}
+\gdhelpid{guidancerPropertiesViewContextId}{Properties View}
+\label{TasksCentralDataReference}
+
+You can reuse a central test data set in a \gdcase{} to provide the concrete data for the parameters required by the \gdcase{}. 
+
+\begin{enumerate}
+\item In the \gdpropview{} for the \gdcase{}, enter the name of the central test data set you want to use in the  \bxname{Central Test Data Set} field. 
+\bxtipp{Press \bxkey{Ctrl+Space} to see a list of possible data sets for this \gdcase{}.}
+\item When you have entered a central test data set, then the \gdpropview{} shows \bxname{central test data set} as the data type. You will see the data from the central test data set in read-only form in the \gddatasetsview{}.
+\bxtipp{If data is missing from the central test data set, you will receive the error that test data is incomplete for any  \gdsuites{} this \gdcase{} is used in.}
+\item You can delete the central test data set used by removing it from the \bxname{central test data set} field. The data type reverts to \bxname{local data}.
+For more information on the data sources, see the earlier section \bxpref{TasksDataSources}.
+\end{enumerate}

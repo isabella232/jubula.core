@@ -1,0 +1,66 @@
+
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+
+\documentclass[en,twoside,manual,guidancer]{bxreport}
+\usepackage{xspace}
+\usepackage{rotating}
+% ----------------------------------------------------------------------
+\begin{document}
+%\include{bxtypography}
+\title{Extending \GD}
+\author*{\GD-Team}{}
+\bxbanner{../../../share/PS/splash}
+\maketitle
+% ----------------------------------------------------------------------
+\input{../../../share/version}
+\bxdocinfo{RELEASE}{BREDEX GmbH}{\today}{}
+%bxdocinfo{Status}{Verfasser}{freigegeben am}{Verteilerliste?}
+% set tocdepth to subsection level
+\setcounter{tocdepth}{2}
+\tableofcontents
+% uncomment the following line to hide all \bxcomment's (i.e. for a
+% release)
+% FIXME MH: L2H doesn't like \renewcommand, find other solution
+\renewcommand{\bxcomment}[2]{}%
+% ----------------------------------------------------------------------
+\clearpage
+% ----------------------------------------------------------------------
+
+\setcounter{secnumdepth}{2}
+
+When developing graphical applications, it is often necessary or
+convenient to alter or combine the functionality of existing toolkit
+components, or even to write entirely new ones, as the requirements or
+concept of the software may dictate. These new components
+generally cannot be tested by \GD{} ''out of the box'', as the
+behavior of custom components cannot be predicted, or they may deviate
+from established standards of ''look and feel''. In order to overcome this limitation, \GD{} offers an extension
+API, which you can use to allow \GD to test your custom components.
+
+The following sections describe the steps involved in extending
+\GD{}.
+
+\clearpage
+
+\input{generalSteps/CONTENT}
+
+\clearpage
+
+\chapter{Issues}
+\input{issues/CONTENT}
+
+\clearpage
+\chapter{Support}
+
+As with any other aspects of our products, please do not hesitate to
+contact \GD Support if you have further problems or questions.
+
+\clearpage
+\end{document}

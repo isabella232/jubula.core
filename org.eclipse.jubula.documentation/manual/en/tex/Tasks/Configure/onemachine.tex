@@ -1,0 +1,31 @@
+% BREDEX LaTeX Template
+%  \documentclass is either ``bxreport'' or ``bxarticle''
+%% %                 option is bxpaper
+%% \documentclass{bxarticle}
+%% % ----------------------------------------------------------------------
+%% \begin{document}
+%% \title{}
+%% \author{}
+%% % \author*{Hauptautor}{Liste der Nebenautoren}
+%% \maketitle
+%% % ----------------------------------------------------------------------
+%% \bxversion{0.1}
+%% %\bxdocinfo{STATUS}{freigegeben durch}{freigegeben am}{Verteilerliste}
+%% \bxdocinfo{DRAFT}{}{}{}
+%% % ----------------------------------------------------------------------
+
+%% \end{document}
+
+\index{Activation}
+\index{Application activation}
+If the \gd{} client and \gdserver are installed on one machine, there are a few things to be aware of:
+\begin{itemize}
+\item Don't use the mouse or any keyboard shortcuts during execution. The \gdaut{} takes control of the machine it is running on during test execution.
+\item Make sure that the \gdaut{} is visible during test execution:
+\begin{itemize}
+\item \gd is minimzed by default when test execution begins. Make sure that the \gdaut{} is the next window to receive focus when the client is minimized. 
+\item You can change the preference to minimize the client via:\\
+\bxmenu{Window}{Preferences}{}\\
+If you do this, make sure that the \gdaut{} can also be seen on the screen when test execution begins. 
+ \end{itemize}
+\end{itemize}

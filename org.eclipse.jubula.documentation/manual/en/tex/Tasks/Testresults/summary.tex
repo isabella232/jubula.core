@@ -1,0 +1,67 @@
+\gd{} stores a test result summary and full details about the whole test for each test run. Individual \gdsuites{} within a \gdjob{} are counted as one test run each. 
+
+You can see the test result summaries in the \gd{} reporting perspective, in the \gdtestsummaryview{}. 
+
+\subsubsection{Re-opening the test result view for a test run}
+\label{TasksReopenTestResult}
+\begin{enumerate}
+\item If the full details for a test run are still available (the column \bxname{Details} shows \bxname{true}), you can re-open the full test result by double-clicking on the entry in the \gdtestsummaryview{} or by clicking the button to open the report in the top right-hand corner of the view. 
+\item In the test result, you can navigate through the test results using the mouse or using the toolbar buttons to spring to the next or previous error. In this way, you can view any screenshots in the \gdimgview{} and details about errors in the \gdpropview{}.
+\end{enumerate}
+\bxtipp{In the \gdproject{} properties, you can specify how often the full reports should be automatically deleted from the \gddb{} \bxpref{ProjPropertiesGeneral}. }
+
+\subsubsection{Filtering and sorting in the \gdtestsummaryview{}}
+\gdhelpid{testResultSummaryViewContextId}{Test Result Summary View}
+
+The \gdtestsummaryview{} shows a summary of each \gdsuite{} that has run. 
+
+\textbf{Sorting entries in the \gdtestsummaryview}\\
+
+Click on a column header to sort the table according to the values in this column. 
+
+\textbf{Showing and hiding columns in the \gdtestsummaryview}\\
+
+In the context-menu on the column headers in the \gdtestsummaryview{}, you can select which columns you want to show in the view. Your settings for this view are saved in your workspace. 
+
+\textbf{Filtering in the \gdtestsummaryview}\\
+
+At the top of the \gdtestsummaryview{} there is a filter. Choose which column you want to filter, and enter the value you want to filter by (use \bxshell{*} as a wildcard). 
+
+
+\subsubsection{Refreshing the \gdtestsummaryview{}}
+\gdhelpid{testResultSummaryViewContextId}{Test Result Summary View}
+
+Use the \bxcaption{Refresh} button \gdmarpar{../../../share/PS/refresh}{refresh view}at the top right hand corner of the \gdtestsummaryview{} to refresh the view after tests have been run. 
+
+\subsubsection{Deleting test runs from the \gdtestsummaryview{}}
+\gdhelpid{testResultSummaryViewContextId}{Test Result Summary View}
+\label{TestSummaryDelete}
+Select one or more rows in the \gdtestsummaryview{} and use the \bxcaption{Delete} button \gdmarpar{../../../share/PS/delete}{delete test runs}in the top right hand corner of the view to delete these test runs. 
+
+
+\subsubsection{Exporting test results from the \gdtestsummaryview{} as HTML and XML reports}
+\gdhelpid{testResultViewContextId}{Test Results View}
+\gdhelpid{testResultSummaryViewContextId}{Test Result Summary View}
+\label{TestSummaryExport}
+
+\begin{itemize}
+\item Select one or more test reports and select \bxmenu{Export}{}{} from the context-sensitive menu or click the \bxcaption{Export} button on the toolbar of the \gdtestsummaryview{}.
+\item In the dialog that opens, enter or browse to a directory where the test results should be saved. 
+\item When you click \bxcaption{Finish}, the result reports for the selected test runs will be exported to the directory you entered.
+\item For each test run, an XML and an HTML file are created. 
+\end{itemize}
+
+\bxtipp{In order to export test results from the \gdtestsummaryview{}, details for these reports must still be in the \gddb{}. This will be shown as \bxname{true} in the \bxname{Details} column in the \gdtestsummaryview{}. }
+
+\subsubsection{Entering comments for test runs in the \gdtestsummaryview}
+\gdhelpid{testResultViewContextId}{Test Results View}
+\gdhelpid{testResultSummaryViewContextId}{Test Result Summary View}
+\gdhelpid{testResultSummaryAddCommentContextId}{Add Comment Dialog}
+\label{TestSummaryComments}
+You can add a comment to a test run in the \gdtestsummaryview{} by:
+\begin{itemize}
+\item  Selecting a test run in the \gdtestsummaryview{} and then selecting \bxmenu{Edit comment}{}{} from the context-sensitive menu.
+\item In the dialog that opens, enter a title for the comment and a longer description in the details area. 
+\item When you click \bxcaption{OK}, the title of the comment is shown in the \bxname{Comment} column. 
+\item You can view the  details for a comment by reselecting \bxmenu{Edit comment}{}{} from the context-sensitive menu.
+\end{itemize}

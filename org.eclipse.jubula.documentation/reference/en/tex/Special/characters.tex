@@ -1,0 +1,41 @@
+\gd{} has a few symbols with a special function (\bxfigref{specialchars}). If you want to use these symbols as a part of a text entry or verification, you must mask them with a backslash. 
+
+
+\section{Verbatim text symbol}
+\label{verbatimsymbol}
+If you have a lot of characters that need to be masked, you can place the data in single quote marks:\\
+'DATA'\\
+ This means that any special functions of the characters between the quote marks are ignored. 
+
+\section{General special characters}
+\begin{figure}
+\begin{tabular}{|l|l|l|l|} \hline
+\centering
+Name & Symbol & Function & Masked version \\ \hline
+Open curly brackets & \{ & Delimits reference/variable names within\\
+&& a concatenated parameter value & \verb+\{+\\ \hline
+Close curly brackets &\} & Delimits reference/variable names within\\
+&& a concatenated parameter value & \verb+\}+\\ \hline
+Single quote &' & Delimits a verbatim area in a parameter &\verb+\'+\\ \hline
+Two single quotes & '' & Denotes an empty string & \verb+\'\'+\\ \hline
+Dollar &\$ & Denotes a variable &\verb+\$+\\ \hline
+Equals & = & Denotes a referenced parameter & \verb+\=+\\ \hline
+Backslash &$\backslash$& The escape symbol & \verb+\\+\\ \hline
+\end{tabular}
+\label{specialchars}
+\caption{Special symbols in \gd{}}
+\end{figure}
+\clearpage
+
+\section{Symbols with special meanings for certain parameters}
+In addition to these general symbols, there are a few symbols which have a special meaning for particular components (\bxfigref{specialcompsymbols}). They must be masked if you want to use them without their special function \bxname{for these components only}. Masking these symbols must be done with a double backslash. 
+\begin{figure}
+\begin{tabular}{|l|l|l|l|}\hline
+\centering
+Name & Symbol & Function & Masked version \\ \hline
+Comma & , & Separator for lists & \verb+\\,+\\ \hline
+Forward slash & / & Separator for paths in menus and trees & \verb+\\/+\\ \hline
+\end{tabular}
+\label{specialcompsymbols}
+\caption{Symbols for components}
+\end{figure}

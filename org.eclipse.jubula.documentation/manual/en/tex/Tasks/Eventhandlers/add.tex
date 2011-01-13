@@ -1,0 +1,25 @@
+\index{Event Handler!Add}
+\index{Add!Event Handler}
+
+
+
+This section deals with adding \gdehandlers{} to \gdcases{}.  For information on using \gdehandlers{} meaningfully to ensure that your test execution is as robust as possible, see the section on \gdehandlers{} in the Best Practices section \bxpref{BPEHandlers}. 
+
+\begin{enumerate}
+\item Open the \gdtestcaseeditor{} by double-clicking on the \gdcase{} you want to edit in the \gdtestcasebrowser{}.   
+\item Select\\
+\bxmenu{Add}{\gdcase{} as \gdehandler{}}{} \\from the context-sensitive menu in the editor or use \bxkey{Ctrl+Enter}. 
+
+\bxtipp{You can also drag the \gdcase{} you want to use straight into the \gdehandlers{} area of the \gdcase{}. }
+
+\item Choose a \gdcase{} to add from the dialog that appears.
+\bxtipp{You can't add a \gdcase{} to itself as an \gdehandler{}, because this would create an infinite loop. }
+\item Select an event type from the combo box \bxpref{eventtype}.
+\item Select a reentry type from the combo box \bxpref{reentrytype}. 
+\bxtipp{For each \gdcase{} you can only add one \gdehandler{} for each event type.}
+\item Click \bxcaption{OK}. 
+\item The \gdehandler{} appears in the lower half of the \gdtestcaseeditor{}. 
+\gdmarpar{../../../share/PS/EventHandler}{ \gdehandler{}}
+\item Save the changes in the editor.
+\end{enumerate}
+

@@ -1,0 +1,38 @@
+% $Id: definitions.tex 1720 2006-03-02 12:25:33Z dennis $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+\begin{description}
+\item[\gdstep] 
+This is the smallest entity we use to specify a test.
+It consists of three elements:
+\begin{itemize}
+\item a user interface \textbf{c}omponent
+\item an \textbf{a}ction  to be performed with that component and 
+\item \textbf{p}arameters for that action.
+\end{itemize}
+Because of these three elements we also use the term \bxname{CAP}.
+
+\item[\gdcase]
+A \gdcase may contain 
+any number and combination of \gdsteps and
+other \gdcases and will be displayed as a tree structure. This concept can be compared
+with a file (\gdstep) and directory(\gdcase) structure. 
+It is the main way of organizing and structuring the
+tests. 
+
+\item[\gdsuite] 
+A \gdsuite may contain any number of \gdcases to be executed.
+It must be linked or bound to an AUT. The execution is done by traversing
+the tree from top to bottom.
+
+\item[\bxname{Project}] 
+Several \gdsuites can be stored and grouped together
+in a project. 
+
+\end{description}

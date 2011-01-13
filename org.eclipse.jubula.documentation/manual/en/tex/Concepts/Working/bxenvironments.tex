@@ -1,0 +1,27 @@
+% $Id: bxenvironments.tex 1720 2006-03-02 12:25:33Z dennis $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+
+%% \newsavebox{\alex}
+%% \newenvironment{bxhint}{%
+%% \begin{minipage}{0.8\textwidth}
+%% \begin{quote}\itshape}%
+%% {\end{quote}\end{minipage}%
+
+
+
+\newsavebox{\alex}%
+\newenvironment{bxhint}{  
+\begin{lrbox}{\alex}
+\begin{minipage}{0.1\textwidth}\huge{!}\end{minipage}
+\begin{minipage}{0,7\textwidth}
+\begin{quote}{\bf Hint:} \\ \end{quote}
+\end{minipage}\begin{minipage}{0.1\textwidth}\huge{!}\end{minipage}}
+\end{lrbox}
+\fbox{\usebox{\alex}}

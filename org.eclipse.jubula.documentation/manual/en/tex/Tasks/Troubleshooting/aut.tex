@@ -1,0 +1,53 @@
+% $Id: aut.tex 12304 2010-09-23 14:35:36Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2005
+% --------------------------------------------------------
+% this command can be inserted multiple times
+%\gdhelpid{}
+% 
+%\begin{gddescription}
+%\end{gddescription}
+%
+%\begin{gdlist}
+% use the \item command for single steps
+%\end{gdlist}
+% change <PATH> to the same directory, file is located in
+% change <FILE> to the same filename you are editing
+%\bxinput{<PATH>/Links/<FILE>}
+%
+% other usefull commands are
+%   \bxtipp{}        to create a hint
+%   \bxwarn{}        to describe a warning
+\index{Errors!AUT}
+\index{AUT!Errors}
+\textbf{If the \gdaut{} button is disabled}\\
+If you cannot start a particular \gdaut{}, this could be because:
+
+\begin{itemize}
+\item You have not connected to the \gdserver \bxpref{connectserv}.
+\item You have not defined an \gdaut{} \bxpref{Defineaut}.
+\item You have not configured an \gdaut{} \bxpref{configuringaut}.
+\item The \gdaut{} does not support the current working language. 
+\end{itemize}
+
+\textbf{Errors starting the \gdaut{}}\\
+If there is an error starting the \gdaut{}, this could be because:
+\begin{description}
+\item [The \gdaut{} cannot be found:]{Make sure that the JAR or executable file for the \gdaut{} is correct, or that the classpaths are correct \bxpref{configuringaut}.}
+\item [The main class has not been found:]{Make sure that the JAR file or the classpaths you have entered contain the main class \bxpref{configuringaut}. }
+\item[The JAR given as a classpath is not valid:]{Check that you have entered the right JAR file, and that the path to it is correct from this computer. If you have entered a relative path, make sure that it is relative to the \gdaut{} base directory, if there is one, or to the \gdserver directory if you have not specified a \gdaut{} base directory. }
+\item[The JAR given as a classpath does not contain a distinct  main 
+class:]{Check that you have entered a JAR which contains a main class.}
+
+\end{description}
+
+\textbf{If the \gdaut{} does not appear in the \gdrunautview{}}\\
+If the \gdaut{} does not appear in the \gdrunautview{} and you are testing an RCP application, make sure that the RCP-Accessor has been installed \bxpref{rcpaut}. 
+
+Otherwise, check that the toolkit you specified in the \gdaut{} configuration \bxpref{configuringaut} is the right toolkit for this \gdaut{}. 
+

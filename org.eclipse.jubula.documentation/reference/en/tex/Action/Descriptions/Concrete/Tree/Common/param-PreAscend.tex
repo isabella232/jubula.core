@@ -1,0 +1,14 @@
+% common description for Pre-ascend parameter
+% 
+\begin{itemize}
+\item Use this parameter with a \bxname{relative path} to start the search above the currently selected node.
+\item The search will begin \emph{n} nodes above the currently selected node, where \emph{n} is the value of this parameter.
+\item For example, a value of 0 will simply begin with the currently selected node, and a value of 2 will begin with the parent of the parent of the currently selected node.
+\item A value can be given such that the search begins 1 level above the topmost visible level. This is then equivalent to an \bxname{absolute path}.
+\item If the search would begin any higher than this, the action fails: The tree node cannot be found.
+\end{itemize}
+
+\normalsize \latex{ \end{adjustwidth} }
+\bxtipp{The \bxname{Pre-ascend} parameter is simply ignored for \bxname{absolute path}s.}
+\latex{\begin{adjustwidth}{.5cm}{.5cm}}%
+\footnotesize%

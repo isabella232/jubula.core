@@ -1,0 +1,28 @@
+
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+\index{Test Case!Locked}
+\index{Locked!Test Case}
+
+When using a multi-user database, multiple testers
+ can work on a single \gdproject{} concurrently.
+
+Within such a scenario, all testers currently working on a \gdproject{}
+ may view and execute all parts of it.
+As soon as one tester alters  a part of the \gdproject{},
+ a lock is placed on that unit to disallow other users from making
+ changes of their own. They are, however, still able to view and execute
+ a locked test unit.
+Once the user with the lock has saved all changes, the lock is removed, and the test unit is once again available for editing.
+
+This database scenario is well-suited for larger testing operations, 
+allowing for tight collaboration among testers and
+ reducing the overall time needed to specify complex testing projects.
+
+

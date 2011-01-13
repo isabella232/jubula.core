@@ -1,0 +1,38 @@
+% BREDEX LaTeX Template
+%  \documentclass is either ``bxreport'' or ``bxarticle''
+%                 option is bxpaper
+%% \documentclass{bxarticle}
+%% % ----------------------------------------------------------------------
+%% \begin{document}
+%% \title{}
+%% \author{}
+%% % \author*{Hauptautor}{Liste der Nebenautoren}
+%% \maketitle
+%% % ----------------------------------------------------------------------
+%% \bxversion{0.1}
+%% %\bxdocinfo{STATUS}{freigegeben durch}{freigegeben am}{Verteilerliste}
+%% \bxdocinfo{DRAFT}{}{}{}
+%% % ----------------------------------------------------------------------
+
+%% \end{document}
+\index{Changes in the AUT}
+\label{omchanges}
+If your \gdaut{} has changed from one version to the next, your tests may still run, depending on the nature and extent of the changes. 
+
+\bxtipp{Please bear in mind that changing the look and feel of your \gdaut{} may lead to different technical names for the components in your \gdaut{} if you have not named the components.} 
+
+If your test does not run, a few simple steps will update it.
+
+If you get a \bxname{component not found} error, or \gd{} selects the wrong component during the test, remap the new component from the \gdaut{} and assign it to your component name. 
+
+This updates this component for the whole test. 
+
+%\item If you cannot assign the newly mapped component to the old component name because the component types are incompatible, then you will have to change the test specification to use different \gdcase{} from the library.  
+
+%This component will then be updated in all of the places you have used this \gdcase{}.  
+%\bxtipp{It is easier to remap changed components if you use \bxname{abstract} components in your \gdsteps{} \bxpref{}.}
+
+   
+ 
+
+\clearpage

@@ -1,0 +1,29 @@
+% BREDEX LaTeX Template
+%  \documentclass is either ``bxreport'' or ``bxarticle''
+%                 option is bxpaper
+%% \documentclass{bxarticle}
+%% % ----------------------------------------------------------------------
+%% \begin{document}
+%% \title{}
+%% \author{}
+%% % \author*{Hauptautor}{Liste der Nebenautoren}
+%% \maketitle
+%% % ----------------------------------------------------------------------
+%% \bxversion{0.1}
+%% %\bxdocinfo{STATUS}{freigegeben durch}{freigegeben am}{Verteilerliste}
+%% \bxdocinfo{DRAFT}{}{}{}
+%% % ----------------------------------------------------------------------
+
+%% \end{document}
+\index{Finding Places of Reuse}
+\index{Search!Test Cases}
+\index{Test Case!Search}
+To find the places where you have reused a \gdcase{}:
+\begin{enumerate}
+\item In the \gdtestcasebrowser{}, right-click on the \gdcase{} whose reuses you want to find.
+\item Select \bxcaption{show where reused} from the context sensitive menu.
+\item In the \bxcaption{Search Result View} \bxpref{TasksSearchResultView}, a list of places will appear.
+\item These are the places where the \gdcase{} has been reused. 
+\item Double-click on the \gdcase{} icons in the view to highlight the place where the \gdcases{} are reused.
+\end{enumerate}
+\bxtipp{If you select this option on a nested \gdcase{}, you will be shown the other places where the \gdcase{} is nested. To see where its parent \gdcase{} is used, you must then carry out the same steps on the parent.}

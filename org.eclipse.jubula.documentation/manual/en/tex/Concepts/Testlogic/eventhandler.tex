@@ -1,0 +1,48 @@
+% $Id: eventhandler.tex 6515 2008-02-18 11:33:01Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+
+\index{Event Handler}
+\label{errortypes}
+\gd{} offers \gdehandlers{} to react to errors during test execution and to continue the test in a way you define. 
+
+An \gdehandler{} \gdmarpar{../../../share/PS/EventHandler}{\gdehandler} is a \gdcase{} used with a special function. It is only executed when a certain error occurs. There are four different types of error in \gd{}, and each \gdcase{} can have an \gdehandler{} for each error type.  You can specify different reactions to each different error type, so that serious errors can stop the test, but unimportant errors will not affect the execution.  
+
+Because \gdehandlers{} are normal \gdcases{}, they can also contain \gdehandlers{},  can do any of the things that a normal \gdcase{} can do. The only restriction is that you cannot add a \gdcase{} to itself as an \gdehandler{}. 
+
+\subsection{How \gdehandlers work}
+When an error occurs in a \gdstep{}, its parent \gdcase{} is searched for 
+an \gdehandler{} for this type of error.
+ If no \gdehandler{} is found, the parent \gdcase{} of this 
+\gdcase{} is searched and so on. Once a corresponding \gdehandler{} is found, 
+it is activated. 
+
+If no \gdehandler{} is found in the highest \gdcase{} in this part of the tree, 
+a default \gdehandler{} (set in the \gdsuite{} properties) is activated. 
+
+Each \gdehandler{} requires an \bxcaption{Event Type} and a
+ \bxcaption {Reentry Type}. For information on these terms, see the section in the Tasks chapter \bxpref{customizedehandler}.  
+
+\subsection{Default \gdehandlers{}}
+Default \gdehandlers{} are a part of the \gdsuite{} and can be considered 
+as being present at the \gdsuite{} level. They  are activated when 
+no \gdehandler{} has been found for the event type in the part of the tree
+where the error occurred. The default reentry type for each 
+event type can be specified in the \gdpropview{} for the \gdtestsuiteeditor{}. 
+
+The reentry types for the default \gdehandlers{} are the same throughout the 
+tree. Everywhere a certain type of error occurs, the same action will be taken, 
+unless the part of the tree where the error occurred has its own 
+\gdehandler{} for that event type.  
+
+\subsection{Customized \gdehandlers{}}
+Customized \gdehandlers{} are essentially \gdcases{}, and can be empty or contain other \gdsteps{}/\gdcases{}. 
+They can be used to specify particular behavior in case of an error in one part of the test tree, or they can be placed so as to affect how the test continues. If an \gdehandler{} contains \gdsteps{}/\gdcases{}, the specified reentry will happen when the \gdehandler{} has been executed. 
+
+Customized \gdehandlers{} are valid for all \gdcases{} under the \gdcase{} where the \gdehandler{} is nested, unless one of these child \gdcases{} has an \gdehandler{} of its own for this error type. 

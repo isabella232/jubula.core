@@ -1,0 +1,18 @@
+\gd{} also lets you create manual tests to be executed and analyzed in the \gd{} software. 
+
+A \gdcase{} containing manual \gdsteps{} is the same as an automated \gdcase{} for all intents and purposes. You can add data, reuse it in other \gdcases{}, and add it to \gdsuites{} to be executed. The only difference is during execution: manual tests are executed in an interactive mode \bxpref{TasksManualExec}. 
+
+To create a manual test:
+\begin{enumerate}
+\item Create a \gdcase{} \bxpref{TasksCreateTC}
+\item Add the module for \bxname{manual \gdcase} from the library of \gdcases{} (category: Manual \gdstep{}).
+\item In the \gdpropview{}, you can enter three pieces of data:
+\begin{description}
+\item[The action(s) to perform:]{Enter a short description which should appear when the test is being executed. You can also enter referenced parameters  \bxpref{TasksTestdataReferences} or variables \bxpref{TasksVariables} here to specify different data for the test.}
+\item [The expected behaviour:]{Enter the description (any any data) of the expected outcome of the \gdstep{}.}
+\item [Timeout:]{Enter how long the test execution should wait before receiving the information that the \gdstep{} passed or failed. We recommend setting this timeout value high enough for a manual tester to be able to complete the \gdstep{} and enter any comments.}
+\end{description}
+\item Once your manual \gdcase{} is finished, then you can add it to a \gdsuite{} \bxpref{TestSuiteEdit} to be executed \bxpref{TasksManualExec}.
+\end{enumerate}
+
+\bxtipp{We recommend keeping manual \gdcases{} in a separate category to automated \gdcases{}. Although it is possible to combine manual and automated \gdcases{} in one test, make sure you know which \gdsuites{} can be run completely automatically for your unattended tests!}

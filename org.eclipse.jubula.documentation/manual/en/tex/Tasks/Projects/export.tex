@@ -1,0 +1,57 @@
+%% % $Id: export.tex 10579 2010-03-18 17:40:32Z alexandra $
+%% % Local Variables:
+%% % ispell-check-comments: nil
+%% % Local IspellDict: american
+%% % End:
+%% % --------------------------------------------------------
+%% % User documentation
+%% % copyright by BREDEX GmbH 2005
+%% % --------------------------------------------------------
+%% % this command can be inserted multiple times
+%% \gdhelpid{}
+%% % 
+%% \begin{bxdescription}
+%% \end{bxdescription}
+%% %
+%% \begin{bxsteps}
+%% % use the \item command for single steps
+%% \end{bxsteps}
+%% % change <FILE> to the same filename you are editing
+%% \bxinput{Links/<FILE>}
+%% %
+%% % other usefull commands are
+%% %   \bxhint{}        to create a hint
+%% %   \bxwarn{}        to describe a warning
+\index{Project!Export}
+\index{Export!Project}
+\index{Export!All}
+
+ You can choose to export the currently opened \gdproject{} \bxpref{exportsingle} or all of the \gdprojects{} in the database \bxpref{exportall}. \gdprojects{} are exported in .xml format so that they can be added to e.g. version control systems. 
+
+\bxtipp{Projects are exported along with all their test result summaries.}
+
+\subsubsection{Exporting the currently opened \gdproject{}}
+\label{exportsingle}
+\begin{enumerate}
+\item To export a single \gdproject{} from the database, the \gdproject{} you want to export must be open.   
+\item Select:\\
+\bxmenu{Project}{Export}{}. 
+\item Choose the location to save your \gdproject{}, and the name you want to save it under. 
+\item Click \bxcaption{OK}. 
+\item The \gdproject{} (including the test result summaries \bxpref{TestResSumView}) will be saved as an .xml file. 
+
+\bxtipp{When you export a single \gdproject{}, only the currently opened version is exported.}
+
+\end{enumerate}
+\subsubsection{Exporting all of the \gdprojects{} from the database}
+\label{exportall}
+\begin{enumerate}
+\item Select:\\
+\bxmenu{Project}{Export all}{}. 
+\item Choose or create a folder where you want the \gdprojects{} to be stored. 
+\item Click \bxcaption{OK}. 
+\item The \gdprojects{} (including the test result summaries \bxpref{TestResSumView}) will be saved as .xml files. 
+\bxtipp{When you export all \gdprojects{}, all versions of each \gdproject{} are exported.}
+
+\end{enumerate}
+

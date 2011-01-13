@@ -1,0 +1,185 @@
+\chapter{Introduction}
+\label{introduction}
+
+\GD starts, controls, and observes \gdauts using its server
+component. In order for the \gdserver to know how to control each
+element of a GUI, we have outfitted the \gdserver with a pluggable interface
+for graphic components. Using this interface, each component that \GD
+can test is described in a
+so-called \textbf{\gdimplclass{}}. Each GUI toolkit that \GD supports
+is described in a toolkit plugin.
+
+Because of the great flexibility that user customization allows, we
+have opened up this interface to our users. You are now able to add
+and to the existing functionality of our officially-supported
+\gdimplclasses{},
+or provide support for in-house graphic components, by
+defining \gdimplclasses of your own, which we will refer to as
+\textbf{\gdtesterclasses}.
+
+\section{What does a \gdtesterclass look like?}
+
+The functionally important aspect of a \gdtesterclass is that it
+contains a public method for each \gd test action which will appear in
+the client. These methods are linked to testable actions within a user-defined
+\GD Plugin, which is described later in this handbook. Each plugin
+provides a XML configuration file,
+which tells \GD which method to call, what parameters it needs to
+send, as well as string externalization information.
+
+\chapter{General Steps to take}
+\label{generalSteps}
+
+The following chapter describes the general steps to take when extending \GD with
+custom defined components and actions. Detailed information for each step can be found in the
+corresponding example extension files in 
+''GUIdancerInstallationDirectory/examples/development/extension/src''
+
+In general you have to always extends two parts of \GD
+\begin{itemize}
+\item The \GD Client by writing your own \bxshell{Toolkit-Plugin}:\\
+      This will tell the clients which new components and actions are available.
+\item The \GD Server Component by putting a compiled class file to a specific directory:\\
+      This is the part which is acutally performing the actions on the new component.
+\end{itemize}
+
+\section{Requirements}
+To create your own \GD extension, you need:
+\begin{itemize}
+\item \gd{} 2.0 or later
+\item a license for the toolkit you want to extend
+\item Eclipse 3.4 or later
+\item JDK 5.0
+\end{itemize}
+
+You must also have write access in the directories:\\
+guidancerInstallationDir$\backslash$guidancer$\backslash$plugins\\
+guidancerInstallationDir$\backslash$server$\backslash$lib$\backslash$extImplClasses 
+
+\section{\GD Client Extension}
+
+The following steps have to be done to extend the \GD Client:
+\begin{enumerate}
+ \item Create an eclipse plug-in project
+ \item Set ''guidancerInstallationDir$\backslash$guidancer$\backslash$plugins'' as your target platform
+ \item Define plugin dependencies to the toolkit support plugin
+ \item Enter the toolkit support plugin in your toolkit plugin project
+ \item Create a MyToolkitProvider class
+ \item Define and configure the toolkit extension at the extension point
+ \item Create a myComponentExtension.xml
+ \begin{itemize}
+  \item Extend existing \gd{} components with new actions
+  \item Derive components from existing \gd{} components
+  \item Define a new component
+ \end{itemize}
+ \item Manage the i18n keys
+ \item Export the toolkit plugin to \gd{}
+\end{enumerate}
+
+Under ''GUIdancerInstallationDirectory/examples/development/extension/src''
+you will find a \\ ''eclipseProjects\_ExampleSwingClientExtension.zip'' which contains
+ an example \GD Client Extension for the Swing component ''JSlider''. This project 
+ is a showcase for steps 1-8.
+ 
+\subsection{Exporting the toolkit plugin to \gd{}}
+ The only step you have to do after importing this project into your eclipse workspace and 
+ setting the target platform (step no. 2) is to export it to the \gd{} you want to 
+ extend. To export the toolkit plugin to \gd{}:
+
+\begin{enumerate}
+\item In the package explorer, right click on the \bxname{plugin.xml} file and select:\\
+\bxmenu{Open with}{plugin manifest editor}{}\\
+from the context-sensitive menu.
+\item Select the \bxname{build} tab from the editor.
+\item In the binary build area, select \bxname{meta-inf, bin, build properties, plugin.xml} and \bxname{resources}.
+\item Save the changes in the editor and close the editor. 
+\item In the package explorer, right click on the project and select \bxname{export} from the context-sensitive menu.
+\item In the dialog that appears, select \bxname{deployable plugins and fragments} and click \bxcaption{next}.
+\item In the next dialog, in the \bxname{destination} tab, enter the location where the plugin should be exported to in the \bxname{directory} field:\\
+\bxname{GUIdancerInstallationPath/guidancer}
+\item In the \bxname{options} tab, deselect the checkbox which will export the plugin as individual jar archives and click \bxcaption{finish}.
+\item You should be able to find the folder \\ \bxcaption{com.bredexsw.guidancer.examples.client.toolkitExtension\_1.0.0} in the \bxname{GUIdancerInstallationPath/guidancer/plugins/} folder. The exported plugin is in this folder. 
+\item If you need to make changes and export the plugin again, delete the \\ \bxname{com.bredexsw.guidancer.examples.client.toolkitExtension\_1.0.0} from the \bxname{GUIdancerInstallationPath/guidancer/plugins/} folder first
+\end{enumerate}
+
+\section{\GD Server Extension}
+
+\gdauts{} are controlled by the server. There exists a \gdtesterclass for each component that
+\GD{} supports. This class implements the test actions that can be carried out on the component, To add your
+component to \GD, you need to write a \gdtesterclass for it.
+
+Please follow the following guidelines for your \gdtesterclasses:
+\begin{itemize}
+  \item Your build path must contain the following three JAR files:
+  \bxshell{AUTServer.jar}, \bxshell{AUTServerBase.jar}, and
+  \bxshell{org.eclipse.jubula.tools.jar}, which contain our server classes and some utility classes. They are located in your \GD{} installation directory under
+  \bxshell{server/lib}.
+  \item The class must be compatible with \bxname{Java 1.4}.
+  \item Its declared package name must begin with: \\
+    ''com.bredexsw.guidancer.autserver\\.swing.implclasses''
+  \item It must implement the following interface: \\
+    ''com.bredexsw.guidancer.autserver\\.swing.implclasses.IImplementationClass''
+  \item It must provide \textbf{public} methods for each action that is implemented for the component.
+  \item Each method that implements an action must throw the following exception upon error:
+    com.bredexsw.guidancer\\.autserverbase.exception.StepExecutionException
+    This way, \GD{} will be able to know that an action has failed.
+\end{itemize}
+
+Under ''GUIdancerInstallationDirectory/examples/development/extension/src''
+you will find a \\ ''eclipseProjects\_ExampleSwingServerExtension.zip'' which contains
+ an example \GD Server Extension for the Swing component ''JSlider''.
+
+Now that you have written your \gdtesterclass, you still need to
+make \GD aware of its presence. This is done by first putting the
+compiled class in a
+location where \GD can find it, then by altering the configuration
+file, so that \GD knows which component it refers to, and how it can
+be used. The following sections explain how this is done.
+
+\section{Where to put your \gdtesterclasses}
+If you extend the SwingToolkitPlugin, your compiled \gdtesterclasses (\bxshell{*.class} files) need to
+be placed in your \GD installation directory under the following path:
+
+\bxshell{server/lib/extImplClasses} ,
+
+using a directory structure that corresponds to the fully-qualified
+package name. Therefore, your \gdtesterclasses should be in some
+sub-directory of the following path within your \GD installation directory:
+
+\texttt{server/lib/extImplClasses/com/bredexsw\\
+    /guidancer/autserver/swing/implclasses}
+
+As \bxname{Eclipse} already stores compiled classes according to this
+structure, you need only (recursively) copy the directory structure,
+starting with \bxshell{com}, into the extImplClasses directory.
+
+Alternatively, you may place a JAR containing the above structure
+(also starting with \bxshell{com}) into the \bxshell{extImplClasses}
+directory.
+
+\bxtipp{Please note that if the \textit{extImplClasses} directory does
+not already exist, you must create it in the above-mentioned location.}
+
+\section{\GD Example Extension}
+\GD comes with a complete example extension implementation in source and binaries. 
+This example extension extends \GD for the Swing component ''JSlider''. After deploying the \GD Client plug-in and the \GD Server 
+extension you should be able to test the Swing component ''JSlider'' at ''Graphics Component''-level with \GD.
+The example extension code and binaries can be found in the ''GUIdancerInstallationDirectory/examples/development/extension'':
+
+\begin{itemize}
+ \item AUT \\
+ This directory contains a trivial example AUT which uses the originally unsupported component "JSlider". 
+ After installing the extensions, your GUIdancer will be able to test this new component.
+ \item src \\
+ This directory contains several archive files which are all importable Eclipse projects:
+ \begin{itemize}
+ 	\item \bxshell{eclipseProjects\_ExampleSwingAUT.zip} \\
+ 	This is the source code project for the example Swing AUT.
+ 	\item \bxshell{eclipseProjects\_ExampleSwingClientExtension.zip} \\
+ 	This is the source code project of the extension plug-in for the \GD Client.
+ 	\item \bxshell{eclipseProjects\_ExampleSwingServerExtension.zip} \\
+ 	This is the source code project of the extension for the \GD Server.
+ \end{itemize}
+ \item bin \\
+ This directory contains the compiled sources as directly deployable units.
+\end{itemize}

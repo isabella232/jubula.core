@@ -1,0 +1,60 @@
+% $Id: SimpleMatch.tex 7708 2009-01-20 15:50:45Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2005
+% --------------------------------------------------------
+\index{Simple Match}
+
+
+\begin{itemize}
+\item Using \bxname{simple match} lets you verify or select text even if you do not know exactly what the text is.
+\item Using a system of placeholders for characters and some function symbols, you can enter a simple match expression to find or check a text. The patterns for simple match are similar to Unix-style globs or Windows wildcards. The exact syntax is defined below.
+\item Actions which support regular expressions have an additional parameter, \bxcaption{Operator}. From this combo box, you can choose \bxcaption{simple match} to indicate that you want to use simple matching.
+\end{itemize}
+
+\textbf{Simple matching}
+\begin{itemize}
+\item \bxshell{abc} matches \bxcaption{abc} and nothing else.
+\end{itemize}
+
+\textbf{Wildcards}
+\begin{itemize}
+\item \bxshell{?} represents one instance of any character.
+\item \bxshell{*} represents any number (zero or more) of any characters.  
+\end{itemize}
+
+\bxtipp{\gd{} applies your expression to your entire string. To search for a match within a string, wildcards need to be placed on either side. See the examples below for more information.}
+
+
+\bxtipp{The following syntax information can be useful, but is also more complex. We recommend that simple match expressions use only letters (upper- and lowercase), numbers, and the wildcards described above. In this way, you can avoid complex syntax.}
+\textbf{Ranges}
+\begin{itemize}
+\item For each individual character, you can specify a range of things it is allowed to be. 
+\item A range is specified using square brackets (\bxshell{[]}) and a dash \bxshell{-}. 
+\item For example, you can specify that a particular character can be any capital letter: \bxshell{[A-Z]}.
+\end{itemize}
+
+\textbf{Escape character}
+\begin{itemize}
+\item Backslash \bxshell{$\backslash$} is used to negate the effect of the character following the backslash.
+\item The characters that are used to construct a simple match expression need to be escaped if they are to be matched within a string.
+\item The characters are: \newline
+ [ ? * \newline 
+\item Because \gd{} already uses a backslash as an escape symbol, you will need to use two backslashes to escape simple match characters. 
+\item For example, to check for a tree node \bxcaption{x/y/z/***} where the slashes are a part of the node, your regular expression in \gd{}  would look like this: \verb1 x\/y\/z\/\\*\\*\\* 1\newline
+The backslashes before the ordinary slashes are an escape symbol to tell \gd{} that the following sign is not a path separator. The extra backslash before the stars tells \gd{} that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol.  
+\end{itemize}
+
+\textbf{Useful examples}
+\begin{itemize}
+\item A string that starts with \bxshell{a} is represented by: \bxshell{a*}
+\item A string that ends in \bxshell{a} is represented by: \bxshell{*a}
+\item A string that starts with \bxshell{a}, ends in \bxshell{b} and has unknown values (0 or more) in the middle is represented by: \bxshell{a*b}
+\item A string which contains \bxshell{a} somewhere between other unknown characters (0 or more) is represented by: \bxshell{*a*}
+\item To check for a text which begins with a star (\bxshell{*}), you must use the escape character: \verb+\\**+
+\end{itemize}
+ 

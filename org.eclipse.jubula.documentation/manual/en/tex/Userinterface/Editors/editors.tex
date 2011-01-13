@@ -1,0 +1,111 @@
+% $Id: editors.tex 12243 2010-09-21 13:40:10Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+Editors appear in the editor area in the middle of the specification perspective when you double-click \gdcase{}, \gdsuite{} or \gdcase{} model in one of the browsers or in the \gdnavview{}. 
+
+You can tell what sort of editor it is in two ways:
+\begin{enumerate}
+\item The tab for each editor shows an ID-code for what type of editor it is:
+\begin{itemize}
+\item \bxcaption{TC} for the \gdtestcaseeditor{}
+\item \bxcaption{TS} for the \gdtestsuiteeditor{}
+\item \bxcaption{OM} for the \gdomeditor{}
+\item \bxcaption{TD} for the \gddataeditor{}
+\item The \gdmodeleditor shows the model diagram name with \bxname{.gtm} after it.
+\end{itemize}
+The tab also shows the name of the \gdcase{}, \gdsuite{}, \gdaut{}, data set or model diagram the editor is for. 
+%\item The borders of the editor are colored according to the type of editor. By default, the \gdtestcaseeditor{} has brown borders and the \gdtestsuiteeditor{} has blue borders. 
+\end{enumerate}
+ 
+ 
+%picture
+
+\subsection{\gdtestcaseeditor{}}
+\gdhelpid{guidancerSpecTestCaseEditorContextId}{Test Case Editor}
+\index{Test Case!Editor}
+ \index{Editor!Test Case}
+You can open the \gdtestcaseeditor{} by double-clicking on a \gdcase{} in the \gdtestcasebrowser{}. 
+Each \gdtestcaseeditor{} displays the name of the \gdcase{} in its tab along with the ID-code \bxcaption{TC}. The borders of the \gdtestcaseeditor{} are brown by default. 
+ 
+In the \gdtestcaseeditor{}:
+\begin{itemize}
+\item You can create, modify and delete \gdsteps{}. 
+\item You can add and delete other \gdcases{}. 
+\item You can add \gdehandlers{}. They appear in the \gdehandler area below the \gdtestcaseeditor{}.  
+\item You can alter test data and component names for the \gdcase{}.
+\end{itemize}
+
+When you single-click items (\gdcases{}, \gdsteps{}) in the \gdtestcaseeditor{}, the support views (\gdpropview{}, \gdcompnamesview{} and \gddatasetsview{}) show details about this item. Using these views, you can edit the properties, test data and component names for this item. You can also add or overwrite comments for the item. 
+
+\subsection{\gdtestsuiteeditor}
+\gdhelpid{testSuiteEditorContextId}{Test Suite Editor}
+\index{Test Suite!Editor}
+\index{Editor!Test Suite}
+You can open the \gdtestsuiteeditor{} by double-clicking on a \gdsuite{} in the \gdtestsuitebrowser{}. 
+Each \gdtestsuiteeditor{} displays the name of the \gdsuite{} in its tab along with the ID-code \bxcaption{TS}. The borders of the \gdtestsuiteeditor{} are blue by default. 
+
+In the \gdtestsuiteeditor{}:
+\begin{itemize}
+\item You can add \gdcases{} to \gdsuites{}. 
+\item You can alter the \gdsuite{} properties (e.g. the \gdaut{} it uses, the default \gdehandlers{}).
+\item You can alter test data for the \gdcases{} shown. 
+ \end{itemize}
+ 
+\bxtipp{In the \gdtestsuiteeditor{}, you can only alter details for the top-level \gdcases{} for each subtree.}
+
+
+ When you single-click \gdcases{} in the \gdtestsuiteeditor{}, the support views (\gdpropview{}, \gdcompnamesview{} and \gddatasetsview{}) show details about this \gdcase{}. Using these views, you can edit the properties, test data and component names for this item. You can also add or overwrite comments for the item. 
+
+\subsection{\gdomeditor}
+\gdhelpid{objectMapEditorContextId}{Object Mapping}
+\index{Object Mapping!Editor}
+\index{Editor!Object Mapping}
+
+You can open the  \gdomeditor{} by right-clicking on a \gdsuite{} in the \gdtestsuitebrowser{} and selecting \bxcaption{open with \gdomeditor{}}. 
+
+You can also open the \gdomeditor{} by single-clicking the chosen \gdsuite{} and clicking on the \bxcaption{start \gdomm{}} button on the toolbar. This also starts the \gdomm{}. 
+
+Each \gdaut{} has a \gdomeditor{}. The \gdomeditor{} displays the ID-code \bxcaption{OM} in its tab, and the name of the \gdaut{} it is used for. 
+
+The \gdomeditor{} has four tabs, a split view, a tree view, a table view and configuration tab. 
+In the \gdomeditor{}:
+\begin{itemize}
+\item You can see all the component names you have used in the \gdsuite{} you selected, and any other \gdsuites{} which use the same \gdaut{}. 
+\item You can see any technical names you have collected from the \gdaut{}. 
+\item You can see the component and technical names you have assigned to each other to complete mapping. 
+\end{itemize}
+
+\subsection{\gddataeditor{}}
+\gdhelpid{guidancerCentralTestDataEditorContextId}{Central Test Data}
+\index{Test data!Editor}
+ \index{Editor!Central test data}
+\index{Central test data!Editor}
+
+You can open the \gddataeditor{} via the button on the toolbar. 
+
+In the \gddataeditor{}:
+\begin{itemize}
+\item You can create, modify and delete central test data sets. 
+\item You can search for places where central test data sets have been used. 
+\end{itemize}
+
+
+\subsection{\gdmodeleditor{}}
+\gdhelpid{guidancerModelEditorContextId}{Modeling Editor}
+
+You can open the \gdmodeleditor{} by double-clicking on a model diagram in the \gdnavview{}. 
+Each \gdmodeleditor{} displays the name of the model in its tab.  
+ 
+In the \gdmodeleditor{}:
+\begin{itemize}
+\item You can add and edit \gdcases{}, categories, referenced \gdcases{} and parameters to the model. 
+\item You can validate your model. 
+\item You can generate your model. 
+\end{itemize}
+

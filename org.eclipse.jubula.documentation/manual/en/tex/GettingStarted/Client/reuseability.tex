@@ -1,0 +1,61 @@
+% $Id: reuseability.tex 1720 2006-03-02 12:25:33Z dennis $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+Just imagine two different ways of developing software-tests. On the one hand you
+can  develop tests with concrete and fixed values. It is like generating a list
+of values which are generally just useful for one \gdcase
+(\bxname{TC}.  
+On the other hand you can
+develop test with references and use them like placeholders.
+References can be fitted with individual values --  and 
+references can also be fitted automatically. 
+The tester just needs to fit \GD with data e.g. using data
+tables. \GD will automatically run a \gdcase
+until all test data have been tested.  
+This approach is much favorable. Just compare the two
+modus operandi: 
+
+To following example (\tableref{comparison}) will distinguish the  advantages of
+\GD over common  testing tools:
+\begin{table}
+\begin{center}
+\begin{tabular}{|p{0.4\bxpicwidth}|p{0.5\bxpicwidthwidth}|}\hline 
+                                 & \\
+\underline{Common Test Tool}                & \underline{\GD} \\ 
+\tt TF1 input 1                 & \bf TC1 \\
+\tt TF1 input 2                 & \tt \hspace{1em}TCadder(P1, P2, P3) \\
+\tt  button click               & \tt  \hspace{3em} TF1 input P1 \\ 
+\tt TF3 verify 3                  & \tt  \hspace{3em} TF2 input P2 \\ 
+\tt TF1 input 2                 & \tt  \hspace{3em} button click \\
+\tt TF1 input 4                 & \tt   \hspace{3em} TF3 verify P3\\ 
+\tt  button click               & \\  
+\tt TF3 verify  6                & \underline{Reusing \GD \gdcases Examples:}\\ 
+\tt TF1 input -2                & \tt TCadder(1, 2, 3)\\
+\tt TF2 input 17                & \tt TCadder(Data Set1, Data Set2,
+Data Set 3)\\
+.....                           & \\
+                                & \\ \hline
+\end{tabular}
+\caption{{\small Comparison between usual SW-Test and \GD}}
+\label{comparison}
+\end{center}
+\end{table}
+
+The tester just needs to specify 
+ one \gdcase including
+references like this and is able to reuse it
+every time and every where it seems to be  necessary/useful. 
+
+This approach is much more convenient because its easy and fast to
+to create, flexible and therefore reusable at any time. 
+
+
+
+  
+

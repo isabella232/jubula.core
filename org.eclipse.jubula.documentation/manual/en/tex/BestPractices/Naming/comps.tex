@@ -1,0 +1,47 @@
+Component names in \gd{} are your link between the test specification and the object mapping. Naming components well means that your mapping will be easy to understand and maintain, as you will always be able to tell what components you are referring to from the names alone. 
+
+We suggest the following three-part structure for naming components:\\
+\bxshell{<LOCATION>\_<FUNCTION>\_<TYPE>}
+
+So the components in a login dialog could be named:
+\begin{itemize}
+\item \bxname{LoginDialog\_Username\_cti}
+\item \bxname{LoginDialog\_Password\_cti}
+\item \bxname{LoginDialog\_Language\_cbx}
+\item \bxname{LoginDialog\_OK\_bt}
+\item \bxname{LoginDialog\_Cancel\_bt}
+\end{itemize}
+
+\bxtipp{Using the \bxname{New Component Name} feature in \gd{}, \bxpref{TasksCreateNewCompName}, you can create component names for your \gdaut{} at the beginning to set conventions the whole team should use.}
+
+The table below gives the abbreviations used by the \gd{} team to distinguish between component types. 
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+{\bf Abbreviation} & {\bf Component} \\ \hline
+{\tt app} & Application \\
+{\tt btc} & Button Component \\
+{\tt btn} & Button / RadioButton / CheckBox \\
+{\tt cbx} & ComboBox \\
+{\tt grc} & Graphics Component \\
+{\tt hyl} & HTML Hyperlink \\
+{\tt ctx} & Component with Text \\
+{\tt cti} & Component with Text Input\\
+{\tt lbl} & Label \\
+{\tt lst} & List \\
+{\tt mbr} & Menu Bar \\
+{\tt tpn} & Tabbed Pane \\
+{\tt tbl} & Table \\
+{\tt tbi} & Toolbar Item \\
+{\tt txf} & TextField / TextArea / EditorPane / TextPane \\
+{\tt tre} & Tree\\
+{\tt trt} & Tree Table \\
+{\tt brw} & Web Browser \\
+\\ \hline
+\end{tabular}
+\caption{Component Naming}
+	\label{compconventions}
+\end{table}
+\bigskip

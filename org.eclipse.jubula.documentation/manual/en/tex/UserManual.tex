@@ -1,0 +1,77 @@
+% $Id:UserManual.tex 4567 2007-02-16 12:59:55Z zeb $
+% 
+% Keep in Mind THIS English VERSION of the HELP-tree is the MASTER
+% for all other languages
+%
+\documentclass[en,a4paper,twoside,manual,guidancer]{bxreport}
+% ----------------------------------------------------------------------
+\setcounter{tocdepth}{2}
+\usepackage{supertabular}
+% external referencing for latex
+\externaldocument[ref,]{ReferenceManual}
+% external referencing for l2h
+\externallabels{../reference}{reflabels.pl}
+
+\begin{document}
+\title{\GDr{} User Manual}
+\author*{\GD-Team}{}
+\bxbanner{../../../share/PS/splash}
+\maketitle
+% ----------------------------------------------------------------------
+\input{../../../share/version}
+\bxdocinfo{RELEASE}{BREDEX GmbH}{\today}{}
+%\bxdocinfo{RELEASE}{BREDEX GmbH}{\today}{}
+
+\maxtocdepth{subsection}
+% declare external document so we can reference it
+
+\tableofcontents
+% ----------------------------------------------------------------------
+% uncomment the following line to hide all \bxcomment's (i.e. for a
+% release)
+% FIXME MH: L2H doesn't like \renewcommand, find other solution
+% Automate as part of build process
+\renewcommand{\bxcomment}[2]{}%
+% ----------------------------------------------------------------------
+% ToC depth for pdf, l2h handles this separately
+\latexonly{\settocdepth{section}}
+% ----------------------------------------------------------------------
+\clearpage
+\chapter{Getting started}
+\label{Gettingstarted}
+\input{GettingStarted/SECTIONS}
+
+\clearpage
+\chapter{Samples: example tests}
+\label{Samples}
+\input{Samples/SECTIONS}
+
+\clearpage
+ \chapter{Tasks}
+ \label{Tasks}
+\input{Tasks/SECTIONS}
+
+\clearpage
+\chapter{Best practices}
+\label{BestPractices}
+\input{BestPractices/SECTIONS}
+
+\clearpage
+\chapter{User interface}
+\label{userinterface}
+\input{Userinterface/SECTIONS}
+
+\clearpage
+\chapter{Concepts}
+\label{Concepts}
+\input{Concepts/SECTIONS}
+
+\clearpage
+\chapter{Glossary}
+\label{Glossary}
+\input{Glossary/SECTIONS}
+
+\clearpage
+\printindex
+
+\end{document}

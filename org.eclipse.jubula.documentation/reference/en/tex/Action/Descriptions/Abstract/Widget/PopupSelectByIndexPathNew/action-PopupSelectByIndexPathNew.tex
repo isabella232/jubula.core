@@ -1,0 +1,15 @@
+% CAP description for Graphics Component --> Select Context Menu Entry by Indexpath
+\begin{itemize}
+\item Use this action to open the context-sensitive menu from the currently active component and to select an item from it.
+\item The menu item is selected using its indexpath. 
+\item \gd{} realises this by:
+\begin{itemize}
+\item Right-clicking in the component.
+\item Navigating to the menu item specified.
+\item Left-clicking on the menu option.  
+\end{itemize}
+\item If you want to select an item from the context-menu on a specific node or cell, then you must first specify that the node or cell you want be selected using the appropriate select action on the \bxname{tree} or \bxname{table} component. 
+\item Depending on your \gdaut{}, you may have to enter \bxshell{0} as the click count for the select action on the \bxname{tree} or \bxname{table} component.
+\end{itemize}
+
+\bxtipp{This action is unsupported for the HTML toolkit}

@@ -1,0 +1,25 @@
+% $Id: library.tex 8171 2009-04-07 07:23:11Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+
+This category contains one \gdcase{}. The \gdcase{} contains another \gdcase{}, with four reused \gdcases, which have been reused from the \gdproject{} \bxname{unbound\_modules\_concrete}. 
+\bxtipp{Press \bxkey{F6} to find where a particular \gdcase{} was originally specified. }
+
+The \gdcases{} carry out the same steps as in the previous example \bxpref{samplesteststeps}. The differences here are:\\
+
+\begin{itemize}
+\item The steps to enter a value both reuse the same \gdcase{}, with different referenced parameters, and a different component name. 
+\item The components used in the reused \gdcases{} are \bxname{abstract} components \bxpref{TasksCompNameType}. This means that the \gdcases{} are easier to reuse, making tests more robust and maintainable. 
+\end{itemize}
+
+This \gdcase{} is reused in the executable \gdcase{} \bxname{1.2\_SIMPLE\_ADDER\_TEST}, which is nested in the \gdsuite{} of the same name. 
+
+%\bxtipp{Start the \bxname{Simple Adder: local configuration} \gdaut{} to run this test locally. }
+
+

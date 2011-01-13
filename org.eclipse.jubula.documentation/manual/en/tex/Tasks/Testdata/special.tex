@@ -1,0 +1,23 @@
+\index{Empty String}
+\index{Escape Character}
+\index{Parameter!Empty String}
+\index{Parameter!Escape Character}
+
+\textbf{Entering empty strings as parameters}\\
+If you want the parameter you enter to be an \bxname{empty string} (i.e. nothing), use two single quote marks: ''\\
+
+You can use this with the \bxname{equals}, \bxname{matches} or \bxname{simple match} operators.
+
+You can also use '\verb+^$+' or '\verb+^\s*$+' with the operator \bxname{matches} to check that a text area is empty.  
+
+%You can also use '\verb+^$+' with the operator \bxname{matches} to check that a text area is empty.  
+
+\bxtipp{If a component looks empty, but entering an empty string doesn't work, it may be worth asking a developer what is actually in the component.}
+
+\textbf{The escape character}\\
+Some symbols have a special meaning in \gd{}. If you want to use the symbol without the special function, you have to \bxname{escape} it. The symbol to negate any special function of the following symbol is a backslash: ($\backslash$). 
+                          
+See the Reference Manual (\bxextref{\gdrefman}{ref,specialchar}) for more details on special symbols and escaping them.
+
+\bxtipp{When you are using regular expressions, you will also need to think about which symbols need neutralising. Sometimes more than one backslash is necessary.}
+

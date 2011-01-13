@@ -1,0 +1,39 @@
+\index{Relative paths}
+\index{Path!relative}
+\begin{itemize}
+\item In the \gdaut{} configuration and in the \gdpropview{} you can enter paths to files \gd{} needs. 
+\item For many paths, you do not have to enter the whole path. Instead, you can use a relative path.
+\item The root for relative paths depends on which path you are entering:
+\end{itemize}
+
+\textbf{Paths to .JAR files, JRE binaries, classpaths and classnames}\\
+These items reside on the machine on which the \gdserver is installed. 
+\begin{itemize}
+\item The paths to these files are entered in the \gdaut{} configuration. 
+\item They are relative to the \gdaut{} \bxname{base directory}, if you have entered one. 
+\item If no \gdaut{} \bxname{base directory} is given, these paths are relative to the ''server'' directory. 
+\end{itemize}
+
+
+\textbf{Paths to Excel files}\\
+External data files reside on the machine on which the client is installed. 
+\begin{itemize}
+\item When you use an Excel file  an external data source, you  must enter the path to the Excel file in the \gdpropview{}.  
+\item The default root for external data sources is your workspace directory.
+\item You can also enter a different root in the preference pages. 
+\end{itemize}
+
+\textbf{Paths to screenshots taken with the \bxname{take screenshot} action}\\
+\begin{itemize}
+\item When you take a screenshot in your test, you must specify a place to save the screenshot. 
+\item Paths you enter are relative to the \gdaut{} \bxname{base directory}, if one has been specified. 
+\item Otherwise, they are relative to the ''server'' directory. 
+\end{itemize}
+
+\textbf{Paths to commands executed with the \bxname{execute external command} action}\\
+\begin{itemize}
+\item When you use the action \bxname{execute external command}, you specify whether the command should be executed locally or remotely. 
+\item If you execute a local command, the relative path to it uses the test data directory as specified in the preferences as its root, if you have specified one. If not, the root is your workspace directory. 
+\item If you execute a remote command, the root directory for the relative path is the \gdaut{} \bxname{base directory}, if you have defined one. If not, the default root directory is the ''server'' directory. 
+\end{itemize}
+

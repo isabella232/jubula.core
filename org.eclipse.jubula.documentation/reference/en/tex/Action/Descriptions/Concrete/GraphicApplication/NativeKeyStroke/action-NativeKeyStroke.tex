@@ -1,0 +1,12 @@
+% CAP description for Application --> External Key Combination
+
+\begin{itemize}
+\item Use this action to send a key combination to a dialog that is not supported by \gd{} (e.g. file choosers). 
+\item \gd{} can send a keystroke to these dialogs, but cannot check if it have arrived. 
+\item For this action to work, the dialog must be in focus. 
+\item Combine this action with the \bxcaption{External Input Text} action to be able to work with file choosers during your test. 
+\item Some of the keystrokes you may need include \bxname{ENTER}, \bxname{SPACE}, \bxname{PERIOD} and \bxname{/}. 
+\end{itemize}
+\bxwarn{Under Swing, this action only supports the American character set. Under SWT, you can use any character set under Windows, but there are some problems with non-American characters under Linux. }
+
+\bxtipp{We recommend using the action \bxname{Copy to Clipboard} to help fill out native dialogs in SWT and RCP \gdauts{}. The string you copy to the clipboard can then simply be entered into the textfield in the dialog using \bxkey{Ctrl+V} as an \bxname{External Key Combination} action. }

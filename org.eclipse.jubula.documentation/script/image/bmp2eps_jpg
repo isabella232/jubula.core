@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# -ne 2 ]
+then
+    echo 
+    echo "usage: $0 <file> <output_dir>"
+    echo 
+    echo "The given bmp file is converted to both .JPG and .EPS files, and saved into the given output directory."
+    echo 
+    exit 1
+fi
+
+/usr/bin/convert $1 -density 92 $2/`basename $1 .bmp`.jpg
+/usr/bin/convert $1 -density 92 $2/`basename $1 .bmp`.eps

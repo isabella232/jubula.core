@@ -1,0 +1,31 @@
+% BREDEX LaTeX Template
+%  \documentclass is either ``bxreport'' or ``bxarticle''
+%                 option is bxpaper
+%% \documentclass{bxarticle}
+%% % ----------------------------------------------------------------------
+%% \begin{document}
+%% \title{}
+%% \author{}
+%% % \author*{Hauptautor}{Liste der Nebenautoren}
+%% \maketitle
+%% % ----------------------------------------------------------------------
+%% \bxversion{0.1}
+%% %\bxdocinfo{STATUS}{freigegeben durch}{freigegeben am}{Verteilerliste}
+%% \bxdocinfo{DRAFT}{}{}{}
+%% % ----------------------------------------------------------------------
+
+%% \end{document}
+\index{Test Suite!Gray}
+\index{Gray Test Suites}
+
+\begin{itemize}
+\item A \gdsuite{} is grayed out if its \gdaut{} does not support the current working language.
+\item For example:
+\begin{itemize}
+\item You have a \gdsuite{} called \bxcaption{Test Adder}.
+\item This \gdsuite{} uses the \gdaut{} \bxcaption{Adder}.
+\item \bxcaption{Adder} supports English and German.
+\item If your working language is currently French, the \gdsuite{} \bxcaption{Test Adder} will be grayed out. 
+\item You can't edit this \gdsuite{} until the working language is changed. 
+\end{itemize}
+\end{itemize}

@@ -1,0 +1,53 @@
+% $Id: intro.tex 12304 2010-09-23 14:35:36Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2005
+% --------------------------------------------------------
+% this command can be inserted multiple times
+%\gdhelpid{}
+% 
+%\begin{gddescription}
+%\end{gddescription}
+%
+%\begin{gdlist}
+% use the \item command for single steps
+%\end{gdlist}
+%% change <PATH> to the same directory, file is located in
+% change <FILE> to the same filename you are editing
+%\bxinput{<PATH>/Links/<FILE>}
+%
+% other usefull commands are
+%   \bxtipp{}        to create a hint
+%   \bxwarn{}        to describe a warning
+\index{Troubleshooting}
+\label{errorHandling}
+
+\subsection{General help}
+Always check in the \gdprobview{} first for any help with your tests. The messages there should help you with most of the problems. \gd{} also highlights problems in the browsers and views with red crosses. Hover the mouse over the item to see a tool tip with more information. 
+
+In some text fields in \gd{} you can only enter certain characters. A red background in a text field means that you have entered something incorrect in that field. A yellow background means that the information entered is incomplete. 
+
+Looking in the log files may help to resolve some problems. If file-based logging is enabled \bxpref{TasksActivateLogging}, logs for the \gdclient{} and \gdserver{} can be found via:\\
+\bxmenu{Help}{Show Client/\gdserver Log}{}
+\bxtipp{The \gdclient{} can only access an \gdserver{} log file if it is currently connected to a \gdserver{}.}
+
+This section contains information on some of the more common problems:
+\begin{itemize}
+\item Starting the \gdserver{} \bxpref{troublestartserver}.
+\item Connecting to the \gdserver{} \bxpref{troubleconnectserver}.
+\item Starting the \gdaut{} \bxpref{troublestartaut}.
+\item Mapping components from the \gdaut{} \bxpref{troubleobjectmapping}.
+\item Executing \gdsuites{} \bxpref{troubleexecute}.
+\item Failed \gdsuites{} \bxpref{troublefailed}. 
+\item Locked \gdcases{}   \bxpref{troublelocked}.
+\end{itemize}
+
+
+For other problems, look in the relevant section of the user manual or the reference manual. There are FAQs on the \gd{} website, and our support team is happy to help with any outstanding questions. 
+
+
+

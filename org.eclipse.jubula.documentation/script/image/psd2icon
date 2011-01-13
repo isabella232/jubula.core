@@ -1,0 +1,37 @@
+#!/bin/ksh
+#set -x
+
+if [ $# -ne 1 ]
+then
+    echo 
+    echo "usage: $0 <directory>"
+    echo 
+    echo "All files with the extension .PSD are converted to both .JPG and .GIF files."
+    echo "Using a resolution of 32x32 for .JPG and 16x16 for .GIF"
+    echo "An .EPS version is generated, too"
+    echo 
+    exit 1
+fi
+
+cd $1
+
+if [ ! -f *.psd ]; then exit 0; fi
+
+for i in `ls *.psd`
+do
+  bfile=`basename $i .psd`
+
+  if [ ${bfile}.psd -nt ${bfile}.jpg  -o  ${bfile}.psd -nt ${bfile}.gif  -o  ${bfile}.psd -nt ${bfile}.eps ]
+  then 
+   
+      echo "Please convert $i to both 16x16 gif, 32x32 jpeg and 32x32 eps"
+      echo ""
+      exit 1
+
+    echo Converting $i...  
+    rm -f ${bfile}.jpg  ${bfile}.eps ${bfile}.pdf ${bfile}.gif
+    convert "${bfile}.psd" -flatten -transparent white -resize 16x16  -quality 100 "${bfile}.gif"
+    convert "${bfile}.psd" -flatten -resize 32x32 -quality 100 "${bfile}.jpg"	
+    convert "${bfile}.psd" -flatten -resize 32x32 -quality 100 "${bfile}.eps"		
+  fi
+done

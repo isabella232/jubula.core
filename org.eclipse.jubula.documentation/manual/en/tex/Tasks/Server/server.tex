@@ -1,0 +1,102 @@
+% $Id: server.tex 12283 2010-09-23 10:34:38Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2005
+% --------------------------------------------------------
+% this command can be inserted multiple times
+%\gdhelpid{}
+% 
+%\begin{gddescription}
+%\end{gddescription}
+%
+%\begin{gdlist}
+% use the \item command for single steps
+%\end{gdlist}
+% change <PATH> to the same directory, file is located in
+% change <FILE> to the same filename you are editing
+%\bxinput{<PATH>/Links/<FILE>}
+%
+% other usefull commands are
+%   \bxtipp{}        to create a hint
+%   \bxwarn{}        to describe a warning
+
+\index{AUT Agent!Starting}
+\index{Start!AUT Agent}
+\label{otherportnumber}
+The \gdagent{} is the server part of \gd{}. It runs on the same machine as the \gdaut{} and allows \gd{} to communicate with the \gdaut{} and control it during test execution. 
+
+\subsection{Windows users}
+\begin{enumerate}
+\item Start the \gdagent{} via the start menu:\\
+\bxmenu{Start}{\GD{}}{Start \gdserver{}}. 
+
+\item This starts the \gdserver on the 
+default port number given during installation (usually 60000).
+\bxtipp{You can find out/change the default port number in the Configuration Tool.}
+
+You can see and stop the \gdagent{} in the system tray.  
+
+\item  For information on using the command line interface to start the \gdserver, and which parameters can be used to start it, see the later section \bxpref{tasksservercmd}. 
+\end{enumerate}
+
+\subsection{Linux users}
+
+Use the script:\\
+ \bxshell{./autagent (-p <port number>)}. 
+
+You can see and stop the \gdagent{} in the system tray. 
+
+\subsection{Starting the \gdserver from the command line}
+\label{tasksservercmd}
+\begin{enumerate}
+\item Start the \gdserver from the command line with this command:\\
+\bxshell{autagent.exe (-p <port number>)}
+
+\item If no port number argument is given, 
+the \gdserver will start on the default port, specified during installation. 
+
+\item  For information which parameters can be used to start the \gdserver{}, see the later section \bxpref{tasksservercmd}. 
+
+\end{enumerate}
+
+\subsubsection{Parameters for the \gdserver}
+\index{AUT Agent!Quiet Mode}
+\index{AUT Agent!Parameters}
+\begin{enumerate}
+\item If you are starting the \gdserver from the command line interface or shell you can start it in one of two modes: verbose and quiet by entering the following parameters after the \gdserver{} command:\\
+\begin{description}
+\item [Verbose: \bxshell{-v}]{You will see a dialog to tell you whether the \gdserver{} has started successfully or not.}
+\item [Quiet \bxshell{-q}]{You will see no dialog if the \gdserver{} starts successfully. If the \gdserver{} does not start successfully, the error is written to the console.}
+\end{description}
+
+\end{enumerate}
+\bxtipp{The parameter \bxshell{-h} displays a list of options for the \gdserver{}}. 
+
+\subsubsection{Starting the \gdagent{} in lenient mode}
+\label{TasksAgentLenient}
+\index{AUT Agent!Quiet Mode}
+\index{AUT Agent!Parameters}
+
+The lenient mode for the \gdagent{} allows \gdauts{} launched  by other \gdauts{} to be tested \bxpref{TasksLenientTest}.
+
+To start the \gdagent{} in the lenient mode, ener \bxshell{-l} as a command line parameter when starting the \gdagent{}. 
+
+You can also change the mode of the currently running \gdagent{} via the system tray. Right-click the \gdagent{} icon and (de)select \bxname{Strict \gdaut{} Management} from the menu. 
+
+\bxtipp{The default mode for the \gdagent{} is \bxname{strict}.}
+
+
+\subsection{Starting the \gdserver more than once}
+\begin{enumerate}
+\item You can start the \gdserver{} multiple times using a different
+port number for each instance. 
+\item You can start the \gdserver on multiple machines, as long as the \gdserver is installed on them.
+\item Ask your system administrator for available  port numbers.
+\item Give the port number for each \gdserver either as an environment variable
+called \bxcaption{GD\_AUT\_AGENT\_PORT} or as a command line argument. 
+\end{enumerate}
+

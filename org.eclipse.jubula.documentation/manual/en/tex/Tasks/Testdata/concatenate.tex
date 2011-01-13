@@ -1,0 +1,24 @@
+\index{Parameter!Concatenation}
+\index{Concatenation}
+
+\gd{} has various different types of parameter:
+\begin{itemize}
+\item Concrete values \bxpref{TasksTestdataConcrete}.
+\item Referenced parameters \bxpref{TasksTestdataReferences}.
+\item Variables \bxpref{TasksVariables}.
+\end{itemize}
+
+You can use these parameters separately, or you can combine them to create a parameter value. This is useful if a value you want to enter or check consists of parts that change and parts that stay the same. 
+
+To combine different types of parameter to make one value, you must write them in a specific way:
+\begin{enumerate}
+\item Referenced parameters must be written with curly brackets around the reference name:\\
+\bxshell{=\{REF\_NAME\}}
+\item Variable names must also be written with curly brackets around them:\\
+\bxshell{\$\{VAR\_NAME\}}
+\item Concrete values are written as normal. 
+\item For example, to check a file name which has the format \bxname{X\_currentdate\_filenumber}, you could enter a parameter thus:\\
+\bxshell{X\_=\{DATE\}\_\$\{FILENUMBER\}}\\
+The date value would come from a reference, and the file number from a variable read from the \gdaut{}. 
+\end{enumerate}
+

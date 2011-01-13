@@ -1,0 +1,49 @@
+% $Id: Filters.tex 2332 2006-06-26 08:47:50Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2005
+% --------------------------------------------------------
+% this command can be inserted multiple times
+%\gdhelpid{}
+% 
+%\begin{gddescription}
+%\end{gddescription}
+%
+%\begin{gdlist}
+% use the \item command for single steps
+%\end{gdlist}
+% change <PATH> to the same directory, file is located in
+% change <FILE> to the same filename you are editing
+%\bxinput{<PATH>/Links/<FILE>}
+%
+% other usefull commands are
+%   \bxtipp{}        to create a hint
+%   \bxwarn{}        to describe a warning
+
+%\index{View!Problem!Filters}
+\index{Problem View!Sorting}
+\begin{itemize}
+\item In the upper right-hand corner of the \gdprobview{} there are three buttons.
+\begin{itemize}
+\item The button on the right maximizes the view.
+\item The middle button minimizes the view.
+\item The button on the left is a menu.
+\end{itemize}
+\item From the menu button, you can choose to sort the \gdprobview{} according to the severity, description and location of the messages (i.e. by the three columns in the view).
+\begin{description}
+\item[Severity]{The order of severity starting at the most severe  is: error -- warning --information.}
+\item [Description]{The description is alphabetically ordered.}
+\item [Location]{The location is alphabetically ordered.}
+\end{description}
+ \item For example:
+ \begin{itemize}
+ \item You choose description (ascending)-- severity (descending) -- location (ascending) as the  properties to sort by.
+ \item The messages will be first be alphabetically ordered (because \bxname{description} is the first sort property).
+ \item Within this order, they will be ordered according to severity (i.e. if two messages are the same, the most severe will be first).
+ \item Then they will be ordered according to location. If the description and severity are the same for two messages, they will be ordered according to location name. 
+ \end{itemize}
+\end{itemize}

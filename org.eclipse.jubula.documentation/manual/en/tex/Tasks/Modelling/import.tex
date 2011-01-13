@@ -1,0 +1,27 @@
+\index{Model Diagram!Import}
+\index{Import!Model Diagram}
+You can import models directly into \gd{} which have been created with the Eclipse UML2 Tools. The UML2 tools project is a sub-project of the Model Development Tools project. 
+
+In this project, models are always saved in two files - \bxname{*.umlusc} and \bxname{*.uml}. The \gd{} import dialog does not show the *.uml files, but it is important that these *.uml files are in the same folder as the *.umlusc files. 
+
+
+
+\begin{enumerate}
+\item In the \gdnavview{},  select:\\
+\bxmenu{Import}{}{}\\
+from the context-sensitive menu. 
+\item In the wizard that appears, select \bxname{Import external Model File} from the \bxname{Model} category. 
+\item Click \bxcaption{Next}. 
+\item Enter of browse to the model diagram you want to import (the *.umlusc file). 
+\item Select or enter the \gdproject{} you want to import the diagram into. 
+\item Click \bxcaption{Finish}. The model diagram you specified  will be imported into your workspace as a \gd{} model digram. It appears in the \gdnavview{} in the \gdproject{} you specified. 
+\item The following elements are imported from the diagram:
+\begin{itemize}
+\item Use cases
+\item Relations between use cases (\bxname{include} relationships)
+\item Packages
+\end{itemize}
+
+Now you have imported a model, you can make changes to it \bxpref{TasksMBTModel}, validate it \bxpref{TasksMBTValidate} or generate it \bxpref{TasksMBTGenerate}. 
+\end{enumerate}
+

@@ -1,0 +1,32 @@
+% $Id: terms.tex 2559 2006-07-26 08:35:50Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+\index{Parameter!Values}
+\index{Parameter}
+\index{References}
+\index{Propagation}
+\index{Foundation}
+When we are talking about reusability, we will use the following terms:
+
+\begin{description}
+\item[Specification]{refers to the creation of test elements, most importantly \gdcases{}. A specified \gdcase{} is a \emph{master template}.}
+\item[Reuse]{is the term used to describe the usage of a \gdcase{} in another \gdcase{} (nesting) or in a \gdsuite{}. }
+\item[Overwriting]{is the process by which certain details or data are changed when a \gdcase{} is reused. Data which have been overwritten in a reused \gdcase{} will not change if the data in the master template change. }
+\item[Parameters]{are the variables associated with a \gdstep{}.}
+\item [Parameter values]{are the actual concrete integers or other inputs 
+which will be used when the test is executed.}
+\item [References]{are placeholders for parameters. They allow concrete 
+parameter values to be specified at the next level (i.e. in the parent \gdcase{}. We refer to this as ''moving the parameter up''. References are preceded by 
+the reference symbol (default is $=$). }
+\item[Foundation]{refers to the names of references which make up a 
+\gdcase{}. The names of references in any nested 
+\gdcases{} also count as the foundation. These details may not be altered, since this would lead to 
+instability.}
+\end{description}
+

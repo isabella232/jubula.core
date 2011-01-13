@@ -1,0 +1,50 @@
+One of the main advantages of \gd{} tests is their structure. Tests are made up of small, reusable modules called keywords. A keyword is simply a \gdcase{} which carries out a certain action or certain actions in the \gdaut{}. The \gdcase{} is named to reflect what it does and is designed to be reusable. 
+
+\subsubsection{General guidelines for keywords}
+\label{BPKeywordsGeneral}
+As a rule of thumb, we recommend making a keyword for any action or actions you execute more than once in your test. This ensures that maintenance is much easier later -- you will only have one place to change in the test, instead of many.  
+
+So what is a keyword? A good example is \bxname{Login}. It is obvious from the name what this \gdcase{} does. It contains three of the \gd{} unbound modules from the library \gdproject{}:\\
+\begin{itemize}
+\item ub\_cti\_replaceText (which has the parameter \bxshell{TEXT})
+\item ub\_cti\_replaceText (which has the parameter \bxshell{TEXT})
+\item ub\_grc\_clickLeftSingle (no parameters)
+\end{itemize}
+
+In this keyword, the two TEXT parameters from the replace text modules would be referenced as \bxshell{=USERNAME} and \bxshell{PASSWORD}.
+
+Any time you need to perform a login in your test, you can reuse this keyword and enter the specific use data each time. This has the advantage that your tests will be easy to read, and that any maintenance you need to do to this keyword can be done in one place. 
+
+Other things that lend themselves well to being made into keywords are:
+\begin{itemize}
+\item Synchronized clicks on buttons (e.g. wait for component, check enablement, click). 
+\item Tab selections (e.g. Select Content Tab, Select Options Tab in Tools Dialog). 
+\item Recurring workflows (e.g. carrying out a search).
+\item Anything that you use more than once.
+\end{itemize}
+
+Many of these keywords will use the same modules from the unbound modules \gdproject{}. However, the advantage of making a keyword is that all or most of the data that you need, and the component names, can be encapsulated into a module which has a recognizable name. 
+
+Some actions cannot be entirely encapsulated into a keyword with no parameters. Actions to enter text or select items from trees often require a different text or textpath each time they are reused. In this case, it is probably not worth writing a separate keyword for each possible data set. 
+
+\bxtipp{If you realise later on in your test that you will need a module again, use the refactor function \bxpref{extract} to extract a reusable \gdcase{}. }
+
+
+\subsubsection{The size of keywords}
+Most keywords are likely to be reasonably small, because they are easier to combine and read when they are smaller. Also, it is easier to reuse smaller, less specific modules than larger ones. However, sometimes it can be worth making larger modules, especially for filling in tables, tabbed panes and dialogs. If you have to fill in the search dialog quite often, you could make a keyword containing all the necessary sub-keywords to fill in this dialog. You can parameterize the data that will change and maybe even enter default values that can be overwritten when the \gdcase{} is reused. 
+
+\subsubsection{Utility modules for keywords}
+\label{BPKeywordsUtility}
+In designing your tests, it may sometimes occur to you that there is a level between the unbound modules and your finished keywords. A good example is a module to to a synchronized text entry on a component:
+\begin{itemize}
+\item ub\_grc\_waitForComponent 
+\item ub\_grc\_checkEnablement
+\item ub\_cti\_replaceText
+\end{itemize}
+
+It is very likely that a test will have to enter various texts. The only difference for each case will be the text to enter and the component to enter it into. All other things (amount of time to wait for the component, the fact that the component should be enabled etc) will remain the same. A utility module to perform a synchronized replace text can solve this problem. It can be reused in \gdcases{} to replace the text on any component \bxpref{TasksCompNamesCheckbox} and only requires the text to enter as a parameter. 
+
+Generally, it is worth making a utility module when the unbound module contains one or more parameters whose values will remain constant in your test (typically things like file paths, operators, path types etc.). The utility module can parameterize the data that will change (e.g. boolean values, text entries, what to check etc.) and make your test specification and maintanence quicker. 
+
+
+

@@ -1,0 +1,74 @@
+\index{DB Tool}
+\begin{enumerate}
+\item Once you have browsed to the \gd{} installation directory and entered \bxshell{GUIdancerDBTool}, you can enter the parameters for the \gddb{} actions.
+\item The DBTool uses the parameters described in the table \bxfigref{dbtoolparams}:
+
+
+\begin{table}[h]
+\label{dbtoolparams}
+	\centering
+	\begin{tabular}{|l|l|}
+
+	\hline
+	\textbf{Detail}&\textbf{Parameter}%&\textbf{Example}
+\\
+		\hline
+                Help 
+                &\bxshell{-h}\\
+                & Gives parameter help\\
+                \hline
+                  Delete Project
+                  & \bxshell{-delete <project-name project-version>}\\
+		  &e.g. \emph{-delete ''ExampleProject'' 1.0}\\
+                  \hline
+                  Delete All
+                  & \bxshell{-deleteall}\\
+		  &e.g. \emph{-deleteall}\\
+                  \hline
+                  Keep test result summaries
+                  & \bxshell{-keepsummary} (optional)\\
+		  &e.g. \emph{-keepsummary}\\
+                 \hline
+                  Directory 
+                  & \bxshell{-directory <directory path>}\\
+		  &e.g. \emph{-directory ''D:/Test/Projects/''}\\
+                 \hline
+                  Export Project
+                  & \bxshell{-export <project-name project-version>}\\
+		  &e.g. \emph{-export ''ExampleProject'' ''1.0''}\\
+                 \hline
+                  Export All
+                  & \bxshell{-exportall}\\
+		  &e.g. \emph{-exportall}\\
+                 \hline
+                  Import Project
+                  & \bxshell{-import <import-file>}\\
+		  &e.g. \emph{-import <ExampleProject.xml>}\\
+		\hline
+                Database scheme
+                & \bxshell{-dbscheme <scheme>}\\
+		&e.g. \emph{-dbscheme ''Oracle''}\\
+                \hline
+		Database username
+                  & \bxshell{-dbuser <username>}\\
+		&e.g. \emph{-dbuser ''myusername''}\\
+		\hline
+		Database password
+                  & \bxshell{-dbpw <password>}\\
+		&e.g. \emph{-dbpw ''mypassword''}\\
+		\hline
+		Database URL (optional)
+                  & \bxshell{-dburl <URL>}\\
+                  &e.g. \emph{-dburl ''db.example.de''}\\
+		&If no URL is given, the default will be used.\\
+		\hline
+	\end{tabular}
+	\caption{Parameters for the DBTool}
+\end{table}
+
+\item You can use the parameter \bxshell{-keepsummary} to specify that the test result summaries should not be deleted when the \gdproject{} or \gdprojects{} are deleted. This is useful for continuous integration processes, where the test results over time should be kept, but the \gdprojects{} are reimported into the \gddb{} (for example from the version control system) each night. If you do not enter this parameter, the summaries will be deleted with the \gdprojects{}.
+
+\item Once you have entered all the necessary parameters, press \bxkey{enter}. 
+
+\end{enumerate}
+  

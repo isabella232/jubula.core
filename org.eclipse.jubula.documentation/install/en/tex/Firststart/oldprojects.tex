@@ -1,0 +1,48 @@
+If you have an older version of \gd{} installed, we recommend that you follow these steps:
+
+%\bxtipp{Please be aware that we can only guarantee that \gdprojects{} from the previous version can be successfully imported into a new version. \gdprojects{} from older versions of \gd{} may not be imported directly into the newest version.}
+
+\begin{enumerate}
+\item From the old version of \gd{}, export and backup all the \gdprojects{} from the database. 
+\bxtipp{Make sure you also export and back up any library \gdprojects{} used in your tests, e.g. the unbound modules \gdprojects{}. }
+\item Back up any extensions you have made to \gd{}: any customized plugins and implementation classes you have written.  
+\item Make a note of any configurations you have used in the configuration tool, e.g. port numbers, logging, the \gddb{} used etc. 
+\item Uninstall the old version of \gd{}. 
+\item If there has been a license change for \gd{}: Uninstall and reinstall the license server. Make sure you do the reinstall on the same computer and that you start the license server on the same port as previously. Customers with maintenance packages can request a new license from the support team.
+
+\bxtipp{If there has been no license update, and you are running the license server centrally, you do not need to uninstall it.}
+%\item Clear (empty) the \gddb{} schema for all necessary \gd{} users. 
+\item Install the new version of \gd{}.
+\bxtipp{If you have \gdservers{} running on other machines, be sure to install the new version of the \gdserver{} there too.}
+\item Add any necessary configurations in the configuration tool. 
+\item Add any necessary \gddb{} configurations in the \gddb{} configuration tool.
+\item Add any extension plugins you backed up from the old version.
+\bxtipp{If you are testing RCP \gdauts{}, bear in mind that you will need to remove the old version of the RCP accessor from your application and insert the new version in its place. We also recommend starting your application with \bxshell{-clean} to ensure that the old RCP accessor is no longer used.}
+\item Start \gd{}.  
+\item When you first connect to the \gddb{}, you will be informed whether your \gddb{} scheme is compatible with the new version. If not, the migration wizard will guide you through the migration process.
+%\item First import any library \gdprojects{} your other \gdprojects{} use e.g. the unbound modules \gdprojects{}) into the \gddb{}. 
+%\item Then import your other \gdprojects{} into the new \gd{} \gddb{}.
+\end{enumerate}
+
+\section{Updating to the new version of the unbound modules}
+We recommend that you always update the version of the unbound modules \gdprojects{} to the new versions installed with \gd{}. You can do this via the \gdproject{} properties in the \gd{} client. This is described in the user manual in the \bxname{Tasks} section under \bxname{\gdprojects{}}. 
+
+You should also check to make sure that your current tests do not use any modules that have become deprecated.
+
+\begin{enumerate}
+%\item In the \gdtestcasebrowser{}, use the filter to search for \bxshell{*dep*}.
+\item In the \gdtestcasebrowser{}, open the category:\\
+\bxname{unbound\_modules/DEPRECATED\_modules}
+\item For the latest version or versions, select each module marked as deprecated and press \bxkey{F7}. If this module is used in your tests, the places will be shown in the search result view. 
+\item For any deprecated modules, look in the new unbound modules for the new version of the module, or read in the release notes for a description of the suggested new module.
+\item Add the new module to your test and copy over the data and component names from the old module to the new module. Remove the old module and save the \gdcase{}.
+\end{enumerate}
+
+
+
+
+
+ 
+
+
+

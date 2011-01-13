@@ -1,0 +1,100 @@
+\subsubsection{Configuring \gdsuites{} in the \gdpropview{}}
+\index{Test Suite!Configuration}
+\index{Configuration!Test Suite}
+\index{Event Handler!Error Types}
+\index{Error Types}
+\index{Action Error}
+\index{Component not found}
+\index{Check failed}
+\index{Configuration error}
+\index{Reentry Properties}
+\index{Event Handler!Reentry Properties}
+\index{Break}
+\index{Continue}
+\index{Return}
+\index{Pause}
+\index{Exit}
+\index{Default Event Handler}
+\index{Event Handler!Default}
+\index{AUT ID}
+\label{confsuite}
+
+To configure a \gdsuite{}, you must first create one \bxpref{TSeditor}.
+
+\bxtipp{If you are editing the \gdsuite{} configuration, the working language (which is specified via the globe button on the toolbar) must be set to a language supported by the chosen \gdaut{} for the \gdsuite{}. Otherwise the \gdsuite{} will be uneditable. }
+
+\begin{enumerate}
+\item Open the \gdtestsuiteeditor{} by double-clicking on the \gdsuite{} you want to configure. 
+\item In the \gdpropview{}, you can:
+\begin{enumerate}
+\item Change the \gdsuite{} name by entering a new name in the \bxname{\gdsuite{} name} field.  
+\item Add a comment to the \gdsuite{}. 
+\item Enter a value in the \bxname{step delay} field. 
+
+\bxtipp{The step delay is the time \gd{} leaves between each \gdstep{} during test execution. The default is 0 milliseconds. }
+
+\item Select the \gdaut{} for this \gdsuite{}. To be able to select an \gdaut{} (and object map, and execute your test) you must have added at least one \gdaut{} to the \gdproject{} \bxpref{Defineaut}.
+
+
+
+\bxtipp{You don't have to choose an \gdaut{} for a \gdsuite{} as soon as you have created it, but you will have to choose one before object mapping, for example.}
+
+\item Choose a default reentry type for each of the four error types in \gd{} from the combo-boxes. 
+
+\gdehandlers{} are \gdcases{} used to deal with errors during test execution. When an error occurs, the current \gdcase{} is searched for an \gdehandler{} for that error type. If none is found, the parent \gdcase{} is searched, and so on. If no \gdehandler{} for the test is found, then a default \gdehandler{} (specified in the \gdsuite{} properties)is activated.  
+
+See the sections on \gdehandlers{} for information on the event types \bxpref{eventtype} and reentry types \bxpref{reentrytype}.
+\item Save the changes in the \gdtestsuiteeditor{}.
+\end{enumerate}
+\end{enumerate}
+
+
+\subsubsection{Adding \gdcases{} to a \gdsuite{}} 
+\label{addtestsuite}
+\index{Test Suite!Add Test Case}
+To add \gdcases{} to a \gdsuite{}, you must first create one \bxpref{TSeditor}.
+\bxtipp{Look at the section on Keyword Design \bxpref{KeywordDesign} for useful information on how to structure your \gdsuites{}.}
+\begin{enumerate}
+\item Open the \gdtestsuiteeditor{} by double-clicking on the \gdsuite{} you want to edit.
+\item Select a \gdcase{} to add from the context-sensitive menu by selecting:
+\bxmenu{Reference Existing \gdcase{}}{}{}\\
+
+\bxtipp{You can also add \gdcases{} to a \gdsuite{} in the \gdtestsuiteeditor{}
+using drag-and-drop or by pressing \bxkey{ENTER} on a selected node in the \gdtestsuiteeditor{}.}
+
+  \item Choose a \gdcase{} or \gdcases{} to add from the dialog which appears.
+  \item Click \bxcaption{OK}. 
+  \item The \gdcase{} or \gdcases{} you selected appear(s) in the \gdtestsuiteeditor{}. They are marked with a small arrow to show that they are reused here. The name of the \gdcase{} is contained in angled brackets (\bxshell{< >}) to show that it is the same name that you used when you specified the \gdcase{}. 
+
+\item Save the changes in the editor.
+\bxtipp{Once you have added \gdcases{} to a \gdsuite{}, the next step is to do the object mapping \bxpref{objectmappingtasks}.}
+\end{enumerate}
+
+\subsubsection{Deleting \gdcases{} from a \gdsuite{}}
+\index{Delete!Test Cases}
+\index{Test Case!Delete}
+\label{TasksDeleteTCsFromSuite}
+\begin{enumerate}
+\item Open the \gdtestsuiteeditor{} by double-clicking on the \gdsuite{} you want to edit.
+\item  Single-click the \gdcase{} you want to delete. Use  \bxkey{Ctrl} to select multiple \gdcases{}. 
+\item Select \bxcaption{delete} from the context-sensitive menu to delete the \gdcases{}.
+\item \gdcases{} can also be deleted using \bxkey{DELETE}.
+\item Confirm that you want to delete the \gdcases{} in the dialog which appears.
+\item Save the changes in the \gdtestsuiteeditor{}. 
+
+\end{enumerate}
+
+\subsubsection{Renaming \gdsuites{}}
+\gdhelpid{dialogRenameContextId}{Rename Dialog}
+\index{Rename!Test Suites}
+\index{Test Suite!Renaming}
+\label{tasksrenametsuite}
+\begin{enumerate}
+\item \gdsuites{} can be renamed in one of two ways:
+\begin{enumerate}
+\item Select the \gdsuite{} you want to rename in the \gdtestsuitebrowser{}. Select:\\
+\bxmenu{Rename}{}{}\\
+from the context-sensitive menu. In the dialog which appears, enter a new name and click \bxcaption{OK}. 
+\item Open the \gdtestsuiteeditor{} by double-clicking on the \gdsuite{} you want to edit in the \gdtestsuitebrowser{}.  In the \gdpropview{}, change the \gdsuite{} name. Save the changes in the editor.  
+\end{enumerate}
+\end{enumerate}

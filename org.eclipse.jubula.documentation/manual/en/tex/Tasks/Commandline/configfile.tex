@@ -1,0 +1,61 @@
+% BREDEX LaTeX Template
+%  \documentclass is either ``bxreport'' or ``bxarticle''
+%                 option is bxpaper
+%% \documentclass{bxarticle}
+%% % ----------------------------------------------------------------------
+%% \begin{document}
+%% \title{}
+%% \author{}
+%% % \author*{Hauptautor}{Liste der Nebenautoren}
+%% \maketitle
+%% % ----------------------------------------------------------------------
+%% \bxversion{0.1}
+%% %\bxdocinfo{STATUS}{freigegeben durch}{freigegeben am}{Verteilerliste}
+%% \bxdocinfo{DRAFT}{}{}{}
+%% % ----------------------------------------------------------------------
+
+%% \end{document}
+\index{Command Line Client}
+\begin{enumerate}
+\item You can also enter command line client details in an XML configuration file.
+\item This saves you typing in the same details each time you start a test.
+\item To enter the configuration file path, enter the following command:\\
+\bxshell{-c <path to file>}
+
+For example:
+\emph{-c ''C:/My Documents/config1.xml''}
+\item You can also overwrite parameters contained in the configuration file by entering another parameter directly into the interface. 
+\item For example, if your configuration file contains the \gdsuite{} \bxcaption{Suite1}, but you enter \bxshell{-testsuite ''Suite2''} in the command line interface, the \gdsuite{} called \bxcaption{Suite2} will be started, not \bxcaption{Suite1}.
+\item To create an XML file:
+\begin{enumerate} 
+\item Open a text editor of your choice. 
+\item Enter the desired parameters as shown in the example:
+\footnotesize
+\begin{verbatim}
+<configuration>
+    <project>ExampleProject</project>
+    <version>1.0</version>
+    <autconfig>local configuration</autconfig>
+    <autid>Adder</autid>
+    <dbscheme>Embedded</dbscheme>
+    <dbuser>joebloggs</dbuser>
+    <dbpw>mypassword</dbpw>
+    <server>localhost</server>
+    <port>60000</port>
+    <language>EN_US</language>
+    <testsuite>Suite1</testsuite>
+            OR
+    <testjob>Job1</testjob>        
+    <datadir>C:/Program Files/guidancer/data</datadir>
+    <resultdir>C:/Program Files/guidancer/results</resultdir>
+</configuration>
+\end{verbatim}
+\normalsize
+\item Save the file as an XML file.
+\item This file will be used when you enter the \bxcaption{-c <path to file>} parameter.
+\bxtipp{The no-run and quiet mode parameters can only be entered in the command line interface. They cannot be entered in the configuration file.}
+\bxtipp{Java Virtual Machine parameters can only be entered in the command line interface. They cannot be entered in the configuration file.}
+\end{enumerate}
+\item A template configuration file was installed with \gd{}. It can be found under:\\
+\bxname{GDInstallationDir/examples/scripts}
+\end{enumerate}

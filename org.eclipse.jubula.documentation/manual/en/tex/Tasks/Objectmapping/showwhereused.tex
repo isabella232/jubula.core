@@ -1,0 +1,31 @@
+%% % BREDEX LaTeX Template
+%% %  \documentclass is either ``bxreport'' or ``bxarticle''
+%% %                 option is bxpaper
+%% \documentclass{bxarticle}
+%% % ----------------------------------------------------------------------
+%% \begin{document}
+%% \title{}
+%% \author{}
+%% % \author*{Hauptautor}{Liste der Nebenautoren}
+%% \maketitle
+%% % ----------------------------------------------------------------------
+%% \bxversion{0.1}
+%% %\bxdocinfo{STATUS}{freigegeben durch}{freigegeben am}{Verteilerliste}
+%% \bxdocinfo{DRAFT}{}{}{}
+%% % ----------------------------------------------------------------------
+\index{Object Mapping!Highlight in AUT}
+\index{Highlight in AUT}
+\index{Search!Component in AUT}
+\index{Search!Components in Test Cases}
+\label{searchcomponentaut}
+In the \gdomeditor{}, as well as the normal search function \bxpref{TasksFindDialog} you can search for a component you have already mapped) in the \gdaut{} 
+
+To search for components in the \gdaut{}, the \gdomeditor{} must be open \bxpref{TasksOpenOME}, and the \gdaut{} must be running \bxpref{startaut} in the \gdomm{} \bxpref{TasksOMCollect}.
+
+\begin{enumerate}
+\item In the \gdomeditor{}, right-click on the technical name whose component you want to find in the \gdaut{} and select:\\
+\bxmenu{Highlight in \gdaut{}}{}{}\\ from the context-sensitive menu.
+\item The component whose technical name you selected will be highlighted with a green border in the \gdaut{}. 
+\bxtipp{You can only highlight components that are currently visible in the \gdaut{}.}
+
+\end{enumerate}

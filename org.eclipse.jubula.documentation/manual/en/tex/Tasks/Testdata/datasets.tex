@@ -1,0 +1,44 @@
+\index{Data Sets View}
+\index{Parameter!Data Set}
+\index{Translating data}
+
+The \gddatasetsview{} lets you do three things:
+\begin{itemize}
+\item Enter multiple data sets for a parameter from a \gdcase{} \bxpref{TasksDSVDataSets}.
+\item Enter data sets for a central test data set \bxpref{TasksDSVCentral}.
+\item Translate your parameter values into other languages \bxpref{TasksDSVTranslate}. 
+\end{itemize}
+
+\bxtipp{You can also create central test data sets for your \gdproject{} to reuse in \gdcases{} \bxpref{TasksCentralData}.}
+
+\subsubsection{\gddatasetsview{}: adding multiple data sets to a \gdcase{}}
+\label{TasksDSVDataSets}
+If your \gdcase{} has parameters which have been referenced from the \gdcases{} and \gdsteps{} it contains, you can enter \bxname{data sets} in the \gddatasetsview{}. 
+
+This means that the \gdcase{} will loop and be executed for each set of data you enter. 
+
+To enter data sets for a \gdcase{}:
+\begin{enumerate}
+\item Open the \gdtestcaseeditor{} or \gdtestsuiteeditor{} by double-clicking on the \gdcase{} or \gdsuite{} you want to edit in the browser. 
+\item In the editor, single-click the \gdcase{} you want to add data to. 
+\item In the \gddatasetsview{}, make sure the language in the combo box on the right is the right language for your data. 
+\item Select \bxcaption{Add} to add a row. 
+\item Enter the values for the parameters in the row. 
+\bxtipp{You can also add references in the \gddatasetsview{} if you want to specify the concrete values for your data sets when you reuse this \gdcase{}. }
+\item Use the buttons in the \gddatasetsview{} to  add more rows, delete rows (if no row is selected, the last row is deleted) and insert rows above the currently selected row. 
+\end{enumerate}
+
+
+\subsubsection{\gddatasetsview{}: translating test data}
+\label{TasksDSVTranslate}
+
+You can add data for other languages supported by your \gdaut{} by changing the language in the combo box in the \gddatasetsview{}. 
+
+\bxtipp{You can add supported languages in the \gdproject{} properties dialog \bxpref{projectproperties}.}
+
+%\bxtipp{If you are entering data via the \gdtestcasebrowser{}, you can add data for all of the \gdproject{} languages. 
+%If you are entering data via the \gdtestsuitebrowser{}, you can only add data for languages supported by the \gdaut{} chosen for the \gdsuite{}. }
+
+The other combo boxes are there to help you see the \gddatasetsview{} in different ways. You can see all the data for one parameter, for one data set or for one language. 
+
+

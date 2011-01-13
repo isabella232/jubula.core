@@ -1,0 +1,20 @@
+% CAP description for Table --> Move
+%
+\begin{itemize}
+\item Use this action to move from a currently selected cell to another cell.
+\item You specify in which direction you want to move, and how far (number of cells).
+\item You also specify how many clicks should be made on the new cell, if any.
+\item This action is useful for navigating in a table.
+\item \gd{} realises this by:
+\begin{itemize}
+\item searching for the cell to move to
+\item placing the cursor on this cell at the position you specify
+\item clicking the amount of times you specify
+\end{itemize}
+%\item To move from a cell, the original cell must be active (selected). 
+\item The movement is carried out relative to the cell where the cursor is. 
+\item This is usually the selected cell, unless you have already carried out a 'move'' action. 
+\item If the cursor is, for any reason, not currently over a cell, the movement is carried out relative to the selected cell. 
+\end{itemize}
+
+\bxtipp{This action is unsupported for the HTML toolkit}

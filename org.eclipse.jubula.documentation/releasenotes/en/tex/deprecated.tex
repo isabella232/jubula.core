@@ -1,0 +1,58 @@
+
+Several test actions were deprecated as of \GD version 1.2, and are
+either no longer 
+available for use in version 2.0, or will be removed in future
+versions. All projects which make use of these actions need to be
+updated to remove use of these deprecated actions. The following is 
+a list of such actions, along with suggested
+replacements/alternatives (see the Reference Manual for more
+information on the suggested alternative actions):
+
+\newenvironment{gddeprecated}{}{}
+\newcommand{\gddepitem}[3]{
+\hrule
+\begin{description}
+  \item[action:]{
+    #1 - #2}
+  \item[alternative:]{
+    #3}
+\end{description}
+}
+
+\begin{gddeprecated}
+  \gddepitem{JTable}{Context Menu by Indexpath (Selected Cell)}{
+    Graphics Component - Context Menu by Indexpath
+  }
+  \gddepitem{JTable}{Context Menu by Indexpath (Specify Cell)}{
+    Graphics Component - Context Menu by Indexpath (Specify Position)
+  }
+  \gddepitem{JTable}{Context Menu by Textpath (Selected Cell)}{
+    Graphics Component - Context Menu by Textpath
+  }
+  \gddepitem{JTable}{Context Menu by Textpath (Specify Cell)}{
+    Graphics Component - Context Menu by Textpath (Specify Position)
+  }
+  \gddepitem{JTable}{Select Value from Column}{
+    same action, now with different parameters
+  }
+  \gddepitem{JTree}{Context Menu by Indexpath (Node specified by indexpath)}{
+    Graphics Component - Context Menu by Indexpath (Specify Position)
+  }
+  \gddepitem{JTree}{Context Menu by Indexpath (Node specified by
+    textpath)}{
+    Graphics Component - Context Menu by Textpath (Specify Position)
+  }
+  \gddepitem{JTree}{Context Menu by Indexpath (Selected Node)}{
+    Graphics Component - Context Menu by Textpath
+  }
+  \gddepitem{JTree}{Context Menu by Textpath (Node specified by indexpath)}{
+    Graphics Component - Context Menu by Indexpath} (Specify Position)
+  \gddepitem{JTree}{Context Menu by Textpath (Node specified by
+    textpath)}{
+    Graphics Component - Context Menu by Textpath (Specify Position)
+  }
+  \gddepitem{JTree}{Context Menu by Textpath (Selected Node)}{
+    Graphics Component - Context Menu by Textpath
+  }
+\end{gddeprecated}
+  

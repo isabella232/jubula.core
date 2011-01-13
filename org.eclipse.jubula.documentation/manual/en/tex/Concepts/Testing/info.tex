@@ -1,0 +1,35 @@
+\subsubsection{Actions}
+
+\gd supports ''high-level'' actions. By this we mean that some of the actions which can be chosen for a component actually carry out a number of actions. This makes the creation of \gdcases{} easier and quicker, and makes them more understandable. 
+
+For example, \gd{} offers 2 actions to enter text into a text field. The action \bxname{Replace Text} selects the whole text in the component and then enters the text input. This effectively overwrites any text which was already in the component. The \bxname{Input Text} action clicks once in the component and then enters the text, which means that any text previously in the component remains. 
+
+Another example is the selection and navigation through trees and menus. Like a human tester, \gd{} works using the path to the item to select, and doesn't first have to select the individual sub-items in the path. 
+
+High-level actions can be used on all standard components without problems. However, if the behaviour or look-and-feel or a component has been changed (e.g. double-click in a text field brings up a dialog instead of selecting the word) then some high-level actions may not work. In this case you will have to combine the low-level actions offered by \gd{}. Often, there are many ways of achieving the same effect in your test, and it may just be a case of trying out a few different ones to see which works for you and your \gdaut{}. 
+
+When writing tests, it helps to be aware of things that a human tester does implicitly. Often, these are things that have to be explicitly stated in an automated test, like waiting for the application to be ready, or selecting an item before opening the context menu, or even pressing enter to close a cell editor in a table. 
+
+\subsubsection{Test execution}
+\gd{} generally executes tests on your \gdaut{} by sending real clicks and key presses, in the same way that a manual tester would. This means that a \gd{} test will give you the same results as a manual test -- if a menu is disabled, an item can't be selected and so on. 
+
+In the cases where real clicks and key presses can't be sent, \gd{} ensures thatonly actions which would be possible for a user can be completed in a test. 
+
+Once clicks and key presses have been sent, \gd{} waits for confirmation from the \gdaut{} that they have arrived (manual testers use their eyes, \gd{} uses confirmers). 
+
+If the \gdaut{} or the components in it need to be scrolled to access the area being tested, scrolling happens automatically. In the same way, if a tree is collapsed, you do not need to specify an expand action before selecting a node. The expansion is done as part of the selection. 
+
+
+\subsection{Standards conformance}
+\GD is designed to test components in their original
+and intended implementations. If these components have been
+derived and altered such that they no longer respond to actions in the
+same way (i.e. rewriting the single-click event for a textbox,
+non-standard responses to certain key combinations, etc.), \GD may no longer be
+able to test these components.
+
+It is therefore recommended for the purposes of testing with \GD{} --
+and also for the sake of conformance to usability standards -- that
+the toolkit conventions are held to.
+
+There may, of course, be situations where exceptions are necessary. For this reason, \gd{} has an API via which testing classes can be implemented so that even changed components can be tested. See the manual on extending \gd{} for more information. 

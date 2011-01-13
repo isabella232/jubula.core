@@ -1,0 +1,32 @@
+% $Id: rdesktop.tex 6021 2007-11-19 15:03:56Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2005
+% --------------------------------------------------------
+% this command can be inserted multiple times
+%\gdhelpid{}
+% 
+%\begin{gddescription}
+%\end{gddescription}
+%
+%\begin{gdlist}
+% use the \item command for single steps
+%\end{gdlist}
+% change <PATH> to the same directory, file is located in
+% change <FILE> to the same filename you are editing
+%\bxinput{<PATH>/Links/<FILE>}
+%
+% other usefull commands are
+%   \bxtipp{}        to create a hint
+%   \bxwarn{}        to describe a warning
+
+\index{rdesktop}
+\begin{itemize}
+\item Under a very specific configuration involving \emph{rdesktop 1.5}, \gd{} is known to frequently fail tests with an action error: 'Timeout received before confirming the posted event'. 
+\item This occurs when \emph{rdesktop 1.5} is used to log into a user account used for the \gdclient{} as well as a separate account for the \gdserver{}. 
+\item The problem does not occur under \emph{rdesktop 1.4.1}.
+\end{itemize}

@@ -1,0 +1,39 @@
+% $Id: accessing.tex 10532 2010-03-16 15:57:20Z alexandra $
+% Local Variables:
+% ispell-check-comments: nil
+% Local IspellDict: american
+% End:
+% --------------------------------------------------------
+% User documentation
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+You can find the \gdproject{} containing the tests
+in the \gd{} installation directory under the subdirectory:\\
+\bxname{examples/projects}. 
+
+You can import the \gdproject{} into the \gd{}-client as follows:
+\begin{enumerate}
+\item Select:\\ \bxmenu{Project}{Import}{}.
+\item Browse to the \bxname{examples/projects} directory in the \gd{} installation directory. 
+\item Select both the \bxname{samples} \gdproject{} and the \bxname{bound\_modules\_samples} \gdproject{}. 
+\item  Select \bxcaption{OK} in the \bxname{Import Project} dialog. 
+\end{enumerate}
+
+
+Once a \gdprojects have been imported, open the \bxname{samples} \gdproject{}. Start the \gdserver \bxpref{otherportnumber}, connect to the \gdserver \bxpref{connectserv} and start the \gdaut{} \bxpref{startaut}. 
+
+
+When working on one machine, it may be a good idea to automatically minimize 
+\gd during test execution. This can be done via :\\
+\bxmenu{Window}{Preferences}{}. \\
+Alternatively, the client window can be reduced so 
+that both the client and the \gdaut{} can be seen. 
+
+\subsubsection{Result Reports}
+
+A result report of the test will be automatically saved into the \gddb{} when the test has run. The summary of the reports can be viewed in the \gdtestsummaryview{} \bxpref{testresultview}.
+
+
+You can also choose to generate result reports for test execution. 
+
+The HTML and XML reports can then be seen in the directory defined when this option is selected. 
