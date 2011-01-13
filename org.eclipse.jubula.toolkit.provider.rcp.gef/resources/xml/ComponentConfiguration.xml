@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<!-- CAUTION: don't format any entries, especially don't use line breaks!
+	The value of the formated item may contain formating characters like tabs or
+	newlines, making them unusable for class or data lookup!-->
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ComponentConfiguration.xsd">
+	<configVersion>
+		<majorVersion>4</majorVersion>
+		<minorVersion>1</minorVersion>
+		<majorCustomVersion>0</majorCustomVersion>
+		<minorCustomVersion>0</minorCustomVersion>
+	</configVersion>
+	
+	<toolkitComponent type="org.eclipse.draw2d.FigureCanvas">
+		<realizes>guidancer.abstract.Widget</realizes>
+		<testerClass>org.eclipse.jubula.rc.rcp.gef.implclasses.FigureCanvasImplClass</testerClass>
+		<componentClass name="org.eclipse.draw2d.FigureCanvas" />
+		<action name="CompSystem.CheckFigureExists" changed="4.0">
+			<method>gdCheckFigureExists</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>	
+			<param name="CompSystem.Exists">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.CheckToolExists" changed="4.0">
+			<method>gdCheckToolExists</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>	
+			<param name="CompSystem.Exists">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.ClickFigure" changed="4.0">
+			<method>gdClickFigure</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.ClickCount">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.ClickInFigure" changed="1.4">
+			<method>gdClickInFigure</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.ClickCount">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.SelectToolByTextPath" changed="4.0">
+			<method>gdSelectTool</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.ClickCount">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+		</action>
+		<action name="CompSystem.ClickConnection" changed="4.0">
+			<method>gdClickConnection</method>
+			<param name="CompSystem.SourceTextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.SourceOperator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.TargetTextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.TargetOperator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.ClickCount">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.DragFigure" changed="4.0">
+			<method>gdDragFigure</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>	
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.ModifierSpecification">
+				<type>java.lang.String</type>
+				<defaultValue>none</defaultValue>
+				<valueSet combinable="true">
+					<element name="CompSystem.None" value="none"/>
+					<element name="CompSystem.Shift" value="shift"/>
+					<element name="CompSystem.Ctrl" value="control"/>
+					<element name="CompSystem.Alt" value="alt"/>
+					<element name="CompSystem.Meta" value="meta"/>
+					<element name="CompSystem.Cmd" value="cmd"/>
+					<element name="CompSystem.Mod" value="mod"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>			
+		</action>
+		
+		<action name="CompSystem.DropOnFigure" changed="4.0">
+			<method>gdDropOnFigure</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>	
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.DelayBeforeDrop">
+				<type>java.lang.Integer</type>
+				<defaultValue>100</defaultValue>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyFigureProperty" changed="4.1">
+			<method>gdVerifyFigureProperty</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.TextOperator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>	
+			<param name="CompSystem.PropertyName">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.PropertyValue">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.ValueOperator">
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+		</action>
+	</toolkitComponent>
+	
+</compSystem>

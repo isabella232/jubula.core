@@ -1,0 +1,53 @@
+/*******************************************************************************
+ * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package org.eclipse.jubula.tools.utils;
+
+import java.util.Date;
+
+/**
+ * Class utility for all things around time, delays, timestamps, ...
+ *
+ * @author BREDEX GmbH
+ * @created 18.02.2008
+ */
+public abstract class TimeUtil {
+    /**
+     * Hidden for class utility
+     */
+    private TimeUtil() {
+        // just hide the constructor
+    }
+    /**
+     * Delay for a certain amount of time. 
+     * The delay will handle InterruptedException
+     * by restarting the Thread.sleep(), thus guaranteeing to wait for
+     * "delayInMs" milliseconds
+     * @param delayInMs the delay in ms, must not be negative
+     */
+    public static void delay(long delayInMs) {
+        if (delayInMs == 0) {
+            return;
+        }
+        if (delayInMs < 0) {
+            throw new IllegalArgumentException("delay has to be positive"); //$NON-NLS-1$
+        }
+        long endTime = new Date().getTime() + delayInMs;
+        long delay = delayInMs;
+        do {
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                // just ignore any interruption
+            }
+            delay = endTime - (new Date().getTime());
+        } while (delay > 0);
+    }
+}

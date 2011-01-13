@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<!-- CAUTION: don't format any entries, especially don't use line breaks!
+	The value of the formated item may contain formating characters like tabs or
+	newlines, making them unusable for class or data lookup!-->
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ComponentConfiguration.xsd">
+	<configVersion>
+		<majorVersion>4</majorVersion>
+		<minorVersion>1</minorVersion>
+		<majorCustomVersion>0</majorCustomVersion>
+		<minorCustomVersion>0</minorCustomVersion>
+	</configVersion>
+	
+	<!-- Concrete components -->
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.ToolItem">
+		<realizes>guidancer.abstract.SwtItem</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.ToolItemImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.ToolItem" />
+		<action name="CompSystem.SelectMenuItem" changed="1.12">
+			<method>selectMenuItem</method>
+			<param name="CompSystem.MenuPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.SelectMenuItemByIndexpath" changed="1.11">
+			<method>selectMenuItemByIndexpath</method>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyEnabledByTextpath" changed="1.12">
+			<method>verifyEnabled</method>
+			<param name="CompSystem.MenuPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IsEnabled">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyEnabledByIndexpath" changed="1.14">
+			<method>verifyEnabledByIndexpath</method>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.IsEnabled">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyExistsByTextpath" changed="1.12">
+			<method>verifyExists</method>
+			<param name="CompSystem.MenuPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IsExisting">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyExistsByIndexpath" changed="1.14">
+			<method>verifyExistsByIndexpath</method>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.IsExisting">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifySelectedByTextpath" changed="1.12">
+			<method>verifySelected</method>
+			<param name="CompSystem.MenuPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IsSelected">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifySelectedByIndexpath" changed="1.14">
+			<method>verifySelectedByIndexpath</method>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.IsSelected">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Label" visible="false">
+		<realizes>guidancer.abstract.SwtLabel</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.LabelImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Label" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.custom.CLabel" visible="false">
+		<realizes>guidancer.abstract.SwtLabel</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.CLabelImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.custom.CLabel" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Text" visible="false">
+		<realizes>guidancer.abstract.SwtText</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.TextImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Text" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.custom.StyledText" visible="false">
+		<realizes>guidancer.abstract.SwtText</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.StyledTextImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.custom.StyledText" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Button" visible="false">
+		<realizes>guidancer.abstract.SwtButton</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.ButtonImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Button" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.GraphicApplication" visible="false">
+		<defaultMapping logicalName="CompSystem.LogicalApplicationName"
+			technicalName="Application">
+			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
+		</defaultMapping>
+		<realizes>guidancer.concrete.GraphicApplication</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.SwtApplicationImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.GraphicApplication" />
+	</toolkitComponent>
+
+	<toolkitComponent type="org.eclipse.swt.widgets.Menu" visible="false">
+		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
+			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
+		</defaultMapping>
+		<realizes>guidancer.concrete.MenuBar</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.MenuImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.MenuDefaultMapping" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Combo" visible="false">
+		<realizes>guidancer.abstract.SwtCombo</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.ComboImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Combo" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.custom.CCombo" visible="false">
+		<realizes>guidancer.abstract.SwtCombo</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.CComboImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.custom.CCombo" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.List" visible="false">
+		<realizes>guidancer.concrete.List</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.ListImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.List" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.TabFolder" visible="false">
+		<realizes>guidancer.abstract.SwtTabFolder</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.TabFolderImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.TabFolder" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.custom.CTabFolder" visible="false">
+		<realizes>guidancer.abstract.SwtTabFolder</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.CTabFolderImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.custom.CTabFolder" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Table" visible="false">
+		<realizes>guidancer.concrete.Table</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.TableImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Table" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Tree" observable="false">
+		<realizes>guidancer.concrete.Tree</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.TableTreeImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Tree" />
+		<action name="CompSystem.VerifyCheckboxOfSelectedEntry" changed="4.1">
+			<method>gdVerifySelectedCheckbox</method>
+			<param name="CompSystem.Checked">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.ToggleCheckboxByTextpath" changed="4.1">
+			<method>gdToggleCheckbox</method>
+			<param name="CompSystem.PathType">
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.PreAscend">
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.ToggleCheckboxByIndexpath" changed="4.1">
+			<method>gdToggleCheckboxByIndices</method>
+			<param name="CompSystem.PathType">
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.PreAscend">
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyCheckboxOfNodeByTextpath" changed="4.1">
+			<method>gdVerifyCheckbox</method>
+			<param name="CompSystem.PathType">
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.PreAscend">
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.Checked">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyCheckboxOfNodeByIndexpath" changed="4.1">
+			<method>gdVerifyCheckboxByIndices</method>
+			<param name="CompSystem.PathType">
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.PreAscend">
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Checked">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.SwtTree">
+		<realizes>org.eclipse.swt.widgets.Tree</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.implclasses.TableTreeImplClass</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Tree" />
+		<action name="CompSystem.SelectByTextPathAtColumn" changed="1.22">
+			<method>gdSelect</method>
+			<param name="CompSystem.PathType">
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.PreAscend">
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.ClickCount">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>	
+			<param name="CompSystem.Column">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.SelectByIndexPathAtColumn" changed="1.22">
+			<method>gdSelectByIndices</method>
+			<param name="CompSystem.PathType">
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.PreAscend">
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.ClickCount">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.Column">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifySelectedValueAtColumn" changed="1.24">
+			<method>gdVerifySelectedValue</method>
+			<param name="CompSystem.Text">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>	
+			<param name="CompSystem.Column">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+		</action>
+	</toolkitComponent>
+
+	<!-- abstract swt special components -->
+	<abstractComponent type="guidancer.abstract.SwtCombo" visible="false">
+		<realizes>guidancer.concrete.ComboBox</realizes>
+	</abstractComponent>
+	
+	<abstractComponent type="guidancer.abstract.SwtItem" visible="false">
+		<realizes>guidancer.abstract.SwtButton</realizes>
+	</abstractComponent>
+	
+	<abstractComponent type="guidancer.abstract.SwtLabel" visible="false">
+		<realizes>guidancer.concrete.Label</realizes>
+	</abstractComponent>
+	
+	<abstractComponent type="guidancer.abstract.SwtTabFolder" visible="false">
+		<realizes>guidancer.concrete.TabbedPane</realizes>
+	</abstractComponent>
+	
+	<abstractComponent type="guidancer.abstract.SwtText" visible="false">
+		<realizes>guidancer.concrete.TextComponent</realizes>
+	</abstractComponent>
+	
+	<abstractComponent type="guidancer.abstract.SwtButton" visible="false">
+		<realizes>guidancer.concrete.Button</realizes>
+	</abstractComponent>
+	
+</compSystem>

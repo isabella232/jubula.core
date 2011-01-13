@@ -1,0 +1,533 @@
+/*******************************************************************************
+ * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package org.eclipse.jubula.toolkit.provider.html.gui;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
+import org.eclipse.jubula.client.core.model.IAUTConfigPO.Browser;
+import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.businessprocess.RemoteFileBrowserBP;
+import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
+import org.eclipse.jubula.client.ui.widgets.AutConfigComponent;
+import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
+import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
+import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.exception.Assert;
+import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
+
+
+/**
+ * @author BREDEX GmbH
+ * @created Nov 4, 2009
+ * 
+ * 
+ */
+public class HtmlAutConfigComponent extends AutConfigComponent {
+
+    /** gui component */
+    private GDText m_autUrlTextField;
+    /** gui field for browser */
+    private GDText m_browserTextField;
+    /** gui button for browser path */
+    private Button m_browserPathButton;
+    /** gui component */
+    private Label m_activationMethodLabel;
+    /** gui component */
+    private Label m_browserPathLabel;
+    /** gui component */
+    private Label m_browserLabel;
+    /** gui component */
+    private Label m_urlLabel;
+    /** gui component */
+    private I18nEnumCombo<Browser> m_browserCombo;
+    /** gui component */
+    private I18nEnumCombo<ActivationMethod> m_activationMethodCombo;
+    /** the GuiDancerModifyListener */
+    private GuiDancerModifyListener m_modifyListener;
+    /** the the GuiDancerSelectionListener */
+    private GuiDancerSelectionListener m_selectionListener;
+
+
+    /**
+     * @param parent {@inheritDoc}
+     * @param style {@inheritDoc}
+     * @param autConfig data to be displayed/edited
+     * @param autName the name of the AUT that will be using this configuration.
+     */
+    public HtmlAutConfigComponent(Composite parent, int style,
+        Map<String, String> autConfig, String autName) {
+        
+        super(parent, style, autConfig, autName, true);
+    }
+
+    /**
+     * @param basicAreaComposite The composite that represents the basic area.
+     */
+    protected void createBasicArea(Composite basicAreaComposite) {
+        super.createBasicArea(basicAreaComposite);
+
+        // URL property
+        m_urlLabel = UIComponentHelper.createLabel(
+                basicAreaComposite, "WebAutConfigComponent.URL"); //$NON-NLS-1$
+        m_urlLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.urlLabel"); //$NON-NLS-1$
+        
+        m_autUrlTextField = UIComponentHelper.createTextField(
+                basicAreaComposite, 2);
+        m_autUrlTextField.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autUrlTextField"); //$NON-NLS-1$
+        
+        // browser
+        m_browserLabel = UIComponentHelper.createLabel(
+                basicAreaComposite, "WebAutConfigComponent.browser"); //$NON-NLS-1$
+        m_browserLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserLabel"); //$NON-NLS-1$
+        
+        m_browserCombo = UIComponentHelper.createEnumCombo(
+                basicAreaComposite, 2, "WebAutConfigComponent.Browser", //$NON-NLS-1$
+                    Browser.class);
+        m_browserCombo.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserCombo"); //$NON-NLS-1$
+
+        
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected void createAdvancedArea(Composite advancedAreaComposite) {
+        super.createAdvancedArea(advancedAreaComposite);
+        
+        createBrowserPathEditor(advancedAreaComposite);
+
+    }
+    
+    /**
+     * Create this dialog's expert area component.
+     * 
+     * @param expertAreaComposite Composite representing the expert area.
+     */
+    protected void createExpertArea(Composite expertAreaComposite) {
+        super.createExpertArea(expertAreaComposite);
+        
+        // activation method editor
+        m_activationMethodLabel = UIComponentHelper.createLabel(
+                expertAreaComposite, "AUTConfigComponent.activationMethod"); //$NON-NLS-1$
+        m_activationMethodLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.activationMethodLabel"); //$NON-NLS-1$
+        
+        m_activationMethodCombo = UIComponentHelper.createEnumCombo(
+                expertAreaComposite, 2, "AUTConfigComponent.ActivationMethod", //$NON-NLS-1$
+                    ActivationMethod.class);
+        m_activationMethodCombo.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.activationMethodCombo"); //$NON-NLS-1$
+        
+    }
+    
+    /**
+     * Inits the browser path area.
+     * 
+     * @param parent The parent Composite.
+     */
+    protected void createBrowserPathEditor(Composite parent) {
+        
+        m_browserPathLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.browserPath"); //$NON-NLS-1$ 
+        m_browserPathLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathLabel"); //$NON-NLS-1$
+        GDControlDecorator.decorateInfo(m_browserPathLabel,  
+                "GDControlDecorator.WebBrowserPath", false); //$NON-NLS-1$
+        
+        m_browserTextField = UIComponentHelper.createTextField(
+            parent, 1);
+        m_browserTextField.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.BrowserTextField"); //$NON-NLS-1$
+        
+        m_browserPathButton = new Button(UIComponentHelper
+                .createLayoutComposite(parent), SWT.PUSH);
+        m_browserPathButton.setText(I18n.getString("AUTConfigComponent.browse"));  //$NON-NLS-1$
+        m_browserPathButton.setLayoutData(BUTTON_LAYOUT);
+        m_browserPathButton.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathButton"); //$NON-NLS-1$
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected void createHeader(Composite parent) {
+        // No header
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected void installListeners() {
+        super.installListeners();
+        GuiDancerModifyListener modifyListener = getModifyListener();
+        GuiDancerSelectionListener selectionListener = getSelectionListener();
+        
+        getServerCombo().addModifyListener(modifyListener);
+        m_autUrlTextField.addModifyListener(modifyListener);
+        m_browserTextField.addModifyListener(modifyListener);
+        m_browserPathButton.addSelectionListener(selectionListener);
+        m_browserCombo.addSelectionListener(selectionListener);
+        m_activationMethodCombo.addSelectionListener(selectionListener);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected void deinstallListeners() {
+        super.deinstallListeners();
+        GuiDancerModifyListener modifyListener = getModifyListener();
+        GuiDancerSelectionListener selectionListener = getSelectionListener();
+        
+        getServerCombo().removeModifyListener(modifyListener);
+        m_autUrlTextField.removeModifyListener(modifyListener);
+        m_browserTextField.removeModifyListener(modifyListener);
+        m_browserPathButton.removeSelectionListener(selectionListener);
+        m_browserCombo.removeSelectionListener(selectionListener);
+        m_activationMethodCombo.removeSelectionListener(selectionListener);
+    }
+    
+    /**
+     * This private inner class contains a new SelectionListener.
+     * 
+     * @author BREDEX GmbH
+     * @created 13.07.2005
+     */
+    private class GuiDancerSelectionListener implements SelectionListener {
+
+        /**
+         * {@inheritDoc}
+         */
+        @SuppressWarnings("synthetic-access")
+        public void widgetSelected(SelectionEvent e) {
+            Object source = e.getSource();
+            boolean checked = false;
+            
+            if (source.equals(m_activationMethodCombo)) {
+                checked = true;
+            } else if (source.equals(m_browserCombo)) {
+                internetExplorerSelected();
+                checked = true;
+            } else if (source.equals(m_browserPathButton)) {
+                if (isRemoteRequest()) {
+                    remoteBrowse(false, AutConfigConstants.BROWSER_PATH,
+                            m_browserTextField,
+                            I18n.getString("WebAutConfigComponent.SelectBrowserPath")); //$NON-NLS-1$
+                } else {
+                    FileDialog fileDialog = new FileDialog(
+                            Plugin.getShell(), SWT.APPLICATION_MODAL
+                                    | SWT.ON_TOP);
+                    //handleBrowserPathButtonEvent(fileDialog);
+                    
+                    fileDialog.setText(I18n.getString("WebAutConfigComponent.SelectBrowserPath")); //$NON-NLS-1$
+                    String browserFile = fileDialog.open();
+                    if (browserFile != null) {
+                        m_browserTextField.setText(browserFile);
+                    }
+                }
+
+                return;
+            }
+            if (checked) {
+                checkAll();
+                return;
+            }
+            Assert.notReached("Event activated by unknown widget(" + source + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void widgetDefaultSelected(SelectionEvent e) {
+            // Do nothing
+        }
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected boolean checkLocalhostServer() {
+        boolean enable = super.checkLocalhostServer();
+        boolean browseEnabled = enable || isRemoteRequest();
+        m_browserPathButton.setEnabled(
+                browseEnabled && m_browserTextField.getEnabled());
+        return enable;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected boolean internetExplorerSelected() {
+        boolean enable = super.checkLocalhostServer();
+        boolean browseEnabled = enable || isRemoteRequest();
+        boolean isIE = m_browserCombo.getSelectedObject().equals(
+                Browser.InternetExplorer);
+        m_browserTextField.setEnabled(!isIE);
+        m_browserPathButton.setEnabled(!isIE && browseEnabled);
+        return isIE;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected void initState() {
+        m_activationMethodCombo.setEnabled(true);
+        m_activationMethodCombo.setEnabled(true);
+        m_autUrlTextField.setEnabled(true);
+        m_browserCombo.setEnabled(true);
+        m_browserPathButton.setEnabled(true);
+        m_browserTextField.setEnabled(true);
+        checkLocalhostServer();
+        internetExplorerSelected();
+        RemoteFileBrowserBP.clearCache(); // avoid all caches
+    }
+
+    /**
+     * This private inner class contains a new ModifyListener.
+     * 
+     * @author BREDEX GmbH
+     * @created 22.11.2006
+     */
+    private class GuiDancerModifyListener implements ModifyListener {
+
+        /**
+         * {@inheritDoc}
+         */
+        @SuppressWarnings("synthetic-access")
+        public void modifyText(ModifyEvent e) {
+            Object source = e.getSource();
+            boolean checked = false;
+            if (source.equals(m_autUrlTextField)) {
+                checked = true;
+            } else if (source.equals(m_browserTextField)) {
+                checked = true;
+            } else if (source.equals(getServerCombo())) {
+                checkLocalhostServer();
+                checked = true;
+            } else if (source.equals(m_browserCombo)) {
+                internetExplorerSelected();
+                checked = true;
+            }
+            if (checked) {
+                checkAll();
+                return;
+            }
+            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+        }
+
+    }
+
+    /**
+     * Possible modes for the dialog
+     *
+     * @author BREDEX GmbH
+     * @created Sep 10, 2007
+     */
+    public static enum Mode {
+        /** basic mode */
+        BASIC,
+        /** advanced mode */
+        ADVANCED, 
+        /** expert mode */
+        EXPERT
+    }
+    
+    /** 
+     * The action of the activation combo
+     * @return true
+     */
+    boolean handleActivationComboEvent() {
+        putConfigValue(AutConfigConstants.ACTIVATION_METHOD, 
+                m_activationMethodCombo
+                    .getSelectedObject().toString().toUpperCase());
+        return true;
+    }
+    
+    /** 
+     * The action of the browser combo
+     * @return true
+     */
+    boolean handleBrowserComboEvent() {
+        putConfigValue(AutConfigConstants.BROWSER, m_browserCombo
+            .getSelectedObject().toString());
+        return true;
+    }
+
+    /**
+     * @return <code>null</code> if the new value is valid. Otherwise, returns
+     *         a status parameter indicating the cause of the problem.
+     */
+    DialogStatusParameter modifyUrlTextField() {
+        DialogStatusParameter error = null;
+        String urlText = m_autUrlTextField.getText();
+        if (m_autUrlTextField.getText().length() == 0) {
+            error = createErrorStatus(I18n.getString("WebAutConfigComponent.emptyUrl")); //$NON-NLS-1$
+        } else {
+            try {
+                new URL(urlText);
+            } catch (MalformedURLException e) {
+                error = createErrorStatus(I18n.getString("WebAutConfigComponent.wrongUrl")); //$NON-NLS-1$
+            }
+        }
+
+        putConfigValue(AutConfigConstants.AUT_URL, urlText);
+        
+        return error;
+    }
+
+    /**
+     * @return <code>null</code> if the new value is valid. Otherwise, returns
+     *         a status parameter indicating the cause of the problem.
+     */
+    DialogStatusParameter modifyWebTagTextField() {
+        DialogStatusParameter error = null;
+
+        putConfigValue(AutConfigConstants.WEB_ID_TAG, StringConstants.EMPTY);
+        
+        return error;
+    }
+    
+    /**
+     * @return <code>null</code> if the new value is valid. Otherwise, returns
+     *         a status parameter indicating the cause of the problem.
+     */
+    DialogStatusParameter modifyBrowserPathTextField() {
+        DialogStatusParameter error = null;
+        String txt = m_browserTextField.getText();
+
+        putConfigValue(AutConfigConstants.BROWSER_PATH, txt);
+        
+        return error;
+    }
+    
+    /**
+     * 
+     * @return <code>null</code> if the new value is valid. Otherwise, returns
+     *         a status parameter indicating the cause of the problem.
+     */
+    DialogStatusParameter modifyBrowser() {
+        final Browser browser = m_browserCombo.getSelectedObject();
+        if (browser != null) {
+            putConfigValue(AutConfigConstants.BROWSER, browser.toString());
+        }
+        
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected void populateBasicArea(Map<String, String> data) {
+        super.populateBasicArea(data);
+        
+        String browser = data.get(AutConfigConstants.BROWSER);
+        if (browser == null) {
+            browser = Browser.InternetExplorer.toString();
+        }
+        m_browserCombo.setSelectedObject(Browser.valueOf(browser));
+
+        if (!isDataNew(data)) {
+            m_autUrlTextField.setText(
+                StringUtils.defaultString(
+                        data.get(AutConfigConstants.AUT_URL)));
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected void populateAdvancedArea(Map<String, String> data) {
+        if (!isDataNew(data)) {
+            m_browserTextField.setText(StringUtils.defaultString(data
+                    .get(AutConfigConstants.BROWSER_PATH)));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected void populateExpertArea(Map<String, String> data) {
+        String actMeth = data.get(AutConfigConstants.ACTIVATION_METHOD);
+        if (actMeth == null) {
+            actMeth = ActivationMethod.NONE.toString();
+        }
+        actMeth = actMeth.toUpperCase();
+        m_activationMethodCombo.setSelectedObject(
+            ActivationMethod.valueOf(actMeth));
+    }
+
+    /**
+     * 
+     * @return the modifier listener.
+     */
+    @SuppressWarnings("synthetic-access")
+    private GuiDancerModifyListener getModifyListener() {
+        if (m_modifyListener == null) {
+            m_modifyListener = new GuiDancerModifyListener();
+        }
+        
+        return m_modifyListener;
+
+    }
+    
+    /**
+     * 
+     * @return the single instance of the selection listener.
+     */
+    @SuppressWarnings("synthetic-access")
+    private GuiDancerSelectionListener getSelectionListener() {
+        if (m_selectionListener == null) {
+            m_selectionListener = new GuiDancerSelectionListener();
+        }
+        
+        return m_selectionListener;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected void checkAll(java.util.List<DialogStatusParameter> paramList) {
+        super.checkAll(paramList);
+        addError(paramList, modifyUrlTextField());
+        addError(paramList, modifyWebTagTextField());
+        addError(paramList, modifyBrowser());
+        addError(paramList, modifyBrowserPathTextField());
+
+        handleActivationComboEvent();
+        //handleBrowserComboEvent();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected void populateMonitoringArea(Map<String, String> data) {
+        //do nothing 
+        
+    }
+
+}

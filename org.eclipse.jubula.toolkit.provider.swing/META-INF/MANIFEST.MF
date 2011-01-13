@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Toolkit - Swing (Incubation)
+Bundle-SymbolicName: org.eclipse.jubula.toolkit.provider.swing;singleton:=true
+Bundle-Version: 0.4.0
+Bundle-Activator: org.eclipse.jubula.toolkit.provider.swing.PluginStarter
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.jubula.toolkit.common,
+ org.eclipse.jubula.client.ui;resolution:=optional
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse Jubula
+Bundle-ClassPath: org.eclipse.jubula.toolkit.provider.swing.jar
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-BundleShape: jar

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Toolkit - GEF (Incubation)
+Bundle-SymbolicName: org.eclipse.jubula.toolkit.provider.rcp.gef;singleton:=true
+Bundle-Version: 0.4.0
+Bundle-Activator: org.eclipse.jubula.toolkit.provider.rcp.gef.PluginStarter
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.jubula.toolkit.common,
+ org.eclipse.jubula.toolkit.provider.rcp
+Bundle-Vendor: Eclipse Jubula
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: org.eclipse.jubula.toolkit.provider.rcp.gef.jar
+Eclipse-BundleShape: jar

@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Toolkit - SWT (Incubation)
+Bundle-SymbolicName: org.eclipse.jubula.toolkit.provider.swt;singleton:=true
+Bundle-Version: 0.4.0
+Bundle-Activator: org.eclipse.jubula.toolkit.provider.swt.PluginStarter
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.jubula.toolkit.common;visibility:=reexport,
+ org.eclipse.jubula.client.ui;resolution:=optional;visibility:=reexport
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse Jubula
+Bundle-ClassPath: org.eclipse.jubula.toolkit.provider.swt.jar
+Export-Package: org.eclipse.jubula.toolkit.provider.swt,
+ org.eclipse.jubula.toolkit.provider.swt.gui
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-BundleShape: jar

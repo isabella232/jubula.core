@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Toolkit - Abstract (Incubation)
+Bundle-SymbolicName: org.eclipse.jubula.toolkit.provider.base;singleton:=true
+Bundle-Version: 0.4.0
+Bundle-Activator: org.eclipse.jubula.toolkit.provider.base.PluginStarter
+Require-Bundle: org.eclipse.jubula.toolkit.common,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse Jubula
+Bundle-ClassPath: org.eclipse.jubula.toolkit.provider.base.jar
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-BundleShape: jar

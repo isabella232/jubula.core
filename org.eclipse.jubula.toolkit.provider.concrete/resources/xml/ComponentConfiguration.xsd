@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:include schemaLocation="../../../ToolkitSupportPlugin/resources/xml/CommonComponentConfiguration.xsd"/>
+  <xs:element name="compSystem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="configVersion"/>
+        <xs:element maxOccurs="unbounded" ref="concreteComponent"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="configVersion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="majorVersion"/>
+        <xs:element ref="minorVersion"/>
+        <xs:element ref="majorCustomVersion"/>
+        <xs:element ref="minorCustomVersion"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="majorVersion" type="xs:string"/>
+  <xs:element name="minorVersion" type="xs:string"/>
+  <xs:element name="majorCustomVersion" type="xs:string"/>
+  <xs:element name="minorCustomVersion" type="xs:string"/>
+  <xs:element name="concreteComponent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="defaultMapping"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="realizes"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="extends"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="action"/>
+      </xs:sequence>
+      <xs:attribute name="type" use="required" type="xs:ID"/>
+      <xs:attribute name="visible" default="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="true"/>
+            <xs:enumeration value="false"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="changed"/>
+      <xs:attribute name="deprecated">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="true"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

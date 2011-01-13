@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.eclipse.jubula.toolkit.common" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.eclipse.jubula.toolkit.common" id="monitoring" name="monitoring"/>
+      </appInfo>
+      <documentation>
+         [Enter description of this extension point.]
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+         <documentation>
+            This extension point stores data for profiling agents with monitoring functionality.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="monitoringAgent"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="monitoringAgent">
+      <annotation>
+         <documentation>
+            A monitoring agent can contain (0 - *) attributes.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="attribute"/>
+         </sequence>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The name will be displayed in the monitoring comboBox in JavaAutConfigComponent
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id will be stored in the AUTConfigMap and can be called via AutConfigConstants.MONITORING_AGENT_ID
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="attribute">
+      <annotation>
+         <documentation>
+            A monitoring attribute can contain (0 - *) attributes. An attribute has an id, a description, a type, a default value. The attribute &quot;render&quot; indicates wheter the attribute will be rendered or not.
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice>
+            <element ref="validator" minOccurs="0" maxOccurs="1"/>
+         </choice>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The id of the attribute. The id is also used as a key for the AUT-Config-Map.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The description will be rendered as a Label.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string" use="required">
+            <annotation>
+               <documentation>
+                  the type of the attribute indicates how the attribute will be rendered.
+
+ &quot;string&quot; will be rendered as a textfield.
+ 
+ &quot;boolean&quot; will be rendered as a checkbox.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="defaultvalue" type="string">
+            <annotation>
+               <documentation>
+                  The default value of the attribute.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="render" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  This attribute indicates whether this attribute will be rendered or not.
+true = The attribute will be rendered
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="infoBoobleText" type="string">
+            <annotation>
+               <documentation>
+                  This text will be rendered into a info bobble.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="validator">
+      <complexType>
+         <attribute name="validator" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.core.databinding.validation.IValidator"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         [Enter the first release in which this extension point appears.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+
+</schema>

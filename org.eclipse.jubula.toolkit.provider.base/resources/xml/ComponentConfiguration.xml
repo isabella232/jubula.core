@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<!-- CAUTION: don't format any entries, especially don't use line breaks!
+	The value of the formated item may contain formating characters like tabs or
+	newlines, making them unusable for class or data lookup!-->
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ComponentConfiguration.xsd">
+	<configVersion>
+		<majorVersion>4</majorVersion>
+		<minorVersion>0</minorVersion>
+		<majorCustomVersion>0</majorCustomVersion>
+		<minorCustomVersion>0</minorCustomVersion>
+	</configVersion>
+	
+	<abstractComponent type="guidancer.abstract.Widget">
+		<action name="CompSystem.ShowText" changed="1.36">
+			<method>gdShowText</method>
+			<param name="CompSystem.Text">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.TextSize">
+				<type>java.lang.Integer</type>
+				<defaultValue>14</defaultValue>
+			</param>
+			<param name="CompSystem.TimePerWord">
+				<type>java.lang.Integer</type>
+				<defaultValue>500</defaultValue>
+			</param>
+			<param name="CompSystem.WindowWidth">
+				<type>java.lang.Integer</type>
+				<defaultValue>250</defaultValue>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyExists" changed="1.23">
+			<method>gdVerifyExists</method>
+			<param name="CompSystem.IsExisting">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyEnabled" changed="1.3">
+			<method>gdVerifyEnabled</method>
+			<param name="CompSystem.IsEnabled">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyProperty" changed="1.3">
+			<method>gdVerifyProperty</method>
+			<param name="CompSystem.PropertyName">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.PropertyValue">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+		</action>
+		<action name="CompSystem.VerifyFocus" changed="1.3">
+			<method>gdVerifyFocus</method>
+			<param name="CompSystem.HasFocus">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.WaitForComponent" changed="1.18">
+			<method>gdWaitForComponent</method>
+			<param name="CompSystem.Timeout">
+				<type>java.lang.Integer</type>
+				<defaultValue>1000</defaultValue>
+			</param>
+			<param name="CompSystem.DelayAfterVisibility">
+				<type>java.lang.Integer</type>
+				<defaultValue>200</defaultValue>
+			</param>
+		</action>
+		<action name="CompSystem.Click" changed="1.26">
+			<method>gdClick</method>
+			<param name="CompSystem.ClickCount">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.ClickDirect" changed="1.4">
+			<method>gdClickDirect</method>
+			<param name="CompSystem.ClickCount">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupSelectByTextPathPositionNew" changed="2.1">
+			<method>gdPopupSelectByTextPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MenuPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupSelectByTextPathPosition" changed="1.12" deprecated="true">
+			<method>gdPopupSelectByTextPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.Units">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MenuPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupSelectByIndexPathNew" changed="2.1">
+			<method>gdPopupSelectByIndexPath</method>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupSelectByIndexPath" changed="1.4" deprecated="true">
+			<method>gdPopupSelectByIndexPath</method>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+		</action>
+		<action name="CompSystem.PopupSelectByTextPathNew" changed="2.1">
+			<method>gdPopupSelectByTextPath</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupSelectByTextPath" changed="1.12" deprecated="true">
+			<method>gdPopupSelectByTextPath</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupSelectByIndexPathPositionNew" changed="2.1">
+			<method>gdPopupSelectByIndexPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupSelectByIndexPathPosition" changed="1.3" deprecated="true">
+			<method>gdPopupSelectByIndexPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.Units">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifyEnabledByIndexpath" changed="2.1">
+			<method>gdPopupVerifyEnabledByIndexPath</method>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.IsEnabled">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifyEnabledByIndexpathPosition" changed="2.1">
+			<method>gdPopupVerifyEnabledByIndexPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.IsEnabled">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifyEnabledByTextpath" changed="2.1">
+			<method>gdPopupVerifyEnabledByTextPath</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IsEnabled">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifyEnabledByTextpathPosition" changed="2.1">
+			<method>gdPopupVerifyEnabledByTextPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IsEnabled">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifyExistsByIndexpath" changed="2.1">
+			<method>gdPopupVerifyExistsByIndexPath</method>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.IsExisting">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifyExistsByIndexpathPosition" changed="2.1">
+			<method>gdPopupVerifyExistsByIndexPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.IsExisting">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifyExistsByTextpath" changed="2.1">
+			<method>gdPopupVerifyExistsByTextPath</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IsExisting">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifyExistsByTextpathPosition" changed="2.1">
+			<method>gdPopupVerifyExistsByTextPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IsExisting">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifySelectedByIndexpath" changed="2.1">
+			<method>gdPopupVerifySelectedByIndexPath</method>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.IsSelected">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifySelectedByIndexpathPosition" changed="2.1">
+			<method>gdPopupVerifySelectedByIndexPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IndexPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.IsSelected">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifySelectedByTextpath" changed="2.1">
+			<method>gdPopupVerifySelectedByTextPath</method>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IsSelected">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.PopupVerifySelectedByTextpathPosition" changed="2.1">
+			<method>gdPopupVerifySelectedByTextPath</method>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.TextPath">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.IsSelected">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>3</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		
+		<action name="CompSystem.Drag" changed="2.0">
+			<method>gdDrag</method>
+			<param name="CompSystem.MouseButton">
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.ModifierSpecification">
+				<type>java.lang.String</type>
+				<defaultValue>none</defaultValue>
+				<valueSet combinable="true">
+					<element name="CompSystem.None" value="none"/>
+					<element name="CompSystem.Shift" value="shift"/>
+					<element name="CompSystem.Ctrl" value="control"/>
+					<element name="CompSystem.Alt" value="alt"/>
+					<element name="CompSystem.Meta" value="meta"/>
+					<element name="CompSystem.Cmd" value="cmd"/>
+					<element name="CompSystem.Mod" value="mod"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>			
+		</action>
+		
+		<action name="CompSystem.Drop" changed="2.0">
+			<method>gdDrop</method>
+						<param name="CompSystem.XPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.XUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.YPos">
+				<type>java.lang.Integer</type>
+				<defaultValue>50</defaultValue>
+			</param>
+			<param name="CompSystem.YUnits">
+				<type>java.lang.String</type>
+				<defaultValue>percent</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Percent" value="percent"/>
+					<element name="CompSystem.Pixel" value="pixel"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.DelayBeforeDrop">
+				<type>java.lang.Integer</type>
+				<defaultValue>100</defaultValue>
+			</param>
+		</action>
+	</abstractComponent>
+	
+	<abstractComponent type="guidancer.abstract.TextInputSupport">
+		<realizes>guidancer.abstract.TextVerifiable</realizes>
+		<action name="CompSystem.VerifyEditable" changed="1.26">
+			<method>gdVerifyEditable</method>
+			<param name="CompSystem.IsEditable">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.InputText" changed="1.3">
+			<method>gdReplaceText</method>
+			<param name="CompSystem.Text">
+				<type>java.lang.String</type>
+			</param>
+		</action>
+		<action name="CompSystem.InputTextDirect" changed="1.3">
+			<method>gdInputText</method>
+			<param name="CompSystem.Text">
+				<type>java.lang.String</type>
+			</param>
+		</action>
+	</abstractComponent>
+	
+	<abstractComponent type="guidancer.abstract.TextVerifiable">
+		<realizes>guidancer.abstract.Widget</realizes>
+		<action name="CompSystem.VerifyText" changed="1.11">
+			<method>gdVerifyText</method>
+			<param name="CompSystem.Text">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator">
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.ReadValue" changed="1.3">
+			<method>gdReadValue</method>
+			<param name="CompSystem.Variable">
+				<type>guidancer.datatype.Variable</type>
+			</param>
+			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
+		</action>
+	</abstractComponent>
+	
+	<abstractComponent type="guidancer.abstract.ButtonComp">
+		<realizes>guidancer.abstract.TextVerifiable</realizes>
+		<action name="CompSystem.VerifySelected" changed="1.26">
+			<method>gdVerifySelected</method>
+			<param name="CompSystem.IsSelected">
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+	</abstractComponent>
+
+</compSystem>

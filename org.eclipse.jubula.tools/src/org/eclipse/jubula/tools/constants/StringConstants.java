@@ -1,0 +1,104 @@
+/*******************************************************************************
+ * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package org.eclipse.jubula.tools.constants;
+
+
+/**
+ * @author BREDEX GmbH
+ * @created Nov 19, 2010
+ */
+public interface StringConstants {
+    /**
+     * <code>EMPTY</code>
+     */
+    public static final String EMPTY = ""; //$NON-NLS-1$
+
+    /**
+     * <code>TAB</code>
+     */
+    public static final String TAB = "\t"; //$NON-NLS-1$
+
+    /**
+     * <code>SPACE</code>
+     */
+    public static final String SPACE = " "; //$NON-NLS-1$
+
+    /**
+     * <code>MINUS</code>
+     */
+    public static final String MINUS = "-"; //$NON-NLS-1$
+
+    /**
+     * <code>NEWLINE</code>
+     */
+    public static final String NEWLINE = "\n"; //$NON-NLS-1$ 
+
+    /**
+     * This is a single "double quote" --> "
+     * <code>QUOTE</code>
+     */
+    public static final String QUOTE = "\""; //$NON-NLS-1$
+    
+    /**
+     * <code>SLASH</code>
+     */
+    public static final String SLASH = "/"; //$NON-NLS-1$
+
+    /**
+     * <code>SEMICOLON</code>
+     */
+    public static final String SEMICOLON = ";"; //$NON-NLS-1$
+    
+    /**
+     * <code>COLON</code>
+     */
+    public static final String COLON = ":"; //$NON-NLS-1$
+    
+    /**
+     * <code>DOT</code>
+     */
+    public static final String DOT = "."; //$NON-NLS-1$
+    
+    /**
+     * <code>LEFT_PARENTHESES "("</code>
+     */
+    public static final String LEFT_PARENTHESES = "("; //$NON-NLS-1$ 
+    
+    /**
+     * <code>RIGHT_PARENTHESES ")"</code>
+     */
+    public static final String RIGHT_PARENTHESES = ")"; //$NON-NLS-1$
+
+    /**
+     * <code>LEFT_BRACKET "["</code>
+     */
+    public static final String LEFT_BRACKET = "["; //$NON-NLS-1$ 
+    
+    /**
+     * <code>RIGHT_BRACKET "]"</code>
+     */
+    public static final String RIGHT_BRACKET = "]"; //$NON-NLS-1$
+    
+    /**
+     * <code>UNDERLINE "_"</code>
+     */
+    public static final String UNDERLINE = "_"; //$NON-NLS-1$
+    
+    /**
+     * <code>EQUALS_SIGN "="</code>
+     */
+    public static final String EQUALS_SIGN = "="; //$NON-NLS-1$
+    
+    /**
+     * <code>EXCLAMATION_MARK "!"</code>
+     */
+    public static final String EXCLAMATION_MARK = "!"; //$NON-NLS-1$
+}

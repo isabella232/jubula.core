@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Toolkit Support (Incubation)
+Bundle-SymbolicName: org.eclipse.jubula.toolkit.common;singleton:=true
+Bundle-Version: 0.4.0
+Bundle-Activator: org.eclipse.jubula.toolkit.common.PluginStarter
+Require-Bundle: org.eclipse.ui;visibility:=reexport,
+ org.eclipse.core.runtime,
+ org.eclipse.jubula.tools;visibility:=reexport,
+ org.eclipse.core.databinding
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.jubula.toolkit.common,
+ org.eclipse.jubula.toolkit.common.businessprocess,
+ org.eclipse.jubula.toolkit.common.exception,
+ org.eclipse.jubula.toolkit.common.monitoring,
+ org.eclipse.jubula.toolkit.common.utils,
+ org.eclipse.jubula.toolkit.common.xml.businessprocess
+Bundle-Vendor: Eclipse Jubula
+Bundle-ClassPath: org.eclipse.jubula.toolkit.common.jar,
+ .
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-BundleShape: jar
