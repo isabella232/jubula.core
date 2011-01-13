@@ -1,0 +1,114 @@
+<?xml version="1.0"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<project name="SimpleAdderSWT" default="build" basedir=".">
+
+	<!-- 
+		application specific 
+		*********************
+		app.name 	the name of the application
+					which is used for directory naming.
+					you can use projects name in 90%.
+	-->
+	<property name="jarname" value="SimpleAdderSWT"/>
+
+	<!-- 
+		general definitions
+		********************
+		
+		src			the name of the diretory(starting at basedir)
+					where to find project source files
+					
+		build		the name of the diretory(starting at basedir)
+					where to compile to.
+
+		classes		the name of the diretory(starting at basedir)
+					where to put compiled classes to.
+					
+		jars		the name of the diretory(starting at basedir)
+					where to put generated jars to.
+					
+		lib			the name of the diretory(starting at basedir)
+					where to find libaries, needed for
+					compilation.
+	-->
+	<property name="src" 			value="src"/>
+	<property name="build" 			value="build"/>
+	<property name="classes"		value="build/classesAUT"/>
+	<property name="jars" 			value="build/jars"/>
+	<property name="lib" 			value="lib"/>
+
+	<!-- JARs, DLLs -->
+	<property name="swtLibWin32" value="${lib}/win32-win32-x86/swt.jar"/>
+	<property name="swtLibGtk" value="${lib}/gtk-linux-x86/swt.jar"/>
+
+	<!-- main class -->
+	<property name="mainClass" value="org.eclipse.jubula.examples.aut.adder.swt.SimpleAdderSWT"/>
+	<property name="javac" value="javac"/>
+	<property name="javac.debug" value="on"/>
+
+	<!-- 
+		Targets
+		********
+		
+		all				calling the targets clean and compile.
+						So "all" is replacing compiled files
+
+		clean			deletes the build directory
+	
+		compile			compiles a project into the $build directory
+		
+		jar				creates one or more jar files from the project.
+
+		jar-src			creates one or more source jar files .
+		
+	-->
+	<target name="build" depends="clean, compile, jar, addLibs" />
+
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${build}" />
+		<mkdir dir="${classes}"/>
+		<mkdir dir="${jars}"/>
+		<javac srcdir="${src}" destdir="${classes}" debug="${javac.debug}" fork="true" executable="${javac}">
+			<classpath>
+				<pathelement path="${swtLibWin32}"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="jar" depends="jarWin32, jarGtk">
+	</target>
+
+	<target name="jarWin32" depends="compile">
+		<jar basedir="${classes}" destfile="${jars}/${jarname}Win32.jar">
+			<manifest>
+				<attribute name="Main-Class" value="${mainClass}"/>
+				<attribute name="Class-Path" value="${swtLibWin32}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="jarGtk" depends="compile">
+		<jar basedir="${classes}" destfile="${jars}/${jarname}Gtk.jar">
+			<manifest>
+				<attribute name="Main-Class" value="${mainClass}"/>
+				<attribute name="Class-Path" value="${swtLibGtk}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="addLibs">
+		<copy todir="${jars}/lib">
+			<fileset dir="${lib}" />
+		</copy>
+	</target>
+</project>
