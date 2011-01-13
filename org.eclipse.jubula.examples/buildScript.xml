@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<project name="com.bredexsw.guidancer.examples" default="build">
+
+	<property name="build.dir"						value="build"/>
+	<property name="examples.aut.dir"				value="${build.dir}/AUTs"/>
+	<property name="examples.projects.dir"			value="${build.dir}/projects"/>
+	<property name="examples.scripts.dir"			value="${build.dir}/scripts"/>
+	<property name="examples.library.dir"			value="${build.dir}/testCaseLibrary"/>
+	<property name="examples.development.dir"	    value="${build.dir}/development"/>
+	
+	<property name="examples.aut.simpleAdder.dir"	value="${examples.aut.dir}/SimpleAdder"/>
+
+	<property name="SimpleAdder.Swing"	value="org.eclipse.jubula.examples.aut.adder.swing"/>
+	<property name="SimpleAdder.SWT"	value="org.eclipse.jubula.examples.aut.adder.swt"/>
+	<property name="SimpleAdder.Web"	value="org.eclipse.jubula.examples.aut.adder.html"/>
+	<property name="DvdTool"			value="org.eclipse.jubula.examples.aut.dvdtool"/>
+	<property name="Meters"				value="com.bredexsw.guidancer.examples.aut.meters"/>
+	<property name="GEFExample"         value="com.bredexsw.guidancer.examples.aut.gef"/>
+	
+	<property name="ExampleSwingExtensionClient" value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
+	<property name="ExampleSwingExtensionServer" value="org.eclipse.jubula.examples.extension.swing.rc"/>
+	<property name="ExampleSwingExtensionAUT"    value="org.eclipse.jubula.examples.extension.swing.aut"/>
+	
+	
+	<target name="build"   depends="clean, 
+									createDirStructure,
+									releaseSimpleAdderSwing,
+									releaseSimpleAdderSWT,
+									releaseSimpleAdderWeb,
+									releaseDvdTool,
+									releaseMeters,
+                                    releaseGEFExample,
+                                    releaseProjects,
+									releaseLibrary,
+									releaseScripts,
+									releaseWorkspace,
+									releaseDevelopment">
+		<antcall target="markAsExecutable" />
+	</target>
+	
+	<target name="createDirStructure">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${examples.aut.dir}"/>
+		<mkdir dir="${examples.projects.dir}"/>
+		<mkdir dir="${examples.scripts.dir}"/>
+		<mkdir dir="${examples.library.dir}"/>
+		<mkdir dir="${examples.development.dir}"/>
+	</target>
+
+	<target name="releaseSimpleAdderSwing">
+		<ant dir="../${SimpleAdder.Swing}" antfile="buildScript.xml" target="build" inheritAll="false" />
+		<mkdir dir="${examples.aut.simpleAdder.dir}/swing"/>
+		<copy todir="${examples.aut.simpleAdder.dir}/swing">
+			<fileset dir="../${SimpleAdder.Swing}/build/jars/"/>
+		</copy>
+		<copy todir="${examples.aut.simpleAdder.dir}/swing">
+			<fileset dir="../${SimpleAdder.Swing}/resources/launcher"/>
+		</copy>
+		<antcall target="markAsExecutable" />
+	</target>
+	
+	<target name="releaseSimpleAdderSWT">
+		<ant dir="../${SimpleAdder.SWT}" antfile="buildScript.xml" target="build" inheritAll="false" />
+		<mkdir dir="${examples.aut.simpleAdder.dir}/swt"/>
+		<copy todir="${examples.aut.simpleAdder.dir}/swt">
+			<fileset dir="../${SimpleAdder.SWT}/build/jars/"/>
+		</copy>
+		<copy todir="${examples.aut.simpleAdder.dir}/swt">
+			<fileset dir="../${SimpleAdder.SWT}/resources/launcher"/>
+		</copy>
+		<antcall target="markAsExecutable" />
+	</target>
+
+	<target name="releaseSimpleAdderWeb">
+		<mkdir dir="${examples.aut.simpleAdder.dir}/html"/>
+		<copy todir="${examples.aut.simpleAdder.dir}/html">
+			<fileset dir="../${SimpleAdder.Web}/resources/aut"/>
+		</copy>
+	</target>
+	
+	<target name="releaseDvdTool">
+		<ant dir="../${DvdTool}" antfile="buildScript.xml" target="build" inheritAll="false" />
+		<mkdir dir="${examples.aut.dir}/DVDTool"/>
+		<copy todir="${examples.aut.dir}/DVDTool">
+			<fileset dir="../${DvdTool}/build/jars/"/>
+		</copy>
+		<copy todir="${examples.aut.dir}/DVDTool">
+			<fileset dir="../${DvdTool}/resources/launcher"/>
+		</copy>
+		<antcall target="markAsExecutable" />
+	</target>
+	
+	<target name="releaseMeters">
+		<ant dir="../${guidancerWS}/${Meters}" antfile="buildScript.xml" target="build" inheritAll="false" />
+		<copy todir="${examples.aut.dir}">
+			<fileset dir="../${guidancerWS}/${Meters}/build"/>
+		</copy>
+		<chmod file="${examples.aut.dir}/meters/meters-lin" perm="775"/>
+	</target>
+	
+	<target name="releaseGEFExample">
+        <ant dir="../${guidancerWS}/${GEFExample}" antfile="buildScript.xml" target="build" inheritAll="false" />
+        <copy todir="${examples.aut.dir}">
+            <fileset dir="../${guidancerWS}/${GEFExample}/build"/>
+        </copy>
+        <chmod file="${examples.aut.dir}/GEFExample/GEFExample-lin" perm="775"/>
+    </target>
+	
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<ant dir="../${SimpleAdder.Swing}" antfile="buildScript.xml" target="clean" inheritAll="false" />
+		<ant dir="../${SimpleAdder.SWT}" antfile="buildScript.xml" target="clean" inheritAll="false" />
+		<ant dir="../${DvdTool}" antfile="buildScript.xml" target="clean" inheritAll="false" />
+		<ant dir="../${guidancerWS}/${Meters}" antfile="buildScript.xml" target="clean" inheritAll="false" />
+		<ant dir="../${guidancerWS}/${GEFExample}" antfile="buildScript.xml" target="clean" inheritAll="false" />
+		<ant dir="../${ExampleSwingExtensionAUT}" antfile="buildScript.xml" target="clean" inheritAll="false" />
+		<ant dir="../${ExampleSwingExtensionServer}" antfile="buildScript.xml" target="clean" inheritAll="false" />
+	</target>
+
+	<target name="markAsExecutable">
+		<chmod dir="${build.dir}" perm="775" includes="**/*.sh"/>
+	</target>
+	
+	<target name="releaseProjects">
+		<copy todir="${examples.projects.dir}">
+			<fileset dir="resources/projects/samples"/>
+		</copy>
+	</target>
+	
+	<target name="releaseWorkspace">
+		<copy todir="${build.dir}">
+			<fileset dir="resources/workspace"/>
+		</copy>
+	</target>
+
+	<target name="releaseExampleSwingExtensionAUT">
+		<ant dir="../${ExampleSwingExtensionAUT}" antfile="buildScript.xml" target="build" inheritAll="false" />
+		<mkdir dir="${examples.development.dir}/extension/AUT"/>
+		<copy todir="${examples.development.dir}/extension/AUT">
+			<fileset dir="../${ExampleSwingExtensionAUT}/build/jars/"/>
+		</copy>
+	</target>
+	
+	<target name="releaseExampleSwingServerExtension">
+		<copy todir="../${ExampleSwingExtensionServer}/lib" overwrite="true">
+			<fileset file="${release}/server/lib/org.eclipse.jubula.rc.common.jar"/>
+			<fileset file="${release}/server/lib/org.eclipse.jubula.rc.swing.jar"/>
+			<fileset file="${release}/server/lib/org.eclipse.jubula.tools.jar"/>
+		</copy>
+		
+		<mkdir dir="${examples.development.dir}/extension/bin"/>
+		<ant dir="../${ExampleSwingExtensionServer}" antfile="buildScript.xml" target="jar" inheritAll="false" />
+		<mkdir dir="${examples.development.dir}/extension/bin"/>
+		<copy todir="${examples.development.dir}/extension/bin">
+			<fileset dir="../${ExampleSwingExtensionServer}/build/jars/"/>
+		</copy>
+	</target>
+	
+	<target name="releaseDevelopment" depends="releaseExampleSwingExtensionAUT, releaseExampleSwingServerExtension">
+		<copy todir="${examples.development.dir}">
+			<fileset dir="resources/development"/>
+		</copy>
+		<mkdir dir="${examples.development.dir}/extension"/>
+
+		<property name="extensionSourceDir" value="${examples.development.dir}/extension/src"/>
+		<mkdir dir="${extensionSourceDir}"/>
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingClientExtension.zip">
+			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, buildScript.xml"/>
+		</zip>
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingServerExtension.zip">
+			<zipfileset dir="../${ExampleSwingExtensionServer}" prefix="${ExampleSwingExtensionServer}" excludes="build, build/**, buildScript.xml"/>
+		</zip>
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingAUT.zip">
+			<zipfileset dir="../${ExampleSwingExtensionAUT}" prefix="${ExampleSwingExtensionAUT}" />
+		</zip>
+	</target>
+
+	<target name="releaseLibrary">
+		<copy todir="${examples.library.dir}">
+			<fileset dir="resources/projects/library"/>
+		</copy>
+	</target>
+	
+    <target name="releaseScripts">
+    	<copy todir="${examples.scripts.dir}">
+			<fileset dir="resources/scripts"/>
+		</copy>
+    </target>
+
+</project>
+
+
