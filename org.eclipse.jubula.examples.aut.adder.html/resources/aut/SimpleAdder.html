@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>
+      SimpleAdder
+    </title>
+    <script type="text/javascript">
+<!--
+      // sums 2 given values
+      function calc () {
+        var x = window.document.simpleadder.value1.value;
+        var y = window.document.simpleadder.value2.value;
+        var xInt = parseInt(x);
+        var yInt = parseInt(y);
+        var result = xInt + yInt;
+        
+        if (isNaN(result) || !isNumber(x) || !isNumber(y)) {
+          window.document.simpleadder.result.value = "#error";
+        } else {
+          if (xInt == 17 && yInt == 4) {
+            window.document.simpleadder.result.value = "jackpotter";
+          } else {
+            window.document.simpleadder.result.value = result;
+          }
+        }
+      }
+
+      // create ResetBtn
+      function createResetBtn(tdid) {
+        var tagid = document.getElementById(tdid);
+        if (!document.getElementById('reset')) {     
+            var resetBtn = document.createElement("input");
+            resetBtn.setAttribute("type", "reset");
+            resetBtn.className = "button"; 
+            resetBtn.id = "reset";
+            resetBtn.setAttribute("value", "c");
+            resetBtn.onclick = performDelete;
+            tagid.appendChild(resetBtn);
+        }
+        return true;
+      }
+
+      // deletes the ResetBtn
+      function delResetBtn() {
+        var tagid = document.getElementById('resetTag');
+        var resetbtn = document.getElementById('reset');
+
+        window.document.simpleadder.value1.value = "";
+        window.document.simpleadder.value2.value = "";
+        window.document.simpleadder.result.value = "";
+        
+        tagid.removeChild(resetbtn);
+
+        return true;
+      } 
+
+      // neccessary function to perform delResetBtn in IE
+      function performDelete() {
+        delResetBtn();return true;
+      }
+      
+      // only digits are allowed and a leading "-" 
+      function isNumber (value) {
+        var chars = "0123456789";
+        for (var i = 0; i < value.length; i++)
+          if (chars.indexOf(value.charAt(i)) < 0) {
+            if (!(value.charAt(i) == "-" && i == 0)) {
+              return false;
+            }
+          }
+        return true;
+      }
+    -->
+    </script>
+    <style type="text/css">
+.button {  width:60px; text-align:center;
+               font-family:System,sans-serif;
+               font-size:100%; }
+    .field { width:70px; text-align:right;
+               font-family:System,sans-serif;
+               font-size:100%; }
+    .text { text-align:right;
+               font-family:System,sans-serif;
+               font-size:100%; }
+    .adder { background-color:#AAAAAA;}
+    body { background-color:#CCCCCC;}
+    A:link {
+    color: #9999CC;
+    text-decoration: none; 
+    }
+    A:visited { 
+    color: #9999CC;
+    text-decoration: none;
+    }
+    A:hover {
+    text-decoration:none;
+    color: #CC0000; 
+    }
+    </style>
+  </head>
+
+  <body>
+    <table width="100%" style="height: 100%;" align="center">
+      <tr>
+        <td align="center">
+          <form name="simpleadder" action="" onsubmit=
+          "calc();return false;">
+            <h1>
+              Simple Adder
+            </h1>
+            <table class="adder" cellpadding="5">
+              <tr>
+                <td>
+                  &nbsp;
+                </td>
+                <td>
+                  <input type="text" name="value1" id="value1"
+                  align="right" class="field" onkeypress=
+                  "return createResetBtn('resetTag')">
+                </td>
+                <td>
+                  value1
+                </td>
+              </tr>
+              <tr>
+                <td class="text">
+                  +
+                </td>
+                <td>
+                  <input type="text" name="value2" id="value2"
+                  align="right" class="field" onkeypress=
+                  "return createResetBtn('resetTag')">
+                </td>
+                <td>
+                  value2
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3">
+                  <hr>
+                </td>
+              </tr>
+              <tr>
+                <td width="30">
+                  <input type="submit" class="button" id="submit"
+                  value="=" onclick="return createResetBtn('resetTag')">
+                </td>
+                <td>
+                  <input type="text" name="result" id="result"
+                  align="right" class="field" readonly>
+                </td>
+                <td>
+                  result
+                </td>
+              </tr>
+              <tr>
+                <td width="30" id="resetTag"></td>
+                <td>
+                  &nbsp;
+                </td>
+                <td>
+                  &nbsp;
+                </td>
+              </tr>
+            </table>
+          </form><small><a href="http://www.eclipse.org/jubula">Visit
+          Jubula</a></small>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
