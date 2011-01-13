@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet
+      title="Keywords for selecting from context menus">
+   <intro>
+      <description>
+         Your tests will most likely have to select from context  menus quite frequently. The next few steps show you how to structure your test in the best way to achieve this.
+      </description>
+   </intro>
+   <item
+         title="Edit the &quot;Select item from context menu on tree node&quot; Test Case">
+      <description>
+         Open the Test Case Editor for the &quot;Select item from context menu on tree node&quot; Test Case.
+      </description>
+      <subitem
+            label="In the &quot;Test Case name&quot; field in the properties view, change the name to &quot;Add Category via context menu in tree&quot;">
+      </subitem>
+      <subitem
+            label="In the Test Case Editor, select the &quot;ub_tre_selectNode_byTextpath&quot; Test Case.">
+      </subitem>
+      <subitem
+            label="In the field for the textpath parameter, enter: =TEXTPATH_TREE and press enter">
+      </subitem>
+      <subitem
+            label="You will see that the parameter &quot;TEXTPATH_TREE&quot; has appeared next to the Test Case name in the Editor and in the Test Case Browser.">
+      </subitem>
+      <subitem
+            label="When you reuse this Test Case, you will have to enter the textpath to the tree node you want to select. The Test Case has become more reusable (you can use it for any tree node), but you don&apos;t have to enter the path in the context menu each time (the Test Case is specifically for the Add category function).">
+      </subitem>
+   </item>
+</cheatsheet>

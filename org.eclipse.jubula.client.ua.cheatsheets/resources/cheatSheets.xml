@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Creating your first test">
+   <intro>
+      <description>
+         This cheat sheet guides you through the steps to create a Project containing a test which you can execute.
+
+The application to be tested is a small calculator in which we can enter two numbers, click an &quot;add&quot; button, and see the result.
+      </description>
+   </intro>
+   <item title="Create a Project" dialog="true" skip="false">
+      <description>
+         The following steps show you how to create a Project.
+      </description>
+      <subitem label="Select: Project &gt; New" skip="false">
+      </subitem>
+      <subitem label="Enter &quot;SimpleAdder&quot; as the Project Name" skip="false">
+      </subitem>
+      <subitem label="Choose &quot;concrete&quot; as the toolkit" skip="false">
+      </subitem>
+      <subitem label="Choose &quot;English (United States) as the Project language" skip="false">
+      </subitem>
+      <subitem label="Click &quot;Next&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Define and configure an AUT" dialog="true" skip="false">
+      <description>
+         The next steps show you how to add an AUT to your Project and how to configure it so that GUIdancer can start it.
+      </description>
+      <subitem label="Enter &quot;Adder&quot; as the AUT name" skip="false">
+      </subitem>
+      <subitem label="Choose &quot;Swing&quot; as the toolkit, because the AUT has a Swing GUI." skip="false">
+      </subitem>
+      <subitem label="Click &quot;Next&quot;" skip="false">
+      </subitem>
+      <subitem label="Select which AUT Starter to use.  (Localhost is the default setting)" skip="false">
+      </subitem>
+      <subitem label="Enter the jar file name:  ”C:\Program Files\GUIdancer\aut\adder\adder.jar&quot;" skip="false">
+      </subitem>
+      <subitem label="Click &quot;Finish&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Import the Test Case library" dialog="true" skip="false">
+      <description>
+         The next steps show you how to import the installed library of Test Cases.
+      </description>
+      <subitem label="Select: Project &gt; Import" skip="false">
+      </subitem>
+      <subitem label="Browse to: &quot;guidancer/aut/testCaseLibrary&quot;" skip="false">
+      </subitem>
+      <subitem label="Select &quot;unbound_modules_concrete_&lt;versionnumber&gt;.xml&quot;" skip="false">
+      </subitem>
+      <subitem label="Click OK in the file chooser" skip="false">
+      </subitem>
+      <subitem skip="false">
+      </subitem>
+   </item>
+   <item title="Add the Test Case library to the Project" dialog="true" skip="false">
+      <description>
+         The next steps show you how to reuse the imported Test Case library in your Project to make test creation easier and more structured.
+      </description>
+      <subitem label="Select: Project &gt; Settings" skip="false">
+      </subitem>
+      <subitem label="Select &quot;Used Projects&quot;" skip="false">
+      </subitem>
+      <subitem label="Select the highest version of &quot;unbound_modules_concrete.xml&quot;" skip="false">
+      </subitem>
+      <subitem label="Click the right arrow to reuse this Project in the currently opened Project" skip="false">
+      </subitem>
+      <subitem label="Click OK" skip="false">
+      </subitem>
+      <subitem label="The reused library of Test Cases appears in the Test Case Browser. It is grayed out because it is a reused Project and cannot be edited here." skip="false">
+      </subitem>
+   </item>
+   <item title="Create a Test Case" dialog="true" skip="false">
+      <description>
+         Now you will create a Test Case to make the program perform an addition and check the result.
+
+Test Cases are reusable modules. 
+
+Note that the following steps are all completed based on the requirements for the AUT - we are not dependent on the AUT to create tests.
+      </description>
+      <subitem label="In the Test Case Browser, right-click on the &quot;Test Cases&quot; node and select: New &gt; Test Case from the context-sensitive menu" skip="false">
+      </subitem>
+      <subitem label="Enter &quot;PerformAddition&quot; as the Test Case name." skip="false">
+      </subitem>
+      <subitem label="Click OK" skip="false">
+      </subitem>
+      <subitem label="The Test Case you created appears in the Test Case Browser." skip="false">
+      </subitem>
+   </item>
+   <item title="Create a Test Step" dialog="true" skip="false">
+      <description>
+         Test Steps are the smallest unit in GUIdancer. A Test Step consists of three pieces of information: the graphical component to be tested, the action to perform on the component, and the data that the action needs.
+      </description>
+      <subitem label="Double-click on the Test Case you just created to open the Test Case Editor" skip="false">
+      </subitem>
+      <subitem label="In the Test Case Editor, right click on the Test Case and select: Add &gt; New Test Step" skip="false">
+      </subitem>
+      <subitem label="Enter &quot;Enter value one&quot; as the Test Step name" skip="false">
+      </subitem>
+      <subitem label="Select &quot;Component with Text Input&quot; as the component.   The first thing we want the test to do is to enter a value into a field in the program. &quot;Component with Text Input&quot; covers all possibilities for components we can enter text into." skip="false">
+      </subitem>
+      <subitem label="Enter &quot;adder_value1&quot; as the component name.  A component name is the tester&apos;s name for a graphical component. It is used later to map the test specification to the actual AUT." skip="false">
+      </subitem>
+      <subitem label="Select &quot;Replace Text&quot; as the action.   This action will perform 3 clicks in the field and then enter the text value specified." skip="false">
+      </subitem>
+      <subitem label="Click OK" skip="false">
+      </subitem>
+      <subitem label="The Test Step appears underneath the Test Case in the editor" skip="false">
+      </subitem>
+      <subitem label="In the Properties View, enter &quot;=VALUE1&quot; (without the quotes) into the &quot;parameter&quot; field and press enter.   This is a reference. The parameter value will be entered later. You can see the referenced parameter next to the Test Case in the editor. This makes the Test Case more reusable." skip="false">
+      </subitem>
+      <subitem label="Save the editor" skip="false">
+      </subitem>
+   </item>
+   <item title="Add reused Test Cases" dialog="true" skip="false">
+      <description>
+         Test Step creation is one way of creating tests. However, GUIdancer&apos;s strength is in reusability. To help with this, you can use the library of reused Test Cases we imported.
+      </description>
+      <subitem label="In the Test Case Browser, open the category: basic &gt; Component with Text Input &gt; Replace Text" skip="false">
+      </subitem>
+      <subitem label="Drag the Test Case that is in this category and drop it into the Test Case Editor, underneath the Test Step you just created." skip="false">
+      </subitem>
+      <subitem label="In the Properties View, enter &quot;=VALUE2&quot; into the &quot;parameter field&quot; and press enter." skip="false">
+      </subitem>
+      <subitem label="In the Component Names View, enter &quot;adder_value2&quot; in the &quot;new name&quot; field.   This is because the library of Test Cases all have very general component names. To make object mapping easier later, it is better to have meaningful component names." skip="false">
+      </subitem>
+      <subitem label="In the Test Case Browser, open the category: basic &gt; graphics component &gt; Click" skip="false">
+      </subitem>
+      <subitem label="Drag the &quot;ub_grc_click&quot; Test Case into the Test Case Editor." skip="false">
+      </subitem>
+      <subitem label="Enter &quot;1&quot; as the click count and &quot;1&quot; as the mouse button (1 is the left mouse button)." skip="false">
+      </subitem>
+      <subitem label="In the Component Names View, enter &quot;equalsButton&quot; in the &quot;new name&quot; field." skip="false">
+      </subitem>
+      <subitem label="In the Test Case Browser, open the category: basic &gt; component with text &gt; check text" skip="false">
+      </subitem>
+      <subitem label="Drag the &quot;ub_ct_checkText&quot; Test Case into the Test Case Editor." skip="false">
+      </subitem>
+      <subitem label="In the Properties View, enter &quot;=RESULT&quot; and press enter." skip="false">
+      </subitem>
+      <subitem label="In the Component Names View, enter &quot;resultField&quot; in the &quot;new name&quot; field." skip="false">
+      </subitem>
+      <subitem label="Save the editor." skip="false">
+      </subitem>
+      <subitem label="You now have a Test Case which will enter any two values into two fields, click the &quot;add&quot; button and check the result." skip="false">
+      </subitem>
+   </item>
+   <item title="Add data" dialog="true" skip="false">
+      <description>
+         Now that the test specification is ready, data can be added to the Test Case.
+      </description>
+      <subitem label="In the Test Case Editor, click on the &quot;PerformAddition&quot; Test Case." skip="false">
+      </subitem>
+      <subitem label="In the Data Sets View, enter &quot;1&quot; under the VALUE1 heading. Enter &quot;2&quot; under the VALUE2 heading. And enter &quot;3&quot; under the RESULT heading.   This creates one data set which tests that the value &quot;3&quot; is given when &quot;1&quot; and &quot;2&quot; are added." skip="false">
+      </subitem>
+      <subitem label="In the Data Sets View, click &quot;Add&quot; and enter another set of data to test (e.g. 5,6,11)" skip="false">
+      </subitem>
+      <subitem label="Save the editor." skip="false">
+      </subitem>
+   </item>
+   <item title="Create a Test Suite" dialog="true" skip="false">
+      <description>
+         Test Suites are the executable units in GUIdancer.
+      </description>
+      <subitem label="In the Test Suite Browser, right click and select: New &gt; Test Suite from the context-sensitive menu." skip="false">
+      </subitem>
+      <subitem label="Enter &quot;TestAdder&quot; as the Test Suite name." skip="false">
+      </subitem>
+      <subitem label="Click OK." skip="false">
+      </subitem>
+      <subitem label="Double click on the Test Suite you just created." skip="false">
+      </subitem>
+      <subitem label="Drag the &quot;PerformAddition&quot; Test Case from the Test Case Browser into the Test Suite Browser." skip="false">
+      </subitem>
+      <subitem label="Save the editor." skip="false">
+      </subitem>
+   </item>
+   <item title="Object mapping" dialog="true" skip="false">
+      <description>
+         Now the test is almost ready. The specification is done, and data have been added. The last step is to join the specification with the actual AUT. <br/>
+This step is called object mapping, and it is the first time that the AUT is required.
+      </description>
+      <subitem label="Start the AUT Starter via the start menu." skip="false">
+      </subitem>
+      <subitem label="Connect to the AUT Starter using the toolbar button." skip="false">
+      </subitem>
+      <subitem label="Start the AUT using the toolbar button." skip="false">
+      </subitem>
+      <subitem label="In the Test Suite Editor, right click on the Test Suite and select: open with &gt; object mapping editor." skip="false">
+      </subitem>
+      <subitem label="In the object mapping editor, you can see all the component names you used in this Test Suite." skip="false">
+      </subitem>
+      <subitem label="Start the object mapping mode using the toolbar button." skip="false">
+      </subitem>
+      <subitem label="Switch to the AUT." skip="false">
+      </subitem>
+      <subitem label="Hover over the top text field. It will have a green border. Press Ctrl+Shift+A to &quot;collect&quot; the component." skip="false">
+      </subitem>
+      <subitem label="Check in the object mapping editor that this component (technical name) has been collected." skip="false">
+      </subitem>
+      <subitem label="In the AUT, collect the second text field in the same way. Then collect the equals button and the result field." skip="false">
+      </subitem>
+      <subitem label="In the object mapping editor, take the technical name for the first text field and drag it onto your component name for the first text field (adder_value1)." skip="false">
+      </subitem>
+      <subitem label="Repeat this process for the other technical names. In this way, you tell GUIdancer which components to test in your specification." skip="false">
+      </subitem>
+      <subitem label="Stop the object mapping mode using the toolbar button." skip="false">
+      </subitem>
+      <subitem label="Save the editor." skip="false">
+      </subitem>
+   </item>
+   <item title="Execute the test" dialog="true" skip="false">
+      <description>
+         The test is now ready to be executed.<br/> Because this test will run locally, do not move the mouse during the test.
+      </description>
+      <subitem label="Start the Test Suite using the button on the toolbar." skip="false">
+      </subitem>
+      <subitem label="In the dialog, choose to switch to the execution perspective." skip="false">
+      </subitem>
+      <subitem label="Wait for the test to end." skip="false">
+      </subitem>
+   </item>
+</cheatsheet>

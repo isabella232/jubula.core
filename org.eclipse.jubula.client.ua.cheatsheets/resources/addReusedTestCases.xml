@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Add reused Test Cases">
+   <intro>
+      <description>
+         The next steps show you how to work with the library of Test Cases installed with GUIdancer to create your tests. The library contains all the actions you will need to automate your tests, and is organized into categories based on the action to perform, and the component to perform the action on.
+      </description>
+   </intro>
+   <item
+         dialog="true"
+         skip="false"
+         title="Open the Test Case Editor">
+      <description>
+         Double-click on the Test Case you just created to open the Test Case Editor
+      </description>
+   </item>
+   <item
+         title="Add an &quot;Activate Application&quot; Test Case">
+      <description>
+         In the Test Case Browser, open the category: <br/><br/>
+<b>unbound_modules_concrete &gt; Actions (basic) &gt;Activate Application </b>
+      </description>
+      <subitem
+            label="&quot;Drag the &quot;ub_app_activate[ACTIVATION_METHOD]&quot; Test Case from this category and drop it into the Test Case Editor (in the middle of the perspective).">
+      </subitem>
+      <subitem
+            label="Hint: When adding Test Cases to an editor, make sure you drop the Test Case directly onto the Test Case node after which you want your new Test Case to appear.">
+      </subitem>
+      <subitem
+            label="The &quot;activate application&quot; Test Case clicks once in the place you specify to ensure that your application has focus before beginning the test.">
+      </subitem>
+   </item>
+   <item
+         title="Add a parameter value">
+      <description>
+         In the Properties View, enter <b> TITLEBAR</b> into the empty <b>parameter value</b> field for the  &quot;ub_app_activate&quot; Test Case and press enter.
+      </description>
+   </item>
+   <item title="Add two &quot;Replace Text&quot; Test Cases" dialog="true" skip="false">
+      <description>
+         In the Test Case Browser, open the category: <br/><br/>
+<b>unbound_modules_concrete &gt; Actions (basic) &gt;Input via Keyboard &gt; Component with Text Input</b>
+      </description>
+      <subitem label="Drag the &quot;ub_cti_replaceText&quot; Test Case from this category and drop it into the Test Case Editor, underneath the &quot;activate&quot; Test Case you just referenced." skip="false">
+      </subitem>
+      <subitem
+            label="Repeat the action so that you have two &quot;&quot;ub_cti_replaceText&quot; Test Cases in the Test Case Editor.">
+      </subitem>
+   </item>
+   <item
+         title="Rename the referenced Test Cases">
+      <description>
+         In the Properties View, rename the first &quot;ub_cti_replaceText&quot; Test Case to:
+<br/>
+<b>Enter first value</b>
+<br/>
+by entering this new name in the <b>Test Case Reference Name</b> field.
+<br/><br/>
+Rename the second &quot;ub_cti_replaceText&quot; Test Case to:
+<br/>
+<b>Enter second value</b>
+<br/><br/>
+This makes the test more readable.
+      </description>
+   </item>
+   <item title="Add references as parameters" dialog="true" skip="false">
+      <description>
+         In the Properties View, enter <b>=VALUE1</b> into the empty <b>parameter value</b> field for the first &quot;ub_cti_replaceText&quot; Test Case and press enter.
+      </description>
+      <subitem
+            label="In the Properties View for the second &quot;ub_cti_replaceText&quot; Test Case, enter =VALUE2 into the parameter value field and press enter.">
+      </subitem>
+   </item>
+   <item title="Reassign the component names" dialog="true" skip="false">
+      <description>
+         In the Component Names View, enter <b>adder_value1_txf</b> in the <b>new name</b> field for the first &quot;ub_cti_replaceText&quot; Test Case. Enter <b>adder_value2_txf</b> for the second &quot;ub_cti_replaceText&quot; Test Case.  
+<br/><br/>
+Reassigning component names like this means you can use the same actions on different components in the interface. It makes your tests more reusable. We recommend having conventions for naming components.
+      </description>
+   </item>
+   <item title="Add a &quot;Click&quot; Test Case" dialog="true" skip="false">
+      <description>
+         In the Test Case Browser, open the category: 
+<br/><br/>
+<b>unbound_modules_concrete &gt; Actions (basic) &gt; Click </b>
+<br/><br/>
+      </description>
+      <subitem label="Drag the &quot;ub_grc_clickLeft_single&quot; Test Case into the Test Case Editor, underneath the other items.  &quot;Graphics component&quot; covers all sorts of interface components that can be clicked and checked." skip="false">
+      </subitem>
+   </item>
+   <item
+         title="Rename the referenced Test Case">
+      <description>
+         In the Properties View, rename the &quot;ub_grc_clickLeft_single&quot; Test Case to:
+<br/>
+<b>Click equals</b>
+      </description>
+   </item>
+   <item title="Reassign the component name" dialog="true" skip="false">
+      <description>
+         In the Component Names View, enter <b>adder_equals_bt</b> in the <b>new name</b> field.
+      </description>
+   </item>
+   <item title="Add a &quot;Check Text&quot; Test Case" dialog="true" skip="false">
+      <description>
+         In the Test Case Browser, open the category:<br/><br/>
+<b> unbound_modules_concrete &gt; Actions (basic) &gt; Check  &gt; Component with Text</b>
+      </description>
+      <subitem label="Drag the &quot;ub_ctx_checkText&quot; Test Case into the Test Case Editor, underneath the other items." skip="false">
+      </subitem>
+   </item>
+   <item
+         title="Rename the referenced Test Case">
+      <description>
+         In the Properties View, rename the &quot;ub_ctx_checkText&quot;  Test Case to:
+<br/>
+<b> Check result</b>
+      </description>
+   </item>
+   <item title="Add a reference and a parameter" dialog="true" skip="false">
+      <description>
+         In the Properties View, enter <b>=RESULT</b> as the  <b>Text</b> parameter and press enter.
+<br/><br/>
+Enter <b>equals</b> as the <b>operator</b> parameter and press enter.
+<br/><br/>
+GUIdancer gives you the choice about how to design your tests - which data you set for the Test Case, and which data you parameterize.
+      </description>
+   </item>
+   <item title="Reassign the component name" dialog="true" skip="false">
+      <description>
+         In the Component Names View, enter <b>adder_result_txf</b> in the <b>new name</b> field.
+      </description>
+   </item>
+   <item title="Finishing the Test Case" dialog="true" skip="false">
+      <description>
+         Save the editor. 
+<br/><br/>
+You now have a Test Case which will enter any two values into two fields, click the &quot;equals&quot; button and check the result. 
+<br/><br/>
+Check that the Test Cases are in the right order - the activate application should come first, then the two replace texts, then the click, and then the check.
+      </description>
+   </item>
+</cheatsheet>

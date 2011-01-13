@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<compositeCheatsheet name="Testing menus with GUIdancer">
+   <taskGroup kind="set" name="Testing menus with GUIdancer" skip="true">
+      <intro>
+         This cheat sheet shows you how to use GUIdancer to specify tests for menus in your application.<br/><br/>
+The menu bar is the component at the top of the application, with items like file, edit, help etc.<br/><br/>
+Refer to the reference manual for more information on menus.
+<br/><br/>
+If you have not already completed the <b>GUIdancer First Steps</b> cheat sheet, we recommend doing this first.
+      </intro>
+      <onCompletion>
+         Now you should have a good overview of how to use the GUIdancer actions to test menus  in your application.
+      </onCompletion>
+      <taskGroup kind="set" name="Open the Samples Project" skip="false">
+         <intro>
+            The first step is to open or import the project.
+         </intro>
+         <task kind="cheatsheet" name="Opening the Samples Project" skip="true">
+            <intro>
+               If you already have the project open, you can skip this task.
+            </intro>
+            <onCompletion>
+               Once the project has been opened, you can start creating test cases.
+            </onCompletion>
+            <param name="path" value="importProject.xml">
+            </param>
+         </task>
+      </taskGroup>
+      <taskGroup kind="set" name="Testing menus" skip="false">
+         <intro>
+            GUIdancer offers a variety of actions for menus. These tasks introduce you to a couple of them. See the reference manual for more information on the other possible actions on menus.
+         </intro>
+         <onCompletion>
+            You do not need to give your menu a component name. As there is only one menu bar in a program, GUIdancer uses a default component name. <br/><br/>
+Using the <b>Textpath</b> to locate menu items means that your tests are robust to changes in the menu order. <br/>
+Read in the reference manual for information on the <b>Indexpath</b> parameter.
+         </onCompletion>
+         <task kind="cheatsheet" name="Using GUIdancer to select from a menu" skip="false">
+            <intro>
+               One of the most frequently needed actions on menus is selecting an item.
+            </intro>
+            <onCompletion>
+               You can read about selecting items using the <b>Indexpath</b> option in the reference manual.
+            </onCompletion>
+            <param name="path" value="menu_Select.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Keywords for opening dialogs from menus" skip="false">
+            <intro>
+               A good tip for test design is to create keywords that will open dialogs from the menu.
+            </intro>
+            <onCompletion>
+               Use this model of keyword design to make your tests more modular and easier to read. We recommend that any action you will have to perform more than once should be encapsulated into a keyword, with the necessary data (and component names, if necessary) contained in it. Referencing this keyword whenever you need it makes test maintenance easier later - if it needs to change, you only have to change one Test Case to update all the places where you referenced it.
+            </onCompletion>
+            <param name="path" value="menu_Keywords.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Other actions for menus" skip="false">
+            <intro>
+               You can also check various properties of menu items, such as whether items exist, are enabled, or are selected. <br/><br/>
+Look in the <br/>
+<b>Actions (basic) &gt; Check &gt; Menu Bar</b> category for these Test Cases.
+            </intro>
+            <onCompletion>
+               Use these options to test your menus with GUIdancer.
+            </onCompletion>
+            <param name="path" value="menu_other.xml">
+            </param>
+         </task>
+      </taskGroup>
+   </taskGroup>
+</compositeCheatsheet>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Create a Test Case">
+   <intro>
+      <description>
+         Test Cases in GUIdancer are the reusable modules. They can contain references to other Test Cases, and can contain Test Steps. 
+<br/><br/>
+The following steps show you how to create a Test Case.
+      </description>
+   </intro>
+   <item title="Create a Test Case" dialog="true" skip="false">
+      <description>
+         In the Test Case Browser, right-click on the <b>Test Cases</b> node and select:
+<br/><br/>
+<b> New &gt; New Test Case</b>  from the context-sensitive menu.
+<br/>
+Enter <b>PerformAddition</b> as the Test Case name.
+<br/>
+Click <b>OK</b>.
+<br/>
+The Test Case you created appears in the Test Case Browser.
+      </description>
+   </item>
+</cheatsheet>

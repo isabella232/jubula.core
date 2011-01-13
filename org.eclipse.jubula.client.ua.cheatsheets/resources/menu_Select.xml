@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Selecting from menus in GUIdancer">
+   <intro>
+      <description>
+         This cheat sheet shows you how to use GUIdancer to select an item from a menu.
+      </description>
+   </intro>
+   <item title="Create a Test Case" dialog="true" skip="false">
+      <description>
+         Create a Test Case called <b>Select item from menu</b>. <br/><br/>
+Open the Test Case Editor for this Test Case.
+      </description>
+   </item>
+   <item title="Reference a Test Case to select an item from a menu" dialog="true" skip="false">
+      <description>
+         From the unbound modules, browse to the category:<br/> <b>Actions (basic) &gt; Select &gt; Menu Bar</b>
+      </description>
+      <subitem label="Select the Test Case &quot;ub_mbr_selectEntry_byTextpath&quot;. Drag it into the Test Case Editor so that it appears under the &quot;Select item from menu&quot; Test Case." skip="false">
+      </subitem>
+   </item>
+   <item title="Enter the parameter details for the Test Case" dialog="true" skip="false">
+      <description>
+         This Test Case has two parameters, which you can see in the properties view. <br/>
+In the <b>Textpath</b> parameter field, enter:<br/>
+<b>Edit.*/Add category.*</b><br/><br/>
+In the <b>Operator</b> parameter field, enter:<br/>
+<b>matches</b><br/><br/>
+Using <b>matches</b> as an operator means that you do not have to enter the whole parameter value. You can use regular expressions.
+      </description>
+   </item>
+   <item
+         title="Save the Test Case editor">
+      <description>
+         You now have a Test Case which will select &quot;Edit &gt; Add category&quot; from the menu in your application.
+      </description>
+   </item>
+   <item
+         title="Execute the test">
+      <description>
+         Try this Test Case out on the DVD Tool. You will need to create a Test Suite, and add this Test Case to it. You may also need to select the AUT you want to use in the Properties View for the Test Suite Editor.
+      </description>
+   </item>
+</cheatsheet>

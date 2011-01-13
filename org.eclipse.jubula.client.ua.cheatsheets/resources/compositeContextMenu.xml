@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<compositeCheatsheet name="Testing context menus with GUIdancer">
+   <taskGroup kind="set" name="Testing context menus with GUIdancer" skip="false">
+      <intro>
+         This cheat sheet shows you how to use GUIdancer to specify tests for context menus in your application.<br/><br/>
+Context menus often appear when you perform a right-click. They offer various context- or selection-sensitive options.<br/><br/>
+If you have not already completed the <b>GUIdancer First Steps</b> cheat sheet, we recommend doing this first.
+      </intro>
+      <onCompletion>
+         This cheat sheet has demonstrated how to select from a context menu on a tree node. You can build similar Test Cases to select from a context menu on a list item, or on other components in your application.
+      </onCompletion>
+      <taskGroup kind="set" name="Open the Samples Project" skip="false">
+         <intro>
+            The first step is to open or import the project.
+         </intro>
+         <task kind="cheatsheet" name="Opening the Samples Project" skip="true">
+            <intro>
+               If you already have the project open, you can skip this task.
+            </intro>
+            <onCompletion>
+               Once the project has been opened, you can start creating test cases.
+            </onCompletion>
+            <param name="path" value="importProject.xml">
+            </param>
+         </task>
+      </taskGroup>
+      <taskGroup kind="set" name="Testing context menus" skip="false">
+         <intro>
+            GUIdancer lets you select items from context menus. If the context menu is on a specific node in a tree, or on a specific item in a list, then you must select this item in a separate step.
+         </intro>
+         <task kind="cheatsheet" name="Using GUIdancer to select from a context menu on a tree" skip="false">
+            <intro>
+               <b>Introduction</b>
+            </intro>
+            <onCompletion>
+               <b>Conclusion</b>
+            </onCompletion>
+            <param name="path" value="contextMenu_select.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Keywords for selecting from context menus on trees" skip="false">
+            <intro>
+               A good tip for test design is to create keywords that will select any given node in the tree and select an item from the context menu for this node. <br/><br/>
+Depending on your application and your test plan you may want to parametrize both  the tree node and the context menu path (which essentially means that you have to enter the paths each time you reference the Test Case). <br/><br/>
+Alternatively, you may only want to parameterize the treepath and create separate keywords for each item in the context menu, with the relevant context menu path encapsulated each time.
+            </intro>
+            <onCompletion>
+               <b>Conclusion</b>
+            </onCompletion>
+            <param name="path" value="contextMenu_Keywords.xml">
+            </param>
+         </task>
+      </taskGroup>
+   </taskGroup>
+</compositeCheatsheet>

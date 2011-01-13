@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Other actions available for testing trees">
+   <intro>
+      <description>
+         This cheat sheet presents some of the other options available to test trees in GUIdancer.
+      </description>
+   </intro>
+   <item title="Checking a node exists" dialog="true" skip="false">
+      <description>
+         From the unbound modules, browse to the category: <b>Actions (basic) &gt; Check &gt; Tree</b>
+      </description>
+      <subitem label="You will see that there are two Test Cases to check if a node exists in a tree." skip="false">
+      </subitem>
+      <subitem label="The Test Cases differ in the way the path to the node is given (indexpath or textpath)." skip="false">
+      </subitem>
+      <subitem label="As well as the path (and, for the textpath option, operator) parameters, you also have to enter the path type (relative or absolute), how many nodes to pre-ascend, and whether you expect the node you specify to exist or not (true/false)." skip="false">
+      </subitem>
+   </item>
+   <item title="Checking the text of a node" dialog="true" skip="false">
+      <description>
+         From the unbound modules, browse to the category: <b>Actions (basic) &gt; Check &gt; Tree</b>.
+      </description>
+      <subitem label="You will see that there is a Test Case to check the text of a selected node." skip="false">
+      </subitem>
+      <subitem label="To execute this Test Case, you must have already selected the node." skip="false">
+      </subitem>
+      <subitem label="The Test Case requires the following parameters: the text to check, and the operator to perform the check with (simple match, equals, matches or not equals)." skip="false">
+      </subitem>
+   </item>
+</cheatsheet>

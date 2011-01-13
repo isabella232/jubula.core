@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Open the object mapping editor">
+   <intro>
+      <description>
+         Each AUT has its own object mapping editor.
+      </description>
+   </intro>
+   <item title="Open the editor" dialog="true" skip="false">
+      <description>
+         In the Test Suite Browser, right click on the Test Suite and select:<br/><br/>
+<b> Open with &gt; Object mapping editor</b>.
+      </description>
+   </item>
+   <item title="Check component names" dialog="true" skip="false">
+      <description>
+         In the object mapping editor, check that you can see all the component names you used in this Test Suite. If you cannot see them, press <b>F5</b>.
+      </description>
+   </item>
+</cheatsheet>

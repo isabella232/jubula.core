@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Add data">
+   <intro>
+      <description>
+         The next steps show you how to add data using the Data Sets View.
+      </description>
+   </intro>
+   <item title="Select the parent Test Case" dialog="true" skip="false">
+      <description>
+         In the Test Case Editor, click on the <b>PerformAddition</b> Test Case.
+      </description>
+   </item>
+   <item title="Add data to the Test Case" dialog="true" skip="false">
+      <description>
+         Click on the Data Sets View, and click the <b>Add</b> button.
+      </description>
+      <subitem label="Enter &quot;1&quot; in the VALUE1 column" skip="false">
+      </subitem>
+      <subitem label="Enter &quot;2&quot; in the VALUE2 column" skip="false">
+      </subitem>
+      <subitem label="Enter &quot;3&quot; in the RESULT column" skip="false">
+      </subitem>
+      <subitem label="This creates one data set which tests that the value &quot;3&quot; is given when &quot;1&quot; and &quot;2&quot; are added." skip="false">
+      </subitem>
+   </item>
+   <item title="Add more data" dialog="true" skip="false">
+      <description>
+         In the Data Sets View, click <b>Add</b> and enter another set of data to test (e.g. 5,6,11).
+<br/><br/>
+The whole Test Case will be executed twice because there are two data sets.
+      </description>
+      <subitem label="Make sure that you have no extra, empty data sets in the data sets view." skip="false">
+      </subitem>
+      <subitem label="Save the editor." skip="false">
+      </subitem>
+   </item>
+</cheatsheet>

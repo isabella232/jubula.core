@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Starting the AUT">
+   <intro>
+      <description>
+         These steps guide you in starting the AUT.
+      </description>
+   </intro>
+   <item title="Starting the AUT" dialog="true" skip="false">
+      <description>
+         Start the AUT using the toolbar button.
+
+When the AUT is started, it will appear in the &quot;Running AUTs&quot; view.
+      </description>
+   </item>
+</cheatsheet>

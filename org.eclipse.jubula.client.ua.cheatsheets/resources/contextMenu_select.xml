@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet
+      title="Selecting from context menus in GUIdancer">
+   <intro>
+      <description>
+         This cheat sheet shows you how to use GUIdancer to select an item from a context menu which opens on a node in a tree. The Test Cases to select from the context menu open the context menu and select the item you specify.
+      </description>
+   </intro>
+   <item
+         title="Create a Test Case">
+      <description>
+         Create a Test Case called <b>Select item from context menu on tree node</b>. <br/><br/>
+Open the Test Case Editor for this Test Case.
+      </description>
+   </item>
+   <item
+         title="Reference a Test Case to select a node from a tree">
+      <description>
+         From the unbound modules, browse to the category: <br/> <b>Actions (basic) &gt; Select &gt; Tree</b>.
+      </description>
+      <subitem
+            label="Select the Test Case &quot;ub_tre_selectNode_byTextpath&quot;. Drag it into the Test Case Editor so that it appears under the &quot;Select item from context menu on tree node&quot; Test Case.">
+      </subitem>
+   </item>
+   <item
+         title="Enter the parameter details for the Test Case">
+      <description>
+         You can find out what these parameters mean in the cheat sheet <b>Learning to test trees</b>
+         
+      </description>
+      <subitem
+            label="In the &quot;path type&quot; parameter field, enter: absolute">
+      </subitem>
+      <subitem
+            label="In the &quot;pre-ascend&quot; parameter field, enter: 0">
+      </subitem>
+      <subitem
+            label="In the &quot;Textpath&quot; parameter field, enter: Category.*">
+      </subitem>
+      <subitem
+            label="In the &quot;Operator&quot; parameter field, enter: matches">
+      </subitem>
+      <subitem
+            label="In the &quot;number of clicks&quot; parameter field, enter: 1">
+      </subitem>
+      <subitem
+            label="In the &quot;mouse button&quot; parameter field, enter: 1. This means that the node will be selected using the left mouse button.">
+      </subitem>
+      <subitem
+            label="In the &quot;Extend Selection&quot; parameter field, enter: no. The extend selection parameter is to allow multi-selection, which is not required here.">
+      </subitem>
+   </item>
+   <item
+         title="Give the component a meaningful component name">
+      <description>
+         In the Test Case Editor, select the <br/> <b>ub_tre_selectNode_byTextpath</b> Test Case.
+      </description>
+      <subitem
+            label="In the component names view, in the &quot;new name&quot; field, enter &quot;DVDTool_Category_tree&quot; as the new component name.">
+      </subitem>
+   </item>
+   <item
+         title="Reference a Test Case to select an item from the context menu">
+      <description>
+         From the unbound modules, browse to the category: <br/> <b>Actions (basic) &gt; Select &gt; Context Menu </b>.
+      </description>
+      <subitem
+            label="Select the Test Case &quot;ub_grc_selectContextMenuEntry_byTextpath&quot;. Drag it into the Test Case Editor so that it appears under the &quot;ub_tre_selectNode_byTextpath&quot; Test Case.">
+      </subitem>
+   </item>
+   <item
+         title="Enter the parameter details for the Test Case">
+      <description>
+         The Test Case to select from a context menu has three parameters.
+      </description>
+      <subitem
+            label="In In the &quot;Textpath&quot; parameter field, enter: Add category.*">
+      </subitem>
+      <subitem
+            label="In the &quot;Operator&quot; parameter field, enter: matches">
+      </subitem>
+      <subitem
+            label="In the &quot;Mouse Button&quot; parameter, enter 3 (the context menu will be opened using the right mouse button)">
+      </subitem>
+   </item>
+   <item
+         title="Enter the same component name">
+      <description>
+         In the component names view, in the &quot;new name&quot; field, enter &quot;DVDTool_Category_tree&quot; as the new component name.<br/><br/>
+Notice how you can use the same component name for different (but compatible) component types (e.g. tree and graphics component). This makes your test specification easier.
+      </description>
+   </item>
+   <item
+         title="Save the Test Case editor">
+      <description>
+         You now have a Test Case which will select the <b>Category</b> node in the tree, and then select <b>Add category</b> from the context menu.
+      </description>
+   </item>
+   <item
+         title="Execute the test">
+      <description>
+         Try this Test Case out on the DVD Tool. You will need to create a Test Suite, and add this Test Case to it. You may also need to carry out the object mapping and select the AUT you want to use in the Properties View for the Test Suite Editor.
+      </description>
+   </item>
+</cheatsheet>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet
+      title="Add the Event Handler to a Test Case">
+   <intro>
+      <description>
+         We will now add the Test Case as an Event Handler to another Test Case.
+      </description>
+   </intro>
+   <item
+         title="Create a new Test Case">
+      <description>
+         In the Test Case Browser, create a new Test Case. <br/><br/>Name the Test Case:<br/><br/>
+<b>Simple Adder with Event Handler</b>
+      </description>
+   </item>
+   <item
+         title="Reference a Test Case to cause an error in the simple adder">
+      <description>
+         
+         
+      </description>
+      <subitem
+            label="Open the Test Case Editor for the &quot;Simple Adder with Event Handler&quot; Test Case.">
+      </subitem>
+      <subitem
+            label="In the Test Case Browser, open the category: &quot;bound_modules_samples/01,02,03 Simple Adder Test Cases&quot;">
+      </subitem>
+      <subitem
+            label="Drag the Test Case &quot;Simple Adder Test&quot; into the Test Case Editor for the &quot;Simple Adder with Event Handler&quot; Test Case.">
+      </subitem>
+   </item>
+   <item
+         title="Add parameters to the referenced Test Case">
+      <description>
+         In the properties view, enter a data set for the referenced Test Case which will cause an error, for example:
+<br/>
+<b>10, 2, 1</b>
+<br/><br/>(10 and 2 do not equal 1)
+      </description>
+   </item>
+   <item
+         title="Add an Event Handler">
+      <description>
+         
+      </description>
+      <subitem
+            label="Locate the &quot;Reset&quot; Test Case you created before.">
+      </subitem>
+      <subitem
+            label="Drag this Test Case into the &quot;Event Handler&quot; area at the bottom of the Test Case Editor for the &quot;Simple Adder with Event Handler&quot; Test Case.">
+      </subitem>
+      <subitem
+            label="In the dialog that appears, specify &quot;Check Failed&quot; as the error type and &quot;Continue&quot; as the reentry type. Click OK. This means that the Event Handler will be activated when a check failed action occurs. Once the Event Handler has been executed, the test will continue.">
+      </subitem>
+   </item>
+   <item
+         title="Execute the Test Case">
+      <description>
+         
+      </description>
+      <subitem
+            label="Save the Test Case and add it to a Test Suite. Specify  &quot;SimpleAdder&quot; as the AUT in the Properties View for the Test Suite Editor.">
+      </subitem>
+      <subitem
+            label="Execute the Test Suite on the Simple Adder application, noticing how &quot;File/reset&quot; is selected from the menu after the error.">
+      </subitem>
+      <subitem
+            label="Check the Test Result View. The Event Handler you specified will have been activated.">
+      </subitem>
+   </item>
+</cheatsheet>

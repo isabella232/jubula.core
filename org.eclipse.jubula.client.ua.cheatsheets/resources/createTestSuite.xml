@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Create a Test Suite">
+   <intro>
+      <description>
+         These steps will show you how to create a Test Suite and add Test Cases to it to be executed.
+      </description>
+   </intro>
+   <item title="Open the new Test Suite dialog" dialog="true" skip="false">
+      <description>
+         In the Test Suite Browser, right click and select:<br/>
+<b> New &gt; Test Suite </b><br/> from the context-sensitive menu.
+<br/>
+Enter <b>TestAdder</b> as the Test Suite name.
+<br/>
+Click <b> OK</b>.
+      </description>
+   </item>
+   <item title="Open the Test Suite Editor" dialog="true" skip="false">
+      <description>
+         Double click on the Test Suite in the Test Suite Browser to open the Test Suite Editor.
+      </description>
+   </item>
+   <item title="Add Test Cases to the Test Suite" dialog="true" skip="false">
+      <description>
+         Drag the <b>PerformAddition</b> Test Case from the Test Case Browser into the Test Suite Editor.
+      </description>
+      <subitem label="Save the editor." skip="false">
+      </subitem>
+   </item>
+</cheatsheet>

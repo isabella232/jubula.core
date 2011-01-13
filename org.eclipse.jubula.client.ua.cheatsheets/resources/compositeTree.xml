@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<compositeCheatsheet name="Testing trees with GUIdancer">
+   <taskGroup kind="set" name="Testing trees with GUIdancer" skip="false">
+      <intro>
+         This cheat sheet shows you how to use GUIdancer to test trees in your application.<br/><br/>
+Trees usually look like the windows explorer <b>folders</b> view. They contain <b>nodes</b>, which have other nodes within them. <br/><br/>
+Refer to the reference manual for more information on trees.<br/><br/>
+If you have not already completed the <b>GUIdancer First Steps</b> cheat sheet, we recommend doing this first.
+      </intro>
+      <onCompletion>
+         Now you should have a good overview of how to use the GUIdancer actions to test trees in your application.
+      </onCompletion>
+      <taskGroup kind="set" name="Import or open the test project" skip="false">
+         <intro>
+            The first step is to open or import the project.
+         </intro>
+         <task kind="cheatsheet" name="Importing the test project" skip="true">
+            <intro>
+               If you already have the project open, you can skip this task.
+            </intro>
+            <param name="path" value="importProject.xml">
+            </param>
+         </task>
+      </taskGroup>
+      <taskGroup kind="set" name="Testing trees" skip="false">
+         <intro>
+            GUIdancer offers a variety of actions for trees. These tasks introduce you to a couple of them, and the parameters you will need to enter to make them work.
+         </intro>
+         <task kind="cheatsheet" name="Using GUIdancer to select a node from a tree" skip="false">
+            <intro>
+               One of the most frequently needed actions on trees is selecting a node.
+            </intro>
+            <onCompletion>
+               You can read about selecting nodes using the <b>Indexpath</b> option in the reference manual.
+            </onCompletion>
+            <param name="path" value="trees_SelectNode.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Keywords for selecting from trees" skip="false">
+            <intro>
+               A good tip for test design is to create a keyword that will select any path from any tree in your application. The trick is to encapsulate any data that will remain the same throughout your test.
+            </intro>
+            <onCompletion>
+               Use this model of keyword design to make your tests more modular and easier to read. We recommend that any action you will have to perform more than once should be encapsulated into a keyword, with the necessary data (and component names, if necessary) contained in it. Referencing this keyword whenever you need it makes test maintenance easier later - if it needs to change, you only have to change one Test Case to update all the places where you referenced it.
+            </onCompletion>
+            <param name="path" value="trees_Keywords.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Other actions for trees" skip="false">
+            <intro>
+               Other actions you may need include checking whether a node exists, and checking the text on a node you have selected.
+            </intro>
+            <param name="path" value="trees_other.xml">
+            </param>
+         </task>
+      </taskGroup>
+   </taskGroup>
+</compositeCheatsheet>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet
+      title="Keywords for opening dialogs from menus">
+   <intro>
+      <description>
+         Your tests will most likely have to open dialogs from menus quite frequently. The next few steps show you how to structure your test in the best way to achieve this.
+      </description>
+   </intro>
+   <item
+         title="Create a general keyword to open any dialog from a menu">
+      <description>
+         Create a new Test Case called <b>Open any dialog from menu</b>
+      </description>
+      <subitem
+            label="Open the Test Case Editor for this Test Case.">
+      </subitem>
+      <subitem
+            label="In the unbound modules, browse to the category &quot;Actions (basic) &gt; Select &gt; Menu Bar.">
+      </subitem>
+      <subitem
+            label="Add the Test Case &quot;ub_mbr_selectEntry_byTextpath&quot; to the Test Case Editor.">
+      </subitem>
+      <subitem
+            label="In the parameter field for the textpath enter =TEXTPATH and press enter.">
+      </subitem>
+      <subitem
+            label="In the parameter field for the Operator enter: matches.">
+      </subitem>
+      <subitem
+            label="In the unbound modules, browse to the category &quot;Actions (basic) &gt; Wait &gt; Application &gt;Wait For Window&quot;.">
+      </subitem>
+      <subitem
+            label="Add the Test Case &quot;ub_app_waitForWindow&quot; to the Test Case Editor, after the select from menu Test Case.">
+      </subitem>
+      <subitem
+            label="In the parameter field for the window name enter =WINDOW_NAME and press enter.">
+      </subitem>
+      <subitem
+            label="In the parameter field for the operator enter: matches.">
+      </subitem>
+      <subitem
+            label="In the parameter field for the timeout in milliseconds enter: 20000.">
+      </subitem>
+      <subitem
+            label="In the parameter field for delay after visibility enter: 500.">
+      </subitem>
+      <subitem
+            label="Save the Test Case Editor. You now have a general Test Case (Keyword) that will open any dialog from the menu, and wait for the dialog to appear. The test will wait a maximum of 20 seconds for the dialog, and a half second once the dialog is visible.">
+      </subitem>
+   </item>
+   <item
+         title="Create concrete keywords using the general keyword">
+      <description>
+         Create a Test Case called <b>Open New Category Dialog</b>.
+      </description>
+      <subitem
+            label="Open the Test Case Editor for this Test Case.">
+      </subitem>
+      <subitem
+            label="Add the keyword you just created, &quot;Open any dialog from menu&quot;, to this Test Case.">
+      </subitem>
+      <subitem
+            label="In the parameter field for the textpath enter: Edit.*/Add category.*">
+      </subitem>
+      <subitem
+            label="In the parameter field for the window title enter: Input.*">
+      </subitem>
+      <subitem
+            label="Save the Test Case Editor. You have now created a keyword which will open the new category dialog in the DVD application. Add this to a Test Suite and execute it.">
+      </subitem>
+      <subitem
+            label="You can reuse the general Test Case to create keywords to open all the dialogs from the menu.">
+      </subitem>
+   </item>
+</cheatsheet>

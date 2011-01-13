@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<compositeCheatsheet name="005 Adding Event Handlers to Tests">
+   <taskGroup kind="set" name="Adding Event Handlers to Tests" skip="false">
+      <intro>
+         This cheat sheet shows you how to use GUIdancer to add Event Handlers to your tests.
+<br/><br/>
+If you have not already completed the <b>GUIdancer First Steps</b> cheat sheet, we recommend doing this first.
+      </intro>
+      <task kind="cheatsheet" name="Open or Import the Samples Project" skip="true">
+         <intro>
+            If you already have the project open, you can skip this task.
+         </intro>
+         <onCompletion>
+            Once the project has been opened, you can start creating test cases.
+         </onCompletion>
+         <param name="path" value="../importProject.xml">
+         </param>
+      </task>
+      <taskGroup kind="set" name="Adding Global Event Handlers to Tests" skip="false">
+         <intro>
+            This cheat sheet shows you how to use GUIdancer to add Event Handlers to your tests for errors that you were not expecting. 
+<br/><br/>
+In cases like this, the Event Handler&apos;s purpose is usually to make sure that the test can continue.
+<br/><br/>
+This cheat sheet is a simple example of using an Event Handler in a test.
+         </intro>
+         <task kind="cheatsheet" name="Creating an Event Handler to reset the application" skip="false">
+            <intro>
+               Event Handlers are Test Cases like any other. You can use any Test Case as an Event Handler. In this case, we will create a Test Case to reset the application if an error occurs.
+            </intro>
+            <param name="path" value="createEH_Reset.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Adding the Event Handler to a Test Case" skip="false">
+            <intro>
+               Once we have a Test Case to use as an Event Handler, it can be added to any other Test Case. The following steps show you how to add the Event Handler, what to specify, and mention some other options for error handling in tests.
+            </intro>
+            <onCompletion>
+               The Event Handlers in this section are designed to be used high up in the Test Case hierarchy. In the best case scenario, each main use case for your application should have an Event Handler for each of the four error types to ensure that any errors are handled. 
+<br/><br/>
+You can consider adding a &quot;restart application&quot; action to Event Handlers that deal with more severe errors, like Action Errors. 
+<br/><br/>
+The next section shows you how to use Event Handlers to deal with errors that you are expecting in your test.
+            </onCompletion>
+            <param name="path" value="addGlobalEH.xml">
+            </param>
+         </task>
+      </taskGroup>
+      <taskGroup kind="set" name="Adding Local Event Handlers to a Test" skip="false">
+         <intro>
+            This cheat sheet shows you how to use GUIdancer to add Event Handlers for errors that you may be able to deal with during the test. Examples are dialogs that occasionally appear and need to be closed, or ensuring that the application is in a specific state before continuing. 
+<br/><br/>
+In cases like this, the Event Handler&apos;s purpose is usually to bring the application into a defined state so that the test can continue.
+         </intro>
+         <task kind="cheatsheet" name="Setting up the test" skip="false">
+            <intro>
+               The first thing to to is to set up a test which will fail in the DVD tool.
+            </intro>
+            <onCompletion>
+               So far, we have a test which fails because the application is not as we expected it would be.
+            </onCompletion>
+            <param name="path" value="setUpEH.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Adding the Event Handler" skip="false">
+            <intro>
+               This task shows you how an Event Handler can be used to deal with the error previously set up.
+            </intro>
+            <onCompletion>
+               The Event Handler deals locally with a small error which can easily be fixed so that the test can continue. 
+<br/><br/>
+By placing Event Handlers in specific Test Cases within the test, you can react to slight changes in the test flow easily and without having to break off the test. In combination with the global Event Handlers discussed in the previous section, your tests can react to and document any unexpected behavior.
+            </onCompletion>
+            <param name="path" value="addLocalEH.xml">
+            </param>
+         </task>
+      </taskGroup>
+   </taskGroup>
+</compositeCheatsheet>

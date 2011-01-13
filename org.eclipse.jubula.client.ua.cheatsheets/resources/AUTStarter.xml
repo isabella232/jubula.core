@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Start and connect to the AUT Agent">
+   <intro>
+      <description>
+         These steps guide you in starting the AUT Agent and connecting to it.
+      </description>
+   </intro>
+   <item title="Starting the AUT Agent" dialog="true" skip="false">
+      <description>
+         Start the AUT Agent via the start menu in windows: <br/>
+<b>Start &gt; GUIdancer &gt;  Start AUT Agent </b>
+<br/>
+or start it from the command line on Unix systems.
+      </description>
+   </item>
+   <item title="Connect to the AUT Agent" dialog="true" skip="false">
+      <description>
+         Connect to the AUT Agent using the toolbar button.
+      </description>
+   </item>
+</cheatsheet>

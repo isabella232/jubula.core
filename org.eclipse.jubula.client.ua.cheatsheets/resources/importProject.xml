@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Open the Samples Project">
+   <intro>
+      <description>
+         We recommend using the Samples Project (installed with GUIdancer) to do this cheat sheet.
+      </description>
+   </intro>
+   <item
+         skip="true"
+         title="Import the Samples Projects">
+      <description>
+         If you have not already done so, import the Samples Projects. <br/><br/>
+Select <b>Project &gt; Import</b>.
+<br/><br/>
+If you have not already logged into the database, do so when prompted.
+<br/><br/>
+ In the import dialog browse to:<br/>
+<b>guidancer/examples/projects</b>
+<br/><br/>
+Select <b>Samples.xml</b> and <b>bound_modules_samples.xml</b> and import them into the database.
+      </description>
+   </item>
+   <item title="Open the Samples Project" dialog="true" skip="false">
+      <description>
+         Select: <b>Project &gt; Open</b> and choose to open the <b>Samples</b> Project.
+      </description>
+   </item>
+</cheatsheet>

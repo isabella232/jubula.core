@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet
+      title="Create a Test Case to use as an Event Handler">
+   <intro>
+      <description>
+         The next few steps guide you through the creation of a Test Case which will reset the program if an error occurs. We will use the Test Case as an Event Handler later.
+      </description>
+   </intro>
+   <item
+         title="Create a new Test Case">
+      <description>
+         In the Test Case Browser, create a new Test Case. <br/><br/>Name the Test Case:<br/><br/>
+<b>Reset</b>
+      </description>
+   </item>
+   <item
+         title="Reference a Test Case to select reset from the menu">
+      <description>
+      </description>
+      <subitem
+            label="Open the Test Case Editor for the &quot;Reset&quot; Test Case.">
+      </subitem>
+      <subitem
+            label="In the Test Case Browser, open the category: &quot;unbound_modules_concrete/Actions(basic)/Select/Menu Bar&quot;">
+      </subitem>
+      <subitem
+            label="Drag the Test Case &quot;ub_mbr_selectEntry_byTextpath&quot; with the parameters &quot;[TEXTPATH]&quot; and &quot;[OPERATOR]&quot; into the Test Case Editor for the &quot;Reset&quot; Test Case.">
+      </subitem>
+   </item>
+   <item
+         title="Enter the parameters">
+      <description>
+         
+      </description>
+      <subitem
+            label="In the properties view, enter the textpath &quot;File.*/reset.*&quot; for the TEXTPATH parameter.">
+      </subitem>
+      <subitem
+            label="In the properties view, enter  &quot;matches&quot; as the OPERATOR parameter. &#x0A;&#x0A;This allows you to use regular expressions (.*) in the textpath for the menu.">
+      </subitem>
+      <subitem
+            label="Save the Test Case Editor.">
+      </subitem>
+   </item>
+</cheatsheet>

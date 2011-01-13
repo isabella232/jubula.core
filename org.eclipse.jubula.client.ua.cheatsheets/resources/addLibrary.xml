@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Add the Test Case library to the Project">
+   <intro>
+      <description>
+         The next steps show you how to reuse external Projects in GUIdancer. <br/><br/>
+These external Projects are like libraries which can be reused in many other Projects.
+      </description>
+   </intro>
+   <item title="Open the Project settings dialog" dialog="true" skip="false">
+      <description>
+         Select: <br/><br/>
+<b>Project &gt; Settings</b>
+      </description>
+   </item>
+   <item title="Open the reused Projects page" dialog="true" skip="false">
+      <description>
+         Select <b>Used Projects</b>
+      </description>
+   </item>
+   <item title="Select the Project to reuse" dialog="true" skip="false">
+      <description>
+         Select the highest version of <b>unbound_modules_concrete.xml</b>
+      </description>
+   </item>
+   <item title="Enter the Project as a reused Project" dialog="true" skip="false">
+      <description>
+         Click the right arrow to reuse this Project in the currently opened Project
+      </description>
+   </item>
+   <item title="Finish" dialog="true" skip="false">
+      <description>
+         Click OK
+      </description>
+   </item>
+</cheatsheet>

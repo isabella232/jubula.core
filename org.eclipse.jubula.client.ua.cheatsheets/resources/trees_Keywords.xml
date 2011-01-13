@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet
+      title="Keywords for selecting from trees">
+   <intro>
+      <description>
+         Your tests will most likely have to select nodes from trees quite frequently. The next few steps show you how to structure your test in the best way to achieve this.
+      </description>
+   </intro>
+   <item
+         title="Create a  keyword to select any node from any tree">
+      <description>
+         Create a new Test Case called <b>Select any node from tree</b>
+      </description>
+      <subitem
+            label="Open the Test Case Editor for this Test Case.">
+      </subitem>
+      <subitem
+            label="In the unbound modules, browse to the category &quot;Actions (basic) &gt; Select &gt; Tree.">
+      </subitem>
+      <subitem
+            label="Add the Test Case &quot;ub_tre_selectNode_byTextpath&quot; to the Test Case Editor.">
+      </subitem>
+      <subitem
+            label="In the &quot;path type&quot; parameter field, enter: absolute">
+      </subitem>
+      <subitem
+            label="In the &quot;pre-ascend&quot; parameter field, enter: 0">
+      </subitem>
+      <subitem
+            label="In the &quot;textpath&quot; parameter field enter =TEXTPATH and press enter.">
+      </subitem>
+      <subitem
+            label="In the &quot;operator&quot; parameter field enter: matches.">
+      </subitem>
+      <subitem
+            label="In the &quot;number of clicks&quot; parameter field, enter: 1">
+      </subitem>
+      <subitem
+            label="In the &quot;Mouse Button&quot; parameter field, enter: 1">
+      </subitem>
+      <subitem
+            label="In the &quot;Extend Selection&quot; parameter field, enter: no">
+      </subitem>
+      <subitem
+            label="In the component names view, leave the new name field empty, but click the checkbox at the left hand side of the view. This makes this component name available to be reassigned when you reuse the parent Test Case.">
+      </subitem>
+      <subitem
+            label="If your application only has one tree component, you could write a component name for the tree in the new name field and not check the checkbox. This means that you do not have to enter the same component name each time you reference this Test Case."
+            skip="true">
+      </subitem>
+      <subitem
+            label="Save the Test Case Editor. You now have a Test Case (Keyword) that will select any node from any tree you specify. You do not need to enter all the parameter details each time you reuse the Test Case, because you have encapsulated them in the keyword.">
+      </subitem>
+   </item>
+   <item
+         title="Add the keyword to a Test Case">
+      <description>
+         Create a Test Case called <b>Test Tree</b>.
+         
+      </description>
+      <subitem
+            label="Open the Test Case Editor for this Test Case.">
+      </subitem>
+      <subitem
+            label="Add the keyword you just created, &quot;Select any node from tree&quot;, to this Test Case.">
+      </subitem>
+      <subitem
+            label="In the parameter field for the textpath enter: Category.*/Horror.*">
+      </subitem>
+      <subitem
+            label="In the component names view, you will see that the old name from the original Test Case can be reassigned here. In the &quot;new name&quot;  field, enter: &quot;DVDTool_Category_tree&quot;">
+      </subitem>
+      <subitem
+            label="Save the Test Case Editor. You have now created a keyword which will select the Category/Horror node in the tree in the DVD tool.">
+      </subitem>
+      <subitem
+            label="Try out this test. You will need to create a Test Suite, and add this Test Case to it. You will need to carry out object mapping, and you must (manually) create a new category called Horror in the DVD tool for the test to work.">
+      </subitem>
+   </item>
+</cheatsheet>

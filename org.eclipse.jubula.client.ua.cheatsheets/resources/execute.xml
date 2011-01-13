@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Execute the test">
+   <intro>
+      <description>
+         These steps tell you how to execute the test.<br/><br/>
+Because this test will run locally, do not move the mouse during the test.
+      </description>
+   </intro>
+   <item title="Start the Test Suite" dialog="true" skip="false">
+      <description>
+         Start the Test Suite using the button in the running AUT&apos;s view or in the Test Suite Browser.
+      </description>
+      <subitem label="In the dialog, choose to switch to the execution perspective. When the test starts, do not move the mouse. Wait until the test has finished until carrying on." skip="false">
+      </subitem>
+   </item>
+   <item title="Analyse the results" dialog="true" skip="false">
+      <description>
+         Look in the results view for information on the test execution.
+      </description>
+      <subitem label="In the Reporting Perspective, you can see a table of all of the test runs you have done. 
+
+Double click on a test run to open it again in the Test Result View." skip="false">
+      </subitem>
+      <subitem
+            label="You can export a report for the test run from the Test Result Summary View.">
+      </subitem>
+   </item>
+</cheatsheet>

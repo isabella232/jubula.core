@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet
+      title="Setting up the test">
+   <intro>
+      <description>
+         These next steps will create a Test Case which will fail, so that an Event Handler can fix the error.
+      </description>
+   </intro>
+   <item
+         title="Create a Test Case">
+      <description>
+         Create a new Test Case called:<br/>
+<b>Check if checkbox is selected</b>
+      </description>
+   </item>
+   <item
+         title="Reference a Test Case">
+      <description>
+         
+      </description>
+      <subitem
+            label="Open the Test Case Editor for the &quot;Check if checkbox is selected&quot; Test Case.">
+      </subitem>
+      <subitem
+            label="In the Test Case Browser, open the category: &quot;unbound_modules_concrete/Actions(basic)/Check/Button Component&quot;">
+      </subitem>
+      <subitem
+            label="Drag the Test Case &quot;ub_btc_checkSelection&quot; into the Test Case Editor for the &quot;Check if checkbox is selected&quot; Test Case.">
+      </subitem>
+      <subitem
+            label="Enter a component name for this Test Case, e.g. TechnicsTab_Bonus_btc">
+      </subitem>
+      <subitem
+            label="Enter &quot;true&quot; for the SELECTED parameter in the properties view">
+      </subitem>
+   </item>
+   <item
+         title="Execute the test">
+      <description>
+         
+      </description>
+      <subitem
+            label="Save the Test Case and add it to a Test Suite. Specify &quot;DVDTool&quot; as the AUT in the Properties View for the Test Suite Editor.">
+      </subitem>
+      <subitem
+            label="Start the DVD Tool AUT and create a DVD manually. Switch to the Technics tab, where you can see the &quot;Bonus&quot; checkbox.">
+      </subitem>
+      <subitem
+            label="Map the bonus checkbox to the component name from the Test Case.">
+      </subitem>
+      <subitem
+            label="Execute the test on the DVD tool. The test will fail because the checkbox is not selected.">
+      </subitem>
+   </item>
+      <subitem
+            label="Sub-Step">
+      </subitem>
+</cheatsheet>

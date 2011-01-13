@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Create a Test Step">
+   <intro>
+      <description>
+         The next steps show you how to create a Test Step.
+      </description>
+   </intro>
+   <item title="Open the Test Case Editor" dialog="true" skip="false">
+      <description>
+         Double-click on the Test Case you just created to open the Test Case Editor
+      </description>
+   </item>
+   <item title="Add a new Test Step" dialog="true" skip="false">
+      <description>
+         In the Test Case Editor, right click on the Test Case and select: 
+<br/><br/>
+<b>Add &gt; New Test Step</b>
+<br/>
+Enter <b>Enter value one</b> as the Test Step name.
+<br/>
+Select <b>Component with Text Input</b> as the component.  
+<br/>
+Enter <b>adder_value1</b> as the component name. 
+<br/>
+Select <b>Replace Text</b> as the action.   
+<br/>
+Click <b>OK</b>.
+      </description>
+   </item>
+   <item title="Enter a parameter value" dialog="true" skip="false">
+      <description>
+         In the Properties View, enter <b>=VALUE1</b> into the <b>parameter</b> field and press enter. 
+<br/><br/>
+This is a reference. The parameter value will be entered later.
+<br/><br/>
+ You can see the referenced parameter next to the Test Case in the editor.
+ <br/><br/>
+  This makes the Test Case more reusable.
+      </description>
+   </item>
+   <item title="Save the editor" dialog="true" skip="false">
+      <description>
+         Use the save button on the  toolbar button to save the editor
+      </description>
+   </item>
+</cheatsheet>

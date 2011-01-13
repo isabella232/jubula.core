@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Doing object mapping">
+   <intro>
+      <description>
+         These steps show you how to do object mapping using a running AUT.
+      </description>
+   </intro>
+   <item title="Start the object mapping mode" dialog="true" skip="false">
+      <description>
+         Start the object mapping mode using the toolbar button.
+      </description>
+      <subitem label="Switch to the AUT" skip="false">
+      </subitem>
+   </item>
+   <item title="Collect the first component" dialog="true" skip="false">
+      <description>
+         Hover over the top text field. It will have a green border
+      </description>
+      <subitem label="Press Ctrl+Shift+Q to &quot;collect&quot; the component." skip="false">
+      </subitem>
+      <subitem label="Check in the object mapping editor that this component (technical name) has been collected." skip="false">
+      </subitem>
+   </item>
+   <item title="Collect the other components" dialog="true" skip="false">
+      <description>
+         In the AUT, collect the second text field in the same way.
+      </description>
+      <subitem label="Then collect the equals button and the result field." skip="false">
+      </subitem>
+   </item>
+   <item title="Assign the technical names to the component names" dialog="true" skip="false">
+      <description>
+         In the object mapping editor, take your component name for the first text field (<b>adder_value1_txf</b>) and drag it onto the technical name for the first text field.
+      </description>
+      <subitem label="Repeat this process for the other component names. In this way, you tell GUIdancer which components to test in your specification." skip="false">
+      </subitem>
+   </item>
+   <item title="Save the editor" dialog="true" skip="false">
+      <description>
+         Using the toolbar button, save the changes you have made in the object mapping editor.
+      </description>
+   </item>
+   <item title="Stop the object mapping mode" dialog="true" skip="false">
+      <description>
+         Stop the object mapping mode using the toolbar button.
+      </description>
+   </item>
+</cheatsheet>

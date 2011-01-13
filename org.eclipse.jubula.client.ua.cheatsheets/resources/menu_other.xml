@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Other actions available for testing menus">
+   <intro>
+      <description>
+         You can also perform checks on menus with GUIdancer. You can check the enablement of an item, whether an item exists, and whether an item is selected.
+      </description>
+   </intro>
+   <item title="Finding the check actions for menus" dialog="true" skip="false">
+      <description>
+         From the unbound modules, browse to the category: <b>Actions (basic) &gt; Check &gt; Menu Bar</b>.
+      </description>
+      <subitem label="You will see that there are Test Cases to check the enablement, existence and selection of menu items." skip="false">
+      </subitem>
+      <subitem label="For each option, there are two Test Cases. The Test Cases differ in the way the path to the item is given (indexpath or textpath)." skip="false">
+      </subitem>
+      <subitem label="As well as the path (and, for the textpath option, operator) parameters, you also have to enter a true/false value about your expectations for the result of the check." skip="false">
+      </subitem>
+   </item>
+   <item
+         title="Make a test to try out some of these options">
+      <description>
+      </description>
+   </item>
+</cheatsheet>

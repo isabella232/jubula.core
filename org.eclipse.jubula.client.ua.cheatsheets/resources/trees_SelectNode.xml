@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<cheatsheet title="Selecting nodes from trees in GUIdancer">
+   <intro>
+      <description>
+         This cheat sheet shows you how to use GUIdancer to select a node in a tree. When you select a node, the tree is automatically &quot;expanded&quot; to the node.
+      </description>
+   </intro>
+   <item title="Create a Test Case" dialog="true" skip="false">
+      <description>
+         Create a Test Case called <b>Select node from tree</b>. <br/><br/>
+Open the Test Case Editor for this Test Case.
+      </description>
+   </item>
+   <item title="Reference a Test Case to select a node from a tree" dialog="true" skip="false">
+      <description>
+         From the unbound modules, browse to the category: <br/> <b>Actions (basic) &gt; Select &gt; Tree</b>.
+      </description>
+      <subitem label="Select the Test Case &quot;ub_tre_selectNode_byTextpath&quot;. Drag it into the Test Case Editor so that it appears under the &quot;Select node from tree&quot; Test Case." skip="false">
+      </subitem>
+   </item>
+   <item title="Enter the parameter details for the Test Case" dialog="true" skip="false">
+      <description>
+         This Test Case has seven parameters, which you can see in the properties view. <br/>
+      </description>
+      <subitem label="The &quot;path type&quot; parameter lets you specify whether the path you enter is relative to the current position or absolute (i.e. for the whole tree). In the &quot;path type&quot; parameter field, enter: absolute" skip="false">
+      </subitem>
+      <subitem label="The &quot;pre-ascend&quot; parameter is important when you are using relative paths in a tree, to specify how many levels to go up before starting the search for the node. In the &quot;pre-ascend&quot; parameter field, enter: 0" skip="false">
+      </subitem>
+      <subitem label="In the &quot;Textpath&quot; parameter field, enter: Category.*/Horror.*" skip="false">
+      </subitem>
+      <subitem label="In the &quot;Operator&quot; parameter field, enter: matches" skip="false">
+      </subitem>
+      <subitem label="The &quot;number of clicks&quot; parameter lets you define how often to click on the node to select it. Entering 0 means that the mouse just hovers over the node. In the &quot;number of clicks&quot; parameter field, enter: 1" skip="false">
+      </subitem>
+      <subitem
+            label="In the &quot;Mouse Button&quot; parameter field, enter: 1. This means that the selection will be done with the left mouse button.">
+      </subitem>
+      <subitem
+            label="In the &quot;Extend Selection&quot; parameter field, enter: no. The extend selection parameter is to allow multi-selection, which is not required here.">
+      </subitem>
+   </item>
+   <item title="Give the component a meaningful component name" dialog="true" skip="false">
+      <description>
+         In the Test Case Editor, select the <br/> <b>ub_tre_selectNode_byTextpath</b> Test Case.
+      </description>
+      <subitem label="In the component names view, in the &quot;new name&quot; field, enter &quot;DVDTool_Category_tree&quot; as the new component name." skip="false">
+      </subitem>
+      <subitem
+            label="Save the Test Case Editor. You now have a Test Case which will select &quot;Category &gt; Horror&quot; from a tree in your application."
+            skip="false">
+      </subitem>
+   </item>
+   <item
+         title="Execute the test">
+      <description>
+         Try this Test Case out on the DVD Tool. You will need to create a Test Suite, and add this Test Case to it. You may also need to select the AUT you want to use in the Properties View for the Test Suite Editor. <br/>
+You will need to carry out object mapping, and you must (manually) create a new category called Horror in the DVD tool for the test to work.
+      </description>
+   </item>
+</cheatsheet>
