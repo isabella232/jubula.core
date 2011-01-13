@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<project name="org.eclipse.jubula.autlauncher" default="compile" basedir=".">
+
+	<!-- 
+		general definitions
+		********************
+		
+		src			the name of the diretory(starting at basedir)
+					where to find project source files
+					
+		build		the name of the diretory(starting at basedir)
+					where to compile to.
+
+		classes		the name of the diretory(starting at basedir)
+					where to put compiled classes to.
+					
+		jars		the name of the diretory(starting at basedir)
+					where to put generated jars to.
+					
+		lib			the name of the diretory(starting at basedir)
+					where to find libaries, needed for
+					compilation.
+					
+	-->
+	<property name="src" 			value="src"/>
+	<property name="build" 			value="build"/>
+	<property name="classes"		value="build/classes"/>
+	<property name="jars" 			value="build/jars"/>
+
+	<!-- classpath -->
+	<property name="javac" value="javac"/>
+	<property name="javac.classpath" value="classpathGDRun"/>
+	<property name="javac.debug" value="javac.debug"/>
+
+	<!-- 
+		Targets
+		********
+		
+		all				calling the targets clean and compile.
+						So "all" is replacing compiled files
+
+		clean			deletes the build directory
+	
+		compile			compiles a project into the $build directory
+		
+		jar				creates one or more jar files from the project.
+
+	-->
+	
+	<target name="all" depends="clean, compile">
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${build}"/>
+		<mkdir dir="${classes}"/>
+		<mkdir dir="${jars}"/>
+		<javac sourcepath=""
+			   srcdir="${src}"
+			   destdir="${classes}"
+			   classpathref="${javac.classpath}"
+			   debug="${javac.debug}"
+			   fork="true"
+			   executable="${javac}">
+						
+		</javac>
+
+	</target>
+
+	<target name="jar" depends="compile">
+		<pathconvert property="manifest.classpath" pathsep=" ">
+		  <path refid="${javac.classpath}"/>
+		  <mapper>
+		    <chainedmapper>
+		       <flattenmapper/>
+		       <globmapper from="*.jar" to="lib/*.jar"/>
+		    </chainedmapper>
+		  </mapper>
+		</pathconvert>
+
+		<jar basedir="${classes}" destfile="${jars}/${ant.project.name}.jar">
+			 <fileset dir="${src}"
+	  			 		includes="**/*"
+			            excludes="**/*.java" />
+			<manifest>
+				<attribute name="Class-Path" value="${manifest.classpath} ./resources/"/>
+				<attribute name="Main-Class" value="org.eclipse.jubula.autlauncher.GDRun"/>
+		    </manifest>
+		</jar>
+	</target>
+
+</project>
