@@ -1,0 +1,179 @@
+/*******************************************************************************
+ * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package org.eclipse.jubula.client.core.utils;
+
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.eclipse.jubula.client.core.model.INodePO;
+
+
+
+/**
+ * object for stack
+ * 
+ * @author BREDEX GmbH
+ * @created 12.04.2005
+ *
+ */
+public class ExecObject {
+    
+    /**
+     * <code>m_execNode</code> execTestCase
+     */
+    private INodePO m_execNode = null;
+    
+    /**
+     * <code>m_numberDs</code> actual executed dataset
+     */
+    private int m_numberDs = -1;
+    
+    /**
+     * <code>m_index</code> index of actual executed child
+     */
+    private int m_index = -1;
+    
+    /** 
+     * the number of times the node for this object has been retried.
+     * this is used for handling the RETRY event handler. 
+     */
+    private int m_retryCount = 0;
+    
+    /**
+     * constructor
+     * 
+     * @param node node
+     * @param index
+     *            index of childrenlist of node for actual executed child
+     * @param number
+     *            number of actual executed dataset
+     * @param retryCount
+     *            number of times this node has been retried
+     */
+    public ExecObject(INodePO node, int index, int number, int retryCount) {
+        this(node, index, number);
+        m_retryCount = retryCount;
+    }
+
+    /**
+     * constructor
+     * 
+     * @param node node
+     * @param index
+     *            index of childrenlist of node for actual executed child
+     * @param number
+     *            number of actual executed dataset
+     */
+    public ExecObject(INodePO node, int index, int number) {
+        m_execNode = node;
+        m_index = index;
+        m_numberDs = number;
+    }
+    
+    /**
+     * constructor to use for node objects without consideration of datasets
+     * @param node see above
+     * @param index see above
+     */
+    public ExecObject(INodePO node, int index) {
+        this(node, index, Traverser.NO_DATASET);
+    }
+    
+    /**
+     * @return Returns the node.
+     */
+    public INodePO getExecNode() {
+        return m_execNode;
+    }
+    
+    /**
+     * @return Returns the lastDataSet.
+     */
+    public int getNumberDs() {
+        return m_numberDs;
+    }
+    
+    /**
+     * increment index
+     */
+    public void incrementIndex() {
+        ++m_index;
+    }
+    
+    /**
+     * decrement index
+     */
+    public void decrementIndex() {
+        --m_index;
+    }
+    
+    /**
+     * increment dataset number
+     */
+    public void incrementDataSetNumber() {
+        ++m_numberDs;
+    }
+    
+    /**
+     * decrement dataset number
+     */
+    public void decrementDataSetNumber() {
+        --m_numberDs;
+    }
+    
+    /**
+     * @return Returns the index.
+     */
+    public int getIndex() {
+        return m_index;
+    }
+    /**
+     * @param index The index to set.
+     */
+    public void setIndex(int index) {
+        m_index = index;
+    }
+    
+    /** 
+     * {@inheritDoc}
+     */
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        boolean result = false;
+        if (obj != null && obj instanceof ExecObject) {
+            ExecObject execObj = (ExecObject) obj;
+            result = m_index == execObj.getIndex()
+                && m_numberDs == execObj.getNumberDs()
+                && m_execNode.equals(execObj.getExecNode())
+                && m_retryCount == execObj.getRetryCount();
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int hashCode() {
+        return new HashCodeBuilder().append(m_execNode.hashCode())
+            .append(m_index).append(m_numberDs).append(m_retryCount)
+            .toHashCode();
+    }
+    
+    /**
+     * 
+     * @return the number of times the node for this object has been retried.
+     */
+    public int getRetryCount() {
+        return m_retryCount;
+    }
+    
+    
+}

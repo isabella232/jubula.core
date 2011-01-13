@@ -1,0 +1,348 @@
+/*******************************************************************************
+ * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package org.eclipse.jubula.client.core.businessprocess;
+
+import java.util.Date;
+import java.util.Set;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.ITestCasePO;
+import org.eclipse.jubula.client.core.model.ITestResult;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.TestDataConstants;
+import org.eclipse.jubula.tools.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+
+
+/**
+ * @author BREDEX GmbH
+ * @created 05.08.2005
+ */
+public abstract class AbstractXMLReportGenerator {
+    
+    /** The logger */
+    private static final Log LOG = LogFactory.getLog(
+        AbstractXMLReportGenerator.class);
+
+    /** the generated report */
+    private Document m_document;
+
+    /** the Test Result for which to write a report */
+    private ITestResult m_testResult;
+    
+    /**
+     * Constructor
+     * 
+     * @param testResult The Test Result for which to write a report.
+     */
+    public AbstractXMLReportGenerator(ITestResult testResult) {
+        m_document = DocumentHelper.createDocument();
+        m_testResult = testResult;
+    }
+    
+    /**
+     * generates a readable xml file
+     * @return
+     *      XML File as String
+     */
+    public abstract Document generateXmlReport();
+    
+    /**
+     * Generates the basic, generic information for an XML report.
+     * 
+     * @return The "project" element of the XML document.
+     */
+    protected Element generateHeader() {
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Generating Result XML Report"); //$NON-NLS-1$
+        }
+        
+        m_document.normalize();
+        m_document.addComment("<?xml-stylesheet type=\"text/xsl\" href=\"format.xsl\"?>"); //$NON-NLS-1$
+
+        Element root = m_document.addElement("report"); //$NON-NLS-1$
+        root.addAttribute("style", getStyleName()); //$NON-NLS-1$
+        Element general = root.addElement("project"); //$NON-NLS-1$
+        
+        StringBuilder nameSb = new StringBuilder(m_testResult.getProjectName());
+        nameSb.append(" ").append(m_testResult.getProjectMajorVersion()); //$NON-NLS-1$
+        nameSb.append(".").append(m_testResult.getProjectMinorVersion()); //$NON-NLS-1$
+        general.addElement("name").//$NON-NLS-1$
+            addText(nameSb.toString());
+
+        Date startTime = m_testResult.getStartTime();
+        if (startTime != null) {
+            general.addElement("test-start").addText(startTime.toString()); //$NON-NLS-1$
+        }
+        Date endTime = m_testResult.getEndTime();
+        if (endTime != null) {
+            general.addElement("test-end").addText(endTime.toString()); //$NON-NLS-1$
+        }
+
+        if (startTime != null && endTime != null) {
+            // elapsed time while executing
+            long timeInSeconds = endTime.getTime() - startTime.getTime();
+            timeInSeconds = timeInSeconds / 1000;
+            long hours, minutes, seconds;
+            hours = timeInSeconds / 3600;
+            timeInSeconds = timeInSeconds - (hours * 3600);
+            minutes = timeInSeconds / 60;
+            timeInSeconds = timeInSeconds - (minutes * 60);
+            seconds = timeInSeconds;
+            String secondsString = (seconds < 10) ? "0" + seconds : String.valueOf(seconds); //$NON-NLS-1$ 
+            String minutesString = (minutes < 10) ? "0" + minutes : String.valueOf(minutes); //$NON-NLS-1$ 
+            String hoursString = (hours < 10) ? "0" + hours : String.valueOf(hours); //$NON-NLS-1$ 
+            general.addElement("test-length").//$NON-NLS-1$
+                addText(hoursString + ":" + minutesString + ":" + secondsString);  //$NON-NLS-1$//$NON-NLS-2$
+        }
+        
+        addStepCountElements(m_testResult, general);
+        
+        general.addElement("language").addText(m_testResult.getTestLanguage()); //$NON-NLS-1$
+        
+        return general;
+    }
+
+    /**
+     * Generates and adds test step count sub-elements to the given 
+     * element.
+     * 
+     * @param result The Test Result from which to retrieve the step count 
+     *               information.
+     * @param general The parent element to which the step count elements
+     *                will be added.
+     */
+    private void addStepCountElements(ITestResult result, Element general) {
+        int expectedNumberOfSteps = 
+            result.getExpectedNumberOfSteps();
+        int numberOfStepsExecuted = 
+            result.getNumberOfTestedSteps();
+        int numberOfEventHandlerSteps =
+            result.getNumberOfEventHandlerSteps();
+        int numberOfFailedTestSteps = 
+            result.getNumberOfFailedSteps();
+        
+        general.addElement("expectedNumSteps").addText(//$NON-NLS-1$
+                String.valueOf(expectedNumberOfSteps));
+        general.addElement("numStepsTested").addText(//$NON-NLS-1$
+            String.valueOf(numberOfStepsExecuted));
+        general.addElement("numEventHandlerSteps").addText(//$NON-NLS-1$
+                String.valueOf(numberOfEventHandlerSteps));
+        general.addElement("numFailedSteps").addText(//$NON-NLS-1$
+                String.valueOf(numberOfFailedTestSteps));
+    }
+    
+    /**
+     * 
+     * @param parent
+     *      The XML element to which the result for node will be added.
+     *      This can be considered the parent of the returned element.
+     * @return the created element.
+     */
+    protected Element buildRootElement(Element parent) {
+        return buildElement(parent, m_testResult.getRootResultNode());
+    }
+    
+    /**
+     * Builds and returns a test report element. Subclasses can create an entire
+     * test result hierarchy by recursively calling this method, using the 
+     * returned element as an argument for the next method call.
+     * 
+     * @param resultNode
+     *      <code>TestResultNode</code> to translate to an XML element.
+     * @param element
+     *      The XML element to which the result for node will be added.
+     *      This can be considered the parent of the returned element.
+     * @return The <code>Element</code> created.
+     */
+    protected Element buildElement(Element element, 
+        TestResultNode resultNode) {
+        Element insertInto = element;
+        Object node = resultNode.getNode();
+        if (node instanceof ITestSuitePO) {
+            ITestSuitePO ts = (ITestSuitePO) node;
+            Element suite = element.addElement("testsuite"); //$NON-NLS-1$
+            insertInto = suite;
+            addGeneralElements(resultNode, insertInto);
+            IAUTMainPO aut = ts.getAut();
+            Element autEl = suite.addElement("aut"); //$NON-NLS-1$
+            autEl.addElement("name").addText(aut.getName()); //$NON-NLS-1$
+            autEl.addElement("config").addText(m_testResult.getAutConfigName()); //$NON-NLS-1$
+            autEl.addElement("server").addText(m_testResult.getAutAgentHostName()); //$NON-NLS-1$
+            autEl.addElement("cmdline-parameter").setText(m_testResult.getAutArguments()); //$NON-NLS-1$
+            insertInto = suite.addElement("test-run"); //$NON-NLS-1$
+        } else if (node instanceof IEventExecTestCasePO) {
+            insertInto = element.addElement("eventhandler"); //$NON-NLS-1$
+            addGeneralElements(resultNode, insertInto);
+            Element typeEl = insertInto.addElement("type"); //$NON-NLS-1$
+            typeEl.addText(I18n.getString(
+                ((IEventExecTestCasePO)node).getEventType()));
+            Element reentryEl = insertInto.addElement("reentry-property"); //$NON-NLS-1$
+            reentryEl.addText(((IEventExecTestCasePO)node).
+                getReentryProp().toString());
+        } else if (node instanceof ITestCasePO) {
+            insertInto = element.addElement("testcase"); //$NON-NLS-1$
+            addGeneralElements(resultNode, insertInto);
+        } else if (node instanceof ICapPO) {
+            insertInto = element.addElement("step"); //$NON-NLS-1$
+            addGeneralElements(resultNode, insertInto);
+            addCapElement(resultNode, insertInto, node);
+        }
+        
+        return insertInto;
+    }
+
+    /**
+     * adds information for a Cap to the XML file
+     * 
+     * @param resultNode
+     *      the actual node
+     * @param insertInto
+     *      where to insert elements in xml
+     * @param node
+     *      NodePO
+     */
+    protected void addCapElement(TestResultNode resultNode, 
+            Element insertInto, Object node) {
+        ICapPO cap = (ICapPO) node;
+        getTimestampFromResultNode(resultNode, insertInto);
+        Element compEl = insertInto.addElement("component-name"); //$NON-NLS-1$
+        compEl.addText(
+            StringUtils.defaultString(resultNode.getComponentName()));
+        Element compTypeEl = insertInto.addElement("component-type"); //$NON-NLS-1$
+        compTypeEl.addText(CompSystemI18n.getString(cap.getComponentType(), 
+            true));
+        Element actionEl = insertInto.addElement("action-type"); //$NON-NLS-1$
+        actionEl.addText(CompSystemI18n.getString(cap.getActionName(), true));
+        int index = 0;
+        for (IParamDescriptionPO param : cap.getParameterList()) {
+            Element paramEl = insertInto.addElement("parameter"); //$NON-NLS-1$
+            
+            Element paramNameEl = paramEl.addElement("parameter-name"); //$NON-NLS-1$
+            paramNameEl.addText(CompSystemI18n.getString(param.getUniqueId(), 
+                true));
+            Element paramTypeEl = paramEl.addElement("parameter-type"); //$NON-NLS-1$
+            paramTypeEl.addText(CompSystemI18n.getString(param.getType(), 
+                true));
+            Element paramValueEl = paramEl.addElement("parameter-value"); //$NON-NLS-1$
+            if (resultNode.getParamValues().size() >= index + 1) {
+                final String value = resultNode.getParamValues().get(index);
+                if (value != null) {
+                    if (value.length() == 0) {
+                        paramValueEl.addText(TestDataConstants.EMPTY_SYMBOL);
+                    } else {
+                        paramValueEl.addText(value);                        
+                    }
+                } else {
+                    paramValueEl.addText(StringConstants.EMPTY);
+                }
+            } else {
+                paramValueEl.addText(StringConstants.EMPTY);
+            }            
+            index++;
+        }
+        
+        if (resultNode.getStatus() == TestResultNode.ERROR 
+                || resultNode.getStatus() == TestResultNode.RETRYING) {
+            
+            Element error = insertInto.addElement("error"); //$NON-NLS-1$
+            Element errorType = error.addElement("type"); //$NON-NLS-1$
+            errorType.addText(I18n.getString(resultNode.getEvent().getId(), 
+                true));
+            Set keys = resultNode.getEvent().getProps().keySet();
+            if (resultNode.getEvent().getId().equals(
+                TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR)) {
+                String key = (String)resultNode.getEvent().getProps().get(
+                    TestErrorEvent.Property.DESCRIPTION_KEY);
+                Object[] args = (Object[])resultNode.getEvent().getProps().get(
+                        TestErrorEvent.Property.PARAMETER_KEY);
+                args = args != null ? args : new Object[0];
+                Element mapEntry = error.addElement("description"); //$NON-NLS-1$
+                if (mapEntry != null && key != null) {
+                    mapEntry.addText(resultNode.hasBackingNode() 
+                            ? String.valueOf(I18n.getString(key, args)) : key);
+                }
+            } else {
+                for (Object key : keys) {
+                    Element mapEntry = error.addElement((String)key);
+                    mapEntry.addText(String.valueOf(resultNode.getEvent()
+                        .getProps().get(key)));
+                }
+            }
+        }
+    }
+
+    /**
+     * @param resultNode
+     *      the actual node
+     * @param insertInto
+     *      where to insert elements in xml 
+     */
+    private void getTimestampFromResultNode(TestResultNode resultNode,
+            Element insertInto) {
+        Element timestampEL = insertInto.addElement("timestamp");
+        Date time = resultNode.getTimeStamp();
+        if (time != null) {
+            String timestamp = time.toString();
+            timestampEL.addText(timestamp);
+        } else {
+            timestampEL.addText(StringConstants.EMPTY);
+        }
+    }
+    /**
+     * @param resultNode
+     *      TestResultNode
+     * @param insertInto
+     *      Element
+     */
+    protected void addGeneralElements(TestResultNode resultNode, 
+        Element insertInto) {
+        Element name = insertInto.addElement("name"); //$NON-NLS-1$
+        
+        final INodePO resNode = resultNode.getNode();
+        name.addText(resNode.getName());
+        if (resNode.getComment() != null) {
+            Element comment = insertInto.addElement("comment"); //$NON-NLS-1$
+            comment.addText(resNode.getComment());
+        }
+        Element status = insertInto.addElement("status"); //$NON-NLS-1$
+        status.addText(String.valueOf(resultNode.getStatus()));
+    }
+    /**
+     * 
+     * @return The <code>Document</code> associated with this report generator.
+     */
+    protected Document getDocument() {
+        return m_document;
+    }
+    
+    /**
+     * Hook method called when generating basic XML data.
+     * 
+     * @return A user-readable <code>String</code> representing the style of 
+     *         this report generator.
+     */
+    protected abstract String getStyleName();
+
+}

@@ -1,0 +1,12 @@
+#Schema Configuration File
+
+#Schema1
+1_schemName = embedded
+1_dbtype = 1_db
+1_url = jdbc:h2:jubula-db;MVCC=TRUE;AUTO_SERVER=TRUE
+
+#Schema2
+#2_schemName = oracle
+#2_dbtype = 2_db
+#2_url = jdbc:oracle:thin:@<hostname>:<port>:<SID>
+#2_schema = DatabaseScheme(optional)

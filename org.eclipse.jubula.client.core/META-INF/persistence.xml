@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+	<persistence-unit name="org.eclipse.jubula" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>org.eclipse.jubula.client.core.persistence.locking.ApplicationPO</class>
+		<class>org.eclipse.jubula.client.core.persistence.locking.DbGuardPO</class>
+		<class>org.eclipse.jubula.client.core.model.DBVersionPO</class>
+		<class>org.eclipse.jubula.client.core.persistence.locking.DbLockPO</class>
+		<class>org.eclipse.jubula.client.core.persistence.locking.LockedObjectPO</class>
+		<class>org.eclipse.jubula.client.core.model.TestResultSummaryPO</class>
+		<class>org.eclipse.jubula.client.core.model.TestResultPO</class>
+		<class>org.eclipse.jubula.client.core.model.ParameterDetailsPO</class>
+		<class>org.eclipse.jubula.client.core.model.I18NStringPO</class>
+		<class>org.eclipse.jubula.client.core.model.AUTConfigPO</class>
+		<class>org.eclipse.jubula.client.core.model.NodePO</class>
+		<class>org.eclipse.jubula.client.core.model.ProjectPO</class>
+		<class>org.eclipse.jubula.client.core.model.TestJobPO</class>
+		<class>org.eclipse.jubula.client.core.model.TestSuitePO</class>
+		<class>org.eclipse.jubula.client.core.model.CapPO</class>
+		<class>org.eclipse.jubula.client.core.model.CategoryPO</class>
+		<class>org.eclipse.jubula.client.core.model.EventExecTestCasePO</class>
+		<class>org.eclipse.jubula.client.core.model.ExecTestCasePO</class>
+		<class>org.eclipse.jubula.client.core.model.ParamNodePO</class>
+		<class>org.eclipse.jubula.client.core.model.RefTestSuitePO</class>
+		<class>org.eclipse.jubula.client.core.model.SpecTestCasePO</class>
+		<class>org.eclipse.jubula.client.core.model.TestCasePO</class>
+		<class>org.eclipse.jubula.client.core.model.AUTMainPO</class>
+		<class>org.eclipse.jubula.client.core.model.ParamDescriptionPO</class>
+		<class>org.eclipse.jubula.client.core.model.CapParamDescriptionPO</class>
+		<class>org.eclipse.jubula.client.core.model.TcParamDescriptionPO</class>
+		<class>org.eclipse.jubula.client.core.model.ReusedProjectPO</class>
+		<class>org.eclipse.jubula.client.core.model.ProjectPropertiesPO</class>
+		<class>org.eclipse.jubula.client.core.model.TestDataCubePO</class>
+		<class>org.eclipse.jubula.client.core.model.TDManagerPO</class>
+		<class>org.eclipse.jubula.client.core.model.TestDataPO</class>
+		<class>org.eclipse.jubula.client.core.model.ListWrapperPO</class>
+		<class>org.eclipse.jubula.client.core.model.CompIdentifierPO</class>
+		<class>org.eclipse.jubula.client.core.model.ObjectMappingPO</class>
+		<class>org.eclipse.jubula.client.core.model.ObjectMappingAssoziationPO</class>
+		<class>org.eclipse.jubula.client.core.model.ObjectMappingCategoryPO</class>
+		<class>org.eclipse.jubula.client.core.model.CompNamesPairPO</class>
+		<class>org.eclipse.jubula.client.core.model.WrapperPO</class>
+		<class>org.eclipse.jubula.client.core.model.AUTContPO</class>
+		<class>org.eclipse.jubula.client.core.model.SpecObjContPO</class>
+		<class>org.eclipse.jubula.client.core.model.TestDataCubeContPO</class>
+		<class>org.eclipse.jubula.client.core.model.TestJobContPO</class>
+		<class>org.eclipse.jubula.client.core.model.TestSuiteContPO</class>
+		<class>org.eclipse.jubula.client.core.model.ParamNamePO</class>
+		<class>org.eclipse.jubula.client.core.model.ProjectNamePO</class>
+		<class>org.eclipse.jubula.client.core.model.ComponentNamePO</class>
+		<class>org.eclipse.jubula.client.core.model.UsedToolkitPO</class>
+		<class>org.eclipse.jubula.client.core.model.ObjectMappingProfilePO</class>
+		<class>org.eclipse.jubula.client.core.model.DocAttributePO</class>
+		<class>org.eclipse.jubula.client.core.model.DocAttributeDescriptionPO</class>
+		<class>org.eclipse.jubula.client.core.model.DocAttributeListPO</class>
+		<class>org.eclipse.jubula.client.core.model.CheckConfContPO</class>
+		<class>org.eclipse.jubula.client.core.model.CheckConfPO</class>
+		<class>org.eclipse.jubula.client.core.model.MonitoringValuePO</class>  
+		
+		<properties>
+			<property name="eclipselink.weaving" value="static"/>
+		</properties>
+		
+	</persistence-unit>
+</persistence>
+

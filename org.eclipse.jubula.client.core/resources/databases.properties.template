@@ -1,0 +1,19 @@
+#DB1
+1_db = Embedded
+1_driverclass = org.h2.Driver
+1_prop.1 = javax.persistence.jdbc.user
+1_val.1 = sa
+1_prop.2 = javax.persistence.jdbc.password
+1_val.2 = 
+
+#DB2
+2_db = Oracle
+2_driverclass = oracle.jdbc.driver.OracleDriver
+
+#DB3
+3_db = Unsupported: MySQL
+3_driverclass = com.mysql.jdbc.Driver
+
+#DB4
+4_db = Unsupported: PostgreSQL
+4_driverclass = org.postgresql.Driver

@@ -1,0 +1,339 @@
+<!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<!-- ===================================================================== -->
+<!-- Custom targets called from a project's generated build.xml            -->
+<!-- Set customBuildCallbacks=<path/to/this/file> in your build.properties.-->
+<!-- ===================================================================== -->
+<project name="org.eclipse.jubula.client.core" default="noDefault">
+	
+	<!-- ===================================================================== -->
+	<!-- START - Old buildScript.xml                                           -->
+	<!-- ===================================================================== -->
+    <path id="eclipselink.weaving.classpath">
+		<fileset dir="${basedir}/../org.eclipse.jubula.project.configuration/target/platform/persistence/plugins">
+	    	<include name="org.eclipse.persistence.*.jar" />
+    	    <include name="javax.persistence_*.jar"/>
+		</fileset>
+    </path>
+	
+    <target name="define-weaving-task" description="New task definition for EclipseLink static weaving"	>
+        <taskdef name="weave" classname="org.eclipse.persistence.tools.weaving.jpa.StaticWeaveAntTask">
+            <classpath refid="eclipselink.weaving.classpath"/>
+        </taskdef>
+    </target>
+
+    <target name="eclipse-autobuild-weaving" 
+	        description="Perform EclipseLink static weaving after Eclipse autobuild.">
+        <path id="weaving.classpath">
+            <pathelement location="${basedir}/../org.eclipse.jubula.tools/bin"/>
+            <pathelement location="${basedir}/../org.eclipse.jubula.communication/bin"/>
+            <fileset dir="${basedir}/../org.eclipse.jubula.project.configuration/target/platform/eclipse/plugins">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${basedir}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${basedir}/../org.eclipse.jubula.tools/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+        </path>
+        <antcall target="weaving" >
+            <param name="weaving.src" value="${basedir}/bin"/>
+        	<param name="weaving.persistence" value="${basedir}"/>
+        	<reference refid="weaving.classpath" torefid="weaving.classpath" />
+        </antcall>
+    </target>
+
+    <target name="weaving" 
+    	    description="Perform EclipseLink static weaving in-place during deployment." 
+    	    depends="define-weaving-task">
+        <weave source="${weaving.src}" target="${weaving.src}" persistenceinfo="${weaving.persistence}">
+            <classpath refid="weaving.classpath"/>
+        </weave>
+    </target>
+
+	<property name="app.name"     	value="org.eclipse.jubula.client.core"/>
+	<property name="src" 			value="src"/>
+	<property name="build" 			value="build"/>
+	<property name="classes"		value="build/classes"/>
+	<property name="jars" 			value="build/jars"/>
+	<property name="lib" 			value="lib"/>
+	<property name="bin" 			value="bin"/>
+	
+	<property name="sablecc.dir"		value="../org.eclipse.jubula.build/lib/sablecc"/>
+	<property name="gen.parser.src"		value="${sablecc.dir}/gen-parser-src"/>
+	<property name="gen.parser.classes"	value="${sablecc.dir}/gen-parser-build"/>
+	<property name="parser.grammar.def"	value="${sablecc.dir}/parameter.sable"/>
+	<property name="sablecc.jar"		value="${sablecc.dir}/sablecc.jar"/>
+				
+	<!-- classpath -->
+	<property name="javaPath" value="javaPath"/>
+	<property name="javavm" value="${javaPath}/java"/>
+	<property name="javac" value="javac"/>
+	<property name="javac.classpath" value="classpath"/>
+	<property name="javac.debug" value="javac.debug"/>
+
+	<!-- 
+	load properties from build.properties file. We expect at least the 
+	following properties to be defined there:
+	 * javacSource
+	 * javacTarget 
+	-->
+	<property file="build.properties"/>
+	<target name="all" depends="clean, compile">
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+
+	<target name="compile" depends="gen-parser">
+		<mkdir dir="${classes}"/>
+		<javac srcdir="${src}"
+		       destdir="${classes}"
+     		   excludes="org/eclipse/jubula/client/core/test/**" 
+			   classpathref="${javac.classpath}"
+		       debug="${javac.debug}"
+			   fork="true"
+			   executable="${javac}"/>		
+		<!-- copy lexer.dat and parser.dat (for SableCC) -->
+		<copy todir="${classes}">
+			<fileset dir="${src}">
+				<include name="**/*.dat"/>
+			</fileset>
+		</copy>
+		<property name="weaving.classpath" refid="${javac.classpath}"/>
+		<echo message="Executing EclipseLink static weaving..." />
+		<java fork="true" jvm="${javaPath}/java" failonerror="true" 
+			  classname="org.eclipse.persistence.tools.weaving.jpa.StaticWeave">
+			<classpath refid="eclipselink.weaving.classpath" />
+			<arg value="-classpath" />
+			<arg value="${weaving.classpath}" />
+			<arg value="-persistenceinfo" />
+			<arg value="${basedir}" />
+			<arg value="${basedir}/${classes}" />
+			<arg value="${basedir}/${classes}" />
+		</java>
+
+		<echo message="...EclipseLink static weaving finished successfully." />
+	</target>
+
+	<target name="jar" depends="compile, detemplify">
+		<mkdir dir="${jars}"/>
+		<jar basedir="${classes}" destfile="${jars}/${app.name}.jar">
+			 <fileset dir="${src}"
+	  			 		includes="**/*"
+			            excludes="**/*.java, **/*.properties.template"/>
+		</jar>
+	</target>
+
+	<target name="gen-parser" depends="clean-parser">
+		<mkdir dir="${gen.parser.src}"/>
+		<mkdir dir="${gen.parser.classes}"/>
+	    <java jar="${sablecc.jar}" fork="true" failonerror="true">
+	       	<arg value="-d"/>
+	       	<arg value="${gen.parser.src}"/>
+	       	<arg value="${parser.grammar.def}"/>
+	   	</java>
+
+		<javac srcdir="${gen.parser.src}"
+		       destdir="${gen.parser.classes}"
+		       debug="${javac.debug}"
+			   fork="true"
+			   executable="${javac}"
+			   target="${javacTarget}"
+			   source="${javacSource}"/>
+		
+		<jar destfile="${lib}/param-parser.jar">
+			 <fileset dir="${gen.parser.classes}"
+	  			 		includes="**/*"/>
+			 <fileset dir="${gen.parser.src}"
+	  			 		includes="**/*.dat"/>
+		</jar>
+		
+		<delete dir="${gen.parser.src}"/>
+		<delete dir="${gen.parser.classes}"/>
+	</target>
+	
+	<target name="clean-parser">
+		<delete dir="${gen.parser.src}"/>
+	</target>
+
+	<target name="detemplify">
+		<copy todir="${basedir}/resources">
+			<fileset dir="${basedir}/resources"/>
+			<globmapper from="*.properties.template" to="*.properties"/>
+		</copy>
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- END - Old buildScript.xml                                           -->
+	<!-- ===================================================================== -->
+
+	<!-- ===================================================================== -->
+	<!-- Default target                                                        -->
+	<!-- ===================================================================== -->
+	<target name="noDefault">
+		<echo message="This file must be called with explicit targets" />
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target build.jars                              -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder to contain the build results           -->
+	<!-- ===================================================================== -->
+	<target name="pre.build.jars">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target build.jars                               -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder to contain the build results           -->
+	<!-- ===================================================================== -->
+	<target name="post.build.jars">
+		<antcall target="detemplify" />
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target build.sources                           -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder to contain the build results           -->
+	<!-- ===================================================================== -->
+	<target name="pre.build.sources">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target build.sources                            -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder to contain the build results           -->
+	<!-- ===================================================================== -->
+	<target name="post.build.sources">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the compilation target <name>                      -->
+	<!-- Substitute "name" with the name of the compilation target, eg @dot    -->
+	<!-- Available parameters :                                                -->
+	<!--   source.foldern : n = 1 ... N, the source folders                    -->
+	<!--   target.folder  : where the results of the compilation go            -->
+	<!--   <name>.classpath : name = name of the compilation target. A         -->
+	<!--                      reference to the classpath structure.            -->
+	<!-- ===================================================================== -->
+	<target name="pre.name">
+	</target>
+
+	<target name="pre.@dot">
+	</target>
+	
+	<target name="pre.org.eclipse.jubula.client.core.jar">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do during the compilation target <name>, after the compile   -->
+	<!-- but before jaring.  Substitute "name" with the name of the compilation-->
+	<!-- target, eg @dot                                                       -->
+	<!-- Available parameters :                                                -->
+	<!--   source.foldern : n = 1 ... N, the source folders                    -->
+	<!--   target.folder  : where the results of the compilation go            -->
+	<!--   <name>.classpath : name = name of the compilation target. A         -->
+	<!--                      reference to the classpath structure.            -->
+	<!-- ===================================================================== -->
+	<target name="post.compile.name">
+	</target>
+
+	<target name="post.compile.@dot">
+	</target>
+	
+	<target name="post.compile.org.eclipse.jubula.client.core.jar">
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the compilation target <name>                       -->
+	<!-- Substitute "name" with the name of the compilation target, eg @dot    -->
+	<!-- Available parameters :                                                -->
+	<!--   jar.Location - the location of the compilation results              -->
+	<!--   <name>.classpath : name = name of the compilation target. A         -->
+	<!--                      reference to the classpath structure.            -->
+	<!-- ===================================================================== -->
+	<target name="post.name">
+	</target>
+
+	<target name="post.@dot">
+	</target>
+
+	<target name="post.org.eclipse.jubula.client.core.jar">
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target gather.bin.parts                         -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder containing the build results           -->
+	<!--   target.folder - destination folder                                  -->
+	<!-- ===================================================================== -->
+	<target name="pre.gather.bin.parts">
+	</target>
+		
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target gather.bin.parts                         -->
+	<!-- Available parameters :                                                -->
+	<!--   build.result.folder - folder containing the build results           -->
+	<!--   target.folder - destination folder                                  -->
+	<!-- ===================================================================== -->
+	<target name="post.gather.bin.parts">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target gather.sources                          -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="pre.gather.sources">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target gather.sources                           -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="post.gather.sources">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target gather.logs                             -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="pre.gather.logs">        
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target gather.logs                              -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="post.gather.logs">       
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before the target clean                                   -->
+	<!-- Available parameters :                                                -->
+	<!--   destination.temp.folder - destination folder                        -->
+	<!-- ===================================================================== -->
+	<target name="pre.clean">              
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the target clean                                    -->
+	<!-- Available parameters :                                                -->
+	<!--   plugin.destination - final destination of the build                 -->
+	<!--   build.result.folder - results of the compilation                    -->
+	<!--   temp.folder - temporary folder                                      -->
+	<!-- ===================================================================== -->
+	<target name="post.clean">             
+	</target>
+</project>
