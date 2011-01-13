@@ -1,0 +1,61 @@
+/* Grammar for GUIdancer parameter values. */
+Package org.eclipse.jubula.client.core.parser.parameter;
+    
+Helpers
+    literal_symbol = ''';
+    alphanumeric = ['0'..'9'] | ['a'..'z'] | ['A'..'Z'] | '_';
+    any_char = [0 .. 0xffff];
+    not_literal_symbol = [any_char - literal_symbol];
+    escapable = ''' | '\' | '?' | '=' | '$';
+
+States
+    normal,
+    literal;
+
+Tokens
+    {normal->literal}
+    open_literal = ''';
+    
+	{normal}
+    reference_token = '=';
+	{normal}
+    escaped_symbol = '\' escapable;
+	{normal}
+    open_brace = '{';
+	{normal}
+    close_brace = '}';
+	{normal}
+    open_parens = '(';
+	{normal}
+    close_parens = ')';
+	{normal}
+    function_symbol = '?';
+	{normal}
+    variable_token = '$';
+	{normal}
+    alphanumeric = alphanumeric+;
+	{normal}
+    char = any_char;
+
+	{literal}
+    literal_body = not_literal_symbol+;
+
+    {literal->normal}
+    close_literal = ''';
+    
+
+Productions
+    parameter = param_token+;
+    param_token = {literal}P.literal | 
+                  {escape_sequence}escaped_symbol | 
+                  {reference}reference | 
+                  {variable}variable | 
+                  {function}function |
+                  {alphanumeric}alphanumeric |
+                  {any_sequence}char;
+    literal = open_literal literal_body? close_literal;
+    function = function_symbol [function_name]:alphanumeric open_parens [function_argument]:alphanumeric? close_parens;
+    reference = {bracketed_ref}reference_token open_brace [reference_body]:alphanumeric close_brace | {simple_ref}reference_token [reference_body]:alphanumeric;
+    variable = {simple_var}simple_variable | {bracketed_var}bracketed_variable;
+    simple_variable = variable_token alphanumeric;
+    bracketed_variable = variable_token open_brace alphanumeric close_brace;

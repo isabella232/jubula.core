@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<project default="build" basedir="../../../">
+	<property file="client.build.properties" />
+	
+	<target name="build">
+		<property name="baseLocation" value="${eclipse.home}" />
+
+		<property name="builder" value="${basedir}" />
+		<property name="buildDirectory" value="${basedir}/buildDirectory" />
+		<property name="pluginPath" value="${basedir}/.." />
+		<property name="buildTempFolder" value="${buildDirectory}" />
+
+		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
+
+		<move todir="${basedir}">
+			<fileset dir="${buildDirectory}/${buildLabel}" includes="*.zip" />
+		</move>
+
+		<!-- refresh the workspace -->
+		<eclipse.convertPath fileSystemPath="${basedir}"
+			property="resourcePath" />
+		<eclipse.refreshLocal resource="${resourcePath}"
+			depth="infinite" />
+	</target>
+</project>
