@@ -42,9 +42,11 @@ Export-Package: com.thoughtworks.xstream,
  org.xmlpull.v1
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Eclipse-BundleShape: jar
-Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
- org.apache.commons.logging;bundle-version="[1.0.4,2.0.0)",
- org.apache.log4j;bundle-version="[1.2.15,2.0.0)",
- org.slf4j.api;bundle-version="[1.5.11,2.0.0)",
- org.slf4j.jcl;bundle-version="[1.5.11,2.0.0)",
- org.slf4j.log4j;bundle-version="[1.5.11,2.0.0)"
+Require-Bundle: org.apache.commons.lang;bundle-version="2.4.0",
+ org.apache.commons.logging;bundle-version="1.1.1";visibility:=reexport,
+ org.apache.log4j;bundle-version="1.2.15",
+ org.slf4j.api;bundle-version="1.5.11";visibility:=reexport,
+ org.slf4j.jcl;bundle-version="1.5.11";visibility:=reexport,
+ org.slf4j.log4j;bundle-version="1.5.11";visibility:=reexport,
+ ch.qos.logback.classic;bundle-version="0.9.19",
+ ch.qos.logback.core;bundle-version="0.9.19"
