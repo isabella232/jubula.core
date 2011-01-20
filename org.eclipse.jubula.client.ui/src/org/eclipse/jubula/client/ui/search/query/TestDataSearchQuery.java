@@ -105,7 +105,7 @@ public class TestDataSearchQuery extends AbstractSearchQuery {
         }
 
         List<SearchResultElement> results = getSearchResultList(nodeResultList,
-                Constants.GUIDANCERDATASET_VIEW_ID);
+                Constants.JB_DATASET_VIEW_ID);
 
         // Search in central test data sets
         for (IParameterInterfacePO testDataCube : centralTestData) {
@@ -115,7 +115,7 @@ public class TestDataSearchQuery extends AbstractSearchQuery {
                         getImageForNode(testDataCube),
                         new TestDataCubeSearchResultElementAction(),
                         null,
-                        Constants.GUIDANCERDATASET_VIEW_ID));
+                        Constants.JB_DATASET_VIEW_ID));
             }
             monitor.worked(1);
         }

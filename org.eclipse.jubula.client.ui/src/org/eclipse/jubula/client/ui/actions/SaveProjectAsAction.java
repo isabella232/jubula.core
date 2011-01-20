@@ -51,10 +51,10 @@ import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ConverterException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
@@ -133,8 +133,8 @@ public class SaveProjectAsAction extends AbstractAction {
                         new ProjectComponentNameMapper(
                             compNameCache, duplicatedProject);
                     try {
-                        duplicatedProject.setClientMetaDataVersion(IGdVersion
-                            .GD_CLIENT_METADATA_VERSION);
+                        duplicatedProject.setClientMetaDataVersion(IVersion
+                            .JB_CLIENT_METADATA_VERSION);
                         attachProjectWithProgress(subMonitor.newChild(
                                 WORK_PROJECT_SAVE), paramNameMapper, 
                                 compNameMapper, duplicatedProject);
@@ -148,7 +148,7 @@ public class SaveProjectAsAction extends AbstractAction {
                         Plugin.stopLongRunning();
                         PMExceptionHandler.handlePMExceptionForMasterSession(e);
                         throw new InvocationTargetException(e);
-                    } catch (GDProjectDeletedException e) {
+                    } catch (ProjectDeletedException e) {
                         Plugin.stopLongRunning();
                         PMExceptionHandler.handleGDProjectDeletedException();
                         throw new InvocationTargetException(e);
@@ -162,10 +162,10 @@ public class SaveProjectAsAction extends AbstractAction {
             } catch (PMException e) {
                 Plugin.stopLongRunning();
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 Plugin.stopLongRunning();
                 PMExceptionHandler.handleGDProjectDeletedException();    
-            } catch (GDVersionException e) {
+            } catch (JBVersionException e) {
                 // should not be occur, that a used toolkit of current project
                 // has a version conflict with installed Toolkit Plugin.
                 log.error("Toolkit version conflict while save project as action."); //$NON-NLS-1$
@@ -181,26 +181,32 @@ public class SaveProjectAsAction extends AbstractAction {
         }
 
         /**
-         * Attaches the given project to the Master Session and database 
-         * using the given parameter name mapper. 
-         * Reports progress during the operation.
+         * Attaches the given project to the Master Session and database using
+         * the given parameter name mapper. Reports progress during the
+         * operation.
          * 
-         * @param monitor The progress monitor for the operation.
-         * @param paramNameMapper The parameter name mapper to use when adding the
-         *               project to the database.
-         * @param compNameMapper The component name mapper to use when adding the
-         *               project to the database.
-         * @param project The project to add to the database
+         * @param monitor
+         *            The progress monitor for the operation.
+         * @param paramNameMapper
+         *            The parameter name mapper to use when adding the project
+         *            to the database.
+         * @param compNameMapper
+         *            The component name mapper to use when adding the project
+         *            to the database.
+         * @param project
+         *            The project to add to the database
          * @throws PMException
          *             in case of any db error
-         * @throws GDProjectDeletedException if project is already deleted
-         * @throws InterruptedException if the operation was canceled.
+         * @throws ProjectDeletedException
+         *             if project is already deleted
+         * @throws InterruptedException
+         *             if the operation was canceled.
          */
         private void attachProjectWithProgress(IProgressMonitor monitor,
                 final ParamNameBPDecorator paramNameMapper, 
                 IWritableComponentNameMapper compNameMapper,
                 final IProjectPO project) throws PMException,
-                GDProjectDeletedException, InterruptedException {
+                ProjectDeletedException, InterruptedException {
 
             // We need to clear the current project data so 
             // we are in a known state if the operation is 
@@ -208,7 +214,7 @@ public class SaveProjectAsAction extends AbstractAction {
             IProjectPO clearedProject = 
                 GeneralStorage.getInstance().getProject();
             if (clearedProject != null) {
-                Utils.clearGuidancer();
+                Utils.clearClient();
                 GeneralStorage.getInstance().setProject(null);
                 DataEventDispatcher.getInstance()
                     .fireDataChangedListener(clearedProject, DataState.Deleted,
@@ -250,7 +256,7 @@ public class SaveProjectAsAction extends AbstractAction {
                 // We have to clear the GUI because all of 
                 // the save work was done in the Master Session, which has been 
                 // rolled back.
-                Utils.clearGuidancer();
+                Utils.clearClient();
             }
         } else {
             Plugin.stopLongRunning();
@@ -334,17 +340,20 @@ public class SaveProjectAsAction extends AbstractAction {
     }
 
     /**
-     * 
-     * @param monitor The progress monitor for this potentially long-running 
-     *                operation.
-     * @return content for new project to create, or <code>null</code> if the 
+     * @param monitor
+     *            The progress monitor for this potentially long-running
+     *            operation.
+     * @return content for new project to create, or <code>null</code> if the
      *         operation was cancelled.
-     * @throws PMException if saving of project as xml file failed
-     * @throws GDProjectDeletedException if current project is already deleted
-     * @throws InterruptedException if the operation was canceled.
+     * @throws PMException
+     *             if saving of project as xml file failed
+     * @throws ProjectDeletedException
+     *             if current project is already deleted
+     * @throws InterruptedException
+     *             if the operation was canceled.
      */
     private String getContentForNewProject(IProgressMonitor monitor) 
-        throws GDProjectDeletedException, InterruptedException, PMException {
+        throws ProjectDeletedException, InterruptedException, PMException {
         GeneralStorage.getInstance().validateProjectExists(
                 GeneralStorage.getInstance().getProject());
         String serializedProject = XmlStorage.save(

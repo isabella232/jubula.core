@@ -102,8 +102,7 @@ public class WorkSpaceData {
     public String getInitialDefault() {
         if (m_initialDefault == null) {
             m_initialDefault = System.getProperty("user.dir") + File.separator //$NON-NLS-1$
-            //FIXME NLS To Rename "GuidancerWorspace"?
-                + "guidancerWorkspace"; //$NON-NLS-1$
+                + "jubulaWorkspace"; //$NON-NLS-1$
         }
         return m_initialDefault;
     }

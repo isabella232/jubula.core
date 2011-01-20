@@ -27,8 +27,8 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.AbstractEditParametersDialog.Parameter;
-import org.eclipse.jubula.client.ui.editors.AbstractGDEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -43,19 +43,19 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
      * @return a valid AbstractGDEditor in the editable state; null if editing
      *         is not possible
      */
-    protected AbstractGDEditor getEditorInEditableState() {
+    protected AbstractJBEditor getEditorInEditableState() {
         final IWorkbenchPart activePart = Plugin.getActivePart();
         if (activePart == null) {
             return null;
         }
-        final Object adapter = activePart.getAdapter(AbstractGDEditor.class);
+        final Object adapter = activePart.getAdapter(AbstractJBEditor.class);
         if (adapter != null) {
-            final AbstractGDEditor editor = (AbstractGDEditor)adapter;
-            final GDEditorHelper.EditableState state = editor.getEditorHelper()
+            final AbstractJBEditor editor = (AbstractJBEditor)adapter;
+            final JBEditorHelper.EditableState state = editor.getEditorHelper()
                     .getEditableState();
-            if (state == GDEditorHelper.EditableState.OK
+            if (state == JBEditorHelper.EditableState.OK
                     || editor.getEditorHelper().requestEditableState() 
-                    == GDEditorHelper.EditableState.OK) {
+                    == JBEditorHelper.EditableState.OK) {
                 return editor;
             }
         }

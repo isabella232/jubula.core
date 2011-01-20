@@ -16,7 +16,7 @@ import java.util.TreeSet;
 
 import org.apache.commons.codec.binary.Base64;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 
 /**
@@ -38,11 +38,11 @@ public class Utils {
      * @param store string read from preference store
      * @param delimiter delimiter to separate string part from index 0 to delimiter
      * @return decoded Set of Strings
-     * @throws GDException in case of problem with preference store
+     * @throws JBException in case of problem with preference store
      */
     public static SortedSet<String> decodeStringToSet(String store,
             String delimiter) 
-        throws GDException {
+        throws JBException {
         SortedSet<String> decodedSet = new TreeSet<String>();
         String storage = store;
         while (storage.length() > 0) {
@@ -58,10 +58,10 @@ public class Utils {
      * @param encodedString decode a base64 encoded string
      * @param delimiter delimiter to separate string part from index 0 to delimiter
      * @return decoded string part
-     * @throws GDException in case of not base64 decoded string
+     * @throws JBException in case of not base64 decoded string
      */
     public static String decodeString(String encodedString, String delimiter) 
-        throws GDException {
+        throws JBException {
         String decodedString = StringConstants.EMPTY;
         checkPreferences(encodedString.substring(0, 
             encodedString.indexOf(delimiter)));
@@ -75,11 +75,11 @@ public class Utils {
     /**
      * Checks correctness of the stored preferences.
      * @param pref The readed, base64-coded preference.
-     * @throws GDException if the prefrence is not base64-coded.
+     * @throws JBException if the prefrence is not base64-coded.
      */
-    public static void checkPreferences(String pref) throws GDException {
+    public static void checkPreferences(String pref) throws JBException {
         if (!Base64.isArrayByteBase64(pref.getBytes())) {
-            throw new GDException(StringConstants.EMPTY, new Integer(0));
+            throw new JBException(StringConstants.EMPTY, new Integer(0));
         }
     }
     

@@ -15,7 +15,7 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
@@ -56,7 +56,7 @@ public class InputDialog extends TitleAreaDialog {
     /** = m_nameField.getText() */
     private String m_name = StringConstants.EMPTY;
     /** the name textfield */
-    private GDText m_nameField;
+    private JBText m_nameField;
     /** the message depends on the object that is selected */
     private String m_message = StringConstants.EMPTY;
     /** the errormessage depends on the object that is selected */
@@ -191,7 +191,7 @@ public class InputDialog extends TitleAreaDialog {
      */
     private void createNameField(Composite area) {
         new Label(area, SWT.NONE).setText(m_label);
-        m_nameField = new GDText(area, SWT.SINGLE | SWT.BORDER);
+        m_nameField = new JBText(area, SWT.SINGLE | SWT.BORDER);
         GridData gridData = newGridData(false);
         Layout.addToolTipAndMaxWidth(gridData, m_nameField);
         m_nameField.setLayoutData(gridData);

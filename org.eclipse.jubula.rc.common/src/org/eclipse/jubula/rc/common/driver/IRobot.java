@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.common.driver;
 
 import java.awt.Point;
 
-import org.eclipse.jubula.rc.common.exception.GuiDancerOsNotSupportedException;
+import org.eclipse.jubula.rc.common.exception.OsNotSupportedException;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 
 
@@ -20,7 +20,7 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
  * This interface represents a Robot which performs mouse clicks, mouse moves
  * and keyboard inputs. <br>
  * The interface might be implemented by using Graphics-API specific Robot
- * implementations. When <code>IGuiDancerRobot</code> is used to control a
+ * implementations. When <code>IRobot</code> is used to control a
  * AWT/Swing application, the implementing Robot class delegates to
  * {@link java.awt.Robot}.<br>
  * It is important to know that the Robot intercepts the mouse clicks and moves
@@ -209,7 +209,7 @@ public interface IRobot {
      * @param activated boolean
      */
     public void keyToggle(Object obj, int key, boolean activated) 
-        throws GuiDancerOsNotSupportedException;
+        throws OsNotSupportedException;
 
     /**
      * activates the application with the given method 

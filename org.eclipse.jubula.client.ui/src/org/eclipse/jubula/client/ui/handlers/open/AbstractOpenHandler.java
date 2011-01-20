@@ -34,7 +34,7 @@ import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -137,7 +137,7 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
                 } catch (PartInitException e) {
                     if (e.getStatus().getSeverity() != IStatus.CANCEL) {
                         final String msg = "Editor can not be opened."; //$NON-NLS-1$
-                        throw new GDFatalException(msg, e, 
+                        throw new JBFatalException(msg, e, 
                             MessageIDs.E_CANNOT_OPEN_EDITOR);
                     }
                 }

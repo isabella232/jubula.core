@@ -15,7 +15,6 @@ import java.util.Collection;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -59,7 +58,7 @@ public class DeleteHandlerHelper {
         }
         MessageDialog dialog = new MessageDialog(Plugin.getShell(), I18n
             .getString("DeleteTreeItemAction.shellTitle"), //$NON-NLS-1$
-            IconConstants.GUIDANCER_IMAGE, 
+            null, 
             label, MessageDialog.QUESTION, new String[] {
                 I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
                 I18n.getString("NewProjectDialog.MessageButton1") }, 0); //$NON-NLS-1$

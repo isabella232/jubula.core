@@ -19,7 +19,7 @@ import javax.swing.JSlider;
  * abstract class "AbstractSwingImplClass" you only have to implement a few
  * methods to enable testability of your new component on the
  * "Graphics Component"-level. That means all actions which are available for
- * the GUIdancer "Graphics Component" should work for your new component.
+ * the Jubula "Graphics Component" should work for your new component.
  * 
  * @author BREDEX GmbH
  * 

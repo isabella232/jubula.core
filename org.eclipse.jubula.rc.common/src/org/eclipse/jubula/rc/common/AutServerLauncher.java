@@ -81,7 +81,7 @@ public class AutServerLauncher {
                     ClassLoader.getSystemClassLoader().getParent());
         } else {
             // Use the new class loading
-            autServerClassLoader = new GDUrlDefaultClassLoader(urls, 
+            autServerClassLoader = new UrlDefaultClassLoader(urls, 
                     ClassLoader.getSystemClassLoader());
         }
         
@@ -196,18 +196,16 @@ public class AutServerLauncher {
      * @author BREDEX GmbH
      * @created 01.12.2009
      */
-    private static class GDUrlDefaultClassLoader extends URLClassLoader {
-
+    private static class UrlDefaultClassLoader extends URLClassLoader {
         
         /**
          * Constructor
          * @param urls URL[]
          * @param parent ClassLoader
          */
-        public GDUrlDefaultClassLoader(URL[] urls, ClassLoader parent) {
+        public UrlDefaultClassLoader(URL[] urls, ClassLoader parent) {
             super(urls, parent);
         }
-
 
         /**
          * Tries to load the given class first.<br>

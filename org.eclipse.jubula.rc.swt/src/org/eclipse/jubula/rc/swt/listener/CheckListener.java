@@ -22,7 +22,7 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.commands.ShowDialogResultCommand;
-import org.eclipse.jubula.rc.common.exception.GuiDancerNoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
@@ -70,7 +70,7 @@ import org.eclipse.swt.widgets.Widget;
  * @author BREDEX GmbH
  * @created 23.08.2004
  */
-public class CheckListener extends AbstractGDAutSwtEventListener {
+public class CheckListener extends AbstractAutSwtEventListener {
     
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
@@ -140,7 +140,7 @@ public class CheckListener extends AbstractGDAutSwtEventListener {
                                 getCurrentComponent(), id);
                         
                         openCheckDialog(id, checkValues, logName);
-                    } catch (GuiDancerNoIdentifierForComponentException nifce) {
+                    } catch (NoIdentifierForComponentException nifce) {
                      // no identifier for the component, log this as an error
                         log.error("no identifier for '" + source); //$NON-NLS-1$
                     }

@@ -41,7 +41,7 @@ public class PrefStoreHelper {
     
     /**
      * @return the singleton instance of PrefStoreHelper
-     * <b>(has to be called first time when starting guidancer)</b>
+     * <b>(has to be called first time when starting Jubula)</b>
      */
     public static PrefStoreHelper getInstance() {
         if (instance == null) {

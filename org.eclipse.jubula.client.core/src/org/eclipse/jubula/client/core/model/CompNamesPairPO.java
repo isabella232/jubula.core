@@ -25,6 +25,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 
@@ -86,8 +87,8 @@ class CompNamesPairPO implements ICompNamesPairPO {
      */
     CompNamesPairPO(String firstName, String secondName, String type) {
         
-        Validate.notNull(firstName, "The first name must not be null"); //$NON-NLS-1$
-        Validate.notNull(secondName, "The second name must not be null"); //$NON-NLS-1$
+        Validate.notNull(firstName, Messages.TheFirstNameMustNotBeNull);
+        Validate.notNull(secondName, Messages.TheSecondNameMustNotBeNull);
         setFirstName(firstName);
         setSecondName(secondName);
         setType(type);
@@ -246,9 +247,16 @@ class CompNamesPairPO implements ICompNamesPairPO {
         IComponentNamePO compNamePo = 
             compNameCache.getCompNamePo(getFirstName());
         if (compNamePo == null) {
-            log.info("Could not find Component Name with GUID ("  //$NON-NLS-1$
-                    + getFirstName() 
-                    + ") while trying to identify its type."); //$NON-NLS-1$
+            StringBuilder msg = new StringBuilder();
+            msg.append(Messages.CouldNotFindComponentNameWithGUID);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.LEFT_PARENTHESES);
+            msg.append(getFirstName());
+            msg.append(StringConstants.RIGHT_PARENTHESES);
+            msg.append(StringConstants.SPACE);
+            msg.append(Messages.WhileTryingToIdentifyItsType);
+            msg.append(StringConstants.DOT);
+            log.info(msg.toString());
             return null;
         }
 

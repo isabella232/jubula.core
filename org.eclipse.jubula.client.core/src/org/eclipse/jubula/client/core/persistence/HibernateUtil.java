@@ -121,6 +121,7 @@ public class HibernateUtil {
      *         hexadecimal string.
      */
     public static String generateGuid() {
-        return UUID.randomUUID().toString().replaceAll("-", StringConstants.EMPTY); //$NON-NLS-1$
+        return UUID.randomUUID().toString().replaceAll(StringConstants.MINUS, 
+                StringConstants.EMPTY);
     }
 }

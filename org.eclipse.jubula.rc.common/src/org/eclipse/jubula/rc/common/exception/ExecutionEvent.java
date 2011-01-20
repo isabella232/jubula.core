@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.exception;
 
-import org.eclipse.jubula.tools.exception.GDRuntimeException;
+import org.eclipse.jubula.tools.exception.JBRuntimeException;
 
 /**
  * This exception supports notification and processing of test execution
@@ -19,7 +19,7 @@ import org.eclipse.jubula.tools.exception.GDRuntimeException;
  * @created 06.04.2005
  */
 public class ExecutionEvent 
-    extends GDRuntimeException {
+    extends JBRuntimeException {
     
     /** test failed: component not found in the AUT*/
     public static final int PAUSE_EXECUTION = 31;

@@ -15,7 +15,7 @@ import org.eclipse.jubula.tools.constants.InputConstants;
 
 
 /**
- * This class configures a mouse click performed by the GuiDancerRobot.
+ * This class configures a mouse click performed by the remote control component.
  *
  * @author BREDEX GmbH
  * @created 21.03.2005
@@ -23,7 +23,7 @@ import org.eclipse.jubula.tools.constants.InputConstants;
 public class ClickOptions {
     /**
      * This class defines how a mouse click performed by the
-     * GuiDancerRobot is confirmed when the Graphics-API specific
+     * JubulaRobot is confirmed when the Graphics-API specific
      * event queue is observed. If the click type <code>CLICKED</code>
      * is used, the Robot confirms the mouse click when a
      * CLICKED mouse event occurs. However, the robot waits for a

@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -47,7 +48,7 @@ import org.eclipse.jubula.client.core.persistence.locking.LockedObjectPO;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDFatalAbortException;
+import org.eclipse.jubula.tools.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -273,8 +274,10 @@ public class CompNamePM extends AbstractNamePM {
             compNames.addAll(q.getResultList());
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.fatal("Could not read component names from DB of Project with ID '" //$NON-NLS-1$
-                + String.valueOf(parentProjectId) + "'", e);  //$NON-NLS-1$
+            log.fatal(Messages.CouldNotReadComponentNamesFromDBOfProjectWithID
+                + StringConstants.SPACE + StringConstants.APOSTROPHE
+                + String.valueOf(parentProjectId) + StringConstants.APOSTROPHE, 
+                     e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         }
         return compNames;
@@ -300,8 +303,10 @@ public class CompNamePM extends AbstractNamePM {
             compNames.addAll(q.getResultList());            
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.fatal("Could not read component names from DB of Project with ID '" //$NON-NLS-1$
-                + String.valueOf(parentProjectId) + "'", e);  //$NON-NLS-1$
+            log.fatal(Messages.CouldNotReadComponentNamesFromDBOfProjectWithID
+                + StringConstants.SPACE + StringConstants.APOSTROPHE
+                + String.valueOf(parentProjectId) + StringConstants.APOSTROPHE, 
+                    e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(s);
@@ -337,9 +342,20 @@ public class CompNamePM extends AbstractNamePM {
             // Fall through to return null
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.error("Could not read component name with parentProjID '" //$NON-NLS-1$
-                + String.valueOf(parentProjId) + "' and GUID '" //$NON-NLS-1$
-                + String.valueOf(compNameGuid) + "'", e);  //$NON-NLS-1$
+            StringBuilder msg = new StringBuilder();
+            msg.append(
+                    Messages.CouldNotReadComponentNamesFromDBOfProjectWithID);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.APOSTROPHE);
+            msg.append(String.valueOf(parentProjId));
+            msg.append(StringConstants.APOSTROPHE);
+            msg.append(StringConstants.SPACE);
+            msg.append(Messages.AndGUID);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.APOSTROPHE);
+            msg.append(String.valueOf(compNameGuid));
+            msg.append(StringConstants.APOSTROPHE);
+            log.error(msg.toString(), e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(s);
@@ -380,8 +396,9 @@ public class CompNamePM extends AbstractNamePM {
             q.executeUpdate();
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.fatal("Could not delete component names from DB of Project with ID '" //$NON-NLS-1$
-                    + String.valueOf(rootProjId) + "'", e); //$NON-NLS-1$
+            log.fatal(Messages.CouldNotReadComponentNamesFromDBOfProjectWithID
+                + StringConstants.SPACE + StringConstants.APOSTROPHE
+                + String.valueOf(rootProjId) + StringConstants.APOSTROPHE, e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         }
     }
@@ -437,9 +454,23 @@ public class CompNamePM extends AbstractNamePM {
                     // Unlock the component names table and throw an 
                     // exception with information about the incompatibility.
                     unlockComponentNames();
-                    String msg = "Error saving changed ComponentName-Type.\n"  //$NON-NLS-1$
-                        + "Incompatible Type '" + currType + "' -> '"  //$NON-NLS-1$ //$NON-NLS-2$
-                        + compName.getComponentType() + "'!"; //$NON-NLS-1$
+                    StringBuilder msgbuild = new StringBuilder();
+                    msgbuild.append(
+                            Messages.ErrorSavingChangedComponentNameType);
+                    msgbuild.append(StringConstants.DOT);
+                    msgbuild.append(StringConstants.NEWLINE);
+                    msgbuild.append(Messages.IncompatibleType);
+                    msgbuild.append(currType);
+                    msgbuild.append(StringConstants.APOSTROPHE);
+                    msgbuild.append(StringConstants.SPACE);
+                    msgbuild.append(StringConstants.MINUS);
+                    msgbuild.append(StringConstants.RIGHT_INEQUALITY_SING);
+                    msgbuild.append(StringConstants.SPACE);
+                    msgbuild.append(StringConstants.APOSTROPHE);
+                    msgbuild.append(compName.getComponentType());
+                    msgbuild.append(StringConstants.APOSTROPHE);
+                    msgbuild.append(StringConstants.EXCLAMATION_MARK);
+                    String msg = msgbuild.toString();
                     throw new IncompatibleTypeException(
                             compName, msg, 
                             MessageIDs.E_COMP_TYPE_INCOMPATIBLE, new String[]{
@@ -451,8 +482,9 @@ public class CompNamePM extends AbstractNamePM {
             }
         } catch (PMObjectDeletedException e) {
             // Should not happen
-            log.error("Exception should not happen", e); //$NON-NLS-1$
-            Assert.notReached("Exception should not happen: " + e); //$NON-NLS-1$
+            log.error(Messages.ExceptionShouldNotHappen, e);
+            Assert.notReached(Messages.ExceptionShouldNotHappen 
+                + StringConstants.COLON + e);
         }
     }
     
@@ -515,8 +547,10 @@ public class CompNamePM extends AbstractNamePM {
             }
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.error("Error writing Component Names to DB of Project ID '"  //$NON-NLS-1$
-                    + String.valueOf(rootProjId) + "'", e); //$NON-NLS-1$
+            log.error(Messages.ErrorWritingComponentNamesToDBOfProjectID
+                    + StringConstants.SPACE + StringConstants.APOSTROPHE
+                    + String.valueOf(rootProjId) + StringConstants.APOSTROPHE, 
+                        e);
             PersistenceManager.handleDBExceptionForAnySession(persObj, e, s);
         } 
         return createdToExistingMap;
@@ -548,9 +582,19 @@ public class CompNamePM extends AbstractNamePM {
             // No result found. Fall through to return null as per javadoc.
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.error("Could not read component name with parentProjID '" //$NON-NLS-1$
-                + String.valueOf(parentProjId) + "' and Name '" //$NON-NLS-1$
-                + String.valueOf(name) + "'", e);  //$NON-NLS-1$
+            StringBuilder msg = new StringBuilder();
+            msg.append(Messages.CouldNotReadComponentNameWithParentProjID);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.APOSTROPHE);
+            msg.append(String.valueOf(parentProjId));
+            msg.append(StringConstants.APOSTROPHE);
+            msg.append(StringConstants.SPACE);
+            msg.append(Messages.AndName);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.APOSTROPHE);
+            msg.append(String.valueOf(name));
+            msg.append(StringConstants.APOSTROPHE);
+            log.error(msg.toString(), e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
             Hibernator.instance().dropSession(s);
@@ -581,13 +625,14 @@ public class CompNamePM extends AbstractNamePM {
                 final long stop = System.currentTimeMillis();
                 if ((stop - start) > timeOut) {
                     throw new PMAlreadyLockedException(lockObj, 
-                            "Could not get a Lock on table COMPONENT_NAMES",  //$NON-NLS-1$
+                            Messages.CouldNotGetALockOnTableCOMPONENT_NAMES,
                             MessageIDs.E_DATABASE_GENERAL);
                 }
             }
         } catch (PMDirtyVersionException e) {
             // cannot happen because checkVersion == false!
-            Assert.notReached("Exception should not happen: " + e); //$NON-NLS-1$
+            Assert.notReached(Messages.ExceptionShouldNotHappen 
+                + StringConstants.COLON + StringConstants.SPACE + e);
         }
     }
 
@@ -621,7 +666,9 @@ public class CompNamePM extends AbstractNamePM {
             HibernateUtil.initialize(lockObj);
             tx.commit();
         } catch (PersistenceException e) {
-            throw new GDFatalAbortException("Error initializing Component Names Locking!" //$NON-NLS-1$
+            throw new JBFatalAbortException(
+                Messages.ErrorInitializingComponentNamesLocking
+                + StringConstants.EXCLAMATION_MARK
                 , e, MessageIDs.E_DATABASE_GENERAL);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(sess);
@@ -851,9 +898,7 @@ public class CompNamePM extends AbstractNamePM {
                 execTcQuery.setParameter(P_PAIR_LIST, compNamePairIds);
             } else {
                 // FIXME zeb The code in this "else" block is a quick-fix for the
-                //           "ORA-01795: maximum number of expressions in a list is 1000"
-                //           error encountered by Whirlpool. This code should be severely refactored
-                //           after the release of GUIdancer 3.1.
+                //           "ORA-01795: maximum number of expressions in a list is 1000".
                 StringBuilder sb = new StringBuilder();
                 sb.append("select execTc from ExecTestCasePO execTc" //$NON-NLS-1$
                         + " left outer join execTc.hbmCompNamesMap as compNamesMap " //$NON-NLS-1$

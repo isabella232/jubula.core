@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Event;
  * @author BREDEX GmbH
  * @created 06.03.2006
  */
-public abstract class CheckedText extends GDText  implements IGDCheckable {
+public abstract class CheckedText extends JBText {
 
     /** How should the text be validated */
     public interface IValidator {

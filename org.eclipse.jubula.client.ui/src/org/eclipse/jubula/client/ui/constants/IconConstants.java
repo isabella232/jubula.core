@@ -41,10 +41,6 @@ public class IconConstants {
     /** disabled delete image */
     public static final Image DELETE_IMAGE_DISABLED = 
         Plugin.getImage("delete_disabled.gif"); //$NON-NLS-1$
-    /** GUIdancer image */
-    public static final Image GUIDANCER_IMAGE = Plugin.getImage("guidancer.gif"); //$NON-NLS-1$
-    /** smaller GUIdancer image */
-    public static final Image GUIDANCER_SMALLER_IMAGE = Plugin.getImage("guidancer_smaller.gif"); //$NON-NLS-1$
     /** new TestCase imageDescriptor */
     public static final ImageDescriptor NEW_TC_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("newTestCaseIcon.gif"); //$NON-NLS-1$
     /** new TestCase_disabled imageDescriptor */

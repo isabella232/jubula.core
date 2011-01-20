@@ -15,7 +15,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.widgets.CompNamePopUpTextField;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
@@ -41,7 +41,7 @@ public class CompNamePopupTextFieldToolTipListener implements Listener  {
     private Shell m_toolTipShell;
 
     /** the label */
-    private GDText m_toolTipTextField;
+    private JBText m_toolTipTextField;
     
     /**
      * {@inheritDoc}
@@ -86,7 +86,7 @@ public class CompNamePopupTextFieldToolTipListener implements Listener  {
             if (textField.getText() != null 
                     && textField.getText().length() > 0) {
                 m_toolTipShell.setLayout(new FillLayout());
-                m_toolTipTextField = new GDText(
+                m_toolTipTextField = new JBText(
                         m_toolTipShell, Layout.MULTI_TEXT);
                 m_toolTipTextField.setEnabled(false);
                 Display display = Plugin.getDisplay();

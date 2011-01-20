@@ -19,7 +19,7 @@ package org.eclipse.jubula.tools.exception;
  * @author BREDEX GmbH
  * @created 02.09.2004
  */
-public class ConfigurationException extends GDException {
+public class ConfigurationException extends JBException {
 
     /** 
      * public constructor

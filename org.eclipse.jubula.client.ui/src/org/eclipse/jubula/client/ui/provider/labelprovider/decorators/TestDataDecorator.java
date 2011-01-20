@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.editors.AbstractGDEditor.GDEditorDecorationContext;
+import org.eclipse.jubula.client.ui.editors.AbstractJBEditor.JBEditorDecorationContext;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
 import org.eclipse.jubula.client.ui.model.TestJobGUI;
@@ -48,7 +48,7 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
         if (node == null || gnode.getParentNode() == null
                 || TestSuiteGUI.getTestSuiteForNode(gnode) == null
                 || decoration.getDecorationContext() 
-                    instanceof GDEditorDecorationContext) {
+                    instanceof JBEditorDecorationContext) {
             return;
         }
         boolean flag = false;

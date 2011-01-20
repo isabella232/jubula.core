@@ -29,8 +29,8 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.ComponentNameTreeViewerUpdater;
-import org.eclipse.jubula.client.ui.filter.GDFilteredTree;
-import org.eclipse.jubula.client.ui.filter.GDPatternFilter;
+import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
+import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.ComponentNameBrowserContentProvider;
 import org.eclipse.jubula.client.ui.sorter.ComponentNameNameViewerSorter;
@@ -50,7 +50,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
  * @created 06.02.2009
  */
 public class ComponentNameBrowser extends ViewPart implements
-        IProjectLoadedListener, ITreeViewerContainer, IGDPart,
+        IProjectLoadedListener, ITreeViewerContainer, IJBPart,
         IDataChangedListener {
     /** Default expansion for the tree */
     public static final int DEFAULT_EXPANSION = 2;
@@ -76,9 +76,9 @@ public class ComponentNameBrowser extends ViewPart implements
         composite.setLayout(GridLayoutFactory.fillDefaults().create());
         composite.setLayoutData(GridDataFactory.fillDefaults().create());
 
-        final FilteredTree ft = new GDFilteredTree(composite, SWT.MULTI
+        final FilteredTree ft = new JBFilteredTree(composite, SWT.MULTI
                | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER, 
-               new GDPatternFilter(), true);
+               new JBPatternFilter(), true);
         ComponentNameBrowserContentProvider cp = 
             new ComponentNameBrowserContentProvider();
 
@@ -178,7 +178,7 @@ public class ComponentNameBrowser extends ViewPart implements
      */
     public Object getAdapter(Class adapter) {
         if (adapter.equals(IPropertySheetPage.class)) {
-            return new GDPropertiesView(false, null);
+            return new JBPropertiesView(false, null);
         }
         return super.getAdapter(adapter);
     }

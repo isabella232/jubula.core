@@ -30,6 +30,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -43,9 +44,10 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import javax.persistence.PersistenceException;
@@ -258,11 +260,11 @@ public class NodePM extends PersistenceManager {
                         (IEventExecTestCasePO)evHandler);
                     setParentProjectId(usingSpecTc, evHandler);
                 } catch (InvalidDataException e) {
-                    log.error("attempt to add an eventhandler twice", e); //$NON-NLS-1$
+                    log.error(Messages.AttemptToAddAnEventhandlerTwice, e);
                 }
             } else {
-                throw new GDFatalException(
-                    "Wrong type for addition of eventhandler",  //$NON-NLS-1$
+                throw new JBFatalException(
+                    Messages.WrongTypeForAdditionOfEventhandler,
                     MessageIDs.E_UNEXPECTED_EXCEPTION);
             }
             
@@ -279,8 +281,8 @@ public class NodePM extends PersistenceManager {
                 ISpecTestCasePO usingSpecTc = (ISpecTestCasePO)assocNode;
                 usingSpecTc.removeNode(evHandler);
             } else {
-                throw new GDFatalException(
-                    "Wrong type for removal of eventhandler",  //$NON-NLS-1$
+                throw new JBFatalException(
+                    Messages.WrongTypeForRemovalOfEventhandler,
                     MessageIDs.E_UNEXPECTED_EXCEPTION);
             }
             
@@ -366,9 +368,9 @@ public class NodePM extends PersistenceManager {
             // execTc or Cap in SpecTestCase
             return new CmdHandleChildIntoNodeList();
         }
-        final String msg = "Unsupported INodePO subclass"; //$NON-NLS-1$
+        final String msg = Messages.UnsupportedINodePOSubclass;
         log.fatal(msg);
-        throw new GDFatalException(msg, MessageIDs.E_UNSUPPORTED_NODE);
+        throw new JBFatalException(msg, MessageIDs.E_UNSUPPORTED_NODE);
     }
 
     /**
@@ -386,13 +388,13 @@ public class NodePM extends PersistenceManager {
      *             in case of DB problem or refresh errors
      * @throws PMAlreadyLockedException in case of locked parent
      * @throws PMException in case of rollback failed
-     * @throws GDProjectDeletedException if the project was deleted in another
+     * @throws ProjectDeletedException if the project was deleted in another
      * instance
      */
     public static void addAndPersistChildNode(INodePO parent, INodePO child,
         Integer pos, AbstractCmdHandleChild handler)
         throws PMSaveException, PMAlreadyLockedException, PMException, 
-        GDProjectDeletedException {
+        ProjectDeletedException {
         processAndPersistChildNode(parent, child, pos, handler, true);
     }
 
@@ -411,12 +413,12 @@ public class NodePM extends PersistenceManager {
      *            specifies if an add operation should be performed. If false,
      *            the child node is removed.
      * @throws PMException in case of rollback failed
-     * @throws GDProjectDeletedException if the project was deleted in another
+     * @throws ProjectDeletedException if the project was deleted in another
      * instance
      */
     private static void processAndPersistChildNode(INodePO parent,
         INodePO child, Integer pos, AbstractCmdHandleChild handler,
-        boolean doAdd) throws PMException, GDProjectDeletedException {
+        boolean doAdd) throws PMException, ProjectDeletedException {
         EntityTransaction tx = null;
         IPersistentObject lockedObj = null;
         final EntityManager sess = 
@@ -434,8 +436,7 @@ public class NodePM extends PersistenceManager {
                 lockedObj = GeneralStorage.getInstance().getProject()
                     .getSpecObjCont();
             } else {
-                throw new GDFatalException("Not supported child node for " + //$NON-NLS-1$
-                        "a project as parent",  //$NON-NLS-1$
+                throw new JBFatalException(Messages.NotSupportedChildForProject,
                     MessageIDs.E_UNEXPECTED_EXCEPTION);
             }
         } else {
@@ -480,12 +481,12 @@ public class NodePM extends PersistenceManager {
      * @throws PMSaveException
      *             in case of DB save error
      * @throws PMException in case of general db error
-     * @throws GDProjectDeletedException if the project was deleted in another
+     * @throws ProjectDeletedException if the project was deleted in another
      * instance            
      */
     public static void renameNode(INodePO node, String newName)
         throws PMDirtyVersionException, PMAlreadyLockedException,
-        PMSaveException, PMException, GDProjectDeletedException {
+        PMSaveException, PMException, ProjectDeletedException {
 
         EntityManager sess = GeneralStorage.getInstance().getMasterSession();
         EntityTransaction tx = null;
@@ -505,12 +506,12 @@ public class NodePM extends PersistenceManager {
      * @param cat category, which is the parent of the testcases to import
      * @param specObjList list with testcases to import
      * @throws PMException in case of a problem while import
-     * @throws GDProjectDeletedException if the project was deleted in another
+     * @throws ProjectDeletedException if the project was deleted in another
      * instance
      */
     public static void addImportedTestCases(ICategoryPO cat, 
             List< ? extends INodePO> specObjList)
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
         
         final GeneralStorage genStorage = GeneralStorage.getInstance();
         IProjectPO currentProject = genStorage.getProject();
@@ -711,7 +712,7 @@ public class NodePM extends PersistenceManager {
      * @see getAllExecTestCases
      */
     public static List<IExecTestCasePO> getExternalExecTestCases(
-        String specTcGuid, long parentProjectId) throws GDException {
+        String specTcGuid, long parentProjectId) throws JBException {
         
         // a SpecTC with guid == null can't be reused
         if (specTcGuid == null) {
@@ -730,9 +731,11 @@ public class NodePM extends PersistenceManager {
 
             if (parentProject == null) {
                 String error = 
-                    "Parent project does not exist with ID: " + parentProjectId; //$NON-NLS-1$
+                    Messages.ParentProjectDoesNotExistWithID 
+                    + StringConstants.COLON + StringConstants.SPACE
+                    + parentProjectId;
                 log.error(error);
-                throw new GDException(error, MessageIDs.E_DATABASE_GENERAL);
+                throw new JBException(error, MessageIDs.E_DATABASE_GENERAL);
             }
 
             List<Long> projectsThatReuse = 
@@ -800,7 +803,7 @@ public class NodePM extends PersistenceManager {
      * @see getExternalExecTestCases
      */
     public static List<IExecTestCasePO> getAllExecTestCases(
-        String specTcGuid, long parentProjectId) throws GDException {
+        String specTcGuid, long parentProjectId) throws JBException {
         // a SpecTC with guid == null can't be reused
         if (specTcGuid == null) {
             return new ArrayList<IExecTestCasePO>(0);
@@ -818,9 +821,11 @@ public class NodePM extends PersistenceManager {
 
             if (parentProject == null) {
                 String error = 
-                    "Parent project does not exist with ID: " + parentProjectId; //$NON-NLS-1$
+                    Messages.ParentProjectDoesNotExistWithID 
+                    + StringConstants.COLON + StringConstants.SPACE
+                    + parentProjectId;
                 log.error(error);
-                throw new GDException(error, MessageIDs.E_DATABASE_GENERAL);
+                throw new JBException(error, MessageIDs.E_DATABASE_GENERAL);
             }
 
             List<Long> projectsThatReuse = 
@@ -1074,9 +1079,9 @@ public class NodePM extends PersistenceManager {
             Integer majorNumber, Integer minorNumber) {
         StringBuilder idBuilder = new StringBuilder(200);
         idBuilder.append(projectGuid);
-        idBuilder.append(':');
+        idBuilder.append(StringConstants.COLON);
         idBuilder.append(majorNumber);
-        idBuilder.append(':');
+        idBuilder.append(StringConstants.COLON);
         idBuilder.append(minorNumber);
         return idBuilder.toString();
     }

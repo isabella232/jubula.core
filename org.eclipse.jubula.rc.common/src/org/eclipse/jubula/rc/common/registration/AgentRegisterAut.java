@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.communication.connection.ConnectionState;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 
@@ -129,7 +129,7 @@ public class AgentRegisterAut implements IRegisterAut {
             LOG.error("Error occurred while connecting to AUT Agent.", nfe); //$NON-NLS-1$
         } catch (SecurityException se) {
             LOG.error("Error occurred while connecting to AUT Agent.", se); //$NON-NLS-1$
-        } catch (GDVersionException gdve) {
+        } catch (JBVersionException gdve) {
             LOG.error("Error occurred while connecting to AUT Agent.", gdve); //$NON-NLS-1$
         }
 

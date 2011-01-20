@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
 import org.eclipse.jubula.client.ui.businessprocess.OMStopMappingModeBP;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Event;
@@ -43,7 +43,7 @@ public class OMStopMappingModeAction extends AbstractAction
         }
         if (TestExecution.getInstance().getConnectedAut() == null) {
             String message = I18n.getString("OMStopMappingModeAction.Error1"); //$NON-NLS-1$
-            Utils.createMessageDialog(new GDException(message, 
+            Utils.createMessageDialog(new JBException(message, 
                     MessageIDs.E_UNEXPECTED_EXCEPTION), null, new String[]{
                         message});
         } else {

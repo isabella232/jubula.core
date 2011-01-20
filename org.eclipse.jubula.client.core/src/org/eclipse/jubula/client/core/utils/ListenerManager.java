@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.exception.UnexpectedGenericTypeException;
 
 
@@ -62,7 +63,7 @@ public class ListenerManager <TYPE extends IGenericListener> {
             } catch (UnexpectedGenericTypeException u) {
                 LOG.error(u.getMessage());
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$ 
+                LOG.error(Messages.UnhandledExceptionWhileCallingListeners, t); 
             }
         }        
     }

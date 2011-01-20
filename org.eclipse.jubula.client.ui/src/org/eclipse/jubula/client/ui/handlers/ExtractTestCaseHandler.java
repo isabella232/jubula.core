@@ -58,8 +58,8 @@ import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IWorkbenchPart;
@@ -127,7 +127,7 @@ public class ExtractTestCaseHandler extends AbstractHandler {
                     ExtractionReturn extractRet = performExtraction(newTcName,
                             node, selection);
                     if (extractRet.getErrorMessage() != null) {
-                        Utils.createMessageDialog(new GDException(
+                        Utils.createMessageDialog(new JBException(
                                 extractRet.getErrorMessage(), 
                                 MessageIDs.E_UNEXPECTED_EXCEPTION), null, 
                                 new String[]{
@@ -141,12 +141,12 @@ public class ExtractTestCaseHandler extends AbstractHandler {
                     }
                 }
             } else {
-                Utils.createMessageDialog((new GDException("editor will be closed", //$NON-NLS-1$
+                Utils.createMessageDialog((new JBException("editor will be closed", //$NON-NLS-1$
                         MessageIDs.E_DELETED_TC)), null, null); 
                 try {
                     GeneralStorage.getInstance().reloadMasterSession(
                             new NullProgressMonitor());
-                } catch (GDProjectDeletedException e) {
+                } catch (ProjectDeletedException e) {
                     PMExceptionHandler.handleGDProjectDeletedException();
                 }
             }
@@ -266,31 +266,36 @@ public class ExtractTestCaseHandler extends AbstractHandler {
             return extractionRet;
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
         }
         return new ExtractionReturn();
     }
 
     /**
-     * @param newTcName the name of the new SpecTestCase
-     * @param ownerNode the edited {@link INodePO} from which to extract
-     * @param modNodes nodes to move from the old tc to the new tc
+     * @param newTcName
+     *            the name of the new SpecTestCase
+     * @param ownerNode
+     *            the edited {@link INodePO} from which to extract
+     * @param modNodes
+     *            nodes to move from the old tc to the new tc
      * @return result of extraction
-     * @throws PMException in case of persistence error
-     * @throws GDProjectDeletedException in case of deleted project
+     * @throws PMException
+     *             in case of persistence error
+     * @throws ProjectDeletedException
+     *             in case of deleted project
      */
     private ExtractionReturn persistExtraction(
         final INodePO ownerNode, final String newTcName, 
         final List<IParamNodePO> modNodes) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
         
         final ExtractionReturn extractionRet = new ExtractionReturn();
         final ParamNameBPDecorator mapper = new ParamNameBPDecorator(
             ParamNameBP.getInstance());
         final ITransactAction op = new ITransactAction() {
             public void run(EntityManager s) throws PMException, 
-                GDProjectDeletedException {               
+                ProjectDeletedException {               
                 IPersistentObject obj = null;
                 try {
                     Hibernator.instance().refreshPO(s, ownerNode, 

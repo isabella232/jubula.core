@@ -32,9 +32,8 @@ import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 
 
 /**
@@ -212,7 +211,7 @@ public class DBToolClient extends AbstractCmdlineClient
                     new NullProgressMonitor(), this, false);
         } catch (PMException pme) {
             System.err.println(pme.getLocalizedMessage());
-        } catch (GDProjectDeletedException gdpde) {
+        } catch (ProjectDeletedException gdpde) {
             System.err.println(gdpde.getLocalizedMessage());
         }
     }
@@ -254,7 +253,7 @@ public class DBToolClient extends AbstractCmdlineClient
                 FileStorageBP.exportProjectList(exportProjects,
                         dirName, session, new NullProgressMonitor(), false,
                         listOfProjectFiles, this);
-            } catch (GDException e) {
+            } catch (JBException e) {
                 reportExportAllFailed(exportDir, e);
             } catch (InterruptedException e) {
                 // the monitor doesn't allow cancelation
@@ -291,7 +290,7 @@ public class DBToolClient extends AbstractCmdlineClient
             FileStorageBP.exportProjectList(projects, dirName,
                     session, new NullProgressMonitor(), false,
                     listOfProjectFiles, this);
-        } catch (GDException e) {
+        } catch (JBException e) {
             reportExportAllFailed(exportDir, e);
         } catch (InterruptedException e) {
             // the monitor doesn't allow cancelation
@@ -314,7 +313,7 @@ public class DBToolClient extends AbstractCmdlineClient
             try {
                 project = ProjectPM.loadProjectByNameAndVersion(name,
                         versionNr[0], versionNr[1]);
-            } catch (GDException e) {
+            } catch (JBException e) {
                 reportMissingProject(name, version);
                 return;
             }
@@ -334,7 +333,7 @@ public class DBToolClient extends AbstractCmdlineClient
                                 project.getMajorProjectVersion(),
                                 project.getMinorProjectVersion(), false);
                     }
-                } catch (GDException e) {
+                } catch (JBException e) {
                     reportDeleteFailed(name, version, e);
                 } catch (InterruptedException e) {
                     // can't happen, this could only be thrown by a user
@@ -362,7 +361,7 @@ public class DBToolClient extends AbstractCmdlineClient
                 TestResultSummaryPM.deleteAllTestresultSummaries();
                 TestResultPM.deleteAllTestresultDetails();
             }
-        } catch (GDException e) {
+        } catch (JBException e) {
             printConsoleError(e.getMessage());
         } catch (InterruptedException e) {
             // can't happen, this could only be thrown by a user
@@ -475,11 +474,8 @@ public class DBToolClient extends AbstractCmdlineClient
      * @param exportDir directory name
      * @param e error condition
      */
-    private void reportExportAllFailed(String exportDir, GDException e) {
-        //FIXME NLS The String "DBTool.ExportAllFailed" exists not in guidancerString.properties
-        String i18nKey = 
-            "DBTool.ExportAllFailed"; //$NON-NLS-1$
-        StringBuilder msg = new StringBuilder(I18n.getString(i18nKey));
+    private void reportExportAllFailed(String exportDir, JBException e) {
+        StringBuilder msg = new StringBuilder(Messages.DBToolExportAllFailed);
         msg.append(StringConstants.SPACE);
         msg.append(exportDir);
         msg.append(StringConstants.NEWLINE);

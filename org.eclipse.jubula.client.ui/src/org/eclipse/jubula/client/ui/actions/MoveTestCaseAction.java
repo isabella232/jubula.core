@@ -53,7 +53,7 @@ import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
@@ -333,7 +333,7 @@ public class MoveTestCaseAction extends Action {
                         errorMessageInfo.getParams(), 
                         null);
             }
-        } catch (GDException e) {
+        } catch (JBException e) {
             Utils.createMessageDialog(e, null, null);
         } catch (ToolkitPluginException tpie) {
             Utils.createMessageDialog(MessageIDs.E_GENERAL_TOOLKIT_ERROR);
@@ -420,7 +420,7 @@ public class MoveTestCaseAction extends Action {
      */
     private List<MultipleNodePM.AbstractCmdHandle> createCommands(
         List<GuiNode> selectionList, 
-        ISpecObjContPO newParent, IProjectPO extProject) throws GDException {
+        ISpecObjContPO newParent, IProjectPO extProject) throws JBException {
         
         List<MultipleNodePM.AbstractCmdHandle> commands = 
             new ArrayList<MultipleNodePM.AbstractCmdHandle>();

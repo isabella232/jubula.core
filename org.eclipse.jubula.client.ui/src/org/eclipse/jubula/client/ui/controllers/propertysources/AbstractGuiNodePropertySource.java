@@ -35,7 +35,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IVerifiable;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IParameterPropertyController.ParameterInputType;
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -324,9 +324,9 @@ public abstract class AbstractGuiNodePropertySource
     protected IParamNameMapper getActiveParamNameMapper() {
         final IEditorPart activeEditor = Plugin.getActiveEditor();
         IParamNameMapper mapper = ParamNameBP.getInstance();
-        if (activeEditor instanceof IGDEditor) {
+        if (activeEditor instanceof IJBEditor) {
             IParamNameMapper editorMapper = 
-                ((IGDEditor)activeEditor).getEditorHelper()
+                ((IJBEditor)activeEditor).getEditorHelper()
                     .getEditSupport().getParamMapper();
             if (editorMapper != null) {
                 mapper = editorMapper;
@@ -342,8 +342,8 @@ public abstract class AbstractGuiNodePropertySource
     protected IWritableComponentNameMapper getActiveComponentNameMapper() {
         final IEditorPart activeEditor = Plugin.getActiveEditor();
         IWritableComponentNameMapper mapper = null;
-        if (activeEditor instanceof IGDEditor) {
-            mapper = ((IGDEditor)activeEditor).getEditorHelper()
+        if (activeEditor instanceof IJBEditor) {
+            mapper = ((IJBEditor)activeEditor).getEditorHelper()
                 .getEditSupport().getCompMapper();
         }
         return mapper;

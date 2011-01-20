@@ -29,7 +29,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.databinding.InverseBooleanConverter;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
@@ -63,20 +63,19 @@ public class ObjectMappingConfigComponent {
     private static final String CUSTOM_NAME = "Custom"; //$NON-NLS-1$
     
     /**
-     * Takes care of IGDEditor-specific steps when changing a value via a 
+     * Takes care of IJBEditor-specific steps when changing a value via a 
      * databinding. This includes requesting an editable state and marking the
      * editor as dirty, if necessary.
      *
      * @author BREDEX GmbH
      * @created Nov 24, 2008
      */
-    private class GDEditorUpdateValueStrategy 
+    private class JBEditorUpdateValueStrategy 
             extends UpdateValueStrategy {
-
         /** 
          * the editor within which this update value strategy does its work 
          */
-        private IGDEditor m_editor; 
+        private IJBEditor m_editor; 
         
         /**
          * Constructor
@@ -84,7 +83,7 @@ public class ObjectMappingConfigComponent {
          * @param editor The editor within which this update value strategy 
          *               does its work.
          */
-        public GDEditorUpdateValueStrategy(IGDEditor editor) {
+        public JBEditorUpdateValueStrategy(IJBEditor editor) {
             super();
             m_editor = editor;
         }
@@ -96,7 +95,7 @@ public class ObjectMappingConfigComponent {
          * @param editor The editor within which this update value strategy 
          *               does its work.
          */
-        public GDEditorUpdateValueStrategy(int updatePolicy, IGDEditor editor) {
+        public JBEditorUpdateValueStrategy(int updatePolicy, IJBEditor editor) {
             super(updatePolicy);
             m_editor = editor;
         }
@@ -337,7 +336,7 @@ public class ObjectMappingConfigComponent {
     private IObjectMappingPO m_input;
 
     /** editor reference */
-    private IGDEditor m_editor;
+    private IJBEditor m_editor;
 
     /** used for triggered updates */
     private DataBindingContext m_bindingContext;
@@ -353,7 +352,7 @@ public class ObjectMappingConfigComponent {
      * @param editor The editor supplying the data for this component.
      */
     public ObjectMappingConfigComponent(Composite parent, 
-            IObjectMappingPO input, IGDEditor editor) {
+            IObjectMappingPO input, IJBEditor editor) {
         
         m_input = input;
         m_editor = editor;
@@ -369,7 +368,7 @@ public class ObjectMappingConfigComponent {
      * @param editor The editor supplying the data for this component.
      */
     private void createAndInitControl(
-            Composite parent, IObjectMappingPO input, IGDEditor editor) {
+            Composite parent, IObjectMappingPO input, IJBEditor editor) {
         
         /** Add layer to parent widget */
         final ScrolledComposite scrollComposite = 
@@ -466,7 +465,7 @@ public class ObjectMappingConfigComponent {
      * @param editor The editor containing the sliders.
      */
     private void linkFactorSliders(final DataBindingContext bindingContext, 
-            final Set<Scale> factorSliders, final IGDEditor editor) {
+            final Set<Scale> factorSliders, final IJBEditor editor) {
         for (final Scale slider : factorSliders) {
             slider.addSelectionListener(new SelectionListener() {
 
@@ -506,7 +505,7 @@ public class ObjectMappingConfigComponent {
      */
     private Scale createFactorSlider(Composite parent, String labelText, 
             String boundProperty, final DataBindingContext bindingContext,
-            IObservableValue masterObservable, IGDEditor editor) {
+            IObservableValue masterObservable, IJBEditor editor) {
         
         // create Widget
         Label label = new Label(parent, SWT.NONE);
@@ -547,7 +546,7 @@ public class ObjectMappingConfigComponent {
     private void bindFactor(String boundProperty,
             final DataBindingContext bindingContext, final Scale factorScale,
             Label factorText, Button lockCheckbox, 
-            IObservableValue masterObservable, IGDEditor editor) {
+            IObservableValue masterObservable, IJBEditor editor) {
         
         IObservableValue uiElement = 
             SWTObservables.observeSelection(factorScale);
@@ -557,7 +556,7 @@ public class ObjectMappingConfigComponent {
                     double.class);
 
         bindingContext.bindValue(uiElement, modelElement, 
-                new GDEditorUpdateValueStrategy(
+                new JBEditorUpdateValueStrategy(
                         UpdateValueStrategy.POLICY_ON_REQUEST, editor)
                             .setConverter(m_sliderToModelConverter),
                 new UpdateValueStrategy()
@@ -700,7 +699,7 @@ public class ObjectMappingConfigComponent {
      */
     private void createThresholdSlider(Composite parent,
             DataBindingContext bindingContext, 
-            IObservableValue masterObservable, IGDEditor editor) {
+            IObservableValue masterObservable, IJBEditor editor) {
         
         String boundProperty = 
             IObjectMappingProfilePO.PROP_THRESHOLD;
@@ -724,7 +723,7 @@ public class ObjectMappingConfigComponent {
                     boundProperty, 
                     double.class);
         bindingContext.bindValue(uiElement, modelElement, 
-                new GDEditorUpdateValueStrategy(editor)
+                new JBEditorUpdateValueStrategy(editor)
                     .setConverter(m_sliderToModelConverter),
                 new UpdateValueStrategy()
                     .setConverter(m_modelToSliderConverter));

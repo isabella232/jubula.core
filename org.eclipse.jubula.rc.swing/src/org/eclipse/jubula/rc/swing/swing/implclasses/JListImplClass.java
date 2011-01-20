@@ -87,15 +87,7 @@ public class JListImplClass extends AbstractSwingImplClass
                 INDEX_LIST_SEP_CHAR, TestDataConstants.ESCAPE_CHAR_DEFAULT);
         int[] indices = new int[list.length];
         for (int i = 0; i < list.length; i++) {
-            String index = list[i];
-            try {
-                indices[i] = Integer.parseInt(index);
-            } catch (NumberFormatException e) {
-                throw new StepExecutionException(
-                    "Index '" + index + "' is not an integer", //$NON-NLS-1$ //$NON-NLS-2$
-                        EventFactory.createActionError(
-                            TestErrorEvent.INVALID_INDEX));
-            }
+            indices[i] = IndexConverter.intValue(list[i]);
         }
 
         return indices;

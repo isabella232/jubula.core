@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.ui.dialogs;
 
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -171,7 +171,7 @@ public final class EditParametersDialog extends AbstractEditParametersDialog {
             }
             
         });
-        GDControlDecorator.decorateInfo(m_lockInterfaceCheckBox, 
+        ControlDecorator.decorateInfo(m_lockInterfaceCheckBox, 
                 "GDControlDecorator.EditParameterLock", false);
     }
 

@@ -15,7 +15,7 @@
 	<!-- START - Old buildScript.xml                                           -->
 	<!-- ===================================================================== -->
     <path id="eclipselink.weaving.classpath">
-		<fileset dir="${basedir}/../org.eclipse.jubula.project.configuration/target/platform/persistence/plugins">
+		<fileset dir="${basedir}/../../guidancer/com.bredexsw.guidancer.project.configuration/target/platform/persistence/plugins">
 	    	<include name="org.eclipse.persistence.*.jar" />
     	    <include name="javax.persistence_*.jar"/>
 		</fileset>
@@ -230,7 +230,7 @@
 	<target name="pre.@dot">
 	</target>
 	
-	<target name="pre.org.eclipse.jubula.client.core.jar">
+	<target name="pre.org.eclipse.jubula.client.core.jar" depends="gen-parser">
 	</target>
 
 	<!-- ===================================================================== -->

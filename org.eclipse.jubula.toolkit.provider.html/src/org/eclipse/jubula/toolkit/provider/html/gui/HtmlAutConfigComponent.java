@@ -19,10 +19,10 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.Browser;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.RemoteFileBrowserBP;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.widgets.AutConfigComponent;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
@@ -50,9 +50,9 @@ import org.eclipse.swt.widgets.Label;
 public class HtmlAutConfigComponent extends AutConfigComponent {
 
     /** gui component */
-    private GDText m_autUrlTextField;
+    private JBText m_autUrlTextField;
     /** gui field for browser */
-    private GDText m_browserTextField;
+    private JBText m_browserTextField;
     /** gui button for browser path */
     private Button m_browserPathButton;
     /** gui component */
@@ -67,10 +67,10 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     private I18nEnumCombo<Browser> m_browserCombo;
     /** gui component */
     private I18nEnumCombo<ActivationMethod> m_activationMethodCombo;
-    /** the GuiDancerModifyListener */
-    private GuiDancerModifyListener m_modifyListener;
-    /** the the GuiDancerSelectionListener */
-    private GuiDancerSelectionListener m_selectionListener;
+    /** the WidgetModifyListener */
+    private WidgetModifyListener m_modifyListener;
+    /** the the WidgetSelectionListener */
+    private WidgetSelectionListener m_selectionListener;
 
 
     /**
@@ -153,7 +153,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         
         m_browserPathLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.browserPath"); //$NON-NLS-1$ 
         m_browserPathLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathLabel"); //$NON-NLS-1$
-        GDControlDecorator.decorateInfo(m_browserPathLabel,  
+        ControlDecorator.decorateInfo(m_browserPathLabel,  
                 "GDControlDecorator.WebBrowserPath", false); //$NON-NLS-1$
         
         m_browserTextField = UIComponentHelper.createTextField(
@@ -181,8 +181,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      */
     protected void installListeners() {
         super.installListeners();
-        GuiDancerModifyListener modifyListener = getModifyListener();
-        GuiDancerSelectionListener selectionListener = getSelectionListener();
+        WidgetModifyListener modifyListener = getModifyListener();
+        WidgetSelectionListener selectionListener = getSelectionListener();
         
         getServerCombo().addModifyListener(modifyListener);
         m_autUrlTextField.addModifyListener(modifyListener);
@@ -198,8 +198,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      */
     protected void deinstallListeners() {
         super.deinstallListeners();
-        GuiDancerModifyListener modifyListener = getModifyListener();
-        GuiDancerSelectionListener selectionListener = getSelectionListener();
+        WidgetModifyListener modifyListener = getModifyListener();
+        WidgetSelectionListener selectionListener = getSelectionListener();
         
         getServerCombo().removeModifyListener(modifyListener);
         m_autUrlTextField.removeModifyListener(modifyListener);
@@ -215,7 +215,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * @author BREDEX GmbH
      * @created 13.07.2005
      */
-    private class GuiDancerSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
 
         /**
          * {@inheritDoc}
@@ -312,7 +312,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * @author BREDEX GmbH
      * @created 22.11.2006
      */
-    private class GuiDancerModifyListener implements ModifyListener {
+    private class WidgetModifyListener implements ModifyListener {
 
         /**
          * {@inheritDoc}
@@ -485,9 +485,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * @return the modifier listener.
      */
     @SuppressWarnings("synthetic-access")
-    private GuiDancerModifyListener getModifyListener() {
+    private WidgetModifyListener getModifyListener() {
         if (m_modifyListener == null) {
-            m_modifyListener = new GuiDancerModifyListener();
+            m_modifyListener = new WidgetModifyListener();
         }
         
         return m_modifyListener;
@@ -499,9 +499,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * @return the single instance of the selection listener.
      */
     @SuppressWarnings("synthetic-access")
-    private GuiDancerSelectionListener getSelectionListener() {
+    private WidgetSelectionListener getSelectionListener() {
         if (m_selectionListener == null) {
-            m_selectionListener = new GuiDancerSelectionListener();
+            m_selectionListener = new WidgetSelectionListener();
         }
         
         return m_selectionListener;

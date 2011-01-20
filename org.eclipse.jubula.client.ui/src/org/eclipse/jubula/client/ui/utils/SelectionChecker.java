@@ -29,14 +29,12 @@ import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 
 
 /**
- * Utility class to check the selection in GuiDancer trees.
+ * Utility class to check the selection in Jubula trees.
  *
  * @author BREDEX GmbH
  * @created 05.04.2005
  */
 public class SelectionChecker {
-    
-    
     /** Constant for ExecTestSuites (= every selection is an execTestSuite) */
     public static final int EXEC_TESTSUITE = 0;
     

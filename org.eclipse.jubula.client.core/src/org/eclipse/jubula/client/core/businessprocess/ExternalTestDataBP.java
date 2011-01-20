@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.businessprocess.importfilter.ExcelImportFi
 import org.eclipse.jubula.client.core.businessprocess.importfilter.IDataImportFilter;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.DataReadException;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.NoSupportForLocaleException;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.II18NStringPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
@@ -35,10 +36,11 @@ import org.eclipse.jubula.client.core.model.ITDManagerPO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.IncompleteDataException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -53,7 +55,7 @@ public class ExternalTestDataBP {
     private static final Log LOG = LogFactory.getLog(ExternalTestDataBP.class);
 
     /** this is where the datafile are stored */
-    private static File globalDataDir = new File("."); //$NON-NLS-1$
+    private static File globalDataDir = new File(StringConstants.DOT);
 
     /** import fiter*/
     private List <IDataImportFilter> m_filter;
@@ -90,12 +92,12 @@ public class ExternalTestDataBP {
      *      directory for data files
      * @param file data source File
      * @param node ParamNode
-     * @throws GDException error occured while reading data source
+     * @throws JBException error occured while reading data source
      * @return filled TestDataManager
      */
     private ITDManagerPO createFilledTDManager(File dataDir, String file, 
         IParamNodePO node) 
-        throws GDException {
+        throws JBException {
         
         ITDManagerPO tdManager = m_tdManagerCache.get(node);
         if (tdManager != null) {
@@ -146,10 +148,10 @@ public class ExternalTestDataBP {
      * @param fileName the name of the data source
      * @param locale the local of the  data
      * @return a DataTable
-     * @throws GDException id data source is not supported
+     * @throws JBException id data source is not supported
      */
     public DataTable createDataTable(File dataDir, String fileName, 
-        Locale locale) throws GDException {
+        Locale locale) throws JBException {
         
         File dataFile = new File(dataDir, fileName);
         DataTable dataTable = m_dataTableCache.get(dataFile);
@@ -164,31 +166,42 @@ public class ExternalTestDataBP {
                 m_dataTableCache.put(dataFile, dataTable);
                 return dataTable;
             } 
-            LOG.error("DataSource: '" + dataFileName + "' not supported");  //$NON-NLS-1$//$NON-NLS-2$
-            throw new GDException(I18n.getString(
-                    "ErrorMessage.NOT_SUPP_DATASOURCE", //$NON-NLS-1$
+            LOG.error(Messages.DataSource + StringConstants.COLON 
+                    + StringConstants.SPACE + StringConstants.APOSTROPHE
+                    + dataFileName + StringConstants.APOSTROPHE 
+                    + StringConstants.SPACE + Messages.NotSupported);
+            throw new JBException(
+                    NLS.bind(Messages.ErrorMessageNOT_SUPP_DATASOURCE,
                     new Object[] { dataFileName }),
                 MessageIDs.E_NOT_SUPP_DATASOURCE);
         } catch (IOException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Error reading file: " + dataFileName, e); //$NON-NLS-1$                
+                LOG.debug(Messages.ErrorReadingFile + StringConstants.COLON
+                        + StringConstants.SPACE + dataFileName, e);
             }
-            throw new GDException(I18n.getString("ErrorMessage.DATASOURCE_FILE_IO",  //$NON-NLS-1$
+            throw new JBException(NLS.bind(
+                Messages.ErrorMessageNOT_SUPP_DATASOURCE,
                 new Object[] {dataFileName}), 
                 MessageIDs.E_DATASOURCE_FILE_IO);
         } catch (DataReadException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Error reading file: " + dataFileName, e); //$NON-NLS-1$                
+                LOG.debug(Messages.ErrorReadingFile + StringConstants.COLON
+                        + StringConstants.SPACE + dataFileName, e);
             }
-            throw new GDException(I18n.getString("ErrorMessage.DATASOURCE_READ_ERROR",  //$NON-NLS-1$
+            throw new JBException(NLS.bind(
+                Messages.ErrorMessageDATASOURCE_READ_ERROR,
                 new Object[] {dataFileName}), 
                 MessageIDs.E_DATASOURCE_READ_ERROR);
         } catch (NoSupportForLocaleException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Locale not supported: " + String.valueOf(locale) //$NON-NLS-1$
-                    + " in data source: " + dataFileName); //$NON-NLS-1$                
+                LOG.debug(Messages.LocaleNotSupported + StringConstants.COLON
+                    + StringConstants.SPACE + String.valueOf(locale)
+                    + StringConstants.SPACE + Messages.InDataSource
+                    + StringConstants.COLON + StringConstants.SPACE 
+                    + dataFileName);                
             }
-            throw new GDException(I18n.getString("ErrorMessage.DATASOURCE_LOCALE_NOTSUPPORTED",  //$NON-NLS-1$
+            throw new JBException(NLS.bind(
+                Messages.ErrorMessageDATASOURCE_LOCALE_NOTSUPPORTED,
                 new Object[] {locale.toString(), locale.getDisplayLanguage()}), 
                 MessageIDs.E_DATASOURCE_LOCALE_NOTSUPPORTED);
         }
@@ -224,11 +237,11 @@ public class ExternalTestDataBP {
      *      What Locale the TestData should be
      * @return
      *      filled TestDataManager with new data
-     * @throws GDException
+     * @throws JBException
      *      error occured while reading data source
      */
     private ITDManagerPO parseTable(DataTable filledTable,
-        IParameterInterfacePO paramPo, Locale locale) throws GDException {
+        IParameterInterfacePO paramPo, Locale locale) throws JBException {
         return parseTable(filledTable, paramPo, locale, false);
     }
     
@@ -245,12 +258,12 @@ public class ExternalTestDataBP {
      *      whether the
      * @return
      *      filled TestDataManager with new data
-     * @throws GDException
+     * @throws JBException
      *      error occured while reading data source
      */
     public ITDManagerPO parseTable(DataTable filledTable,
         IParameterInterfacePO paramPo, Locale locale,
-        boolean updateCellValues) throws GDException {
+        boolean updateCellValues) throws JBException {
         
         // iterate over rows
         List<String> paramNamesExcel = 
@@ -295,8 +308,8 @@ public class ExternalTestDataBP {
         for (IParamDescriptionPO desc : paramNamesNode) {
             if (!paramNamesExcel.contains(desc.getName())) {
                 
-                throw new GDException(I18n.getString(
-                        "ErrorMessage.DATASOURCE_MISSING_PARAMETER", //$NON-NLS-1$
+                throw new JBException(NLS.bind(
+                        Messages.ErrorMessageDATASOURCE_MISSING_PARAMETER,
                         new Object[] { desc.getName(),
                                 paramPo.getName(),
                                 paramPo.getDataFile()}),
@@ -304,7 +317,8 @@ public class ExternalTestDataBP {
             }
         }
         if (rowCount == 1) {
-            throw new GDException(I18n.getString("ErrorMessage.DATASOURCE_MISSING_VALUES"),  //$NON-NLS-1$
+            throw new JBException(
+                Messages.ErrorMessageDATASOURCE_MISSING_VALUES,
                 MessageIDs.E_DATASOURCE_MISSING_VALUES);
         }
         return paramPo.getDataManager();
@@ -312,7 +326,7 @@ public class ExternalTestDataBP {
 
     /**
      * Gets the value for the TestDataManager from the given DataTable.
-     * Any internal GUIdancer-Symbols (References, Variables, etc.) will be
+     * Any internal Jubula-Symbols (References, Variables, etc.) will be
      * converted into the right format.
      * @param filledTable The DataTable of the Excel-file
      * @param row the row number
@@ -330,8 +344,10 @@ public class ExternalTestDataBP {
                     MessageIDs.E_DATASOURCE_CONTAIN_EMPTY_DATA).setDetails(
                             new String[] {});
             throw new IncompleteDataException(MessageIDs.getMessage(
-                    MessageIDs.E_DATASOURCE_CONTAIN_EMPTY_DATA) + "\n"  //$NON-NLS-1$
-                        + I18n.getString("ErrorDetail.DATASOURCE_CONTAIN_EMPTY_DATA",  //$NON-NLS-1$
+                    MessageIDs.E_DATASOURCE_CONTAIN_EMPTY_DATA) 
+                        + StringConstants.NEWLINE
+                        + NLS.bind(Messages
+                                .ErrorDetailDATASOURCE_CONTAIN_EMPTY_DATA,
                                 new Object[] {row + 1, column + 1}), 
                 MessageIDs.E_DATASOURCE_CONTAIN_EMPTY_DATA);
         }
@@ -345,11 +361,11 @@ public class ExternalTestDataBP {
      * will be returned.
      * @param paramNode ParamNode
      * @return the usable TDManager
-     * @throws GDException
+     * @throws JBException
      *      occuring Exception while creating TDManager
      */
     public ITDManagerPO getExternalCheckedTDManager(IParamNodePO paramNode)
-        throws GDException {
+        throws JBException {
         
         boolean isTestRunning = 
             TestExecution.getInstance().getStartedTestSuite() != null
@@ -385,12 +401,12 @@ public class ExternalTestDataBP {
      *              returned.
      * 
      * @return the retrieved or generated Test Data Manager.
-     * @throws GDException 
+     * @throws JBException 
      *              if an error occurs while reading an external data source.
      */
     public ITDManagerPO getExternalCheckedTDManager(
             IParamNodePO paramNode, Locale locale, 
-            boolean retrieveExternalData) throws GDException {
+            boolean retrieveExternalData) throws JBException {
         
         Validate.notNull(paramNode);
         Validate.notNull(locale);
@@ -417,7 +433,8 @@ public class ExternalTestDataBP {
                     paramNode.getReferencedDataCube(), paramNode);
         }
 
-        LOG.error("Unknown data source type for: " + paramNode.getName()); //$NON-NLS-1$
+        LOG.error(Messages.UnknownSourceType + StringConstants.COLON 
+                + StringConstants.SPACE + paramNode.getName());
         return null;
     }
     

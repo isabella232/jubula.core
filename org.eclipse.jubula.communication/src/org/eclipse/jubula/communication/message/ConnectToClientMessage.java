@@ -14,7 +14,7 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 
 /**
  * Message sent to an AUT Server containing information necessary to establish
- * a connection to a waiting GUIdancer Client.
+ * a connection to a waiting client.
  *
  * @author BREDEX GmbH
  * @created Mar 22, 2010
@@ -27,10 +27,10 @@ public class ConnectToClientMessage extends Message {
      */
     private static final double VERSION = 1.0;
 
-    /** the host name at which the GUIdancer Client is listening */
+    /** the host name at which the client is listening */
     private String m_clientHostName;
     
-    /** the port number on which the GUIdancer Client is listening */
+    /** the port number on which the client is listening */
     private int m_clientPort;
     
     /**
@@ -46,10 +46,10 @@ public class ConnectToClientMessage extends Message {
     /**
      * Constructor
      * 
-     * @param clientHostName The host name at which the GUIdancer Client is 
-     *                       listening.
-     * @param clientPort The port number on which the GUIdancer Client is 
-     *                   listening.
+     * @param clientHostName
+     *            The host name at which the client is listening.
+     * @param clientPort
+     *            The port number on which the client is listening.
      */
     public ConnectToClientMessage(String clientHostName, int clientPort) {
         m_clientHostName = clientHostName;
@@ -71,14 +71,14 @@ public class ConnectToClientMessage extends Message {
     }
 
     /**
-     * @return the host name at which the GUIdancer Client is listening.
+     * @return the host name at which the client is listening.
      */
     public String getClientHostName() {
         return m_clientHostName;
     }
 
     /**
-     * @return the port nubmer on which the GUIdancer Client is listening.
+     * @return the port nubmer on which the client is listening.
      */
     public int getClientPort() {
         return m_clientPort;

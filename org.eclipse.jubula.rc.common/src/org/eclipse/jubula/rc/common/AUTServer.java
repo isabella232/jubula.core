@@ -40,7 +40,7 @@ import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 
@@ -52,7 +52,7 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
  * Expected arguments to main are, see also
  * StartAUTServerCommand.createCmdArray():
  * <ul>
- * <li>The name of host the GuiDancerCLient is running on, must be InetAddress
+ * <li>The name of host where the client is running on, must be InetAddress
  * conform.</li>
  * <li>The port the JubulaClient is listening to.</li>
  * <li>The main class of the AUT.</li>
@@ -465,17 +465,18 @@ public abstract class AUTServer {
     /**
      * Initializes the communication between:
      * <ul>
-     *   <li>GUIdancer Client and AUT</li>
-     *   <li>AUT Agent and AUT</li>
+     * <li>Client and AUT</li>
+     * <li>AUT Agent and AUT</li>
      * </ul>
      * 
-     * @param clientHostName Host name to use for connecting to GUIdancer 
-     *                       Client.
-     * @param clientPort     Port number to use for connecting to GUIdancer 
-     *                       Client.
+     * @param clientHostName
+     *            Host name to use for connecting to the client.
+     * @param clientPort
+     *            Port number to use for connecting to the client.
      * 
-     * @throws UnknownHostException if no IP address can be found for 
-     *                              <code>clientHostName</code>.
+     * @throws UnknownHostException
+     *             if no IP address can be found for <code>clientHostName</code>
+     *             .
      */
     public void initClientCommunication(String clientHostName, int clientPort) 
         throws UnknownHostException {
@@ -500,7 +501,7 @@ public abstract class AUTServer {
             log.fatal("Exception in start()", se); //$NON-NLS-1$
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_COMMUNICATION);
-        } catch (GDVersionException e) {
+        } catch (JBVersionException e) {
             log.error(e.toString());
         }
     }
@@ -551,17 +552,21 @@ public abstract class AUTServer {
     
 
     /**
-     * Initializes communication between the receiver and the AUT Agent at 
-     * the given address.
+     * Initializes communication between the receiver and the AUT Agent at the
+     * given address.
      * 
-     * @param agentAddress The address of the waiting AUT Agent.
-     * @param agentPort The port on which the AUT Agent is listening.
-     * @throws SecurityException if the security manager does not allow connections.
-     * @throws GDVersionException in case of version error between AUT Agent and AUT Server.
+     * @param agentAddress
+     *            The address of the waiting AUT Agent.
+     * @param agentPort
+     *            The port on which the AUT Agent is listening.
+     * @throws SecurityException
+     *             if the security manager does not allow connections.
+     * @throws JBVersionException
+     *             in case of version error between AUT Agent and AUT Server.
      */
     public void initAutAgentCommunicator(
             InetAddress agentAddress, int agentPort) 
-        throws SecurityException, GDVersionException {
+        throws SecurityException, JBVersionException {
         
         m_serverCommunicator = new Communicator(agentAddress, agentPort, 
                 Thread.currentThread().getContextClassLoader());
@@ -891,12 +896,11 @@ public abstract class AUTServer {
     }
 
     /**
-     * Listener for events that occur during communication with a 
-     * GUIdancer Client.
-     *
+     * Listener for events that occur during communication with a client.
+     * 
      * @author BREDEX GmbH
      * @created Feb 24, 2010
-     *
+     * 
      */
     private class ClientCommunicationListener 
             extends AbstractCommunicationListener {
@@ -936,7 +940,7 @@ public abstract class AUTServer {
 
     /**
      * Starts an Inspector that allows data for the next component clicked to 
-     * be sent to the GUIdancer Client.
+     * be sent to the client.
      * 
      */
     public final void startInspector() {

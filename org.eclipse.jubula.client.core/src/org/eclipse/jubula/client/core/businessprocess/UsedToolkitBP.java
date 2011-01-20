@@ -24,6 +24,7 @@ import javax.persistence.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -46,9 +47,10 @@ import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
@@ -92,12 +94,12 @@ public class UsedToolkitBP {
      * @param specTC The {@link ISpecTestCasePO} whose toolkits are to add.
      * @param project the project of the {@link ISpecTestCasePO}
      * @throws PMException in case of DB error.
-     * @throws GDProjectDeletedException if the project was deleted in another
+     * @throws ProjectDeletedException if the project was deleted in another
      *                                   session.
      */
     @SuppressWarnings("unchecked")
     public void addToolkit(ISpecTestCasePO specTC, IProjectPO project) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
         
         final Iterator<INodePO> childs = specTC.getNodeListIterator();
         final Set<IUsedToolkitPO> addedToolkits = 
@@ -147,15 +149,18 @@ public class UsedToolkitBP {
     }
 
     
-   /**
-    * Inserts the given List of used toolkits into the DB.
-    * @param usedToolkits the used toolkits to insert into DB.
-    * @throws PMException in case of DB error.
-     * @throws GDProjectDeletedException if the project was deleted in another
-     *                                   session.
-    */
+    /**
+     * Inserts the given List of used toolkits into the DB.
+     * 
+     * @param usedToolkits
+     *            the used toolkits to insert into DB.
+     * @throws PMException
+     *             in case of DB error.
+     * @throws ProjectDeletedException
+     *             if the project was deleted in another session.
+     */
     private void insertIntoDB(Set<IUsedToolkitPO> usedToolkits) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
         if (usedToolkits.isEmpty()) {
             return;
         }
@@ -213,7 +218,7 @@ public class UsedToolkitBP {
      * @param project the Project
      */
     public void refreshToolkitInfo(final IProjectPO project) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
 
         refreshToolkitInfo(project, null);
     }
@@ -229,7 +234,7 @@ public class UsedToolkitBP {
      */
     public void refreshToolkitInfo(final IProjectPO project, 
         final IProgressMonitor monitor) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
         
         EntityManager s = Hibernator.instance().openSession();
         try {
@@ -279,7 +284,7 @@ public class UsedToolkitBP {
      * @throws PMException in case of failed delete statement
      */
     public void deleteToolkitsFromDB(EntityManager s, Long parentProjectId, 
-        boolean commit) throws PMException, GDProjectDeletedException {
+        boolean commit) throws PMException, ProjectDeletedException {
         try {
             if (commit) {
                 EntityTransaction tx = Hibernator.instance().getTransaction(s);
@@ -289,7 +294,8 @@ public class UsedToolkitBP {
                 executeDeleteStatement(s, parentProjectId);
             }
         } catch (PersistenceException e) {
-            String msg = "Deletion of Toolkits failed."; //$NON-NLS-1$
+            String msg = Messages.DeletionOfToolkitsFailed 
+                + StringConstants.DOT;
             log.error(msg, e); 
             throw new PMException(msg, MessageIDs.E_DB_SAVE);
         }
@@ -675,7 +681,7 @@ public class UsedToolkitBP {
             refreshToolkitInfo(project);
         } catch (PMException e) {
             // nothing
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             // nothing
         }
 
@@ -767,7 +773,7 @@ public class UsedToolkitBP {
                             .getToolkitPluginDescriptor(
                                     reusedProject.getToolkit()));
                 }
-            } catch (GDException e) {
+            } catch (JBException e) {
                 // Do nothing.
                 // If the project cannot be found in the db, then we cannot consider
                 // it in our computations.

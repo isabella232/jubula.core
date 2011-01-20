@@ -82,7 +82,7 @@ import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.controllers.GDStateController;
+import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.controllers.TreeIterator;
@@ -97,9 +97,9 @@ import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseEditorContentProvider;
-import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralGDLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -107,7 +107,7 @@ import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -135,7 +135,7 @@ import org.eclipse.ui.IWorkbenchPartConstants;
  * @created 13.10.2004
  */
 @SuppressWarnings("synthetic-access")
-public abstract class AbstractTestCaseEditor extends AbstractGDEditor {
+public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     /**
      * <code>TEST_CASE_EDITOR_ROOT_NAME</code>
      */
@@ -255,7 +255,7 @@ public abstract class AbstractTestCaseEditor extends AbstractGDEditor {
         headLineComposite.setLayout(layout);
         Label headLine = new Label(headLineComposite, SWT.NONE);
         headLine.setText(I18n.getString("TestCaseEditor.EHAreaHeadline")); //$NON-NLS-1$ 
-        GDControlDecorator.decorateInfo(headLine,  
+        ControlDecorator.decorateInfo(headLine,  
                 "GDControlDecorator.EventHandler", false); //$NON-NLS-1$
         GridData ehTvGridData = new GridData();
         ehTvGridData.grabExcessHorizontalSpace = true;
@@ -272,13 +272,13 @@ public abstract class AbstractTestCaseEditor extends AbstractGDEditor {
         m_eventHandlerTreeViewer.getTree().setLayout(ehTvLayout);
         m_eventHandlerTreeViewer.getTree().setLayoutData(ehTvGridData);
         m_eventHandlerTreeViewer.setLabelProvider(
-                new DecoratingCellLabelProvider(new GeneralGDLabelProvider(), 
+                new DecoratingCellLabelProvider(new GeneralLabelProvider(), 
                 Plugin.getDefault().getWorkbench().getDecoratorManager()
                 .getLabelDecorator()));
         m_eventHandlerTreeViewer.setUseHashlookup(true);
         m_eventHandlerTreeViewer.getTree()
             .addListener(SWT.MouseDown, new MouseDownListener());
-        GDStateController.getInstance().
+        JubulaStateController.getInstance().
             addSelectionListenerToSelectionService();
         firePropertyChange(IWorkbenchPartConstants.PROP_INPUT);
     }
@@ -416,7 +416,7 @@ public abstract class AbstractTestCaseEditor extends AbstractGDEditor {
             } catch (PMException e1) {
                 PMExceptionHandler.handlePMExceptionForEditor(e, this);
             }
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
         } finally {
             monitor.done();

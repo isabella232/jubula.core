@@ -17,13 +17,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.utils.ExecObject;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -208,8 +209,9 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             try {
                 tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(cap);
-            } catch (GDException e) {
-                log.error("TestData not available.", e); //$NON-NLS-1$
+            } catch (JBException e) {
+                log.error(Messages.TestDataNotAvailable + StringConstants.DOT, 
+                    e);
             }
             ITestDataPO date = tdManager.getCell(0, desc);
             TestExecution te = TestExecution.getInstance();

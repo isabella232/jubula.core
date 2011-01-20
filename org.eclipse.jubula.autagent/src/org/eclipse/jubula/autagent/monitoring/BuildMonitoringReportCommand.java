@@ -48,10 +48,9 @@ public class BuildMonitoringReportCommand implements ICommand {
         try {
             m.send(message);
         } catch (CommunicationException e) {
-            LOG.debug("Failed to send SendMonitoringReportMessage", e); ////$NON-NLS-1$
+            LOG.debug("Failed to send SendMonitoringReportMessage", e); //$NON-NLS-1$
 
-        }
-       
+        }       
         return null;
     }
     

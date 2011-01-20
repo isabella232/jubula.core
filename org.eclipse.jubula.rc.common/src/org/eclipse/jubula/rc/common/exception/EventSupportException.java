@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.exception;
 
-import org.eclipse.jubula.tools.exception.GDRuntimeException;
+import org.eclipse.jubula.tools.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -24,7 +24,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @created 06.04.2005
  */
 public abstract class EventSupportException 
-    extends GDRuntimeException {
+    extends JBRuntimeException {
     
     /** the error message id */
     private Integer m_id = MessageIDs.E_EVENT_SUPPORT;

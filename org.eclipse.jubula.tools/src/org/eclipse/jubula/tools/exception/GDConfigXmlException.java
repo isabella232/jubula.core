@@ -17,7 +17,7 @@ package org.eclipse.jubula.tools.exception;
  * @created 29.11.2005
  *
  */
-public class GDConfigXmlException extends GDFatalAbortException {
+public class GDConfigXmlException extends JBFatalAbortException {
     
     /** 
      * public constructor

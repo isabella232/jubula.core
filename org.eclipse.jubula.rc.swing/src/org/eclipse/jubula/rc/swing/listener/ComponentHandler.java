@@ -22,10 +22,10 @@ import java.util.EventListener;
 
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.exception.GuiDancerComponentNotFoundException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerComponentNotManagedException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerNoIdentifierForComponentException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
+import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
@@ -70,17 +70,17 @@ public class ComponentHandler extends BaseAWTEventListener
      * must be distinct for the whole AUT. To obtain this identifier the
      * AUTHierarchy is queried. 
      * @param component the component to get an identifier for
-     * @throws GuiDancerNoIdentifierForComponentException if an identifer could not created for <code>component</code>.
+     * @throws NoIdentifierForComponentException if an identifer could not created for <code>component</code>.
      * @return the identifier, containing the identification 
      */
     public static IComponentIdentifier getIdentifier(Component component) 
-        throws GuiDancerNoIdentifierForComponentException {
+        throws NoIdentifierForComponentException {
         
         try {
             return autHierarchy.getComponentIdentifier(component);
-        } catch (GuiDancerComponentNotManagedException cnme) {
+        } catch (ComponentNotManagedException cnme) {
             log.warn(cnme);
-            throw new GuiDancerNoIdentifierForComponentException(
+            throw new NoIdentifierForComponentException(
                     "unable to create an identifier for '" //$NON-NLS-1$
                     + component + "'", //$NON-NLS-1$
                     MessageIDs.E_COMPONENT_ID_CREATION); 
@@ -90,11 +90,11 @@ public class ComponentHandler extends BaseAWTEventListener
      * @param factory factory
      * @param componentName componentName
      * @param technicalName technicalName
-     * @throws GuiDancerUnsupportedComponentException GuiDancerUnsupportedComponentException
+     * @throws UnsupportedComponentException UnsupportedComponentException
      */
     public static void addToHierarchy(IComponentFactory factory,
         String componentName, String technicalName)
-        throws GuiDancerUnsupportedComponentException {
+        throws UnsupportedComponentException {
         
         autHierarchy.addToHierarchy(factory, componentName, technicalName);
     }
@@ -118,7 +118,7 @@ public class ComponentHandler extends BaseAWTEventListener
      * @param retry number of tries to get object
      * @param timeout
      *      timeout for retries
-     * @throws GuiDancerComponentNotFoundException
+     * @throws ComponentNotFoundException
      *             if no component is found for the given identifier.
      * @throws IllegalArgumentException
      *             if the identifier is null or contains invalid data
@@ -127,14 +127,14 @@ public class ComponentHandler extends BaseAWTEventListener
      */
     public static Component findComponent(
         IComponentIdentifier componentIdentifier, boolean retry, int timeout)
-        throws GuiDancerComponentNotFoundException, IllegalArgumentException {
+        throws ComponentNotFoundException, IllegalArgumentException {
 
         long start = System.currentTimeMillis();
 
         // FIXME : waitForComponent
         try {
             return autHierarchy.findComponent(componentIdentifier);
-        } catch (GuiDancerComponentNotManagedException cnme) {
+        } catch (ComponentNotManagedException cnme) {
             if (retry) {
                 while (System.currentTimeMillis() - start < timeout) {
                     try {
@@ -143,7 +143,7 @@ public class ComponentHandler extends BaseAWTEventListener
                         return autHierarchy.findComponent(componentIdentifier); 
                     } catch (InterruptedException e) {
                         // ok
-                    }  catch (GuiDancerComponentNotManagedException e) { // NOPMD by zeb on 10.04.07 15:25
+                    }  catch (ComponentNotManagedException e) { // NOPMD by zeb on 10.04.07 15:25
                         // OK, we will throw a corresponding exception later
                         // if we really can't find the component
                     } catch (InvalidDataException ide) { // NOPMD by zeb on 10.04.07 15:25
@@ -152,14 +152,14 @@ public class ComponentHandler extends BaseAWTEventListener
                     }
                 }
             }
-            throw new GuiDancerComponentNotFoundException(
+            throw new ComponentNotFoundException(
                         cnme.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
         } catch (IllegalArgumentException iae) {
             log.error(iae);
             throw iae;
         } catch (InvalidDataException ide) {
             log.error(ide);
-            throw new GuiDancerComponentNotFoundException(
+            throw new ComponentNotFoundException(
                     ide.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
         }
     }
@@ -235,7 +235,7 @@ public class ComponentHandler extends BaseAWTEventListener
      * to the AUTHierarchy via this method by calling the componentAdded method
      * of the AUTHierarchy. <br> <br>
      * <b>Note:</b> This is only a workaround, because some applications may 
-     * clean the listeners of the container inclusive the GuiDancer listeners, so 
+     * clean the listeners of the container inclusive the listeners, so 
      * we cannot notice added components anymore. 
      * Therefor the global AWTEventListener at the Toolkit has to check this.
      * 

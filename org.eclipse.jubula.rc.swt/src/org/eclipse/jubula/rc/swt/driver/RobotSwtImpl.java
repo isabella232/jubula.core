@@ -38,7 +38,7 @@ import org.eclipse.jubula.rc.common.driver.InterceptorOptions;
 import org.eclipse.jubula.rc.common.driver.MouseMovementStrategy;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
-import org.eclipse.jubula.rc.common.exception.GuiDancerOsNotSupportedException;
+import org.eclipse.jubula.rc.common.exception.OsNotSupportedException;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
@@ -73,8 +73,8 @@ import org.eclipse.swt.widgets.Widget;
 
 /**
  * <p>
- * AWT/Swing implementation of the <code>IGuiDancerRobot</code> interface. It
- * uses the {@link java.awt.Robot}to move the mouse and perform clicks. Any
+ * AWT/Swing implementation of the <code>IRobot</code> interface. It
+ * uses the {@link java.awt.Robot} to move the mouse and perform clicks. Any
  * mouse move or click is intercepted and confirmed using the appropriate
  * AWT/Swing implementations of
  * {@link org.eclipse.jubula.rc.swt.driver.IRobotEventInterceptor}and
@@ -1144,7 +1144,7 @@ public class RobotSwtImpl implements IRobot {
      * {@inheritDoc}
      */
     public void keyToggle(Object obj, int key, boolean activated) 
-        throws GuiDancerOsNotSupportedException {
+        throws OsNotSupportedException {
         
         if (activated && isActivated(key)
             || !activated && !isActivated(key)) {
@@ -1192,7 +1192,7 @@ public class RobotSwtImpl implements IRobot {
      * @return true, if key is already activated
      */
     private boolean isActivated(int key) 
-        throws GuiDancerOsNotSupportedException {
+        throws OsNotSupportedException {
         
         if (SWT.getPlatform().equals("win32")) { //$NON-NLS-1$
             try {
@@ -1205,8 +1205,8 @@ public class RobotSwtImpl implements IRobot {
         } else if (SWT.getPlatform().equals("gtk")) { //$NON-NLS-1$
             return isActivatedGTK(key);
         }
-        throw new GuiDancerOsNotSupportedException("Current os \"" //$NON-NLS-1$
-            + SWT.getPlatform() + "\" is not supported by GUIdancer.", //$NON-NLS-1$
+        throw new OsNotSupportedException("Current os \"" //$NON-NLS-1$
+            + SWT.getPlatform() + "\" is not supported.", //$NON-NLS-1$
             MessageIDs.E_UNSUPPORTED_OS);
     }
 

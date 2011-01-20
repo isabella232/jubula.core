@@ -35,13 +35,14 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.dialogs.ClassPathDialog;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.toolkit.common.monitoring.MonitoringAttribute;
 import org.eclipse.jubula.toolkit.common.monitoring.MonitoringUtils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -101,11 +102,11 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     // internally used classes for data handling
     // internally used GUI components
     /** gui component */
-    private GDText m_jarTextField;
+    private JBText m_jarTextField;
     /** gui component */
     private Button m_jarButton;
     /** text field for the executable that will launch the AUT */
-    private GDText m_execTextField;
+    private JBText m_execTextField;
     /** browse button for the executable */
     private Button m_execButton;
     /** gui component */
@@ -123,31 +124,31 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     /** move down button */
     private Button m_moveElementDownButton;
     /** gui component */
-    private GDText m_classNameTextField;
+    private JBText m_classNameTextField;
     /** gui component */
-    private GDText m_autArgsTextField;
+    private JBText m_autArgsTextField;
     /** gui component */
     private I18nEnumCombo<ActivationMethod> m_activationMethodCombo;
     /** gui component */
-    private GDText m_autJreTextField;
+    private JBText m_autJreTextField;
     /** gui component */
     private Button m_autJreButton;
     /** gui component */
     private Composite m_autJreComposite;
     /** gui component */
-    private GDText m_autJreParamTextField;
+    private JBText m_autJreParamTextField;
     /** gui component */
     private DirectCombo<String> m_monitoringCombo;
     /** gui component */
-    private GDText m_envTextArea;
-    /** the GuiDancerModifyListener */
-    private GuiDancerModifyListener m_modifyListener;
-    /** the GuiDancerFocusListener */
-    private GuiDancerFocusListener m_focusListener;
-    /** the the GuiDancerSelectionListener */
-    private GuiDancerSelectionListener m_selectionListener;
-    /** the the GuiDancerKeyListener */
-    private GuiDancerKeyListener m_keyListener;
+    private JBText m_envTextArea;
+    /** the WidgetModifyListener */
+    private WidgetModifyListener m_modifyListener;
+    /** the WidgetFocusListener */
+    private WidgetFocusListener m_focusListener;
+    /** the the WidgetSelectionListener */
+    private WidgetSelectionListener m_selectionListener;
+    /** the the WidgetKeyListener */
+    private WidgetKeyListener m_keyListener;
     
     /**
      * @param parent {@inheritDoc}
@@ -198,8 +199,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                
     }
     /**
-     * Creates gui components dynamically
-     * @param monitoringComposite The compostie to add the components to
+     * Dynamically creates GUI components 
+     * @param monitoringComposite The composite to add the components to
      * @param guiCompList This list contains attributes from the extension point
      * @param statusParamterList This list contains DialogStatusParamters
      */
@@ -216,17 +217,18 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 putConfigValue(ca.getId(), ca.getDefaultValue());
             }   
             if (ca.isRender()) {                     
-                if (ca.getType().equalsIgnoreCase("string")) { //$NON-NLS-1$
+                if (ca.getType().equalsIgnoreCase(
+                        MonitoringConstants.RENDER_AS_TEXTFIELD)) { 
                     if (!StringUtils.isEmpty(ca.getInfoBobbleText())) {
                         Label l = UIComponentHelper.createLabel(
                                 monitoringComposite, ca.getDescription());
-                        GDControlDecorator.decorateInfo(l, 
+                        ControlDecorator.decorateInfo(l, 
                                 ca.getInfoBobbleText(), false);
                     } else {
                         UIComponentHelper.createLabel(monitoringComposite, 
                                 ca.getDescription());
                     }
-                    final GDText t = UIComponentHelper.createTextField(
+                    final JBText t = UIComponentHelper.createTextField(
                             monitoringComposite, 1);
                     t.setId(ca.getId());  
                     t.setText(getConfigValue(ca.getId()));
@@ -262,7 +264,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                         }
                     });                    
                 }
-                if (ca.getType().equalsIgnoreCase("boolean")) { //$NON-NLS-1$
+                if (ca.getType().equalsIgnoreCase(
+                        MonitoringConstants.RENDER_AS_CHECKBOX)) { 
                     UIComponentHelper.createLabel(monitoringComposite, 
                             ca.getDescription());
                     final Button b = UIComponentHelper.createToggleButton(
@@ -279,7 +282,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         }
     }
     /**
-     * modifys the default layout for monitoring composite.
+     * modifies the default layout for monitoring composite.
      * @param c The Composite to modify
      */
     private void modifyMonitoringLayout(Composite c) {
@@ -313,11 +316,10 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         
     }
     /**
-     * This method handles the event which is fired when an item in the
-     * combobox is selected. According to which element is 
-     *   
+     * This method handles the event which was fired when an item in the
+     * combobox is selected.    
      */
-    private void handleMonitoringComboEvent() {        
+    private void handleMonitoringComboEvent() {  
         
         if (m_monitoringCombo.getSelectedObject() != null) {         
             
@@ -331,23 +333,20 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         } else {
             cleanComposite(getMonitoringAreaComposite());
             putConfigValue(AutConfigConstants.MONITORING_AGENT_ID, 
-                    StringConstants.EMPTY); //
-           
-        }
-        
-        final String autId = super.getConfigValue(AutConfigConstants.AUT_ID);
+                    StringConstants.EMPTY);            
+        }        
+        String autId = super.getConfigValue(AutConfigConstants.AUT_ID);
         showMonitoringInfoDialog(autId);
         
     }
     /**
-     * deletes all gui elements form the given composite.
+     * deletes all GUI elements form the given composite.
      * @param compostie A Composite from which all gui elements should be deleted
      */    
     private void cleanComposite(Composite compostie) { 
         
         Control[] ca = compostie.getChildren();
         for (int i = 0; i < ca.length; i++) {
-
             ca[i].dispose();
         }        
         resize();
@@ -355,7 +354,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     }    
     
     /**
-     * Inits the AUT-Config-Settings area.
+     * Inits the AUT configuration settings area.
      * 
      * @param parent The parent Composite.
      */
@@ -432,9 +431,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     protected void installListeners() {
         super.installListeners();
 
-        GuiDancerModifyListener modifyListener = getModifyListener();
-        GuiDancerKeyListener keyListener = getKeyListener();
-        GuiDancerSelectionListener selectionListener = getSelectionListener();
+        WidgetModifyListener modifyListener = getModifyListener();
+        WidgetKeyListener keyListener = getKeyListener();
+        WidgetSelectionListener selectionListener = getSelectionListener();
 
         m_activationMethodCombo.addSelectionListener(selectionListener);
         m_autJreParamTextField.addModifyListener(modifyListener);
@@ -469,9 +468,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     protected void deinstallListeners() {
         super.deinstallListeners();
 
-        GuiDancerModifyListener modifyListener = getModifyListener();
-        GuiDancerKeyListener keyListener = getKeyListener();
-        GuiDancerSelectionListener selectionListener = getSelectionListener();
+        WidgetModifyListener modifyListener = getModifyListener();
+        WidgetKeyListener keyListener = getKeyListener();
+        WidgetSelectionListener selectionListener = getSelectionListener();
 
         m_activationMethodCombo.removeSelectionListener(selectionListener);
         m_autJreParamTextField.removeModifyListener(modifyListener);
@@ -500,7 +499,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      */
     private void initGuiEnvironmentEditor(Composite parent) {
         UIComponentHelper.createLabel(parent, "AUTConfigComponent.envVariables"); //$NON-NLS-1$ 
-        m_envTextArea = new GDText(parent, Layout.MULTI_TEXT_STYLE);
+        m_envTextArea = new JBText(parent, Layout.MULTI_TEXT_STYLE);
         Layout.setMaxChar(m_envTextArea, 4000);
         GridData textGridData = new GridData();
         textGridData.horizontalAlignment = GridData.FILL;
@@ -769,8 +768,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         Control[] ca = compostie.getChildren();
 
         for (int i = 0; i < ca.length; i++) {
-            if (ca[i] instanceof GDText) {
-                GDText t = (GDText)ca[i];
+            if (ca[i] instanceof JBText) {
+                JBText t = (JBText)ca[i];
                 String tmp = data.get(t.getId());
                 if (tmp != null && !tmp.equals(StringConstants.EMPTY)) {
                     t.setText(tmp);
@@ -981,7 +980,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @param title window title
      */
     void browseLocal(String [] extensionFilters, String title, 
-            GDText textField, String configVarKey) {
+            JBText textField, String configVarKey) {
         String directory;
         FileDialog fileDialog = 
             new FileDialog(getShell(), SWT.APPLICATION_MODAL | SWT.ON_TOP);
@@ -1295,7 +1294,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @author BREDEX GmbH
      * @created 22.11.2006
      */
-    private class GuiDancerModifyListener implements ModifyListener {
+    private class WidgetModifyListener implements ModifyListener {
         /**
          * {@inheritDoc}
          */
@@ -1324,7 +1323,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @created 03.07.2008
      */
     @SuppressWarnings("synthetic-access")
-    private class GuiDancerFocusListener implements FocusListener {
+    private class WidgetFocusListener implements FocusListener {
 
         /**
          * {@inheritDoc}
@@ -1357,7 +1356,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @author BREDEX GmbH
      * @created 10.09.2007
      */
-    private class GuiDancerKeyListener extends KeyAdapter {
+    private class WidgetKeyListener extends KeyAdapter {
 
         /**
          * {@inheritDoc}
@@ -1383,7 +1382,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @author BREDEX GmbH
      * @created 13.07.2005
      */
-    private class GuiDancerSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
 
         /**
          * {@inheritDoc}
@@ -1561,7 +1560,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
 
         UIComponentHelper.createSeparator(expertAreaComposite, 3);
         
-        GDControlDecorator.decorateInfo(UIComponentHelper.createLabel(
+        ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
                 expertAreaComposite, "AUTConfigComponent.labelMonitoring"), //$NON-NLS-1$, 
                 "AUTConfigComponent.labelMonitoring.helpText", false); //$NON-NLS-1$
                         
@@ -1624,9 +1623,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @return the single instance of the key listener.
      */
     @SuppressWarnings("synthetic-access")
-    private GuiDancerKeyListener getKeyListener() {
+    private WidgetKeyListener getKeyListener() {
         if (m_keyListener == null) {
-            m_keyListener = new GuiDancerKeyListener();
+            m_keyListener = new WidgetKeyListener();
         }
         
         return m_keyListener;
@@ -1637,9 +1636,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @return the single instance of the selection listener.
      */
     @SuppressWarnings("synthetic-access")
-    private GuiDancerSelectionListener getSelectionListener() {
+    private WidgetSelectionListener getSelectionListener() {
         if (m_selectionListener == null) {
-            m_selectionListener = new GuiDancerSelectionListener();
+            m_selectionListener = new WidgetSelectionListener();
         }
         
         return m_selectionListener;
@@ -1650,9 +1649,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @return the single instance of the modify listener.
      */
     @SuppressWarnings("synthetic-access")
-    private GuiDancerModifyListener getModifyListener() {
+    private WidgetModifyListener getModifyListener() {
         if (m_modifyListener == null) {
-            m_modifyListener = new GuiDancerModifyListener();
+            m_modifyListener = new WidgetModifyListener();
         }
         
         return m_modifyListener;
@@ -1663,9 +1662,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @return the single instance of the modify listener.
      */
     @SuppressWarnings("synthetic-access")
-    private GuiDancerFocusListener getFocusListener() {
+    private WidgetFocusListener getFocusListener() {
         if (m_focusListener == null) {
-            m_focusListener = new GuiDancerFocusListener();
+            m_focusListener = new WidgetFocusListener();
         }
         
         return m_focusListener;

@@ -19,7 +19,7 @@ import org.eclipse.jubula.rc.common.driver.IRobotFactory;
  * 
  * <pre>
  * IRobotFactory factory = new RobotFactoryConfig().getRobotFactory();
- * IGuiDancerRobot robot = factory.getRobot();
+ * IRobot robot = factory.getRobot();
  * robot.click(component, null);
  * </pre>
  *

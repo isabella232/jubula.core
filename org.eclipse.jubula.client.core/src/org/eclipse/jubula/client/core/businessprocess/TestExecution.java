@@ -40,10 +40,11 @@ import org.eclipse.jubula.client.core.commands.DisplayManualTestStepResponseComm
 import org.eclipse.jubula.client.core.commands.EndTestExecutionResponseCommand;
 import org.eclipse.jubula.client.core.commands.TakeScreenshotResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
-import org.eclipse.jubula.client.core.communication.BaseConnection.GuiDancerNotConnectedException;
+import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
-import org.eclipse.jubula.client.core.model.GuiDancerLogicComponentNotManagedException;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -87,9 +88,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -103,6 +103,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
+import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Constants;
 
 
@@ -117,7 +118,7 @@ import org.osgi.framework.Constants;
  */
 public class TestExecution {
     /**
-     * <code>COM_BREDEXSW_GUIDANCER_CLIENT_TEST</code>
+     * <code>CLIENT_TEST_PLUGIN_ID</code>
      */
     private static final String CLIENT_TEST_PLUGIN_ID = 
         "org.eclipse.jubula.client.core"; //$NON-NLS-1$
@@ -309,7 +310,7 @@ public class TestExecution {
         m_autConfig = ClientTestFactory.getClientTest().getLastAutConfig();
         m_autoScreenshot = autoScreenshot;
         setPaused(false);
-        Validate.notNull(testSuite, "Testsuite must not be null"); //$NON-NLS-1$
+        Validate.notNull(testSuite, Messages.TestsuiteMustNotBeNull);
         m_executionLanguage = locale;
         m_varStore.storeEnvironmentVariables();
         storePredefinedVariables(m_varStore, testSuite);
@@ -328,7 +329,7 @@ public class TestExecution {
                 handleNoConnectionToAUT(testSuite, autId);
             }
         } catch (ConnectionException e) {
-            LOG.error("Unable to connect to AUT.", e); //$NON-NLS-1$
+            LOG.error(Messages.UnableToConnectToAUT + StringConstants.DOT, e);
         }
     }
     
@@ -359,13 +360,15 @@ public class TestExecution {
         String autName = autId.getExecutableName();
         if (isAutNameSet(autName)) {
             // no AUTid for test suite has been set
-            autName = I18n.getString("ErrorDetail.NO_AUT_ID_FOR_REF_TS_FOUND", //$NON-NLS-1$
+            autName = NLS.bind(Messages.ErrorDetailNO_AUT_ID_FOR_REF_TS_FOUND,
                     new String[] { testSuite.getName() });
         }
         ClientTestFactory.getClientTest().fireTestExecutionChanged(
                 new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_FAILED,
-                        new GDException("Could not connect to AUT: " + autName, //$NON-NLS-1$
-                                MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
+                        new JBException(Messages.CouldNotConnectToAUT 
+                                + StringConstants.COLON + StringConstants.SPACE
+                                + autName, 
+                                    MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
     }
     
     /**
@@ -444,6 +447,7 @@ public class TestExecution {
      * @param locale language valid for testexecution
      */
     private void startTestSuite(ITestSuitePO testSuite, Locale locale) {
+        //FIXME tobi NLS ??
         Validate.notNull(testSuite, "No testsuite available"); //$NON-NLS-1$
         ICapPO firstCap = null;
         m_expectedNumberOfSteps = 0;
@@ -452,13 +456,6 @@ public class TestExecution {
         IClientTest clientTest = ClientTestFactory.getClientTest();
         clientTest.setLastConnectedAutId(
                 getConnectedAutId().getExecutableName());       
-//        Map m = clientTest.getLastConnectedAutConfigMap();
-//        boolean resetMonitoringData = Boolean.valueOf(
-//                (String)m.get(MonitoringConstants.RESET_MONITORING_DATA));
-//        boolean monitoring = clientTest.isRunningWithMonitoring();
-//        if (resetMonitoringData && monitoring) {
-//            resetMonitoringData();
-//        }
         try {
             // build and show result Tree
             Traverser copier = new Traverser(testSuite, locale);
@@ -475,7 +472,8 @@ public class TestExecution {
                     resultTreeBuilder.getRootNode()));
             initTestExecutionMessage();
             if (LOG.isInfoEnabled()) {
-                LOG.info("Start TestSuite: " + testSuite.getName()); //$NON-NLS-1$
+                LOG.info(Messages.StartTestSuite + StringConstants.COLON
+                        + StringConstants.SPACE + testSuite.getName());
             }
             
             m_resultTreeTracker = new ResultTreeTracker(resultTreeBuilder.
@@ -488,8 +486,8 @@ public class TestExecution {
                 fireTestExecutionChanged(new TestExecutionEvent(
                         TestExecutionEvent.TEST_EXEC_RESULT_TREE_READY));
             firstCap = m_trav.next();
-        } catch (GDException e) {
-            LOG.error("Incomplete testdata", e); //$NON-NLS-1$
+        } catch (JBException e) {
+            LOG.error(Messages.IncompleteTestdata, e);
             fireError(e);
         }
         if (firstCap != null) {
@@ -512,17 +510,23 @@ public class TestExecution {
      * @param cap the cap to check
      * @return <code>null</code> if everything is OK, a thrown Exception otherwise.
      */
-    private GDException isCapExecutable(ICapPO cap) {
+    private JBException isCapExecutable(ICapPO cap) {
         try {
             buildMessageCap(cap, true);
-        } catch (GuiDancerLogicComponentNotManagedException e) {
-            return new GDException("Incomplete TS-run: missing Object Mapping",  //$NON-NLS-1$
+        } catch (LogicComponentNotManagedException e) {
+            return new JBException(Messages.IncompleteTSRun 
+                    + StringConstants.COLON + StringConstants.SPACE 
+                    + Messages.MissingObjectMapping,
                 TestExecutionEvent.TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR);
         } catch (InvalidDataException ide) {
-            return new GDException("Incomplete TS-run: missing Test Data",  //$NON-NLS-1$
+            return new JBException(Messages.IncompleteTSRun 
+                    + StringConstants.COLON + StringConstants.SPACE 
+                    + Messages.MissingTestData,
                 TestExecutionEvent.TEST_RUN_INCOMPLETE_TESTDATA_ERROR);
         } catch (IndexOutOfBoundsException iobe) {
-            return new GDException("Incomplete TS-run: missing Test Data",  //$NON-NLS-1$
+            return new JBException(Messages.IncompleteTSRun 
+                    + StringConstants.COLON + StringConstants.SPACE 
+                    + Messages.MissingTestData,
                 TestExecutionEvent.TEST_RUN_INCOMPLETE_TESTDATA_ERROR);
         }
         return null;
@@ -543,8 +547,10 @@ public class TestExecution {
         }
         try {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("TestStep: " + currCap.getName()); //$NON-NLS-1$
-                LOG.debug("Component: " + currCap.getComponentName()); //$NON-NLS-1$                
+                LOG.debug(Messages.TestStep + StringConstants.COLON
+                        + StringConstants.SPACE + currCap.getName());
+                LOG.debug(Messages.Component + StringConstants.COLON
+                        + StringConstants.SPACE + currCap.getComponentName());
             }
             messageCap = buildMessageCap(currCap, false);
             if (!m_stopped) {
@@ -583,12 +589,12 @@ public class TestExecution {
                     endTestExecution();
                 }
             }
-        } catch (GuiDancerNotConnectedException bnce) {
-            LOG.error("AUTConnection fails", bnce); //$NON-NLS-1$
+        } catch (NotConnectedException bnce) {
+            LOG.error(Messages.AUTConnectionFails, bnce);
         } catch (CommunicationException bce) {
-            LOG.error("Communication with AUT fails", bce); //$NON-NLS-1$
+            LOG.error(Messages.CommunicationWithAUTFails, bce);
             fireError(bce);
-        } catch (GuiDancerLogicComponentNotManagedException blcnme) {
+        } catch (LogicComponentNotManagedException blcnme) {
             LOG.error(blcnme.getMessage(), blcnme);
             fireComponentError();
         } catch (InvalidDataException ide) { // NOPMD by al on 3/19/07 1:24 PM
@@ -649,8 +655,8 @@ public class TestExecution {
             return null;
         }
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Executing ClientAction: "  //$NON-NLS-1$
-                + action.getPostExecutionCommand());
+            LOG.debug(Messages.ExecutingClientAction + StringConstants.COLON
+                + StringConstants.SPACE + action.getPostExecutionCommand());
         }
         final String postExecCommandClass = action.getPostExecutionCommand();
         final IPostExecutionCommand command = m_postExecCmdFactory
@@ -664,7 +670,7 @@ public class TestExecution {
                 response.setMessageCap(capTestMessage.getMessageCap());
                 return response;
             }
-        } catch (GDException e) { // NOPMD by al on 3/19/07 1:24 PM
+        } catch (JBException e) { // NOPMD by al on 3/19/07 1:24 PM
             // nothing
         }
         return null;
@@ -686,8 +692,9 @@ public class TestExecution {
             return Integer.parseInt(timePerWordParam.getValue()) 
                 * numWords;
         } catch (NumberFormatException e) {
-            LOG.warn("Error while parsing timeout parameter. " //$NON-NLS-1$
-                + "Using default value.", e); //$NON-NLS-1$
+            LOG.warn(Messages.ErrorParsingTimeoutParameter + StringConstants.DOT
+                    + StringConstants.SPACE + Messages.UsingDefaultValue 
+                    + StringConstants.DOT, e);
         }
         return -1;
     }
@@ -699,7 +706,7 @@ public class TestExecution {
      * @param runIncomplete sets this method in "run incomplete"-mode.
      *  It throws InvalidDataException if missing test data.
      * @return MessageCap
-     * @throws GuiDancerLogicComponentNotManagedException
+     * @throws LogicComponentNotManagedException
      *             if component not found in objectMap.
      *             if building compSystem fails.
      *             if component cannot be found.
@@ -708,7 +715,7 @@ public class TestExecution {
      */
     private MessageCap buildMessageCap(ICapPO cap, boolean runIncomplete)
         throws InvalidDataException, 
-        GuiDancerLogicComponentNotManagedException {
+        LogicComponentNotManagedException {
         
         MessageCap messageCap;
         String logicalName = null;
@@ -733,11 +740,11 @@ public class TestExecution {
             
             try {
                 technicalName = transientOm.getTechnicalName(logicalName);
-            } catch (GuiDancerLogicComponentNotManagedException e) {
+            } catch (LogicComponentNotManagedException e) {
                 technicalName = om.getTechnicalName(logicalName);
             }
             if (technicalName == null) {
-                throw new GuiDancerLogicComponentNotManagedException(
+                throw new LogicComponentNotManagedException(
                         StringConstants.EMPTY,
                         MessageIDs.E_COMPONENT_NOT_MANAGED);
             }
@@ -752,11 +759,23 @@ public class TestExecution {
                     runIncomplete);
             }
             return messageCap;
-        } catch (GuiDancerLogicComponentNotManagedException blcnme) {
-            LOG.error("No entry for " + cap.getComponentName() //$NON-NLS-1$
-                + "(=professional name) / " + logicalName //$NON-NLS-1$
-                + "(=technical name)", //$NON-NLS-1$
-                blcnme);
+        } catch (LogicComponentNotManagedException blcnme) {
+            StringBuilder msg = new StringBuilder();
+            msg.append(Messages.NoEntryFor);
+            msg.append(StringConstants.SPACE);
+            msg.append(cap.getComponentName());
+            msg.append(StringConstants.LEFT_PARENTHESES);
+            msg.append(StringConstants.EQUALS_SIGN);
+            msg.append(Messages.ProfessionalName);
+            msg.append(StringConstants.RIGHT_PARENTHESES);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.SLASH);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.LEFT_PARENTHESES);
+            msg.append(StringConstants.EQUALS_SIGN);
+            msg.append(Messages.TechnicalName);
+            msg.append(StringConstants.RIGHT_PARENTHESES);
+            LOG.error(msg.toString(), blcnme);
             throw blcnme;
         } catch (InvalidDataException e) {
             if (runIncomplete) {
@@ -785,7 +804,7 @@ public class TestExecution {
         ITDManagerPO tdManager = null;
         try {
             tdManager = m_externalTestDataBP.getExternalCheckedTDManager(cap);
-        } catch (GDException gde) {
+        } catch (JBException gde) {
             fireError(gde);
         }
         if (tdManager != null) {
@@ -799,9 +818,21 @@ public class TestExecution {
                 messageCap.addMessageParam(messageParam);
                 ITestDataPO date = 
                     tdManager.getCell(0, desc);
-                Validate.notNull(date, "No testdata available for CAP: " + //$NON-NLS-1$
-                    cap.getName() + ", parameter: " +  //$NON-NLS-1$ 
-                    desc.getName() + ", and dataset number 0"); //$NON-NLS-1$
+                StringBuilder msg = new StringBuilder();
+                msg.append(Messages.NoTestdataAvailableForCAP);
+                msg.append(StringConstants.COLON);
+                msg.append(StringConstants.SPACE);
+                msg.append(cap.getName());
+                msg.append(StringConstants.COMMA);
+                msg.append(StringConstants.SPACE);
+                msg.append(Messages.Parameter);
+                msg.append(StringConstants.COLON);
+                msg.append(StringConstants.SPACE);
+                msg.append(desc.getName());
+                msg.append(StringConstants.COMMA);
+                msg.append(StringConstants.SPACE);
+                msg.append(Messages.AndDatasetNumberZero);
+                Validate.notNull(date, msg.toString());
                 String value = null;
                 try {
                     final int dsNumber = m_trav.getDataSetNumber();
@@ -815,9 +846,18 @@ public class TestExecution {
                     value = conv.getExecutionString(stackList, getLocale());
                 } catch (InvalidDataException e) {
                     if (!runIncomplete) {
-                        LOG.error("No value available for parameter: "  //$NON-NLS-1$
-                            + desc.getName() 
-                            + " in node: " + cap.getName(), e); //$NON-NLS-1$)
+                        StringBuilder msgbuild = new StringBuilder();
+                        msgbuild.append(Messages.NoValueAvailableForParameter);
+                        msgbuild.append(StringConstants.COLON);
+                        msgbuild.append(StringConstants.SPACE);
+                        msgbuild.append(desc.getName());
+                        msgbuild.append(StringConstants.SPACE);
+                        msgbuild.append(Messages.InNode);
+                        msgbuild.append(StringConstants.COLON);
+                        msgbuild.append(StringConstants.SPACE);
+                        msgbuild.append(cap.getName());
+                        
+                        LOG.error(msgbuild.toString(), e);
                         fireError(e);
                     } else {
                         throw e;
@@ -842,7 +882,8 @@ public class TestExecution {
 
         Param xmlParam = action.findParam(desc.getUniqueId());
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Param: " + xmlParam.getName()); //$NON-NLS-1$            
+            LOG.debug(Messages.Param + StringConstants.COLON 
+                    + StringConstants.SPACE + xmlParam.getName());            
         }
         MessageParam messageParam = new MessageParam();
         messageParam.setType(xmlParam.getType());
@@ -854,6 +895,7 @@ public class TestExecution {
      * verifies the response of server for execution of a cap
      * @param msg The response message.
      */
+    //FIXME tobi NLS ?? (execute)
     public void processServerResponse(final CAPTestResponseMessage msg) {
         Thread t = new Thread("Execute Test Step") { //$NON-NLS-1$
             public void run() {
@@ -874,8 +916,8 @@ public class TestExecution {
                         if (!m_stopped) {
                             nextCap = m_trav.next();
                         }
-                    } catch (GDException e) {
-                        LOG.error("Incomplete testdata", e); //$NON-NLS-1$
+                    } catch (JBException e) {
+                        LOG.error(Messages.IncompleteTestdata, e);
                         fireError(e);
                     }
                 } else {
@@ -901,8 +943,8 @@ public class TestExecution {
                         if (!m_stopped) {
                             nextCap = m_trav.next(eventType);
                         }
-                    } catch (GDException e) {
-                        LOG.error("Incomplete testdata", e); //$NON-NLS-1$
+                    } catch (JBException e) {
+                        LOG.error(Messages.IncompleteTestdata, e);
                         fireError(e);
                     }
                 }
@@ -913,7 +955,7 @@ public class TestExecution {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
                             if (LOG.isDebugEnabled()) {
-                                LOG.debug("Thread interrupted.", e); //$NON-NLS-1$
+                                LOG.debug(Messages.ThreadInterrupted, e);
                             }
                             return;
                         }
@@ -921,7 +963,7 @@ public class TestExecution {
                     processCap(nextCap);
                 } else {
                     if (LOG.isInfoEnabled()) {
-                        LOG.info("Testsuite finished."); //$NON-NLS-1$
+                        LOG.info(Messages.TestsuiteFinished);
                     }
                     endTestExecution();
                 }
@@ -941,7 +983,7 @@ public class TestExecution {
             AUTConnection.getInstance().request(
                     message, command, 
                     TimeoutConstants.CLIENT_SERVER_TIMEOUT_TAKE_SCREENSHOT);
-        } catch (GuiDancerNotConnectedException nce) {
+        } catch (NotConnectedException nce) {
             if (LOG.isErrorEnabled()) {
                 LOG.error(nce);
             }
@@ -984,9 +1026,20 @@ public class TestExecution {
             .createCommand(cmdClassName);
         try {
             return cmd.execute();
-        } catch (GDException e) {
-            LOG.error("Error executing command: " + cmdClassName  //$NON-NLS-1$
-                + " . Exception: " + String.valueOf(e)); //$NON-NLS-1$
+        } catch (JBException e) {
+            StringBuilder msg = new StringBuilder();
+            msg.append(Messages.ErrorExecutingCommand);
+            msg.append(StringConstants.COLON);
+            msg.append(StringConstants.SPACE);
+            msg.append(cmdClassName);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.DOT);
+            msg.append(StringConstants.SPACE);
+            msg.append(Messages.Exception);
+            msg.append(StringConstants.COLON);
+            msg.append(StringConstants.SPACE);
+            msg.append(String.valueOf(e));
+            LOG.error(msg.toString());
             fireError(e);
             return null;
         }
@@ -1001,7 +1054,7 @@ public class TestExecution {
         try {
             AUTConnection.getInstance().send(new NullMessage());
         } catch (CommunicationException e) {
-            fireError(new GDException(MessageIDs.getMessage(
+            fireError(new JBException(MessageIDs.getMessage(
                     MessageIDs.E_INTERRUPTED_CONNECTION), 
                     MessageIDs.E_INTERRUPTED_CONNECTION));
         }
@@ -1046,7 +1099,7 @@ public class TestExecution {
 
     /**
      * Fires an event if test fails
-     * @param e GDException
+     * @param e JBException
      */
     private void fireError(Exception e) {
         ClientTestFactory.getClientTest().
@@ -1097,7 +1150,7 @@ public class TestExecution {
                     fireError(e);
                 }
                 if (LOG.isInfoEnabled()) {
-                    LOG.info("Testsuite is stopped"); //$NON-NLS-1$
+                    LOG.info(Messages.TestsuiteIsStopped);
                 }
                 
                 ClientTestFactory.getClientTest().fireEndTestExecution();
@@ -1123,7 +1176,7 @@ public class TestExecution {
                         .getConnectedAutId().getExecutableName());
             ServerConnection.getInstance().send(message);
 
-        } catch (GuiDancerNotConnectedException nce) {
+        } catch (NotConnectedException nce) {
             LOG.error(nce);
             
         } catch (CommunicationException ce) {
@@ -1142,7 +1195,7 @@ public class TestExecution {
         try {
             AUTConnection.getInstance().request(message, command,
                     EndTestExecutionMessage.TIMEOUT);
-        } catch (GuiDancerNotConnectedException nce) {
+        } catch (NotConnectedException nce) {
             if (LOG.isWarnEnabled()) {
                 LOG.warn(nce);
             }
@@ -1162,13 +1215,13 @@ public class TestExecution {
         setPaused(!isPaused());
         if (isPaused()) {
             if (LOG.isInfoEnabled()) {
-                LOG.info("Testsuite is paused"); //$NON-NLS-1$
+                LOG.info(Messages.TestsuiteIsPaused);
             }
             ClientTestFactory.getClientTest().fireTestExecutionChanged(
                 new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_PAUSED));
         } else {
             if (LOG.isInfoEnabled()) {
-                LOG.info("Testexecution has resumed"); //$NON-NLS-1$
+                LOG.info(Messages.TestexecutionHasResumed);
             }
             // FIXME key "ACTIVATE_APPLICATION" should NOT be fix!
             if (m_autConfig != null) {
@@ -1199,7 +1252,7 @@ public class TestExecution {
      */
     public void timeout() {
         m_resultTreeTracker.getEndNode().setResult(TestResultNode.ABORT, null);
-        fireError(new GDException(MessageIDs.getMessage(MessageIDs.
+        fireError(new JBException(MessageIDs.getMessage(MessageIDs.
                 E_TIMEOUT_CONNECTION), MessageIDs.E_TIMEOUT_CONNECTION));
     }
 
@@ -1420,7 +1473,7 @@ public class TestExecution {
         /**
          * {@inheritDoc}
          */
-        public TestErrorEvent execute() throws GDException {
+        public TestErrorEvent execute() throws JBException {
             // FIXME zeb Simply retrieving the first parameter has worked so 
             //           far because all Store/Read actions list Variable Name 
             //           as the first parameter. The first action that does not 
@@ -1445,10 +1498,10 @@ public class TestExecution {
                     LAST_ACTION_RETURN));
                 return null;
             } catch (IllegalArgumentException e) {
-                throw new GDException("IllegalArgumentException", e,  // //$NON-NLS-1$
+                throw new JBException("IllegalArgumentException", e,  // //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } catch (InvalidDataException e) {
-                throw new GDException("InvalidDataException", e,  // //$NON-NLS-1$
+                throw new JBException("InvalidDataException", e,  // //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } 
         }
@@ -1464,7 +1517,7 @@ public class TestExecution {
         extends AbstractPostExecutionCommand {
 
         /** @return the timer name */
-        protected String getTimerName() throws GDException {
+        protected String getTimerName() throws JBException {
             return getValueForParam("CompSystem.TimerName"); //$NON-NLS-1$
         }
     }
@@ -1480,7 +1533,7 @@ public class TestExecution {
         /**
          * {@inheritDoc}
          */
-        public TestErrorEvent execute() throws GDException {
+        public TestErrorEvent execute() throws JBException {
             try {
                 String timerName = getTimerName();
                 String variableName = getValueForParam(
@@ -1492,10 +1545,10 @@ public class TestExecution {
                 getTimerStore().put(timerName, curTimeInMillisecs);
                 m_varStore.store(variableName, curTimeInMillisecs.toString());
             } catch (IllegalArgumentException e) {
-                throw new GDException("IllegalArgumentException", e, //$NON-NLS-1$
+                throw new JBException("IllegalArgumentException", e, //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } catch (InvalidDataException e) {
-                throw new GDException("InvalidDataException", e,  // //$NON-NLS-1$
+                throw new JBException("InvalidDataException", e,  // //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } 
             return null;
@@ -1513,7 +1566,7 @@ public class TestExecution {
         /**
          * {@inheritDoc}
          */
-        public TestErrorEvent execute() throws GDException {
+        public TestErrorEvent execute() throws JBException {
             try {
                 String timerName = getTimerName();
                 String variableName = getValueForParam(
@@ -1527,10 +1580,10 @@ public class TestExecution {
                 Long timeDelta = curTimeInMillisecs - timerTimeInMillisecs;
                 m_varStore.store(variableName, timeDelta.toString());
             } catch (IllegalArgumentException e) {
-                throw new GDException("IllegalArgumentException", e, //$NON-NLS-1$
+                throw new JBException("IllegalArgumentException", e, //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } catch (InvalidDataException e) {
-                throw new GDException("InvalidDataException", e,  // //$NON-NLS-1$
+                throw new JBException("InvalidDataException", e,  // //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } 
             return null;
@@ -1557,7 +1610,7 @@ public class TestExecution {
         /**
          * {@inheritDoc}
          */
-        public TestErrorEvent execute() throws GDException {
+        public TestErrorEvent execute() throws JBException {
             try {
                 String actionToPerform = 
                     getValueForParam("CompSystem.ActionToPerfom"); //$NON-NLS-1$
@@ -1594,10 +1647,10 @@ public class TestExecution {
                 }
                 return null;
             } catch (IllegalArgumentException e) {
-                throw new GDException("IllegalArgumentException", e,  // //$NON-NLS-1$
+                throw new JBException("IllegalArgumentException", e,  // //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } catch (InvalidDataException e) {
-                throw new GDException("InvalidDataException", e,  // //$NON-NLS-1$
+                throw new JBException("InvalidDataException", e,  // //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } 
         }
@@ -1641,7 +1694,7 @@ public class TestExecution {
         /**
          * {@inheritDoc}
          */
-        public TestErrorEvent execute() throws GDException {
+        public TestErrorEvent execute() throws JBException {
             final AutIdentifier autId = getConnectedAutId();
             final AtomicBoolean isAutRestarted = new AtomicBoolean(false);
             IAutRegistrationListener registrationListener = 
@@ -1668,7 +1721,7 @@ public class TestExecution {
                     // nothing
                 }
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("Requesting AUT Agent to close AUTConnection..."); //$NON-NLS-1$
+                    LOG.debug(Messages.RequestingAUTAgentToCloseAUTConnection);
                 }
                 AUTConnection.getInstance().getCommunicator().
                     getConnectionManager().remove(
@@ -1702,7 +1755,7 @@ public class TestExecution {
                 AutAgentRegistration.getInstance().removeListener(
                         registrationListener);
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("Continue test execution..."); //$NON-NLS-1$
+                    LOG.debug(Messages.ContinueTestExecution);
                 }
                 if (!m_stopped) { // the AUT/TS may be stopped by a project
                                   // load
@@ -1711,7 +1764,7 @@ public class TestExecution {
                                     TestExecutionEvent.TEST_EXEC_RESTART));
                 } else {
                     if (LOG.isDebugEnabled()) {
-                        LOG.debug("Can't continue, TS is stopped..."); //$NON-NLS-1$
+                        LOG.debug(Messages.CantContinueTSIsStopped);
                     }
                 }
             }
@@ -1880,7 +1933,7 @@ public class TestExecution {
         /**
          * {@inheritDoc}
          */
-        public TestErrorEvent execute() throws GDException {
+        public TestErrorEvent execute() throws JBException {
             IParamDescriptionPO desc = 
                 m_currentCap.getParameterForUniqueId("CompSystem.RunLocal"); //$NON-NLS-1$
             try {
@@ -1942,10 +1995,10 @@ public class TestExecution {
 
                 }
             } catch (IllegalArgumentException e) {
-                throw new GDException("IllegalArgumentException", e, //$NON-NLS-1$
+                throw new JBException("IllegalArgumentException", e, //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } catch (InvalidDataException e) {
-                throw new GDException("InvalidDataException", e,  // //$NON-NLS-1$
+                throw new JBException("InvalidDataException", e,  // //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } 
             
@@ -1956,7 +2009,7 @@ public class TestExecution {
     /**
      * Interface for commands to execute after the execution of the dependent
      * CAP. The implementing class of this interface must be inscribed 
-     * with the full qualified name in the guidancerContext.xml 
+     * with the full qualified name in the componentConfiguration.xml 
      * in the "postExecutionCommand"-tag in the dependent Action.
      * 
      * @author BREDEX GmbH
@@ -1966,11 +2019,11 @@ public class TestExecution {
         
         /**
          * Implementation of this IPostExecutionCommand
-         * @throws GDException in case of error while execution
+         * @throws JBException in case of error while execution
          * @return a TestErrorEvent representing an error that occurred during  
          *         execution, or <code>null</code> if no such error occurs. 
          */
-        public TestErrorEvent execute() throws GDException;
+        public TestErrorEvent execute() throws JBException;
         
     }
     
@@ -2009,7 +2062,9 @@ public class TestExecution {
                     new ArrayList<ExecObject>(m_trav.getExecStackAsList());
                 value = conv.getExecutionString(stackList, getLocale());
             } catch (InvalidDataException e) {
-                throw new InvalidDataException("Neither value nor reference for Node: "  //$NON-NLS-1$
+                throw new InvalidDataException(
+                    Messages.NeitherValueNorReferenceForNode
+                    + StringConstants.COLON + StringConstants.SPACE
                     + cap.getName(), MessageIDs.E_NO_REFERENCE); 
             }
             return value;
@@ -2018,7 +2073,7 @@ public class TestExecution {
         /** 
          * @param paramID the parameter id 
          * @return the value of the current paramID parameter */
-        protected String getValueForParam(String paramID) throws GDException {
+        protected String getValueForParam(String paramID) throws JBException {
             IParamDescriptionPO desc = m_currentCap
                     .getParameterForUniqueId(paramID);
             ITDManagerPO tdManager = 

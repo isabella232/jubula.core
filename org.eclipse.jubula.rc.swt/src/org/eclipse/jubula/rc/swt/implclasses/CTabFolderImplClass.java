@@ -233,9 +233,9 @@ public class CTabFolderImplClass extends AbstractTabFolderImplClass {
                     Control control = 
                         m_ctabFolder.getItem(tabIndex).getControl();
                     if (control == null) {
-                        // FIXME zeb: Strange workaround for GUIdancer CTabFolders,
-                        //            which somehow never seem to have an associated
-                        //            Control.
+                        // FIXME zeb: Strange workaround for CTabFolders,
+                        // which somehow never seem to have an associated
+                        // Control.
                         log.debug(this + ".getControl() returned null."); //$NON-NLS-1$
                         return Boolean.TRUE;
                     }
@@ -263,9 +263,9 @@ public class CTabFolderImplClass extends AbstractTabFolderImplClass {
                     Control control = 
                         m_ctabFolder.getItem(implIdx).getControl();
                     if (control == null) {
-                        // FIXME zeb: Strange workaround for GUIdancer CTabFolders,
-                        //            which somehow never seem to have an associated
-                        //            Control.
+                        // FIXME zeb: Strange workaround for CTabFolders,
+                        // which somehow never seem to have an associated
+                        // Control.
                         log.debug(this + ".getControl() returned null."); //$NON-NLS-1$
                         return Boolean.TRUE;
                     }

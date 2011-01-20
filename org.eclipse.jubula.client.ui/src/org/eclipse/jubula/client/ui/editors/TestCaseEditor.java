@@ -58,11 +58,11 @@ import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralGDLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -95,10 +95,10 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         ActionListener actionListener = new ActionListener();
         getTreeViewer().addSelectionChangedListener(actionListener);
         DecoratingLabelProvider ld = new DecoratingLabelProvider(
-                new GeneralGDLabelProvider(), Plugin.getDefault()
+                new GeneralLabelProvider(), Plugin.getDefault()
                         .getWorkbench().getDecoratorManager()
                         .getLabelDecorator());
-        ld.setDecorationContext(new GDEditorDecorationContext());
+        ld.setDecorationContext(new JBEditorDecorationContext());
         getTreeViewer().setLabelProvider(ld);
         getEventHandlerTreeViewer().addSelectionChangedListener(actionListener);
         if (!Plugin.getDefault().anyDirtyStar()) {
@@ -137,7 +137,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                 super.doSave(monitor);
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
             } catch (IncompatibleTypeException ite) {
                 Utils.createMessageDialog(ite, 
@@ -236,7 +236,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             Plugin.getDisplay().syncExec(new Runnable() {
                 public void run() {
                     if (getEditorHelper().requestEditableState() 
-                            != GDEditorHelper.EditableState.OK) {
+                            != JBEditorHelper.EditableState.OK) {
                         return;
                     }
                     final CapGUI capGUI = 
@@ -383,7 +383,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
      */
     protected void setHelp(Composite parent) {
         Plugin.getHelpSystem().setHelp(parent,
-            ContextHelpIds.GUIDANCER_SPEC_TESTCASE_EDITOR);        
+            ContextHelpIds.JB_SPEC_TESTCASE_EDITOR);        
     }
     
     /**
@@ -391,13 +391,12 @@ public class TestCaseEditor extends AbstractTestCaseEditor
      * @return returnCode of Dialog
      */
     private int showSaveInObservModeDialog() {
-        MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
-            I18n.getString("SaveInObservationModeDialog.title"), //$NON-NLS-1$
-                IconConstants.GUIDANCER_IMAGE,
-                I18n.getString("SaveInObservationModeDialog.question"), //$NON-NLS-1$
+        MessageDialog dialog = new MessageDialog(Plugin.getShell(),
+                I18n.getString("SaveInObservationModeDialog.title"), //$NON-NLS-1$
+                null, I18n.getString("SaveInObservationModeDialog.question"), //$NON-NLS-1$
                 MessageDialog.QUESTION, new String[] {
-                    I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
-                    I18n.getString("NewProjectDialog.MessageButton1") }, 0); //$NON-NLS-1$
+                        I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
+                        I18n.getString("NewProjectDialog.MessageButton1") }, 0); //$NON-NLS-1$
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();

@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -23,7 +24,8 @@ import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ParamNamePM;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -137,7 +139,7 @@ public class ParamNameBP extends AbstractNameBP<IParamNamePO>
             try {
                 namePO = ParamNamePM.readParamNamePO(uniqueId, rootProjId);
             } catch (PMException e) {
-                throw new GDFatalException(e, MessageIDs.E_DATABASE_GENERAL);
+                throw new JBFatalException(e, MessageIDs.E_DATABASE_GENERAL);
             }
         }
         if (namePO != null) {
@@ -145,8 +147,23 @@ public class ParamNameBP extends AbstractNameBP<IParamNamePO>
             addNamePO(namePO);
         } else {
             if (log.isDebugEnabled()) {
-                log.debug("Empty Parameter name. Parent ProjectId = " + rootProjId //$NON-NLS-1$ 
-                        + " uniqueId = " + uniqueId); //$NON-NLS-1$                
+                StringBuilder msg = new StringBuilder();
+                msg.append(Messages.EmptyParameterName);
+                msg.append(StringConstants.DOT);
+                msg.append(StringConstants.SPACE);
+                msg.append(Messages.ParentProjectId);
+                msg.append(StringConstants.SPACE);
+                msg.append(StringConstants.EQUALS_SIGN);
+                msg.append(StringConstants.SPACE);
+                msg.append(rootProjId);
+                msg.append(StringConstants.SPACE);
+                msg.append(Messages.uniqueId);
+                msg.append(StringConstants.SPACE);
+                msg.append(StringConstants.EQUALS_SIGN);
+                msg.append(StringConstants.SPACE);
+                msg.append(uniqueId);
+                
+                log.debug(msg.toString());                
             }
         }
         return name;

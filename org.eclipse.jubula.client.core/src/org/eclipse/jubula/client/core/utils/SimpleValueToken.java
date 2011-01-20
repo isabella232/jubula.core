@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -25,9 +27,6 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * @created 14.08.2007
  */
 class SimpleValueToken implements IParamValueToken {
-    
-   
-
     /** Constant for a Variable as a data type of test data */
     private static final String VARIABLE = "guidancer.datatype.Variable"; //$NON-NLS-1$
 
@@ -147,13 +146,21 @@ class SimpleValueToken implements IParamValueToken {
                         }   
                     }
                     if (!isValid) {
-                        throw new InvalidDataException(
-                            "Invalid character " + c + " after backslash in " + m_value, //$NON-NLS-1$ //$NON-NLS-2$
+                        StringBuilder msg = new StringBuilder();
+                        msg.append(Messages.InvalidCharacter);
+                        msg.append(StringConstants.SPACE);
+                        msg.append(c);
+                        msg.append(StringConstants.SPACE);
+                        msg.append(Messages.AfterBackslashIn);
+                        msg.append(StringConstants.SPACE);
+                        msg.append(m_value);
+                        throw new InvalidDataException(msg.toString(), 
                             MessageIDs.E_SYNTAX_ERROR);
                     }            
                 } else {
                     throw new InvalidDataException(
-                        "Not allowed to set a single backslash in " + m_value, //$NON-NLS-1$
+                        Messages.NotAllowedToSetSingleBackslashIn 
+                        + StringConstants.SPACE + m_value, 
                         MessageIDs.E_SYNTAX_ERROR);
                 }            
             } else {

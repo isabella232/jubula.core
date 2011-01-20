@@ -28,10 +28,10 @@ import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.factory.ControlFactory;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.widgets.AutIdListComposite;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.wizards.ProjectWizard;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
@@ -82,7 +82,7 @@ public class AUTSettingWizardPage extends WizardPage {
     private Button m_leftButton;
 
     /** the AUT name editor */
-    private GDText m_autNameText;
+    private JBText m_autNameText;
     
     /** the combo box with the toolkit names */
     private DirectCombo<String> m_autToolKitComboBox;
@@ -93,13 +93,13 @@ public class AUTSettingWizardPage extends WizardPage {
     /** the new project to create */
     private IProjectPO m_project;
 
-    /** the the GuiDancerSelectionListener */
-    private final GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    /** the the WidgetSelectionListener */
+    private final WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
 
-    /** the GuiDancerModifyListener */
-    private final GuiDancerModifyListener m_modifyListener = 
-        new GuiDancerModifyListener();
+    /** the WidgetModifyListener */
+    private final WidgetModifyListener m_modifyListener = 
+        new WidgetModifyListener();
     
     /** the composite with 2 ListBoxes */
     private ListElementChooserComposite m_chooseLists;
@@ -176,7 +176,7 @@ public class AUTSettingWizardPage extends WizardPage {
         }
         Label descriptionLabel = new Label(innerComposite, SWT.NONE);
         descriptionLabel.setText(I18n.getString("AUTSettingWizardPage.SelectLanguagesOfTD")); //$NON-NLS-1$
-        GDControlDecorator.decorateInfo(descriptionLabel, 
+        ControlDecorator.decorateInfo(descriptionLabel, 
                 "GDControlDecorator.NewProjectAUTLanguage", false);
         m_chooseLists = new ListElementChooserComposite(
             innerComposite, 
@@ -295,7 +295,7 @@ public class AUTSettingWizardPage extends WizardPage {
         leftComposite.setLayout(gridLayout);
         rightComposite.setLayout(gridLayout);
         newLabel(leftComposite, I18n.getString("AUTSettingWizardPage.autName")); //$NON-NLS-1$
-        m_autNameText = new GDText(rightComposite, SWT.BORDER);
+        m_autNameText = new JBText(rightComposite, SWT.BORDER);
         m_autNameText.setFocus();
         final GridData gridData = new GridData();
         gridData.grabExcessHorizontalSpace = true;
@@ -332,7 +332,7 @@ public class AUTSettingWizardPage extends WizardPage {
                 SWT.FILL, true);
         Label infoLabel = newLabel(leftComposite, I18n
                 .getString("AUTPropertiesDialog.generateNames")); //$NON-NLS-1$
-        GDControlDecorator.decorateInfo(infoLabel, 
+        ControlDecorator.decorateInfo(infoLabel, 
                 "AUTPropertiesDialog.generateNamesDescription", false); //$NON-NLS-1$
         m_generateNames = new Button(rightComposite, SWT.CHECK);
         m_generateNames.addSelectionListener(new SelectionListener() {
@@ -371,7 +371,7 @@ public class AUTSettingWizardPage extends WizardPage {
         
         newLabel(leftComposite, StringConstants.EMPTY);
         newLabel(rightComposite, StringConstants.EMPTY);
-        GDControlDecorator.decorateInfo(newLabel(leftComposite, 
+        ControlDecorator.decorateInfo(newLabel(leftComposite, 
                 I18n.getString("AUTSettingWizardPage.toolkit")), 
                 "GDControlDecorator.NewProjectAUTToolkit", false);
         try {
@@ -520,7 +520,7 @@ public class AUTSettingWizardPage extends WizardPage {
      * @author BREDEX GmbH
      * @created 10.02.2005
      */
-    private class GuiDancerSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
         /**
          * {@inheritDoc}
          */
@@ -587,7 +587,7 @@ public class AUTSettingWizardPage extends WizardPage {
      * @author BREDEX GmbH
      * @created 11.02.2005
      */
-    private class GuiDancerModifyListener implements ModifyListener {
+    private class WidgetModifyListener implements ModifyListener {
         /**
          * {@inheritDoc}
          */

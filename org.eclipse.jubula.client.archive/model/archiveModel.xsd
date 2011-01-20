@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema elementFormDefault="qualified" xml:lang="EN" targetNamespace="http://www.bredexsw.com/guidancer/client/importer/gdschema" xmlns:gd="http://www.bredexsw.com/guidancer/client/importer/gdschema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation xml:lang="en"> Schema for GUIdancer test projects. Used for
+    <xs:documentation xml:lang="en"> Schema for Jubula test projects. Used for
 			export/import and optional external generators. Copyright 2005 BREDEX GmbH.
 			All rights reserved.
 		</xs:documentation>
@@ -77,6 +77,8 @@
         		minOccurs="0" maxOccurs="1" />
         	<xs:element name="checkConfiguration" type="gd:checkConfiguration" 
         		minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="teststyleEnabled" type="xs:boolean" minOccurs="0" 
+                nillable="false" default="false" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

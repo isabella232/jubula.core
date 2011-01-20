@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.actions;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
-import org.eclipse.jubula.client.ui.editors.AbstractGDEditor;
+import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.swt.dnd.Transfer;
 
 
@@ -29,7 +29,7 @@ public class CutTreeItemActionGDEditor extends AbstractCutTreeItemAction {
      * {@inheritDoc}
      */
     public void run() {
-        AbstractGDEditor tce = (AbstractGDEditor)Plugin.getActiveEditor();
+        AbstractJBEditor tce = (AbstractJBEditor)Plugin.getActiveEditor();
         if (!(tce.getSelection() instanceof IStructuredSelection)) {
             return;
         }

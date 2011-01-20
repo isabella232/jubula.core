@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.events;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class GuiEventDispatcher {
          * @param editor The editor whose dirty state changed
          * @param isDirty The new dirty state
          */
-        public void handleEditorDirtyStateChanged(IGDEditor editor, 
+        public void handleEditorDirtyStateChanged(IJBEditor editor, 
                 boolean isDirty);
     }
     
@@ -106,7 +106,7 @@ public class GuiEventDispatcher {
      * @param editor The editor whose dirty state changed
      * @param isDirty The new dirty state
      */
-    public void fireEditorDirtyStateListener(IGDEditor editor, 
+    public void fireEditorDirtyStateListener(IJBEditor editor, 
             boolean isDirty) {
         long start = System.currentTimeMillis();
         

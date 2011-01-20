@@ -118,17 +118,11 @@ public class Layout {
             Plugin.getDisplay(), new RGB(170, 211, 255));
     /** default color (mostly black) for gui elements */
     public static final Color DEFAULT_OS_COLOR = null;
-    /** light blue */
-    public static final RGB GUIDANCER_BLUE = new RGB(129, 147, 255);
-    /** light orange */
-    public static final RGB GUIDANCER_ORANGE = new RGB(184, 128, 59);
     /** light red */
-    public static final RGB GUIDANCER_LIGHT_RED = new RGB(255, 204, 230);
-    /** red */
-    public static final RGB GUIDANCER_RED = new RGB(255, 0, 0);
+    public static final RGB CLIENT_LIGHT_RED = new RGB(255, 204, 230);
     /** Color constant for error tool tips */
     public static final Color TOOLTIP_COLOR = new Color(
-            Plugin.getDisplay(), GUIDANCER_LIGHT_RED);   
+            Plugin.getDisplay(), CLIENT_LIGHT_RED);   
     // -------------------------------------------------------------
     // Font
     // -------------------------------------------------------------

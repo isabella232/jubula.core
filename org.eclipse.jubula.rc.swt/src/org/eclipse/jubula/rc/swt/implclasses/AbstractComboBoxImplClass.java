@@ -16,8 +16,6 @@ import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.StringParsing;
 
 
@@ -52,7 +50,8 @@ public abstract class AbstractComboBoxImplClass
      * @param isSelected If the index should be selected or not.
      */
     public void gdVerifySelectedIndex(String index, boolean isSelected) {
-        int implIdx = IndexConverter.toImplementationIndex(parseIndex(index));
+        int implIdx = IndexConverter.toImplementationIndex(
+                IndexConverter.intValue(index));
         int actual = getComboBoxHelper().getSelectedIndex();
         Verifier.equals(implIdx, actual, isSelected);
     }
@@ -118,7 +117,8 @@ public abstract class AbstractComboBoxImplClass
      * @param index The index to select
      */
     public void gdSelectIndex(String index) {
-        int implIdx = IndexConverter.toImplementationIndex(parseIndex(index));
+        int implIdx = IndexConverter.toImplementationIndex(
+                IndexConverter.intValue(index));
         try {
             getComboBoxHelper().select(implIdx);
         } catch (StepExecutionException e) {
@@ -148,22 +148,6 @@ public abstract class AbstractComboBoxImplClass
     public String gdReadValue(String variable) {
         final String selectedValue = getComboBoxHelper().getSelectedValue();
         return selectedValue != null ? selectedValue : StringConstants.EMPTY;
-    }
-
-    /**
-     * Parses the index and returns an integer. 
-     * @param index The index to parse
-     * @return The integer value
-     * @throws StepExecutionException If the index cannot be parsed
-     */
-    protected int parseIndex(String index) throws StepExecutionException {
-        try {
-            return Integer.parseInt(index);
-        } catch (NumberFormatException e) {
-            throw new StepExecutionException("Index '" + index //$NON-NLS-1$
-                + "' is not an integer", EventFactory.createActionError(//$NON-NLS-1$
-                        TestErrorEvent.INVALID_INDEX));
-        }
     }
 
     /**

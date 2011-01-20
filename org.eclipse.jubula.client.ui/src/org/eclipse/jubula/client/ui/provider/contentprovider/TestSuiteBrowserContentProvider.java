@@ -23,7 +23,7 @@ import org.eclipse.jubula.tools.exception.Assert;
  * @created 15.10.2004
  */
 public class TestSuiteBrowserContentProvider 
-    extends AbstractGDTreeViewContentProvider {
+    extends AbstractTreeViewContentProvider {
 
     /**
      * @param parentElement Object

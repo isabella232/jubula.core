@@ -24,8 +24,6 @@ package org.eclipse.jubula.client.cmd;
  * 
  */
 public final class ClientStrings {
-    /** String */
-    public static final String CLIENT_CMD = "GUIdancerCmd"; //$NON-NLS-1$
     /** Error message */
     public static final String ERR_JOBFILE = "Client.JobFileError"; //$NON-NLS-1$
     /** Error message */

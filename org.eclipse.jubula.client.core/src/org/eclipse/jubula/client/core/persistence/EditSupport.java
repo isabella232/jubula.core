@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.core.businessprocess.CompNameMapperFactory;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -40,9 +41,10 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDFatalAbortException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBFatalAbortException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.persistence.jpa.JpaEntityManager;
 
@@ -140,17 +142,20 @@ public class EditSupport {
      */
     public IPersistentObject createWorkVersion(IPersistentObject po)
         throws PMException {
-        Assert.verify(m_isValid, "Invalid instance for invoking of this method"); //$NON-NLS-1$
+        Assert.verify(m_isValid, 
+            Messages.InvalidInstanceForInvokingOfThisMethod);
         Validate.notNull(po,
-            "Original object for creating of workversion is null."); //$NON-NLS-1$
+            Messages.OriginalObjectForCreatingOfWorkversionIsNull
+            + StringConstants.DOT);
         try {
             IPersistentObject result = (IPersistentObject)m_session.find(
                 HibernateUtil.getClass(po), po.getId());
             if (result == null) {
                 throw new EntityNotFoundException(
-                        "Unable to find "  //$NON-NLS-1$
+                        Messages.UnableToFind + StringConstants.SPACE
                         + HibernateUtil.getClass(po).getName() 
-                        + " with id " + po.getId()); //$NON-NLS-1$
+                        + StringConstants.SPACE + Messages.WithID 
+                        + StringConstants.SPACE + po.getId());
             }
             /* if po in the mastersession is newer than the corresponding
                object in the editor session, the instance in the editor session
@@ -164,9 +169,10 @@ public class EditSupport {
                         HibernateUtil.getClass(po), po.getId());
                 if (result == null) {
                     throw new EntityNotFoundException(
-                            "Unable to find "  //$NON-NLS-1$
+                            Messages.UnableToFind + StringConstants.SPACE
                             + HibernateUtil.getClass(po).getName() 
-                            + " with id " + po.getId()); //$NON-NLS-1$
+                            + StringConstants.SPACE + Messages.WithID
+                            + StringConstants.SPACE + po.getId());
                 }
             }
             return result;
@@ -192,7 +198,8 @@ public class EditSupport {
      */
     public void lockWorkVersion() throws PMReadException,
         PMAlreadyLockedException, PMDirtyVersionException, PMException {
-        Assert.verify(m_isValid, "Invalid instance for invoking of this method"); //$NON-NLS-1$
+        Assert.verify(m_isValid, 
+            Messages.InvalidInstanceForInvokingOfThisMethod);
         try {
             if (m_workVersion instanceof ISpecTestCasePO) {
                 List<IParamDescriptionPO> params = 
@@ -243,13 +250,13 @@ public class EditSupport {
      *             if commit failed
      * @throws PMException
      *             in case of failed rollback
-     * @throws GDProjectDeletedException if the project was deleted in another
-     * instance
-     * @throws IncompatibleTypeException if a Component Name is reused in an
-     *                                   incompatible context.
+     * @throws ProjectDeletedException
+     *             if the project was deleted in another instance
+     * @throws IncompatibleTypeException
+     *             if a Component Name is reused in an incompatible context.
      */
     public void saveWorkVersion() throws PMReadException, PMSaveException,
-        PMException, GDProjectDeletedException, IncompatibleTypeException {
+        PMException, ProjectDeletedException, IncompatibleTypeException {
         if (m_isValid) {
             if (m_isLocked) {
                 boolean stayLocked = false;
@@ -308,11 +315,15 @@ public class EditSupport {
                     m_isLocked = stayLocked;
                 }
             } else {
-                throw new GDFatalAbortException("Not allowed to save an unlocked workversion.", //$NON-NLS-1$
+                throw new JBFatalAbortException(
+                        Messages.NotAllowedToSaveAnUnlockedWorkversion
+                        + StringConstants.DOT,
                         MessageIDs.E_CANNOT_SAVE_UNLOCKED); 
             }
         } else {
-            throw new GDFatalAbortException("Not allowed to save an invalid workversion.", //$NON-NLS-1$
+            throw new JBFatalAbortException(
+                    Messages.NotAllowedToSaveAnUnlockedWorkversion
+                    + StringConstants.DOT,
                     MessageIDs.E_CANNOT_SAVE_INVALID); 
         }
     }
@@ -389,11 +400,11 @@ public class EditSupport {
      * please attend, that in this case the Java-IDs of the old and the reloaded
      * object are different<br>
      * refreshs the original versions, which were possibly modified in editor
-     * @throws GDProjectDeletedException if the project was deleted in another
-     * instance
      * 
+     * @throws ProjectDeletedException
+     *             if the project was deleted in another instance
      */
-    private void refreshOriginalVersions() throws GDProjectDeletedException {
+    private void refreshOriginalVersions() throws ProjectDeletedException {
         try {
             final EntityManager masterSession = GeneralStorage.getInstance()
                 .getMasterSession();
@@ -403,7 +414,8 @@ public class EditSupport {
                 GeneralStorage.getInstance().fireDataModified(original);
             }
         } catch (PersistenceException e) {
-            log.error("Refresh of original version failed.", e); //$NON-NLS-1$
+            log.error(Messages.RefreshOfOriginalVersionFailed 
+                + StringConstants.DOT, e);
             GeneralStorage.getInstance().reloadMasterSession(
                     new NullProgressMonitor());
         }
@@ -414,7 +426,8 @@ public class EditSupport {
      * 
      */
     public void close() {
-        Assert.verify(m_isValid, "Invalid instance for invoking of this method"); //$NON-NLS-1$
+        Assert.verify(m_isValid, 
+            Messages.InvalidInstanceForInvokingOfThisMethod);
         closeSession();
     }
 
@@ -479,7 +492,7 @@ public class EditSupport {
             m_compMapper.setContext(m_workVersion);
             m_workVersion = m_session.merge(m_workVersion);
         } catch (PersistenceException e) {
-            final String msg = "reinit of session failed"; //$NON-NLS-1$
+            final String msg = Messages.ReinitOfSessionFailed;
             log.error(msg);
             throw new PMException(msg,
                 MessageIDs.E_DATABASE_GENERAL);
@@ -505,7 +518,7 @@ public class EditSupport {
                 m_paramMapper.updateStandardMapperAndCleanup(projId);
             }
         } catch (PersistenceException e) {
-            final String msg = "reinit of session failed"; //$NON-NLS-1$
+            final String msg = Messages.ReinitOfSessionFailed;
             log.error(msg);
             throw new PMException(msg,
                 MessageIDs.E_DATABASE_GENERAL);
@@ -528,9 +541,10 @@ public class EditSupport {
                 HibernateUtil.getClass(masterProj), masterProj.getId());
             if (workProj == null) {
                 throw new EntityNotFoundException(
-                        "Unable to find "  //$NON-NLS-1$
+                        Messages.UnableToFind + StringConstants.SPACE
                         + HibernateUtil.getClass(masterProj).getName() 
-                        + " with id " + masterProj.getId()); //$NON-NLS-1$
+                        + StringConstants.SPACE + Messages.WithID
+                        + StringConstants.SPACE + masterProj.getId());
             }
             return workProj;
         } catch (PersistenceException e) {

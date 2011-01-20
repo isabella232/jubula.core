@@ -38,7 +38,7 @@ import org.eclipse.jubula.communication.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.StringParsing;
 import org.slf4j.Logger;
@@ -119,7 +119,7 @@ public class AutAgent {
                         LOG.error("Error occurred while establishing communication with AUT." , ioe); //$NON-NLS-1$
                     } catch (SecurityException se) {
                         LOG.error("Error occurred while establishing communication with AUT." , se); //$NON-NLS-1$
-                    } catch (GDVersionException gdve) {
+                    } catch (JBVersionException gdve) {
                         LOG.error("Error occurred while establishing communication with AUT." , gdve); //$NON-NLS-1$
                     }
 
@@ -617,7 +617,7 @@ public class AutAgent {
     }
     
     /**
-     * Sends a request to a Running AUT. The AUT should connect to a GUIdancer
+     * Sends a request to a Running AUT. The AUT should then connect to the
      * Client using the provided connection information.
      * 
      * @param autId The ID of the AUT to which the message should be sent.

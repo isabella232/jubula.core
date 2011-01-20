@@ -18,8 +18,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IWorkbenchPart;
@@ -40,10 +40,10 @@ public class MergeLogicalNameHandler extends AbstractMergeComponentNameHandler {
         ISelection sel = HandlerUtil.getCurrentSelection(event);
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (sel instanceof IStructuredSelection
-                && activePart instanceof IGDEditor) {
+                && activePart instanceof IJBEditor) {
             IStructuredSelection structuredSel = (IStructuredSelection)sel;
-            IGDEditor editor = 
-                (IGDEditor)activePart;
+            IJBEditor editor = 
+                (IJBEditor)activePart;
             if (editor.isDirty()) {
                 Utils.createMessageDialog(MessageIDs.I_SAVE_EDITOR);
                 return null;
@@ -81,7 +81,7 @@ public class MergeLogicalNameHandler extends AbstractMergeComponentNameHandler {
      * @param selectedCompNamePo The Component Name that will be used in place
      *                           of the merged Component Names.
      */
-    private void performOperation(IGDEditor editor,
+    private void performOperation(IJBEditor editor,
             Set<IComponentNamePO> compNames,
             IComponentNamePO selectedCompNamePo) {
 

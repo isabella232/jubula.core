@@ -11,14 +11,14 @@
 package org.eclipse.jubula.client.core.persistence;
 
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 
 /**
  * @author BREDEX GmbH
  * @created Jun 27, 2008
  */
-public class IncompatibleTypeException extends GDException {
+public class IncompatibleTypeException extends JBException {
     
     /**
      * The IComponentNamePO

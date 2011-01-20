@@ -318,4 +318,18 @@
             <property name="tagName" value="div" />
         </componentClass>
 	</toolkitComponent>
+	<toolkitComponent type="html.text.Ol" visible="false">
+		<realizes>guidancer.concrete.List</realizes>
+		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.text.OlImplClass</testerClass>
+		<componentClass name="html.text.Ol">
+            <property name="tagName" value="ol" />
+        </componentClass>
+	</toolkitComponent>
+	<toolkitComponent type="html.text.Ul" visible="false">
+		<realizes>guidancer.concrete.List</realizes>
+		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.text.UlImplClass</testerClass>
+		<componentClass name="html.text.Ul">
+            <property name="tagName" value="ul" />
+        </componentClass>
+    </toolkitComponent>
 </compSystem>

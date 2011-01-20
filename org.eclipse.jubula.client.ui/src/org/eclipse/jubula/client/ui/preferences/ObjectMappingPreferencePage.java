@@ -16,7 +16,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.InputCodeHelper;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.constants.InputCodeHelper.GDUserInput;
+import org.eclipse.jubula.client.ui.constants.InputCodeHelper.UserInput;
 import org.eclipse.jubula.client.ui.preferences.utils.InputComboUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -57,7 +57,7 @@ public class ObjectMappingPreferencePage extends PreferencePage
     private Combo m_mappingModifier = null;
 
     /** combo for mapping keyboard shortcut */
-    private DirectCombo<GDUserInput> m_mappingKey = null;
+    private DirectCombo<UserInput> m_mappingKey = null;
     
     /**
      * Default Constructor

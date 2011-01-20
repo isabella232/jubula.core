@@ -50,6 +50,8 @@ public abstract class CommandConstants {
     public static final String AUT_SWT_SERVER_JAR = "./lib/org.eclipse.jubula.rc.swt.jar"; //$NON-NLS-1$
     /** /** constant: "./lib/extImplClasses" - path name to external ImplClasses */
     public static final String EXT_IMPLCLASSES_PATH = "./lib/extImplClasses"; //$NON-NLS-1$
+    /** constant: "./lib/ext" - path name for extension jars like monitoring */
+    public static final String EXT_JARS_PATH = "./lib/ext/"; ////$NON-NLS-1$    
     /** constant: "../AUTServerBase/bin" */
     public static final String AUT_SERVER_BASE_BIN = "../org.eclipse.jubula.rc.common/bin"; //$NON-NLS-1$
     /** constant: "./lib/AUTServerBase.jar" */
@@ -134,8 +136,8 @@ public abstract class CommandConstants {
     public static final String SWING_IMPLCLASS_PACKAGE = "org.eclipse.jubula.rc.swing.swing.implclasses"; //$NON-NLS-1$
     /** package for swt implclasses: "org.eclipse.jubula.rc.swt.implclasses"  */
     public static final String SWT_IMPLCLASSES_PACKAGE = "org.eclipse.jubula.rc.swt.implclasses"; //$NON-NLS-1$
-    /** package name for GUIdancer extension ImplClasses (".guidancerextension.") */
-    public static final String GUIDANCER_EXTENSION_PACKAGE = ".guidancerextension."; //$NON-NLS-1$
+    /** package name for Jubula extension ImplClasses (".jubulaextension.") */
+    public static final String JUBULA_EXTENSION_PACKAGE = ".jubulaextension."; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.ServerLogResponseCommand"  */
     public static final String SERVER_LOG_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.ServerLogResponseCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.TakeScreenshotCommand"  */

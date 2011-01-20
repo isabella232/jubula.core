@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.ui.handlers.switchto;
 
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.views.dataset.AbstractDataSetPage;
-import org.eclipse.jubula.client.ui.views.dataset.GDDataSetView;
+import org.eclipse.jubula.client.ui.views.dataset.DataSetView;
 import org.eclipse.jubula.client.ui.views.dataset.AbstractDataSetPage.DSVTableCursor;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.IPage;
@@ -27,15 +27,15 @@ public class SwitchToDataSetViewHandler extends AbstractSwitchToHandler {
      * {@inheritDoc}
      */
     protected String getViewIDToSwitchTo() {
-        return Constants.GUIDANCERDATASET_VIEW_ID;
+        return Constants.JB_DATASET_VIEW_ID;
     }
     
     /**
      * {@inheritDoc}
      */
     protected void executeSetFocus(IWorkbenchPart activePart) {
-        if (activePart instanceof GDDataSetView) {
-            GDDataSetView dataSetView = (GDDataSetView) activePart;
+        if (activePart instanceof DataSetView) {
+            DataSetView dataSetView = (DataSetView) activePart;
             IPage p = dataSetView.getCurrentPage();
             if (p instanceof AbstractDataSetPage) {
                 AbstractDataSetPage dataSetPage = (AbstractDataSetPage) p;

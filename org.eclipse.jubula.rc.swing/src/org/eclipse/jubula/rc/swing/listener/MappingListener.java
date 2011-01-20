@@ -27,9 +27,9 @@ import org.eclipse.jubula.communication.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.businessprocess.ReflectionBP;
-import org.eclipse.jubula.rc.common.exception.GuiDancerComponentNotFoundException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerNoIdentifierForComponentException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -54,7 +54,7 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  * @author BREDEX GmbH
  * @created 23.08.2004
  */
-public class MappingListener extends AbstractGDAutSwingEventListener {
+public class MappingListener extends AbstractAutSwingEventListener {
     
    
     /** the logger */
@@ -99,7 +99,7 @@ public class MappingListener extends AbstractGDAutSwingEventListener {
                         implClass = AUTServerConfiguration.getInstance()
                             .getImplementationClass(parent.getClass());
                         source = parent;
-                    } catch (GuiDancerUnsupportedComponentException uce) { // NOPMD by zeb on 10.04.07 12:24
+                    } catch (UnsupportedComponentException uce) { // NOPMD by zeb on 10.04.07 12:24
                         /* 
                          * This means that the parent of the source of the
                          * event is not a supported component. The original
@@ -111,7 +111,7 @@ public class MappingListener extends AbstractGDAutSwingEventListener {
                     try {
                         implClass = AUTServerConfiguration.getInstance()
                             .getImplementationClass(source.getClass());
-                    } catch (GuiDancerUnsupportedComponentException uce2) {
+                    } catch (UnsupportedComponentException uce2) {
                         return;
                     }
                 }
@@ -146,7 +146,7 @@ public class MappingListener extends AbstractGDAutSwingEventListener {
     /**
      * @param event     AWTEvent
      * @param source    Component
-     * @param implClass IGuiDancerImplementationClass
+     * @param implClass IImplementationClass
      */
     protected void switchEvent(AWTEvent event, Component source, 
         final Object implClass) {
@@ -213,7 +213,7 @@ public class MappingListener extends AbstractGDAutSwingEventListener {
                     ObjectMappedMessage message = new ObjectMappedMessage();
                     message.setComponentIdentifier(id);
                     AUTServer.getInstance().getCommunicator().send(message);
-                } catch (GuiDancerNoIdentifierForComponentException nifce) {
+                } catch (NoIdentifierForComponentException nifce) {
                     // no identifier for the component, log this as an error
                     log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
                 } catch (CommunicationException ce) {
@@ -242,7 +242,7 @@ public class MappingListener extends AbstractGDAutSwingEventListener {
                         implClass, new Class[] {Component.class, Color.class}, 
                         new Object[] {getCurrentComponent(), highlightColor});
                 }
-            } catch (GuiDancerUnsupportedComponentException e) { // NOPMD by zeb on 10.04.07 12:18
+            } catch (UnsupportedComponentException e) { // NOPMD by zeb on 10.04.07 12:18
                 /* This means that the component that we wish to highlight is not
                  * supported.
                  * The component will not be highlighted.
@@ -295,11 +295,11 @@ public class MappingListener extends AbstractGDAutSwingEventListener {
                 return false;
             }
 
-        } catch (GuiDancerComponentNotFoundException e) {
+        } catch (ComponentNotFoundException e) {
             log.warn(e);
         } catch (IllegalArgumentException e) {
             log.warn(e);
-        } catch (GuiDancerUnsupportedComponentException uce) {
+        } catch (UnsupportedComponentException uce) {
             log.warn(uce);
         }
         return false;

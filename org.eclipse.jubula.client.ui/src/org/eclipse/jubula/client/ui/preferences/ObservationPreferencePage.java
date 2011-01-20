@@ -21,14 +21,14 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.InputCodeHelper;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.constants.InputCodeHelper.GDUserInput;
+import org.eclipse.jubula.client.ui.constants.InputCodeHelper.UserInput;
 import org.eclipse.jubula.client.ui.preferences.utils.InputComboUtil;
 import org.eclipse.jubula.client.ui.preferences.utils.Utils;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.ModifiableTriggerList;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -70,13 +70,13 @@ public class ObservationPreferencePage extends PreferencePage implements
     private Combo m_startStopCheckMods = null;
 
     /** combo for start/stop checkmode shortcut key */
-    private DirectCombo<GDUserInput> m_startStopCheckKey = null;
+    private DirectCombo<UserInput> m_startStopCheckKey = null;
 
     /** combo for check component shortcut modifier */
     private Combo m_checkCompMods = null;
     
     /** combo for check component shortcut key */
-    private DirectCombo<GDUserInput> m_checkCompKey = null;
+    private DirectCombo<UserInput> m_checkCompKey = null;
     
     /** checkbox for recorded action dialog */
     private Button m_showDialog = null;
@@ -187,7 +187,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         GridData data2 = new GridData();
         data2.horizontalSpan = 4;
         dialogLabel.setLayoutData(data2);        
-        GDControlDecorator.decorateInfo(dialogLabel,  
+        ControlDecorator.decorateInfo(dialogLabel,  
                 "GDControlDecorator.ObervationConsole", false); //$NON-NLS-1$
               
         m_showDialog = new Button(composite, SWT.CHECK);
@@ -207,7 +207,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         GridData data3 = new GridData();
         data3.horizontalSpan = 4;
         triggerLabel.setLayoutData(data3);
-        GDControlDecorator.decorateInfo(triggerLabel, 
+        ControlDecorator.decorateInfo(triggerLabel, 
                 "GDControlDecorator.ObservationTriggerReplaceText", false);
         
         Set<String> values = new HashSet<String>();
@@ -308,7 +308,7 @@ public class ObservationPreferencePage extends PreferencePage implements
                     Utils.decodeStringToSet(getPreferenceStore().getString(
                             Constants.MULTILINETRIGGER_KEY),
                             StringConstants.SEMICOLON));
-        } catch (GDException e) {
+        } catch (JBException e) {
             e.printStackTrace();
         }
     }
@@ -343,7 +343,7 @@ public class ObservationPreferencePage extends PreferencePage implements
             m_multiLineTrigger.setValues(Utils.decodeStringToSet(
                     getDefaultPrefsString(Constants.MULTILINETRIGGER_KEY),
                     StringConstants.SEMICOLON));
-        } catch (GDException e) {
+        } catch (JBException e) {
             e.printStackTrace();
         }
 

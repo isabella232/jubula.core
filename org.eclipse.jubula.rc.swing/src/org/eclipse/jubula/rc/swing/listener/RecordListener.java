@@ -48,7 +48,7 @@ import javax.swing.tree.TreePath;
 
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.exception.GuiDancerNoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
@@ -73,7 +73,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.Action;
  * @author BREDEX GmbH
  * @created 23.08.2004
  */
-public class RecordListener extends AbstractGDAutSwingEventListener {    
+public class RecordListener extends AbstractAutSwingEventListener {    
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
         RecordListener.class);
@@ -114,7 +114,7 @@ public class RecordListener extends AbstractGDAutSwingEventListener {
                             m_recordActions.selectListValues(jlst, id, a);
                             //m_recordActions.setSelectionState(true);
                         }
-                    } catch (GuiDancerNoIdentifierForComponentException nifce) {
+                    } catch (NoIdentifierForComponentException nifce) {
                         // no identifier for the component, log this as an error
                         log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
                     }
@@ -139,7 +139,7 @@ public class RecordListener extends AbstractGDAutSwingEventListener {
                         id = ComponentHandler.getIdentifier(jtre);
                         m_recordActions.collExpTree(jtre, path, id, "CompSystem.CollapseByTextPath"); //$NON-NLS-1$
                         //m_recordActions.setSelectionState(true);
-                    } catch (GuiDancerNoIdentifierForComponentException nifce) {
+                    } catch (NoIdentifierForComponentException nifce) {
                         // no identifier for the component, log this as an error
                         log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
                     }
@@ -159,7 +159,7 @@ public class RecordListener extends AbstractGDAutSwingEventListener {
                         id = ComponentHandler.getIdentifier(jtre);
                         m_recordActions.collExpTree(jtre, path, id, "CompSystem.ExpandByTextPath"); //$NON-NLS-1$
                         //m_recordActions.setSelectionState(true);
-                    } catch (GuiDancerNoIdentifierForComponentException nifce) {
+                    } catch (NoIdentifierForComponentException nifce) {
                         // no identifier for the component, log this as an error
                         log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
                     }
@@ -188,7 +188,7 @@ public class RecordListener extends AbstractGDAutSwingEventListener {
                                 jtre, path, id, a, clickcount);
                         //m_recordActions.setSelectionState(true);
                     }
-                } catch (GuiDancerNoIdentifierForComponentException nifce) {
+                } catch (NoIdentifierForComponentException nifce) {
                     // no identifier for the component, log this as an error
                     log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
                 }
@@ -238,7 +238,7 @@ public class RecordListener extends AbstractGDAutSwingEventListener {
                                 m_recordActions.selectCbxValue(jcbx, id, a);
                                 m_recordActions.setSelectionState(true);
                             } catch (
-                                    GuiDancerNoIdentifierForComponentException 
+                                    NoIdentifierForComponentException 
                                     nifce) {
                                 // no identifier for the component, log this as an error
                                 log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
@@ -426,7 +426,7 @@ public class RecordListener extends AbstractGDAutSwingEventListener {
                     m_recordActions.clickGraphComp(id, me, source);
                 }
             }
-        } catch (GuiDancerNoIdentifierForComponentException nifce) {
+        } catch (NoIdentifierForComponentException nifce) {
             // no identifier for the component, log this as an error
             log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
         }

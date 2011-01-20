@@ -1,4 +1,4 @@
-/* Grammar for GUIdancer parameter values. */
+/* Grammar for Client parameter values. */
 Package org.eclipse.jubula.client.core.parser.parameter;
     
 Helpers
@@ -6,34 +6,36 @@ Helpers
     alphanumeric = ['0'..'9'] | ['a'..'z'] | ['A'..'Z'] | '_';
     any_char = [0 .. 0xffff];
     not_literal_symbol = [any_char - literal_symbol];
-    escapable = ''' | '\' | '?' | '=' | '$';
+    escapable = ''' | '\' | '=' | '$';
 
 States
     normal,
+    variable,
+    var_brace,
+    reference,
+    ref_brace,
     literal;
 
 Tokens
     {normal->literal}
     open_literal = ''';
     
-	{normal}
+	{normal->reference}
     reference_token = '=';
 	{normal}
     escaped_symbol = '\' escapable;
-	{normal}
+	{variable->var_brace,reference->ref_brace}
     open_brace = '{';
-	{normal}
+	{variable->normal,var_brace->normal,reference->normal,ref_brace->normal}
     close_brace = '}';
-	{normal}
-    open_parens = '(';
-	{normal}
-    close_parens = ')';
-	{normal}
-    function_symbol = '?';
-	{normal}
+	{normal->variable}
     variable_token = '$';
 	{normal}
     alphanumeric = alphanumeric+;
+    {variable->normal,var_brace->variable}
+    variable_body = alphanumeric+;
+    {reference->normal,ref_brace->reference}
+    reference_body = alphanumeric+;
 	{normal}
     char = any_char;
 
@@ -48,14 +50,10 @@ Productions
     parameter = param_token+;
     param_token = {literal}P.literal | 
                   {escape_sequence}escaped_symbol | 
-                  {reference}reference | 
-                  {variable}variable | 
-                  {function}function |
+                  {reference}P.reference | 
+                  {variable}P.variable | 
                   {alphanumeric}alphanumeric |
                   {any_sequence}char;
     literal = open_literal literal_body? close_literal;
-    function = function_symbol [function_name]:alphanumeric open_parens [function_argument]:alphanumeric? close_parens;
-    reference = {bracketed_ref}reference_token open_brace [reference_body]:alphanumeric close_brace | {simple_ref}reference_token [reference_body]:alphanumeric;
-    variable = {simple_var}simple_variable | {bracketed_var}bracketed_variable;
-    simple_variable = variable_token alphanumeric;
-    bracketed_variable = variable_token open_brace alphanumeric close_brace;
+    reference = reference_token open_brace? reference_body? close_brace?;
+    variable = variable_token open_brace? variable_body? close_brace?;

@@ -22,17 +22,17 @@ import org.eclipse.ui.ISources;
 
 
 /**
- * Provides variables related to the status of the connection between GUIdancer
- * client and AutStarter.
+ * Provides variables related to the status of the connection between the
+ * client and AUT-Agent.
  *
  * @author BREDEX GmbH
  * @created Apr 29, 2009
  */
-public class AutStarterStateSourceProvider extends AbstractGDSourceProvider 
+public class AutStarterStateSourceProvider extends AbstractJBSourceProvider 
         implements IServerConnectionListener {
     
     /** 
-     * ID of variable that indicates whether GUIdancer is currently connected 
+     * ID of variable that indicates whether the client is currently connected 
      * to an AutStarter
      */
     public static final String IS_AUT_STARTER_CONNECTED = 

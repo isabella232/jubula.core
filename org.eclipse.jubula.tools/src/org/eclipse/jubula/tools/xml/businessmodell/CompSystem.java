@@ -37,10 +37,8 @@ import org.eclipse.jubula.tools.xml.businessprocess.ConfigVersion;
 
 /**
  * This class represents a container for all components which can be tested by
- * GuiDancer.
- * 
- * {@inheritDoc}
- * 
+ * Jubula.
+
  * @author BREDEX GmbH
  * @created 18.07.2005
  */
@@ -90,7 +88,7 @@ public class CompSystem {
     private boolean m_initialized = false;
     
     /**
-     * <code>m_configVersion</code> version for GUIdancerConfig.xml
+     * <code>m_configVersion</code> version for clientConfig.xml
      */
     private ConfigVersion m_configVersion = null;
 
@@ -291,7 +289,7 @@ public class CompSystem {
      * 
      * @param component
      *            A
-     *            <code>com.beredexsw.guidancer.tools.xml.businessmodell.Component</code>
+     *            <code>org.eclipse.jubula.tools.xml.businessmodell.Component</code>
      *            object
      * 
      */

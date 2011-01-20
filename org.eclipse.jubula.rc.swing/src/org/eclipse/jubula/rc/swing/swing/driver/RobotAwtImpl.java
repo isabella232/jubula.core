@@ -66,7 +66,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
 /**
  * <p>
- * AWT/Swing implementation of the <code>IGuiDancerRobot</code> interface. It
+ * AWT/Swing implementation of the <code>IRobot</code> interface. It
  * uses the {@link java.awt.Robot}to move the mouse and perform clicks. Any
  * mouse move or click is intercepted and confirmed using the appropriate
  * AWT/Swing implementations of

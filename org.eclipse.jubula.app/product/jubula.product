@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="%productName" uid="org.eclipse.jubula.app.product.definition" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="0.4.0" useFeatures="true" includeLaunchers="true">
+<product name="%productName" uid="org.eclipse.jubula.app.product.definition" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="0.9.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="icons/about.gif"/>
@@ -45,7 +45,12 @@
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5</windows>
    </vm>
 
+   <plugins>
+   </plugins>
+
    <features>
       <feature id="org.eclipse.jubula.feature"/>
    </features>
+
+
 </product>

@@ -74,8 +74,8 @@ public class ListElementChooserComposite extends Composite {
     private Object[] m_buttonContents;
 
     /** the GDStateController */
-    private final GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    private final WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
 
     
     /**
@@ -562,7 +562,7 @@ public class ListElementChooserComposite extends Composite {
      * @author BREDEX GmbH
      * @created 10.02.2005
      */
-    private class GuiDancerSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
 
         /**
          * {@inheritDoc}

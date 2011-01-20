@@ -21,11 +21,13 @@ import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBException;
 
 
 /**
@@ -102,10 +104,10 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
      */
     public IParamDescriptionPO addParameter(String type, String name,
         String guid, IParamNameMapper mapper) {
-        Validate.notEmpty(type, "Missing parameter type for Testcase " + //$NON-NLS-1$
-            this.getName());
-        Validate.notEmpty(name, "Missing name for parameter in " + //$NON-NLS-1$
-            "testcase " + this.getName()); //$NON-NLS-1$
+        Validate.notEmpty(type, Messages.MissingParameterTypeForTestcase
+            + StringConstants.SPACE + this.getName());
+        Validate.notEmpty(name, Messages.MissingNameForParameterInTestcase 
+            + this.getName());
         
         IParamDescriptionPO desc = PoMaker.createTcParamDescriptionPO(type,
             name, guid, mapper);
@@ -181,10 +183,17 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
             try {
                 parent = ProjectPM.loadProjectById(getParentProjectId(), 
                     GeneralStorage.getInstance().getMasterSession());
-            } catch (GDException e) {
-                LOG.fatal("Could not find parent for TestCase: " + this //$NON-NLS-1$
-                    + "; Returning null.",  //$NON-NLS-1$
-                    e);
+            } catch (JBException e) {
+                StringBuilder msg = new StringBuilder();
+                msg.append(Messages.CouldNotFindParentForTestCase);
+                msg.append(StringConstants.COLON);
+                msg.append(StringConstants.SPACE);
+                msg.append(this);
+                msg.append(StringConstants.SEMICOLON);
+                msg.append(StringConstants.SPACE);
+                msg.append(Messages.ReturningNull);
+                msg.append(StringConstants.DOT);
+                LOG.fatal(msg.toString(), e);
             }
         }
         return parent;
@@ -260,10 +269,10 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
      */
     public IParamDescriptionPO addParameter(String type, String name, 
         IParamNameMapper mapper) {
-        Validate.notEmpty(type, "Missing parameter type for Testcase " + //$NON-NLS-1$
-            this.getName());
-        Validate.notEmpty(name, "Missing name for parameter in " + //$NON-NLS-1$
-            "testcase " + this.getName()); //$NON-NLS-1$
+        Validate.notEmpty(type, Messages.MissingParameterTypeForTestcase
+            + StringConstants.SPACE + this.getName());
+        Validate.notEmpty(name, Messages.MissingNameForParameterInTestcase 
+            + this.getName());
         
         IParamDescriptionPO desc = PoMaker.createTcParamDescriptionPO(type,
             name, HibernateUtil.generateGuid(), mapper);

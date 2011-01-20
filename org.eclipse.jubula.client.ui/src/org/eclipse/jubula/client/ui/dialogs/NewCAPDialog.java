@@ -32,7 +32,7 @@ import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.widgets.CompNamePopUpTextField;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -76,7 +76,7 @@ public class NewCAPDialog extends TitleAreaDialog {
     /** horizontal span = 3 */
     private static final int HORIZONTAL_SPAN = 3;
     /** the m_text field for the CapPO name */
-    private GDText m_capNameField;
+    private JBText m_capNameField;
     /** the m_text field for the component name */
     private CompNamePopUpTextField m_componentNameField;
     /** the combo box for the components */
@@ -100,8 +100,8 @@ public class NewCAPDialog extends TitleAreaDialog {
     /** the SpecTestCaseGUI */
     private SpecTestCaseGUI m_specTCGui;
     /** the modifyListener */
-    private final GuiDancerModifyListener m_modifyListener = 
-        new GuiDancerModifyListener();
+    private final WidgetModifyListener m_modifyListener = 
+        new WidgetModifyListener();
 
     /** the component mapper to use for finding and modifying components */
     private IComponentNameMapper m_compMapper;
@@ -224,7 +224,7 @@ public class NewCAPDialog extends TitleAreaDialog {
     private void createCapNameField(Composite area) {
         Label label = new Label(area, SWT.NONE);
         label.setText(I18n.getString("NewCAPDialog.capNameLabel")); //$NON-NLS-1$
-        m_capNameField = new GDText(area, SWT.SINGLE | SWT.BORDER);
+        m_capNameField = new JBText(area, SWT.SINGLE | SWT.BORDER);
         GridData gridData = newGridData();
         Layout.addToolTipAndMaxWidth(gridData, m_capNameField);
         m_capNameField.setLayoutData(gridData);
@@ -552,7 +552,7 @@ public class NewCAPDialog extends TitleAreaDialog {
      * @author BREDEX GmbH
      * @created 15.07.2005
      */
-    private class GuiDancerModifyListener implements ModifyListener {
+    private class WidgetModifyListener implements ModifyListener {
         /**
          * {@inheritDoc}
          */

@@ -68,6 +68,11 @@ public interface StringConstants {
     public static final String DOT = "."; //$NON-NLS-1$
     
     /**
+     * <code>COMMA</code>
+     */
+    public static final String COMMA = ","; //$NON-NLS-1$
+    
+    /**
      * <code>LEFT_PARENTHESES "("</code>
      */
     public static final String LEFT_PARENTHESES = "("; //$NON-NLS-1$ 
@@ -101,4 +106,20 @@ public interface StringConstants {
      * <code>EXCLAMATION_MARK "!"</code>
      */
     public static final String EXCLAMATION_MARK = "!"; //$NON-NLS-1$
+    
+    /**
+     * <code>APOSTROPHE "'"</code>
+     */
+    public static final String APOSTROPHE = "'"; //$NON-NLS-1$
+    
+    /**
+     * <code>LEFT_INEQUALITY_SING "<" </code>
+     */
+    public static final String LEFT_INEQUALITY_SING = "<"; //$NON-NLS-1$
+    
+    /**
+     * <code>RIGHT_INEQUALITY_SING ">"</code>
+     */
+    public static final String RIGHT_INEQUALITY_SING = ">"; //$NON-NLS-1$
+    
 }

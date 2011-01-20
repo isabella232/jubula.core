@@ -45,4 +45,14 @@ public interface ICheckConfContPO extends IPersistentObject {
      * @return the confMap
      */
     Map<String, CheckConfPO> getConfMap();
+    
+    /**
+     * @return true, if teststyle is enabled for this project
+     */
+    boolean getEnabled();
+    
+    /**    
+     * @param enabled the new enablement for this project
+     */
+    void setEnabled(boolean enabled);
 }

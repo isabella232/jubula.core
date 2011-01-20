@@ -16,10 +16,10 @@ import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.exception.GuiDancerComponentNotFoundException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerComponentNotManagedException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerNoIdentifierForComponentException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
+import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
@@ -87,17 +87,17 @@ public class ComponentHandler extends BaseSwtEventListener
      * must be distinct for the whole AUT. To obtain this identifier the
      * AUTSWTHierarchy is queried. 
      * @param component the component to get an identifier for
-     * @throws GuiDancerNoIdentifierForComponentException if an identifer could not created for <code>component</code>.
+     * @throws NoIdentifierForComponentException if an identifer could not created for <code>component</code>.
      * @return the identifier, containing the identification 
      */
     public static IComponentIdentifier getIdentifier(Widget component) 
-        throws GuiDancerNoIdentifierForComponentException {
+        throws NoIdentifierForComponentException {
         
         try {
             return autHierarchy.getComponentIdentifier(component);
-        } catch (GuiDancerComponentNotManagedException cnme) {
+        } catch (ComponentNotManagedException cnme) {
             log.warn(cnme);
-            throw new GuiDancerNoIdentifierForComponentException(
+            throw new NoIdentifierForComponentException(
                     "unable to create an identifier for '" //$NON-NLS-1$
                     + component + "'", //$NON-NLS-1$
                     MessageIDs.E_COMPONENT_ID_CREATION); 
@@ -109,11 +109,11 @@ public class ComponentHandler extends BaseSwtEventListener
      * @param factory factory
      * @param componentName componentName
      * @param technicalName technicalName
-     * @throws GuiDancerUnsupportedComponentException
+     * @throws UnsupportedComponentException
      */
     public static void addToHierarchy(IComponentFactory factory,
         String componentName, String technicalName)
-        throws GuiDancerUnsupportedComponentException {
+        throws UnsupportedComponentException {
         
         autHierarchy.addToHierarchy(factory, componentName, technicalName);
     }
@@ -134,7 +134,7 @@ public class ComponentHandler extends BaseSwtEventListener
      * @param componentIdentifier the identifier of the component to search for
      * @param retry number of tries to get object
      * @param timeout timeout for retries
-     * @throws GuiDancerComponentNotFoundException if no component is found for the given identifier.
+     * @throws ComponentNotFoundException if no component is found for the given identifier.
      * @throws IllegalArgumentException if the identifier is null or contains invalid data
      * {@inheritDoc}
      * @return the found component
@@ -142,7 +142,7 @@ public class ComponentHandler extends BaseSwtEventListener
     public static Widget findComponent(
             final IComponentIdentifier componentIdentifier, boolean retry, 
             int timeout)
-        throws GuiDancerComponentNotFoundException, IllegalArgumentException {
+        throws ComponentNotFoundException, IllegalArgumentException {
         
         long start = System.currentTimeMillis();
 
@@ -150,7 +150,7 @@ public class ComponentHandler extends BaseSwtEventListener
         
         try {
             return autHierarchy.findComponent(componentIdentifier);
-        } catch (GuiDancerComponentNotManagedException cnme) {
+        } catch (ComponentNotManagedException cnme) {
             log.warn(cnme);
             if (retry) {
 
@@ -170,7 +170,7 @@ public class ComponentHandler extends BaseSwtEventListener
                                 try {
                                     return autHierarchy.
                                         findComponent(componentIdentifier); 
-                                }  catch (GuiDancerComponentNotManagedException e) { // NOPMD by zeb on 10.04.07 15:26
+                                }  catch (ComponentNotManagedException e) { // NOPMD by zeb on 10.04.07 15:26
                                     // OK, we will throw a corresponding exception later
                                     // if we really can't find the component
                                 } catch (InvalidDataException ide) { // NOPMD by zeb on 10.04.07 15:26
@@ -191,14 +191,14 @@ public class ComponentHandler extends BaseSwtEventListener
                     }
                 }
             }
-            throw new GuiDancerComponentNotFoundException(
+            throw new ComponentNotFoundException(
                         cnme.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
         } catch (IllegalArgumentException iae) {
             log.error(iae);
             throw iae;
         } catch (InvalidDataException ide) {
             log.error(ide);
-            throw new GuiDancerComponentNotFoundException(
+            throw new ComponentNotFoundException(
                     ide.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
         }
     }

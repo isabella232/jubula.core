@@ -17,7 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.SerialisationException;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 import com.thoughtworks.xstream.XStream;
@@ -36,9 +36,9 @@ public class XStreamXmlSerializer implements IXmlSerializer {
     /** static xml header */
     private static final String XML_HEADER =
         "<?xml version=\"1.0\" minor=\""  //$NON-NLS-1$
-        + IGdVersion.GD_XML_IMPORT_MINOR_VERSION 
+        + IVersion.JB_XML_IMPORT_MINOR_VERSION 
         + "\" major=\"" //$NON-NLS-1$
-        + IGdVersion.GD_XML_IMPORT_MAJOR_VERSION
+        + IVersion.JB_XML_IMPORT_MAJOR_VERSION
         + "\"?>"; //$NON-NLS-1$
     /** The XStream instance. This is the facade for all XStream operations. */
     private final XStream m_stream;

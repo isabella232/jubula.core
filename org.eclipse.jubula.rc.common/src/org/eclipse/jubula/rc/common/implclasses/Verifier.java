@@ -32,7 +32,7 @@ public class Verifier {
     // Nothing to be done.
     }
     /**
-     * Throws a <code>GuiDancerStepVerifyFailedException</code> containing
+     * Throws a <code>StepVerifyFailedException</code> containing
      * an error event.
      * 
      * @param expected The expected value.
@@ -46,7 +46,7 @@ public class Verifier {
     /**
      * Checks if the passed strings are equal. The method uses
      * {@link StringUtils#equals(java.lang.String, java.lang.String)}. If the
-     * values are not equal, an <code>GuiDancerStepVerifyFailedException</code>
+     * values are not equal, an <code>StepVerifyFailedException</code>
      * will be thrown. It contains an error event with ID
      * <code>VERIFY_FAILED</code>.
      * 

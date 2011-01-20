@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedL
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.sourceprovider.AbstractGDSourceProvider;
+import org.eclipse.jubula.client.ui.sourceprovider.AbstractJBSourceProvider;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.ISources;
@@ -36,7 +36,7 @@ import org.eclipse.ui.ISources;
  * @author BREDEX GmbH
  * @created Mar 23, 2010
  */
-public class InspectableAutSourceProvider extends AbstractGDSourceProvider 
+public class InspectableAutSourceProvider extends AbstractJBSourceProvider 
         implements IAutRegistrationListener, IProjectLoadedListener, 
                    IProjectPropertiesModifyListener {
 

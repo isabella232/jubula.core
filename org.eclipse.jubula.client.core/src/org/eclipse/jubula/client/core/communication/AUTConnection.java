@@ -26,6 +26,7 @@ import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.commands.ConnectToAutResponseCommand;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -34,8 +35,9 @@ import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.ConnectToAutMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendCompSystemI18nMessage;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
@@ -107,11 +109,12 @@ public class AUTConnection extends BaseConnection {
      * @param throwable
      *            the occured exception
      * @throws ConnectionException
-     *             a GuiDancerConnectionException containing a detailed message
+     *             a ConnectionException containing a detailed message
      */
     private void handleInitError(Throwable throwable)
         throws ConnectionException {
-        String message = "initialisation of AUTConnection failed: "; //$NON-NLS-1$ 
+        String message = Messages.InitialisationOfAUTConnectionFailed
+            + StringConstants.COLON + StringConstants.SPACE;
         log.fatal(message, throwable);
         throw new ConnectionException(message + throwable.getMessage(), 
             MessageIDs.E_AUT_CONNECTION_INIT);
@@ -169,16 +172,15 @@ public class AUTConnection extends BaseConnection {
      * @return <code>true</code> if a connection to the AUT could be 
      *         established. Otherwise <code>false</code>.
      */
-    public boolean connectToAut(AutIdentifier autId, 
+    public boolean connectToAut(AutIdentifier autId,
             IProgressMonitor monitor) {
         if (!isConnected()) {
             DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
                     ServerState.Connecting);
             try {
-                monitor.beginTask("Connecting to AUT", //$NON-NLS-1$
+                monitor.beginTask(Messages.ConnectingToAUT,
                         IProgressMonitor.UNKNOWN);
-                log.info("Establishing connection to AUT..."); //$NON-NLS-1$
-                
+                log.info(Messages.EstablishingConnectionToAUT);
                 run();
                 getCommunicator().addCommunicationErrorListener(
                         m_autConnectionListener);
@@ -200,8 +202,7 @@ public class AUTConnection extends BaseConnection {
                 }
                 long timeout = 10000;
                 long startTime = System.currentTimeMillis();
-                while (!monitor.isCanceled() 
-                        && !isConnected() 
+                while (!monitor.isCanceled() && !isConnected() 
                         && ServerConnection.getInstance().isConnected()
                         && startTime + timeout > System.currentTimeMillis()) {
                     try {
@@ -211,35 +212,37 @@ public class AUTConnection extends BaseConnection {
                         // again on the next loop iteration.
                     }
                 }
-
                 if (isConnected()) {
                     m_connectedAutId = autId;
-                    log.info("Connection to AUT established."); //$NON-NLS-1$
+                    log.info(Messages.ConnectionToAUTEstablished 
+                            + StringConstants.DOT);
                     IAUTMainPO aut = AutAgentRegistration.getAutForId(autId, 
                             GeneralStorage.getInstance().getProject());
                     if (aut != null) {
                         getComponentsFromAut(aut);
                         sendResourceBundlesToAut();
                     } else {
-                        log.warn("Error occurred while activating Object Mapping Profile for Running AUT. No such AUT was found in the curent project."); //$NON-NLS-1$
+                        log.warn(Messages.ErrorOccurredActivatingObjectMapping);
                     }
                     return true;
                 }
-
-                log.error("Connection to AUT could not be established."); //$NON-NLS-1$
+                log.error(Messages.ConnectionToAUTCouldNotBeEstablished
+                        + StringConstants.DOT);
             } catch (CommunicationException e) {
-                log.error("Error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
+                log.error(Messages.ErrorOccurredEstablishingConnectionToAUT
+                        + StringConstants.DOT, e);
             } catch (UnknownHostException e) {
-                log.error("Error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
-            } catch (GDVersionException e) {
-                log.error("Error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
+                log.error(Messages.ErrorOccurredEstablishingConnectionToAUT
+                        + StringConstants.DOT, e);
+            } catch (JBVersionException e) {
+                log.error(Messages.ErrorOccurredEstablishingConnectionToAUT
+                        + StringConstants.DOT, e);
             } finally {
                 monitor.done();
             }
         } else {
-            log.warn("Cannot establish new connection to AUT: Connection to AUT already exists."); //$NON-NLS-1$
-        }
-        
+            log.warn(Messages.CannotEstablishNewConnectionToAUT);
+        } 
         DataEventDispatcher.getInstance()
             .fireAutServerConnectionChanged(
                 ServerState.Disconnected);
@@ -257,8 +260,8 @@ public class AUTConnection extends BaseConnection {
         try {
             send(i18nMessage);
         } catch (CommunicationException ce) {
-            log.fatal("communication error while setting Resource Bundle", //$NON-NLS-1$
-                    ce); 
+            log.fatal(Messages.CommunicationErrorWhileSettingResourceBundle, 
+                ce); 
         }
     }
 
@@ -280,7 +283,9 @@ public class AUTConnection extends BaseConnection {
         
         IAUTInfoListener listener = new IAUTInfoListener() {
             public void error(int reason) {
-                log.error("Error occurred while getting components from AUT. Error code: " + reason); //$NON-NLS-1$
+                log.error(Messages.ErrorOccurredWhileGettingComponentsFromAUT
+                       + StringConstants.COLON + StringConstants.SPACE 
+                       + reason);
             }
         };
 
@@ -303,13 +308,12 @@ public class AUTConnection extends BaseConnection {
         public void connectionGained(InetAddress inetAddress, int port) {
             if (log.isInfoEnabled()) {
                 try {
-                    String logMessage = "connected to " //$NON-NLS-1$ 
+                    String logMessage = Messages.ConnectedTo 
                             + inetAddress.getHostName()
-                            + ":" + String.valueOf(port); //$NON-NLS-1$
+                            + StringConstants.COLON + String.valueOf(port);
                     log.info(logMessage);
                 } catch (SecurityException se) {
-                    log.debug("security violation while getting " //$NON-NLS-1$
-                            + "the host name from ip address"); //$NON-NLS-1$
+                    log.debug(Messages.SecurityViolationGettingHostNameFromIP);
                 }
             }
             ClientTestFactory.getClientTest().
@@ -322,8 +326,8 @@ public class AUTConnection extends BaseConnection {
          */
         public void shutDown() {
             if (log.isInfoEnabled()) {
-                log.info("connection to AUTServer closed"); //$NON-NLS-1$
-                log.info("closing connection to the AutStarter"); //$NON-NLS-1$
+                log.info(Messages.ConnectionToAUTServerClosed);
+                log.info(Messages.ClosingConnectionToTheAutStarter);
             }
             disconnectFromAut();
             DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
@@ -342,9 +346,9 @@ public class AUTConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void sendFailed(Message message) {
-            log.error("sending message failed:" //$NON-NLS-1$ 
+            log.error(Messages.SendingMessageFailed + StringConstants.COLON 
                     + message.toString());
-            log.error("closing connection to the AUTServer"); //$NON-NLS-1$
+            log.error(Messages.ClosingConnectionToTheAUTServer);
             close();
         }
 
@@ -352,7 +356,8 @@ public class AUTConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void acceptingFailed(int port) {
-            log.warn("accepting failed:" + String.valueOf(port)); //$NON-NLS-1$
+            log.warn(Messages.AcceptingFailed + StringConstants.COLON 
+                    + String.valueOf(port));
         }
 
         /**
@@ -360,7 +365,13 @@ public class AUTConnection extends BaseConnection {
          *      int)
          */
         public void connectingFailed(InetAddress inetAddress, int port) {
-            log.error("connectingFailed() called although this is a 'server'"); //$NON-NLS-1$
+            StringBuilder msg = new StringBuilder();
+            msg.append(Messages.ConnectingFailed);
+            msg.append(StringConstants.LEFT_PARENTHESES);
+            msg.append(StringConstants.RIGHT_PARENTHESES);
+            msg.append(StringConstants.SPACE);
+            msg.append(Messages.CalledAlthoughThisIsServer);
+            log.error(msg.toString());
         }
     }
 

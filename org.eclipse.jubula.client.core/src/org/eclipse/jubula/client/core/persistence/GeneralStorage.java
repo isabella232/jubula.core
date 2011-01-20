@@ -21,11 +21,13 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.tools.exception.GDFatalAbortException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
-import org.eclipse.jubula.tools.exception.GDRuntimeException;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBFatalAbortException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import javax.persistence.PersistenceException;
 
@@ -112,7 +114,7 @@ public class GeneralStorage {
         try {
             clearMasterSession();
         } catch (PMException e) {
-            LOG.error("Clearing of master session failed", e); //$NON-NLS-1$
+            LOG.error(Messages.ClearingOfMasterSessionFailed, e);
         }
         Hibernator.instance().dropSession(m_masterSession);
         m_masterSession = null;
@@ -130,7 +132,7 @@ public class GeneralStorage {
             Hibernator.instance().dropSession(masterSession); 
             m_masterSession = Hibernator.instance().openSession(); 
         } catch (PMException e) { 
-            LOG.warn("reset failed", e); //$NON-NLS-1$ 
+            LOG.warn(Messages.ResetFailed, e); 
         }
         m_project = null;
     }
@@ -145,7 +147,7 @@ public class GeneralStorage {
         try {
             masterSession.clear();
         } catch (PersistenceException e) {
-            throw new PMException("Clearing of master session failed",  //$NON-NLS-1$
+            throw new PMException(Messages.ClearingOfMasterSessionFailed,
                 MessageIDs.E_DATABASE_GENERAL);
         }
     }
@@ -164,7 +166,7 @@ public class GeneralStorage {
             }
         } catch (PersistenceException e) {
             handleFatalError(e);
-        } catch (GDRuntimeException e) {
+        } catch (JBRuntimeException e) {
             handleFatalError(e);
         }
     }
@@ -173,20 +175,20 @@ public class GeneralStorage {
      * @param t cause of error
      */
     public static void handleFatalError(Throwable t) {
-        final String msg = "Non recoverable error."; //$NON-NLS-1$
+        final String msg = Messages.NonRecoverableError + StringConstants.DOT;
         LOG.fatal(msg, t);
-        throw new GDFatalAbortException(msg, t, MessageIDs.E_NON_RECOVERABLE);
+        throw new JBFatalAbortException(msg, t, MessageIDs.E_NON_RECOVERABLE);
     }
 
     /**
      * reopen the session and reload any object in master session
      * 
      * @param monitor The progress monitor for this operation.
-     * @throws GDProjectDeletedException if the project was deleted in another
+     * @throws ProjectDeletedException if the project was deleted in another
      * instance
      */
     public void reloadMasterSession(IProgressMonitor monitor) 
-        throws GDProjectDeletedException {
+        throws ProjectDeletedException {
         
         ProjectNameBP.getInstance().clearCache();
         try {
@@ -201,7 +203,8 @@ public class GeneralStorage {
                     reset();
                     // temporarely restore the project 
                     setProject(oldProject);
-                    throw new GDProjectDeletedException("Project was deleted",  //$NON-NLS-1$
+                    throw new ProjectDeletedException(
+                            Messages.ProjectWasDeleted,
                             MessageIDs.E_CURRENT_PROJ_DEL);
                 }
                 fireSessionReloaded(monitor);
@@ -243,7 +246,8 @@ public class GeneralStorage {
             try {
                 listener.reloadData(monitor);
             } catch (Throwable e) {
-                LOG.error("invocation of listener for reloading session failed."); //$NON-NLS-1$
+                LOG.error(Messages.InvocationOfListenerForReloadingSessionFailed
+                    + StringConstants.DOT);
             }
         }
     }
@@ -307,7 +311,8 @@ public class GeneralStorage {
             try {
                 listener.dataModified(po);
             } catch (Throwable e) {
-                LOG.error("invocation of listener for refreshed object failed."); //$NON-NLS-1$
+                LOG.error(Messages.InvocationOfListenerForReloadingSessionFailed
+                        + StringConstants.DOT);
             }
         }
     }
@@ -318,12 +323,12 @@ public class GeneralStorage {
      * there is still a slightly chance that the project is delete at this
      * very moment.
      * @param project Project to verify
-     * @throws GDProjectDeletedException if the project is not in the DB
+     * @throws ProjectDeletedException if the project is not in the DB
      */
     public void validateProjectExists(IProjectPO project) 
-        throws GDProjectDeletedException {
+        throws ProjectDeletedException {
         if (!ProjectPM.doesProjectExist(project.getId())) {
-            throw new GDProjectDeletedException("Project not in DB", //$NON-NLS-1$
+            throw new ProjectDeletedException(Messages.ProjectNotInDB,
                     MessageIDs.E_CURRENT_PROJ_DEL);
         }
 

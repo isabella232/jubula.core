@@ -19,7 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 
 
@@ -69,7 +69,7 @@ public class ExportAllBP extends AbstractActionBP {
             String exportDirName, EntityManager exportSession, 
             IProgressMonitor monitor, boolean writeToSystemTempDir, 
             List<File> listOfProjectFiles) 
-        throws InterruptedException, GDException {
+        throws InterruptedException, JBException {
 
         FileStorageBP.exportProjectList(projectList, exportDirName, 
                 exportSession, monitor, writeToSystemTempDir, 
@@ -82,7 +82,7 @@ public class ExportAllBP extends AbstractActionBP {
      * 
      * @param gde The error that caused the export operation to abort.
      */
-    public void showAbortExport(GDException gde) {
+    public void showAbortExport(JBException gde) {
         Plugin.getDefault().writeErrorLineToConsole(
             I18n.getString(
                 "ExportAllBP.Error.ExportFailed", //$NON-NLS-1$

@@ -29,9 +29,9 @@ import org.eclipse.jubula.client.core.utils.DBSchemaPropertyCreator;
 import org.eclipse.jubula.client.core.utils.ProgressEvent;
 import org.eclipse.jubula.client.core.utils.ProgressEventDispatcher;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.utils.GDThread;
+import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
@@ -83,7 +83,7 @@ public class SelectDatabaseAction extends AbstractAction {
      * @author BREDEX GmbH
      *
      */
-    private static class Loader extends GDThread {
+    private static class Loader extends JBThread {
         
         /**
          * run method
@@ -156,7 +156,7 @@ public class SelectDatabaseAction extends AbstractAction {
                             }
                             
                             if (hibernateInit) {
-                                Utils.clearGuidancer();
+                                Utils.clearClient();
                                 LockManager.instance();
                                 Plugin.getDefault().writeLineToConsole(
                                         I18n.getString(
@@ -164,7 +164,7 @@ public class SelectDatabaseAction extends AbstractAction {
                                             true);
                                 Plugin.stopLongRunning();
                             } else {
-                                Utils.clearGuidancerUI();
+                                Utils.clearClientUI();
                                 Plugin.getDefault().writeLineToConsole(
                                         I18n.getString(
                                         "SelectDatabaseAction.Info.ConnectFailed"), //$NON-NLS-1$
@@ -210,7 +210,7 @@ public class SelectDatabaseAction extends AbstractAction {
                     } else {
                         hibernateInit = false;
                     }
-                } catch (GDFatalException e) {
+                } catch (JBFatalException e) {
                     hibernateInit = false;
                     ProgressEventDispatcher.notifyListener(new ProgressEvent(
                             ProgressEvent.SHOW_MESSAGE,

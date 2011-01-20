@@ -39,9 +39,9 @@ public class ClassPathDialog extends InputDialog {
     private Button m_addFileButton;
     /** gui component */
     private Button m_addDirButton;
-    /** the the GuiDancerSelectionListener */
-    private final GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    /** the the WidgetSelectionListener */
+    private final WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
     /** true, if browse buttons should be enabled */
     private boolean m_buttonsEnabled;
 
@@ -153,7 +153,7 @@ public class ClassPathDialog extends InputDialog {
      * @author BREDEX GmbH
      * @created 13.07.2005
      */
-    private class GuiDancerSelectionListener extends SelectionAdapter {
+    private class WidgetSelectionListener extends SelectionAdapter {
 
         /**
          * {@inheritDoc}

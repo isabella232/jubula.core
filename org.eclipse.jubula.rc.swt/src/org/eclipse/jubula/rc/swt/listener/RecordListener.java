@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
-import org.eclipse.jubula.rc.common.exception.GuiDancerNoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
@@ -65,7 +65,7 @@ import org.eclipse.swt.widgets.Widget;
  * @created 23.08.2004
  *
  */
-public class RecordListener extends AbstractGDAutSwtEventListener {
+public class RecordListener extends AbstractAutSwtEventListener {
     
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
@@ -306,7 +306,7 @@ public class RecordListener extends AbstractGDAutSwtEventListener {
                     }
                 }
             }
-        } catch (GuiDancerNoIdentifierForComponentException nifce) {
+        } catch (NoIdentifierForComponentException nifce) {
             // no identifier for the component, log this as an error
             log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
         }
@@ -447,7 +447,7 @@ public class RecordListener extends AbstractGDAutSwtEventListener {
                     a = m_recordHelperSWT.compSysToAction(id, "CompSystem.SelectTab"); //$NON-NLS-1$
                     m_recordActionsSWT.selectTab(tf, id, a);
                 }
-            } catch (GuiDancerNoIdentifierForComponentException
+            } catch (NoIdentifierForComponentException
                     nifce) {
                 // no identifier for the component, log this as an error
                 log.error("no identifier for '" + widget); //$NON-NLS-1$
@@ -543,8 +543,7 @@ public class RecordListener extends AbstractGDAutSwtEventListener {
                 logName = m_recordHelperSWT.generateLogicalName(
                         m_popupSource, id);
                 m_popupSource = null;
-            } catch (GuiDancerNoIdentifierForComponentException
-                    nifce) {
+            } catch (NoIdentifierForComponentException nifce) {
                 // no identifier for the component, log this as an error
                 log.error("no identifier for '" + widget); //$NON-NLS-1$
             }

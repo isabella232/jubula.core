@@ -52,8 +52,8 @@ import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.editors.AbstractGDEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
@@ -510,7 +510,7 @@ public abstract class AbstractDataSetPage extends Page
         initTableViewer(buttonComp); 
         createButtons(buttonComp);
         Plugin.getHelpSystem().setHelp(getTable(),
-                ContextHelpIds.GUIDANCER_DATASET_VIEW);
+                ContextHelpIds.JB_DATASET_VIEW);
     }
 
     /**
@@ -644,7 +644,7 @@ public abstract class AbstractDataSetPage extends Page
      *            the row to insert the new data set
      */
     private void insertDataSet(int row) {
-        final AbstractGDEditor editor = (AbstractGDEditor)m_currentPart;
+        final AbstractJBEditor editor = (AbstractJBEditor)m_currentPart;
         editor.getEditorHelper().requestEditableState();
         if (getParamInterfaceObj() instanceof IExecTestCasePO) {
             ITDManagerPO man = ((IExecTestCasePO)getParamInterfaceObj())
@@ -1439,7 +1439,7 @@ public abstract class AbstractDataSetPage extends Page
         /** The ControlEditor */
         private ControlEditor m_editor;
         /** the current testcase editor */
-        private AbstractGDEditor m_tcEditor;
+        private AbstractJBEditor m_tcEditor;
         /** The KeyListener of the editor */
         private KeyAdapter m_keyListener = new EditorKeyListener();
         /** The MouseListener of this Cursor */
@@ -1496,8 +1496,8 @@ public abstract class AbstractDataSetPage extends Page
          * assumes the typed data
          */
         private void writeData() {
-            if (m_currentPart instanceof AbstractGDEditor) {
-                m_tcEditor = (AbstractGDEditor)m_currentPart;
+            if (m_currentPart instanceof AbstractJBEditor) {
+                m_tcEditor = (AbstractJBEditor)m_currentPart;
             }
             if (m_tcEditor == null) { // e.g. activeEditor = OMEditor
                 return;
@@ -1533,7 +1533,7 @@ public abstract class AbstractDataSetPage extends Page
          * @param edit the editor
          */
         private void writeDataSetData(String property, Object value, 
-                AbstractGDEditor edit) {
+                AbstractJBEditor edit) {
             final int langIndex = getColumnIndexOfProperty(property);
             final Locale locale = (Locale)getTable()
                 .getColumn(langIndex).getData();
@@ -1552,7 +1552,7 @@ public abstract class AbstractDataSetPage extends Page
          * @param edit the editor
          */
         private void writeLanguageData(String property, Object value, 
-                AbstractGDEditor edit) {
+                AbstractJBEditor edit) {
             final int paramIndex = getColumnIndexOfProperty(property);
             final int dsNumber = getTable().indexOf(getRow());
             Locale locale = getLanguageCombo().getSelectedObject();
@@ -1573,10 +1573,10 @@ public abstract class AbstractDataSetPage extends Page
          * @param locale
          *            the locale of the test data
          */
-        private void setValueToModel(Object value, AbstractGDEditor editor,
+        private void setValueToModel(Object value, AbstractJBEditor editor,
                 int paramIndex, int dsNumber, Locale locale) {
             if (editor.getEditorHelper().requestEditableState() 
-                    == GDEditorHelper.EditableState.OK) {
+                    == JBEditorHelper.EditableState.OK) {
                 ParamNameBPDecorator mapper = editor.getEditorHelper()
                         .getEditSupport().getParamMapper();
                 GuiParamValueConverter conv = getGuiParamValueConverter(
@@ -1612,7 +1612,7 @@ public abstract class AbstractDataSetPage extends Page
          * @param edit the editor
          */
         private void writeParamData(String property, Object value, 
-                AbstractGDEditor edit) {
+                AbstractJBEditor edit) {
             final int langIndex = getColumnIndexOfProperty(property);
             final Locale locale = (Locale)getTable()
                 .getColumn(langIndex).getData();
@@ -1639,10 +1639,10 @@ public abstract class AbstractDataSetPage extends Page
          * @return if the value can be modified
          */
         private boolean canModify() {
-            if (!(m_currentPart instanceof AbstractGDEditor)) {
+            if (!(m_currentPart instanceof AbstractJBEditor)) {
                 return false;
             }
-            final AbstractGDEditor edit = (AbstractGDEditor)m_currentPart;
+            final AbstractJBEditor edit = (AbstractJBEditor)m_currentPart;
             // First column is not editable!
             boolean isFirstColumn = getColumn() == 0;
             boolean isEditor = (edit != null);
@@ -1850,12 +1850,12 @@ public abstract class AbstractDataSetPage extends Page
      * Removes a selected data set.
      */
     private void removeDataSet() {
-        final AbstractGDEditor editor = (AbstractGDEditor)m_currentPart;
+        final AbstractJBEditor editor = (AbstractJBEditor)m_currentPart;
         if (editor == null) {
             return;
         }
         if (editor.getEditorHelper().requestEditableState() 
-                == GDEditorHelper.EditableState.OK) {
+                == JBEditorHelper.EditableState.OK) {
             if (getParamInterfaceObj() instanceof IExecTestCasePO) {
                 ITDManagerPO man = ((IExecTestCasePO)getParamInterfaceObj())
                         .resolveTDReference();
@@ -1984,7 +1984,7 @@ public abstract class AbstractDataSetPage extends Page
         public void selectionChanged(IWorkbenchPart part, 
             ISelection selection) {
             if (!(selection instanceof IStructuredSelection)) { 
-                // e.g. in GUIdancer plugin-version you can open an java editor, 
+                // e.g. in Jubula plugin-version you can open an java editor, 
                 // that reacts on org.eclipse.jface.text.TextSelection, which
                 // is not a StructuredSelection
                 return;
@@ -1995,7 +1995,7 @@ public abstract class AbstractDataSetPage extends Page
             boolean correctPart = false;
             if (part != null) {
                 correctPart = (part == AbstractDataSetPage.this || part
-                        .getAdapter(AbstractGDEditor.class) != null);
+                        .getAdapter(AbstractJBEditor.class) != null);
             }
             if (!correctPart) {
                 getTable().setForeground(Layout.GRAY_COLOR);
@@ -2034,7 +2034,7 @@ public abstract class AbstractDataSetPage extends Page
             ISelection selection) {
             
         if (!(selection instanceof IStructuredSelection)) { 
-            // e.g. in GUIdancer plugin-version you can open an java editor, 
+            // e.g. in Jubula plugin-version you can open an java editor, 
             // that reacts on org.eclipse.jface.text.TextSelection, which
             // is not a StructuredSelection
             return;

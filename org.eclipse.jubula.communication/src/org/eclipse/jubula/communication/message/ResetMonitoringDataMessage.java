@@ -19,14 +19,13 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 public class ResetMonitoringDataMessage extends Message {
     /** The autId */
     private String m_autId;
-    /** */
+    /** default constructor */
     public ResetMonitoringDataMessage() {
         //do nothing
-    }
-    
+    }    
     /**
-     * ad
-     * @param autId asd
+     * 
+     * @param autId the autId
      */
     public ResetMonitoringDataMessage(String autId) {
         this.m_autId = autId;

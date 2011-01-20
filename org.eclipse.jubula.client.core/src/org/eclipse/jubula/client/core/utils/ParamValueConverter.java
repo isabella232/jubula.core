@@ -10,16 +10,21 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.utils.Parser.ParserException;
+import org.eclipse.jubula.client.core.parser.parameter.lexer.LexerException;
+import org.eclipse.jubula.client.core.parser.parameter.parser.ParserException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -32,6 +37,22 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  */
 public abstract class ParamValueConverter {
 
+    /** 
+     * All error codes that should be indicated to the user as "recoverable".
+     * Essentially, this means that the parameter text is not currently valid,
+     * but it may be made valid by appending the correct characters.
+     * This is generally marked in the Jubula UI by highlighting the text field
+     * in yellow.
+     */
+    private static final Set<Integer> RECOVERABLE_PARSE_ERROR_CODES =
+        new HashSet<Integer>();
+    
+    static {
+        RECOVERABLE_PARSE_ERROR_CODES.add(MessageIDs.E_ONE_CHAR_PARSE_ERROR);
+        RECOVERABLE_PARSE_ERROR_CODES.add(MessageIDs.E_MISSING_CLOSING_BRACE);
+
+    }
+    
     /** string in gui representation */
     private String m_guiString = null;
 
@@ -89,7 +110,8 @@ public abstract class ParamValueConverter {
      */
     public ParamValueConverter(IParameterInterfacePO currentNode, Locale locale,
         IParamDescriptionPO desc, IParamValueValidator validator)  {
-        Validate.notNull(currentNode, "Node for given parameter value must not be null."); //$NON-NLS-1$
+        Validate.notNull(currentNode, 
+            Messages.NodeForGivenParameterValueMustNotBeNull);
         m_currentNode = currentNode;
         m_locale = locale;
         m_desc = desc;
@@ -309,19 +331,55 @@ public abstract class ParamValueConverter {
     }
     
     /**
-     * @param e occured ParserException
+     * Creates an error based on the provided information and appends that
+     * error to the receiver.
+     * 
+     * @param e The exception that caused the error.
+     * @param input The input string for which the exception occurred.
      */
-    protected void createErrors(ParserException e) {
-        List<Integer> undecidedMsgs = new ArrayList<Integer>();
-        undecidedMsgs.add(MessageIDs.E_ONE_CHAR_PARSE_ERROR);
-        undecidedMsgs.add(MessageIDs.E_MISSING_CLOSING_BRACE);
-        
-        if (undecidedMsgs.contains(e.getMessageId())) {
-            addError(new TokenError(e.getInput(), e.getStartPos(), 
-                e.getMessageId(), ConvValidationState.undecided));
+    protected void createErrors(IOException e, String input) {
+        addError(new TokenError(input, MessageIDs.E_GENERAL_PARSE_ERROR, 
+                ConvValidationState.invalid));
+    }
+
+    /**
+     * Creates an error based on the provided information and appends that
+     * error to the receiver.
+     * 
+     * @param e The exception that caused the error.
+     * @param input The input string for which the exception occurred.
+     */
+    protected void createErrors(LexerException e, String input) {
+        addError(new TokenError(input, MessageIDs.E_GENERAL_PARSE_ERROR, 
+                ConvValidationState.invalid));
+    }
+
+    /**
+     * Creates an error based on the provided information and appends that
+     * error to the receiver.
+     * 
+     * @param e The exception that caused the error.
+     * @param input The input string for which the exception occurred.
+     */
+    protected void createErrors(ParserException e, String input) {
+        addError(new TokenError(input, 
+                MessageIDs.E_GENERAL_PARSE_ERROR, ConvValidationState.invalid));
+    }
+
+    /**
+     * Creates an error based on the provided information and appends that
+     * error to the receiver.
+     * 
+     * @param e The exception that caused the error.
+     * @param input The input string for which the exception occurred.
+     */
+    protected void createErrors(SemanticParsingException e, String input) {
+        if (RECOVERABLE_PARSE_ERROR_CODES.contains(e.getErrorId())) {
+            addError(new TokenError(input,  
+                    e.getErrorId(), ConvValidationState.undecided));
         } else {
-            addError(new TokenError(e.getInput(), e.getStartPos(), 
-                e.getMessageId(), ConvValidationState.invalid));
+            addError(new TokenError(input, 
+                    e.getErrorId(), ConvValidationState.invalid));
         }
     }
 
@@ -338,11 +396,11 @@ public abstract class ParamValueConverter {
      * @param token validated token
      */
     protected void createTokenError(ConvValidationState state, 
-        IParamValueToken token) {
+            IParamValueToken token) {
         if (state == ConvValidationState.invalid 
             || state == ConvValidationState.undecided) {
             TokenError tokenError = 
-                new TokenError(getGuiString(), token.getStartIndex(), 
+                new TokenError(getGuiString(), 
                     token.getErrorKey(), state);
             addError(tokenError);
         }

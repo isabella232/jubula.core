@@ -21,7 +21,7 @@ import org.eclipse.jubula.client.ui.model.GuiNode;
  * @created 05.04.2005
  */
 public class TestCaseEditorContentProvider 
-    extends AbstractGDTreeViewContentProvider {
+    extends AbstractTreeViewContentProvider {
     
     /**
      * Constructor.

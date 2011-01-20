@@ -48,7 +48,7 @@ import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.controllers.GDStateController;
+import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
@@ -70,7 +70,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
  * @created 11.10.2004
  */
 public class TestResultTreeView extends ViewPart 
-    implements ITreeViewerContainer, IGDPart, IDataChangedListener, 
+    implements ITreeViewerContainer, IJBPart, IDataChangedListener, 
     ITestResultEventListener, ITestExecutionEventListener, IAdaptable,
     IProjectLoadedListener {
     
@@ -119,7 +119,7 @@ public class TestResultTreeView extends ViewPart
         if (adapter.equals(ResetColourAdapter.class)) {
             return m_colourAdapter;
         } else if (adapter.equals(IPropertySheetPage.class)) {
-            return new GDPropertiesView(false, null);
+            return new JBPropertiesView(false, null);
         }
         return super.getAdapter(adapter);
     }
@@ -170,7 +170,7 @@ public class TestResultTreeView extends ViewPart
             ContextHelpIds.RESULT_TREE_VIEW);
         getTreeViewer().getControl().setLayoutData(layoutData);
         getSite().setSelectionProvider(getTreeViewer());
-        GDStateController.getInstance().
+        JubulaStateController.getInstance().
             addSelectionListenerToSelectionService();
         createContextMenu();
         DataEventDispatcher.getInstance().addDataChangedListener(this, true);

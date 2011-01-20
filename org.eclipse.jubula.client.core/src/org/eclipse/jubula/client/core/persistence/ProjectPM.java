@@ -40,6 +40,7 @@ import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IDocAttributeDescriptionPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -56,11 +57,11 @@ import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -90,11 +91,11 @@ public class ProjectPM extends PersistenceManager {
     /**
      * @return list with all available projects from database the project
      *         instances are detached from their session
-     * @throws GDException
+     * @throws JBException
      *             ...
      */
     public static synchronized List<IProjectPO> findAllProjects() 
-        throws GDException {
+        throws JBException {
         
         ProjectNameBP.getInstance().clearCache();
         EntityManager session = null;
@@ -102,8 +103,8 @@ public class ProjectPM extends PersistenceManager {
             session = Hibernator.instance().openSession();
             return findAllProjects(session);
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -125,7 +126,7 @@ public class ProjectPM extends PersistenceManager {
         Query query = sess.createQuery("select project from ProjectPO" //$NON-NLS-1$
                 + " as project where project.clientMetaDataVersion = :majorversion"); //$NON-NLS-1$
         query.setParameter(
-            "majorversion", IGdVersion.GD_CLIENT_METADATA_VERSION); //$NON-NLS-1$
+            "majorversion", IVersion.JB_CLIENT_METADATA_VERSION); //$NON-NLS-1$
         return query.getResultList();
     }
 
@@ -139,11 +140,11 @@ public class ProjectPM extends PersistenceManager {
      * @return the Project with the given attributes, or <code>null</code> if  
      *         no such Project could be found. The returned Project is not 
      *         associated with an Entity Manager.
-     * @throws GDException
+     * @throws JBException
      *             ...
      */
     public static synchronized IProjectPO loadProjectByGuidAndVersion(
-        String guid, int majorVersion, int minorVersion) throws GDException {
+        String guid, int majorVersion, int minorVersion) throws JBException {
 
         EntityManager session = null;
         try {
@@ -168,8 +169,8 @@ public class ProjectPM extends PersistenceManager {
             if (oce != null) {
                 throw oce;
             }
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -186,11 +187,11 @@ public class ProjectPM extends PersistenceManager {
      * @return the Project with the given attributes, or <code>null</code> if  
      *         no such Project could be found. The returned Project is not 
      *         associated with an Entity Manager.
-     * @throws GDException
+     * @throws JBException
      *             ...
      */
     public static synchronized IProjectPO loadProjectByNameAndVersion(
-        String name, int majorVersion, int minorVersion) throws GDException {
+        String name, int majorVersion, int minorVersion) throws JBException {
 
         EntityManager session = null;
         String guid = StringConstants.EMPTY;
@@ -207,8 +208,8 @@ public class ProjectPM extends PersistenceManager {
                 return null;
             }
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -222,11 +223,11 @@ public class ProjectPM extends PersistenceManager {
      *         The project instance is detached from the session.
      * @param name
      *            Name of the project to load
-     * @throws GDException
+     * @throws JBException
      *             ...
      */
     public static synchronized IProjectPO loadLatestVersionOfProjectByName(
-        String name) throws GDException {
+        String name) throws JBException {
 
         EntityManager session = null;
         String guid = StringConstants.EMPTY;
@@ -250,12 +251,12 @@ public class ProjectPM extends PersistenceManager {
             majorVersion = Integer.parseInt(versionNumber.substring(0, index));
             minorVersion = Integer.parseInt(versionNumber.substring(index + 1));
         } catch (NumberFormatException nfe) {
-            log.error("Invalid project version number", nfe); //$NON-NLS-1$
-            throw new GDException(nfe.getMessage(),
+            log.error(Messages.InvalidProjectVersionNumber, nfe);
+            throw new JBException(nfe.getMessage(),
                 MessageIDs.E_INVALID_PROJECT_VERSION);
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -269,10 +270,10 @@ public class ProjectPM extends PersistenceManager {
      * @param reused
      *            The reused project information for this project.
      * @return proj
-     * @throws GDException
+     * @throws JBException
      */
     public static synchronized IProjectPO loadProject(IReusedProjectPO reused)
-        throws GDException {
+        throws JBException {
 
         EntityManager session = null;
         try {
@@ -291,8 +292,8 @@ public class ProjectPM extends PersistenceManager {
             }
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -305,10 +306,10 @@ public class ProjectPM extends PersistenceManager {
      * 
      * @param reused The reused project information for the project.
      * @return the loaded project.
-     * @throws GDException
+     * @throws JBException
      */
     public static synchronized IProjectPO loadReusedProjectInMasterSession(
-        IReusedProjectPO reused) throws GDException {
+        IReusedProjectPO reused) throws JBException {
 
         EntityManager masterSession = 
             GeneralStorage.getInstance().getMasterSession();
@@ -335,8 +336,8 @@ public class ProjectPM extends PersistenceManager {
             }
             return project;
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         }
     }
@@ -348,19 +349,19 @@ public class ProjectPM extends PersistenceManager {
      * <code>null</code> if the project could not be found.
      * @param reusedProjectInfo 
      *      Information for finding the reused project
-     * @throws GDException
+     * @throws JBException
      *             ...
      */
     public static synchronized IProjectPO loadReusedProject(
-        IReusedProjectPO reusedProjectInfo) throws GDException {
+        IReusedProjectPO reusedProjectInfo) throws JBException {
 
         EntityManager session = null;
         try {
             session = Hibernator.instance().openSession();
             return loadReusedProject(reusedProjectInfo, session);
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -376,12 +377,12 @@ public class ProjectPM extends PersistenceManager {
      *      Information for finding the reused project
      * @param session
      *      The session into which the Project will be loaded
-     * @throws GDException
+     * @throws JBException
      *             ...
      */
     public static synchronized IProjectPO loadReusedProject(
         IReusedProjectPO reusedProjectInfo, EntityManager session) 
-        throws GDException {
+        throws JBException {
 
         try {
             Query query = session.createQuery("select project from ProjectPO project" //$NON-NLS-1$
@@ -397,8 +398,8 @@ public class ProjectPM extends PersistenceManager {
                 return null;
             }
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         }
     }
@@ -410,10 +411,10 @@ public class ProjectPM extends PersistenceManager {
      * @param projMajVers the Major Version
      * @param projMinVers the Minor Version
      * @return an ID or null if not found
-     * @throws GDException ...
+     * @throws JBException ...
      */
     public static final synchronized Long findProjectId(String projGuid,
-            Integer projMajVers, Integer projMinVers) throws GDException {
+            Integer projMajVers, Integer projMinVers) throws JBException {
 
         EntityManager session = null;
         try {
@@ -432,8 +433,8 @@ public class ProjectPM extends PersistenceManager {
                 return null;
             }
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -447,11 +448,11 @@ public class ProjectPM extends PersistenceManager {
      * @param projMajVers the Major Version of the Project which IReusedProjectPOs are wanted.
      * @param projMinVers the Minor Version of the Project which IReusedProjectPOs are wanted.
      * @return a List of IReusedProjectPO or an empty List of nothing found. 
-     * @throws GDException ...
+     * @throws JBException ...
      */
     public static final synchronized List<IReusedProjectPO> loadReusedProjects(
         String projGuid, Integer projMajVers, Integer projMinVers) 
-        throws GDException {
+        throws JBException {
         
         EntityManager session = null;
         final List<IReusedProjectPO> list = new ArrayList<IReusedProjectPO>();
@@ -468,8 +469,8 @@ public class ProjectPM extends PersistenceManager {
                 list.addAll(query.getResultList());
             }
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                     MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -509,19 +510,23 @@ public class ProjectPM extends PersistenceManager {
             if (cancel != null) {
                 throw cancel;
             }            
-            String msg = "Can't read project from database."; //$NON-NLS-1$
-            log.error("Unexpected persistence error, ignored", e); //$NON-NLS-1$
+            String msg = Messages.CantReadProjectFromDatabase
+                + StringConstants.DOT;
+            log.error(Messages.UnexpectedPersistenceErrorIgnored 
+                    + StringConstants.DOT, e);
             throw new PMReadException(msg + e.getMessage(),
                 MessageIDs.E_CANT_READ_PROJECT);
         } catch (PMException e) {
-            String msg = "Could not read param names from db."; //$NON-NLS-1$
+            String msg = Messages.CouldNotReadParamNamesFromDB 
+                + StringConstants.DOT;
             log.error(msg, e); 
             throw new PMReadException(msg + e.getMessage(),
                 MessageIDs.E_CANT_READ_PROJECT);
-        } catch (GDException e) {
+        } catch (JBException e) {
             GeneralStorage.getInstance().setProject(null);
-            String msg = "Can't read project from database."; //$NON-NLS-1$
-            log.error("Unexpected persistence error, ignored", e); //$NON-NLS-1$
+            String msg = Messages.CantReadProjectFromDatabase 
+                + StringConstants.DOT;
+            log.error(Messages.UnexpectedPersistenceErrorIgnored, e);
             throw new PMReadException(msg + e.getMessage(),
                 MessageIDs.E_CANT_READ_PROJECT);            
         }
@@ -550,10 +555,10 @@ public class ProjectPM extends PersistenceManager {
      * iterate over a the reused list and check for reused project inside
      * @param reused A Set of accumulated IDs of reused project
      * @param check the current set of reused project under inspection
-     * @throws GDException in case of DB problem
+     * @throws JBException in case of DB problem
      */
     private static void findReusedProjects(Set<Long> reused,
-            Set<IReusedProjectPO> check) throws GDException {
+            Set<IReusedProjectPO> check) throws JBException {
         for (IReusedProjectPO ru : check) {
             IProjectPO ruP = loadProject(ru);
             if (ruP != null) { // check for dangling reference
@@ -571,7 +576,7 @@ public class ProjectPM extends PersistenceManager {
      */
     @SuppressWarnings("nls")
     private static void preloadData(EntityManager s, IProjectPO key)
-        throws GDException {
+        throws JBException {
 
         // Determine Sub Projects
         Set<Long> projectIds = new HashSet<Long>(17);
@@ -654,16 +659,16 @@ public class ProjectPM extends PersistenceManager {
      *                operation.
      * @throws PMException
      *             in case of any db error
-     * @throws GDProjectDeletedException if project is already deleted
+     * @throws ProjectDeletedException if project is already deleted
      * @throws InterruptedException if the operation was canceled.
      */
     public static void attachProjectToROSession(IProjectPO proj, 
         String newProjectName, List<INameMapper> mapperList, 
         List<IWritableComponentNameMapper> compNameBindingList, 
         IProgressMonitor monitor) 
-        throws PMException, GDProjectDeletedException, InterruptedException {
+        throws PMException, ProjectDeletedException, InterruptedException {
         
-        monitor.beginTask(I18n.getString("ProjectWizard.creatingProject", //$NON-NLS-1$
+        monitor.beginTask(NLS.bind(Messages.ProjectWizardCreatingProject,
                 new Object[] { newProjectName }),
                 getTotalWorkForSave(proj));
         // Register hibernate progress listeners
@@ -750,7 +755,7 @@ public class ProjectPM extends PersistenceManager {
         for (INameMapper mapper : mapperList) {
             mapper.clearAllNames();
         }
-        String msg = "Can't attach project."; //$NON-NLS-1$
+        String msg = Messages.CantAttachProject + StringConstants.DOT;
         throw new PMSaveException(msg, MessageIDs.E_OBJECT_IN_USE);
 
     }
@@ -811,7 +816,7 @@ public class ProjectPM extends PersistenceManager {
             // Operation was canceled.
             throw new InterruptedException();
         }
-        String msg = "Can't attach project."; //$NON-NLS-1$
+        String msg = Messages.CantAttachProject + StringConstants.DOT;
         throw new PMSaveException(msg + e.getMessage(),
             MessageIDs.E_ATTACH_PROJECT);
     }
@@ -848,18 +853,22 @@ public class ProjectPM extends PersistenceManager {
      * @throws PMSaveException
      */
     private static void initBPs(IProjectPO proj) throws PMException,
-            GDProjectDeletedException, PMSaveException {
+            ProjectDeletedException, PMSaveException {
         try {
             ComponentNamesBP.getInstance().init();
             ParamNameBP.getInstance().initMap();
         } catch (PMException e) {
-            throw new PMException("Reading of project name or param names failed: " //$NON-NLS-1$
+            throw new PMException(
+                Messages.ReadingOfProjectNameOrParamNamesFailed
+                + StringConstants.COLON + StringConstants.SPACE
                 + e.toString(), MessageIDs.E_ATTACH_PROJECT);
         }
         try {
             UsedToolkitBP.getInstance().refreshToolkitInfo(proj);
         } catch (PMException e) {
-            throw new PMSaveException("PMException while writing UsedToolkits into DB! Exception: " //$NON-NLS-1$
+            throw new PMSaveException(
+                Messages.PMExceptionWhileWritingUsedToolkitsInDB
+                + StringConstants.COLON + StringConstants.SPACE
                 + e.toString(), MessageIDs.E_ATTACH_PROJECT);
         }
     }
@@ -920,13 +929,13 @@ public class ProjectPM extends PersistenceManager {
      * @param compNameBindingList a List of Component Name mappers to persist 
      *                            names (Component).
      * @throws PMException in case of any db error
-     * @throws GDProjectDeletedException if project is already deleted
+     * @throws ProjectDeletedException if project is already deleted
      * @throws InterruptedException if the operation is canceled
      */
     public static void saveProject(IProjectPO proj, String newProjectName, 
             List<INameMapper> mapperList, 
             List<IWritableComponentNameMapper> compNameBindingList) 
-        throws PMException, GDProjectDeletedException, 
+        throws PMException, ProjectDeletedException, 
             InterruptedException {
         
         final EntityManager saveSession = Hibernator.instance().openSession();
@@ -969,14 +978,14 @@ public class ProjectPM extends PersistenceManager {
                 // Operation was canceled.
                 throw new InterruptedException();
             }
-            String msg = "Can't save project."; //$NON-NLS-1$
+            String msg = Messages.CantSaveProject + StringConstants.DOT;
             throw new PMSaveException(msg + e.getMessage(),
                     MessageIDs.E_ATTACH_PROJECT);
         } catch (IncompatibleTypeException ite) {
             if (tx != null) {
                 Hibernator.instance().rollbackTransaction(saveSession, tx);
             }
-            String msg = "Can't save project. "; //$NON-NLS-1$
+            String msg = Messages.CantSaveProject + StringConstants.DOT;
             throw new PMSaveException(msg + ite.getMessage(),
                     MessageIDs.E_ATTACH_PROJECT);
         } finally {
@@ -1040,7 +1049,7 @@ public class ProjectPM extends PersistenceManager {
         } catch (NoResultException nre) {
             return false;
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
+            log.error(Messages.HibernateLoadFailed, e);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
         }
@@ -1075,7 +1084,7 @@ public class ProjectPM extends PersistenceManager {
             q.setParameter("minorNumber", minorNumber); //$NON-NLS-1$
             hits = (Long)q.getSingleResult();
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
+            log.error(Messages.HibernateLoadFailed, e);
         } finally {
             Hibernator.instance().
                 dropSessionWithoutLockRelease(session);            
@@ -1104,7 +1113,7 @@ public class ProjectPM extends PersistenceManager {
             q.setParameter(2, projectId);
             hits = q.getResultList();
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
+            log.error(Messages.HibernateLoadFailed, e);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
         }
@@ -1132,7 +1141,7 @@ public class ProjectPM extends PersistenceManager {
             q.setParameter(2, projectId);
             hits = q.getResultList();
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
+            log.error(Messages.HibernateLoadFailed, e);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
         }
@@ -1150,19 +1159,19 @@ public class ProjectPM extends PersistenceManager {
      *             if project is already locked in db
      * @throws PMDirtyVersionException
      *             if project to delete is modified in the meantime
-     * @throws GDException
+     * @throws JBException
      *             if a session cannot closed
      * @throws PMExtProjDeletedException
      *             if a project (but not the current) was deleted by another
      *             user
-     * @throws GDProjectDeletedException
+     * @throws ProjectDeletedException
      *             if the current project was deleted by another user
      * @throws InterruptedException
      *             if the operation was canceled
      */
     public static void deleteProject(IProjectPO proj, boolean isActProject)
         throws PMDirtyVersionException, PMAlreadyLockedException,
-        PMExtProjDeletedException, GDProjectDeletedException, GDException, 
+        PMExtProjDeletedException, ProjectDeletedException, JBException, 
         InterruptedException {
 
         Validate.notNull(proj, "Project to delete is null"); //$NON-NLS-1$
@@ -1176,7 +1185,8 @@ public class ProjectPM extends PersistenceManager {
                 IProjectPO currProj = (IProjectPO)s.find(
                     NodeMaker.getProjectPOClass(), projId, LockModeType.READ);
                 if (currProj == null) {
-                    throw new GDProjectDeletedException("Project was deleted", //$NON-NLS-1$
+                    throw new ProjectDeletedException(
+                        Messages.ProjectWasDeleted,
                         MessageIDs.E_CURRENT_PROJ_DEL);
                 }
             }
@@ -1191,11 +1201,12 @@ public class ProjectPM extends PersistenceManager {
                     NodeMaker.getProjectPOClass(), projId);
             if (p == null) {
                 if (isActProject) {
-                    throw new GDProjectDeletedException(
+                    throw new ProjectDeletedException(
                         "Current Project was deleted", //$NON-NLS-1$
                         MessageIDs.E_CURRENT_PROJ_DEL);
                 }
-                throw new PMExtProjDeletedException("Project was deleted.", //$NON-NLS-1$
+                throw new PMExtProjDeletedException(Messages.ProjectWasDeleted
+                    + StringConstants.DOT,
                     MessageIDs.E_DELETED_OBJECT);
             }
             Hibernator.instance().lockPO(deleteSess, p);
@@ -1243,11 +1254,12 @@ public class ProjectPM extends PersistenceManager {
      *            project, whose independent objects to be deleted
      * @throws PMException
      *             in case of failed delete operation
-     * @throws GDProjectDeletedException in case of already deleted exception
+     * @throws ProjectDeletedException
+     *             in case of already deleted exception
      * 
      */
     private static void deleteProjectIndependentDBObjects(EntityManager s,
-        IProjectPO p) throws PMException, GDProjectDeletedException {
+        IProjectPO p) throws PMException, ProjectDeletedException {
         UsedToolkitBP.getInstance().deleteToolkitsFromDB(s, p.getId(), false);
         ParamNamePM.deleteParamNames(s, p.getId(), false);
 
@@ -1345,7 +1357,7 @@ public class ProjectPM extends PersistenceManager {
      *         GUID
      */
     public static synchronized String findHighestVersionNumber(String guid)
-        throws GDException {
+        throws JBException {
 
         EntityManager session = null;
         try {
@@ -1360,11 +1372,11 @@ public class ProjectPM extends PersistenceManager {
                 return StringConstants.EMPTY;
             }
             IProjectPO project = (IProjectPO)projList.get(0);
-            return project.getMajorProjectVersion() + "." //$NON-NLS-1$
+            return project.getMajorProjectVersion() + StringConstants.DOT
                 + project.getMinorProjectVersion(); 
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -1392,8 +1404,7 @@ public class ProjectPM extends PersistenceManager {
     public static synchronized List<IProjectPO> findReusableProjects(
         String guid, int majorVersionNumber, int minorVersionNumber, 
         String toolkit, String toolkitLevel) 
-        throws GDException {
-
+        throws JBException {
         EntityManager session = null;
         try {
             session = Hibernator.instance().openSession();
@@ -1403,12 +1414,10 @@ public class ProjectPM extends PersistenceManager {
             query.setParameter("isReusable", true); //$NON-NLS-1$
             query.setParameter("guid", guid); //$NON-NLS-1$
             List<IProjectPO> projects = query.getResultList();
-            
             Iterator<IProjectPO> iter = projects.iterator();
             while (iter.hasNext()) {
                 IProjectPO project = iter.next();
                 String reusedToolkit = project.getToolkit();
-
                 try {
                     String reusedToolkitLevel = 
                         ToolkitSupportBP.getToolkitLevel(reusedToolkit);
@@ -1420,15 +1429,21 @@ public class ProjectPM extends PersistenceManager {
                         iter.remove();
                     }
                 } catch (ToolkitPluginException tpe) {
+                    StringBuilder msg = new StringBuilder();
+                    msg.append(Messages.Project);
+                    msg.append(StringConstants.SPACE);
+                    msg.append(project.getName());
+                    msg.append(StringConstants.SPACE);
+                    msg.append(
+                        Messages.CouldNotBeLoadedAnUnavailableToolkitPlugin);
+                    msg.append(StringConstants.DOT);
                     // Plugin for toolkit could not be loaded.
-                    log.error("Project " + project.getName() + " could not be "  //$NON-NLS-1$//$NON-NLS-2$
-                        + "loaded due to an unavailable Toolkit Plugin."); //$NON-NLS-1$
+                    log.error(msg.toString());
                     // Remove the project using the unavailable toolkit
                     // from the available projects list.
                     iter.remove();
                 }
             }
-
             // We have a list of reusable projects with compatible toolkits.
             // Now we need to remove from the list any projects that would lead 
             // to circular dependencies. 
@@ -1439,8 +1454,7 @@ public class ProjectPM extends PersistenceManager {
                     guid, majorVersionNumber, minorVersionNumber);
             
             if (givenProject == null) {
-                log.debug("Tried to find reusable projects for a non-existant " //$NON-NLS-1$
-                        + "project. Returning an empty list."); //$NON-NLS-1$
+                log.debug(Messages.TriedFindProjectsForNonExistantProject);
                 return new ArrayList<IProjectPO>();
             }
             
@@ -1457,8 +1471,8 @@ public class ProjectPM extends PersistenceManager {
             
             return projects;
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -1531,7 +1545,7 @@ public class ProjectPM extends PersistenceManager {
                         findIllegalProjects(reusedProject, checkedProjects, 
                             illegalProjects, projectsToImport);
                     }
-                } catch (GDException e) {
+                } catch (JBException e) {
                     // Error occurred while attempting to load the project
                     illegalProjects.add(projectToCheck);
                 }
@@ -1565,11 +1579,11 @@ public class ProjectPM extends PersistenceManager {
      *      The session to use for loading. The returned project will be 
      *      attached to this session. It is the responsibility of the
      *      caller to close the session.
-     * @throws GDException
+     * @throws JBException
      *             if the session cannot be loaded.
      */
     public static synchronized IProjectPO loadProjectById(
-        Long projectId, EntityManager session) throws GDException {
+        Long projectId, EntityManager session) throws JBException {
 
         if (projectId == null) {
             return null;
@@ -1589,8 +1603,8 @@ public class ProjectPM extends PersistenceManager {
             if (oce != null) {
                 throw oce;
             }
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         }
     }
@@ -1600,11 +1614,11 @@ public class ProjectPM extends PersistenceManager {
      * @return The  project for the given (database) ID
      * @param projectId 
      *      (database) ID of the project to load
-     * @throws GDException
+     * @throws JBException
      *             if the session cannot be loaded or closed.
      */
     public static IProjectPO loadProjectById(Long projectId) 
-        throws GDException {
+        throws JBException {
 
         EntityManager session = null;
         try {
@@ -1627,7 +1641,7 @@ public class ProjectPM extends PersistenceManager {
      */
     @SuppressWarnings("unchecked")
     public static synchronized List<Long> findIdsThatReuse(
-        String guid, int majorVersion, int minorVersion) throws GDException {
+        String guid, int majorVersion, int minorVersion) throws JBException {
 
         EntityManager session = null;
         List<Long> hits;
@@ -1644,8 +1658,8 @@ public class ProjectPM extends PersistenceManager {
                 "minorNumber", minorVersion); //$NON-NLS-1$
             hits = query.getResultList();
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -1659,10 +1673,10 @@ public class ProjectPM extends PersistenceManager {
      * @param projId the ID of the project
      * @return the GUID of the project with the given ID or null if
      * no project with the given ID was found.
-     * @throws GDException if the session cannot be loaded or closed.
+     * @throws JBException if the session cannot be loaded or closed.
      */
     public static final synchronized String getGuidOfProjectId(Long projId) 
-        throws GDException {
+        throws JBException {
         
         EntityManager session = null;
         String projGuid = null;
@@ -1675,7 +1689,7 @@ public class ProjectPM extends PersistenceManager {
         } catch (NoResultException nre) {
             // No result found. Fall through to return null.
         } catch (PersistenceException e) {
-            throw new GDException(e.getMessage(),
+            throw new JBException(e.getMessage(),
                 MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -1697,7 +1711,7 @@ public class ProjectPM extends PersistenceManager {
             q.setParameter(1, projectId);
             hits = q.getResultList();
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
+            log.error(Messages.HibernateLoadFailed, e);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
         }

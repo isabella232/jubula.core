@@ -20,6 +20,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IAutStateListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
@@ -34,7 +35,7 @@ import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.dialogs.DBLoginDialog;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.TimeUtil;
@@ -48,7 +49,7 @@ import org.eclipse.ui.progress.IProgressService;
  * @created 14.02.2007
  */
 public class ProgressController implements IProgressListener, 
-    IAutStateListener {
+    IAutStateListener, IProjectLoadedListener {
 
     /** for log messages */
     private static Log log = LogFactory.getLog(ProgressController.class);
@@ -60,10 +61,12 @@ public class ProgressController implements IProgressListener,
     private ProgressOperation m_prog;
     
     /**
-     * 
+     * Constructor
      */
     public ProgressController() {
-        DataEventDispatcher.getInstance().addAutStateListener(this, true);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addAutStateListener(this, true);
+        ded.addProjectLoadedListener(this, true);
     }
     
     /**
@@ -187,14 +190,14 @@ public class ProgressController implements IProgressListener,
                         }
                         
                         if (hibernateInit) {
-                            Utils.clearGuidancer();
+                            Utils.clearClient();
                             LockManager.instance();
                             Plugin.getDefault().writeLineToConsole(
                                     I18n.getString(
                                     "SelectDatabaseAction.Info.ConnectSuccessful"), true); //$NON-NLS-1$
                             Plugin.stopLongRunning();
                         } else {
-                            Utils.clearGuidancerUI();
+                            Utils.clearClientUI();
                             Plugin.getDefault().writeLineToConsole(
                                     I18n.getString(
                                     "SelectDatabaseAction.Info.ConnectFailed"), true); //$NON-NLS-1$
@@ -239,7 +242,7 @@ public class ProgressController implements IProgressListener,
                 } else {
                     hibernateInit = false;
                 }
-            } catch (GDFatalException e) {
+            } catch (JBFatalException e) {
                 hibernateInit = false;
                 ProgressEventDispatcher.notifyListener(new ProgressEvent(
                         ProgressEvent.SHOW_MESSAGE,
@@ -307,5 +310,13 @@ public class ProgressController implements IProgressListener,
      */
     public static boolean initHibernate() {
         return hibernateInit;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void handleProjectLoaded() {
+        reactOnProgressEvent(new ProgressEvent(ProgressEvent.CLOSE_PROGRESS_BAR,
+                null, null));
     }
 }

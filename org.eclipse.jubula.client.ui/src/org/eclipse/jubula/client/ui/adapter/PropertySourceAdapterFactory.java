@@ -21,7 +21,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
 
 
 /**
- * Provides property sources for GUIdancer model objects.
+ * Provides property sources for Jubula model objects.
  *
  * @author BREDEX GmbH
  * @created Feb 20, 2009

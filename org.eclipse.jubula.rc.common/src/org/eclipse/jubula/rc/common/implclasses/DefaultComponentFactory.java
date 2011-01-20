@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.implclasses;
 
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -39,17 +39,17 @@ public class DefaultComponentFactory implements IComponentFactory {
      * {@inheritDoc}
      */
     public Object createComponent(String componentName)
-        throws GuiDancerUnsupportedComponentException {
+        throws UnsupportedComponentException {
         try {
             return Class.forName(componentName).newInstance();
         } catch (InstantiationException e) {
-            throw new GuiDancerUnsupportedComponentException(createMessage(
+            throw new UnsupportedComponentException(createMessage(
                 componentName, e), MessageIDs.E_COMPONENT_NOT_INSTANTIATED);
         } catch (IllegalAccessException e) {
-            throw new GuiDancerUnsupportedComponentException(createMessage(
+            throw new UnsupportedComponentException(createMessage(
                 componentName, e), MessageIDs.E_COMPONENT_NOT_INSTANTIATED);
         } catch (ClassNotFoundException e) {
-            throw new GuiDancerUnsupportedComponentException(createMessage(
+            throw new UnsupportedComponentException(createMessage(
                 componentName, e), MessageIDs.E_COMPONENT_NOT_INSTANTIATED);
         }
     }

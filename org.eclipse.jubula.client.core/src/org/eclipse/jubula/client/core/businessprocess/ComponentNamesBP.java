@@ -29,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.CheckIfComponentNameIsReusedOp;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.FindNodesForComponentNameOp;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IComponentNameData;
@@ -55,13 +56,13 @@ import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -224,8 +225,8 @@ public class ComponentNamesBP
                     currProj.getMajorProjectVersion(), 
                     currProj.getMinorProjectVersion());
                 addComponentNamePO(namePO);
-            } catch (GDException e) {
-                throw new GDFatalException(e, MessageIDs.E_DATABASE_GENERAL);
+            } catch (JBException e) {
+                throw new JBFatalException(e, MessageIDs.E_DATABASE_GENERAL);
             }
         }
         if (namePO != null) {
@@ -237,7 +238,8 @@ public class ComponentNamesBP
             // This can happen legally if there is an unused overridden 
             // Component Name which was formerly propagated. 
             if (log.isDebugEnabled()) {
-                log.debug("Empty Component name. Parent ProjectId = " //$NON-NLS-1$
+                log.debug(Messages.EmptyComponentName + StringConstants.SPACE
+                        + StringConstants.EQUALS_SIGN + StringConstants.SPACE
                         + rootProjId + " uniqueId = " + guid); //$NON-NLS-1$
             }
         }
@@ -284,7 +286,7 @@ public class ComponentNamesBP
                         && loadedProjectIds.add(usedProjPo.getId())) {
                     init(usedProjPo, loadedProjectIds);
                 }
-            } catch (GDException e) {
+            } catch (JBException e) {
                 // Continue! Maybe the Project is not present in DB.
             }
         }
@@ -389,10 +391,10 @@ public class ComponentNamesBP
      * @param compNameParentProjGuid The ParentProjectGUID of the 
      * IComponentNamePO which is to load.
      * @return an IComponentNamePO or null if not found
-     * @throws GDException in case of any db problem.
+     * @throws JBException in case of any db problem.
      */
     public final IComponentNamePO getCompNamePo(String compNameGuid, 
-            String compNameParentProjGuid) throws GDException {
+            String compNameParentProjGuid) throws JBException {
         
         final IProjectPO currProject = GeneralStorage.getInstance()
             .getProject();
@@ -426,11 +428,11 @@ public class ComponentNamesBP
      * @param projMinVers the Minor Version of the ParentProject of the wanted 
      * IComponentNamePO.
      * @return an IComponentNamePO or null if not found.
-     * @throws GDException in case of any db problem.
+     * @throws JBException in case of any db problem.
      */
     private IComponentNamePO getCompNamePoImpl(String projToSearchGuid, 
         String compNameGuid, String compNameParentProjGuid, 
-        Integer projMajVers, Integer projMinVers) throws GDException {
+        Integer projMajVers, Integer projMinVers) throws JBException {
         
         if (compNameParentProjGuid != null) {
             IComponentNamePO compNamePo = loadCompNamePoImpl(compNameGuid, 
@@ -473,11 +475,11 @@ public class ComponentNamesBP
      * @param projMinVers the Minor Version of the ParentProject of the wanted 
      * IComponentNamePO.
      * @return an IComponentNamePO or null if not found.
-     * @throws GDException in case of any db problem.
+     * @throws JBException in case of any db problem.
      */
     private IComponentNamePO loadCompNamePoImpl(String compNameGuid, 
         String compNameParentProjGuid, Integer projMajVers, Integer projMinVers)
-        throws GDException {
+        throws JBException {
 
         IComponentNamePO compNamePO = null;
         final Long projId = ProjectPM.findProjectId(compNameParentProjGuid, 
@@ -707,18 +709,18 @@ public class ComponentNamesBP
         
         if (UNKNOWN_COMPONENT_TYPE.equals(computedType)) {
             // Computed component type is "unknown"
-            return  I18n.getString("CompName.UnknownTypeDetail", //$NON-NLS-1$
+            return NLS.bind(Messages.CompNameUnknownTypeDetail, 
                     new Object[]{
                         namePO != null ? namePO.getName() : checkableName});
         }
         
-        return  I18n.getString("CompName.IncompatibleTypeDetail", //$NON-NLS-1$
-            new Object[]{namePO != null ? namePO.getName() : checkableName, 
-                StringHelper.getInstance().get(checkableComponent.getType(), 
-                        true),
-                StringHelper.getInstance().get(originalComponent.getType(), 
-                        true)});
-
+        return NLS.bind(Messages.CompNameIncompatibleTypeDetail,
+                new Object[]{namePO != null ? namePO.getName() : checkableName, 
+                        StringHelper.getInstance()
+                        .get(checkableComponent.getType(), true),
+                        StringHelper.getInstance()
+                        .get(originalComponent.getType(), true)});
+        
     }
     
     /**
@@ -930,7 +932,7 @@ public class ComponentNamesBP
         Set<INodePO> reuse = new HashSet<INodePO>();
 
         monitor.beginTask(
-                I18n.getString("ShowWhereUsed.Searching"), //$NON-NLS-1$
+                Messages.ShowWhereUsedSearching,
                 specsToSearch.size() + suitesToSearch.size());
         
         for (ISpecPersistable node : specsToSearch) {
@@ -1005,7 +1007,7 @@ public class ComponentNamesBP
      *             if the TC was modified outside this instance of the
      *             application.
      * @throws PMObjectDeletedException
-     *             if the po as deleted by another instance of GUIdancer
+     *             if the po as deleted by another concurrently working user
      */
     public static void handleFirstReference(EntityManager sess,
         IComponentNamePO refCompName, boolean isReferencedByThisAction)
@@ -1033,13 +1035,15 @@ public class ComponentNamesBP
                             name.getClass(), name.getId());
                 } catch (PersistenceException he) {
                     // Continue since we are just refreshing the cache
-                    log.error("Stray hibernate exception on evict/load, continuing..", //$NON-NLS-1$
+                    log.error(Messages.StrayHibernateException 
+                            + StringConstants.DOT + StringConstants.DOT,
                         he);                
                 }
                 if (!LockManager.instance()
                         .lockPO(lockSession, name, false)) {
                     throw new PMAlreadyLockedException(name, 
-                            "Original Component Name already locked in db.", //$NON-NLS-1$
+                            Messages.OrginalTestcaseLocked 
+                                + StringConstants.DOT,
                             MessageIDs.E_OBJECT_IN_USE);           
                 }
             }

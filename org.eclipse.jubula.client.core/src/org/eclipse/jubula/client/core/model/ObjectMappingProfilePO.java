@@ -24,6 +24,8 @@ import javax.persistence.Version;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 
 
@@ -193,7 +195,8 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
         throws UnsupportedOperationException {
 
         throw new UnsupportedOperationException(
-            getClass().getName() + " does not have a parent project"); //$NON-NLS-1$
+            getClass().getName() + StringConstants.SPACE 
+                + Messages.DoesNotHaveAParentProject);
     }
 
     /**
@@ -207,7 +210,8 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
         throws UnsupportedOperationException {
         
         throw new UnsupportedOperationException(
-            getClass().getName() + " does not have a parent project"); //$NON-NLS-1$
+            getClass().getName() + StringConstants.SPACE 
+                + Messages.DoesNotHaveAParentProject);
     }
 
     /**

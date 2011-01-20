@@ -36,6 +36,7 @@ import javax.persistence.Version;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 
 
@@ -155,7 +156,7 @@ class TestDataCubePO implements ITestDataCubePO {
      *         contain a parameter with the passed unique id
      */
     public IParamDescriptionPO getParameterForUniqueId(String uniqueId) {
-        Validate.notNull(uniqueId, "The unique id must not be null"); //$NON-NLS-1$
+        Validate.notNull(uniqueId, Messages.TheUniqueIdMustNotBeNull);
         for (IParamDescriptionPO desc : getParameterList()) {
             if (uniqueId.equals(desc.getUniqueId())) {
                 return desc;

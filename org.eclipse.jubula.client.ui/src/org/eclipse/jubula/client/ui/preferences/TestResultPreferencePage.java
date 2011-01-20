@@ -20,8 +20,8 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.controllers.GDStateController;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.I18nStringCombo;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -82,7 +82,7 @@ public class TestResultPreferencePage extends PreferencePage
         "TestResultViewPreferencePage"; //$NON-NLS-1$
     
     /** textfield to define path to xml Generation */
-    private GDText m_path = null;
+    private JBText m_path = null;
 
     /**  Checkbox to decide Open ResultView */
     private Button m_openResultView = null;
@@ -111,14 +111,14 @@ public class TestResultPreferencePage extends PreferencePage
     /** Yes = 0; No = 1; Prompt = 2 */
     private int m_relevantValue;
     /** a new selection listener */
-    private final GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    private final WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
     
     /**
      * textfield to define maximum number of results in the test result summary
      * view
      */
-    private GDText m_numberOfDays = null;
+    private JBText m_numberOfDays = null;
 
     /**
      * <code>m_testExecRememberValue</code>
@@ -129,7 +129,7 @@ public class TestResultPreferencePage extends PreferencePage
      * @author BREDEX GmbH
      * @created May 3, 2010
      */
-    private class GuiDancerSelectionListener extends SelectionAdapter {
+    private class WidgetSelectionListener extends SelectionAdapter {
         /**
          * @param e
          *            The selection event.
@@ -198,7 +198,7 @@ public class TestResultPreferencePage extends PreferencePage
                         SWT.DEFAULT));
             }
         });
-        GDStateController.getInstance()
+        JubulaStateController.getInstance()
                 .addSelectionListenerToSelectionService();
         return scrollComposite;
     }
@@ -372,8 +372,8 @@ public class TestResultPreferencePage extends PreferencePage
      * @param parent The composite.
      * @return a new m_text field
      */
-    private GDText newTextField(Composite parent) {
-        final GDText textField = new GDText(parent, SWT.BORDER);
+    private JBText newTextField(Composite parent) {
+        final JBText textField = new JBText(parent, SWT.BORDER);
         GridData textGrid = new GridData(GridData.FILL, GridData.CENTER, 
             true , false, 3, 1);
         textGrid.widthHint = Dialog.convertWidthInCharsToPixels(

@@ -29,7 +29,7 @@ import com.thoughtworks.xstream.io.StreamException;
 import com.thoughtworks.xstream.mapper.Mapper;
 
 /**
- * XStream doesn't support XML tag attributes so far. As the GuiDancer
+ * XStream doesn't support XML tag attributes so far. As the client
  * configuration file contains attributes, this converter adds attribute support
  * to the deserialization mechanism of XStream.
  * 

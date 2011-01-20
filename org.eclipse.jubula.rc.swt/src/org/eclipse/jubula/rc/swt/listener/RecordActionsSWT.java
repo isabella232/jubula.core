@@ -23,7 +23,7 @@ import org.eclipse.jubula.communication.message.RecordActionMessage;
 import org.eclipse.jubula.communication.message.ShowObservInfoMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
-import org.eclipse.jubula.rc.common.exception.GuiDancerNoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
@@ -394,7 +394,7 @@ public class RecordActionsSWT {
             String logName = createLogicalName(widget, id);
             
             createCAP(a, id, treValues, logName, StringConstants.EMPTY);
-        } catch (GuiDancerNoIdentifierForComponentException nifce) {
+        } catch (NoIdentifierForComponentException nifce) {
             // no identifier for the component, log this as an error
             log.error("no identifier for '" + widget); //$NON-NLS-1$
         }
@@ -591,7 +591,7 @@ public class RecordActionsSWT {
                 createCAP(a, id, parameterValues, logName,
                         StringConstants.EMPTY);
                 
-            } catch (GuiDancerNoIdentifierForComponentException nifce) {
+            } catch (NoIdentifierForComponentException nifce) {
                 // no identifier for the component, log this as an error
                 log.error("no identifier for '" + source); //$NON-NLS-1$
             }
@@ -629,7 +629,7 @@ public class RecordActionsSWT {
                 createCAP(a, id, parameterValues, logName,
                         StringConstants.EMPTY);
                 m_map.put(src, txt);  
-            } catch (GuiDancerNoIdentifierForComponentException nifce) {
+            } catch (NoIdentifierForComponentException nifce) {
                 // no identifier for the component, log this as an error
                 log.error("no identifier for '" + tbl); //$NON-NLS-1$
             }

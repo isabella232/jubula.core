@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 
 
@@ -22,7 +23,7 @@ import org.eclipse.jubula.tools.exception.Assert;
  * @created 18.07.2006
  */
 public class TDVariableStore {
-
+    //FIXME tobi NLS ??
     /** Prefix for a user defined variable of the system environment */
     public static final String USERDEF_ENV_VAR_PREFIX = "GDUDV_"; //$NON-NLS-1$
         
@@ -56,7 +57,7 @@ public class TDVariableStore {
     public static final String VAR_AUTCONFIG = 
         PREDEF_VAR_PREFIX + "AUTCONFIG"; //$NON-NLS-1$
     
-    /** id for the predefined GUIdancer client version variable */
+    /** id for the predefined Jubula client version variable */
     public static final String VAR_CLIENTVERSION = 
         PREDEF_VAR_PREFIX + "CLIENTVERSION"; //$NON-NLS-1$
     
@@ -137,6 +138,7 @@ public class TDVariableStore {
      * {@inheritDoc}
      */
     public String toString() {
-        return super.toString() + " " + m_variables.toString();  //$NON-NLS-1$
+        return super.toString() + StringConstants.SPACE 
+            + m_variables.toString();
     }
 }

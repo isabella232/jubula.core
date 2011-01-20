@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.inspector.ui.commands;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.inspector.ui.i18n.Messages;
 import org.eclipse.jubula.client.inspector.ui.provider.sourceprovider.InspectorStateProvider;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.ActivateInspectorResponseMessage;
@@ -69,7 +70,7 @@ public class ActivateInspectorResponseCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        log.error(this.getClass().getName() + "timeout() called"); //$NON-NLS-1$
+        log.error(this.getClass().getName() + Messages.TimeoutCalled);
     }
 
 }

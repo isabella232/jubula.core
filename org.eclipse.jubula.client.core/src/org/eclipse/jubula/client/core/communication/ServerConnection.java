@@ -18,9 +18,11 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.AutStarterEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.ServerEvent;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -97,8 +99,7 @@ public class ServerConnection extends BaseConnection {
     public static synchronized ServerConnection getInstance() throws 
         ConnectionException {
         if (instance == null) {
-            String message = "ServerConnection is " + //$NON-NLS-1$
-                    "not initialized"; //$NON-NLS-1$
+            String message = Messages.ServerConnectionIsNotInitialized;
             throw new ConnectionException(message, 
                 MessageIDs.E_NO_SERVER_CONNECTION_INIT);
         }
@@ -120,13 +121,13 @@ public class ServerConnection extends BaseConnection {
         public void connectionGained(InetAddress inetAddress, int port) {
             if (log.isInfoEnabled()) {
                 try {
-                    String logMessage = "connected to " //$NON-NLS-1$ 
+                    String logMessage = Messages.ConnectedTo 
+                        + StringConstants.SPACE 
                         + inetAddress.getHostName() 
-                        + ":" + String.valueOf(port); //$NON-NLS-1$
+                        + StringConstants.COLON + String.valueOf(port);
                     log.info(logMessage);
                 } catch (SecurityException se) {
-                    log.debug("security violation while getting " //$NON-NLS-1$
-                           + "the host name from ip address"); //$NON-NLS-1$
+                    log.debug(Messages.SecurityViolationGettingHostNameFromIP);
                 }
             }
             ClientTestFactory.getClientTest().fireAutStarterStateChanged(
@@ -137,8 +138,8 @@ public class ServerConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void shutDown() {
-            log.info("connection to AUT Agent closed"); //$NON-NLS-1$
-            log.info("closing connection to the AUTServer"); //$NON-NLS-1$
+            log.info(Messages.ConnectionToAUTAgentClosed);
+            log.info(Messages.ClosingConnectionToTheAUTServer);
             
             try {
                 AUTConnection.getInstance().close();
@@ -156,9 +157,9 @@ public class ServerConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void sendFailed(Message message) {
-            log.warn("sending message failed:" //$NON-NLS-1$ 
+            log.warn(Messages.SendingMessageFailed + StringConstants.COLON 
                 + message.toString());
-            log.info("closing connection to the AUT Agent"); //$NON-NLS-1$
+            log.info(Messages.ClosingConnectionToTheAUTAgent);
             
             close();
         }
@@ -167,16 +168,15 @@ public class ServerConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void acceptingFailed(int port) {
-            log.error("accepting failed() called although " + //$NON-NLS-1$
-                    "this is a 'client':" //$NON-NLS-1$ 
-                + String.valueOf(port));
+            log.error(Messages.AcceptingFailedCalledAlthoughThisIsClient 
+                + StringConstants.COLON + String.valueOf(port));
         }
 
         /**
          * {@inheritDoc}
          */
         public void connectingFailed(InetAddress inetAddress, int port) {
-            log.warn("connecting the AUT Agent failed"); //$NON-NLS-1$
+            log.warn(Messages.ConnectingTheAUTAgentFailed);
             ClientTestFactory.getClientTest().
                 fireAutStarterStateChanged(new AutStarterEvent(
                     AutStarterEvent.SERVER_CANNOT_CONNECTED));

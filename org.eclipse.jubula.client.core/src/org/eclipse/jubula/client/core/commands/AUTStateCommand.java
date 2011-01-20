@@ -18,12 +18,14 @@ import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTStateMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.communication.message.SendCompSystemI18nMessage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
@@ -63,17 +65,14 @@ public class AUTStateCommand implements ICommand {
         public void error(int reason) {
             switch (reason) {
                 case IAUTInfoListener.ERROR_TIMEOUT:
-                    log.error("timeout occured getting " + //$NON-NLS-1$
-                            "all components from AUT"); //$NON-NLS-1$
+                    log.error(Messages.TimeoutOccuredGettingCompAUT);
                     break;
                 case IAUTInfoListener.ERROR_COMMUNICATION:
-                    log.error("could not request " + //$NON-NLS-1$
-                            "components from AUT"); //$NON-NLS-1$
+                    log.error(Messages.CouldNotRequestComsFromAUT);
                     break;
                 default: 
-                    log.fatal("unknown error reason " + //$NON-NLS-1$
-                        "getting all components from AUT: " //$NON-NLS-1$
-                        + String.valueOf(reason));
+                    log.fatal(Messages.UnknownErrorGettingAllCompsAUT 
+                        + StringConstants.COLON + String.valueOf(reason));
             }
             
         }
@@ -129,12 +128,10 @@ public class AUTStateCommand implements ICommand {
             try {
                 AUTConnection.getInstance().send(i18nMessage);
             } catch (CommunicationException ce) {
-                log.fatal("communication error while setting Resource Bundle", //$NON-NLS-1$
-                        ce); 
+                log.fatal(Messages.CommunicationErrorSetResourceBundle, ce); 
             }
         } catch (CommunicationException bce) {
-            log.fatal("communication error while getting all components from AUT", //$NON-NLS-1$
-                bce);
+            log.fatal(Messages.CommunicationErrorGetResourceBundle, bce);
         }
         return null;
     }
@@ -143,6 +140,6 @@ public class AUTStateCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        log.info("timeout expired"); //$NON-NLS-1$
+        log.info(Messages.TimeoutExpired);
     }
 }

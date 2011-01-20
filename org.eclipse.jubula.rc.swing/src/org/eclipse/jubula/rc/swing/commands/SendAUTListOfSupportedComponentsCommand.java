@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.swing.commands;
 import java.util.List;
 
 import org.eclipse.jubula.rc.common.commands.AbstractSendAUTListOfSupportedComponentsCommand;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
@@ -41,7 +41,7 @@ public class SendAUTListOfSupportedComponentsCommand
      */
     protected void addToHierarchy(IComponentFactory factory, 
         ConcreteComponent c, String technicalName) 
-        throws GuiDancerUnsupportedComponentException {
+        throws UnsupportedComponentException {
         
         ComponentHandler.addToHierarchy(factory, c.getComponentClass(), 
             technicalName);
@@ -52,7 +52,7 @@ public class SendAUTListOfSupportedComponentsCommand
      */
     protected List addComponentID(List componentIds, 
         ConcreteComponent concrete) 
-        throws GuiDancerUnsupportedComponentException {
+        throws UnsupportedComponentException {
         
         componentIds.add(createIdentifier(concrete));
         return componentIds;

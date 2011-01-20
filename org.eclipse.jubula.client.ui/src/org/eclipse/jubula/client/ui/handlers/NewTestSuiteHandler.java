@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 
 
@@ -78,7 +78,7 @@ public class NewTestSuiteHandler extends AbstractHandler {
                         new StructuredSelection(node));
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
         }
     }

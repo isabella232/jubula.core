@@ -24,7 +24,7 @@ import org.eclipse.swt.graphics.Image;
  * @author BREDEX GmbH
  * @created Jun 28, 2010
  */
-public class CentralTestDataLabelProvider extends GeneralGDLabelProvider {
+public class CentralTestDataLabelProvider extends GeneralLabelProvider {
     /**
      * {@inheritDoc}
      */

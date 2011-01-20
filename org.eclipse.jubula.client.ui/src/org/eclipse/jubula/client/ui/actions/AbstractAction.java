@@ -17,7 +17,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Event;
@@ -97,7 +97,7 @@ public abstract class AbstractAction implements IWorkbenchWindowActionDelegate,
      */
     public static boolean handleLockedObject(IPersistentObject po) {
         boolean result = false;
-        IEditorPart editor = GDEditorHelper.findEditor2LockedObj(po);
+        IEditorPart editor = JBEditorHelper.findEditor2LockedObj(po);
         if (editor != null) {
             Utils.createMessageDialog(MessageIDs.I_LOCK_OBJ_1, 
                     new Object[] {po.getName(), editor.getTitle() }, null);

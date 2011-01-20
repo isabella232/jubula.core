@@ -12,9 +12,13 @@ package org.eclipse.jubula.autagent.commands;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -351,6 +355,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         
         return sb.toString();
     }
+    
     /**
      * Gets the absolute path of the org.eclipse.jubula.rc.common.agent.jar file.
      * @return the absolute path
@@ -362,9 +367,35 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         String absPath = paths.toString();
         return absPath.replace('\\', '/');
     }
+    
+    /**
+     * Searches for *.jar files in the server extension directory (ext). 
+     * @return the extensions (jarfiles) as URL's
+     */
+    private URL[] getExtensions() {
+        
+        final File extDir = new File(CommandConstants.EXT_JARS_PATH);
+        final File[] extJars = extDir.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".jar"); //$NON-NLS-1$
+            }
+        });
+        URL[] urls = new URL[extJars.length];
+        if (extJars != null) {           
+            for (int i = 0; i < extJars.length; i++) {
+                try {                          
+                    urls[i] = extJars[i].toURI().toURL();
+                } catch (MalformedURLException e) {                   
+                    LOG.error("URL is not Malformed", e);
+                }                  
+            }
+        } 
+        return urls;
+    }
+    
     /**
      * This method will load the class which implements the {@link IMonitoring} 
-     * interface, and will invoke the "getAgent" method.
+     * interface, and will invoke the "getAgent" method. 
      * @param parameters The AutConfigMap
      * @return agentString The agent string 
      */        
@@ -381,9 +412,10 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         
         String agentString = null;       
         if (isRunnigWithMonitoring(parameters)) {                           
-            try {   
-                                
-                Class<?> monitoringClass = Class.forName(monitoringAgentClass); 
+            try {  
+                ClassLoader loader = new URLClassLoader(getExtensions());
+                Class<?> monitoringClass = 
+                    loader.loadClass(monitoringAgentClass);     
                 Constructor<?> constructor = monitoringClass.getConstructor();
                 IMonitoring agentInstance = 
                     (IMonitoring)constructor.newInstance();

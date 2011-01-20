@@ -21,7 +21,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 
 
 /**
- * The class containing methods which are needed by all IGuiDancerEventListener.
+ * The class containing methods which are needed by all IEventListener.
  * 
  * @author BREDEX GmbH
  * @created 26.08.2004

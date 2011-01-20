@@ -17,9 +17,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.ObjectMappedMessage;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
 
@@ -73,20 +75,24 @@ public class ObjectMappedCommand implements ICommand {
     private void mapObject(IComponentIdentifier componentIdentifier) {
         if (log.isInfoEnabled()) {
             try {
-                String logMessage = "mapped object '" //$NON-NLS-1$
+                String logMessage = Messages.MappedObject 
+                    + StringConstants.SPACE + StringConstants.APOSTROPHE
                     + componentIdentifier.getComponentName()
-                    + "' of type '" //$NON-NLS-1$
+                    + StringConstants.APOSTROPHE + StringConstants.SPACE
+                    + Messages.OfType + StringConstants.SPACE
+                    + StringConstants.APOSTROPHE
                     + componentIdentifier.getComponentClassName() 
-                    + "' in hierachy: "; //$NON-NLS-1$ 
+                    + StringConstants.APOSTROPHE + StringConstants.SPACE
+                    + Messages.InHierachy + StringConstants.COLON 
+                    + StringConstants.SPACE; 
                 for (Iterator iter = componentIdentifier.getHierarchyNames()
                         .iterator(); iter.hasNext();) {
                     String element = (String)iter.next();
-                    logMessage = logMessage + element + ","; //$NON-NLS-1$
+                    logMessage = logMessage + element + StringConstants.COMMA;
                 }
                 log.info(logMessage);
             } catch (ClassCastException cce) {
-                log.error("component identifiers does " + //$NON-NLS-1$
-                        "not consist of Strings"); //$NON-NLS-1$
+                log.error(Messages.ComponentIdentifiersDoes);
             }
         }
         if (TestExecution.getInstance().getConnectedAut() != null) {
@@ -99,7 +105,7 @@ public class ObjectMappedCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        log.error(this.getClass().getName() + "timeout() called"); //$NON-NLS-1$
+        log.error(this.getClass().getName() + Messages.TimeoutCalled);
     }
 
 }

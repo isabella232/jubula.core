@@ -10,15 +10,25 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.io.IOException;
+import java.io.PushbackReader;
+import java.io.StringReader;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.utils.Parser.ParserException;
+import org.eclipse.jubula.client.core.parser.parameter.lexer.Lexer;
+import org.eclipse.jubula.client.core.parser.parameter.lexer.LexerException;
+import org.eclipse.jubula.client.core.parser.parameter.parser.Parser;
+import org.eclipse.jubula.client.core.parser.parameter.parser.ParserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -26,6 +36,11 @@ import org.eclipse.jubula.client.core.utils.Parser.ParserException;
  * @created 31.10.2007
  */
 public class GuiParamValueConverter extends ParamValueConverter {
+
+    /** the logger */
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(GuiParamValueConverter.class);
+    
     /**
      * hint: the string could be null.
      * @param guiString to convert
@@ -58,12 +73,22 @@ public class GuiParamValueConverter extends ParamValueConverter {
     
     /** create tokens from gui string */
     void createTokens() {
+        Parser parser = new Parser(new Lexer(new PushbackReader(
+                new StringReader(StringUtils.defaultString(getGuiString())))));
+        ParsedParameter parsedParam = 
+            new ParsedParameter(true, getCurrentNode(), getDesc());
         try {
-            Parser parser = new Parser(getGuiString(), true, getCurrentNode(), 
-                getDesc());
-            setTokens(parser.getTokens());   
+            parser.parse().apply(parsedParam);
+            setTokens(parsedParam.getTokens());
+        } catch (LexerException e) {
+            createErrors(e, getGuiString());
         } catch (ParserException e) {
-            createErrors(e);
+            createErrors(e, getGuiString());
+        } catch (IOException e) {
+            LOG.error(Messages.ParameterParsingErrorOccurred, e);
+            createErrors(e, getGuiString());
+        } catch (SemanticParsingException e) {
+            createErrors(e, getGuiString());
         }
     }
     

@@ -29,7 +29,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
 
 
 /**
- * This is the abstract superclass of all PropertySources of the GuiDancer.
+ * This is the abstract superclass of all PropertySources of Jubula.
  * 
  * @author BREDEX GmbH
  * @created 31.01.2005
@@ -125,9 +125,9 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
     
        
     /**
-     * Gets a <code>IGuiDancerPropertyDescriptor</code> by the given ID.
+     * Gets a <code>IPropertyDescriptor</code> by the given ID.
      * @param id the ID of the searched Descriptor.
-     * @return a IGuiDancerPropertyDescriptor or null if no descriptor found.
+     * @return a IPropertyDescriptor or null if no descriptor found.
      */
     protected IPropertyDescriptor getPropertyDescriptorById(
         IPropertyController id) {

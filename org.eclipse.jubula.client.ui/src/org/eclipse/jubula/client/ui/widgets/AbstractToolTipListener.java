@@ -39,7 +39,7 @@ public abstract class AbstractToolTipListener implements Listener {
     /***/
     private Control m_toolTipOwner;
     /***/
-    private GDText m_toolTipContent;
+    private JBText m_toolTipContent;
     /***/
     private Shell m_tip;
     /***/
@@ -55,7 +55,7 @@ public abstract class AbstractToolTipListener implements Listener {
         m_toolTipOwner.addListener(SWT.KeyDown, this);
         m_toolTipOwner.addListener(SWT.MouseMove, this);
         m_toolTipOwner.addListener(SWT.MouseHover, this);
-        m_toolTipContent = new GDText(m_toolTipOwner.getShell(), 
+        m_toolTipContent = new JBText(m_toolTipOwner.getShell(), 
             Layout.MULTI_TEXT);
     }
     
@@ -89,7 +89,7 @@ public abstract class AbstractToolTipListener implements Listener {
                     m_tip = new Shell(m_toolTipOwner.getShell(), 
                         SWT.ON_TOP | SWT.TOOL);            
                     m_tip.setLayout(new FillLayout());
-                    m_toolTipContent = new GDText(m_tip, Layout.MULTI_TEXT 
+                    m_toolTipContent = new JBText(m_tip, Layout.MULTI_TEXT 
                         | SWT.READ_ONLY);
                     m_toolTipContent.setForeground(m_toolTipOwner.getDisplay()
                         .getSystemColor(SWT.COLOR_INFO_FOREGROUND));
@@ -173,7 +173,7 @@ public abstract class AbstractToolTipListener implements Listener {
                     && rect.equals(getBoundsOfItem(item, 
                         getColumnForToolTip()))) {
 
-                    GDText t = new GDText(parent, SWT.NONE);
+                    JBText t = new JBText(parent, SWT.NONE);
                     t.setVisible(false);
                     t.setText(getTextOfItem(item, getColumnForToolTip()));
                     GC gc = new GC(t);
@@ -256,7 +256,7 @@ public abstract class AbstractToolTipListener implements Listener {
          */
         public void handleEvent(Event event) {
             Tree tree = (Tree)m_toolTipOwner;
-            GDText label = (GDText) event.widget;
+            JBText label = (JBText) event.widget;
             Shell shell = label.getShell();
             switch (event.type) {
                 case SWT.MouseDown:

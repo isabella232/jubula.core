@@ -44,16 +44,16 @@ import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.controllers.GDStateController;
+import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
-import org.eclipse.jubula.client.ui.filter.GDBrowserPatternFilter;
-import org.eclipse.jubula.client.ui.filter.GDFilteredTree;
+import org.eclipse.jubula.client.ui.filter.JBBrowserPatternFilter;
+import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.provider.contentprovider.CentralTestDataContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.CentralTestDataLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.wizards.ImportTestDataSetsWizard;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
@@ -70,7 +70,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
  * @author BREDEX GmbH
  * @created Jun 28, 2010
  */
-public class CentralTestDataEditor extends AbstractGDEditor implements
+public class CentralTestDataEditor extends AbstractJBEditor implements
         IParamChangedListener {
 
     /**
@@ -92,7 +92,7 @@ public class CentralTestDataEditor extends AbstractGDEditor implements
                 new CentralTestDataLabelProvider(), Plugin.getDefault()
                         .getWorkbench().getDecoratorManager()
                         .getLabelDecorator());
-        lp.setDecorationContext(new GDEditorDecorationContext());
+        lp.setDecorationContext(new JBEditorDecorationContext());
         getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setSorter(new ViewerSorter());
         getMainTreeViewer().setComparer(new PersistentObjectComparer());
@@ -204,7 +204,7 @@ public class CentralTestDataEditor extends AbstractGDEditor implements
             } catch (PMException e1) {
                 PMExceptionHandler.handlePMExceptionForEditor(e, this);
             }
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
         } finally {
             monitor.done();
@@ -311,12 +311,12 @@ public class CentralTestDataEditor extends AbstractGDEditor implements
      *            Composite.
      */
     protected void createMainPart(Composite parent) {
-        final FilteredTree ft = new GDFilteredTree(parent, SWT.MULTI
+        final FilteredTree ft = new JBFilteredTree(parent, SWT.MULTI
                 | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER,
-                new GDBrowserPatternFilter(), true);
+                new JBBrowserPatternFilter(), true);
         setMainTreeViewer(ft.getViewer());
         getMainTreeViewer().setUseHashlookup(true);
-        GDStateController.getInstance()
+        JubulaStateController.getInstance()
                 .addSelectionListenerToSelectionService();
         getSite().setSelectionProvider(this);
         firePropertyChange(IWorkbenchPartConstants.PROP_INPUT);

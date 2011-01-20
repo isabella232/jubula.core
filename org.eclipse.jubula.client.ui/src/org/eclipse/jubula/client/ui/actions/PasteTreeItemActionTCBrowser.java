@@ -20,7 +20,7 @@ import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTrans
 import org.eclipse.jubula.client.ui.controllers.dnd.TCBrowserDndSupport;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 
 
 /**
@@ -68,7 +68,7 @@ public class PasteTreeItemActionTCBrowser extends AbstractPasteTreeItemAction {
                 TCBrowserDndSupport.moveNodes(nodesToBeMoved, target);
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
             }
         }

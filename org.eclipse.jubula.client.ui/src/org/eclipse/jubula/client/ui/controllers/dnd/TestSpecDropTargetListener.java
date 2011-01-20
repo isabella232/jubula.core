@@ -21,7 +21,7 @@ import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
@@ -57,7 +57,7 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
             return true;
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
         } finally {
             LocalSelectionTransfer.getInstance().setSelection(null);

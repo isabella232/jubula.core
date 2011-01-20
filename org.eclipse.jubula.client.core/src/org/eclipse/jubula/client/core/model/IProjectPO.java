@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.eclipse.jubula.tools.constants.StringConstants;
+
 /**
  * @author BREDEX GmbH
  * @created 19.12.2005
@@ -21,10 +23,10 @@ import java.util.Set;
 public interface IProjectPO extends IParamNodePO {
 
     /** Used between project name and version number in display strings */
-    public static final String NAME_SEPARATOR = "_"; //$NON-NLS-1$
+    public static final String NAME_SEPARATOR = StringConstants.UNDERLINE;
     
     /** Used between major and minor version numbers in display strings */
-    public static final String VERSION_SEPARATOR = "."; //$NON-NLS-1$
+    public static final String VERSION_SEPARATOR = StringConstants.DOT;
     
     /** indicates disabled auto-cleanup for test result details */
     public static final int NO_CLEANUP = -1;

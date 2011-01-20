@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Widget;
 
 /**
- * The class containing methods which are needed by all IGuiDancerEventListener.
+ * The class containing methods which are needed by all IEventListener.
  * 
  * @author BREDEX GmbH
  * @created 19.04.2006

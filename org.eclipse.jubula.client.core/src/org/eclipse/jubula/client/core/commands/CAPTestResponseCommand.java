@@ -13,10 +13,12 @@ package org.eclipse.jubula.client.core.commands;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.MessageCap;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 
@@ -85,21 +87,30 @@ public class CAPTestResponseCommand implements ICommand {
      */
     public void timeout() {
         StringBuilder messageCapData = 
-            new StringBuilder("; MessageCap: "); //$NON-NLS-1$
+            new StringBuilder(StringConstants.SEMICOLON);
+        messageCapData.append(Messages.MessageCap);
+        messageCapData.append(StringConstants.COLON);
+        messageCapData.append(StringConstants.SPACE);
         if (LOG.isErrorEnabled()) {
             if (m_capTestResponseMessage != null) {
                 MessageCap msgCap = m_capTestResponseMessage.getMessageCap();
-                messageCapData.append("Method '") //$NON-NLS-1$
+                messageCapData.append(Messages.Method)
+                    .append(StringConstants.APOSTROPHE)
                     .append(msgCap.getMethod())
-                    .append("', ComponentId '") //$NON-NLS-1$
+                    .append(StringConstants.APOSTROPHE)
+                    .append(StringConstants.COMMA)
+                    .append(StringConstants.SPACE)
+                    .append(Messages.ComponentId)
+                    .append(StringConstants.SPACE)
+                    .append(StringConstants.APOSTROPHE)
                     .append(msgCap.getCi())
-                    .append("'"); //$NON-NLS-1$
+                    .append(StringConstants.APOSTROPHE);
             } else {
-                messageCapData.append("null"); //$NON-NLS-1$
+                messageCapData.append(Messages.Null);
             }
         }
         LOG.error(this.getClass().getName() 
-                + " timeout() called" //$NON-NLS-1$
+                + StringConstants.SPACE + Messages.TimeoutCalled
                 + messageCapData.toString());
         TestExecution.getInstance().timeout();
     }
@@ -110,59 +121,75 @@ public class CAPTestResponseCommand implements ICommand {
      */
     private void logResult() {
         if (LOG.isInfoEnabled()) {
-            String message = "test step result:"; //$NON-NLS-1$
+            String message = Messages.TestStepResult + StringConstants.COLON;
             int state = m_capTestResponseMessage.getState();
-            
             switch (state) {
                 case CAPTestResponseMessage.TEST_OK: 
-                    message = message + "success"; //$NON-NLS-1$
+                    message = message + Messages.Success;
                     if (!void.class.getName().equals(
                             m_capTestResponseMessage.getReturnType())) {
                         
-                        message = message + "\nreturn type:" //$NON-NLS-1$
-                                + m_capTestResponseMessage.getReturnType()
-                                + "\nreturn value:" //$NON-NLS-1$
-                                + m_capTestResponseMessage.getReturnValue();
+                        message = message + StringConstants.NEWLINE 
+                            + Messages.ReturnType + StringConstants.SPACE
+                            + m_capTestResponseMessage.getReturnType()
+                            + StringConstants.NEWLINE + Messages.ReturnValue
+                            + StringConstants.COLON
+                            + m_capTestResponseMessage.getReturnValue();
                     }
                     break;
                 case CAPTestResponseMessage.TEST_FAILED:
                     message = message  
-                        + "general failure\n"; //$NON-NLS-1$
+                        + Messages.GeneralFailure + StringConstants.NEWLINE;
                     break;
                 case CAPTestResponseMessage.FAILURE_SECURITY:
                     message = message 
-                        + "failure: missing permission\n"; //$NON-NLS-1$
+                        + Messages.Failure + StringConstants.COLON 
+                        + StringConstants.SPACE + Messages.MissingPermission
+                        + StringConstants.NEWLINE;
                     break;
                 case CAPTestResponseMessage.FAILURE_ACCESSIBILITY:
                     message = message 
-                        + "failure: method not accesible\n"; //$NON-NLS-1$
+                        + Messages.Failure + StringConstants.COLON 
+                        + StringConstants.SPACE + Messages.MethodNotAccesible
+                        + StringConstants.NEWLINE;
                     break;
                 case CAPTestResponseMessage
                     .FAILURE_INVALID_IMPLEMENTATION_CLASS:
                     message = message
-                        + "failure: missing implementation class\n"; //$NON-NLS-1$ 
+                        + Messages.Failure + StringConstants.COLON 
+                        + StringConstants.SPACE 
+                        + Messages.MissingImplementationClass 
+                        + StringConstants.NEWLINE;
                     break;
                 case CAPTestResponseMessage.FAILURE_METHOD_NOT_FOUND:
                     break;
                 case CAPTestResponseMessage.FAILURE_INVALID_PARAMETER:
-                    message = message 
-                        + "failure: parameters are not valid\n"; //$NON-NLS-1$ 
+                    message = message + Messages.Failure + StringConstants.COLON
+                        + StringConstants.SPACE + Messages.parametersAreNotValid
+                        + StringConstants.NEWLINE;
                     break;
                 case CAPTestResponseMessage.FAILURE_STEP_EXECUTION:
-                    message = message 
-                        + "failure: implementing method " //$NON-NLS-1$
-                        + "has thrown an exception\n"; //$NON-NLS-1$
+                    message = message + Messages.Failure + StringConstants.COLON
+                        + StringConstants.SPACE 
+                        + Messages.ImplementingMethodHasThrownAnException
+                        + StringConstants.NEWLINE;
                     break;
                 case CAPTestResponseMessage.FAILURE_UNSUPPORTED_COMPONENT:
                     message = message 
-                        + "failure: component is not supported\n"; //$NON-NLS-1$
+                        + Messages.Failure + StringConstants.COLON 
+                        + StringConstants.SPACE 
+                        + Messages.ComponentIsNotSupported
+                        + StringConstants.NEWLINE;
                     break;
                 case CAPTestResponseMessage.FAILURE_COMPONENT_NOT_FOUND:
                     message = message 
-                        + "failure: component not found\n"; //$NON-NLS-1$
+                        + Messages.Failure + StringConstants.COLON 
+                        + StringConstants.SPACE + Messages.ComponentNotFound
+                        + StringConstants.NEWLINE;
                     break;
                 default:
-                    message = "unknown state: " + state; //$NON-NLS-1$
+                    message = Messages.UnknownState + StringConstants.COLON
+                        + StringConstants.SPACE + state;
             }
             LOG.debug(message);
         }

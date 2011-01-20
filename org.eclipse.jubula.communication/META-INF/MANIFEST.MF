@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Communication (Incubation)
 Bundle-SymbolicName: org.eclipse.jubula.communication;singleton:=true
-Bundle-Version: 0.4.0
+Bundle-Version: 0.9.0.qualifier
 Bundle-ClassPath: org.eclipse.jubula.communication.jar
 Bundle-Vendor: Eclipse Jubula
 Export-Package: org.eclipse.jubula.communication,
@@ -14,6 +14,9 @@ Export-Package: org.eclipse.jubula.communication,
  org.eclipse.jubula.communication.message.html,
  org.eclipse.jubula.communication.parser,
  org.eclipse.jubula.communication.writer
-Require-Bundle: org.eclipse.jubula.tools;visibility:=reexport
+Require-Bundle: org.eclipse.jubula.tools;bundle-version="[0.9.0,1.0.0)";visibility:=reexport,
+ org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
+ org.apache.commons.logging;bundle-version="[1.0.4,2.0.0)",
+ org.apache.log4j;bundle-version="[1.2.15,2.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
 Eclipse-BundleShape: jar

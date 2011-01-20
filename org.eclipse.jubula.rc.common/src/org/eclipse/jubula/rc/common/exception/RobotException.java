@@ -15,7 +15,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
 
 /**
- * This exception is thrown by the GuiDancer Robot API implementations.
+ * This exception is thrown by the Robot API implementations.
  * 
  * @author BREDEX GmbH
  * @created 17.03.2005

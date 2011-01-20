@@ -51,9 +51,9 @@ public class MonitoringAttribute {
      * @param id the id of the attribute
      * @param defaultValue the default value of the attribute
      * @param monitoringName the monitoring name of the attribute
-     * @param render true: the attribute will be redered, false: no rendering
+     * @param render true: the attribute will be rendered, false: no rendering
      * @param infoBoobleText The text to display as info booble
-     * @param validator An optional Validator
+     * @param validator An optional validator
      */
     public MonitoringAttribute(String type, String description, String id,
             String defaultValue, boolean render, String monitoringName,

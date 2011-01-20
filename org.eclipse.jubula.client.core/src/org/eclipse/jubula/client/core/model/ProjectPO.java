@@ -34,6 +34,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 
 
@@ -576,7 +577,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      */
     public void setName(String name) {
         //ProjectNameBP.getInstance().setName(getGuid(), name);
-        log.debug("setName() not supported on ProjectPO"); //$NON-NLS-1$
+        log.debug(Messages.SetNameNotSupportedOnProjectPO);
     }
 
     /**

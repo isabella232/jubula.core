@@ -77,7 +77,7 @@ public final class ShowClientLogBP extends AbstractActionBP {
             
             // Ask user to turn on file logging
             Utils.createMessageDialog(MessageIDs.I_FILE_LOGGING_NOT_ENABLED,
-                new String[] {"GUIdancer"}, null); //$NON-NLS-1$
+                new String[] {"Jubula"}, null); //$NON-NLS-1$
         }
             
         return clientLogFile;

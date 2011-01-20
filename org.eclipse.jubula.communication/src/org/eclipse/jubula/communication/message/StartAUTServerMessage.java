@@ -19,7 +19,7 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 /**
  * The class <code>StartAutServerCommand</code> and the associated
  * <code>StartAutServerMessage</code> are used as examples for the intended
- * use of the communications layer in GuiDancer. Since changes are expected, this
+ * use of the communications layer in Jubula. Since changes are expected, this
  * documentation is inlined in the source code. Please reevaluate the Java doc
  * frequently for changes in this templates.
  *  
@@ -38,8 +38,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * public. Since these are pure data carrying properties this is acceptable.
  *
  * @attribute System.Serializable()
- * 
- *
  */
 public class StartAUTServerMessage extends Message {
     /**
@@ -52,7 +50,7 @@ public class StartAUTServerMessage extends Message {
     /* see class comment for details on .NET attributes */
     /** where to find the JubulaClient, inetAdress conform */
     /** @attribute System.Xml.Serialization.XmlElement("m__guidancerClient") */
-    public String m_guidancerClient;
+    public String m_client;
     
     /** port the GDClient listens to */
     /** @attribute System.Xml.Serialization.XmlElement("m__port") */
@@ -116,7 +114,7 @@ public class StartAUTServerMessage extends Message {
         Validate.isTrue(port > 0);
         
         setAutConfiguration(autConfig);
-        setGDClient(host);
+        setClient(host);
         setPort(port);
         setAutToolKit(autToolKit);
         setGenerateNames(generateNames);
@@ -152,18 +150,18 @@ public class StartAUTServerMessage extends Message {
     }
 
     /**
-     * @return Returns the guidancerClient.
+     * @return Returns the client.
      */
-    public String getGDClient() {
-        return m_guidancerClient;
+    public String getClient() {
+        return m_client;
     }
     
     /**
-     * @param guidancerClient The guidancerClient to set.
+     * @param client The client to set.
      */
-    public void setGDClient(String guidancerClient) {
-        Validate.notEmpty(guidancerClient);
-        m_guidancerClient = guidancerClient;
+    public void setClient(String client) {
+        Validate.notEmpty(client);
+        m_client = client;
     }
     
     /**

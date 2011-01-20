@@ -30,7 +30,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.handlers.HandlerUtil;

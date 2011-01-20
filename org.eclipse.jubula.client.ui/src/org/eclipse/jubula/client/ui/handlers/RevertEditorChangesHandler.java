@@ -16,8 +16,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -39,8 +38,8 @@ public class RevertEditorChangesHandler extends AbstractHandler {
             return null;
         }
         
-        final IGDEditor editor = 
-            (IGDEditor)activePart.getAdapter(IGDEditor.class);
+        final IJBEditor editor = 
+            (IJBEditor)activePart.getAdapter(IJBEditor.class);
         if (editor != null) {
             MessageDialog dialog = showConfirmDialog();
             if (dialog.getReturnCode() == Window.OK) {
@@ -57,7 +56,7 @@ public class RevertEditorChangesHandler extends AbstractHandler {
     private MessageDialog showConfirmDialog() {
         MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
             I18n.getString("RevertEditorChangesAction.shellTitle"), //$NON-NLS-1$
-                IconConstants.GUIDANCER_IMAGE,
+                null,
                 I18n.getString("RevertEditorChangesAction.questionText"), //$NON-NLS-1$
                 MessageDialog.QUESTION, new String[] {
                     I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
@@ -71,7 +70,7 @@ public class RevertEditorChangesHandler extends AbstractHandler {
     /**
      * @param editor The editor in that the changes have to be reverted
      */
-    private void revertEditorChanges(IGDEditor editor) {
+    private void revertEditorChanges(IJBEditor editor) {
         try {
             editor.reOpenEditor(
                     editor.getEditorHelper().getEditSupport().getOriginal());

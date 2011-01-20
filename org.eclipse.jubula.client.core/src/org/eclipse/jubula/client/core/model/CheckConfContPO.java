@@ -13,7 +13,9 @@ package org.eclipse.jubula.client.core.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKeyColumn;
@@ -28,6 +30,9 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "CHECK_CONF_CONT")
 class CheckConfContPO extends WrapperPO implements ICheckConfContPO {
+    
+    /** is teststyle enabled? */
+    private boolean m_enabled = false;
 
     /** map of the checkconf and the checkid */
     private Map<String, CheckConfPO> m_confMap = 
@@ -43,6 +48,23 @@ class CheckConfContPO extends WrapperPO implements ICheckConfContPO {
     public Map<String, CheckConfPO> getConfMap() {
         return m_confMap;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Basic
+    @Column(name = "ENABLED")
+    public boolean getEnabled() {
+        return m_enabled;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void setEnabled(boolean enabled) {
+        m_enabled = enabled;
+    }
+    
 
     /**
      * @param confMap
@@ -91,9 +113,9 @@ class CheckConfContPO extends WrapperPO implements ICheckConfContPO {
     //           "parentProjectId" should be persisted. This causes an 
     //           exception when trying to access an instance of this class 
     //           from the database. Oddly enough, the exceptions do not occur 
-    //           when running GUIdancer from the IDE. The exceptions only occur 
-    //           in a deployed GUIdancer. Once this problem is resolved (for a 
-    //           deployed GUIdancer), the workaround can be removed.
+    //           when running Jubula from the IDE. The exceptions only occur 
+    //           in a deployed Jubula. Once this problem is resolved (for a 
+    //           deployed Jubula), the workaround can be removed.
     public Long getParentProjectId() {
         return super.getParentProjectId();
     }

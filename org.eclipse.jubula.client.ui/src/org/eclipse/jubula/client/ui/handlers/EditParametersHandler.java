@@ -20,8 +20,8 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.EditParametersDialog;
 import org.eclipse.jubula.client.ui.dialogs.AbstractEditParametersDialog.Parameter;
-import org.eclipse.jubula.client.ui.editors.AbstractGDEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 
 
@@ -34,9 +34,9 @@ public class EditParametersHandler extends AbstractEditParametersHandler {
      * {@inheritDoc}
      */
     public Object execute(ExecutionEvent event) {
-        final AbstractGDEditor editor = getEditorInEditableState();
+        final AbstractJBEditor editor = getEditorInEditableState();
         if (editor != null) {
-            final GDEditorHelper.EditableState state = editor.getEditorHelper()
+            final JBEditorHelper.EditableState state = editor.getEditorHelper()
                     .getEditableState();
             final ISpecTestCasePO workTC = (ISpecTestCasePO)editor
                     .getEditorHelper().getEditSupport().getWorkVersion();
@@ -48,7 +48,7 @@ public class EditParametersHandler extends AbstractEditParametersHandler {
             if (Window.OK == dialog.getReturnCode()) {
                 performChanges(editor, state, workTC, dialog);
             } else {
-                if (state == GDEditorHelper.EditableState.NotChecked) {
+                if (state == JBEditorHelper.EditableState.NotChecked) {
                     workTC.setIsReused(null);
                     editor.getEditorHelper().resetEditableState();
                 }
@@ -64,8 +64,8 @@ public class EditParametersHandler extends AbstractEditParametersHandler {
      * @param workTC the working ISpecTestCasePO
      * @param dialog the EditParametersDialog
      */
-    private static void performChanges(AbstractGDEditor editor, 
-        GDEditorHelper.EditableState state, ISpecTestCasePO workTC, 
+    private static void performChanges(AbstractJBEditor editor, 
+        JBEditorHelper.EditableState state, ISpecTestCasePO workTC, 
         EditParametersDialog dialog) {
         
         final List<Parameter> parameters = dialog.getParameters();
@@ -80,7 +80,7 @@ public class EditParametersHandler extends AbstractEditParametersHandler {
                 .fireParamChangedListener();
             DataEventDispatcher.getInstance().firePropertyChanged(false);
         } else {
-            if (state == GDEditorHelper.EditableState.NotChecked) {
+            if (state == JBEditorHelper.EditableState.NotChecked) {
                 workTC.setIsReused(null);
                 editor.getEditorHelper().resetEditableState();
             }  

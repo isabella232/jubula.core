@@ -21,8 +21,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.client.core.Activator;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -47,7 +48,7 @@ public class DBSchemaPropertyCreator {
     /**
      * file-name for our database
      */
-    private static String embeddedName = "guidancer-db"; //$NON-NLS-1$
+    private static String embeddedName = "jubula-db"; //$NON-NLS-1$
     
     /** schema properties */
     private static Properties schemaProp = null;
@@ -113,7 +114,7 @@ public class DBSchemaPropertyCreator {
                 //add schemaname and properties to schemaMap
                 String schemaName = schemaProp.getProperty(number + "_schemName"); //$NON-NLS-1$
                 schemaMap.put(schemaName, completeProps);
-            } catch (GDException e) {                
+            } catch (JBException e) {                
                 if (e.getErrorId().equals(
                         MessageIDs.E_ERROR_IN_SCHEMA_CONFIG)) {
                     log.fatal(e.getMessage());
@@ -140,7 +141,7 @@ public class DBSchemaPropertyCreator {
      * @return the db properties
      */
     public static Properties getDbProps(Properties properties, String dbNr)
-        throws GDException {
+        throws JBException {
         Properties dbProps = properties;
         
         try {
@@ -158,8 +159,8 @@ public class DBSchemaPropertyCreator {
                             dbProp.getProperty(dbNr + "_val." + propNr)); //$NON-NLS-1$
                 }
             } 
-        } catch (GDException e) {
-            throw new GDException(e.getMessage(), e.getErrorId());
+        } catch (JBException e) {
+            throw new JBException(e.getMessage(), e.getErrorId());
         }
                
         return dbProps;
@@ -170,12 +171,12 @@ public class DBSchemaPropertyCreator {
      * @param number of scheme
      */
     private static void validateSchemaProperties(String number)
-        throws GDException {
+        throws JBException {
         if (schemaProp.getProperty(number + "_schemName") == null //$NON-NLS-1$
                 || schemaProp.getProperty(number + "_dbtype") == null //$NON-NLS-1$
                 || schemaProp.getProperty(number + "_url") == null) { //$NON-NLS-1$
-            final String msg = "Your schema.properties is not correct."; //$NON-NLS-1$
-            throw new GDException(msg,
+            final String msg = Messages.YourSchemaPropertiesIsNotCorrect;
+            throw new JBException(msg,
                     MessageIDs.E_ERROR_IN_SCHEMA_CONFIG);
         }        
     }
@@ -185,11 +186,11 @@ public class DBSchemaPropertyCreator {
      * @param number of scheme
      */
     private static void validateDatabaseProperties(String number)
-        throws GDException {
+        throws JBException {
         if (dbProp.getProperty(number + "_db") == null //$NON-NLS-1$
                 || dbProp.getProperty(number + "_driverclass") == null) { //$NON-NLS-1$
-            final String msg = "Your databases.properties is not correct."; //$NON-NLS-1$
-            throw new GDException(msg,
+            final String msg = Messages.YourDatabasesPropertiesIsNotCorrect;
+            throw new JBException(msg,
                     MessageIDs.E_ERROR_IN_DB_CONFIG);
         }
     }
@@ -197,7 +198,7 @@ public class DBSchemaPropertyCreator {
     /**
      * Loads the properties files.
      */
-    private static void loadProperties() throws GDFatalException {
+    private static void loadProperties() throws JBFatalException {
         schemaProp = BundleUtils.loadProperties(Platform
                 .getBundle(Activator.PLUGIN_ID), Activator.RESOURCES_DIR
                 + SCHEMA_PROPERTIES);

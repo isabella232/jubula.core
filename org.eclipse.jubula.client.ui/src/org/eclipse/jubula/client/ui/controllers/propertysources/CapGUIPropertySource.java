@@ -43,9 +43,9 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDPopupCompNameTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDPropertyDescriptor;
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.PopupCompNameTextPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
@@ -320,32 +320,32 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                     // FIXME zeb This looks like a workaround for something
                     // unnecessary. We should see if we can handle this default
                     // mapping situation in a more elegant way.
-                    if (activeEditor instanceof IGDEditor
-                            && ((IGDEditor)activeEditor).getEditorHelper()
+                    if (activeEditor instanceof IJBEditor
+                            && ((IJBEditor)activeEditor).getEditorHelper()
                                 .getEditSupport().getWorkVersion() 
                                     == capPO.getParentNode()) {
                         IWritableComponentNameMapper mapper = 
-                            ((IGDEditor)activeEditor).getEditorHelper()
+                            ((IJBEditor)activeEditor).getEditorHelper()
                                 .getEditSupport().getCompMapper();
                         try {
                             ComponentNamesBP.getInstance().setCompName(capPO, 
                                     logicalName, CompNameCreationContext.STEP, 
                                     mapper);
                             cnc.setProperty(logicalName);
-                            pd = new GDPropertyDescriptor(
+                            pd = new JBPropertyDescriptor(
                                     cnc, P_ELEMENT_DISPLAY_COMPNAME);
                         } catch (IncompatibleTypeException e) {
                             Utils.createMessageDialog(
                                     e, e.getErrorMessageParams(), null);
                         } catch (PMException pme) {
                             PMExceptionHandler.handlePMExceptionForEditor(
-                                    pme, (IGDEditor)activeEditor);
+                                    pme, (IJBEditor)activeEditor);
                         }
                     }
                 } 
             }
             if (pd == null) {
-                pd = new GDPopupCompNameTextPropertyDescriptor(
+                pd = new PopupCompNameTextPropertyDescriptor(
                     new ComponentNameController(), P_ELEMENT_DISPLAY_COMPNAME, 
                     capPO.getComponentType());
             }
@@ -422,7 +422,7 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                 ParameterNameController pnc = new ParameterNameController(i, 
                         desc.getUniqueId());
                 m_paramNameControllerList.add(pnc);
-                GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+                JBPropertyDescriptor propDes = new JBPropertyDescriptor(
                     pnc, P_ELEMENT_DISPLAY_PARAMETERNAME);
                 propDes.setCategory(P_PARAMETER_CAT);
                 propDes.setLabelProvider(new DisabledLabelProvider());
@@ -432,7 +432,7 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                 ParameterTypeController ptc = new ParameterTypeController(i,
                         desc.getUniqueId());
                 m_paramTypeControllerList.add(ptc);
-                propDes = new GDPropertyDescriptor(
+                propDes = new JBPropertyDescriptor(
                     ptc, P_ELEMENT_DISPLAY_PARAMETERTYPE);
                 propDes.setCategory(P_PARAMETER_CAT);
                 propDes.setLabelProvider(new DisabledLabelProvider());
@@ -463,7 +463,7 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                 m_initializedParamDescriptors.add(descr);
                 
                 // empty line
-                propDes = new GDPropertyDescriptor(new DummyController(),
+                propDes = new JBPropertyDescriptor(new DummyController(),
                     StringConstants.EMPTY);
                 propDes.setCategory(P_PARAMETER_CAT);
                 m_initializedParamDescriptors.add(propDes);
@@ -625,9 +625,9 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                         null);
             } catch (PMException e) {
                 IEditorPart activeEditor = Plugin.getActiveEditor();
-                if (activeEditor instanceof IGDEditor) {
+                if (activeEditor instanceof IJBEditor) {
                     PMExceptionHandler.handlePMExceptionForEditor(
-                            e, (IGDEditor)activeEditor);
+                            e, (IJBEditor)activeEditor);
                 } else {
                     PMExceptionHandler.handlePMExceptionForMasterSession(e);
                 }

@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
@@ -71,7 +71,7 @@ public class OMDropTargetListener extends ViewerDropAdapter {
         
         ObjectMappingMultiPageEditor editor = getEditor();
         if (editor.getEditorHelper().requestEditableState() 
-                != GDEditorHelper.EditableState.OK) {
+                != JBEditorHelper.EditableState.OK) {
             return;
         }
         

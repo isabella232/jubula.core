@@ -18,7 +18,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 
 
 /**
- * This message transfers all GuiDancer components of type
+ * This message transfers all Jubula components of type
  * {@link org.eclipse.jubula.tools.xml.businessmodell.Component} and
  * subclasses. the components will be registered in the AUT server by executing
  * <code>SendAUTListOfSupportedComponentsCommand</code>.

@@ -15,7 +15,7 @@ import java.util.Iterator;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.part.EditorPart;
@@ -40,8 +40,8 @@ public class DirtyStarListLabelProvider implements ILabelProvider {
 
             if (editor.getTitle().equals(element)) {
                 image = editor.getTitleImage();
-                if (!editor.isDirty() && (editor instanceof IGDEditor)) {
-                    IGDEditor seditor = (IGDEditor) editor;
+                if (!editor.isDirty() && (editor instanceof IJBEditor)) {
+                    IJBEditor seditor = (IJBEditor) editor;
                     image = seditor.getDisabledTitleImage();
                 }
                 return image;

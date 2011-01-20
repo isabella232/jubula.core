@@ -18,10 +18,10 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.provider.labelprovider.PropertyControllerLabelProvider;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.graphics.Image;
@@ -59,23 +59,23 @@ public class OMLogicNameGUIPropertySource
      */
     protected void initPropDescriptor() {
         clearPropertyDescriptors();
-        GDPropertyDescriptor propDes = null;
+        JBPropertyDescriptor propDes = null;
         // Component Name
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentNameController(), P_ELEMENT_DISPLAY_COMPNAME);
         propDes.setCategory(P_COMPONENT_CAT); 
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
         addPropertyDescriptor(propDes);
 
         // Component Type
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentTypeController(), P_ELEMENT_DISPLAY_COMPTYPE);
         propDes.setCategory(P_COMPONENT_CAT); 
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
         addPropertyDescriptor(propDes);
 
         // Parent Project
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
                 new ParentProjectController(), P_ELEMENT_DISPLAY_PARENTPROJECT);
         propDes.setCategory(P_COMPONENT_CAT); 
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
@@ -197,7 +197,7 @@ public class OMLogicNameGUIPropertySource
                         parentProjectGuid = ProjectPM
                                 .getGuidOfProjectId(compName
                                         .getParentProjectId());
-                    } catch (GDException e) {
+                    } catch (JBException e) {
                         // No problem. We just won't be able to show the
                         // parent project.
                     }

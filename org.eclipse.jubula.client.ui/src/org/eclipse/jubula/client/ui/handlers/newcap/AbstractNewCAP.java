@@ -29,7 +29,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.NewCAPDialog;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -50,7 +50,7 @@ public abstract class AbstractNewCAP extends AbstractHandler {
         if (activePart instanceof AbstractTestCaseEditor) {
             AbstractTestCaseEditor tse = (AbstractTestCaseEditor)activePart;
             if (tse.getEditorHelper().requestEditableState() 
-                    == GDEditorHelper.EditableState.OK) {
+                    == JBEditorHelper.EditableState.OK) {
                 ISpecTestCasePO workTC = (ISpecTestCasePO)tse.getEditorHelper()
                         .getEditSupport().getWorkVersion();
                 if (!(tse.getTreeViewer().getSelection() 

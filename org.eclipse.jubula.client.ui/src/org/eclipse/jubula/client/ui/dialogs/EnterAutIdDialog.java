@@ -16,7 +16,7 @@ import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -74,7 +74,7 @@ public class EnterAutIdDialog extends AbstractValidatedDialog {
         area.setLayoutData(gridData);
         area.setLayout(new GridLayout(2, false));
 
-        GDText autIdField = createAutIdText(area);
+        JBText autIdField = createAutIdText(area);
         gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         Layout.addToolTipAndMaxWidth(gridData, autIdField);
         autIdField.setLayoutData(gridData);
@@ -104,10 +104,10 @@ public class EnterAutIdDialog extends AbstractValidatedDialog {
      * @param area The parent for the created widgets.
      * @return the created text field.
      */
-    private GDText createAutIdText(Composite area) {
+    private JBText createAutIdText(Composite area) {
         new Label(area, SWT.NONE).setText(I18n.getString(
                 "EnterAutIdDialog.autIdLabel")); //$NON-NLS-1$
-        return new GDText(area, SWT.SINGLE | SWT.BORDER);
+        return new JBText(area, SWT.SINGLE | SWT.BORDER);
     }
 
     /**

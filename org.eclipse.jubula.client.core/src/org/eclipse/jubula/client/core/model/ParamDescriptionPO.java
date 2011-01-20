@@ -25,6 +25,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.client.core.i18n.Messages;
 
 
 /**
@@ -43,7 +44,7 @@ abstract class ParamDescriptionPO {
     /** Hibernate OID */
     private transient Long m_id = null;
     
-    /** global unique id or I18N-Key, managed by GUIdancer client */
+    /** global unique id or I18N-Key, managed by Jubula client */
     private String m_uniqueId = null;
     
     /**
@@ -89,7 +90,7 @@ abstract class ParamDescriptionPO {
      * @param type The type to set.
      */
     public void setType(String type) {
-        Validate.notEmpty("Missing parameter type", type); //$NON-NLS-1$
+        Validate.notEmpty(Messages.MissingParameterType, type);
         m_type = type;
     }
 

@@ -29,10 +29,10 @@ public class ConnectToAutMessage extends Message {
      */
     private static final double VERSION = 1.0;
 
-    /** host name where GUIdancer Client is waiting */
+    /** host name where the client is waiting */
     private String m_clientHostName;
     
-    /** port number where GUIdancer Client is waiting */
+    /** port number where the client is waiting */
     private int m_clientPort;
     
     /** Timeout for the AUTServer to wait for a confirmation for a sended event*/

@@ -17,11 +17,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.jface.preference.IPreferenceNode;
+import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.handlers.ProjectPropertiesHandler;
 import org.eclipse.jubula.client.ui.properties.AbstractProjectPropertyPage;
-import org.eclipse.ui.internal.dialogs.PropertyPageManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +71,7 @@ public final class ProjectPropertyExtensionHandler {
      * @return list of these pages
      */
     public static List<AbstractProjectPropertyPage> createPages(
-            EditSupport es, PropertyPageManager mgr) {
+            EditSupport es, PreferenceManager mgr) {
         List<AbstractProjectPropertyPage> tmp = 
             new ArrayList<AbstractProjectPropertyPage>();
         // With all extensions of my extension point...

@@ -2,16 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula GEF Component Inspector (Incubation)
 Bundle-SymbolicName: org.eclipse.jubula.client.inspector.ui;singleton:=true
-Bundle-Version: 0.4.0
+Bundle-Version: 0.9.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Eclipse-RegisterBuddy: org.eclipse.jubula.client.core
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.ui,
- org.eclipse.jubula.tools,
- org.eclipse.jubula.communication,
- org.eclipse.jubula.client.core,
- org.eclipse.jubula.client.ui
+Require-Bundle: org.apache.commons.logging;bundle-version="[1.0.4,2.0.0)",
+ org.apache.log4j;bundle-version="[1.2.15,2.0.0)",
+ org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
+ org.eclipse.ui;bundle-version="[3.6.1,4.0.0)",
+ org.eclipse.jubula.tools;bundle-version="[0.9.0,1.0.0)",
+ org.eclipse.jubula.communication;bundle-version="[0.9.0,1.0.0)",
+ org.eclipse.jubula.client.core;bundle-version="[0.9.0,1.0.0)",
+ org.eclipse.jubula.client.ui;bundle-version="[0.9.0,1.0.0)"
 Bundle-ClassPath: org.eclipse.jubula.client.inspector.ui.jar,
  ./icons
 Export-Package: org.eclipse.jubula.client.inspector.ui.commands

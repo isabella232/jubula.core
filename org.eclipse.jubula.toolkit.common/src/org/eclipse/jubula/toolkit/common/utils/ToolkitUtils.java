@@ -23,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
+import org.eclipse.jubula.toolkit.common.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
@@ -71,8 +72,16 @@ public class ToolkitUtils {
         try {
             fileURL = FileLocator.toFileURL(unresolvedUrl);
         } catch (IOException e) {
-            LOG.error("Could not resolve Path: " + pluginRelPath //$NON-NLS-1$
-                + " of plugin: " + String.valueOf(plugin), e); //$NON-NLS-1$
+            StringBuilder logMsg = new StringBuilder();
+            logMsg.append(Messages.CouldNotResolvePath);
+            logMsg.append(StringConstants.COLON);
+            logMsg.append(StringConstants.SPACE);
+            logMsg.append(pluginRelPath);
+            logMsg.append(StringConstants.SPACE);
+            logMsg.append(Messages.OfPlugin);
+            logMsg.append(StringConstants.COLON);
+            logMsg.append(StringConstants.SPACE);
+            LOG.error(logMsg.toString(), e);
         }
         return fileURL;
     }
@@ -174,6 +183,12 @@ public class ToolkitUtils {
         throws ToolkitPluginException {
         
         Composite autConfigDialog = null;
+        StringBuilder logMsg = new StringBuilder();
+        logMsg.append(Messages.FailedLoading);
+        logMsg.append(StringConstants.SLASH);
+        logMsg.append(Messages.InstantiatingClass);
+        logMsg.append(StringConstants.COLON);
+        logMsg.append(StringConstants.SPACE);
         try {
             Class autConfigComponentClass = classLoader.loadClass(className);
             Constructor<Composite> constructor = autConfigComponentClass
@@ -184,37 +199,37 @@ public class ToolkitUtils {
         } catch (SecurityException e) {
             LOG.error(e);
             throw new ToolkitPluginException(
-                "Failed loading/instantiating class: "  //$NON-NLS-1$
+                logMsg.toString()
                 + String.valueOf(className), e);
         } catch (IllegalArgumentException e) {
             LOG.error(e);
             throw new ToolkitPluginException(
-                "Failed loading/instantiating class: "  //$NON-NLS-1$
+                logMsg.toString()
                 + String.valueOf(className), e);
         } catch (ClassNotFoundException e) {
             LOG.error(e);
             throw new ToolkitPluginException(
-                "Failed loading/instantiating class: "  //$NON-NLS-1$
+                logMsg.toString()
                 + String.valueOf(className), e);
         } catch (NoSuchMethodException e) {
             LOG.error(e);
             throw new ToolkitPluginException(
-                "Failed loading/instantiating class: "  //$NON-NLS-1$
+                logMsg.toString()
                 + String.valueOf(className), e);
         } catch (InstantiationException e) {
             LOG.error(e);
             throw new ToolkitPluginException(
-                "Failed loading/instantiating class: "  //$NON-NLS-1$
+                logMsg.toString()
                 + String.valueOf(className), e);
         } catch (IllegalAccessException e) {
             LOG.error(e);
             throw new ToolkitPluginException(
-                "Failed loading/instantiating class: "  //$NON-NLS-1$
+                logMsg.toString()
                 + String.valueOf(className), e);
         } catch (InvocationTargetException e) {
             LOG.error(e);
             throw new ToolkitPluginException(
-                "Failed loading/instantiating class: "  //$NON-NLS-1$
+                logMsg.toString()
                 + String.valueOf(className), e);
         }
         return autConfigDialog;

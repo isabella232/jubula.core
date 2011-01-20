@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.views;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +58,7 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.filter.GDPatternFilter;
+import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestresultSummaryContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestresultSummaryViewColumnLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -66,7 +67,7 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.wizards.ExportTestResultDetailsWizard;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
@@ -102,6 +103,20 @@ import org.eclipse.ui.part.ViewPart;
  */
 public class TestresultSummaryView extends ViewPart
     implements ITestresultSummaryEventListener, ITestresultChangedListener {
+    /**
+     * <code>defaultDateTimeFormat</code> the Date Time Format used in to
+     * display dates
+     */
+    public static final DateFormat DTF_DEFAULT = DateFormat.getDateTimeInstance(
+            DateFormat.DEFAULT, DateFormat.DEFAULT);
+
+    /**
+     * <code>fullDateTimeFormat</code> the detailed Date Time Format used in to
+     * display dates
+     */
+    public static final DateFormat DTF_LONG = DateFormat.getDateTimeInstance(
+            DateFormat.DEFAULT, DateFormat.LONG);
+    
     /**
      * <code>FILTER_CONTROL_INPUT_DELAY</code>
      */
@@ -782,7 +797,7 @@ public class TestresultSummaryView extends ViewPart
                     if (metaList != null) {
                         m_tableViewer.setInput(metaList.toArray());
                     }
-                } catch (GDException e) {
+                } catch (JBException e) {
                     String msg = "Can't load metadata from database"; //$NON-NLS-1$
                     log.error(msg, e);
                     showErrorDialog(msg);
@@ -839,8 +854,12 @@ public class TestresultSummaryView extends ViewPart
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
-                return ObjectUtils.toString(
-                    ((ITestResultSummaryPO)element).getTestJobStartTime());
+                Date date = ((ITestResultSummaryPO)element)
+                        .getTestJobStartTime();
+                if (date != null) {
+                    return DTF_LONG.format(date);
+                }
+                return ObjectUtils.toString(date, StringConstants.EMPTY);
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
@@ -1142,8 +1161,8 @@ public class TestresultSummaryView extends ViewPart
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
-                return ObjectUtils.toString(
-                    ((ITestResultSummaryPO)element).getTestsuiteDate());
+                return DTF_DEFAULT.format(
+                        ((ITestResultSummaryPO)element).getTestsuiteDate());
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
@@ -1183,7 +1202,7 @@ public class TestresultSummaryView extends ViewPart
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
-                return ObjectUtils.toString(
+                return DTF_LONG.format(
                     ((ITestResultSummaryPO)element).getTestsuiteStartTime());
             }
         });
@@ -1204,7 +1223,7 @@ public class TestresultSummaryView extends ViewPart
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
-                return ObjectUtils.toString(
+                return DTF_LONG.format(
                     ((ITestResultSummaryPO)element).getTestsuiteEndTime());
             }
         });
@@ -1430,7 +1449,7 @@ public class TestresultSummaryView extends ViewPart
                 if (monitoringId != null && monitoringValue != null) { 
                     if (monitoringValueTyp.equals(
                             MonitoringConstants.PERCENT_VALUE)) {  
-                        DecimalFormat n = new DecimalFormat("0.0#%"); ////$NON-NLS-1$
+                        DecimalFormat n = new DecimalFormat("0.0#%"); //$NON-NLS-1$
                         Double doubleValue = Double.valueOf(monitoringValue);
                         return StringUtils.defaultString(
                                 n.format(doubleValue.doubleValue())); 
@@ -1443,7 +1462,7 @@ public class TestresultSummaryView extends ViewPart
                     return StringUtils.defaultString(monitoringValue);
                 } 
                 return I18n.getString(
-                        "TestresultSummary.MonitoringValueNotAvailable"); ////$NON-NLS-1$  
+                        "TestresultSummary.MonitoringValueNotAvailable"); //$NON-NLS-1$  
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
@@ -1454,7 +1473,7 @@ public class TestresultSummaryView extends ViewPart
      * @param message the messag eto show in the dialog.
      */
     private void showErrorDialog(String message) {
-        Utils.createMessageDialog(new GDException(message,
+        Utils.createMessageDialog(new JBException(message,
                 MessageIDs.E_HIBERNATE_LOAD_FAILED), null,
                 new String[] { message });
     }
@@ -1571,7 +1590,7 @@ public class TestresultSummaryView extends ViewPart
      * @author BREDEX GmbH
      * @created Jan 28, 2010
      */
-    private class TestresultSummaryFilter extends GDPatternFilter {
+    private class TestresultSummaryFilter extends JBPatternFilter {
         /**
          * defines, which column should be the filter value
          */

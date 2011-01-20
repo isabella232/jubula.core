@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 
 
 /**
@@ -33,13 +33,13 @@ public interface INameMapper {
      * @param s session to use
      * @param projectId id of rootProject       
      * @throws PMException in case of any db problem
-     * @throws GDProjectDeletedException if current project is already deleted
+     * @throws ProjectDeletedException if current project is already deleted
      * @throws IncompatibleTypeException if the type of any persisted name is
      *                                   incompatible with the type of the 
      *                                   already existing name in the database
      */
     public void persist(EntityManager s, Long projectId) 
-        throws PMException, GDProjectDeletedException, 
+        throws PMException, ProjectDeletedException, 
                IncompatibleTypeException;
     
     /**

@@ -37,7 +37,7 @@ import org.eclipse.jubula.client.ui.utils.KeyConverter;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
@@ -252,7 +252,7 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
         if (!AutAgentRegistration.getInstance().getRegisteredAuts()
                 .contains(autId)) {
             String message = I18n.getString("OMStartMappingModeAction.Error1"); //$NON-NLS-1$
-            Utils.createMessageDialog(new GDException(message, 
+            Utils.createMessageDialog(new JBException(message, 
                     MessageIDs.E_UNEXPECTED_EXCEPTION), null, new String[]{
                         message});
         } else {

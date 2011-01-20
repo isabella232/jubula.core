@@ -19,7 +19,7 @@ import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
-import org.eclipse.jubula.rc.swt.listener.AbstractGDAutSwtEventListener;
+import org.eclipse.jubula.rc.swt.listener.AbstractAutSwtEventListener;
 import org.eclipse.jubula.rc.swt.listener.CheckListener;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swt.listener.FocusTracker;
@@ -30,17 +30,14 @@ import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 
-
-
 /**
  * The AutServer controling the AUT. <br>
  * A quasi singleton: the instance is created from main(). <br>
  * Expected arguments to main are, see also
  * StartAUTServerCommand.createCmdArray():
  * <ul>
- * <li>The name of host the GuiDancerCLient is running on, must be InetAddress
- * conform.</li>
- * <li>The port the JubulaClient is listening to.</li>
+ * <li>The name of host the Client is running on, must be InetAddress conform.</li>
+ * <li>The port the Client is listening to.</li>
  * <li>The main class of the AUT.</li>
  * <li>Any further arguments are interpreted as arguments to the AUT.</li>
  * <ul>
@@ -48,10 +45,10 @@ import org.eclipse.swt.widgets.Listener;
  * message to the JubulaClient.
  * 
  * Changing the mode to OBJECT_MAPPING results in installing an AWTEventListener
- * (an instance of <code>MappingListener</code>). For simplification the
- * virtual machine is closed  without sending a message to the client when an
- * error occurs during the installation of the SWTEventListener. The exitcode is
- * the appopriate EXIT_* constant
+ * (an instance of <code>MappingListener</code>). For simplification the virtual
+ * machine is closed without sending a message to the client when an error
+ * occurs during the installation of the SWTEventListener. The exitcode is the
+ * appopriate EXIT_* constant
  * 
  * Changing the mode to TESTING removes the installed MappingListener.
  * 
@@ -187,13 +184,13 @@ public class SwtAUTServer extends AUTServer {
             getAutDisplay().syncExec(new Runnable() {
                 public void run() {
                     for (int i = 0; 
-                        i < ((AbstractGDAutSwtEventListener)listener)
+                        i < ((AbstractAutSwtEventListener)listener)
                             .getEventMask().length; i++) {
                         
                         getAutDisplay().removeFilter(
-                                (int)((AbstractGDAutSwtEventListener)
+                                (int)((AbstractAutSwtEventListener)
                                         listener).getEventMask()[i], 
-                                    (AbstractGDAutSwtEventListener)listener); 
+                                    (AbstractAutSwtEventListener)listener); 
                         if (LOG.isInfoEnabled()) {
                             LOG.info("uninstalling SWTEventListener " //$NON-NLS-1$ 
                                     + listener.toString());

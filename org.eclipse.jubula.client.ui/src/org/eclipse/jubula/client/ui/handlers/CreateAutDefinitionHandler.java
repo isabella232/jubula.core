@@ -32,7 +32,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.dialogs.AUTPropertiesDialog;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -103,7 +103,7 @@ public class CreateAutDefinitionHandler extends AbstractHandler {
                         }
                     } catch (PMException e) {
                         Utils.createMessageDialog(e, null, null);
-                    } catch (GDProjectDeletedException e) {
+                    } catch (ProjectDeletedException e) {
                         Utils.createMessageDialog(e, null, null);
                     } catch (IncompatibleTypeException e) {
                         // Not something we would expect.

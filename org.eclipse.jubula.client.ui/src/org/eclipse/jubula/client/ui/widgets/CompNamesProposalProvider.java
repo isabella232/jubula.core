@@ -34,12 +34,11 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * @created Apr 7, 2010
  */
 public class CompNamesProposalProvider implements IContentProposalProvider {
-
     /**
      * @author BREDEX GmbH
      * @created 16.08.2005
      */
-    private class GDComparator implements Comparator<IComponentNameData> {
+    private class JBComparator implements Comparator<IComponentNameData> {
 
         /**
          * @param element0 element 0.
@@ -142,7 +141,7 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
             }
         });
         if (!StringUtils.isEmpty(contents)) {
-            Collections.sort(compNamesList, new GDComparator());
+            Collections.sort(compNamesList, new JBComparator());
         }
 
         List<IContentProposal> proposals = 

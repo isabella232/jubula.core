@@ -37,13 +37,13 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.factory.ControlFactory;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.AutIdListComposite;
 import org.eclipse.jubula.client.ui.widgets.CheckedRequiredText;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.wizards.pages.AUTSettingWizardPage;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
@@ -133,20 +133,20 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      */
     private boolean m_edit = false;
 
-    /** the GuiDancerSelectionListener */
-    private final GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    /** the WidgetSelectionListener */
+    private final WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
 
-    /** the GuiDancerVerifyListener */
-    private final GuiDancerVerifyListener m_verifyListener = 
-        new GuiDancerVerifyListener();
+    /** the WidgetVerifyListener */
+    private final WidgetVerifyListener m_verifyListener = 
+        new WidgetVerifyListener();
     
     /** the composite with 2 ListBoxes */
     private ListElementChooserComposite m_chooseLists;
     
-    /** the GDStateController */
-    private final GuiDancerModifyListener m_modifyListener = 
-        new GuiDancerModifyListener();
+    /** the WidgetStateController */
+    private final WidgetModifyListener m_modifyListener = 
+        new WidgetModifyListener();
     
     /** the Project to which the AUT Definition belongs */
     private IProjectPO m_project;
@@ -497,7 +497,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      */
     private void createGenerateNamesCheckBox(Composite parent) {
         Label infoLabel = newLabel(parent, I18n.getString("AUTPropertiesDialog.generateNames")); //$NON-NLS-1$
-        GDControlDecorator.decorateInfo(infoLabel, 
+        ControlDecorator.decorateInfo(infoLabel, 
                 "AUTPropertiesDialog.generateNamesDescription", false); //$NON-NLS-1$
         m_generateNames = new Button(parent, SWT.CHECK);
         m_generateNames.addSelectionListener(new SelectionListener() {
@@ -535,12 +535,12 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      * @param parent The parent composite.
      */
     private void createAutConfigButtons(Composite parent) {
-        GDText invisibleText = new GDText(parent, SWT.BORDER);
+        JBText invisibleText = new JBText(parent, SWT.BORDER);
         invisibleText.setVisible(false);
         GridData invisibleGrid = new GridData();
         invisibleGrid.widthHint = 10;
         invisibleText.setLayoutData(invisibleGrid);
-        GDText invisibleText2 = new GDText(parent, SWT.BORDER);
+        JBText invisibleText2 = new JBText(parent, SWT.BORDER);
         invisibleText2.setVisible(false);
         invisibleText2.setLayoutData(invisibleGrid);
         
@@ -821,7 +821,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      * @author BREDEX GmbH
      * @created 10.02.2005
      */
-    private class GuiDancerSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
 
         /**
          * {@inheritDoc}
@@ -895,7 +895,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      * @author BREDEX GmbH
      * @created 11.02.2005
      */
-    private class GuiDancerVerifyListener implements VerifyListener {
+    private class WidgetVerifyListener implements VerifyListener {
 
         /**
          * {@inheritDoc}
@@ -1049,7 +1049,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      * @author BREDEX GmbH
      * @created 12.07.2005
      */
-    private class GuiDancerModifyListener implements ModifyListener {
+    private class WidgetModifyListener implements ModifyListener {
 
         /**
          * {@inheritDoc}

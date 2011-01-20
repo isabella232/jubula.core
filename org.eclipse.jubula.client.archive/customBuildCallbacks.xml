@@ -70,10 +70,10 @@
 			classpathref="project.class.path" />
 		<mkdir dir="${classes}"/>
 		<mkdir dir="${jars}"/>		
-		<xmlbean 
+		<xmlbean
 			schema="model/archiveModel.xsd" 
 			destfile="${lib}/archiveModel.jar" 
-			javasource="1.5"
+			javasource="1.5" 
 			classpathref="project.class.path" />
 	</target>
 	

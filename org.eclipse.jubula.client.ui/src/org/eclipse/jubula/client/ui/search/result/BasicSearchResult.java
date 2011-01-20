@@ -33,7 +33,7 @@ import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.client.ui.views.AbstractGDTreeView;
+import org.eclipse.jubula.client.ui.views.AbstractJBTreeView;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.search.ui.ISearchQuery;
@@ -410,7 +410,7 @@ public class BasicSearchResult implements ISearchResult {
          * {@inheritDoc}
          */
         public void jumpTo(Long id) {
-            AbstractGDTreeView gdtv = (TestCaseBrowser)Plugin
+            AbstractJBTreeView gdtv = (TestCaseBrowser)Plugin
                     .showView(Constants.TC_BROWSER_ID);
             TreeViewer tv = gdtv.getTreeViewer();
             INodePO node = selectNodeInTree(id, tv);

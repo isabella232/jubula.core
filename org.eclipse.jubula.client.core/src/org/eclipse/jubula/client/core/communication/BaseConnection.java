@@ -14,12 +14,14 @@ import java.net.InetAddress;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -68,7 +70,7 @@ public abstract class BaseConnection {
         // check paramater
         if (communicator == null) {
             throw new IllegalArgumentException(
-                    "communicator must not be null"); //$NON-NLS-1$
+                    Messages.CommunicatorMustNotBeNull);
         }
         m_communicator = communicator;
         // add an private listener for monitoring connection state
@@ -79,25 +81,28 @@ public abstract class BaseConnection {
     /**
      * synchronized method for starting the communication.
      * 
-     * @throws GuiDancerAlreadyConnectedException
+     * @throws AlreadyConnectedException
      *             if this connection is laready connected.
-     * @throws GDVersionException in case of version error between Client
+     * @throws JBVersionException in case of version error between Client
      *  and AutStarter 
      */
-    public synchronized void run() throws GuiDancerAlreadyConnectedException, 
-    GDVersionException {
+    public synchronized void run() throws AlreadyConnectedException, 
+    JBVersionException {
         
         if (isConnected()) {
-            log.error("run() called to an already connected connection"); //$NON-NLS-1$
-            throw new GuiDancerAlreadyConnectedException(
-                "This connection is already connected", //$NON-NLS-1$
+            log.error(Messages.RunCalledToAnAlreadyConnectedConnection);
+            throw new AlreadyConnectedException(
+                Messages.ThisConnectionIsAlreadyConnected,
                 MessageIDs.E_CONNECTED_CONNECTION);
         }
         m_communicator.run();
         if (log.isDebugEnabled()) {
-            log.debug(this.getClass().getName() + ": Connection established on port: " //$NON-NLS-1$
-                + getCommunicator().getPort() + " and local port: "  //$NON-NLS-1$
-                + getCommunicator().getLocalPort());
+            log.debug(this.getClass().getName() + StringConstants.COLON
+                + StringConstants.SPACE + Messages.ConnectionEstablishedOnPort
+                + StringConstants.COLON + StringConstants.SPACE
+                + getCommunicator().getPort() + StringConstants.SPACE
+                + Messages.AndLocalPort + StringConstants.COLON 
+                + StringConstants.SPACE + getCommunicator().getLocalPort());
         }
     }
 
@@ -110,18 +115,18 @@ public abstract class BaseConnection {
      *             if Message is null
      * @throws CommunicationException
      *             when the message could not send
-     * @throws GuiDancerNotConnectedException
+     * @throws NotConnectedException
      *             when no connection is availiable either not yet set or lost
      * {@inheritDoc}
      */
     public synchronized void send(Message message)
         throws IllegalArgumentException,
-        GuiDancerNotConnectedException, CommunicationException {
+        NotConnectedException, CommunicationException {
         if (!isConnected()) {
             if (log.isWarnEnabled()) {
                 log.warn("send() called to an unconnected connection"); //$NON-NLS-1$
             }
-            throw new GuiDancerNotConnectedException(
+            throw new NotConnectedException(
                     "This connection is not connected", //$NON-NLS-1$
                     MessageIDs.E_UNCONNECTED_CONNECTION);
         }
@@ -143,18 +148,18 @@ public abstract class BaseConnection {
      * @param timeout -
      *            max milliseconds to wait for a response. Only values greater than
      *            zero are valid.
-     * @throws GuiDancerNotConnectedException
+     * @throws NotConnectedException
      *             when no connection is availiable either not yet set or lost
      * @throws CommunicationException
      *             when the message could not send
      * {@inheritDoc}
      */
     public synchronized void request(Message message, ICommand response,
-            int timeout) throws GuiDancerNotConnectedException,
+            int timeout) throws NotConnectedException,
             CommunicationException {
         if (!isConnected()) {
             log.error("request() called to an unconnected connection"); //$NON-NLS-1$
-            throw new GuiDancerNotConnectedException(
+            throw new NotConnectedException(
                     "This connection is not connected", //$NON-NLS-1$
                     MessageIDs.E_UNCONNECTED_CONNECTION); 
         }
@@ -256,7 +261,7 @@ public abstract class BaseConnection {
      * @author BREDEX GmbH
      * @created 22.07.2004
      */
-    public static class GuiDancerNotConnectedException 
+    public static class NotConnectedException 
         extends CommunicationException {
 
         /**
@@ -266,7 +271,7 @@ public abstract class BaseConnection {
          * @param id An ErrorMessage.ID.
          * {@inheritDoc}
          */
-        public GuiDancerNotConnectedException(String message, Integer id) {
+        public NotConnectedException(String message, Integer id) {
             super(message, id);
         }
     }
@@ -279,7 +284,7 @@ public abstract class BaseConnection {
      * @author BREDEX GmbH
      * @created 22.07.2004
      */
-    public static class GuiDancerAlreadyConnectedException extends
+    public static class AlreadyConnectedException extends
             CommunicationException {
         /**
          * public constructor
@@ -288,7 +293,7 @@ public abstract class BaseConnection {
          * @param id An ErrorMessage.ID.
          * {@inheritDoc}
          */
-        public GuiDancerAlreadyConnectedException(String message, Integer id) {
+        public AlreadyConnectedException(String message, Integer id) {
             super(message, id);
         }
     }

@@ -58,9 +58,9 @@ import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.ProgressController;
-import org.eclipse.jubula.client.ui.editors.AbstractGDEditor;
+import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
@@ -68,22 +68,22 @@ import org.eclipse.jubula.client.ui.provider.contentprovider.DirtyStarListConten
 import org.eclipse.jubula.client.ui.provider.labelprovider.DirtyStarListLabelProvider;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.client.ui.views.IGDPart;
+import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.views.TestResultTreeView;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.jubula.client.ui.views.TreeBuilder;
-import org.eclipse.jubula.client.ui.widgets.GDStatusLineContributionItem;
+import org.eclipse.jubula.client.ui.widgets.StatusLineContributionItem;
 import org.eclipse.jubula.tools.constants.ConfigurationConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
-import org.eclipse.jubula.tools.exception.GDRuntimeException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -130,12 +130,12 @@ public class Plugin extends AbstractUIPlugin
      * <code>AUT_AGENT_DEFAULT_HOST</code>
      */
     private static final String AUT_AGENT_DEFAULT_HOST = "localhost"; //$NON-NLS-1$
-    /** name of the GUIdancer console */
-    private static final String GD_CONSOLE_NAME = "GUIdancer Console"; //$NON-NLS-1$
+    /** name of the Jubula console */
+    private static final String JB_CONSOLE_NAME = "Console"; //$NON-NLS-1$
     /** for log messages */
     private static Log log = LogFactory.getLog(Plugin.class);
-    /** single instance of GuiDancerPlugin */
-    private static Plugin gdplugin;
+    /** single instance of plugin */
+    private static Plugin plugin;
     /** StatusLineText */
     private static String statusLineText = I18n.getString("StatusLine.notConnected"); //$NON-NLS-1$
     /** StatusLineText */
@@ -152,8 +152,8 @@ public class Plugin extends AbstractUIPlugin
     /** <code>LANG_STATUSLINE_ITEM</code> */
     private static final String LANG_STATUSLINE_ITEM = "lang"; //$NON-NLS-1$
     
-    /** the GUIdancer status */
-    private GDStatus m_status = GDStatus.STARTING;
+    /** the client status */
+    private ClientStatus m_status = ClientStatus.STARTING;
     /** single invisible root instance of view */
     private TestSuiteGUI m_testSuiteBrowserRootGUI = null;
     /** single invisible root instance of view */
@@ -164,11 +164,11 @@ public class Plugin extends AbstractUIPlugin
     private boolean m_isPrefStoreInitialized = false;
     /** the global progress controller */
     private IProgressListener m_progressController = new ProgressController();
-    /** GUIdancer console */
+    /** the console */
     private MessageConsole m_console;
-    /** standard message stream for the GUIdancer console */
+    /** standard message stream for the console */
     private MessageConsoleStream m_standardMessageStream;
-    /** error message stream for the GUIdancer console */
+    /** error message stream for the console */
     private MessageConsoleStream m_errorMessageStream;
 
     /**
@@ -185,19 +185,19 @@ public class Plugin extends AbstractUIPlugin
     }
     
     /**
-     * 
+     * The Client Status
      */
-    public enum GDStatus {
+    public enum ClientStatus {
         /**
-         * GUIdancer is launched completely
+         * Jubula is launched completely
          */
         RUNNING,
         /**
-         * GUIdancer is starting up
+         * Jubula is starting up
          */
         STARTING,
         /**
-         * GUIdancer is shutting down
+         * Jubula is shutting down
          */
         STOPPING
     }
@@ -205,17 +205,17 @@ public class Plugin extends AbstractUIPlugin
     
     /**
      * 
-     * @param statust - the new DGStatus (RUNNING,STOPPING,STARTING)
+     * @param statust - the new ClientStatus (RUNNING,STOPPING,STARTING)
      */
-    public void setDGStatus(GDStatus statust) {
+    public void setClientStatus(ClientStatus statust) {
         m_status = statust;
     }
     
     /**
      * 
-     * @return the actual GDStatus (RUNNING,STARTING,STOPPING)
+     * @return the actual ClientStatus (RUNNING,STARTING,STOPPING)
      */
-    public GDStatus getGDStatus() {
+    public ClientStatus getClientStatus() {
         return m_status;
     }
     
@@ -244,10 +244,10 @@ public class Plugin extends AbstractUIPlugin
     }
     
     /**
-     * @return instance of GuiDancerPlugin
+     * @return instance of plugin
      */
     public static Plugin getDefault() {
-        return gdplugin;
+        return plugin;
     }
 
     /**
@@ -319,14 +319,14 @@ public class Plugin extends AbstractUIPlugin
                     .getStatusLineManager();
         }
         if (window instanceof WorkbenchWindow) {
-            GDStatusLineContributionItem item = 
-                (GDStatusLineContributionItem)manager.find(
+            StatusLineContributionItem item = 
+                (StatusLineContributionItem)manager.find(
                     CONNECTION_INFO_STATUSLINE_ITEM);
             if (item == null) {
                 if (getDefault().getWorkbench().getActiveWorkbenchWindow() 
                         != null) {
                     createStatusLineItems();
-                    item = (GDStatusLineContributionItem)manager.find(
+                    item = (StatusLineContributionItem)manager.find(
                             CONNECTION_INFO_STATUSLINE_ITEM);
                 } 
                 if (item == null) {
@@ -457,7 +457,7 @@ public class Plugin extends AbstractUIPlugin
     private static void initializeDefaultPluginPreferences(
             IPreferenceStore store) {
 
-        initializeDefaultPreferencesGuiDancerBasic(store);
+        initializeDefaultPreferencesJubulaBasic(store);
         initializeDefaultPreferencesObjectMapping(store);
         initializeDefaultPreferencesKeyBoardShortCuts(store);
         initializeDefaultPreferencesObservation(store);
@@ -467,9 +467,9 @@ public class Plugin extends AbstractUIPlugin
         store.setDefault(Constants.PREF_MAJORVERSION_KEY, -1);
         if (store.getInt(Constants.PREF_MINORVERSION_KEY) == -1) {
             store.setValue(Constants.PREF_MINORVERSION_KEY,
-                IGdVersion.GD_PREF_MINOR_VERSION);
+                IVersion.JB_PREF_MINOR_VERSION);
             store.setValue(Constants.PREF_MAJORVERSION_KEY,
-                IGdVersion.GD_PREF_MAJOR_VERSION);
+                IVersion.JB_PREF_MAJOR_VERSION);
         }
         store.setDefault(Constants.SERVER_SETTINGS_KEY, AUT_AGENT_DEFAULT_HOST
                 + StringConstants.COLON
@@ -490,7 +490,7 @@ public class Plugin extends AbstractUIPlugin
      * initialize the default preferences for a preference page 
      * @param store IPreferenceStore
      */
-    private static void initializeDefaultPreferencesGuiDancerBasic(
+    private static void initializeDefaultPreferencesJubulaBasic(
             IPreferenceStore store) {
         store.setDefault(Constants.TREEAUTOSCROLL_KEY,
                 Constants.TREEAUTOSCROLL_KEY_DEFAULT);
@@ -647,8 +647,8 @@ public class Plugin extends AbstractUIPlugin
             .getEditorReferences();
         for (IEditorReference edRef : editorReferences) {
             final IEditorPart editorPart = edRef.getEditor(false);
-            if (editorPart instanceof IGDEditor) {
-                IGDEditor gdEd = (IGDEditor)editorPart;
+            if (editorPart instanceof IJBEditor) {
+                IJBEditor gdEd = (IJBEditor)editorPart;
                 if (gdEd.getEditorHelper().isActive()) {
                     return gdEd;
                 }
@@ -715,7 +715,7 @@ public class Plugin extends AbstractUIPlugin
     }
     
     /**
-     * Writes a line of text to the GUIdancer console.
+     * Writes a line of text to the console.
      * 
      * @param msg the message to print.
      * @param forceActivate whether the console should be activated if it is not
@@ -724,7 +724,7 @@ public class Plugin extends AbstractUIPlugin
     public void writeLineToConsole(String msg, boolean forceActivate) {
         // FIXME zeb this "if" statement is necessary because the DB Tool, which never
         //           starts the workbench because it never intends to use PlatformUI,
-        //           depends on and uses methods from ClientGUI.
+        //           depends on and uses methods from org.eclipse.jubula.client.ui.
         //           Thus, these dependencies should be removed, and then the "if"
         //           statement should thereafter also be removed.
         if (PlatformUI.isWorkbenchRunning()) {
@@ -738,7 +738,7 @@ public class Plugin extends AbstractUIPlugin
     }
 
     /**
-     * Writes a line of text to the GUIdancer console.
+     * Writes a line of text to the console.
      * 
      * @param msg the message to print.
      * @param forceActivate whether the console should be activated if it is not
@@ -763,7 +763,7 @@ public class Plugin extends AbstractUIPlugin
     /**
      * Lazy retrieval of the standard message console stream.
      * 
-     * @return the standard message stream for the GUIdancer console
+     * @return the standard message stream for the console
      */
     private synchronized MessageConsoleStream getStandardConsoleStream() {
         if (m_standardMessageStream == null) {
@@ -775,7 +775,7 @@ public class Plugin extends AbstractUIPlugin
     /**
      * Lazy retrieval of the error message console stream.
      * 
-     * @return the error message stream for the GUIdancer console
+     * @return the error message stream for the console
      */
     private synchronized MessageConsoleStream getErrorConsoleStream() {
         if (m_errorMessageStream == null) {
@@ -792,13 +792,13 @@ public class Plugin extends AbstractUIPlugin
     }
 
     /**
-     * Lazy retrieval of the GUIdancer console.
+     * Lazy retrieval of the console.
      * 
-     * @return the GUIdancer console
+     * @return the console
      */
     private synchronized MessageConsole getConsole() {
         if (m_console == null) {
-            m_console = new MessageConsole(GD_CONSOLE_NAME, null);
+            m_console = new MessageConsole(JB_CONSOLE_NAME, null);
             m_console.activate();
             ConsolePlugin.getDefault().getConsoleManager().addConsoles(
                 new IConsole [] {m_console});
@@ -837,7 +837,7 @@ public class Plugin extends AbstractUIPlugin
             try {
                 vp = getActivePage().showView(viewID, secondaryViewID, mode);
             } catch (PartInitException e) {
-                Utils.createMessageDialog(new GDException(I18n
+                Utils.createMessageDialog(new JBException(I18n
                         .getString("Plugin.cantOpenView") + viewID, //$NON-NLS-1$
                         MessageIDs.E_CLASS_NOT_FOUND), null, null);
             }
@@ -954,15 +954,15 @@ public class Plugin extends AbstractUIPlugin
     /**
      * @return the active gd editor or null if no gd editor is active
      */
-    public AbstractGDEditor getActiveGDEditor() {
+    public AbstractJBEditor getActiveGDEditor() {
         IWorkbenchPage activePage = getActivePage();
         if (activePage == null) { // during shutdown
             return null;
         }
         IEditorPart iEditorPart = getActiveEditor();
         if (iEditorPart != null 
-                && iEditorPart instanceof AbstractGDEditor) {
-            return (AbstractGDEditor)iEditorPart;
+                && iEditorPart instanceof AbstractJBEditor) {
+            return (AbstractJBEditor)iEditorPart;
         }
         return null;              
     }
@@ -994,11 +994,11 @@ public class Plugin extends AbstractUIPlugin
     }
     
     /**
-     * Closes all opened GUIdancer editors (ex. TCE, TSE, OME). This method 
+     * Closes all opened Jubula editors (ex. TCE, TSE, OME). This method 
      * must be called from the GUI thread. If it is called from a thread that 
      * is *not* the GUI thread, it will do nothing.
      */
-    public static void closeAllOpenedGDEditors() {
+    public static void closeAllOpenedJubulaEditors() {
         IWorkbenchPage activePage = getActivePage();
         if (activePage != null) {
             Set<IEditorReference> editorRefSet = 
@@ -1006,7 +1006,7 @@ public class Plugin extends AbstractUIPlugin
             for (IEditorReference editorRef 
                     : activePage.getEditorReferences()) {
 
-                if (editorRef.getEditor(true) instanceof IGDPart) {
+                if (editorRef.getEditor(true) instanceof IJBPart) {
                     editorRefSet.add(editorRef);
                 }
             }
@@ -1122,11 +1122,11 @@ public class Plugin extends AbstractUIPlugin
                     return;
                 }
                 log.error("Unhandled throwable : ", e); //$NON-NLS-1$
-                if (e instanceof GDRuntimeException) {
-                    GDRuntimeException gdEx = (GDRuntimeException)e;
+                if (e instanceof JBRuntimeException) {
+                    JBRuntimeException gdEx = (JBRuntimeException)e;
                     Utils.createMessageDialog(gdEx);
-                } else if (e instanceof GDException) {
-                    GDException gdEx = (GDException)e;
+                } else if (e instanceof JBException) {
+                    JBException gdEx = (JBException)e;
                     Utils.createMessageDialog(gdEx, null, null);
                 } else if (isRCPException(e)) {
                     // there are a few bugs in RCP which will trigger
@@ -1148,7 +1148,7 @@ public class Plugin extends AbstractUIPlugin
                     Utils.createMessageDialog(MessageIDs.E_DATABASE_GENERAL,
                         null, new String [] {e.getLocalizedMessage()});
                 } else {
-                    Utils.createMessageDialog(new GDFatalException(e,
+                    Utils.createMessageDialog(new JBFatalException(e,
                             MessageIDs.E_UNEXPECTED_EXCEPTION));
                 }
             }
@@ -1236,16 +1236,16 @@ public class Plugin extends AbstractUIPlugin
      * {@inheritDoc}
      */
     public void start(BundleContext context) throws Exception {
-        gdplugin = this;
+        plugin = this;
         Platform.addLogListener(new ILogListener() {
-            public void logging(IStatus status, String plugin) {
+            public void logging(IStatus status, String pluginId) {
                 if (status.getException() instanceof RuntimeException) {
                     handleError(status.getException());
                 }
             }
         });
         ErrorMessagePresenter.setPresenter(new IErrorMessagePresenter() {
-            public void showErrorMessage(GDException ex, Object[] params,
+            public void showErrorMessage(JBException ex, Object[] params,
                     String[] details) {
                 Utils.createMessageDialog(ex, params, details);
             }
@@ -1268,7 +1268,7 @@ public class Plugin extends AbstractUIPlugin
 
     /**
      * register business processes and service that should be available
-     * while complete guidancer live cycle
+     * while complete Jubula live cycle
      * - ProgressController
      * - ComponentNamesListBP
      */
@@ -1311,8 +1311,8 @@ public class Plugin extends AbstractUIPlugin
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 IStatusLineManager manager = getStatusLineManager();
-                GDStatusLineContributionItem item = 
-                    (GDStatusLineContributionItem)manager.find(
+                StatusLineContributionItem item = 
+                    (StatusLineContributionItem)manager.find(
                         LANG_STATUSLINE_ITEM);
                 if (item == null) {
                     return;
@@ -1336,8 +1336,8 @@ public class Plugin extends AbstractUIPlugin
      */
     public static void showAutToolKitInfo(String toolkit) {
         IStatusLineManager manager = getStatusLineManager();
-        GDStatusLineContributionItem item = 
-            (GDStatusLineContributionItem)manager
+        StatusLineContributionItem item = 
+            (StatusLineContributionItem)manager
                 .find(AUT_TOOLKIT_STATUSLINE_ITEM);
         if (item == null) {
             return;
@@ -1351,15 +1351,15 @@ public class Plugin extends AbstractUIPlugin
      */
     public static void createStatusLineItems() {
         IStatusLineManager manager = getStatusLineManager();        
-        GDStatusLineContributionItem connectionItem = 
-            new GDStatusLineContributionItem(
+        StatusLineContributionItem connectionItem = 
+            new StatusLineContributionItem(
                 CONNECTION_INFO_STATUSLINE_ITEM);
         manager.insertBefore(StatusLineManager.END_GROUP, connectionItem);
-        GDStatusLineContributionItem langItem = 
-            new GDStatusLineContributionItem(LANG_STATUSLINE_ITEM);
+        StatusLineContributionItem langItem = 
+            new StatusLineContributionItem(LANG_STATUSLINE_ITEM);
         manager.insertBefore(CONNECTION_INFO_STATUSLINE_ITEM, langItem);
-        GDStatusLineContributionItem autToolKitItem = 
-            new GDStatusLineContributionItem(AUT_TOOLKIT_STATUSLINE_ITEM);
+        StatusLineContributionItem autToolKitItem = 
+            new StatusLineContributionItem(AUT_TOOLKIT_STATUSLINE_ITEM);
         autToolKitItem.setText(StringConstants.EMPTY);
         manager.insertBefore(LANG_STATUSLINE_ITEM, autToolKitItem);
         manager.update(true);

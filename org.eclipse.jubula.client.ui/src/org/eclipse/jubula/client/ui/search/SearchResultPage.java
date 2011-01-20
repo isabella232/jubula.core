@@ -23,10 +23,10 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.filter.GDFilteredTree;
-import org.eclipse.jubula.client.ui.filter.GDPatternFilter;
+import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
+import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
-import org.eclipse.jubula.client.ui.provider.contentprovider.AbstractGDTreeViewContentProvider;
+import org.eclipse.jubula.client.ui.provider.contentprovider.AbstractTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -70,9 +70,9 @@ public class SearchResultPage extends AbstractSearchResultPage
         layoutData.grabExcessHorizontalSpace = true;
         topLevelComposite.setLayoutData(layoutData);
 
-        final FilteredTree ft = new GDFilteredTree(topLevelComposite, SWT.MULTI
+        final FilteredTree ft = new JBFilteredTree(topLevelComposite, SWT.MULTI
                 | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER,
-                new GDPatternFilter(), true);
+                new JBPatternFilter(), true);
 
         setTreeViewer(ft.getViewer());
 
@@ -90,7 +90,7 @@ public class SearchResultPage extends AbstractSearchResultPage
         DataEventDispatcher.getInstance().addProjectLoadedListener(this, true);
         
         Plugin.getHelpSystem().setHelp(parent,
-                ContextHelpIds.GUIDANCER_SEARCH_RESULT_VIEW);
+                ContextHelpIds.JB_SEARCH_RESULT_VIEW);
     }
 
     /**
@@ -145,7 +145,7 @@ public class SearchResultPage extends AbstractSearchResultPage
      * The content provider of the table.
      */
     private static class SearchResultContentProvider extends
-            AbstractGDTreeViewContentProvider {
+            AbstractTreeViewContentProvider {
         /** {@inheritDoc} */
         public Object[] getChildren(Object parentElement) {
             if (parentElement instanceof BasicSearchResult) {

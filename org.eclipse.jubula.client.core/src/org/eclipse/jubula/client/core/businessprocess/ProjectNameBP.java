@@ -22,14 +22,16 @@ import javax.persistence.Query;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IProjectNamePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.core.utils.NameValidationUtil;
-import org.eclipse.jubula.tools.exception.GDFatalException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import javax.persistence.PersistenceException;
 
@@ -162,7 +164,7 @@ public class ProjectNameBP {
      * @param guid id of the project name
      */
     public void checkAndDeleteName(String guid) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
         
         EntityManager session = null;
         try {
@@ -177,8 +179,15 @@ public class ProjectNameBP {
             m_names.remove(guid);
             m_transientNames.remove(guid);
         } catch (PersistenceException he) {
-            log.error("Could not delete Project Name (for guid " //$NON-NLS-1$
-                    + guid + ") from the database.", he); //$NON-NLS-1$
+            StringBuilder msgbuid = new StringBuilder();
+            msgbuid.append(Messages.CouldNotDeleteProjectName);
+            msgbuid.append(StringConstants.LEFT_PARENTHESES);
+            msgbuid.append(Messages.ForGuid);
+            msgbuid.append(guid);
+            msgbuid.append(StringConstants.RIGHT_PARENTHESES);
+            msgbuid.append(Messages.FromTheDatabase);
+            msgbuid.append(StringConstants.DOT);
+            log.error(msgbuid.toString(), he);
         } finally {
             Hibernator.instance().dropSession(session);
         }
@@ -233,10 +242,12 @@ public class ProjectNameBP {
                 setName(session, guid, newProjectName);
                 Hibernator.instance().commitTransaction(session, tx);
             } catch (PMException e) {
-                throw new GDFatalException("saving of project name failed.", e, //$NON-NLS-1$
+                throw new JBFatalException(Messages.SavingProjectFailed 
+                        + StringConstants.DOT, e,
                         MessageIDs.E_DATABASE_GENERAL);
-            } catch (GDProjectDeletedException e) {
-                throw new GDFatalException("saving of project name failed.", e, //$NON-NLS-1$
+            } catch (ProjectDeletedException e) {
+                throw new JBFatalException(Messages.SavingProjectFailed 
+                        + StringConstants.DOT, e,
                         MessageIDs.E_PROJECT_NOT_FOUND);
             } finally {
                 Hibernator.instance().dropSession(session);
@@ -253,7 +264,8 @@ public class ProjectNameBP {
     private void setTransientName(String guid, String newProjectName) {
         if (m_names.containsKey(guid)) { 
             // there is a persistent key for the guid, so just uopate the name
-            log.debug("setTransientName() called for persistant object."); //$NON-NLS-1$
+            log.debug("setTransientName() " + Messages.CalledForPersistantObject //$NON-NLS-1$
+                    + StringConstants.DOT);
             m_names.put(guid, newProjectName);
         } else {
             m_transientNames.put(guid, newProjectName);
@@ -337,10 +349,10 @@ public class ProjectNameBP {
      */
     public static boolean isValidProjectName(String name, boolean checkSpaces) {
         if (checkSpaces) {
-            if (name.startsWith(" ")) { //$NON-NLS-1$
+            if (name.startsWith(StringConstants.SPACE)) {
                 return false; // no leading spaces
             }
-            if (name.endsWith(" ")) { //$NON-NLS-1$
+            if (name.endsWith(StringConstants.SPACE)) {
                 return false; // no trailing spaces
             }
         }

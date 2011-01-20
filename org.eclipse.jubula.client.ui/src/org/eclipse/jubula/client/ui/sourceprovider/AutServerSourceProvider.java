@@ -25,7 +25,7 @@ import org.eclipse.ui.ISources;
  * @author BREDEX GmbH
  * @created Mar 3, 2010
  */
-public class AutServerSourceProvider extends AbstractGDSourceProvider 
+public class AutServerSourceProvider extends AbstractJBSourceProvider 
         implements IServerConnectionListener {
 
     /** 

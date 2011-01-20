@@ -20,7 +20,7 @@ import org.eclipse.jubula.client.core.IAUTEventListener;
 import org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand;
 import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
-import org.eclipse.jubula.client.core.communication.BaseConnection.GuiDancerNotConnectedException;
+import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
@@ -28,7 +28,7 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.communication.message.AUTHighlightComponentMessage;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -96,7 +96,7 @@ public class OMMarkInAutAction extends AbstractAction
                 message.setComponent(compId);
                 AUTConnection.getInstance().request(message, 
                     response, 5000);
-            } catch (GuiDancerNotConnectedException nce) {
+            } catch (NotConnectedException nce) {
                 // HERE: notify the listeners about unsuccessfull mode change
             } catch (CommunicationException ce) {
                 // HERE: notify the listeners about unsuccessfull mode change
@@ -125,7 +125,7 @@ public class OMMarkInAutAction extends AbstractAction
     public void stateChanged(AUTEvent event) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                Utils.createMessageDialog((new GDException(
+                Utils.createMessageDialog((new JBException(
                         "Component could not be found in running AUT.", //$NON-NLS-1$
                         MessageIDs.E_COMPONENT_NOT_FOUND)), null, null); 
             }

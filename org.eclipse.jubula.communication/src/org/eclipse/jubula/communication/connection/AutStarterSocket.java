@@ -18,7 +18,7 @@ import java.net.Socket;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 
 
@@ -52,7 +52,7 @@ public class AutStarterSocket extends ServerSocket {
      * @param socket
      *            the socket created by accept.
      * @param state
-     *            the state to send see GuiDancerConnectionState
+     *            the state to send see ConnectionState
      * @throws IOException
      *             from getting (and writing to) the outputstream of the given
      *             socket
@@ -61,7 +61,7 @@ public class AutStarterSocket extends ServerSocket {
         PrintStream outputStream = new PrintStream(socket.getOutputStream());
         final String status = state 
             + ConnectionState.SEPARATOR 
-            + IGdVersion.GD_PROTOCOL_MAJOR_VERSION;
+            + IVersion.JB_PROTOCOL_MAJOR_VERSION;
         if (log.isDebugEnabled()) {
             log.debug("sending state: " + String.valueOf(status)); //$NON-NLS-1$
         }
@@ -87,7 +87,7 @@ public class AutStarterSocket extends ServerSocket {
         PrintStream outputStream = new PrintStream(socket.getOutputStream());
         final String request = ConnectionState.CLIENT_TYPE_REQUEST 
             + ConnectionState.SEPARATOR 
-            + IGdVersion.GD_PROTOCOL_MAJOR_VERSION;
+            + IVersion.JB_PROTOCOL_MAJOR_VERSION;
 
         log.debug("sending request: " + request); //$NON-NLS-1$
 

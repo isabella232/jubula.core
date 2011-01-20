@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -21,7 +22,6 @@ import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -85,25 +85,31 @@ public final class DefaultEventHandler {
                 }
             }
             handlerMap.put("Default", //$NON-NLS-1$
-                createHandler(I18n.getString("DefaultEventHandler.Unknown"), ReentryProperty.EXIT, rootNode)); //$NON-NLS-1$
+                createHandler(Messages.DefaultEventHandlerUnknown, 
+                        ReentryProperty.EXIT, rootNode)); 
             return;
         }
         
         // Impl.Class Action Error      
         handlerMap.put("TestErrorEvent.Action", //$NON-NLS-1$
-            createHandler(I18n.getString("TestErrorEvent.Action"), ReentryProperty.EXIT, rootNode)); //$NON-NLS-1$
+            createHandler(Messages.TestErrorEventAction, 
+                    ReentryProperty.EXIT, rootNode)); 
         // Component not found
         handlerMap.put("TestErrorEvent.CompNotFound", //$NON-NLS-1$
-            createHandler(I18n.getString("TestErrorEvent.CompNotFound"), ReentryProperty.EXIT, rootNode)); //$NON-NLS-1$
+            createHandler(Messages.TestErrorEventCompNotFound, 
+                    ReentryProperty.EXIT, rootNode)); 
         // Configuration Error      
         handlerMap.put("TestErrorEvent.Config", //$NON-NLS-1$
-            createHandler(I18n.getString("TestErrorEvent.Config"), ReentryProperty.CONTINUE, rootNode)); //$NON-NLS-1$
+            createHandler(Messages.TestErrorEventConfig, 
+                    ReentryProperty.CONTINUE, rootNode)); 
         // Verify Failed      
         handlerMap.put("TestErrorEvent.VerifyFailed", //$NON-NLS-1$
-            createHandler(I18n.getString("TestErrorEvent.VerifyFailed"), ReentryProperty.CONTINUE, rootNode)); //$NON-NLS-1$
+            createHandler(Messages.TestErrorEventVerifyFailed, 
+                    ReentryProperty.CONTINUE, rootNode)); 
         // Default Handler in case of unexpected eventType
         handlerMap.put("Default", //$NON-NLS-1$
-            createHandler(I18n.getString("DefaultEventHandler.Unknown"), ReentryProperty.EXIT, rootNode)); //$NON-NLS-1$
+            createHandler(Messages.DefaultEventHandlerUnknown, 
+                    ReentryProperty.EXIT, rootNode)); 
     }
     
     
@@ -119,9 +125,9 @@ public final class DefaultEventHandler {
         ReentryProperty prop, INodePO assocNode) {
         IEventExecTestCasePO eventTC = NodeMaker.createEventExecTestCasePO(
             org.eclipse.jubula.client.core.model.NodeMaker
-                .createSpecTestCasePO("EmptyGuiDancerSpecTestCase"), assocNode); //$NON-NLS-1$
+                .createSpecTestCasePO("EmptySpecTestCase"), assocNode); //$NON-NLS-1$
         eventTC.setReentryProp(prop);
-        eventTC.setName(I18n.getString("DefaultEventHandler.DefEH")); //$NON-NLS-1$
+        eventTC.setName(Messages.DefaultEventHandlerDefEH);
         eventTC.setEventType(eventType);
         return eventTC;    
     }

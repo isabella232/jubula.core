@@ -120,7 +120,7 @@ public class DesktopIntegration implements PropertyChangeListener {
             popup.addSeparator();
             popup.add(defaultItem);
 
-            m_trayIcon = new TrayIcon(image, "GUIdancer AUT Agent", popup); //$NON-NLS-1$
+            m_trayIcon = new TrayIcon(image, "AUT Agent", popup); //$NON-NLS-1$
 
             m_trayIcon.setImageAutoSize(true);
 
@@ -145,7 +145,7 @@ public class DesktopIntegration implements PropertyChangeListener {
      * @return info according to status fields
      */
     private String buildToolTip() {
-        StringBuilder tt = new StringBuilder("GUIdancer AUT Agent\n"); //$NON-NLS-1$
+        StringBuilder tt = new StringBuilder("AUT Agent\n"); //$NON-NLS-1$
         tt.append(" Port used: "); //$NON-NLS-1$
         tt.append(m_port);
         if (!m_auts.isEmpty()) {

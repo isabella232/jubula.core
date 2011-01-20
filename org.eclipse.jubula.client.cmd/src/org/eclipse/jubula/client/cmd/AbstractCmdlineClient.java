@@ -37,7 +37,7 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.Message;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
@@ -311,7 +311,7 @@ public abstract class AbstractCmdlineClient {
      */
     public int run(String[] args) {
         ErrorMessagePresenter.setPresenter(new IErrorMessagePresenter() {
-            public void showErrorMessage(GDException ex, Object[] params,
+            public void showErrorMessage(JBException ex, Object[] params,
                     String[] details) {
                 
                 log.error(ex + StringConstants.COLON + StringConstants.SPACE

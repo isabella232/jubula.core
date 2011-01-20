@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -91,7 +91,7 @@ public class TestResultNodeGUIPropertySource
     protected void initPropDescriptor() {
         clearPropertyDescriptors();
         final INodePO node = getGuiNode().getNode();        
-        GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     final TestResultNode cap = getGuiNode();
@@ -105,7 +105,7 @@ public class TestResultNodeGUIPropertySource
             }, P_ELEMENT_DISPLAY_TIMESTAMP);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return getGuiNode().getName();
@@ -113,7 +113,7 @@ public class TestResultNodeGUIPropertySource
             } , P_ELEMENT_DISPLAY_STEPNAME);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
-        propDes = new GDPropertyDescriptor(new ComponentController() {
+        propDes = new JBPropertyDescriptor(new ComponentController() {
             public Object getProperty() {
                 if (Hibernator.isPoSubclass(node, IEventExecTestCasePO.class)) {
                     return I18n
@@ -138,7 +138,7 @@ public class TestResultNodeGUIPropertySource
         }, P_ELEMENT_DISPLAY_STEPTYPE);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return node == null || node.getComment() == null 
@@ -201,7 +201,7 @@ public class TestResultNodeGUIPropertySource
      *
      */
     private void initResultDetailsPropDesc() {
-        GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return getGuiNode().getStatusString();
@@ -240,7 +240,7 @@ public class TestResultNodeGUIPropertySource
      */
     private void initCapDetailsPropDescriptor() {
         final ICapPO node = (ICapPO)getGuiNode().getNode();
-        GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return getGuiNode().getComponentName();
@@ -248,7 +248,7 @@ public class TestResultNodeGUIPropertySource
             } , P_ELEMENT_DISPLAY_COMPNAME);
         propDes.setCategory(P_CAP_CAT);
         addPropertyDescriptor(propDes);
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return CompSystemI18n.getString(
@@ -258,7 +258,7 @@ public class TestResultNodeGUIPropertySource
         propDes.setCategory(P_CAP_CAT);
         addPropertyDescriptor(propDes);
         insertEmptyRow(P_CAP_CAT);
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return CompSystemI18n.getString(node.getActionName());
@@ -269,7 +269,7 @@ public class TestResultNodeGUIPropertySource
         int index = 0;
         insertEmptyRow(P_CAP_CAT);
         for (final IParamDescriptionPO desc : node.getParameterList()) {
-            propDes = new GDPropertyDescriptor(
+            propDes = new JBPropertyDescriptor(
                 new ComponentController() {
                     public Object getProperty() {
                         return CompSystemI18n.getString(desc
@@ -279,7 +279,7 @@ public class TestResultNodeGUIPropertySource
             propDes.setCategory(P_CAP_CAT);
             addPropertyDescriptor(propDes);
             
-            propDes = new GDPropertyDescriptor(
+            propDes = new JBPropertyDescriptor(
                 new ComponentController() {
                     public Object getProperty() {
                         return CompSystemI18n.getString(desc.getType());
@@ -298,10 +298,10 @@ public class TestResultNodeGUIPropertySource
      * @param index of parameter value
      * @return property descriptor
      */
-    private GDPropertyDescriptor createPropDescriptorForParamValue(
+    private JBPropertyDescriptor createPropDescriptorForParamValue(
         final int index) {
         
-        GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     if (getGuiNode().
@@ -329,7 +329,7 @@ public class TestResultNodeGUIPropertySource
      *      String
      */
     private void insertEmptyRow(String cat) {
-        GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
                 new ComponentController() {
                     
                     public Object getProperty() {
@@ -345,7 +345,7 @@ public class TestResultNodeGUIPropertySource
      */
     @SuppressWarnings("unchecked")
     private void initErrorEventPropDescriptor() {
-        GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return I18n.getString(getGuiNode()
@@ -358,7 +358,7 @@ public class TestResultNodeGUIPropertySource
         if (event.getId().equals(TestErrorEvent.ID.VERIFY_FAILED)) {
             Set keys = event.getProps().keySet();
             for (final Object key : keys) {
-                propDes = new GDPropertyDescriptor(new ComponentController() {
+                propDes = new JBPropertyDescriptor(new ComponentController() {
                     public Object getProperty() {
                         return event.getProps().get(key);
                     }
@@ -371,7 +371,7 @@ public class TestResultNodeGUIPropertySource
             && event.getProps().keySet().contains(
                 TestErrorEvent.Property.DESCRIPTION_KEY)) {
             
-            propDes = new GDPropertyDescriptor(new ComponentController() {
+            propDes = new JBPropertyDescriptor(new ComponentController() {
                 public Object getProperty() {
                     String key = (String)event.getProps().get(
                         TestErrorEvent.Property.DESCRIPTION_KEY);
@@ -398,7 +398,7 @@ public class TestResultNodeGUIPropertySource
     private void initEventTestCasePropDescriptor(final INodePO node) {
         
         final IEventExecTestCasePO tc = (IEventExecTestCasePO) node;
-        GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return I18n.getString(tc.getEventType());
@@ -406,7 +406,7 @@ public class TestResultNodeGUIPropertySource
             } , I18n.getString("TestResultNodeGUIPropertySource.ErrorType")); //$NON-NLS-1$
         propDes.setCategory(I18n.getString("TestResultNodeGUIPropertySource.Eventhandler")); //$NON-NLS-1$
         addPropertyDescriptor(propDes);
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return tc.getReentryProp();

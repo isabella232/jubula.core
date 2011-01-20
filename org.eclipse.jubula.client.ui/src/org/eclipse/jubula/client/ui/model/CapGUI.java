@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertysources.CapGUIPropertySource;
-import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralGDLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -152,14 +152,14 @@ public class CapGUI extends GuiNode implements IAdaptable {
     public void getInfoString(StringBuilder info) {
         if (Plugin.getDefault().getPreferenceStore()
                 .getBoolean(Constants.SHOWCAPINFO_KEY)) {
-            info.append(GeneralGDLabelProvider.OPEN_BRACKED);
+            info.append(GeneralLabelProvider.OPEN_BRACKED);
             final Map<String, String> map = StringHelper.getInstance().getMap();
             ICapPO cap = (ICapPO)getContent();
             IComponentNameMapper compMapper = 
                 Plugin.getActiveCompMapper();
             info.append(I18n.getString("CapGUI.Type"));  //$NON-NLS-1$
             info.append(map.get(cap.getComponentType())).append(
-                    GeneralGDLabelProvider.SEPARATOR);
+                    GeneralLabelProvider.SEPARATOR);
             info.append(I18n.getString("CapGUI.Name"));  //$NON-NLS-1$
             String componentName = cap.getComponentName();
             if (compMapper != null) {
@@ -172,10 +172,10 @@ public class CapGUI extends GuiNode implements IAdaptable {
             if (componentName != null) {
                 info.append(componentName);
             }
-            info.append(GeneralGDLabelProvider.SEPARATOR);
+            info.append(GeneralLabelProvider.SEPARATOR);
             info.append(I18n.getString("CapGUI.Action"));  //$NON-NLS-1$
             info.append(map.get(cap.getActionName()));
-            info.append(GeneralGDLabelProvider.CLOSE_BRACKED);
+            info.append(GeneralLabelProvider.CLOSE_BRACKED);
         }        
     }
 }

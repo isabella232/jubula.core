@@ -14,10 +14,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.AUTServerEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTModeChangedMessage;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -60,7 +62,7 @@ public class AUTModeChangedCommand implements ICommand {
      * {@inheritDoc}
      */
     public Message execute() {
-        log.info("AUTServer mode changed to " //$NON-NLS-1$
+        log.info(Messages.AUTServerModeChangedTo + StringConstants.SPACE
                 + String.valueOf(m_message.getMode()));
 
             // HERE notify listener about changed mode 

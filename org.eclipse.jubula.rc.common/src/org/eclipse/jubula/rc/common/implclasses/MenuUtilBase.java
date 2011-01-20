@@ -10,10 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.implclasses;
 
-import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.StringParsing;
 
 
@@ -54,14 +51,7 @@ public abstract class MenuUtilBase {
         final int textPathLength = textPath.length;
         int[] result = new int[textPathLength];
         for (int i = 0; i < textPathLength; ++i) {
-            try {
-                result[i] = Integer.parseInt(textPath[i]);
-            } catch (NumberFormatException exc) {
-                throw new StepExecutionException(
-                    "no index path: " + path, //$NON-NLS-1$
-                    EventFactory.createActionError(
-                            TestErrorEvent.INVALID_PARAM_VALUE));
-            }
+            result[i] = IndexConverter.intValue(textPath[i]);
         }
         return IndexConverter.toImplementationIndices(result);
     }

@@ -28,8 +28,8 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.contentassist.TestDataCubeRefContentProposalProvider;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ContentAssistedTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDParamTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ParamTextPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
@@ -114,7 +114,7 @@ public class ExecTestCaseGUIPropertySource extends
         
         // Specification Name
         if (m_specNamePropDesc == null) {
-            GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+            JBPropertyDescriptor propDes = new JBPropertyDescriptor(
                     new SpecNameController(), P_SPECNAME_DISPLAY_NAME);
             propDes.setLabelProvider(new DisabledLabelProvider());
             m_specNamePropDesc = propDes;
@@ -183,7 +183,7 @@ public class ExecTestCaseGUIPropertySource extends
             IParamNameMapper activeParamNameMapper = getActiveParamNameMapper();
             for (IParamDescriptionPO paramDescr : paramList) {
                 // Parameter name
-                propDes = new GDPropertyDescriptor(
+                propDes = new JBPropertyDescriptor(
                         new ParameterNameController(this, paramDescr),
                         P_ELEMENT_DISPLAY_PARAMETERNAME);
                 propDes.setLabelProvider(new DisabledLabelProvider());
@@ -192,7 +192,7 @@ public class ExecTestCaseGUIPropertySource extends
                 
                 //Parameter type
                 propDes = 
-                    new GDPropertyDescriptor(new ParameterTypeController(
+                    new JBPropertyDescriptor(new ParameterTypeController(
                             this, paramDescr), P_ELEMENT_DISPLAY_PARAMETERTYPE);
                 propDes.setLabelProvider(new DisabledLabelProvider());
                 propDes.setCategory(P_PARAMETER_CAT);
@@ -204,7 +204,7 @@ public class ExecTestCaseGUIPropertySource extends
                         new ParameterValueController(this, 
                                 paramDescr, activeParamNameMapper), 
                                 P_ELEMENT_DISPLAY_PARAMETERVALUE, 
-                                GDParamTextPropertyDescriptor.getValuesSet(
+                                ParamTextPropertyDescriptor.getValuesSet(
                                         paramNodePO, paramDescr.getUniqueId()),
                                         false);
                 propDes.setCategory(P_PARAMETER_CAT);
@@ -213,7 +213,7 @@ public class ExecTestCaseGUIPropertySource extends
                 m_paramPropDescList.add(propDes);
                 
                 // empty line
-                propDes = new GDPropertyDescriptor(new DummyController(),
+                propDes = new JBPropertyDescriptor(new DummyController(),
                         StringConstants.EMPTY);
                 propDes.setCategory(P_PARAMETER_CAT);
                 m_paramPropDescList.add(propDes);

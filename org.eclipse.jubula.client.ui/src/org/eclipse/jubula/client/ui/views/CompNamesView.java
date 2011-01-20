@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.views;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
-import org.eclipse.jubula.client.ui.views.dataset.GDDataSetView;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.views.dataset.DataSetView;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
@@ -56,14 +56,14 @@ public class CompNamesView extends PageBookView
      * {@inheritDoc}
      */
     protected PageRec doCreatePage(IWorkbenchPart part) {
-        if (part instanceof AbstractGDTreeView
-                || part instanceof IGDEditor) {
+        if (part instanceof AbstractJBTreeView
+                || part instanceof IJBEditor) {
                 
             CompNamesPage page = new CompNamesPage();
             initPage(page);
             page.createControl(getPageBook());
             return new PageRec(part, page);
-        } else if (part instanceof IGDPart) {
+        } else if (part instanceof IJBPart) {
             return new PageRec(part, createDefaultPage(getPageBook()));
         }
 
@@ -95,7 +95,7 @@ public class CompNamesView extends PageBookView
      */
     protected boolean isImportant(IWorkbenchPart part) {
         return !(part == this
-                || part instanceof GDDataSetView
+                || part instanceof DataSetView
                 || part instanceof PropertySheet);
     }
 

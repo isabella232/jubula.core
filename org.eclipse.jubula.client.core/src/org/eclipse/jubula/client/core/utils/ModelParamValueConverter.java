@@ -10,15 +10,25 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.io.IOException;
+import java.io.PushbackReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
-import org.eclipse.jubula.client.core.utils.Parser.ParserException;
+import org.eclipse.jubula.client.core.parser.parameter.lexer.Lexer;
+import org.eclipse.jubula.client.core.parser.parameter.lexer.LexerException;
+import org.eclipse.jubula.client.core.parser.parameter.parser.Parser;
+import org.eclipse.jubula.client.core.parser.parameter.parser.ParserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -26,6 +36,10 @@ import org.eclipse.jubula.client.core.utils.Parser.ParserException;
  * @created 31.10.2007
  */
 public class ModelParamValueConverter extends ParamValueConverter {
+    
+    /** the logger */
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(ModelParamValueConverter.class);
     
     /**
      * hint: the string could be null.
@@ -72,13 +86,23 @@ public class ModelParamValueConverter extends ParamValueConverter {
      * @{inheritDoc}
      */
     void createTokens() {
-        Parser parser = null;
+        Parser parser = new Parser(new Lexer(new PushbackReader(
+                new StringReader(StringUtils.defaultString(
+                        getModelString())))));
+        ParsedParameter parsedParam = 
+            new ParsedParameter(false, getCurrentNode(), getDesc());
         try {
-            parser = new Parser(getModelString(), false, 
-                getCurrentNode(), getDesc());
-            setTokens(parser.getTokens());   
+            parser.parse().apply(parsedParam);
+            setTokens(parsedParam.getTokens());
+        } catch (LexerException e) {
+            createErrors(e, getModelString());
         } catch (ParserException e) {
-            createErrors(e);
+            createErrors(e, getModelString());
+        } catch (IOException e) {
+            LOG.error(Messages.ParameterParsingErrorOccurred, e);
+            createErrors(e, getModelString());
+        } catch (SemanticParsingException e) {
+            createErrors(e, getModelString());
         }
     }
 
@@ -91,7 +115,7 @@ public class ModelParamValueConverter extends ParamValueConverter {
             if (state == ConvValidationState.invalid 
                 || state == ConvValidationState.undecided) {
                 TokenError tokenError = 
-                    new TokenError(getModelString(), token.getStartIndex(), 
+                    new TokenError(getModelString(), 
                         token.getErrorKey(), state);
                 addError(tokenError);
             }

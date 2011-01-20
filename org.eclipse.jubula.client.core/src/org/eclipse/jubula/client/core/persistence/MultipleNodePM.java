@@ -29,6 +29,9 @@ import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
 import org.eclipse.jubula.client.core.datastructure.CompNameUsageMap;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -51,7 +54,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
 
@@ -595,6 +598,8 @@ public class MultipleNodePM  extends PersistenceManager {
             IPersistentObject oldParent = m_oldParent;
             IPersistentObject newParent = m_newParent;
             INodePO node = m_node;
+            DataEventDispatcher eventDispatcher = 
+                DataEventDispatcher.getInstance();
             
             if (masterSession != sess) {
                 masterSession.detach(node);
@@ -618,6 +623,9 @@ public class MultipleNodePM  extends PersistenceManager {
                 ((INodePO)oldParent).removeNode(node);
             }
             
+            eventDispatcher.fireDataChangedListener(oldParent, 
+                    DataState.StructureModified, UpdateState.notInEditor);
+            
             
             // add to new parent
             if (newParent instanceof ISpecObjContPO) {
@@ -629,6 +637,9 @@ public class MultipleNodePM  extends PersistenceManager {
             } else {
                 ((INodePO)newParent).addNode(node);
             }
+            
+            eventDispatcher.fireDataChangedListener(newParent, 
+                    DataState.StructureModified, UpdateState.notInEditor);
             
             return null;
         }
@@ -892,14 +903,14 @@ public class MultipleNodePM  extends PersistenceManager {
      *      List<AbstractCmdHandle>
      * @throws PMException
      *      error occured
-     * @throws GDProjectDeletedException
+     * @throws ProjectDeletedException
      *      error occured
      * @return a message containing information about the error that 
      *         occurred during execution, or <code>null</code> if no error
      *         occurred.
      */
     public MessageInfo executeCommands(List<AbstractCmdHandle> cmds) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
 
         return executeCommands(cmds, null);    
     }
@@ -913,7 +924,7 @@ public class MultipleNodePM  extends PersistenceManager {
      * @param dec the descriptor used during the transaction
      * @throws PMException
      *      error occured
-     * @throws GDProjectDeletedException
+     * @throws ProjectDeletedException
      *      error occured
      * @return a message containing information about the error that 
      *         occurred during execution, or <code>null</code> if no error
@@ -921,7 +932,7 @@ public class MultipleNodePM  extends PersistenceManager {
      */
     public MessageInfo executeCommands(List<AbstractCmdHandle> cmds, 
         ParamNameBPDecorator dec) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
 
         return executeCommands(cmds, dec, 
                 GeneralStorage.getInstance().getMasterSession());
@@ -938,7 +949,7 @@ public class MultipleNodePM  extends PersistenceManager {
      * @param sess The session in which to execute the commands.
      * @throws PMException
      *      error occured
-     * @throws GDProjectDeletedException
+     * @throws ProjectDeletedException
      *      error occured
      * @return a message containing information about the error that 
      *         occurred during execution, or <code>null</code> if no error
@@ -946,7 +957,7 @@ public class MultipleNodePM  extends PersistenceManager {
      */
     public MessageInfo executeCommands(List<AbstractCmdHandle> cmds, 
             ParamNameBPDecorator dec, EntityManager sess) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
         
         final Hibernator hibernator = Hibernator.instance();
         EntityTransaction tx = null;

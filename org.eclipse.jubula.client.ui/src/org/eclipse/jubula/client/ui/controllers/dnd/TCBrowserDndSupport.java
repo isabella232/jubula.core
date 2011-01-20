@@ -27,7 +27,7 @@ import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.ui.IViewPart;
 
 
@@ -94,7 +94,7 @@ public class TCBrowserDndSupport {
      * @param target The target location.
      */
     public static void moveNodes(List<GuiNode> nodesToBeMoved, 
-            GuiNode target) throws PMException, GDProjectDeletedException {
+            GuiNode target) throws PMException, ProjectDeletedException {
         if (getSpecView() != null) {
             doMove(nodesToBeMoved, target);
         }
@@ -109,7 +109,7 @@ public class TCBrowserDndSupport {
      *      List <GuiNode>
      */
     private static void doMove(List <GuiNode> nodes, GuiNode target) 
-        throws PMException, GDProjectDeletedException {
+        throws PMException, ProjectDeletedException {
 
         // persist changes into database
         List<AbstractCmdHandle> cmds = new ArrayList<AbstractCmdHandle>();

@@ -41,7 +41,7 @@ import org.eclipse.jubula.communication.parser.MessageSerializer;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.AssertException;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.SerialisationException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -282,12 +282,16 @@ public class Communicator {
     /**
      * establish the connection, either connecting to a server or accepting
      * connections. This method will not block. If a conection could not made,
-     * the listeners are notified with connectingFailed() and acceptingFailed respectively. 
-     * @throws SecurityException if the security manager does not allow connections.
-     * @throws GDVersionException in case of version error between Client and AutStarter
+     * the listeners are notified with connectingFailed() and acceptingFailed
+     * respectively.
+     * 
+     * @throws SecurityException
+     *             if the security manager does not allow connections.
+     * @throws JBVersionException
+     *             in case of version error between Client and AutStarter
      */
     public synchronized void run() throws SecurityException, 
-        GDVersionException {
+        JBVersionException {
         
         if (m_serverSocket != null && !isAccepting()) {
             // it's a server that hasn't yet started accepting connections

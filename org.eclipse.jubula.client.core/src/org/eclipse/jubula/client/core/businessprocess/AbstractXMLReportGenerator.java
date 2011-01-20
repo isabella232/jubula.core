@@ -301,7 +301,7 @@ public abstract class AbstractXMLReportGenerator {
      */
     private void getTimestampFromResultNode(TestResultNode resultNode,
             Element insertInto) {
-        Element timestampEL = insertInto.addElement("timestamp");
+        Element timestampEL = insertInto.addElement("timestamp"); //$NON-NLS-1$
         Date time = resultNode.getTimeStamp();
         if (time != null) {
             String timestamp = time.toString();

@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.errorhandling;
 
 /**
  * Interface for classes capable of resolving conflicts between the database
- * version expected by GUIdancer and the actual version of the database to which 
+ * version expected by Jubula and the actual version of the database to which 
  * the Client is trying to connect.
  *
  * @author BREDEX GmbH

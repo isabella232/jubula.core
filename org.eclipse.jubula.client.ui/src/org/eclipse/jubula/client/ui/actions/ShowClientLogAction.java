@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.internal.Workbench;
+import org.eclipse.ui.PlatformUI;
 
 
 /**
@@ -46,8 +46,8 @@ public class ShowClientLogAction extends AbstractAction {
         
         if (clientLogFile != null) {
             IWorkbenchPage currentPage = 
-                Workbench.getInstance().getActiveWorkbenchWindow()
-                .getActivePage();
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                    .getActivePage();
             
             if (currentPage != null) {
                 if (m_clientLogInput != null 

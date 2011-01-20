@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.dialogs.EnterTestDataManagerDialog;
 import org.eclipse.jubula.client.ui.dialogs.RenameTestDataManagerDialog;
 import org.eclipse.jubula.client.ui.editors.CentralTestDataEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.handlers.AddNewTestDataManagerHandler;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.swt.widgets.Shell;

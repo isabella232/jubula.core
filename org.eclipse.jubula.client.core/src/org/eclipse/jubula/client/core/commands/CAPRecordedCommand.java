@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapp
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -63,7 +64,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.Component;
 
 
 /**
- * This class is used by record mode of GUIdancer. Server sends a recorded CAP,
+ * This class is used by record mode of Jubula. Server sends a recorded CAP,
  * which is added to specification store. (CAP + Objectmapping)
  * 
  * @author BREDEX GmbH
@@ -107,7 +108,7 @@ public class CAPRecordedCommand implements ICommand {
     
     /** info Message for actions that are not supported for selected toolkit */
     private String m_wrongToolkit =
-        "Current Action not available for selected Toolkit. Please check project properties."; //$NON-NLS-1$
+        Messages.CurrenActionNotAvailabelForSelectedToolkit;
     
     /**
      * get name of recorded action
@@ -167,9 +168,9 @@ public class CAPRecordedCommand implements ICommand {
                 String extraMsg = m_extraMsg;
                 return new ShowRecordedActionMessage(true, recAction, extraMsg);
             } catch (IllegalArgumentException e) {
-                LOG.error("execute() failed!", e); //$NON-NLS-1$
+                LOG.error(Messages.ExecutedFailed, e);
             } catch (CommunicationException e) {
-                LOG.error("execute() failed!", e); //$NON-NLS-1$
+                LOG.error(Messages.ExecutedFailed, e);
             }
             return new ShowRecordedActionMessage(false);
         }
@@ -234,12 +235,14 @@ public class CAPRecordedCommand implements ICommand {
         } catch (IncompatibleTypeException e) {
             // Should not happen, but if it does, return null to indicate that 
             // the cap was not created successfully.
-            LOG.error("Error occurred while observing Test Step.", e); //$NON-NLS-1$
+            LOG.error(Messages.ErrorOccurredWhileObservingTestStep 
+                    + StringConstants.DOT, e);
             return null;
         } catch (PMException e) {
             // Should not happen, but if it does, return null to indicate that 
             // the cap was not created successfully.
-            LOG.error("Error occurred while observing Test Step.", e); //$NON-NLS-1$
+            LOG.error(Messages.ErrorOccurredWhileObservingTestStep 
+                    + StringConstants.DOT, e);
             return null;
         }
         recSpecTestCase.addNode(recCap);
@@ -366,7 +369,6 @@ public class CAPRecordedCommand implements ICommand {
                 || actionName.equals("CompSystem.VerifyProperty") //$NON-NLS-1$
                 || actionName.equals("CompSystem.PopupSelectByTextPath")) { //$NON-NLS-1$
             compTyp = "guidancer.abstract.Widget"; //$NON-NLS-1$
-            
         } else if (actionName.equals("CompSystem.InputTextDirect") //$NON-NLS-1$
                 || actionName.equals("CompSystem.InputText") //$NON-NLS-1$
                 || actionName.equals("CompSystem.VerifyEditable")) { //$NON-NLS-1$
@@ -524,7 +526,7 @@ public class CAPRecordedCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        LOG.error(this.getClass().getName() + "timeout() called"); //$NON-NLS-1$
+        LOG.error(this.getClass().getName() + Messages.TimeoutCalled);
     }
     /**
      * @param r The recSpecTestCase to set.

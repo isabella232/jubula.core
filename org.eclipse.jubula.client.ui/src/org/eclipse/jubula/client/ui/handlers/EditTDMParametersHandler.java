@@ -25,8 +25,8 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.AbstractEditParametersDialog;
 import org.eclipse.jubula.client.ui.dialogs.EditParametersTDMDialog;
 import org.eclipse.jubula.client.ui.dialogs.AbstractEditParametersDialog.Parameter;
-import org.eclipse.jubula.client.ui.editors.AbstractGDEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -60,11 +60,11 @@ public class EditTDMParametersHandler extends AbstractEditParametersHandler {
     
     /** {@inheritDoc} */
     public Object execute(ExecutionEvent event) {
-        AbstractGDEditor editor = getEditorInEditableState();
+        AbstractJBEditor editor = getEditorInEditableState();
         if (editor != null) {
             ITestDataCubePO tdc = getSelectedTestDataManager(event);
             if (tdc != null) {
-                final GDEditorHelper.EditableState state = editor
+                final JBEditorHelper.EditableState state = editor
                         .getEditorHelper().getEditableState();
                 final AbstractEditParametersDialog dialog = 
                     new EditParametersTDMDialog(Plugin.getShell(), tdc);
@@ -74,7 +74,7 @@ public class EditTDMParametersHandler extends AbstractEditParametersHandler {
                 if (Window.OK == dialog.getReturnCode()) {
                     performChanges(editor, tdc, dialog);
                 } else {
-                    if (state == GDEditorHelper.EditableState.NotChecked) {
+                    if (state == JBEditorHelper.EditableState.NotChecked) {
                         editor.getEditorHelper().resetEditableState();
                     }
                 }
@@ -91,7 +91,7 @@ public class EditTDMParametersHandler extends AbstractEditParametersHandler {
      * @param dialog
      *            the edit parameters dialog
      */
-    private void performChanges(AbstractGDEditor editor, ITestDataCubePO tdc,
+    private void performChanges(AbstractJBEditor editor, ITestDataCubePO tdc,
             AbstractEditParametersDialog dialog) {
         final List<Parameter> parameters = dialog.getParameters();
         boolean isModified = editParameters(tdc, parameters, editor

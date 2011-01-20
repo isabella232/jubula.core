@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.ui.businessprocess;
 
 import org.eclipse.jubula.client.ui.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Control;
 
@@ -36,8 +36,8 @@ public class TextControlBP {
      */
     @SuppressWarnings("unchecked")
     public static void setText(String text, Control control) {
-        if (control instanceof GDText) {
-            ((GDText)control).setText(text);
+        if (control instanceof JBText) {
+            ((JBText)control).setText(text);
         } else if (control instanceof DirectCombo) {
             ((DirectCombo<String>)control).setSelectedObject(text);
         } else if (control instanceof CCombo) {
@@ -53,8 +53,8 @@ public class TextControlBP {
      * @return the text of the given control
      */
     public static String getText(Control control) {
-        if (control instanceof GDText) {
-            return ((GDText)control).getText();
+        if (control instanceof JBText) {
+            return ((JBText)control).getText();
         } else if (control instanceof DirectCombo) {
             return ((DirectCombo)control).getText();
         } else if (control instanceof CCombo) {
@@ -68,8 +68,8 @@ public class TextControlBP {
      * @param control the current control
      */
     public static void selectAll(Control control) {
-        if (control instanceof GDText) {
-            ((GDText)control).selectAll();
+        if (control instanceof JBText) {
+            ((JBText)control).selectAll();
         } else if (!(control instanceof DirectCombo 
                 || control instanceof CCombo)) {
             
@@ -83,8 +83,8 @@ public class TextControlBP {
      * @param index the index to set the selection
      */
     public static void setSelection(Control control, int index) {
-        if (control instanceof GDText) {
-            ((GDText)control).setSelection(index);
+        if (control instanceof JBText) {
+            ((JBText)control).setSelection(index);
         } else if (!(control instanceof DirectCombo 
                 || control instanceof CCombo)) {
             

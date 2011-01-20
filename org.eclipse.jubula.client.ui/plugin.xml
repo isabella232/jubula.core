@@ -69,6 +69,20 @@
 				</with>
 			</and>
 		</definition>
+  <definition
+        id="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+			<!-- 
+			makes use of the fact that actionSets exist as a context when 
+			they are "active" (i.e. this menu is visible when the actionSet 
+			"org.eclipse.jubula.client.ui.menu.actions" is active)
+			-->
+			<with variable="activeContexts">
+				<iterate operator="or">
+					<equals value="org.eclipse.jubula.client.ui.menu.actions">
+					</equals>
+				</iterate>
+			</with>
+  </definition>
 	</extension>
 	<extension point="org.eclipse.core.expressions.propertyTesters">
 		<propertyTester
@@ -205,9 +219,9 @@
 			icon="icons/testResultTree.gif" category="org.eclipse.jubula.client.views"
 			name="%TestResult" id="org.eclipse.jubula.client.ui.views.TestResultTreeView" />
 		<view icon="icons/dataSetView.gif"
-			class="org.eclipse.jubula.client.ui.views.dataset.GDDataSetView"
+			class="org.eclipse.jubula.client.ui.views.dataset.DataSetView"
 			category="org.eclipse.jubula.client.views"
-			name="%JubulaDataSetView" id="org.eclipse.jubula.client.ui.views.GDDataSetView" />
+			name="%JubulaDataSetView" id="org.eclipse.jubula.client.ui.views.DataSetView" />
 		<view icon="icons/perspective_report.gif"
 			class="org.eclipse.jubula.client.ui.views.TestresultSummaryView"
 			category="org.eclipse.jubula.client.views"
@@ -293,6 +307,12 @@
 			category="org.eclipse.jubula.client.ui.preferences.mainPrefPage"
 			id="org.eclipse.jubula.client.ui.preferences.ObservPrefPage"
 			name="%ObservationPreferences" />
+  <page
+        category="org.eclipse.jubula.client.ui.preferences.mainPrefPage"
+        class="org.eclipse.jubula.client.ui.preferences.DatabaseConnectionPreferencePage"
+        id="org.eclipse.jubula.client.ui.preferences.DatabaseConnectionPrefPage"
+        name="%DatabaseConnectionPreferencePageName">
+  </page>
 	</extension>
 	<extension point="org.eclipse.ui.decorators">
 		<decorator adaptable="false"
@@ -377,88 +397,59 @@
 			description="only these actions, that are visible in the main menu- or toolbar"
 			id="org.eclipse.jubula.client.ui.menu.actions" label="Jubula Menu Action Set"
 			visible="false">
-			<menu id="JubulaMenu" label="%&amp;Jubula" path="additions">
-				<separator name="JubulaSeparator1" />
-				<separator name="JubulaSeparator2" />
-				<separator name="JubulaSeparator3" />
-				<separator name="JubulaSeparator4" />
-				<separator name="JubulaSeparator5" />
-			</menu>
 
-			<menu label="%Project" path="" id="JubulaProjectMenu">
-				<separator name="JubulaProjectSeparator1" />
-				<separator name="JubulaProjectSeparator2" />
-				<separator name="JubulaProjectSeparator3" />
-				<separator name="JubulaProjectSeparator4" />
-				<separator name="JubulaProjectSeparator5" />
-			</menu>
-			<menu label="%Edit" path="" id="JubulaEditMenu">
-				<separator name="JubulaEditSeparator1" />
-				<separator name="JubulaEditSeparator2" />
-				<separator name="JubulaEditSeparator3" />
-			</menu>
-
-
-			<menu label="%Insert" path="JubulaEditMenu/JubulaEditSeparator1" id="JubulaInsertMenu">
+			<menu label="%Insert" path="edit/JubulaEditSeparator1" id="JubulaInsertMenu">
 				<separator name="JubulaInsertSeparator1" />
 			</menu>
 
-			<menu label="%Add" path="JubulaEditMenu/JubulaEditSeparator1" id="JubulaAddMenu">
+			<menu label="%Add" path="edit/JubulaEditSeparator1" id="JubulaAddMenu">
 				<separator name="JubulaAddSeparator1" />
 			</menu>
 
-			<menu label="%Run" path="" id="JubulaRunMenu">
-				<separator name="JubulaRunSeparator0" />
-				<separator name="JubulaRunSeparator1" />
-				<separator name="JubulaRunSeparator2" />
-				<separator name="JubulaRunSeparator3" />
-				<separator name="JubulaRunSeparator4" />
-				<separator name="JubulaRunSeparator5" />
-			</menu>
 			<action
 				class="org.eclipse.jubula.client.ui.actions.SaveProjectAsAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.SaveProjectAsCommand"
 				disabledIcon="icons/saveas_d.gif" icon="icons/saveas_e.gif"
 				id="org.eclipse.jubula.client.ui.actions.SaveProjectAsAction"
-				label="%SaveAs" menubarPath="JubulaProjectMenu/JubulaProjectSeparator1" />
+				label="%SaveAs" menubarPath="projects/JubulaProjectSeparator1" />
 			<action
 				class="org.eclipse.jubula.client.ui.actions.DeleteProjectAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.DeleteProjectCommand"
 				disabledIcon="icons/deleteProject_disabled.gif" icon="icons/deleteProject.gif"
 				id="org.eclipse.jubula.client.ui.actions.DeleteProjectAction"
-				label="%DeleteProject" menubarPath="JubulaProjectMenu/JubulaProjectSeparator3" />
+				label="%DeleteProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" />
 			<action class="org.eclipse.jubula.client.ui.actions.OpenProjectAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
 				disabledIcon="icons/loadDB_disabled.gif" icon="icons/loadDB.gif"
 				id="org.eclipse.jubula.client.ui.actions.OpenProjectDBAction"
-				label="%OpenProject" menubarPath="JubulaProjectMenu/JubulaProjectSeparator1" />
+				label="%OpenProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" />
 
 			<action class="org.eclipse.jubula.client.ui.actions.NewProjectAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.NewProjectCommand"
 				disabledIcon="icons/project_dis.gif" icon="icons/newProjectIcon.gif"
 				id="org.eclipse.jubula.client.ui.actions.NewProjectAction"
-				label="%NewProject" menubarPath="JubulaProjectMenu/JubulaProjectSeparator1" tooltip="%NewProjectToolTip" />
+				label="%NewProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" tooltip="%NewProjectToolTip" />
 			<action class="org.eclipse.jubula.client.ui.actions.ExportAllAction"
 				id="org.eclipse.jubula.client.ui.actions.ExportAllAction"
-				label="%ExportAll" menubarPath="JubulaProjectMenu/JubulaProjectSeparator3" style="push"
+				label="%ExportAll" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" style="push"
 				tooltip="%ExportAllToolTip" />
 			<action class="org.eclipse.jubula.client.ui.actions.ExportFileAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
 				disabledIcon="icons/export_disabled.gif" icon="icons/export.gif"
 				id="org.eclipse.jubula.client.ui.actions.ExportFileAction"
-				label="%Export" menubarPath="JubulaProjectMenu/JubulaProjectSeparator3" tooltip="%ExportToolTip">
+				label="%Export" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" tooltip="%ExportToolTip">
 			</action>
 			<action class="org.eclipse.jubula.client.ui.actions.ImportFileAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.ImportFileCommand"
 				disabledIcon="icons/import_disabled.gif" icon="icons/import.gif"
 				id="org.eclipse.jubula.client.ui.actions.ImportFileAction"
-				label="%Import" menubarPath="JubulaProjectMenu/JubulaProjectSeparator3" tooltip="%ImportToolTip">
+				label="%Import" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" tooltip="%ImportToolTip">
 			</action>
 
 			<action class="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
 				definitionId="org.eclipse.ui.edit.findReplace" icon="icons/search.gif"
 				id="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
-				label="%Search" menubarPath="JubulaEditMenu/JubulaEditSeparator3" tooltip="%SearchToolTip" />
+				label="%Search" menubarPath="edit/JubulaEditSeparator3" tooltip="%SearchToolTip" />
 
 			<action
 				class="org.eclipse.jubula.client.ui.actions.ChooseLanguageAction"
@@ -472,7 +463,7 @@
 				definitionId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
 				disabledIcon="icons/stopServer_disabled.gif" icon="icons/stopServer.gif"
 				id="org.eclipse.jubula.client.ui.actions.DisconnectAction"
-				label="%Disconnect" menubarPath="JubulaRunMenu/JubulaRunSeparator1"
+				label="%Disconnect" menubarPath="org.eclipse.ui.run/JubulaRunSeparator1"
 				toolbarPath="org.eclipse.jubula.client.ui.toolbar.AutStarterToolbar/GlobalActions"
 				tooltip="%DisconnectToolTip" />
 			<action
@@ -488,7 +479,7 @@
 				definitionId="org.eclipse.jubula.client.ui.commands.StopRecordTestCaseCommand"
 				disabledIcon="icons/stopcam_disabled.gif" icon="icons/stopcam.gif"
 				id="org.eclipse.jubula.client.ui.actions.StopRecordTestCaseAction"
-				label="%StopRecord" menubarPath="JubulaRunMenu/JubulaRunSeparator4"
+				label="%StopRecord" menubarPath="org.eclipse.ui.run/JubulaRunSeparator4"
 				toolbarPath="org.eclipse.jubula.client.ui.toolbar.ObservationToolbar/GlobalActions"
 				tooltip="%StopRecordToolTip" />
 			<action
@@ -496,16 +487,16 @@
 				definitionId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
 				disabledIcon="icons/stopOM_disabled.gif" icon="icons/stopOM.gif"
 				id="org.eclipse.jubula.client.ui.actions.OMStopMappingModeAction"
-				label="%StopMapping" menubarPath="JubulaRunMenu/JubulaRunSeparator5"
+				label="%StopMapping" menubarPath="org.eclipse.ui.run/JubulaRunSeparator5"
 				toolbarPath="org.eclipse.jubula.client.ui.toolbar.ObjectMappingToolbar/GlobalActions"
 				tooltip="%StopMappingToolTip" />
 			<action disabledIcon="icons/newTestCaseIcon.gif" icon="icons/newTestCaseIcon.gif"
 				id="org.eclipse.jubula.client.ui.actions.AbstractNewTestCaseAction_INSERT"
-				label="%TestCase" menubarPath="JubulaEditMenu/JubulaInsertMenu/JubulaInsertSeparator1" retarget="true"
+				label="%TestCase" menubarPath="edit/JubulaInsertMenu/JubulaInsertSeparator1" retarget="true"
 				tooltip="%TestCaseToolTip" />
 			<action disabledIcon="icons/newTestCaseIcon.gif" icon="icons/newTestCaseIcon.gif"
 				id="org.eclipse.jubula.client.ui.actions.AbstractNewTestCaseAction_ADD"
-				label="%TestCase" menubarPath="JubulaEditMenu/JubulaAddMenu/JubulaAddSeparator1" retarget="true"
+				label="%TestCase" menubarPath="edit/JubulaAddMenu/JubulaAddSeparator1" retarget="true"
 				tooltip="%TestCaseToolTip" />
 			<action
 				class="org.eclipse.jubula.client.ui.actions.ShowClientLogAction"
@@ -521,14 +512,14 @@
 				class="org.eclipse.jubula.client.ui.actions.CreateNewVersionAction"
 				disabledIcon="icons/project_dis.gif" icon="icons/newProjectIcon.gif"
 				id="org.eclipse.jubula.client.ui.actions.CreateNewVersionAction"
-				label="%CreateNewVersion" menubarPath="JubulaProjectMenu/JubulaProjectSeparator3" style="push"
+				label="%CreateNewVersion" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" style="push"
 				tooltip="%CreateNewVersionTooltip" />
 			<action
 				class="org.eclipse.jubula.client.ui.actions.SelectDatabaseAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.SelectDBCommand"
 				icon="icons/selectDB.gif"
 				id="org.eclipse.jubula.client.ui.actions.SelectDatabaseAction"
-				label="%SelectDatabase" menubarPath="JubulaProjectMenu/JubulaProjectSeparator3" />
+				label="%SelectDatabase" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" />
 		</actionSet>
 		<actionSet description="all actions, that are not in the main menu- or toolbar"
 			id="org.eclipse.jubula.client.ui.globalActions" label="Jubula Global Action Set">
@@ -564,13 +555,13 @@
 			<view id="org.eclipse.ui.views.PropertySheet" minimized="false"
 				ratio="0.6" relationship="right" relative="org.eclipse.ui.editorss">
 			</view>
-			<view id="org.eclipse.jubula.client.ui.views.GDDataSetView"
+			<view id="org.eclipse.jubula.client.ui.views.DataSetView"
 				minimized="false" ratio="0.5" relationship="bottom"
 				relative="org.eclipse.ui.views.PropertySheet">
 			</view>
 			<view id="org.eclipse.jubula.client.ui.views.CompNamesView"
 				minimized="false" relationship="stack"
-				relative="org.eclipse.jubula.client.ui.views.GDDataSetView">
+				relative="org.eclipse.jubula.client.ui.views.DataSetView">
 			</view>
 			<view id="org.eclipse.ui.views.ProblemView" minimized="false"
 				ratio="0.75" relationship="bottom" relative="org.eclipse.ui.editorss">
@@ -605,7 +596,7 @@
 			<viewShortcut
 				id="org.eclipse.jubula.client.ui.views.ComponentNameBrowser">
 			</viewShortcut>
-			<viewShortcut id="org.eclipse.jubula.client.ui.views.GDDataSetView">
+			<viewShortcut id="org.eclipse.jubula.client.ui.views.DataSetView">
 			</viewShortcut>
 			<viewShortcut id="org.eclipse.jubula.client.ui.views.CompNamesView">
 			</viewShortcut>
@@ -645,7 +636,7 @@
 			<viewShortcut
 				id="org.eclipse.jubula.client.ui.views.ComponentNameBrowser">
 			</viewShortcut>
-			<viewShortcut id="org.eclipse.jubula.client.ui.views.GDDataSetView">
+			<viewShortcut id="org.eclipse.jubula.client.ui.views.DataSetView">
 			</viewShortcut>
 			<viewShortcut id="org.eclipse.jubula.client.ui.views.CompNamesView">
 			</viewShortcut>
@@ -688,7 +679,7 @@
 			<viewShortcut
 				id="org.eclipse.jubula.client.ui.views.ComponentNameBrowser">
 			</viewShortcut>
-			<viewShortcut id="org.eclipse.jubula.client.ui.views.GDDataSetView">
+			<viewShortcut id="org.eclipse.jubula.client.ui.views.DataSetView">
 			</viewShortcut>
 			<viewShortcut id="org.eclipse.jubula.client.ui.views.CompNamesView">
 			</viewShortcut>
@@ -1222,7 +1213,7 @@
 	<extension id="gdMarkerResolution" name="%JubulaMarkerResolution"
 		point="org.eclipse.ui.ide.markerResolution">
 		<markerResolutionGenerator
-			class="org.eclipse.jubula.client.ui.views.problemview.GDMarkerResolutionGenerator"
+			class="org.eclipse.jubula.client.ui.views.problemview.JBMarkerResolutionGenerator"
 			markerType="org.eclipse.jubula.client.ui.gdProblem">
 		</markerResolutionGenerator>
 	</extension>
@@ -1254,22 +1245,15 @@
 			</menu>
 		</menuContribution>
 		<menuContribution
-			locationURI="menu:JubulaProjectMenu?before=JubulaProjectSeparator5">
+			locationURI="menu:org.eclipse.jubula.client.ui.menu.test?before=JubulaProjectSeparator5">
 			<command
 				commandId="org.eclipse.jubula.client.ui.commands.PropertiesCommand"
 				label="%Properties" style="push" tooltip="%PropertiesToolTip">
 			</command>
 		</menuContribution>
 		<menuContribution
-			locationURI="menu:JubulaEditMenu?before=JubulaEditSeparator3">
-			<command commandId="org.eclipse.ui.edit.rename" style="push">
-			</command>
+			locationURI="menu:edit?before=JubulaEditSeparator3">
 			<command commandId="org.eclipse.ui.edit.delete" style="push">
-			</command>
-		</menuContribution>
-		<menuContribution locationURI="menu:help?after=additions">
-			<command commandId="org.eclipse.ui.help.aboutAction" label="%AboutItem"
-				style="push">
 			</command>
 		</menuContribution>
 		<menuContribution locationURI="popup:ComponentNameBrowserContextMenuID">
@@ -1316,11 +1300,23 @@
       <command
             commandId="org.eclipse.jubula.client.ui.commands.OpenCentralTestDataEditor"
             style="push">
+         <visibleWhen
+               checkEnabled="false">
+            <reference
+                  definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+            </reference>
+         </visibleWhen>
       </command>
       <command
             commandId="org.eclipse.search.ui.openSearchDialog"
             label="%OpenSearchDialog"
             style="push">
+         <visibleWhen
+               checkEnabled="false">
+            <reference
+                  definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+            </reference>
+         </visibleWhen>
       </command>
       <separator
             name="GlobalActions">
@@ -1337,6 +1333,12 @@
 					disabledIcon="icons/startAUTdisabled.gif" icon="icons/startAUT.gif"
 					id="org.eclipse.jubula.client.ui.toolbar.AutToolbar.ChooseAutCommand"
 					style="pulldown">
+       <visibleWhen
+             checkEnabled="false">
+          <reference
+                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+          </reference>
+       </visibleWhen>
 				</command>
 				<separator name="GlobalActions">
 				</separator>
@@ -1345,14 +1347,32 @@
 				<command
 					commandId="org.eclipse.jubula.client.ui.commands.PauseTestSuiteCommand"
 					style="toggle">
+       <visibleWhen
+             checkEnabled="false">
+          <reference
+                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+          </reference>
+       </visibleWhen>
 				</command>
 				<command
 					commandId="org.eclipse.jubula.client.ui.commands.StopSuiteCommand"
 					style="push">
+       <visibleWhen
+             checkEnabled="false">
+          <reference
+                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+          </reference>
+       </visibleWhen>
 				</command>
 				<command
 					commandId="org.eclipse.jubula.client.ui.commands.togglePauseOnErrorCommand"
 					style="toggle">
+       <visibleWhen
+             checkEnabled="false">
+          <reference
+                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+          </reference>
+       </visibleWhen>
 				</command>
 				<separator name="GlobalActions">
 				</separator>
@@ -1363,6 +1383,12 @@
 					commandId="org.eclipse.jubula.client.ui.commands.StartObservationModeCommand"
 					id="org.eclipse.jubula.client.ui.toolbar.ObservationToolbar.StartObservationModeCommand"
 					style="pulldown">
+       <visibleWhen
+             checkEnabled="false">
+          <reference
+                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+          </reference>
+       </visibleWhen>
 				</command>
 				<separator name="GlobalActions" visible="false">
 				</separator>
@@ -1373,6 +1399,12 @@
 					commandId="org.eclipse.jubula.client.ui.commands.OMStartMappingModeCommand"
 					id="org.eclipse.jubula.client.ui.toolbar.ObjectMappingToolbar.OMStartMappingModeCommand"
 					style="pulldown">
+       <visibleWhen
+             checkEnabled="false">
+          <reference
+                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+          </reference>
+       </visibleWhen>
 				</command>
 				<separator name="GlobalActions" visible="false">
 				</separator>
@@ -1486,15 +1518,16 @@
    </command>
 		</menuContribution>
 		<menuContribution
-			locationURI="menu:JubulaEditMenu?before=JubulaEditSeparator1">
-     <command
-           commandId="org.eclipse.search.ui.openSearchDialog"
-           label="%OpenSearchDialog"
-           style="push">
-     </command>
+			locationURI="menu:edit?before=JubulaEditSeparator1">
      <command
            commandId="org.eclipse.jubula.client.ui.commands.OpenTestCase"
            style="push">
+        <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
      </command>
      <separator
            name="ClientGUI.separator1"
@@ -1503,28 +1536,70 @@
 			<command
 				commandId="org.eclipse.jubula.client.ui.commands.newTestCaseReference"
 				style="push">
+        <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
 			</command>
 			<command
 				commandId="org.eclipse.jubula.client.ui.commands.NewTestSuiteCommand"
 				style="push">
+        <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
 			</command>
 			<command
 				commandId="org.eclipse.jubula.client.ui.commands.NewTestJobCommand"
 				style="push">
+        <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
 			</command>
 			<command commandId="org.eclipse.jubula.client.ui.commands.newCap"
 				style="push">
+        <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
 			</command>
    <command
          commandId="org.eclipse.jubula.client.ui.commands.AddEventHandler"
          style="push">
+        <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
    </command>
 			<command commandId="org.eclipse.jubula.client.ui.commands.EditParameters"
 				style="push">
+        <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
 			</command>
 			<command
 				commandId="org.eclipse.jubula.client.ui.commands.CreateNewCategoryCommand"
 				style="push">
+        <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
 			</command>
 		</menuContribution>
 		<menuContribution
@@ -1562,6 +1637,44 @@
 				id="menu:org.eclipse.jubula.client.ui.toolbar.ObservationToolbar.StartObservationModeCommand.dropdown">
 			</dynamic>
 		</menuContribution>
+  <menuContribution
+        allPopups="false"
+        locationURI="menu:org.eclipse.ui.main.menu?after=edit">
+     <menu
+           id="org.eclipse.jubula.client.ui.menu.test"
+           label="Test">
+        <separator
+              name="JubulaProjectSeparator1"
+              visible="true">
+        </separator>
+        <separator
+              name="JubulaProjectSeparator2"
+              visible="true">
+        </separator>
+        <separator
+              name="JubulaProjectSeparator3"
+              visible="true">
+        </separator>
+        <separator
+              name="JubulaProjectSeparator4"
+              visible="true">
+        </separator>
+        <separator
+              name="JubulaProjectSeparator5"
+              visible="true">
+        </separator>
+		<visibleWhen checkEnabled="false">
+     <reference
+           definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+     </reference>
+			<!-- 
+			makes use of the fact that actionSets exist as a context when 
+			they are "active" (i.e. this menu is visible when the actionSet 
+			"org.eclipse.jubula.client.ui.menu.actions" is active)
+			-->
+		</visibleWhen>
+     </menu>
+  </menuContribution>
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
@@ -3077,20 +3190,47 @@
     </wizard>
  </extension>
 	<extension point="org.eclipse.ui.activities">
-		<activity id="org.eclipse.jubula.app.activities.removeInvalidCommands"
+		<activity id="org.eclipse.jubula.app.activity.nonTestEditor"
 			name="removeInvalidCommands">
 			<enabledWhen>
 				<not>
 					<with variable="activeEditor">
-						<instanceof value="org.eclipse.jubula.client.ui.editors.IGDEditor">
+						<instanceof value="org.eclipse.jubula.client.ui.editors.IJBEditor">
 						</instanceof>
 					</with>
 				</not>
 			</enabledWhen>
 		</activity>
 		<activityPatternBinding
-			activityId="org.eclipse.jubula.app.activities.removeInvalidCommands"
-			pattern="org.eclipse.ui.window.newEditor">
+			activityId="org.eclipse.jubula.app.activity.nonTestEditor"
+			pattern="org\.eclipse\.ui\.window\.newEditor">
 		</activityPatternBinding>
+		<activity
+            id="org.eclipse.jubula.client.ui.activity.nonTestPerspective"
+            name="removeSearchFromToolbar">
+     <enabledWhen>
+		<not>
+	        <reference
+    	          definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+			</reference>
+		</not>
+     </enabledWhen>
+      </activity>
+      <activityPatternBinding
+            activityId="org.eclipse.jubula.client.ui.activity.nonTestPerspective"
+            pattern="org.eclipse.search/org\.eclipse\.search\.OpenFileSearchPage">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.jubula.client.ui.activity.nonTestPerspective"
+            pattern="org.eclipse.search/org\.eclipse\.search\.TextSearch.*">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.jubula.client.ui.activity.nonTestPerspective"
+            pattern="org.eclipse.ui.editors/org\.eclipse\.ui\.edit\.text\.gotoLastEditPosition">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="org.eclipse.jubula.client.ui.activity.nonTestPerspective"
+            pattern="org.eclipse.ui.editors/org\.eclipse\.ui\.edit\.text\..*nnotation">
+      </activityPatternBinding>
 	</extension>
 </plugin>

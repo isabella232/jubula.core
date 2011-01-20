@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.swt.commands;
 
 import org.eclipse.jubula.rc.common.commands.AbstractCapTestCommand;
-import org.eclipse.jubula.rc.common.exception.GuiDancerComponentNotFoundException;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
@@ -37,7 +37,7 @@ public class CAPTestCommand extends AbstractCapTestCommand {
      * {@inheritDoc}
      */
     protected Object findComponent(final IComponentIdentifier ci, 
-        final int timeout) throws GuiDancerComponentNotFoundException, 
+        final int timeout) throws ComponentNotFoundException, 
         IllegalArgumentException {
 
         m_comp = ComponentHandler.findComponent(ci, true, timeout);

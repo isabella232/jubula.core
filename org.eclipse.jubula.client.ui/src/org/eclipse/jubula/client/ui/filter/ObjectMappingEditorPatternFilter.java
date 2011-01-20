@@ -19,7 +19,7 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  * @author BREDEX GmbH
  * @created 25.06.2009
  */
-public class ObjectMappingEditorPatternFilter extends GDPatternFilter {
+public class ObjectMappingEditorPatternFilter extends JBPatternFilter {
 
     /**
      * {@inheritDoc}

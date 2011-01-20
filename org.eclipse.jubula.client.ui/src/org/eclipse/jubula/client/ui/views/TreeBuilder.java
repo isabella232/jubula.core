@@ -51,8 +51,8 @@ import org.eclipse.jubula.client.ui.model.TestSuiteBrowserRootGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteRootGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -571,7 +571,7 @@ public class TreeBuilder {
                     childNodes, pos, false);
             return reusedProjectGUI;
 
-        } catch (GDException e) {
+        } catch (JBException e) {
             Utils.createMessageDialog(e, null, null);
             return new ReusedProjectGUI(reused.getProjectGuid(), parentGUI,
                     null, reused.getVersionString());
@@ -665,7 +665,7 @@ public class TreeBuilder {
             return buildSubTree((IRefTestSuitePO)root, parentGUI, childNodes,
                     pos);
         }
-        throw new GDFatalException("Unsupported buildSubTree: " //$NON-NLS-1$
+        throw new JBFatalException("Unsupported buildSubTree: " //$NON-NLS-1$
                 + root.getClass().getName(), MessageIDs.E_UNSUPPORTED_NODE);
     }
     

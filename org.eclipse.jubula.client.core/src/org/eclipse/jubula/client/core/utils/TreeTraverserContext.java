@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -103,10 +104,10 @@ public class TreeTraverserContext<T> implements ITreeTraverserContext<T> {
                 m_treePath.toArray(new INodePO [m_treePath.size()]);
             StringBuilder sb = new StringBuilder();
             for (INodePO node : treePath) {
-                sb.append("/").append(node.getName()); //$NON-NLS-1$
+                sb.append(StringConstants.SLASH).append(node.getName());
             }
             if (sb.length() == 0) {
-                sb.append("/"); //$NON-NLS-1$
+                sb.append(StringConstants.SLASH);
             }
             return sb.toString();
         } catch (Throwable t) {

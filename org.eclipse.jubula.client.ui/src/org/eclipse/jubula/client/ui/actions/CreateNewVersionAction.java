@@ -51,11 +51,11 @@ import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ConverterException;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
@@ -136,9 +136,9 @@ public class CreateNewVersionAction extends AbstractAction {
             } catch (PMException e) {
                 log.error("Error occurred while creating new project version",  //$NON-NLS-1$
                     e);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
-            } catch (GDVersionException e) {
+            } catch (JBVersionException e) {
                 // should not be occur
                 log.error("Toolkit version conflict while creating new project version."); //$NON-NLS-1$
             } catch (ConverterException e) {
@@ -160,7 +160,7 @@ public class CreateNewVersionAction extends AbstractAction {
          * @param subMonitor The sub-monitor for the operation.
          * @param paramNameMapper The mapper for Parameter Names.
          * @param compNameCache The mapper for Component Names.
-         * @throws GDProjectDeletedException 
+         * @throws ProjectDeletedException 
          * @throws PMException
          * @throws InterruptedException
          * @throws PMReadException
@@ -171,8 +171,8 @@ public class CreateNewVersionAction extends AbstractAction {
                 final SubMonitor subMonitor,
                 final ParamNameBPDecorator paramNameMapper,
                 final IWritableComponentNameCache compNameCache)
-            throws GDProjectDeletedException, PMException,
-                InterruptedException, PMReadException, GDVersionException,
+            throws ProjectDeletedException, PMException,
+                InterruptedException, PMReadException, JBVersionException,
                 ConverterException {
             
             NodePM.getInstance().setUseCache(true);
@@ -204,7 +204,7 @@ public class CreateNewVersionAction extends AbstractAction {
                         compNameCache, duplicatedProject);
             try {
                 duplicatedProject.setClientMetaDataVersion(
-                    IGdVersion.GD_CLIENT_METADATA_VERSION);
+                    IVersion.JB_CLIENT_METADATA_VERSION);
                 attachProjectWithProgress(
                         subMonitor.newChild(WORK_PROJECT_SAVE), 
                         paramNameMapper, compNameMapper, duplicatedProject);
@@ -217,33 +217,39 @@ public class CreateNewVersionAction extends AbstractAction {
             } catch (PMException e) {
                 Plugin.stopLongRunning();
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 Plugin.stopLongRunning();
                 PMExceptionHandler.handleGDProjectDeletedException();
             }
         }
         
         /**
-         * Attaches the given project to the Master Session and database 
-         * using the given parameter name mapper. 
-         * Reports progress during the operation.
+         * Attaches the given project to the Master Session and database using
+         * the given parameter name mapper. Reports progress during the
+         * operation.
          * 
-         * @param monitor The progress monitor for the operation.
-         * @param paramNameMapper The parameter name mapper to use when adding the
-         *               project to the database.
-         * @param compNameMapper The component name mapper to use when adding the
-         *               project to the database.
-         * @param project The project to add to the database
+         * @param monitor
+         *            The progress monitor for the operation.
+         * @param paramNameMapper
+         *            The parameter name mapper to use when adding the project
+         *            to the database.
+         * @param compNameMapper
+         *            The component name mapper to use when adding the project
+         *            to the database.
+         * @param project
+         *            The project to add to the database
          * @throws PMException
          *             in case of any db error
-         * @throws GDProjectDeletedException if project is already deleted
-         * @throws InterruptedException if the operation was canceled.
+         * @throws ProjectDeletedException
+         *             if project is already deleted
+         * @throws InterruptedException
+         *             if the operation was canceled.
          */
         private void attachProjectWithProgress(IProgressMonitor monitor,
                 final ParamNameBPDecorator paramNameMapper,
                 final IWritableComponentNameMapper compNameMapper,
                 final IProjectPO project) throws PMException,
-                GDProjectDeletedException, InterruptedException {
+                ProjectDeletedException, InterruptedException {
 
             // We need to clear the current project data so 
             // we are in a known state if the operation is 
@@ -251,7 +257,7 @@ public class CreateNewVersionAction extends AbstractAction {
             IProjectPO clearedProject = 
                 GeneralStorage.getInstance().getProject();
             if (clearedProject != null) {
-                Utils.clearGuidancer();
+                Utils.clearClient();
                 GeneralStorage.getInstance().setProject(null);
                 DataEventDispatcher.getInstance()
                     .fireDataChangedListener(clearedProject, DataState.Deleted,
@@ -298,7 +304,7 @@ public class CreateNewVersionAction extends AbstractAction {
                 // We have to clear the GUI because all of 
                 // the save work was done in the Master Session, which has been 
                 // rolled back.
-                Utils.clearGuidancer();
+                Utils.clearClient();
             }
         } else {
             Plugin.stopLongRunning();
@@ -356,11 +362,11 @@ public class CreateNewVersionAction extends AbstractAction {
                     GeneralStorage.getInstance().getProject());
             highestVersionString = ProjectPM.findHighestVersionNumber(
                 GeneralStorage.getInstance().getProject().getGuid());
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler
                 .handleGDProjectDeletedException();
             return null;
-        } catch (GDException e) {
+        } catch (JBException e) {
             Utils.createMessageDialog(e, null, null);
             return null;
         }

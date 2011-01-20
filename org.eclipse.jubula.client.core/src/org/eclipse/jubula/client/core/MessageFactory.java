@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.communication.message.ActivateApplicationMessage;
 import org.eclipse.jubula.communication.message.CAPTestMessage;
@@ -85,7 +86,6 @@ public class MessageFactory {
      */
     public static ActivateApplicationMessage getActivateApplicationMessage() 
         throws UnknownMessageException {
-        
         final String autToolKit = getAutToolkit();
         String messageClassName = StringConstants.EMPTY;
         try {
@@ -98,11 +98,10 @@ public class MessageFactory {
                         messageClass)) {
                     
                     throw new UnknownMessageException(messageClass.getName()
-                            + "is not assignable to " //$NON-NLS-1$
+                            + Messages.IsNotAssignableTo + StringConstants.SPACE
                             + ActivateApplicationMessage.class.getName(),
                             MessageIDs.E_MESSAGE_NOT_ASSIGNABLE);
                 }
-                
                 // create a sharedInstance and set the message
                 ActivateApplicationMessage result = 
                     (ActivateApplicationMessage)messageClass.newInstance();
@@ -110,43 +109,54 @@ public class MessageFactory {
             }
             
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            "No AUT Activation Message class found for toolkit " + autToolKit,  //$NON-NLS-1$
+                    Messages.CreatingAnMessageSharedInstanceFor 
+                        + StringConstants.SPACE + messageClassName 
+                        + Messages.Failed + StringConstants.COLON 
+                        + StringConstants.SPACE
+                        + Messages.NoAUTActivationMessageClassFoundForToolkit
+                        + StringConstants.SPACE + autToolKit,
                             MessageIDs.E_MESSAGE_NOT_CREATED);
             
         } catch (ExceptionInInitializerError eiie) {
             LOG.error(eiie);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            eiie.getMessage(), 
+                    Messages.CreatingAnMessageSharedInstanceFor
+                        + StringConstants.SPACE + messageClassName 
+                        + Messages.Failed + StringConstants.COLON 
+                        + StringConstants.SPACE + eiie.getMessage(), 
                             MessageIDs.E_MESSAGE_NOT_CREATED);
         } catch (LinkageError le) {
             LOG.error(le);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            le.getMessage(), MessageIDs.E_MESSAGE_NOT_CREATED);
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE + le.getMessage(), 
+                        MessageIDs.E_MESSAGE_NOT_CREATED);
         } catch (ClassNotFoundException cnfe) {
             LOG.error(cnfe);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            cnfe.getMessage(), 
-                            MessageIDs.E_MESSAGE_NOT_CREATED);
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE + cnfe.getMessage(), 
+                        MessageIDs.E_MESSAGE_NOT_CREATED);
         } catch (InstantiationException ie) {
             LOG.error(ie);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            ie.getMessage(), MessageIDs.E_MESSAGE_NOT_CREATED);
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE + ie.getMessage(), 
+                        MessageIDs.E_MESSAGE_NOT_CREATED);
         } catch (IllegalAccessException iae) {
             LOG.error(iae);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            iae.getMessage(), MessageIDs.E_MESSAGE_NOT_CREATED);
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE + iae.getMessage(), 
+                        MessageIDs.E_MESSAGE_NOT_CREATED);
         }
     }
 
@@ -175,12 +185,12 @@ public class MessageFactory {
             if (StringConstants.EMPTY.equals(autToolKit) 
                     && !AUTConnection.getInstance().isConnected()) {
                 throw new UnknownMessageException(
-                        "creating a Message sharedInstance failed: No connection to AUT.", //$NON-NLS-1$);
+                        Messages.CreatingMessageSharedInstanceFailed,
                         MessageIDs.E_MESSAGE_NOT_CREATED);
             }
         } catch (ConnectionException e) {
             throw new UnknownMessageException(
-                    "creating a Message sharedInstance failed: No connection to AUT.", //$NON-NLS-1$);
+                    Messages.CreatingMessageSharedInstanceFailed,
                     MessageIDs.E_MESSAGE_NOT_CREATED);
         }
         String messageClassName = "null"; //$NON-NLS-1$
@@ -193,7 +203,7 @@ public class MessageFactory {
                         messageClass)) {
                     
                     throw new UnknownMessageException(messageClass.getName()
-                            + "is not assignable to " //$NON-NLS-1$
+                            + Messages.IsNotAssignableTo + StringConstants.SPACE
                             + CAPTestMessage.class.getName(),
                             MessageIDs.E_MESSAGE_NOT_ASSIGNABLE);
                 }
@@ -205,46 +215,46 @@ public class MessageFactory {
                 return result;
             }
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            "No Test Message class found for toolkit " + autToolKit,  //$NON-NLS-1$
-                            MessageIDs.E_MESSAGE_NOT_CREATED);
-
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE
+                    + Messages.NoAUTActivationMessageClassFoundForToolkit 
+                    + autToolKit, MessageIDs.E_MESSAGE_NOT_CREATED);
         } catch (ExceptionInInitializerError eiie) {
-            LOG.error(eiie);
-            throw new UnknownMessageException(
-                    "creating a Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            eiie.getMessage(), 
-                            MessageIDs.E_MESSAGE_NOT_CREATED);
+            throwUnknownMessageException(messageClassName, eiie);
         } catch (LinkageError le) {
-            LOG.error(le);
-            throw new UnknownMessageException(
-                    "creating a Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            le.getMessage(), MessageIDs.E_MESSAGE_NOT_CREATED);
+            throwUnknownMessageException(messageClassName, le);
         } catch (ClassNotFoundException cnfe) {
-            LOG.error(cnfe);
-            throw new UnknownMessageException(
-                    "creating a Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            cnfe.getMessage(), 
-                            MessageIDs.E_MESSAGE_NOT_CREATED);
+            throwUnknownMessageException(messageClassName, cnfe);
         } catch (InstantiationException ie) {
-            LOG.error(ie);
-            throw new UnknownMessageException(
-                    "creating a Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            ie.getMessage(), MessageIDs.E_MESSAGE_NOT_CREATED);
+            throwUnknownMessageException(messageClassName, ie);
         } catch (IllegalAccessException iae) {
-            LOG.error(iae);
-            throw new UnknownMessageException(
-                    "creating a Message sharedInstance for " //$NON-NLS-1$ 
-                            + messageClassName + "failed: " + //$NON-NLS-1$);
-                            iae.getMessage(), MessageIDs.E_MESSAGE_NOT_CREATED);
+            throwUnknownMessageException(messageClassName, iae);
         }
+        return null;
     }
     
+    /**
+     * @param messageClassName
+     *            the message class name
+     * @param nestedException
+     *            the nested exception
+     * @throws UnknownMessageException
+     *             when called
+     */
+    private static void throwUnknownMessageException(String messageClassName,
+            Throwable nestedException)
+        throws UnknownMessageException {
+        LOG.error(nestedException);
+        throw new UnknownMessageException(
+                Messages.CreatingAnMessageSharedInstanceFor
+                        + StringConstants.SPACE + messageClassName
+                        + Messages.Failed + StringConstants.COLON
+                        + StringConstants.SPACE + nestedException.getMessage(),
+                MessageIDs.E_MESSAGE_NOT_CREATED);
+    }
+
     /**
      * @throws UnknownMessageException the exception thrown if the instantiation of message failed.
      * @return the created Message
@@ -274,7 +284,7 @@ public class MessageFactory {
                     messageClass)) {
                 
                 throw new UnknownMessageException(messageClass.getName()
-                        + "is not assignable to " //$NON-NLS-1$
+                        + Messages.IsNotAssignableTo + StringConstants.SPACE
                         + SendAUTListOfSupportedComponentsMessage.class
                         .getName(), MessageIDs.E_MESSAGE_NOT_ASSIGNABLE);
             }
@@ -287,35 +297,43 @@ public class MessageFactory {
         } catch (ExceptionInInitializerError eiie) {
             LOG.error(eiie);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + String.valueOf(messageClassName) + "failed:" + //$NON-NLS-1$);
-                            eiie.getMessage(), 
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE + eiie.getMessage(), 
                             MessageIDs.E_MESSAGE_NOT_CREATED);
         } catch (LinkageError le) {
             LOG.error(le);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + String.valueOf(messageClassName) + "failed:" + //$NON-NLS-1$);
-                            le.getMessage(), MessageIDs.E_MESSAGE_NOT_CREATED);
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE + le.getMessage(), 
+                        MessageIDs.E_MESSAGE_NOT_CREATED);
         } catch (ClassNotFoundException cnfe) {
             LOG.error(cnfe);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + String.valueOf(messageClassName) + "failed:" + //$NON-NLS-1$);
-                            cnfe.getMessage(), 
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE + cnfe.getMessage(), 
                             MessageIDs.E_MESSAGE_NOT_CREATED);
         } catch (InstantiationException ie) {
             LOG.error(ie);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + String.valueOf(messageClassName) + "failed:" + //$NON-NLS-1$);
-                            ie.getMessage(), MessageIDs.E_MESSAGE_NOT_CREATED);
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE + ie.getMessage(), 
+                        MessageIDs.E_MESSAGE_NOT_CREATED);
         } catch (IllegalAccessException iae) {
             LOG.error(iae);
             throw new UnknownMessageException(
-                    "creating an Message sharedInstance for " //$NON-NLS-1$ 
-                            + String.valueOf(messageClassName) + "failed:" + //$NON-NLS-1$);
-                            iae.getMessage(), MessageIDs.E_MESSAGE_NOT_CREATED);
+                    Messages.CreatingAnMessageSharedInstanceFor
+                    + StringConstants.SPACE + messageClassName 
+                    + Messages.Failed + StringConstants.COLON 
+                    + StringConstants.SPACE + iae.getMessage(), 
+                        MessageIDs.E_MESSAGE_NOT_CREATED);
         }
     }
 }

@@ -17,6 +17,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.toolkit.common.IToolKitProvider;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
+import org.eclipse.jubula.toolkit.common.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
 import org.eclipse.swt.widgets.Composite;
 
@@ -70,7 +72,8 @@ public class ToolkitSupportBP {
         }
         if (autConf == null) {
             throwToolkitPluginException(
-                "No AutConfigComposite found for toolkit: " //$NON-NLS-1$
+                Messages.NoAutConfigFound + StringConstants.COLON 
+                + StringConstants.SPACE
                 + String.valueOf(toolkit), null);
         }
         return autConf;
@@ -99,7 +102,8 @@ public class ToolkitSupportBP {
         throws ToolkitPluginException {
         
         if (name == null) {    
-            final String msg = "Toolkit name is null!"; //$NON-NLS-1$
+            final String msg = Messages.ToolkitNameIsNull 
+                + StringConstants.EXCLAMATION_MARK;
             log.error(msg);
             throwToolkitPluginException(msg, null);
         }
@@ -117,7 +121,8 @@ public class ToolkitSupportBP {
         throws ToolkitPluginException {
         
         if (name == null) {
-            final String msg = "Toolkit name is null!"; //$NON-NLS-1$
+            final String msg = Messages.ToolkitNameIsNull 
+                + StringConstants.EXCLAMATION_MARK;
             log.error(msg);
             throwToolkitPluginException(msg, null);
         }
@@ -137,7 +142,8 @@ public class ToolkitSupportBP {
         String toolkitId) throws ToolkitPluginException {
         
         if (toolkitId == null) {
-            final String msg = "Toolkit name is null!"; //$NON-NLS-1$
+            final String msg = Messages.ToolkitNameIsNull 
+                + StringConstants.EXCLAMATION_MARK;
             log.error(msg);
             throwToolkitPluginException(msg, null);
         }
@@ -146,7 +152,8 @@ public class ToolkitSupportBP {
                 return descr;
             }
         }
-        final String msg = "No ToolkitPluginDescriptor found for toolkit: " //$NON-NLS-1$
+        final String msg = Messages.NoToolkitPluginDescriptorFound
+            + StringConstants.COLON + StringConstants.SPACE
             + String.valueOf(toolkitId);
         log.error(msg);
         throwToolkitPluginException(msg, null);

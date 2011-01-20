@@ -21,13 +21,12 @@ import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 
-
 /**
  * The class <code>StartAutServerCommand</code> and the associated
- * <code>StartAutServerMessage</code> are used as examples for the intended
- * use of the communications layer in GuiDancer. Since changes are expected, this
- * documentation is inlined in the source code. Please reevaluate the Java doc
- * frequently for changes in this templates.
+ * <code>StartAutServerMessage</code> are used as examples for the intended use
+ * of the communications layer in the application. Since changes are expected,
+ * this documentation is inlined in the source code. Please reevaluate the Java
+ * doc frequently for changes in this templates.
  * 
  * The command object for starting the AUTServer. The method execute() returns a
  * StartAUTServerStateMessage which contains a state. In case of not OK, the

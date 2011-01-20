@@ -46,8 +46,8 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ConverterException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -167,19 +167,23 @@ public class XmlStorage {
     /**
      * Generate an XML document representing the content of the project.
      * 
-     * @param project the root of the data
-     * @param includeTestResultSummaries 
-     *                 Whether to save the Test Result Summaries as well.
-     * @param monitor The progress monitor for this potentially long-running 
-     *                operation.
-     * @return a String which contains the XML representation, or 
+     * @param project
+     *            the root of the data
+     * @param includeTestResultSummaries
+     *            Whether to save the Test Result Summaries as well.
+     * @param monitor
+     *            The progress monitor for this potentially long-running
+     *            operation.
+     * @return a String which contains the XML representation, or
      *         <code>null</code> if the operation was cancelled.
-     * @throws PMException of io or encoding errors
-     * @throws GDProjectDeletedException in case of current project is already deleted
+     * @throws PMException
+     *             of io or encoding errors
+     * @throws ProjectDeletedException
+     *             in case of current project is already deleted
      */
     private static String save(IProjectPO project, 
             boolean includeTestResultSummaries, IProgressMonitor monitor) 
-        throws GDProjectDeletedException, PMException {
+        throws ProjectDeletedException, PMException {
         XmlOptions genOpts = new XmlOptions();
         genOpts.setCharacterEncoding(RECOMMENDED_CHAR_ENCODING);
         genOpts.setSaveInner();
@@ -235,26 +239,32 @@ public class XmlStorage {
      * 
      * @param xmlString
      *            XML representation of a project
-     * @param assignNewGuid <code>true</code> if the project and all subnodes
-     *                      should be assigned new GUIDs. Otherwise 
-     *                      <code>false</code>.
-     * @param paramNameMapper mapper to resolve param names
-     * @param compNameCache cache to resolve component names
-     * @param monitor The progress monitor for this potentially long-running 
-     *                operation.
-     * @param io the device to write the import output 
+     * @param assignNewGuid
+     *            <code>true</code> if the project and all subnodes should be
+     *            assigned new GUIDs. Otherwise <code>false</code>.
+     * @param paramNameMapper
+     *            mapper to resolve param names
+     * @param compNameCache
+     *            cache to resolve component names
+     * @param monitor
+     *            The progress monitor for this potentially long-running
+     *            operation.
+     * @param io
+     *            the device to write the import output
      * @return an transient IProjectPO and its components
      * @throws PMReadException
      *             in case of a malformed XML string
-     * @throws GDVersionException in case of version conflict between used toolkits
-     * of imported project and the installed Toolkit Plugins
-     * @throws InterruptedException if the operation was canceled.
+     * @throws JBVersionException
+     *             in case of version conflict between used toolkits of imported
+     *             project and the installed Toolkit Plugins
+     * @throws InterruptedException
+     *             if the operation was canceled.
      */
     public static IProjectPO load(String xmlString, boolean assignNewGuid, 
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
         IProgressConsole io) 
-        throws PMReadException, GDVersionException, InterruptedException, 
+        throws PMReadException, JBVersionException, InterruptedException, 
         ConverterException {
         
         return load(xmlString, assignNewGuid, null, null, paramNameMapper, 
@@ -267,24 +277,29 @@ public class XmlStorage {
      * 
      * @param xmlString
      *            XML representation of a project
-     * @param assignNewGuid <code>true</code> if the project and all subnodes
-     *                      should be assigned new GUIDs. Otherwise 
-     *                      <code>false</code>.
-     * @param paramNameMapper mapper to resolve param names
-     * @param compNameCache cache to resolve component names
-     * @param monitor The progress monitor for this potentially long-running 
-     *                operation.
+     * @param assignNewGuid
+     *            <code>true</code> if the project and all subnodes should be
+     *            assigned new GUIDs. Otherwise <code>false</code>.
+     * @param paramNameMapper
+     *            mapper to resolve param names
+     * @param compNameCache
+     *            cache to resolve component names
+     * @param monitor
+     *            The progress monitor for this potentially long-running
+     *            operation.
      * @return an transient IProjectPO and its components
      * @throws PMReadException
      *             in case of a malformed XML string
-     * @throws GDVersionException in case of version conflict between used toolkits
-     * of imported project and the installed Toolkit Plugins
-     * @throws InterruptedException if the operation was canceled.
+     * @throws JBVersionException
+     *             in case of version conflict between used toolkits of imported
+     *             project and the installed Toolkit Plugins
+     * @throws InterruptedException
+     *             if the operation was canceled.
      */
     public static IProjectPO load(String xmlString, boolean assignNewGuid, 
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor) 
-        throws PMReadException, GDVersionException, InterruptedException, 
+        throws PMReadException, JBVersionException, InterruptedException, 
         ConverterException {
         return load(xmlString, assignNewGuid, null, null, paramNameMapper, 
                 compNameCache, monitor, new NullImportOutput());
@@ -316,7 +331,7 @@ public class XmlStorage {
      * @return an transient IProjectPO and its components
      * @throws PMReadException
      *             in case of a malformed XML string
-     * @throws GDVersionException
+     * @throws JBVersionException
      *             in case of version conflict between used toolkits of imported
      *             project and the installed Toolkit Plugins
      * @throws InterruptedException
@@ -326,7 +341,7 @@ public class XmlStorage {
         Integer majorVersion, Integer minorVersion,
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor) 
-        throws PMReadException, GDVersionException, InterruptedException, 
+        throws PMReadException, JBVersionException, InterruptedException, 
         ConverterException {
         return load(xmlString, assignNewGuid, majorVersion, minorVersion, 
                 paramNameMapper, compNameCache, 
@@ -341,30 +356,38 @@ public class XmlStorage {
      *            XML representation of a project
      * @param assignNewGuid
      *            Flag for assigning the project a new GUID and version
-     * @param majorVersion Major version number for the created object, or 
-     *                     <code>null</code> if the version from the imported 
-     *                     XML should be used.
-     * @param minorVersion Minor version number for the created object, or
-     *                     <code>null</code> if the version from the imported 
-     *                     XML should be used.
-     * @param paramNameMapper mapper to resolve param names
-     * @param compNameCache cache to resolve component names
-     * @param monitor The progress monitor for this potentially long-running 
-     *                operation.
-     * @param io the device to write the import output 
+     * @param majorVersion
+     *            Major version number for the created object, or
+     *            <code>null</code> if the version from the imported XML should
+     *            be used.
+     * @param minorVersion
+     *            Minor version number for the created object, or
+     *            <code>null</code> if the version from the imported XML should
+     *            be used.
+     * @param paramNameMapper
+     *            mapper to resolve param names
+     * @param compNameCache
+     *            cache to resolve component names
+     * @param monitor
+     *            The progress monitor for this potentially long-running
+     *            operation.
+     * @param io
+     *            the device to write the import output
      * @return an transient IProjectPO and its components
      * @throws PMReadException
      *             in case of a malformed XML string
-     * @throws GDVersionException in case of version conflict between used toolkits
-     * of imported project and the installed Toolkit Plugins
-     * @throws InterruptedException if the operation was canceled.
+     * @throws JBVersionException
+     *             in case of version conflict between used toolkits of imported
+     *             project and the installed Toolkit Plugins
+     * @throws InterruptedException
+     *             if the operation was canceled.
      */
     public static IProjectPO load(String xmlString, boolean assignNewGuid, 
         Integer majorVersion, Integer minorVersion,
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
         IProgressConsole io) 
-        throws PMReadException, GDVersionException, InterruptedException, 
+        throws PMReadException, JBVersionException, InterruptedException, 
         ConverterException {
         
         ContentDocument contentDoc;
@@ -428,51 +451,72 @@ public class XmlStorage {
     }
 
     /**
-     * Save a project as XML to a file or return the serialized project as string, if fileName == null!
+     * Save a project as XML to a file or return the serialized project as
+     * string, if fileName == null!
      * 
-     * @param proj proj to be saved
-     * @param fileName name for file to save or null, if wanting to get the project as serialized string
-     * @param includeTestResultSummaries 
-     *                 Whether to save the Test Result Summaries as well.
-     * @param monitor The progress monitor for this potentially long-running 
-     *                operation.
-     * @return the serialized project as string, if  fileName == null<br>or<br><b>Returns:</b><br>null otherwise.
-     *         Always returns <code>null</code> if the save operation was canceled.
-     * @throws PMException if save failed for any reason
-     * @throws GDProjectDeletedException in case of current project is already deleted
+     * @param proj
+     *            proj to be saved
+     * @param fileName
+     *            name for file to save or null, if wanting to get the project
+     *            as serialized string
+     * @param includeTestResultSummaries
+     *            Whether to save the Test Result Summaries as well.
+     * @param monitor
+     *            The progress monitor for this potentially long-running
+     *            operation.
+     * @return the serialized project as string, if fileName == null<br>
+     *         or<br>
+     *         <b>Returns:</b><br>
+     *         null otherwise. Always returns <code>null</code> if the save
+     *         operation was canceled.
+     * @throws PMException
+     *             if save failed for any reason
+     * @throws ProjectDeletedException
+     *             in case of current project is already deleted
      */
     public static String save(IProjectPO proj, String fileName, 
             boolean includeTestResultSummaries, IProgressMonitor monitor)
-        throws GDProjectDeletedException, PMException {
+        throws ProjectDeletedException, PMException {
         
         return save(proj, fileName, includeTestResultSummaries, 
                 monitor, false, null);
     }
 
     /**
-     * Save a project as XML to a file or return the serialized project as string, if fileName == null!
+     * Save a project as XML to a file or return the serialized project as
+     * string, if fileName == null!
      * 
-     * @param proj proj to be saved
-     * @param fileName name for file to save or null, if wanting to get the project as serialized string
-     * @param includeTestResultSummaries 
-     *                 Whether to save the Test Result Summaries as well.
-     * @param monitor The progress monitor for this potentially long-running 
-     *                operation.
-     * @param writeToSystemTempDir Indicates whether the project has to be 
-     *                             written to the system temp directory
-     * @param listOfProjectFiles If a project is written into the temp dir
-     *                           then the written file is added to the list, 
-     *                           if the list is not null.
-     * @return the serialized project as string, if  fileName == null<br>or<br><b>Returns:</b><br>null otherwise.
-     *         Always returns <code>null</code> if the save operation was canceled.
-     * @throws PMException if save failed for any reason
-     * @throws GDProjectDeletedException in case of current project is already deleted
+     * @param proj
+     *            proj to be saved
+     * @param fileName
+     *            name for file to save or null, if wanting to get the project
+     *            as serialized string
+     * @param includeTestResultSummaries
+     *            Whether to save the Test Result Summaries as well.
+     * @param monitor
+     *            The progress monitor for this potentially long-running
+     *            operation.
+     * @param writeToSystemTempDir
+     *            Indicates whether the project has to be written to the system
+     *            temp directory
+     * @param listOfProjectFiles
+     *            If a project is written into the temp dir then the written
+     *            file is added to the list, if the list is not null.
+     * @return the serialized project as string, if fileName == null<br>
+     *         or<br>
+     *         <b>Returns:</b><br>
+     *         null otherwise. Always returns <code>null</code> if the save
+     *         operation was canceled.
+     * @throws PMException
+     *             if save failed for any reason
+     * @throws ProjectDeletedException
+     *             in case of current project is already deleted
      */
     public static String save(IProjectPO proj, String fileName,
             boolean includeTestResultSummaries,
             IProgressMonitor monitor, boolean writeToSystemTempDir, 
             List<File> listOfProjectFiles)
-        throws GDProjectDeletedException, PMException {
+        throws ProjectDeletedException, PMException {
 
         monitor.beginTask(Messages.XmlStorageSavingProject, 
             getWorkToSave(proj));
@@ -715,28 +759,37 @@ public class XmlStorage {
     }
 
     /**
-     * read a <code> GeneralStorage </code> object from filename
-     * <b> call getProjectAutToolKit(String filename) at first </b>
-     * @param filename name of file to read
-     * @param paramNameMapper mapper to resolve param names
-     * @param compNameCache cache to resolve component names
-     * @param assignNewGuids <code>true</code> if new GUIDs should be created 
-     *                        for each PO. <code>false</code> if old GUIDs 
-     *                        should be used.
-     * @param monitor The progress monitor for this potentially long-running 
-     *                operation.
-     * @param io the device to write the import output 
+     * read a <code> GeneralStorage </code> object from filename <b> call
+     * getProjectAutToolKit(String filename) at first </b>
+     * 
+     * @param filename
+     *            name of file to read
+     * @param paramNameMapper
+     *            mapper to resolve param names
+     * @param compNameCache
+     *            cache to resolve component names
+     * @param assignNewGuids
+     *            <code>true</code> if new GUIDs should be created for each PO.
+     *            <code>false</code> if old GUIDs should be used.
+     * @param monitor
+     *            The progress monitor for this potentially long-running
+     *            operation.
+     * @param io
+     *            the device to write the import output
      * @return the persisted object
-     * @throws PMReadException in case of error
-     * @throws GDVersionException in case of version conflict between used toolkits
-     * of imported project and the installed Toolkit Plugins
-     * @throws InterruptedException if the operation was canceled.
+     * @throws PMReadException
+     *             in case of error
+     * @throws JBVersionException
+     *             in case of version conflict between used toolkits of imported
+     *             project and the installed Toolkit Plugins
+     * @throws InterruptedException
+     *             if the operation was canceled.
      */
     public IProjectPO readProject(String filename, 
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, boolean assignNewGuids, 
         IProgressMonitor monitor, IProgressConsole io) throws PMReadException, 
-        GDVersionException, 
+        JBVersionException, 
         InterruptedException, ConverterException {
 
         return load(readProjectFile(filename), assignNewGuids, paramNameMapper, 
@@ -744,27 +797,35 @@ public class XmlStorage {
     }
     
     /**
-     * read a <code> GeneralStorage </code> object from filename
-     * <b> call getProjectAutToolKit(String filename) at first </b>
-     * @param filename name of file to read
-     * @param paramNameMapper mapper to resolve param names
-     * @param compNameCache cache to resolve component names
-     * @param assignNewGuids <code>true</code> if new GUIDs should be created 
-     *                        for each PO. <code>false</code> if old GUIDs 
-     *                        should be used.
-     * @param monitor The progress monitor for this potentially long-running 
-     *                operation.
+     * read a <code> GeneralStorage </code> object from filename <b> call
+     * getProjectAutToolKit(String filename) at first </b>
+     * 
+     * @param filename
+     *            name of file to read
+     * @param paramNameMapper
+     *            mapper to resolve param names
+     * @param compNameCache
+     *            cache to resolve component names
+     * @param assignNewGuids
+     *            <code>true</code> if new GUIDs should be created for each PO.
+     *            <code>false</code> if old GUIDs should be used.
+     * @param monitor
+     *            The progress monitor for this potentially long-running
+     *            operation.
      * @return the persisted object
-     * @throws PMReadException in case of error
-     * @throws GDVersionException in case of version conflict between used toolkits
-     * of imported project and the installed Toolkit Plugins
-     * @throws InterruptedException if the operation was canceled.
+     * @throws PMReadException
+     *             in case of error
+     * @throws JBVersionException
+     *             in case of version conflict between used toolkits of imported
+     *             project and the installed Toolkit Plugins
+     * @throws InterruptedException
+     *             if the operation was canceled.
      */
     public IProjectPO readProject(String filename, 
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, boolean assignNewGuids, 
         IProgressMonitor monitor) throws PMReadException, 
-        GDVersionException, 
+        JBVersionException, 
         InterruptedException, ConverterException {
 
         return load(readProjectFile(filename), assignNewGuids, paramNameMapper, 

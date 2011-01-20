@@ -6,9 +6,9 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 
-<project default="build" basedir="../../../">
-	<property file="client.build.properties" />
-	
+<project default="build">
+	<property file="build.properties" />
+
 	<target name="build">
 		<property name="baseLocation" value="${eclipse.home}" />
 
@@ -16,17 +16,33 @@
 		<property name="buildDirectory" value="${basedir}/buildDirectory" />
 		<property name="pluginPath" value="${basedir}/.." />
 		<property name="buildTempFolder" value="${buildDirectory}" />
-
-		<ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
-
-		<move todir="${basedir}">
+		
+		<property name="buildArtifactsFolder" value="${basedir}/artifacts" />
+		
+		<delete dir="${buildArtifactsFolder}" />
+		
+		<!-- <ant antfile="${eclipse.pdebuild.scripts}/build.xml" />
+		
+		<property name="eclipseInstallation" value="/devapps/eclipse/eclipse361be" />
+		<exec executable="java" dir="${basedir}">
+			<arg value="-jar"/>
+			<arg value="${eclipseInstallation}/plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar" />
+			<arg value="-clean"/>
+			<arg value="-application"/>
+			<arg value="org.eclipse.ant.core.antRunner"/>
+			<arg value="-buildfile"/>
+			<arg value="${eclipseInstallation}/plugins/org.eclipse.pde.build_3.6.1.R36x_v20100823/scripts/build.xml"/>
+			<arg value="-Dbase=${basedir}"/>
+			<arg value="-DbuildDirectory=${buildDirectory}"/>
+			<arg value="-Dbuilder=${basedir}"/>
+		</exec>
+		
+		<mkdir dir="${buildArtifactsFolder}" />
+		<move todir="${buildArtifactsFolder}">
 			<fileset dir="${buildDirectory}/${buildLabel}" includes="*.zip" />
 		</move>
-
-		<!-- refresh the workspace -->
-		<eclipse.convertPath fileSystemPath="${basedir}"
-			property="resourcePath" />
-		<eclipse.refreshLocal resource="${resourcePath}"
-			depth="infinite" />
+		 -->
+		<delete dir="${buildTempFolder}" />
+		<delete dir="${basedir}/eclipse" />
 	</target>
 </project>

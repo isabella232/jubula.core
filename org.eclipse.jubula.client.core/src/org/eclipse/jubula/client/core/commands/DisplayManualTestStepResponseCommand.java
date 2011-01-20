@@ -11,9 +11,11 @@
 package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.ManualTestStepCmd;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.DisplayManualTestStepResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,7 +76,8 @@ public class DisplayManualTestStepResponseCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        LOG.warn(this.getClass().getName() + " timeout() called"); //$NON-NLS-1$
+        LOG.warn(this.getClass().getName() + StringConstants.SPACE
+            + Messages.TimeoutCalled);
     }
 
 }

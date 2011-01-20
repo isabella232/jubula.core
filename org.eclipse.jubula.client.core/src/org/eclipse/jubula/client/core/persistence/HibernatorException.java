@@ -10,13 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.persistence;
 
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 /**
  * @author BREDEX GmbH
  * @created 19.04.2005
  */
-public class HibernatorException extends GDException {
+public class HibernatorException extends JBException {
 
     /**
      * @param message message

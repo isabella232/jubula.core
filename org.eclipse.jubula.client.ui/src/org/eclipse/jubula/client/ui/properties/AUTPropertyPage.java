@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.dialogs.AUTPropertiesDialog;
-import org.eclipse.jubula.client.ui.dialogs.GDPropertyDialog;
+import org.eclipse.jubula.client.ui.dialogs.JBPropertyDialog;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -72,8 +72,8 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
     private List m_autList = null;
         
     /** a new selection listener */
-    private GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    private WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
     
     /**
      * @param es the editSupport
@@ -224,7 +224,7 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
             if (dialog.getAutMain().equals(
                 TestExecution.getInstance().getConnectedAut())) {
                 
-                ((GDPropertyDialog)getContainer()).setStartedAutChanged(true);
+                ((JBPropertyDialog)getContainer()).setStartedAutChanged(true);
             }
 
             getProject().addAUTMain(dialog.getAutMain());
@@ -277,7 +277,7 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
                 if (dialog.getAutMain().equals(
                     TestExecution.getInstance().getConnectedAut())) {
                     
-                    ((GDPropertyDialog)getContainer()).setStartedAutChanged(
+                    ((JBPropertyDialog)getContainer()).setStartedAutChanged(
                         true);
                 }
                 initFields();
@@ -397,7 +397,7 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
      * @author BREDEX GmbH
      * @created 11.02.2005
      */
-    private class GuiDancerSelectionListener 
+    private class WidgetSelectionListener 
         implements SelectionListener {
         /**
          * @param e The selection event.

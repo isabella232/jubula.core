@@ -14,7 +14,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.utils.GDThread;
+import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.views.TestresultSummaryView;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -35,7 +35,7 @@ public class RefreshTestresultsHandler extends AbstractHandler {
         if (activePart instanceof TestresultSummaryView) {
             final TestresultSummaryView summary = 
                 (TestresultSummaryView)activePart;
-            GDThread t = new GDThread() {
+            JBThread t = new JBThread() {
                 public void run() {
                     if (!Hibernator.init()) {
                         Plugin.stopLongRunning();

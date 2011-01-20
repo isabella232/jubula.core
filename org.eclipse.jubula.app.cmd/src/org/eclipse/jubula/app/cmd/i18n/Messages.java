@@ -79,13 +79,13 @@ public class Messages extends NLS {
     public static String ExecutionControllerTestJobBegin;
     public static String ExecutionControllerTestSuiteBegin;
     public static String ExecutionControllerTestSuiteEnd;
+    public static String ReceivedShutdownCommand;
     public static String RetryStep;
     public static String Step;
     public static String TestCase;
     public static String TestSuite;
     public static String UtilsSeparator;
     public static String WatchdogTimer;
-    public static String ReceivedShutdownCommand;
     
     static {
         // initialize resource bundle
@@ -96,7 +96,6 @@ public class Messages extends NLS {
      * Constructor
      */
     private Messages() {
-        super();
+        // hide
     }
-    
 }

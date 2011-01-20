@@ -14,9 +14,10 @@ import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -36,6 +37,12 @@ class VariableToken implements IParamValueToken {
     private String m_value = null;
 
     /**
+     * represents the actual name of the variable (without the additional 
+     * pre- and post-fix information contained in <code>m_value</code>).
+     */
+    private String m_variableName = null;
+
+    /**
      * index of first character of this token in the entire parameter value
      */
     private int m_startPos = 0;
@@ -52,10 +59,15 @@ class VariableToken implements IParamValueToken {
     /**
      * @param s string represents the token
      * @param pos index of first character of token in entire string
+     * @param variableName The name of the variable represented by the token
+     *                     (without the pre- and post-fix text included in 
+     *                     <code>s</code>).
      * @param desc param description belonging to currently edited parameter value
      */
-    public VariableToken(String s, int pos, IParamDescriptionPO desc) {
+    public VariableToken(String s, int pos, String variableName, 
+            IParamDescriptionPO desc) {
         m_value = s;
+        m_variableName = variableName;
         m_startPos = pos;
         m_desc = desc;
     }
@@ -120,23 +132,13 @@ class VariableToken implements IParamValueToken {
      */
     public String getExecutionString(List<ExecObject> stack, Locale locale) 
         throws InvalidDataException {
-        StringBuilder builder = new StringBuilder(m_value);
-        if (builder.charAt(0) == TestDataConstants.VARIABLE_CHAR_DEFAULT) {
-            builder.deleteCharAt(0);
-            if (builder.charAt(0) == Parser.OPENING_BRACE_SYMBOL) {
-                builder.deleteCharAt(0);
-                if (builder.charAt(builder.length() - 1) 
-                    == Parser.CLOSING_BRACE_SYMBOL) {
-                    builder.deleteCharAt(builder.length() - 1);
-                }
-            }
-        }
-        String  resolvedVar = 
-            TestExecution.getInstance().getVariableStore().getValue(
-                builder.toString());
+        String  resolvedVar = TestExecution.getInstance()
+            .getVariableStore().getValue(m_variableName);
         if (resolvedVar == null) {
-            throw new InvalidDataException("Variable with name " + m_value  //$NON-NLS-1$
-                + " is not resolvable.", MessageIDs.E_UNRESOLV_VAR_ERROR); //$NON-NLS-1$
+            throw new InvalidDataException(Messages.VariableWithName 
+                + StringConstants.SPACE + m_value 
+                + StringConstants.SPACE + Messages.IsNotResolvable, 
+                MessageIDs.E_UNRESOLV_VAR_ERROR);
         }
         return resolvedVar;
     }

@@ -21,8 +21,9 @@ import javax.persistence.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamNamePO;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import javax.persistence.PersistenceException;
 
@@ -102,7 +103,7 @@ public class ParamNamePM extends AbstractNamePM {
             paramNames = q.getResultList();            
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.fatal("Could not read parameter names from DB", e); //$NON-NLS-1$
+            log.fatal(Messages.CouldNotReadParameterNamesFromDB, e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(s);
@@ -115,11 +116,11 @@ public class ParamNamePM extends AbstractNamePM {
      * @param parentProjectId id of root project
      * @param commit flag for commitment of delete statement
      * @throws PMException in case of failed delete statement
-     * @throws GDProjectDeletedException in case of already deleted project
+     * @throws ProjectDeletedException in case of already deleted project
      */
     public static final void deleteParamNames(EntityManager s, 
         Long parentProjectId, 
-        boolean commit) throws PMException, GDProjectDeletedException {
+        boolean commit) throws PMException, ProjectDeletedException {
         try {
             if (commit) {
                 EntityTransaction tx = Hibernator.instance().getTransaction(s);
@@ -129,7 +130,7 @@ public class ParamNamePM extends AbstractNamePM {
                 executeDeleteStatement(s, parentProjectId);
             }
         } catch (PersistenceException e) {
-            String msg = "Deletion of paramNamePOs failed."; //$NON-NLS-1$
+            String msg = Messages.DeletionOfParamNamePOsFailed;
             log.error(msg, e); 
             throw new PMException(msg, MessageIDs.E_DB_SAVE);
         }

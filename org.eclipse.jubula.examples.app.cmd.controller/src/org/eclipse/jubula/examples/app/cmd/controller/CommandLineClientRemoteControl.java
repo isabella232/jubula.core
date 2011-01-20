@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.cmd.controller.IClcServer;
 
 /**
  * This snippet shows the remote control ability of the commandline client.
- * Before running this code you should start the GUIdancerCMD with the option
+ * Before running this code you should start the CmdTestExecutor with the option
  * "-startserver <port_number>   Wait on a port for receiving test execution data"
  * . The same <port_numer> must be used in for the
  * COMMANDLINE_CLIENT_SERVER_LISTENING_PORT
@@ -28,7 +28,7 @@ import org.eclipse.jubula.client.cmd.controller.IClcServer;
  */
 public class CommandLineClientRemoteControl {
     /**
-     * This is the port for communication with the GUIdancer commandline client
+     * This is the port for communication with the CmdTestExecutor client
      */
     private static final int COMMANDLINE_CLIENT_SERVER_LISTENING_PORT = -1;
 

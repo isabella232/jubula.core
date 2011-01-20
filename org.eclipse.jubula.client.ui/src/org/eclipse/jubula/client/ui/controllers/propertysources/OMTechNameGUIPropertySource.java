@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.provider.labelprovider.PropertyControllerLabelProvider;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -77,23 +77,23 @@ public class OMTechNameGUIPropertySource
     @SuppressWarnings("synthetic-access")
     protected void initPropDescriptor() {
         clearPropertyDescriptors();
-        GDPropertyDescriptor propDes = null;
+        JBPropertyDescriptor propDes = null;
         // Component Name
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentNameController(), P_ELEMENT_DISPLAY_COMPNAME);
         propDes.setCategory(P_ELEMENT_DISPLAY_COMP);
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
         addPropertyDescriptor(propDes);
 
         // Component Class
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentClassController(), P_ELEMENT_DISPLAY_COMPCLASS);
         propDes.setCategory(P_ELEMENT_DISPLAY_COMP);
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
         addPropertyDescriptor(propDes);
         
         // Component SuppClass
-        propDes = new GDPropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentSuppClassController(), 
                 P_ELEMENT_DISPLAY_COMPSUPPCLASS);
         propDes.setCategory(P_ELEMENT_DISPLAY_COMPADDINFO);
@@ -110,17 +110,17 @@ public class OMTechNameGUIPropertySource
      */
     @SuppressWarnings("unchecked")
     private void initHierarchy() {
-        GDPropertyDescriptor propDes = null;
+        JBPropertyDescriptor propDes = null;
         IComponentIdentifier compId = getGuiNode().getTechnicalName();
         if (compId != null) {
             List hierarchy = compId.getHierarchyNames();
             for (int i = 0; i < hierarchy.size(); i++) {
                 if (i == 0) {
-                    propDes = new GDPropertyDescriptor(
+                    propDes = new JBPropertyDescriptor(
                             new ComponentHierarchyController(i), 
                             P_ELEMENT_DISPLAY_HIERARCHY);
                 } else {
-                    propDes = new GDPropertyDescriptor(
+                    propDes = new JBPropertyDescriptor(
                             new ComponentHierarchyController(i), 
                             StringConstants.EMPTY);
                 }
@@ -135,17 +135,17 @@ public class OMTechNameGUIPropertySource
      */
     @SuppressWarnings("unchecked")
     private void initContext() {
-        GDPropertyDescriptor propDes = null;
+        JBPropertyDescriptor propDes = null;
         IComponentIdentifier compId = getGuiNode().getTechnicalName();
         if (compId != null) {
             List context = compId.getNeighbours();
             for (int i = 0; i < context.size(); i++) {
                 if (i == 0) {
-                    propDes = new GDPropertyDescriptor(
+                    propDes = new JBPropertyDescriptor(
                             new ComponentContextController(i), 
                             P_ELEMENT_DISPLAY_CONTEXT);
                 } else {
-                    propDes = new GDPropertyDescriptor(
+                    propDes = new JBPropertyDescriptor(
                             new ComponentContextController(i), 
                             StringConstants.EMPTY);
                 }

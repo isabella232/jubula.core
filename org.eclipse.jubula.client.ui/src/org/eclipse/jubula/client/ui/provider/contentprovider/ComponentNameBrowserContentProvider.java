@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.graphics.Color;
@@ -82,7 +82,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
                     parentProjectID = ProjectPM.findProjectId(rp
                             .getProjectGuid(), rp.getMajorNumber(), rp
                             .getMinorNumber());
-                } catch (GDException e) {
+                } catch (JBException e) {
                     // do nothing
                 }
             }
@@ -112,7 +112,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
                             new AbstractCompNamesCategory[] { usedCat, 
                                                               unCat };
                     }
-                } catch (GDException e) {
+                } catch (JBException e) {
                     // nothing to catch here
                 }
             } 
@@ -150,7 +150,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
         try {
             IProjectPO rp = ProjectPM.loadProjectById(pe.getParentProjectID());
             return rp.getUsedProjects().toArray();
-        } catch (GDException e) {
+        } catch (JBException e) {
             // nothing to catch here
         }
         return DUMMY;

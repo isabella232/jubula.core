@@ -34,6 +34,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 /**
  * @author BREDEX GmbH
@@ -266,7 +267,9 @@ class AUTMainPO implements IAUTMainPO {
      * {@inheritDoc}
      */
     public String toString() {
-        return super.toString() + " (" + m_autName + ")";  //$NON-NLS-1$//$NON-NLS-2$
+        return super.toString() + StringConstants.SPACE 
+            + StringConstants.LEFT_PARENTHESES + m_autName 
+            + StringConstants.RIGHT_PARENTHESES;
     }
     
 

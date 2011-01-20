@@ -75,7 +75,7 @@ public abstract class AbstractParamInterfaceBP<T> {
                         paramNode, locale, desc, AbstractParamInterfaceBP
                                 .createParamValueValidator(
                                         desc.getType(), false));
-                startParameterUpdate(conv, null, row, mapper);
+                startParameterUpdate(conv, locale, row, mapper);
             }
         }
         paramNode.getDataManager().removeDataSet(row);

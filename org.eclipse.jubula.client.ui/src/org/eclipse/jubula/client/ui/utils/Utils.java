@@ -48,7 +48,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.SpecRefreshTreeIterator;
 import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.editors.PersistableEditorInput;
@@ -60,8 +59,8 @@ import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.views.TestResultTreeView;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDRuntimeException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.Message;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -157,7 +156,7 @@ public class Utils {
             final int returnCodeCANCEL = -1;
             MessageDialogWithToggle dialog = new MessageDialogWithToggle (
                 Plugin.getShell(), I18n.getString("Utils.title"),  //$NON-NLS-1$
-                IconConstants.GUIDANCER_SMALLER_IMAGE, 
+                null, 
                 I18n.getString("Utils.question", new Object[]{perspectiveName}), //$NON-NLS-1$
                 MessageDialog.QUESTION, 
                 new String[] { I18n.getString("Utils.Yes"), I18n.getString("Utils.No") }, 0, //$NON-NLS-1$ //$NON-NLS-2$
@@ -326,13 +325,13 @@ public class Utils {
     /**
      * clears the content of client
      */
-    public static void clearGuidancer() {
+    public static void clearClient() {
         TestExecution.getInstance().stopExecution();
         GeneralStorage.getInstance().reset();
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 Plugin.setProjectNameInTitlebar(null, null, null);
-                Plugin.closeAllOpenedGDEditors();
+                Plugin.closeAllOpenedJubulaEditors();
                 if (Plugin.getView(Constants.TESTRE_ID) != null) {
                     ((TestResultTreeView)Plugin.getView(Constants.TESTRE_ID))
                         .clear();
@@ -357,13 +356,13 @@ public class Utils {
     }
     
     /**
-     * clears the content of client, when guidancer is not connected to database
+     * clears the content of client, when the client is not connected to database
      */
-    public static void clearGuidancerUI() {
+    public static void clearClientUI() {
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 Plugin.setProjectNameInTitlebar(null, null, null);
-                Plugin.closeAllOpenedGDEditors();
+                Plugin.closeAllOpenedJubulaEditors();
                 if (Plugin.getView(Constants.TESTRE_ID) != null) {
                     ((TestResultTreeView)Plugin.getView(Constants.TESTRE_ID))
                         .clear();
@@ -404,11 +403,11 @@ public class Utils {
     }
     
     /**
-     * Open the message dialog and logs the gdexception.
+     * Open the message dialog and logs the JBException.
      * @param ex the actual GDRuntimeException
      * @return the dialog.
      */
-    public static Dialog createMessageDialog(GDRuntimeException ex) {
+    public static Dialog createMessageDialog(JBRuntimeException ex) {
         Integer messageID = ex.getErrorId();
         Message m = MessageIDs.getMessageObject(messageID);
         if (m != null && m.getSeverity() == Message.ERROR) {
@@ -433,23 +432,23 @@ public class Utils {
     }
     
     /**
-     * Open the message dialog and logs the gdexception.
-     * @param ex the actual GDException
+     * Open the message dialog and logs the JBException.
+     * @param ex the actual JBException
      * @return the dialog.
      */
-    public static Dialog createMessageDialog(GDException ex) {
+    public static Dialog createMessageDialog(JBException ex) {
         return createMessageDialog(ex, null, null);
     }
     
     
     /**
-     * Open the message dialog and logs the gdexception.
-     * @param ex the actual GDException
+     * Open the message dialog and logs the JBException.
+     * @param ex the actual JBException
      * @param params Parameter of the message text or null, if not needed.
      * @param details use null, or overwrite in MessageIDs hardcoded details.
      * @return the dialog.
      */
-    public static Dialog createMessageDialog(GDException ex, 
+    public static Dialog createMessageDialog(JBException ex, 
             Object[] params, String[] details) {
         
         Integer messageID = ex.getErrorId();
@@ -462,7 +461,7 @@ public class Utils {
 
     /**
      * Open the message dialog.
-     * <p><b>Use createMessageDialog(GDException ex, Object[] params, String[] details)
+     * <p><b>Use createMessageDialog(JBException ex, Object[] params, String[] details)
      * instead, if you want to get an entry in error log.</b></p>
      * @param messageID the actual messageID
      * @param params Parameter of the message text or null, if not needed.
@@ -493,7 +492,7 @@ public class Utils {
     
     /**
      * Open the message dialog.
-     * <p><b>Use createMessageDialog(GDException ex, Object[] params, String[] details)
+     * <p><b>Use createMessageDialog(JBException ex, Object[] params, String[] details)
      * instead, if you want to get an entry in error log.</b></p>
      * @param messageID the actual messageID
      * @param params Parameter of the message text or null, if not needed.

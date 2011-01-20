@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
@@ -31,7 +32,7 @@ import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDFatalAbortException;
+import org.eclipse.jubula.tools.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -112,7 +113,7 @@ public final class LockManager {
             
             tx.commit();
         } catch (PersistenceException e) {
-            throw new GDFatalAbortException("Locking won't start", e, //$NON-NLS-1$
+            throw new JBFatalAbortException(Messages.LockingWontStart, e,
                 MessageIDs.E_DATABASE_GENERAL);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(sess);
@@ -140,7 +141,7 @@ public final class LockManager {
             tx.commit();
             tx = null;
         } catch (PersistenceException e) {
-            log.error("failed to update application timestamp", e); //$NON-NLS-1$
+            log.error(Messages.FailedToUpdateApplicationTimestamp, e);
         } finally {
             if (tx != null) {
                 tx.rollback();
@@ -173,7 +174,7 @@ public final class LockManager {
                     "update ApplicationPO app set app.timestamp = CURRENT_TIMESTAMP where app.id = :id"); //$NON-NLS-1$
                 q.setParameter("id", m_application.getId()); //$NON-NLS-1$
                 if (q.executeUpdate() != 1) {
-                    log.error("Update of timestamp failed"); //$NON-NLS-1$
+                    log.error(Messages.UpdateOfTimestampFailed);
                 }
                 return Result.OK;
             }
@@ -249,7 +250,7 @@ public final class LockManager {
             }, "LockManger.KeepAlive"); //$NON-NLS-1$
             m_keepAliveThread.start();
         } else {
-            log.warn("Keep alive already active."); //$NON-NLS-1$
+            log.warn(Messages.KeepAliveAlreadyActive + StringConstants.DOT);
         }
     }
     
@@ -335,12 +336,12 @@ public final class LockManager {
         final Result runResult = runInSession(checkForDirty);
         if (runResult == Result.OBJECT_DELETED) {
             throw new PMObjectDeletedException(po,
-                "lock failed due to deleted PO", //$NON-NLS-1$
+                Messages.LockFailedDueToDeletedPO,
                 MessageIDs.E_DELETED_OBJECT);
         }
         if (checkVersion && (runResult == Result.OBJECT_DIRTY)) {
             throw new PMDirtyVersionException(po,
-                "lock failed due to db out of sync", //$NON-NLS-1$
+                Messages.LockFailedDueToDbOutOfSync,
                 MessageIDs.E_STALE_OBJECT);
         }
 
@@ -440,18 +441,19 @@ public final class LockManager {
             String poName = po != null ? po.getName() : StringConstants.EMPTY;
             long poId = po != null ? po.getId() : -1;
             throw new PMAlreadyLockedException(po, 
+                    //FIXME tobi NLS ??
                 "PO " + po + " (name=" + poName + "; id=" + poId + ") locked in db.", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 MessageIDs.E_OBJECT_IN_USE);   
         }
         if (runResult == Result.OBJECT_DELETED) {
             throw new PMObjectDeletedException(po,
-                "lock failed due to deleted DOT", //$NON-NLS-1$
+                Messages.LockFailedDueToDeletedDOT,
                 MessageIDs.E_DELETED_OBJECT); 
         }
         
         if (runResult == Result.OBJECT_DIRTY) {
             throw new PMDirtyVersionException(po,
-                "lock failed due to db out of sync", //$NON-NLS-1$
+                Messages.LockFailedDueToDbOutOfSync,
                 MessageIDs.E_DELETED_OBJECT); 
         }
         

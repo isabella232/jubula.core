@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.errorhandling;
 
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 /**
  * Noop implementation for presenting error messages to the user (so, 
@@ -24,7 +24,7 @@ public class NoopErrorMessagePresenter implements IErrorMessagePresenter {
     /**
      * {@inheritDoc}
      */
-    public void showErrorMessage(GDException ex, 
+    public void showErrorMessage(JBException ex, 
             Object[] params, String[] details) {
 
         // No-op

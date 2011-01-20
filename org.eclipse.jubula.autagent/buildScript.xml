@@ -138,18 +138,7 @@
 														./lib/AutStarter.jar 
 														./resources/
 														./logs/
-														./lib/org.jacoco.core_0.4.1.20101112194955.jar
-														./lib/org.jacoco.report_0.4.1.20101112194955.jar
-														./lib/com.bredexsw.guidancer.autagent.monitoring.jacoco.jar
-														./lib/com.bredexsw.guidancer.autagent.monitoring.yourkit.jar
-														./lib/yjp-controller-api-redist.jar
-														./lib/asm-3.3.jar
-														./lib/asm-analysis-3.3.jar
-														./lib/asm-commons-3.3.jar
-														./lib/asm-tree-3.3.jar
-														./lib/asm-util-3.3.jar
-														./lib/asm-xml-3.3.jar
-														./lib/commons-io-1.4.jar
+						                                ./lib/commons-io-1.4.jar
 														./lib/" />
  			    </manifest>		
 		</jar>

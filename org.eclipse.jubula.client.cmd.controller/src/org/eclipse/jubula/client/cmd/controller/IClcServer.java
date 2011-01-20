@@ -27,7 +27,7 @@ public interface IClcServer extends Remote {
      * @param tsName Specify the name of the Test Suite which should be run
      * by the service
      * @param timeout the maximum allowed time for the test Suite in seconds
-     * @param variables key/value data for GUIdancer variables
+     * @param variables key/value data for Jubula variables
      * @return the result code of the test execution, 0 if everything is fine.
      * @throws RemoteException
      */

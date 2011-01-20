@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
+
 /**
  * read only class to manage consistency between application version and (update)
  * state of database
@@ -150,7 +152,7 @@ public class DBVersionPO implements IPersistentObject {
         throws UnsupportedOperationException {
 
         throw new UnsupportedOperationException(
-            "DBVersion does not have a parent project"); //$NON-NLS-1$
+            Messages.DBVersionDoesNotHaveAParentProject);
     }
 
     /**
@@ -163,6 +165,6 @@ public class DBVersionPO implements IPersistentObject {
         throws UnsupportedOperationException {
         
         throw new UnsupportedOperationException(
-            "DBVersion does not have a parent project"); //$NON-NLS-1$
+                Messages.DBVersionDoesNotHaveAParentProject);
     }
 }

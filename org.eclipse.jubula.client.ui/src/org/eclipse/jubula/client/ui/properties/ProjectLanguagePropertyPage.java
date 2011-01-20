@@ -67,8 +67,8 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
     /** the combo box for the project default language */
     private DirectCombo <Locale> m_defaultLangComboBox;
     /** the GDStateController */
-    private final GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    private final WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
     /** the composite with 2 ListBoxes */
     private ListElementChooserComposite m_chooseLists;
     /** the button to add all languages from the upper field into the bottom field */
@@ -494,7 +494,7 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
      * @author BREDEX GmbH
      * @created 10.02.2005
      */
-    private class GuiDancerSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
 
         /**
          * {@inheritDoc}

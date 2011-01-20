@@ -28,7 +28,7 @@ import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 
@@ -73,7 +73,7 @@ public class NewComponentNameInViewHandler extends
             Utils.createMessageDialog(e, e.getErrorMessageParams(), null);
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
         } finally {
             Hibernator.instance().dropSession(s);

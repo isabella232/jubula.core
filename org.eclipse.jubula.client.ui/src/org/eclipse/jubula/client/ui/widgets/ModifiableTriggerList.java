@@ -234,7 +234,7 @@ public class ModifiableTriggerList extends Composite implements
         /***/
         private Control m_toolTipOwner;
         /***/
-        private GDText m_toolTipContent;
+        private JBText m_toolTipContent;
         /***/
         private Shell m_tip;
         /***/
@@ -301,7 +301,7 @@ public class ModifiableTriggerList extends Composite implements
                     layout.marginHeight = 2;
                     layout.marginWidth = 2;
                     m_tip.setLayout(layout);
-                    m_toolTipContent = new GDText(m_tip, Layout.MULTI_TEXT 
+                    m_toolTipContent = new JBText(m_tip, Layout.MULTI_TEXT 
                         | SWT.READ_ONLY);
                     m_tip.setForeground(m_toolTipOwner.getDisplay()
                         .getSystemColor(SWT.COLOR_INFO_FOREGROUND));
@@ -356,7 +356,7 @@ public class ModifiableTriggerList extends Composite implements
              * @param event
              */
             public void handleEvent(Event event) {
-                GDText label = (GDText) event.widget;
+                JBText label = (JBText) event.widget;
                 Shell shell = label.getShell();
                 switch (event.type) {
                     case SWT.FocusOut:    

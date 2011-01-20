@@ -32,6 +32,8 @@ import org.dom4j.io.DocumentResult;
 import org.dom4j.io.DocumentSource;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 /**
  * Writes an XML document to a file. Also writes an HTML document based on the
@@ -100,9 +102,9 @@ public class FileXMLReportWriter implements IXMLReportWriter {
             fileWriter.write(document);
             fileWriter.close();
         } catch (UnsupportedEncodingException e) {
-            LOG.error("Error file writing.", e); //$NON-NLS-1$
+            LOG.error(Messages.ErrorFileWriting + StringConstants.DOT, e);
         } catch (IOException e) {
-            LOG.error("Error file writing.", e); //$NON-NLS-1$
+            LOG.error(Messages.ErrorFileWriting + StringConstants.DOT, e);
         }
         if (m_xsl == null) {
             return;
@@ -141,11 +143,11 @@ public class FileXMLReportWriter implements IXMLReportWriter {
                 }
             }
         } catch (TransformerConfigurationException e1) {
-            LOG.error("Error file writing.", e1); //$NON-NLS-1$
+            LOG.error(Messages.ErrorFileWriting + StringConstants.DOT, e1);
         } catch (TransformerException e) {
-            LOG.error("Error file writing.", e); //$NON-NLS-1$
+            LOG.error(Messages.ErrorFileWriting + StringConstants.DOT, e);
         } catch (IOException e) {
-            LOG.error("UError file writing.", e); //$NON-NLS-1$
+            LOG.error(Messages.ErrorFileWriting + StringConstants.DOT, e);
         }
     }
 

@@ -34,7 +34,7 @@ import org.eclipse.ui.ISources;
  * @author BREDEX GmbH
  * @created Apr 30, 2009
  */
-public class ActiveProjectSourceProvider extends AbstractGDSourceProvider
+public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
         implements IProjectLoadedListener, IDataChangedListener,
         IProgressListener {
 

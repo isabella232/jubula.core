@@ -24,13 +24,12 @@ public abstract class AbstractMonitoring implements IMonitoring {
 
     /** the autId */
     private String m_autId;  
-    /** MonitoringDataStore which contains the configmaps */
+    /** MonitoringDataStore which contains the configuration maps */
     private MonitoringDataStore m_mds = MonitoringDataStore.getInstance();
     /**
      * {@inheritDoc}
      */
-    public void autRestartOccurred() {
-       
+    public void autRestartOccurred() {       
         //do nothing
     }
 
@@ -61,8 +60,7 @@ public abstract class AbstractMonitoring implements IMonitoring {
     /**
      * {@inheritDoc}
      */
-    public void resetMonitoringData() {
-       
+    public void resetMonitoringData() {       
       //do nothing
         
     }  

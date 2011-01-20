@@ -10,11 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.persistence;
 
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 
 /** PMException as base class for all other PM exceptions */
-public class PMException extends GDException {
+public class PMException extends JBException {
 
     /**
      * {@inheritDoc}

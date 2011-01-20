@@ -155,7 +155,7 @@ public class ToolkitPluginDescriptor implements Comparable {
 
     /**
      * @return the id of the toolkit 
-     *         (e.g. com.bredexsw.guidancer.SwingToolkitPlugin)
+     *         (e.g. org.eclipse.jubula.toolkit.swing)
      */
     public String getToolkitID() {
         return m_toolkitID;

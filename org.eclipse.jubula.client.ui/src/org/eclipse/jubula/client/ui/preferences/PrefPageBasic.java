@@ -20,7 +20,7 @@ import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.widgets.CheckedDirnameText;
 import org.eclipse.jubula.client.ui.widgets.CheckedText;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -49,12 +49,8 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * Custom preference page implementation. Uses the <code>Constants</code> API to
  * access the <code>Preferences</code> object for storing preference values.
  * <p>
- * Preference keys are defined in the <code>GuiDancerPlugin</code> interface.
+ * Preference keys are defined in the <code>JubulaPlugin</code> interface.
  * </p>
- * 
- * {@inheritDoc}
- * {@inheritDoc}
- * {@inheritDoc}
  */
 public class PrefPageBasic extends PreferencePage implements
         IWorkbenchPreferencePage {
@@ -110,8 +106,8 @@ public class PrefPageBasic extends PreferencePage implements
     private IPreferenceStore m_store = Plugin.getDefault()
             .getPreferenceStore();
     /** a new selection listener */
-    private final GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    private final WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
 
     /** watches changes on the ws selection button */
     private final SelectionListener m_dataDirIsWsButtonListener = 
@@ -211,7 +207,7 @@ public class PrefPageBasic extends PreferencePage implements
         m_capInfoCheckbox.setSelection(Plugin.getDefault()
                 .getPreferenceStore().getBoolean(
                         Constants.SHOWCAPINFO_KEY));
-        GDControlDecorator.decorateInfo(m_capInfoCheckbox,  
+        ControlDecorator.decorateInfo(m_capInfoCheckbox,  
                 "GDControlDecorator.ShowCapInfo", false); //$NON-NLS-1$
     }
     
@@ -226,7 +222,7 @@ public class PrefPageBasic extends PreferencePage implements
         m_showTransientChildrenCheckBox.setSelection(Plugin.getDefault()
                 .getPreferenceStore().getBoolean(
                         Constants.SHOW_TRANSIENT_CHILDREN_KEY));
-        GDControlDecorator.decorateInfo(m_showTransientChildrenCheckBox,
+        ControlDecorator.decorateInfo(m_showTransientChildrenCheckBox,
                 "GDControlDecorator.showTransientChildrenCheckBox", false); //$NON-NLS-1$
     }
 
@@ -529,7 +525,7 @@ public class PrefPageBasic extends PreferencePage implements
      * @author BREDEX GmbH
      * @created 09.08.2005
      */
-    private class GuiDancerSelectionListener extends SelectionAdapter {
+    private class WidgetSelectionListener extends SelectionAdapter {
         /** @param e The selection event. */
         public void widgetSelected(SelectionEvent e) {
             Object o = e.getSource();

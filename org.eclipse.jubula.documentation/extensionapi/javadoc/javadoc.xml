@@ -8,7 +8,51 @@
 
 <project default="javadoc">
 	<target name="javadoc">
-		<javadoc access="protected" author="false" classpath="../../../org.eclipse.jubula.tools/lib/commons-logging-api.jar:../../../org.eclipse.jubula.tools/lib/log4j-1.2.14.jar:../../../org.eclipse.jubula.tools/lib/commons-collections-3.2.1.jar:../../../org.eclipse.jubula.tools/lib/j2ee.jar:../../../org.eclipse.jubula.tools/lib/xpp3_min-1.1.3.4.I.jar:../../../org.eclipse.jubula.tools/lib/xerces1.3.1.jar:../../../org.eclipse.jubula.tools/lib/jakarta-oro-2.0.8.jar:../../../org.eclipse.jubula.rc.common/bin:/devapps/eclipse/eclipse310/plugins/org.junit_3.8.1/junit.jar:../../../org.eclipse.jubula.tools/bin:../../../org.eclipse.jubula.tools/lib/commons-lang-2.4.jar:../../../org.eclipse.jubula.rc.common/lib/commons-beanutils-1.7.0.jar:../../../org.eclipse.jubula.tools/lib/xstream-1.1.2.jar:../../../org.eclipse.jubula.tools/lib/commons-cli-1.0.jar:../../..//org.eclipse.jubula.communication/bin:../../../org.eclipse.jubula.tools/lib/jcl-over-slf4j-1.5.2.jar:../../../org.eclipse.jubula.tools/lib/slf4j-api-1.5.2.jar:../../../org.eclipse.jubula.tools/lib/slf4j-log4j12-1.5.2.jar" destdir="${outputdir}" doctitle="GUIdancer External Swing Component API" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.eclipse.jubula.rc.swing.swing.implclasses.table,com.bredexsw.guidancer.autserverbase.exception,com.bredexsw.guidancer.autserverbase.driver,com.bredexsw.guidancer.tools.constants,org.eclipse.jubula.rc.swing.swing.implclasses,com.bredexsw.guidancer.tools.objects.event,com.bredexsw.guidancer.autserverbase.implclasses,org.eclipse.jubula.rc.swing.swing.implclasses.tree" source="1.3" sourcepath="../../../org.eclipse.jubula.tools/src:../../../org.eclipse.jubula.rc.swing/src:../../../org.eclipse.jubula.rc.common/src:../../../org.eclipse.jubula.tools/resources:../../..//org.eclipse.jubula.communication/src" splitindex="true" use="true" version="false">
+		<javadoc 
+			access="protected" 
+			author="false" 
+			classpath="../../../org.eclipse.jubula.tools/lib/commons-logging-api.jar:
+			../../../org.eclipse.jubula.tools/lib/log4j-1.2.14.jar:
+			../../../org.eclipse.jubula.rc.orbit/org.apache.commons.collections_3.2.0.v201005080500.jar:
+			../../../org.eclipse.jubula.tools/lib/j2ee.jar:
+			../../../org.eclipse.jubula.tools/lib/xpp3_min-1.1.3.4.O.jar:
+			../../../org.eclipse.jubula.tools/lib/xerces1.3.1.jar:
+			../../../org.eclipse.jubula.orbit/org.apache.oro_2.0.8.v201005080400.jar:
+			../../../org.eclipse.jubula.rc.common/bin:
+			/devapps/eclipse/eclipse310/plugins/org.junit_3.8.1/junit.jar:
+			../../../org.eclipse.jubula.tools/bin:
+			../../../org.eclipse.jubula.rc.orbit/org.apache.commons.lang_2.4.0.v201005080502.jar:
+			../../../org.eclipse.jubula.rc.orbit/org.apache.commons.beanutils_1.7.0.v200902170505.jar:
+			../../../org.eclipse.jubula.tools/lib/xstream-1.3.1.jar:
+			../../../org.eclipse.jubula.tools/lib/commons-cli-1.0.jar:
+			../../../org.eclipse.jubula.communication/bin:
+			../../../org.eclipse.jubula.tools/lib/jcl-over-slf4j-1.5.2.jar:
+			../../../org.eclipse.jubula.tools/lib/slf4j-api-1.5.2.jar:
+			../../../org.eclipse.jubula.tools/lib/slf4j-log4j12-1.5.2.jar" 
+			destdir="${outputdir}" 
+			doctitle="GUIdancer External Swing Component API" 
+			nodeprecated="false" 
+			nodeprecatedlist="false" 
+			noindex="false" 
+			nonavbar="false" 
+			notree="false" 
+			packagenames="org.eclipse.jubula.rc.swing.swing.implclasses.table,
+			com.bredexsw.guidancer.autserverbase.exception,
+			com.bredexsw.guidancer.autserverbase.driver,
+			com.bredexsw.guidancer.tools.constants,
+			org.eclipse.jubula.rc.swing.swing.implclasses,
+			com.bredexsw.guidancer.tools.objects.event,
+			com.bredexsw.guidancer.autserverbase.implclasses,
+			org.eclipse.jubula.rc.swing.swing.implclasses.tree" 
+			source="1.3" 
+			sourcepath="../../../org.eclipse.jubula.tools/src:
+			../../../org.eclipse.jubula.rc.swing/src:
+			../../../org.eclipse.jubula.rc.common/src:
+			../../../org.eclipse.jubula.tools/resources:
+			../../../org.eclipse.jubula.communication/src" 
+			splitindex="true" 
+			use="true" 
+			version="false">
 			<tag name="created" scope="all" />
 		</javadoc>
 	</target>

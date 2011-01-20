@@ -14,54 +14,48 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
- * 
- *
- * class to manage the version of the guiDancerConfig.xml
+ * class to manage the version of the clientConfig.xml
  * @author BREDEX GmbH
  * @created 24.11.2005
- *
- *
- *
- *
  */
 public class ConfigVersion {
     /**
-     * <code>m_majorVersion</code>majorVersion read from guidancer config xml
+     * <code>m_majorVersion</code>majorVersion read from client config xml
      */
     private String m_majorV = null;
     
     /**
-     * <code>m_minorVersion</code>minorVersion read from guidancer config xml
+     * <code>m_minorVersion</code>minorVersion read from client config xml
      */
     private String m_minorV = null;
     
     /**
-     * <code>m_majorVersion</code>majorCustomVersion read from guidancer config xml
+     * <code>m_majorVersion</code>majorCustomVersion read from client config xml
      */
     private String m_majorCustomV = null;
     
     /**
-     * <code>m_minorVersion</code>minorCustomVersion read from guidancer config xml
+     * <code>m_minorVersion</code>minorCustomVersion read from client config xml
      */
     private String m_minorCustomV = null;
     
     /**
-     * <code>m_majorVersion</code>majorVersion read from guidancer config xml
+     * <code>m_majorVersion</code>majorVersion read from client config xml
      */
     private Integer m_majorVersion = null;
     
     /**
-     * <code>m_minorVersion</code>minorVersion read from guidancer config xml
+     * <code>m_minorVersion</code>minorVersion read from client config xml
      */
     private Integer m_minorVersion = null;
     
     /**
-     * <code>m_majorVersion</code>majorCustomVersion read from guidancer config xml
+     * <code>m_majorVersion</code>majorCustomVersion read from client config xml
      */
     private Integer m_majorCustomVersion = null;
     
     /**
-     * <code>m_minorVersion</code>minorCustomVersion read from guidancer config xml
+     * <code>m_minorVersion</code>minorCustomVersion read from client config xml
      */
     private Integer m_minorCustomVersion = null;
     

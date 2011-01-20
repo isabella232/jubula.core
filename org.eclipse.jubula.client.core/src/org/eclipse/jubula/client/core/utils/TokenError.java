@@ -24,9 +24,6 @@ public class TokenError {
     /** entire string */
     private String m_input = StringConstants.EMPTY;
 
-    /** start index of token string in entire string */
-    private int m_startPos = -1;
-
     /** I18N Key for error message */
     private Integer m_i18NErrorKey = null;
 
@@ -39,14 +36,12 @@ public class TokenError {
     /**
      * constructor
      * @param input value to the token
-     * @param startPos beginning index of value in the entire string
      * @param i18NMessageId messageId for error message
      * @param state validationState
      */
-    public TokenError(String input, int startPos, 
-        Integer i18NMessageId, ConvValidationState state) {
+    public TokenError(String input, 
+            Integer i18NMessageId, ConvValidationState state) {
         m_input = input;
-        m_startPos = startPos;
         m_i18NErrorKey = i18NMessageId;
         m_convValidationState = state;
     }  
@@ -56,13 +51,6 @@ public class TokenError {
      */
     public Integer getI18NErrorKey() {
         return m_i18NErrorKey;
-    }
-
-    /**
-     * @return Returns the startPos.
-     */
-    public int getStartPos() {
-        return m_startPos;
     }
 
     /**

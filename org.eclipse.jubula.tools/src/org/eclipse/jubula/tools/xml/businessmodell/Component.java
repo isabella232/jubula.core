@@ -24,7 +24,7 @@ import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 /**
- * This class represents Components which can be tested by the GuiDancer.
+ * This class represents Components which can be tested by Jubula.
  *
  * @author BREDEX GmbH
  * @created 08.07.2005

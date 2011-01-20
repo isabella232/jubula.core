@@ -21,7 +21,7 @@ import java.net.Socket;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 
@@ -44,7 +44,7 @@ public class GDSocket extends Socket {
     /** flag wheter a connection could established or not */
     private boolean m_connectionEstablished = false;
     
-    /** the state send from the other site, see GuiDancerConnectionState */
+    /** the state send from the other site, see ConnectionState */
     private int m_state = ConnectionState.UNKNOWN; 
     
     /** 
@@ -55,19 +55,22 @@ public class GDSocket extends Socket {
     private BufferedReader m_inputStreamReader;
     
     /**
-     * creates a new socket and waits <code>waitForServer</code> for the
-     * server. This constructor blocks <code>waitForServer</code> in milli
-     * seconds.
+     * creates a new socket and waits <code>waitForServer</code> for the server.
+     * This constructor blocks <code>waitForServer</code> in milli seconds.
      * 
-     * @param address the inetAddress to connect to
-     * @param port the port number
-     * @param waitForServer timeout for server sending SERVER_OK
-     * @throws IOException from super class java.net.Socket
-     * @throws GDVersionException in case of a version error between Client
-     * and AutStarter
+     * @param address
+     *            the inetAddress to connect to
+     * @param port
+     *            the port number
+     * @param waitForServer
+     *            timeout for server sending SERVER_OK
+     * @throws IOException
+     *             from super class java.net.Socket
+     * @throws JBVersionException
+     *             in case of a version error between Client and AutStarter
      */
     public GDSocket(InetAddress address, int port, long waitForServer) 
-        throws IOException, GDVersionException {
+        throws IOException, JBVersionException {
         super(address, port);
     
         setSoLinger(true, 10);
@@ -80,13 +83,14 @@ public class GDSocket extends Socket {
      * Waits for a "client type" request from the server and responds to that
      * request.
      * 
-     * @param waitForServer The maximum amount of time (in milliseconds) to 
-     *                      wait for the request from the server.
-     * @throws GDVersionException in case of a version error between client
-     *                            and server.
+     * @param waitForServer
+     *            The maximum amount of time (in milliseconds) to wait for the
+     *            request from the server.
+     * @throws JBVersionException
+     *             in case of a version error between client and server.
      */
     private void respondToTypeRequest(long waitForServer) 
-        throws GDVersionException {
+        throws JBVersionException {
         
         try {
             if (log.isDebugEnabled()) {
@@ -102,7 +106,7 @@ public class GDSocket extends Socket {
                     getInputStreamReader(), 
                     inputStream, outputStream, 
                     ConnectionState.CLIENT_TYPE_SINGLE);
-        } catch (GDVersionException gdve) {
+        } catch (JBVersionException gdve) {
             handleState(false);
             throw gdve;
         } catch (IOException ioe) {
@@ -124,16 +128,18 @@ public class GDSocket extends Socket {
     public synchronized int getState() {
         return m_state;
     }
+
     /**
      * waits the given time, read a byte from the inputstream and sets the
      * <code>connected</code> flag.
      * 
-     * @param waitForServer timeout for the server to send OK
-     * @throws GDVersionException in case of a version error between Client
-     * and AutStarter.
+     * @param waitForServer
+     *            timeout for the server to send OK
+     * @throws JBVersionException
+     *             in case of a version error between Client and AutStarter.
      */
     private void waitForServerState(long waitForServer) throws 
-        GDVersionException {
+        JBVersionException {
         
         try {
             if (log.isDebugEnabled()) {
@@ -162,7 +168,7 @@ public class GDSocket extends Socket {
                             break;
                         case ConnectionState.VERSION_ERROR:
                             handleState(false);
-                            throw new GDVersionException(
+                            throw new JBVersionException(
                                 "Version error between Client and AUT Agent!", //$NON-NLS-1$ 
                                 MessageIDs.E_VERSION_ERROR);
                         case ConnectionState.UNKNOWN:

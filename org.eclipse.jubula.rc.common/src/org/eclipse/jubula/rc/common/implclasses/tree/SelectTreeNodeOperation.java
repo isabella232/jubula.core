@@ -36,7 +36,7 @@ public class SelectTreeNodeOperation extends AbstractSelectTreeNodeOperation {
      * returns <code>true</code>. The node is identified by calling
      * {@link JTree#convertValueToText(java.lang.Object, boolean, boolean, boolean, int, boolean)}
      * and the returned text is compared to the constructor argument. The method
-     * throws a <code>GuiDancerStepExecutionException</code> If the node has not
+     * throws a <code>StepExecutionException</code> If the node has not
      * been selected (invalid node).
      */
     public boolean operate(final Object node) throws StepExecutionException {

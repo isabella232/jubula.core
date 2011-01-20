@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
@@ -33,10 +34,11 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.TestCaseParamCheckException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -187,9 +189,10 @@ public class TestCaseParamCheckBP {
                 if (!refsForTD.isEmpty() 
                     && !hasMoreThanOneChildrenWithRef(parent, ref, locale)) {
 
-                    errors.add(I18n.getString("TestCaseParamCheckBP.TestCaseDefinesRefs", //$NON-NLS-1$
-                        new String[] { parent.getName(), ref }),
-                        null);
+                    errors.add(NLS.bind(
+                            Messages.TestCaseParamCheckBPTestCaseDefinesRefs,
+                            new String[] { parent.getName(), ref }),
+                            null);
                 }
             } catch (IndexOutOfBoundsException e) { // NOPMD by al on 3/19/07 1:24 PM
                 // Nothing to be done
@@ -248,7 +251,7 @@ public class TestCaseParamCheckBP {
             try {
                 execTestCases = NodePM.getAllExecTestCases(
                     parent.getGuid(), parent.getParentProjectId());
-            } catch (GDException e) {
+            } catch (JBException e) {
                 LOG.error(e);
             }
             List <String> paramNames = parent.getParamNames();
@@ -261,7 +264,8 @@ public class TestCaseParamCheckBP {
                                 ? execTc.getParentNode().getName() 
                                     : execTc.getName();
                             if (!checkList.contains(name)) {
-                                errors.add("TestCaseParamCheckBP.TestExecHasOwnTestData", //$NON-NLS-1$
+                                errors.add(Messages
+                                    .TestCaseParamCheckBPTestExecHasOwnTestData,
                                     new String[] { name });
                                 checkList.add(name);
                             }
@@ -359,13 +363,14 @@ public class TestCaseParamCheckBP {
                     }
                     String name = execTc.getParentNode() != null ? execTc
                         .getParentNode().getName() : execTc.getName();
-                    errors.add(I18n.getString("TestCaseParamCheckBP.TestCaseIsUsed1") //$NON-NLS-1$
-                            + specNode.getName() + I18n.getString("TestCaseParamCheckBP.TestCaseIsUsed2"), //$NON-NLS-1$
+                    errors.add(Messages.TestCaseParamCheckBPTestCaseIsUsed1
+                            + specNode.getName() 
+                            + Messages.TestCaseParamCheckBPTestCaseIsUsed2,
                             new String[] { name });
                     editorShouldBeDirty = false;
                 }   
-            } catch (GDException e) {
-                errors.add("ErrorMessage.DATABASE_GENERAL", null); //$NON-NLS-1$
+            } catch (JBException e) {
+                errors.add(Messages.ErrorMessageDATABASE_GENERAL, null);
             }
         }
 
@@ -414,7 +419,7 @@ public class TestCaseParamCheckBP {
                 if (Hibernator.isPoClassSubclass(
                         parentPoClass, ITestSuitePO.class)) {
                     errors.add(
-                        "TestCaseParamCheckBP.TestExecHasTestSuiteParent", //$NON-NLS-1$
+                        Messages.TestCaseParamCheckBPTestExecHasTestSuiteParent,
                         new String[] { execNode.getName() });
                 }
             } else {
@@ -451,13 +456,15 @@ public class TestCaseParamCheckBP {
                             break;
                         }
                     }
-                    errors.add("TestCaseParamCheckBP.InvalidRefInTestData", //$NON-NLS-1$
+                    errors.add(Messages
+                            .TestCaseParamCheckBPInvalidRefInTestData,
                         new String[] { notAllowedRef });
                 }
             }
             if (!node.getParamReferencesIterator(0, locale).hasNext()) {
                 for (String refInput : ref) {
-                    errors.add("TestCaseParamCheckBP.InvalidRefInTestData", //$NON-NLS-1$
+                    errors.add(Messages
+                            .TestCaseParamCheckBPInvalidRefInTestData,
                         new String[] { refInput });
                 }
             }

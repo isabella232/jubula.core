@@ -23,17 +23,18 @@ import java.util.Locale;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.StringParsing;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
+import org.eclipse.osgi.util.NLS;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
@@ -256,7 +257,8 @@ public class JobConfiguration {
      */
     public void initAndValidate() {
         // all needed properties set correctly?
-        Validate.notNull(m_project, I18n.getString("JobConfiguration.ValidateProjectExist", //$NON-NLS-1$
+        Validate.notNull(m_project, NLS.bind(
+                Messages.JobConfigurationValidateProjectExist,
                 new Object[] {String.valueOf(m_projectName), 
                     String.valueOf(m_projectMajor), 
                     String.valueOf(m_projectMinor)}));
@@ -271,7 +273,7 @@ public class JobConfiguration {
             }
         }
         Validate.isTrue((m_testSuiteNames.size() == m_testSuites.size()), 
-            I18n.getString("JobConfiguration.ValidateTestSuiteExist")); //$NON-NLS-1$
+            Messages.JobConfigurationValidateTestSuiteExist);
 
         for (ITestJobPO tj : getProject().getTestJobCont().getTestJobList()) {
             if (tj.getName().equals(m_testJobName)) {
@@ -288,7 +290,8 @@ public class JobConfiguration {
         if (!m_testSuites.isEmpty()) {
             // checking that all Test Suites are assigned to an AUT
             for (ITestSuitePO ts : m_testSuites) {
-                Validate.notNull(ts.getAut(), I18n.getString("JobConfiguration.ValidateAnyAut")); //$NON-NLS-1$
+                Validate.notNull(ts.getAut(), 
+                        Messages.JobConfigurationValidateAnyAut);
             }
             
             // checking if specified AUT Config exists
@@ -299,13 +302,14 @@ public class JobConfiguration {
                         m_autConfig = config;
                     }
                 }
-                Validate.notNull(m_autConfig, I18n.getString("JobConfiguration.ValidateAutConf")); //$NON-NLS-1$
+                Validate.notNull(m_autConfig, 
+                        Messages.JobConfigurationValidateAutConf);
             }
 
             // LanguageCheck
             List <Locale> autLocales = aut.getLangHelper().getLanguageList();
             Validate.isTrue(autLocales.size() != 0, 
-                "There is no language configured in choosen AUT"); //$NON-NLS-1$
+                Messages.NoLanguageConfiguredInChoosenAUT);
             if (getLanguage() == null) {
                 if (autLocales.size() == 1) {
                     setLanguage(autLocales.get(0));
@@ -314,7 +318,7 @@ public class JobConfiguration {
                 }
             }
             Validate.isTrue(autLocales.contains(getLanguage()), 
-                "Specified language is not supported by AUT"); //$NON-NLS-1$
+                Messages.SpecifiedLanguageNotSupported);
         }
     }
 

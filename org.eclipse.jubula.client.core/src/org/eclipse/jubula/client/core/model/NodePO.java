@@ -508,7 +508,9 @@ abstract class NodePO implements INodePO {
      * {@inheritDoc}
      */
     public String toString() {
-        return super.toString() + " (" + getName() + ")";   //$NON-NLS-1$//$NON-NLS-2$
+        return super.toString() + StringConstants.SPACE 
+            + StringConstants.LEFT_PARENTHESES + getName() 
+            + StringConstants.RIGHT_PARENTHESES;
     }
     
     /**

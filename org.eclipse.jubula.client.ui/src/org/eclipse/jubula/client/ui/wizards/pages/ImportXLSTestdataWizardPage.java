@@ -53,7 +53,7 @@ import org.eclipse.jubula.client.ui.handlers.AbstractEditParametersHandler;
 import org.eclipse.jubula.client.ui.handlers.AddNewTestDataManagerHandler;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.IncompleteDataException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
@@ -91,7 +91,6 @@ import org.eclipse.ui.wizards.datatransfer.IImportStructureProvider;
  * @author BREDEX GmbH
  * @created Oct 19, 2010
  */
-
 public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
     /**
      * @author BREDEX GmbH
@@ -188,7 +187,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                     } catch (IncompleteDataException e) {
                         p.writeErrorLine(absoluteFilePath + "\n" //$NON-NLS-1$
                                 + e.getLocalizedMessage());
-                    } catch (GDException e) {
+                    } catch (JBException e) {
                         p.writeErrorLine(e.getLocalizedMessage());
                     } finally {
                         monitor.worked(1);
@@ -206,11 +205,11 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
          *            the list of locales to fill the data for
          * @param testdata
          *            the test data cube to use
-         * @throws GDException
+         * @throws JBException
          *             in case of data retrival problems
          */
         private void fillCentralTestDataSet(File f, List<Locale> ll,
-                ITestDataCubePO testdata) throws GDException {
+                ITestDataCubePO testdata) throws JBException {
             ExternalTestDataBP bp = new ExternalTestDataBP();
             String absoluteFilePath = f.getAbsoluteFile()
                     .getAbsolutePath();

@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 
 /**
@@ -44,7 +44,7 @@ public class CollectComponentNameUsersOp
      * the exception that occurred during traversal, or <code>null</code>
      * if no such exception occurred.
      */
-    private GDException m_exception = null;
+    private JBException m_exception = null;
     
     /**
      * Constructor
@@ -95,7 +95,7 @@ public class CollectComponentNameUsersOp
 
                 }
             }
-        } catch (GDException e) {
+        } catch (JBException e) {
             m_exception = e;
             ctx.setContinued(false); 
         }
@@ -113,10 +113,10 @@ public class CollectComponentNameUsersOp
     /**
      * 
      * @return the Component Name usage map.
-     * @throws GDException if a <code>GDException</code> occurred during 
+     * @throws JBException if a <code>JBException</code> occurred during 
      *                     traversal.
      */
-    public CompNameUsageMap getUsageMap() throws GDException {
+    public CompNameUsageMap getUsageMap() throws JBException {
         if (m_exception != null) {
             throw m_exception;
         }

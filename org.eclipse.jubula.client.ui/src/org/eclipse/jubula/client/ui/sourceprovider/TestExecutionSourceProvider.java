@@ -25,7 +25,7 @@ import org.eclipse.ui.ISources;
  * @author BREDEX GmbH
  * @created Feb 8, 2010
  */
-public class TestExecutionSourceProvider extends AbstractGDSourceProvider
+public class TestExecutionSourceProvider extends AbstractJBSourceProvider
     implements ITestExecutionEventListener {
 
     /** 

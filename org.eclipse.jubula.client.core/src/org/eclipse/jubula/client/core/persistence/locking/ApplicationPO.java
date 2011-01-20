@@ -21,6 +21,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
+
 /**
  *
  * @author BREDEX GmbH
@@ -131,12 +134,25 @@ public class ApplicationPO {
      */
     public String toString() {
         StringBuffer res = new StringBuffer(100);
-        res.append("Application Id = "); //$NON-NLS-1$
+        res.append(Messages.ApplicationID);
+        res.append(StringConstants.SPACE);
+        res.append(StringConstants.EQUALS_SIGN);
+        res.append(StringConstants.SPACE);
         res.append(getId());
-        res.append(", User = "); //$NON-NLS-1$
+        res.append(StringConstants.COMMA);
+        res.append(StringConstants.SPACE);
+        res.append(Messages.User);
+        res.append(StringConstants.SPACE);
+        res.append(StringConstants.EQUALS_SIGN);
+        res.append(StringConstants.SPACE);
         res.append(getUserName());
         if (getTimestamp() != null) {
-            res.append(", Timestamp = "); //$NON-NLS-1$
+            res.append(StringConstants.COMMA);
+            res.append(StringConstants.SPACE);
+            res.append(Messages.Timestamp);
+            res.append(StringConstants.SPACE);
+            res.append(StringConstants.EQUALS_SIGN);
+            res.append(StringConstants.SPACE);
             res.append(getTimestamp().toGMTString());
         }
         return res.toString();

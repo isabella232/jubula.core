@@ -25,7 +25,7 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
@@ -307,7 +307,7 @@ public class ProjectDialog extends TitleAreaDialog {
         GridData data = new GridData();
         data.horizontalSpan = HORIZONTAL_SPAN;
         m_keepTestresultSummaryButton.setLayoutData(data);
-        GDControlDecorator.decorateInfo(m_keepTestresultSummaryButton,  
+        ControlDecorator.decorateInfo(m_keepTestresultSummaryButton,  
                 "GDControlDecorator.KeepTestresultSummary", false); //$NON-NLS-1$
     }
 

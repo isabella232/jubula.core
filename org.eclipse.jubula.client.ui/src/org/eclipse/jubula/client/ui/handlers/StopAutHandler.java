@@ -24,7 +24,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionGUIController;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -88,13 +87,11 @@ public class StopAutHandler extends AbstractHandler {
         } else {
             questionText = I18n.getString("StopAUTAction.questionText"); //$NON-NLS-1$
         }
-        MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
-            I18n.getString("StopAUTAction.shellTitle"), //$NON-NLS-1$
-                IconConstants.GUIDANCER_IMAGE,
-                questionText, 
-                MessageDialog.QUESTION, new String[] {
-                    I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
-                    I18n.getString("NewProjectDialog.MessageButton1") }, 0); //$NON-NLS-1$
+        MessageDialog dialog = new MessageDialog(Plugin.getShell(),
+                I18n.getString("StopAUTAction.shellTitle"), //$NON-NLS-1$
+                null, questionText, MessageDialog.QUESTION, new String[] {
+                        I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
+                        I18n.getString("NewProjectDialog.MessageButton1") }, 0); //$NON-NLS-1$
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();

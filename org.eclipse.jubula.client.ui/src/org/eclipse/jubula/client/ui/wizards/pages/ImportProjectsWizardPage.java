@@ -25,10 +25,10 @@ import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP.IProjectImportI
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -72,7 +72,7 @@ public class ImportProjectsWizardPage extends WizardPage
     private static final int NUM_COLUMS = 6; 
 
     /** TextField for FilePath */
-    private GDText m_fileToAdd;
+    private JBText m_fileToAdd;
     /** All files that will be imported */
     private List m_filesToImport;
     /** button to browse for file */
@@ -753,7 +753,7 @@ public class ImportProjectsWizardPage extends WizardPage
         label.setLayoutData(gridData);
         label.setText(I18n.getString("ImportProjectDialog.fileLabel")); //$NON-NLS-1$
         
-        m_fileToAdd = new GDText(composite, SWT.BORDER);
+        m_fileToAdd = new JBText(composite, SWT.BORDER);
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
         gridData.grabExcessHorizontalSpace = true;
@@ -776,7 +776,7 @@ public class ImportProjectsWizardPage extends WizardPage
         gridData.grabExcessHorizontalSpace = false;
         gridData.horizontalAlignment = SWT.LEFT;
         listLabel.setLayoutData(gridData);
-        GDControlDecorator.decorateInfo(listLabel, 
+        ControlDecorator.decorateInfo(listLabel, 
                 "GDControlDecorator.Import", false); //$NON-NLS-1$
         
         addImportList(composite);

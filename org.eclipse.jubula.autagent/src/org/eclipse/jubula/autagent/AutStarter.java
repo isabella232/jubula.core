@@ -54,7 +54,7 @@ import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.constants.ConfigurationConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.DevNull;
@@ -225,7 +225,6 @@ public class AutStarter {
      */
     public static void main(String[] args) {
         // create the single instance here
-
         final AutStarter server = AutStarter.getInstance();
 
         CommandLineParser parser = new PosixParser();
@@ -389,7 +388,7 @@ public class AutStarter {
             log.error("no command line", npe); //$NON-NLS-1$
             printHelp();
             exitCode = EXIT_INVALID_OPTIONS;
-        } catch (GDVersionException ve) {
+        } catch (JBVersionException ve) {
             log.error(ve.getMessage(), ve);
             exitCode = EXIT_CLIENT_SERVER_VERSION_ERROR;
         } finally {
@@ -450,13 +449,16 @@ public class AutStarter {
 
     /**
      * initializes the Socket for the client to connect.
-     * @param port int
-     * @throws IOException error
-     * @throws GDVersionException in case of version error between Client and
-     * AutStarter
+     * 
+     * @param port
+     *            int
+     * @throws IOException
+     *             error
+     * @throws JBVersionException
+     *             in case of version error between Client and AutStarter
      */
     private void initClientConnectionSocket(int port) throws IOException,
-    GDVersionException {
+    JBVersionException {
 
         Map<String, IConnectionInitializer> clientTypeToInitializer =
             new HashMap<String, IConnectionInitializer>();
@@ -487,12 +489,14 @@ public class AutStarter {
 
     /**
      * initializes the Socket for the AUTServer to connect
-     * @throws IOException error
-     * @throws GDVersionException in case of a version error between Client
-     * and AutStarter
+     * 
+     * @throws IOException
+     *             error
+     * @throws JBVersionException
+     *             in case of a version error between Client and AutStarter
      */
     private void initAutConnectionSocket() throws IOException,
-        GDVersionException {
+        JBVersionException {
 
         // create a communicator on any free port
         setAutCommunicator(new Communicator(0, this.getClass()
@@ -806,7 +810,7 @@ public class AutStarter {
                 .remove(getAutCommunicator().getConnection());
             try {
                 initAutConnectionSocket();
-            } catch (GDVersionException e) {
+            } catch (JBVersionException e) {
                 message = new StartAUTServerStateMessage(
                     StartAUTServerStateMessage.COMMUNICATION,
                     "version exception while restart AUT"); //$NON-NLS-1$

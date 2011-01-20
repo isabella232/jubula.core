@@ -16,7 +16,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.CheckedIntText;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
@@ -55,9 +55,9 @@ public class VersionDialog extends TitleAreaDialog {
     /** int value of minor version field */
     private Integer m_minorVersionNumber = null;
     /** the major version textfield */
-    private GDText m_majorVersionField;
+    private JBText m_majorVersionField;
     /** the minor version textfield */
-    private GDText m_minorVersionField;
+    private JBText m_minorVersionField;
     /** the message depends on the object that is selected */
     private String m_message = StringConstants.EMPTY;
     /** the errormessage depends on the object that is selected */

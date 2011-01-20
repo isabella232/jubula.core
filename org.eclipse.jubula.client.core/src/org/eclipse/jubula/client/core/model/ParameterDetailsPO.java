@@ -18,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.eclipse.jubula.tools.constants.StringConstants;
+
 /**
  * @author BREDEX GmbH
  * @created 22.01.2010
@@ -165,7 +167,9 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
      * {@inheritDoc}
      */
     public String toString() {
-        return super.toString() + " (" + m_id.toString() + ")";  //$NON-NLS-1$//$NON-NLS-2$
+        return super.toString() + StringConstants.SPACE 
+            + StringConstants.LEFT_PARENTHESES + m_id.toString() 
+            + StringConstants.RIGHT_PARENTHESES;
     }
     
     /**

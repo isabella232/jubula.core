@@ -11,9 +11,11 @@
 package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.GetAutConfigMapResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +62,8 @@ public class GetAutConfigMapResponseCommand implements ICommand {
      */
     public void timeout() {
                 
-        LOG.error(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
+        LOG.error(this.getClass().getName() + StringConstants.DOT
+                + Messages.TimeoutCalled);
 
     }
 }

@@ -16,7 +16,7 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 
 
 /**
- * This message transfers all GuiDancer components of type
+ * This message transfers all Jubula components of type
  * {@link org.eclipse.jubula.tools.xml.businessmodell.Component} and
  * subclasses. the components will be registered in the AUTSwingServer by executing
  * <code>SendAUTListOfSupportedComponentsCommand</code>.

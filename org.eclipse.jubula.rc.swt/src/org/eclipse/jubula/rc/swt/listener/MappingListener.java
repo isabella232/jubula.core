@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.communication.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
-import org.eclipse.jubula.rc.common.exception.GuiDancerNoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -46,7 +46,7 @@ import org.eclipse.swt.widgets.Widget;
  * @created 19.04.2006
  *
  */
-public class MappingListener extends AbstractGDAutSwtEventListener {
+public class MappingListener extends AbstractAutSwtEventListener {
     
     /** the logger */
     private static final Log LOG = LogFactory.getLog(MappingListener.class);
@@ -118,7 +118,7 @@ public class MappingListener extends AbstractGDAutSwtEventListener {
                 ObjectMappedMessage message = new ObjectMappedMessage();
                 message.setComponentIdentifier(id);
                 AUTServer.getInstance().getCommunicator().send(message);
-            } catch (GuiDancerNoIdentifierForComponentException nifce) { 
+            } catch (NoIdentifierForComponentException nifce) { 
                 
                 // no identifier for the component, LOG this as an error
                 LOG.error("no identifier for '" + currComp); //$NON-NLS-1$

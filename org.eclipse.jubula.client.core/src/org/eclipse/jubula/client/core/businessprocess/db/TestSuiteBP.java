@@ -51,7 +51,7 @@ public class TestSuiteBP extends NodeBP {
      * @throws PMDirtyVersionException
      *             if the referenced TS was modified
      * @throws PMObjectDeletedException
-     *             if the po as deleted by another instance of GUIdancer
+     *             if the po as deleted by another concurrently working user
      * @return The RefTestSuite used to reference the Test Suite
      */
     public static IRefTestSuitePO addReferencedTestSuite(
@@ -86,7 +86,7 @@ public class TestSuiteBP extends NodeBP {
      *             if the TC was modified outside this instance of the
      *             application.
      * @throws PMObjectDeletedException
-     *             if the po as deleted by another instance of GUIdancer
+     *             if the po as deleted by another concurrently working user
      */
     private static void handleFirstReference(EditSupport editSupport,
             ITestSuitePO referencedTS, boolean isReferencedByThisAction)

@@ -15,9 +15,7 @@ import java.util.Map;
 /**
  * This MonitoringDataStore is a singelton and can be instantiated in the 
  * AutAgent. The AUTConfigMap for each AUT will be saved separately in this
- * DataManager. This class should be used as a data storage class. For example: 
- * The Jacoco class uses this Manager to store the port for the communication with
- * the jacocoagent, which will be defined at runtime.  
+ * DataManager.
  *
  * @author BREDEX GmbH
  * @created 25.08.2010

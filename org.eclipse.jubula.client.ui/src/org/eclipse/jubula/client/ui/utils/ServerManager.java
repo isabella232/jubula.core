@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -74,7 +74,7 @@ public class ServerManager {
             }
         } catch (StringIndexOutOfBoundsException e) {
             handleError();
-        } catch (GDException e) {
+        } catch (JBException e) {
             handleError();
         }
     }
@@ -96,10 +96,10 @@ public class ServerManager {
      * Reads the pref storage to build the serverList.
      * @param restored True, if default-values should be restored.
      * @throws StringIndexOutOfBoundsException if prefs are out-of-date/wrong.
-     * @throws GDException if prefs are out-of-date/wrong.
+     * @throws JBException if prefs are out-of-date/wrong.
      */
     private void readFromPrefStore(boolean restored) 
-        throws StringIndexOutOfBoundsException, GDException {
+        throws StringIndexOutOfBoundsException, JBException {
         
         String storage = StringConstants.EMPTY;
         if (restored) {
@@ -138,10 +138,10 @@ public class ServerManager {
     /**
      * load the server list from the preference store into m_servers
      * @param store string read from preference store
-     * @throws GDException in case of problem with preference store
+     * @throws JBException in case of problem with preference store
      */
     private void decodeServerPrefs(String store) 
-        throws GDException {
+        throws JBException {
         m_servers.clear();
         String storage = store;
         while (storage.length() > 0) {
@@ -171,10 +171,10 @@ public class ServerManager {
      * @param encodedString decode a base64 encoded string
      * @param delimiter delimiter to separate string part from index 0 to delimiter
      * @return decoded string part
-     * @throws GDException in case of not base64 decoded string
+     * @throws JBException in case of not base64 decoded string
      */
     String decodeString(String encodedString, String delimiter) 
-        throws GDException {
+        throws JBException {
         String decodedString = StringConstants.EMPTY;
         checkPreferences(encodedString.substring(0, 
             encodedString.indexOf(delimiter)));
@@ -191,7 +191,7 @@ public class ServerManager {
         m_servers.clear();
         try {
             readFromPrefStore(true);
-        } catch (GDException e) {
+        } catch (JBException e) {
             // correct: do nothing
         }
     }
@@ -417,11 +417,11 @@ public class ServerManager {
     /**
      * Checks correctness of the stored preferences.
      * @param pref The readed, base64-coded preference.
-     * @throws GDException if the prefrence is not base64-coded.
+     * @throws JBException if the prefrence is not base64-coded.
      */
-    private void checkPreferences(String pref) throws GDException {
+    private void checkPreferences(String pref) throws JBException {
         if (!Base64.isArrayByteBase64(pref.getBytes())) {
-            throw new GDException(StringConstants.EMPTY, new Integer(0));
+            throw new JBException(StringConstants.EMPTY, new Integer(0));
         }
     }
     

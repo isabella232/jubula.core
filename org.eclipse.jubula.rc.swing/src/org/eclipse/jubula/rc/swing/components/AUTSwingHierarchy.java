@@ -42,17 +42,19 @@ import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
 import org.eclipse.jubula.rc.common.components.HierarchyContainer;
-import org.eclipse.jubula.rc.common.exception.GuiDancerComponentNotManagedException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swing.SwingAUTServer;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
+import org.eclipse.jubula.rc.swing.utils.WorkerRunnable;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.MappingConstants;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 
 
 
@@ -61,11 +63,11 @@ import org.eclipse.jubula.tools.objects.MappingConstants;
  * 
  * The hierarchy is composed with <code>SwingHierarchyContainer</code>s. For every
  * component from the AUT a hierarchy container is created. The names for the
- * components are stored in the appopriate hierachy containers, instead of the
+ * components are stored in the appropriate hierarchy containers, instead of the
  * components itself. Thus the AUTServer does not affect the instances from the
  * AUT. <br>
  * 
- * In JRE 1.3 the WINDOW_CLOSED event is not deliverd properly, so a window
+ * In JRE 1.3 the WINDOW_CLOSED event is not delivered properly, so a window
  * listener is added to any opened window listening to
  * <code>WindowEvent.WINDOW_CLOSED</code>.<br>
  * <p>
@@ -83,7 +85,15 @@ import org.eclipse.jubula.tools.objects.MappingConstants;
  */
 public class AUTSwingHierarchy extends AUTHierarchy
     implements ContainerListener, ComponentListener {
-    
+
+    /** 
+     * name of environment variable / Java property that should be set to 
+     * "true" (case-insensitive) if Swing/AWT listeners should be 
+     * (de-)registered directly in the thread that handles Swing / AWT events
+     */
+    private static final String ENV_VAR_SYNC_REGISTER_LISTENERS = 
+        "JB_SYNC_REG_SWING_LISTENERS";
+
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
         AUTSwingHierarchy.class);
@@ -91,9 +101,48 @@ public class AUTSwingHierarchy extends AUTHierarchy
     /**Businessprocess for getting components */
     private static FindSwingComponentBP findBP = new FindSwingComponentBP();
 
+    /** 
+     * the worker responsible for handling (de-)registration of 
+     * Swing/AWT listeners
+     */
+    private WorkerRunnable m_listenerRegistrationWorker = new WorkerRunnable();
+
+    /** 
+     * whether Swing/AWT listeners should be (de-)registered directly in the 
+     * thread that handles Swing / AWT events. if not, then a worker thread is
+     * used.  
+     */
+    private boolean m_syncListenerRegistration = false;
+
+    /**
+     * Constructor
+     */
+    public AUTSwingHierarchy() {
+        String syncListenersRegistrationValue = 
+            EnvironmentUtils.getProcessEnvironment().getProperty(
+                    ENV_VAR_SYNC_REGISTER_LISTENERS);
+        
+        if (syncListenersRegistrationValue == null) {
+            // Use JVM property as fallback
+            syncListenersRegistrationValue = 
+                System.getProperty(ENV_VAR_SYNC_REGISTER_LISTENERS);
+        }
+
+        m_syncListenerRegistration = 
+            Boolean.valueOf(syncListenersRegistrationValue).booleanValue();
+
+        if (!m_syncListenerRegistration) {
+            Thread registrationThread = 
+                new Thread(m_listenerRegistrationWorker, 
+                        "Jubula Listener Registration");
+            registrationThread.setDaemon(true);
+            registrationThread.start();
+        }
+    }
+    
     /**
      * Adds the complete hierarchy of the given <code>window</code> to the
-     * hierary. <br>
+     * hierarchy. <br>
      * @param window a new (and opened) window
      */
     public void add(Window window) {
@@ -147,7 +196,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * {@inheritDoc}
      */
     public void addToHierarchy(IComponentFactory factory, String componentName,
-        String technicalName) throws GuiDancerUnsupportedComponentException {
+        String technicalName) throws UnsupportedComponentException {
         
         Component component = (Component)factory.createComponent(componentName);
         // don't add, if in hierarchy map yet
@@ -198,13 +247,13 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * obtain this identifier the name of the component and the container
      * hierarchy is used.
      * @param component the component to create an identifier for, must not be null.
-     * @throws GuiDancerComponentNotManagedException if component is null or <br>
+     * @throws ComponentNotManagedException if component is null or <br>
      *      (one of the) component(s) in the hierarchy is not managed
      * @return the identifier for <code>component</code>
      */
     public IComponentIdentifier getComponentIdentifier(
             Component component) 
-        throws GuiDancerComponentNotManagedException {
+        throws ComponentNotManagedException {
         checkDispatchThread();
         IComponentIdentifier result = new ComponentIdentifier();
         try {
@@ -221,10 +270,10 @@ public class AUTSwingHierarchy extends AUTHierarchy
         } catch (IllegalArgumentException iae) {
             // from getPathToRoot()
             log.error(iae);
-            throw new GuiDancerComponentNotManagedException(
+            throw new ComponentNotManagedException(
                     "getComponentIdentifier() called for an unmanaged component: " //$NON-NLS-1$
                     + component, MessageIDs.E_COMPONENT_NOT_MANAGED);
-            // let pass the GuiDancerComponentNotManagedException from getPathToRoot()
+            // let pass the ComponentNotManagedException from getPathToRoot()
         }
     }
     
@@ -282,7 +331,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
                 // from isSupported -> log
                 log.fatal("hierarchy map contains null values", iae); //$NON-NLS-1$   
                 // and continue
-            } catch (GuiDancerComponentNotManagedException e) {
+            } catch (ComponentNotManagedException e) {
                 // from isSupported -> log
                 log.fatal("component '" + component.getName() + "' not found!", e); //$NON-NLS-1$ //$NON-NLS-2$                    
                 // and continue
@@ -298,12 +347,12 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * @param componentIdentifier the identifier created in object mapping mode
      * @throws IllegalArgumentException if the given identifer is null or <br>the hierarchy is not valid: empty or containing null elements
      * @throws InvalidDataException if the hierarchy in the componentIdentifier does not consist of strings
-     * @throws GuiDancerComponentNotManagedException if no component could be found for the identifier
+     * @throws ComponentNotManagedException if no component could be found for the identifier
      * @return the instance of the component of the AUT 
      */
     public Component findComponent(
         IComponentIdentifier componentIdentifier)
-        throws IllegalArgumentException, GuiDancerComponentNotManagedException,
+        throws IllegalArgumentException, ComponentNotManagedException,
         InvalidDataException {
         Component comp = findBP.findComponent(componentIdentifier, 
                 ComponentHandler.getAutHierarchy());
@@ -315,7 +364,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
             }
             return comp; 
         }
-        throw new GuiDancerComponentNotManagedException(
+        throw new ComponentNotManagedException(
             "unmanaged component with identifier: '" //$NON-NLS-1$
                 + componentIdentifier.toString() + "'.", //$NON-NLS-1$ 
                 MessageIDs.E_COMPONENT_NOT_MANAGED); 
@@ -326,11 +375,11 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * Strings (the name of the components).
      * @param component the component to start, it's an instance from the AUT, must not be null
      * @throws IllegalArgumentException if component is null
-     * @throws GuiDancerComponentNotManagedException if no hierarchy conatiner exists for the component
+     * @throws ComponentNotManagedException if no hierarchy conatiner exists for the component
      * @return the path to root, the first elements contains the root, the last element contains the component itself.
      */
     public List getPathToRoot(Component component) 
-        throws IllegalArgumentException, GuiDancerComponentNotManagedException {
+        throws IllegalArgumentException, ComponentNotManagedException {
         
         if (log.isInfoEnabled()) {
             log.info("pathToRoot called for " + component); //$NON-NLS-1$            
@@ -371,7 +420,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
         } else {
             log.error("component '" + component //$NON-NLS-1$ 
                     + "' is not managed by this hierarchy"); //$NON-NLS-1$
-            throw new GuiDancerComponentNotManagedException(
+            throw new ComponentNotManagedException(
                     "unmanaged component " + component.toString(), //$NON-NLS-1$                    
                     MessageIDs.E_COMPONENT_NOT_MANAGED); 
         }
@@ -501,29 +550,59 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * Register the AutHierarchy as a container listener to <code>container</code>.
      * @param container the container to register to
      */
-    private void registerAsContainerListener(Container container) {
-        if (log.isInfoEnabled()) {
-            log.info("registering as listener to container " + container); //$NON-NLS-1$               
-        }
-        ContainerListener[] listener = (ContainerListener[])
-            container.getListeners(ContainerListener.class);
-        for (int i = 0; i < listener.length; i++) {
-            if (listener[i] instanceof AUTSwingHierarchy) {
-                return;
+    private void registerAsContainerListener(final Container container) {
+        Runnable registrationRunnable = new Runnable() {
+            public void run() {
+                if (log.isInfoEnabled()) {
+                    log.info("registering as listener to container " + container); //$NON-NLS-1$               
+                }
+
+                ContainerListener[] listener = 
+                    container.getContainerListeners();
+                for (int i = 0; i < listener.length; i++) {
+                    if (listener[i] instanceof AUTSwingHierarchy) {
+                        return;
+                    }
+                }
+                container.addContainerListener(AUTSwingHierarchy.this);
             }
+        };
+
+        registerListener(registrationRunnable);
+
+    }
+
+    /**
+     * (De-)Registers a Swing / AWT listener, using the given {@link Runnable}.
+     * A worker thread may be used in order to perform the (de-)registration 
+     * asynchronously, depending on how the receiver is configured.
+     * 
+     * @param registrationRunnable The work to perform in order to 
+     *                             (de-)register the listener.
+     */
+    private void registerListener(Runnable registrationRunnable) {
+        if (m_syncListenerRegistration) {
+            registrationRunnable.run();
+        } else {
+            m_listenerRegistrationWorker.addWork(registrationRunnable);
         }
-        container.addContainerListener(this);
     }
     
     /**
      * remove the AutHierarchy as a container listener from <code>container</code>.
      * @param container the container to deregister from
      */
-    private void deregisterAsContainerListener(Container container) {
-        if (log.isInfoEnabled()) {
-            log.info("deregistering as listener from container " + container); //$NON-NLS-1$       
-        }
-        container.removeContainerListener(this);
+    private void deregisterAsContainerListener(final Container container) {
+        Runnable deregistrationRunnable = new Runnable() {
+            public void run() {
+                if (log.isInfoEnabled()) {
+                    log.info("deregistering as listener from container " + container); //$NON-NLS-1$       
+                }
+                container.removeContainerListener(AUTSwingHierarchy.this);
+            }
+        };
+
+        registerListener(deregistrationRunnable);
     }
     
     /**
@@ -531,19 +610,25 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * <code>WindowClosingListener.windowClosed()</code>.
      * @param window the window to register to
      */
-    private void registerAsWindowListener(Window window) {
-        if (log.isInfoEnabled()) {
-            log.info("registering window listener to window " //$NON-NLS-1$
-                    + window);
-        }
-        WindowListener[] listener = (WindowListener[])window.getListeners(
-                WindowListener.class);
-        for (int i = 0; i < listener.length; i++) {
-            if (listener[i] instanceof WindowClosingListener) {
-                return;
+    private void registerAsWindowListener(final Window window) {
+        Runnable registrationRunnable = new Runnable() {
+
+            public void run() {
+                if (log.isInfoEnabled()) {
+                    log.info("registering window listener to window " //$NON-NLS-1$
+                            + window);
+                }
+                WindowListener[] listener = window.getWindowListeners();
+                for (int i = 0; i < listener.length; i++) {
+                    if (listener[i] instanceof WindowClosingListener) {
+                        return;
+                    }
+                }
+                window.addWindowListener(new WindowClosingListener());
             }
-        }
-        window.addWindowListener(new WindowClosingListener());
+        };
+
+        registerListener(registrationRunnable);
     }
     
     /**
@@ -831,22 +916,29 @@ public class AUTSwingHierarchy extends AUTHierarchy
         /**
          * {@inheritDoc}
          */
-        public void windowClosed(WindowEvent event) {
-            ClassLoader originalCL = Thread.currentThread()
-                .getContextClassLoader();
-            Thread.currentThread().setContextClassLoader(
-                ((SwingAUTServer)AUTServer.getInstance()).getClass()
-                    .getClassLoader());
-            try {
-                Window window = event.getWindow();    
-                remove(window);
-                if (log.isInfoEnabled()) {
-                    log.info("deregistering window listener from window "  + window); //$NON-NLS-1$
+        public void windowClosed(final WindowEvent event) {
+            Runnable deregistrationRunnable = new Runnable() {
+                public void run() {
+                    ClassLoader originalCL = 
+                        Thread.currentThread().getContextClassLoader();
+                    Thread.currentThread().setContextClassLoader(
+                            ((SwingAUTServer)AUTServer.getInstance()).getClass()
+                            .getClassLoader());
+                    try {
+                        Window window = event.getWindow();    
+                        remove(window);
+                        if (log.isInfoEnabled()) {
+                            log.info("deregistering window listener from window "  + window); //$NON-NLS-1$
+                        }
+                        window.removeWindowListener(WindowClosingListener.this);
+                    } finally {
+                        Thread.currentThread()
+                            .setContextClassLoader(originalCL);
+                    }
                 }
-                window.removeWindowListener(this);
-            } finally {
-                Thread.currentThread().setContextClassLoader(originalCL);
-            }
+            };
+
+            registerListener(deregistrationRunnable);
         }
 
         /**

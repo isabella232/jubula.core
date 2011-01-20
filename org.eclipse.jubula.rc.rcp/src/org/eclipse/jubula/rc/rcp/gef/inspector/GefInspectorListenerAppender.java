@@ -370,7 +370,7 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
         }
 
         /**
-         * Sends the given ID information to the GUIdancer Client.
+         * Sends the given ID information to the client.
          * 
          * @param compId The component identifier to send. May be 
          *               <code>null</code>.

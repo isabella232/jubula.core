@@ -39,7 +39,7 @@ import org.eclipse.jubula.client.ui.model.CategoryGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -65,7 +65,7 @@ public class AddNewCategoryHandler extends AbstractHandler {
                 createNewCategory(selection);
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
             }
         }
@@ -73,16 +73,20 @@ public class AddNewCategoryHandler extends AbstractHandler {
     }
     
     /**
-     * @param selection the parent of the new category.
-     * @throws PMSaveException in case of DB storage problem
-     * @throws PMAlreadyLockedException in case of locked catParentPO
-     * @throws PMException in case of rollback failed
-     * @throws GDProjectDeletedException if the project was deleted in another
-     * instance 
+     * @param selection
+     *            the parent of the new category.
+     * @throws PMSaveException
+     *             in case of DB storage problem
+     * @throws PMAlreadyLockedException
+     *             in case of locked catParentPO
+     * @throws PMException
+     *             in case of rollback failed
+     * @throws ProjectDeletedException
+     *             if the project was deleted in another instance
      */
     private void createNewCategory(IStructuredSelection selection)
         throws PMSaveException, PMAlreadyLockedException, PMException, 
-        GDProjectDeletedException {
+        ProjectDeletedException {
         final INodePO catParentPO;
         if (!selection.isEmpty()) {
             GuiNode catParentGUI = (GuiNode)selection.getFirstElement();

@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage.IDataModifiedListener;
@@ -31,7 +32,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage.IReloadedSessio
 import org.eclipse.jubula.client.core.utils.IGenericListener;
 import org.eclipse.jubula.client.core.utils.ListenerManager;
 import org.eclipse.jubula.tools.constants.DebugConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -77,13 +77,13 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                     if (!(rootCause instanceof OperationCanceledException)) {
                         // Only need to log an error if the root cause
                         // is not that the operation was canceled.
-                        LOG.error(
-                                "Unhandled exception while calling listeners", //$NON-NLS-1$ 
+                        LOG.error(Messages.UnhandledExceptionWhileCallListeners,
                                 nre);
                     }
                 } catch (Throwable t) {
                     LOG.error(
-                        "Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                            Messages.UnhandledExceptionWhileCallListeners, 
+                            t);
                 }
             }        
 
@@ -106,12 +106,12 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                         // Only need to log an error if the root cause
                         // is not that the operation was canceled.
                         LOG.error(
-                                "Unhandled exception while calling listeners", //$NON-NLS-1$ 
+                                Messages.UnhandledExceptionWhileCallListeners, 
                                 nre);
                     }
                 } catch (Throwable t) {
                     LOG.error(
-                        "Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                            Messages.UnhandledExceptionWhileCallListeners, t);
                 }
             }
             
@@ -729,13 +729,16 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                 l.handleDataChanged(changedObj, dataState, updateState);
             } catch (Throwable t) {
                 if (t instanceof EntityNotFoundException) {
-                    ErrorMessagePresenter.getPresenter().showErrorMessage(
-                            MessageIDs.E_HIBERNATE_LOAD_FAILED, null, 
-                            new String[]{I18n.getString("DataEventDispatcher.ReopenProject")}); //$NON-NLS-1$
+                    String msg = Messages.DataEventDispatcherReopenProject;
+                    ErrorMessagePresenter
+                            .getPresenter()
+                            .showErrorMessage(
+                                    MessageIDs.E_HIBERNATE_LOAD_FAILED,
+                                    null,
+                                    new String[] { msg });
                 }
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
-
         }
 
         // gui updates
@@ -745,7 +748,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleDataChanged(changedObj, dataState, updateState);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
         }
     }
@@ -785,7 +788,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleParamChanged();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
         }
 
@@ -796,7 +799,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleParamChanged();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
         }
         
@@ -884,7 +887,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handlePartClosed(part);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
         }
 
@@ -895,11 +898,12 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handlePartClosed(part);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
         }
         
         if (System.getProperty(DebugConstants.VM_DEBUG) != null
+                //FIXME tobi NLS ??
             && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
             System.out.println("firePartClosed():"  //$NON-NLS-1$
                 + (System.currentTimeMillis() - start));
@@ -920,7 +924,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handlePropertyChanged(isCompNameChanged);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
         }
 
@@ -932,7 +936,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handlePropertyChanged(isCompNameChanged);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -957,7 +961,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleLanguageChanged(locale);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -968,7 +972,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleLanguageChanged(locale);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1056,7 +1060,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleProjectCreated();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }        
 
@@ -1067,7 +1071,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleProjectCreated();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1113,7 +1117,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleRefreshProblem();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1124,7 +1128,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleRefreshProblem();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1170,7 +1174,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleServerConnStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1182,7 +1186,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleServerConnStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1229,7 +1233,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleServerConnStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1241,7 +1245,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleServerConnStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1266,7 +1270,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleProjectPropsChanged();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1278,7 +1282,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleProjectPropsChanged();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1368,7 +1372,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleRecordModeStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1380,7 +1384,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleRecordModeStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1427,7 +1431,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleOMStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1438,7 +1442,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleOMStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1485,7 +1489,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleAutStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1496,7 +1500,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleAutStateChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1546,7 +1550,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleTestresultChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1558,7 +1562,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleTestresultChanged(state);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1605,7 +1609,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleTSStateChanged(event);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1617,7 +1621,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleTSStateChanged(event);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1659,7 +1663,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handleProjectOpened();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t);
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
         }
     }
@@ -1688,7 +1692,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handlePrefServerChanged();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1700,7 +1704,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handlePrefServerChanged();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         
@@ -1747,7 +1751,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handlePrefVCChanged();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
 
@@ -1759,7 +1763,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             try {
                 l.handlePrefVCChanged();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
         

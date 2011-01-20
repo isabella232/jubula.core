@@ -13,12 +13,14 @@ package org.eclipse.jubula.client.core.businessprocess;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IComponentNameReuser;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
@@ -121,9 +123,22 @@ public abstract class AbstractComponentNameMapper implements
                 // Component types are incompatible.
                 // Throw an exception with information about 
                 // the incompatibility.
-                String msg = "Error saving changed ComponentName-Type.\n"  //$NON-NLS-1$
-                    + "Incompatible Type '" + currType + "' -> '"  //$NON-NLS-1$ //$NON-NLS-2$
-                    + userType + "'!"; //$NON-NLS-1$
+                StringBuilder msgBuid = new StringBuilder();
+                msgBuid.append(Messages.ErrorSavingChangedComponentName);
+                msgBuid.append(StringConstants.DOT);
+                msgBuid.append(StringConstants.NEWLINE);
+                msgBuid.append(StringConstants.APOSTROPHE);
+                msgBuid.append(currType);
+                msgBuid.append(StringConstants.APOSTROPHE);
+                msgBuid.append(StringConstants.SPACE);
+                msgBuid.append(StringConstants.MINUS);
+                msgBuid.append(StringConstants.RIGHT_INEQUALITY_SING);
+                msgBuid.append(StringConstants.SPACE);
+                msgBuid.append(StringConstants.APOSTROPHE);
+                msgBuid.append(userType);
+                msgBuid.append(StringConstants.APOSTROPHE);
+                msgBuid.append(StringConstants.EXCLAMATION_MARK);
+                String msg = msgBuid.toString();
                 throw new IncompatibleTypeException(
                         compNamePo, msg, 
                         MessageIDs.E_COMP_TYPE_INCOMPATIBLE, new String[]{

@@ -11,12 +11,6 @@
 
 package org.eclipse.jubula.client.core.persistence;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,25 +38,23 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SafeRunner;
-import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.constants.PluginConstants;
 import org.eclipse.jubula.client.core.errorhandling.IDatabaseVersionErrorHandler;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.DBVersionPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
-import org.eclipse.jubula.client.core.utils.BundleUtils;
 import org.eclipse.jubula.client.core.utils.DBSchemaPropertyCreator;
 import org.eclipse.jubula.client.core.utils.ProgressEvent;
 import org.eclipse.jubula.client.core.utils.ProgressEventDispatcher;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDFatalAbortException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalAbortException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.exceptions.DatabaseException;
@@ -79,11 +71,6 @@ public class Hibernator {
     /** the name of the default persistence unit for Jubula */
     private static final String DEFAULT_PU_NAME = "org.eclipse.jubula"; //$NON-NLS-1$
     
-    /**
-     * location of the hibernate properties file
-     */
-    private static final String HIBERNATE_PROPERTIES = "hibernate.properties"; //$NON-NLS-1$
-
     /** shutdown hook to dispose the current Hibernator */
     private static final Thread SHUTDOWN_HOOK = new Thread(
             "Close Session Factory") { //$NON-NLS-1$
@@ -95,12 +82,14 @@ public class Hibernator {
                         LockManager.instance().dispose();
                     }
                 } catch (Throwable t) {
-                    log.warn("Could not shut down lock manager.", t); //$NON-NLS-1$
+                    log.warn(Messages.CouldNotShutDownLockManager 
+                            + StringConstants.DOT, t);
                 }
                 try {
                     hib.dispose();
                 } catch (Throwable t) {
-                    log.warn("Could not shut down database connection pool.", t); //$NON-NLS-1$
+                    log.warn(Messages.CouldNotShutDownDatabaseConnectionPool 
+                            + StringConstants.DOT, t);
                 }
             }
         }
@@ -130,9 +119,6 @@ public class Hibernator {
 
     /** map of schemas */
     private static Map<String, Properties> schemaMap = null;
-
-    /** hibernate properties */
-    private static Properties hibernateProp = null;
 
     /** scheme properties */
     private static Properties schemeProp = null;
@@ -164,35 +150,34 @@ public class Hibernator {
      *            The password.
      * @param url
      *            The password.
-     * @throws GDException
+     * @throws JBException
      *             in case of configuration problems.
      */
     private Hibernator(String userName, String pwd, String url)
-        throws GDException, DatabaseVersionConflictException {
+        throws JBException, DatabaseVersionConflictException {
 
         super();
         try {
             if (!isSelectDbAction) {
                 ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                        ProgressEvent.OPEN_PROGRESS_BAR, null, I18n
-                                .getString("Plugin.connectProgress"))); //$NON-NLS-1$
+                        ProgressEvent.OPEN_PROGRESS_BAR, null, 
+                            Messages.PluginConnectProgress));
             }
 
             m_cfg = new Properties();
-            m_cfg.putAll(hibernateProp);
             // add schema properties
             if (schemeProp != null) {
                 m_cfg.putAll(schemeProp);
             } else {
                 throw new IllegalArgumentException(
-                        I18n.getString("ExecutionController.InvalidDBschemeError"), null); //$NON-NLS-1$
+                        Messages.ExecutionControllerInvalidDBschemeError, null);
             }
 
             buildSessionFactoryWithLoginData(userName, pwd, url);
         } catch (PersistenceException e) {
-            String msg = "Can't setup hibernate"; //$NON-NLS-1$
+            String msg = Messages.CantSetupHibernate;
             log.fatal(msg, e);
-            throw new GDFatalException(msg, MessageIDs.E_HIBERNATE_CANT_SETUP);
+            throw new JBFatalException(msg, MessageIDs.E_HIBERNATE_CANT_SETUP);
         } catch (DatabaseVersionConflictException dbvce) {
             dispose();
             throw dbvce;
@@ -200,44 +185,14 @@ public class Hibernator {
     }
 
     /**
-     * @return a path where the files for the embedded DB shoukld live
-     */
-    private File setDbPathForEmbedded() {
-        String homedir = System.getProperty("user.home"); //$NON-NLS-1$
-        if (homedir == null) {
-            homedir = System.getenv("HOME"); //$NON-NLS-1$
-        }
-        File dbPath = null;
-        if (homedir != null) {
-            dbPath = new File(homedir);
-            if (!dbPath.isDirectory() || !dbPath.canWrite()) {
-                dbPath = new File("."); //$NON-NLS-1$
-            }
-        } else {
-            dbPath = new File("."); //$NON-NLS-1$
-        }
-        dbPath = new File(dbPath, ".GUIdancer_hsqldb"); //$NON-NLS-1$
-        // try to use a directory, if this fails just go for the file
-        if (dbPath.exists() && dbPath.isDirectory()) {
-            dbPath = new File(dbPath, "db"); //$NON-NLS-1$            
-        } else if (!dbPath.exists()) {
-            if (dbPath.mkdirs()) {
-                dbPath = new File(dbPath, "db"); //$NON-NLS-1$
-            }
-        }
-        return dbPath;
-    }
-
-    /**
      * Inits the hibernator.
      * 
      * @return boolean True, if Hibernator could initialized. False, otherwise.
-     * @throws GDFatalException
+     * @throws JBFatalException
      *             in case of setup problems.
      */
-    public static synchronized boolean init() throws GDFatalException {
+    public static synchronized boolean init() throws JBFatalException {
         if (instance == null) {
-            loadProperties();
             loadSchemaProperties();
             if (!isSelectDbAction) {
                 if (schemaMap.size() == 1) {
@@ -290,7 +245,7 @@ public class Hibernator {
                             MessageIDs.E_UNEXPECTED_EXCEPTION, null));
                 }
                 return false;
-            } catch (GDException e) {
+            } catch (JBException e) {
                 ProgressEventDispatcher.notifyListener(new ProgressEvent(
                         ProgressEvent.CLOSE_PROGRESS_BAR, null, null));
                 if (e.getErrorId().equals(MessageIDs.E_NO_DB_CONNECTION)) {
@@ -347,36 +302,9 @@ public class Hibernator {
     }
 
     /**
-     * Loads the hibernate properties file.
-     */
-    private static void loadProperties() throws GDFatalException {
-        URL propFile = BundleUtils.getFileURL(Platform
-                .getBundle(Activator.PLUGIN_ID), Activator.RESOURCES_DIR
-                + HIBERNATE_PROPERTIES);
-        InputStream propStream = null;
-        try {
-            propStream = propFile.openStream();
-            hibernateProp = new Properties();
-            hibernateProp.load(propStream);
-        } catch (IOException e) {
-            String msg = "Can't load hibernate properties"; //$NON-NLS-1$
-            log.fatal(msg, e);
-            throw new GDFatalException(msg, MessageIDs.E_HIBERNATE_LOAD_FAILED);
-        } finally {
-            try {
-                if (propStream != null) {
-                    propStream.close();
-                }
-            } catch (IOException e) { // NOPMD by al on 3/19/07 1:37 PM
-                // ignore
-            }
-        }
-    }
-
-    /**
      * Loads the schema properties file.
      */
-    private static void loadSchemaProperties() throws GDFatalException {
+    private static void loadSchemaProperties() throws JBFatalException {
         schemaMap = DBSchemaPropertyCreator.getSchemaMap();
     }
 
@@ -395,7 +323,7 @@ public class Hibernator {
      *            url connection string
      * @throws PersistenceException
      *             in case of configuration problems.
-     * @throws GDException
+     * @throws JBException
      *             in case of configuration problems.
      * @throws PMDatabaseConfException
      *             in case of invalid db scheme
@@ -403,7 +331,7 @@ public class Hibernator {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void buildSessionFactoryWithLoginData(String userName, String pwd,
             String url) throws PersistenceException, PMDatabaseConfException,
-            GDException, DatabaseVersionConflictException {
+            JBException, DatabaseVersionConflictException {
 
         if (m_cfg != null) {
             m_cfg.setProperty(PersistenceUnitProperties.JDBC_USER, userName);
@@ -429,18 +357,21 @@ public class Hibernator {
 
                 } catch (AmbiguousDatabaseVersionException e) {
                     throw new PMDatabaseConfException(
-                            "DBVersion problem.", MessageIDs.E_NOT_CHECKABLE_DB_VERSION); //$NON-NLS-1$
+                            Messages.DBVersionProblem + StringConstants.DOT, 
+                            MessageIDs.E_NOT_CHECKABLE_DB_VERSION);
                 }
             } catch (PersistenceException e) {
                 Throwable rootCause = ExceptionUtils.getRootCause(e);
                 if (rootCause instanceof SQLException) {
                     if (("08001").equals(((SQLException)rootCause).getSQLState())) { //$NON-NLS-1$
-                        log.error("The database is already in use by another process", e); //$NON-NLS-1$
-                        throw new GDException(e.getMessage(),
+                        log.error(
+                            Messages.TheDatabaseIsAlreadyInUseByAnotherProcess, 
+                                e);
+                        throw new JBException(e.getMessage(),
                                 MessageIDs.E_DB_IN_USE);
                     }
-                    log.error("no or wrong username or password", e); //$NON-NLS-1$
-                    throw new GDException(e.getMessage(),
+                    log.error(Messages.NoOrWrongUsernameOrPassword, e);
+                    throw new JBException(e.getMessage(),
                             MessageIDs.E_NO_DB_CONNECTION);
                 }
             } finally {
@@ -450,7 +381,7 @@ public class Hibernator {
             }
         } else {
             Assert.verify(false,
-                    "The session configuration was not initialized"); //$NON-NLS-1$
+                    Messages.TheSessionConfigurationWasNotInitialized);
         }
     }
 
@@ -477,7 +408,8 @@ public class Hibernator {
                 }
             } catch (CoreException ce) {
                 log.warn(
-                        "An error occurred while initializing a database version conflict handler.", ce); //$NON-NLS-1$
+                        Messages.ErrorOccurredInitializingDatabaseVersion
+                        + StringConstants.DOT, ce);
             }
         }
 
@@ -489,7 +421,8 @@ public class Hibernator {
             ISafeRunnable runnable = new ISafeRunnable() {
                 public void handleException(Throwable t) {
                     log.warn(
-                            "Error occurred while resolving database version conflict.", t); //$NON-NLS-1$
+                        Messages.ErrorOccurredResolvingDatabaseVersionConflict
+                        + StringConstants.DOT, t);
                 }
 
                 public void run() throws Exception {
@@ -506,22 +439,21 @@ public class Hibernator {
     }
 
     /**
-     * validates the consistency of DbVersion and GUIdancer Client Version
+     * Validates the consistency of DbVersion and Jubula Client Version
      * 
      * @param session
      *            current session
      * @throws PMDatabaseConfException
      *             in case of any problem with db scheme
-     * @throws GDException
+     * @throws JBException
      *             in case of a configuration problem
      * @throws DatabaseVersionConflictException
      * @throws AmbiguousDatabaseVersionException
      */
     @SuppressWarnings("unchecked")
     private void validateDBVersion(EntityManager session)
-        throws PMDatabaseConfException, GDException,
+        throws PMDatabaseConfException, JBException,
         DatabaseVersionConflictException, AmbiguousDatabaseVersionException {
-
         List<DBVersionPO> hits = null;
         try {
             hits = session.createQuery("select version from DBVersionPO as version").getResultList(); //$NON-NLS-1$
@@ -538,7 +470,8 @@ public class Hibernator {
             if (cause instanceof SQLException) {
                 SQLException se = (SQLException)cause;
                 if (se.getErrorCode() == 17002) {
-                    final String msg = "There is a problem with your database scheme configuration."; //$NON-NLS-1$
+                    final String msg = Messages.ProblemWithDatabaseSchemeConf
+                        + StringConstants.DOT;
                     log.fatal(msg);
                     throw new PMDatabaseConfException(msg,
                             MessageIDs.E_ERROR_IN_SCHEMA_CONFIG);
@@ -549,7 +482,8 @@ public class Hibernator {
             try {
                 hits = session.createQuery("select version from DBVersionPO as version").getResultList(); //$NON-NLS-1$
             } catch (PersistenceException pe) {
-                final String msg = "There is a problem with installing the db scheme."; //$NON-NLS-1$
+                final String msg = Messages.ProblemWithInstallingDBScheme 
+                    + StringConstants.DOT;
                 log.fatal(msg);
                 throw new PMDatabaseConfException(msg,
                         MessageIDs.E_NO_DB_SCHEME);
@@ -562,7 +496,8 @@ public class Hibernator {
                 //           it looks like we do. See:
                 //           http://stackoverflow.com/questions/2394885/what-exceptions-are-thrown-by-jpa-in-ejb-containers
                 //           for a brief discussion on the topic.
-                final String msg = "There is a problem with installing the db scheme."; //$NON-NLS-1$
+                final String msg = Messages.ProblemWithInstallingDBScheme 
+                    + StringConstants.DOT;
                 log.fatal(msg);
                 throw new PMDatabaseConfException(msg,
                         MessageIDs.E_NO_DB_SCHEME);
@@ -570,33 +505,32 @@ public class Hibernator {
         }
         if (!hits.isEmpty() && hits.size() == 1) {
             DBVersionPO dbVersion = hits.get(0);
-            if (dbVersion.getMajorVersion().equals(
-                    IGdVersion.GD_DB_MAJOR_VERSION)) {
-
-                if (dbVersion.getMinorVersion().equals(
-                        IGdVersion.GD_DB_MINOR_VERSION)) {
-
-                    log.info("DBVersion: OK"); //$NON-NLS-1$
+            Integer dbMaj = dbVersion.getMajorVersion();
+            Integer dbMin = dbVersion.getMinorVersion();
+            if (dbMaj.equals(IVersion.JB_DB_MAJOR_VERSION)) {
+                if (dbMin.equals(IVersion.GD_DB_MINOR_VERSION)) {
+                    log.info(Messages.DBVersion + StringConstants.COLON
+                            + StringConstants.SPACE + Messages.OK);
                 } else {
-                    log.error("DBVersion: minor version invalid"); //$NON-NLS-1$
-                    throw new DatabaseVersionConflictException(
-                            dbVersion.getMajorVersion(),
-                            dbVersion.getMinorVersion());
+                    log.error(Messages.DBVersion + StringConstants.COLON
+                            + StringConstants.SPACE
+                            + Messages.MinorVersionInvalid);
+                    throw new DatabaseVersionConflictException(dbMaj, dbMin);
                 }
             } else {
-                log.fatal("DBVersion: major version invalid"); //$NON-NLS-1$
-                throw new DatabaseVersionConflictException(
-                        dbVersion.getMajorVersion(),
-                        dbVersion.getMinorVersion());
+                log.fatal(Messages.DBVersion + StringConstants.COLON
+                        + StringConstants.SPACE + Messages.MajorVersionInvalid);
+                throw new DatabaseVersionConflictException(dbMaj, dbMin);
             }
         } else {
-            log.error("DBVersion: db entry for DBVersion is missing or ambiguous"); //$NON-NLS-1$
+            log.error(Messages.DBVersion + StringConstants.COLON
+                    + StringConstants.SPACE + Messages.DBEntryMissingAmbiguous);
             throw new AmbiguousDatabaseVersionException(hits);
         }
     }
 
     /**
-     * Installs the DB scheme used by GUIdancer.
+     * Installs the DB scheme used by Jubula.
      * 
      * @param entityManagerFactory
      *            The factory to use to create the entity manager in which the
@@ -606,12 +540,12 @@ public class Hibernator {
      *         <code>false</code>.
      * @throws PMDatabaseConfException
      *             if the scheme couldn't be installed
-     * @throws GDException
+     * @throws JBException
      *             in case of configuration problems
      */
     private static boolean installDbScheme(
             EntityManagerFactory entityManagerFactory) 
-        throws PMDatabaseConfException, GDException {
+        throws PMDatabaseConfException, JBException {
 
         EntityManager em = null;
         try {
@@ -627,15 +561,16 @@ public class Hibernator {
             Throwable rootCause = ExceptionUtils.getRootCause(e);
             if (rootCause instanceof SQLException) {
                 if (("08001").equals(((SQLException)rootCause).getSQLState())) { //$NON-NLS-1$
-                    log.error("The database is already in use by another process", e); //$NON-NLS-1$
-                    throw new GDException(rootCause.getMessage(), 
+                    log.error(Messages.TheDBAllreadyUseAnotherProcess, e);
+                    throw new JBException(rootCause.getMessage(), 
                             MessageIDs.E_DB_IN_USE);
                 }
-                log.error("no or wrong username or password", e); //$NON-NLS-1$
-                throw new GDException(e.getMessage(), 
+                log.error(Messages.NoOrWrongUsernameOrPassword, e);
+                throw new JBException(e.getMessage(), 
                     MessageIDs.E_NO_DB_CONNECTION);
             }
-            final String msg = "There is a problem with installing the db scheme."; //$NON-NLS-1$
+            final String msg = Messages.ProblemInstallingDBScheme
+                + StringConstants.DOT;
             log.fatal(msg);
             throw new PMDatabaseConfException(msg, MessageIDs.E_NO_DB_SCHEME);
         } finally {
@@ -674,12 +609,12 @@ public class Hibernator {
             try {
                 DBVersionPO version = 
                     (DBVersionPO)em.createQuery("select version from DBVersionPO as version").getSingleResult(); //$NON-NLS-1$
-                version.setMajorVersion(IGdVersion.GD_DB_MAJOR_VERSION);
-                version.setMinorVersion(IGdVersion.GD_DB_MINOR_VERSION);
+                version.setMajorVersion(IVersion.JB_DB_MAJOR_VERSION);
+                version.setMinorVersion(IVersion.GD_DB_MINOR_VERSION);
                 em.merge(version);
             } catch (NoResultException nre) {
-                em.merge(new DBVersionPO(IGdVersion.GD_DB_MAJOR_VERSION,
-                        IGdVersion.GD_DB_MINOR_VERSION));
+                em.merge(new DBVersionPO(IVersion.JB_DB_MAJOR_VERSION,
+                        IVersion.GD_DB_MINOR_VERSION));
             }
 
             tx.commit();
@@ -736,31 +671,33 @@ public class Hibernator {
      *            connection string / url
      * @return the only instance of the Hibernator, building the connection to
      *         the database
-     * @throws GDFatalException .
-     * @throws GDException .
+     * @throws JBFatalException .
+     * @throws JBException .
      */
     private static Hibernator instance(String userName, String pwd, String url)
-        throws GDFatalException, GDException {
+        throws JBFatalException, JBException {
         if (instance == null) {
             try {
                 instance = new Hibernator(userName, pwd, url);
             } catch (DatabaseVersionConflictException e) {
-                if (IGdVersion.GD_DB_MAJOR_VERSION > e
+                if (IVersion.JB_DB_MAJOR_VERSION > e
                         .getDatabaseMajorVersion()
-                        || (IGdVersion.GD_DB_MAJOR_VERSION.equals(e
+                        || (IVersion.JB_DB_MAJOR_VERSION.equals(e
                                 .getDatabaseMajorVersion()) 
                                 && 
-                                IGdVersion.GD_DB_MINOR_VERSION > e
+                                IVersion.GD_DB_MINOR_VERSION > e
                                 .getDatabaseMinorVersion())) {
                     // Client is newer than database schema
                     if (!handleDatabaseVersionConflict()) {
                         throw new PMDatabaseConfException(
-                                "DBVersion problem.", MessageIDs.E_INVALID_DB_VERSION); //$NON-NLS-1$
+                                Messages.DBVersionProblem + StringConstants.DOT,
+                                    MessageIDs.E_INVALID_DB_VERSION);
                     }
                 } else {
                     // Client is older than database schema
                     throw new PMDatabaseConfException(
-                            "DBVersion problem.", MessageIDs.E_INVALID_DB_VERSION); //$NON-NLS-1$
+                            Messages.DBVersionProblem + StringConstants.DOT, 
+                                MessageIDs.E_INVALID_DB_VERSION);
                 }
             } finally {
                 if (!isSelectDbAction) {
@@ -780,10 +717,10 @@ public class Hibernator {
 
     /**
      * @return a new Session for the standard configuration
-     * @throws GDFatalAbortException
+     * @throws JBFatalAbortException
      *             if the open failed
      */
-    public EntityManager openSession() throws GDFatalAbortException {
+    public EntityManager openSession() throws JBFatalAbortException {
         try {
             // FIXME zeb we used to configure the opened session with an 
             //           interceptor in order to track progress. figure out a 
@@ -794,9 +731,9 @@ public class Hibernator {
             m_sessions.add(em);
             return em;
         } catch (PersistenceException e) {
-            String msg = "Persistence error: createEntityManager failed"; //$NON-NLS-1$
+            String msg = Messages.PersistenceErrorCreateEntityManagerFailed;
             log.error(msg, e);
-            throw new GDFatalAbortException(msg, e, 
+            throw new JBFatalAbortException(msg, e, 
                 MessageIDs.E_SESSION_FAILED);
         }
     }
@@ -814,16 +751,17 @@ public class Hibernator {
 
         Validate.notNull(s);
         if (tx != null) {
+            //FIXME tobi NLS ??
             Validate.isTrue(tx.equals(s.getTransaction()),
                     "Session and Transaction don't match"); //$NON-NLS-1$
             try {
                 tx.rollback();
             } catch (PersistenceException e) {
-                log.error("Rollback failed", e); //$NON-NLS-1$
+                log.error(Messages.RollbackFailed, e);
                 if (s.equals(GeneralStorage.getInstance().getMasterSession())) {
                     GeneralStorage.getInstance().recoverSession();
                 }
-                throw new PMException("Rollback failed", //$NON-NLS-1$
+                throw new PMException(Messages.RollbackFailed,
                         MessageIDs.E_DATABASE_GENERAL);
             } finally {
                 removeLocks(s);
@@ -842,11 +780,11 @@ public class Hibernator {
         try {
             s.flush();
         } catch (PersistenceException e) {
-            log.error("Flush failed", e); //$NON-NLS-1$
+            log.error(Messages.FlushFailed, e);
             if (s.equals(GeneralStorage.getInstance().getMasterSession())) {
                 GeneralStorage.getInstance().recoverSession();
             }
-            throw new PMException("Flush failed", //$NON-NLS-1$
+            throw new PMException(Messages.FlushFailed,
                     MessageIDs.E_DATABASE_GENERAL);
         } finally {
             removeLocks(s);
@@ -866,12 +804,12 @@ public class Hibernator {
         EntityTransaction result = s.getTransaction();
         if (result.isActive()) {
             if (log.isDebugEnabled()) {
-                log.debug("Joining transaction"); //$NON-NLS-1$
+                log.debug(Messages.JoiningTransaction);
             }
         } else {
             result.begin();
             if (log.isDebugEnabled()) {
-                log.debug("Starting transaction"); //$NON-NLS-1$
+                log.debug(Messages.StartingTransaction);
             }
         }
         
@@ -891,17 +829,17 @@ public class Hibernator {
      *             {@inheritDoc}
      * @throws PMException
      *             {@inheritDoc}
-     * @throws GDProjectDeletedException
+     * @throws ProjectDeletedException
      *             if the project was deleted in another instance
      */
     public void commitTransaction(EntityManager s, EntityTransaction tx)
         throws PMReadException, PMAlreadyLockedException,
-        PMDirtyVersionException, PMException, GDProjectDeletedException {
+        PMDirtyVersionException, PMException, ProjectDeletedException {
 
         Validate.notNull(s);
         Validate.notNull(tx);
         Validate.isTrue(tx.equals(s.getTransaction()),
-                "Session and Transaction don't match"); //$NON-NLS-1$
+                Messages.SessionAndTransactionDontMatch);
         try {
             tx.commit();
         } catch (PersistenceException e) {
@@ -941,7 +879,7 @@ public class Hibernator {
                 }
             }
         } catch (PersistenceException e) {
-            log.error("Close session failed", e); //$NON-NLS-1$
+            log.error(Messages.CloseSessionFailed, e);
         } finally {
             if (dropLocks) {
                 removeLocks(s);
@@ -963,13 +901,13 @@ public class Hibernator {
                 closeSession(s, true);
             }
         } catch (PMException e) {
-            log.error("Couldn't drop session", e); //$NON-NLS-1$
+            log.error(Messages.CouldntDropSsession, e);
         }
     }
 
     /**
      * This method performs a closeSession(), but will never report a failure.
-     * It's also null-safe. It will not release GUIdancer locks, i.e. it's
+     * It's also null-safe. It will not release database locks, i.e. it's
      * supposed to be used by the LockManager itself;
      * 
      * @param s
@@ -981,7 +919,7 @@ public class Hibernator {
                 closeSession(s, false);
             }
         } catch (PMException e) {
-            log.error("Couldn't drop session", e); //$NON-NLS-1$
+            log.error(Messages.CouldntDropSsession, e);
         }
 
     }
@@ -999,15 +937,15 @@ public class Hibernator {
      *             if object is locked
      * @throws PMException
      *             if rollback failed
-     * @throws GDProjectDeletedException
+     * @throws ProjectDeletedException
      *             if the project was deleted in another instance
      */
     public void refreshPO(EntityManager s, IPersistentObject po, 
             LockModeType lockMode)
         throws PMDirtyVersionException, PMAlreadyLockedException,
-        PMException, GDProjectDeletedException {
+        PMException, ProjectDeletedException {
 
-        Validate.notNull(s, "No null value allowed"); //$NON-NLS-1$
+        Validate.notNull(s, Messages.NoNullValueAllowed);
         try {
             s.refresh(po, lockMode);
         } catch (PersistenceException e) {
@@ -1042,6 +980,7 @@ public class Hibernator {
         if (!LockManager.instance().lockPO(s, po, true)) {
             String poName = po != null ? po.getName() : StringConstants.EMPTY;
             long poId = po != null ? po.getId() : -1;
+            //FIXME tobi NLS ??
             throw new PMAlreadyLockedException(po,
                     "PO " + po + " (name=" + poName + "; id=" + poId + ") locked in db.", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                     MessageIDs.E_OBJECT_IN_USE);
@@ -1088,7 +1027,7 @@ public class Hibernator {
      *             in case of locked object
      * @throws PMDirtyVersionException
      *             in case of version conflict
-     * @throws GDProjectDeletedException
+     * @throws ProjectDeletedException
      *             if the project was deleted in another instance
      * @throws InterruptedException
      *             if the oepration was canceled
@@ -1096,7 +1035,7 @@ public class Hibernator {
     public void deletePO(EntityManager s, IPersistentObject po) 
         throws PMException,
                PMAlreadyLockedException, PMDirtyVersionException,
-               GDProjectDeletedException, InterruptedException {
+               ProjectDeletedException, InterruptedException {
         
         Validate.notNull(s);
         try {
@@ -1144,7 +1083,7 @@ public class Hibernator {
     }
 
     /**
-     * set true if guidancer application is headless (e.g. GUIdancerDBTool)
+     * set true if client application is running headless (e.g. CmdDbTool)
      * 
      * @param isHeadless
      *            boolean
@@ -1227,16 +1166,16 @@ public class Hibernator {
 
     /**
      * Migrates the structure of the database to match the version of the
-     * currently running client. <em>This effectively deletes all GUIdancer data 
+     * currently running client. <em>This effectively deletes all Jubula data 
      * currently in the database, so be careful how you use it.</em>
      * 
-     * @throws GDFatalException
+     * @throws JBFatalException
      *             if a fatal exception occurs during migration.
-     * @throws GDException
+     * @throws JBException
      *             if a general exception occurs during migration.
      */
-    public static void migrateDatabaseStructure() throws GDFatalException,
-            GDException {
+    public static void migrateDatabaseStructure() throws JBFatalException,
+            JBException {
 
         boolean wasSelectingDatabase = getSelectDBAction();
         setSelectDBAction(true);
@@ -1244,7 +1183,6 @@ public class Hibernator {
 
         try {
             Properties migrationConfig = new Properties();
-            migrationConfig.putAll(hibernateProp);
             migrationConfig.putAll(schemeProp);
             migrationConfig.setProperty(
                     PersistenceUnitProperties.JDBC_USER, user);
@@ -1288,7 +1226,7 @@ public class Hibernator {
                 m_sessions.clear();
                 m_sf.close();
             } catch (Throwable e) {
-                log.error("dispose of Hibernator failed", e); //$NON-NLS-1$
+                log.error(Messages.DisposeOfHibernatorFailed, e);
             }
         }
 
@@ -1310,43 +1248,6 @@ public class Hibernator {
      */
     public static boolean getSelectDBAction() {
         return isSelectDbAction;
-    }
-
-    /**
-     * 
-     * @return the contents of the hibernate settings file, or an empty string
-     *         if the file cannot be found.
-     * @throws IOException
-     *             if an error occurs while reading the file.
-     */
-    public static String getProperties() throws IOException {
-        BufferedReader reader = null;
-        String fileContent = StringConstants.EMPTY;
-        try {
-            URL propFile = BundleUtils.getFileURL(Platform
-                    .getBundle(Activator.PLUGIN_ID), Activator.RESOURCES_DIR
-                    + HIBERNATE_PROPERTIES);
-            reader = new BufferedReader(new InputStreamReader(propFile
-                    .openStream()));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            line = reader.readLine();
-            while (line != null) {
-                sb.append(line).append('\n');
-                line = reader.readLine();
-            }
-            fileContent = sb.toString();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (Exception ex) {
-                // ignore exception, because closing is not essential
-            }
-        }
-
-        return fileContent;
     }
 
     /**

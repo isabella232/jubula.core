@@ -33,13 +33,14 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -172,12 +173,12 @@ class ExecTestCasePO extends TestCasePO implements
             String reusedProjectName = 
                 ProjectNameBP.getInstance().getName(m_projectGuid);
             if (reusedProjectName != null && reusedProjectName.length() != 0) {
-                return I18n.getString(
-                        "ExecTestCasePO.missingReferenceWithProjectName",  //$NON-NLS-1$
+                return NLS.bind(
+                        Messages.ExecTestCasePOMissingReferenceWithProjectName, 
                         new String [] {reusedProjectName});
             }
 
-            return I18n.getString("ExecTestCasePO.missingReference"); //$NON-NLS-1$
+            return Messages.ExecTestCasePOMissingReference;
         }
         return name;
     }
@@ -240,7 +241,7 @@ class ExecTestCasePO extends TestCasePO implements
                 parentProject = ProjectPM.loadProjectById(
                     getParentProjectId());
             }
-        } catch (GDException e) {
+        } catch (JBException e) {
             // FIXME zeb Could not find spec test case
             return null;
         }
@@ -281,7 +282,7 @@ class ExecTestCasePO extends TestCasePO implements
                 try {
                     setProjectGuid(ProjectPM.loadProjectById(
                         specTestCase.getParentProjectId()).getGuid());
-                } catch (GDException e) {
+                } catch (JBException e) {
                     // FIXME zeb Error occurred while trying to set project guid for exec tc
                 }
             } else {
@@ -700,7 +701,9 @@ class ExecTestCasePO extends TestCasePO implements
         }
         // could be happens, if the given ExecTestCase was fetched per database statement
         // parent will be set only in memory
-        Assert.notReached("Unexpected error because ExecTestCase has no parent."); //$NON-NLS-1$
+        Assert.notReached(
+                Messages.UnexpectedErrorBecauseExecTestCaseHasNoParent
+                + StringConstants.DOT);
         return null;
     }
     

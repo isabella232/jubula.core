@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.model.GuiDancerLogicComponentNotManagedException;
+import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -147,7 +147,7 @@ public final class CompletenessGuard {
                     ComponentNamesBP.getInstance());
                 try {
                     id = objMap.getTechnicalName(result.getCompName());
-                } catch (GuiDancerLogicComponentNotManagedException e) { // NOPMD by al on 3/19/07 1:21 PM
+                } catch (LogicComponentNotManagedException e) { // NOPMD by al on 3/19/07 1:21 PM
                     // ok
                 }
                 if (id == null) {

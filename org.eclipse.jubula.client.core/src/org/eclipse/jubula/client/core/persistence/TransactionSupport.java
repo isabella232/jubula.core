@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 
 
 /**
@@ -40,11 +40,11 @@ public class TransactionSupport {
          * Executes the transaction
          * @param sess The database session
          * @throws PMException in any case of db error
-         * @throws GDProjectDeletedException if the project was deleted in another
+         * @throws ProjectDeletedException if the project was deleted in another
          * instance
          */
         public void run(EntityManager sess) throws PMException, 
-        GDProjectDeletedException;
+        ProjectDeletedException;
     }
     
     
@@ -66,11 +66,11 @@ public class TransactionSupport {
      * 
      * @param action the ITransactAction to execute.
      * @throws PMException .
-     * @throws GDProjectDeletedException if the project was deleted in another
+     * @throws ProjectDeletedException if the project was deleted in another
      * instance
      */
     public void transact(ITransactAction action) throws PMException, 
-        GDProjectDeletedException {
+        ProjectDeletedException {
         EntityTransaction tx = null;       
         tx = Hibernator.instance().getTransaction(m_session);
         action.run(m_session);

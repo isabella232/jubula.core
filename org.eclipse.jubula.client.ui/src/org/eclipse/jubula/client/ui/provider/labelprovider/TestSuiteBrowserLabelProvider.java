@@ -40,7 +40,7 @@ import org.eclipse.jubula.tools.i18n.I18n;
  * @author BREDEX GmbH
  * @created 06.07.2004
  */
-public class TestSuiteBrowserLabelProvider extends GeneralGDLabelProvider {
+public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
     /** {@inheritDoc} */
     public String getToolTipText(Object element) {
         if (element instanceof GuiNode) {

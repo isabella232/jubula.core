@@ -54,15 +54,15 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.dialogs.ProjectDialog;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.utils.GDThread;
+import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
@@ -104,7 +104,7 @@ public class OpenProjectAction extends AbstractAction {
             IProjectPO clearedProject = 
                 GeneralStorage.getInstance().getProject();
             if (clearedProject != null) {
-                Utils.clearGuidancer();
+                Utils.clearClient();
                 GeneralStorage.getInstance().setProject(null);
                 DataEventDispatcher.getInstance()
                     .fireDataChangedListener(clearedProject, DataState.Deleted,
@@ -157,7 +157,7 @@ public class OpenProjectAction extends AbstractAction {
                 if (monitor.isCanceled()) {
                     throw new InterruptedException();
                 }
-            } catch (final GDException e) {
+            } catch (final JBException e) {
                 errorOccured();
                 Display.getDefault().asyncExec(new Runnable() {
                     public void run() {
@@ -268,7 +268,7 @@ public class OpenProjectAction extends AbstractAction {
                                 reusedId, 
                                 masterSession);
                     }
-                } catch (GDException e) {
+                } catch (JBException e) {
                     // Do nothing
                 }
             }
@@ -293,7 +293,7 @@ public class OpenProjectAction extends AbstractAction {
             try {
                 Plugin.getDisplay().syncExec(new Runnable() {
                     public void run() {
-                        Plugin.closeAllOpenedGDEditors();
+                        Plugin.closeAllOpenedJubulaEditors();
                     }
                 });
                 IProjectPO prevProj = GeneralStorage.getInstance().getProject();
@@ -306,7 +306,7 @@ public class OpenProjectAction extends AbstractAction {
                     } catch (PMException e1) {
                         PMExceptionHandler.handlePMExceptionForMasterSession(
                             e1);
-                    } catch (GDProjectDeletedException e1) {
+                    } catch (ProjectDeletedException e1) {
                         PMExceptionHandler.handleGDProjectDeletedException();
                     }
                     if (monitor.isCanceled()) {
@@ -324,7 +324,7 @@ public class OpenProjectAction extends AbstractAction {
             } catch (PMReadException e) {
                 showErrorDialog(I18n.getString("ErrorMessage.CANT_READ_PROJECT")); //$NON-NLS-1$
             } catch (OperationCanceledException oce) {
-                Utils.clearGuidancer();
+                Utils.clearClient();
             } finally {
                 Plugin.stopLongRunning();
             }
@@ -338,7 +338,7 @@ public class OpenProjectAction extends AbstractAction {
             IProjectPO clearedProject = 
                 GeneralStorage.getInstance().getProject();
             if (clearedProject != null) {
-                Utils.clearGuidancer();
+                Utils.clearClient();
                 GeneralStorage.getInstance().setProject(null);
                 DataEventDispatcher.getInstance()
                     .fireDataChangedListener(clearedProject, DataState.Deleted,
@@ -379,7 +379,7 @@ public class OpenProjectAction extends AbstractAction {
          * @param message the messag eto show in the dialog.
          */
         private void showErrorDialog(String message) {
-            Utils.createMessageDialog(new GDException(message, 
+            Utils.createMessageDialog(new JBException(message, 
                     MessageIDs.E_UNEXPECTED_EXCEPTION), null, new String[]{
                         message});
         }
@@ -436,7 +436,7 @@ public class OpenProjectAction extends AbstractAction {
      * @author BREDEX GmbH
      *
      */
-    private static class Loader extends GDThread {
+    private static class Loader extends JBThread {
         
         /**
          * run method
@@ -524,7 +524,7 @@ public class OpenProjectAction extends AbstractAction {
                     openOperation.handleOperationException();
                 }
                 
-            } catch (final GDException e) {
+            } catch (final JBException e) {
                 Display.getDefault().asyncExec(new Runnable() {
                     public void run() {
                         Utils.createMessageDialog(e, null, null);

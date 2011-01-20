@@ -68,7 +68,7 @@ public class RunnableWrapper implements Runnable {
     }
     /**
      * executes the method {@link IRunnable#run()}and stores the return value
-     * and a thrown <code>GuiDancerStepExecutionEception</code>.
+     * and a thrown <code>StepExecutionEception</code>.
      */
     public final void run() {
         try {

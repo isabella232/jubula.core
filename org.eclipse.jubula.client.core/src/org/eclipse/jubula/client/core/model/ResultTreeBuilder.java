@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.model;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.utils.Traverser;
 
 
@@ -43,8 +44,7 @@ public class ResultTreeBuilder implements IExecStackModificationListener {
      * @param trav traverser for associated testexecution tree
      */
     public ResultTreeBuilder(Traverser trav) {
-        Validate.notNull(trav, "No traverser instance available for building" + //$NON-NLS-1$
-                 " of result tree"); //$NON-NLS-1$
+        Validate.notNull(trav, Messages.NoTraverserInstance);
         m_rootNode = new TestResultNode(trav.getRoot(), null);
         m_endNode = m_rootNode;
     }

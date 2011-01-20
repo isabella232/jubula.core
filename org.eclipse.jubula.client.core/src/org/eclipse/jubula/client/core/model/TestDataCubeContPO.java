@@ -22,7 +22,7 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.core.i18n.Messages;
 
 
 /**
@@ -79,7 +79,7 @@ public class TestDataCubeContPO extends WrapperPO implements
      */
     @Transient
     public String getName() {
-        return I18n.getString("CentralTestDataEditor.name"); //$NON-NLS-1$
+        return Messages.CentralTestDataEditorName;
     }
 
     /**
@@ -107,9 +107,9 @@ public class TestDataCubeContPO extends WrapperPO implements
     //           "parentProjectId" should be persisted. This causes an 
     //           exception when trying to access an instance of this class 
     //           from the database. Oddly enough, the exceptions do not occur 
-    //           when running GUIdancer from the IDE. The exceptions only occur 
-    //           in a deployed GUIdancer. Once this problem is resolved (for a 
-    //           deployed GUIdancer), the workaround can be removed.
+    //           when running Jubula from the IDE. The exceptions only occur 
+    //           in a deployed Jubula. Once this problem is resolved (for a 
+    //           deployed Jubula), the workaround can be removed.
     public Long getParentProjectId() {
         return super.getParentProjectId();
     }

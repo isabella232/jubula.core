@@ -29,6 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IEventStackModificationListener;
@@ -44,10 +45,10 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.IncompleteDataException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -197,10 +198,10 @@ public class Traverser {
 
     /**
      * @return the next Cap, regarding to the actual position in tree
-     * @throws GDException in case of missing testdata
+     * @throws JBException in case of missing testdata
      */
     @SuppressWarnings("unchecked")
-    public ICapPO next() throws GDException {
+    public ICapPO next() throws JBException {
         if (!m_execStack.isEmpty()) {
             ExecObject stackObj = m_execStack.peek();
             INodePO node = stackObj.getExecNode();
@@ -221,7 +222,9 @@ public class Traverser {
                 }
                 if (Hibernator.isPoSubclass(childNode, ICapPO.class)) {
                     if (LOG.isDebugEnabled()) {
-                        LOG.debug("actual executed cap: " + childNode.getName()); //$NON-NLS-1$
+                        LOG.debug(Messages.ActualExecutedCap 
+                            + StringConstants.COLON + StringConstants.SPACE 
+                            + childNode.getName());
                     }
                     fireNextCap((ICapPO)childNode);
                     return (ICapPO)childNode;
@@ -230,15 +233,13 @@ public class Traverser {
                     if (((IExecTestCasePO)childNode).getSpecTestCase() 
                             == null) {
                         throw new IncompleteDataException(
-                            I18n.getString("ExecTestCasePO.missingReference"),  //$NON-NLS-1$
+                            Messages.ExecTestCasePOMissingReference,
                             MessageIDs.E_DATASOURCE_CONTAIN_EMPTY_DATA);
                     }
                     processExecTestCase(stackObj, (IExecTestCasePO)childNode);
                     return next();
                 }
-                Assert.notReached("Error in Testexecution tree. Only " + //$NON-NLS-1$
-                        "expected to contain caps or execTestCases in " + //$NON-NLS-1$
-                        "nodeList"); //$NON-NLS-1$
+                Assert.notReached(Messages.ErrorInTestExecutionTree);
                 return null;
                 // next dataset
             } else if (!(Hibernator.isPoSubclass(stackObj.getExecNode(),
@@ -265,11 +266,11 @@ public class Traverser {
      * processes a childnode which is an ExecTestCasePO
      * @param stackObj the stack object
      * @param childNode the child node
-     * @throws GDException an exception.
+     * @throws JBException an exception.
      */
     private void processExecTestCase(ExecObject stackObj,
         IExecTestCasePO childNode) 
-        throws GDException {
+        throws JBException {
         
         IExecTestCasePO exTc = childNode;
         ITDManagerPO tdManager = null;
@@ -335,20 +336,21 @@ public class Traverser {
      */
     private void executeLogging() {
         if (LOG.isDebugEnabled() && !m_execStack.isEmpty()) {
-            LOG.debug("actual peek object on stack: " +  //$NON-NLS-1$
-                m_execStack.peek().getExecNode().getName());
+            LOG.debug(Messages.ActualPeekObjectOnStack + StringConstants.COLON
+                + StringConstants.SPACE 
+                + m_execStack.peek().getExecNode().getName());
         }
     }
 
     /**
      * @param node for which the number of dataset to find
      * @return number of datasets for given node
-     * @throws GDException in case of missing testdata
+     * @throws JBException in case of missing testdata
      * hint: each execTestCase with a dataManager has parameter(s) and must
      * have at least one dataset
      */
     private int getFirstDataSetNumber(INodePO node) 
-        throws GDException {
+        throws JBException {
         int firstDs = NO_DATASET;
 
         if (Hibernator.isPoSubclass(node, IParamNodePO.class) 
@@ -544,10 +546,10 @@ public class Traverser {
     /**
      * @param reentryProp reentryProperty
      * @return next Cap to execute
-     * @throws GDException in case of incomplete testdata
+     * @throws JBException in case of incomplete testdata
      */
     private ICapPO next(ReentryProperty reentryProp) 
-        throws GDException {
+        throws JBException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("ReentryProperty: " + String.valueOf(reentryProp)); //$NON-NLS-1$
         }
@@ -717,10 +719,10 @@ public class Traverser {
      * @param eventType eventType of eventhandler, which is to execute in next
      * step
      * @return next cap to execute
-     * @throws GDException in case of incomplete testdata
+     * @throws JBException in case of incomplete testdata
      */
     public ICapPO next(String eventType) 
-        throws GDException {
+        throws JBException {
         ExecObject execObj = m_execStack.peek();
         EventObject eventObj = getEventObject(eventType);
         IEventExecTestCasePO eventExecTC = eventObj.getEventExecTc();
@@ -801,8 +803,9 @@ public class Traverser {
         if (eventObj == null) {
             IEventExecTestCasePO eventExecTc = 
                 DefaultEventHandler.getDefaultEventHandler(eventType, m_root);
-            Validate.notNull(eventExecTc, "Missing defaultEventHandler for " + //$NON-NLS-1$
-                "eventType " + eventType + "."); //$NON-NLS-1$ //$NON-NLS-2$
+            Validate.notNull(eventExecTc, 
+                Messages.MissingDefaultEventHandlerForEventType + eventType 
+                + StringConstants.DOT);
             eventObj = new EventObject(eventExecTc, 0);
         }
         return eventObj;      

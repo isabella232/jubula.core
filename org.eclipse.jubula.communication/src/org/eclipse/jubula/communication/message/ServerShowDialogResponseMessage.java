@@ -55,9 +55,11 @@ public class ServerShowDialogResponseMessage extends Message {
     /** normal recordlistener or checkmode*/
     /** @attribute System.Xml.Serialization.XmlElement("m__mode") */
     public int m_mode = ChangeAUTModeMessage.CHECK_MODE;
-    
-    /** true if closing of check dialog is caused by user-action on dialog-buttons
-     *  false if closing is caused by guidancer-client*/
+
+    /**
+     * true if closing of check dialog is caused by user-action on
+     * dialog-buttons false if closing is caused by client
+     */
     /** @attribute System.Xml.Serialization.XmlElement("m__belongsToDialog") */
     public boolean m_belongsToDialog = false;
 
@@ -125,7 +127,7 @@ public class ServerShowDialogResponseMessage extends Message {
     
     /**
      * @return true if closing of check dialog is caused by user-action on dialog-buttons
-     *  false if closing is caused by guidancer-client
+     *  false if closing is caused by client
      */
     public boolean belongsToDialog() {
         return m_belongsToDialog;
@@ -134,7 +136,7 @@ public class ServerShowDialogResponseMessage extends Message {
     /**
      * @param belongsToDialog boolean
      * true if closing of check dialog is caused by user-action on dialog-buttons
-     *  false if closing is caused by guidancer-client
+     *  false if closing is caused by client
      */
     public void setBelongsToDialog(boolean belongsToDialog) {
         m_belongsToDialog = belongsToDialog;

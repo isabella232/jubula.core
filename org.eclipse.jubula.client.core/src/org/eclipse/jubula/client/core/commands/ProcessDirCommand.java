@@ -12,9 +12,11 @@ package org.eclipse.jubula.client.core.commands;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendDirectoryResponseMessage;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -33,7 +35,9 @@ public class ProcessDirCommand implements ICommand {
      * {@inheritDoc}
      */
     public Message execute() {
-        log.debug("executing directory list command (response)"); //$NON-NLS-1$
+        log.debug(Messages.ExecutingDirectoryListCommand 
+            + StringConstants.RIGHT_PARENTHESES + Messages.Response
+            + StringConstants.LEFT_PARENTHESES);
         return null;
     }
 

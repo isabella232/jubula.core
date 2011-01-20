@@ -13,9 +13,11 @@ package org.eclipse.jubula.client.core.commands;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.IServerLogListener;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.ServerLogResponseMessage;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -72,7 +74,8 @@ public class ServerLogResponseCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        log.error(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
+        log.error(this.getClass().getName() + StringConstants.DOT
+                + Messages.TimeoutCalled);
     }
 
 }

@@ -33,6 +33,8 @@ import javax.persistence.Version;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -279,11 +281,11 @@ class ObjectMappingPO implements IObjectMappingPO {
      * returns the technicalName to a logical name
      * @param logical       String
      * @return              String
-     * @throws GuiDancerLogicComponentNotManagedException error
+     * @throws LogicComponentNotManagedException error
      */
     @SuppressWarnings("unchecked")
     public IComponentIdentifier getTechnicalName(String logical) throws
-        GuiDancerLogicComponentNotManagedException {
+        LogicComponentNotManagedException {
         IObjectMappingAssoziationPO asso = 
             getLogicalNameAssoc(logical);
         if (asso != null) {
@@ -327,9 +329,11 @@ class ObjectMappingPO implements IObjectMappingPO {
             }
         }
         
-        throw new GuiDancerLogicComponentNotManagedException(
-            "The logic component '" //$NON-NLS-1$
-            + logical + "' is not managed.", //$NON-NLS-1$
+        throw new LogicComponentNotManagedException(
+            Messages.TheLogicComponent + StringConstants.SPACE
+            + StringConstants.APOSTROPHE + logical 
+            + StringConstants.APOSTROPHE + StringConstants.SPACE
+            + Messages.IsNotManaged + StringConstants.DOT,
             MessageIDs.E_COMPONENT_NOT_MANAGED); 
     }
 

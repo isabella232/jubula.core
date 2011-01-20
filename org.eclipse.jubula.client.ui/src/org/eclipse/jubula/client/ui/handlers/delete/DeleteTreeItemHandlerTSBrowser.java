@@ -45,7 +45,7 @@ import org.eclipse.jubula.client.ui.model.TestJobGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPart;
@@ -78,7 +78,7 @@ public class DeleteTreeItemHandlerTSBrowser
                 }
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
             }
         }
@@ -90,15 +90,21 @@ public class DeleteTreeItemHandlerTSBrowser
     
     /**
      * Deletes the given selection.
-     * @param selection the selection to delete.
-     * @throws PMSaveException if the save operation failed
-     * @throws PMAlreadyLockedException in case of locked item to delete
-     * @throws PMException in case of failed rollback
-     * @throws GDProjectDeletedException if the project was deleted in another instance
+     * 
+     * @param selection
+     *            the selection to delete.
+     * @throws PMSaveException
+     *             if the save operation failed
+     * @throws PMAlreadyLockedException
+     *             in case of locked item to delete
+     * @throws PMException
+     *             in case of failed rollback
+     * @throws ProjectDeletedException
+     *             if the project was deleted in another instance
      */
     private void deleteExecItems(IStructuredSelection selection) 
         throws PMSaveException, PMAlreadyLockedException, PMException, 
-            GDProjectDeletedException {
+            ProjectDeletedException {
         IEditorReference[] editors = Plugin.getActivePage()
                 .getEditorReferences();
 

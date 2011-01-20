@@ -16,7 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.commands.AbstractSendAUTListOfSupportedComponentsCommand;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
@@ -53,7 +53,7 @@ public class SendAUTListOfSupportedComponentsCommand
      */
     protected void addToHierarchy(IComponentFactory factory, 
         ConcreteComponent c, String technicalName) 
-        throws GuiDancerUnsupportedComponentException {
+        throws UnsupportedComponentException {
         
         ComponentHandler.addToHierarchy(factory, c.getComponentClass(), 
             technicalName);
@@ -72,7 +72,7 @@ public class SendAUTListOfSupportedComponentsCommand
                 public void run() {
                     try {
                         m_componentIds.add(createIdentifier(m_concrete));
-                    } catch (GuiDancerUnsupportedComponentException e) {
+                    } catch (UnsupportedComponentException e) {
                         log.error(e);
                     }
                 }

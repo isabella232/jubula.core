@@ -27,11 +27,11 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 
 
@@ -66,7 +66,7 @@ public abstract class AbstractNewTestCaseAction extends Action {
                 instanceof IStructuredSelection)) {
             return;
         }
-        if (GDEditorHelper.EditableState.OK == tce.getEditorHelper()
+        if (JBEditorHelper.EditableState.OK == tce.getEditorHelper()
                 .requestEditableState()) {
             GuiNode selectedGuiNode = (GuiNode)((IStructuredSelection)tce
                     .getTreeViewer().getSelection()).getFirstElement();
@@ -102,7 +102,7 @@ public abstract class AbstractNewTestCaseAction extends Action {
                             newSpecTC, DataState.Added, UpdateState.all);
                 } catch (PMException e) {
                     PMExceptionHandler.handlePMExceptionForMasterSession(e);
-                } catch (GDProjectDeletedException e) {
+                } catch (ProjectDeletedException e) {
                     PMExceptionHandler.handleGDProjectDeletedException();
                 }
             }

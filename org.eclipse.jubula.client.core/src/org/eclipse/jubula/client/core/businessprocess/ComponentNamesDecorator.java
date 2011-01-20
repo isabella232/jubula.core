@@ -24,6 +24,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IComponentNameData;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -33,7 +34,8 @@ import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.ValueListIterator;
 
@@ -121,8 +123,9 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
             updateStandardMapper(projectId);
             clear();
         } catch (PMException e) {
-            throw new GDFatalException("Reading Component Names from DB failed!"  //$NON-NLS-1$
-                , e, MessageIDs.E_DATABASE_GENERAL);
+            throw new JBFatalException(Messages.ReadingComponentNamesFailed
+                    + StringConstants.EXCLAMATION_MARK, e, 
+                    MessageIDs.E_DATABASE_GENERAL);
         }
     }
 

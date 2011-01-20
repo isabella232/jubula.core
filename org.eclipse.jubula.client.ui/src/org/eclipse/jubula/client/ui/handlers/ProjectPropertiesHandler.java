@@ -14,6 +14,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.preference.IPreferenceNode;
+import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -23,14 +24,14 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.dialogs.GDPropertyDialog;
+import org.eclipse.jubula.client.ui.dialogs.JBPropertyDialog;
 import org.eclipse.jubula.client.ui.extensions.ProjectPropertyExtensionHandler;
 import org.eclipse.jubula.client.ui.properties.AUTPropertyPage;
 import org.eclipse.jubula.client.ui.properties.AbstractProjectPropertyPage;
 import org.eclipse.jubula.client.ui.properties.ProjectGeneralPropertyPage;
+import org.eclipse.jubula.client.ui.properties.ProjectGeneralPropertyPage.IOkListener;
 import org.eclipse.jubula.client.ui.properties.ProjectLanguagePropertyPage;
 import org.eclipse.jubula.client.ui.properties.ProjectUsedPropertyPage;
-import org.eclipse.jubula.client.ui.properties.ProjectGeneralPropertyPage.IOkListener;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -38,7 +39,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.ui.internal.dialogs.PropertyPageManager;
 
 
 /**
@@ -67,7 +67,7 @@ public class ProjectPropertiesHandler extends AbstractHandler {
         
         Shell shell = activeWindow != null ? activeWindow.getShell() : null;
 
-        PropertyPageManager mgr = new PropertyPageManager();
+        PreferenceManager mgr = new PreferenceManager();
         ISelection sel = new StructuredSelection(GeneralStorage.getInstance()
             .getProject());
 
@@ -110,7 +110,7 @@ public class ProjectPropertiesHandler extends AbstractHandler {
                 }
             }
             
-            GDPropertyDialog dialog = new GDPropertyDialog(shell, mgr, sel);
+            JBPropertyDialog dialog = new JBPropertyDialog(shell, mgr, sel);
             String sectionToOpen = 
                 event.getParameter(SECTION_TO_OPEN);
             

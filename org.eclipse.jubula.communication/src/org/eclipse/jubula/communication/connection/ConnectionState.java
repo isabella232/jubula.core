@@ -17,8 +17,8 @@ import java.io.PrintStream;
 import java.util.StringTokenizer;
 
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDVersionException;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.exception.JBVersionException;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.slf4j.Logger;
@@ -126,25 +126,29 @@ public class ConnectionState {
      * Waits for a "client type" request from the server and responds to that
      * request.
      * 
-     * @param waitForServer The maximum amount of time (in milliseconds) to 
-     *                      wait for the request from the server.
-     * @param inputReader   Reader for the input stream from which the request
-     *                      is expected.
-     * @param inputStream   The input stream from which the request
-     *                      is expected.
-     * @param outputStream  The printer to use for sending the response.
-     * @param response      The response to send, if the expected request is
-     *                      received.
+     * @param waitForServer
+     *            The maximum amount of time (in milliseconds) to wait for the
+     *            request from the server.
+     * @param inputReader
+     *            Reader for the input stream from which the request is
+     *            expected.
+     * @param inputStream
+     *            The input stream from which the request is expected.
+     * @param outputStream
+     *            The printer to use for sending the response.
+     * @param response
+     *            The response to send, if the expected request is received.
      * @return <code>true</code> if the expected request is received in good.
      *         Otherwise <code>false</code>.
-     * @throws GDVersionException in case of a version error between client
-     *                            and server.
-     * @throws IOException in case of an I/O error.
+     * @throws JBVersionException
+     *             in case of a version error between client and server.
+     * @throws IOException
+     *             in case of an I/O error.
      */
     public static boolean respondToTypeRequest(long waitForServer, 
             BufferedReader inputReader, InputStream inputStream, 
             PrintStream outputStream, String response) 
-        throws GDVersionException, IOException {
+        throws JBVersionException, IOException {
         
         if (LOG.isDebugEnabled()) {
             LOG.debug("waiting for server's 'client type request' with timeout: " //$NON-NLS-1$ 
@@ -158,9 +162,9 @@ public class ConnectionState {
                 String line = inputReader.readLine();
                 success = true;
                 final int version = Integer.parseInt(String.valueOf(
-                        IGdVersion.GD_PROTOCOL_MAJOR_VERSION.intValue())); 
+                        IVersion.JB_PROTOCOL_MAJOR_VERSION.intValue())); 
                 if (ConnectionState.parseVersion(line) != version) {
-                    throw new GDVersionException(
+                    throw new JBVersionException(
                             "Version error between Client and Server!", //$NON-NLS-1$ 
                             MessageIDs.E_VERSION_ERROR);
                 }

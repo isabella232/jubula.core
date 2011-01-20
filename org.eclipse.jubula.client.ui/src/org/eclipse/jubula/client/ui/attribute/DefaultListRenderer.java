@@ -73,8 +73,8 @@ public class DefaultListRenderer extends AbstractAttributeRenderer {
     private IDocAttributeDescriptionPO m_desc;
         
     /** a new selection listener */
-    private GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    private WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
 
     /**
      * {@inheritDoc}
@@ -334,7 +334,7 @@ public class DefaultListRenderer extends AbstractAttributeRenderer {
      * @author BREDEX GmbH
      * @created 11.02.2005
      */
-    private class GuiDancerSelectionListener 
+    private class WidgetSelectionListener 
         implements SelectionListener {
         /**
          * @param e The selection event.

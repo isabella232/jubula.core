@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.utils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -27,7 +28,7 @@ import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
-import org.eclipse.jubula.client.ui.views.AbstractGDTreeView;
+import org.eclipse.jubula.client.ui.views.AbstractJBTreeView;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
@@ -60,7 +61,7 @@ public abstract class CommandHelper {
      *            the gdtree view this node hast been found for
      */
     public static void openEditorForNode(INodePO node, 
-        AbstractGDTreeView gdtv) {
+        AbstractJBTreeView gdtv) {
         if (node instanceof ISpecTestCasePO || node instanceof IExecTestCasePO
                 || node instanceof IEventExecTestCasePO
                 || node instanceof ICapPO) {
@@ -139,16 +140,26 @@ public abstract class CommandHelper {
      * @param params a map of parameters for this command
      * @param style
      *            The style to use for the contribution item. See the
-     *            CommandContributionItem STYLE_* contants.
+     *            CommandContributionItem STYLE_* constants.
      * @param label
      *            the label to display for this item
      * @return the created contribution item.
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static IContributionItem createContributionItem(String commandId,
-            Map<?, ?> params, String label, int style) {
-        return new CommandContributionItem(
-                new CommandContributionItemParameter(PlatformUI.getWorkbench(),
-                        null, commandId, params, null, null, null, label, null,
-                        null, style, null, false));
+            Map params, String label, int style) {
+        
+        CommandContributionItemParameter itemParameter =
+            new CommandContributionItemParameter(
+                    PlatformUI.getWorkbench(), null, commandId, style);
+        itemParameter.label = label;
+        if (params != null) {
+            if (itemParameter.parameters == null) {
+                itemParameter.parameters = new HashMap(params);
+            } else {
+                itemParameter.parameters.putAll(params);
+            }
+        }
+        return new CommandContributionItem(itemParameter);
     }
 }

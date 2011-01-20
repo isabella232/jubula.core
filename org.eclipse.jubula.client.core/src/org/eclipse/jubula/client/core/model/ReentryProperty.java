@@ -14,10 +14,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -148,27 +148,27 @@ public final class ReentryProperty {
         throws InvalidDataException {
         String val = reentryPropValue == null 
             ? StringConstants.EMPTY : reentryPropValue;
-        if (val.equals(I18n.getString("EventExecTestCasePO.CONTINUE"))) { //$NON-NLS-1$
+        if (val.equals(Messages.EventExecTestCasePOCONTINUE)) { 
             return 1;
-        } else if (val.equals(I18n.getString("EventExecTestCasePO.REPEAT"))) { //$NON-NLS-1$
+        } else if (val.equals(Messages.EventExecTestCasePOREPEAT)) { 
             return 2;
-        } else if (val.equals(I18n.getString("EventExecTestCasePO.BREAK"))) { //$NON-NLS-1$
+        } else if (val.equals(Messages.EventExecTestCasePOBREAK)) { 
             return 3;
-        } else if (val.equals(I18n.getString("EventExecTestCasePO.GOTO"))) { //$NON-NLS-1$
+        } else if (val.equals(Messages.EventExecTestCasePOGOTO)) { 
             return 4;
-        } else if (val.equals(I18n.getString("EventExecTestCasePO.RETURN"))) { //$NON-NLS-1$
+        } else if (val.equals(Messages.EventExecTestCasePORETURN)) { 
             return 5;
-        } else if (val.equals(I18n.getString("EventExecTestCasePO.STOP"))) { //$NON-NLS-1$
+        } else if (val.equals(Messages.EventExecTestCasePOSTOP)) { 
             return 6;
-        } else if (val.equals(I18n.getString("EventExecTestCasePO.EXIT"))) { //$NON-NLS-1$
+        } else if (val.equals(Messages.EventExecTestCasePOEXIT)) { 
             return 7;
-        } else if (val.equals(I18n.getString("EventExecTestCasePO.RETRY"))) { //$NON-NLS-1$
+        } else if (val.equals(Messages.EventExecTestCasePORETRY)) { 
             return 8;
         } 
-        LOG.error("Unsupported reentry property " //$NON-NLS-1$
-            + "with value " + val); //$NON-NLS-1$
-        throw new InvalidDataException("Unsupported reentry property with value "  //$NON-NLS-1$ 
-            + val, MessageIDs.E_UNSUPPORTED_REENTRY);
+        LOG.error(Messages.UnsupportedReentryProperty + StringConstants.SPACE 
+            + val); 
+        throw new InvalidDataException(Messages.UnsupportedReentryProperty 
+            + StringConstants.SPACE + val, MessageIDs.E_UNSUPPORTED_REENTRY);
     }
 
     /**
@@ -184,9 +184,11 @@ public final class ReentryProperty {
                 return;
             }
         }
-        LOG.error("Unsupported reentry property with value " + value); //$NON-NLS-1$
-        throw new InvalidDataException("Unsupported reentry property with value " //$NON-NLS-1$  
-            + value, MessageIDs.E_UNSUPPORTED_REENTRY);       
+        LOG.error(Messages.UnsupportedReentryProperty + StringConstants.SPACE
+            + value); 
+        throw new InvalidDataException(Messages.UnsupportedReentryProperty
+                + StringConstants.SPACE + value,
+                MessageIDs.E_UNSUPPORTED_REENTRY);
     }
 
     /**
@@ -220,23 +222,24 @@ public final class ReentryProperty {
     public String toString() {
         switch(m_value) {
             case 1:
-                return I18n.getString("EventExecTestCasePO.CONTINUE"); //$NON-NLS-1$
+                return Messages.EventExecTestCasePOCONTINUE; 
             case 2:
-                return I18n.getString("EventExecTestCasePO.REPEAT"); //$NON-NLS-1$
+                return Messages.EventExecTestCasePOREPEAT; 
             case 3:
-                return I18n.getString("EventExecTestCasePO.BREAK"); //$NON-NLS-1$
+                return Messages.EventExecTestCasePOBREAK; 
             case 4:
-                return I18n.getString("EventExecTestCasePO.GOTO"); //$NON-NLS-1$
+                return Messages.EventExecTestCasePOGOTO; 
             case 5:
-                return I18n.getString("EventExecTestCasePO.RETURN"); //$NON-NLS-1$
+                return Messages.EventExecTestCasePORETURN; 
             case 6:
-                return I18n.getString("EventExecTestCasePO.STOP"); //$NON-NLS-1$
+                return Messages.EventExecTestCasePOSTOP; 
             case 7:
-                return I18n.getString("EventExecTestCasePO.EXIT"); //$NON-NLS-1$
+                return Messages.EventExecTestCasePOEXIT; 
             case 8:
-                return I18n.getString("EventExecTestCasePO.RETRY"); //$NON-NLS-1$
+                return Messages.EventExecTestCasePORETRY; 
             default:
-                Assert.notReached("Wrong type of ReentryProperty!"); //$NON-NLS-1$
+                Assert.notReached(Messages.WrongTypeOfReentryProperty 
+                    + StringConstants.EXCLAMATION_MARK); 
                 return StringConstants.EMPTY;
         }
     }

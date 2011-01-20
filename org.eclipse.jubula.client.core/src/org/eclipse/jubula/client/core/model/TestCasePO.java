@@ -25,6 +25,8 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -110,9 +112,10 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
             eventTC.setParentProjectId(getParentProjectId());
             eventTC.setParentNode(this);
         } else {
-            throw new InvalidDataException("Double eventTestCase for " + //$NON-NLS-1$
-                    "the same event \"" +  //$NON-NLS-1$
-                    eventTC.getEventType() + "\"", //$NON-NLS-1$
+            throw new InvalidDataException(
+                    Messages.DoubleEventTestCaseForTheSameEvent 
+                    + StringConstants.SPACE + StringConstants.SLASH
+                    + eventTC.getEventType() + StringConstants.SLASH,
                     MessageIDs.E_DOUBLE_EVENT); 
         }
     }

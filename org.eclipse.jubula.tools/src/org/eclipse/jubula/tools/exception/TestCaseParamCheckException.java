@@ -20,7 +20,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * @author BREDEX GmbH
  * @created 25.08.2005
  */
-public class TestCaseParamCheckException extends GDException {
+public class TestCaseParamCheckException extends JBException {
     /**
      * @param message The message
      * @param id The message ID

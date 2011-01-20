@@ -22,8 +22,8 @@ import org.eclipse.jubula.tools.exception.AssertException;
 
 
 /**
- * This class represents concrete graphic components which can be tested by the
- * GuiDancer. The tester class which is associated to the component performs
+ * This class represents concrete graphic components which can be tested by
+ * Jubula. The tester class which is associated to the component performs
  * the operations on the component.
  * 
  * @author BREDEX GmbH

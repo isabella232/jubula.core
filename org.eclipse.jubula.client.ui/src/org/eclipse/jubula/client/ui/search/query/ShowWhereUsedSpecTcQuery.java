@@ -27,7 +27,7 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.NodeSearchResultElementAction;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 
 
@@ -78,7 +78,7 @@ public class ShowWhereUsedSpecTcQuery
                 if (projID != null) {
                     parentProjectIDs.add(projID);
                 }
-            } catch (GDException e) {
+            } catch (JBException e) {
                 // ignore
             }
         }

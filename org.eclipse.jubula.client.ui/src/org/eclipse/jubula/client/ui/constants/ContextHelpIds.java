@@ -54,15 +54,15 @@ public interface ContextHelpIds {
         + "guidancerComponentNameBrowserContextId"; //$NON-NLS-1$
     
     /** ContextHelpId for guidancerPropertiesView */
-    public static final String GUIDANCER_PROPERTIES_VIEW = PRAEFIX
+    public static final String JB_PROPERTIES_VIEW = PRAEFIX
         + "guidancerPropertiesViewContextId"; //$NON-NLS-1$
 
     /** ContextHelpId for guidancerDataSetView */
-    public static final String GUIDANCER_DATASET_VIEW = PRAEFIX
+    public static final String JB_DATASET_VIEW = PRAEFIX
         + "guidancerDataSetViewContextId"; //$NON-NLS-1$
     
     /** ContextHelpId for SpecTestCaseEditor */
-    public static final String GUIDANCER_SPEC_TESTCASE_EDITOR = PRAEFIX
+    public static final String JB_SPEC_TESTCASE_EDITOR = PRAEFIX
         + "guidancerSpecTestCaseEditorContextId"; //$NON-NLS-1$
     
     /** ContextHelpId for Test Job Editor */
@@ -194,7 +194,7 @@ public interface ContextHelpIds {
         + "openProjectDialogContextId"; //$NON-NLS-1$
     
     /** help context id for the search result view */
-    public static final String GUIDANCER_SEARCH_RESULT_VIEW = PRAEFIX
+    public static final String JB_SEARCH_RESULT_VIEW = PRAEFIX
         + "searchResultViewContextId"; //$NON-NLS-1$
     
     /** ContextHelpId for AUT settings page: aut list in settings*/

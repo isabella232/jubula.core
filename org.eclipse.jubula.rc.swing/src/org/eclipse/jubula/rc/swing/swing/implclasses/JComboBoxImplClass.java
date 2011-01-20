@@ -23,8 +23,6 @@ import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.swing.swing.interfaces.IJComboBoxImplClass;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.StringParsing;
 
 
@@ -63,24 +61,7 @@ public class JComboBoxImplClass extends AbstractSwingImplClass
     public JComponent getComponent() {
         return m_comboBox;
     }
-    /**
-     * Parses the index and returns an integer.
-     *
-     * @param index
-     *            The index to parse
-     * @return The integer value
-     * @throws StepExecutionException
-     *             If the index cannot be parsed
-     */
-    private int parseIndex(String index) throws StepExecutionException {
-        try {
-            return Integer.parseInt(index);
-        } catch (NumberFormatException e) {
-            throw new StepExecutionException("Index '" + index //$NON-NLS-1$
-                + "' is not an integer", EventFactory.createActionError(//$NON-NLS-1$
-                        TestErrorEvent.INVALID_INDEX));
-        }
-    }
+
     /**
      * Gets the ComboBox helper. The helper is created once per instance.
      *
@@ -108,7 +89,8 @@ public class JComboBoxImplClass extends AbstractSwingImplClass
      * @param isSelected If the index should be selected or not.
      */
     public void gdVerifySelectedIndex(String index, boolean isSelected) {
-        int implIdx = IndexConverter.toImplementationIndex(parseIndex(index));
+        int implIdx = IndexConverter.toImplementationIndex(
+                IndexConverter.intValue(index));
         Integer actual = (Integer)getEventThreadQueuer()
             .invokeAndWait(
                 JComboBoxImplClass.class.getName() + ".getSelectedIndex", //$NON-NLS-1$
@@ -196,7 +178,8 @@ public class JComboBoxImplClass extends AbstractSwingImplClass
      *            The index to select
      */
     public void gdSelectIndex(String index) {
-        int implIdx = IndexConverter.toImplementationIndex(parseIndex(index));
+        int implIdx = IndexConverter.toImplementationIndex(
+                IndexConverter.intValue(index));
         double maxWidth = getMaxWidth();
         try {
             getComboBoxHelper().select(implIdx, maxWidth);

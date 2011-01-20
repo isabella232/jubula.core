@@ -26,7 +26,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.NodePM.AbstractCmdHandleChild;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 
 
@@ -54,7 +54,7 @@ public class TestCaseBP  extends NodeBP {
      * referenced before and is edited by another user.
      * @throws PMDirtyVersionException if the referenced TC was modified
      * @throws PMObjectDeletedException
-     *             if the po as deleted by another instance of GUIdancer
+     *             if the po as deleted by another concurrently working user
      * @return The ExecTC used to reference the SpecTC
      */
     public static IExecTestCasePO addReferencedTestCase(
@@ -92,7 +92,7 @@ public class TestCaseBP  extends NodeBP {
      *             if the TC was modified outside this instance of the
      *             application.
      * @throws PMObjectDeletedException
-     *             if the po as deleted by another instance of GUIdancer
+     *             if the po as deleted by another concurrently working user
      */
     private static void handleFirstReference(EditSupport editSupport,
         ISpecTestCasePO referencedTC, boolean isReferencedByThisAction)
@@ -125,7 +125,7 @@ public class TestCaseBP  extends NodeBP {
      * @throws PMDirtyVersionException
      *             if the TC was modified outside of this application instance.
      * @throws PMObjectDeletedException
-     *             if the po as deleted by another instance of GUIdancer
+     *             if the po as deleted by another concurrently working user
      */
     public static void addEventHandler(EditSupport editSupport, 
         ISpecTestCasePO targetTC, IEventExecTestCasePO eventHandlerTC) 
@@ -153,11 +153,11 @@ public class TestCaseBP  extends NodeBP {
      * @throws PMSaveException in case of save failed
      * @throws PMAlreadyLockedException in case of already locked
      * @throws PMException in case of exception
-     * @throws GDProjectDeletedException in case of project deleted
+     * @throws ProjectDeletedException in case of project deleted
      */
     public static ISpecTestCasePO createNewSpecTestCase(String name, 
         INodePO parent, Integer position) throws PMSaveException, 
-        PMAlreadyLockedException, PMException, GDProjectDeletedException {
+        PMAlreadyLockedException, PMException, ProjectDeletedException {
         
         Integer pos = position;
         ISpecTestCasePO specTC = NodeMaker.createSpecTestCasePO(name);

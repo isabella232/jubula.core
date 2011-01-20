@@ -17,7 +17,7 @@ import java.util.Map;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.IBaseImplementationClass;
 import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
@@ -111,12 +111,12 @@ public abstract class AUTHierarchy {
      * @param factory The factory to create a new component
      * @param componentName The name of the component to create
      * @param technicalName The technical name of the component
-     * @throws GuiDancerUnsupportedComponentException If the factory fails creating the component
+     * @throws UnsupportedComponentException If the factory fails creating the component
      */
     public abstract void addToHierarchy(IComponentFactory factory, 
             String componentName,
             String technicalName) 
-        throws GuiDancerUnsupportedComponentException;
+        throws UnsupportedComponentException;
     
     /**
      * returns an array of all component identifier of (supported) components,
@@ -220,7 +220,7 @@ public abstract class AUTHierarchy {
                         (IBaseImplementationClass)implClass;
                     componentTextArray = baseImpl.getTextArrayFromComponent();
                 }
-            } catch (GuiDancerUnsupportedComponentException uce) {
+            } catch (UnsupportedComponentException uce) {
                 LOG.warn(uce);
             } catch (IllegalArgumentException iae) {
                 LOG.error(iae);

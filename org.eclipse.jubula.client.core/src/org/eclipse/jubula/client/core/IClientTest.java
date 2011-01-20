@@ -20,7 +20,7 @@ import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListene
 import org.eclipse.jubula.client.core.businessprocess.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
-import org.eclipse.jubula.client.core.communication.BaseConnection.GuiDancerNotConnectedException;
+import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -78,12 +78,12 @@ public interface IClientTest {
      * @param autId The ID of the AUT for which to start the Object Mapping.
      * 
      * @throws ConnectionException
-     * @throws GuiDancerNotConnectedException
+     * @throws NotConnectedException
      * @throws CommunicationException
      */
     public abstract void startObjectMapping(AutIdentifier autId, int mod, 
             int inputCode, int inputType) throws ConnectionException, 
-            GuiDancerNotConnectedException, CommunicationException;
+            NotConnectedException, CommunicationException;
 
     /**
      * Starts the record mode. <br>

@@ -29,6 +29,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 
 /**
@@ -215,7 +217,8 @@ class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
     @Transient
     public Long getParentProjectId() {
         throw new UnsupportedOperationException(
-                getClass().getName() + " does not track its parent project"); //$NON-NLS-1$
+                getClass().getName() + StringConstants.SPACE
+                    + Messages.DoesNotTrackItsParentProject);
     }
 
     /**
@@ -240,7 +243,8 @@ class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
      */
     public void setParentProjectId(Long projectId) {
         throw new UnsupportedOperationException(
-                getClass().getName() + " does not track its parent project"); //$NON-NLS-1$
+                getClass().getName() + StringConstants.SPACE
+                    + Messages.DoesNotTrackItsParentProject);
     }
 
     /**

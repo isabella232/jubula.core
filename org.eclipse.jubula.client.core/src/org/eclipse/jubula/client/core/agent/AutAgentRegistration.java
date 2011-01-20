@@ -27,11 +27,13 @@ import org.eclipse.jubula.client.core.ServerEvent;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
 import org.eclipse.jubula.client.core.commands.RegisteredAutListCommand;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.communication.message.GetRegisteredAutListMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.slf4j.Logger;
@@ -123,7 +125,8 @@ public class AutAgentRegistration
             try {
                 l.handleAutRegistration(event);
             } catch (Throwable t) {
-                LOG.error("Error occurred while notifying listeners.", t); //$NON-NLS-1$
+                LOG.error(Messages.ErrorWhileNotifyingListeners
+                        + StringConstants.DOT, t);
             }
         }
     }
@@ -150,7 +153,8 @@ public class AutAgentRegistration
                         new GetRegisteredAutListMessage(), 
                         new RegisteredAutListCommand(this), 5000);
                 } catch (CommunicationException ce) {
-                    LOG.error("Error occurred while getting list of registered AUTs from AUT Agent", ce); //$NON-NLS-1$
+                    LOG.error(Messages.ErrorWhileGettingListOfRegisteredAUTs, 
+                            ce);
                 }
                 break;
             default:

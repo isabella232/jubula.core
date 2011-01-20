@@ -15,7 +15,7 @@ package org.eclipse.jubula.tools.exception;
  * @author BREDEX GmbH
  * @created Nov 23, 2006
  */
-public class UnexpectedGenericTypeException extends GDException {
+public class UnexpectedGenericTypeException extends JBException {
     
     /** 
      * public constructor

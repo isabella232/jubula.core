@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.errorhandling;
 
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 /**
  * Presents an error message to the user.
@@ -26,7 +26,7 @@ public interface IErrorMessagePresenter {
      * @param params Parameter of the message text or null, if not needed.
      * @param details use null, or overwrite in MessageIDs hardcoded details.
      */
-    public void showErrorMessage(GDException ex, 
+    public void showErrorMessage(JBException ex, 
             Object[] params, String[] details);
 
     /**

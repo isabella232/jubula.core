@@ -30,10 +30,11 @@ import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
+import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -225,8 +226,9 @@ public class ActionBuilder {
     private void fillMenuBar(IMenuManager menuBar) {
         m_resetPersp.setEnabled(true);        
         menuBar.setRemoveAllWhenShown(true);
-        menuBar.add(createProjectMenu());
+        menuBar.add(createFileMenu());
         menuBar.add(createEditMenu());
+        menuBar.add(createSearchMenu());
         menuBar.add(createRunMenu());
         menuBar.add(createWindowMenu());
         menuBar.add(createHelpMenu()); 
@@ -235,11 +237,12 @@ public class ActionBuilder {
     
     /**
      * Creates Edit menu.
+     * 
      * @return IMenuManager.
      */
     private IMenuManager createEditMenu() {
         IMenuManager editMenu = new MenuManager(Messages.ActionBuilderEdit,
-                "JubulaEditMenu"); //$NON-NLS-1$
+                IWorkbenchActionConstants.M_EDIT);
         /* 
          * JubulaEditSeparator1 = Create>
          * JubulaEditSeparator1 = Add>
@@ -258,50 +261,50 @@ public class ActionBuilder {
         editMenu.add(new GroupMarker("JubulaEditSeparator3")); //$NON-NLS-1$
         return editMenu;
     }
-    
+
     /**
-     * Creates Run menu.
-     * @return IMenuManager.
+     * Creates a Search menu.
+     * 
+     * @return the menu manager for the created menu.
+     */
+    private IMenuManager createSearchMenu() {
+        IMenuManager searchMenu = new MenuManager(Messages.ActionBuilderSearch,
+                "org.eclipse.search.menu"); //$NON-NLS-1$
+        return searchMenu;
+    }
+
+    /**
+     * Creates a Run menu.
+     * 
+     * @return the menu manager for the created menu.
      */
     private IMenuManager createRunMenu() {
         IMenuManager runMenu = new MenuManager(Messages.ActionBuilderRun,
-                "JubulaRunMenu"); //$NON-NLS-1$
+                "org.eclipse.ui.run"); //$NON-NLS-1$
         return runMenu;
     }
 
     /**
-     * Creates the ProjectMenu.
-     * {@inheritDoc}
-     * @return an IMenuManager.
+     * Creates a File menu.
+     * 
+     * @return the menu manager for the created menu.
      */
-    private IMenuManager createProjectMenu() {
-        IMenuManager projectMenu = new MenuManager(Messages
-                .ActionBuilderMyFileEntry,                
-                "JubulaProjectMenu"); //$NON-NLS-1$
-        //FIXME NLS rename JubulaProjectSeparator1 (look messages.properties)
-        /* 
-         * JubulaProjectSeparator1 = new Project/open Project / saveAs
-         * JubulaProjectSeparator2 = import/export
-         * JubulaProjectSeparator3 = settings
-         */
-        projectMenu.add(new GroupMarker("JubulaProjectSeparator1")); //$NON-NLS-1$
-        projectMenu.add(new Separator()); 
-        projectMenu.add(m_fileSave);
-        projectMenu.add(m_fileSaveAll);
-        projectMenu.add(new Separator());
-        CommandHelper.createContributionPushItem(projectMenu,
-                CommandIDs.REFRESH_COMMAND_ID);
-        projectMenu.add(new Separator()); 
-        projectMenu.add(new GroupMarker("JubulaProjectSeparator3")); //$NON-NLS-1$
-        projectMenu.add(new Separator()); 
-        projectMenu.add(new GroupMarker("JubulaProjectSeparator4")); //$NON-NLS-1$
-        projectMenu.add(new Separator()); 
-        projectMenu.add(new GroupMarker("JubulaProjectSeparator5")); //$NON-NLS-1$
-        projectMenu.add(new Separator()); 
-        projectMenu.add(m_quitAction);
-        return projectMenu;
+    private IMenuManager createFileMenu() {
+        IMenuManager fileMenu = new MenuManager(Messages
+                .ActionBuilderMyFileEntry,
+                IWorkbenchActionConstants.M_FILE);
+        fileMenu.add(m_fileSave);
+        fileMenu.add(m_fileSaveAll);
+        fileMenu.add(new Separator());
+        CommandHelper.createContributionPushItem(fileMenu,
+                IWorkbenchCommandConstants.FILE_RENAME);
+        CommandHelper.createContributionPushItem(fileMenu,
+                IWorkbenchCommandConstants.FILE_REFRESH);
+        fileMenu.add(new Separator()); 
+        fileMenu.add(m_quitAction);
+        return fileMenu;
     }
-    
+
     /**
      * Creates the Window menu.
      * @return IMenuManager.
@@ -354,6 +357,9 @@ public class ActionBuilder {
         helpMenu.add(m_helpCont);
         helpMenu.add(new Separator("helpEnd")); //$NON-NLS-1$
 
+        CommandHelper.createContributionPushItem(
+                helpMenu, IWorkbenchCommandConstants.HELP_ABOUT);
+        
         return helpMenu;
     }
     

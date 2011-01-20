@@ -18,8 +18,8 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.utils.StringHelper;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDIntegerTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IntegerTextPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
@@ -142,7 +142,7 @@ public class EventExecTestCaseGUIPropertySource extends
         
         // Specification Name
         if (m_specNamePropDesc == null) {
-            PropertyDescriptor propDes = new GDPropertyDescriptor(
+            PropertyDescriptor propDes = new JBPropertyDescriptor(
                     new SpecNameController(),
                     P_SPECNAME_DISPLAY_NAME);
             propDes.setLabelProvider(new DisabledLabelProvider());
@@ -188,7 +188,7 @@ public class EventExecTestCaseGUIPropertySource extends
         
         // Max Retries
         if (m_maxRetriesPropDesc == null) {
-            m_maxRetriesPropDesc = new GDIntegerTextPropertyDescriptor(
+            m_maxRetriesPropDesc = new IntegerTextPropertyDescriptor(
                     new MaxRetriesController(), P_ELEMENT_DISPLAY_MAXRETRIES, 
                     false, IEventExecTestCasePO.MIN_VALUE_MAX_NUM_RETRIES, 
                     IEventExecTestCasePO.MAX_VALUE_MAX_NUM_RETRIES);
@@ -199,7 +199,7 @@ public class EventExecTestCaseGUIPropertySource extends
         }
 
         // empty line
-        addPropertyDescriptor(new GDPropertyDescriptor(
+        addPropertyDescriptor(new JBPropertyDescriptor(
                 new DummyController(), StringConstants.EMPTY));
         // Get the ExecTcDescriptors and add them to this descriptors
         addPropertyDescriptor(super.createParamDescriptors());

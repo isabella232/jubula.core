@@ -115,8 +115,8 @@ public class TreeElementChooserComposite extends Composite {
     private Set<String> m_usedParents = new HashSet<String>();
     
     /** the GDStateController */
-    private final GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    private final WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
     
     /** Mapping between display Strings and corresponding GUI objects */
     private Map<String, IChooserCompositeGuiObject> m_listItemsToGuiObjects =
@@ -1081,7 +1081,7 @@ public class TreeElementChooserComposite extends Composite {
      * @created 10.02.2005
      */
     @SuppressWarnings("synthetic-access")
-    private class GuiDancerSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
 
         /**
          * {@inheritDoc}

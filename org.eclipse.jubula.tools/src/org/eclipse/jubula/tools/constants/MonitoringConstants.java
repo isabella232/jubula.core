@@ -10,10 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.tools.constants;
 
-import java.util.Map;
 
 /**
- * This class contains the keys for the extension point mechanism.
+ * This class contains the keys for the extension point mechanism and other
+ * monitoring constants.
  *
  * @author BREDEX GmbH
  * @created 27.07.2010
@@ -43,36 +43,35 @@ public class MonitoringConstants {
     /** the query syntax for the extensions rendering parameter */
     public static final String M_INFO_TEXT = "infoBoobleText"; //$NON-NLS-1$ 
     /** the query syntax for the extensions validator */
-    public static final String M_ATTR_VALIDATOR = "validator"; ////$NON-NLS-1$
+    public static final String M_ATTR_VALIDATOR = "validator"; ////$NON-NLS-1$    
     
-    /** methode name constant for reflection */
-    public static final String GET_MONITORING_AGENT_METHOD = "getAgent";  //$NON-NLS-1$ 
     /** key for ConfigMap */
-    public static final String AGENT_CLASS = "AGENT_CLASS"; ////$NON-NLS-1$
-    
+    public static final String AGENT_CLASS = "AGENT_CLASS"; //$NON-NLS-1$   
     
     /** default empty values if value, id or report are null. This happens when
-     *  monitoring methods are not implemented.
-     */
+     *  monitoring methods are not implemented. */
+    
     /** default value */
-    public static final Map EMPTY_MONITORING_VALUES = null;
-    /** default value */
-    public static final String EMPTY_MONITORING_ID = "non selected"; //$NON-NLS-1$
+    public static final String EMPTY_MONITORING_ID = "none selected"; //$NON-NLS-1$
     /** default value */
     public static final byte[] EMPTY_REPORT = new byte[0];
     /** default value */
-    public static final String EMPTY_TYPE = "none"; ////$NON-NLS-1$
+    public static final String EMPTY_TYPE = "none"; //$NON-NLS-1$
     
  
-    /** Monitoring-Valuetyp */ 
-    public static final String DOUBLE_VALUE = "DOUBLE"; ////$NON-NLS-1$
-    /** Monitoring-Valuetyp */ 
-    public static final String PERCENT_VALUE = "PERCENT"; ////$NON-NLS-1$
-    /** Monitoring-Valuetyp */ 
-    public static final String INTEGER_VALUE = "INTEGER"; ////$NON-NLS-1$
+    /** Monitoring-Value type */ 
+    public static final String DOUBLE_VALUE = "DOUBLE"; //$NON-NLS-1$
+    /** Monitoring-Value type */ 
+    public static final String PERCENT_VALUE = "PERCENT"; //$NON-NLS-1$
+    /** Monitoring-Value type */ 
+    public static final String INTEGER_VALUE = "INTEGER"; //$NON-NLS-1$
     /** Monitoring category  */
-    public static final String NO_CATEGORY = "NO_CATEGORY"; ////$NON-NLS-1$
+    public static final String NO_CATEGORY = "NO_CATEGORY"; //$NON-NLS-1$
     
+    /** a type "string" (set in the extension point) will be rendered as a Textfield*/
+    public static final String RENDER_AS_TEXTFIELD = "string"; //$NON-NLS-1$
+    /** a type "boolean" (set in the extension point) will be rendered as a checkbox*/
+    public static final String RENDER_AS_CHECKBOX = "boolean"; //$NON-NLS-1$ 
     
     /** private constructor */
     private MonitoringConstants() {        

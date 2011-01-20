@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * Toolkit Provider Class
  * 
- * This class provides the GUIdancer Client with all necessary information:
+ * This class provides the client with all necessary information:
  * which new components have been added by the user (see the
  * ComponentConfiguration.xml), from what kind of components they inherit and
  * where to search for translatable keys.

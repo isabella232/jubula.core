@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.core.persistence.PMExtProjDeletedException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.ui.actions.AbstractAction;
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.handlers.RefreshProjectHandler.RefreshProjectOperation;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -86,7 +86,7 @@ public class PMExceptionHandler {
      * @param editor editor caused this excpetion
      */
     public static void handlePMExceptionForEditor(PMException exc, 
-        IGDEditor editor) {
+        IJBEditor editor) {
         
         if (exc instanceof PMDirtyVersionException
             || exc instanceof PMObjectDeletedException) {
@@ -135,7 +135,7 @@ public class PMExceptionHandler {
                 IPersistentObject oldProj = GeneralStorage.getInstance()
                         .getProject();
                 Utils.createMessageDialog(MessageIDs.E_CURRENT_PROJ_DEL);
-                Utils.clearGuidancer();
+                Utils.clearClient();
                 GeneralStorage.getInstance().setProject(null);
                 if (oldProj != null) {
                     DataEventDispatcher.getInstance().fireDataChangedListener(

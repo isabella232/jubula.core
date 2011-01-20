@@ -11,6 +11,8 @@
 package org.eclipse.jubula.client.core.errorhandling;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,8 +59,19 @@ public class ErrorMessagePresenter {
         // Generally, the presenter should only be set once (on application 
         // startup), so log as a warning if the presenter is being set again.
         if (!(presenter instanceof NoopErrorMessagePresenter)) {
-            LOG.warn("Error message presenter [" + presenter  //$NON-NLS-1$
-                    + "] is being replaced with [" + errorMessagePresenter + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+            StringBuilder msg = new StringBuilder();
+            msg.append(Messages.ErrorMessagePresenter);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.LEFT_BRACKET);
+            msg.append(presenter);
+            msg.append(StringConstants.RIGHT_BRACKET);
+            msg.append(StringConstants.SPACE);
+            msg.append(Messages.IsBeingReplacedWith);
+            msg.append(StringConstants.SPACE);
+            msg.append(StringConstants.LEFT_BRACKET);
+            msg.append(errorMessagePresenter);
+            msg.append(StringConstants.RIGHT_BRACKET);
+            LOG.warn(msg.toString());
         }
         presenter = errorMessagePresenter;
     }

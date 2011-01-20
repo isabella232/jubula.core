@@ -30,7 +30,7 @@ import org.eclipse.jubula.client.ui.businessprocess.ExportFileBP;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.handlers.RefreshProjectHandler;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
@@ -96,7 +96,7 @@ public class ExportFileAction extends AbstractAction {
                     }
                 } catch (final PMException e) {
                     Utils.createMessageDialog(e, null, null);
-                } catch (final GDProjectDeletedException e) {
+                } catch (final ProjectDeletedException e) {
                     PMExceptionHandler.handleGDProjectDeletedException();
                 } finally {
                     monitor.done();

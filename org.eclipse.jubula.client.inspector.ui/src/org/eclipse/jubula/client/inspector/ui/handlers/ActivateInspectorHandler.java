@@ -20,13 +20,13 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.BaseConnection.GuiDancerNotConnectedException;
+import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.inspector.ui.commands.ActivateInspectorResponseCommand;
+import org.eclipse.jubula.client.inspector.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.communication.message.ActivateInspectorMessage;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 
@@ -50,7 +50,7 @@ public class ActivateInspectorHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
         final AutIdentifier autId = 
             (AutIdentifier)event.getObjectParameterForExecution(AUT_ID);
-        final String jobName = I18n.getString("UIJob.activateInspector"); //$NON-NLS-1$
+        final String jobName = Messages.UIJobActivateInspector;
         Job activateInspectorJob = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
@@ -61,7 +61,7 @@ public class ActivateInspectorHandler extends AbstractHandler {
                             autId, new NullProgressMonitor());
                     AUTConnection.getInstance().request(message, 
                             new ActivateInspectorResponseCommand(), 5000);
-                } catch (GuiDancerNotConnectedException nce) {
+                } catch (NotConnectedException nce) {
                     Utils.createMessageDialog(
                             MessageIDs.E_NO_AUT_CONNECTION_ERROR);
                 } catch (ConnectionException ce) {

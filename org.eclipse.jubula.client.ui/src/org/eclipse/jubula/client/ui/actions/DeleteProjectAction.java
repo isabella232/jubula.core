@@ -45,10 +45,10 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.ProjectDialog;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.utils.GDThread;
+import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
@@ -121,7 +121,7 @@ public class DeleteProjectAction extends AbstractAction {
                 if (m_deleteCurrentProject) {
                     Plugin.getDisplay().syncExec(new Runnable() {
                         public void run() {
-                            Plugin.closeAllOpenedGDEditors();
+                            Plugin.closeAllOpenedJubulaEditors();
                         }
                     });
                 }
@@ -153,7 +153,7 @@ public class DeleteProjectAction extends AbstractAction {
                 };
                 job.schedule();
                 if (m_deleteCurrentProject) {
-                    Utils.clearGuidancer();
+                    Utils.clearClient();
                     GeneralStorage.getInstance().setProject(null);
                     DataEventDispatcher.getInstance()
                         .fireDataChangedListener(m_project, DataState.Deleted,
@@ -165,10 +165,10 @@ public class DeleteProjectAction extends AbstractAction {
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
                 return;
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
                 return;
-            } catch (GDException e) {
+            } catch (JBException e) {
                 Utils.createMessageDialog(e, null, null);
             } finally {
                 // Remove JPA progress listeners
@@ -209,7 +209,7 @@ public class DeleteProjectAction extends AbstractAction {
             return;
         }
         Plugin.startLongRunning();
-        GDThread t = new GDThread() {
+        JBThread t = new JBThread() {
                 public void run() {
                     if (!Hibernator.init()) {
                         Plugin.stopLongRunning();
@@ -282,7 +282,7 @@ public class DeleteProjectAction extends AbstractAction {
                     // Do nothing.
                 }
             }
-        } catch (GDException e) {
+        } catch (JBException e) {
             Utils.createMessageDialog(e, null, null);
         } finally {
             Plugin.stopLongRunning();

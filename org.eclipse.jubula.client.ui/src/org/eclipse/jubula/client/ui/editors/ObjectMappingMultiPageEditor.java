@@ -97,7 +97,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.ComponentNameTreeViewerUpdater;
-import org.eclipse.jubula.client.ui.controllers.GDStateController;
+import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
@@ -107,10 +107,10 @@ import org.eclipse.jubula.client.ui.controllers.dnd.objectmapping.OMDropTargetLi
 import org.eclipse.jubula.client.ui.controllers.dnd.objectmapping.OMEditorDndSupport;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.editingsupport.AbstractObjectMappingEditingSupport;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher.IEditorDirtyStateListener;
-import org.eclipse.jubula.client.ui.filter.GDFilteredTree;
+import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.ObjectMappingEditorPatternFilter;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
@@ -124,12 +124,12 @@ import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.ColumnSortListener;
-import org.eclipse.jubula.client.ui.views.IGDPart;
+import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.IMultiTreeViewerContainer;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -164,13 +164,13 @@ import org.eclipse.ui.swt.IFocusService;
 
 
 /**
- * Editor for managing Object Mapping in GUIdancer.
+ * Editor for managing Object Mapping in Jubula.
  *
  * @author BREDEX GmbH
  * @created Oct 21, 2008
  */
 public class ObjectMappingMultiPageEditor extends MultiPageEditorPart 
-                implements IGDPart, IGDEditor, 
+                implements IJBPart, IJBEditor, 
                 IObjectMappingObserver, IEditorDirtyStateListener,
                 IMultiTreeViewerContainer, IPropertyListener {
 
@@ -191,7 +191,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     private static final int TABLE_PAGE_IDX = 2;
     
     /** the object responsible for handling GDEditor-related tasks */
-    private GDEditorHelper m_editorHelper;
+    private JBEditorHelper m_editorHelper;
     
     /** handles the business process operations for this editor */
     private OMEditorBP m_omEditorBP;
@@ -829,7 +829,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     protected void createPages() {
         if (m_editorHelper == null) {
-            m_editorHelper = new GDEditorHelper(this);
+            m_editorHelper = new JBEditorHelper(this);
         }
         m_omEditorBP = new OMEditorBP(this);
         IObjectMappingPO objMap = getAut().getObjMap();
@@ -1045,7 +1045,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         GridData gridData = 
             new GridData (GridData.HORIZONTAL_ALIGN_FILL | GridData.FILL_BOTH);
         treeComp.setLayoutData(gridData); 
-        final FilteredTree ft = new GDFilteredTree(treeComp, SWT.MULTI
+        final FilteredTree ft = new JBFilteredTree(treeComp, SWT.MULTI
                 | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER, 
                 new ObjectMappingEditorPatternFilter(), true);
         m_treeViewer = ft.getViewer();
@@ -1073,7 +1073,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_treeViewer.setAutoExpandLevel(2);
         m_treeViewer.setInput(getAut().getObjMap());
         createTreeContextMenu(m_treeViewer, contextMenuMgr);
-        GDStateController.getInstance().
+        JubulaStateController.getInstance().
             addSelectionListenerToSelectionService();
         Plugin.getHelpSystem().setHelp(parent,
             ContextHelpIds.OBJECT_MAP_EDITOR);
@@ -1611,7 +1611,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         monitor.beginTask(I18n.getString("Editors.saveEditors"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
         boolean isProjDeleted = false;
         IObjectMappingPO objMap = getAut().getObjMap();
-        getAut().setObjMap(objMap);
         TimestampBP.refreshTimestamp(objMap);
         try {
             if (getEditorHelper().isDirty()) {
@@ -1652,7 +1651,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             ComponentNamesBP.getInstance().init();
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForEditor(e, this);
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
             isProjDeleted = true;
         } catch (IncompatibleTypeException ite) {
@@ -1953,7 +1952,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     /**
      * {@inheritDoc}
      */
-    public GDEditorHelper getEditorHelper() {
+    public JBEditorHelper getEditorHelper() {
         return m_editorHelper;
     }
 
@@ -2064,7 +2063,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * {@inheritDoc}
      */
     public void handleEditorDirtyStateChanged(
-            IGDEditor gdEditor, boolean isDirty) {
+            IJBEditor gdEditor, boolean isDirty) {
         
         if (gdEditor == this) {
             m_revertEditorChangesAction.setEnabled(isDirty);
@@ -2212,7 +2211,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         super.init(site, input);
         
         if (m_editorHelper == null) {
-            m_editorHelper = new GDEditorHelper(this);
+            m_editorHelper = new JBEditorHelper(this);
         }
         m_editorHelper.init(site, input);
     }

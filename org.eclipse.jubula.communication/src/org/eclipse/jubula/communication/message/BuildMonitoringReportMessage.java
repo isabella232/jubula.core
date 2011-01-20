@@ -19,15 +19,13 @@ public class BuildMonitoringReportMessage extends Message {
 
     /** The autId */
     private String m_autId;
-    /** default constructor 
-     * @deprecated A Message without an ID will cause an error while building 
-     * report*/
+    /** default constructor */
     public BuildMonitoringReportMessage() {
         //default constructor
     }
     /**
-     * ad
-     * @param autId asd
+     * 
+     * @param autId The autId
      */
     public BuildMonitoringReportMessage(String autId) {
         this.m_autId = autId;

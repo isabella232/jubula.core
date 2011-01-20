@@ -64,7 +64,7 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.InvalidAction;
@@ -821,7 +821,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
             boolean reusedProjectExists = false;
             try {
                 reusedProjectExists = (ProjectPM.loadProject(reused) != null);
-            } catch (GDException e) {
+            } catch (JBException e) {
                 // Error while loading project; Project does not exist
                 // Do nothing
             }
@@ -867,7 +867,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                         }
                     }
                 }
-            } catch (GDException e) {
+            } catch (JBException e) {
                 // Error while loading project; Project does not exist
                 // Do nothing
             }

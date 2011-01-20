@@ -18,7 +18,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
 import org.eclipse.jubula.client.ui.businessprocess.DisconnectServerBP;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionGUIController;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -83,7 +82,7 @@ public class DisconnectAction extends AbstractAction {
                 
         MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
             I18n.getString("Client.DisconnectFromServerTitle"), //$NON-NLS-1$
-                IconConstants.GUIDANCER_IMAGE,
+                null,
                 I18n.getString("Client.DisconnectFromServerMessage"), //$NON-NLS-1$
                 MessageDialog.QUESTION, new String[] {
                     I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$

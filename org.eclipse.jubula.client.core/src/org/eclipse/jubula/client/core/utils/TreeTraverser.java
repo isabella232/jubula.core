@@ -27,7 +27,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 
 /**
@@ -268,7 +268,7 @@ public class TreeTraverser {
                         }
                     }
 
-                } catch (GDException e) {
+                } catch (JBException e) {
                     // Unable to load Reused Project.
                     // The Reused Project will not be traversed.
                 }

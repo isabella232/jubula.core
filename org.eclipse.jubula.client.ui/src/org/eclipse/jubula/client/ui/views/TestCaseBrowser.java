@@ -61,7 +61,7 @@ import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.controllers.GDStateController;
+import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
@@ -75,13 +75,13 @@ import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseBrowserContentProvider;
-import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralGDLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
@@ -103,8 +103,8 @@ import org.eclipse.ui.actions.ActionFactory;
  * @author BREDEX GmbH
  * @created 05.07.2004
  */
-public class TestCaseBrowser extends AbstractGDTreeView 
-    implements ITreeViewerContainer, IGDPart {
+public class TestCaseBrowser extends AbstractJBTreeView 
+    implements ITreeViewerContainer, IJBPart {
     /** New-menu ID */
     public static final String NEW_ID = PlatformUI.PLUGIN_ID + ".NewSubMenu"; //$NON-NLS-1$
     /** Identifies the workbench plug-in */
@@ -145,7 +145,7 @@ public class TestCaseBrowser extends AbstractGDTreeView
         getTreeViewer().setContentProvider(
                 new TestCaseBrowserContentProvider());
         getTreeViewer().setLabelProvider(new DecoratingCellLabelProvider(
-            new GeneralGDLabelProvider(), Plugin.getDefault()
+            new GeneralLabelProvider(), Plugin.getDefault()
                     .getWorkbench().getDecoratorManager().getLabelDecorator()));
         m_cutTreeItemAction = new CutTreeItemActionTCBrowser();
         m_pasteTreeItemAction = new PasteTreeItemActionTCBrowser();
@@ -161,7 +161,7 @@ public class TestCaseBrowser extends AbstractGDTreeView
             new TestSpecDropTargetListener(this));
         
         createContextMenu(); 
-        GDStateController.getInstance().
+        JubulaStateController.getInstance().
             addSelectionListenerToSelectionService();
         Plugin.getHelpSystem().setHelp(getTreeViewer().getControl(),
             ContextHelpIds.TEST_SPEC_VIEW);
@@ -305,7 +305,7 @@ public class TestCaseBrowser extends AbstractGDTreeView
     public void dispose() {
         try {
             m_menuMgr.removeMenuListener(m_menuListener);
-            GDStateController.getInstance()
+            JubulaStateController.getInstance()
                 .removeSelectionListenerFromSelectionService();
             DataEventDispatcher.getInstance().removeDataChangedListener(this);
             getViewSite().getWorkbenchWindow().getSelectionService()
@@ -468,7 +468,7 @@ public class TestCaseBrowser extends AbstractGDTreeView
             ISelection selection) {
             
             if (!(selection instanceof IStructuredSelection)) { 
-                // e.g. in GUIdancer plugin-version you can open an java editor, 
+                // e.g. in Jubula plugin-version you can open an java editor, 
                 // that reacts on org.eclipse.jface.text.TextSelection, which
                 // is not a StructuredSelection
                 return;
@@ -708,7 +708,7 @@ public class TestCaseBrowser extends AbstractGDTreeView
         if (edit == null) {
             String msg = "no active TC editor, please fix the method"; //$NON-NLS-1$
             LOG.fatal(msg); 
-            throw new GDFatalException(msg, MessageIDs.E_NO_OPENED_EDITOR);
+            throw new JBFatalException(msg, MessageIDs.E_NO_OPENED_EDITOR);
         }
         return edit;
     }

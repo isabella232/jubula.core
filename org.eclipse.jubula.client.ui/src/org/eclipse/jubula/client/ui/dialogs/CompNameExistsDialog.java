@@ -16,10 +16,10 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
@@ -56,7 +56,7 @@ public class CompNameExistsDialog extends TitleAreaDialog {
     private Label m_typeLabel;
     
     /** The name Text-Field */
-    private GDText m_nameField;
+    private JBText m_nameField;
 
     /**
      * @param parentShell The parent shell.
@@ -100,7 +100,7 @@ public class CompNameExistsDialog extends TitleAreaDialog {
         
         try {
             createInput(area);
-        } catch (GDException e) {
+        } catch (JBException e) {
             Utils.createMessageDialog(e, null, null);
             cancelPressed();
         }
@@ -112,7 +112,7 @@ public class CompNameExistsDialog extends TitleAreaDialog {
     /**
      * @param parent the parent
      */
-    private void createInput(final Composite parent) throws GDException {
+    private void createInput(final Composite parent) throws JBException {
         final Composite nameFieldArea = new Composite(parent, SWT.NONE);
         final GridLayout areaLayout = new GridLayout(1, false);
         nameFieldArea.setLayout(areaLayout);
@@ -131,7 +131,7 @@ public class CompNameExistsDialog extends TitleAreaDialog {
         final Label messageLabel2 = new Label(nameFieldArea, SWT.NONE);
         messageLabel2.setText(I18n.getString("CompNameExistsDialog.PressOkOrEnter")); //$NON-NLS-1$
         
-        m_nameField = new GDText(nameFieldArea, SWT.SINGLE | SWT.BORDER);
+        m_nameField = new JBText(nameFieldArea, SWT.SINGLE | SWT.BORDER);
         final GridData nameFieldGridData = new GridData();
         nameFieldGridData.grabExcessHorizontalSpace = true;
         nameFieldGridData.horizontalAlignment = GridData.FILL;
@@ -169,7 +169,7 @@ public class CompNameExistsDialog extends TitleAreaDialog {
             if (isNameOK()) {
                 super.okPressed();
             }
-        } catch (GDException e) {
+        } catch (JBException e) {
             Utils.createMessageDialog(e, null, null);
             cancelPressed();
         }
@@ -179,7 +179,7 @@ public class CompNameExistsDialog extends TitleAreaDialog {
     /**
      * @return Checks if the new entered name is OK.
      */
-    private boolean isNameOK() throws GDException {
+    private boolean isNameOK() throws JBException {
         if (StringConstants.EMPTY.equals(m_newName)) {
             setErrorMessage(I18n.getString("CompNameExistsDialog.TypeComponentName")); //$NON-NLS-1$
             return false;

@@ -41,8 +41,8 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.ComboBoxDialog;
 import org.eclipse.jubula.client.ui.dialogs.ImportProjectDialog;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.utils.GDThread;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.client.ui.utils.JBThread;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.widgets.Button;
@@ -117,7 +117,7 @@ public class ImportFileBP implements IProjectNameConflictResolver {
      */
     public void importFile() {
         Plugin.startLongRunning();
-        GDThread t = new GDThread() {
+        JBThread t = new JBThread() {
             public void run() {
                 if (!Hibernator.init()) {
                     Plugin.stopLongRunning();
@@ -156,7 +156,7 @@ public class ImportFileBP implements IProjectNameConflictResolver {
      */
     public void importUnboundModules() {
         Plugin.startLongRunning();
-        GDThread t = new GDThread() {
+        JBThread t = new JBThread() {
             public void run() {
                 Plugin.getDisplay().syncExec(new ImportUnboundThread());
             }
@@ -210,7 +210,7 @@ public class ImportFileBP implements IProjectNameConflictResolver {
                         } catch (PMException pme) {
                             PMExceptionHandler
                                 .handlePMExceptionForMasterSession(pme);
-                        } catch (GDProjectDeletedException gdpde) {
+                        } catch (ProjectDeletedException gdpde) {
                             PMExceptionHandler
                                 .handleGDProjectDeletedException();
                         }
@@ -309,7 +309,7 @@ public class ImportFileBP implements IProjectNameConflictResolver {
         } catch (PMException pme) {
             PMExceptionHandler
                 .handlePMExceptionForMasterSession(pme);
-        } catch (GDProjectDeletedException gdpde) {
+        } catch (ProjectDeletedException gdpde) {
             PMExceptionHandler
                 .handleGDProjectDeletedException();
         }

@@ -24,8 +24,8 @@ import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
 import org.eclipse.jubula.client.core.utils.StringHelper;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDParamComboPropertyDescriptor;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDParamTextPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ParamComboPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ParamTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.controllers.propertysources.AbstractGuiNodePropertySource.AbstractParamValueController;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamTextContentAssisted;
@@ -100,7 +100,7 @@ public class TestDataControlFactory {
         }
         if (paramObj instanceof IParamNodePO) {
             IParamNodePO paramNode = (IParamNodePO)paramObj;
-            String[] valuesSet = GDParamTextPropertyDescriptor.getValuesSet(
+            String[] valuesSet = ParamTextPropertyDescriptor.getValuesSet(
                     paramNode, paramDesc.getUniqueId());
 
             if (TestDataConstants.BOOLEAN.equals(paramDesc.getType())) {
@@ -152,18 +152,18 @@ public class TestDataControlFactory {
 
         final String paramType = paramValController.getParamDesc().getType();
         if (values.length > 0) {
-            return new GDParamComboPropertyDescriptor(paramValController,
+            return new ParamComboPropertyDescriptor(paramValController,
                     displayName, values, createParamValueValidator(
                             TestDataConstants.COMBO, valuesAreCombinable, 
                             values));
         }
         if (TestDataConstants.BOOLEAN.equals(paramType)) {
-            return new GDParamTextPropertyDescriptor(paramValController,
+            return new ParamTextPropertyDescriptor(paramValController,
                     displayName, createParamValueValidator(
                             TestDataConstants.COMBO, valuesAreCombinable, 
                             BOOLEAN_VALUES));
         }
-        return new GDParamTextPropertyDescriptor(paramValController,
+        return new ParamTextPropertyDescriptor(paramValController,
                 displayName, 
                 createParamValueValidator(paramType, valuesAreCombinable));
     }

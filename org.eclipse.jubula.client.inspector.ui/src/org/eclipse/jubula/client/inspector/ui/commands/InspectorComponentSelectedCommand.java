@@ -14,11 +14,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
+import org.eclipse.jubula.client.inspector.ui.i18n.Messages;
 import org.eclipse.jubula.client.inspector.ui.model.InspectedComponent;
 import org.eclipse.jubula.client.inspector.ui.provider.sourceprovider.InspectorStateProvider;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.InspectorComponentSelectedMessage;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -61,7 +63,8 @@ public class InspectorComponentSelectedCommand implements ICommand {
             AUTConnection.getInstance().close();
         } catch (ConnectionException ce) {
             // Connection already closed. Do nothing.
-            log.info("Attempted to close an uninitialized connection.", ce); //$NON-NLS-1$
+            log.info(Messages.AttemptedCloseUninitializedConnection 
+                    + StringConstants.DOT, ce);
         }
         IWorkbenchWindow activeWorkbenchWindow = 
             PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -100,7 +103,7 @@ public class InspectorComponentSelectedCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        log.error(this.getClass().getName() + "timeout() called"); //$NON-NLS-1$
+        log.error(this.getClass().getName() + Messages.TimeoutCalled);
     }
 
 }

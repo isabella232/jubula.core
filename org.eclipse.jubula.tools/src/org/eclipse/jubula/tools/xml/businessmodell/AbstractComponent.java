@@ -11,10 +11,9 @@
 package org.eclipse.jubula.tools.xml.businessmodell;
 
 /**
- * This class represents abstract components which can be tested by the
- * GuiDancer. This allows the tester to define test specifications without
- * mapping the actions (clicks, text inputs etc.) to concrete graphic component
- * types.
+ * This class represents abstract components which can be tested Jubula. This
+ * allows the tester to define test specifications without mapping the actions
+ * (clicks, text inputs etc.) to concrete graphic component types.
  * 
  * @author BREDEX GmbH
  * @created 08.07.2004

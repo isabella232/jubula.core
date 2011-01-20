@@ -15,11 +15,13 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.GetMonitoringDataResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.MonitoringValue;
 
 
@@ -49,8 +51,7 @@ public class GetMonitoringDataResponseCommand implements ICommand {
         Map<String, MonitoringValue> monitoringValue = 
             m_message.getMonitoringValues();      
         if (monitoringValue == null) {
-            result.setMonitoringValues(
-                    MonitoringConstants.EMPTY_MONITORING_VALUES);
+            result.setMonitoringValues(null);
         } else {
             result.setMonitoringValues(m_message.getMonitoringValues());
         }
@@ -77,7 +78,8 @@ public class GetMonitoringDataResponseCommand implements ICommand {
      */
     public void timeout() {
         
-        log.error(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
+        log.error(this.getClass().getName() + StringConstants.DOT
+                + Messages.TimeoutCalled);
 
     }
 

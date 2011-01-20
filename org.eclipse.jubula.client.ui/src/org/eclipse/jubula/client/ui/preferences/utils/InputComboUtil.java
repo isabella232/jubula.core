@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.ui.constants.InputCodeHelper;
-import org.eclipse.jubula.client.ui.constants.InputCodeHelper.GDUserInput;
+import org.eclipse.jubula.client.ui.constants.InputCodeHelper.UserInput;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.constants.InputConstants;
 import org.eclipse.swt.widgets.Composite;
@@ -43,9 +43,9 @@ public final class InputComboUtil {
      * @param style The style for the combo box.
      * @return a new combo box containing only key inputs.
      */
-    public static DirectCombo<GDUserInput> createKeyCombo(
+    public static DirectCombo<UserInput> createKeyCombo(
             Composite parent, int style) {
-        return new DirectCombo<GDUserInput>(parent, style, 
+        return new DirectCombo<UserInput>(parent, style, 
                 Arrays.asList(InputCodeHelper.getInstance().getKeys()),
                 Arrays.asList(InputCodeHelper.getInstance().getKeyStrings()),
                 false, false);
@@ -57,9 +57,9 @@ public final class InputComboUtil {
      * @param style The style for the combo box.
      * @return a new combo box containing key and mouse inputs.
      */
-    public static DirectCombo<GDUserInput> createInputCombo(
+    public static DirectCombo<UserInput> createInputCombo(
             Composite parent, int style) {
-        return new DirectCombo<GDUserInput>(parent, style, 
+        return new DirectCombo<UserInput>(parent, style, 
                 Arrays.asList(InputCodeHelper.getInstance().getInputs()),
                 Arrays.asList(InputCodeHelper.getInstance().getInputStrings()),
                 false, false);
@@ -78,10 +78,10 @@ public final class InputComboUtil {
      *                  {@link InputCodeHelper.INPUT_TYPE}  enumeration.
      *                  
      */
-    public static void setSelectedInput(DirectCombo<GDUserInput> combo, 
+    public static void setSelectedInput(DirectCombo<UserInput> combo, 
             int inputCode, int inputType) {
 
-        combo.setSelectedObject(new GDUserInput(
+        combo.setSelectedObject(new UserInput(
                 inputCode, inputType));
     }
 
@@ -96,7 +96,7 @@ public final class InputComboUtil {
      *                  
      */
     public static void setSelectedKey(
-            DirectCombo<GDUserInput> combo, int inputCode) {
+            DirectCombo<UserInput> combo, int inputCode) {
 
         setSelectedInput(combo, inputCode, InputConstants.TYPE_KEY_PRESS);
     }
@@ -112,7 +112,7 @@ public final class InputComboUtil {
      *                    store.
      *                  
      */
-    public static void setPrefCode(DirectCombo<GDUserInput> combo, 
+    public static void setPrefCode(DirectCombo<UserInput> combo, 
             IPreferenceStore prefStore, String codePrefKey) {
         prefStore.setValue(codePrefKey, combo.getSelectedObject().getCode());
     }
@@ -128,7 +128,7 @@ public final class InputComboUtil {
      *                    store.
      *                  
      */
-    public static void setPrefType(DirectCombo<GDUserInput> combo, 
+    public static void setPrefType(DirectCombo<UserInput> combo, 
             IPreferenceStore prefStore, String typePrefKey) {
         prefStore.setValue(typePrefKey, combo.getSelectedObject().getType());
     }

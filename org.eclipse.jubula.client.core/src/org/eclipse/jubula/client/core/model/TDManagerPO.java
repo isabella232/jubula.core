@@ -34,6 +34,8 @@ import javax.persistence.Version;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -291,8 +293,9 @@ class TDManagerPO implements ITDManagerPO {
         throws IllegalArgumentException {
         int index = getUniqueIds().indexOf(uniqueId);
         if (index == -1) {
-            throw new IndexOutOfBoundsException("Parameter with unique id " + //$NON-NLS-1$
-                    uniqueId + " is not available."); //$NON-NLS-1$
+            throw new IndexOutOfBoundsException(Messages.ParameterWithUniqueId 
+                    + StringConstants.SPACE + uniqueId + StringConstants.SPACE 
+                    + Messages.IsNotAvailable + StringConstants.DOT);
         }
         return getCell(dataSetRow, index);
     }

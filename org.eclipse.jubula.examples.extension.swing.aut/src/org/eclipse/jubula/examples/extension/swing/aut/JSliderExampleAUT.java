@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JSlider;
 
 /**
- * Example AUT for GUIdancer Extension Mechanism
+ * Example AUT for Jubula Extension Mechanism
  * 
  * @author BREDEX GmbH
  */

@@ -33,6 +33,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.client.core.attributes.DefaultInitializer;
 import org.eclipse.jubula.client.core.attributes.IDocAttributeInitializer;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -149,19 +151,30 @@ class DocAttributeDescriptionPO implements IDocAttributeDescriptionPO {
         if (getValueSetKeys().contains(newDefaultValue)) {
             setHbmDefaultValue(newDefaultValue);
         } else {
-            StringBuffer sb = new StringBuffer("Attempted to set a default value that does not " //$NON-NLS-1$
-                    + "exist in the value set."); //$NON-NLS-1$
-            sb.append(" Value: "); //$NON-NLS-1$
+            StringBuffer sb = new StringBuffer(
+                    Messages.AttemptedToSetADefaultValueThatDoesNotExist);
+            sb.append(StringConstants.DOT);
+            sb.append(StringConstants.SPACE);
+            sb.append(Messages.Value);
+            sb.append(StringConstants.COLON);
+            sb.append(StringConstants.SPACE);
             sb.append(newDefaultValue);
-            sb.append("; Value set: ["); //$NON-NLS-1$
+            sb.append(StringConstants.SEMICOLON);
+            sb.append(StringConstants.SPACE);
+            sb.append(Messages.ValueSet);
+            sb.append(StringConstants.COLON);
+            sb.append(StringConstants.SPACE);
+            sb.append(StringConstants.LEFT_BRACKET);
             for (String value : getValueSetKeys()) {
                 sb.append(value);
-                sb.append(", "); //$NON-NLS-1$
+                sb.append(StringConstants.COMMA + StringConstants.SPACE);
             }
             if (getValueSetKeys().isEmpty()) {
-                sb.append("]"); //$NON-NLS-1$
+                sb.append(StringConstants.RIGHT_BRACKET);
             } else {
-                sb.replace(sb.lastIndexOf(", "), sb.length(), "]"); //$NON-NLS-1$ //$NON-NLS-2$
+                sb.replace(sb.lastIndexOf(StringConstants.COMMA 
+                    + StringConstants.SPACE), sb.length(), 
+                        StringConstants.RIGHT_BRACKET);
             }
             
             throw new IllegalArgumentException(sb.toString());

@@ -26,7 +26,7 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -177,7 +177,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
         // create a non-editable text field for the name of the event handler
         Label eventNameLabel = new Label(parent, SWT.NONE);
         eventNameLabel.setText(I18n.getString("AddEventHandlerDialog.label"));  //$NON-NLS-1$
-        GDText nameText = new GDText(parent, SWT.FILL | SWT.BORDER);
+        JBText nameText = new JBText(parent, SWT.FILL | SWT.BORDER);
         GridData eventNameGridData = 
             new GridData(SWT.FILL, SWT.NONE, true, false);
         nameText.setLayoutData(eventNameGridData);
@@ -387,7 +387,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
      * Adds listener to the widgets.
      */
     private void addListenerToWidgets() {
-        GDModifyListener listener = new GDModifyListener();
+        WidgetModifyListener listener = new WidgetModifyListener();
         m_eventTypesCombo.addModifyListener(listener);
         m_reentryTypesCombo.addModifyListener(listener);
     }
@@ -414,7 +414,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
      * @author BREDEX GmbH
      * @created 14.04.2005
      */
-    private class GDModifyListener implements ModifyListener {
+    private class WidgetModifyListener implements ModifyListener {
         /**
          * {@inheritDoc}
          */

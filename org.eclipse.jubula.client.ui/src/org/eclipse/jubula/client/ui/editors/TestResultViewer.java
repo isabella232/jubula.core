@@ -48,12 +48,12 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.controllers.GDStateController;
+import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.client.ui.views.GDPropertiesView;
-import org.eclipse.jubula.client.ui.views.IGDPart;
+import org.eclipse.jubula.client.ui.views.JBPropertiesView;
+import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -80,7 +80,7 @@ import org.slf4j.LoggerFactory;
  * @created May 17, 2010
  */
 public class TestResultViewer extends EditorPart implements ISelectionProvider,
-    ITreeViewerContainer, IAdaptable, IGDPart {
+    ITreeViewerContainer, IAdaptable, IJBPart {
 
     /** Constant: Editor ID */
     public static final String EDITOR_ID = 
@@ -411,7 +411,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                 .getWorkbench().getDecoratorManager().getLabelDecorator()));
 
         getSite().setSelectionProvider(m_viewer);
-        GDStateController.getInstance().
+        JubulaStateController.getInstance().
             addSelectionListenerToSelectionService();
         createContextMenu(m_viewer);
         TestResultEditorInput editorInput = 
@@ -518,7 +518,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
      */
     public Object getAdapter(Class adapter) {
         if (adapter.equals(IPropertySheetPage.class)) {
-            return new GDPropertiesView(false, null);
+            return new JBPropertiesView(false, null);
         }
         return super.getAdapter(adapter);
     }

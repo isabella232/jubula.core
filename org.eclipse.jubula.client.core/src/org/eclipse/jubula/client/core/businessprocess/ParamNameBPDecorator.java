@@ -19,6 +19,7 @@ import javax.persistence.Query;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNamePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -174,9 +175,16 @@ public class ParamNameBPDecorator extends GuidNameCache<IParamNamePO>
             try {
                 s.persist(paramName);
             } catch (PersistenceException e) {
-                String msg = "Could not save Parameter with name " //$NON-NLS-1$
-                    + paramName.getName() + " and GUID " + paramName.getGuid() //$NON-NLS-1$
-                                    + "."; //$NON-NLS-1$
+                StringBuilder msgbuid = new StringBuilder();
+                msgbuid.append(Messages.CouldNotSaveParameter);
+                msgbuid.append(StringConstants.SPACE);
+                msgbuid.append(paramName.getName());
+                msgbuid.append(StringConstants.SPACE);
+                msgbuid.append(Messages.AndGUID);
+                msgbuid.append(StringConstants.SPACE);
+                msgbuid.append(paramName.getGuid());
+                msgbuid.append(StringConstants.DOT);
+                String msg = msgbuid.toString();
                 log.error(msg, e); 
                 throw new PMSaveException(msg, MessageIDs.E_DB_SAVE);
             }
@@ -207,7 +215,8 @@ public class ParamNameBPDecorator extends GuidNameCache<IParamNamePO>
             }
 
         } catch (PersistenceException e) {
-            String msg = "Could not delete all parameters."; //$NON-NLS-1$                   
+            String msg = Messages.CouldNotDeleteAllParameters 
+                + StringConstants.DOT;                   
             log.error(msg, e);
             throw new PMSaveException(msg, MessageIDs.E_DB_SAVE);
         }

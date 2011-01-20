@@ -25,8 +25,10 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 /**
@@ -64,24 +66,28 @@ public abstract class PersistenceManager {
         String msg = null;
         String objName = null;
         if (obj == null) {
-            objName = "Unknown object"; //$NON-NLS-1$
+            objName = Messages.UnknownObject; //$NON-NLS-1$
         } else {
             objName = obj.getName();
         }
         // please attend the order of instance of verifications
         Throwable rootCause = ExceptionUtils.getRootCause(e);
         if (e instanceof EntityNotFoundException) {
-            msg = objName + " was deleted by another transaction."; //$NON-NLS-1$
+            msg = objName + StringConstants.SPACE 
+                + Messages.WasDeletedByAnotherTransaction + StringConstants.DOT;
             log.debug(msg, e);
             throw new PMObjectDeletedException(obj, msg,
                 MessageIDs.E_DELETED_OBJECT);
         } else if (e instanceof OptimisticLockException) {
-            msg = objName + " was modified in db (dirty version)."; //$NON-NLS-1$
+            msg = objName + StringConstants.SPACE
+                + Messages.WasModifiedInDBDirtyVersion + StringConstants.DOT;
             log.debug(msg, e);
             throw new PMDirtyVersionException(obj, msg, 
                 MessageIDs.E_STALE_OBJECT); 
         } else if (isLockException(e)) {
-            msg = objName + " already locked. Currently lock attempt failed."; //$NON-NLS-1$
+            msg = objName + StringConstants.SPACE
+                + Messages.AlreadyLockedCurrentlyLockAttemptFailed 
+                + StringConstants.DOT;
             log.debug(msg, e);
             throw new PMAlreadyLockedException(obj, msg, 
                 MessageIDs.E_OBJECT_IN_USE);
@@ -93,7 +99,8 @@ public abstract class PersistenceManager {
             throw new PMException(msg, MessageIDs.E_SQL_EXCEPTION);
             
         } 
-        msg = "general database error for " + objName + "."; //$NON-NLS-1$ //$NON-NLS-2$
+        msg = Messages.GeneralDatabaseErrorFor + StringConstants.SPACE 
+            + objName + StringConstants.DOT;
         log.error(msg, e);
         throw new PMException(msg, MessageIDs.E_DATABASE_GENERAL);
     }
@@ -139,21 +146,24 @@ public abstract class PersistenceManager {
     
     /**
      * @param obj
-     *            obj to handle the PersistenceException for
-     *            hint: obj could be null (for example for a db commit, where
-     *            the causing object is unknown
-     * @param e thrown exception
-     * @throws PMAlreadyLockedException in case of locked obj
-     * @throws PMDirtyVersionException in case of version conflict
-     * @throws PMException in case of general db error
-     * @throws GDProjectDeletedException if the project was deleted in another
-     * instance
-     * 
+     *            obj to handle the PersistenceException for hint: obj could be
+     *            null (for example for a db commit, where the causing object is
+     *            unknown
+     * @param e
+     *            thrown exception
+     * @throws PMAlreadyLockedException
+     *             in case of locked obj
+     * @throws PMDirtyVersionException
+     *             in case of version conflict
+     * @throws PMException
+     *             in case of general db error
+     * @throws ProjectDeletedException
+     *             if the project was deleted in another instance
      */
     public static void handleDBExceptionForMasterSession(IPersistentObject obj,
         PersistenceException e)
         throws PMAlreadyLockedException, PMDirtyVersionException, PMException, 
-        GDProjectDeletedException {
+        ProjectDeletedException {
         final GeneralStorage gs = GeneralStorage.getInstance();
         if (isLockException(e)) {
             gs.recoverSession();

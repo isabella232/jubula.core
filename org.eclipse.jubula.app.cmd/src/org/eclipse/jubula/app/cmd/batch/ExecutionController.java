@@ -72,7 +72,7 @@ import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
@@ -248,7 +248,7 @@ public class ExecutionController implements IAUTServerEventListener,
     }
 
     /** 
-     * Name of the environment variable that defines the time GUIdancer should
+     * Name of the environment variable that defines the time the client should
      * wait during AUT startup process.
      */
     private static final String AUT_STARTUP_DELAY_VAR = "GD_AUT_STARTUP_DELAY"; //$NON-NLS-1$
@@ -373,7 +373,6 @@ public class ExecutionController implements IAUTServerEventListener,
             timer.start();
         }
         // init ClientTest
-        // guidancerConfig.xml has to be added to classpath
         IClientTest clientTest = ClientTestFactory.getClientTest();
         clientTest.connectToServer(m_job.getServer(), m_job.getPort());
         if (!ServerConnection.getInstance().isConnected()) {
@@ -455,7 +454,7 @@ public class ExecutionController implements IAUTServerEventListener,
     }
 
     /**
-     * run a GUIdancer job
+     * run a test job
      */
     private void doSingleJob() {
         AbstractCmdlineClient.printConsoleLn(
@@ -780,7 +779,7 @@ public class ExecutionController implements IAUTServerEventListener,
                     + NLS.bind(Messages.ExecutionControllerProjectLoaded, 
                             new Object[] {m_job.getProjectName()}), true);
             }
-        } catch (GDException e1) { // NOPMD by zeb on 10.04.07 14:47
+        } catch (JBException e1) { // NOPMD by zeb on 10.04.07 14:47
             /* An exception was thrown while loading data or closing a session
              * using Hibernate. The project is never set. This is detected
              * during job validation (initAndValidate). */
@@ -951,7 +950,7 @@ public class ExecutionController implements IAUTServerEventListener,
      */
     public void stateChanged(TestExecutionEvent event) {
         if (event.getException() != null
-            && event.getException() instanceof GDException) {
+            && event.getException() instanceof JBException) {
             String errorMsg = 
                 I18n.getString(event.getException().getMessage(), true);
             AbstractCmdlineClient.printConsoleError(errorMsg);

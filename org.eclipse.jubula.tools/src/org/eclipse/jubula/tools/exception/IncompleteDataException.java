@@ -17,7 +17,7 @@ package org.eclipse.jubula.tools.exception;
  * @author BREDEX GmbH
  * @created 11.04.2005
  */
-public class IncompleteDataException extends GDException {
+public class IncompleteDataException extends JBException {
     /** 
      * public constructor
      * @param message the detailed message

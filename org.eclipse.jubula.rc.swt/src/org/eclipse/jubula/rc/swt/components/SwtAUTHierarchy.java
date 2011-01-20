@@ -27,8 +27,8 @@ import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
 import org.eclipse.jubula.rc.common.components.HierarchyContainer;
-import org.eclipse.jubula.rc.common.exception.GuiDancerComponentNotManagedException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
@@ -140,7 +140,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
      * {@inheritDoc}
      */
     public void addToHierarchy(IComponentFactory factory, String componentName,
-        String technicalName) throws GuiDancerUnsupportedComponentException {
+        String technicalName) throws UnsupportedComponentException {
         
         Widget component = (Widget)factory.createComponent(componentName);
         // don't add, if in hierarchy map yet
@@ -206,12 +206,12 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
      * obtain this identifier the name of the component and the container
      * hierarchy is used.
      * @param component the component to create an identifier for, must not be null.
-     * @throws GuiDancerComponentNotManagedException if component is null or <br> (one of the) component(s) in the hierarchy is not managed
+     * @throws ComponentNotManagedException if component is null or <br> (one of the) component(s) in the hierarchy is not managed
      * @return the identifier for <code>component</code>
      */
     public synchronized IComponentIdentifier getComponentIdentifier(
             Widget component) 
-        throws GuiDancerComponentNotManagedException {
+        throws ComponentNotManagedException {
         
         IComponentIdentifier result = new ComponentIdentifier();
 
@@ -230,10 +230,10 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
         } catch (IllegalArgumentException iae) {
             // from getPathToRoot()
             log.error(iae);
-            throw new GuiDancerComponentNotManagedException(
+            throw new ComponentNotManagedException(
                     "getComponentIdentifier() called for an unmanaged component " //$NON-NLS-1$
                     + component, MessageIDs.E_COMPONENT_NOT_MANAGED);
-            // let pass the GuiDancerComponentNotManagedException from getPathToRoot()
+            // let pass the ComponentNotManagedException from getPathToRoot()
         }
     }
     
@@ -289,7 +289,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
                 // from isSupported -> log
                 log.fatal("hierarchy map contains null values", iae); //$NON-NLS-1$   
                 // and continue
-            } catch (GuiDancerComponentNotManagedException e) {
+            } catch (ComponentNotManagedException e) {
                 // from isSupported -> log
                 log.fatal("component '" + component.getClass().getName() + "' not found!", e); //$NON-NLS-1$ //$NON-NLS-2$                    
                 // and continue
@@ -305,11 +305,11 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
      * @throws IllegalArgumentException if the given identifer is null or <br>
      *         the hierarchy is not valid: empty or containing null elements
      * @throws InvalidDataException if the hierarchy in the componentIdentifier does not consist of strings
-     * @throws GuiDancerComponentNotManagedException if no component could be found for the identifier
+     * @throws ComponentNotManagedException if no component could be found for the identifier
      * @return the instance of the component of the AUT 
      */
     public Widget findComponent(IComponentIdentifier componentIdentifier)
-        throws IllegalArgumentException, GuiDancerComponentNotManagedException,
+        throws IllegalArgumentException, ComponentNotManagedException,
         InvalidDataException {
     
         final Widget comp = findBP.findComponent(componentIdentifier, 
@@ -329,7 +329,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             });
             return comp; 
         }
-        throw new GuiDancerComponentNotManagedException(
+        throw new ComponentNotManagedException(
             "unmanaged component with identifier: '" //$NON-NLS-1$
                 + componentIdentifier.toString() + "'.", //$NON-NLS-1$ 
                 MessageIDs.E_COMPONENT_NOT_MANAGED); 
@@ -340,11 +340,11 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
      * Strings (the name of the components).
      * @param component the component to start, it's an instance from the AUT, must not be null
      * @throws IllegalArgumentException if component is null
-     * @throws GuiDancerComponentNotManagedException if no hierarchy conatiner exists for the component
+     * @throws ComponentNotManagedException if no hierarchy conatiner exists for the component
      * @return the path to root, the first elements contains the root, the last element contains the component itself.
      */
     private List getPathToRoot(Widget component) 
-        throws IllegalArgumentException, GuiDancerComponentNotManagedException {
+        throws IllegalArgumentException, ComponentNotManagedException {
         
         if (log.isInfoEnabled()) {
             log.info("pathToRoot called for " + component); //$NON-NLS-1$            
@@ -364,7 +364,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
         } else {
             log.error("component '" + component //$NON-NLS-1$ 
                     + "' is not managed by this hierarchy"); //$NON-NLS-1$
-            throw new GuiDancerComponentNotManagedException(
+            throw new ComponentNotManagedException(
                     "unmanaged component " //$NON-NLS-1$ 
                     + component.toString(), 
                     MessageIDs.E_COMPONENT_NOT_MANAGED); 

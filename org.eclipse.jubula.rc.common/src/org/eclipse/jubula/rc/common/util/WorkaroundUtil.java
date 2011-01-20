@@ -22,7 +22,7 @@ import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 public class WorkaroundUtil {
 
     /** 
-     * Name of the environment variable that defines whether GUIdancer should
+     * Name of the environment variable that defines whether the client should
      * ignore server-side timeouts that occur during test execution.
      */
     private static final String IGNORE_TIMEOUT_VAR = "GD_IGNORE_TIMEOUT"; //$NON-NLS-1$

@@ -27,6 +27,8 @@ import org.eclipse.jubula.toolkit.common.IToolKitProvider;
 import org.eclipse.jubula.toolkit.common.PluginStarter;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
+import org.eclipse.jubula.toolkit.common.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -88,7 +90,9 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                     final ResourceBundle resourceBundle = provider
                         .getI18nResourceBundle();
                     if (resourceBundle == null) {
-                        log.error("No I18n-ResourceBundle available for Toolkit: " //$NON-NLS-1$
+                        log.error(Messages.NoI18n + StringConstants.MINUS
+                            + Messages.ResourceBundleAvailable 
+                            + StringConstants.COLON + StringConstants.SPACE
                             + String.valueOf(descr.getName())); 
                     }
                     CompSystemI18n.addResourceBundle(resourceBundle);
@@ -97,11 +101,13 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                     addToolkitToCompSystem(compSystem);
                     ToolkitSupportBP.addToolkitProvider(descr, provider);
                 } catch (IOException fileNotFoundEx) {
-                    final String msg = "ComponenConfiguration.xml of Toolkit-Plugin not found!";  //$NON-NLS-1$
+                    final String msg = Messages.ComponenConfigurationNotFound
+                        + StringConstants.EXCLAMATION_MARK;
                     log.fatal(msg, fileNotFoundEx);
                     throw new ToolkitPluginException(msg, fileNotFoundEx);
                 } catch (CoreException coreEx) {
-                    final String msg = "Could not create ToolkitProvider of Toolkit-Plugin!"; //$NON-NLS-1$
+                    final String msg = Messages.CouldNotCreateToolkitProvider
+                        + StringConstants.EXCLAMATION_MARK;
                     log.fatal(msg, coreEx);
                     throw new ToolkitPluginException(msg, coreEx);
                 }
@@ -154,12 +160,14 @@ public class ComponentBuilder extends AbstractComponentBuilder {
         } catch (NumberFormatException e) {
             log.error(e);
             throw new ToolkitPluginException(
-                "Error while reading attributes of Toolkit: "  //$NON-NLS-1$
+                Messages.ErrorWhileReadingAttributes + StringConstants.COLON
+                + StringConstants.SPACE
                 + String.valueOf(toolkitId), e);
         } catch (InvalidRegistryObjectException e) {
             log.error(e);
             throw new ToolkitPluginException(
-                "Error while reading attributes of Toolkit: "  //$NON-NLS-1$
+                Messages.ErrorWhileReadingAttributes + StringConstants.COLON
+                + StringConstants.SPACE
                 + String.valueOf(toolkitId), e);
         } 
         return null;
@@ -181,7 +189,7 @@ public class ComponentBuilder extends AbstractComponentBuilder {
 
     /**
      * Returns a <code>CompSystem</code> with all components which can be
-     * tested by GuiDancer. The configuration files (ComponentConfiguration.xml)
+     * tested by Jubula. The configuration files (ComponentConfiguration.xml)
      * will be read from the installed Toolkit-Plugins.
      * @return the CompSystem a<code>CompSystem</code> object.
      */

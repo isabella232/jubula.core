@@ -18,6 +18,7 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -36,7 +37,7 @@ import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.RefToken;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -54,7 +55,7 @@ public class TreeOpsBP {
      * @author BREDEX GmbH
      * @created 09.09.2005
      */
-    public static class TreeOpFailedException extends GDException {
+    public static class TreeOpFailedException extends JBException {
 
         /**
          * @param message message
@@ -112,7 +113,7 @@ public class TreeOpsBP {
         for (IParamNodePO selectecNode : modNodes) {
             INodePO moveNode = findNode(ownerNode, selectecNode);
             if (moveNode == null) {
-                throw new TreeOpFailedException("Node mismatch", //$NON-NLS-1$
+                throw new TreeOpFailedException(Messages.NodeMismatch,
                     MessageIDs.E_PO_NOT_FOUND);
             }
             if (isOwnerSpecTestCase) {

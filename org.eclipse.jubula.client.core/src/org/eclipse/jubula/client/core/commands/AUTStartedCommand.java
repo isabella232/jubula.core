@@ -19,6 +19,7 @@ import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.communication.ICommand;
@@ -26,6 +27,7 @@ import org.eclipse.jubula.communication.message.AUTStartStateMessage;
 import org.eclipse.jubula.communication.message.AUTStateMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
@@ -101,13 +103,13 @@ public class AUTStartedCommand implements ICommand {
         int state = m_stateMessage.getState();
         switch (state) { 
             case AUTStateMessage.RUNNING:
-                log.info("AUT is running"); //$NON-NLS-1$
+                log.info(Messages.AUTIsRunning);
                 ClientTestFactory.getClientTest().fireAUTStateChanged(
                     new AUTEvent(AUTEvent.AUT_STARTED));
                 break;
             case AUTStateMessage.START_FAILED:
-                log.error("AUT could not started: " //$NON-NLS-1$ 
-                    + m_stateMessage.getDescription());
+                log.error(Messages.AUTCouldNotStarted + StringConstants.COLON
+                    + StringConstants.SPACE + m_stateMessage.getDescription());
                 ClientTestFactory.getClientTest().fireAUTStateChanged(
                     new AUTEvent(AUTEvent.AUT_START_FAILED));
                 break;
@@ -189,8 +191,10 @@ public class AUTStartedCommand implements ICommand {
                     logicalName, id);
             } else {
                 if (log.isErrorEnabled()) {
-                    log.error("No logical name for default mapping " //$NON-NLS-1$
-                        + "defined by component: " + comp); //$NON-NLS-1$
+                    log.error(Messages.NoLogicalNameForDefaultMapping
+                        + StringConstants.SPACE
+                        + Messages.DefinedByComponent + StringConstants.COLON
+                        + StringConstants.SPACE + comp);
                 }
             }
         }

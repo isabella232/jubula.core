@@ -38,8 +38,8 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.contentassist.TestDataCubeRefContentProposalProvider;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ContentAssistedTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDPropertyDescriptor;
-import org.eclipse.jubula.client.ui.editors.AbstractGDEditor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
@@ -178,7 +178,7 @@ public class SpecTestCaseGUIPropertySource
         addPropertyDescriptor(m_referencedCubePropDesc);
 
         if (m_lockPropDesc == null) {
-            GDPropertyDescriptor propDes = new GDPropertyDescriptor(
+            JBPropertyDescriptor propDes = new JBPropertyDescriptor(
                     new LockInterfaceController(), 
                     P_ELEMENT_DISPLAY_PARAM_LOCKED);
             propDes.setLabelProvider(new DisabledLabelProvider());
@@ -204,14 +204,14 @@ public class SpecTestCaseGUIPropertySource
             PropertyDescriptor propDes = null;
 
             // Parameter name
-            propDes = new GDPropertyDescriptor(new ParameterNameController(
+            propDes = new JBPropertyDescriptor(new ParameterNameController(
                     this, paramDescr), P_ELEMENT_DISPLAY_PARAMETERNAME);
             propDes.setCategory(P_PARAMETER_CAT);
             propDes.setLabelProvider(new DisabledLabelProvider());
             paramPropDescList.add(propDes);
 
             // Parameter type
-            propDes = new GDPropertyDescriptor(new ParameterTypeController(
+            propDes = new JBPropertyDescriptor(new ParameterTypeController(
                     this, paramDescr), P_ELEMENT_DISPLAY_PARAMETERTYPE);
             propDes.setCategory(P_PARAMETER_CAT);
             propDes.setLabelProvider(new DisabledLabelProvider());
@@ -228,7 +228,7 @@ public class SpecTestCaseGUIPropertySource
             paramPropDescList.add(propDes);
 
             // empty line
-            propDes = new GDPropertyDescriptor(new DummyController(),
+            propDes = new JBPropertyDescriptor(new DummyController(),
                     StringConstants.EMPTY);
             propDes.setCategory(P_PARAMETER_CAT);
             paramPropDescList.add(propDes);
@@ -500,7 +500,7 @@ public class SpecTestCaseGUIPropertySource
                 node.clearTestData();
                 String valueString = (String)value;
                 if (!StringUtils.isEmpty(valueString)) {
-                    AbstractGDEditor activeEditor = 
+                    AbstractJBEditor activeEditor = 
                         Plugin.getDefault().getActiveGDEditor();
                     if (activeEditor == null) {
                         LOG.error("Active GUIdancer editor reference should not be null from Properties View."); //$NON-NLS-1$

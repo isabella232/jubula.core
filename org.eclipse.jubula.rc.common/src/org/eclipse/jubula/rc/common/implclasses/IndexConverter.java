@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.implclasses;
 
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+
 /**
  * This class converts user indices to implementation indices and vice versa
  *
@@ -99,5 +103,22 @@ public class IndexConverter {
             res[i] = new Integer(indices[i].intValue() - 1);
         }
         return res;
+    }
+
+    /**
+     * @param integerString
+     *            the string to parse to an int
+     * @return the parsed int or throws a <code>StepExecutionException</code> in
+     *         case of a nested number format exception
+     */
+    public static int intValue(String integerString) {
+        try {
+            return Integer.parseInt(integerString);
+        } catch (NumberFormatException e) {
+            throw new StepExecutionException(
+                "Index '" + integerString + "' is not an integer.", //$NON-NLS-1$ //$NON-NLS-2$
+                    EventFactory.createActionError(
+                        TestErrorEvent.INVALID_INDEX));
+        }
     }
 }

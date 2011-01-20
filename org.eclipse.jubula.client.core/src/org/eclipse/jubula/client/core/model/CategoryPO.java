@@ -16,9 +16,11 @@ import javax.persistence.Transient;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBException;
 
 
 /**
@@ -72,10 +74,12 @@ class CategoryPO extends NodePO implements ICategoryPO {
             try {
                 parent = ProjectPM.loadProjectById(getParentProjectId(), 
                     GeneralStorage.getInstance().getMasterSession());
-            } catch (GDException e) {
-                LOG.fatal("Could not find parent for Category: " + this //$NON-NLS-1$
-                    + "; Returning null.",  //$NON-NLS-1$
-                    e);
+            } catch (JBException e) {
+                LOG.fatal(Messages.CouldNotFindParentForCategory 
+                    + StringConstants.COLON + StringConstants.SPACE + this
+                    + StringConstants.SEMICOLON + StringConstants.SPACE
+                    + Messages.ReturningNull + StringConstants.DOT 
+                    + StringConstants.DOT, e);
             }
         }
         return parent;

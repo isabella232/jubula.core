@@ -48,10 +48,10 @@ import org.eclipse.jubula.client.ui.wizards.pages.ProjectInfoWizardPage;
 import org.eclipse.jubula.client.ui.wizards.pages.ProjectSettingWizardPage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
 import org.eclipse.ui.INewWizard;
@@ -190,7 +190,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
         Plugin.startLongRunning();
         final String emptystr = StringConstants.EMPTY;
         m_newProject = NodeMaker.createProjectPO(emptystr, 
-            IGdVersion.GD_CLIENT_METADATA_VERSION); 
+            IVersion.JB_CLIENT_METADATA_VERSION); 
         m_autMain = PoMaker.createAUTMainPO(emptystr);
         m_newProject.addAUTMain(m_autMain);
         m_autConfig = PoMaker.createAUTConfigPO();
@@ -240,7 +240,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
     private void createNewProject(final String newProjectName, 
         IProgressMonitor monitor) throws InterruptedException {          
         
-        Plugin.closeAllOpenedGDEditors();
+        Plugin.closeAllOpenedJubulaEditors();
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 Plugin.setProjectNameInTitlebar(newProjectName, 
@@ -282,7 +282,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
                     MessageIDs.E_CREATE_NEW_PROJECT_FAILED));
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
         } catch (InterruptedException ie) {
             throw ie;
@@ -316,7 +316,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
                         log.info("Project '" + moduleName + "' does not exist."); //$NON-NLS-1$ //$NON-NLS-2$
                     }
                 }
-            } catch (GDException e) {
+            } catch (JBException e) {
                 log.error(e + ": " + e.getMessage()); //$NON-NLS-1$
             }
             desc = ComponentBuilder.getInstance().getCompSystem()

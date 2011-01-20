@@ -21,7 +21,7 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.exception.GuiDancerOsNotSupportedException;
+import org.eclipse.jubula.rc.common.exception.OsNotSupportedException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.AbstractApplicationImplClass;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
@@ -484,7 +484,7 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
                     TestErrorEvent.UNSUPPORTED_OPERATION_ERROR, 
                     EventFactory.createActionError(
                         TestErrorEvent.UNSUPPORTED_OPERATION_ERROR));
-            } catch (GuiDancerOsNotSupportedException e) {
+            } catch (OsNotSupportedException e) {
                 throw new StepExecutionException(
                         TestErrorEvent.UNSUPPORTED_OPERATION_ERROR, 
                         EventFactory.createActionError(

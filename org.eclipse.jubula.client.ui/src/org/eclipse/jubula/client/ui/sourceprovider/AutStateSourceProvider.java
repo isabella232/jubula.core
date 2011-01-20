@@ -25,7 +25,7 @@ import org.eclipse.ui.ISources;
  * @author BREDEX GmbH
  * @created Apr 29, 2009
  */
-public class AutStateSourceProvider extends AbstractGDSourceProvider 
+public class AutStateSourceProvider extends AbstractJBSourceProvider 
         implements IAutRegistrationListener {
 
     /** 

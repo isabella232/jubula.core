@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
-import org.eclipse.jubula.client.core.communication.BaseConnection.GuiDancerNotConnectedException;
+import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -33,7 +33,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.nag.RCPAUTStartDelayNagTask;
 import org.eclipse.jubula.client.ui.handlers.AbstractStartTestHandler;
-import org.eclipse.jubula.client.ui.utils.GDThread;
+import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ServerManager.Server;
@@ -78,7 +78,7 @@ public class TestExecutionGUIController {
      * @param conf associated configuration for AUT to start
      */
     public static void startAUT(final IAUTMainPO aut, final IAUTConfigPO conf) {
-        new GDThread() {
+        new JBThread() {
             /** inform user if AUT does not start within two minutes */
             private TimerTask m_infoRCPTask = null;
             
@@ -147,7 +147,7 @@ public class TestExecutionGUIController {
     public static void startTestSuite(final ITestSuitePO ts,
         final AutIdentifier autId, final boolean autoScreenshot) {
         TestExecutionContributor.setClientMinimized(true);
-        GDThread t = new GDThread("Initialize Test Execution") { //$NON-NLS-1$
+        JBThread t = new JBThread("Initialize Test Execution") { //$NON-NLS-1$
             @Override
             public void run() {
                 if (!AbstractStartTestHandler.prepareTestExecution()) {
@@ -170,7 +170,7 @@ public class TestExecutionGUIController {
      * stops started TestSuite
      */
     public static void stopTestSuite() {
-        GDThread t = new GDThread() {
+        JBThread t = new JBThread() {
             @Override
             public void run() {
                 TestExecutionContributor.getInstance().
@@ -217,7 +217,7 @@ public class TestExecutionGUIController {
      * disconnects from server if connected
      */
     public static void disconnectFromServer() {
-        GDThread t = new GDThread() {
+        JBThread t = new JBThread() {
             @Override
             public void run() {
                 try {
@@ -239,7 +239,7 @@ public class TestExecutionGUIController {
                                     }
                                 }, 2000);
                     }
-                } catch (GuiDancerNotConnectedException e1) {
+                } catch (NotConnectedException e1) {
                     // no need to react, we are in the process of ending the AUT
                 } catch (ConnectionException e1) {
                     // no need to react, we are in the process of ending the AUT
@@ -275,7 +275,7 @@ public class TestExecutionGUIController {
                 message.setResourceBundles(CompSystemI18n.bundlesToString());
                 try {
                     connection.send(message);
-                } catch (GuiDancerNotConnectedException e) {
+                } catch (NotConnectedException e) {
                     LOG.error("Could not send CompSystemI18nResourceBundle to Server", e);  //$NON-NLS-1$
                 } catch (IllegalArgumentException e) {
                     LOG.error("Could not send CompSystemI18nResourceBundle to Server", e);  //$NON-NLS-1$

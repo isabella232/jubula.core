@@ -47,9 +47,9 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
@@ -58,8 +58,8 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.slf4j.Logger;
@@ -249,7 +249,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         }
         if (editor != null
                 && editor.getEditorHelper().requestEditableState() 
-                == GDEditorHelper.EditableState.OK) {
+                == JBEditorHelper.EditableState.OK) {
             setEditor(editor, runningAut);
         }
 
@@ -301,7 +301,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                         .openEditor(recSpecTestCase);
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
             }
         }
@@ -353,7 +353,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                     .decodeStringToSet(Plugin.getDefault().getPreferenceStore()
                             .getString(Constants.MULTILINETRIGGER_KEY),
                             StringConstants.SEMICOLON);
-        } catch (GDException e) {
+        } catch (JBException e) {
             e.printStackTrace();
         }
 

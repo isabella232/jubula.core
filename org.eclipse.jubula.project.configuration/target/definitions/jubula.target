@@ -3,9 +3,9 @@
 
 <target name="Jubula">
 <locations>
-<location path="${project_loc:org.eclipse.jubula.project.configuration}/target/platform/eclipse" type="Directory"/>
-<location path="${project_loc:org.eclipse.jubula.project.configuration}/target/platform/deltaPack" type="Directory"/>
-<location path="${project_loc:org.eclipse.jubula.project.configuration}/target/platform/persistence" type="Directory"/>
+<location path="${project_loc:com.bredexsw.guidancer.project.configuration}/target/platform/eclipse" type="Directory"/>
+<location path="${project_loc:com.bredexsw.guidancer.project.configuration}/target/platform/deltaPack" type="Directory"/>
+<location path="${project_loc:com.bredexsw.guidancer.project.configuration}/target/platform/persistence" type="Directory"/>
 </locations>
 <environment>
 <arch>x86</arch>

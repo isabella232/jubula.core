@@ -19,87 +19,91 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.archive.i18n.messages"; //$NON-NLS-1$
     
+    public static String Action;
+    public static String CantCloseOOS;
+    public static String ClassSerializedCouldntFound;
+    public static String Component;
+    public static String CouldNotExportProject;
+    public static String CouldNotInitializeProxy;
+    public static String DataBaseErrorUpdatingToolkits;
+    public static String ErrorMessageIMPORT_PROJECT_XML_FAILED;
+    public static String ErrorMessagePROJ_CIRC_DEPEND;
+    public static String ErrorWhileCloseOS;
+    public static String ErrorWhileImportingProject;
+    public static String ExportAllBPErrorExportFailedProject;
+    public static String ExportAllBPExporting;
+    public static String ExportAllBPInfoFinishedExportProject;
+    public static String ExportAllBPInfoStartingExportProject;
+    public static String ExportOperationCanceled;
+    public static String Failed;
+    public static String FailedReadingFile;
+    public static String File;
+    public static String GeneralIoExeption;
+    public static String ImportEmptyName;
+    public static String ImportFailed;
     public static String ImportFileActionDoubleProjName;
-    public static String ImportFileBPImporting;
-    public static String ImportFileBPReading;
-    public static String ImportFileBPWaitWhileImporting;
     public static String ImportFileActionErrorImportFailed;
     public static String ImportFileActionErrorImportFailedProject;
     public static String ImportFileActionErrorIncompatibleToolkits;
     public static String ImportFileActionErrorMissingDepProj;
-    public static String ImportFileActionInfoFinishedReadingProjects;
     public static String ImportFileActionInfoFinishedImport;
     public static String ImportFileActionInfoFinishedImportProject;
-    public static String ImportFileActionInfoStartingReadingProjects;
-    public static String ImportFileActionInfoStartingReadingProject;
+    public static String ImportFileActionInfoFinishedReadingProjects;
     public static String ImportFileActionInfoStartingImport;
     public static String ImportFileActionInfoStartingImportProject;
+    public static String ImportFileActionInfoStartingReadingProject;
+    public static String ImportFileActionInfoStartingReadingProjects;
     public static String ImportFileActionProjErr;
     public static String ImportFileActionProjLabel;
     public static String ImportFileActionProjMessage;
     public static String ImportFileActionProjShell;
     public static String ImportFileActionProjTitle;
+    public static String ImportFileBPImporting;
+    public static String ImportFileBPReading;
+    public static String ImportFileBPWaitWhileImporting;
     public static String ImportFileComboActionProjMessage;
     public static String ImportFileSingleActionProjMessage;
-    public static String ErrorWhileImportingProject;
-    public static String SaveOf;
-    public static String Reading;
-    public static String Failed;
     public static String ImportOf;
-    public static String ImportFailed;
-    public static String ImportEmptyName;
     public static String ImportWithoutName;
-    public static String ErrorMessagePROJ_CIRC_DEPEND;
+    public static String IncompatibleToolkitVersion;
+    public static String InvalidImportFile;
+    public static String MalformedXMLData;
+    public static String NoHeaderFound;
+    public static String NoSupportedFileEncoding;
+    public static String NotFound;
+    public static String OpenProjectActionToolkitVersionConflict2; 
+    public static String OpenProjectActionToolkitVersionConflict3;
+    public static String OpenProjectActionToolkitVersionConflict4a;
+    public static String OpenProjectActionToolkitVersionConflict4b;
+    public static String OpenProjectActionToolkitVersionConflict4c;
+    public static String OpenProjectActionToolkitVersionConflict5;
+    public static String OriginalException;
+    public static String Parameter;
+    public static String Property;
+    public static String Reading;
+    public static String SaveOf;
     public static String ToolkitSupportToolkitNotFound;
     public static String TreeOpsBPImportedCat;
-    public static String ExportAllBPExporting;
-    public static String ExportAllBPInfoStartingExportProject;
-    public static String ExportAllBPInfoFinishedExportProject;
-    public static String CouldNotExportProject;
-    public static String ExportAllBPErrorExportFailedProject;
-    public static String ErrorMessageIMPORT_PROJECT_XML_FAILED;
-    public static String DataBaseErrorUpdatingToolkits;
-    public static String OriginalException;
-    public static String XmlImporterToolkitVersionConversion;
-    public static String XmlImporterToolkitVersionConflict3a;
-    public static String XmlImporterToolkitVersionConflict3b;
+    public static String UnknownErrorType;
+    public static String ValidateFailed;
     public static String XmlImporterProjectDependency;
     public static String XmlImporterProjectXMLTooOld;
     public static String XmlImporterRequiredProject;
     public static String XmlImporterRequiredProjectWithoutName;
-    public static String IncompatibleToolkitVersion;
-    public static String OpenProjectActionToolkitVersionConflict2;
-    public static String OpenProjectActionToolkitVersionConflict5;
-    public static String OpenProjectActionToolkitVersionConflict3; 
-    public static String OpenProjectActionToolkitVersionConflict4a;
-    public static String OpenProjectActionToolkitVersionConflict4b;
-    public static String OpenProjectActionToolkitVersionConflict4c;
-    public static String UnknownErrorType;
-    public static String Property;
-    public static String NotFound;
-    public static String Component;
-    public static String Action;
-    public static String Parameter;
-    public static String ErrorWhileCloseOS;
-    public static String ExportOperationCanceled;
-    public static String ValidateFailed;
-    public static String InvalidImportFile;
+    public static String XmlImporterToolkitVersionConflict3a;
+    public static String XmlImporterToolkitVersionConflict3b;
+    public static String XmlImporterToolkitVersionConversion;
     public static String XmlStorageSavingProject;
-    public static String File;
-    public static String GeneralIoExeption;
-    public static String CouldNotInitializeProxy;
-    public static String CantCloseOOS;
-    public static String ClassSerializedCouldntFound;
-    public static String FailedReadingFile;
-    public static String MalformedXMLData;
-    public static String NoSupportedFileEncoding;
-    public static String NoHeaderFound;
     
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
     }
 
+    /**
+     * Constructor
+     */
     private Messages() {
+        // hide
     }
 }

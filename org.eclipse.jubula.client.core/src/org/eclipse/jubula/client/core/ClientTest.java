@@ -58,9 +58,10 @@ import org.eclipse.jubula.client.core.commands.DisconnectFromAutAgentResponseCom
 import org.eclipse.jubula.client.core.commands.GetAutConfigMapResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection;
-import org.eclipse.jubula.client.core.communication.BaseConnection.GuiDancerNotConnectedException;
+import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
@@ -94,9 +95,8 @@ import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.objects.MonitoringValue;
@@ -219,7 +219,7 @@ public class ClientTest implements IClientTest {
                         AutStarterEvent.SERVER_CANNOT_CONNECTED));
                 return;
             }
-        } catch (GDVersionException e) {
+        } catch (JBVersionException e) {
             fireAutStarterStateChanged(new AutStarterEvent(
                 AutStarterEvent.VERSION_ERROR));
         }
@@ -235,14 +235,14 @@ public class ClientTest implements IClientTest {
         Message message = new DisconnectFromAutAgentMessage();
         try {
             ServerConnection.getInstance().request(message, command, 10000);
-        } catch (GuiDancerNotConnectedException e) {
+        } catch (NotConnectedException e) {
             // Exceptions thrown from getInstance(): no connections are
             // established, just log
-            log.info("closing the connections failed", e); //$NON-NLS-1$
+            log.info(Messages.ClosingTheConnectionsFailed, e);
         } catch (CommunicationException e) {
             // Exceptions thrown from getInstance(): no connections are
             // established, just log
-            log.info("closing the connections failed", e); //$NON-NLS-1$
+            log.info(Messages.ClosingTheConnectionsFailed, e);
         }
     }
 
@@ -260,7 +260,7 @@ public class ClientTest implements IClientTest {
                 ToolkitSupportBP.getToolkitLevel(autToolkit))) {
 
             throw new ToolkitPluginException(
-                    I18n.getString("ErrorMessage.AUT_TOOLKIT_NOT_AVAILABLE")); //$NON-NLS-1$
+                    Messages.ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE);
         }
         
         m_lastAutConfig = conf;
@@ -278,9 +278,9 @@ public class ClientTest implements IClientTest {
             startAUTServerMessage.setLocale(locale);
             ServerConnection.getInstance().send(startAUTServerMessage);
             if (log.isDebugEnabled()) {
-                log.debug("StartAUTServerMessage send"); //$NON-NLS-1$
+                log.debug(Messages.StartAUTServerMessageSend);
             }
-        } catch (GuiDancerNotConnectedException nce) {
+        } catch (NotConnectedException nce) {
             // The ServerConnection was closed. This Exception occurs after 
             // initialising the server, so there must be a shutdown(). The 
             // listeners are already notified from the ConnectionListener of
@@ -295,7 +295,7 @@ public class ClientTest implements IClientTest {
             try {
                 closeConnections();
             } catch (ConnectionException ce) {
-                log.fatal("closing the connections failed", ce); //$NON-NLS-1$
+                log.fatal(Messages.ClosingTheConnectionsFailed, ce);
             }
         } catch (UnknownHostException uhe) {
             log.fatal(uhe);
@@ -306,7 +306,7 @@ public class ClientTest implements IClientTest {
                 AUTConnection.getInstance().close();
                 ServerConnection.getInstance().close();
             } catch (ConnectionException ce) {
-                log.fatal("closing the connections failed", ce); //$NON-NLS-1$
+                log.fatal(Messages.ClosingTheConnectionsFailed, ce);
             }
         }
     }
@@ -334,8 +334,7 @@ public class ClientTest implements IClientTest {
             mapToSend.put(AutConfigConstants.AUT_NAME, 
                     mapToSend.get(AutConfigConstants.AUT_ID));
         } catch (ConnectionException e) {
-            log.error("Unable to append AUT Agent connection information to " //$NON-NLS-1$
-                    + "AUT Configuration. No connection to AUT Agent."); //$NON-NLS-1$
+            log.error(Messages.UnableToAppendAUTAgent);
         }
         return mapToSend;
     }
@@ -354,7 +353,7 @@ public class ClientTest implements IClientTest {
      */
     public void stopAut(AutIdentifier autId) {
         if (log.isInfoEnabled()) {
-            log.info("stopping test"); //$NON-NLS-1$            
+            log.info(Messages.StoppingTest);            
         }
         try {
             ServerConnection.getInstance().getCommunicator().send(
@@ -363,10 +362,10 @@ public class ClientTest implements IClientTest {
             // Exceptions thrown from getInstance(): no connections are
             // established, just log
             if (log.isInfoEnabled()) {
-                log.info("closing the connections failed", ce); //$NON-NLS-1$
+                log.info(Messages.ClosingTheConnectionsFailed, ce);
             }
         } catch (CommunicationException e) {
-            log.error("Error occurred while trying to stop AUT.", e); //$NON-NLS-1$
+            log.error(Messages.ErrorOccurredWhileTryingToStopAUT, e);
         }
         TestExecution te = TestExecution.getInstance();
         ITestSuitePO startedTestSuite = te.getStartedTestSuite();
@@ -386,9 +385,9 @@ public class ClientTest implements IClientTest {
      */
     public void startObjectMapping(AutIdentifier autId, int mod, 
             int inputCode, int inputType) throws ConnectionException, 
-            GuiDancerNotConnectedException, CommunicationException {
+            NotConnectedException, CommunicationException {
         
-        log.info("starting object mapping"); //$NON-NLS-1$
+        log.info(Messages.StartingObjectMapping);
         // put the AUTServer into the mode OBJECT_MAPPING via sending a
         // ChangeAUTModeMessage(OBJECT_MAPPING).
 
@@ -428,7 +427,7 @@ public class ClientTest implements IClientTest {
             boolean dialogOpen,
             SortedSet<String> singleLineTrigger,
             SortedSet<String> multiLineTrigger, Locale locale) {
-        log.info("starting record modus"); //$NON-NLS-1$
+        log.info(Messages.StartingRecordModus);
         // put the AUTServer into the mode RECORD_MODE via sending a
         // ChangeAUTModeMessage(RECORD_MODE).
         try {
@@ -455,7 +454,7 @@ public class ClientTest implements IClientTest {
             CAPRecordedCommand.setRecordLocale(locale);
         } catch (UnknownMessageException ume) {
             fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
-        } catch (GuiDancerNotConnectedException nce) {
+        } catch (NotConnectedException nce) {
             log.error(nce);
             // HERE: notify the listeners about unsuccessfull mode change
         } catch (CommunicationException ce) {
@@ -480,7 +479,7 @@ public class ClientTest implements IClientTest {
             AUTConnection.getInstance().send(message);
         } catch (UnknownMessageException ume) {
             fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
-        } catch (GuiDancerNotConnectedException nce) {
+        } catch (NotConnectedException nce) {
             log.error(nce);
             // HERE: notify the listeners about unsuccessfull mode change
         } catch (CommunicationException ce) {
@@ -538,8 +537,8 @@ public class ClientTest implements IClientTest {
                         testExecutionState.set(event.getState());
                         if (event.getState() 
                                 == TestExecutionEvent.TEST_EXEC_FAILED) {
-                            if (event.getException() instanceof GDException) {
-                                GDException e = (GDException)
+                            if (event.getException() instanceof JBException) {
+                                JBException e = (JBException)
                                     event.getException();
                                 testExecutionMessageId.set(e.getErrorId());
                             }
@@ -629,10 +628,10 @@ public class ClientTest implements IClientTest {
     public void getAllComponentsFromAUT(IAUTInfoListener listener, 
             int timeout) {
         
-        log.info("getting all components from AUT"); //$NON-NLS-1$
+        log.info(Messages.GettingAllComponentsFromAUT);
 
         if (listener == null) {
-            log.warn("listener is null"); //$NON-NLS-1$
+            log.warn(Messages.ListenerIsNull);
             return;
         }
 
@@ -676,13 +675,12 @@ public class ClientTest implements IClientTest {
                 // FIXME zeb Logging as error assumes that every AUT Server has
                 //           default mappings to contribute. So far this is true,
                 //           but might not be true for future toolkits.
-                log.warn("No default Object Mappings could be found for the AUT."); //$NON-NLS-1$
+                log.warn(Messages.NoDefaultObjectMappingsCouldBeFoundForTheAUT);
             }
         } catch (UnknownMessageException ume) {
             fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
         } catch (CommunicationException bce) {
-            log.error("could not request components from AUT", //$NON-NLS-1$
-                    bce); 
+            log.error(Messages.CouldNotRequestComponentsFromAUT, bce); 
             listener.error(IAUTInfoListener.ERROR_COMMUNICATION);
         } 
     }
@@ -693,8 +691,8 @@ public class ClientTest implements IClientTest {
      */
     public void addTestEventListener(IAUTEventListener listener) {
         if (log.isInfoEnabled()) {
-            log.info("adding IAUTEventListener " //$NON-NLS-1$
-                    + listener.getClass().getName() + ":" //$NON-NLS-1$
+            log.info(Messages.AddingIAUTEventListener + StringConstants.SPACE
+                    + listener.getClass().getName() + StringConstants.COLON
                     + listener.toString());
         }
         eventListenerList.add(IAUTEventListener.class, listener);
@@ -706,8 +704,8 @@ public class ClientTest implements IClientTest {
      */
     public void removeTestEventListener(IAUTEventListener listener) {
         if (log.isInfoEnabled()) {
-            log.info("removing IAUTEventListener " //$NON-NLS-1$
-                    + listener.getClass().getName() + ":" //$NON-NLS-1$
+            log.info(Messages.RemovingIAUTEventListener + StringConstants.SPACE
+                    + listener.getClass().getName() + StringConstants.COLON
                     + listener.toString());
         }
         eventListenerList.remove(IAUTEventListener.class, listener);
@@ -794,7 +792,7 @@ public class ClientTest implements IClientTest {
      */
     public void fireAUTStateChanged(AUTEvent event) {
         if (log.isInfoEnabled()) {
-            log.info("firing AUTStateChanged:" //$NON-NLS-1$ 
+            log.info(Messages.FiringAUTStateChanged + StringConstants.COLON 
                     + String.valueOf(event.getState()));
         }
         // Guaranteed to return a non-null array
@@ -815,7 +813,7 @@ public class ClientTest implements IClientTest {
      */
     public void fireAutStarterStateChanged(AutStarterEvent event) {
         if (log.isInfoEnabled()) {
-            log.info("firing AutStarterStateChanged:" //$NON-NLS-1$ 
+            log.info(Messages.FiringAUTStateChanged + StringConstants.COLON 
                     + String.valueOf(event.getState()));
         }
         // Guaranteed to return a non-null array
@@ -835,7 +833,7 @@ public class ClientTest implements IClientTest {
      */
     public void fireAUTServerStateChanged(AUTServerEvent event) {
         if (log.isInfoEnabled()) {
-            log.info("firing AUTServerStateChanged:" //$NON-NLS-1$ 
+            log.info(Messages.FiringAUTStateChanged + StringConstants.COLON 
                     + String.valueOf(event.getState()));
         }
         // Guaranteed to return a non-null array
@@ -874,7 +872,7 @@ public class ClientTest implements IClientTest {
                 this.getLastConnectedAutId());
         try {
             ServerConnection.getInstance().send(message);
-        } catch (GuiDancerNotConnectedException nce) {
+        } catch (NotConnectedException nce) {
             log.error(nce);
         } catch (CommunicationException ce) {
             log.error(ce);
@@ -892,7 +890,7 @@ public class ClientTest implements IClientTest {
        
         try {
             ServerConnection.getInstance().send(message);
-        } catch (GuiDancerNotConnectedException nce) {
+        } catch (NotConnectedException nce) {
             log.error(nce);
         } catch (CommunicationException ce) {
             log.error(ce);
@@ -922,10 +920,10 @@ public class ClientTest implements IClientTest {
             }, REQUEST_CONFIG_MAP_TIMEOUT);            
             while (m_autConfigMap == null && timeoutFlag.get()) {
                 TimeUtil.delay(200);  
-                log.info("Waiting for AutConfigMap from Agent"); ////$NON-NLS-1$
+                log.info(Messages.WaitingForAutConfigMapFromAgent);
             }
            
-        } catch (GuiDancerNotConnectedException nce) {
+        } catch (NotConnectedException nce) {
             log.error(nce);           
         } catch (CommunicationException ce) {
             log.error(ce);
@@ -957,21 +955,20 @@ public class ClientTest implements IClientTest {
     private void createReportJob(TestResult results) {
         final TestResult result = results;         
         final AtomicBoolean ab = new AtomicBoolean(false);
-        final Job job = new Job (
-                I18n.getString("Client.CollectingInformation")) { ////$NON-NLS-1$
+        final Job job = new Job (Messages.ClientCollectingInformation) {
             private String m_jobFamily = this.getName();
             public boolean belongsTo(Object family) {
                 return m_jobFamily.equals(family);
             } 
             protected IStatus run(IProgressMonitor monitor) {            
-                monitor.beginTask(I18n.getString("Client.WritingReport"), //$NON-NLS-1$
+                monitor.beginTask(Messages.ClientWritingReport,
                         IProgressMonitor.UNKNOWN); 
                 writeReport();
-                monitor.beginTask(I18n.getString("Client.WritingReportToDB"), //$NON-NLS-1$
+                monitor.beginTask(Messages.ClientWritingReportToDB,
                         IProgressMonitor.UNKNOWN); 
                 writeTestresultToDB();                
                 if (isRunningWithMonitoring()) {
-                    monitor.setTaskName(I18n.getString("Client.Calculating")); ////$NON-NLS-1$
+                    monitor.setTaskName(Messages.ClientCalculating);
                     getMonitoringData();   
                     while (result.getMonitoringValues() == null 
                             || result.getMonitoringValues().isEmpty()) {
@@ -984,8 +981,7 @@ public class ClientTest implements IClientTest {
                             return Status.CANCEL_STATUS;
                         }
                     }
-                    monitor.setTaskName(
-                            I18n.getString("Client.BuildingReport")); ////$NON-NLS-1$
+                    monitor.setTaskName(Messages.ClientBuildingReport);
                     buildMonitoringReport();      
                     while (result.getReportData() == null) {
                         TimeUtil.delay(500);
@@ -1135,7 +1131,7 @@ public class ClientTest implements IClientTest {
             AbstractXMLReportGenerator generator = null;
             // Use the appropriate report generator
             // Default is currently Complete
-            if (I18n.getString("TestResultViewPreferencePage.StyleErrorsOnly") //$NON-NLS-1$
+            if (Messages.TestResultViewPreferencePageStyleErrorsOnly
                     .equalsIgnoreCase(m_logStyle)) { 
 
                 generator = new ErrorsOnlyXMLReportGenerator(TestResultBP.
@@ -1169,12 +1165,14 @@ public class ClientTest implements IClientTest {
      */
     private String createFilename(TestResult result) {
         StringBuilder sb = new StringBuilder(m_logPath);
-        sb.append("/executionLog-"); //$NON-NLS-1$
+        sb.append(StringConstants.SLASH);
+        sb.append(Messages.ExecutionLog);
+        sb.append(StringConstants.MINUS);
         sb.append(result.getProjectName());
-        sb.append("-"); //$NON-NLS-1$
+        sb.append(StringConstants.MINUS);
         TestResultNode testSuiteNode = result.getRootResultNode();
         sb.append(testSuiteNode.getName());
-        sb.append("-"); //$NON-NLS-1$
+        sb.append(StringConstants.MINUS);
 
         // Add result of test
         if (testSuiteNode.getStatus() == TestResultNode.SUCCESS) {
@@ -1185,7 +1183,7 @@ public class ClientTest implements IClientTest {
 
         if (new File(sb.toString() + XML_FILE_EXT).exists()) {
             int postfix = 1;
-            sb.append("-"); //$NON-NLS-1$
+            sb.append(StringConstants.MINUS);
             while (new File(sb.toString() + postfix + XML_FILE_EXT).exists()) {
                 postfix++;
             }
@@ -1200,23 +1198,23 @@ public class ClientTest implements IClientTest {
      * error, the listeners are notified with appopriate ServerEvent.
      * @param serverName The name of the server.
      * @param port The port number.
-     * @throws GDVersionException in case of a version error between Client
+     * @throws JBVersionException in case of a version error between Client
      * and AutStarter
      * @return false if an error occurs, true otherwise
      */
     private boolean initServerConnection(String serverName, String port) 
-        throws GDVersionException {
+        throws JBVersionException {
         
         try {
             ServerConnection.createInstance(serverName, port);
             ServerConnection.getInstance().run();
             if (log.isDebugEnabled()) {
-                log.debug("connected to the GuiDancerServer"); //$NON-NLS-1$
+                log.debug(Messages.ConnectedToTheServer);
             }
         } catch (ConnectionException ce) {
             log.error(ce.getLocalizedMessage(), ce);
             return false;
-        } catch (BaseConnection.GuiDancerAlreadyConnectedException ae) {
+        } catch (BaseConnection.AlreadyConnectedException ae) {
             // The connection is already established.
             if (log.isDebugEnabled()) {
                 log.debug(ae);
@@ -1235,7 +1233,7 @@ public class ClientTest implements IClientTest {
     private boolean initAutServerConnection() {
         try {
             if (log.isDebugEnabled()) {
-                log.debug("AUTConnection starting"); //$NON-NLS-1$
+                log.debug(Messages.AUTConnectionStarting);
             }
             AUTConnection.getInstance().run();
         } catch (ConnectionException ce) {
@@ -1243,11 +1241,11 @@ public class ClientTest implements IClientTest {
             fireAUTServerStateChanged(new AUTServerEvent(
                     AUTServerEvent.COULD_NOT_ACCEPTING));
             return false;
-        } catch (BaseConnection.GuiDancerAlreadyConnectedException ae) {
+        } catch (BaseConnection.AlreadyConnectedException ae) {
             // The connection is already established.
             log.error(ae);
             return false;
-        } catch (GDVersionException e) {
+        } catch (JBVersionException e) {
             log.error(e);
             fireAUTServerStateChanged(new AUTServerEvent(
                 AUTServerEvent.COULD_NOT_ACCEPTING));

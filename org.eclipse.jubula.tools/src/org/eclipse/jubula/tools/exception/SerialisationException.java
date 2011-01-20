@@ -17,7 +17,7 @@ package org.eclipse.jubula.tools.exception;
  * @author BREDEX GmbH
  * @created 15.07.2004
  */
-public class SerialisationException extends GDException {
+public class SerialisationException extends JBException {
     /**
      * public constructor
      * 

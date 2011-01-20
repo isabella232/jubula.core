@@ -83,7 +83,7 @@ public class FigureCanvasUtil {
 
     /**
      * Searches the path to root for the first element considered to be testable
-     * by GUIdancer. Testable in this case means that an ID can be acquired for
+     * by Jubula. Testable in this case means that an ID can be acquired for
      * the edit part.
      * 
      * @param editPart

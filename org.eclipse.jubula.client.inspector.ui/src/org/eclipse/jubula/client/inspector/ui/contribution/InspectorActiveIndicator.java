@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.inspector.ui.contribution;
 
 import org.eclipse.jubula.client.inspector.ui.constants.IconConstants;
+import org.eclipse.jubula.client.inspector.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -52,7 +53,7 @@ public class InspectorActiveIndicator extends
 
         Label label = new Label(parent, SWT.NONE);
         label.setImage(IconConstants.INSPECTOR);
-        label.setToolTipText("Inspector is active"); //$NON-NLS-1$
+        label.setToolTipText(Messages.InspectorIsActive);
         return label;
     }
 

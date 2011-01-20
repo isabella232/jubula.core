@@ -21,7 +21,7 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @author BREDEX GmbH
  * @created 04.05.2006
  */
-public class ImplClassClassLoader extends GDUrlClassLoader {
+public class ImplClassClassLoader extends JBUrlClassLoader {
 
     /** The alternative ClassLoader*/ 
     private ClassLoader m_componentCL;
@@ -54,7 +54,7 @@ public class ImplClassClassLoader extends GDUrlClassLoader {
         // in case of c is an ImplClass
         if (name.startsWith(CommandConstants.SWING_IMPLCLASS_PACKAGE)
             || name.startsWith(CommandConstants.SWT_IMPLCLASSES_PACKAGE)
-            || (name.indexOf(CommandConstants.GUIDANCER_EXTENSION_PACKAGE) 
+            || (name.indexOf(CommandConstants.JUBULA_EXTENSION_PACKAGE) 
                 != -1)) {
             
             return implLoadClass(name, resolve);

@@ -15,7 +15,7 @@ import java.util.Iterator;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.provider.contentprovider.IGDSortableTreeViewContentProvider;
+import org.eclipse.jubula.client.ui.provider.contentprovider.ISortableTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 
 
@@ -46,9 +46,9 @@ public class TreeViewContainerGUIController {
             editor = ((ITreeViewerContainer)Plugin.getActivePart());
         }
         if (editor.getTreeViewer().getContentProvider() 
-                instanceof IGDSortableTreeViewContentProvider) {
-            IGDSortableTreeViewContentProvider prov = 
-                (IGDSortableTreeViewContentProvider)
+                instanceof ISortableTreeViewContentProvider) {
+            ISortableTreeViewContentProvider prov = 
+                (ISortableTreeViewContentProvider)
                     editor.getTreeViewer().getContentProvider();
             prov.setSorting(!prov.isSorting());
             editor.getTreeViewer().refresh();

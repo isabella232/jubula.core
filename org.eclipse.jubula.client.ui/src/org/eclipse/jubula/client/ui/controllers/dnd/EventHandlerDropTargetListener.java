@@ -16,7 +16,7 @@ import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
@@ -49,7 +49,7 @@ public class EventHandlerDropTargetListener extends ViewerDropAdapter {
      */
     public boolean performDrop(Object data) {
         if (m_editor.getEditorHelper().requestEditableState() 
-                != GDEditorHelper.EditableState.OK) {
+                != JBEditorHelper.EditableState.OK) {
             return false;
         }
         LocalSelectionTransfer transfer = LocalSelectionTransfer.getInstance();

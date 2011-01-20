@@ -45,7 +45,7 @@ public interface IEventThreadQueuer {
      * @return The result returned by the runnable, maybe <code>null</code>.
      * @throws StepExecutionException
      *             If the invocation fails or if the runnable throws a
-     *             <code>GuiDancerStepExecutionException</code>.
+     *             <code>StepExecutionException</code>.
      */
     public Object invokeAndWait(String name, IRunnable runnable)
         throws StepExecutionException;
@@ -62,7 +62,7 @@ public interface IEventThreadQueuer {
      * @return The result returned by the runnable, maybe <code>null</code>.
      * @throws StepExecutionException
      *             If the invocation fails or if the runnable throws a
-     *             <code>GuiDancerStepExecutionException</code>.
+     *             <code>StepExecutionException</code>.
      */
     public Object invokeLater(String name, IRunnable runnable)
         throws StepExecutionException;

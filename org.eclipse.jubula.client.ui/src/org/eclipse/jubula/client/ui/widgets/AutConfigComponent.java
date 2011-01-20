@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
@@ -36,13 +37,13 @@ import org.eclipse.jubula.client.ui.businessprocess.ConnectServerBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.dialogs.RemoteFileBrowserDialog;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.RemoteFileStore;
 import org.eclipse.jubula.client.ui.utils.ServerManager;
-import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ServerManager.Server;
+import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -63,8 +64,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.dialogs.FilteredPreferenceDialog;
-import org.eclipse.ui.internal.dialogs.WorkbenchPreferenceDialog;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 
 
 /**
@@ -91,7 +91,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * @author BREDEX GmbH
      * @created 22.11.2006
      */
-    private class GuiDancerModifyListener implements ModifyListener {
+    private class WidgetModifyListener implements ModifyListener {
 
         /**
          * {@inheritDoc}
@@ -121,7 +121,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * @author BREDEX GmbH
      * @created 13.07.2005
      */
-    private class GuiDancerSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
 
         /**
          * {@inheritDoc}
@@ -200,10 +200,10 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     private java.util.List<DialogStatusParameter> m_paramList = 
         new ArrayList<DialogStatusParameter>();
 
-    /** the the GuiDancerSelectionListener */
-    private GuiDancerSelectionListener m_selectionListener;
-    /** the GuiDancerModifyListener */
-    private GuiDancerModifyListener m_modifyListener;
+    /** the the WidgetSelectionListener */
+    private WidgetSelectionListener m_selectionListener;
+    /** the WidgetModifyListener */
+    private WidgetModifyListener m_modifyListener;
 
     /** Composite representing the basic area */
     private Composite m_basicAreaComposite;
@@ -216,17 +216,17 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /** Composite holding the entire contents of this config component */
     private Composite m_contentComposite;
     /** gui component */
-    private GDText m_autConfigNameTextField;
+    private JBText m_autConfigNameTextField;
     /** gui component */
     private Combo m_serverCombo;
     /** gui component */
     private Button m_addServerButton;
     /** gui component */
-    private GDText m_autWorkingDirectoryTextField;
+    private JBText m_autWorkingDirectoryTextField;
     /** gui component */
     private Button m_autWorkingDirectoryButton;
     /** gui component */
-    private GDText m_autIdTextField;
+    private JBText m_autIdTextField;
     /** validator for the AUT ID text field */
     private IValidator m_autIdValidator;
 
@@ -308,7 +308,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /**
      * @return the text field for the AUT working directory
      */
-    protected GDText getAutWorkingDirField() {
+    protected JBText getAutWorkingDirField() {
         return m_autWorkingDirectoryTextField;
     }
     /**
@@ -512,7 +512,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         initGuiServerChooser(parent);
 
         // AUT ID field
-        GDControlDecorator.decorateInfo(
+        ControlDecorator.decorateInfo(
             UIComponentHelper.createLabel(parent, "AUTConfigComponent.autId"), //$NON-NLS-1$, 
             "AUTConfigComponent.autId.helpText", false); //$NON-NLS-1$
          
@@ -721,8 +721,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * listeners for data validatuion or permission reevaluation.
      */
     protected void installListeners() {
-        GuiDancerSelectionListener selectionListener = getSelectionListener();
-        GuiDancerModifyListener modifyListener = getModifyListener();
+        WidgetSelectionListener selectionListener = getSelectionListener();
+        WidgetModifyListener modifyListener = getModifyListener();
         if (m_isMultiMode) {
             m_basicModeButton.addSelectionListener(selectionListener);
             m_advancedModeButton.addSelectionListener(selectionListener);
@@ -742,8 +742,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * listeners for data validatuion or permission reevaluation.
      */
     protected void deinstallListeners() {
-        GuiDancerSelectionListener selectionListener = getSelectionListener();
-        GuiDancerModifyListener modifyListener = getModifyListener();
+        WidgetSelectionListener selectionListener = getSelectionListener();
+        WidgetModifyListener modifyListener = getModifyListener();
         if (m_isMultiMode) {
             m_basicModeButton.removeSelectionListener(selectionListener);
             m_advancedModeButton.removeSelectionListener(selectionListener);
@@ -911,8 +911,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * Opens the server preference page
      */
     protected void openServerPrefPage() {
-        FilteredPreferenceDialog dialog = WorkbenchPreferenceDialog
-            .createDialogOn(Plugin.getShell(), Constants.GD_PREF_PAGE_AUTAGENT);
+        PreferenceDialog dialog = PreferencesUtil.createPreferenceDialogOn(
+                null, Constants.JB_PREF_PAGE_AUTAGENT, null, null);
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();
         m_listOfServers = ServerManager.getInstance();
@@ -949,8 +949,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             String text = combo.getText();
             return checkTextInput(emptyAllowed, textLength, text);
         } 
-        if (modifiedWidget instanceof GDText) {
-            GDText textField = (GDText)modifiedWidget;
+        if (modifiedWidget instanceof JBText) {
+            JBText textField = (JBText)modifiedWidget;
             int textLength = textField.getText().length();
             String text = textField.getText();
             return checkTextInput(emptyAllowed, textLength, text);
@@ -1190,9 +1190,9 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * @return the single instance of the selection listener.
      */
     @SuppressWarnings("synthetic-access")
-    private GuiDancerSelectionListener getSelectionListener() {
+    private WidgetSelectionListener getSelectionListener() {
         if (m_selectionListener == null) {
-            m_selectionListener = new GuiDancerSelectionListener();
+            m_selectionListener = new WidgetSelectionListener();
         }
         
         return m_selectionListener;
@@ -1203,9 +1203,9 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * @return the single instance of the modify listener.
      */
     @SuppressWarnings("synthetic-access")
-    private GuiDancerModifyListener getModifyListener() {
+    private WidgetModifyListener getModifyListener() {
         if (m_modifyListener == null) {
-            m_modifyListener = new GuiDancerModifyListener();
+            m_modifyListener = new WidgetModifyListener();
         }
         
         return m_modifyListener;
@@ -1214,7 +1214,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /**
      * @return the Text component for the Configuration name.
      */
-    protected GDText getAutConfigNameTextField() {
+    protected JBText getAutConfigNameTextField() {
         return m_autConfigNameTextField;
     }
     
@@ -1261,7 +1261,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * 
      * @return the text field for the Working Directory.
      */
-    protected GDText getWorkingDirTextField() {
+    protected JBText getWorkingDirTextField() {
         return m_autWorkingDirectoryTextField;
     }
     
@@ -1301,7 +1301,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * @return true if the user selected a new entry and no error occured
      */
     protected boolean remoteBrowse(boolean folderSelection,
-            String configVarKey, GDText textfield, String title) {
+            String configVarKey, JBText textfield, String title) {
         
         boolean valueChanged = false;
         

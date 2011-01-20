@@ -8,7 +8,21 @@
 
 <project default="javadoc">
 	<target name="javadoc">
-		<javadoc access="protected" author="false" destdir="${outputdir}" doctitle="GUIdancer GEF Accessibility API" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.eclipse.jubula.rc.rcp.gef.identifier" classpath="../../../org.eclipse.jubula.project.configuration/target/platform/eclipse/plugins/org.eclipse.gef_3.6.1.v20100712-1224.jar" sourcepath="../../../org.eclipse.jubula.rc.rcp/src" splitindex="true" use="true" version="false">
+		<javadoc access="protected" 
+			author="false" 
+			destdir="${outputdir}" 
+			doctitle="GUIdancer GEF Accessibility API" 
+			nodeprecated="false" 
+			nodeprecatedlist="false" 
+			noindex="false" 
+			nonavbar="false" 
+			notree="false" 
+			packagenames="org.eclipse.jubula.rc.rcp.gef.identifier" 
+			classpath="../../../../guidancer/com.bredexsw.guidancer.project.configuration/target/platform/eclipse/plugins/org.eclipse.gef_3.6.1.v20100712-1224.jar" 
+			sourcepath="../../../org.eclipse.jubula.rc.rcp/src" 
+			splitindex="true" 
+			use="true" 
+			version="false">
 			<tag name="created" scope="all" />
 		</javadoc>
 	</target>

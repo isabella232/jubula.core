@@ -62,7 +62,7 @@ public class Launcher implements IApplication,
     private static Log log = LogFactory.getLog(Launcher.class);
 
     /**
-     * Creates a new GuiDancer application.
+     * Creates a new Application.
      */
     public Launcher() {
         // do nothing
@@ -81,8 +81,8 @@ public class Launcher implements IApplication,
         Location instanceLoc = Platform.getInstanceLocation();
         if (instanceLoc == null) {
             MessageDialog.openError(shell, Messages
-                    .GuiDancerLauncherValidWorkspaceTitle,
-                Messages.GuiDancerLauncherValidWorkspace);
+                    .LauncherValidWorkspaceTitle,
+                Messages.LauncherValidWorkspace);
             return false;
         }
 
@@ -111,13 +111,13 @@ public class Launcher implements IApplication,
                 }
             } catch (IllegalStateException e) {
                 MessageDialog.openError(shell, Messages
-                        .GuiDancerLauncherCannotBeSetTitle,
-                    Messages.GuiDancerLauncherCannotBeSet);
+                        .LauncherCannotBeSetTitle,
+                    Messages.LauncherCannotBeSet);
                 return false;
             } catch (IOException e) {
                 MessageDialog.openError(shell, Messages
-                        .GuiDancerLauncherCannotBeSetTitle,
-                        Messages.GuiDancerLauncherCannotBeSet);
+                        .LauncherCannotBeSetTitle,
+                        Messages.LauncherCannotBeSet);
                 return false;
             }
 
@@ -125,8 +125,8 @@ public class Launcher implements IApplication,
             // already
             // in use -- force the user to choose again
             MessageDialog.openError(shell, Messages
-                    .GuiDancerLauncherAlreadyInUseTitle,
-                Messages.GuiDancerLauncherAlreadyInUse);
+                    .LauncherAlreadyInUseTitle,
+                Messages.LauncherAlreadyInUse);
         }
     }
 
@@ -159,8 +159,8 @@ public class Launcher implements IApplication,
                 url = file.toURL();
             } catch (MalformedURLException e) {
                 MessageDialog.openError(shell, Messages
-                        .GuiDancerLauncherNotValidTitle,
-                    Messages.GuiDancerLauncherNotValid);
+                        .LauncherNotValidTitle,
+                    Messages.LauncherNotValid);
                 continue;
             }
         } while (!isValidWorkspace(shell, url));
@@ -193,10 +193,10 @@ public class Launcher implements IApplication,
         // At this point workspace has been detected to be from a version
         // other than the current ide version -- find out if the user wants
         // to use it anyhow.
-        String title = Messages.GuiDancerLauncherDifferentVersionTitle;
+        String title = Messages.LauncherDifferentVersionTitle;
         // Use NLS.bind in Eclipse3.1
         String message = NLS.bind(
-            Messages.GuiDancerLauncherDifferentVersionMessage, 
+            Messages.LauncherDifferentVersionMessage, 
             new Object[] { url.getFile() });
         MessageBox mbox = new MessageBox(shell, SWT.OK | SWT.CANCEL
             | SWT.ICON_WARNING | SWT.APPLICATION_MODAL);
@@ -232,8 +232,8 @@ public class Launcher implements IApplication,
         } catch (IOException e) {
             log.error(Messages.CouldNotReadVersionFile, e);
             MessageDialog.openError(shell, Messages
-                    .GuiDancerLauncherCouldNotReadTitle,
-                    Messages.GuiDancerLauncherCouldNotRead);
+                    .LauncherCouldNotReadTitle,
+                    Messages.LauncherCouldNotRead);
             return null;
         }
     }
@@ -262,8 +262,8 @@ public class Launcher implements IApplication,
         } catch (IOException e) {
             log.error(Messages.CouldNotWriteVersionFile, e);
             MessageDialog.openError(shell, Messages
-                    .GuiDancerLauncherCouldNotWriteTitle,
-                    Messages.GuiDancerLauncherCouldNotWrite);
+                    .LauncherCouldNotWriteTitle,
+                    Messages.LauncherCouldNotWrite);
         } finally {
             try {
                 if (output != null) {

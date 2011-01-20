@@ -24,12 +24,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import javax.persistence.PersistenceException;
 import org.slf4j.Logger;
@@ -128,10 +129,10 @@ public class TestResultSummaryPM {
             sess.persist(summary);
             Hibernator.instance().commitTransaction(sess, tx);
         } catch (PMException e) {
-            throw new GDFatalException("storing of metadata failed.", e, //$NON-NLS-1$
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
-        } catch (GDProjectDeletedException e) {
-            throw new GDFatalException("storing of metadata failed.", e, //$NON-NLS-1$
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
             Hibernator.instance().dropSession(sess);
@@ -152,10 +153,10 @@ public class TestResultSummaryPM {
             sess.merge(summary);
             Hibernator.instance().commitTransaction(sess, tx);
         } catch (PMException e) {
-            throw new GDFatalException("storing of metadata failed.", e, //$NON-NLS-1$
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
-        } catch (GDProjectDeletedException e) {
-            throw new GDFatalException("storing of metadata failed.", e, //$NON-NLS-1$
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
             Hibernator.instance().dropSession(sess);
@@ -239,7 +240,7 @@ public class TestResultSummaryPM {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static final List<ITestResultSummaryPO> findAllTestResultSummaries(
         Date startTime)
-        throws GDException {
+        throws JBException {
         EntityManager session = null;
         if (Hibernator.instance() == null) {
             return null;
@@ -253,8 +254,8 @@ public class TestResultSummaryPM {
             List<ITestResultSummaryPO> metaList = query.getResultList();
             return metaList;
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                     MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -272,7 +273,7 @@ public class TestResultSummaryPM {
     @SuppressWarnings("unchecked")
     public static final Set<Long> findTestResultSummariesByDate(Date cleanDate,
             String projGUID, int majorVersion, int minorVersion)
-        throws GDException {
+        throws JBException {
         EntityManager session = null;
         if (Hibernator.instance() == null) {
             return null;
@@ -294,8 +295,8 @@ public class TestResultSummaryPM {
             Set<Long> idSet = new HashSet<Long>(metaList);
             return idSet;
         } catch (PersistenceException e) {
-            log.error("Hibernate load failed", e); //$NON-NLS-1$
-            throw new GDException(e.getMessage(),
+            log.error(Messages.HibernateLoadFailed, e);
+            throw new JBException(e.getMessage(),
                     MessageIDs.E_HIBERNATE_LOAD_FAILED);
         } finally {
             Hibernator.instance().dropSessionWithoutLockRelease(session);
@@ -346,10 +347,10 @@ public class TestResultSummaryPM {
             }
             Hibernator.instance().commitTransaction(session, tx);
         } catch (PMException e) {
-            throw new GDFatalException("delete testrun metadata failed.", e, //$NON-NLS-1$
+            throw new JBFatalException(Messages.DeleteTestrunMetadataFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
-        } catch (GDProjectDeletedException e) {
-            throw new GDFatalException("delete testrun metadata failed.", e, //$NON-NLS-1$
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.DeleteTestrunMetadataFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
             Hibernator.instance().dropSession(session);
@@ -397,10 +398,10 @@ public class TestResultSummaryPM {
             }
             Hibernator.instance().commitTransaction(session, tx);
         } catch (PMException e) {
-            throw new GDFatalException("delete testrun failed.", e, //$NON-NLS-1$
+            throw new JBFatalException(Messages.DeleteTestrunFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
-        } catch (GDProjectDeletedException e) {
-            throw new GDFatalException("delete testrun failed.", e, //$NON-NLS-1$
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.DeleteTestrunFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
             Hibernator.instance().dropSession(session);
@@ -422,11 +423,11 @@ public class TestResultSummaryPM {
             query.executeUpdate();
             Hibernator.instance().commitTransaction(session, tx);
         } catch (PMException e) {
-            throw new GDFatalException("delete all testrun summaries failed.", e, //$NON-NLS-1$
-                    MessageIDs.E_DATABASE_GENERAL);
-        } catch (GDProjectDeletedException e) {
-            throw new GDFatalException("delete all testrun summaries failed.", e, //$NON-NLS-1$
-                    MessageIDs.E_PROJECT_NOT_FOUND);
+            throw new JBFatalException(Messages.DeleteAllTestrunSummariesFailed,
+                    e, MessageIDs.E_DATABASE_GENERAL);
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.DeleteAllTestrunSummariesFailed,
+                    e, MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
             Hibernator.instance().dropSession(session);
         }

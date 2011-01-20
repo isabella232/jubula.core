@@ -16,6 +16,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeNode;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -30,7 +31,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class CopyHierarchyHandler extends AbstractHandler {
 
     /** the separator for test specification paths */
-    private static final String PATH_SEPARATOR = "/"; //$NON-NLS-1$
+    private static final String PATH_SEPARATOR = StringConstants.SLASH;
     
     /**
      * 

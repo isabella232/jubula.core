@@ -159,14 +159,14 @@ public class MessageHeader {
      * Validates the header version.
      * 
      * {@inheritDoc}
-     * @throws GuiDancerInvalidHeaderVersionException
+     * @throws InvalidHeaderVersionException
      *             If the version member is not equal to
      *             <code>HEADER_VERSION</code>.
      */
     public void validateVersion()
-        throws GuiDancerInvalidHeaderVersionException {
+        throws InvalidHeaderVersionException {
         if (m_version != HEADER_VERSION) {
-            throw new GuiDancerInvalidHeaderVersionException("Invalid version " //$NON-NLS-1$
+            throw new InvalidHeaderVersionException("Invalid version " //$NON-NLS-1$
                 + m_version + ". Valid is: " + HEADER_VERSION, //$NON-NLS-1$
                 MessageIDs.E_INVALID_HEADER);
 
@@ -217,18 +217,17 @@ public class MessageHeader {
      * 
      * {@inheritDoc}
      */
-    public static class GuiDancerInvalidHeaderVersionException extends
+    public static class InvalidHeaderVersionException extends
         CommunicationException {
         /**
          * constructor
          * 
          * @param message The detailed message.
          * @param id An ErrorMessage.ID.
-     * {@inheritDoc}
+         * {@inheritDoc}
          */
-        public GuiDancerInvalidHeaderVersionException(String message, 
+        public InvalidHeaderVersionException(String message, 
             Integer id) {
-            
             super(message, id);
         }
     }

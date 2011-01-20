@@ -22,7 +22,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.dialogs.EnterAutIdDialog;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
@@ -73,7 +73,7 @@ public class AutIdListComposite extends Composite {
         setLayout(compositeLayout);
         Label idLabel = new Label(this, SWT.NONE);
         idLabel.setText(I18n.getString("AUTPropertiesDialog.AutId")); //$NON-NLS-1$
-        GDControlDecorator.decorateInfo(idLabel, 
+        ControlDecorator.decorateInfo(idLabel, 
                 "AUTPropertiesDialog.AutId.helpText", false); //$NON-NLS-1$
         GridData data = new GridData(SWT.BEGINNING, SWT.FILL, false, false);
         data.horizontalSpan = 1;

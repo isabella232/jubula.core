@@ -40,7 +40,7 @@ import org.eclipse.jubula.client.ui.widgets.TreeElementChooserComposite.IUsedLis
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.persistence.jpa.JpaEntityManager;
@@ -176,7 +176,7 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
                 availableGuiObjects, usedGuiObjects);
 
 
-        } catch (GDException gde) {
+        } catch (JBException gde) {
             // Loading of a project failed
             Utils.createMessageDialog(gde, null, null);
         } catch (ToolkitPluginException tpe) {

@@ -92,7 +92,8 @@ public class NewServerPortDialog extends TitleAreaDialog {
     /** the selected server */
     private Server m_server;
     /** selection listener */
-    private GDSelectionListener m_selectionListener = new GDSelectionListener();
+    private WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
     /** the actual serverList */
     private ServerManager m_serverMgr;
 
@@ -424,7 +425,7 @@ public class NewServerPortDialog extends TitleAreaDialog {
      * @author BREDEX GmbH
      * @created 08.12.2005
      */
-    private class GDSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
         /**
          * {@inheritDoc}
          */

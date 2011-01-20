@@ -26,9 +26,8 @@ import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
@@ -55,7 +54,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
             String htmlDir = null;
             if (xslUrl == null) {
                 Plugin.getDefault().handleError(
-                        new GDException("File not found: format.xsl", //$NON-NLS-1$
+                        new JBException("File not found: format.xsl", //$NON-NLS-1$
                                 MessageIDs.E_FILE_NOT_FOUND));
                 return false;
             }
@@ -66,7 +65,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                 htmlDir = cssFile.getParentFile().getAbsolutePath();
             } catch (IOException e) {
                 Plugin.getDefault().handleError(
-                                new GDException("Can't resolve URL of 'format.xsl' or 'reportStyle.css'.", //$NON-NLS-1$
+                                new JBException("Can't resolve URL of 'format.xsl' or 'reportStyle.css'.", //$NON-NLS-1$
                                 MessageIDs.E_FILE_IO));
                 return false;
             }
@@ -159,7 +158,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
         MessageDialogWithToggle dialog = new MessageDialogWithToggle(
                 Plugin.getShell(),
                 I18n.getString("TestExecRelevantDialog.Title"), //$NON-NLS-1$
-                IconConstants.GUIDANCER_SMALLER_IMAGE,
+                null,
                 I18n.getString("TestExecRelevantDialog.Question"), //$NON-NLS-1$
                 MessageDialog.QUESTION,
                 new String[] {

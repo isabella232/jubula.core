@@ -112,8 +112,8 @@ public class TestresultSummaryBP {
 
         sum.setInternalProjectGuid(result.getProjectGuid());
         sum.setInternalProjectID(result.getProjectId());
-        sum.setProjectName(result.getProjectName() + " " //$NON-NLS-1$
-                + result.getProjectMajorVersion() + "." //$NON-NLS-1$
+        sum.setProjectName(result.getProjectName() + StringConstants.SPACE
+                + result.getProjectMajorVersion() + StringConstants.DOT
                 + result.getProjectMinorVersion());
         sum.setProjectMajorVersion(result.getProjectMajorVersion());
         sum.setProjectMinorVersion(result.getProjectMinorVersion());
@@ -140,13 +140,11 @@ public class TestresultSummaryBP {
                     .getTestjobStartTime());
         }
         sum.setTestsuiteStatus(result.getRootResultNode().getStatus());      
-        //FIXME: Marc if these values aren't set, MySQL will throw a NaN exception
-        //sum.setMonitoringValues(MonitoringConstants.EMPTY_MONITORING_VALUES);  
+        //set default monitoring values.       
         sum.setInternalMonitoringId(MonitoringConstants.EMPTY_MONITORING_ID); 
         sum.setReport(MonitoringConstants.EMPTY_REPORT);
         sum.setReportWritten(false);
         sum.setMonitoringValueType(MonitoringConstants.EMPTY_TYPE); 
-        //FIX end
         return sum;
     }
     
@@ -382,6 +380,7 @@ public class TestresultSummaryBP {
         String secondsString = (seconds < 10) ? "0" + seconds : String.valueOf(seconds); //$NON-NLS-1$ 
         String minutesString = (minutes < 10) ? "0" + minutes : String.valueOf(minutes); //$NON-NLS-1$ 
         String hoursString = (hours < 10) ? "0" + hours : String.valueOf(hours); //$NON-NLS-1$ 
-        return hoursString + ":" + minutesString + ":" + secondsString; //$NON-NLS-1$//$NON-NLS-2$
+        return hoursString + StringConstants.COLON + minutesString 
+            + StringConstants.COLON + secondsString;
     }
 }

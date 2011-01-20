@@ -30,11 +30,8 @@ import org.eclipse.ui.IPageLayout;
  * @created 13.07.2004
  */
 public interface Constants {
-    
-    /** the product id of the GUIdancer Standalone Client */
-    public static final String GD_PRODUCT_ID = "org.eclipse.jubula.client.ui.GuiDancerClient"; //$NON-NLS-1$
-    /** the category id of the GUIdancer views */
-    public static final String GD_VIEWS_CATEGORY_ID = "org.eclipse.jubula.client.views"; //$NON-NLS-1$
+    /** the category id of the Jubula views */
+    public static final String JB_VIEWS_CATEGORY_ID = "org.eclipse.jubula.client.views"; //$NON-NLS-1$
     //  -------------------------------------------------------------
     //  Keys for Views, Editors, Perspectives, Plugins
     //  -------------------------------------------------------------
@@ -86,9 +83,9 @@ public interface Constants {
     public static final String TC_BROWSER_ID = 
         "org.eclipse.jubula.client.ui.views.TestCaseBrowser"; //$NON-NLS-1$
     
-    /** ID of the GuiDancerDataSetView */
-    public static final String GUIDANCERDATASET_VIEW_ID = 
-        "org.eclipse.jubula.client.ui.views.GDDataSetView"; //$NON-NLS-1$
+    /** ID of the Jubula Data Set View */
+    public static final String JB_DATASET_VIEW_ID = 
+        "org.eclipse.jubula.client.ui.views.DataSetView"; //$NON-NLS-1$
     
     /** ID of the Eclipse Properties View */
     public static final String PROPVIEW_ID = IPageLayout.ID_PROP_SHEET;
@@ -96,11 +93,11 @@ public interface Constants {
     /** ID of the ImageView */
     public static final String IMAGEVIEW_ID = "org.eclipse.jubula.client.ui.views.Image"; //$NON-NLS-1$
     
-    /** ID of the GuiDancer Component Names View (override component names) */
+    /** ID of the Jubula Component Names View (override component names) */
     public static final String COMPNAMESVIEW_ID =
         "org.eclipse.jubula.client.ui.views.CompNamesView"; //$NON-NLS-1$
     
-    /** ID of the GuiDancer Component Name Browser */
+    /** ID of the Jubula Component Name Browser */
     public static final String COMPNAMEBROWSER_ID =
         "org.eclipse.jubula.client.ui.views.ComponentNameBrowser"; //$NON-NLS-1$
 
@@ -515,10 +512,10 @@ public interface Constants {
 
     //  -------------------------------------------------------------
     
-    /** server Pref Page */
-    public static final String GD_PREF_PAGE_AUTAGENT = "org.eclipse.jubula.client.ui.preferences.AutAgentPrefPage"; //$NON-NLS-1$
-    /** GUIdancer main preference page */
-    public static final String GD_MAIN_PREF_PAGE = "org.eclipse.jubula.client.ui.preferences.prefpage1"; //$NON-NLS-1$
+    /** AUT-Agent Preference Page */
+    public static final String JB_PREF_PAGE_AUTAGENT = "org.eclipse.jubula.client.ui.preferences.AutAgentPrefPage"; //$NON-NLS-1$
+    /** Jubula main preference page */
+    public static final String JB_MAIN_PREF_PAGE = "org.eclipse.jubula.client.ui.preferences.prefpage1"; //$NON-NLS-1$
     //  'status icon' constants
     /** constant for state "not connected to server" */
     public static final int NO_SERVER = 0;

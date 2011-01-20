@@ -27,7 +27,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -78,7 +78,7 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
         Assert.verify(editor instanceof AbstractTestCaseEditor, "Wrong editor type!"); //$NON-NLS-1$
         AbstractTestCaseEditor testCaseEditor = 
             (AbstractTestCaseEditor) editor;
-        if (GDEditorHelper.EditableState.OK == testCaseEditor.getEditorHelper()
+        if (JBEditorHelper.EditableState.OK == testCaseEditor.getEditorHelper()
                 .requestEditableState()) {
             openTestCasePopUp(testCaseEditor);
         }

@@ -48,8 +48,8 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
-import org.eclipse.jubula.client.ui.editors.IGDEditor;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
+import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.editors.TestSuiteEditor;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
@@ -396,9 +396,9 @@ public class CompNamesPage extends Page implements ISelectionListener {
                 && !StringConstants.EMPTY.equals(pair.getType())) {
             return;
         }
-        if ((m_selectedExecNodeOwner instanceof IGDEditor)) {
+        if ((m_selectedExecNodeOwner instanceof IJBEditor)) {
             final IPersistentObject orig = 
-                ((IGDEditor)m_selectedExecNodeOwner).getEditorHelper()
+                ((IJBEditor)m_selectedExecNodeOwner).getEditorHelper()
                     .getEditSupport().getOriginal();
             if (orig instanceof ISpecTestCasePO 
                 || orig instanceof ITestSuitePO) {
@@ -568,7 +568,7 @@ public class CompNamesPage extends Page implements ISelectionListener {
         AbstractTestCaseEditor edit = Plugin.getDefault().getActiveTCEditor();
         if (edit != null 
                 && edit.getEditorHelper().requestEditableState() 
-                    == GDEditorHelper.EditableState.OK
+                    == JBEditorHelper.EditableState.OK
                 && !edit.isDirty()) {
             
             edit.getEditorHelper().setDirty(true);
@@ -598,9 +598,9 @@ public class CompNamesPage extends Page implements ISelectionListener {
     private boolean updateSecondName(ICompNamesPairPO pair, String secondName) {
         boolean updateSuccessfull = false;
         if (!getInvalidData()) {
-            if (m_selectedExecNodeOwner instanceof IGDEditor) {
+            if (m_selectedExecNodeOwner instanceof IJBEditor) {
                 if (m_selectedExecNode != null) {
-                    final IGDEditor editor = (IGDEditor)m_selectedExecNodeOwner;
+                    final IJBEditor editor = (IJBEditor)m_selectedExecNodeOwner;
                     final IWritableComponentNameMapper compMapper = editor
                             .getEditorHelper().getEditSupport().getCompMapper();
                     try {
@@ -653,8 +653,8 @@ public class CompNamesPage extends Page implements ISelectionListener {
             }
 
             IWorkbenchPart activePart = Plugin.getActivePart();
-            if (activePart instanceof IGDEditor) {
-                m_compMapper = ((IGDEditor)activePart).getEditorHelper()
+            if (activePart instanceof IJBEditor) {
+                m_compMapper = ((IJBEditor)activePart).getEditorHelper()
                     .getEditSupport().getCompMapper();
             }
             m_cellEdit.setValidator(new CompNameCellValidator(m_tableViewer, 
@@ -800,7 +800,7 @@ public class CompNamesPage extends Page implements ISelectionListener {
      */
     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
         if (!(selection instanceof StructuredSelection)) { 
-            // e.g. in GUIdancer plugin-version you can open an java editor, 
+            // e.g. in Jubula plugin-version you can open an java editor, 
             // that reacts on org.eclipse.jface.text.TextSelection, which
             // is not a StructuredSelection
             return;
@@ -819,9 +819,9 @@ public class CompNamesPage extends Page implements ISelectionListener {
                 || (!(m_selectedExecNodeOwner.equals(
                         m_oldSelectedExecNodeOwner)))) {
             
-            if (part instanceof IGDEditor) {
+            if (part instanceof IJBEditor) {
                 m_cellEdit.setComponentNameMapper(
-                    ((IGDEditor)part).getEditorHelper().getEditSupport()
+                    ((IJBEditor)part).getEditorHelper().getEditSupport()
                         .getCompMapper());
             }
             

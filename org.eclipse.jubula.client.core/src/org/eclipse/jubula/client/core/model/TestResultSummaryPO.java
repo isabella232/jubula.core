@@ -31,7 +31,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.objects.MonitoringValue;
 import org.slf4j.Logger;
@@ -752,7 +753,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * {@inheritDoc}
      */
     public String toString() {
-        return super.toString() + " (" + m_id.toString() + ")";  //$NON-NLS-1$//$NON-NLS-2$
+        return super.toString() + StringConstants.SPACE 
+            + StringConstants.LEFT_PARENTHESES + m_id.toString()
+            + StringConstants.RIGHT_PARENTHESES;
     }
     
     /**
@@ -820,25 +823,25 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     public String getStatusString() {
         switch (getTestsuiteStatus()) {
             case TestResultNode.ERROR:
-                return I18n.getString("TestResultNode.Stepfailed"); //$NON-NLS-1$
+                return Messages.TestResultNodeStepfailed;
             case TestResultNode.ERROR_IN_CHILD:
-                return I18n.getString("TestResultNode.ErrorInChildren"); //$NON-NLS-1$
+                return Messages.TestResultNodeErrorInChildren;
             case TestResultNode.NOT_YET_TESTED:
-                return I18n.getString("TestResultNode.NotYetTested"); //$NON-NLS-1$
+                return Messages.TestResultNodeNotYetTested;
             case TestResultNode.SUCCESS:
-                return I18n.getString("TestResultNode.SuccessfullyTested"); //$NON-NLS-1$
+                return Messages.TestResultNodeSuccessfullyTested;
             case TestResultNode.TESTING:
-                return I18n.getString("TestResultNode.Testing"); //$NON-NLS-1$
+                return Messages.TestResultNodeTesting;
             case TestResultNode.RETRYING:
-                return I18n.getString("TestResultNode.Retrying"); //$NON-NLS-1$
+                return Messages.TestResultNodeRetrying;
             case TestResultNode.SUCCESS_RETRY:
-                return I18n.getString("TestResultNode.SuccessRetry"); //$NON-NLS-1$
+                return Messages.TestResultNodeSuccessRetry;
             case TestResultNode.ABORT:
-                return I18n.getString("TestResultNode.Abort"); //$NON-NLS-1$
+                return Messages.TestResultNodeAbort;
             default:
                 break;
         }
-        return I18n.getString("TestResultNode.unknown"); //$NON-NLS-1$
+        return Messages.TestResultNodeUnknown;
     }
 
     /**

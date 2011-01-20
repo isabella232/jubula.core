@@ -131,9 +131,9 @@ public class TestJobContPO extends WrapperPO implements ITestJobContPO {
     //           "parentProjectId" should be persisted. This causes an 
     //           exception when trying to access an instance of this class 
     //           from the database. Oddly enough, the exceptions do not occur 
-    //           when running GUIdancer from the IDE. The exceptions only occur 
-    //           in a deployed GUIdancer. Once this problem is resolved (for a 
-    //           deployed GUIdancer), the workaround can be removed.
+    //           when running Jubula from the IDE. The exceptions only occur 
+    //           in a deployed Jubula. Once this problem is resolved (for a 
+    //           deployed Jubula), the workaround can be removed.
     public Long getParentProjectId() {
         return super.getParentProjectId();
     }

@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertysources.ExecTestCaseGUIPropertySource;
-import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralGDLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -279,19 +279,19 @@ public class ExecTestCaseGUI extends GuiNode implements IAdaptable {
         boolean parameterExist = false;
         if (iter.hasNext()) {
             parameterExist = true;
-            info.append(GeneralGDLabelProvider.OPEN_BRACKED);
+            info.append(GeneralLabelProvider.OPEN_BRACKED);
         }
         if (iter.hasNext()) {
             while (iter.hasNext()) {
                 IParamDescriptionPO descr = (IParamDescriptionPO)iter.next();
                 info.append(descr.getName());
                 if (iter.hasNext()) {
-                    info.append(GeneralGDLabelProvider.SEPARATOR);
+                    info.append(GeneralLabelProvider.SEPARATOR);
                 }
             }
         }
         if (parameterExist) {
-            info.append(GeneralGDLabelProvider.CLOSE_BRACKED);
+            info.append(GeneralLabelProvider.CLOSE_BRACKED);
         }
     }
     

@@ -29,7 +29,7 @@ import org.eclipse.jubula.communication.IExceptionHandler;
 import org.eclipse.jubula.communication.listener.IErrorHandler;
 import org.eclipse.jubula.communication.listener.IMessageHandler;
 import org.eclipse.jubula.communication.message.MessageHeader;
-import org.eclipse.jubula.communication.message.MessageHeader.GuiDancerInvalidHeaderVersionException;
+import org.eclipse.jubula.communication.message.MessageHeader.InvalidHeaderVersionException;
 import org.eclipse.jubula.communication.parser.MessageHeaderSerializer;
 import org.eclipse.jubula.communication.writer.MessageWriter;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -459,7 +459,7 @@ public class Connection {
                 } catch (NumberFormatException e) {
                     log.error("invalid header length token: " //$NON-NLS-1$
                         + headerLengthToken, e); 
-                } catch (GuiDancerInvalidHeaderVersionException ihve) {
+                } catch (InvalidHeaderVersionException ihve) {
                     log.error(ihve);
                 } catch (Throwable t) {
                     log.error("exception raised", t); //$NON-NLS-1$

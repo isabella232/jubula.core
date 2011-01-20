@@ -47,7 +47,6 @@ import org.slf4j.LoggerFactory;
  * @created Dec 9, 2009
  */
 public class GDRun {
-    
     /** the logger */
     private static final Logger LOG = LoggerFactory.getLogger(GDRun.class);
     

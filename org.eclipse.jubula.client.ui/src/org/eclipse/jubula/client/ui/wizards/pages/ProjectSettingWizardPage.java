@@ -28,11 +28,11 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.factory.ControlFactory;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.CheckedProjectNameText;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.wizards.ProjectWizard;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -59,15 +59,12 @@ import org.eclipse.ui.PlatformUI;
  * @created 18.05.2005
  */
 public class ProjectSettingWizardPage extends WizardPage {
-
     /** number of columns = 1 */
     private static final int NUM_COLUMNS_1 = 1; 
     /** number of columns = 2 */
     private static final int NUM_COLUMNS_2 = 2;
     /** Toolkit that is selected by default */
-    private static final String DEFAULT_TOOLKIT = 
-        "com.bredexsw.guidancer.ConcreteToolkitPlugin";   //$NON-NLS-1$
-    /** number of columns = 3 */
+    private static final String DEFAULT_TOOLKIT = "com.bredexsw.guidancer.ConcreteToolkitPlugin";   //$NON-NLS-1$
     /** the project that owns these properties */
     private IProjectPO m_project = null;
     /** new name for the project */
@@ -95,19 +92,19 @@ public class ProjectSettingWizardPage extends WizardPage {
     /** the combo box for the project aut toolkit */
     private DirectCombo<String> m_autToolKitComboBox;
     /** the text field for the project name */
-    private GDText m_projectNameTextField;
+    private JBText m_projectNameTextField;
     /** the checkbox for the project reusability */
     private Button m_projectReusabilityCheckbox;
     /** the checkbox for the project reusability */
     private Button m_projectProtectionCheckbox;
     /** the selectionListener */
-    private final GuiDancerSelectionListener m_selectionListener = 
-        new GuiDancerSelectionListener();
+    private final WidgetSelectionListener m_selectionListener = 
+        new WidgetSelectionListener();
     /** the composite with 2 ListBoxes */
     private ListElementChooserComposite m_chooseLists;
     /** the the modifyListener */
-    private final GuiDancerModifyListener m_modifyListener = 
-        new GuiDancerModifyListener();
+    private final WidgetModifyListener m_modifyListener = 
+        new WidgetModifyListener();
    
     /**
      * @param pageName The name of the wizard page.
@@ -151,7 +148,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         createLabel(projectNameComposite, StringConstants.EMPTY);
         createAutToolKit(projectNameComposite);
         separator(composite, NUM_COLUMNS_1);  
-        GDControlDecorator.decorateInfo(createLabel(composite, 
+        ControlDecorator.decorateInfo(createLabel(composite, 
                 I18n.getString("ProjectSettingWizardPage.SelectLanguagesOfTD")),  //$NON-NLS-1$
                  "GDControlDecorator.NewProjectProjectLanguage", //$NON-NLS-1$ 
                 false); 
@@ -236,7 +233,7 @@ public class ProjectSettingWizardPage extends WizardPage {
             GridData.BEGINNING, false);
         Composite rightComposite = createComposite(composite, NUM_COLUMNS_1, 
             GridData.FILL, true);
-        GDControlDecorator.decorateInfo(createLabel(leftComposite, 
+        ControlDecorator.decorateInfo(createLabel(leftComposite, 
             I18n.getString("ProjectPropertyPage.isReusable")),   //$NON-NLS-1$
             "GDControlDecorator.NewProjectIsReusable", false);  //$NON-NLS-1$
         m_projectReusabilityCheckbox = new Button(rightComposite, SWT.CHECK);
@@ -253,7 +250,7 @@ public class ProjectSettingWizardPage extends WizardPage {
             GridData.BEGINNING, false);
         Composite rightComposite = createComposite(composite, NUM_COLUMNS_1, 
             GridData.FILL, true);
-        GDControlDecorator.decorateInfo(createLabel(leftComposite, 
+        ControlDecorator.decorateInfo(createLabel(leftComposite, 
             I18n.getString("ProjectPropertyPage.isProtected")),   //$NON-NLS-1$
             "GDControlDecorator.NewProjectIsProtected", false);  //$NON-NLS-1$
         m_projectProtectionCheckbox = new Button(rightComposite, SWT.CHECK);
@@ -286,7 +283,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         gridLayout.marginWidth = 4;
         leftComposite.setLayout(gridLayout);
         rightComposite.setLayout(gridLayout);
-        GDControlDecorator.decorateInfo(createLabel(leftComposite, 
+        ControlDecorator.decorateInfo(createLabel(leftComposite, 
                 I18n.getString("ProjectSettingWizardPage.autToolKitLabel")), 
                  "GDControlDecorator.NewProjectToolkit", false); //$NON-NLS-1$
         m_autToolKitComboBox = ControlFactory.createToolkitCombo(
@@ -408,7 +405,7 @@ public class ProjectSettingWizardPage extends WizardPage {
             GridData.FILL, true);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_1, 
                 GridData.END, true);
-        GDControlDecorator.decorateInfo(createLabel(leftComposite, 
+        ControlDecorator.decorateInfo(createLabel(leftComposite, 
                 I18n.getString("ProjectSettingWizardPage.languageLabel")), 
                 "GDControlDecorator.NewProjectDefaultLanguage", 
                 false); //$NON-NLS-1$
@@ -689,7 +686,7 @@ public class ProjectSettingWizardPage extends WizardPage {
      * @author BREDEX GmbH
      * @created 10.02.2005
      */
-    private class GuiDancerSelectionListener implements SelectionListener {
+    private class WidgetSelectionListener implements SelectionListener {
         /**
          * {@inheritDoc}
          */
@@ -796,7 +793,7 @@ public class ProjectSettingWizardPage extends WizardPage {
      * @author BREDEX GmbH
      * @created 23.05.2005
      */
-    private class GuiDancerModifyListener implements ModifyListener {
+    private class WidgetModifyListener implements ModifyListener {
         /**
          * {@inheritDoc}
          */

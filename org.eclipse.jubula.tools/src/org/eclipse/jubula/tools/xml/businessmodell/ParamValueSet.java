@@ -73,7 +73,7 @@ public class ParamValueSet {
      * Non-combinable values are mutually exclusive. An example of combinable 
      * values is key modifiers (alt, control, shift, etc.), as multiple 
      * modifiers can be used simultaneously. Boolean values, on the other hand, 
-     * are an example of non-combinable values, as GUIdancer does not support 
+     * are an example of non-combinable values, as Jubula does not support 
      * boolean math.
      * 
      * @return <code>true</code> if the contained values can be combined. 

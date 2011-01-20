@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.businessprocess.ReflectionBP;
 import org.eclipse.jubula.rc.common.classloader.ImplClassClassLoader;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -205,7 +205,7 @@ public class AUTServerConfiguration {
      * 
      * @param componentClass
      *            the class name of the component, e.g javax.swing.JButton
-     * @throws GuiDancerUnsupportedComponentException
+     * @throws UnsupportedComponentException
      *             If the <code>componentClassName</code> has no registered
      *             implementation class.
      * @throws IllegalArgumentException
@@ -213,7 +213,7 @@ public class AUTServerConfiguration {
      * @return An instance of the implementation class.
      */
     public Object getImplementationClass(Class componentClass) 
-        throws GuiDancerUnsupportedComponentException, 
+        throws UnsupportedComponentException, 
         IllegalArgumentException {
         
         Validate.notNull(componentClass);
@@ -247,17 +247,17 @@ public class AUTServerConfiguration {
                 }
             } catch (InstantiationException ie) {
                 log.error(ie);
-                throw new GuiDancerUnsupportedComponentException(
+                throw new UnsupportedComponentException(
                     "component '" + implClass.getName() //$NON-NLS-1$
                     + "' could not be instantiated", MessageIDs.E_INSTANTIATION);  //$NON-NLS-1$
             } catch (IllegalAccessException iae) {
                 log.error(iae);
-                throw new GuiDancerUnsupportedComponentException(
+                throw new UnsupportedComponentException(
                     "component '" + implClass.getName() //$NON-NLS-1$
                     + "' could not be accessed", MessageIDs.E_ILLEGAL_ACCESS);  //$NON-NLS-1$
             } catch (ClassNotFoundException cnfe) {
                 log.error(cnfe);
-                throw new GuiDancerUnsupportedComponentException(
+                throw new UnsupportedComponentException(
                     "component '" + componentClass.getName() //$NON-NLS-1$
                     + "' is not supported: implementation class '" //$NON-NLS-1$
                     + implClassName
@@ -265,7 +265,7 @@ public class AUTServerConfiguration {
             } 
             return implInstance;
         }
-        throw new GuiDancerUnsupportedComponentException(
+        throw new UnsupportedComponentException(
             "component '" + componentClass.getName() //$NON-NLS-1$
             + "' is not supported", MessageIDs.E_COMPONENT_UNSUPPORTED); //$NON-NLS-1$
     }
@@ -324,14 +324,14 @@ public class AUTServerConfiguration {
      * @param graphicsComponent The graphics component.
      * @param componentClass the class name of the component, e.g javax.swing.JButton
      * @return The implementation class.
-     * @throws GuiDancerUnsupportedComponentException If the component identified by the
+     * @throws UnsupportedComponentException If the component identified by the
      *             <code>componentClassName</code> is not supported, that
      *             means, if there is no mapped implementation class.
      * @throws IllegalArgumentException If the <code>graphicsComponent</code> or
      *             <code>componentClassName</code> is <code>null</code>.
      */
     public Object prepareImplementationClass(Object graphicsComponent,
-        Class componentClass) throws GuiDancerUnsupportedComponentException, 
+        Class componentClass) throws UnsupportedComponentException, 
         IllegalArgumentException {
         
         Validate.notNull(graphicsComponent);
@@ -421,9 +421,9 @@ public class AUTServerConfiguration {
     }
     
     /**
-     * gets the guidancer component name for a java component
+     * gets the jubula component name for a java component
      * @param component java component
-     * @return guidancer component type
+     * @return jubula component type
      */
     public String getGDComponentName (Object component) {
         String gdCompName = null;        

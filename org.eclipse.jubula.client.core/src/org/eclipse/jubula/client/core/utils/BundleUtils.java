@@ -19,7 +19,9 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.osgi.framework.Bundle;
 
@@ -53,7 +55,9 @@ public class BundleUtils {
             if (url != null) {
                 return FileLocator.toFileURL(url);
             }
-            LOG.error("Resource: " + resouceName + " not found."); //$NON-NLS-1$//$NON-NLS-2$
+            LOG.error(Messages.Resource + StringConstants.COLON 
+                + StringConstants.SPACE + resouceName + StringConstants.SPACE
+                + Messages.NotFound + StringConstants.DOT);
         } catch (MalformedURLException e) {
             LOG.error(e);
         } catch (IOException e) {
@@ -66,19 +70,20 @@ public class BundleUtils {
      * @param bundle the bundle to load the properties from
      * @param propertyFileName the name of the properties file
      * @return the loaded properties
-     * @throws GDFatalException in case of error during properties loading
+     * @throws JBFatalException in case of error during properties loading
      */
     public static Properties loadProperties(Bundle bundle,
-            String propertyFileName) throws GDFatalException {
+            String propertyFileName) throws JBFatalException {
         Properties prop = new Properties();
         InputStream propStream = null;
         try {
             propStream = getFileURL(bundle, propertyFileName).openStream();
             prop.load(propStream);
         } catch (IOException e) {
-            String msg = "Can't load: " + propertyFileName; //$NON-NLS-1$
+            String msg = Messages.CantLoad + StringConstants.COLON
+                + StringConstants.SPACE + propertyFileName;
             LOG.fatal(msg, e);
-            throw new GDFatalException(msg,
+            throw new JBFatalException(msg,
                     MessageIDs.E_PROPERTIES_FILE_NOT_FOUND);
         } finally {
             try {

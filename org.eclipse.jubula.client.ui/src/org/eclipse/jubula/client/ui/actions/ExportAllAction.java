@@ -29,9 +29,9 @@ import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
 import org.eclipse.jubula.client.ui.businessprocess.ExportAllBP;
-import org.eclipse.jubula.client.ui.utils.GDThread;
+import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -102,7 +102,7 @@ public class ExportAllAction extends AbstractAction {
 
                     Utils.storeLastDirPath(m_dirDialog.getFilterPath());
                     ExportAllBP.getInstance().showFinishedExport();
-                } catch (GDException gde) {
+                } catch (JBException gde) {
                     log.error("Export aborted.", gde); //$NON-NLS-1$
                     ExportAllBP.getInstance().showAbortExport(gde);
                 } catch (InterruptedException ie) {
@@ -137,7 +137,7 @@ public class ExportAllAction extends AbstractAction {
             return;
         }
         
-        GDThread showDialog = new GDThread() {
+        JBThread showDialog = new JBThread() {
 
             public void run() {
                 Plugin.startLongRunning();

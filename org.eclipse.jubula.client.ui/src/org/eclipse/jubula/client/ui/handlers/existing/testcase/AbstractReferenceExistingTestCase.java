@@ -26,7 +26,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
@@ -49,7 +49,7 @@ public abstract class AbstractReferenceExistingTestCase
         final AbstractTestCaseEditor tce = 
             (AbstractTestCaseEditor)Plugin.getActiveEditor();
         if (tce.getEditorHelper().requestEditableState() 
-                == GDEditorHelper.EditableState.OK) {
+                == JBEditorHelper.EditableState.OK) {
             final INodePO editorNode = (INodePO)tce.getEditorHelper()
                     .getEditSupport().getWorkVersion();
             if (!(tce.getTreeViewer().getSelection() 

@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
@@ -32,7 +33,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -97,7 +98,8 @@ public class RefToken implements IParamValueToken {
     public RefToken(String string, boolean isGuiString, int startPos, 
             IParameterInterfacePO node, IParamDescriptionPO desc) {
         if (!isValid(string, isGuiString)) {
-            throw new IllegalArgumentException("Syntax error in reference " //$NON-NLS-1$
+            throw new IllegalArgumentException(Messages.SyntaxErrorInReference
+                + StringConstants.SPACE
                 + new StringBuilder(string).toString()); 
         }
         m_startPos = startPos;
@@ -149,7 +151,13 @@ public class RefToken implements IParamValueToken {
                         return null;
                     }
                 } else {
-                    Assert.notReached("Node " + m_currentNode.getName() + " with reference is not a child of a paramNode."); //$NON-NLS-1$ //$NON-NLS-2$
+                    StringBuilder msg = new StringBuilder();
+                    msg.append(Messages.Node);
+                    msg.append(StringConstants.SPACE);
+                    msg.append(m_currentNode.getName());
+                    msg.append(StringConstants.SPACE);
+                    msg.append(Messages.WithReferenceIsNotChildOfParamNode);
+                    Assert.notReached(msg.toString());
                 }
             }
         }
@@ -177,7 +185,7 @@ public class RefToken implements IParamValueToken {
             builder.replace(start, end, repl);
             return builder.toString();
         }
-        Assert.notReached("Unexpected problem with string replacement in reference token."); //$NON-NLS-1$
+        Assert.notReached(Messages.UnexpectedProblemWithStringReplacement);
         return str;
     }
 
@@ -277,8 +285,7 @@ public class RefToken implements IParamValueToken {
 
             } else {
                 throw new UnsupportedOperationException(
-                    "not allowed to add a reference to a node " + //$NON-NLS-1$
-                    "is not a child of a SpecTestCase."); //$NON-NLS-1$
+                    Messages.NotAllowedToAddReferenceToNodeASpecTestCase);
             }
         } else {
             // assumption, that semantic of modelString is correct
@@ -317,7 +324,7 @@ public class RefToken implements IParamValueToken {
                             //           situation.
                             man = new ExternalTestDataBP()
                                     .getExternalCheckedTDManager(execNode);
-                        } catch (GDException e) {
+                        } catch (JBException e) {
                             throwInvalidDataException(refName);
                         }
 
@@ -356,8 +363,9 @@ public class RefToken implements IParamValueToken {
      */
     private void throwInvalidDataException(String reference) 
         throws InvalidDataException {
-        throw new InvalidDataException("reference " +  //$NON-NLS-1$
-            reference + " not resolvable", MessageIDs.E_NO_REFERENCE); //$NON-NLS-1$    
+        throw new InvalidDataException(Messages.Reference + reference 
+            + StringConstants.SPACE + Messages.NotResolvable, 
+            MessageIDs.E_NO_REFERENCE);    
     }
     
 
@@ -425,10 +433,13 @@ public class RefToken implements IParamValueToken {
                 } else {
                     String id = (guid != null) 
                         ? guid : StringConstants.EMPTY;
-                    Assert.notReached("Invalid guid " + id + " in reference. No appropriate parameter description available."); //$NON-NLS-1$ //$NON-NLS-2$
+                    Assert.notReached(Messages.InvalidGuid 
+                        + StringConstants.SPACE + id + StringConstants.SPACE
+                        + Messages.InReferenceNoAppropriateParameter);
                 }
             } else {
-                Assert.notReached("Node with reference is not a child of a paramNode."); //$NON-NLS-1$
+                Assert.notReached(
+                    Messages.NodeWithReferenceIsNotChildOfParamNode);
             }
         }
         return refName;

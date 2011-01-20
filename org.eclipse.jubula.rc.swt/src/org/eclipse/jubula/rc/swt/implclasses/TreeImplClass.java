@@ -710,15 +710,7 @@ public class TreeImplClass extends AbstractControlImplClass {
         if (path != null) {
             indexPath = new Integer[path.length];
             for (int i = 0; i < path.length; i++) {
-                String index = path[i];
-                try {
-                    indexPath[i] = new Integer(Integer.parseInt(index));
-                } catch (NumberFormatException exc) {
-                    throw new StepExecutionException(
-                            exc.getMessage(),
-                            EventFactory.createActionError(
-                                    TestErrorEvent.INVALID_INDEX));
-                }
+                indexPath[i] = new Integer(IndexConverter.intValue(path[i]));
             }
         }
         return IndexConverter.toImplementationIndices(indexPath);

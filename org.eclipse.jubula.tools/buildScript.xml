@@ -49,6 +49,9 @@
 		<fileset dir="lib">
 			<include name="**/*.jar" />
 		</fileset>
+		<fileset dir="../org.eclipse.jubula.rc.orbit">
+			<include name="*.jar"/>
+		</fileset>
 	</path>
 	
 	<property name="javac" value="javac"/>

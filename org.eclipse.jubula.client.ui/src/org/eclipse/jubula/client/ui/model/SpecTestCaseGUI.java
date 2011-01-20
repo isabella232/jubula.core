@@ -18,7 +18,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertysources.SpecTestCaseGUIPropertySource;
-import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralGDLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -115,19 +115,19 @@ public class SpecTestCaseGUI extends GuiNode implements IAdaptable {
         boolean parameterExist = false;
         if (iter.hasNext()) {
             parameterExist = true;
-            info.append(GeneralGDLabelProvider.OPEN_BRACKED);
+            info.append(GeneralLabelProvider.OPEN_BRACKED);
         }
         if (iter.hasNext()) {
             while (iter.hasNext()) {
                 IParamDescriptionPO descr = iter.next();
                 info.append(descr.getName());
                 if (iter.hasNext()) {
-                    info.append(GeneralGDLabelProvider.SEPARATOR);
+                    info.append(GeneralLabelProvider.SEPARATOR);
                 }
             }
         }
         if (parameterExist) {
-            info.append(GeneralGDLabelProvider.CLOSE_BRACKED);
+            info.append(GeneralLabelProvider.CLOSE_BRACKED);
         }
     }
 }

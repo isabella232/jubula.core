@@ -272,12 +272,13 @@ public class I18NStringPO implements II18NStringPO {
     public String toString() {
         SortedSet<String> sorter = new TreeSet<String>();
         for (Entry<String, String> entry : getMap().entrySet()) {
-            sorter.add(entry.getKey() + ':' + entry.getValue());
+            sorter.add(entry.getKey() + StringConstants.COLON 
+                + entry.getValue());
         }
         StringBuilder result = new StringBuilder(sorter.size() * 100);
         for (String line : sorter) {
             result.append(line);
-            result.append('\n');
+            result.append(StringConstants.NEWLINE);
         }
         return result.toString();
     }

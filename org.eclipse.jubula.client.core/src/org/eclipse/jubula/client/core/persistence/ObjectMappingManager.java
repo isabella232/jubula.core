@@ -18,7 +18,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import javax.persistence.PersistenceException;
 
@@ -42,14 +42,14 @@ public class ObjectMappingManager {
      * 
      * @throws PMException 
      *              If a database error occurs.
-     * @throws GDProjectDeletedException 
+     * @throws ProjectDeletedException 
      *              If the project was deleted in another transaction.
      * @throws IncompatibleTypeException 
      *              If at least one of the mappings contains a component type 
      *              incompatibility.
      */
     public void saveMappings() throws PMException, 
-            GDProjectDeletedException, IncompatibleTypeException {
+            ProjectDeletedException, IncompatibleTypeException {
         try {
             for (IAUTMainPO aut : m_objectMappings.keySet()) {
                 if (aut != null) {

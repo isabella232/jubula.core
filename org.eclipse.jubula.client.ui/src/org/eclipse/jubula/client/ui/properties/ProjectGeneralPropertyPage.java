@@ -38,17 +38,17 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.factory.ControlFactory;
-import org.eclipse.jubula.client.ui.provider.GDControlDecorator;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.CheckedIntText;
 import org.eclipse.jubula.client.ui.widgets.CheckedProjectNameText;
 import org.eclipse.jubula.client.ui.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
@@ -107,8 +107,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     /** the m_isProtected checkbox for if the project is protected */
     private Button m_isProtectedCheckbox;
     /** the GDStateController */
-    private final GuiDancerModifyListener m_modifyListener = 
-        new GuiDancerModifyListener();
+    private final WidgetModifyListener m_modifyListener = 
+        new WidgetModifyListener();
     /** the GDStateController */
     private final ToolkitComboSelectionListener m_toolkitComboListener = 
         new ToolkitComboSelectionListener();
@@ -244,11 +244,11 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         Composite rightComposite = createComposite(parent, 3, 
             GridData.FILL, true);
         
-        GDControlDecorator.decorateInfo(createLabel(leftComposite, 
+        ControlDecorator.decorateInfo(createLabel(leftComposite, 
             I18n.getString("ProjectPropertyPage.projectGuid")), 
             "GDControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
         
-        GDText projectGuid = new GDText(rightComposite, 
+        JBText projectGuid = new JBText(rightComposite, 
             SWT.READ_ONLY | SWT.BORDER);
         projectGuid.setText(m_projectGuid);
         Label l = createLabel(rightComposite, StringConstants.EMPTY);
@@ -268,7 +268,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_2,
                 GridData.FILL, true);
-        GDControlDecorator.decorateInfo(createLabel(leftComposite, I18n
+        ControlDecorator.decorateInfo(createLabel(leftComposite, I18n
                 .getString("ProjectPropertyPage.isReusable")), //$NON-NLS-1$
                 "GDControlDecorator.NewProjectIsReusable", false); //$NON-NLS-1$
         m_isReusableCheckbox = new Button(rightComposite, SWT.CHECK);
@@ -297,7 +297,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_2,
                 GridData.FILL, true);
-        GDControlDecorator.decorateInfo(createLabel(leftComposite, I18n
+        ControlDecorator.decorateInfo(createLabel(leftComposite, I18n
                 .getString("ProjectPropertyPage.isProtected")), //$NON-NLS-1$
                 "GDControlDecorator.NewProjectIsProtected", false); //$NON-NLS-1$
         m_isProtectedCheckbox = new Button(rightComposite, SWT.CHECK);
@@ -472,7 +472,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         gridData.grabExcessHorizontalSpace = false;
         label.setLayoutData(gridData);
         enableCleanResultDaysTextfield();
-        GDControlDecorator.decorateInfo(label,  
+        ControlDecorator.decorateInfo(label,  
                 "TestResultViewPreferencePage.cleanResultsInfo", false); //$NON-NLS-1$
     }
     
@@ -537,7 +537,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                         ProjectPM.loadReusedProject(reused);
                     ComponentNamesBP.getInstance().refreshNames(
                             reusedProject.getId());
-                } catch (GDException e) {
+                } catch (JBException e) {
                     // Could not refresh Component Name information for 
                     // reused proejct. Log the exception.
                     log.error("Error while retrieving Reused Project information", e); //$NON-NLS-1$
@@ -558,7 +558,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                     project.getMinorProjectVersion());
         } catch (PMException e) {
             Utils.createMessageDialog(e, null, null);
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
         } catch (IncompatibleTypeException ite) {
             Utils.createMessageDialog(ite, ite.getErrorMessageParams(), null);
@@ -597,7 +597,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     /**
      * Refreshes the AutMainList of the Project.
      */
-    private void refreshAutMainList() throws GDProjectDeletedException {
+    private void refreshAutMainList() throws ProjectDeletedException {
         try {
             GeneralStorage.getInstance().getMasterSession().refresh(
                 GeneralStorage.getInstance().getProject().getAutCont());
@@ -671,7 +671,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
      * @created 11.07.2005
      */
     @SuppressWarnings("synthetic-access")
-    private class GuiDancerModifyListener implements ModifyListener {
+    private class WidgetModifyListener implements ModifyListener {
         /**
          * {@inheritDoc}
          */

@@ -37,7 +37,7 @@ import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IEditorReference;
@@ -256,7 +256,7 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
                             node, DataState.Renamed, UpdateState.all);
                 } catch (PMException e) {
                     PMExceptionHandler.handlePMExceptionForMasterSession(e);
-                } catch (GDProjectDeletedException e) {
+                } catch (ProjectDeletedException e) {
                     PMExceptionHandler.handleGDProjectDeletedException();
                 }
             }

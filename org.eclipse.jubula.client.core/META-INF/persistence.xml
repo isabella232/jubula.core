@@ -68,6 +68,7 @@
 		
 		<properties>
 			<property name="eclipselink.weaving" value="static"/>
+			<property name="eclipselink.weaving.changetracking" value="false"/>
 		</properties>
 		
 	</persistence-unit>

@@ -24,15 +24,15 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.wizards.pages.DatabaseMigrationAssistantIntroPage;
 import org.eclipse.jubula.client.ui.wizards.pages.ImportProjectsWizardPage;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 /**
- * Wizard that assists in migrating a GUIdancer database so that it is 
- * compatible with a newer version of GUIdancer.
+ * Wizard that assists in migrating a Jubula database so that it is 
+ * compatible with a newer version of Jubula.
  *
  * @author BREDEX GmbH
  * @created May 25, 2010
@@ -126,9 +126,9 @@ public class DatabaseMigrationAssistant extends Wizard
                                                 DATABASE_MIGRATION_ASSISTANT);
                             }
                         });
-                    } catch (GDFatalException e) {
+                    } catch (JBFatalException e) {
                         LOG.error("An error occurred during migration.", e); //$NON-NLS-1$
-                    } catch (GDException e) {
+                    } catch (JBException e) {
                         LOG.error("An error occurred during migration.", e); //$NON-NLS-1$
                     } finally {
                         monitor.done();

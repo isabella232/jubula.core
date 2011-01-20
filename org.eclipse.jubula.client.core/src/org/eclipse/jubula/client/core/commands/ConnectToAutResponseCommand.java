@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.ConnectToAutResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
@@ -58,7 +59,7 @@ public class ConnectToAutResponseCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        LOG.warn(this.getClass().getName() + " timeout() called"); //$NON-NLS-1$
+        LOG.warn(this.getClass().getName() + Messages.TimeoutCalled);
     }
 
 }

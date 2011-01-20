@@ -4,7 +4,8 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.communication"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.4"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.tools"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-beanutils-1.7.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/org.apache.commons.collections_3.2.0.v201005080500.jar"/>
+	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.orbit/org.apache.commons.beanutils_1.7.0.v200902170505.jar"/>
+	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.orbit/org.apache.oro_2.0.8.v201005080400.jar"/>
+	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.orbit/org.apache.commons.collections_3.2.0.v201005080500.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

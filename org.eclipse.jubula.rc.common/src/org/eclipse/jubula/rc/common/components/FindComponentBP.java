@@ -113,8 +113,7 @@ public abstract class FindComponentBP {
      * Checks if the given currcomp class or one of its superclass is testable 
      * with the given suppClassName.
      * @param autServerConf the AUTServerConfiguration
-     * @param suppClassName the class name of he component supported 
-     *          by GUIdancer
+     * @param suppClassName the class name of the supported component 
      * @param currComp the current component to test
      * @return true if testable, false otherwise.
      */

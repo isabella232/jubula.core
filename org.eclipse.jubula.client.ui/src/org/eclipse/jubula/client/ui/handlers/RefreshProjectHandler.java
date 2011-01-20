@@ -28,8 +28,8 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.PlatformUI;
 
@@ -67,7 +67,7 @@ public class RefreshProjectHandler extends AbstractHandler {
             try {
                 GeneralStorage.getInstance().reloadMasterSession(
                         monitor);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
             } finally {
                 ProgressMonitorTracker.getInstance().setProgressMonitor(null);
@@ -124,7 +124,7 @@ public class RefreshProjectHandler extends AbstractHandler {
                                 reusedId, 
                                 masterSession);
                     }
-                } catch (GDException e) {
+                } catch (JBException e) {
                     // Do nothing
                 }
             }

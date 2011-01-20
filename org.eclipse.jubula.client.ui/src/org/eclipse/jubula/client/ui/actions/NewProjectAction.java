@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
 import org.eclipse.jubula.client.ui.businessprocess.AlwaysEnabledBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
-import org.eclipse.jubula.client.ui.utils.GDThread;
+import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.widgets.JavaAutConfigComponent;
 import org.eclipse.jubula.client.ui.wizards.ProjectWizard;
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -51,7 +51,7 @@ public class NewProjectAction extends AbstractAction {
         }
         m_alreadyNagged = false;
         Plugin.startLongRunning();
-        GDThread t = new GDThread() {
+        JBThread t = new JBThread() {
                 public void run() {
                     if (!Hibernator.init()) {
                         Plugin.stopLongRunning();

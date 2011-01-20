@@ -47,7 +47,7 @@ import org.eclipse.jubula.communication.message.RecordActionMessage;
 import org.eclipse.jubula.communication.message.ShowObservInfoMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
-import org.eclipse.jubula.rc.common.exception.GuiDancerNoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.tools.constants.CharacterConstants;
@@ -388,7 +388,7 @@ public class RecordActions {
                     a = m_recordHelper.compSysToAction(id, "CompSystem.PopupSelectByTextPathNew"); //$NON-NLS-1$
                     logName = createLogicalName(comp, id);
                     parValues.add((new Integer(m_popupMouseBtn)).toString());
-                } catch (GuiDancerNoIdentifierForComponentException
+                } catch (NoIdentifierForComponentException
                         nifce) {
                     // no identifier for the component, log this as an error
                     log.error("no identifier for '" + comp); //$NON-NLS-1$
@@ -582,7 +582,7 @@ public class RecordActions {
                 parameterValues.add(text);                
                 String logName = createLogicalName(src, id);                 
                 createCAP(a, id, parameterValues, logName);
-            } catch (GuiDancerNoIdentifierForComponentException nifce) {
+            } catch (NoIdentifierForComponentException nifce) {
                 // no identifier for the component, log this as an error
                 log.error("no identifier for '" + src); //$NON-NLS-1$
             }
@@ -622,7 +622,7 @@ public class RecordActions {
                 
                 createCAP(a, id, parameterValues, logName);            
                 m_map.put(src, txt);  
-            } catch (GuiDancerNoIdentifierForComponentException nifce) {
+            } catch (NoIdentifierForComponentException nifce) {
                 // no identifier for the component, log this as an error
                 log.error("no identifier for '" + tbl); //$NON-NLS-1$
             }

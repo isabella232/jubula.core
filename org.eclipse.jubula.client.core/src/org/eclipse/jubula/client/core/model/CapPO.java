@@ -26,6 +26,7 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
@@ -191,13 +192,15 @@ class CapPO extends ParamNodePO implements ICapPO {
      */
     private void validateCAP(String capName, String componentName,
             String componentType, String actionName) {
-        Validate.notEmpty(capName, "missing name for CapPO"); //$NON-NLS-1$
+        Validate.notEmpty(capName, Messages.MissingNameForCapPO);
         Validate
-                .notEmpty(componentName, "missing component name for component"); //$NON-NLS-1$
+                .notEmpty(componentName, 
+                    Messages.MissingComponentNameForComponent);
         Validate
-                .notEmpty(componentType, "missing component type for component"); //$NON-NLS-1$
-        Validate.notEmpty(actionName, "missing action name for component" + //$NON-NLS-1$
-                componentName);
+                .notEmpty(componentType, 
+                        Messages.MissingComponentNameForComponent);
+        Validate.notEmpty(actionName, 
+                Messages.MissingComponentNameForComponent + componentName);
         getMetaDataFromXmlDescr(componentType, actionName);
     }
 
@@ -295,7 +298,7 @@ class CapPO extends ParamNodePO implements ICapPO {
                 .getCompSystem();
             m_metaComponentType = compSystem.findComponent(
                 getComponentType());
-            Validate.notNull(getComponentType(), "component type is null"); //$NON-NLS-1$
+            Validate.notNull(getComponentType(), Messages.ComponentTypeIsNull);
         }
         return m_metaComponentType;
     }
@@ -329,8 +332,8 @@ class CapPO extends ParamNodePO implements ICapPO {
      *            The actionName to set.
      */
     public void setActionName(String actionName) {
-        Validate.notEmpty(actionName, "missing action for component" + //$NON-NLS-1$
-                getComponentName());
+        Validate.notEmpty(actionName, Messages.MissingActionForComponent
+                + getComponentName());
         setHbmActionName(actionName);
         setMetaAction(null);
         getMetaAction();
@@ -344,7 +347,7 @@ class CapPO extends ParamNodePO implements ICapPO {
      */
     public void addNode(INodePO childNode) {
         childNode.getName(); // only to use the parameter
-        Assert.verify(false, "not allowed to add a node to a CapPO"); //$NON-NLS-1$
+        Assert.verify(false, Messages.NotAllowedToAddNodeToCapPO);
     }
 
     
@@ -390,7 +393,7 @@ class CapPO extends ParamNodePO implements ICapPO {
      * {@inheritDoc}
      */
     protected void removeParameter(IParamDescriptionPO p) {
-        Assert.verify(false, "It's not allowed to remove parameters from a CapPO"); //$NON-NLS-1$
+        Assert.verify(false, Messages.ItsNotAllowedToRemoveParametersFromCapPO);
     }
 
     /**
@@ -399,7 +402,6 @@ class CapPO extends ParamNodePO implements ICapPO {
     private void setMetaComponentType(Component metaComponentType) {
         m_metaComponentType = metaComponentType;
     }
-
 
     /**
      * @param aut aut, for which the completeOMFlag is valid

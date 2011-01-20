@@ -30,7 +30,7 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 
@@ -83,7 +83,7 @@ public class DeleteComponentNameInViewHandler extends AbstractHandler {
                     }
                 } catch (PMException e) {
                     PMExceptionHandler.handlePMExceptionForMasterSession(e);
-                } catch (GDProjectDeletedException e) {
+                } catch (ProjectDeletedException e) {
                     PMExceptionHandler.handleGDProjectDeletedException();
                 } finally {
                     Hibernator.instance().dropSession(s);

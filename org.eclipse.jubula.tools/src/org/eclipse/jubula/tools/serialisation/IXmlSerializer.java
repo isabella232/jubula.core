@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.tools.serialisation;
 
-import org.eclipse.jubula.tools.exception.GDFatalAbortException;
+import org.eclipse.jubula.tools.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.exception.SerialisationException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -47,13 +47,13 @@ public interface IXmlSerializer {
                     .newInstance();
 
             } catch (java.lang.ClassNotFoundException ex) {
-                throw new GDFatalAbortException(errMsg, ex,
+                throw new JBFatalAbortException(errMsg, ex,
                     MessageIDs.E_CLASS_NOT_FOUND);
             } catch (java.lang.InstantiationException ex) {
-                throw new GDFatalAbortException(errMsg, ex,
+                throw new JBFatalAbortException(errMsg, ex,
                     MessageIDs.E_CLASS_NOT_FOUND);
             } catch (java.lang.IllegalAccessException ex) {
-                throw new GDFatalAbortException(errMsg, ex,
+                throw new JBFatalAbortException(errMsg, ex,
                     MessageIDs.E_CLASS_NOT_FOUND);
             }
         }

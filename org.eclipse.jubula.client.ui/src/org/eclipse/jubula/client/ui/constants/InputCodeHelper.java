@@ -38,7 +38,7 @@ public class InputCodeHelper {
      * @author BREDEX GmbH
      * @created Sep 18, 2009
      */
-    public static class GDUserInput {
+    public static class UserInput {
 
         /** the type of input represented */
         private int m_type;
@@ -55,7 +55,7 @@ public class InputCodeHelper {
          * @param code Specific information about the content of the input.
          * @param type The type of input.
          */
-        public GDUserInput(int code, int type) {
+        public UserInput(int code, int type) {
             m_code = code;
             m_type = type;
         }
@@ -84,8 +84,8 @@ public class InputCodeHelper {
                 return true;
             }
 
-            if (obj instanceof GDUserInput) {
-                GDUserInput input = (GDUserInput)obj;
+            if (obj instanceof UserInput) {
+                UserInput input = (UserInput)obj;
                 return new EqualsBuilder().append(getCode(), input.getCode())
                     .append(getType(), input.getType()).isEquals();
             }
@@ -113,10 +113,10 @@ public class InputCodeHelper {
     private int[] m_modifier = new int[5];
     
     /** all key-press inputs */
-    private GDUserInput[] m_keys;
+    private UserInput[] m_keys;
     
     /** all inputs */
-    private GDUserInput[] m_inputs;
+    private UserInput[] m_inputs;
 
     /**
      * general inputs text
@@ -146,26 +146,26 @@ public class InputCodeHelper {
         m_modifier[3] = InputEvent.ALT_DOWN_MASK;
         m_modifier[4] = InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK;
         
-        List<GDUserInput> inputList = new ArrayList<GDUserInput>();
+        List<UserInput> inputList = new ArrayList<UserInput>();
         List<String> inputStringList = new ArrayList<String>();
         for (int i = KeyEvent.VK_0; i <= KeyEvent.VK_9; i++) {
-            inputList.add(new GDUserInput(i, InputConstants.TYPE_KEY_PRESS));
+            inputList.add(new UserInput(i, InputConstants.TYPE_KEY_PRESS));
             inputStringList.add(KeyEvent.getKeyText(i));
         }
         for (int i = KeyEvent.VK_A; i <= KeyEvent.VK_Z; i++) {
-            inputList.add(new GDUserInput(i, InputConstants.TYPE_KEY_PRESS));
+            inputList.add(new UserInput(i, InputConstants.TYPE_KEY_PRESS));
             inputStringList.add(KeyEvent.getKeyText(i));
         }
         for (int i = KeyEvent.VK_NUMPAD0; i <= KeyEvent.VK_ADD; i++) {
-            inputList.add(new GDUserInput(i, InputConstants.TYPE_KEY_PRESS));
+            inputList.add(new UserInput(i, InputConstants.TYPE_KEY_PRESS));
             inputStringList.add(KeyEvent.getKeyText(i));
         }
         for (int i = KeyEvent.VK_SUBTRACT; i <= KeyEvent.VK_DIVIDE; i++) {
-            inputList.add(new GDUserInput(i, InputConstants.TYPE_KEY_PRESS));
+            inputList.add(new UserInput(i, InputConstants.TYPE_KEY_PRESS));
             inputStringList.add(KeyEvent.getKeyText(i));
         }
         for (int i = KeyEvent.VK_F1; i <= KeyEvent.VK_F12; i++) {
-            inputList.add(new GDUserInput(i, InputConstants.TYPE_KEY_PRESS));
+            inputList.add(new UserInput(i, InputConstants.TYPE_KEY_PRESS));
             inputStringList.add(KeyEvent.getKeyText(i));
         }
 
@@ -174,17 +174,17 @@ public class InputCodeHelper {
             m_modifierString[i] = InputEvent.getModifiersExText(m_modifier[i]);
         }
 
-        m_keys = inputList.toArray(new GDUserInput[inputList.size()]);
+        m_keys = inputList.toArray(new UserInput[inputList.size()]);
         m_keyStrings = 
             inputStringList.toArray(new String[inputStringList.size()]);
         
-        inputList.add(new GDUserInput(
+        inputList.add(new UserInput(
                 InputConstants.MOUSE_BUTTON_LEFT, 
                 InputConstants.TYPE_MOUSE_CLICK));
-        inputList.add(new GDUserInput(
+        inputList.add(new UserInput(
                 InputConstants.MOUSE_BUTTON_MIDDLE, 
                 InputConstants.TYPE_MOUSE_CLICK));
-        inputList.add(new GDUserInput(
+        inputList.add(new UserInput(
                 InputConstants.MOUSE_BUTTON_RIGHT, 
                 InputConstants.TYPE_MOUSE_CLICK));
 
@@ -192,7 +192,7 @@ public class InputCodeHelper {
         inputStringList.add(I18n.getString("ObjectMappingPreferencePage.mouseButton2")); //$NON-NLS-1$
         inputStringList.add(I18n.getString("ObjectMappingPreferencePage.mouseButton3")); //$NON-NLS-1$
         
-        m_inputs = inputList.toArray(new GDUserInput[inputList.size()]);
+        m_inputs = inputList.toArray(new UserInput[inputList.size()]);
         m_inputStrings = 
             inputStringList.toArray(new String[inputStringList.size()]);
     }
@@ -212,13 +212,13 @@ public class InputCodeHelper {
     /**
      * @return all available key-press inputs.
      */
-    public GDUserInput[] getKeys() {
+    public UserInput[] getKeys() {
         return m_keys;
     }
     /**
      * @return all available inputs.
      */
-    public GDUserInput[] getInputs() {
+    public UserInput[] getInputs() {
         return m_inputs;
     }
 

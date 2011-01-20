@@ -25,11 +25,12 @@ import javax.persistence.criteria.Root;
 import org.apache.commons.lang.time.DateUtils;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -58,10 +59,10 @@ public class TestResultPM {
                 Hibernator.instance().getTransaction(session);
             Hibernator.instance().commitTransaction(session, tx);
         } catch (PMException e) {
-            throw new GDFatalException("storing of test results failed.", e, //$NON-NLS-1$
+            throw new JBFatalException(Messages.StoringOfTestResultsFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
-        } catch (GDProjectDeletedException e) {
-            throw new GDFatalException("storing of test results failed.", e, //$NON-NLS-1$
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.StoringOfTestResultsFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
             Hibernator.instance().dropSession(session);
@@ -87,11 +88,11 @@ public class TestResultPM {
             
             Hibernator.instance().commitTransaction(session, tx);
         } catch (PMException e) {
-            throw new GDFatalException("delete testresult element failed.", e, //$NON-NLS-1$
-                    MessageIDs.E_DATABASE_GENERAL);
-        } catch (GDProjectDeletedException e) {
-            throw new GDFatalException("delete testresult element failed.", e, //$NON-NLS-1$
-                    MessageIDs.E_PROJECT_NOT_FOUND);
+            throw new JBFatalException(Messages.DeleteTestresultElementFailed, 
+                    e, MessageIDs.E_DATABASE_GENERAL);
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.DeleteTestresultElementFailed, 
+                    e, MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
             Hibernator.instance().dropSession(session);
         }
@@ -191,8 +192,8 @@ public class TestResultPM {
             }
             DataEventDispatcher.getInstance().fireTestresultChanged(
                     TestresultState.Refresh);
-        } catch (GDException e) {
-            throw new GDFatalException("deleting testresults failed.", e, //$NON-NLS-1$
+        } catch (JBException e) {
+            throw new JBFatalException(Messages.DeletingTestresultsFailed, e,
                     MessageIDs.E_DELETE_TESTRESULT);
         } 
     }

@@ -54,7 +54,7 @@ public class EventThreadQueuerSwtImpl implements IEventThreadQueuer {
         } catch (InvocationTargetException ite) {
             // the run() method from IRunnable has thrown an exception
             // -> log on info
-            // -> throw a GuiDancerStepExecutionException
+            // -> throw a StepExecutionException
             Throwable thrown = ite.getTargetException();
             if (thrown instanceof StepExecutionException) {
                 if (log.isInfoEnabled()) {
@@ -89,7 +89,7 @@ public class EventThreadQueuerSwtImpl implements IEventThreadQueuer {
         } catch (InvocationTargetException ite) {
             // the run() method from IRunnable has thrown an exception
             // -> log on info
-            // -> throw a GuiDancerStepExecutionException
+            // -> throw a StepExecutionException
             Throwable thrown = ite.getTargetException();
             if (thrown instanceof StepExecutionException) {
                 if (log.isInfoEnabled()) {

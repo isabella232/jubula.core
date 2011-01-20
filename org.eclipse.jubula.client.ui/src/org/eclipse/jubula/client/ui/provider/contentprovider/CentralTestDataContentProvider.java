@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
  * @created Mar 17, 2010
  */
 public class CentralTestDataContentProvider extends
-        AbstractGDTreeViewContentProvider {
+        AbstractTreeViewContentProvider {
 
     /**
      * {@inheritDoc}

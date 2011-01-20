@@ -31,13 +31,13 @@ import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.filter.GDFilteredTree;
-import org.eclipse.jubula.client.ui.filter.GDPatternFilter;
+import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
+import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.model.CategoryGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
-import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralGDLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.sorter.GuiNodeNameViewerSorter;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -220,8 +220,8 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
 
         area.setLayoutData(gridData);
 
-        final FilteredTree ft = new GDFilteredTree(
-                area, m_treeStyle, new GDPatternFilter(), true);
+        final FilteredTree ft = new JBFilteredTree(
+                area, m_treeStyle, new JBPatternFilter(), true);
         
         m_treeViewer = ft.getViewer();
 
@@ -413,7 +413,7 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
          * {@inheritDoc}
          */
         public String getText(Object element) {
-            return GeneralGDLabelProvider.getGDText(element);
+            return GeneralLabelProvider.getGDText(element);
         }
 
         /**

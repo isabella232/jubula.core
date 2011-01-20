@@ -76,8 +76,8 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.objects.MonitoringValue;
@@ -355,14 +355,13 @@ class XmlExporter {
      */
     public void fillProject(Project xml, IProjectPO po, 
             boolean includeTestResultSummaries)
-        throws GDProjectDeletedException, PMException, 
+        throws ProjectDeletedException, PMException, 
             OperationCanceledException {
         fillNode(xml, po);
         fillAttributes(xml, po, po.getProjectAttributeDescriptions());
         checkForCancel();
         fillCheckConfiguration(
                 xml, po.getProjectProperties().getCheckConfCont());
-        
         // used toolkits
         fillUsedToolkits(xml, po);
         // All project toolkit info finished
@@ -416,7 +415,6 @@ class XmlExporter {
         // reused projects
         handleReusedProjects(xml, po);
         checkForCancel();
-        
         // testresult summaries
         if (includeTestResultSummaries) {
             fillTestResultSummary(xml, po);
@@ -427,6 +425,8 @@ class XmlExporter {
         xml.setMinorProjectVersion(po.getMinorProjectVersion());
         xml.setIsReusable(po.getIsReusable());
         xml.setIsProtected(po.getIsProtected());
+        xml.setTeststyleEnabled(
+                po.getProjectProperties().getCheckConfCont().getEnabled());
         xml.setTestResultDetailsCleanupInterval(
                 po.getTestResultCleanupInterval());
         m_monitor.worked(1);
@@ -677,14 +677,14 @@ class XmlExporter {
      *            The XML element to which the toolkits will be added.
      * @param po
      *            The project from which the toolkits will be read.
-     * @throws GDProjectDeletedException
+     * @throws ProjectDeletedException
      *             if the project was deleted while toolkits were being read.
      * @throws PMSaveException
      *             if a database error occurs while reading the project
      *             toolkits.
      */
     private void fillUsedToolkits(Project xml, IProjectPO po)
-        throws GDProjectDeletedException, PMSaveException {
+        throws ProjectDeletedException, PMSaveException {
 
         UsedToolkitBP toolkitBP = UsedToolkitBP.getInstance();
         try {
@@ -890,7 +890,7 @@ class XmlExporter {
             try {
                 xml.setProjectGuid(ProjectPM.loadProjectById(
                         po.getSpecTestCase().getParentProjectId()).getGuid());
-            } catch (GDException e) {
+            } catch (JBException e) {
                 // FIXME zeb Could not load project for spec testcase
             }
         }

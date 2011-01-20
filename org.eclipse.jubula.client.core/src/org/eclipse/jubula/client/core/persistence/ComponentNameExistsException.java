@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.persistence;
 
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 /**
  * This exception indicates that a Component Name could not be created because 
@@ -19,7 +19,7 @@ import org.eclipse.jubula.tools.exception.GDException;
  * @author BREDEX GmbH
  * @created Aug 20, 2010
  */
-public class ComponentNameExistsException extends GDException {
+public class ComponentNameExistsException extends JBException {
 
     /**
      * Error details

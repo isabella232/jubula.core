@@ -139,8 +139,8 @@ public class ExportTestResultDetailsWizard extends Wizard
                                 new SummarizedTestResult(
                                         summary, rootDetailNode));
 
-                    exportDocument(
-                            generator.generateXmlReport(), summary, subMonitor);
+                    exportDocument(generator.generateXmlReport(), summary,
+                            subMonitor);
                 }
             } finally {
                 monitor.done();

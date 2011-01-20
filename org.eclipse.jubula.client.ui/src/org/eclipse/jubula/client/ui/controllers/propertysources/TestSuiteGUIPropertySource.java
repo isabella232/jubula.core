@@ -28,8 +28,8 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.GDIntegerTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.editors.AbstractGDEditor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IntegerTextPropertyDescriptor;
+import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -116,7 +116,7 @@ public class TestSuiteGUIPropertySource
         
         // step delay
         if (m_stepDelayPropDesc == null) {
-            m_stepDelayPropDesc = new GDIntegerTextPropertyDescriptor(
+            m_stepDelayPropDesc = new IntegerTextPropertyDescriptor(
                     new StepDelayController(), 
                     P_STEPDELAY_DISPLAY_NAME, false, 0, 10000);
         }
@@ -209,7 +209,7 @@ public class TestSuiteGUIPropertySource
      * @return The work version of the original object.
      */
     IPersistentObject getWorkVersion(IPersistentObject object) {
-        AbstractGDEditor edit = Plugin.getDefault().getActiveGDEditor();
+        AbstractJBEditor edit = Plugin.getDefault().getActiveGDEditor();
         EditSupport editSupport = edit.getEditorHelper().getEditSupport();
         IPersistentObject objectW = null;
         try {

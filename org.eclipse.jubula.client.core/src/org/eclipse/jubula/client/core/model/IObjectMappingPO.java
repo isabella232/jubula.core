@@ -83,10 +83,10 @@ public interface IObjectMappingPO extends ITimestampPO {
      * returns the technicalName to a logical name
      * @param logical       String
      * @return              String
-     * @throws GuiDancerLogicComponentNotManagedException error
+     * @throws LogicComponentNotManagedException error
      */
     public abstract IComponentIdentifier getTechnicalName(String logical)
-        throws GuiDancerLogicComponentNotManagedException;
+        throws LogicComponentNotManagedException;
 
     /**
      * 

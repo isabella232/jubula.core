@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.client.core.businessprocess.JobConfiguration;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 
 /**
  * @created Mar 21, 2006
@@ -87,7 +87,7 @@ public class Client extends AbstractCmdlineClient {
         } catch (IllegalArgumentException e) {
             log.error(e);
             printConsoleError(e.getMessage());
-        } catch (GDFatalException e) {
+        } catch (JBFatalException e) {
             log.error(e);
             printConsoleError(e.getMessage());
         } catch (Throwable t) {

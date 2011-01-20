@@ -23,6 +23,7 @@ import javax.persistence.Version;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 
@@ -273,11 +274,12 @@ class ReusedProjectPO implements IReusedProjectPO {
      */
     @Transient
     public String getVersionString() {
-        StringBuilder sb = new StringBuilder("_["); //$NON-NLS-1$
+        StringBuilder sb = new StringBuilder(StringConstants.UNDERLINE);
+        sb.append(StringConstants.LEFT_BRACKET);
         sb.append(getMajorNumber());
-        sb.append("."); //$NON-NLS-1$
+        sb.append(StringConstants.DOT);
         sb.append(getMinorNumber());
-        sb.append("]"); //$NON-NLS-1$
+        sb.append(StringConstants.RIGHT_BRACKET);
         return sb.toString();
     }
 

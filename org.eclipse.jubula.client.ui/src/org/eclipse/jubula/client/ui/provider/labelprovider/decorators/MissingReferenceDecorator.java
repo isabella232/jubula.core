@@ -16,7 +16,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.tools.exception.GDException;
+import org.eclipse.jubula.tools.exception.JBException;
 
 
 /**
@@ -36,7 +36,7 @@ public class MissingReferenceDecorator extends LabelProvider
             try {
                 projID = ProjectPM.findProjectId(rProj.getProjectGuid(), rProj
                         .getMajorNumber(), rProj.getMinorNumber());
-            } catch (GDException e) {
+            } catch (JBException e) {
                 projID = null;
             }
             if (projID == null) {

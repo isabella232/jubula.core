@@ -14,7 +14,7 @@ package org.eclipse.jubula.tools.exception;
  * @author BREDEX GmbH
  * @created May 14, 2008
  */
-public class ConverterException extends GDException {
+public class ConverterException extends JBException {
 
     /**
      * @param message The detailed message for this exception.

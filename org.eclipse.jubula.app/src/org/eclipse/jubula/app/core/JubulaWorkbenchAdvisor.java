@@ -33,15 +33,15 @@ import org.eclipse.jubula.app.i18n.Messages;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.Plugin.GDStatus;
+import org.eclipse.jubula.client.ui.Plugin.ClientStatus;
 import org.eclipse.jubula.client.ui.businessprocess.ProblemsBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.search.query.AbstractSearchQuery;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDFatalException;
-import org.eclipse.jubula.tools.exception.GDRuntimeException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.search.ui.IQueryListener;
@@ -76,7 +76,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
     private static Log log = LogFactory.getLog(JubulaWorkbenchAdvisor.class);
 
     /**
-     * Constructs a new <code>GuiDancerWorkbenchAdvisor</code>.
+     * Constructs a new <code>JubulaWorkbenchAdvisor</code>.
      */
     public JubulaWorkbenchAdvisor() {
         // do nothing
@@ -196,7 +196,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
     
     /**
      * doing sth after Startup
-     * (starts the spec perspective after the guiDancer-start)
+     * (starts the spec perspective after the application-start)
      */
     public void postStartup() {
         setupPermanentServices();
@@ -219,7 +219,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
             Utils.createMessageDialog(MessageIDs.E_NO_PERSPECTIVE, 
                     new Object[]{Constants.SPEC_PERSPECTIVE}, null);
         }
-        Plugin.getDefault().setDGStatus(GDStatus.RUNNING);
+        Plugin.getDefault().setClientStatus(ClientStatus.RUNNING);
     }
 
     /**
@@ -317,8 +317,8 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
                 return;
             }
             log.error(Messages.UnhandledRuntimeException, exception);
-            if (exception instanceof GDRuntimeException) {
-                Utils.createMessageDialog(((GDRuntimeException)exception)
+            if (exception instanceof JBRuntimeException) {
+                Utils.createMessageDialog(((JBRuntimeException)exception)
                         .getErrorId());
                 return;
             } else if (exception instanceof PersistenceException) {
@@ -351,7 +351,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
 
             if (!Plugin.isRCPException(exception) 
                     && !Plugin.isContentAssistException(exception)) {
-                Utils.createMessageDialog(new GDFatalException(exception,
+                Utils.createMessageDialog(new JBFatalException(exception,
                         MessageIDs.E_UNEXPECTED_EXCEPTION));
             }
         } else {
@@ -472,7 +472,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
      */
     public boolean preShutdown() {
         try {
-            Plugin.getDefault().setDGStatus(GDStatus.STOPPING);
+            Plugin.getDefault().setClientStatus(ClientStatus.STOPPING);
             // Close all open editors
             IWorkbenchWindow[] allWW = PlatformUI.getWorkbench()
                 .getWorkbenchWindows();

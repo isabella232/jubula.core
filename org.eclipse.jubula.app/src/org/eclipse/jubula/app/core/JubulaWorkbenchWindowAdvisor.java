@@ -15,7 +15,10 @@ import org.eclipse.jubula.app.Activator;
 import org.eclipse.jubula.app.i18n.Messages;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
@@ -30,6 +33,15 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
+    /** 
+     * all basic action sets that should be hidden when running Jubula as 
+     * a stand-alone client 
+     */
+    private static final String [] ACTION_SETS_TO_HIDE = new String [] {
+        "org.eclipse.ui.actionSet.openFiles", //$NON-NLS-1$
+        "org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo" //$NON-NLS-1$
+    };
+    
     /** Key to look up the action builder on the window configurer. */
     private static final String BUILDER_KEY = "builder"; //$NON-NLS-1$
     /***/
@@ -71,6 +83,17 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      */
     public void postWindowOpen() {
         super.postWindowOpen();
+        for (IWorkbenchWindow window 
+                : PlatformUI.getWorkbench().getWorkbenchWindows()) {
+            
+            IWorkbenchPage page = window.getActivePage();
+            if (page != null) {
+                for (String actionSetToHide : ACTION_SETS_TO_HIDE) {
+                    page.hideActionSet(actionSetToHide);
+                }
+            }
+        }
+
         AbstractUIPlugin plugin = Activator.getDefault();
         ImageRegistry imageRegistry = plugin.getImageRegistry();
         getWindowConfigurer().getWindow().getShell().setImages(

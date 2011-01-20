@@ -77,10 +77,10 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
-import org.eclipse.jubula.tools.exception.GDException;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
-import org.eclipse.jubula.tools.exception.GDVersionException;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
@@ -184,7 +184,7 @@ public class FileStorageBP {
                                 compNameCache, proj));
                         m_projectToMapperMap.put(proj, mapperList);
                         m_projectToCompMapperMap.put(proj, compNameMapperList);
-                    } catch (GDVersionException e) {
+                    } catch (JBVersionException e) {
                         for (Object msg : e.getErrorMsgs()) {
                             m_console.writeErrorLine((String)msg);
                         }
@@ -306,7 +306,7 @@ public class FileStorageBP {
                     showFinishedImport(m_console, projectName);
                 } catch (PMSaveException e) {
                     LOG.warn(Messages.ErrorWhileImportingProject, e);
-                    GDException gde = new GDException(
+                    JBException gde = new JBException(
                         e + StringConstants.SPACE + StringConstants.COLON 
                         + Messages.SaveOf + proj.getName() 
                         + StringConstants.SPACE + Messages.Failed,
@@ -316,15 +316,15 @@ public class FileStorageBP {
                             gde, new String [] {proj.getName()}, null);
                 } catch (PMException pme) {
                     LOG.warn(Messages.ErrorWhileImportingProject, pme);
-                    GDException gde = new GDException(
+                    JBException gde = new JBException(
                         pme + Messages.ImportOf + proj.getName() 
                         + StringConstants.SPACE + Messages.Failed,
                         MessageIDs.E_IMPORT_PROJECT_XML_FAILED);
                     showErrorDuringImport(m_console, projectName, gde);
                     ErrorMessagePresenter.getPresenter().showErrorMessage(
                             gde, new String [] {proj.getName()}, null);
-                } catch (GDProjectDeletedException e) {
-                    GDException gde = new GDException(
+                } catch (ProjectDeletedException e) {
+                    JBException gde = new JBException(
                         e + Messages.ImportOf + proj.getName() 
                         + StringConstants.SPACE + Messages.Failed,
                         MessageIDs.E_ALREADY_DELETED_PROJECT);
@@ -366,7 +366,7 @@ public class FileStorageBP {
                 }
             } catch (PMException pme) {
                 ErrorMessagePresenter.getPresenter().showErrorMessage(
-                    new GDException(
+                    new JBException(
                         pme + Messages.ImportFailed,
                         MessageIDs.E_DATABASE_GENERAL), 
                     null, null);
@@ -419,7 +419,7 @@ public class FileStorageBP {
                         try {
                             reusedProject = ProjectPM.loadReusedProject(
                                     reused, circularDependencyCheckSess);
-                        } catch (GDException e) {
+                        } catch (JBException e) {
                             // We can't detect circular dependencies from a
                             // project if we can't load it from the db.
                             // Report to the user that the error will
@@ -470,18 +470,23 @@ public class FileStorageBP {
         }
     
         /**
-         * @param proj The project to import.
-         * @param monitor The progress monitor for this operation.
+         * @param proj
+         *            The project to import.
+         * @param monitor
+         *            The progress monitor for this operation.
          * @return <code>true</code> if the project was successfully imported.
          *         Returns <code>false</code> if their were conflicts that
          *         prevented the project from being successfully imported.
-         * @throws PMException in case of any db error
-         * @throws GDProjectDeletedException if project is already deleted
-         * @throws InterruptedException if the operation was canceled
+         * @throws PMException
+         *             in case of any db error
+         * @throws ProjectDeletedException
+         *             if project is already deleted
+         * @throws InterruptedException
+         *             if the operation was canceled
          */
         private boolean importProject(IProjectPO proj, 
             IProgressMonitor monitor) 
-            throws PMException, GDProjectDeletedException, 
+            throws PMException, ProjectDeletedException, 
             InterruptedException {
             
             // if (import.guid exists and guid->version == import.version)
@@ -502,7 +507,7 @@ public class FileStorageBP {
             if (selectedProjectName != null) {
                 // Import project
                 proj.setClientMetaDataVersion(
-                    IGdVersion.GD_CLIENT_METADATA_VERSION);
+                    IVersion.JB_CLIENT_METADATA_VERSION);
                 boolean willRequireRefresh = false;
                 IProjectPO currentProject = 
                     GeneralStorage.getInstance().getProject();
@@ -1070,7 +1075,7 @@ public class FileStorageBP {
             } catch (PMException e) {
                 showAbortImport(m_console, e);
                 throw new InvocationTargetException(e);
-            } catch (GDProjectDeletedException e) {
+            } catch (ProjectDeletedException e) {
                 showAbortImport(m_console, e);
                 throw new InvocationTargetException(e);
             } finally {
@@ -1082,31 +1087,41 @@ public class FileStorageBP {
     
         /**
          * Tries to perform the import, and displays an error message if not
-         * successful. This method was created because of checkstyle's method 
-         * length restrictions. As such, there are a lot of arguments, and 
-         * none of them are well documented.
+         * successful. This method was created because of checkstyle's method
+         * length restrictions. As such, there are a lot of arguments, and none
+         * of them are well documented.
          * 
-         * @param subMonitor The progress monitor.
-         * @param mapperList This is responsible for mapping Parameter names 
-         *                   from the imported test cases into the given 
-         *                   project.
-         * @param compMapperList Responsible for mapping Component Names
-         *                   from the imported test cases into the given 
-         *                   project.
-         * @param projectName The project name.
-         * @param specObjList The specObjList.
-         * @param project The project.
-         * @param importedToolkit The imported toolkit.
-         * @param importedLevel The imported level.
-         * @param currentToolkit The current toolkit.
-         * @param currentLevel The current level.
-         * @throws PMException if a Hibernate exception occurs.
-         * @throws GDProjectDeletedException if the the project was 
-         *                                   already deleted.
-         * @throws InterruptedException if the operation is canceled by the
-         *                              user.
+         * @param subMonitor
+         *            The progress monitor.
+         * @param mapperList
+         *            This is responsible for mapping Parameter names from the
+         *            imported test cases into the given project.
+         * @param compMapperList
+         *            Responsible for mapping Component Names from the imported
+         *            test cases into the given project.
+         * @param projectName
+         *            The project name.
+         * @param specObjList
+         *            The specObjList.
+         * @param project
+         *            The project.
+         * @param importedToolkit
+         *            The imported toolkit.
+         * @param importedLevel
+         *            The imported level.
+         * @param currentToolkit
+         *            The current toolkit.
+         * @param currentLevel
+         *            The current level.
+         * @throws PMException
+         *             if a Hibernate exception occurs.
+         * @throws ProjectDeletedException
+         *             if the the project was already deleted.
+         * @throws InterruptedException
+         *             if the operation is canceled by the user.
          * @throws IncompatibleTypeException
-         * @throws ToolkitPluginException If a toolkit error occurs.
+         * @throws ToolkitPluginException
+         *             If a toolkit error occurs.
          */
         private void tryImport(SubMonitor subMonitor,
                 List<INameMapper> mapperList, 
@@ -1115,7 +1130,7 @@ public class FileStorageBP {
                 List<ISpecPersistable> specObjList, IProjectPO project,
                 String importedToolkit, String importedLevel,
                 String currentToolkit, String currentLevel) throws PMException,
-                GDProjectDeletedException, InterruptedException,
+                ProjectDeletedException, InterruptedException,
                 IncompatibleTypeException, ToolkitPluginException {
            
             // Perform the import if the project toolkits are 
@@ -1191,28 +1206,31 @@ public class FileStorageBP {
         /**
          * Imports the given test cases into the given project.
          * 
-         * @param mapperList This is responsible for mapping Parameter names 
-         *                   from the imported test cases into the given 
-         *                   project.
-         * @param compMapperList Responsible for mapping Component Names
-         *                   from the imported test cases into the given 
-         *                   project.
-         * @param specObjList List of test cases to import.
-         * @param project The project into which the test cases will be 
-         *                imported.
-         * @param monitor The progress monitor for this potentially long-running 
-         *                operation.
-         * @return <code>true</code> if the test cases were imported 
+         * @param mapperList
+         *            This is responsible for mapping Parameter names from the
+         *            imported test cases into the given project.
+         * @param compMapperList
+         *            Responsible for mapping Component Names from the imported
+         *            test cases into the given project.
+         * @param specObjList
+         *            List of test cases to import.
+         * @param project
+         *            The project into which the test cases will be imported.
+         * @param monitor
+         *            The progress monitor for this potentially long-running
+         *            operation.
+         * @return <code>true</code> if the test cases were imported
          *         successfully. Otherwise, <code>false</code>.
-         * @throws PMException if a database error occurs.
-         * @throws GDProjectDeletedException if the current project has been 
-         *                                   deleted.
+         * @throws PMException
+         *             if a database error occurs.
+         * @throws ProjectDeletedException
+         *             if the current project has been deleted.
          */
         private boolean importTestCases(List<INameMapper> mapperList, 
             List<IWritableComponentNameMapper> compMapperList,
             List<ISpecPersistable> specObjList, IProjectPO project, 
             IProgressMonitor monitor) 
-            throws PMException, GDProjectDeletedException, 
+            throws PMException, ProjectDeletedException, 
             InterruptedException, IncompatibleTypeException {
             
             String newName = createCategoryName(
@@ -1413,7 +1431,7 @@ public class FileStorageBP {
             String exportDirName, EntityManager exportSession, 
             IProgressMonitor monitor, boolean writeToSystemTempDir, 
             List<File> listOfProjectFiles, IProgressConsole console) 
-        throws GDException, InterruptedException {
+        throws JBException, InterruptedException {
 
         SubMonitor subMonitor = SubMonitor.convert(monitor, 
                 Messages.ExportAllBPExporting,
@@ -1491,7 +1509,7 @@ public class FileStorageBP {
      */
     public static void importFiles(String[] importFileNames, 
             IProgressMonitor monitor, IProgressConsole console, 
-            boolean openProject) throws PMException, GDProjectDeletedException {
+            boolean openProject) throws PMException, ProjectDeletedException {
         // import all data from projects
         try {
             doImport(IMPORT_ALL, importFileNames, 
@@ -1526,7 +1544,7 @@ public class FileStorageBP {
             final String[] fileNames, 
             IProgressMonitor monitor, IProgressConsole console, 
             boolean openProject) 
-        throws InterruptedException, PMException, GDProjectDeletedException {
+        throws InterruptedException, PMException, ProjectDeletedException {
         
         SubMonitor subMonitor = SubMonitor.convert(
                 monitor, Messages.ImportFileBPImporting, 
@@ -1554,7 +1572,7 @@ public class FileStorageBP {
     private static IProjectPO doImport(final int elements, String [] fileNames, 
             SubMonitor subMonitor, IProgressConsole console, 
             boolean openProject) 
-        throws InterruptedException, PMException, GDProjectDeletedException {
+        throws InterruptedException, PMException, ProjectDeletedException {
         
         // Read project files
         ReadFilesOperation readFilesOp = 
@@ -1573,8 +1591,8 @@ public class FileStorageBP {
             Throwable cause = ExceptionUtils.getRootCause(ite);
             if (cause instanceof PMException) {
                 throw (PMException)cause;
-            } else if (cause instanceof GDProjectDeletedException) {
-                throw (GDProjectDeletedException)cause;
+            } else if (cause instanceof ProjectDeletedException) {
+                throw (ProjectDeletedException)cause;
             } else {
                 throw new RuntimeException(ite);
             }
@@ -1733,7 +1751,7 @@ public class FileStorageBP {
             final String [] fileNames) {
         
         ErrorMessagePresenter.getPresenter().showErrorMessage(
-                new GDException(
+                new JBException(
                     e + Messages.Reading + fileNames + Messages.Failed, 
                     MessageIDs.E_IMPORT_PROJECT_XML_FAILED), 
                 null, MessageIDs.getMessageObject(e.getErrorId()).getDetails());

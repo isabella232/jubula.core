@@ -23,7 +23,7 @@ import org.eclipse.jubula.tools.constants.MonitoringConstants;
 
 
 /**
- * This class reads the infomations which are provided by the extension point. 
+ * This class reads the informations which are provided by the extension point. 
  * 
  * @author BREDEX GmbH
  * @created 20.07.2010
@@ -36,8 +36,6 @@ public abstract class MonitoringUtils {
     private static IConfigurationElement[] extensions = 
         reg.getConfigurationElementsFor(
                 MonitoringConstants.MONITORING_EXT_REG);
-    
-    
     /**
      * utility constructor
      */
@@ -46,10 +44,8 @@ public abstract class MonitoringUtils {
     }
         
     /**
-     * @return returns a list of all registered Monitoring id's to build 
-     * e.g. the ComboBox in ClientGUI/JavaAutConfig
-     */
-        
+     * @return returns a list of all registered Monitoring id's      * 
+     */        
     public static List<String> getAllRegisteredMonitoringIds() {
                 
         ArrayList<String> list = new ArrayList<String>();
@@ -64,8 +60,7 @@ public abstract class MonitoringUtils {
         return list;
     }
     /**
-     * @return returns a list of all registered Monitoring names to build 
-     * e.g. the ComboBox in ClientGUI/JavaAutConfig
+     * @return returns a list of all registered Monitoring names  
      */
     public static List<String> getAllRegisteredMonitoringNames() {
         
@@ -101,9 +96,9 @@ public abstract class MonitoringUtils {
     }  
     /**
      * 
-     * @param element the element form which the childeren attributes 
+     * @param element the element form which the children attributes 
      * should be returned
-     * @return returns a list of attributes with the parameter typ, descritpion, id 
+     * @return returns a list of attributes with the parameter type, description, id 
      * and the name of the parent monitoring agent
      * 
      */

@@ -14,7 +14,7 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
 /**
- * This message is send from the AUTServer to the GUIDancer Client after 
+ * This message is send from the AUTServer to the client after 
  * the user has selected a component to inspect. <br>
  * 
  * There is no response message.

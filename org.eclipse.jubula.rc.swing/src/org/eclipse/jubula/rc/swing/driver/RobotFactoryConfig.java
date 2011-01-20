@@ -24,7 +24,7 @@ import org.eclipse.jubula.rc.swing.swing.driver.RobotFactoryAwtImpl;
  * 
  * <pre>
  * IRobotFactory factory = new RobotFactoryConfig().getRobotFactory();
- * IGuiDancerRobot robot = factory.getRobot();
+ * IRobot robot = factory.getRobot();
  * robot.click(component, null);
  * </pre>
  *

@@ -21,7 +21,7 @@ import org.eclipse.jubula.communication.message.AUTStartStateMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
@@ -71,10 +71,10 @@ public abstract class AbstractSendAUTListOfSupportedComponentsCommand
      * The identifier contains information about a default mapped component.
      * @param c The component with a default mapping
      * @return The identifier
-     * @throws GuiDancerUnsupportedComponentException If the registration of the default mapping fails
+     * @throws UnsupportedComponentException If the registration of the default mapping fails
      */
     protected IComponentIdentifier createIdentifier(ConcreteComponent c)
-        throws GuiDancerUnsupportedComponentException {
+        throws UnsupportedComponentException {
 
         DefaultMapping defaultMapping = c.getDefaultMapping();
         String typeFactoryName = defaultMapping.getTypeFactory();
@@ -92,13 +92,13 @@ public abstract class AbstractSendAUTListOfSupportedComponentsCommand
             id.setHierarchyNames(list);
             return id;
         } catch (ClassNotFoundException e) {
-            throw new GuiDancerUnsupportedComponentException(e.getMessage(),
+            throw new UnsupportedComponentException(e.getMessage(),
                 MessageIDs.E_CLASS_NOT_FOUND);
         } catch (InstantiationException e) {
-            throw new GuiDancerUnsupportedComponentException(e.getMessage(),
+            throw new UnsupportedComponentException(e.getMessage(),
                 MessageIDs.E_INSTANTIATION);
         } catch (IllegalAccessException e) {
-            throw new GuiDancerUnsupportedComponentException(e.getMessage(),
+            throw new UnsupportedComponentException(e.getMessage(),
                 MessageIDs.E_ILLEGAL_ACCESS);
         }
     }
@@ -107,11 +107,11 @@ public abstract class AbstractSendAUTListOfSupportedComponentsCommand
      * @param factory factory
      * @param c The component with a default mapping
      * @param technicalName technicalName
-     * @throws GuiDancerUnsupportedComponentException .
+     * @throws UnsupportedComponentException .
      */
     protected abstract void addToHierarchy(IComponentFactory factory, 
         ConcreteComponent c, String technicalName)
-        throws GuiDancerUnsupportedComponentException;
+        throws UnsupportedComponentException;
 
     /**
      * {@inheritDoc}
@@ -142,7 +142,7 @@ public abstract class AbstractSendAUTListOfSupportedComponentsCommand
                 if (concrete.hasDefaultMapping()) {
                     componentIds = addComponentID(componentIds, concrete);
                 }
-            } catch (GuiDancerUnsupportedComponentException e) {
+            } catch (UnsupportedComponentException e) {
                 log.error("An error occurred while registering a component.", e); //$NON-NLS-1$
             } catch (IllegalArgumentException e) {
                 log.error("An error occurred while registering a component.", e); //$NON-NLS-1$
@@ -156,12 +156,12 @@ public abstract class AbstractSendAUTListOfSupportedComponentsCommand
     /**
      * @param componentIds the list of compIDs to add
      * @param concrete the concrete component
-     * @throws GuiDancerUnsupportedComponentException .
+     * @throws UnsupportedComponentException .
      * @return the list of the supported component ids
      */
     protected abstract List addComponentID(List componentIds, 
         ConcreteComponent concrete) 
-        throws GuiDancerUnsupportedComponentException;
+        throws UnsupportedComponentException;
 
     /** 
      * {@inheritDoc}

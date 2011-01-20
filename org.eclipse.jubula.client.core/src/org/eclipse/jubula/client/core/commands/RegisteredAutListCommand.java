@@ -13,9 +13,11 @@ package org.eclipse.jubula.client.core.commands;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
 import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.RegisteredAutListMessage;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +79,8 @@ public class RegisteredAutListCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        LOG.error(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
+        LOG.error(this.getClass().getName() + StringConstants.DOT
+                + Messages.TimeoutCalled);
     }
 
 }

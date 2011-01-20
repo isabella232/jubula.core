@@ -44,7 +44,7 @@ import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
  * Expected arguments to main are, see also
  * StartAUTServerCommand.createCmdArray():
  * <ul>
- * <li>The name of host the GuiDancerCLient is running on, must be InetAddress
+ * <li>The name of host the client is running on, must be InetAddress
  * conform.</li>
  * <li>The port the JubulaClient is listening to.</li>
  * <li>The main class of the AUT.</li>

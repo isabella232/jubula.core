@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.core.utils;
 /**
  * This interface is implemented by classes that provide actual values
  * for the reference and escape symbols, e.g. by reading them from the
- * preferences pages of the Guidancer Client.
+ * preferences pages of the Jubula Client.
  *
  * @author BREDEX GmbH
  * @created 01.09.2005

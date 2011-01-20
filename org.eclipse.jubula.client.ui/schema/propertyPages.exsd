@@ -3,7 +3,7 @@
 <schema targetNamespace="org.eclipse.jubula.client.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.jubula.client.ui" id="propertyPages" name="GUIdancer Property Pages"/>
+         <meta.schema plugin="org.eclipse.jubula.client.ui" id="propertyPages" name="Jubula Property Pages"/>
       </appInfo>
       <documentation>
          TODO: Description
@@ -85,7 +85,7 @@
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         GUIdancer 5.0
+         Jubula 0.9.0
       </documentation>
    </annotation>
 

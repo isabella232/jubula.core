@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.jubula.toolkit.common" id="com.bredexsw.guidancer.toolkitsupport" name="com.bredexsw.guidancer.toolkitsupport"/>
       </appInfo>
       <documentation>
-         Extension Point to add new Toolkits to GUIdancer.
+         Extension Point to add new Toolkits to Jubula.
       </documentation>
    </annotation>
 
@@ -107,7 +107,7 @@
          <attribute name="includes" type="string" use="required">
             <annotation>
                <documentation>
-                  The id of the extended-toolkit or empty String if the toolkit is independent (e.g. the GUIdancer &apos;rcp&apos; toolkit includes the &apos;swt&apos; toolkit).
+                  The id of the extended-toolkit or empty String if the toolkit is independent (e.g. the &apos;rcp&apos; toolkit includes the &apos;swt&apos; toolkit).
                </documentation>
             </annotation>
          </attribute>

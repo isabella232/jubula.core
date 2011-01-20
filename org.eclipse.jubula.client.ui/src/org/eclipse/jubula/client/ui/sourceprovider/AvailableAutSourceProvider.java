@@ -45,7 +45,7 @@ import org.eclipse.ui.ISources;
  * @author BREDEX GmbH
  * @created Apr 29, 2009
  */
-public class AvailableAutSourceProvider extends AbstractGDSourceProvider 
+public class AvailableAutSourceProvider extends AbstractJBSourceProvider 
         implements ILanguageChangedListener, IServerConnectionListener, 
                    IProjectPropertiesModifyListener, 
                    IProjectLoadedListener, IDataChangedListener {

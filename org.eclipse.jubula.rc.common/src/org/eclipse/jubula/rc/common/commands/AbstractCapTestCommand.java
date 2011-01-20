@@ -26,8 +26,8 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.exception.EventSupportException;
 import org.eclipse.jubula.rc.common.exception.ExecutionEvent;
-import org.eclipse.jubula.rc.common.exception.GuiDancerComponentNotFoundException;
-import org.eclipse.jubula.rc.common.exception.GuiDancerUnsupportedComponentException;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.exception.MethodParamException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
@@ -144,7 +144,7 @@ public abstract class AbstractCapTestCommand implements ICommand {
             }
         } catch (IllegalArgumentException e) {
             handleComponentNotFound(response, e);
-        } catch (GuiDancerComponentNotFoundException e) {
+        } catch (ComponentNotFoundException e) {
             MessageCap cap = m_capTestMessage.getMessageCap();
             if ("gdVerifyExists".equals(cap.getMethod())) { //$NON-NLS-1$
                 MessageParam isVisibleParam = 
@@ -154,7 +154,7 @@ public abstract class AbstractCapTestCommand implements ICommand {
             } else {
                 handleComponentNotFound(response, e);
             }
-        } catch (GuiDancerUnsupportedComponentException buce) {
+        } catch (UnsupportedComponentException buce) {
             LOG.error(buce);
             response.setTestErrorEvent(EventFactory.createConfigErrorEvent());
         } catch (Throwable e) {
@@ -190,15 +190,20 @@ public abstract class AbstractCapTestCommand implements ICommand {
             
         }
     }
+
     /**
-     * @param ci the component identifier
-     * @param timeout the timeout
+     * @param ci
+     *            the component identifier
+     * @param timeout
+     *            the timeout
      * @return the found component
-     * @throws IllegalArgumentException if error occured
-     * @throws GuiDancerComponentNotFoundException if component could not found in compHierarchy
+     * @throws IllegalArgumentException
+     *             if error occured
+     * @throws ComponentNotFoundException
+     *             if component could not found in compHierarchy
      */
     protected abstract Object findComponent(IComponentIdentifier ci, 
-        int timeout) throws GuiDancerComponentNotFoundException, 
+        int timeout) throws ComponentNotFoundException, 
         IllegalArgumentException;
     
     /**

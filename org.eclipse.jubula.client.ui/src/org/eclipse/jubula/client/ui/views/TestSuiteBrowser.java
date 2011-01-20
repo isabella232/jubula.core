@@ -58,7 +58,7 @@ import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.controllers.GDStateController;
+import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
@@ -76,7 +76,7 @@ import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.exception.GDFatalException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
@@ -95,8 +95,8 @@ import org.eclipse.ui.PlatformUI;
  * @created 05.07.2004
  */
 @SuppressWarnings("synthetic-access")
-public class TestSuiteBrowser extends AbstractGDTreeView implements
-    ITreeViewerContainer, IGDPart,
+public class TestSuiteBrowser extends AbstractJBTreeView implements
+    ITreeViewerContainer, IJBPart,
     ILanguageChangedListener, ICompletenessCheckListener {
 
     /** Identifies the workbench plug-in */
@@ -132,7 +132,7 @@ public class TestSuiteBrowser extends AbstractGDTreeView implements
                 Plugin.getDefault().getTestSuiteBrowserRootGUI());
         Plugin.getHelpSystem().setHelp(getTreeViewer().getControl(),
                 ContextHelpIds.TEST_SUITE_VIEW);
-        GDStateController.getInstance()
+        JubulaStateController.getInstance()
             .addSelectionListenerToSelectionService();
         
         int ops = DND.DROP_MOVE;
@@ -308,7 +308,7 @@ public class TestSuiteBrowser extends AbstractGDTreeView implements
      */
     public void dispose() {
         try {
-            GDStateController.getInstance()
+            JubulaStateController.getInstance()
                 .removeSelectionListenerFromSelectionService();
         } finally {
             m_mgr.removeMenuListener(m_menuListener);
@@ -585,7 +585,7 @@ public class TestSuiteBrowser extends AbstractGDTreeView implements
         if (edit == null) {
             String msg = "no active TC editor, please fix the method"; //$NON-NLS-1$
             LOG.fatal(msg); 
-            throw new GDFatalException(msg, MessageIDs.E_NO_OPENED_EDITOR);
+            throw new JBFatalException(msg, MessageIDs.E_NO_OPENED_EDITOR);
         }
         return edit;
     }

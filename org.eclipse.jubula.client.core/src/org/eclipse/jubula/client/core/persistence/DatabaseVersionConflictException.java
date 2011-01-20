@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.persistence;
 
 /**
- * Exception indicating that the database version expected by GUIdancer does not
+ * Exception indicating that the database version expected by Jubula does not
  * match the version of the database to which the Client is trying to connect.
  *
  * @author BREDEX GmbH

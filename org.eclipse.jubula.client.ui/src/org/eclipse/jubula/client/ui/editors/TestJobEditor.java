@@ -52,7 +52,7 @@ import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDProjectDeletedException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
@@ -68,7 +68,7 @@ import org.eclipse.swt.widgets.Composite;
  * @author BREDEX GmbH
  * @created Mar 17, 2010
  */
-public class TestJobEditor extends AbstractGDEditor {
+public class TestJobEditor extends AbstractJBEditor {
     /**
      * <code>TEST_JOB_EDITOR_ROOT_NAME</code>
      */
@@ -183,7 +183,7 @@ public class TestJobEditor extends AbstractGDEditor {
             } catch (PMException e1) {
                 PMExceptionHandler.handlePMExceptionForEditor(e, this);
             }
-        } catch (GDProjectDeletedException e) {
+        } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
         } finally {
             monitor.done();

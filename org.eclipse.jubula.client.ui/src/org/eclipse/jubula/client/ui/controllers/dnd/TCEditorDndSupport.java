@@ -29,7 +29,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.editors.GDEditorHelper;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.model.CategoryGUI;
@@ -72,7 +72,7 @@ public class TCEditorDndSupport {
     public static boolean performDrop(AbstractTestCaseEditor targetEditor,
             IStructuredSelection toDrop, GuiNode dropTarget, int dropPosition) {
         if (targetEditor.getEditorHelper().requestEditableState() 
-                != GDEditorHelper.EditableState.OK) {
+                != JBEditorHelper.EditableState.OK) {
             return false;
         }
         List<Object> selectedElements = toDrop.toList();

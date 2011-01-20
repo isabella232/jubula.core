@@ -16,7 +16,7 @@ package org.eclipse.jubula.tools.exception;
  * @author BREDEX GmbH
  * @created 02.09.2004
  */
-public class CommunicationException extends GDException {
+public class CommunicationException extends JBException {
 
     /** 
      * public constructor

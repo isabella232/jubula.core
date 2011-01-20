@@ -18,7 +18,7 @@ import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.databinding.validators.TestDataManagerNameValidator;
-import org.eclipse.jubula.client.ui.widgets.GDText;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -80,7 +80,7 @@ public abstract class EnterTestDataManagerDialog
         area.setLayoutData(gridData);
         area.setLayout(new GridLayout(2, false));
 
-        GDText testDataCubeNameField = createTestDataManagerName(area);
+        JBText testDataCubeNameField = createTestDataManagerName(area);
         gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         Layout.addToolTipAndMaxWidth(gridData, testDataCubeNameField);
         testDataCubeNameField.setLayoutData(gridData);
@@ -112,11 +112,11 @@ public abstract class EnterTestDataManagerDialog
      * @param area The parent for the created widgets.
      * @return the created text field.
      */
-    private GDText createTestDataManagerName(Composite area) {
+    private JBText createTestDataManagerName(Composite area) {
         new Label(area, SWT.NONE).setText(I18n.getString(
                 "EnterTestDataCubeDialog.testDataCubeNameLabel")); //$NON-NLS-1$
-        GDText testDataCubeNameField = 
-            new GDText(area, SWT.SINGLE | SWT.BORDER);
+        JBText testDataCubeNameField = 
+            new JBText(area, SWT.SINGLE | SWT.BORDER);
         return testDataCubeNameField;
     }
 

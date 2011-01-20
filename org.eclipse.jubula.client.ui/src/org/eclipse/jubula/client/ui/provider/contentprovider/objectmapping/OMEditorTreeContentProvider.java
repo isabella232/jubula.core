@@ -29,7 +29,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.ui.provider.contentprovider.AbstractGDTreeViewContentProvider;
+import org.eclipse.jubula.client.ui.provider.contentprovider.AbstractTreeViewContentProvider;
 import org.eclipse.jubula.tools.exception.Assert;
 
 
@@ -38,7 +38,7 @@ import org.eclipse.jubula.tools.exception.Assert;
  * @created 19.04.2005
  */
 public class OMEditorTreeContentProvider extends
-    AbstractGDTreeViewContentProvider {
+    AbstractTreeViewContentProvider {
 
     /** mapping from each child object to its parent */
     private Map<Object, Object> m_childToParentMap = 

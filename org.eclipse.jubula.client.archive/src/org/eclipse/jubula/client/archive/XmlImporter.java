@@ -34,6 +34,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.archive.converter.AbstractXmlConverter;
 import org.eclipse.jubula.client.archive.converter.AutIdGenerationConverter;
+import org.eclipse.jubula.client.archive.converter.HTMLTechnicalComponentIndexConverter;
 import org.eclipse.jubula.client.archive.converter.IXmlConverter;
 import org.eclipse.jubula.client.archive.converter.V4C001;
 import org.eclipse.jubula.client.archive.i18n.Messages;
@@ -99,10 +100,10 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.GDVersionException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.jarutils.IGdVersion;
+import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -212,7 +213,7 @@ class XmlImporter {
                     try {
                         return convertToString(arg1);
                     } catch (Throwable e) {
-                        throw new ConversionException((Exception)e);
+                        throw new ConversionException(e);
                     }
                 }
                 throw new ConversionException("Can convert only strings");
@@ -275,53 +276,71 @@ class XmlImporter {
     }
     
     /**
-     * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
-     * as well.
-     * @param xml Abstraction of the XML element (see Apache XML Beans)
-     * @param paramNameMapper mapper to resolve param names
-     * @param compNameCache cache to resolve component names
+     * Creates the instance of the persistent object which is defined by the XML
+     * element used as prameter. The method generates all dependend objects as
+     * well.
+     * 
+     * @param xml
+     *            Abstraction of the XML element (see Apache XML Beans)
+     * @param paramNameMapper
+     *            mapper to resolve param names
+     * @param compNameCache
+     *            cache to resolve component names
      * @return a persistent object generated from the information in the XML
-     * element
-     * @throws InvalidDataException if some data is invalid when constructing
-     * an object. This should not happen for exported project, but may happen
-     * when someone generates XML project description outside of GUIdancer.
-     * @throws GDVersionException in case of version conflict between used toolkits
-     * of imported project and the installed Toolkit Plugins
-     * @throws InterruptedException if the operation was canceled.
+     *         element
+     * @throws InvalidDataException
+     *             if some data is invalid when constructing an object. This
+     *             should not happen for exported project, but may happen when
+     *             someone generates XML project description outside of
+     *             GUIdancer.
+     * @throws JBVersionException
+     *             in case of version conflict between used toolkits of imported
+     *             project and the installed Toolkit Plugins
+     * @throws InterruptedException
+     *             if the operation was canceled.
      */
     public IProjectPO createProject(Project xml, 
             IParamNameMapper paramNameMapper, 
             IWritableComponentNameCache compNameCache) 
-        throws InvalidDataException, GDVersionException, InterruptedException {
+        throws InvalidDataException, JBVersionException, InterruptedException {
         
         return createProject(xml, false, paramNameMapper, compNameCache);
     }
 
     /**
-     * Creates the instance of the persistent object which is defined by the
-     * XML element used as parameter. The method generates all dependend objects
-     * as well. This method also assigns a new version number to the persistent 
+     * Creates the instance of the persistent object which is defined by the XML
+     * element used as parameter. The method generates all dependend objects as
+     * well. This method also assigns a new version number to the persistent
      * object.
-     * @param xml Abstraction of the XML element (see Apache XML Beans)
-     * @param majorVersion Major version number for the created object.
-     * @param minorVersion Minor version number for the created object.
-     * @param paramNameMapper mapper to resolve param names
-     * @param compNameCache cache to resolve component names
+     * 
+     * @param xml
+     *            Abstraction of the XML element (see Apache XML Beans)
+     * @param majorVersion
+     *            Major version number for the created object.
+     * @param minorVersion
+     *            Minor version number for the created object.
+     * @param paramNameMapper
+     *            mapper to resolve param names
+     * @param compNameCache
+     *            cache to resolve component names
      * @return a persistent object generated from the information in the XML
-     * element
-     * @throws InvalidDataException if some data is invalid when constructing
-     * an object. This should not happen for exported project, but may happen
-     * when someone generates XML project description outside of GUIdancer.
-     * @throws GDVersionException in case of version conflict between used toolkits
-     * of imported project and the installed Toolkit Plugins
-     * @throws InterruptedException if the operation was canceled.
+     *         element
+     * @throws InvalidDataException
+     *             if some data is invalid when constructing an object. This
+     *             should not happen for exported project, but may happen when
+     *             someone generates XML project description outside of
+     *             GUIdancer.
+     * @throws JBVersionException
+     *             in case of version conflict between used toolkits of imported
+     *             project and the installed Toolkit Plugins
+     * @throws InterruptedException
+     *             if the operation was canceled.
      */
     public IProjectPO createProject(Project xml, 
         Integer majorVersion, Integer minorVersion, 
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache) 
-        throws InvalidDataException, GDVersionException, InterruptedException {
+        throws InvalidDataException, JBVersionException, InterruptedException {
         
         xml.setMajorProjectVersion(majorVersion);
         xml.setMinorProjectVersion(minorVersion);
@@ -329,29 +348,37 @@ class XmlImporter {
     }
 
     /**
-     * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
-     * as well.
-     * @param xml Abstraction of the XML element (see Apache XML Beans)
-     * @param assignNewGuid <code>true</code> if the project and all subnodes
-     *                      should be assigned new GUIDs. Otherwise 
-     *                      <code>false</code>.
-     * @param paramNameMapper mapper to resolve param names
-     * @param compNameCache cache to resolve component names
+     * Creates the instance of the persistent object which is defined by the XML
+     * element used as prameter. The method generates all dependend objects as
+     * well.
+     * 
+     * @param xml
+     *            Abstraction of the XML element (see Apache XML Beans)
+     * @param assignNewGuid
+     *            <code>true</code> if the project and all subnodes should be
+     *            assigned new GUIDs. Otherwise <code>false</code>.
+     * @param paramNameMapper
+     *            mapper to resolve param names
+     * @param compNameCache
+     *            cache to resolve component names
      * @return a persistent object generated from the information in the XML
-     * element
-     * @throws InvalidDataException if some data is invalid when constructing
-     * an object. This should not happen for exported project, but may happen
-     * when someone generates XML project description outside of GUIdancer.
-     * @throws InterruptedException if the operation was canceled
-     * @throws GDVersionException in case of version conflict between used toolkits
-     * of imported project and the installed Toolkit Plugins
+     *         element
+     * @throws InvalidDataException
+     *             if some data is invalid when constructing an object. This
+     *             should not happen for exported project, but may happen when
+     *             someone generates XML project description outside of
+     *             GUIdancer.
+     * @throws InterruptedException
+     *             if the operation was canceled
+     * @throws JBVersionException
+     *             in case of version conflict between used toolkits of imported
+     *             project and the installed Toolkit Plugins
      */
     public IProjectPO createProject(Project xml, boolean assignNewGuid,
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache) 
         throws InvalidDataException, 
-        InterruptedException, GDVersionException {
+        InterruptedException, JBVersionException {
         
         checkMinimumRequiredXMLVersion(xml);
         documentRequiredProjects(xml);
@@ -363,6 +390,7 @@ class XmlImporter {
         // ======= register converter here =======
         listOfConverter.add(new AutIdGenerationConverter());
         listOfConverter.add(new V4C001());
+        listOfConverter.add(new HTMLTechnicalComponentIndexConverter());
         // =======================================
         
         for (IXmlConverter c : listOfConverter) {
@@ -378,20 +406,20 @@ class XmlImporter {
     /**
      * @param xml
      *            the project xml
-     * @throws GDVersionException
+     * @throws JBVersionException
      *             in case of version conflict between given xml and minimum xml
      *             version number; if these versions do not fit the current
      *             available converter are not able to convert the given project
      *             xml properly.
      */
     private void checkMinimumRequiredXMLVersion(Project xml)
-        throws GDVersionException {
+        throws JBVersionException {
         if (!xml.isSetMetaDataVersion()
                 || xml.getMetaDataVersion() 
-                    < IGdVersion.GD_CLIENT_MIN_XML_METADATA_VERSION) {
+                    < IVersion.JB_CLIENT_MIN_XML_METADATA_VERSION) {
             List<String> errorMsgs = new ArrayList<String>();
             errorMsgs.add(Messages.XmlImporterProjectXMLTooOld);
-            throw new GDVersionException(
+            throw new JBVersionException(
                     Messages.XmlImporterProjectXMLTooOld,
                     MessageIDs.E_LOAD_PROJECT_XML_VERSION_ERROR,
                     errorMsgs);
@@ -399,11 +427,13 @@ class XmlImporter {
     }
 
     /**
-     * @param xml the xml project
-     * @throws GDVersionException in case of version conflict between used toolkits
-     * of imported project and the installed Toolkit Plugins
+     * @param xml
+     *            the xml project
+     * @throws JBVersionException
+     *             in case of version conflict between used toolkits of imported
+     *             project and the installed Toolkit Plugins
      */
-    private void checkUsedToolkits(Project xml) throws GDVersionException {
+    private void checkUsedToolkits(Project xml) throws JBVersionException {
         Set<IUsedToolkitPO> usedTK = new HashSet<IUsedToolkitPO>();
         for (UsedToolkit usedToolkit : xml.getUsedToolkitList()) {
             usedTK.add(PoMaker.createUsedToolkitsPO(usedToolkit.getName(), 
@@ -413,7 +443,7 @@ class XmlImporter {
         }
         List<String> errorMsgs = new ArrayList<String>();
         if (!validateToolkitVersion(usedTK, xml.getName(), errorMsgs)) {
-            throw new GDVersionException(
+            throw new JBVersionException(
                 Messages.IncompatibleToolkitVersion,
                 MessageIDs.E_LOAD_PROJECT_TOOLKIT_MAJOR_VERSION_ERROR, 
                 errorMsgs);
@@ -687,6 +717,8 @@ class XmlImporter {
         proj.setToolkit(xml.getAutToolKit());
         proj.setIsReusable(xml.getIsReusable());
         proj.setIsProtected(xml.getIsProtected());
+        proj.getProjectProperties().getCheckConfCont().setEnabled(
+                xml.getTeststyleEnabled());
         if (xml.isSetTestResultDetailsCleanupInterval()) {
             proj.setTestResultCleanupInterval(xml
                     .getTestResultDetailsCleanupInterval());
@@ -789,13 +821,13 @@ class XmlImporter {
             Integer minorProjVersion = xml.isSetMinorProjectVersion()
                 ? xml.getMinorProjectVersion() : xml.getMinorNumber();
             proj = NodeMaker.createProjectPO(
-                IGdVersion.GD_CLIENT_METADATA_VERSION, 
+                IVersion.JB_CLIENT_METADATA_VERSION, 
                 majorProjVersion, minorProjVersion, xml.getGUID());
             ProjectNameBP.getInstance().setName(xml.getGUID(), xml.getName(),
                     false);
         } else {
-            proj = NodeMaker.createProjectPO(xml.getName(), IGdVersion
-                .GD_CLIENT_METADATA_VERSION);
+            proj = NodeMaker.createProjectPO(xml.getName(), IVersion
+                .JB_CLIENT_METADATA_VERSION);
             if (assignNewGuid) {
                 m_oldToNewGuids.put(xml.getGUID(), proj.getGuid());
             }
