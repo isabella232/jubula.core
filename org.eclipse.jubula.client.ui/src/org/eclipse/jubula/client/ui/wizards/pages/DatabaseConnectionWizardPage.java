@@ -42,8 +42,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -60,10 +58,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DatabaseConnectionWizardPage extends WizardPage {
 
-    /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(DatabaseConnectionWizardPage.class);
-    
     /**
      * Responsible for creating the detail area.
      * 
@@ -192,7 +186,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                                     I18n.getString("DatabaseConnection.Oracle.Port"))),  //$NON-NLS-1$
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
-
+            
             new Label(parent, SWT.NONE).setText(
                     I18n.getString("DatabaseConnection.Oracle.Schema")); //$NON-NLS-1$
             final JBText schemaText = new JBText(parent, SWT.NONE);
@@ -265,6 +259,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         }
     }
 
+    
+    
     /**
      * 
      * {@inheritDoc}
@@ -298,6 +294,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                             }
                         }), 
                 new UpdateValueStrategy());
+        nameText.setFocus();
+        nameText.selectAll();
         
         Label typeLabel = new Label(composite, SWT.NONE);
         typeLabel.setText(I18n.getString("DatabaseConnection.Type")); //$NON-NLS-1$
