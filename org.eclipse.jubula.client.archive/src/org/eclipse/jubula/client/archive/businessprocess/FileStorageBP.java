@@ -849,10 +849,10 @@ public class FileStorageBP {
             console.writeErrorLine(
                     NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED,
                             new String [] {importName}));
-            console.writeErrorLine(
-                    NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED,
-                            new String [] {existingName, String.valueOf(majNum),
-                                String.valueOf(minNum)}));
+            console.writeErrorLine(NLS.bind(
+                    Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED_EXISTING,
+                    new String[] { existingName, String.valueOf(majNum),
+                            String.valueOf(minNum) }));
         }
     
     }
