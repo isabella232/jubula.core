@@ -4,8 +4,8 @@ Bundle-Name: Jubula Remote Control - RCP (Incubation)
 Bundle-SymbolicName: org.eclipse.jubula.rc.rcp; singleton:=true
 Bundle-Version: 0.9.0.qualifier
 Bundle-ClassPath: lib/org.apache.commons.beanutils_1.7.0.v200902170505.jar,
- lib/commons-cli-1.0.jar,
  lib/org.apache.commons.collections_3.2.0.v201005080500.jar,
+ lib/commons-cli-1.0.jar,
  lib/commons-lang-2.4.jar,
  lib/jcl-over-slf4j-1.5.2.jar,
  lib/slf4j-api-1.5.2.jar,
