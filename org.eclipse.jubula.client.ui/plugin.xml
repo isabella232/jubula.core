@@ -411,7 +411,7 @@
 				definitionId="org.eclipse.jubula.client.ui.commands.SaveProjectAsCommand"
 				disabledIcon="icons/saveas_d.gif" icon="icons/saveas_e.gif"
 				id="org.eclipse.jubula.client.ui.actions.SaveProjectAsAction"
-				label="%SaveAs" menubarPath="projects/JubulaProjectSeparator1" />
+				label="%SaveAs" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" />
 			<action
 				class="org.eclipse.jubula.client.ui.actions.DeleteProjectAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.DeleteProjectCommand"
