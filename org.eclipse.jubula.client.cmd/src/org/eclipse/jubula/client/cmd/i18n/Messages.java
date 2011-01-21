@@ -41,15 +41,11 @@ public class Messages extends NLS {
     public static String ClientExitCode;
     public static String ClientExitCodeTask;
     public static String ClientHelpOpt;
-    public static String ClientInvalidLicenseError;
     public static String ClientJobFileError;
     public static String ClientLanguageOpt;
-    public static String ClientLicenseCommunicationError;
     public static String ClientMissingArgs;
     public static String ClientMonitoringInfoDialog;
     public static String ClientName;
-    public static String ClientNoLicenseAvailable;
-    public static String ClientnoLicenseFileExistError;
     public static String ClientNoRunOpt;
     public static String ClientogViewerName;
     public static String ClientPortOpt;
