@@ -25,7 +25,6 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
 import org.eclipse.jface.viewers.ICellEditorListener;
-import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
@@ -36,9 +35,9 @@ import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.utils.ServerManager;
+import org.eclipse.jubula.client.ui.validator.cell.PortCellEditorValidator;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -103,25 +102,8 @@ public class AutAgentPreferencePage extends PreferencePage
         protected CellEditor getCellEditor(Object element) {
             final TextCellEditor editor = 
                 new TextCellEditor((Composite)getViewer().getControl());
-            editor.setValidator(new ICellEditorValidator() {
-
-                @SuppressWarnings("synthetic-access")
-                public String isValid(Object value) {
-                    try {
-                        int portValue = getPortValue(value);
-                        if (portValue < Constants.MIN_PORT_NUMBER 
-                                || portValue > Constants.MAX_PORT_NUMBER) {
-                            return I18n.getString("AutAgentPreferencePage.error.invalidPortNumber"); //$NON-NLS-1$
-                        }
-                        return null;
-                    } catch (NumberFormatException nfe) {
-                        // Fall through
-                    }
-                    
-                    return I18n.getString("AutAgentPreferencePage.error.invalidPortNumber"); //$NON-NLS-1$
-                }
-                
-            });
+            editor.setValidator(new PortCellEditorValidator(
+                    I18n.getString("AutAgentPreferencePage.columnHeader.port"))); //$NON-NLS-1$
             editor.addListener(new ICellEditorListener() {
                 public void applyEditorValue() {
                     AutAgentPreferencePage.this.setErrorMessage(null);

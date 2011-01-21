@@ -31,6 +31,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.ui.databinding.SimpleIntegerToStringConverter;
 import org.eclipse.jubula.client.ui.databinding.SimpleStringToIntegerConverter;
+import org.eclipse.jubula.client.ui.databinding.validators.StringToPortValidator;
 import org.eclipse.jubula.client.ui.model.DatabaseConnection;
 import org.eclipse.jubula.client.ui.model.DatabaseConnectionInfo;
 import org.eclipse.jubula.client.ui.model.H2ConnectionInfo;
@@ -178,12 +179,16 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             new Label(parent, SWT.NONE).setText(
                     I18n.getString("DatabaseConnection.Oracle.Port")); //$NON-NLS-1$
             final JBText portText = new JBText(parent, SWT.NONE);
+            UpdateValueStrategy portTargetToModelUpdateStrategy =
+                new UpdateValueStrategy();
+            portTargetToModelUpdateStrategy
+                .setConverter(new SimpleStringToIntegerConverter())
+                .setAfterGetValidator(new StringToPortValidator(
+                        I18n.getString("DatabaseConnection.Oracle.Port"))); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
                             OracleConnectionInfo.PROP_NAME_PORT),
-                    new UpdateValueStrategy().setConverter(
-                            new SimpleStringToIntegerConverter(
-                                    I18n.getString("DatabaseConnection.Oracle.Port"))),  //$NON-NLS-1$
+                    portTargetToModelUpdateStrategy,
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
             
