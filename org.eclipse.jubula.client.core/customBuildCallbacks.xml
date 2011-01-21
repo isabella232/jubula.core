@@ -32,7 +32,7 @@
         <path id="weaving.classpath">
             <pathelement location="${basedir}/../org.eclipse.jubula.tools/bin"/>
             <pathelement location="${basedir}/../org.eclipse.jubula.communication/bin"/>
-            <fileset dir="${basedir}/../org.eclipse.jubula.project.configuration/target/platform/eclipse/plugins">
+            <fileset dir="${basedir}/../../guidancer/com.bredexsw.guidancer.project.configuration/target/platform/eclipse/plugins">
                 <include name="**/*.jar"/>
             </fileset>
             <fileset dir="${basedir}/lib">
