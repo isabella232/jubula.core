@@ -30,7 +30,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
-import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -40,9 +39,7 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
  * @author BREDEX GmbH
  * @created Mar 12, 2009
  */
-public class DBToolClient extends AbstractCmdlineClient 
-        implements IProgressConsole {
-    
+public class DBToolClient extends AbstractCmdlineClient {
     /** delete parameter */
     private static final String OPTION_DELETE = "delete"; //$NON-NLS-1$
     /** delete all projects parameter */
@@ -149,7 +146,6 @@ public class DBToolClient extends AbstractCmdlineClient
      * {@inheritDoc}
      */
     public int doRun() {
-        int exitCode = 0;
         boolean keepSummariesOnDelete = false;
 
         setupDB();
@@ -192,7 +188,8 @@ public class DBToolClient extends AbstractCmdlineClient
         if (cmdLine.hasOption(OPTION_IMPORT)) {
             importProject(cmdLine.getOptionValue(OPTION_IMPORT), exportDir);
         }
-        return exitCode;
+
+        return EXIT_CODE_OK;
     }
 
     /**
@@ -210,9 +207,9 @@ public class DBToolClient extends AbstractCmdlineClient
                     new String[] { impFile.getAbsolutePath() }, 
                     new NullProgressMonitor(), this, false);
         } catch (PMException pme) {
-            System.err.println(pme.getLocalizedMessage());
+            writeErrorLine(pme.getLocalizedMessage());
         } catch (ProjectDeletedException gdpde) {
-            System.err.println(gdpde.getLocalizedMessage());
+            writeErrorLine(gdpde.getLocalizedMessage());
         }
     }
 
@@ -362,7 +359,7 @@ public class DBToolClient extends AbstractCmdlineClient
                 TestResultPM.deleteAllTestresultDetails();
             }
         } catch (JBException e) {
-            printConsoleError(e.getMessage());
+            printlnConsoleError(e.getMessage());
         } catch (InterruptedException e) {
             // can't happen, this could only be thrown by a user
             // interaction
@@ -412,7 +409,7 @@ public class DBToolClient extends AbstractCmdlineClient
         msg.append(StringConstants.RIGHT_BRACKET);
         msg.append(StringConstants.NEWLINE);
         msg.append(e.getLocalizedMessage());
-        printConsoleError(msg.toString());
+        printlnConsoleError(msg.toString());
 
     }
 
@@ -428,7 +425,7 @@ public class DBToolClient extends AbstractCmdlineClient
         msg.append(StringConstants.SPACE + StringConstants.LEFT_BRACKET);
         msg.append(version);
         msg.append(StringConstants.RIGHT_BRACKET);
-        printConsoleError(msg.toString());
+        printlnConsoleError(msg.toString());
     }
 
     /**
@@ -443,7 +440,7 @@ public class DBToolClient extends AbstractCmdlineClient
         msg.append(StringConstants.SPACE + StringConstants.LEFT_BRACKET);
         msg.append(version);
         msg.append(StringConstants.RIGHT_BRACKET);
-        printConsoleError(msg.toString());
+        printlnConsoleError(msg.toString());
     }
 
     /**
@@ -455,7 +452,7 @@ public class DBToolClient extends AbstractCmdlineClient
                 .DBToolInvalidExportDirectory);
         msg.append(StringConstants.SPACE);
         msg.append(dirName);
-        printConsoleError(msg.toString());
+        printlnConsoleError(msg.toString());
     }
 
     /**
@@ -467,7 +464,7 @@ public class DBToolClient extends AbstractCmdlineClient
                 .DBToolNonEmptyExportDirectory);
         msg.append(StringConstants.SPACE);
         msg.append(dirName);
-        printConsoleError(msg.toString());
+        printlnConsoleError(msg.toString());
     }
     
     /**
@@ -480,7 +477,7 @@ public class DBToolClient extends AbstractCmdlineClient
         msg.append(exportDir);
         msg.append(StringConstants.NEWLINE);
         msg.append(e.getLocalizedMessage());
-        printConsoleError(msg.toString());       
+        printlnConsoleError(msg.toString());       
     }
 
     /**
@@ -501,19 +498,5 @@ public class DBToolClient extends AbstractCmdlineClient
     /** {@inheritDoc} */
     public String getCmdlineClientName() {
         return Messages.DBToolName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void writeErrorLine(String line) {
-        System.err.println(line);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void writeLine(String line) {
-        System.out.println(line);
     }
 }

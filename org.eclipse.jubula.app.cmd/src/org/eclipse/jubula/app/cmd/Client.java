@@ -68,7 +68,7 @@ public class Client extends AbstractCmdlineClient {
      *      Exit Code
      */
     public int doRun() {
-        int exitCode = 0;
+        int exitCode = EXIT_CODE_OK;
         try {            
             // initializing execution controller
             ExecutionController controller = ExecutionController.getInstance();
@@ -78,30 +78,23 @@ public class Client extends AbstractCmdlineClient {
                 controller.simulateJob();
             } else {
                 if (!controller.executeJob()) {
-                    exitCode = 1;
+                    exitCode = EXIT_CODE_ERROR;
                 }
             }
         } catch (CommunicationException e) {
             log.error(e.getLocalizedMessage(), e);
-            printConsoleError(e.getMessage());
+            printlnConsoleError(e.getMessage());
         } catch (IllegalArgumentException e) {
             log.error(e);
-            printConsoleError(e.getMessage());
+            printlnConsoleError(e.getMessage());
         } catch (JBFatalException e) {
             log.error(e);
-            printConsoleError(e.getMessage());
+            printlnConsoleError(e.getMessage());
         } catch (Throwable t) {
             log.error(ClientStrings.ERR_UNEXPECTED, t);
-            printConsoleError(t.getMessage());
+            printlnConsoleError(t.getMessage());
         }
         shutdown();
-        
-        if (isErrorOccured()) {
-            exitCode = 1;
-        }
-        
-        printConsoleLn(Messages.ClientExitCode + exitCode, 
-                true); 
         return exitCode;
     }
     

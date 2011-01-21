@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
+import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -47,7 +48,12 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
  * @author BREDEX GmbH
  * @created Mar 12, 2009
  */
-public abstract class AbstractCmdlineClient {
+public abstract class AbstractCmdlineClient implements IProgressConsole {
+    /** <code>EXIT_CODE_ERROR</code> */
+    protected static final int EXIT_CODE_ERROR = 1;
+    /** <code>EXIT_CODE_OK</code> */
+    protected static final int EXIT_CODE_OK = 0;
+    
     /** error message */
     protected static final String OPT_NO_VAL = 
         Messages.NoArgumentFor + StringConstants.COLON;
@@ -73,9 +79,7 @@ public abstract class AbstractCmdlineClient {
     /** JobConfiguration created from configFile */
     private JobConfiguration m_job;
 
-    
     /**
-     * 
      * @param name name of optione
      * @param hasArg option has an argument
      * @param argname name of the argument
@@ -98,7 +102,7 @@ public abstract class AbstractCmdlineClient {
     protected void shutdown() {
         try {
             if (!ServerConnection.getInstance().isConnected()) {
-                printConsoleError(Messages.ConnectionToAutUnexpectedly);
+                printlnConsoleError(Messages.ConnectionToAutUnexpectedly);
             }
         } catch (ConnectionException e) {
             log.info(Messages.ConnectionToAutUnexpectedly, e);
@@ -202,7 +206,7 @@ public abstract class AbstractCmdlineClient {
         } catch (PreValidateException exp) {
             String message = exp.getLocalizedMessage();
             if (message != null && message.length() > 0) {
-                printConsoleError(message);
+                printlnConsoleError(message);
             }
             printUsage();
             throw new ParseException(StringConstants.EMPTY);
@@ -276,6 +280,20 @@ public abstract class AbstractCmdlineClient {
         printConsole(StringUtils.chomp(text));
         printConsole(StringConstants.NEWLINE);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void writeErrorLine(String line) {
+        printlnConsoleError(line);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void writeLine(String line) {
+        printConsole(line + StringConstants.NEWLINE);
+    }
 
     /**
      * writes an output to console
@@ -288,13 +306,12 @@ public abstract class AbstractCmdlineClient {
         }
     }
 
-
     /**
      * writes an output to console
      * @param text
-     *      Message
+     *      the message to log and println to sys.err
      */
-    public static void printConsoleError(String text) {
+    public static void printlnConsoleError(String text) {
         errorOccured = true;
         log.error(Messages.AnErrorOcurred + StringConstants.COLON
                 + StringConstants.SPACE + text);
@@ -302,6 +319,7 @@ public abstract class AbstractCmdlineClient {
                 + StringConstants.TAB
                 + text); 
     }
+    
     /**
      * excute a job
      * @param args
@@ -331,7 +349,7 @@ public abstract class AbstractCmdlineClient {
                 } else {
                     String msgString = m.getMessage(params);
                     if (m.getSeverity() == Message.ERROR) {
-                        printConsoleError(msgString);
+                        printlnConsoleError(msgString);
                     } else {
                         printConsole(msgString);
                     }
@@ -342,21 +360,29 @@ public abstract class AbstractCmdlineClient {
             parseCommandLine(args);
         } catch (ParseException e) {
             log.error(e);
-            return 1;
+            return EXIT_CODE_ERROR;
         } catch (IOException e) {
             log.error(e);
-            return 1;
+            return EXIT_CODE_ERROR;
         }
         preRun();
         try {
-            return doRun();
+            int exitCode = doRun();
+
+            if (isErrorOccured()) {
+                exitCode = EXIT_CODE_ERROR;
+            }
+            
+            printConsoleLn(Messages.ClientExitCode + exitCode, true);
+
+            return exitCode;
         } catch (Throwable t) {
             // Assume that, if an exception has bubbled up this far, then it is 
             // a big enough problem to warrant telling the user and returning a
             // generic error exit code.
             log.error(t);
-            printConsoleError(t.getLocalizedMessage());
-            return 1;
+            printlnConsoleError(t.getLocalizedMessage());
+            return EXIT_CODE_ERROR;
         }
     }
 
@@ -420,7 +446,7 @@ public abstract class AbstractCmdlineClient {
         int idx;
         String message = exp.getLocalizedMessage();
         if (message != null && message.length() > 0) {
-            printConsoleError(message);
+            printlnConsoleError(message);
         }
         if (message.startsWith(OPT_NO_VAL)) {
             idx = message.indexOf(COLON);

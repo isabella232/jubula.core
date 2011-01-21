@@ -38,7 +38,7 @@ public class PluginStarter extends Plugin {
         try {
             super.start(context);
         } catch (IllegalArgumentException iae) {
-            AbstractCmdlineClient.printConsoleError(iae.getMessage());
+            AbstractCmdlineClient.printlnConsoleError(iae.getMessage());
             throw iae;
         }
     }

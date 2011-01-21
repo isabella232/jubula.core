@@ -403,7 +403,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 doTestSuites();
             }
         } catch (ToolkitPluginException e1) {
-            AbstractCmdlineClient.printConsoleError(
+            AbstractCmdlineClient.printlnConsoleError(
                     Messages.ExecutionControllerAUT
                       + Messages.ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE);
         }
@@ -842,31 +842,31 @@ public class ExecutionController implements IAUTServerEventListener,
     public void stateChanged(AUTServerEvent event) {
         switch (event.getState()) {
             case AUTServerEvent.INVALID_JAR:
-                AbstractCmdlineClient.printConsoleError(Messages
+                AbstractCmdlineClient.printlnConsoleError(Messages
                         .ExecutionControllerInvalidJarError);
                 stopProcessing();
                 m_idle = false;
                 break;
             case AUTServerEvent.INVALID_JAVA:
-                AbstractCmdlineClient.printConsoleError(Messages
+                AbstractCmdlineClient.printlnConsoleError(Messages
                         .ExecutionControllerInvalidJREError);
                 stopProcessing();
                 m_idle = false;
                 break;
             case AUTServerEvent.SERVER_NOT_INSTANTIATED:
-                AbstractCmdlineClient.printConsoleError(Messages
+                AbstractCmdlineClient.printlnConsoleError(Messages
                         .ExecutionControllerServerNotInstantiated);
                 stopProcessing();
                 m_idle = false;
                 break;
             case AUTServerEvent.NO_MAIN_IN_JAR:
-                AbstractCmdlineClient.printConsoleError(Messages
+                AbstractCmdlineClient.printlnConsoleError(Messages
                         .ExecutionControllerInvalidMainError);
                 stopProcessing();
                 m_idle = false;
                 break;
             case AUTServerEvent.COULD_NOT_ACCEPTING:
-                AbstractCmdlineClient.printConsoleError(Messages
+                AbstractCmdlineClient.printlnConsoleError(Messages
                         .ExecutionControllerAUTStartError);
                 stopProcessing();
                 m_idle = false;
@@ -876,7 +876,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 m_idle = false;
                 break;
             case AUTServerEvent.DOTNET_INSTALL_INVALID:
-                AbstractCmdlineClient.printConsoleError(Messages
+                AbstractCmdlineClient.printlnConsoleError(Messages
                         .ExecutionControllerDotNetInstallProblem);
                 stopProcessing();
                 m_idle = false;
@@ -921,7 +921,7 @@ public class ExecutionController implements IAUTServerEventListener,
             case AUTEvent.AUT_NOT_FOUND:
             case AUTEvent.AUT_ABORTED:
             case AUTEvent.AUT_START_FAILED:
-                AbstractCmdlineClient.printConsoleError(Messages
+                AbstractCmdlineClient.printlnConsoleError(Messages
                         .ExecutionControllerAUTStartError);
                 stopProcessing();
                 break;
@@ -953,7 +953,7 @@ public class ExecutionController implements IAUTServerEventListener,
             && event.getException() instanceof JBException) {
             String errorMsg = 
                 I18n.getString(event.getException().getMessage(), true);
-            AbstractCmdlineClient.printConsoleError(errorMsg);
+            AbstractCmdlineClient.printlnConsoleError(errorMsg);
         }
 
         switch (event.getState()) {
