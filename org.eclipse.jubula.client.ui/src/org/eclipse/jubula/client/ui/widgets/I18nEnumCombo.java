@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.widgets;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -52,6 +53,6 @@ public class I18nEnumCombo <E extends Enum> extends AbstractI18nCombo<E> {
     @Deprecated
     public void setItems(List keys) {
         throw new IllegalStateException(
-            "setItems() not valid for this subclass."); //$NON-NLS-1$        
+            Messages.SetItemsNotValidForThisSubclass);        
     }
 }

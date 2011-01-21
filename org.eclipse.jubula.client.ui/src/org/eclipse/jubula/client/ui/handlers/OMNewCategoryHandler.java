@@ -31,8 +31,8 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 
@@ -61,7 +61,7 @@ public class OMNewCategoryHandler extends AbstractHandler {
             createNewCategory(selection.getFirstElement(), editor, 
                     selectionProvider);
         } else {
-            throw new ExecutionException("No valid selection count"); //$NON-NLS-1$
+            throw new ExecutionException(Messages.NoValidSelectionCount);
         }
         return null;
     }
@@ -90,14 +90,14 @@ public class OMNewCategoryHandler extends AbstractHandler {
         final IObjectMappingCategoryPO node = category;
         InputDialog dialog = 
             new InputDialog(Plugin.getShell(), 
-                I18n.getString("OMNewCategoryAction.Title"), //$NON-NLS-1$
-                I18n.getString("OMNewCategoryAction.Name"), //$NON-NLS-1$
-                I18n.getString("OMNewCategoryAction.Message"),  //$NON-NLS-1$
-                I18n.getString("OMNewCategoryAction.Label"), //$NON-NLS-1$
-                I18n.getString("OMNewCategoryAction.Error1"), //$NON-NLS-1$
-                I18n.getString("OMNewCategoryAction.doubleCatName"), //$NON-NLS-1$
+                Messages.OMNewCategoryActionTitle,
+                Messages.OMNewCategoryActionName,
+                Messages.OMNewCategoryActionMessage,
+                Messages.OMNewCategoryActionLabel,
+                Messages.OMNewCategoryActionError1,
+                Messages.OMNewCategoryActionDoubleCatName,
                 IconConstants.NEW_CAT_DIALOG_STRING,
-                I18n.getString("OMNewCategoryAction.Shell"), //$NON-NLS-1$
+                Messages.OMNewCategoryActionShell,
                 false) {
 
                 /**

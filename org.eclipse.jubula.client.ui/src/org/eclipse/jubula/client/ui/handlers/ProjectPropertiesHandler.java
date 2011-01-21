@@ -26,6 +26,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.JBPropertyDialog;
 import org.eclipse.jubula.client.ui.extensions.ProjectPropertyExtensionHandler;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.properties.AUTPropertyPage;
 import org.eclipse.jubula.client.ui.properties.AbstractProjectPropertyPage;
 import org.eclipse.jubula.client.ui.properties.ProjectGeneralPropertyPage;
@@ -34,7 +35,6 @@ import org.eclipse.jubula.client.ui.properties.ProjectLanguagePropertyPage;
 import org.eclipse.jubula.client.ui.properties.ProjectUsedPropertyPage;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.dialogs.PropertyPage;
@@ -78,25 +78,25 @@ public class ProjectPropertiesHandler extends AbstractHandler {
 
             ProjectGeneralPropertyPage generalPage = 
                 new ProjectGeneralPropertyPage(es);
-            generalPage.setTitle(I18n.getString("PropertiesAction.page1")); //$NON-NLS-1$
+            generalPage.setTitle(Messages.PropertiesActionPage1);
             IPreferenceNode generalNode = new PreferenceNode(
                 Constants.PROJECT_PROPERTY_ID, generalPage);
             mgr.addToRoot(generalNode);
 
             PropertyPage langPage = new ProjectLanguagePropertyPage(es);
-            langPage.setTitle(I18n.getString("PropertiesAction.page2")); //$NON-NLS-1$
+            langPage.setTitle(Messages.PropertiesActionPage2);
             IPreferenceNode langNode = new PreferenceNode(
                 Constants.PROJECT_PROPERTY_ID, langPage);
             mgr.addToRoot(langNode);
 
             PropertyPage autPage = new AUTPropertyPage(es);
-            autPage.setTitle(I18n.getString("PropertiesAction.page3")); //$NON-NLS-1$
+            autPage.setTitle(Messages.PropertiesActionPage3);
             IPreferenceNode autNode = new PreferenceNode(
                 Constants.AUT_PROPERTY_ID, autPage);
             mgr.addToRoot(autNode);
 
             ProjectUsedPropertyPage usedPage = new ProjectUsedPropertyPage(es);
-            usedPage.setTitle(I18n.getString("PropertiesAction.page4")); //$NON-NLS-1$
+            usedPage.setTitle(Messages.PropertiesActionPage4);
             IPreferenceNode usedNode = new PreferenceNode(
                 Constants.REUSED_PROJECT_PROPERTY_ID, usedPage);
             mgr.addToRoot(usedNode);

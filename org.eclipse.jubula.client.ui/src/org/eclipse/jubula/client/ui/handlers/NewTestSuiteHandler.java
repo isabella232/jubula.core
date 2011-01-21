@@ -33,11 +33,11 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -123,15 +123,15 @@ public class NewTestSuiteHandler extends AbstractHandler {
         if (testSuiteCount > 0) {
             str = str + testSuiteCount;
         }
-        str = I18n.getString("InputDialog.newTS") + str; //$NON-NLS-1$
-        InputDialog dialog = new InputDialog(Plugin.getShell(), I18n
-                .getString("NewTestSuiteAction.TSTitle"), //$NON-NLS-1$
-                str, I18n.getString("NewTestSuiteAction.TSMessage"), //$NON-NLS-1$
-                I18n.getString("NewTestSuiteAction.TSLabel"), //$NON-NLS-1$
-                I18n.getString("NewTestSuiteAction.TSError"), //$NON-NLS-1$
-                I18n.getString("NewTestSuiteAction.doubleTSName"), //$NON-NLS-1$
-                IconConstants.NEW_TS_DIALOG_STRING, I18n
-                        .getString("NewTestSuiteAction.TSShell"), //$NON-NLS-1$
+        str = Messages.InputDialogNewTS + str;
+        InputDialog dialog = new InputDialog(Plugin.getShell(), 
+                Messages.NewTestSuiteActionTSTitle,
+                str, Messages.NewTestSuiteActionTSMessage,
+                Messages.NewTestSuiteActionTSLabel,
+                Messages.NewTestSuiteActionTSError,
+                Messages.NewTestSuiteActionDoubleTSName,
+                IconConstants.NEW_TS_DIALOG_STRING, 
+                Messages.NewTestSuiteActionTSShell,
                 false) {
             protected boolean isInputAllowed() {
                 String newName = getInputFieldText();

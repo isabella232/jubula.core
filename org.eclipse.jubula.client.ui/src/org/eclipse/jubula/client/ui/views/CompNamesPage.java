@@ -51,6 +51,7 @@ import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.editors.TestSuiteEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -59,7 +60,6 @@ import org.eclipse.jubula.client.ui.widgets.CompNamePopupTextCellEditor;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -618,10 +618,11 @@ public class CompNamesPage extends Page implements ISelectionListener {
                     } catch (PMAlreadyLockedException pme) {
                         setInvalidData(true);
                         PMExceptionHandler.handlePMAlreadyLockedException(pme,
-                                new String[] { "The component name \"" //$NON-NLS-1$
+                                new String[] { Messages.TheComponentName + " \"" //$NON-NLS-1$
                                                 + secondName
-                                                + "\" is already in use in a different editor." //$NON-NLS-1$
-                                                , "Please save these editor(s) first." }); //$NON-NLS-1$
+                                                + "\" " + Messages.IsAlreadyInUseInDifferentEditor //$NON-NLS-1$
+                                                , Messages
+                                                .PleaseSaveTheseEditorsFirst });
                     } catch (PMException pme) {
                         setInvalidData(true);
                         PMExceptionHandler.handlePMExceptionForEditor(pme, 
@@ -629,7 +630,8 @@ public class CompNamesPage extends Page implements ISelectionListener {
                     }
                 }
             } else {
-                Assert.notReached("m_selectedExecNodeOwner is not an instance of IGDEditor"); //$NON-NLS-1$
+                Assert.notReached(
+                    Messages.m_selectedExecNodeOwnerIsNotAnInstanceOfIGDEditor);
             }
         }
         return updateSuccessfull;
@@ -760,11 +762,11 @@ public class CompNamesPage extends Page implements ISelectionListener {
         final TableColumn tc1 = new TableColumn(table, SWT.CENTER);
         tc1.setImage(IconConstants.PROPAGATE_IMAGE);
         final TableColumn tc2 = new TableColumn(table, SWT.LEFT);
-        tc2.setText(I18n.getString("CompNamesView.OldNameColumn")); //$NON-NLS-1$
+        tc2.setText(Messages.CompNamesViewOldNameColumn);
         final TableColumn tc3 = new TableColumn(table, SWT.LEFT);
-        tc3.setText(I18n.getString("CompNamesView.NewNameColumn")); //$NON-NLS-1$
+        tc3.setText(Messages.CompNamesViewNewNameColumn);
         final TableColumn tc4 = new TableColumn(table, SWT.LEFT);
-        tc4.setText(I18n.getString("CompNamesView.typeColumn")); //$NON-NLS-1$
+        tc4.setText(Messages.CompNamesViewTypeColumn);
         final CompNamesViewContentProvider provider =
             new CompNamesViewContentProvider();
         m_tableViewer = new CheckboxTableViewer(table);

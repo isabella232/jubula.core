@@ -22,9 +22,10 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.OMStopMappingModeBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -97,8 +98,8 @@ public class DeleteTreeItemHandlerOMEditor
         boolean delete = false;
         IObjectMappingCategoryPO lastParent = null;
         delete = MessageDialog.openConfirm(Plugin.getShell(),
-            I18n.getString("DeleteTreeItemActionOMEditor.OMTitle"), //$NON-NLS-1$
-            I18n.getString("DeleteTreeItemActionOMEditor.OMText3")); //$NON-NLS-1$
+            Messages.DeleteTreeItemActionOMEditorOMTitle,
+            Messages.DeleteTreeItemActionOMEditorOMText3);
         if (delete) {
             for (Object node : toDelete) {
                 if (node instanceof IComponentNamePO) {
@@ -134,8 +135,8 @@ public class DeleteTreeItemHandlerOMEditor
         Object lastParent = null;
         if (toDelete instanceof IObjectMappingAssoziationPO) {
             delete = MessageDialog.openConfirm(Plugin.getShell(),
-                I18n.getString("DeleteTreeItemActionOMEditor.OMTitle"), //$NON-NLS-1$
-                I18n.getString("DeleteTreeItemActionOMEditor.OMText1")); //$NON-NLS-1$
+                Messages.DeleteTreeItemActionOMEditorOMTitle,
+                Messages.DeleteTreeItemActionOMEditorOMText1);
             if (delete) {
                 lastParent = editor.getOmEditorBP().deleteAssociation(
                         (IObjectMappingAssoziationPO)toDelete);
@@ -143,8 +144,8 @@ public class DeleteTreeItemHandlerOMEditor
             }
         } else if (toDelete instanceof IComponentNamePO) {
             delete = MessageDialog.openConfirm(Plugin.getShell(),
-                I18n.getString("DeleteTreeItemActionOMEditor.OMTitle"), //$NON-NLS-1$
-                I18n.getString("DeleteTreeItemActionOMEditor.OMText2")); //$NON-NLS-1$
+                Messages.DeleteTreeItemActionOMEditorOMTitle,
+                Messages.DeleteTreeItemActionOMEditorOMText2);
             if (delete) {
                 lastParent = editor.getOmEditorBP().deleteCompName(
                         (IComponentNamePO)toDelete);
@@ -152,8 +153,8 @@ public class DeleteTreeItemHandlerOMEditor
             }
         } else if (toDelete instanceof IObjectMappingCategoryPO) {
             delete = MessageDialog.openConfirm(Plugin.getShell(),
-                I18n.getString("DeleteTreeItemActionOMEditor.OMTitle"), //$NON-NLS-1$
-                I18n.getString("DeleteTreeItemActionOMEditor.OMText4")); //$NON-NLS-1$
+                Messages.DeleteTreeItemActionOMEditorOMTitle,
+                Messages.DeleteTreeItemActionOMEditorOMText4);
             if (delete) {
                 lastParent = editor.getOmEditorBP().deleteCategory(
                         (IObjectMappingCategoryPO)toDelete);
@@ -200,8 +201,10 @@ public class DeleteTreeItemHandlerOMEditor
                 getConnectedAut())
                 && OMStopMappingModeBP.getInstance().isEnabled()) {
                 
-                String message = I18n.getString("TestExecutionContributor.AUTStartedMapping",  //$NON-NLS-1$
-                    new Object[] {I18n.getString("TestExecutionContributor.CatUnassigned")}); //$NON-NLS-1$}); 
+                String message = NLS.bind(
+                    Messages.TestExecutionContributorAUTStartedMapping,
+                    new Object[] {Messages
+                            .TestExecutionContributorCatUnassigned}); 
                 int icon = Constants.MAPPING;
                 Plugin.showStatusLine(icon, message);
             }

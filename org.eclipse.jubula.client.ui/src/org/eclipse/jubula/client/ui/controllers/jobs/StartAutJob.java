@@ -22,9 +22,10 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -51,7 +52,7 @@ public class StartAutJob extends Job {
      * @param autConfig The AUT Configuration to use for startup.
      */
     public StartAutJob(final IAUTMainPO aut, final IAUTConfigPO autConfig) {
-        super(I18n.getString("StartAutJob.jobName",  //$NON-NLS-1$
+        super(NLS.bind(Messages.StartAutJobJobName,
                 new String [] {
                     autConfig.getConfigMap().get(AutConfigConstants.AUT_ID)
                 }));

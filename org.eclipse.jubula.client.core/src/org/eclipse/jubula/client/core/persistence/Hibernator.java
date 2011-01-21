@@ -751,7 +751,7 @@ public class Hibernator {
 
         Validate.notNull(s);
         if (tx != null) {
-            //FIXME tobi NLS ??
+            // FIXME NLS
             Validate.isTrue(tx.equals(s.getTransaction()),
                     "Session and Transaction don't match"); //$NON-NLS-1$
             try {
@@ -980,7 +980,6 @@ public class Hibernator {
         if (!LockManager.instance().lockPO(s, po, true)) {
             String poName = po != null ? po.getName() : StringConstants.EMPTY;
             long poId = po != null ? po.getId() : -1;
-            //FIXME tobi NLS ??
             throw new PMAlreadyLockedException(po,
                     "PO " + po + " (name=" + poName + "; id=" + poId + ") locked in db.", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                     MessageIDs.E_OBJECT_IN_USE);

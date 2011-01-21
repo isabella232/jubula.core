@@ -59,6 +59,7 @@ import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ProblemType;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.ReusedProjectGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
@@ -66,11 +67,11 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.InvalidAction;
 import org.eclipse.jubula.tools.xml.businessmodell.InvalidComponent;
 import org.eclipse.jubula.tools.xml.businessmodell.InvalidParam;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
+import org.eclipse.osgi.util.NLS;
 
 
 
@@ -176,8 +177,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      */
     private void problemMissingReusedProject(ReusedProjectGUI node, 
             String label) {
-        createProblem(
-            I18n.getString("ProblemChecker.ProjectDoesNotExist", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerProjectDoesNotExist,
                 new String[] {label}),
             IMarker.SEVERITY_ERROR, 
             StringConstants.EMPTY,
@@ -316,8 +316,14 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                 && m_compNameProblemTypes.contains(
                     marker.getAttribute(Constants.GD_REASON));
         } catch (CoreException ce) {
-            log.error("Could not retrieve type for marker: " + marker //$NON-NLS-1$
-                + ". The marker will not be shown.", ce); //$NON-NLS-1$
+            log.error(Messages.CouldNotRetrieveTypeForMarker
+                + StringConstants.COLON
+                + StringConstants.SPACE
+                + marker
+                + StringConstants.DOT
+                + StringConstants.SPACE
+                + Messages.TheMarkerWillNotBeShown
+                + StringConstants.DOT, ce);
             return false;
         }
     }
@@ -332,8 +338,14 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                 && m_missingProjectProblemTypes.contains(
                     marker.getAttribute(Constants.GD_REASON));
         } catch (CoreException ce) {
-            log.error("Could not retrieve type for marker: " + marker //$NON-NLS-1$
-                + ". The marker will not be shown.", ce); //$NON-NLS-1$
+            log.error(Messages.CouldNotRetrieveTypeForMarker
+                    + StringConstants.COLON
+                    + StringConstants.SPACE
+                    + marker
+                    + StringConstants.DOT
+                    + StringConstants.SPACE
+                    + Messages.TheMarkerWillNotBeShown
+                    + StringConstants.DOT, ce);
             return false;
         }
     }
@@ -617,8 +629,8 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      * Shows the status of the server connection in GDProblemView.
      */
     private void problemNoAutStarterConnection() {
-        createProblem(I18n.getString("ProblemChecker.connectToGDServer"), //$NON-NLS-1$
-            IMarker.SEVERITY_INFO, StringConstants.EMPTY, "CONNECTION", //$NON-NLS-1$
+        createProblem(Messages.ProblemCheckerConnectToGDServer,
+            IMarker.SEVERITY_INFO, StringConstants.EMPTY, Messages.Connection,
             ProblemType.REASON_CONNECTED_TO_NO_SERVER);
     }
     
@@ -626,8 +638,9 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      * Shows the status of the project protection in GDProblemView.
      */
     private void problemProtectedProjectLoaded() {
-        createProblem(I18n.getString("ProblemChecker.protectedProject"), //$NON-NLS-1$
-            IMarker.SEVERITY_INFO, StringConstants.EMPTY, "PROTECTED_PROJECT", //$NON-NLS-1$
+        createProblem(Messages.ProblemCheckerProtectedProject,
+            IMarker.SEVERITY_INFO, StringConstants.EMPTY,
+            Messages.ProtectedProject,
             ProblemType.REASON_PROTECTED_PROJECT);
     }
     
@@ -635,8 +648,8 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      * Called when no server in Workspace.
      */
     private void problemNoServerDefined() {
-        createProblem(I18n.getString("ProblemChecker.NoServer"), //$NON-NLS-1$
-            IMarker.SEVERITY_WARNING, StringConstants.EMPTY, "NOSERVER", //$NON-NLS-1$
+        createProblem(Messages.ProblemCheckerNoServer,
+            IMarker.SEVERITY_WARNING, StringConstants.EMPTY, Messages.NoServer,
             ProblemType.REASON_NO_SERVER_DEFINED);
     }
 
@@ -644,8 +657,8 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      * Shows the existance of a project in GDProblemView.
      */
     private void problemNoProjectExists() {
-        createProblem(I18n.getString("GDStateController.infoNoProject"), //$NON-NLS-1$
-            IMarker.SEVERITY_INFO, StringConstants.EMPTY, "PROJECT", //$NON-NLS-1$
+        createProblem(Messages.GDStateControllerInfoNoProject,
+            IMarker.SEVERITY_INFO, StringConstants.EMPTY, Messages.Project,
             ProblemType.REASON_NO_PROJECT);
     }
 
@@ -653,8 +666,8 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      * Shows the existance of a project in GDProblemView.
      */
     private void problemNoTestSuiteExists() {
-        createProblem(I18n.getString("ProblemChecker.NoTestSuite"), //$NON-NLS-1$
-            IMarker.SEVERITY_INFO, StringConstants.EMPTY, "SUITE", //$NON-NLS-1$
+        createProblem(Messages.ProblemCheckerNoTestSuite,
+            IMarker.SEVERITY_INFO, StringConstants.EMPTY, Messages.Suite,
             ProblemType.REASON_NO_TESTSUITE);
     }
 
@@ -663,8 +676,8 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      */
     private void problemNoAutForProjectExists() {
         createProblem(
-            I18n.getString("ProblemChecker.NoAutExists"), //$NON-NLS-1$
-            IMarker.SEVERITY_WARNING, StringConstants.EMPTY, "PROJECT", //$NON-NLS-1$
+            Messages.ProblemCheckerNoAutExists,
+            IMarker.SEVERITY_WARNING, StringConstants.EMPTY, Messages.Project,
             ProblemType.REASON_NO_AUT_FOR_PROJECT_EXISTS);
     }
 
@@ -673,10 +686,10 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      * @param testSuite TestSuite where problem occurs
      */
     private void problemNoAutForTestSuiteSelected(ITestSuitePO testSuite) {
-        createProblem(I18n.getString("ProblemChecker.NoAutSelected", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerNoAutSelected,
                 new String[] { testSuite.getName() }), 
             IMarker.SEVERITY_ERROR,
-            I18n.getString("ProblemChecker.TestSuite") + testSuite.getName(), //$NON-NLS-1$
+            Messages.ProblemCheckerTestSuite + testSuite.getName(),
             testSuite, 
             ProblemType.REASON_NO_AUT_FOR_TESTSUITE_SELECTED);
     }
@@ -689,10 +702,10 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     private void problemNoJarOrClassPathForAutConfigExists(IAUTConfigPO config, 
             IAUTMainPO aut) {
         
-        createProblem(I18n.getString("ProblemChecker.AutConfigMissesJar", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerAutConfigMissesJar,
             new String[] { config.getName(),
                     aut.getName() }), IMarker.SEVERITY_WARNING,
-            I18n.getString("ProblemChecker.AUT") //$NON-NLS-1$ 
+                    Messages.ProblemCheckerAUT
                 + aut.getName(), aut,
             ProblemType.REASON_NOJAR_FOR_AUTCONFIG);
     }
@@ -705,10 +718,10 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     private void problemNoServerForAutConfigExists(IAUTConfigPO config, 
             IAUTMainPO aut) {
         
-        createProblem(I18n.getString("ProblemChecker.AutConfigMissesServer", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerAutConfigMissesJar,
             new String[] { config.getName(),
                     aut.getName() }), IMarker.SEVERITY_WARNING,
-            I18n.getString("ProblemChecker.AUT") //$NON-NLS-1$
+                    Messages.ProblemCheckerAUT
                 + aut.getName(), aut,
             ProblemType.REASON_NOSERVER_FOR_AUTCONFIG);
     }
@@ -719,10 +732,10 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      */
     private void problemNoAutConfigForServerExists(IAUTMainPO aut) {
         createProblem(
-            I18n.getString("ProblemChecker.AutNoConfigurationForServer", //$NON-NLS-1$
+                NLS.bind(Messages.ProblemCheckerAutNoConfigurationForServer,
                 new String[] { aut.getName()}),
             IMarker.SEVERITY_WARNING,
-            I18n.getString("ProblemChecker.AUT") + aut.getName(), //$NON-NLS-1$
+            Messages.ProblemCheckerAUT + aut.getName(),
             aut, 
             ProblemType.REASON_NO_AUTCONFIG_FOR_SERVER_EXIST);
     }
@@ -735,10 +748,10 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
         if (!checkTS(testSuite)) {
             return;
         }
-        createProblem(I18n.getString("ProblemChecker.EmptyTestSuite", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerEmptyTestSuite,
                 new String[] { testSuite.getName() }), 
             IMarker.SEVERITY_WARNING,
-            I18n.getString("ProblemChecker.TestSuite") + testSuite.getName(), //$NON-NLS-1$
+            Messages.ProblemCheckerTestSuite + testSuite.getName(),
             testSuite, 
             ProblemType.REASON_EMPTY_TESTSUITE);
     }
@@ -751,10 +764,10 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
         if (!checkTS(testSuite)) {
             return;
         }
-        createProblem(I18n.getString("ProblemChecker.OMIncomplete", //$NON-NLS-1$ 
+        createProblem(NLS.bind(Messages.ProblemCheckerOMIncomplete,
                 new String[] { testSuite.getName() }), 
             IMarker.SEVERITY_ERROR,
-            I18n.getString("ProblemChecker.TestSuite") + testSuite.getName(), //$NON-NLS-1$
+            Messages.ProblemCheckerTestSuite + testSuite.getName(),
             testSuite, 
             ProblemType.REASON_OM_INCOMPLETE);
     }    
@@ -767,10 +780,10 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
         if (!checkTS(testSuite)) {
             return;
         }
-        createProblem(I18n.getString("ProblemChecker.TestDataIncomplete", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerTestDataIncomplete,
                 new String[] { testSuite.getName() }),
             IMarker.SEVERITY_ERROR,
-            I18n.getString("ProblemChecker.TestSuite") + testSuite.getName(), //$NON-NLS-1$
+            Messages.ProblemCheckerTestSuite + testSuite.getName(),
             testSuite, 
             ProblemType.REASON_TD_INCOMPLETE);
     }
@@ -783,10 +796,10 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
         if (!checkTS(testSuite)) {
             return;
         }
-        createProblem(I18n.getString("ProblemChecker.MissingSpecTc", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerMissingSpecTc,
                 new String[] { testSuite.getName() }),
             IMarker.SEVERITY_ERROR,
-            I18n.getString("ProblemChecker.TestSuite") + testSuite.getName(), //$NON-NLS-1$
+            Messages.ProblemCheckerTestSuite + testSuite.getName(),
             testSuite, 
             ProblemType.REASON_MISSING_SPEC_TC);
     }
@@ -885,8 +898,8 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      */
     private void problemReusedProjectMissingLang(
         Locale lang, String name, int severity) {
-        createProblem(I18n.getString(
-                "ProblemChecker.ReusedProjectMissingLanguage", //$NON-NLS-1$
+        createProblem(NLS.bind(
+                Messages.ProblemCheckerReusedProjectMissingLanguage,
                 new String[] { name, lang.getDisplayName() }), severity,
                 StringConstants.EMPTY, null,
                 ProblemType.REASON_REUSED_PROJECT_MISSING_LANG);
@@ -898,9 +911,9 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     private void problemDeprecatedActionFound(ICapPO cap) {
         final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
         
-        createProblem(I18n.getString("ProblemChecker.DeprecatedAction", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerDeprecatedAction,
             new String[] { cap.getName(), tcPO.getName() }),
-            IMarker.SEVERITY_WARNING, I18n.getString("ProblemChecker.TestCase") //$NON-NLS-1$
+            IMarker.SEVERITY_WARNING, Messages.ProblemCheckerTestCase
             + tcPO.getName(), cap, ProblemType.REASON_DEPRECATED_ACTION);
     }
     
@@ -910,9 +923,9 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     private void problemDeprecatedCompFound(ICapPO cap) {
         final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
         
-        createProblem(I18n.getString("ProblemChecker.DeprecatedComp", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerDeprecatedComp,
             new String[] { cap.getName(), tcPO.getName() }),
-            IMarker.SEVERITY_WARNING, I18n.getString("ProblemChecker.TestCase") //$NON-NLS-1$
+            IMarker.SEVERITY_WARNING, Messages.ProblemCheckerTestCase
             + tcPO.getName(), cap, ProblemType.REASON_DEPRECATED_COMP);
     }
     
@@ -922,13 +935,13 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     private void problemCompDoesNotExist(ICapPO cap) {
         final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
         
-        createProblem(I18n.getString("ProblemChecker.CompDoesNotExist", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerCompDoesNotExist,
             new String[] { 
                 cap.getName(), 
                 tcPO.getName(), 
                 CompSystemI18n.getString(cap.getComponentType(), true) 
             }),
-            IMarker.SEVERITY_ERROR, I18n.getString("ProblemChecker.TestCase") //$NON-NLS-1$
+            IMarker.SEVERITY_ERROR, Messages.ProblemCheckerTestCase
             + tcPO.getName(), cap, ProblemType.REASON_COMP_DOES_NOT_EXIST);
     }
 
@@ -938,13 +951,13 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     private void problemActionDoesNotExist(ICapPO cap) {
         final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
         
-        createProblem(I18n.getString("ProblemChecker.CompDoesNotExist", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerCompDoesNotExist,
             new String[] { 
                 cap.getName(), 
                 tcPO.getName(), 
                 cap.getComponentName() 
             }),
-            IMarker.SEVERITY_ERROR, I18n.getString("ProblemChecker.TestCase") //$NON-NLS-1$
+            IMarker.SEVERITY_ERROR, Messages.ProblemCheckerTestCase
             + tcPO.getName(), cap, ProblemType.REASON_COMP_DOES_NOT_EXIST);
     }
 
@@ -954,13 +967,13 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     private void problemParamDoesNotExist(ICapPO cap) {
         final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
         
-        createProblem(I18n.getString("ProblemChecker.CompDoesNotExist", //$NON-NLS-1$
+        createProblem(NLS.bind(Messages.ProblemCheckerCompDoesNotExist,
             new String[] { 
                 cap.getName(), 
                 tcPO.getName(), 
                 cap.getComponentName() 
             }),
-            IMarker.SEVERITY_ERROR, I18n.getString("ProblemChecker.TestCase") //$NON-NLS-1$
+            IMarker.SEVERITY_ERROR, Messages.ProblemCheckerTestCase
             + tcPO.getName(), cap, ProblemType.REASON_COMP_DOES_NOT_EXIST);
     }
 
@@ -1047,26 +1060,41 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
             } else if (node instanceof ICapPO) {
                 ICapPO cap = (ICapPO)node;
                 if (cap.getMetaComponentType() instanceof InvalidComponent) {
-                    String message = "Component: " + cap.getComponentType(); //$NON-NLS-1$ 
-                    log.error("Could not find " + message); //$NON-NLS-1$
+                    String message = Messages.Component + StringConstants.COLON
+                        + StringConstants.SPACE + cap.getComponentType();
+                    log.error(Messages.CouldNotFind
+                            + StringConstants.SPACE + message);
                     problemCompDoesNotExist(cap);
                 } else if (cap.getMetaAction() instanceof InvalidAction) {
-                    String message = "Could not find Action "  //$NON-NLS-1$
+                    String message = Messages.CouldNotFindAction
+                        + StringConstants.SPACE
                         + CompSystemI18n.getString(cap.getActionName(), true)
-                        + "\nin Component: " + cap.getComponentType(); //$NON-NLS-1$
+                        + StringConstants.NEWLINE + "in" + StringConstants.SPACE
+                        + Messages.Component + StringConstants.COLON
+                        + StringConstants.SPACE + cap.getComponentType();
                     log.error(message);
                     problemActionDoesNotExist(cap);
                 }
                 for (Object paramObj : cap.getParameterList()) {
                     if (paramObj instanceof InvalidParam) {
                         Param param = (Param)paramObj;
-                        String message = "Component: " + cap.getComponentType() //$NON-NLS-1$
-                            + "\nAction: " //$NON-NLS-1$ 
+                        String message = Messages.Component
+                            + StringConstants.COLON
+                            + StringConstants.SPACE 
+                            + cap.getComponentType()
+                            + StringConstants.NEWLINE
+                            + Messages.Action
+                            + StringConstants.COLON
+                            + StringConstants.SPACE
                             + CompSystemI18n.getString(cap.getActionName(), 
                                 true)
-                            + "\nParameter: " //$NON-NLS-1$ 
+                            + StringConstants.NEWLINE
+                            + Messages.Parameter
+                            + StringConstants.COLON
+                            + StringConstants.SPACE
                             + CompSystemI18n.getString(param.getName(), true);
-                        log.error("Could not find " + message); //$NON-NLS-1$
+                        log.error(Messages.CouldNotFind + StringConstants.SPACE
+                               + message);
                         problemParamDoesNotExist(cap);
                     }
                 }
@@ -1090,11 +1118,11 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                 name = ((IExecTestCasePO)execTC.getParentNode())
                     .getSpecTestCase().getName();
             } 
-            String location = I18n.getString("ProblemChecker.TestCase"); //$NON-NLS-1$
+            String location = Messages.ProblemCheckerTestCase;
             if (execTC.getParentNode() instanceof ITestSuitePO) {
-                location = I18n.getString("ProblemChecker.TestSuite"); //$NON-NLS-1$
+                location = Messages.ProblemCheckerTestSuite;
             }
-            createProblem(I18n.getString("ProblemChecker.NoCompType", //$NON-NLS-1$
+            createProblem(NLS.bind(Messages.ProblemCheckerNoCompType,
                 new String[] { name }),
                 IMarker.SEVERITY_WARNING, location + name, 
                 execTC.getParentNode(), 

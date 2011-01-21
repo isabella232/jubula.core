@@ -22,6 +22,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -201,7 +202,8 @@ public class ServerManager {
      * @param server The server to add.
      */
     public void addServer(Server server) {
-        Validate.notNull(server, "Server object must not be null."); //$NON-NLS-1$
+        Validate.notNull(server, Messages.ServerObjectMustNotBeNull 
+                + StringConstants.DOT);
         if (!server.getName().equals(StringConstants.EMPTY)
             && !m_servers.contains(server)) {
             m_servers.add(server);

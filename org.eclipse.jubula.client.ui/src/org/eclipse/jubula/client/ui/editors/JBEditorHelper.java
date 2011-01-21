@@ -33,9 +33,9 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.JBPropertiesView;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.ui.IEditorInput;
@@ -245,7 +245,7 @@ public class JBEditorHelper implements ILockedObjects,
             resetEditableState();
             m_editor.initTextAndInput(site, input);
         } else {
-            String msg = I18n.getString("EditorInit.CreateError"); //$NON-NLS-1$
+            String msg = Messages.EditorInitCreateError;
             throw new PartInitException(msg);
         }
     } 
@@ -281,8 +281,8 @@ public class JBEditorHelper implements ILockedObjects,
                         m_editor.reOpenEditor(po);
                     } catch (PMException e) {
                         Utils.createMessageDialog(MessageIDs.E_REFRESH_FAILED,
-                            null, new String[] { I18n
-                                .getString("ErrorMessage.EDITOR_CLOSE") }); //$NON-NLS-1$
+                            null, new String[] { 
+                                Messages.ErrorMessageEDITOR_CLOSE });
                         m_editor.getSite().getPage().closeEditor(
                                 m_editor, false);
                     }                     
@@ -308,8 +308,8 @@ public class JBEditorHelper implements ILockedObjects,
                         } catch (PMException e) {
                             Utils.createMessageDialog(
                                 MessageIDs.E_REFRESH_FAILED,
-                                null, new String[] { I18n
-                                .getString("ErrorMessage.EDITOR_CLOSE") }); //$NON-NLS-1$
+                                null, new String[] { 
+                                    Messages.ErrorMessageEDITOR_CLOSE });
                             m_editor.getSite().getPage().closeEditor(
                                     m_editor, false);
                         } finally {

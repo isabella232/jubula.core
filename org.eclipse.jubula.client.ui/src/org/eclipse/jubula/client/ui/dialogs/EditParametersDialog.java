@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.dialogs;
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -55,10 +55,9 @@ public final class EditParametersDialog extends AbstractEditParametersDialog {
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
-        final String dialogTitle = I18n
-                .getString("EditParametersDialog.EditParameters"); //$NON-NLS-1$
+        final String dialogTitle = Messages.EditParametersDialogEditParameters;
         setTitle(dialogTitle);
-        setMessage(I18n.getString("EditParametersDialog.EditParamsOfTestCase")); //$NON-NLS-1$
+        setMessage(Messages.EditParametersDialogEditParamsOfTestCase);
 
         getShell().setText(dialogTitle);
         return super.createDialogArea(parent);
@@ -153,7 +152,8 @@ public final class EditParametersDialog extends AbstractEditParametersDialog {
      */
     private void createLockInterfaceCheckBox(Composite parent) {
         m_lockInterfaceCheckBox = new Button(parent, SWT.CHECK);
-        m_lockInterfaceCheckBox.setText(I18n.getString("EditParametersDialog.LockInterface")); //$NON-NLS-1$
+        m_lockInterfaceCheckBox.setText(
+                Messages.EditParametersDialogLockInterface);
         m_lockInterfaceCheckBox.setSelection(m_isInterfaceLocked);
         m_lockInterfaceCheckBox.addSelectionListener(new SelectionListener() {
 
@@ -235,6 +235,6 @@ public final class EditParametersDialog extends AbstractEditParametersDialog {
      * {@inheritDoc}
      */
     protected String getEditedObjectNameString() {
-        return I18n.getString("EditParametersDialog.TestCaseName"); //$NON-NLS-1$
+        return Messages.EditParametersDialogTestCaseName;
     }
 }

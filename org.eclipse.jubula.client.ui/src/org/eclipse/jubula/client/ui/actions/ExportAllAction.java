@@ -32,7 +32,8 @@ import org.eclipse.jubula.client.ui.businessprocess.ExportAllBP;
 import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Event;
@@ -103,7 +104,7 @@ public class ExportAllAction extends AbstractAction {
                     Utils.storeLastDirPath(m_dirDialog.getFilterPath());
                     ExportAllBP.getInstance().showFinishedExport();
                 } catch (JBException gde) {
-                    log.error("Export aborted.", gde); //$NON-NLS-1$
+                    log.error(Messages.ExportAborted, gde);
                     ExportAllBP.getInstance().showAbortExport(gde);
                 } catch (InterruptedException ie) {
                     ExportAllBP.getInstance().showCancelExport();
@@ -180,13 +181,14 @@ public class ExportAllAction extends AbstractAction {
     private void showExportDialog() {
         final DirectoryDialog dirDialog = 
             new DirectoryDialog(Plugin.getShell(), SWT.APPLICATION_MODAL);
-        dirDialog.setText(I18n.getString("ActionBuilder.ExportAll")); //$NON-NLS-1$
+        dirDialog.setText(Messages.ActionBuilderExportAll);
         dirDialog.setFilterPath(Utils.getLastDirPath());
         boolean done = false;
         String tempDirName = null;
         while (!done) {
             tempDirName = dirDialog.open();
-            Plugin.startLongRunning(I18n.getString("ExportFileAction.waitWhileExporting")); //$NON-NLS-1$
+            Plugin.startLongRunning(
+                    Messages.ExportFileActionWaitWhileExporting);
             if (tempDirName == null) {
                 done = true;
                 Plugin.stopLongRunning();
@@ -195,8 +197,9 @@ public class ExportAllAction extends AbstractAction {
                 if (dir.list().length > 0) {
                     MessageBox mb = new MessageBox(dirDialog.getParent(), 
                         SWT.ICON_WARNING | SWT.OK);
-                    mb.setMessage(I18n.getString("ExportAllAction.DirectoryNotEmpty", new Object[] { //$NON-NLS-1$
-                        tempDirName}));
+                    mb.setMessage(NLS.bind(
+                        Messages.ExportAllActionDirectoryNotEmpty, 
+                        new Object[] { tempDirName}));
                     mb.open();
                 } else {
                     done = true;
@@ -208,7 +211,6 @@ public class ExportAllAction extends AbstractAction {
         
         if (tempDirName != null 
                 && tempDirName.charAt(tempDirName.length() - 1) != '/') {
-            
             tempDirName += "/"; //$NON-NLS-1$
         }
         final String dirName = tempDirName;

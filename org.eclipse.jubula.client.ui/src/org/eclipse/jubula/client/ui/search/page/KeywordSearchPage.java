@@ -13,11 +13,12 @@ package org.eclipse.jubula.client.ui.search.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData;
 import org.eclipse.jubula.client.ui.search.data.StructureSearchData;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData.SearchableType;
 import org.eclipse.jubula.client.ui.search.query.StructureSearchQuery;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.ISearchQuery;
 
 
@@ -41,8 +42,8 @@ public class KeywordSearchPage extends AbstractSearchPage {
         boolean caseSensitive = getSearchData().isCaseSensitive();
         boolean regEx = getSearchData().isUseRegex();
 
-        StructureSearchData searchData = new StructureSearchData(I18n
-                .getString("SimpleSearchPage.SearchName", //$NON-NLS-1$
+        StructureSearchData searchData = new StructureSearchData(
+                NLS.bind(Messages.SimpleSearchPageSearchName,
                         new Object[] { searchString }), searchString,
                 caseSensitive, regEx, typesToSearchIn);
 

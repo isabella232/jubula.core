@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.ui.command.parameters;
 
 import org.eclipse.core.commands.AbstractParameterValueConverter;
 import org.eclipse.core.commands.ParameterValueConversionException;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 
 
@@ -34,14 +36,18 @@ public class AutIdentifierParameterValueConverter extends
 
         if (parameterValue == null) {
             throw new ParameterValueConversionException(
-                    "Could not convert parameter value: " + parameterValue); //$NON-NLS-1$
+                    Messages.CouldNotConvertParameterValue
+                    + StringConstants.COLON + StringConstants.SPACE
+                    + parameterValue);
         }
         
         try {
             return AutIdentifier.decode(parameterValue);
         } catch (IllegalArgumentException iae) {
             throw new ParameterValueConversionException(
-                    "Could not convert parameter value: " + parameterValue, iae); //$NON-NLS-1$
+                    Messages.CouldNotConvertParameterValue
+                    + StringConstants.COLON + StringConstants.SPACE
+                    + parameterValue, iae);
         }
     }
 

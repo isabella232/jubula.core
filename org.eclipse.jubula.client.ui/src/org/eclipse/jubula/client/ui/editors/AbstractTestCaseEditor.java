@@ -92,6 +92,7 @@ import org.eclipse.jubula.client.ui.controllers.dnd.TCEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.dialogs.AddEventHandlerDialog;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
@@ -111,6 +112,7 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
@@ -254,8 +256,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         layout.marginTop = 0;
         headLineComposite.setLayout(layout);
         Label headLine = new Label(headLineComposite, SWT.NONE);
-        headLine.setText(I18n.getString("TestCaseEditor.EHAreaHeadline")); //$NON-NLS-1$ 
-        ControlDecorator.decorateInfo(headLine,  
+        headLine.setText(Messages.TestCaseEditorEHAreaHeadline); 
+        ControlDecorator.decorateInfo(headLine,
                 "GDControlDecorator.EventHandler", false); //$NON-NLS-1$
         GridData ehTvGridData = new GridData();
         ehTvGridData.grabExcessHorizontalSpace = true;
@@ -363,7 +365,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         if (!checkCompleteness()) {
             return;
         }
-        monitor.beginTask(I18n.getString("Editors.saveEditors"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+        monitor.beginTask(Messages.EditorsSaveEditors,
+                IProgressMonitor.UNKNOWN);
         try {
             EditSupport editSupport = getEditorHelper().getEditSupport();
             removeIncorrectCompNamePairs();
@@ -510,7 +513,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 }
             }
         } else {
-            LOG.error("Wrong edit support in TestCaseEditor: " + node); //$NON-NLS-1$
+            LOG.error(Messages.WrongEditSupportInTestCaseEditor 
+                + StringConstants.COLON + StringConstants.SPACE + node);
         }
     }
     
@@ -590,19 +594,18 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      */
     @SuppressWarnings("unchecked")
     protected boolean checkCompleteness() {
-        ISpecTestCasePO testCase = 
-            (ISpecTestCasePO)getEditorHelper()
+        ISpecTestCasePO testCase = (ISpecTestCasePO)getEditorHelper()
                 .getEditSupport().getWorkVersion();
         if (testCase.getName() == null 
                 || StringConstants.EMPTY.equals(testCase.getName())) {
             Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, 
-                    null, new String[]{I18n.getString("TestCaseEditor.noTcName")}); //$NON-NLS-1$
+                    null, new String[]{Messages.TestCaseEditorNoTcName});
             return false;
         }
         if (testCase.getName().startsWith(BLANK) 
             || testCase.getName().endsWith(BLANK)) { 
             Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, 
-                    null, new String[]{I18n.getString("TestCaseEditor.wrongTcName")});  //$NON-NLS-1$
+                    null, new String[]{Messages.TestCaseEditorWrongTcName});
             return false;
         }
         Iterator iter = testCase.getNodeListIterator();
@@ -615,14 +618,15 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                         || StringConstants.EMPTY.equals(cap.getName())) {
                     Utils.createMessageDialog(
                         MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                        new String[]{I18n.getString("TestCaseEditor.noCapName")}); //$NON-NLS-1$
+                        new String[]{Messages.TestCaseEditorNoCapName});
                     return false;
                 }
                 if (cap.getName().startsWith(BLANK) 
                     || cap.getName().endsWith(BLANK)) { 
                     Utils.createMessageDialog(
                         MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                        new String[]{I18n.getString("TestCaseEditor.wrongTsName", //$NON-NLS-1$
+                        new String[]{NLS.bind(
+                            Messages.TestCaseEditorWrongTsName,
                             new Object[]{cap.getName()})}); 
                     return false;
                 }
@@ -631,7 +635,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                                 cap.getComponentName())) {
                     Utils.createMessageDialog(
                         MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                        new String[]{I18n.getString("TestCaseEditor.noCompName", //$NON-NLS-1$
+                        new String[]{NLS.bind(Messages.TestCaseEditorNoCompName,
                             new Object[]{cap.getName()})});
                     return false;
                 }  
@@ -639,7 +643,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                     || cap.getComponentName().endsWith(BLANK)) { 
                     Utils.createMessageDialog(
                         MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                        new String[]{I18n.getString("TestCaseEditor.wrongCompName2", //$NON-NLS-1$  
+                        new String[]{NLS.bind(
+                                Messages.TestCaseEditorWrongCompName2,  
                             new Object[]{cap.getName()})}); 
                     return false;
                 }
@@ -649,14 +654,14 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             IEventExecTestCasePO eventTC = (IEventExecTestCasePO)object;
             if (StringConstants.EMPTY.equals(eventTC.getName())) {
                 Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP,
-                    null, new String[]{I18n.getString("TestCaseEditor.noEventTcName")}); //$NON-NLS-1$
+                    null, new String[]{Messages.TestCaseEditorNoEventTcName});
                 return false;
             }
             if (eventTC.getName().startsWith(BLANK) 
                 || eventTC.getName().endsWith(BLANK)) { 
-                
                 Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP,
-                    null, new String[]{I18n.getString("TestCaseEditor.wrongEhName", //$NON-NLS-1$ 
+                    null, new String[]{NLS.bind(
+                            Messages.TestCaseEditorWrongEhName, 
                         new Object[]{eventTC.getName()})}); 
                 return false;
             }
@@ -696,8 +701,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 for (String refName : conv.getNamesForReferences()) {
                     Utils.createMessageDialog(
                         MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                        new String[]{I18n.getString(
-                            "TestCaseEditor.contReference", //$NON-NLS-1$
+                        new String[]{NLS.bind(
+                                Messages.TestCaseEditorContReference,
                             new Object[]{refName})});  
                     return false;
                 }
@@ -715,7 +720,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
 
                         Utils.createMessageDialog(
                             MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                            new String[]{I18n.getString("TestCaseEditor.missingCompName", //$NON-NLS-1$
+                            new String[]{NLS.bind(
+                                    Messages.TestCaseEditorMmissingCompName,
                                 new Object[]{StringHelper.getInstance()
                                     .getMap().get(pair.getType()), 
                                     pair.getFirstName(), 
@@ -749,9 +755,12 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         if (getCurrentSelection().getFirstElement() == null) {
             return;
         }
-        MenuManager submenuInsert = new MenuManager(I18n.getString("TestCaseEditor.Insert"), INSERT_ID); //$NON-NLS-1$
-        MenuManager submenuAdd = new MenuManager(I18n.getString("TestSuiteBrowser.Add"), ADD_ID); //$NON-NLS-1$
-        MenuManager submenuRefactor = new MenuManager(I18n.getString("TestCaseEditor.Refactor"), REFACTOR_ID); //$NON-NLS-1$
+        MenuManager submenuInsert = new MenuManager(
+                Messages.TestCaseEditorInsert, INSERT_ID);
+        MenuManager submenuAdd = new MenuManager(Messages.TestSuiteBrowserAdd,
+                ADD_ID);
+        MenuManager submenuRefactor = new MenuManager(
+                Messages.TestCaseEditorRefactor, REFACTOR_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.REFERENCE_TC_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
@@ -988,7 +997,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 } catch (PMException e) {
                     Utils.createMessageDialog(
                         MessageIDs.E_REFRESH_FAILED, null,
-                        new String[] {I18n.getString("ErrorMessage.EDITOR_CLOSE")}); //$NON-NLS-1$
+                        new String[] {Messages.ErrorMessageEDITOR_CLOSE});
                     getSite().getPage().closeEditor(this, false);
                 }  
                 return false;
@@ -1093,7 +1102,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             }
         }
         Assert.verify(eventHandler.getReentryProp() != null,
-            "Error when setting Reentry property!"); //$NON-NLS-1$
+            Messages.ErrorWhenSettingReentryProperty 
+            + StringConstants.EXCLAMATION_MARK);
 
         eventHandler.setMaxRetries(maxRetries);
     }
@@ -1137,7 +1147,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         } catch (InvalidDataException e) {
             // no log entry, because it is a use case!
             Utils.createMessageDialog(MessageIDs.E_DOUBLE_EVENT, null, 
-                new String[]{I18n.getString("TestCaseEditor.doubleEventTypeErrorDetail", //$NON-NLS-1$
+                new String[]{NLS.bind(
+                        Messages.TestCaseEditorDoubleEventTypeErrorDetail,
                         new Object[]{evHandlerOwner.getName(), 
                             I18n.getString(eventHandlerPO.getEventType())})}); 
         } catch (PMException e) {

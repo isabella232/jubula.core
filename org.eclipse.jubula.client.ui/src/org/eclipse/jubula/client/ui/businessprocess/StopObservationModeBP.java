@@ -17,6 +17,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IOMStateListene
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IRecordModeStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.exception.Assert;
 
 
@@ -49,7 +50,7 @@ public class StopObservationModeBP extends AbstractActionBP {
                         m_isRecordModeRunning = false;
                         break;
                     default:
-                        Assert.notReached("Unhandled aut state."); //$NON-NLS-1$
+                        Assert.notReached(Messages.UnhandledAutState);
                 }
                 setEnabledStatus();
             }
@@ -82,7 +83,7 @@ public class StopObservationModeBP extends AbstractActionBP {
                     case notRunning:
                         break;
                     default:
-                        Assert.notReached("Unsupported Record mode state."); //$NON-NLS-1$                        
+                        Assert.notReached(Messages.UnsupportedRecordModeState);
                 }
                 setEnabledStatus();
             }

@@ -38,6 +38,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionGUIController;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
@@ -181,7 +182,7 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
                         updateTestSuiteButtonState(false);
                         break;
                     default:
-                        Assert.notReached("Unhandled aut state."); //$NON-NLS-1$
+                        Assert.notReached(Messages.UnhandledAutState);
                 }
             }
         };
@@ -230,7 +231,7 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
                     m_isOmMode = false;
                     break;
                 default:
-                    Assert.notReached("Unsupported Object Mapping state."); //$NON-NLS-1$                        
+                    Assert.notReached(Messages.UnsupportedObjectMappingState);
             }
             updateTestSuiteButtonState(true);
         }
@@ -253,7 +254,7 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
                         m_isRecordMode = false;
                         break;
                     default:
-                        Assert.notReached("Unsupported Record mode state."); //$NON-NLS-1$                        
+                        Assert.notReached(Messages.UnsupportedRecordModeState);
                 }
                 updateTestSuiteButtonState(true);                
             }

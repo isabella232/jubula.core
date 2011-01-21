@@ -16,6 +16,7 @@ import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IWorkbenchPropertyPage;
@@ -75,7 +76,7 @@ public abstract class AbstractProjectPropertyPage extends PropertyPage
                 m_workProject = getEditSupport().getWorkProject();
             } catch (PMException e) {
                 throw new JBFatalAbortException(
-                        "Can't load project in edit session", e, //$NON-NLS-1$
+                        Messages.CantLoadProjectInEditSession, e,
                         MessageIDs.E_DATABASE_GENERAL);
             }
         }

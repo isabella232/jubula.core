@@ -26,6 +26,7 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.handlers.StartAutHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.ui.actions.CompoundContributionItem;
 import org.eclipse.ui.menus.CommandContributionItem;
 
@@ -60,7 +61,9 @@ public class StartAutContributionItem extends CompoundContributionItem {
                     String autId = conf.getValue(AutConfigConstants.AUT_ID,
                             null);
                     if (autId != null) {
-                        itemName += " (" + autId + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+                        itemName += StringConstants.SPACE
+                            + StringConstants.LEFT_PARENTHESES
+                            + autId + StringConstants.RIGHT_PARENTHESES;
                     }
                     itemName += " : " + conf.getName(); //$NON-NLS-1$;
                     contributionItems.add(CommandHelper.createContributionItem(

@@ -13,10 +13,10 @@ package org.eclipse.jubula.client.ui.dialogs;
 import java.io.File;
 
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -86,7 +86,7 @@ public class ClassPathDialog extends InputDialog {
     protected void createAdditionalComponents(Composite parent) {
         new Label(parent, SWT.NONE);
         m_addFileButton = new Button(parent, SWT.PUSH);
-        m_addFileButton.setText(I18n.getString("ClassPathDialog.file")); //$NON-NLS-1$
+        m_addFileButton.setText(Messages.ClassPathDialogFile);
         GridData data = new GridData ();
         data.horizontalAlignment = GridData.END;
         data.grabExcessHorizontalSpace = true;
@@ -94,7 +94,7 @@ public class ClassPathDialog extends InputDialog {
         m_addFileButton.setEnabled(m_buttonsEnabled);
         
         m_addDirButton = new Button(parent, SWT.PUSH);
-        m_addDirButton.setText(I18n.getString("ClassPathDialog.dir")); //$NON-NLS-1$
+        m_addDirButton.setText(Messages.ClassPathDialogDir);
         data = new GridData ();
         data.horizontalAlignment = GridData.END;
         m_addDirButton.setLayoutData(data);
@@ -116,7 +116,7 @@ public class ClassPathDialog extends InputDialog {
      * @param directoryDialog The directory dialog.
      */
     void handleAddDirButtonEvent(DirectoryDialog directoryDialog) {
-        directoryDialog.setMessage(I18n.getString("ClassPathDialog.addDir")); //$NON-NLS-1$
+        directoryDialog.setMessage(Messages.ClassPathDialogAddDir);
         directoryDialog.setFilterPath(Utils.getLastDirPath());
         String directory = directoryDialog.open();
         if (directory != null) {
@@ -131,8 +131,9 @@ public class ClassPathDialog extends InputDialog {
      */
     void handleAddFileButtonEvent(FileDialog fileDialog) {
         String directory;
-        fileDialog.setFilterExtensions(new String[]{"*.*"}); //$NON-NLS-1$
-        fileDialog.setText(I18n.getString("ClassPathDialog.fileDialogMessage"));  //$NON-NLS-1$
+        fileDialog.setFilterExtensions(new String[]{StringConstants.STAR
+                + StringConstants.DOT + StringConstants.STAR});
+        fileDialog.setText(Messages.ClassPathDialogFileDialogMessage);
         fileDialog.setFilterPath(Utils.getLastDirPath());
         directory = fileDialog.open();
         if (directory != null) {
@@ -169,7 +170,10 @@ public class ClassPathDialog extends InputDialog {
                         SWT.MULTI | SWT.APPLICATION_MODAL | SWT.ON_TOP));
                 return;
             } 
-            Assert.notReached("Event activated by unknown widget(" + o + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
+            Assert.notReached(Messages.EventActivatedUnknownWidget
+                    + StringConstants.LEFT_PARENTHESES + o
+                    + StringConstants.RIGHT_PARENTHESES
+                    + StringConstants.DOT);    
         }
     }
 }

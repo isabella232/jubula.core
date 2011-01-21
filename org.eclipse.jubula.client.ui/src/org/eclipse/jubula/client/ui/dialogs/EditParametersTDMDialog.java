@@ -16,8 +16,8 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -42,16 +42,17 @@ public class EditParametersTDMDialog extends AbstractEditParametersDialog {
     
     /** {@inheritDoc} */
     protected Control createDialogArea(Composite parent) {
-        setTitle(I18n.getString("EditParametersTDMDialog.EditParameters")); //$NON-NLS-1$
+        setTitle(Messages.EditParametersTDMDialogEditParameters);
         setTitleImage(IconConstants.NEW_TESTDATAMANAGER_DIALOG_IMAGE);
-        setMessage(I18n.getString("EditParametersTDMDialog.EditParamsOfTestDataSet")); //$NON-NLS-1$
-        getShell().setText(I18n.getString("EditParametersTDMDialog.EditParameters.shellTitle")); //$NON-NLS-1$
+        setMessage(Messages.EditParametersTDMDialogEditParamsOfTestDataSet);
+        getShell().setText(
+                Messages.EditParametersTDMDialogEditParametersShellTitle);
         return super.createDialogArea(parent);
     }
     
     /** {@inheritDoc} */
     protected String getEditedObjectNameString() {
-        return I18n.getString("EditParametersTDMDialog.tdmName"); //$NON-NLS-1$
+        return Messages.EditParametersTDMDialogTdmName;
     }
     
     /**

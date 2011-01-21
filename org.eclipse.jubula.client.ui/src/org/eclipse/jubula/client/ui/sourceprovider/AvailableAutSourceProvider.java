@@ -30,8 +30,8 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.ui.businessprocess.StartAutBP;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.ISources;
 
 
@@ -118,7 +118,7 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
      * Fires a source changed event for <code>IS_AUT_AVAILABLE</code>.
      */
     private void fireSourceChanged() {
-        final String jobName = I18n.getString("UIJob.resolvingStartableAuts"); //$NON-NLS-1$
+        final String jobName = Messages.UIJobResolvingStartableAuts;
         Job resolveStartableAUTs = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);

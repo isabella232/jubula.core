@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.attribute;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -35,7 +36,8 @@ public class ReadOnlyShortStringRenderer extends AbstractAttributeRenderer {
         Composite composite = new Composite(parent, SWT.NONE);
         composite.setLayout(new GridLayout(2, false));
         new Label(composite, SWT.NONE).setText(
-                I18n.getString(getDescription().getLabelKey()) + ": "); //$NON-NLS-1$
+                I18n.getString(getDescription().getLabelKey())
+                + StringConstants.COLON + StringConstants.SPACE);
         Text text = new Text(composite, SWT.BORDER);
         text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         String username = StringUtils.defaultString(getAttribute().getValue());

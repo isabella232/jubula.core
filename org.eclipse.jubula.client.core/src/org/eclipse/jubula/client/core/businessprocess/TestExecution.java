@@ -447,7 +447,6 @@ public class TestExecution {
      * @param locale language valid for testexecution
      */
     private void startTestSuite(ITestSuitePO testSuite, Locale locale) {
-        //FIXME tobi NLS ??
         Validate.notNull(testSuite, "No testsuite available"); //$NON-NLS-1$
         ICapPO firstCap = null;
         m_expectedNumberOfSteps = 0;
@@ -895,7 +894,6 @@ public class TestExecution {
      * verifies the response of server for execution of a cap
      * @param msg The response message.
      */
-    //FIXME tobi NLS ?? (execute)
     public void processServerResponse(final CAPTestResponseMessage msg) {
         Thread t = new Thread("Execute Test Step") { //$NON-NLS-1$
             public void run() {

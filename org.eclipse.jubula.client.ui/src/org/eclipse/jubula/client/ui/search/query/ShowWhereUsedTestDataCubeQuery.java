@@ -18,7 +18,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -45,8 +46,9 @@ public class ShowWhereUsedTestDataCubeQuery extends AbstractShowWhereUsedQuery {
     public String getLabel() {
         StringBuilder sb = new StringBuilder();
         sb.append(getTimestamp());
-        sb.append(": ");
-        sb.append(I18n.getString("UIJob.searchingTestDataCube"));
+        sb.append(StringConstants.COLON);
+        sb.append(StringConstants.SPACE);
+        sb.append(Messages.UIJobSearchingTestDataCube);
         sb.append(" \"");
         sb.append(getTestDataCube().getName());
         sb.append("\"");

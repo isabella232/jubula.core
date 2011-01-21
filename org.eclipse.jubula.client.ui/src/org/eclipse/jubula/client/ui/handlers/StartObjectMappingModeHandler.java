@@ -32,13 +32,14 @@ import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.controllers.dnd.objectmapping.OMEditorDndSupport;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.KeyConverter;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.IEditorPart;
@@ -137,7 +138,7 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
                         m_category);
                 m_editor.getOmEditorBP().setCategoryToCreateIn(m_category);
             } catch (CommunicationException ce) {
-                LOG.error("An error occurred while starting the Object Mapping Mode.", ce); //$NON-NLS-1$
+                LOG.error(Messages.ErrorStartingObjectMappingMode, ce);
             }
 
             return Status.OK_STATUS;
@@ -184,9 +185,10 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
         }
         if (omEditor == null) {
             if (runningAut == null) {
-                LOG.error("Could not open Object Mapping Editor: No Running AUT"); //$NON-NLS-1$
+                LOG.error(Messages.CouldNotOpenOMEditorNoAUT);
             } else {
-                LOG.error("Could not open Object Mapping Editor for Running AUT: " //$NON-NLS-1$
+                LOG.error(Messages.CouldNotOpenOMEditorForAUT 
+                        + StringConstants.COLON + StringConstants.SPACE
                         + runningAut.getExecutableName());
             }
             return null;
@@ -251,7 +253,7 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
         }
         if (!AutAgentRegistration.getInstance().getRegisteredAuts()
                 .contains(autId)) {
-            String message = I18n.getString("OMStartMappingModeAction.Error1"); //$NON-NLS-1$
+            String message = Messages.OMStartMappingModeActionError1;
             Utils.createMessageDialog(new JBException(message, 
                     MessageIDs.E_UNEXPECTED_EXCEPTION), null, new String[]{
                         message});

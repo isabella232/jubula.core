@@ -47,6 +47,7 @@ import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IObjectMappingObserver;
@@ -54,7 +55,6 @@ import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCach
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -113,6 +113,7 @@ import org.eclipse.jubula.client.ui.events.GuiEventDispatcher.IEditorDirtyStateL
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.ObjectMappingEditorPatternFilter;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTableContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
@@ -565,7 +566,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                             // Should not happen since we are assigning the
                             // Component Name to an unmapped association.
                             // Log it just in case.
-                            LOG.error("Error occurred while collecting Component Names.", pme); //$NON-NLS-1$
+                            LOG.error(Messages.ErrorCollectingComponentNames
+                                    + StringConstants.DOT, pme);
                         }
                     }
                     m_componentNames.add(logic);
@@ -865,17 +867,17 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         setPageText(
                 splitPaneViewIndex, 
-                I18n.getString("ObjectMappingEditor.SplitPaneView")); //$NON-NLS-1$
+                Messages.ObjectMappingEditorSplitPaneView);
         setPageText(
                 treeViewIndex, 
-                I18n.getString("ObjectMappingEditor.TreeView")); //$NON-NLS-1$
+                Messages.ObjectMappingEditorTreeView);
         setPageText(
                 tableViewIndex, 
-                I18n.getString("ObjectMappingEditor.TableView")); //$NON-NLS-1$
+                Messages.ObjectMappingEditorTableView);
 
         setPageText(
                 configViewIndex, 
-                I18n.getString("ObjectMappingEditor.ConfigView")); //$NON-NLS-1$
+                Messages.ObjectMappingEditorConfigView);
         
         m_pageToSelectionProvider.put(splitPaneViewIndex, 
                 m_splitPaneSelectionProvider);
@@ -1464,7 +1466,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setText(
-                I18n.getString("ObjectMappingEditor.ComponentType")); //$NON-NLS-1$
+                Messages.ObjectMappingEditorComponentType);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new ColumnLabelProvider() {
 
@@ -1510,7 +1512,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         column.getColumn().setWidth(200);
         column.getColumn().setImage(IconConstants.CATEGORY_IMAGE);
         column.getColumn().setText(
-                I18n.getString("ObjectMappingEditor.Category")); //$NON-NLS-1$
+                Messages.ObjectMappingEditorCategory);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new ColumnLabelProvider() {
 
@@ -1555,7 +1557,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         column.getColumn().setWidth(200);
         column.getColumn().setImage(IconConstants.LOGICAL_NAME_IMAGE);
         column.getColumn().setText(
-                I18n.getString("ObjectMappingEditor.LogicalName")); //$NON-NLS-1$
+                Messages.ObjectMappingEditorLogicalName);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new ColumnLabelProvider() {
             public String getText(Object element) {
@@ -1588,7 +1590,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         column.getColumn().setWidth(200);
         column.getColumn().setImage(IconConstants.TECHNICAL_NAME_IMAGE);
         column.getColumn().setText(
-                I18n.getString("ObjectMappingEditor.TechnicalName")); //$NON-NLS-1$
+                Messages.ObjectMappingEditorTechnicalName);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new ColumnLabelProvider() {
 
@@ -1608,7 +1610,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * {@inheritDoc}
      */
     public void doSave(IProgressMonitor monitor) {
-        monitor.beginTask(I18n.getString("Editors.saveEditors"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+        monitor.beginTask(Messages.EditorsSaveEditors,
+                IProgressMonitor.UNKNOWN);
         boolean isProjDeleted = false;
         IObjectMappingPO objMap = getAut().getObjMap();
         TimestampBP.refreshTimestamp(objMap);
@@ -1960,7 +1963,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * {@inheritDoc}
      */
     public String getEditorPrefix() {
-        return I18n.getString("ObjectMappingEditor.Editor"); //$NON-NLS-1$
+        return Messages.ObjectMappingEditorEditor;
     }
 
     /**

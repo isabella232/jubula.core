@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.dialogs;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -102,9 +102,9 @@ public final class SupportRequestMailDialog extends TitleAreaDialog {
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
-        setTitle(I18n.getString("SupportRequestMailDialog.title")); //$NON-NLS-1$
-        setMessage(I18n.getString("SupportRequestMailDialog.message")); //$NON-NLS-1$
-        getShell().setText(I18n.getString("SupportRequestMailDialog.shellTitle")); //$NON-NLS-1$
+        setTitle(Messages.SupportRequestMailDialogTitle);
+        setMessage(Messages.SupportRequestMailDialogMessage);
+        getShell().setText(Messages.SupportRequestMailDialogShellTitle);
         final GridLayout gridLayoutParent = new GridLayout();
         gridLayoutParent.numColumns = NUM_COLUMNS_AREA_PARENT;
         gridLayoutParent.verticalSpacing = VERTICAL_SPACING;
@@ -138,14 +138,14 @@ public final class SupportRequestMailDialog extends TitleAreaDialog {
     private void createFields(Composite area) {
         // for 'add configuration information' 
         new Label(area, SWT.NONE).setText(
-            I18n.getString("SupportRequestMailDialog.addConfigInfoLabel")); //$NON-NLS-1$
+            Messages.SupportRequestMailDialogAddConfigInfoLabel);
         m_addConfigInfoCheckbox = new Button(area, SWT.CHECK);
         m_addConfigInfoCheckbox.setSelection(m_addConfigInfoCheckboxSelected);
 
         // for 'add aut starter log' 
         m_addAutStarterLogLabel = new Label(area, SWT.NONE);
         m_addAutStarterLogLabel.setText(
-            I18n.getString("SupportRequestMailDialog.addAutStarterLogLabel")); //$NON-NLS-1$
+            Messages.SupportRequestMailDialogAddAutStarterLogLabel);
         m_addAutStarterLogCheckbox = new Button(area, SWT.CHECK);
         if (m_enableAutStarterLogCheckbox) { 
             m_addAutStarterLogCheckbox
@@ -158,7 +158,7 @@ public final class SupportRequestMailDialog extends TitleAreaDialog {
         // for 'add client log' 
         m_addClientLogLabel = new Label(area, SWT.NONE);
         m_addClientLogLabel.setText(
-            I18n.getString("SupportRequestMailDialog.addClientLogLabel")); //$NON-NLS-1$
+            Messages.SupportRequestMailDialogAddClientLogLabel);
         m_addClientLogCheckbox = new Button(area, SWT.CHECK);
         if (m_enableClientLogCheckbox) { 
             m_addClientLogCheckbox.setSelection(m_addClientLogCheckboxSelected);
@@ -170,7 +170,7 @@ public final class SupportRequestMailDialog extends TitleAreaDialog {
         // for 'add projects' 
         m_addProjectsLabel = new Label(area, SWT.NONE);
         m_addProjectsLabel.setText(
-            I18n.getString("SupportRequestMailDialog.addProjectsLabel")); //$NON-NLS-1$
+            Messages.SupportRequestMailDialogAddProjectsLabel);
         m_addProjectsCheckbox = new Button(area, SWT.CHECK);
         if (m_enableProjectsCheckbox) { 
             m_addProjectsCheckbox.setSelection(m_addProjectsCheckboxSelected);

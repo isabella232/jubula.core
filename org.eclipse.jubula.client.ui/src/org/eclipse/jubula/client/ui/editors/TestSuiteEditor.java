@@ -47,6 +47,7 @@ import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTrans
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TSEditorDndSupport;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
@@ -58,8 +59,8 @@ import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
@@ -141,20 +142,21 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
             (ITestSuitePO)getEditorHelper().getEditSupport().getWorkVersion();
         if (!checkWorkingLanguage(tsWorkVersion)) {
             Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR, null, 
-                    new String[]{I18n.getString("TestCaseEditor.unsupportedAUTLanguage")}); //$NON-NLS-1$
+                    new String[]{
+                        Messages.TestCaseEditorUnsupportedAUTLanguage});
             return false;
         }
         if (tsWorkVersion.getName() == null
                 || StringConstants.EMPTY.equals(tsWorkVersion.getName())) {
             Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR, null, 
-                    new String[]{I18n.getString("TestCaseEditor.noTsuiteName")}); //$NON-NLS-1$
+                    new String[]{Messages.TestCaseEditorNoTsuiteName});
             return false;
         } 
         if (tsWorkVersion.getName().startsWith(BLANK) 
             || tsWorkVersion.getName().endsWith(BLANK)) { 
             
             Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR, null, 
-                    new String[]{I18n.getString("TestCaseEditor.wrongTsuiteName")});  //$NON-NLS-1$
+                    new String[]{Messages.TestCaseEditorWrongTsName});
             return false;
         }
         final IProjectPO project = GeneralStorage.getInstance().
@@ -165,12 +167,12 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
             && ProjectPM.doesTestSuiteExists(project.getId(), 
                 tsWorkVersion.getName())) {
             Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR, null,
-                new String[]{I18n.getString("TestCaseEditor.doubleTsuiteName")});  //$NON-NLS-1$
+                new String[]{Messages.TestCaseEditorDoubleTsuiteName});
             return false;
         }
         if (tsWorkVersion.getStepDelay() == -1) { // empty step delay
             Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR, null, 
-                    new String[]{I18n.getString("TestSuiteEditor.EmptyStepDelay")}); //$NON-NLS-1$
+                    new String[]{Messages.TestSuiteEditorEmptyStepDelay});
             return false;
         }
         Iterator iter = tsWorkVersion.getNodeListIterator();
@@ -224,14 +226,15 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         String name = testCase.getName();
         if (name == null || StringConstants.EMPTY.equals(name)) {
             Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_EX, 
-                    tcName, new String[]{I18n.getString("TestCaseEditor.noExecTcName")}); //$NON-NLS-1$
+                    tcName, new String[]{Messages.TestCaseEditorNoExecTcName});
             return false;
         } 
         if (testCase.getName().startsWith(BLANK) 
             || testCase.getName().endsWith(BLANK)) { 
             
             Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_EX, 
-                    tcName, new String[]{I18n.getString("TestCaseEditor.wrongExecTcName")});  //$NON-NLS-1$
+                    tcName, new String[]{
+                        Messages.TestCaseEditorWrongExecTcName});
             return false;
         }
         for (ICompNamesPairPO compNamesPair : testCase.getCompNamesPairs()) {
@@ -239,17 +242,19 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 StringConstants.EMPTY)) {
                 
                 Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_EX,
-                        tcName, new String[]{I18n.getString("TestCaseEditor.CompNameError", //$NON-NLS-1$
+                        tcName, new String[]{
+                            NLS.bind(Messages.TestCaseEditorCompNameError,
                                 new Object[]{compNamesPair.getFirstName()}) 
-                            + I18n.getString("TestCaseEditor.EmptyCompName")});  //$NON-NLS-1$
+                            + Messages.TestCaseEditorEmptyCompName});
                 return false;
             }
             if (compNamesPair.getSecondName().startsWith(BLANK) 
                 || compNamesPair.getSecondName().endsWith(BLANK)) { 
                 Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_EX,
-                        tcName, new String[]{I18n.getString("TestCaseEditor.CompNameError", //$NON-NLS-1$
+                        tcName, new String[]{NLS.bind(
+                                Messages.TestCaseEditorCompNameError,
                                 new Object[]{compNamesPair.getFirstName()}) 
-                            + I18n.getString("TestCaseEditor.WrongCompName")});  //$NON-NLS-1$
+                            + Messages.TestCaseEditorWrongCompName});
                 return false;
             }
         }
@@ -260,7 +265,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      * {@inheritDoc}
      */
     public String getEditorPrefix() {
-        return I18n.getString("Plugin.TS"); //$NON-NLS-1$
+        return Messages.PluginTS;
     }
     
     /**
@@ -272,11 +277,12 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         if (selection.getFirstElement() == null) {
             return;
         }
-        MenuManager submenuAdd = new MenuManager(I18n
-            .getString("TestSuiteBrowser.Add"), ADD_ID); //$NON-NLS-1$
+        MenuManager submenuAdd = new MenuManager(Messages.TestSuiteBrowserAdd,
+                ADD_ID);
         MenuManager submenuRefactor = new MenuManager(
-            I18n.getString("TestCaseEditor.Refactor"), REFACTOR_ID); //$NON-NLS-1$
-        MenuManager submenuInsert = new MenuManager(I18n.getString("TestSuiteEditor.Insert"), INSERT_ID); //$NON-NLS-1$
+            Messages.TestCaseEditorRefactor, REFACTOR_ID);
+        MenuManager submenuInsert = new MenuManager(
+                Messages.TestSuiteEditorInsert, INSERT_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.REFERENCE_TC_COMMAND_ID);
         mgr.add(submenuAdd);

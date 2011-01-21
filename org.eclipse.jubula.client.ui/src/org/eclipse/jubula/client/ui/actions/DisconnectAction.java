@@ -19,8 +19,8 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
 import org.eclipse.jubula.client.ui.businessprocess.DisconnectServerBP;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionGUIController;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.widgets.Event;
 
 
@@ -36,7 +36,7 @@ public class DisconnectAction extends AbstractAction {
     /** The eclipse job manager */
     private IJobManager m_jobManager = Job.getJobManager();
     /** The job family String */
-    private String m_jobFamily = I18n.getString("Client.CollectingInformation"); //$NON-NLS-1$
+    private String m_jobFamily = Messages.ClientCollectingInformation;
     
     /**
      * {@inheritDoc}
@@ -81,12 +81,13 @@ public class DisconnectAction extends AbstractAction {
     private MessageDialog getConfirmDialog() {      
                 
         MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
-            I18n.getString("Client.DisconnectFromServerTitle"), //$NON-NLS-1$
+            Messages.ClientDisconnectFromServerTitle,
                 null,
-                I18n.getString("Client.DisconnectFromServerMessage"), //$NON-NLS-1$
+                Messages.ClientDisconnectFromServerMessage,
                 MessageDialog.QUESTION, new String[] {
-                    I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
-                    I18n.getString("NewProjectDialog.MessageButton1") }, 0); //$NON-NLS-1$
+                    Messages.NewProjectDialogMessageButton0,
+                    Messages.NewProjectDialogMessageButton1
+                }, 0);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();

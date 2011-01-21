@@ -21,11 +21,11 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.I18nStringCombo;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlAdapter;
@@ -146,7 +146,9 @@ public class TestResultPreferencePage extends PreferencePage
                 m_relevantValue = Constants.TEST_EXECUTION_RELEVANT_PROMPT;
                 return;
             }
-            Assert.notReached("Event activated by unknown widget(" + o + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
+            Assert.notReached(Messages.EventActivatedUnknownWidget 
+                    + StringConstants.LEFT_PARENTHESES + o 
+                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
         }
     }
     
@@ -169,7 +171,7 @@ public class TestResultPreferencePage extends PreferencePage
      */
     protected Control createContents(Composite parent) {
         /** Add layer to parent widget */
-        setMessage(I18n.getString("TestResultViewPreferencePage.title"), NONE); //$NON-NLS-1$
+        setMessage(Messages.TestResultViewPreferencePageTitle, NONE);
         final ScrolledComposite scrollComposite = new ScrolledComposite(parent,
                 SWT.V_SCROLL | SWT.H_SCROLL);
         final Composite composite = new Composite(scrollComposite, SWT.NONE);
@@ -209,8 +211,7 @@ public class TestResultPreferencePage extends PreferencePage
     private void createMaxNumberOfResults(Composite composite) {
         Label label = new Label(composite, SWT.NONE);
         label.setFont(Layout.BOLD_TAHOMA);
-        label.setText(I18n.
-            getString("TestResultViewPreferencePage.maxNumberOfDaysText")); //$NON-NLS-1$
+        label.setText(Messages.TestResultViewPreferencePageMaxNumberOfDaysText);
         GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
@@ -250,7 +251,7 @@ public class TestResultPreferencePage extends PreferencePage
     private void createRelevantGroup(Composite composite) {
         Group group = new Group(composite, SWT.NONE);
         group.setText(
-                I18n.getString("TestResultViewPreferencePage.testExecRelevant")); //$NON-NLS-1$
+                Messages.TestResultViewPreferencePageTestExecRelevant);
         RowLayout layout = new RowLayout();
         group.setLayout(layout);
         GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
@@ -258,11 +259,11 @@ public class TestResultPreferencePage extends PreferencePage
         layoutData.horizontalSpan = 4;
         group.setLayoutData(layoutData);
         m_relevant0Button = new Button(group, SWT.RADIO);
-        m_relevant0Button.setText(I18n.getString("PrefPageBasic.always")); //$NON-NLS-1$
+        m_relevant0Button.setText(Messages.PrefPageBasicAlways);
         m_relevant1Button = new Button(group, SWT.RADIO);
-        m_relevant1Button.setText(I18n.getString("PrefPageBasic.never")); //$NON-NLS-1$
+        m_relevant1Button.setText(Messages.PrefPageBasicNever);
         m_relevant2Button = new Button(group, SWT.RADIO);
-        m_relevant2Button.setText(I18n.getString("PrefPageBasic.prompt")); //$NON-NLS-1$
+        m_relevant2Button.setText(Messages.PrefPageBasicPrompt);
         m_relevantValue = getPreferenceStore().getInt(
                 Constants.TEST_EXEC_RELEVANT);
         setRadioSelection();
@@ -314,7 +315,7 @@ public class TestResultPreferencePage extends PreferencePage
         boolean writeResult = m_generateReport.getSelection();
         if (writeResult 
             && path.equals(StringConstants.EMPTY)) {
-            setErrorMessage(I18n.getString("TestResultViewPreferencePage.PathEmpty")); //$NON-NLS-1$
+            setErrorMessage(Messages.TestResultViewPreferencePagePathEmpty);
             setValid(false);
             return;
         }
@@ -345,7 +346,7 @@ public class TestResultPreferencePage extends PreferencePage
             }
         }
         if (!valid) {
-            setErrorMessage(I18n.getString("TestResultViewPreferencePage.PathInvalid")); //$NON-NLS-1$
+            setErrorMessage(Messages.TestResultViewPreferencePagePathInvalid);
             setValid(false);
             return;
         }
@@ -353,18 +354,20 @@ public class TestResultPreferencePage extends PreferencePage
         try {
             int noOfResults = Integer.parseInt(numberOfResults);
             if (noOfResults < 1) {
-                setErrorMessage(I18n.getString("TestResultViewPreferencePage.invalidNegMaxNumberOfDays")); //$NON-NLS-1$
+                setErrorMessage(Messages
+                        .TestResultViewPreferencePageInvalidNegMaxNumberOfDays);
                 setValid(false);
                 return;
             }
         } catch (NumberFormatException e) {
-            setErrorMessage(I18n.getString("TestResultViewPreferencePage.invalidMaxNumberOfDays")); //$NON-NLS-1$
+            setErrorMessage(Messages
+                    .TestResultViewPreferencePageInvalidMaxNumberOfDays);
             setValid(false);
             return;
         }
         
         setErrorMessage(null);
-        setMessage(I18n.getString("TestResultViewPreferencePage.title"), NONE); //$NON-NLS-1$
+        setMessage(Messages.TestResultViewPreferencePageTitle, NONE);
         setValid(true);
     }
     
@@ -388,24 +391,24 @@ public class TestResultPreferencePage extends PreferencePage
     private void createOpenResultView(Composite parent) {
         // create Widget
         m_openResultView = new Button(parent, SWT.CHECK);
-        m_openResultView.setText(I18n.
-            getString("TestResultViewPreferencePage.openResultView"));  //$NON-NLS-1$
+        m_openResultView.setText(Messages
+                .TestResultViewPreferencePageOpenResultView);
         GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
         gridData.grabExcessHorizontalSpace = false;
         m_openResultView.setLayoutData(gridData);
 
         m_trackResults = new Button(parent, SWT.CHECK);
-        m_trackResults.setText(I18n.
-            getString("TestResultViewPreferencePage.trackResults"));  //$NON-NLS-1$
+        m_trackResults.setText(Messages
+                .TestResultViewPreferencePageTrackResults);
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
         gridData.grabExcessHorizontalSpace = false;
         m_trackResults.setLayoutData(gridData);
 
         m_autoScreenshots = new Button(parent, SWT.CHECK);
-        m_autoScreenshots.setText(I18n.
-            getString("TestResultViewPreferencePage.autoScreenshots"));  //$NON-NLS-1$
+        m_autoScreenshots.setText(Messages
+                .TestResultViewPreferencePageAutoScreenshots);
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
         gridData.grabExcessHorizontalSpace = false;
@@ -418,8 +421,8 @@ public class TestResultPreferencePage extends PreferencePage
     private void createGenerateReport(Composite parent) {
         // create Widget
         m_generateReport = new Button(parent, SWT.CHECK);
-        m_generateReport.setText(I18n.
-            getString("TestResultViewPreferencePage.generateReport"));  //$NON-NLS-1$
+        m_generateReport.setText(Messages
+                .TestResultViewPreferencePageGenerateReport);
         GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
         gridData.grabExcessHorizontalSpace = true;
@@ -439,8 +442,8 @@ public class TestResultPreferencePage extends PreferencePage
         createReportStyleCombo(parent);
         Label label = new Label(parent, SWT.NONE);
         label.setFont(Layout.BOLD_TAHOMA);
-        label.setText(I18n.
-            getString("TestResultViewPreferencePage.PathText")); //$NON-NLS-1$
+        label.setText(Messages
+                .TestResultViewPreferencePagePathText);
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
         gridData.grabExcessHorizontalSpace = true;
@@ -456,7 +459,7 @@ public class TestResultPreferencePage extends PreferencePage
         gridData.horizontalSpan = 1;
         gridData.grabExcessHorizontalSpace = false;
         m_browser.setLayoutData(gridData);
-        m_browser.setText(I18n.getString("TestResultViewPreferencePage.Browse")); //$NON-NLS-1$
+        m_browser.setText(Messages.TestResultViewPreferencePageBrowse);
         m_path.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
                 // nothing
@@ -472,8 +475,8 @@ public class TestResultPreferencePage extends PreferencePage
                     new DirectoryDialog(Plugin.getShell(), 
                             SWT.APPLICATION_MODAL);
                 String directory;
-                directoryDialog.setMessage(I18n.
-                    getString("TestResultViewPreferencePage.DirSelector")); //$NON-NLS-1$
+                directoryDialog.setMessage(Messages
+                        .TestResultViewPreferencePageDirSelector);
                 directoryDialog.setFilterPath(
                     getPath());
                 directory = directoryDialog.open();
@@ -497,8 +500,7 @@ public class TestResultPreferencePage extends PreferencePage
     private void createReportStyleCombo(Composite parent) {
         Label label = new Label(parent, SWT.NONE);
         label.setFont(Layout.BOLD_TAHOMA);
-        label.setText(I18n.
-            getString("TestResultViewPreferencePage.StyleText")); //$NON-NLS-1$
+        label.setText(Messages.TestResultViewPreferencePageStyleText);
         GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
         gridData.grabExcessHorizontalSpace = true;
@@ -521,7 +523,7 @@ public class TestResultPreferencePage extends PreferencePage
      * {@inheritDoc}
      */
     public void init(IWorkbench workbench) {
-        setDescription(I18n.getString("TestResultViewPreferencePage.description")); //$NON-NLS-1$
+        setDescription(Messages.TestResultViewPreferencePageDescription);
     }
 
     /**
@@ -551,7 +553,7 @@ public class TestResultPreferencePage extends PreferencePage
         m_numberOfDays.setText(getDefaultPrefsString(
                 Constants.MAX_NUMBER_OF_DAYS_KEY));
         setErrorMessage(null);
-        setMessage(I18n.getString("TestResultViewPreferencePage.title"), //$NON-NLS-1$
+        setMessage(Messages.TestResultViewPreferencePageTitle,
             NONE); 
         setValid(true);
     }

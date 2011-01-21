@@ -33,6 +33,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CategoryGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
@@ -40,7 +41,6 @@ import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.sorter.GuiNodeNameViewerSorter;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -92,16 +92,16 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
         new ArrayList < ISelectionListener > ();
     
     /** the title */
-    private String m_title = I18n.getString("TestCaseTableDialog.title"); //$NON-NLS-1$
+    private String m_title = Messages.TestCaseTableDialogTitle;
     
     /** the message */
-    private String m_message = I18n.getString("TestCaseTableDialog.message"); //$NON-NLS-1$
+    private String m_message = Messages.TestCaseTableDialogMessage;
     
     /** the shell title */
-    private String m_shellTitle = I18n.getString("TestCaseTableDialog.shellTitle"); //$NON-NLS-1$
+    private String m_shellTitle = Messages.TestCaseTableDialogShellTitle;
 
     /** the add button text */
-    private String m_addButtonText = I18n.getString("TestCaseTableDialog.Add"); //$NON-NLS-1$
+    private String m_addButtonText = Messages.TestCaseTableDialogAdd;
     
     /** the type to add property */
     private int m_typeToAdd = TESTCASE;
@@ -311,8 +311,8 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
         });
         // Cancel-Button
         Button cancelButton = 
-            createButton(parent, CANCEL , I18n.getString(
-                    "TestCaseTableDialog.Cancel") , false); //$NON-NLS-1$
+            createButton(parent, CANCEL , Messages.TestCaseTableDialogCancel,
+                    false);
         cancelButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 setReturnCode(CANCEL);

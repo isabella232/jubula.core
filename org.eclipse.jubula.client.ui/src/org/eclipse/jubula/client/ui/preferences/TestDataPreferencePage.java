@@ -20,9 +20,9 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.widgets.CheckedRequiredText;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -155,22 +155,22 @@ public class TestDataPreferencePage extends PreferencePage
 //        list.add(pathSep);
         
         if (esc.length() == 0 || StringConstants.SPACE.equals(esc)) {
-            setErrorMessage(I18n.getString("TestDataPreferencePage.EscEmpty")); //$NON-NLS-1$
+            setErrorMessage(Messages.TestDataPreferencePageEscEmpty);
             setValid(false);
             // character for labeling of references in testdata 
         } else if (ref.length() == 0 || StringConstants.SPACE.equals(ref)) {
-            setErrorMessage(I18n.getString("TestDataPreferencePage.RefEmpty")); //$NON-NLS-1$
+            setErrorMessage(Messages.TestDataPreferencePageRefEmpty);
             setValid(false);
         } else if (valSep.length() == 0 
                 || StringConstants.SPACE.equals(valSep)) {
-            setErrorMessage(I18n.getString("TestDataPreferencePage.PathEmpty")); //$NON-NLS-1$
+            setErrorMessage(Messages.TestDataPreferencePagePathEmpty);
             setValid(false);
         } else if (pathSep.length() == 0 
                 || StringConstants.SPACE.equals(pathSep)) {
-            setErrorMessage(I18n.getString("TestDataPreferencePage.ValueEmpty")); //$NON-NLS-1$
+            setErrorMessage(Messages.TestDataPreferencePageValueEmpty);
             setValid(false);
         } else if (list.size() != numberOfDistinctOptions) {
-            setErrorMessage(I18n.getString("TestDataPreferencePage.NotDisjunkt")); //$NON-NLS-1$
+            setErrorMessage(Messages.TestDataPreferencePageNotDisjunkt);
             setValid(false);
         } else {
             setErrorMessage(null);
@@ -200,7 +200,7 @@ public class TestDataPreferencePage extends PreferencePage
      */
     private void createRefTextField(Composite parent) {
         Label labelRef = new Label(parent, SWT.NONE);
-        labelRef.setText(I18n.getString("TestDataPreferencePage.CharForRef")); //$NON-NLS-1$
+        labelRef.setText(Messages.TestDataPreferencePageCharForRef);
         m_textRef = new CheckedRequiredText(parent, SWT.SINGLE | SWT.BORDER);
         m_textRef.setText(getPreferenceStore()
                 .getString(Constants.REFERENCE_CHAR_KEY));
@@ -219,7 +219,7 @@ public class TestDataPreferencePage extends PreferencePage
     private void createPathSepTextField(Composite parent) {
         Label labelRef = new Label(parent, SWT.NONE);
         labelRef.setVisible(false);
-        labelRef.setText(I18n.getString("TestDataPreferencePage.PathSepForRef")); //$NON-NLS-1$
+        labelRef.setText(Messages.TestDataPreferencePagePathSepForRef);
         m_textPathSep = 
             new CheckedRequiredText(parent, SWT.SINGLE | SWT.BORDER);
         m_textPathSep.setText(getPreferenceStore()
@@ -240,7 +240,7 @@ public class TestDataPreferencePage extends PreferencePage
     private void createValueSepTextField(Composite parent) {
         Label labelRef = new Label(parent, SWT.NONE);
         labelRef.setVisible(false);
-        labelRef.setText(I18n.getString("TestDataPreferencePage.ValueSepForRef")); //$NON-NLS-1$
+        labelRef.setText(Messages.TestDataPreferencePageValueSepForRef);
         m_textValueSep = 
             new CheckedRequiredText(parent, SWT.SINGLE | SWT.BORDER);
         m_textValueSep.setVisible(false);
@@ -259,7 +259,7 @@ public class TestDataPreferencePage extends PreferencePage
      */
     private void createEscapeTextfield(Composite parent) {
         Label labelEsc = new Label(parent, SWT.NONE);
-        labelEsc.setText(I18n.getString("TestDataPreferencePage.CharForEsc")); //$NON-NLS-1$
+        labelEsc.setText(Messages.TestDataPreferencePageCharForEsc);
         m_textEscape = new CheckedRequiredText(parent, SWT.SINGLE | SWT.BORDER);
         m_textEscape.setEnabled(false);
         m_textEscape.setText(getPreferenceStore()
@@ -277,7 +277,7 @@ public class TestDataPreferencePage extends PreferencePage
      */
     private void createFuncTextfield(Composite parent) {
         Label labelFunc = new Label(parent, SWT.NONE);
-        labelFunc.setText(I18n.getString("TestDataPreferencePage.CharForFunc")); //$NON-NLS-1$
+        labelFunc.setText(Messages.TestDataPreferencePageCharForFunc);
         m_textFunc = new CheckedRequiredText(parent, SWT.SINGLE | SWT.BORDER);
         m_textFunc.setText(getPreferenceStore()
                 .getString(Constants.FUNCTION_CHAR_KEY));
@@ -295,7 +295,7 @@ public class TestDataPreferencePage extends PreferencePage
      * {@inheritDoc}
      */
     public void init(IWorkbench workbench) {
-        setDescription(I18n.getString("TestDataPreferencePage.description")); //$NON-NLS-1$
+        setDescription(Messages.TestDataPreferencePagedescription);
     }
 
     /**

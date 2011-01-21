@@ -41,6 +41,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.databinding.validators.AutIdValidator;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.wizards.pages.AUTSettingWizardPage;
 import org.eclipse.jubula.client.ui.wizards.pages.AutConfigSettingWizardPage;
@@ -50,10 +51,10 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -130,7 +131,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
      *      org.eclipse.jface.viewers.IStructuredSelection)
      */
     public void init(IWorkbench workbench, IStructuredSelection selection) {
-        setWindowTitle(I18n.getString("ProjectWizard.newProjectWizard")); //$NON-NLS-1$
+        setWindowTitle(Messages.ProjectWizardNewProjectWizard);
         setDefaultPageImageDescriptor(IconConstants
                 .PROJECT_WIZARD_IMAGE_DESCRIPTOR);
         setNeedsProgressMonitor(true);    
@@ -153,7 +154,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
                     public void run(IProgressMonitor monitor) 
                         throws InterruptedException {
                         monitor.beginTask(
-                            I18n.getString("ProjectWizard.creatingProject", //$NON-NLS-1$
+                            NLS.bind(Messages.ProjectWizardCreatingProject,
                                     new Object[] { name }),
                             IProgressMonitor.UNKNOWN);
                         try {
@@ -199,32 +200,34 @@ public class ProjectWizard extends Wizard implements INewWizard {
             new AutIdValidator(m_newProject, null, m_autConfig);
         m_projectSettingWizardPage = new ProjectSettingWizardPage(
                 PROJECT_SETTING_WP, m_newProject);
-        m_projectSettingWizardPage.setTitle(I18n
-                .getString("ProjectWizard.ProjectSettings")); //$NON-NLS-1$
-        m_projectSettingWizardPage.setDescription(I18n
-                .getString("ProjectWizard.newProject")); //$NON-NLS-1$
+        m_projectSettingWizardPage.setTitle(Messages
+                .ProjectWizardProjectSettings);
+        m_projectSettingWizardPage.setDescription(Messages
+                .ProjectWizardNewProject);
         addPage(m_projectSettingWizardPage);            
         
         m_autSettingWizardPage = new AUTSettingWizardPage(
                 AUT_SETTING_WP, m_newProject, m_autMain);
-        m_autSettingWizardPage.setTitle(I18n.getString("ProjectWizard.AutSettings")); //$NON-NLS-1$
-        m_autSettingWizardPage.setDescription(I18n.getString("ProjectWizard.newAUT")); //$NON-NLS-1$
+        m_autSettingWizardPage.setTitle(Messages.ProjectWizardAutSettings);
+        m_autSettingWizardPage.setDescription(Messages.ProjectWizardNewAUT);
         m_autSettingWizardPage.setPageComplete(true);
         addPage(m_autSettingWizardPage);
         
         m_autConfigSettingWizardPage = 
             new AutConfigSettingWizardPage(AUT_CONFIG_SETTING_WP, 
                     m_autConfig, autIdValidator); 
-        m_autConfigSettingWizardPage.setTitle(I18n.getString("ProjectWizard.AutSettings")); //$NON-NLS-1$
-        m_autConfigSettingWizardPage.setDescription(I18n.getString("ProjectWizard.AUTData")); //$NON-NLS-1$
+        m_autConfigSettingWizardPage.setTitle(
+                Messages.ProjectWizardAutSettings);
+        m_autConfigSettingWizardPage.setDescription(
+                Messages.ProjectWizardAUTData);
         m_autConfigSettingWizardPage.setPageComplete(true);
         addPage(m_autConfigSettingWizardPage);  
         
         m_projectInfoWizardPage =
             new ProjectInfoWizardPage(PROJECT_INFO_WP);
-        m_projectInfoWizardPage.setTitle(I18n.getString("ProjectWizard.ProjectSettings")); //$NON-NLS-1$
+        m_projectInfoWizardPage.setTitle(Messages.ProjectWizardProjectSettings);
         m_projectInfoWizardPage.setDescription(
-            I18n.getString("ProjectWizard.projectCreated")); //$NON-NLS-1$
+            Messages.ProjectWizardProjectCreated);
         m_projectInfoWizardPage.setPageComplete(true);
         addPage(m_projectInfoWizardPage); 
         Plugin.stopLongRunning();
@@ -313,11 +316,15 @@ public class ProjectWizard extends Wizard implements INewWizard {
                             PoMaker.createReusedProjectPO(ubmProject));
                 } else {
                     if (log.isInfoEnabled()) {
-                        log.info("Project '" + moduleName + "' does not exist."); //$NON-NLS-1$ //$NON-NLS-2$
+                        log.info(Messages.Project + StringConstants.SPACE
+                            + StringConstants.APOSTROPHE + moduleName
+                            + StringConstants.APOSTROPHE + Messages.DoesNotExist
+                            + StringConstants.DOT);
                     }
                 }
             } catch (JBException e) {
-                log.error(e + ": " + e.getMessage()); //$NON-NLS-1$
+                log.error(e + StringConstants.COLON + StringConstants.SPACE 
+                        + e.getMessage());
             }
             desc = ComponentBuilder.getInstance().getCompSystem()
                 .getToolkitPluginDescriptor(desc.getIncludes());

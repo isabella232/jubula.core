@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.businessprocess;
 
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.JBText;
@@ -43,7 +44,7 @@ public class TextControlBP {
         } else if (control instanceof CCombo) {
             ((CCombo)control).setText(text);
         } else {
-            throw new ClassCastException("not supported control"); //$NON-NLS-1$
+            throw new ClassCastException(Messages.NotSupportedControl);
         }
     }
     
@@ -60,7 +61,7 @@ public class TextControlBP {
         } else if (control instanceof CCombo) {
             return ((CCombo)control).getText();
         }
-        throw new ClassCastException("not supported control"); //$NON-NLS-1$
+        throw new ClassCastException(Messages.NotSupportedControl);
     }
     
     /**
@@ -73,7 +74,7 @@ public class TextControlBP {
         } else if (!(control instanceof DirectCombo 
                 || control instanceof CCombo)) {
             
-            throw new ClassCastException("not supported control"); //$NON-NLS-1$     
+            throw new ClassCastException(Messages.NotSupportedControl);
         }
     }
     
@@ -88,7 +89,7 @@ public class TextControlBP {
         } else if (!(control instanceof DirectCombo 
                 || control instanceof CCombo)) {
             
-            throw new ClassCastException("not supported control"); //$NON-NLS-1$     
+            throw new ClassCastException(Messages.NotSupportedControl);     
         }
     }
     

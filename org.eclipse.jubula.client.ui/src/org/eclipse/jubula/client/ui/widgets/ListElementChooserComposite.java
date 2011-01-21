@@ -14,6 +14,7 @@ import java.util.Arrays;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
@@ -588,7 +589,7 @@ public class ListElementChooserComposite extends Composite {
                 checkButtons();
                 return;
             } 
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget);
         }
 
         /**
@@ -603,7 +604,7 @@ public class ListElementChooserComposite extends Composite {
                 handleSelectionTwoToOneButtonEvent();
                 return;
             } 
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget);
         }        
     }
     /**

@@ -22,7 +22,8 @@ import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.ui.IPersistableElement;
 
 
@@ -62,7 +63,7 @@ public class ClientLogInput extends PlatformObject
      * {@inheritDoc}
      */
     public String getName() {
-        return I18n.getString("ClientLogViewer.Name"); //$NON-NLS-1$
+        return Messages.ClientLogViewerName;
     }
 
     /**
@@ -89,7 +90,7 @@ public class ClientLogInput extends PlatformObject
             StringBuilder sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n"); //$NON-NLS-1$
+                sb.append(line + StringConstants.NEWLINE);
             }
             return sb.toString();
         } catch (FileNotFoundException e) {
@@ -97,14 +98,14 @@ public class ClientLogInput extends PlatformObject
                 new Status(
                     IStatus.ERROR, Plugin.PLUGIN_ID,
                     IStatus.OK, 
-                    I18n.getString("ErrorMessage.FILE_NOT_FOUND"), //$NON-NLS-1$
+                    Messages.ErrorMessageFILE_NOT_FOUND,
                     e));
         } catch (IOException ioe) {
             throw new CoreException(
                 new Status(
                     IStatus.ERROR, Plugin.PLUGIN_ID,
-                    IStatus.OK, 
-                    I18n.getString("ErrorMessage.IO_EXCEPTION"), //$NON-NLS-1$
+                    IStatus.OK,
+                    Messages.ErrorMessageIO_EXCEPTION,
                     ioe));
         }
     }

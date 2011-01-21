@@ -64,6 +64,7 @@ public abstract class AbstractAttributeRenderer implements IAttributeRenderer {
         if (getDescription().isValueValid(value)) {
             getAttribute().setValue(value);
         } else {
+            //FIXME NLS
             StringBuffer sb = new StringBuffer("Attempted to set a value not " //$NON-NLS-1$
                     + "contained in the value set."); //$NON-NLS-1$
             sb.append(" Value: "); //$NON-NLS-1$

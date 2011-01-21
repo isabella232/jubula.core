@@ -30,6 +30,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IntegerTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -49,16 +50,20 @@ public class TestSuiteGUIPropertySource
     extends AbstractGuiNodePropertySource {
 
     /** Constant for the String Specification Name */
-    private static final String P_SUITENAME_DISPLAY_NAME = I18n.getString("TestSuiteGUIPropertySource.testSuiteName"); //$NON-NLS-1$
+    private static final String P_SUITENAME_DISPLAY_NAME =
+        Messages.TestSuiteGUIPropertySourceTestSuiteName;
 
     /** Constant for the String AUT Name */
-    private static final String P_AUT_DISPLAY_NAME = I18n.getString("TestSuiteGUIPropertySource.AUTName"); //$NON-NLS-1$
+    private static final String P_AUT_DISPLAY_NAME =
+        Messages.TestSuiteGUIPropertySourceAUTName;
     
     /** Constant for the String step delay */
-    private static final String P_STEPDELAY_DISPLAY_NAME = I18n.getString("TestSuiteGUIPropertySource.StepDelay"); //$NON-NLS-1$
+    private static final String P_STEPDELAY_DISPLAY_NAME =
+        Messages.TestSuiteGUIPropertySourceStepDelay;
     
     /** Constant for Category Event Handler */
-    private static final String P_EVENTHANDLER_CAT = I18n.getString("TestSuiteGUIPropertySource.EventHandler"); //$NON-NLS-1$
+    private static final String P_EVENTHANDLER_CAT =
+        Messages.TestSuiteGUIPropertySourceEventHandler;
 
     /** List of aut names */
     private String[] m_autNameList = new String[0];
@@ -172,7 +177,7 @@ public class TestSuiteGUIPropertySource
                         }
                         return m_autNameList[((Integer)element)];
                     }
-                    Assert.notReached("Wrong AUT."); //$NON-NLS-1$
+                    Assert.notReached(Messages.WrongAUT + StringConstants.DOT);
                     return String.valueOf(element);
                 }
             });

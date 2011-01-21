@@ -38,8 +38,10 @@ import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer.GenerateTestResultTreeOperation;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.wizards.pages.ExportTestResultDetailsDestinationWizardPage;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
@@ -174,8 +176,11 @@ public class ExportTestResultDetailsWizard extends Wizard
                 if (!isWriteFile 
                         && m_overwriteState != OVERWRITE_NONE) {
                     final MessageDialog dialog = new MessageDialog(
-                            getContainer().getShell(), I18n.getString("ExportTestResultDetailsWizard.ConfirmOverwriteDialog.title"), //$NON-NLS-1$
-                            null, I18n.getString("ExportTestResultDetailsWizard.ConfirmOverwriteDialog.description", new String [] {fileToWrite.getCanonicalPath()}), //$NON-NLS-1$
+                            getContainer().getShell(), Messages
+                                .ExportTestResultDetailsConfirmOverwriteTitle,
+                            null, NLS.bind(Messages
+                                .ExportTestResultDetailsWizardPageDescription,
+                                new String [] {fileToWrite.getCanonicalPath()}),
                             MessageDialog.QUESTION,
                             OVERWRITE_DIALOG_BUTTON_LABELS, 0);
 
@@ -207,7 +212,9 @@ public class ExportTestResultDetailsWizard extends Wizard
                             // cancel the operation
                             return;
                         default:
-                            LOG.warn("Unexpected dialog return code: " + dialogResult); //$NON-NLS-1$
+                            LOG.warn(Messages.UnexpectedDialogReturnCode
+                                    + StringConstants.COLON 
+                                    + StringConstants.SPACE + dialogResult);
                             break;
                     }
                     
@@ -277,7 +284,8 @@ public class ExportTestResultDetailsWizard extends Wizard
             getContainer().run(true, true, 
                     new ExportTestResultDetailsOperation());
         } catch (InvocationTargetException e) {
-            LOG.error("Error occurred while exporting Test Result details.", e.getCause()); //$NON-NLS-1$
+            LOG.error(Messages.ErrorOccurredWhileExportingTestResultDetails
+                    + StringConstants.DOT, e.getCause());
         } catch (InterruptedException ie) {
             // Operation canceled
             // Do nothing
@@ -315,7 +323,9 @@ public class ExportTestResultDetailsWizard extends Wizard
         m_selectedSummaries = selectedSummaryList.toArray(
                 new ITestResultSummaryPO[selectedSummaryList.size()]);
 
-        setWindowTitle(I18n.getString("ExportTestResultDetailsWizard.windowTitle", new String [] {String.valueOf(m_selectedSummaries.length)})); //$NON-NLS-1$
+        setWindowTitle(NLS.bind(
+                Messages.ExportTestResultDetailsWizardWindowTitle, 
+                new String [] {String.valueOf(m_selectedSummaries.length)}));
     }
 
 }

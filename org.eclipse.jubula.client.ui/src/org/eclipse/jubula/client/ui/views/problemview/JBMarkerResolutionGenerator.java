@@ -47,9 +47,10 @@ import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.handlers.ProjectPropertiesHandler;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMarkerResolution;
@@ -148,7 +149,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
          * {@inheritDoc}
          */
         public String getLabel() {
-            return I18n.getString("GDProblemView.openTestSuiteEditor", //$NON-NLS-1$ 
+            return NLS.bind(Messages.GDProblemViewOpenTestSuiteEditor, 
                     new String[] {m_tsName});
         }
 
@@ -197,7 +198,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
          * {@inheritDoc}
          */
         public String getLabel() {
-            return I18n.getString("GDProblemView.openObjectMappingEditor", //$NON-NLS-1$ 
+            return NLS.bind(Messages.GDProblemViewOpenObjectMappingEditor, 
                     new String[] {m_tsName});
         }
 
@@ -240,8 +241,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
             return getResolutions(type, gdObject);
         } catch (CoreException ce) {
-            log.info("Error occurred while finding resolutions for " //$NON-NLS-1$
-                + "a Problem Marker", ce); //$NON-NLS-1$
+            log.info(Messages
+                    .ErrorOccurredWhileFindingResolutionsForProblemMarker, ce);
             return new IMarkerResolution[0];
         } 
     }
@@ -303,7 +304,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
         return new IMarkerResolution [] {new IMarkerResolution() {
 
             public String getLabel() {
-                return I18n.getString("GDProblemView.connectToAutStarter"); //$NON-NLS-1$
+                return Messages.GDProblemViewConnectToAutStarter;
             }
 
             public void run(IMarker marker) {
@@ -322,7 +323,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                 public String getLabel() {
-                    return I18n.getString("GDProblemView.openReusedProjectSettings"); //$NON-NLS-1$
+                    return Messages.GDProblemViewOpenReusedProjectSettings;
                 }
 
                 public void run(IMarker marker) {
@@ -346,7 +347,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                                 null);
                     } catch (CommandException ce) {
                         log.error(
-                            "Error occurred while opening Project Settings", //$NON-NLS-1$
+                            Messages.ErrorOccurredWhileOpeningProjectSettings,
                             ce);
                     }
                 }
@@ -366,7 +367,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                 public String getLabel() {
-                    return I18n.getString("GDProblemView.openTestCaseEditor"); //$NON-NLS-1$
+                    return Messages.GDProblemViewOpenTestCaseEditor;
                 }
 
                 public void run(IMarker marker) {
@@ -436,7 +437,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                     public String getLabel() {
-                        return I18n.getString("GDProblemView.openTestCaseEditor"); //$NON-NLS-1$
+                        return Messages.GDProblemViewOpenTestCaseEditor;
                     }
 
                     public void run(IMarker marker) {
@@ -498,7 +499,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                 public String getLabel() {
-                    return I18n.getString("GDProblemView.openTestCaseEditor"); //$NON-NLS-1$
+                    return Messages.GDProblemViewOpenTestCaseEditor;
                 }
 
                 public void run(IMarker marker) {
@@ -524,7 +525,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                 public String getLabel() {
-                    return I18n.getString("GDProblemView.openAutSettings"); //$NON-NLS-1$
+                    return Messages.GDProblemViewOpenAutSettings;
                 }
 
                 public void run(IMarker marker) {
@@ -548,7 +549,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                                 null);
                     } catch (CommandException ce) {
                         log.error(
-                            "Error occurred while opening Project Settings", //$NON-NLS-1$
+                            Messages.ErrorOccurredWhileOpeningProjectSettings,
                             ce);
                     }
                 }
@@ -567,7 +568,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                 public String getLabel() {
-                    return I18n.getString("GDProblemView.openAutStarterPreferences"); //$NON-NLS-1$
+                    return Messages.GDProblemViewOpenAutStarterPreferences;
                 }
 
                 public void run(IMarker marker) {
@@ -602,7 +603,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                 public String getLabel() {
-                    return I18n.getString("GDProblemView.create"); //$NON-NLS-1$
+                    return Messages.GDProblemViewCreate;
                 }
 
                 public void run(IMarker marker) {
@@ -615,7 +616,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                 public String getLabel() {
-                    return I18n.getString("GDProblemView.import"); //$NON-NLS-1$
+                    return Messages.GDProblemViewImport;
                 }
 
                 public void run(IMarker marker) {
@@ -628,7 +629,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                 public String getLabel() {
-                    return I18n.getString("GDProblemView.open"); //$NON-NLS-1$
+                    return Messages.GDProblemViewOpen;
                 }
 
                 public void run(IMarker marker) {
@@ -688,7 +689,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
         return new IMarkerResolution[] { new IMarkerResolution() {
 
             public String getLabel() {
-                return I18n.getString("GDProblemView.createTestSuite"); //$NON-NLS-1$
+                return Messages.GDProblemViewCreateTestSuite;
             }
 
             public void run(IMarker marker) {

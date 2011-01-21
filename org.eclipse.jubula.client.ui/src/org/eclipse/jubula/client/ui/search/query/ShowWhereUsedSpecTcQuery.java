@@ -25,10 +25,11 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.NodeSearchResultElementAction;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -96,7 +97,8 @@ public class ShowWhereUsedSpecTcQuery
                 Long id = execTC.getId();
                 String name = execTC.getName();
                 parentList.add(parent);
-                String resultName = parent.getName() + " / " + name; //$NON-NLS-1$
+                String resultName = parent.getName() + StringConstants.SPACE
+                    + StringConstants.SLASH + StringConstants.SPACE + name;
                 reuseLoc.add(new SearchResultElement<Long>(resultName, id,
                         getImageForNode(execTC),
                         new NodeSearchResultElementAction(), execTC
@@ -116,8 +118,9 @@ public class ShowWhereUsedSpecTcQuery
     public String getLabel() {
         StringBuilder sb = new StringBuilder();
         sb.append(getTimestamp());
-        sb.append(": ");
-        sb.append(I18n.getString("UIJob.searchingTestCases"));
+        sb.append(StringConstants.COLON);
+        sb.append(StringConstants.SPACE);
+        sb.append(Messages.UIJobSearchingTestCases);
         sb.append(" \"");
         sb.append(getSpecTC().getName());
         sb.append("\"");

@@ -15,7 +15,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -36,8 +36,8 @@ public class DatabaseMigrationAssistantIntroPage extends WizardPage {
      */
     public DatabaseMigrationAssistantIntroPage(String pageName) {
         super(pageName);
-        setTitle(I18n.getString("DatabaseMigrationAssistant.introPage.title")); //$NON-NLS-1$
-        setMessage(I18n.getString("DatabaseMigrationAssistant.introPage.description")); //$NON-NLS-1$
+        setTitle(Messages.DatabaseMigrationAssistantIntroPageTitle);
+        setMessage(Messages.DatabaseMigrationAssistantIntroPageDescription);
     }
 
     /**
@@ -48,7 +48,7 @@ public class DatabaseMigrationAssistantIntroPage extends WizardPage {
         composite.setLayout(new GridLayout());
         
         Label label = new Label(composite, SWT.WRAP);
-        label.setText(I18n.getString("DatabaseMigrationAssistant.introPage.text")); //$NON-NLS-1$
+        label.setText(Messages.DatabaseMigrationAssistantIntroPageText);
 
         initializeDialogUnits(label);
 

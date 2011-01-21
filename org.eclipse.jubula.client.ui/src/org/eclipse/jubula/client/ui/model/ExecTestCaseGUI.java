@@ -24,7 +24,9 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertysources.ExecTestCaseGUIPropertySource;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -249,7 +251,8 @@ public class ExecTestCaseGUI extends GuiNode implements IAdaptable {
      * @param specTestCase The specTestCase to set.
      */
     public void setSpecTestCase(SpecTestCaseGUI specTestCase) {
-        Assert.verify(m_specTestCase == null, "Do not change the SpecTestCase!"); //$NON-NLS-1$
+        Assert.verify(m_specTestCase == null, 
+            Messages.DoNotChangeTheSpecTestCase);
         m_specTestCase = specTestCase;
     }
     
@@ -308,11 +311,14 @@ public class ExecTestCaseGUI extends GuiNode implements IAdaptable {
             String name = exec.getRealName();
             if (Plugin.getDefault().getPreferenceStore().getBoolean(
                     Constants.SHOWORIGINALNAME_KEY)) {
-                name += " (" //$NON-NLS-1$
-                        + exec.getSpecTestCase().getName() + ")"; //$NON-NLS-1$
+                name += StringConstants.SPACE + StringConstants.LEFT_PARENTHESES
+                        + exec.getSpecTestCase().getName() 
+                        + StringConstants.RIGHT_PARENTHESES;
             }
             return name;
         }
-        return "<" + exec.getSpecTestCase().getName() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
+        return StringConstants.LEFT_INEQUALITY_SING 
+            + exec.getSpecTestCase().getName() 
+            + StringConstants.RIGHT_INEQUALITY_SING;
     }
 }

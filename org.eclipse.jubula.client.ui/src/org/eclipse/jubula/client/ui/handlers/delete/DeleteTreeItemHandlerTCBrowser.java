@@ -251,7 +251,8 @@ public class DeleteTreeItemHandlerTCBrowser
                 parent = node.getParentNode();
             }
             if (parent != null && !nodesToDelete.contains(parent)) {
-                locations.add(Constants.BULLET + parent.getName() + "\n"); //$NON-NLS-1$
+                locations.add(Constants.BULLET + parent.getName() 
+                        + StringConstants.NEWLINE);
             }
         }
         String list = StringConstants.EMPTY;

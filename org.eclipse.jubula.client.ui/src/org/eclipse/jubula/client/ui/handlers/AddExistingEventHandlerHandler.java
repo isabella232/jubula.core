@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -35,8 +36,8 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISelectionListener;
@@ -75,7 +76,8 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
     /** {@inheritDoc} */
     public Object execute(ExecutionEvent event) {
         IEditorPart editor = Plugin.getActiveEditor();
-        Assert.verify(editor instanceof AbstractTestCaseEditor, "Wrong editor type!"); //$NON-NLS-1$
+        Assert.verify(editor instanceof AbstractTestCaseEditor, 
+            Messages.WrongEditorType + StringConstants.EXCLAMATION_MARK);
         AbstractTestCaseEditor testCaseEditor = 
             (AbstractTestCaseEditor) editor;
         if (JBEditorHelper.EditableState.OK == testCaseEditor.getEditorHelper()
@@ -97,7 +99,7 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
             
             return;
         }
-        String title = I18n.getString("AddEventHandlerAction.AddEventHandler"); //$NON-NLS-1$
+        String title = Messages.AddEventHandlerActionAddEventHandler;
         TestCaseTreeDialog dialog = new TestCaseTreeDialog(Plugin
             .getShell(), title, StringConstants.EMPTY, 
             (ISpecTestCasePO)parentNode.getContent(), title, SWT.SINGLE, 
@@ -147,7 +149,8 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
         List < String > availableEventTypes = Arrays.asList(eventTypes);
         if (availableEventTypes.size() == existentEventTypes.size()) {
             Utils.createMessageDialog(MessageIDs.E_ENOUGH_EVENT_HANDLER, null, 
-                    new String[]{I18n.getString("AddEventHandlerDialog.enoughEventHandler", //$NON-NLS-1$
+                    new String[]{NLS.bind(
+                            Messages.AddEventHandlerDialogEnoughEventHandler,
                             new Object[]{parentNode.getName()})});
             return true;
         }

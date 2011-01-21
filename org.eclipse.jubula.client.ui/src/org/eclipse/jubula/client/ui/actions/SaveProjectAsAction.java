@@ -47,15 +47,17 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
 
@@ -110,8 +112,8 @@ public class SaveProjectAsAction extends AbstractAction {
             throws InterruptedException, InvocationTargetException {
             String cProjectName = GeneralStorage.getInstance()
                 .getProject().getName();
-            SubMonitor subMonitor = SubMonitor.convert(monitor, I18n.getString(
-                    "SaveProjectAsOperation.SavingProject", //$NON-NLS-1$
+            SubMonitor subMonitor = SubMonitor.convert(monitor,
+                    NLS.bind(Messages.SaveProjectAsOperationSavingProject,
                     new Object[] {cProjectName,
                                   m_newProjectName}), TOTAL_WORK);
             final ParamNameBPDecorator paramNameMapper = 
@@ -168,9 +170,11 @@ public class SaveProjectAsAction extends AbstractAction {
             } catch (JBVersionException e) {
                 // should not be occur, that a used toolkit of current project
                 // has a version conflict with installed Toolkit Plugin.
-                log.error("Toolkit version conflict while save project as action."); //$NON-NLS-1$
+                log.error(Messages.
+                        ToolkitVersionConflictWhileSaveProjectAsAction);
             } catch (ConverterException e) { // should not occur
-                final String msg = "Exception '" + e + "' should not occur!"; //$NON-NLS-1$//$NON-NLS-2$
+                final String msg = Messages.Exception + StringConstants.SPACE
+                    + e + StringConstants.SPACE + Messages.ShouldNotOccur;
                 log.error(msg);
                 Assert.notReached(msg);  
             } finally {
@@ -239,7 +243,7 @@ public class SaveProjectAsAction extends AbstractAction {
         if (action != null && !action.isEnabled()) {
             return;
         }
-        Plugin.startLongRunning(I18n.getString("SaveProjectAsAction.waitWhileSaving")); //$NON-NLS-1$
+        Plugin.startLongRunning(Messages.SaveProjectAsActionWaitWhileSaving);
         InputDialog dialog = openInputDialog();
         if (dialog.getReturnCode() == Window.OK) {
             final String newProjectName = dialog.getName();
@@ -279,14 +283,14 @@ public class SaveProjectAsAction extends AbstractAction {
     private InputDialog openInputDialog() {
         InputDialog dialog = new InputDialog(
             Plugin.getShell(),
-            I18n.getString("SaveProjectAsAction.title"),  //$NON-NLS-1$
+            Messages.SaveProjectAsActionTitle,
             GeneralStorage.getInstance().getProject().getName(),
-            I18n.getString("SaveProjectAsAction.message"), //$NON-NLS-1$
-            I18n.getString("SaveProjectAsAction.label"), //$NON-NLS-1$
-            I18n.getString("SaveProjectAsAction.invalidName"), //$NON-NLS-1$
-            I18n.getString("SaveProjectAsAction.doubleOrInvalidName"), //$NON-NLS-1$
+            Messages.SaveProjectAsActionMessage,
+            Messages.SaveProjectAsActionLabel,
+            Messages.SaveProjectAsActionInvalidName,
+            Messages.SaveProjectAsActionDoubleOrInvalidName,
             IconConstants.BIG_PROJECT_STRING, 
-            I18n.getString("SaveProjectAsAction.shellTitle"), //$NON-NLS-1$ 
+            Messages.SaveProjectAsActionShellTitle,
             false) {
 
             /**

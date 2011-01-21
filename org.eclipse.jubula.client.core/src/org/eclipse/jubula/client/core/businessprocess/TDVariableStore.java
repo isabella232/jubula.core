@@ -23,7 +23,6 @@ import org.eclipse.jubula.tools.exception.Assert;
  * @created 18.07.2006
  */
 public class TDVariableStore {
-    //FIXME tobi NLS ??
     /** Prefix for a user defined variable of the system environment */
     public static final String USERDEF_ENV_VAR_PREFIX = "GDUDV_"; //$NON-NLS-1$
         

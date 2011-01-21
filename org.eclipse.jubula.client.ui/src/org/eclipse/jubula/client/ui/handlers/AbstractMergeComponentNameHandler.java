@@ -28,8 +28,8 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.DirectComboBoxDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -96,11 +96,11 @@ public abstract class AbstractMergeComponentNameHandler
                 Plugin.getActiveWorkbenchWindowShell(), 
                 compNamesList, 
                 displayNameList, 
-                I18n.getString("MergeComponentNames.message"), //$NON-NLS-1$
-                I18n.getString("MergeComponentNames.title"), //$NON-NLS-1$
+                Messages.MergeComponentNamesMessage,
+                Messages.MergeComponentNamesShellTitle,
                 IconConstants.MERGE_COMPONENT_NAME_DIALOG_IMAGE,
-                I18n.getString("MergeComponentNames.shellTitle"), //$NON-NLS-1$
-                I18n.getString("MergeComponentNames.label"));  //$NON-NLS-1$
+                Messages.MergeComponentNamesShellTitle,
+                Messages.MergeComponentNamesLabel);
         return dialog;
     }
     

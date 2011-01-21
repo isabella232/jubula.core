@@ -13,8 +13,10 @@ import java.util.Locale;
 
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 
 
@@ -31,7 +33,7 @@ public class TestSuiteBrowserContentProvider
      */
     public Object[] getChildren(Object parentElement) {
         Assert.verify(parentElement instanceof GuiNode,
-                "Wrong type of element!"); //$NON-NLS-1$
+                Messages.WrongTypeOfElement + StringConstants.EXCLAMATION_MARK);
         GuiNode data = (GuiNode)parentElement;
         if (data instanceof TestSuiteGUI) {
             TestSuiteGUI tsGUI = (TestSuiteGUI)data;

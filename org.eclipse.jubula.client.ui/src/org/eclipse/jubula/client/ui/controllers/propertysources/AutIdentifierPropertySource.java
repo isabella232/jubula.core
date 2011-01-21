@@ -14,8 +14,8 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -65,9 +65,11 @@ public class AutIdentifierPropertySource implements IPropertySource {
         if (m_descriptors == null) {
             m_descriptors = new IPropertyDescriptor [] {
                 new PropertyDescriptor(AutIdentifier.PROP_EXECUTABLE_NAME, 
-                        I18n.getString("AutIdentifierPropertySource.propertyLabel.executable")), //$NON-NLS-1$
+                    Messages.
+                    AutIdentifierPropertySourcePropertyLabelExecutable),
                 new PropertyDescriptor(PROP_MATCHED_AUT, 
-                        I18n.getString("AutIdentifierPropertySource.propertyLabel.matchedAut")) //$NON-NLS-1$
+                    Messages.
+                    AutIdentifierPropertySourcePropertyLabelMatchedAut)
             };
         }
         return m_descriptors;

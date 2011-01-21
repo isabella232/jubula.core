@@ -32,6 +32,11 @@ public interface StringConstants {
     public static final String SPACE = " "; //$NON-NLS-1$
 
     /**
+     * <code>PLUS</code>
+     */
+    public static final String PLUS = "+"; //$NON-NLS-1$
+    
+    /**
      * <code>MINUS</code>
      */
     public static final String MINUS = "-"; //$NON-NLS-1$
@@ -106,6 +111,11 @@ public interface StringConstants {
      * <code>EXCLAMATION_MARK "!"</code>
      */
     public static final String EXCLAMATION_MARK = "!"; //$NON-NLS-1$
+    
+    /**
+     * <code>STAR "*"</code>
+     */
+    public static final String STAR = "*"; //$NON-NLS-1$
     
     /**
      * <code>APOSTROPHE "'"</code>

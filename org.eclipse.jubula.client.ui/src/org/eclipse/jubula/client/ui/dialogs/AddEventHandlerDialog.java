@@ -27,9 +27,9 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.widgets.JBText;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -122,10 +122,10 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
-        setTitle(I18n.getString("AddEventHandlerDialog.AddErrorHandler")); //$NON-NLS-1$
+        setTitle(Messages.AddEventHandlerDialogAddErrorHandler);
         setTitleImage(IconConstants.NEW_EH_DIALOG_IMAGE); 
-        getShell().setText(I18n.getString("AddEventHandlerDialog.AddErrorHandler"));  //$NON-NLS-1$
-        setMessage(I18n.getString("AddEventHandlerDialog.message")); //$NON-NLS-1$
+        getShell().setText(Messages.AddEventHandlerDialogAddErrorHandler);
+        setMessage(Messages.AddEventHandlerDialogMessage);
 
 //      new Composite as container
         final GridLayout gridLayoutParent = new GridLayout();
@@ -176,7 +176,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
     private void createWidgets(Composite parent) {
         // create a non-editable text field for the name of the event handler
         Label eventNameLabel = new Label(parent, SWT.NONE);
-        eventNameLabel.setText(I18n.getString("AddEventHandlerDialog.label"));  //$NON-NLS-1$
+        eventNameLabel.setText(Messages.AddEventHandlerDialogLabel);
         JBText nameText = new JBText(parent, SWT.FILL | SWT.BORDER);
         GridData eventNameGridData = 
             new GridData(SWT.FILL, SWT.NONE, true, false);
@@ -193,7 +193,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
         }
         // create Combo with event types
         Label eventTypeLabel = new Label(parent, SWT.NONE);
-        eventTypeLabel.setText(I18n.getString("AddEventHandlerDialog.EventType")); //$NON-NLS-1$
+        eventTypeLabel.setText(Messages.AddEventHandlerDialogEventType);
         m_eventTypesCombo = new Combo(parent, SWT.FILL | SWT.READ_ONLY);
         GridData eventGridData = 
             new GridData(SWT.FILL, SWT.NONE, true, false);
@@ -213,7 +213,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
             .toArray(new String[selectableEventTypes.size()]));
         // create Combo with reentry types
         Label reentryTypeLabel = new Label(parent, SWT.NONE);
-        reentryTypeLabel.setText(I18n.getString("AddEventHandlerDialog.ReentryType")); //$NON-NLS-1$
+        reentryTypeLabel.setText(Messages.AddEventHandlerDialogReentryType);
         m_reentryTypesCombo = new Combo(parent, SWT.FILL | SWT.READ_ONLY);
         GridData reentryGridData = 
             new GridData(SWT.FILL, SWT.NONE, true, false);
@@ -248,7 +248,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
     private void createMaxNumRetriesWidgets(Composite parent) {
         m_maxRetriesLabel = new Label(parent, SWT.NONE);
         m_maxRetriesLabel.setText(
-                I18n.getString("AddEventHandlerDialog.MaxNumRetries")); //$NON-NLS-1$
+                Messages.AddEventHandlerDialogMaxNumRetries);
         
         m_maxRetriesText = new Spinner(
                 parent, SWT.FILL | SWT.BORDER); 
@@ -322,7 +322,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
      */
     private boolean modifyEventTypeComboAction() {
         if (m_eventTypesCombo.getText() == StringConstants.EMPTY) {
-            setErrorMessage(I18n.getString("AddEventHandlerDialog.NoEventTypeSel")); //$NON-NLS-1$
+            setErrorMessage(Messages.AddEventHandlerDialogNoEventTypeSel);
             enableOKButton(false);
             return false;
         }
@@ -335,7 +335,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
      */
     private boolean modifyReentryTypeComboAction() {
         if (m_reentryTypesCombo.getText() == StringConstants.EMPTY) {
-            setErrorMessage(I18n.getString("AddEventHandlerDialog.NoReentryTypeSel")); //$NON-NLS-1$
+            setErrorMessage(Messages.AddEventHandlerDialogNoReentryTypeSel);
             enableOKButton(false);
             return false;
         }

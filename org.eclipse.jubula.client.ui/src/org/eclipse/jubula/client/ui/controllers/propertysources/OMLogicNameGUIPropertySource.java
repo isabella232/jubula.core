@@ -19,11 +19,11 @@ import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.labelprovider.PropertyControllerLabelProvider;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.graphics.Image;
 
 
@@ -36,13 +36,17 @@ public class OMLogicNameGUIPropertySource
     extends AbstractPropertySource<IComponentNamePO> {
 
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_COMPNAME = I18n.getString("OMLogicNameGUIPropertySource.ComponentName"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_COMPNAME =
+        Messages.OMLogicNameGUIPropertySourceComponentName;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_COMPTYPE = I18n.getString("OMLogicNameGUIPropertySource.CompType");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_COMPTYPE =
+        Messages.OMLogicNameGUIPropertySourceCompType;
     /** Label for parent project property */
-    public static final String P_ELEMENT_DISPLAY_PARENTPROJECT = I18n.getString("OMLogicNameGUIPropertySource.ParentProject");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_PARENTPROJECT =
+        Messages.OMLogicNameGUIPropertySourceParentProject;
     /** Constant for Category Component */
-    public static final String P_COMPONENT_CAT = I18n.getString("OMLogicNameGUIPropertySource.Component");  //$NON-NLS-1$
+    public static final String P_COMPONENT_CAT =
+        Messages.OMLogicNameGUIPropertySourceComponent;
 
     /**
      * Constructor
@@ -209,8 +213,7 @@ public class OMLogicNameGUIPropertySource
                 }
             }
 
-            return I18n
-                    .getString("OMLogicNameGUIPropertySource.unknownParentProject"); //$NON-NLS-1$n
+            return Messages.OMLogicNameGUIPropertySourceUnknownParentProject;
         }  
         
         /**

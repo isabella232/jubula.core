@@ -22,6 +22,7 @@ import java.util.TreeMap;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -1110,7 +1111,8 @@ public class TreeElementChooserComposite extends Composite {
                 checkButtons();
                 return;
             } 
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.DOT);
         }
 
         /**
@@ -1125,7 +1127,8 @@ public class TreeElementChooserComposite extends Composite {
                 handleSelectionUsedToAvailableButtonEvent();
                 return;
             } 
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.DOT);
         }        
     }
     /**

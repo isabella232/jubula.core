@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.properties.ProjectGeneralPropertyPage.IOkListener;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.ListElementChooserComposite;
@@ -41,7 +42,6 @@ import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.persistence.jpa.JpaEntityManager;
 import org.eclipse.swt.SWT;
@@ -98,13 +98,12 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
             NUM_COLUMNS_2, GridData.FILL, false);
         noDefaultAndApplyButton();       
         String str = getProject().getName();
-        super.getShell().setText(I18n.getString(
-            "ProjectPropertyPage.shellTitle") + str); //$NON-NLS-1$
+        super.getShell().setText(Messages.ProjectPropertyPageShellTitle + str);
 
         createLabel(projectNameComposite, StringConstants.EMPTY);
         createLabel(projectNameComposite, StringConstants.EMPTY);
         createLabel(composite, 
-            I18n.getString("ProjectPropertyPage.selectReusedProjects")); //$NON-NLS-1$
+            Messages.ProjectPropertyPageSelectReusedProjects);
         Composite innerComposite = new Composite(composite, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
         compositeLayout.numColumns = NUM_COLUMNS_1;
@@ -126,7 +125,8 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
                 GridData.FILL, false); 
             
             new Label(composite, SWT.NONE).setText(
-                "Could not load reusable Projects:\n\t"  //$NON-NLS-1$
+                Messages.CouldNotLoadReusableProjects + StringConstants.COLON
+                + StringConstants.NEWLINE + StringConstants.TAB
                 + tpe.getLocalizedMessage());
         }
         Plugin.getHelpSystem().setHelp(parent,
@@ -183,8 +183,7 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
             // Toolkit plugin for the current project is not loaded
             Utils.createMessageDialog(MessageIDs.E_READ_PROJECT, 
                 null, new String [] {
-                    "Cannot find Reusable Projects for this Project because " //$NON-NLS-1$
-                        + "the Toolkit for the Project cannot be found." //$NON-NLS-1$
+                    Messages.CannotFindReusableProjects
                 });
             throw tpe;
         }
@@ -414,8 +413,10 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
             Set<IChooserCompositeGuiObject> availableGuiObjects, 
             Set<IChooserCompositeGuiObject> usedGuiObjects) {
 
-            super(innerComposite, I18n.getString("ProjectPropertyPage.reusableProjectsUpperLabel"), //$NON-NLS-1$
-                availableGuiObjects, I18n.getString("ProjectPropertyPage.reusableProjectsBottomLabel"), //$NON-NLS-1$
+            super(innerComposite, Messages
+                    .ProjectPropertyPageReusableProjectsUpperLabel,
+                availableGuiObjects, Messages
+                    .ProjectPropertyPageReusableProjectsBottomLabel,
                 usedGuiObjects, 15, 
                     new Image[] { IconConstants.RIGHT_ARROW_IMAGE, 
                                   IconConstants.DOUBLE_RIGHT_ARROW_IMAGE, 
@@ -428,11 +429,13 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
                                   IconConstants.DOUBLE_LEFT_ARROW_DIS_IMAGE,
                                   IconConstants.SWAP_ARROW_DIS_IMAGE }, 
                     new String[] { 
-                        I18n.getString("ProjectPropertyPage.reusableProjectsDownToolTip"), //$NON-NLS-1$
-                        I18n.getString("ProjectPropertyPage.reusableProjectsAllDownToolTip"), //$NON-NLS-1$
-                        I18n.getString("ProjectPropertyPage.reusableProjectsUpToolTip"), //$NON-NLS-1$
-                        I18n.getString("ProjectPropertyPage.reusableProjectsAllUpToolTip"),  //$NON-NLS-1$
-                        I18n.getString("ProjectPropertyPage.reusableProjectsSwapToolTip")  //$NON-NLS-1$
+                        Messages.ProjectPropertyPageReusableProjectsDownToolTip,
+                        Messages
+                            .ProjectPropertyPageReusableProjectsAllDownToolTip,
+                        Messages.ProjectPropertyPageReusableProjectsUpToolTip,
+                        Messages
+                            .ProjectPropertyPageReusableProjectsAllUpToolTip,
+                        Messages.ProjectPropertyPageReusableProjectsSwapToolTip
                     }, ListElementChooserComposite.VERTICAL);
             addListModifiedListener(this);
         }

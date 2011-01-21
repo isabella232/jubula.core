@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.graphics.Image;
 
 
@@ -126,8 +127,7 @@ public class TestResultTreeViewLabelProvider extends LabelProvider {
      * @return RuntimeException Unknown type
      */
     public RuntimeException unknownElement(Object element) {
-        return new RuntimeException("Unknown type of " + //$NON-NLS-1$
-            "element in tree of type " //$NON-NLS-1$
+        return new RuntimeException(Messages.UnknownTypeOfElementInTreeOfType
             + element.getClass().getName());
     }
 }

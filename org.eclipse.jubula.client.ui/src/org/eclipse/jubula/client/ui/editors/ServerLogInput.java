@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.editors;
 
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.IPersistableElement;
 
 
@@ -53,7 +53,7 @@ public class ServerLogInput extends PlatformObject implements
      * {@inheritDoc}
      */
     public String getName() {
-        return I18n.getString("ServerLogViewer.Name"); //$NON-NLS-1$
+        return Messages.ServerLogViewerName;
     }
 
     /**

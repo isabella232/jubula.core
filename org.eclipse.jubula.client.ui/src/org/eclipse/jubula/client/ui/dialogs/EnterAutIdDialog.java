@@ -17,7 +17,7 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.widgets.JBText;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -65,9 +65,9 @@ public class EnterAutIdDialog extends AbstractValidatedDialog {
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
-        setTitle(I18n.getString("EnterAutIdDialog.Title")); //$NON-NLS-1$
-        setMessage(I18n.getString("EnterAutIdDialog.Message")); //$NON-NLS-1$
-        getShell().setText(I18n.getString("EnterAutIdDialog.Title")); //$NON-NLS-1$
+        setTitle(Messages.EnterAutIdDialogTitle);
+        setMessage(Messages.EnterAutIdDialogMessage);
+        getShell().setText(Messages.EnterAutIdDialogTitle);
 
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         Composite area = new Composite(parent, SWT.BORDER);
@@ -105,8 +105,7 @@ public class EnterAutIdDialog extends AbstractValidatedDialog {
      * @return the created text field.
      */
     private JBText createAutIdText(Composite area) {
-        new Label(area, SWT.NONE).setText(I18n.getString(
-                "EnterAutIdDialog.autIdLabel")); //$NON-NLS-1$
+        new Label(area, SWT.NONE).setText(Messages.EnterAutIdDialogAutIdLabel);
         return new JBText(area, SWT.SINGLE | SWT.BORDER);
     }
 

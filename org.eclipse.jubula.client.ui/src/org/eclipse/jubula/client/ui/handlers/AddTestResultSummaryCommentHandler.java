@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.dialogs.EnterCommentDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -124,10 +125,10 @@ public class AddTestResultSummaryCommentHandler extends AbstractHandler {
             Hibernator.instance().commitTransaction(sess, tx);
             ClientTestFactory.getClientTest().fireTestresultSummaryChanged();
         } catch (PMException e) {
-            throw new JBFatalException("storing of metadata failed.", e, //$NON-NLS-1$
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
         } catch (ProjectDeletedException e) {
-            throw new JBFatalException("storing of metadata failed.", e, //$NON-NLS-1$
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
             Hibernator.instance().dropSession(sess);

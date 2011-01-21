@@ -29,6 +29,8 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.AbstractEditParametersDialog.Parameter;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -132,7 +134,10 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
                     paramsToRename.put(paramDescr, param.getName());
                 }
             } else {
-                Assert.notReached("Unexpected error: Modification of a non existing parameter."); //$NON-NLS-1$
+                Assert.notReached(Messages.UnexpectedError 
+                    + StringConstants.COLON + StringConstants.SPACE
+                    + Messages.ModificationOfNonExistingParameter 
+                    + StringConstants.DOT);
             }
         }
         // find parameters to remove

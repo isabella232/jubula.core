@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 
 
 /**
@@ -148,7 +149,7 @@ public class ModifiableListObservable implements IModifiableListObservable {
             try {
                 l.updateContentAdded(newValue);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallingListeners, t);
             }
         }
         
@@ -164,7 +165,7 @@ public class ModifiableListObservable implements IModifiableListObservable {
             try {
                 l.updateContentChanged(oldValue, newValue);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallingListeners, t);
             }
         }        
     }
@@ -179,7 +180,7 @@ public class ModifiableListObservable implements IModifiableListObservable {
             try {
                 l.updateContentRemoved(oldValue);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallingListeners, t);
             }
         }        
     }
@@ -194,7 +195,7 @@ public class ModifiableListObservable implements IModifiableListObservable {
             try {
                 l.updateSelectionChanged(value);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallingListeners, t);
             }
         }       
     }
@@ -210,7 +211,7 @@ public class ModifiableListObservable implements IModifiableListObservable {
             try {
                 l.updateOptionalButtonSelected();
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionWhileCallingListeners, t);
             }
         }      
         

@@ -48,6 +48,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.jobs.StartAutJob;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.labelprovider.OMEditorTreeLabelProvider;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -56,10 +57,10 @@ import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PartInitException;
@@ -178,13 +179,14 @@ public class TestExecutionContributor
      * @param event the raised event, determines the displayed message 
      */
     void handleEvent(AUTEvent event) {
-        log.info("handle AUTEvent: " + event.toString()); //$NON-NLS-1$
+        log.info(Messages.HandleAUTEvent + StringConstants.COLON 
+                + StringConstants.SPACE + event.toString());
         String message = Plugin.getStatusLineText();
         String error = null;
         int icon = Plugin.isConnectionStatusIcon();
         switch (event.getState()) {
             case AUTEvent.AUT_STARTED: 
-                message = I18n.getString("TestExecutionContributor.AUTStartedTesting");  //$NON-NLS-1$
+                message = Messages.TestExecutionContributorAUTStartedTesting;
                 icon = Constants.AUT_UP;
                 fireAndSetAutState(true);
                 AUTModeChangedCommand.setAutMode(ChangeAUTModeMessage.TESTING);
@@ -193,22 +195,22 @@ public class TestExecutionContributor
                 fireAndSetAutState(false);
                 break;
             case AUTEvent.AUT_STOPPED:
-                message = I18n.getString("TestExecutionContributor.AUTStopped");  //$NON-NLS-1$
+                message = Messages.TestExecutionContributorAUTStopped;
                 icon = Constants.NO_SC;
                 fireAndSetAutState(false);
                 break;
             case AUTEvent.AUT_NOT_FOUND:
-                error = I18n.getString("TestExecutionContributor.AUTNotFound");  //$NON-NLS-1$
+                error = Messages.TestExecutionContributorAUTNotFound;
                 icon = Constants.NO_SC;
                 fireAndSetAutState(false);
                 break;
             case AUTEvent.AUT_MAIN_NOT_FOUND:
-                error = I18n.getString("TestExecutionContributor.mainClassNotFound");  //$NON-NLS-1$
+                error = Messages.TestExecutionContributorMainClassNotFound;
                 icon = Constants.NO_SC;
                 fireAndSetAutState(false);
                 break;  
             case AUTEvent.AUT_CLASS_VERSION_ERROR:
-                error = I18n.getString("TestExecutionContributor.ClassVersionError");  //$NON-NLS-1$
+                error = Messages.TestExecutionContributorClassVersionError;
                 icon = Constants.NO_SC;
                 fireAndSetAutState(false);
                 break;  
@@ -222,7 +224,8 @@ public class TestExecutionContributor
                 // only important for TestExecution
                 break;
             default:
-                Assert.notReached("unknown AUT state: " + String.valueOf(event.getState())); //$NON-NLS-1$
+                Assert.notReached(Messages.UnknownAUTState 
+                        + String.valueOf(event.getState()));
                 break;  
         }
         Plugin.showStatusLine(icon, message); 
@@ -230,7 +233,8 @@ public class TestExecutionContributor
             if (StringConstants.EMPTY.equals(error)) {
                 error = null;
             }
-            Utils.createMessageDialog(MessageIDs.E_AUT_START, null, error.split("\n")); //$NON-NLS-1$
+            Utils.createMessageDialog(MessageIDs.E_AUT_START, null, 
+                    error.split(StringConstants.NEWLINE));
         }
     }
     
@@ -249,7 +253,7 @@ public class TestExecutionContributor
      */
     void handleEvent(AUTServerEvent event) {
         if (log.isDebugEnabled()) {
-            log.debug("handle AUTServerEvent: " + event.toString()); //$NON-NLS-1$            
+            log.debug(Messages.HandleAUTServerEvent + event.toString());       
         }
         int icon = Plugin.isConnectionStatusIcon();
         String message = Plugin.getStatusLineText();
@@ -257,52 +261,56 @@ public class TestExecutionContributor
         switch (event.getState()) {
             case ServerEvent.CONNECTION_CLOSED:                
                 message = getConnectionMessage(message);
-                message = message + " - " + I18n.getString("TestExecutionContributor.connAUTServClosed"); //$NON-NLS-1$ //$NON-NLS-2$
+                message = message + StringConstants.SPACE
+                    + StringConstants.COLON + StringConstants.SPACE
+                    + Messages.TestExecutionContributorConnAUTServClosed;
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
             case ServerEvent.CONNECTION_GAINED:
-                message = I18n.getString("TestExecutionContributor.connectedToAUTServer"); //$NON-NLS-1$
+                message = Messages.TestExecutionContributorConnectedToAUTServer;
                 icon = Constants.NO_AUT;
                 // no changes for actions, see stateChanged(AUTEvent);
                 break;
             case AUTServerEvent.SERVER_NOT_INSTANTIATED:
-                error = I18n.getString("TestExecutionContributor.serverNotInstantiated");  //$NON-NLS-1$
+                error = Messages.TestExecutionContributorServerNotInstantiated;
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
             case AUTServerEvent.DOTNET_INSTALL_INVALID:
-                error = I18n.getString("TestExecutionContributor.DotNetInstallProblem");  //$NON-NLS-1$
+                error = Messages.TestExecutionContributorDotNetInstallProblem;
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
             case AUTServerEvent.JDK_INVALID:
-                error = I18n.getString("TestExecutionContributor.UnrecognizedJavaAgent");  //$NON-NLS-1$
+                error = Messages.TestExecutionContributorUnrecognizedJavaAgent;
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
             case AUTServerEvent.INVALID_JAVA:
-                error = I18n.getString("TestExecutionContributor.startingJavaFailed");  //$NON-NLS-1$
+                error = Messages.TestExecutionContributorStartingJavaFailed;
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
             case AUTServerEvent.COULD_NOT_ACCEPTING:
-                error = I18n.getString("TestExecutionContributor.openingConnAUTServerFailed");  //$NON-NLS-1$
+                error = Messages.
+                    TestExecutionContributorOpeningConnAUTServerFailed;
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
             case AUTServerEvent.COMMUNICATION:
-                error = I18n.getString("TestExecutionContributor.establishingCommunicationAUTServerFailed"); //$NON-NLS-1$ 
+                error = Messages.
+                    TestExecutionContributorCommunicationAUTServerFailed;
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
             case AUTServerEvent.INVALID_JAR:
-                error = I18n.getString("TestExecutionContributor.invalidJar");  //$NON-NLS-1$
+                error = Messages.TestExecutionContributorInvalidJar;
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
             case AUTServerEvent.NO_MAIN_IN_JAR:
-                error = I18n.getString("TestExecutionContributor.noMainInJar");  //$NON-NLS-1$
+                error = Messages.TestExecutionContributorNoMainInJar;
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
@@ -314,7 +322,7 @@ public class TestExecutionContributor
                 return;             
             default:
                 setAutNotRunningState();
-                log.error("unknown AUTServer state: " + event.getState()); //$NON-NLS-1$
+                log.error(Messages.UnknownAUTServerState + event.getState());
         }
         showError(icon, message, error);
     }
@@ -343,7 +351,7 @@ public class TestExecutionContributor
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 Utils.createMessageDialog(MessageIDs.E_AUT_START, null,
-                    errorHolder.split("\n")); //$NON-NLS-1$
+                    errorHolder.split(StringConstants.NEWLINE));
             }
         });
     }
@@ -355,18 +363,22 @@ public class TestExecutionContributor
     private String getConnectionMessage(String message) {
         String msg = message;
         try {
-            msg = I18n.getString("TestExecutionContributor.connectedToGuiDancerServer1",  //$NON-NLS-1$
+            msg = NLS.bind(Messages.
+                    TestExecutionContributorConnectedToGuiDancerServer1,
                 new Object[]{m_server, m_port});
-            if (I18n.getString("StartAutBP.localhost").equals(m_server.toLowerCase())) { //$NON-NLS-1$
-                msg = I18n.getString("TestExecutionContributor.connectedToGuiDancerServer2",  //$NON-NLS-1$
+            if (Messages.StartAutBPLocalhost.equals(m_server.toLowerCase())) {
+                msg = NLS.bind(Messages.
+                        TestExecutionContributorConnectedToGuiDancerServer2,
                     new Object[]{m_server, m_port});
             } else if (m_server.equals(InetAddress.getLocalHost().getHostName())
                 || m_server.equals(InetAddress.getLocalHost().getHostAddress())
                 || m_server.equals(InetAddress.getLocalHost()
                     .getCanonicalHostName())) {
                 
-                msg = I18n.getString("TestExecutionContributor.connectedToGuiDancerServer3",  //$NON-NLS-1$
-                    new Object[]{m_server, I18n.getString("StartAutBP.localhost"), m_port}); //$NON-NLS-1$
+                msg = NLS.bind(Messages.
+                        TestExecutionContributorConnectedToGuiDancerServer3,
+                    new Object[]{m_server,
+                        Messages.StartAutBPLocalhost, m_port});
             }
         } catch (UnknownHostException e) {
             // really do nothing
@@ -391,7 +403,7 @@ public class TestExecutionContributor
         String message = Plugin.getStatusLineText();
         switch (e.getState()) {
             case AUTServerEvent.TESTING_MODE:
-                message = I18n.getString("TestExecutionContributor.AUTStartedTesting");  //$NON-NLS-1$
+                message = Messages.TestExecutionContributorAUTStartedTesting;
                 icon = Constants.AUT_UP;
                 break;
             case AUTServerEvent.MAPPING_MODE:
@@ -406,21 +418,23 @@ public class TestExecutionContributor
                             .getTopLevelCategoryName(strCat);
                     }
                 } else {
-                    strCat = I18n.getString("TestExecutionContributor.CatUnassigned"); //$NON-NLS-1$
+                    strCat = Messages.TestExecutionContributorCatUnassigned;
                 }
                 
-                message = I18n.getString("TestExecutionContributor.AUTStartedMapping",  //$NON-NLS-1$
+                message = NLS.bind(Messages.
+                        TestExecutionContributorAUTStartedMapping,
                     new Object[] {strCat});  
                 icon = Constants.MAPPING;
                 break;
             case AUTServerEvent.RECORD_MODE:
                 //message = I18n.getString("TestExecutionContributor.AUTStartedRecording");  //$NON-NLS-1$
-                message = I18n.getString("TestExecutionContributor.AUTStartedRecording"); //$NON-NLS-1$
+                message = Messages.TestExecutionContributorAUTStartedRecording;
                 icon = Constants.RECORDING;
                 break;
             case AUTServerEvent.CHECK_MODE:
                 //message = I18n.getString("TestExecutionContributor.AUTStartedRecordingCheckMode");  //$NON-NLS-1$
-                message = I18n.getString("TestExecutionContributor.AUTStartedRecordingCheckMode"); //$NON-NLS-1$
+                message = Messages.
+                    TestExecutionContributorAUTStartedRecordingCheckMode;
                 icon = Constants.CHECKING;
                 break;
             default:
@@ -435,7 +449,8 @@ public class TestExecutionContributor
      */
     void handleEvent(AutStarterEvent event) {
         if (log.isDebugEnabled()) {
-            log.debug("handle AUT Agent Event: " + event.toString()); //$NON-NLS-1$
+            log.debug(Messages.HandleAUTAgentEvent + StringConstants.COLON
+                    + StringConstants.SPACE + event.toString());
         } 
         String statusLineMessage = Plugin.getStatusLineText();
         Integer messageId = MessageIDs.E_SERVER_ERROR;
@@ -443,8 +458,7 @@ public class TestExecutionContributor
         int icon = Plugin.isConnectionStatusIcon();
         switch (event.getState()) {
             case ServerEvent.CONNECTION_CLOSED:
-                statusLineMessage = I18n.getString(
-                        "StatusLine.notConnected");  //$NON-NLS-1$
+                statusLineMessage = Messages.StatusLine_NotConnected;
                 icon = Constants.NO_SERVER;
                 DataEventDispatcher.getInstance().fireServerConnectionChanged(
                         ServerState.Disconnected);
@@ -457,20 +471,22 @@ public class TestExecutionContributor
                 // no changing for the actions, see AUTServerEvent
                 break;
             case AutStarterEvent.SERVER_CANNOT_CONNECTED:
-                error = I18n.getString("InfoDetail.connGuiDancerServerFailed"); //$NON-NLS-1$
-                statusLineMessage = I18n.getString("StatusLine.notConnected");  //$NON-NLS-1$
+                error = Messages.InfoDetailConnGuiDancerServerFailed;
+                statusLineMessage = Messages.StatusLine_NotConnected;
                 DataEventDispatcher.getInstance().fireServerConnectionChanged(
                         ServerState.Disconnected);
                 messageId = MessageIDs.I_SERVER_CANNOT_CONNECTED;
                 break;
             case AutStarterEvent.VERSION_ERROR:
-                error = I18n.getString("ErrorMessage.VERSION_ERROR"); //$NON-NLS-1$
-                statusLineMessage = I18n.getString("StatusLine.notConnected"); //$NON-NLS-1$
+                error = Messages.ErrorMessageVERSION_ERROR;
+                statusLineMessage = Messages.StatusLine_NotConnected;
                 DataEventDispatcher.getInstance().fireServerConnectionChanged(
                         ServerState.Disconnected);
                 break;
             default:
-                log.error("unknown AUT Agent state: " + String.valueOf(event.getState())); //$NON-NLS-1$
+                log.error(Messages.UnknownAUTAgentState + StringConstants.COLON
+                        + StringConstants.SPACE 
+                        + String.valueOf(event.getState()));
                 break;
         }
         Plugin.showStatusLine(icon, statusLineMessage);
@@ -480,7 +496,8 @@ public class TestExecutionContributor
                 error = null;
             }
             Utils.createMessageDialog(messageId, 
-                    new String [] {m_server, m_port}, error.split("\n")); //$NON-NLS-1$
+                    new String [] {m_server, m_port}, 
+                        error.split(StringConstants.NEWLINE));
         }       
     }
 
@@ -498,26 +515,26 @@ public class TestExecutionContributor
         switch (event.getState()) {
             case TestExecutionEvent.TEST_EXEC_STOP:
                 icon = Constants.AUT_UP;
-                message = I18n.getString("TestExecutionContributor.SuiteStop"); //$NON-NLS-1$
+                message = Messages.TestExecutionContributorSuiteStop;
                 setAllTestSuitesStopped();
                 break;
             case TestExecutionEvent.TEST_EXEC_FAILED:
                 error = getTestSuiteErrorText(event);
-                message = I18n.getString("TestExecutionContributor.SuiteFailed"); //$NON-NLS-1$
+                message = Messages.TestExecutionContributorSuiteFailed;
                 setAllTestSuitesStopped();
                 break;
             case TestExecutionEvent.TEST_EXEC_START:
                 setClientMinimized(true);
                 icon = Constants.AUT_UP;
-                message = I18n.getString("TestExecutionContributor.SuiteRun");  //$NON-NLS-1$
+                message = Messages.TestExecutionContributorSuiteRun;
                 showTestResultTreeView();
                 break;
             case TestExecutionEvent.TEST_EXEC_RESULT_TREE_READY:
-                message = I18n.getString("TestExecutionContributor.SuiteRun"); //$NON-NLS-1$
+                message = Messages.TestExecutionContributorSuiteRun;
                 TestExecution.getInstance().setStepSpeed(getStepSpeed());
                 break;
             case TestExecutionEvent.TEST_EXEC_FINISHED:
-                message = I18n.getString("TestExecutionContributor.SuiteFinished"); //$NON-NLS-1$
+                message = Messages.TestExecutionContributorSuiteFinished;
                 icon = Constants.AUT_UP;
                 setAllTestSuitesStopped();
                 break;
@@ -526,33 +543,34 @@ public class TestExecutionContributor
                 final String componentName = cap.getComponentName();
                 testCaseName = cap.getParentNode().getName();
                 capName = cap.getName();
-                error = I18n.getString("TestExecutionContributor.CompFailure", new Object[]{componentName, testCaseName, capName}); //$NON-NLS-1$
-                message = I18n.getString("TestExecutionContributor.SuiteFailed"); //$NON-NLS-1$
+                error = NLS.bind(Messages.TestExecutionContributorCompFailure,
+                        new Object[]{componentName, testCaseName, capName});
+                message = Messages.TestExecutionContributorSuiteFailed;
                 setAllTestSuitesStopped();
                 break;
             case TestExecutionEvent.TEST_EXEC_PAUSED:
                 setClientMinimized(false);
                 icon = Constants.PAUSED;
-                message = I18n.getString("TestExecutionContributor.SuitePaused");  //$NON-NLS-1$
+                message = Messages.TestExecutionContributorSuitePaused;
                 break;
             case TestExecutionEvent.TEST_RUN_INCOMPLETE_TESTDATA_ERROR:
                 setClientMinimized(false);
                 error = getIncompleteTestRunMessage(TestExecutionEvent
                     .TEST_RUN_INCOMPLETE_TESTDATA_ERROR);
-                message = I18n.getString("TestExecutionContributor.SuiteFailed"); //$NON-NLS-1$
+                message = Messages.TestExecutionContributorSuiteFailed;
                 break;
             case TestExecutionEvent.TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR:
                 setClientMinimized(false);
                 error = getIncompleteTestRunMessage(TestExecutionEvent
                     .TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR);
-                message = I18n.getString("TestExecutionContributor.SuiteFailed"); //$NON-NLS-1$
+                message = Messages.TestExecutionContributorSuiteFailed;
                 break;
             case TestExecutionEvent.TEST_EXEC_RESTART:
                 icon = Constants.AUT_UP;
-                message = I18n.getString("TestExecutionContributor.SuiteRun");  //$NON-NLS-1$
+                message = Messages.TestExecutionContributorSuiteRun;
                 break;
             default:
-                log.error("unknown TestExecutionEvent"); //$NON-NLS-1$
+                log.error(Messages.UnknownTestExecutionEvent);
                 setAllTestSuitesStopped();
         }
         showErrorAndStatus(event, message, error, icon);
@@ -572,7 +590,7 @@ public class TestExecutionContributor
         DataEventDispatcher.getInstance().fireTestSuiteStateChanged(event);
         Plugin.showStatusLine(icon, message);
         if (error != null) {
-            String[] errorDetail = error.split("\n"); //$NON-NLS-1$
+            String[] errorDetail = error.split(StringConstants.NEWLINE);
             if (StringConstants.EMPTY.equals(error)) {
                 errorDetail = null;
             }
@@ -593,13 +611,15 @@ public class TestExecutionContributor
         String capName = cap.getName();
         switch(testExecEventID) {
             case TestExecutionEvent.TEST_RUN_INCOMPLETE_TESTDATA_ERROR:
-                return I18n.getString("TestExecutionContributor.TEST_RUN_INCOMPLETE_TESTDATA_ERROR", //$NON-NLS-1$
+                return NLS.bind(Messages.
+                    TestExecutionContributorTEST_RUN_INCOMPLETE_TESTDATA_ERROR,
                     new Object[]{testCaseName, capName});
             case TestExecutionEvent.TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR:
-                return I18n.getString("TestExecutionContributor.TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR", //$NON-NLS-1$
+                return NLS.bind(Messages.
+                        TestExecutionContributorRunIncompleteOMError,
                     new Object[]{testCaseName, capName});
             default:
-                log.error("unknown TestExecutionEvent"); //$NON-NLS-1$
+                log.error(Messages.UnknownTestExecutionEvent);
                 setAllTestSuitesStopped();  
         }
         return StringConstants.EMPTY;
@@ -648,7 +668,7 @@ public class TestExecutionContributor
         if (event.getException() != null) {
             return event.getException().getMessage();    
         }
-        return I18n.getString("TestExecutionContributor.SuiteFailed"); //$NON-NLS-1$
+        return Messages.TestExecutionContributorSuiteFailed;
     }
 
     /**
@@ -662,9 +682,10 @@ public class TestExecutionContributor
                     try {
                         Plugin.getActivePage().showView("org.eclipse.jubula.client.ui.views.TestResultTreeView"); //$NON-NLS-1$
                     } catch (PartInitException pie) {
-                        log.error("TestResultTreeView could not be initialised", pie); //$NON-NLS-1$
+                        log.error(Messages
+                            .TestResultTreeViewCouldNotInitialised, pie);
                     } catch (NullPointerException npe) {
-                        log.error("Window is null", npe); //$NON-NLS-1$
+                        log.error(Messages.WindowIsNull, npe);
                     }
                 }
             });
@@ -685,7 +706,7 @@ public class TestExecutionContributor
      */
     public void startAUTaction(final IAUTMainPO aut, final IAUTConfigPO conf) 
         throws ToolkitPluginException {
-        Validate.notNull(conf, "Configuration must not be null."); //$NON-NLS-1$
+        Validate.notNull(conf, Messages.ConfigurationMustNotNull);
         Job job = new StartAutJob(aut, conf);
         JobUtils.executeJob(job, null);
     }

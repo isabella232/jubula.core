@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.bindings.keys.KeySequenceText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.widgets.ModifiableListObservable.IContentAddedListener;
 import org.eclipse.jubula.client.ui.widgets.ModifiableListObservable.IContentChangedListener;
 import org.eclipse.jubula.client.ui.widgets.ModifiableListObservable.IContentRemovedListener;
@@ -106,7 +107,8 @@ public class ModifiableTriggerList extends Composite implements
         boolean emptyListAllowed) {
         super(parent, style);
         if (!emptyListAllowed && values != null && values.isEmpty()) {
-            String msg = "Values for list must not be empty."; //$NON-NLS-1$
+            String msg = Messages.ValuesForListMustNotBeEmpty 
+                + StringConstants.DOT;
             log.fatal(msg);
             throw new IllegalArgumentException(msg); 
         }
@@ -657,7 +659,7 @@ public class ModifiableTriggerList extends Composite implements
         m_textTriggerSequenceManager.setKeyStrokeLimit(1); 
         
         m_addButton = new Button(this, SWT.PUSH);
-        m_addButton.setText(I18n.getString("ModifiableList.Add")); //$NON-NLS-1$
+        m_addButton.setText(Messages.ModifiableListAdd);
         FormData addButtonData = new FormData();
         m_addButton.setLayoutData(addButtonData);
         
@@ -685,7 +687,7 @@ public class ModifiableTriggerList extends Composite implements
     private void createButtonGroup() {
         
         m_changeButton = new Button(this, SWT.NONE);
-        m_changeButton.setText(I18n.getString("ModifiableList.Edit")); //$NON-NLS-1$
+        m_changeButton.setText(Messages.ModifiableListEdit);
         FormData changeBtData = new FormData();
         changeBtData.left = new FormAttachment(0, 0);
         changeBtData.top = new FormAttachment(100, -30);
@@ -693,7 +695,7 @@ public class ModifiableTriggerList extends Composite implements
         m_changeButton.setLayoutData(changeBtData);
         
         m_removeButton = new Button(this, SWT.NONE);
-        m_removeButton.setText(I18n.getString("ModifiableList.Remove"));   //$NON-NLS-1$
+        m_removeButton.setText(Messages.ModifiableListRemove);
         FormData removeBtData = new FormData();
         removeBtData.left = new FormAttachment(51, 0);
         removeBtData.top = new FormAttachment(m_changeButton, 0, SWT.TOP);

@@ -79,12 +79,12 @@ import org.eclipse.jubula.client.ui.controllers.propertysources.IParameterProper
 import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.contextprovider.JBContextProvider;
 import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.utils.generator.ActionInfo;
 import org.eclipse.jubula.tools.utils.generator.CompSystemProcessor;
 import org.eclipse.jubula.tools.utils.generator.ComponentInfo;
@@ -417,7 +417,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
         TreeViewerColumn propertyNameColumn = 
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
         propertyNameColumn.getColumn().setText(
-                I18n.getString("GuiDancerPropertiesView.Property")); //$NON-NLS-1$
+                Messages.GuiDancerPropertiesViewProperty);
         propertyNameColumn.getColumn().setWidth(175);
         propertyNameColumn.setLabelProvider(new PropertyNameLabelProvider());
         
@@ -425,7 +425,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
         TreeViewerColumn propertyValueColumn = 
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
         propertyValueColumn.getColumn().setText(
-                I18n.getString("GuiDancerPropertiesView.Value")); //$NON-NLS-1$
+                Messages.GuiDancerPropertiesViewValue);
         propertyValueColumn.getColumn().setWidth(300);
         propertyValueColumn.setLabelProvider(new PropertyValueLabelProvider());
         propertyValueColumn.setEditingSupport(
@@ -637,7 +637,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
                 }
             }
         } catch (Throwable t) {
-            LOG.info("Error in workaround for springy selection.", t); //$NON-NLS-1$
+            LOG.info(Messages.ErrorInWorkaroundForSpringySelection, t);
         }
     }
     

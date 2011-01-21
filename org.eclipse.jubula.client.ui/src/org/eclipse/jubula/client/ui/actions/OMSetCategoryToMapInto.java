@@ -21,8 +21,9 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.dnd.objectmapping.OMEditorDndSupport;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.labelprovider.OMEditorTreeLabelProvider;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
 
@@ -104,9 +105,10 @@ public class OMSetCategoryToMapInto extends AbstractAction {
                             .getTopLevelCategoryName(strCat);
                     }
                 } else {
-                    strCat = I18n.getString("TestExecutionContributor.CatUnassigned"); //$NON-NLS-1$
+                    strCat = Messages.TestExecutionContributorCatUnassigned;
                 }
-                String message = I18n.getString("TestExecutionContributor.AUTStartedMapping",  //$NON-NLS-1$
+                String message = NLS.bind(
+                        Messages.TestExecutionContributorAUTStartedMapping,
                     new Object[] {strCat}); 
                 Plugin.showStatusLine(Constants.MAPPING, message);
             }

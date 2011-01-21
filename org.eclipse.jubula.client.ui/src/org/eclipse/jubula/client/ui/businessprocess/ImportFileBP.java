@@ -26,6 +26,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.archive.errorhandling.IProjectNameConflictResolver;
+import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
@@ -43,8 +44,8 @@ import org.eclipse.jubula.client.ui.dialogs.ImportProjectDialog;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.osgi.service.datalocation.Location;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
@@ -192,7 +193,7 @@ public class ImportFileBP implements IProjectNameConflictResolver {
      */
     private void importProject(final int elements, final String [] fileNames, 
             final boolean openProject) {
-        Plugin.startLongRunning(I18n.getString("ImportFileBP.waitWhileImporting")); //$NON-NLS-1$
+        Plugin.startLongRunning(Messages.ImportFileBPWaitWhileImporting);
         try {
             if (fileNames == null) {
                 return;
@@ -236,9 +237,11 @@ public class ImportFileBP implements IProjectNameConflictResolver {
                                     projectToOpen.getMinorProjectVersion());
                         }
                     });
+                    
                 } catch (InvocationTargetException ite) {
                     // Exception occurred during operation
-                    log.error("Error occurred during import.", ite.getCause()); //$NON-NLS-1$
+                    log.error(org.eclipse.jubula.client.ui.i18n.Messages.
+                            ErrorOccurredDuringImport, ite.getCause());
                     openOp.handleOperationException();
                 } catch (InterruptedException e) {
                     // Operation was canceled.
@@ -247,7 +250,8 @@ public class ImportFileBP implements IProjectNameConflictResolver {
             }
         } catch (InvocationTargetException ite) {
             // Exception occurred during operation
-            log.error("An error occurred during import.", ite.getCause()); //$NON-NLS-1$
+            log.error(org.eclipse.jubula.client.ui.i18n.Messages.
+                    ErrorOccurredDuringImport, ite.getCause());
         } catch (InterruptedException e) {
             // Operation was canceled.
             showCancelImport(Plugin.getDefault());
@@ -271,7 +275,9 @@ public class ImportFileBP implements IProjectNameConflictResolver {
                     finishButton.setText(IDialogConstants.OK_LABEL);
                 }
             };
-        importProjectWizard.setWindowTitle(I18n.getString("ImportProjectDialog.title")); //$NON-NLS-1$
+        importProjectWizard.setWindowTitle(
+                org.eclipse.jubula.client.ui.i18n.
+                Messages.ImportProjectDialogTitle);
         dialog.setHelpAvailable(true);
         
         int val = dialog.open();
@@ -435,11 +441,15 @@ public class ImportFileBP implements IProjectNameConflictResolver {
         ComboBoxDialog dialog = new ComboBoxDialog(
                 Plugin.getShell(), 
                 new ArrayList<String>(availableNames), 
-                I18n.getString("ImportFileComboAction.ProjMessage"), //$NON-NLS-1$
-                I18n.getString("ImportFileAction.ProjTitle"), //$NON-NLS-1$
+                org.eclipse.jubula.client.ui.i18n.Messages.
+                ImportFileComboActionProjMessage,
+                org.eclipse.jubula.client.ui.i18n.Messages.
+                ImportFileActionProjTitle,
                 Plugin.getImage(IconConstants.IMPORT_PROJECT_STRING), 
-                I18n.getString("ImportFileAction.ProjShell"), //$NON-NLS-1$
-                I18n.getString("ImportFileAction.ProjLabel")); //$NON-NLS-1$
+                org.eclipse.jubula.client.ui.i18n.Messages.
+                ImportFileActionProjShell,
+                org.eclipse.jubula.client.ui.i18n.Messages.
+                ImportFileActionProjLabel);
             
         dialog.setHelpAvailable(true);
         dialog.create();
@@ -476,9 +486,10 @@ public class ImportFileBP implements IProjectNameConflictResolver {
      */
     private void showCancelImport(IProgressConsole console) {
         console.writeErrorLine(
-            I18n.getString(
-                "ImportFileAction.Error.ImportFailed",  //$NON-NLS-1$
-                new Object [] {"Import operation cancelled by user"})); //$NON-NLS-1$
+            NLS.bind(org.eclipse.jubula.client.ui.i18n.Messages.
+                    ImportFileActionErrorImportFailed,
+                new Object [] {org.eclipse.jubula.client.ui.i18n.Messages.
+                        ImportOperationCancelledByUser}));
     }
 
 }

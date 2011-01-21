@@ -13,11 +13,12 @@ package org.eclipse.jubula.client.ui.search.page;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData;
 import org.eclipse.jubula.client.ui.search.data.TestDataSearchData;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData.SearchableType;
 import org.eclipse.jubula.client.ui.search.query.TestDataSearchQuery;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.ISearchQuery;
 
 
@@ -41,10 +42,10 @@ public class TestDataSearchPage extends AbstractSearchPage {
         boolean caseSensitive = getSearchData().isCaseSensitive();
         boolean regEx = getSearchData().isUseRegex();
         
-        TestDataSearchData searchData = new TestDataSearchData(I18n.getString(
-                "TestDataSearchPage.SearchName", //$NON-NLS-1$
-                new Object[] { searchString }), searchString, caseSensitive,
-                regEx, typesToSearchIn);
+        TestDataSearchData searchData = new TestDataSearchData(
+                NLS.bind(Messages.TestDataSearchPageSearchName,
+                    new Object[] { searchString }), searchString, caseSensitive,
+                    regEx, typesToSearchIn);
 
         return new TestDataSearchQuery(searchData);
     }

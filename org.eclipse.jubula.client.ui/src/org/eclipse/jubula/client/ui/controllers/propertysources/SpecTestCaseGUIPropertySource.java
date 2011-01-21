@@ -41,6 +41,7 @@ import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ContentAssis
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.ParameterValueLabelProvider;
@@ -68,34 +69,44 @@ public class SpecTestCaseGUIPropertySource
     extends AbstractGuiNodePropertySource {
     
     /** Constant for the String TestCase Name */
-    public static final String P_ELEMENT_DISPLAY_NAME = I18n.getString("SpecTestCaseGUIPropertySource.TestCaseName");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_NAME =
+        Messages.SpecTestCaseGUIPropertySourceTestCaseName;
 
     /** Constant for the String Locked Parameter */
-    public static final String P_ELEMENT_DISPLAY_PARAM_LOCKED = I18n.getString("SpecTestCaseGUIPropertySource.LockedParameters"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_PARAM_LOCKED = 
+        Messages.SpecTestCaseGUIPropertySourceLockedParameters;
 
     /** Constant for the String Excel Data File */
-    public static final String P_ELEMENT_DISPLAY_DATEFILE = I18n.getString("SpecTestCaseGUIPropertySource.TestCaseFileName");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_DATEFILE = 
+        Messages.SpecTestCaseGUIPropertySourceTestCaseFileName;
 
     /** Constant for name of referenced Test Data Cube */
-    public static final String P_ELEMENT_DISPLAY_REFDATA = I18n.getString("SpecTestCaseGUIPropertySource.TestCaseReferencedTestData");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_REFDATA = 
+        Messages.SpecTestCaseGUIPropertySourceTestCaseReferencedTestData;
 
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERNAME = I18n.getString("SpecTestCaseGUIPropertySource.ParameterName");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_PARAMETERNAME = 
+        Messages.SpecTestCaseGUIPropertySourceParameterName;
     
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_DATASOURCE = I18n.getString("SpecTestCaseGUIPropertySource.DataSource");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_DATASOURCE = 
+        Messages.SpecTestCaseGUIPropertySourceDataSource;
     
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERVALUE = I18n.getString("SpecTestCaseGUIPropertySource.ParameterValue");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_PARAMETERVALUE = 
+        Messages.SpecTestCaseGUIPropertySourceParameterValue;
     
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERTYPE = I18n.getString("SpecTestCaseGUIPropertySource.ParameterType");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_PARAMETERTYPE = 
+        Messages.SpecTestCaseGUIPropertySourceParameterType;
     
     /** Constant for Category Parameter */
-    public static final String P_PARAMETER_CAT = I18n.getString("SpecTestCaseGUIPropertySource.parameter");  //$NON-NLS-1$
+    public static final String P_PARAMETER_CAT = 
+        Messages.SpecTestCaseGUIPropertySourceParameter;
    
     /** Constant for Category Parameter */
-    public static final String P_TESTDATA_CAT = I18n.getString("SpecTestCaseGUIPropertySource.testdataCategory");  //$NON-NLS-1$
+    public static final String P_TESTDATA_CAT = 
+        Messages.SpecTestCaseGUIPropertySourceTestdataCategory;
     
     /** the logger */
     private static final Logger LOG = 
@@ -503,7 +514,8 @@ public class SpecTestCaseGUIPropertySource
                     AbstractJBEditor activeEditor = 
                         Plugin.getDefault().getActiveGDEditor();
                     if (activeEditor == null) {
-                        LOG.error("Active GUIdancer editor reference should not be null from Properties View."); //$NON-NLS-1$
+                        LOG.error(Messages
+                                .ActiveGUIdancerEditorReferenceNotNull);
                         return false;
                     }
 
@@ -513,8 +525,15 @@ public class SpecTestCaseGUIPropertySource
                             GeneralStorage.getInstance().getProject());
                     if (dataCube == null) {
                         if (LOG.isInfoEnabled()) {
-                            LOG.info("Could not find Test Data named '"  //$NON-NLS-1$
-                                    + valueString + "' in current project."); //$NON-NLS-1$
+                            StringBuilder msg = new StringBuilder();
+                            msg.append(Messages.CouldNotFindTestDataNamed)
+                                .append(StringConstants.SPACE)
+                                .append(StringConstants.APOSTROPHE)
+                                .append(valueString)
+                                .append(StringConstants.APOSTROPHE)
+                                .append(StringConstants.SPACE)
+                                .append(Messages.InCurrentProject);
+                            LOG.info(msg.toString());
                         }
                         return false;
                     }
@@ -717,8 +736,8 @@ public class SpecTestCaseGUIPropertySource
         public Object getProperty() {
             final ISpecTestCasePO specTc = (ISpecTestCasePO)getPoNode();
             final boolean isInterfaceLocked = specTc.isInterfaceLocked();
-            return isInterfaceLocked ? I18n.getString("Utils.Yes")  //$NON-NLS-1$
-                    : I18n.getString("Utils.No"); //$NON-NLS-1$
+            return isInterfaceLocked ? Messages.UtilsYes
+                    : Messages.UtilsYes;
         }
 
         /**

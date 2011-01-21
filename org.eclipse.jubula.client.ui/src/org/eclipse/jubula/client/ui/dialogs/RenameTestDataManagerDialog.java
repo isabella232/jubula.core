@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.dialogs;
 import java.util.Set;
 
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -40,10 +40,10 @@ public class RenameTestDataManagerDialog extends EnterTestDataManagerDialog {
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
-        setTitle(I18n.getString("RenameTestDataCubeDialog.Title")); //$NON-NLS-1$
+        setTitle(Messages.RenameTestDataCubeDialogTitle);
         setTitleImage(IconConstants.NEW_TESTDATAMANAGER_DIALOG_IMAGE);
-        setMessage(I18n.getString("RenameTestDataCubeDialog.Message")); //$NON-NLS-1$
-        getShell().setText(I18n.getString("RenameTestDataCubeDialog.Title")); //$NON-NLS-1$
+        setMessage(Messages.RenameTestDataCubeDialogMessage);
+        getShell().setText(Messages.RenameTestDataCubeDialogTitle);
         return super.createDialogArea(parent);
     }
 }

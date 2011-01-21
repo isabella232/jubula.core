@@ -13,8 +13,9 @@ package org.eclipse.jubula.client.ui.propertytester;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -48,16 +49,14 @@ public class GuiNodePropertyTester extends PropertyTester {
                 return isEditable == expectedBoolean;
             }
 
-            LOG.warn(I18n.getString(
-                    "PropertyTester.PropertyNotSupported",  //$NON-NLS-1$
+            LOG.warn(NLS.bind(Messages.PropertyTesterPropertyNotSupported,
                     new String [] {property}));
             return false;
         }
 
         String receiverClass = 
             receiver != null ? receiver.getClass().getName() : "null"; //$NON-NLS-1$
-        LOG.warn(I18n.getString(
-                "PropertyTester.TypeNotSupported",  //$NON-NLS-1$
+        LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
                 new String [] {receiverClass}));
         return false;
     }

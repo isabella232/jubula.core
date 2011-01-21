@@ -51,6 +51,7 @@ import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.KeyConverter;
@@ -60,7 +61,6 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -263,8 +263,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
      */
     private TestCaseEditor askForNewTC() {
         TestCaseEditor editor = null;
-        String standartName = I18n
-                .getString("RecordTestCaseAction.StandardName"); //$NON-NLS-1$
+        String standartName = Messages.RecordTestCaseActionStandardName;
         int index = 1;
         String newName = standartName + index;
         final Set<String> usedNames = new HashSet<String>();
@@ -384,14 +383,14 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
      */
     private InputDialog createDialog(String newName,
             final Set<String> usedNames) {
-        InputDialog dialog = new InputDialog(Plugin.getShell(), I18n
-                .getString("RecordTestCaseAction.TCTitle"), //$NON-NLS-1$
-                newName, I18n.getString("RecordTestCaseAction.TCMessage"), //$NON-NLS-1$
-                I18n.getString("RecordTestCaseAction.TCLabel"), //$NON-NLS-1$
-                I18n.getString("RenameAction.TCError"), //$NON-NLS-1$
-                I18n.getString("RecordTestCaseAction.doubleTCName"), //$NON-NLS-1$
-                IconConstants.OBSERVE_TC_DIALOG_STRING, I18n
-                        .getString("RecordTestCaseAction.TCShell"), //$NON-NLS-1$
+        InputDialog dialog = new InputDialog(Plugin.getShell(), 
+                Messages.RecordTestCaseActionTCTitle,
+                newName, Messages.RecordTestCaseActionTCMessage,
+                Messages.RecordTestCaseActionTCLabel,
+                Messages.RenameActionTCError,
+                Messages.RecordTestCaseActionDoubleTCName,
+                IconConstants.OBSERVE_TC_DIALOG_STRING, 
+                Messages.RecordTestCaseActionTCShell,
                 false) {
             protected boolean isInputAllowed() {
                 if (usedNames.contains((getInputFieldText()))) {

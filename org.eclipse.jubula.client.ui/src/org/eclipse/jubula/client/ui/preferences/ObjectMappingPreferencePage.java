@@ -17,9 +17,9 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.InputCodeHelper;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.constants.InputCodeHelper.UserInput;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.preferences.utils.InputComboUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlAdapter;
@@ -136,8 +136,8 @@ public class ObjectMappingPreferencePage extends PreferencePage
         compositeGridData(composite, NUM_COLUMNS);
         // create Widget
         m_showContainerCount = new Button(composite, SWT.CHECK);
-        m_showContainerCount.setText(I18n.
-            getString("ObjectMappingPreferencePage.showContainerCount"));  //$NON-NLS-1$
+        m_showContainerCount.setText(
+                Messages.ObjectMappingPreferencePageShowContainerCount);
         GridData data2 = new GridData();
         data2.horizontalSpan = 4;
         m_showContainerCount.setLayoutData(data2);
@@ -153,8 +153,7 @@ public class ObjectMappingPreferencePage extends PreferencePage
         compositeGridData(composite, NUM_COLUMNS);
         
         Label label = new Label(composite, SWT.NONE);
-        label.setText(I18n.getString(
-                "ObjectMappingPreferencePage.collectShortcut")); //$NON-NLS-1$
+        label.setText(Messages.ObjectMappingPreferencePageCollectShortcut);
         label.setFont(Layout.BOLD_TAHOMA);
         GridData data2 = new GridData();
         data2.horizontalSpan = 4;
@@ -175,7 +174,7 @@ public class ObjectMappingPreferencePage extends PreferencePage
      * {@inheritDoc}
      */
     public void init(IWorkbench workbench) {
-        setDescription(I18n.getString("ObjectMappingPreferencePage.description")); //$NON-NLS-1$
+        setDescription(Messages.ObjectMappingPreferencePageDescription);
     }
 
     /**

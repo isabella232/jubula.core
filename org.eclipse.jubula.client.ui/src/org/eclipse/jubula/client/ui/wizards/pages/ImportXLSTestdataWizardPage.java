@@ -51,11 +51,12 @@ import org.eclipse.jubula.client.ui.dialogs.AbstractEditParametersDialog.Paramet
 import org.eclipse.jubula.client.ui.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.handlers.AbstractEditParametersHandler;
 import org.eclipse.jubula.client.ui.handlers.AddNewTestDataManagerHandler;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.IncompleteDataException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.events.FocusEvent;
@@ -129,7 +130,8 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
         public void run(IProgressMonitor monitor) {
             Plugin p = Plugin.getDefault();
             int numerOfFilesToImport = m_fileSystemObjects.size();
-            String operationDescription = I18n.getString("ImportXLSTestDataWizard.importOperationName"); //$NON-NLS-1$
+            String operationDescription = 
+                Messages.ImportXLSTestDataWizardImportOperationName;
             monitor.beginTask(operationDescription, numerOfFilesToImport);
             p.writeLine(operationDescription);
             boolean merge = m_selection != null && m_selection.size() == 1
@@ -158,7 +160,8 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                                 fireDataChangedEvent(tdc, 
                                         DataState.StructureModified,
                                         UpdateState.onlyInEditor);
-                                p.writeLine(I18n.getString("ImportXLSTestDataWizard.successfullMerge", //$NON-NLS-1$
+                                p.writeLine(NLS.bind(Messages
+                                        .ImportXLSTestDataSuccessfullMerge,
                                         new Object[] { absoluteFilePath, 
                                             tdc.getName() }));
                             }
@@ -174,18 +177,19 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                                 name = name.replaceAll(
                                         "(_[0-9]+)+$", "_" + counter++); //$NON-NLS-1$ //$NON-NLS-2$
                             }
-
                             ITestDataCubePO testdata = PoMaker
                                     .createTestDataCubePO(name);
                             fillCentralTestDataSet(f, ll, testdata);
                             cont.addTestDataCube(testdata);
-                            p.writeLine(I18n.getString("ImportXLSTestDataWizard.successfullImport", //$NON-NLS-1$
+                            p.writeLine(NLS.bind(Messages
+                                    .ImportXLSTestDataWizardSuccessfullImport,
                                     new Object[] { absoluteFilePath }));
                             fireDataChangedEvent(testdata, DataState.Added,
                                     UpdateState.onlyInEditor);
                         }
                     } catch (IncompleteDataException e) {
-                        p.writeErrorLine(absoluteFilePath + "\n" //$NON-NLS-1$
+                        p.writeErrorLine(absoluteFilePath 
+                                + StringConstants.NEWLINE
                                 + e.getLocalizedMessage());
                     } catch (JBException e) {
                         p.writeErrorLine(e.getLocalizedMessage());
@@ -194,7 +198,8 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                     }
                 }
             }
-            p.writeLine(I18n.getString("ImportXLSTestDataWizard.importOperationFinished") + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+            p.writeLine(Messages.ImportXLSTestDataWizardImportOperationFinished 
+                    + StringConstants.NEWLINE);
             monitor.done();
         }
 

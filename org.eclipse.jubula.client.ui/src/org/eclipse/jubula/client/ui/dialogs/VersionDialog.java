@@ -14,11 +14,12 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.CheckedIntText;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -238,7 +239,7 @@ public class VersionDialog extends TitleAreaDialog {
         FileDialog dialog = new FileDialog(Plugin.getShell(),
             SWT.APPLICATION_MODAL);
         dialog.setFilterPath(Utils.getLastDirPath());
-        dialog.setText(I18n.getString("InputDialog.selectJRE"));  //$NON-NLS-1$
+        dialog.setText(Messages.InputDialogSelectJRE);
         String path = dialog.open();
         if (path != null) {
             Utils.storeLastDirPath(dialog.getFilterPath());
@@ -271,8 +272,7 @@ public class VersionDialog extends TitleAreaDialog {
             || m_minorVersionField.getText().trim().length() == 0) {
             
             getButton(IDialogConstants.OK_ID).setEnabled(false);
-            setErrorMessage(
-                I18n.getString("VersionDialog.emptyField", true)); //$NON-NLS-1$
+            setErrorMessage(NLS.bind(Messages.VersionDialogEmptyField, true));
             isCorrect = false;
         } else {
             

@@ -19,7 +19,7 @@ import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.databinding.validators.TestDataManagerNameValidator;
 import org.eclipse.jubula.client.ui.widgets.JBText;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -113,8 +113,8 @@ public abstract class EnterTestDataManagerDialog
      * @return the created text field.
      */
     private JBText createTestDataManagerName(Composite area) {
-        new Label(area, SWT.NONE).setText(I18n.getString(
-                "EnterTestDataCubeDialog.testDataCubeNameLabel")); //$NON-NLS-1$
+        new Label(area, SWT.NONE).setText(
+                Messages.EnterTestDataCubeDialogTestDataCubeNameLabel);
         JBText testDataCubeNameField = 
             new JBText(area, SWT.SINGLE | SWT.BORDER);
         return testDataCubeNameField;

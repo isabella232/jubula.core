@@ -33,10 +33,10 @@ import org.eclipse.jubula.client.core.utils.ProgressEventDispatcher;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.dialogs.DBLoginDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.JBFatalException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.swt.widgets.Display;
@@ -192,15 +192,15 @@ public class ProgressController implements IProgressListener,
                         if (hibernateInit) {
                             Utils.clearClient();
                             LockManager.instance();
-                            Plugin.getDefault().writeLineToConsole(
-                                    I18n.getString(
-                                    "SelectDatabaseAction.Info.ConnectSuccessful"), true); //$NON-NLS-1$
+                            Plugin.getDefault().writeLineToConsole(Messages.
+                                SelectDatabaseActionInfoConnectSuccessful,
+                                    true);
                             Plugin.stopLongRunning();
                         } else {
                             Utils.clearClientUI();
-                            Plugin.getDefault().writeLineToConsole(
-                                    I18n.getString(
-                                    "SelectDatabaseAction.Info.ConnectFailed"), true); //$NON-NLS-1$
+                            Plugin.getDefault().writeLineToConsole(Messages.
+                                    SelectDatabaseActionInfoConnectFailed
+                                    , true);
                             Plugin.stopLongRunning();
                         }
                     }
@@ -233,7 +233,7 @@ public class ProgressController implements IProgressListener,
          */
         public void run(IProgressMonitor monitor) {
 
-            monitor.beginTask(I18n.getString("Plugin.connectProgress"), //$NON-NLS-1$
+            monitor.beginTask(Messages.PluginConnectProgress,
                     IProgressMonitor.UNKNOWN);
             
             try {

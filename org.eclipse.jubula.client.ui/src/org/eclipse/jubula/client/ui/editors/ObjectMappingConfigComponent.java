@@ -30,7 +30,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.databinding.InverseBooleanConverter;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
 import org.eclipse.swt.SWT;
@@ -389,15 +389,15 @@ public class ObjectMappingConfigComponent {
         m_profileObservable = PojoObservables.observeValue(input,
                 IObjectMappingPO.PROP_PROFILE);
         factorSliders.add(createFactorSlider(m_sliderComposite,
-                I18n.getString("ObjectMappingPreferencePage.pathFactor"), //$NON-NLS-1$
+                Messages.ObjectMappingPreferencePagePathFactor,
                 IObjectMappingProfilePO.PROP_PATH_FACTOR, m_bindingContext,
                 m_profileObservable, editor));
         factorSliders.add(createFactorSlider(m_sliderComposite,
-                I18n.getString("ObjectMappingPreferencePage.nameFactor"), //$NON-NLS-1$
+                Messages.ObjectMappingPreferencePageNameFactor,
                 IObjectMappingProfilePO.PROP_NAME_FACTOR, m_bindingContext,
                 m_profileObservable, editor));
         factorSliders.add(createFactorSlider(m_sliderComposite,
-                I18n.getString("ObjectMappingPreferencePage.contextFactor"), //$NON-NLS-1$
+                Messages.ObjectMappingPreferencePageContextFactor,
                 IObjectMappingProfilePO.PROP_CONTEXT_FACTOR, m_bindingContext,
                 m_profileObservable, editor));
 
@@ -450,8 +450,7 @@ public class ObjectMappingConfigComponent {
         label = new Label(sliderComposite, SWT.CENTER);
         label.setText(" %");  //$NON-NLS-1$
         label = new Label(sliderComposite, SWT.NONE);
-        label.setText(I18n.
-            getString("ObjectMappingPreferencePage.lock"));  //$NON-NLS-1$
+        label.setText(Messages.ObjectMappingPreferencePageLock);
         
         return sliderComposite;
     }
@@ -629,7 +628,7 @@ public class ObjectMappingConfigComponent {
         composite.setLayout(compositeLayout);
         
         Label label = new Label(composite, SWT.NONE);
-        label.setText(I18n.getString("ObjectMappingPreferencePage.profile")); //$NON-NLS-1$
+        label.setText(Messages.ObjectMappingPreferencePageProfile);
         
         m_profileCombo = new Combo(composite, SWT.CHECK | SWT.READ_ONLY);
         m_profileCombo.setTextLimit(20);
@@ -705,8 +704,7 @@ public class ObjectMappingConfigComponent {
             IObjectMappingProfilePO.PROP_THRESHOLD;
         // create Widget
         Label label = new Label(parent, SWT.NONE);
-        label.setText(I18n.
-            getString("ObjectMappingPreferencePage.threshold"));  //$NON-NLS-1$
+        label.setText(Messages.ObjectMappingPreferencePageThreshold);
         m_threshold = new Scale(parent, SWT.NONE);
         m_threshold.setMinimum(0);
         m_threshold.setMaximum(HUNDRED_PERCENT);

@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.ui.handlers.StartTestJobHandler;
 import org.eclipse.jubula.client.ui.handlers.StartTestSuiteHandler;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -128,9 +129,14 @@ public class TSBStartTestSuiteContributionItem
         params.put(StartTestSuiteHandler.TEST_SUITE_TO_START, suiteToStart);
         params.put(StartTestSuiteHandler.RUNNING_AUT, autId);
         StringBuilder labelBuilder = new StringBuilder();
-        labelBuilder.append(suiteToStart.getName()).append(" : ") //$NON-NLS-1$
-            .append(suiteToStart.getAut().getName()).append(" (") //$NON-NLS-1$
-            .append(autId.getExecutableName()).append(")"); //$NON-NLS-1$
+        labelBuilder.append(suiteToStart.getName())
+            .append(StringConstants.SPACE).append(StringConstants.COLON)
+            .append(StringConstants.SPACE)
+            .append(suiteToStart.getAut().getName())
+            .append(StringConstants.SPACE)
+            .append(StringConstants.LEFT_PARENTHESES)
+            .append(autId.getExecutableName())
+            .append(StringConstants.RIGHT_PARENTHESES);
         return CommandHelper.createContributionItem(
                 CommandIDs.START_TEST_SUITE_COMMAND_ID, params, labelBuilder
                         .toString(), CommandContributionItem.STYLE_CHECK);

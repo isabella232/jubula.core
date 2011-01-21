@@ -28,8 +28,10 @@ import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.views.AbstractJBTreeView;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
@@ -114,7 +116,8 @@ public abstract class CommandHelper {
         try {
             return handlerService.executeCommand(commandID, null);
         } catch (CommandException e) {
-            log.warn("Error occurred while executing command: " + commandID); //$NON-NLS-1$
+            log.warn(Messages.ErrorOccurredWhileExecutingCommand 
+                + StringConstants.COLON + StringConstants.SPACE + commandID);
         }
         return null;
     }

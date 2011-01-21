@@ -62,6 +62,7 @@ import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CategoryGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.ProjectGUI;
@@ -76,8 +77,8 @@ import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
@@ -199,7 +200,8 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                         getSite().getPage().showView(Constants.PROPVIEW_ID,
                                 null, IWorkbenchPage.VIEW_VISIBLE);
                     } catch (PartInitException e) {
-                        LOG.error("unable to open GDPropertiesView!", e); //$NON-NLS-1$
+                        LOG.error(Messages.UnableToOpenGDPropertiesView
+                                + StringConstants.EXCLAMATION_MARK, e);
                     }
                 }
             }
@@ -221,8 +223,10 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      */
     private void createContextMenu(IMenuManager mgr) {
         if (!m_isContextMenuInitialized) {
-            MenuManager submenuNew = new MenuManager(I18n.getString("TestSuiteBrowser.New"), NEW_ID); //$NON-NLS-1$
-            MenuManager submenuOpenWith = new MenuManager(I18n.getString("TestSuiteBrowser.OpenWith"), OPEN_WITH_ID); //$NON-NLS-1$
+            MenuManager submenuNew = new MenuManager(
+                    Messages.TestSuiteBrowserNew, NEW_ID);
+            MenuManager submenuOpenWith = new MenuManager(
+                    Messages.TestSuiteBrowserOpenWith, OPEN_WITH_ID);
             CommandHelper.createContributionPushItem(submenuNew,
                     CommandIDs.NEW_TESTSUITE_COMMAND_ID);
             CommandHelper.createContributionPushItem(submenuNew,
@@ -583,7 +587,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     private TestJobEditor getTJEditor() {
         TestJobEditor edit = Plugin.getDefault().getActiveTJEditor();
         if (edit == null) {
-            String msg = "no active TC editor, please fix the method"; //$NON-NLS-1$
+            String msg = Messages.NoActiveTCEditorPleaseFixTheMethod;
             LOG.fatal(msg); 
             throw new JBFatalException(msg, MessageIDs.E_NO_OPENED_EDITOR);
         }

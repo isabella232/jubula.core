@@ -26,6 +26,7 @@ import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.ui.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -93,11 +94,13 @@ public class DeleteTestDataManagerHandler
 
         if (reusedCubeList.size() > 0) {
             StringBuilder sb = new StringBuilder();
-            sb.append("\n");
+            sb.append(StringConstants.NEWLINE);
             for (String s : reusedCubeList) {
-                sb.append(" - ");
+                sb.append(StringConstants.SPACE);
+                sb.append(StringConstants.MINUS);
+                sb.append(StringConstants.SPACE);
                 sb.append(s);
-                sb.append("\n");
+                sb.append(StringConstants.NEWLINE);
             }
             Utils.createMessageDialog(MessageIDs.I_REUSED_TDC,
                     new Object[] { sb.toString() }, null);

@@ -43,6 +43,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.ReusedProjectSelectionDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CategoryGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
@@ -54,10 +55,11 @@ import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewPart;
 
@@ -172,7 +174,7 @@ public class MoveTestCaseAction extends Action {
      *
      */
     public MoveTestCaseAction() {
-        super(I18n.getString("MoveTestCaseAction.Move")); //$NON-NLS-1$
+        super(Messages.MoveTestCaseActionMove);
         setEnabled(false);
     }
     
@@ -230,10 +232,10 @@ public class MoveTestCaseAction extends Action {
             ReusedProjectSelectionDialog dialog = 
                 new ReusedProjectSelectionDialog(
                     Plugin.getShell(), projectNames, 
-                    I18n.getString("MoveTestCaseDialog.title"), //$NON-NLS-1$
-                    I18n.getString("MoveTestCaseDialog.message"), //$NON-NLS-1$
+                    Messages.MoveTestCaseDialogShellTitle,
+                    Messages.MoveTestCaseDialogMessage,
                     IconConstants.MOVE_TC_DIALOG_STRING, 
-                    I18n.getString("MoveTestCaseDialog.shellTitle")); //$NON-NLS-1$
+                    Messages.MoveTestCaseDialogShellTitle);
 
             dialog.setHelpAvailable(true);
             dialog.create();
@@ -401,11 +403,11 @@ public class MoveTestCaseAction extends Action {
         StringBuilder sb = new StringBuilder();
         for (MoveProblem moveProblem : moveProblems.getProblems()) {
             sb.append(moveProblem.getCause().getName());
-            sb.append("\n"); //$NON-NLS-1$
+            sb.append(StringConstants.NEWLINE);
         }
         Utils.createMessageDialog(MessageIDs.I_CANNOT_MOVE_TC, 
             null, new String [] {
-                I18n.getString("InfoDetail.CANNOT_MOVE_TC",  //$NON-NLS-1$
+                NLS.bind(Messages.InfoDetailCannotMoveTc,
                     new String [] {sb.toString()})
             });
     }

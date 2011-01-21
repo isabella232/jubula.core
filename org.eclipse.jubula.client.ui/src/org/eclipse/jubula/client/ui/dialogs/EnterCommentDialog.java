@@ -18,7 +18,7 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.widgets.JBText;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -81,9 +81,9 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
-        setTitle(I18n.getString("EnterCommentDialog.Title")); //$NON-NLS-1$
-        setMessage(I18n.getString("EnterCommentDialog.Message")); //$NON-NLS-1$
-        getShell().setText(I18n.getString("EnterCommentDialog.Title")); //$NON-NLS-1$
+        setTitle(Messages.EnterCommentDialogTitle);
+        setMessage(Messages.EnterCommentDialogMessage);
+        getShell().setText(Messages.EnterCommentDialogTitle);
         
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         Composite area = new Composite(parent, SWT.BORDER);
@@ -172,8 +172,8 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
      * @return the created text field.
      */
     private JBText createCommentTitleText(Composite area) {
-        new Label(area, SWT.NONE).setText(I18n.getString(
-                "EnterCommentDialog.titleLabel")); //$NON-NLS-1$
+        new Label(area, SWT.NONE).setText(
+                Messages.EnterCommentDialogTitleLabel);
         return new JBText(area, SWT.SINGLE | SWT.BORDER);
     }
     
@@ -182,8 +182,8 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
      * @return the created text field.
      */
     private JBText createCommentDetailText(Composite area) {
-        new Label(area, SWT.NONE).setText(I18n.getString(
-                "EnterCommentDialog.detailLabel")); //$NON-NLS-1$
+        new Label(area, SWT.NONE).setText(
+                Messages.EnterCommentDialogDetailLabel);
         return new JBText(area, SWT.V_SCROLL | SWT.BORDER);
     }
     

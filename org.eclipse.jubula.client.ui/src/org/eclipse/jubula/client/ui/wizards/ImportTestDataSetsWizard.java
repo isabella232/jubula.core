@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.ui.wizards;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jubula.client.ui.editors.CentralTestDataEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.wizards.pages.ImportXLSTestdataWizardPage;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
@@ -78,7 +78,7 @@ public class ImportTestDataSetsWizard extends Wizard implements IImportWizard {
      */
     public void init(IWorkbench workbench, IStructuredSelection selection) {
         setNeedsProgressMonitor(true);
-        setWindowTitle(I18n.getString("ImportTestDataSetsWizard.windowTitle")); //$NON-NLS-1$
+        setWindowTitle(Messages.ImportTestDataSetsWizardWindowTitle);
         IEditorPart activeEditor = workbench.getActiveWorkbenchWindow()
                 .getActivePage().getActiveEditor();
         if (activeEditor instanceof CentralTestDataEditor) {

@@ -26,8 +26,9 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchPart;
 
 
@@ -68,8 +69,7 @@ public class ComponentNameCollectionPropertyTester extends PropertyTester {
                 if (element instanceof IComponentNamePO) {
                     compNames.add((IComponentNamePO)element);
                 } else {
-                    LOG.warn(I18n.getString(
-                            "PropertyTester.TypeNotSupported",  //$NON-NLS-1$
+                    LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
                             new String [] {element.getClass().getName()}));
                     return false;
                 }
@@ -93,16 +93,14 @@ public class ComponentNameCollectionPropertyTester extends PropertyTester {
                 return areInCurrentProject == expectedBoolean;
             }
 
-            LOG.warn(I18n.getString(
-                    "PropertyTester.PropertyNotSupported",  //$NON-NLS-1$
+            LOG.warn(NLS.bind(Messages.PropertyTesterPropertyNotSupported,
                     new String [] {property}));
             return false;
         }
 
         String receiverClass = 
             receiver != null ? receiver.getClass().getName() : "null"; //$NON-NLS-1$
-        LOG.warn(I18n.getString(
-                "PropertyTester.TypeNotSupported",  //$NON-NLS-1$
+        LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
                 new String [] {receiverClass}));
         return false;
     }

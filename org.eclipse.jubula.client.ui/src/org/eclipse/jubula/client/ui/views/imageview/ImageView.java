@@ -19,8 +19,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
@@ -118,7 +118,7 @@ public class ImageView extends ViewPart {
         if (provider == null) {
             return;
         }
-        final String jobName = I18n.getString("UIJob.loadingImage"); //$NON-NLS-1$
+        final String jobName = Messages.UIJobLoadingImage;
         Job job = new Job(jobName) {
             public IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);

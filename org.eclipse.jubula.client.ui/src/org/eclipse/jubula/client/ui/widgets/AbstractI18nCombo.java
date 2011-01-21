@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -108,7 +109,7 @@ public abstract class AbstractI18nCombo<TheObject> extends
     @Deprecated
     public void setItems(List<TheObject> values, List<String> i18nKeys) {
         throw new IllegalStateException(
-            "setItems() not valid for this subclass."); //$NON-NLS-1$        
+            Messages.SetItemsNotValidForThisSubclass);        
     }
     /**
      * {@inheritDoc}

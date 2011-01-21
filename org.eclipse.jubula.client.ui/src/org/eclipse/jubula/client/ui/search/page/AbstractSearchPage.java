@@ -20,9 +20,9 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData.SearchableType;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.search.ui.ISearchPage;
 import org.eclipse.search.ui.ISearchPageContainer;
 import org.eclipse.search.ui.ISearchQuery;
@@ -67,7 +67,7 @@ public abstract class AbstractSearchPage extends DialogPage implements
         pageContent.setLayout(layout);
         
         Label findLabel = new Label(pageContent, SWT.NONE);
-        findLabel.setText(I18n.getString("SimpleSearchPage.Search")); //$NON-NLS-1$
+        findLabel.setText(Messages.SimpleSearchPageSearch);
 
         setSearchStringCombo(new Combo(pageContent, SWT.BORDER));
         getSearchStringCombo().setLayoutData(
@@ -76,7 +76,7 @@ public abstract class AbstractSearchPage extends DialogPage implements
                 getSearchData().getRecent().toArray(
                         new String[getSearchData().getRecent().size()]));
         if (getSearchStringCombo().getItemCount() == 0) {
-            getSearchStringCombo().setText(I18n.getString("SimpleSearchPage.Phrase")); //$NON-NLS-1$
+            getSearchStringCombo().setText(Messages.SimpleSearchPagePhrase);
         } else {
             getSearchStringCombo().select(0);
         }
@@ -141,14 +141,14 @@ public abstract class AbstractSearchPage extends DialogPage implements
         layout.marginHeight = Layout.MARGIN_HEIGHT;
         optionsGroup.setLayout(layout);
         optionsGroup.setLayoutData(getGridData(4, true));
-        optionsGroup.setText(I18n.getString("SimpleSearchPage.OptionGroupHeader")); //$NON-NLS-1$
+        optionsGroup.setText(Messages.SimpleSearchPageOptionGroupHeader);
 
         setCaseSensitivCheck(new Button(optionsGroup, SWT.CHECK));
-        getCaseSensitivCheck().setText(I18n.getString("SimpleSearchPage.CaseSen")); //$NON-NLS-1$
+        getCaseSensitivCheck().setText(Messages.SimpleSearchPageCaseSen);
         getCaseSensitivCheck().setSelection(getSearchData().isCaseSensitive());
         getCaseSensitivCheck().setLayoutData(getGridData(1, true));
         setUseRegExCheck(new Button(optionsGroup, SWT.CHECK));
-        getUseRegExCheck().setText(I18n.getString("SimpleSearchPage.RegEx")); //$NON-NLS-1$
+        getUseRegExCheck().setText(Messages.SimpleSearchPageRegEx);
         getUseRegExCheck().setSelection(getSearchData().isUseRegex());
         getUseRegExCheck().setLayoutData(getGridData(1, true));
     }
@@ -226,8 +226,8 @@ public abstract class AbstractSearchPage extends DialogPage implements
         layout.marginHeight = Layout.MARGIN_HEIGHT;
         optionsGroup.setLayout(layout);
         optionsGroup.setLayoutData(getGridData(3, true));
-        optionsGroup.setText(I18n
-                .getString("SimpleSearchPage.StructureToSearchGroupHeader")); //$NON-NLS-1$
+        optionsGroup.setText(
+                Messages.SimpleSearchPageStructureToSearchGroupHeader);
 
         DataBindingContext dbc = new DataBindingContext();
         for (SearchableType searchableType : getSearchData()

@@ -27,8 +27,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.RemoteFileStore;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -286,7 +286,7 @@ public class RemoteFileBrowserDialog extends ElementTreeSelectionDialog {
         setComparator(new FileViewerSorter());
         setValidator(new FileSelectionValidator(multiSelect,
                 (type & IResource.FOLDER) != 0));
-        setEmptyListMessage(I18n.getString("AUTConfigComponent.remoteDirEmpty")); //$NON-NLS-1$
+        setEmptyListMessage(Messages.AUTConfigComponentRemoteDirEmpty);
     }
 
     /**

@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.TreeIterator;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.model.CategoryGUI;
 import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
@@ -51,9 +52,9 @@ import org.eclipse.jubula.client.ui.model.TestSuiteBrowserRootGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteRootGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -68,10 +69,10 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  */
 public class TreeBuilder {
     /** the name of the Test Job category */
-    public static final String TJ_CAT_NAME = I18n.getString("TSB.CategoryTJ"); //$NON-NLS-1$
+    public static final String TJ_CAT_NAME = Messages.TSBCategoryTJ;
     
     /** the name of the Test Suite category */
-    public static final String TS_CAT_NAME = I18n.getString("TSB.CategoryTS"); //$NON-NLS-1$
+    public static final String TS_CAT_NAME = Messages.TSBCategoryTS;
 
     /**
      * Constructor.
@@ -93,7 +94,7 @@ public class TreeBuilder {
             .getBoolean(Constants.SHOW_TRANSIENT_CHILDREN_KEY);
         TestCaseBrowserRootGUI dummy = new TestCaseBrowserRootGUI("TestSpecTv_root"); //$NON-NLS-1$
         TestCaseBrowserRootGUI specTsGUI = 
-            new TestCaseBrowserRootGUI(I18n.getString("TreeBuilder.TestCases")); //$NON-NLS-1$
+            new TestCaseBrowserRootGUI(Messages.TreeBuilderTestCases);
         dummy.addNode(specTsGUI);
         Plugin.getDefault().setTestCaseBrowserRootGUI(dummy);
         // Add TCs to root:
@@ -665,7 +666,8 @@ public class TreeBuilder {
             return buildSubTree((IRefTestSuitePO)root, parentGUI, childNodes,
                     pos);
         }
-        throw new JBFatalException("Unsupported buildSubTree: " //$NON-NLS-1$
+        throw new JBFatalException(Messages.UnsupportedBuildSubTree 
+                + StringConstants.COLON + StringConstants.DOT
                 + root.getClass().getName(), MessageIDs.E_UNSUPPORTED_NODE);
     }
     

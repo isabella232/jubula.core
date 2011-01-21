@@ -22,8 +22,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.utils.FileUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -63,8 +64,9 @@ public class ExportTestResultDetailsDestinationWizardPage
      */
     public ExportTestResultDetailsDestinationWizardPage() {
         super("testResultDetailsExportDestinationPage"); //$NON-NLS-1$
-        setTitle(I18n.getString("ExportTestResultDetailsWizard.DestinationPage.title")); //$NON-NLS-1$
-        setDescription(I18n.getString("ExportTestResultDetailsWizard.DestinationPage.description")); //$NON-NLS-1$
+        setTitle(Messages.ExportTestResultDetailsWizardDestinationPageTitle);
+        setDescription(
+            Messages.ExportTestResultDetailsWizardPageDescription);
     }
 
     /**
@@ -81,25 +83,23 @@ public class ExportTestResultDetailsDestinationWizardPage
         destinationSelectionGroup.setLayout(layout);
         destinationSelectionGroup.setLayoutData(new GridData(
                 GridData.HORIZONTAL_ALIGN_FILL | GridData.VERTICAL_ALIGN_FILL));
-
         Label destinationLabel = new Label(destinationSelectionGroup, SWT.NONE);
-        destinationLabel.setText(
-            I18n.getString("ExportTestResultDetailsWizard.DestinationPage.destinationLabelText")); //$NON-NLS-1$
-
+        destinationLabel.setText(Messages
+            .ExportTestResultDetailsWizardDestinationPageDestinationLabelText);
         // destination name entry field
         final Text destinationNameField = 
             new Text(destinationSelectionGroup, SWT.SINGLE | SWT.BORDER);
         GridData data = new GridData(GridData.HORIZONTAL_ALIGN_FILL
                 | GridData.GRAB_HORIZONTAL);
         destinationNameField.setLayoutData(data);
-
         UpdateValueStrategy targetToModelUpdateStrategy = 
             new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE);
         targetToModelUpdateStrategy.setAfterGetValidator(new IValidator() {
             public IStatus validate(Object value) {
                 String stringValue = String.valueOf(value);
                 if (!FileUtils.isValidPath(stringValue)) {
-                    return ValidationStatus.error(I18n.getString("ExportTestResultDetailsWizard.DestinationPage.error.invalidDestination")); //$NON-NLS-1$
+                    return ValidationStatus.error(Messages
+                        .ExportTestResultDetailsWizardDestinationPageInvDest);
                 }
                 return ValidationStatus.ok();
             }
@@ -115,21 +115,23 @@ public class ExportTestResultDetailsDestinationWizardPage
             destinationNameField.setText(
                     new File(Utils.getLastDirPath()).getCanonicalPath());
         } catch (IOException ioe) {
-            LOG.error("An error occurred while initializing the destination path.", ioe); //$NON-NLS-1$
+            LOG.error(
+                Messages.AnErrorOccurredWhileInitializingTheDestinationPath
+                + StringConstants.DOT, ioe);
         }
         
         // destination browse button
         Button destinationBrowseButton = 
             new Button(destinationSelectionGroup, SWT.PUSH);
         destinationBrowseButton.setText(
-            I18n.getString("ExportTestResultDetailsWizard.DestinationPage.browseButtonText")); //$NON-NLS-1$
+            Messages.ExportTestResultDetailsWizardDestinationPageBrowseBtnText);
         destinationBrowseButton.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent event) {
                 final DirectoryDialog fileDialog = new DirectoryDialog(
                         getWizard().getContainer().getShell(), 
                         SWT.SAVE | SWT.APPLICATION_MODAL);
-                fileDialog.setText(I18n.getString(
-                    "ExportTestResultDetailsWizard.DestinationPage.browseDialogTitle")); //$NON-NLS-1$
+                fileDialog.setText(Messages
+                    .ExportTestResultDetailsWizardDestinationPageDialogTitle);
                 fileDialog.setFilterPath(Utils.getLastDirPath());
                 String newFileName = fileDialog.open();
                 if (newFileName != null) {

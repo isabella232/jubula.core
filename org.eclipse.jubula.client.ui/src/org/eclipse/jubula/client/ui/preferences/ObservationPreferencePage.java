@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.InputCodeHelper;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.constants.InputCodeHelper.UserInput;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.preferences.utils.InputComboUtil;
 import org.eclipse.jubula.client.ui.preferences.utils.Utils;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
@@ -29,7 +30,6 @@ import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.ModifiableTriggerList;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -128,7 +128,7 @@ public class ObservationPreferencePage extends PreferencePage implements
      * @param workbench
      */
     public void init(IWorkbench workbench) {
-        setDescription(I18n.getString("ObservationPreferencePage.description")); //$NON-NLS-1$
+        setDescription(Messages.ObservationPreferencePageDescription);
     }
     
     /**
@@ -141,25 +141,26 @@ public class ObservationPreferencePage extends PreferencePage implements
         compositeGridData(composite);
         
         Label keycombLabel = new Label(composite, SWT.NONE);
-        keycombLabel.setText(I18n.getString("ObservationPreferencePage.keycombos")); //$NON-NLS-1$
+        keycombLabel.setText(Messages.ObservationPreferencePageKeycombos);
         keycombLabel.setFont(Layout.BOLD_TAHOMA);
         GridData data = new GridData();
         data.horizontalSpan = 4;
         keycombLabel.setLayoutData(data);
         
         Label checkmodeLabel = new Label(composite, SWT.NONE);
-        checkmodeLabel.setText(I18n.getString("ObservationPreferencePage.checkMode")); //$NON-NLS-1$
+        checkmodeLabel.setText(Messages.ObservationPreferencePageCheckMode);
         
         m_startStopCheckMods = new Combo(
                 composite, SWT.DROP_DOWN | SWT.READ_ONLY);
         m_startStopCheckMods.setItems(keys.getModifierString());
         Label pluslabel = new Label(composite, SWT.NONE);
-        pluslabel.setText(" + "); //$NON-NLS-1$
+        pluslabel.setText(StringConstants.SPACE + StringConstants.PLUS 
+                + StringConstants.SPACE);
         m_startStopCheckKey = InputComboUtil.createKeyCombo(
                 composite, SWT.DROP_DOWN | SWT.READ_ONLY);
 
         Label checkCompLabel = new Label(composite, SWT.NONE);
-        checkCompLabel.setText(I18n.getString("ObservationPreferencePage.checkComp")); //$NON-NLS-1$
+        checkCompLabel.setText(Messages.ObservationPreferencePageCheckComp);
         
         m_checkCompMods = new Combo(composite, SWT.DROP_DOWN | SWT.READ_ONLY);
         m_checkCompMods.setItems(keys.getModifierString());
@@ -182,7 +183,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         m_checkCompKey.addSelectionListener(selListener);
 
         Label dialogLabel = new Label(composite, SWT.NONE);
-        dialogLabel.setText(I18n.getString("ObservationPreferencePage.recActDialog")); //$NON-NLS-1$
+        dialogLabel.setText(Messages.ObservationPreferencePageRecActDialog);
         dialogLabel.setFont(Layout.BOLD_TAHOMA);
         GridData data2 = new GridData();
         data2.horizontalSpan = 4;
@@ -191,7 +192,7 @@ public class ObservationPreferencePage extends PreferencePage implements
                 "GDControlDecorator.ObervationConsole", false); //$NON-NLS-1$
               
         m_showDialog = new Button(composite, SWT.CHECK);
-        m_showDialog.setText(I18n.getString("ObservationPreferencePage.showDialog")); //$NON-NLS-1$
+        m_showDialog.setText(Messages.ObservationPreferencePageShowDialog);
         //
 
         createTriggerArea(composite);
@@ -202,7 +203,7 @@ public class ObservationPreferencePage extends PreferencePage implements
      */
     private void createTriggerArea(Composite composite) {
         Label triggerLabel = new Label(composite, SWT.NONE);
-        triggerLabel.setText(I18n.getString("ObservationPreferencePage.trigger")); //$NON-NLS-1$
+        triggerLabel.setText(Messages.ObservationPreferencePageTrigger);
         triggerLabel.setFont(Layout.BOLD_TAHOMA);
         GridData data3 = new GridData();
         data3.horizontalSpan = 4;
@@ -212,7 +213,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         
         Set<String> values = new HashSet<String>();
         m_singleLineTrigger = new ModifiableTriggerList(composite, SWT.NONE, 
-                I18n.getString("ObservationPreferencePage.singleLine"), //$NON-NLS-1$
+                Messages.ObservationPreferencePageSingleLine,
                 values, true);
         GridData gridData2 = new GridData(GridData.FILL_VERTICAL);
         gridData2.horizontalSpan = 2;
@@ -223,7 +224,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         
         Set<String> values2 = new HashSet<String>();
         m_multiLineTrigger = new ModifiableTriggerList(composite, SWT.NONE, 
-                I18n.getString("ObservationPreferencePage.multiLine"), //$NON-NLS-1$
+                Messages.ObservationPreferencePageMultiLine,
                 values2, true);
         GridData gridData3 = new GridData(GridData.FILL_VERTICAL);
         gridData3.horizontalSpan = 2;
@@ -232,7 +233,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         m_multiLineTrigger.setLayoutData(gridData3);
         
         Label keycombLabel = new Label(composite, SWT.NONE);
-        keycombLabel.setText(I18n.getString("ObservationPreferencePage.hint")); //$NON-NLS-1$
+        keycombLabel.setText(Messages.ObservationPreferencePageHhint);
         keycombLabel.setFont(Layout.BOLD_TAHOMA);
         GridData data = new GridData();
         data.horizontalSpan = 4;
@@ -252,7 +253,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         // All Observation shortcuts must differ
         if (checkModeShortcut.equals(checkCompShortcut)) {
             
-            setErrorMessage(I18n.getString("ObservationPreferencePage.recordInvalidKey")); //$NON-NLS-1$
+            setErrorMessage(Messages.ObservationPreferencePageRecordInvalidKey);
             setValid(false);
         } else {
             setErrorMessage(null);

@@ -25,11 +25,13 @@ import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP.IProjectImportI
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.JBText;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -141,8 +143,8 @@ public class ImportProjectsWizardPage extends WizardPage
                 m_addButton.setEnabled(true);
                 setErrorMessage(null);
             } else {
-                setErrorMessage(I18n.getString(
-                        "ImportProjectDialog.invalidFile", //$NON-NLS-1$
+                setErrorMessage(NLS.bind(
+                        Messages.ImportProjectDialogInvalidFile,
                         new Object[] { fileName }));
                 m_addButton.setEnabled(false);
             }
@@ -195,7 +197,8 @@ public class ImportProjectsWizardPage extends WizardPage
         gridData.horizontalSpan = NUM_COLUMS;
         gridData.grabExcessHorizontalSpace = true;
         m_openProjectCheckbox.setLayoutData(gridData);
-        m_openProjectCheckbox.setText(I18n.getString("ImportProjectDialog.openProjectCheckbox")); //$NON-NLS-1$)
+        m_openProjectCheckbox.setText(Messages
+                .ImportProjectDialogOpenProjectCheckbox);
         DialogUtils.setWidgetName(m_openProjectCheckbox, "openProjectCheckbox"); //$NON-NLS-1$
         addBlankLine(parent);
 
@@ -204,12 +207,12 @@ public class ImportProjectsWizardPage extends WizardPage
         gridData.horizontalSpan = NUM_COLUMS;
         gridData.grabExcessHorizontalSpace = true;
         m_radio1.setLayoutData(gridData);
-        m_radio1.setText(I18n.getString("ImportProjectDialog.radio1")); //$NON-NLS-1$)
+        m_radio1.setText(Messages.ImportProjectDialogRadio1);
         DialogUtils.setWidgetName(m_radio1, "radio1"); //$NON-NLS-1$
         
         m_radio2 = new Button(parent, SWT.RADIO);
         m_radio2.setLayoutData(gridData);
-        m_radio2.setText(I18n.getString("ImportProjectDialog.radio2")); //$NON-NLS-1$)
+        m_radio2.setText(Messages.ImportProjectDialogRadio2);
         DialogUtils.setWidgetName(m_radio2, "radio2"); //$NON-NLS-1$
         Group elements = new Group(parent, SWT.SHADOW_IN);
         elements.setLayout(new GridLayout());
@@ -219,13 +222,15 @@ public class ImportProjectsWizardPage extends WizardPage
         gridData.grabExcessHorizontalSpace = true;
         elements.setLayoutData(gridData);
         
-        elements.setText(I18n.getString("ImportProjectDialog.elements")); //$NON-NLS-1$
+        elements.setText(Messages.ImportProjectDialogElements);
         m_elementsCheckBox1 = new Button(elements, SWT.CHECK);
-        m_elementsCheckBox1.setText(I18n.getString("ImportProjectDialog.elementsCheckBox1")); //$NON-NLS-1$
+        m_elementsCheckBox1.setText(
+                Messages.ImportProjectDialogElementsCheckBox1);
         DialogUtils.setWidgetName(m_elementsCheckBox1, "elementsCheckBox1"); //$NON-NLS-1$
 
         m_elementsCheckBox2 = new Button(elements, SWT.CHECK);
-        m_elementsCheckBox2.setText(I18n.getString("ImportProjectDialog.elementsCheckBox2")); //$NON-NLS-1$
+        m_elementsCheckBox2.setText(
+                Messages.ImportProjectDialogElementsCheckBox2);
         m_elementsCheckBox2.setEnabled(false);
         DialogUtils.setWidgetName(m_elementsCheckBox2, "elementsCheckBox2"); //$NON-NLS-1$
     }
@@ -310,7 +315,7 @@ public class ImportProjectsWizardPage extends WizardPage
         m_removeButton = new Button(parent, SWT.PUSH);
         m_removeButton.setImage(IconConstants.DELETE_IMAGE_DISABLED);
         m_removeButton.setToolTipText(
-            I18n.getString("ImportProjectDialog.RemoveToolTip")); //$NON-NLS-1$
+            Messages.ImportProjectDialogRemoveToolTip);
         gridData = new GridData();
         gridData.horizontalSpan = 1;
         gridData.grabExcessHorizontalSpace = false;
@@ -335,7 +340,7 @@ public class ImportProjectsWizardPage extends WizardPage
         m_moveDownButton = new Button(parent, SWT.PUSH);
         m_moveDownButton.setImage(IconConstants.DOWN_ARROW_DIS_IMAGE);
         m_moveDownButton.setToolTipText(
-            I18n.getString("ImportProjectDialog.MoveDownToolTip")); //$NON-NLS-1$
+            Messages.ImportProjectDialogMoveDownToolTip);
         gridData = new GridData();
         gridData.horizontalSpan = 1;
         gridData.grabExcessHorizontalSpace = false;
@@ -377,7 +382,7 @@ public class ImportProjectsWizardPage extends WizardPage
         m_moveUpButton = new Button(parent, SWT.PUSH);
         m_moveUpButton.setImage(IconConstants.UP_ARROW_DIS_IMAGE);
         m_moveUpButton.setToolTipText(
-            I18n.getString("ImportProjectDialog.MoveUpToolTip")); //$NON-NLS-1$
+            Messages.ImportProjectDialogMoveUpToolTip);
         gridData = new GridData();
         gridData.horizontalSpan = 1;
         gridData.grabExcessHorizontalSpace = false;
@@ -489,16 +494,16 @@ public class ImportProjectsWizardPage extends WizardPage
             }
         }
         if (m_fileNames.length < 1) {
-            setErrorMessage(I18n.getString("ImportProjectDialog.NoFilesToImport")); //$NON-NLS-1$
+            setErrorMessage(Messages.ImportProjectDialogNoFilesToImport);
             setPageComplete(false);
         } else if (m_importTarget != FileStorageBP.IMPORT_ALL 
                 && !isProjectOpen()) {
-            setErrorMessage(I18n.getString("ImportProjectDialog.NoProjectError")); //$NON-NLS-1$
+            setErrorMessage(Messages.ImportProjectDialogNoProjectError);
             setPageComplete(false);
         } else if (m_importTarget != FileStorageBP.IMPORT_ALL 
                 && m_selectedElements == 0) {
             
-            setErrorMessage(I18n.getString("ImportProjectDialog.NoSelectError")); //$NON-NLS-1$
+            setErrorMessage(Messages.ImportProjectDialogNoSelectError);
             setPageComplete(false);
         } else {
             setErrorMessage(null);
@@ -557,13 +562,13 @@ public class ImportProjectsWizardPage extends WizardPage
         gridData.horizontalSpan = 1;
         gridData.grabExcessHorizontalSpace = false;
         m_browseButton.setLayoutData(gridData);
-        m_browseButton.setText(I18n.getString("ImportProjectDialog.browse")); //$NON-NLS-1$
+        m_browseButton.setText(Messages.ImportProjectDialogBrowse);
         m_browseButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 FileDialog fileDialog = new FileDialog(Plugin.getShell(), 
                         SWT.OPEN | SWT.APPLICATION_MODAL | SWT.MULTI);
                 String file;
-                fileDialog.setText(I18n.getString("ImportProjectDialog.fileSelector")); //$NON-NLS-1$
+                fileDialog.setText(Messages.ImportProjectDialogFileSelector);
                 String[] extension = new String[1];
                 extension[0] = "*.xml"; //$NON-NLS-1$
                 fileDialog.setFilterExtensions(extension);
@@ -579,7 +584,8 @@ public class ImportProjectsWizardPage extends WizardPage
                             absFileNames[i] = 
                                 new File(path, fileNames[i]).getCanonicalPath();
                         } catch (IOException ioe) {
-                            log.error("Failed to find file: " //$//$NON-NLS-1$
+                            log.error(Messages.FailedToFindFile 
+                                + StringConstants.COLON + StringConstants.SPACE
                                 + path + File.pathSeparator + fileNames[i], 
                                 ioe);
                         }
@@ -603,7 +609,7 @@ public class ImportProjectsWizardPage extends WizardPage
         gridData.horizontalSpan = 1;
         gridData.grabExcessHorizontalSpace = false;
         m_addButton.setLayoutData(gridData);
-        m_addButton.setText(I18n.getString("ImportProjectDialog.add")); //$NON-NLS-1$
+        m_addButton.setText(Messages.ImportProjectDialogAdd);
         m_addButton.setEnabled(false);
         m_addButton.addSelectionListener(new SelectionAdapter() {
 
@@ -614,8 +620,8 @@ public class ImportProjectsWizardPage extends WizardPage
                         new File(m_fileToAdd.getText()).getCanonicalPath()
                     });
                 } catch (IOException ioe) {
-                    log.error("Failed to find file: " + m_fileToAdd.getText(), //$//$NON-NLS-1$
-                        ioe);
+                    log.error(Messages.FailedToFindFile + StringConstants.COLON
+                        + StringConstants.SPACE + m_fileToAdd.getText(), ioe);
                 }
             }
             
@@ -734,10 +740,10 @@ public class ImportProjectsWizardPage extends WizardPage
      * {@inheritDoc}
      */
     public void createControl(Composite parent) {
-        final String title = I18n.getString("ImportProjectDialog.title"); //$NON-NLS-1$
+        final String title = Messages.ImportProjectDialogTitle;
         setTitle(title);
         setImageDescriptor(IconConstants.IMPORT_DIALOG_IMAGE_DESCRIPTOR);
-        setMessage(I18n.getString("ImportProjectDialog.message")); //$NON-NLS-1$ 
+        setMessage(Messages.ImportProjectDialogMessage); 
         
         Composite composite = new Composite(parent, SWT.NONE);
         GridData gridData;
@@ -751,7 +757,7 @@ public class ImportProjectsWizardPage extends WizardPage
         gridData.horizontalSpan = NUM_COLUMS;
         gridData.grabExcessHorizontalSpace = true;
         label.setLayoutData(gridData);
-        label.setText(I18n.getString("ImportProjectDialog.fileLabel")); //$NON-NLS-1$
+        label.setText(Messages.ImportProjectDialogFileLabel);
         
         m_fileToAdd = new JBText(composite, SWT.BORDER);
         gridData = new GridData(GridData.FILL_HORIZONTAL);
@@ -770,7 +776,7 @@ public class ImportProjectsWizardPage extends WizardPage
         addBlankLine(composite);
 
         Label listLabel = new Label(composite, SWT.NONE);
-        listLabel.setText(I18n.getString("ImportProjectDialog.listLabel")); //$NON-NLS-1$
+        listLabel.setText(Messages.ImportProjectDialogListLabel);
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = NUM_COLUMS;
         gridData.grabExcessHorizontalSpace = false;

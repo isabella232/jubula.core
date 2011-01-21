@@ -903,7 +903,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         }
         
         if (System.getProperty(DebugConstants.VM_DEBUG) != null
-                //FIXME tobi NLS ??
             && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
             System.out.println("firePartClosed():"  //$NON-NLS-1$
                 + (System.currentTimeMillis() - start));

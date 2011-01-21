@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,7 +118,7 @@ public class GuiEventDispatcher {
             try {
                 l.handleEditorDirtyStateChanged(editor, isDirty);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionCallingListeners, t);
             }
         }
 
@@ -129,7 +130,7 @@ public class GuiEventDispatcher {
             try {
                 l.handleEditorDirtyStateChanged(editor, isDirty);
             } catch (Throwable t) {
-                LOG.error("Unhandled exception while calling listeners", t); //$NON-NLS-1$
+                LOG.error(Messages.UnhandledExceptionCallingListeners, t);
             }
         }
         

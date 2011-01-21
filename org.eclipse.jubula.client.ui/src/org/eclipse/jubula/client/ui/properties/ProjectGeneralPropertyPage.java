@@ -38,6 +38,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.factory.ControlFactory;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.CheckedIntText;
@@ -49,7 +50,6 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -164,8 +164,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             NUM_COLUMNS_2, GridData.FILL, false);
         noDefaultAndApplyButton();       
         String str = getProject().getName();
-        super.getShell().setText(I18n.getString(
-            "ProjectPropertyPage.shellTitle") + str); //$NON-NLS-1$
+        super.getShell().setText(Messages.ProjectPropertyPageShellTitle + str);
 
         createEmptyLabel(projectNameComposite);
         createEmptyLabel(projectNameComposite);
@@ -224,9 +223,9 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             GridData.FILL, true);
         
         createLabel(leftComposite, 
-            I18n.getString("ProjectPropertyPage.projectVersion")); //$NON-NLS-1$
-        createLabel(rightComposite, m_majorVersionNumber.toString() + "."  //$NON-NLS-1$
-            + m_minorVersionNumber);
+            Messages.ProjectPropertyPageProjectVersion);
+        createLabel(rightComposite, m_majorVersionNumber.toString() 
+                + StringConstants.DOT + m_minorVersionNumber);
         Label l = createLabel(rightComposite, StringConstants.EMPTY);
         GridData textGD = new GridData();
         textGD.grabExcessHorizontalSpace = true;
@@ -245,8 +244,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             GridData.FILL, true);
         
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
-            I18n.getString("ProjectPropertyPage.projectGuid")), 
-            "GDControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
+            Messages.ProjectPropertyPageProjectGuid), 
+            "GDControlDecorator.ProjectPropertiesGUID", false);
         
         JBText projectGuid = new JBText(rightComposite, 
             SWT.READ_ONLY | SWT.BORDER);
@@ -268,8 +267,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_2,
                 GridData.FILL, true);
-        ControlDecorator.decorateInfo(createLabel(leftComposite, I18n
-                .getString("ProjectPropertyPage.isReusable")), //$NON-NLS-1$
+        ControlDecorator.decorateInfo(createLabel(leftComposite, 
+                Messages.ProjectPropertyPageIsReusable),
                 "GDControlDecorator.NewProjectIsReusable", false); //$NON-NLS-1$
         m_isReusableCheckbox = new Button(rightComposite, SWT.CHECK);
 
@@ -297,8 +296,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_2,
                 GridData.FILL, true);
-        ControlDecorator.decorateInfo(createLabel(leftComposite, I18n
-                .getString("ProjectPropertyPage.isProtected")), //$NON-NLS-1$
+        ControlDecorator.decorateInfo(createLabel(leftComposite, 
+                Messages.ProjectPropertyPageIsProtected),
                 "GDControlDecorator.NewProjectIsProtected", false); //$NON-NLS-1$
         m_isProtectedCheckbox = new Button(rightComposite, SWT.CHECK);
 
@@ -371,7 +370,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_1, 
             GridData.FILL, true);
-        createLabel(leftComposite, I18n.getString("ProjectPropertyPage.projectName"));  //$NON-NLS-1$
+        createLabel(leftComposite, Messages.ProjectPropertyPageProjectName);
         m_projectNameTextField = new CheckedProjectNameText(rightComposite, 
             SWT.BORDER);
         m_projectNameTextField.setText(getProject().getName());
@@ -391,7 +390,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_2, 
             GridData.FILL, true);
-        createLabel(leftComposite, I18n.getString("ProjectPropertyPage.autToolKitLabel")); //$NON-NLS-1$
+        createLabel(leftComposite, Messages.ProjectPropertyPageAutToolKitLabel);
         m_projectToolkitCombo = createToolkitCombo(rightComposite);
         m_projectToolkitCombo.setSelectedObject(getProject().getToolkit());
         GridData textGridData = new GridData();
@@ -426,7 +425,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
      */
     private void createCleanTestResults(Composite parent) {
         m_cleanTestresults = new Button(parent, SWT.CHECK);
-        m_cleanTestresults.setText(I18n.getString("TestResultViewPreferencePage.cleanResults")); //$NON-NLS-1$
+        m_cleanTestresults.setText(Messages
+                .TestResultViewPreferencePageCleanResults);
         GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 1;
         gridData.grabExcessHorizontalSpace = false;
@@ -466,7 +466,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             
         });
         Label label = new Label(parent, SWT.NONE);
-        label.setText(I18n.getString("TestResultViewPreferencePage.cleanDaysLabel")); //$NON-NLS-1$
+        label.setText(Messages.TestResultViewPreferencePageCleanDaysLabel);
         gridData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.horizontalSpan = 1;
         gridData.grabExcessHorizontalSpace = false;
@@ -482,8 +482,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     protected void checkCompleteness() {
         if (m_cleanResultDays.isEnabled() 
                 && m_cleanResultDays.getValue() <= 0) {
-            setErrorMessage(I18n
-                    .getString("TestResultViewPreferencePage.cleanResultDaysEmpty")); //$NON-NLS-1$
+            setErrorMessage(Messages
+                    .TestResultViewPreferencePageCleanResultDaysEmpty);
             setValid(false);
             return;
         }
@@ -540,7 +540,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 } catch (JBException e) {
                     // Could not refresh Component Name information for 
                     // reused proejct. Log the exception.
-                    log.error("Error while retrieving Reused Project information", e); //$NON-NLS-1$
+                    log.error(Messages
+                            .ErrorWhileRetrievingReusedProjectInformation, e);
                 }
             }
             // FIXME zeb This updates the Test Case Browser. Once we have separate
@@ -632,15 +633,17 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         boolean isCorrect = true;
         String projectName = m_projectNameTextField.getText();
         int projectNameLength = projectName.length();
-        super.getShell().setText(I18n.getString("ProjectPropertyPage.shellTitle") + projectName); //$NON-NLS-1$
-        if ((projectNameLength == 0) || (projectName.startsWith(" ")) //$NON-NLS-1$
+        super.getShell().setText(Messages.ProjectPropertyPageShellTitle 
+                + projectName);
+        if ((projectNameLength == 0) || (projectName
+                .startsWith(StringConstants.SPACE))
             || (projectName.charAt(projectNameLength - 1) == ' ')) {
             
             isCorrect = false;
         }
         if (isCorrect) {
             setErrorMessage(null);
-            setMessage(I18n.getString("PropertiesAction.page1"), NONE); //$NON-NLS-1$
+            setMessage(Messages.PropertiesActionPage1, NONE);
             setValid(true);
             if (isProjectNameVerified) {
                 m_newProjectName = projectName;
@@ -648,16 +651,17 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             if (ProjectPM.doesProjectNameExist(projectName)
                 && !m_oldProjectName.equals(projectName)) {
                     
-                setErrorMessage(I18n.getString("ProjectSettingWizardPage.doubleProjectName")); //$NON-NLS-1$ 
+                setErrorMessage(Messages
+                        .ProjectSettingWizardPageDoubleProjectName); 
                 isCorrect = false;
                 setValid(false);
             }
         } else {
             if (projectNameLength == 0) {
-                setErrorMessage(I18n.getString("ProjectWizard.emptyProject")); //$NON-NLS-1$
+                setErrorMessage(Messages.ProjectWizardEmptyProject);
                 setValid(false);
             } else {
-                setErrorMessage(I18n.getString("ProjectWizard.notValidProject")); //$NON-NLS-1$
+                setErrorMessage(Messages.ProjectWizardNotValidProject);
                 setValid(false);
             }
         }
@@ -701,7 +705,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 handleAutToolkitSelection();
                 return;
             }
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedUnknownWidget 
+                    + StringConstants.DOT);
         }
 
         /**
@@ -718,7 +723,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
          * {@inheritDoc}
          */
         public void widgetDefaultSelected(SelectionEvent e) {
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedUnknownWidget 
+                    + StringConstants.DOT);
         }        
     }
 

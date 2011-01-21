@@ -25,11 +25,11 @@ import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.dialogs.AUTPropertiesDialog;
 import org.eclipse.jubula.client.ui.dialogs.JBPropertyDialog;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -95,7 +95,7 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
         createCompositeLayout(composite, compositeLayout, compositeData);
         String str = getProject().getName();
         super.getShell().setText(
-            I18n.getString("ProjectPropertyPage.shellTitle") + str); //$NON-NLS-1$
+            Messages.ProjectPropertyPageShellTitle + str);
         createAUTList(composite);
         createButtons(composite);
         initFields();
@@ -145,7 +145,7 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
         data.horizontalAlignment = SWT.FILL;
         data.grabExcessHorizontalSpace = true;
         composite.setLayoutData(data);
-        newLabel(composite, I18n.getString("AUTPropertyPage.AUTList")); //$NON-NLS-1$
+        newLabel(composite, Messages.AUTPropertyPageAUTList);
         m_autList = new List(composite, 
             Layout.MULTI_TEXT_STYLE | SWT.SINGLE);
         GridData textGridData = new GridData();
@@ -172,16 +172,16 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
         composite.setLayoutData(data);
         new Label(composite, SWT.NONE);
         m_addButton = new Button(composite, SWT.PUSH);
-        m_addButton.setText(I18n.getString("AUTPropertyPage.Add")); //$NON-NLS-1$
+        m_addButton.setText(Messages.AUTPropertyPageAdd);
         m_addButton.setLayoutData(buttonGrid());
         
         m_editButton = new Button(composite, SWT.PUSH);
-        m_editButton.setText(I18n.getString("AUTPropertyPage.Edit")); //$NON-NLS-1$
+        m_editButton.setText(Messages.AUTPropertyPageEdit);
         m_editButton.setLayoutData(buttonGrid());
         m_editButton.setEnabled(false);
         
         m_removeButton = new Button(composite, SWT.PUSH);
-        m_removeButton.setText(I18n.getString("AUTPropertyPage.Remove")); //$NON-NLS-1$
+        m_removeButton.setText(Messages.AUTPropertyPageRemove);
         m_removeButton.setLayoutData(buttonGrid());
         m_removeButton.setEnabled(false);
     }
@@ -218,7 +218,7 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
             m_addButton.getShell(), false, null, getProject());
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
-        dialog.getShell().setText(I18n.getString("AUTPropertyPage.AUTConfig")); //$NON-NLS-1$
+        dialog.getShell().setText(Messages.AUTPropertyPageAUTConfig);
         dialog.open();
         if (dialog.getReturnCode() == Window.OK) {
             if (dialog.getAutMain().equals(
@@ -271,7 +271,7 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
             dialog.getShell().setText(
-                I18n.getString("AUTPropertyPage.AUTConfig")); //$NON-NLS-1$
+                    Messages.AUTPropertyPageAUTConfig);
             dialog.open();
             if (dialog.getReturnCode() == Window.OK) {
                 if (dialog.getAutMain().equals(
@@ -417,7 +417,8 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
                 handleAutListEvent();
                 return;
             }
-            Assert.notReached("Event was created by an unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventWasCreatedByAnUnknownWidget 
+                    + StringConstants.DOT);
         }
 
         /**
@@ -429,7 +430,8 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
                 handleEditButtonEvent();
                 return;
             }
-            Assert.notReached("DoubleClickEvent was created by an unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages
+                    .DoubleClickEventWasCreatedByAnUnknownWidget);
         }
     }
 }

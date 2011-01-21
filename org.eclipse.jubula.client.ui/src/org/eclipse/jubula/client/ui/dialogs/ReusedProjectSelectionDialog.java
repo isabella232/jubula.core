@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -131,8 +131,7 @@ public class ReusedProjectSelectionDialog extends TitleAreaDialog {
         gridData.widthHint = WIDTH_HINT;
         area.setLayoutData(gridData);
 
-        new Label(area, SWT.NONE).setText(
-            I18n.getString("MoveTestCaseDialog.label")); //$NON-NLS-1$
+        new Label(area, SWT.NONE).setText(Messages.MoveTestCaseDialogLabel);
         
         GridData selectionGridData = new GridData();
         selectionGridData.grabExcessHorizontalSpace = true;

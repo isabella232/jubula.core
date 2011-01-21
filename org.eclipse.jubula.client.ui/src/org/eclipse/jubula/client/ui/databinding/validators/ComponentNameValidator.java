@@ -14,7 +14,8 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -69,7 +70,7 @@ public class ComponentNameValidator implements IValidator {
         }
 
         return ValidationStatus.error(
-                I18n.getString("LogicalName.Error.Exists")); //$NON-NLS-1$
+                Messages.LogicalNameErrorExists);
     }
 
     /**
@@ -80,19 +81,19 @@ public class ComponentNameValidator implements IValidator {
     public static IStatus isValidComponentNameString(String stringValue) {
         if (stringValue.trim().length() == 0) {
             return ValidationStatus.error(
-                    I18n.getString("LogicalName.Error.Empty")); //$NON-NLS-1$
+                    Messages.LogicalNameErrorEmpty);
         }
-        if (stringValue.startsWith(" ")  //$NON-NLS-1$
+        if (stringValue.startsWith(StringConstants.SPACE)
             || stringValue.charAt(
                     stringValue.length() - 1) == ' ') {
 
             return ValidationStatus.error(
-                    I18n.getString("LogicalName.Error.NoSpaceAtStartOrEnd")); //$NON-NLS-1$
+                    Messages.LogicalNameErrorNoSpaceAtStartOrEnd);
         }
         for (char ch : stringValue.toCharArray()) {
             if (Character.isISOControl(ch)) {
-                return ValidationStatus.error(I18n
-                        .getString("LogicalName.Error.InvalidChar")); //$NON-NLS-1$
+                return ValidationStatus.error(
+                        Messages.LogicalNameErrorInvalidChar);
             }
         }
         return ValidationStatus.ok();

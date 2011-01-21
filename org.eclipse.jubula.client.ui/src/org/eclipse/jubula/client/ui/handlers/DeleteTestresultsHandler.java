@@ -15,9 +15,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.views.TestresultSummaryView;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.IWorkbenchPart;
 
 
@@ -51,12 +51,12 @@ public class DeleteTestresultsHandler extends AbstractHandler {
      */
     private int showDeleteTestresultsDialog() {
         MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
-            I18n.getString("TestresultSummary.DeleteTestrunDialogTitle"), //$NON-NLS-1$
+            Messages.TestresultSummaryDeleteTestrunDialogTitle,
                 null,
-                I18n.getString("TestresultSummary.DeleteTestrunDialogMessage"), //$NON-NLS-1$
+                Messages.TestresultSummaryDeleteTestrunDialogMessage,
                 MessageDialog.QUESTION, new String[] {
-                    I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
-                    I18n.getString("NewProjectDialog.MessageButton1") }, 0); //$NON-NLS-1$
+                    Messages.NewProjectDialogMessageButton0,
+                    Messages.NewProjectDialogMessageButton1 }, 0);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();

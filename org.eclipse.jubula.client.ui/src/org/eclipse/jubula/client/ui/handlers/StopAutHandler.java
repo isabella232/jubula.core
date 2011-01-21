@@ -25,8 +25,8 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionGUIController;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -42,7 +42,7 @@ public class StopAutHandler extends AbstractHandler {
     /** The eclipse job manager */
     private IJobManager m_jobManager = Job.getJobManager();
     /** The job familiy */
-    private String m_jobFamily = I18n.getString("Client.CollectingInformation"); //$NON-NLS-1$
+    private String m_jobFamily = Messages.ClientCollectingInformation;
  
     /**
      * {@inheritDoc}
@@ -83,15 +83,15 @@ public class StopAutHandler extends AbstractHandler {
     private MessageDialog getConfirmDialog() {
         String questionText;
         if (isJobRunning()) {
-            questionText = I18n.getString("StopAUTAction.questionTextIfcollecting"); //$NON-NLS-1$
+            questionText = Messages.StopAUTActionQuestionTextIfcollecting;
         } else {
-            questionText = I18n.getString("StopAUTAction.questionText"); //$NON-NLS-1$
+            questionText = Messages.StopAUTActionQuestionText;
         }
         MessageDialog dialog = new MessageDialog(Plugin.getShell(),
-                I18n.getString("StopAUTAction.shellTitle"), //$NON-NLS-1$
+                Messages.StopAUTActionShellTitle,
                 null, questionText, MessageDialog.QUESTION, new String[] {
-                        I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
-                        I18n.getString("NewProjectDialog.MessageButton1") }, 0); //$NON-NLS-1$
+                    Messages.NewProjectDialogMessageButton0,
+                    Messages.NewProjectDialogMessageButton1 }, 0);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();

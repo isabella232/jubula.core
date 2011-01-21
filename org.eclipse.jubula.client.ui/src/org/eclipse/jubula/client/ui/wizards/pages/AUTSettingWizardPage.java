@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.factory.ControlFactory;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.widgets.AutIdListComposite;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
@@ -39,7 +40,6 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -145,7 +145,6 @@ public class AUTSettingWizardPage extends WizardPage {
      */
     public void createControl(Composite parent) {
         m_scroll = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
-        
         Composite composite = createComposite(m_scroll, 1, GridData.FILL, 
             false);
         Composite autNameComposite = createComposite(composite, 
@@ -175,14 +174,15 @@ public class AUTSettingWizardPage extends WizardPage {
             leftList.add(Languages.getInstance().getDisplayString(iter.next()));
         }
         Label descriptionLabel = new Label(innerComposite, SWT.NONE);
-        descriptionLabel.setText(I18n.getString("AUTSettingWizardPage.SelectLanguagesOfTD")); //$NON-NLS-1$
+        descriptionLabel.setText(
+                Messages.AUTSettingWizardPageSelectLanguagesOfTD);
         ControlDecorator.decorateInfo(descriptionLabel, 
                 "GDControlDecorator.NewProjectAUTLanguage", false);
         m_chooseLists = new ListElementChooserComposite(
             innerComposite, 
-            I18n.getString("AUTSettingWizardPage.upperLabel"), //$NON-NLS-1$
+            Messages.AUTSettingWizardPageUpperLabel,
             leftList,  
-            I18n.getString("AUTSettingWizardPage.bottomLabel"), //$NON-NLS-1$
+            Messages.AUTSettingWizardPageBottomLabel,
             new ArrayList(),  
             15, 
             new Image[]{
@@ -194,10 +194,10 @@ public class AUTSettingWizardPage extends WizardPage {
                 IconConstants.DOUBLE_RIGHT_ARROW_DIS_IMAGE, 
                 IconConstants.LEFT_ARROW_DIS_IMAGE, 
                 IconConstants.DOUBLE_LEFT_ARROW_DIS_IMAGE },
-            new String[]{I18n.getString("AUTSettingWizardPage.downToolTip"), //$NON-NLS-1$
-                I18n.getString("AUTSettingWizardPage.allDownToolTip"),  //$NON-NLS-1$
-                I18n.getString("AUTSettingWizardPage.upToolTip"), //$NON-NLS-1$
-                I18n.getString("AUTSettingWizardPage.allUpToolTip")},  //$NON-NLS-1$
+            new String[]{Messages.AUTSettingWizardPageDownToolTip,
+                Messages.AUTSettingWizardPageAllDownToolTip,
+                Messages.AUTSettingWizardPageUpToolTip,
+                Messages.AUTSettingWizardPageAllUpToolTip},
             ListElementChooserComposite.VERTICAL);  
         getObjects();
 
@@ -237,7 +237,7 @@ public class AUTSettingWizardPage extends WizardPage {
      */
     private void createNextLabel(Composite composite) {
         Label nextLabel = new Label(composite, SWT.NONE);
-        nextLabel.setText(I18n.getString("AUTSettingWizardPage.clickNext")); //$NON-NLS-1$
+        nextLabel.setText(Messages.AUTSettingWizardPageClickNext);
         GridData data = new GridData();
         data.grabExcessVerticalSpace = true;
         data.verticalAlignment = GridData.END;
@@ -294,7 +294,7 @@ public class AUTSettingWizardPage extends WizardPage {
         gridLayout.marginWidth = 0;
         leftComposite.setLayout(gridLayout);
         rightComposite.setLayout(gridLayout);
-        newLabel(leftComposite, I18n.getString("AUTSettingWizardPage.autName")); //$NON-NLS-1$
+        newLabel(leftComposite, Messages.AUTSettingWizardPageAutName);
         m_autNameText = new JBText(rightComposite, SWT.BORDER);
         m_autNameText.setFocus();
         final GridData gridData = new GridData();
@@ -330,8 +330,8 @@ public class AUTSettingWizardPage extends WizardPage {
                 SWT.LEFT, false);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_1,
                 SWT.FILL, true);
-        Label infoLabel = newLabel(leftComposite, I18n
-                .getString("AUTPropertiesDialog.generateNames")); //$NON-NLS-1$
+        Label infoLabel = newLabel(leftComposite, 
+                Messages.AUTPropertiesDialogGenerateNames);
         ControlDecorator.decorateInfo(infoLabel, 
                 "AUTPropertiesDialog.generateNamesDescription", false); //$NON-NLS-1$
         m_generateNames = new Button(rightComposite, SWT.CHECK);
@@ -372,7 +372,7 @@ public class AUTSettingWizardPage extends WizardPage {
         newLabel(leftComposite, StringConstants.EMPTY);
         newLabel(rightComposite, StringConstants.EMPTY);
         ControlDecorator.decorateInfo(newLabel(leftComposite, 
-                I18n.getString("AUTSettingWizardPage.toolkit")), 
+                Messages.AUTSettingWizardPageToolkit), 
                 "GDControlDecorator.NewProjectAUTToolkit", false);
         try {
             m_autToolKitComboBox = ControlFactory.createAutToolkitCombo(
@@ -566,8 +566,10 @@ public class AUTSettingWizardPage extends WizardPage {
                 checkCompleteness();
                 return;
             }
-            Assert.notReached("Event activated by unknown widget: '"  //$NON-NLS-1$
-                + String.valueOf(o) + "'"); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                + StringConstants.COLON + StringConstants.SPACE 
+                + StringConstants.APOSTROPHE + String.valueOf(o) 
+                + StringConstants.APOSTROPHE);
         }
     }
     
@@ -598,7 +600,8 @@ public class AUTSettingWizardPage extends WizardPage {
                 checkCompleteness();
                 return;
             } 
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.DOT);
         }
     }
 
@@ -708,8 +711,7 @@ public class AUTSettingWizardPage extends WizardPage {
         if (modifyAUTNameFieldAction() 
             && modifyAutToolkitComboAction()) {
             
-            setMessage(I18n.getString("ProjectWizard.newAUT"), //$NON-NLS-1$
-                IMessageProvider.NONE);
+            setMessage(Messages.ProjectWizardNewAUT, IMessageProvider.NONE);
             setPageComplete(true);
             confirmNextButton();
         } else {
@@ -731,7 +733,7 @@ public class AUTSettingWizardPage extends WizardPage {
             m_autMain.setToolkit(m_autToolKitComboBox.getSelectedObject());
             checkToolkit(getShell(), m_autMain, oldToolkit);
         } else {
-            setMessage(I18n.getString("ProjectWizard.noToolkitSelected"), //$NON-NLS-1$
+            setMessage(Messages.ProjectWizardNoToolkitSelected,
                 IMessageProvider.ERROR);
 
         }
@@ -755,11 +757,11 @@ public class AUTSettingWizardPage extends WizardPage {
         }
         if (isError) {
             if (autNameLength == 0) {
-                setMessage(I18n.getString("AUTSettingWizardPage.emptyAUTName"),  //$NON-NLS-1$
+                setMessage(Messages.AUTSettingWizardPageEmptyAUTName,
                         IMessageProvider.ERROR); 
                 setPageComplete(false);
             } else {
-                setMessage(I18n.getString("ProjectWizard.notValidAUT"), //$NON-NLS-1$
+                setMessage(Messages.ProjectWizardNotValidAUT,
                         IMessageProvider.ERROR); 
                 setPageComplete(false);
             }

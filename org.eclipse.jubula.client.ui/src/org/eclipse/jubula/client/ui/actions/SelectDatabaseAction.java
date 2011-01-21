@@ -32,12 +32,11 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.JBFatalException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
-
 
 /**
  * @author BREDEX GmbH
@@ -47,70 +46,71 @@ public class SelectDatabaseAction extends AbstractAction {
     /**
      * <code>HIBERNATE_CONNECTION_PASSWORD</code>
      */
-    private static final String HIBERNATE_CONNECTION_PASSWORD = 
-        "javax.persistence.jdbc.password"; //$NON-NLS-1$
+    private static final String HIBERNATE_CONNECTION_PASSWORD = "javax.persistence.jdbc.password"; //$NON-NLS-1$
 
     /**
      * key for the username property for Hibernate
      */
-    private static final String HIBERNATE_CONNECTION_USERNAME = 
-        "javax.persistence.jdbc.user"; //$NON-NLS-1$
-    
+    private static final String HIBERNATE_CONNECTION_USERNAME = "javax.persistence.jdbc.user"; //$NON-NLS-1$
+
     /** true, if hibernate init was successful */
     private static boolean hibernateInit = false;
-    
+
     /**
-     * {@inheritDoc}
-     * + check unsaved editors
+     * {@inheritDoc} + check unsaved editors
      */
     public void runWithEvent(IAction action, Event event) {
         if (action != null && !action.isEnabled()) {
             return;
         }
         if (GeneralStorage.getInstance().getProject() != null
-                && Plugin.getDefault().anyDirtyStar() 
+                && Plugin.getDefault().anyDirtyStar()
                 && !Plugin.getDefault().showSaveEditorDialog()) {
 
             Plugin.stopLongRunning();
             return;
         }
-        
+
         new Loader().start();
     }
 
     /**
      * Runnable to connect to DB
+     * 
      * @author BREDEX GmbH
-     *
+     * 
      */
     private static class Loader extends JBThread {
-        
+
         /**
          * run method
          */
         public void run() {
             Plugin.startLongRunning();
-            
+
             Hibernator.setSelectDBAction(true);
-            
-            Map<String, Properties> schemeMap = 
-                DBSchemaPropertyCreator.getSchemaMap();
-            //if only one scheme with user and password is defined don't show login dialog 
+
+            Map<String, Properties> schemeMap = DBSchemaPropertyCreator
+                    .getSchemaMap();
+            // if only one scheme with user and password is defined don't show
+            // login dialog
             if (schemeMap.size() == 1) {
                 connectWithoutLoginDialog(schemeMap);
             } else {
                 ProgressEventDispatcher.notifyListener(new ProgressEvent(
                         ProgressEvent.LOGIN, null, null));
             }
-            
+
             Hibernator.setSelectDBAction(false);
-            
+
         }
 
         /**
-         * don't open login dialog, if only one scheme is defined
-         * with user and password
-         * @param schemeMap Map of schemes
+         * don't open login dialog, if only one scheme is defined with user and
+         * password
+         * 
+         * @param schemeMap
+         *            Map of schemes
          */
         private void connectWithoutLoginDialog(
                 final Map<String, Properties> schemeMap) {
@@ -121,69 +121,68 @@ public class SelectDatabaseAction extends AbstractAction {
                     Iterator<Properties> it = values.iterator();
                     if (it.hasNext()) {
                         Properties schemeProp = it.next();
-                        String predefinedUsername = schemeProp.getProperty(
-                                HIBERNATE_CONNECTION_USERNAME);
-                        String predefinedPassword = schemeProp.getProperty(
-                                HIBERNATE_CONNECTION_PASSWORD);
+                        String predefinedUsername = schemeProp
+                                .getProperty(HIBERNATE_CONNECTION_USERNAME);
+                        String predefinedPassword = schemeProp
+                                .getProperty(HIBERNATE_CONNECTION_PASSWORD);
                         String schemName = keys[0].toString();
                         if (predefinedUsername != null
-                            && predefinedPassword != null) {                    
+                                && predefinedPassword != null) {
                             Hibernator.setUser(predefinedUsername);
                             Hibernator.setPw(predefinedPassword);
                             Hibernator.setSchemaName(schemName);
-                            
+
                             if (Hibernator.instance() != null) {
                                 CompNamePM.dispose();
                                 GeneralStorage.getInstance().dispose();
                                 if (LockManager.isRunning()) {
                                     LockManager.instance().dispose();
-                                }                
+                                }
                                 Hibernator.instance().dispose();
                                 DataEventDispatcher.getInstance()
-                                    .fireTestresultChanged(
-                                            TestresultState.Clear);
+                                        .fireTestresultChanged(
+                                                TestresultState.Clear);
                             }
-                            
-                            ConnectDbOperation connDbOp = 
+
+                            ConnectDbOperation connDbOp =
                                 new ConnectDbOperation();
                             try {
                                 PlatformUI.getWorkbench().getProgressService()
-                                    .run(true, false, connDbOp);
+                                        .run(true, false, connDbOp);
                             } catch (InvocationTargetException e) {
                                 hibernateInit = false;
                             } catch (InterruptedException e) {
                                 hibernateInit = false;
                             }
-                            
+
                             if (hibernateInit) {
                                 Utils.clearClient();
                                 LockManager.instance();
-                                Plugin.getDefault().writeLineToConsole(
-                                        I18n.getString(
-                                        "SelectDatabaseAction.Info.ConnectSuccessful"), //$NON-NLS-1$
-                                            true);
+                                Plugin.getDefault().writeLineToConsole(Messages.
+                                    SelectDatabaseActionInfoConnectSuccessful,
+                                    true);
                                 Plugin.stopLongRunning();
                             } else {
                                 Utils.clearClientUI();
                                 Plugin.getDefault().writeLineToConsole(
-                                        I18n.getString(
-                                        "SelectDatabaseAction.Info.ConnectFailed"), //$NON-NLS-1$
-                                            true);
+                                                Messages.
+                                        SelectDatabaseActionInfoConnectFailed,
+                                                true);
                                 Plugin.stopLongRunning();
                             }
                         } else {
-                            ProgressEventDispatcher.notifyListener(
-                                    new ProgressEvent(ProgressEvent.LOGIN, null,
-                                            null));
+                            ProgressEventDispatcher
+                                    .notifyListener(new ProgressEvent(
+                                            ProgressEvent.LOGIN, null, null));
                         }
                     }
                 }
             });
         }
-        
+
         /**
          * 
-         *
+         * 
          * @author BREDEX GmbH
          * @created Jan 2, 2008
          */
@@ -193,7 +192,7 @@ public class SelectDatabaseAction extends AbstractAction {
              * constructor
              */
             public ConnectDbOperation() {
-                //default constructor
+                // default constructor
             }
 
             /**
@@ -201,9 +200,9 @@ public class SelectDatabaseAction extends AbstractAction {
              */
             public void run(IProgressMonitor monitor) {
 
-                monitor.beginTask(I18n.getString("Plugin.connectProgress"), //$NON-NLS-1$
+                monitor.beginTask(Messages.PluginConnectProgress,
                         IProgressMonitor.UNKNOWN);
-                
+
                 try {
                     if (Hibernator.init()) {
                         hibernateInit = true;
@@ -225,7 +224,7 @@ public class SelectDatabaseAction extends AbstractAction {
          * {@inheritDoc}
          */
         protected void errorOccured() {
-            Plugin.stopLongRunning();            
+            Plugin.stopLongRunning();
         }
     }
 }

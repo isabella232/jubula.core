@@ -26,13 +26,13 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.query.AbstractSearchQuery;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.TreeViewerIterator;
 import org.eclipse.jubula.client.ui.views.IMultiTreeViewerContainer;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -120,7 +120,7 @@ public class FindDialog <NODE> implements DisposeListener {
      * initializes search window
      */
     private void init() {
-        m_shell.setText(I18n.getString("FindDialog.Title")); //$NON-NLS-1$
+        m_shell.setText(Messages.FindDialogTitle);
         createContent();
         Point location = m_shell.getDisplay().getCursorLocation();
         if ((location.x + m_shell.getSize().x) > m_shell.getDisplay().
@@ -145,7 +145,7 @@ public class FindDialog <NODE> implements DisposeListener {
         layout.marginWidth = 10;
         m_shell.setLayout(layout);
         Label findLabel = new Label(m_shell, SWT.NONE);
-        findLabel.setText(I18n.getString("FindDialog.Find") + ":"); //$NON-NLS-1$ //$NON-NLS-2$
+        findLabel.setText(Messages.FindDialogFind + StringConstants.COLON);
         FormData findLabelData = new FormData();
         // set position and size with relative values
         findLabelData.left   = new FormAttachment(0, 0);
@@ -161,7 +161,7 @@ public class FindDialog <NODE> implements DisposeListener {
         m_searchStringCombo.setItems(RECENT.toArray
             (new String[RECENT.size()]));
         if (m_searchStringCombo.getItemCount() == 0) {
-            m_searchStringCombo.setText(I18n.getString("FindDialog.Phrase")); //$NON-NLS-1$
+            m_searchStringCombo.setText(Messages.FindDialogPhrase);
         } else {
             m_searchStringCombo.select(0);
         }
@@ -197,14 +197,14 @@ public class FindDialog <NODE> implements DisposeListener {
                 doCallBack();
             }
         });
-        m_findButton.setText(I18n.getString("FindDialog.Find")); //$NON-NLS-1$
+        m_findButton.setText(Messages.FindDialogFind);
         FormData findButtonData = new FormData();
         findButtonData.top = new FormAttachment(m_optionsGroup, 15, SWT.BOTTOM);
         findButtonData.left = new FormAttachment(20, 0);
         findButtonData.right = new FormAttachment(58, 0);
         m_findButton.setLayoutData(findButtonData);
         m_cancelButton = new Button(m_shell, SWT.NONE);
-        m_cancelButton.setText(I18n.getString("FindDialog.Close")); //$NON-NLS-1$
+        m_cancelButton.setText(Messages.FindDialogClose);
         m_cancelButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 m_shell.close();
@@ -261,7 +261,7 @@ public class FindDialog <NODE> implements DisposeListener {
      */
     private void createDirectionGroup() {
         m_directionGroup = new Group(m_shell, SWT.NONE);
-        m_directionGroup.setText(I18n.getString("FindDialog.Direction")); //$NON-NLS-1$
+        m_directionGroup.setText(Messages.FindDialogDirection);
         FormLayout groupLayout = new FormLayout();
         m_directionGroup.setLayout(groupLayout);
         groupLayout.marginHeight = 5;
@@ -273,14 +273,14 @@ public class FindDialog <NODE> implements DisposeListener {
         groupDirectionData.left = new FormAttachment(0, 0);
         m_directionGroup.setLayoutData(groupDirectionData);
         m_findForwardButton = new Button(m_directionGroup, SWT.RADIO);
-        m_findForwardButton.setText(I18n.getString("FindDialog.Forward")); //$NON-NLS-1$
+        m_findForwardButton.setText(Messages.FindDialogForward);
         m_findForwardButton.setSelection(lastforward);
         FormData findForwardData = new FormData();
         findForwardData.left = new FormAttachment(0, 0);
         findForwardData.right = new FormAttachment(48, 0);
         m_findForwardButton.setLayoutData(findForwardData);
         m_findBackwardButton = new Button(m_directionGroup, SWT.RADIO);
-        m_findBackwardButton.setText(I18n.getString("FindDialog.Backward")); //$NON-NLS-1$
+        m_findBackwardButton.setText(Messages.FindDialogBackward);
         m_findBackwardButton.setSelection(!lastforward);
         FormData findBackwardData = new FormData();
         findBackwardData.left = new FormAttachment(52, 0);
@@ -293,7 +293,7 @@ public class FindDialog <NODE> implements DisposeListener {
      */
     private void createOptionsGroup() {
         m_optionsGroup = new Group(m_shell, SWT.NONE);
-        m_optionsGroup.setText(I18n.getString("FindDialog.Options")); //$NON-NLS-1$
+        m_optionsGroup.setText(Messages.FindDialogOptions);
         FormData groupDirectionData = new FormData();
         groupDirectionData.top = new FormAttachment(m_directionGroup, 10, 
                 SWT.BOTTOM);
@@ -305,21 +305,21 @@ public class FindDialog <NODE> implements DisposeListener {
         layout.marginWidth = 5;
         m_optionsGroup.setLayout(layout);
         m_caseSensitivCheck = new Button(m_optionsGroup, SWT.CHECK);
-        m_caseSensitivCheck.setText(I18n.getString("FindDialog.CaseSen")); //$NON-NLS-1$
+        m_caseSensitivCheck.setText(Messages.FindDialogCaseSen);
         m_caseSensitivCheck.setSelection(lastcasesensitive);
         FormData sensitiveData = new FormData();
         sensitiveData.left = new FormAttachment(0, 0);
         sensitiveData.right = new FormAttachment(48, 0);
         m_caseSensitivCheck.setLayoutData(sensitiveData); 
         m_wrapSearchCheck = new Button(m_optionsGroup, SWT.CHECK);
-        m_wrapSearchCheck.setText(I18n.getString("FindDialog.Wrap")); //$NON-NLS-1$
+        m_wrapSearchCheck.setText(Messages.FindDialogWrap);
         m_wrapSearchCheck.setSelection(lastwrapsearch);
         FormData warpSearchData = new FormData();
         warpSearchData.left = new FormAttachment(52, 0);
         warpSearchData.right = new FormAttachment(100, 0);
         m_wrapSearchCheck.setLayoutData(warpSearchData);
         m_useRegExCheck = new Button(m_optionsGroup, SWT.CHECK);
-        m_useRegExCheck.setText(I18n.getString("FindDialog.RegEx")); //$NON-NLS-1$
+        m_useRegExCheck.setText(Messages.FindDialogRegEx);
         m_useRegExCheck.setSelection(lastregex);
         FormData regExData = new FormData();
         regExData.left = new FormAttachment(0, 0);
@@ -369,7 +369,7 @@ public class FindDialog <NODE> implements DisposeListener {
         final Object nodeToStart = treeSelection instanceof IStructuredSelection
                 ? ((IStructuredSelection)treeSelection).getFirstElement() 
                         : null;
-        final String jobName = I18n.getString("UIJob.findingNodes"); //$NON-NLS-1$
+        final String jobName = Messages.UIJobFindingNodes;
         Job findingNodes = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
@@ -380,8 +380,7 @@ public class FindDialog <NODE> implements DisposeListener {
                     public void run() {
                         if (!m_errorLabel.isDisposed()) {
                             if (!result) {
-                                m_errorLabel.setText(I18n
-                                        .getString("FindDialog.Error")); //$NON-NLS-1$
+                                m_errorLabel.setText(Messages.FindDialogError);
                             } else {
                                 m_errorLabel.setText(StringConstants.EMPTY);
                             }
@@ -486,8 +485,10 @@ public class FindDialog <NODE> implements DisposeListener {
                     getActiveTreeViewer(), nodeToStart,
                     forward);
             int noOfElements = iterator.getElements().size();
-            monitor.beginTask("Searching in " + noOfElements  //$NON-NLS-1$
-                    + " elements...", noOfElements); //$NON-NLS-1$
+            monitor.beginTask(Messages.SearchingIn + StringConstants.SPACE
+                    + noOfElements + StringConstants.SPACE + Messages.Elements
+                    + StringConstants.DOT + StringConstants.DOT
+                    + StringConstants.DOT, noOfElements);
             ILabelProvider labelProv = 
                 (ILabelProvider)getActiveTreeViewer().getLabelProvider();
             while (iterator.hasNext()) {

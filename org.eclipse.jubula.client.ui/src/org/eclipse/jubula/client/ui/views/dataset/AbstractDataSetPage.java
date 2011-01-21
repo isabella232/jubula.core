@@ -55,6 +55,7 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
@@ -63,7 +64,6 @@ import org.eclipse.jubula.client.ui.widgets.CheckedParamTextContentAssisted;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.constants.CharacterConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ControlEditor;
@@ -519,15 +519,15 @@ public abstract class AbstractDataSetPage extends Page
      */
     private void createComboLabels(Composite parent) {
         Label paramLabel = new Label(parent, SWT.NONE);
-        paramLabel.setText(I18n.getString("GDDataSetView.Parameter")); //$NON-NLS-1$
+        paramLabel.setText(Messages.GDDataSetViewParameter);
         paramLabel.setData(WIDGET_NAME_KEY, "DataSetView.ParamLabel"); //$NON-NLS-1$
         
         Label dataSetLabel = new Label(parent, SWT.NONE);
-        dataSetLabel.setText(I18n.getString("GDDataSetView.DataSet")); //$NON-NLS-1$
+        dataSetLabel.setText(Messages.GDDataSetViewDataSet);
         dataSetLabel.setData(WIDGET_NAME_KEY, "DataSetView.DataSetLabel"); //$NON-NLS-1$
         
         Label languageLabel = new Label(parent, SWT.NONE);
-        languageLabel.setText(I18n.getString("GDDataSetView.Language")); //$NON-NLS-1$
+        languageLabel.setText(Messages.GDDataSetViewLanguage);
         languageLabel.setData(WIDGET_NAME_KEY, "DataSetView.DataSetLabel"); //$NON-NLS-1$
     }
     
@@ -539,7 +539,7 @@ public abstract class AbstractDataSetPage extends Page
         // Create and configure the "Add" button
         setAddButton(new Button(parent, SWT.PUSH | SWT.CENTER));
         getAddButton().setData(WIDGET_NAME_KEY, "DataSetView.AddButton"); //$NON-NLS-1$
-        getAddButton().setText(I18n.getString("GuiDancerDataSetView.append")); //$NON-NLS-1$
+        getAddButton().setText(Messages.GuiDancerDataSetViewAppend);
         GridData gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80;
         getAddButton().setLayoutData(gridData);
@@ -549,7 +549,7 @@ public abstract class AbstractDataSetPage extends Page
         // Create and configure the "Insert" button
         setInsertButton(new Button(parent, SWT.PUSH | SWT.CENTER));
         getInsertButton().setData(WIDGET_NAME_KEY, "DataSetView.InsertButton"); //$NON-NLS-1$
-        getInsertButton().setText(I18n.getString("GDDataSetView.Insert")); //$NON-NLS-1$
+        getInsertButton().setText(Messages.GDDataSetViewInsert);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80;
         getInsertButton().setLayoutData(gridData);
@@ -559,7 +559,7 @@ public abstract class AbstractDataSetPage extends Page
         //  Create and configure the "Delete" button
         setDeleteButton(new Button(parent, SWT.PUSH | SWT.CENTER));
         getDeleteButton().setData(WIDGET_NAME_KEY, "DataSetView.DeleteButton"); //$NON-NLS-1$
-        getDeleteButton().setText(I18n.getString("GuiDancerDataSetView.delete")); //$NON-NLS-1$
+        getDeleteButton().setText(Messages.GuiDancerDataSetViewDelete);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80; 
         getDeleteButton().setLayoutData(gridData); 
@@ -849,7 +849,7 @@ public abstract class AbstractDataSetPage extends Page
         final Table table = getTable();
         // create column for data set numer
         TableColumn dataSetNumberCol = new TableColumn(table, SWT.NONE);
-        dataSetNumberCol.setText(I18n.getString("GDDataSetViewController.DataSetNumber")); //$NON-NLS-1$
+        dataSetNumberCol.setText(Messages.GDDataSetViewControllerDataSetNumber);
         dataSetNumberCol.setWidth(DATASET_NUMBER_COLUMNWIDTH);
         return dataSetNumberCol.getText();
     }
@@ -863,7 +863,7 @@ public abstract class AbstractDataSetPage extends Page
         final Table table = getTable();
         // create column for data set numer
         TableColumn paramCol = new TableColumn(table, SWT.NONE);
-        paramCol.setText(I18n.getString("GDDataSetView.Parameter")); //$NON-NLS-1$
+        paramCol.setText(Messages.GDDataSetViewParameter);
         paramCol.pack();
         return paramCol.getText();
     }

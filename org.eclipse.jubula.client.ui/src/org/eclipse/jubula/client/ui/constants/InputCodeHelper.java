@@ -18,8 +18,8 @@ import java.util.List;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.InputConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -188,9 +188,9 @@ public class InputCodeHelper {
                 InputConstants.MOUSE_BUTTON_RIGHT, 
                 InputConstants.TYPE_MOUSE_CLICK));
 
-        inputStringList.add(I18n.getString("ObjectMappingPreferencePage.mouseButton1")); //$NON-NLS-1$
-        inputStringList.add(I18n.getString("ObjectMappingPreferencePage.mouseButton2")); //$NON-NLS-1$
-        inputStringList.add(I18n.getString("ObjectMappingPreferencePage.mouseButton3")); //$NON-NLS-1$
+        inputStringList.add(Messages.ObjectMappingPreferencePageMouseButton1);
+        inputStringList.add(Messages.ObjectMappingPreferencePageMouseButton2);
+        inputStringList.add(Messages.ObjectMappingPreferencePageMouseButton3);
         
         m_inputs = inputList.toArray(new UserInput[inputList.size()]);
         m_inputStrings = 

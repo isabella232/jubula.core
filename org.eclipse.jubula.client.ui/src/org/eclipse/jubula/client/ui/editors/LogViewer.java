@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.ui.editors;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -60,7 +60,7 @@ public class LogViewer extends EditorPart {
             setInput(input);
             setPartName(input.getName());
         } else {
-            String msg = I18n.getString("EditorInit.CreateError"); //$NON-NLS-1$
+            String msg = Messages.EditorInitCreateError;
             throw new PartInitException(msg);
         }
 

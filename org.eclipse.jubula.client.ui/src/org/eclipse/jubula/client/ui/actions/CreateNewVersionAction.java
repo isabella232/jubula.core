@@ -47,16 +47,18 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.VersionDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
@@ -117,12 +119,14 @@ public class CreateNewVersionAction extends AbstractAction {
          */
         public void run(IProgressMonitor monitor) throws InterruptedException {
             String pName = GeneralStorage.getInstance().getProject().getName();
-            final SubMonitor subMonitor = SubMonitor.convert(monitor,
-                    I18n.getString("CreateNewProjectVersionOperation.CreatingNewVersion", //$NON-NLS-1$
-                            new Object[]{m_majorVersionNumber,
-                                         m_minorVersionNumber,
-                                         pName}), 
-                    TOTAL_WORK);
+            final SubMonitor subMonitor = SubMonitor
+                    .convert(
+                            monitor,
+                            NLS.bind(Messages.
+                        CreateNewProjectVersionOperationCreatingNewVersion,
+                                    new Object[] { m_majorVersionNumber,
+                                        m_minorVersionNumber, pName }),
+                            TOTAL_WORK);
             final ParamNameBPDecorator paramNameMapper = 
                 new ParamNameBPDecorator(ParamNameBP.getInstance());
             final IWritableComponentNameCache compNameCache = 
@@ -131,19 +135,21 @@ public class CreateNewVersionAction extends AbstractAction {
                 createNewVersion(monitor, subMonitor, paramNameMapper,
                         compNameCache); 
             } catch (final PMReadException e) {
-                log.error("Error occurred while creating new project version",  //$NON-NLS-1$
+                log.error(Messages.ErrorOccurredWhileCreatingNewProjectVersion,
                     e);
             } catch (PMException e) {
-                log.error("Error occurred while creating new project version",  //$NON-NLS-1$
+                log.error(Messages.ErrorOccurredWhileCreatingNewProjectVersion,
                     e);
             } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
             } catch (JBVersionException e) {
                 // should not be occur
-                log.error("Toolkit version conflict while creating new project version."); //$NON-NLS-1$
+                log.error(Messages.
+                        ToolkitVersionConflictWhileCreatingNewProjectVersion);
             } catch (ConverterException e) {
                 // should not occur
-                final String msg = "Exception '" + e + "' should not occur!"; //$NON-NLS-1$//$NON-NLS-2$
+                final String msg = Messages.Exception + StringConstants.SPACE
+                    + e + StringConstants.SPACE + Messages.ShouldNotOccur;
                 log.error(msg);
                 Assert.notReached(msg);  
             } finally {
@@ -283,7 +289,7 @@ public class CreateNewVersionAction extends AbstractAction {
         if (action != null && !action.isEnabled()) {
             return;
         }
-        Plugin.startLongRunning(I18n.getString("SaveProjectAsAction.waitWhileSaving")); //$NON-NLS-1$
+        Plugin.startLongRunning(Messages.SaveProjectAsActionWaitWhileSaving);
         VersionDialog dialog = openVersionDialog();
         if (dialog != null && dialog.getReturnCode() == Window.OK) {
             final Integer majorVersionNumber = dialog.getMajorVersionNumber();
@@ -376,16 +382,16 @@ public class CreateNewVersionAction extends AbstractAction {
         Integer minNum = Integer.parseInt(versionNumbers[1]);
         VersionDialog dialog = new VersionDialog(
             Plugin.getShell(),
-            I18n.getString("CreateNewProjectVersionAction.title"),  //$NON-NLS-1$
+            Messages.CreateNewProjectVersionActionTitle,
             majNum,
             minNum,
-            I18n.getString("CreateNewProjectVersionAction.message"), //$NON-NLS-1$
-            I18n.getString("CreateNewProjectVersionAction.majorLabel"), //$NON-NLS-1$
-            I18n.getString("CreateNewProjectVersionAction.minorLabel"), //$NON-NLS-1$
-            I18n.getString("CreateNewProjectVersionAction.invalidVersion"), //$NON-NLS-1$
-            I18n.getString("CreateNewProjectVersionAction.doubleVersion"), //$NON-NLS-1$
+            Messages.CreateNewProjectVersionActionMessage,
+            Messages.CreateNewProjectVersionActionMajorLabel,
+            Messages.CreateNewProjectVersionActionMinorLabel,
+            Messages.CreateNewProjectVersionActionInvalidVersion,
+            Messages.CreateNewProjectVersionActionDoubleVersion,
             IconConstants.BIG_PROJECT_STRING, 
-            I18n.getString("CreateNewProjectVersionAction.shellTitle")) { //$NON-NLS-1$ 
+            Messages.CreateNewProjectVersionActionShellTitle) { 
 
             /**
              * {@inheritDoc}

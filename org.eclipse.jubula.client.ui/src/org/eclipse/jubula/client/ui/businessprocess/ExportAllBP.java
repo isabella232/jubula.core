@@ -20,7 +20,8 @@ import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -84,9 +85,8 @@ public class ExportAllBP extends AbstractActionBP {
      */
     public void showAbortExport(JBException gde) {
         Plugin.getDefault().writeErrorLineToConsole(
-            I18n.getString(
-                "ExportAllBP.Error.ExportFailed", //$NON-NLS-1$
-                new Object [] {gde.getMessage()}),
+            NLS.bind(Messages.ExportAllBPErrorExportFailed,
+                    new Object [] {gde.getMessage()}),
             true);
     }
 
@@ -96,9 +96,8 @@ public class ExportAllBP extends AbstractActionBP {
      */
     public void showCancelExport() {
         Plugin.getDefault().writeErrorLineToConsole(
-            I18n.getString(
-                "ExportAllBP.Error.ExportFailed", //$NON-NLS-1$
-                new Object [] {"Export operation cancelled by user"}), //$NON-NLS-1$
+                NLS.bind(Messages.ExportAllBPErrorExportFailed,
+                new Object [] {"Export operation cancelled by user"}),
             true);
     }
 
@@ -107,7 +106,7 @@ public class ExportAllBP extends AbstractActionBP {
      */
     public void showFinishedExport() {
         Plugin.getDefault().writeLineToConsole(
-            I18n.getString("ExportAllBP.Info.FinishedExport"), true); //$NON-NLS-1$
+            Messages.ExportAllBPInfoFinishedExport, true);
     }
 
     /**
@@ -116,7 +115,7 @@ public class ExportAllBP extends AbstractActionBP {
      */
     public void showStartingExport() {
         Plugin.getDefault().writeLineToConsole(
-            I18n.getString("ExportAllBP.Info.StartingExport"), true); //$NON-NLS-1$
+            Messages.ExportAllBPInfoStartingExport, true);
     }
 
     /**

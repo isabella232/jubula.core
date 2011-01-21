@@ -21,6 +21,7 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 
 
@@ -78,9 +79,11 @@ public class TestDataCubeRefContentProposalProvider implements
             StringBuilder sb = new StringBuilder();
             for (IParamDescriptionPO param : m_dataCube.getParameterList()) {
                 sb.append(param.getName());
-                sb.append("\t-\t"); //$NON-NLS-1$
+                sb.append(StringConstants.TAB);
+                sb.append(StringConstants.MINUS);
+                sb.append(StringConstants.TAB);
                 sb.append(CompSystemI18n.getString(param.getType()));
-                sb.append("\n"); //$NON-NLS-1$
+                sb.append(StringConstants.NEWLINE);
             }
 
             return sb.length() > 0  ? sb.toString() : null;

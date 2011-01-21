@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ContentAssis
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ParamTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.ParameterValueLabelProvider;
@@ -62,11 +63,12 @@ public class ExecTestCaseGUIPropertySource extends
         IconConstants.OVERWRITTEN_DATA_IMAGE;
    
     /** Constant for the String Specification Name */
-    public static final String P_SPECNAME_DISPLAY_NAME = I18n.getString("ExecTestCaseGUIPropertySource.specificationName"); //$NON-NLS-1$
+    public static final String P_SPECNAME_DISPLAY_NAME =
+        Messages.ExecTestCaseGUIPropertySourceSpecificationName;
     
     /** Constant for the String Test Case Reference Name */
-    public static final String P_REFERNCE_DISPLAY_NAME = 
-        I18n.getString("ExecTestCaseGUIPropertySource.TestCaseReferenceName");  //$NON-NLS-1$
+    public static final String P_REFERNCE_DISPLAY_NAME =
+        Messages.ExecTestCaseGUIPropertySourceTestCaseReferenceName;
 
     /** cached property descriptor for name */
     private IPropertyDescriptor m_namePropDesc = null;

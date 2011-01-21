@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.dialogs.ClassPathDialog;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -45,9 +46,9 @@ import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -303,8 +304,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         LinkedList<AutIdentifier> l = 
             (LinkedList<AutIdentifier>)
             AutAgentRegistration.getInstance().getRegisteredAuts();
-        String message = 
-            I18n.getString("Client.MonitoringInfoDialog", //$NON-NLS-1$
+        String message = NLS.bind(Messages.ClientMonitoringInfoDialog,
                 new Object[]{autId});        
         for (AutIdentifier a : l) {
             if (a.getExecutableName().equals(autId)) {                
@@ -368,7 +368,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         m_execButton = new Button(
                 UIComponentHelper.createLayoutComposite(parent),
                 SWT.PUSH);
-        m_execButton.setText(I18n.getString("AUTConfigComponent.browse"));  //$NON-NLS-1$
+        m_execButton.setText(Messages.AUTConfigComponentBrowse);
         m_execButton.setLayoutData(BUTTON_LAYOUT);
         m_execButton.setEnabled(Utils.isLocalhost());
     }
@@ -521,7 +521,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         UIComponentHelper.setMaxTextChars(m_jarTextField, MAX_TEXT_LENGTH);
         m_jarButton = new Button(UIComponentHelper
                 .createLayoutComposite(parent), SWT.PUSH);
-        m_jarButton.setText(I18n.getString("AUTConfigComponent.browse")); //$NON-NLS-1$
+        m_jarButton.setText(Messages.AUTConfigComponentBrowse);
         m_jarButton.setLayoutData(BUTTON_LAYOUT);
         m_jarButton.setEnabled(Utils.isLocalhost());
     }
@@ -546,30 +546,30 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         m_classPathButtonComposite = 
             UIComponentHelper.createLayoutComposite(parent);
         m_addElementButton = new Button(m_classPathButtonComposite, SWT.PUSH);
-        m_addElementButton.setText(I18n.getString("AUTConfigComponent.element")); //$NON-NLS-1$
+        m_addElementButton.setText(Messages.AUTConfigComponentElement);
         m_addElementButton.setLayoutData(BUTTON_LAYOUT);
         
         m_moveElementUpButton = 
             new Button(m_classPathButtonComposite, SWT.PUSH);
         m_moveElementUpButton.setImage(IconConstants.UP_ARROW_DIS_IMAGE);
         m_moveElementUpButton.setToolTipText(
-            I18n.getString("AutConfigDialog.moveCpUpToolTip")); //$NON-NLS-1$
+            Messages.AutConfigDialogMoveCpUpToolTip);
         m_moveElementUpButton.setLayoutData(BUTTON_LAYOUT);
 
         m_moveElementDownButton = 
             new Button(m_classPathButtonComposite, SWT.PUSH);
         m_moveElementDownButton.setImage(IconConstants.DOWN_ARROW_DIS_IMAGE);
         m_moveElementDownButton.setToolTipText(
-            I18n.getString("AutConfigDialog.moveCpDownToolTip")); //$NON-NLS-1$
+            Messages.AutConfigDialogMoveCpDownToolTip);
         m_moveElementDownButton.setLayoutData(BUTTON_LAYOUT);
 
         m_editElementButton = new Button(m_classPathButtonComposite, SWT.PUSH);
-        m_editElementButton.setText(I18n.getString("AUTConfigComponent.edit")); //$NON-NLS-1$
+        m_editElementButton.setText(Messages.AUTConfigComponentEdit);
         m_editElementButton.setLayoutData(BUTTON_LAYOUT);
 
         m_removeElementButton = 
             new Button(m_classPathButtonComposite, SWT.PUSH);
-        m_removeElementButton.setText(I18n.getString("AUTConfigComponent.remove")); //$NON-NLS-1$
+        m_removeElementButton.setText(Messages.AUTConfigComponentRemove);
         m_removeElementButton.setLayoutData(BUTTON_LAYOUT);
         
         checkClasspathButtons();
@@ -581,7 +581,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     private void initDataClassPath(String classPath) {
         m_classPathListField.removeAll();
         if (!StringUtils.isEmpty(classPath)) {
-            String[] pathList = classPath.split(";"); //$NON-NLS-1$
+            String[] pathList = classPath.split(StringConstants.SEMICOLON);
             for (int i = 0; i < pathList.length; i++) {
                 m_classPathListField.add(pathList[i]);
             }
@@ -661,7 +661,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         if (!isValid(m_classNameTextField, true) 
             && m_classNameTextField.getText().length() != 0) {
 
-            error = createErrorStatus(I18n.getString("AUTConfigComponent.wrongClassName")); //$NON-NLS-1$
+            error = createErrorStatus(
+                    Messages.AUTConfigComponentWrongClassName);
         }
         
         return error;
@@ -690,36 +691,39 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 }
                 try {
                     if (!file.exists()) {
-                        error = createWarningStatus(I18n.getString("AUTConfigComponent.fileNotFound", //$NON-NLS-1$
-                            new String [] {file.getCanonicalPath()}));
+                        error = createWarningStatus(
+                            NLS.bind(Messages.AUTConfigComponentFileNotFound,
+                                    new String [] {file.getCanonicalPath()}));
                     } else {
                         JarFile jarFile = new JarFile(file);
                         Manifest jarManifest = jarFile.getManifest();
                         if (jarManifest == null) {
                             // no manifest for JAR
-                            error = createErrorStatus(I18n.getString(
-                                "AUTConfigComponent.noManifest")); //$NON-NLS-1$
+                            error = createErrorStatus(
+                                    Messages.AUTConfigComponentNoManifest);
                         } else if (
                             jarManifest.getMainAttributes().getValue(MAIN_CLASS)
                                 == null) {
                             
                             // no main class defined in JAR manifest
-                            error = createErrorStatus(I18n.getString(
-                                "AUTConfigComponent.noMainClass")); //$NON-NLS-1$
+                            error = createErrorStatus(
+                                    Messages.AUTConfigComponentNoMainClass);
                         }
                     }
                 } catch (ZipException ze) {
                     // given file is not a jar file
-                    error = createErrorStatus(I18n.getString("AUTConfigComponent.fileNotJar", //$NON-NLS-1$
-                        new String [] {filename}));
+                    error = createErrorStatus(
+                        NLS.bind(Messages.AUTConfigComponentFileNotJar,
+                                new String [] {filename}));
                 } catch (IOException e) {
                     // could not find jar file
-                    error = createWarningStatus(I18n.getString("AUTConfigComponent.fileNotFound", //$NON-NLS-1$
-                        new String [] {filename}));
+                    error = createWarningStatus(NLS.bind(
+                            Messages.AUTConfigComponentFileNotFound,
+                                new String [] {filename}));
                 }
             }
         } else if (!isEmpty) {
-            error = createErrorStatus(I18n.getString("AUTConfigComponent.wrongJAR")); //$NON-NLS-1$
+            error = createErrorStatus(Messages.AUTConfigComponentWrongJAR);
         }
 
         putConfigValue(AutConfigConstants.JAR_FILE, m_jarTextField.getText());
@@ -854,7 +858,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         if (!isValid(m_autJreTextField, true) 
             && m_autJreTextField.getText().length() != 0) {
             
-            error = createErrorStatus(I18n.getString("AUTConfigComponent.wrongJRE")); //$NON-NLS-1$
+            error = createErrorStatus(Messages.AUTConfigComponentWrongJRE);
         }
         return error;
     }
@@ -1021,7 +1025,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     private void handleExecButtonEvent(FileDialog fileDialog) {
         String directory;
         fileDialog.setText(
-            I18n.getString("AUTConfigComponent.selectExecutable")); //$NON-NLS-1$
+            Messages.AUTConfigComponentSelectExecutable);
         String filterPath = Utils.getLastDirPath();
         File path = new File(getConfigValue(AutConfigConstants.EXECUTABLE));
         if (!path.isAbsolute()) {
@@ -1057,7 +1061,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     private void handleExecButtonEventForRemote() {
 
         if (remoteBrowse(false, AutConfigConstants.EXECUTABLE, m_execTextField,
-                I18n.getString("AUTConfigComponent.selectExecutable"))) { //$NON-NLS-1$
+                Messages.AUTConfigComponentSelectExecutable)) { 
             setWorkingDirToExecFilePath(executablePath);
         }
     }
@@ -1088,13 +1092,15 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
 
                 try {
                     if (!file.isFile()) {
-                        error = createWarningStatus(I18n.getString("AUTConfigComponent.fileNotFound", //$NON-NLS-1$
-                            new String [] {file.getCanonicalPath()}));
+                        error = createWarningStatus(NLS.bind(
+                            Messages.AUTConfigComponentFileNotFound,
+                                new String [] {file.getCanonicalPath()}));
                     } else {
                         // Make sure that the user has not entered an executable
                         // JAR file in the wrong field.
                         new JarFile(file);
-                        error = createErrorStatus(I18n.getString("AUTConfigComponent.fileJar", //$NON-NLS-1$
+                        error = createErrorStatus(NLS.bind(
+                            Messages.AUTConfigComponentFileJar,
                                 new String [] {file.getCanonicalPath()}));
                     }
                 } catch (ZipException ze) {
@@ -1102,13 +1108,14 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                     // a JAR file.
                 } catch (IOException e) {
                     // could not find file
-                    error = createWarningStatus(I18n.getString("AUTConfigComponent.fileNotFound", //$NON-NLS-1$
-                        new String [] {filename}));
+                    error = createWarningStatus(NLS.bind(
+                        Messages.AUTConfigComponentFileNotFound,
+                            new String [] {filename}));
                 }
             }
         } else if (!isExecFieldEmpty) {
             error = createErrorStatus(
-                I18n.getString("AUTConfigComponent.wrongExecutable")); //$NON-NLS-1$
+                    Messages.AUTConfigComponentWrongExecutable);
         }
         if (error != null) {
             m_isExecFieldValid = false;
@@ -1231,12 +1238,13 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             oldText = m_classPathListField.getSelection()[0];
         }
         ClassPathDialog dialog = new ClassPathDialog(
-                Plugin.getShell(), I18n.getString("AUTConfigComponent.classPathDialogTitle"), //$NON-NLS-1$
-                oldText, I18n.getString("AUTConfigComponent.message"), //$NON-NLS-1$ 
-                I18n.getString("AUTConfigComponent.label"), //$NON-NLS-1$
-                I18n.getString("AUTConfigComponent.wrongInputMessage"), //$NON-NLS-1$
+                Plugin.getShell(), 
+                Messages.AUTConfigComponentClassPathDialogTitle,
+                oldText, Messages.AUTConfigComponentMessage, 
+                Messages.AUTConfigComponentLabel,
+                Messages.AUTConfigComponentWrongInputMessage,
                 StringConstants.EMPTY, IconConstants.CLASS_PATH_STRING,
-                I18n.getString("AUTConfigComponent.shellText"), //$NON-NLS-1$
+                Messages.AUTConfigComponentShellText,
                 false, maxLength, checkLocalhostServer());
         dialog.setStyle(SWT.APPLICATION_MODAL);
         dialog.create();
@@ -1394,22 +1402,21 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             if (source.equals(m_autJreButton)) {
                 if (isRemoteRequest()) {
                     remoteBrowse(false, AutConfigConstants.JRE_BINARY,
-                            m_autJreTextField, I18n
-                                    .getString("AUTConfigComponent.selectJRE")); //$NON-NLS-1$
+                            m_autJreTextField, 
+                                Messages.AUTConfigComponentSelectJRE);
                 } else {
-                    browseLocal(null, I18n
-                            .getString("AUTConfigComponent.selectJRE"), //$NON-NLS-1$
+                    browseLocal(null, 
+                            Messages.AUTConfigComponentSelectJRE,
                             m_autJreTextField, AutConfigConstants.JRE_BINARY);
                 }
                 return;
             } else if (source.equals(m_jarButton)) {
                 if (isRemoteRequest()) {
                     remoteBrowse(false, AutConfigConstants.JAR_FILE,
-                            m_jarTextField, I18n
-                                    .getString("AUTConfigComponent.selectJAR")); //$NON-NLS-1$
+                        m_jarTextField, Messages.AUTConfigComponentSelectJAR);
                 } else {
                     browseLocal(new String[] { "*.jar" }, //$NON-NLS-1$
-                            I18n.getString("AUTConfigComponent.selectJAR"), //$NON-NLS-1$
+                            Messages.AUTConfigComponentSelectJAR,
                             m_jarTextField, AutConfigConstants.JAR_FILE);
                 }
                 return;
@@ -1453,7 +1460,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 return;
 
             }
-            Assert.notReached("Event activated by unknown widget(" + source + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.LEFT_PARENTHESES + source 
+                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
         }
 
         /**
@@ -1467,7 +1476,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                     .getShell(), SWT.APPLICATION_MODAL);
             String directory;
             if (source.equals(m_classPathListField)) {
-                directoryDialog.setMessage(I18n.getString("AUTConfigComponent.edit"));  //$NON-NLS-1$
+                directoryDialog.setMessage(Messages.AUTConfigComponentEdit);
                 directoryDialog.setFilterPath(m_classPathListField
                         .getSelection()[0]);
                 int selectionIndex = m_classPathListField.getSelectionIndex();
@@ -1480,7 +1489,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 handleClassPathListEvent();
                 return;
             }
-            Assert.notReached("Event activated by unknown widget(" + source + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.LEFT_PARENTHESES + source 
+                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
         }
     }
     
@@ -1530,7 +1541,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             UIComponentHelper.createLayoutComposite(advancedAreaComposite);
         m_autJreButton = 
             new Button(m_autJreComposite, SWT.PUSH);
-        m_autJreButton.setText(I18n.getString("AUTConfigComponent.browse"));  //$NON-NLS-1$
+        m_autJreButton.setText(Messages.AUTConfigComponentBrowse);
         m_autJreButton.setLayoutData(BUTTON_LAYOUT);
 
         super.createAdvancedArea(advancedAreaComposite);

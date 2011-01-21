@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.filter.JBBrowserPatternFilter;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
@@ -43,7 +44,6 @@ import org.eclipse.jubula.client.ui.sorter.GuiNodeNameViewerSorter;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.layout.GridData;
@@ -159,7 +159,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
          * Constructor
          */
         public ToggleLinkingAction() {
-            super(I18n.getString("TestCaseBrowser.LinkWithEditor"), IAction.AS_CHECK_BOX); //$NON-NLS-1$
+            super(Messages.TestCaseBrowserLinkWithEditor, IAction.AS_CHECK_BOX);
             setImageDescriptor(IconConstants.LINK_WITH_EDITOR_IMAGE_DESCRIPTOR);
             m_isLinkedWithEditor = Plugin.getDefault().getPreferenceStore()
                 .getBoolean(Constants.LINK_WITH_EDITOR_TCVIEW_KEY);

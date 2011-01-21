@@ -29,7 +29,9 @@ import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.AbstractTreeViewContentProvider;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 
 
@@ -129,13 +131,13 @@ public class OMEditorTreeContentProvider extends
             for (Object child : childList) {
                 m_childToParentMap.put(child, parentElement);
             }
-            
             Validate.noNullElements(childList);
             return childList.toArray();
         } else if (parentElement instanceof String) {
             return new Object[0];
         }
-        Assert.notReached("Wrong type of element!"); //$NON-NLS-1$
+        Assert.notReached(Messages.WrongTypeOfElement 
+                + StringConstants.EXCLAMATION_MARK);
         return new Object[0];
     }
 

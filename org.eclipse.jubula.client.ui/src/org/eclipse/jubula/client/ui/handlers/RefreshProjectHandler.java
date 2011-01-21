@@ -28,9 +28,9 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -59,7 +59,7 @@ public class RefreshProjectHandler extends AbstractHandler {
             int totalWork = getTotalWork();
 
             monitor.beginTask(
-                    I18n.getString("RefreshProjectOperation.refreshing"),  //$NON-NLS-1$
+                    Messages.RefreshProjectOperationRefreshing,
                     totalWork);
 
             ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
@@ -139,7 +139,8 @@ public class RefreshProjectHandler extends AbstractHandler {
      * @return the result of the operation.
      */
     public IStatus refreshProject() {
-        Plugin.startLongRunning(I18n.getString("RefreshTSBrowserAction.progressMessage")); //$NON-NLS-1$
+        Plugin.startLongRunning(Messages
+                .RefreshTSBrowserActionProgressMessage);
         try {
             PlatformUI.getWorkbench().getProgressService().run(true, false,
                     new RefreshProjectOperation());

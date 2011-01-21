@@ -20,11 +20,12 @@ import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.widgets.CheckedDirnameText;
 import org.eclipse.jubula.client.ui.widgets.CheckedText;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -171,7 +172,7 @@ public class PrefPageBasic extends PreferencePage implements
         createDataDirGroup(composite);
 
         Label hint = new Label(composite, SWT.NONE);
-        hint.setText(I18n.getString("GuiDancerPrefPageBasic.hint")); //$NON-NLS-1$
+        hint.setText(Messages.GuiDancerPrefPageBasicHint);
 
         addListener();
 
@@ -193,7 +194,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createShowOrigTestCaseName(Composite composite) {
         m_showOrigName = new Button(composite, SWT.CHECK);
-        m_showOrigName.setText(I18n.getString("GuiDancerPrefPageBasic.showOrig")); //$NON-NLS-1$
+        m_showOrigName.setText(Messages.GuiDancerPrefPageBasicShowOrig);
         m_showOrigName.setSelection(getPreferenceStore()
                 .getBoolean(Constants.SHOWORIGINALNAME_KEY));
     }
@@ -203,7 +204,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createShowCAPInfosCheckbox(Composite composite) {              
         m_capInfoCheckbox = new Button(composite, SWT.CHECK);
-        m_capInfoCheckbox.setText(I18n.getString("EditorPreferencePage.showCapInfo")); //$NON-NLS-1$
+        m_capInfoCheckbox.setText(Messages.EditorPreferencePageShowCapInfo);
         m_capInfoCheckbox.setSelection(Plugin.getDefault()
                 .getPreferenceStore().getBoolean(
                         Constants.SHOWCAPINFO_KEY));
@@ -217,8 +218,8 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createShowTransientChildrensCheckbox(Composite composite) {
         m_showTransientChildrenCheckBox = new Button(composite, SWT.CHECK);
-        m_showTransientChildrenCheckBox.setText(I18n
-                        .getString("EditorPreferencePage.showTransientChildrenCheckBox")); //$NON-NLS-1$
+        m_showTransientChildrenCheckBox.setText(
+                Messages.EditorPreferencePageShowTransientChildrenCheckBox);
         m_showTransientChildrenCheckBox.setSelection(Plugin.getDefault()
                 .getPreferenceStore().getBoolean(
                         Constants.SHOW_TRANSIENT_CHILDREN_KEY));
@@ -263,18 +264,18 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createRememberGroup(Composite composite) {
         Group group = new Group(composite, SWT.NONE);
-        group.setText(I18n.getString("PrefPageBasic.openPerspective")); //$NON-NLS-1$
+        group.setText(Messages.PrefPageBasicOpenPerspective);
         RowLayout layout = new RowLayout();
         group.setLayout(layout);
         GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
         layoutData.grabExcessHorizontalSpace = true;
         group.setLayoutData(layoutData);
         m_perspChange0Button = new Button(group, SWT.RADIO);
-        m_perspChange0Button.setText(I18n.getString("PrefPageBasic.always")); //$NON-NLS-1$
+        m_perspChange0Button.setText(Messages.PrefPageBasicAlways);
         m_perspChange1Button = new Button(group, SWT.RADIO);
-        m_perspChange1Button.setText(I18n.getString("PrefPageBasic.never")); //$NON-NLS-1$
+        m_perspChange1Button.setText(Messages.PrefPageBasicNever);
         m_perspChange2Button = new Button(group, SWT.RADIO);
-        m_perspChange2Button.setText(I18n.getString("PrefPageBasic.prompt")); //$NON-NLS-1$
+        m_perspChange2Button.setText(Messages.PrefPageBasicPrompt);
         m_perspChangeValue = m_store.getInt(Constants.PERSP_CHANGE_KEY);
         setRadioSelection();
     }
@@ -286,7 +287,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createDataDirGroup(Composite parent) {
         Group group = new Group(parent, SWT.NONE);
-        group.setText(I18n.getString("PrefPageBasic.selectDataDir")); //$NON-NLS-1$
+        group.setText(Messages.PrefPageBasicSelectDataDir);
         group.setLayout(new GridLayout());
         GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
         layoutData.grabExcessHorizontalSpace = true;
@@ -295,13 +296,13 @@ public class PrefPageBasic extends PreferencePage implements
         setGridLayout(content, 3);
         m_dataDirIsWorkspaceButton = new Button(content, SWT.CHECK);
         m_dataDirIsWorkspaceButton.setText(
-            I18n.getString("PrefPageBasic.dataDirWSLabel")); //$NON-NLS-1$
+            Messages.PrefPageBasicDataDirWSLabel);
         GridData data = new GridData();
         data.horizontalSpan = 3;
         m_dataDirIsWorkspaceButton.setLayoutData(data);
                 
         Label l = new Label(content, SWT.None);
-        l.setText(I18n.getString("PrefPageBasic.dataDirLabel")); //$NON-NLS-1$
+        l.setText(Messages.PrefPageBasicDataDirLabel);
         m_dataDirPathTextfield = new CheckedDirnameText(content, 
             SWT.SINGLE | SWT.BORDER);
         data = new GridData();
@@ -311,7 +312,7 @@ public class PrefPageBasic extends PreferencePage implements
 
         m_dataDirPathButton = new Button(content, SWT.PUSH);
         m_dataDirPathButton.
-            setText(I18n.getString("PrefPageBasic.DataDirBrowse")); //$NON-NLS-1$
+            setText(Messages.PrefPageBasicDataDirBrowse);
         
         m_store.setDefault(Constants.DATADIR_WS_KEY, true);
         m_store.setDefault(Constants.DATADIR_PATH_KEY, Platform.getLocation()
@@ -369,7 +370,7 @@ public class PrefPageBasic extends PreferencePage implements
         DirectoryDialog dialog = new DirectoryDialog(Plugin.getShell(),
             SWT.APPLICATION_MODAL | SWT.OPEN);
         dialog.setFilterPath(m_dataDirPathTextfield.getText());
-        dialog.setText(I18n.getString("PrefPageBasic.DataDirFileDialogTitle")); //$NON-NLS-1$
+        dialog.setText(Messages.PrefPageBasicDataDirFileDialogTitle);
         String path = dialog.open();
         if (path != null) {
             m_dataDirPathTextfield.setText(path);
@@ -385,7 +386,7 @@ public class PrefPageBasic extends PreferencePage implements
         if (!m_dataDirIsWorkspaceValue) {
             if (!m_dataDirPathTextfield.isValid()) {
                 setValid(false);
-                setErrorMessage(I18n.getString("PrefPageBasic.dataDirInvalid")); //$NON-NLS-1$
+                setErrorMessage(Messages.PrefPageBasicDataDirInvalid);
             }
         }
     }
@@ -427,7 +428,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createMinimizeClientButton(Composite composite) {
         m_minimize = new Button(composite, SWT.CHECK);
-        m_minimize.setText(I18n.getString("GuiDancerPrefPageBasic.minimize")); //$NON-NLS-1$
+        m_minimize.setText(Messages.GuiDancerPrefPageBasicMinimize);
         m_minimize.setSelection(getPreferenceStore()
                 .getBoolean(Constants.MINIMIZEONSUITESTART_KEY));
     }
@@ -437,7 +438,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createAskStopAUTButton(Composite composite) {
         m_askStopAUT = new Button(composite, SWT.CHECK);
-        m_askStopAUT.setText(I18n.getString("GuiDancerPrefPageBasic.askStopAUT")); //$NON-NLS-1$
+        m_askStopAUT.setText(Messages.GuiDancerPrefPageBasicAskStopAUT);
         m_askStopAUT.setSelection(getPreferenceStore()
                 .getBoolean(Constants.ASKSTOPAUT_KEY));
     }
@@ -447,7 +448,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createTreeScrollButton(Composite composite) {
         m_treeScroll = new Button(composite, SWT.CHECK);
-        m_treeScroll.setText(I18n.getString("GuiDancerPrefPageBasic.scroll")); //$NON-NLS-1$
+        m_treeScroll.setText(Messages.GuiDancerPrefPageBasicScroll);
         m_treeScroll.setSelection(getPreferenceStore()
                 .getBoolean(Constants.TREEAUTOSCROLL_KEY));
     }
@@ -539,7 +540,9 @@ public class PrefPageBasic extends PreferencePage implements
                 m_perspChangeValue = Constants.PERSPECTIVE_CHANGE_PROMPT;
                 return;
             }
-            Assert.notReached("Event activated by unknown widget(" + o + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
+            Assert.notReached(Messages.EventActivatedUnknownWidget 
+                    + StringConstants.LEFT_PARENTHESES + o 
+                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
         }
     }
 }

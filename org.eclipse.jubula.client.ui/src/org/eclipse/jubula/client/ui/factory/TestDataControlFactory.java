@@ -27,8 +27,10 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ParamComboPropertyDescriptor;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ParamTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.controllers.propertysources.AbstractGuiNodePropertySource.AbstractParamValueController;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamTextContentAssisted;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
@@ -123,7 +125,8 @@ public class TestDataControlFactory {
                     createParamValueValidator(paramDesc.getType(), false));
         }
         
-        Assert.notReached("implement for " + paramObj.getClass().getName()); //$NON-NLS-1$
+        Assert.notReached(Messages.ImplementFor + StringConstants.SPACE 
+                + paramObj.getClass().getName());
         return null;
     }
     

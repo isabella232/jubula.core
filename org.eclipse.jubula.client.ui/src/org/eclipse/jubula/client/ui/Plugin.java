@@ -62,6 +62,7 @@ import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.provider.contentprovider.DirtyStarListContentProvider;
@@ -82,9 +83,9 @@ import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -137,7 +138,7 @@ public class Plugin extends AbstractUIPlugin
     /** single instance of plugin */
     private static Plugin plugin;
     /** StatusLineText */
-    private static String statusLineText = I18n.getString("StatusLine.notConnected"); //$NON-NLS-1$
+    private static String statusLineText = Messages.StatusLine_NotConnected;
     /** StatusLineText */
     private static int connectionStatusIcon = Constants.DEFAULT_ICON;
     /** current workbench window */
@@ -706,7 +707,7 @@ public class Plugin extends AbstractUIPlugin
      * @return A <code>IViewReference</code> value. The view or null.
      **/
     public static IViewPart getView(String id) {
-        Validate.notEmpty(id, "missing ID for view."); //$NON-NLS-1$
+        Validate.notEmpty(id, Messages.Missing_ID);
         if (getActivePage() != null) {
             IViewPart vp = getActivePage().findView(id);
             return vp;
@@ -831,15 +832,15 @@ public class Plugin extends AbstractUIPlugin
      */
     public static IViewPart showView(String viewID, String secondaryViewID,
             int mode) {
-        Validate.notEmpty(viewID, "missing ID for view."); //$NON-NLS-1$
+        Validate.notEmpty(viewID, Messages.Missing_ID);
         if (getActivePage() != null) {
             IViewPart vp = null;
             try {
                 vp = getActivePage().showView(viewID, secondaryViewID, mode);
             } catch (PartInitException e) {
-                Utils.createMessageDialog(new JBException(I18n
-                        .getString("Plugin.cantOpenView") + viewID, //$NON-NLS-1$
-                        MessageIDs.E_CLASS_NOT_FOUND), null, null);
+                Utils.createMessageDialog(new JBException(
+                        NLS.bind(Messages.PluginCantOpenView + viewID,
+                        MessageIDs.E_CLASS_NOT_FOUND), null, null));
             }
             return vp;
         }
@@ -1061,9 +1062,9 @@ public class Plugin extends AbstractUIPlugin
     public boolean showSaveEditorDialog() {
         ListSelectionDialog dialog = new ListSelectionDialog(getShell(),
                 m_dirtyEditors, new DirtyStarListContentProvider(),
-                new DirtyStarListLabelProvider(), I18n
-                        .getString("StartSuiteAction.Message")); //$NON-NLS-1$
-        dialog.setTitle(I18n.getString("StartSuiteAction.Title")); //$NON-NLS-1$
+                new DirtyStarListLabelProvider(),
+                Messages.StartSuiteActionMessage);
+        dialog.setTitle(Messages.StartSuiteActionTitle);
         dialog.setInitialSelections(m_dirtyEditors.toArray());
         dialog.open();
         // if OK was pressed in the dialog
@@ -1121,7 +1122,8 @@ public class Plugin extends AbstractUIPlugin
                     // operation, so it can be safely ignored
                     return;
                 }
-                log.error("Unhandled throwable : ", e); //$NON-NLS-1$
+                log.error(Messages.UnhandledThrowable + StringConstants.SPACE
+                        + StringConstants.COLON + StringConstants.SPACE, e);
                 if (e instanceof JBRuntimeException) {
                     JBRuntimeException gdEx = (JBRuntimeException)e;
                     Utils.createMessageDialog(gdEx);
@@ -1134,7 +1136,7 @@ public class Plugin extends AbstractUIPlugin
                     // org.eclipse.ui.views.markers.internal.MarkerAdapter.buildAllMarkers()
                     // well known racing condition. Since the error is not
                     // critical, is is ignored.
-                    log.error("internal RCP error", e); //$NON-NLS-1$
+                    log.error(Messages.InternalRcpError, e);
                     
                 } else if (isGEFException(e)) {
                     // there are a few bugs in GEF which will trigger
@@ -1142,7 +1144,7 @@ public class Plugin extends AbstractUIPlugin
                     // org.eclipse.gmf.runtime.diagram.ui.tools.DragEditPartsTrackerEx.addSourceCommands
                     // well known racing condition. Since the error is not
                     // critical, is is ignored.
-                    log.error("internal GEF error", e); //$NON-NLS-1$
+                    log.error(Messages.InternalGefError, e);
                     
                 } else if (e instanceof PersistenceException) {
                     Utils.createMessageDialog(MessageIDs.E_DATABASE_GENERAL,
@@ -1201,7 +1203,8 @@ public class Plugin extends AbstractUIPlugin
                 for (StackTraceElement el : stack) {
                     // check for
                     // NPE in recomputeProposals
-                    if ("recomputeProposals".equals(el.getMethodName())) { //$NON-NLS-1$
+                    if (Messages.RecomputeProposals.
+                            equals(el.getMethodName())) {
                         return true;
                     }
                 }
@@ -1457,19 +1460,25 @@ public class Plugin extends AbstractUIPlugin
             Integer majorVersion, Integer minorVersion) {
         
         StringBuilder sb = new StringBuilder(
-                I18n.getString("Constants.DefaultTextValue")); //$NON-NLS-1$
+                Messages.ConstantsDefaultTextValue);
         
         Hibernator hibernator = Hibernator.instance();
         if (hibernator != null) {
             String user = hibernator.getCurrentDBUser();
             if (user != null && user.length() != 0) {
-                sb.append(" - ").append(user); //$NON-NLS-1$
+                sb.append(StringConstants.SPACE
+                        + StringConstants.MINUS
+                        + StringConstants.SPACE)
+                        .append(user);
             }
         }
         
         if (projectName != null && projectName.length() != 0) {
-            sb.append(" - ").append(projectName); //$NON-NLS-1$
-            sb.append(" ").append(majorVersion.intValue()).append(".");  //$NON-NLS-1$//$NON-NLS-2$
+            sb.append(StringConstants.SPACE
+                    + StringConstants.MINUS
+                    + StringConstants.SPACE).append(projectName);
+            sb.append(StringConstants.SPACE).append(majorVersion.intValue())
+            .append(StringConstants.DOT);
             sb.append(minorVersion.intValue());
         }
         

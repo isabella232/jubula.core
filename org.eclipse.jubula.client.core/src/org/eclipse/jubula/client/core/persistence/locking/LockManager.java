@@ -441,7 +441,6 @@ public final class LockManager {
             String poName = po != null ? po.getName() : StringConstants.EMPTY;
             long poId = po != null ? po.getId() : -1;
             throw new PMAlreadyLockedException(po, 
-                    //FIXME tobi NLS ??
                 "PO " + po + " (name=" + poName + "; id=" + poId + ") locked in db.", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 MessageIDs.E_OBJECT_IN_USE);   
         }

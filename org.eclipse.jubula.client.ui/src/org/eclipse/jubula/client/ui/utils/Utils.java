@@ -51,6 +51,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.SpecRefreshTreeIterator;
 import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.editors.PersistableEditorInput;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
@@ -61,9 +62,9 @@ import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBRuntimeException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.Message;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -115,9 +116,9 @@ public class Utils {
         IPreferenceStore prefStore = Plugin.getDefault().getPreferenceStore();
         String serverPort = prefStore.getString(Constants.SERVER_SETTINGS_KEY);
         String server = serverPort.split(StringConstants.COLON)[0];
-        if (server.equals(I18n.getString("Utils.localhost1")) //$NON-NLS-1$
-            || server.equals(I18n.getString("Utils.localhost3")) //$NON-NLS-1$
-            || server.startsWith(I18n.getString("Utils.localhost2"))) { //$NON-NLS-1$
+        if (server.equals(Messages.UtilsLocalhost1)
+            || server.equals(Messages.UtilsLocalhost3)
+            || server.startsWith(Messages.UtilsLocalhost2)) {
             return true;
         }           
         return false;
@@ -131,15 +132,15 @@ public class Utils {
     public static boolean openPerspective(String perspectiveID) {
         try {
             if (PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getPerspective().getId()
+                    .getActivePage().getPerspective().getId()
                     .equals(perspectiveID)) {
                 return true;
             }
-            int value = Plugin.getDefault().getPreferenceStore().getInt(
-                Constants.PERSP_CHANGE_KEY);
+            int value = Plugin.getDefault().getPreferenceStore()
+                    .getInt(Constants.PERSP_CHANGE_KEY);
             if (value == Constants.PERSPECTIVE_CHANGE_YES) {
                 PlatformUI.getWorkbench().showPerspective(perspectiveID,
-                    PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow());
                 return true;
             } else if (value == Constants.PERSPECTIVE_CHANGE_NO) {
                 return true;
@@ -147,53 +148,57 @@ public class Utils {
             // if --> value = Constants.PERSPECTIVE_CHANGE_PROMPT:
             String perspectiveName = StringConstants.EMPTY;
             if (perspectiveID.equals(Constants.SPEC_PERSPECTIVE)) {
-                perspectiveName = I18n.getString("Utils.specPerspective"); //$NON-NLS-1$
+                perspectiveName = Messages.UtilsSpecPerspective;
             } else {
-                perspectiveName = I18n.getString("Utils.execPerspective"); //$NON-NLS-1$
+                perspectiveName = Messages.UtilsExecPerspective;
             }
             final int returnCodeYES = 256; // since Eclipse3.2 (not 0)
             final int returnCodeNO = 257; // since Eclipse3.2 (not 1)
             final int returnCodeCANCEL = -1;
-            MessageDialogWithToggle dialog = new MessageDialogWithToggle (
-                Plugin.getShell(), I18n.getString("Utils.title"),  //$NON-NLS-1$
-                null, 
-                I18n.getString("Utils.question", new Object[]{perspectiveName}), //$NON-NLS-1$
-                MessageDialog.QUESTION, 
-                new String[] { I18n.getString("Utils.Yes"), I18n.getString("Utils.No") }, 0, //$NON-NLS-1$ //$NON-NLS-2$
-                I18n.getString("Utils.remember"), false) { //$NON-NLS-1$
-                
+            MessageDialogWithToggle dialog = new MessageDialogWithToggle(
+                    Plugin.getShell(), Messages.UtilsTitle, null, NLS.bind(
+                            Messages.UtilsQuestion,
+                            new Object[] { perspectiveName }),
+                    MessageDialog.QUESTION, new String[] { Messages.UtilsYes,
+                        Messages.UtilsNo }, 0, Messages.UtilsRemember,
+                    false) {
                 /**
                  * {@inheritDoc}
                  */
                 protected void buttonPressed(int buttonId) {
                     super.buttonPressed(buttonId);
-                    Plugin.getDefault().getPreferenceStore().setValue(
-                        Constants.REMEMBER_KEY, getToggleState());
+                    Plugin.getDefault().getPreferenceStore()
+                            .setValue(Constants.REMEMBER_KEY, getToggleState());
                     int val = Constants.PERSPECTIVE_CHANGE_PROMPT;
                     if (getToggleState() && getReturnCode() == returnCodeNO) {
                         val = Constants.PERSPECTIVE_CHANGE_NO;
-                    } else if (getToggleState() 
-                        && getReturnCode() == returnCodeYES) {
-                        
+                    } else if (getToggleState()
+                            && getReturnCode() == returnCodeYES) {
                         val = Constants.PERSPECTIVE_CHANGE_YES;
                     }
-                    Plugin.getDefault().getPreferenceStore().setValue(
-                        Constants.PERSP_CHANGE_KEY, val);
-                }               
+                    Plugin.getDefault().getPreferenceStore()
+                            .setValue(Constants.PERSP_CHANGE_KEY, val);
+                }
             };
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
             dialog.open();
-            if (dialog.getReturnCode() == returnCodeNO) {                
+            if (dialog.getReturnCode() == returnCodeNO) {
                 return true;
             } else if (dialog.getReturnCode() == returnCodeCANCEL) {
                 return false;
             }
             PlatformUI.getWorkbench().showPerspective(perspectiveID,
-                PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow());
         } catch (WorkbenchException e) {
-            log.error("Cannot open the perspective: " + perspectiveID //$NON-NLS-1$
-                + "(" + e + ")."); //$NON-NLS-1$ //$NON-NLS-2$
+            StringBuilder msg = new StringBuilder();
+            msg.append(Messages.CannotOpenThePerspective)
+                    .append(StringConstants.COLON)
+                    .append(StringConstants.SPACE).append(perspectiveID)
+                    .append(StringConstants.LEFT_PARENTHESES).append(e)
+                    .append(StringConstants.RIGHT_PARENTHESES)
+                    .append(StringConstants.DOT);
+            log.error(msg.toString());
             createMessageDialog(MessageIDs.E_NO_PERSPECTIVE);
             return false;
         }
@@ -394,7 +399,8 @@ public class Utils {
     private static String[] lineFeed(String[] strArray) {
         List<String> strList = new ArrayList<String>();
         for (String str : strArray) {
-            StringTokenizer tok = new StringTokenizer(str, "\n"); //$NON-NLS-1$
+            StringTokenizer tok = new StringTokenizer(str, 
+                    StringConstants.NEWLINE);
             while (tok.hasMoreElements()) {
                 strList.add(tok.nextToken());
             }
@@ -411,7 +417,7 @@ public class Utils {
         Integer messageID = ex.getErrorId();
         Message m = MessageIDs.getMessageObject(messageID);
         if (m != null && m.getSeverity() == Message.ERROR) {
-            log.error("An error has occurred.", ex); //$NON-NLS-1$
+            log.error(Messages.AnErrorHasOccurred + StringConstants.DOT, ex);
         }
         return createMessageDialog(messageID, null,
                 getStackTrace(ex.getCausedBy()));
@@ -426,7 +432,7 @@ public class Utils {
             Writer writer = new StringWriter();
             PrintWriter printWriter = new PrintWriter(writer);
             throwable.printStackTrace(printWriter);
-            return writer.toString().split("\n"); //$NON-NLS-1$
+            return writer.toString().split(StringConstants.NEWLINE);
         }
         return null;
     }
@@ -454,7 +460,7 @@ public class Utils {
         Integer messageID = ex.getErrorId();
         Message m = MessageIDs.getMessageObject(messageID);
         if (m != null && m.getSeverity() == Message.ERROR) {
-            log.error("An error has occurred.", ex); //$NON-NLS-1$
+            log.error(Messages.AnErrorHasOccurred + StringConstants.DOT, ex);
         }
         return createMessageDialog(messageID, params, details);
     }
@@ -505,7 +511,7 @@ public class Utils {
         final Object[] params, final String[] details, final Shell parent) {
         String title = StringConstants.EMPTY;
         String message = StringConstants.EMPTY;
-        String[] labels = new String[] { I18n.getString("Utils.OK") };
+        String[] labels = new String[] { Messages.UtilsOK };
         int imageID = MessageDialog.INFORMATION;
         Message msg = MessageIDs.getMessageObject(messageID);
         String[] detail = lineFeed(msg.getDetails());
@@ -514,23 +520,23 @@ public class Utils {
         }
         switch (msg.getSeverity()) {
             case Message.ERROR:
-                title = I18n.getString("Utils.Error");
-                message = I18n.getString("Utils.ErrorOccurred");
+                title = Messages.UtilsError;
+                message = Messages.UtilsErrorOccurred;
                 break;
             case Message.INFO:
-                title = I18n.getString("Utils.Info1");
-                message = I18n.getString("Utils.Info2");
+                title = Messages.UtilsInfo1;
+                message = Messages.UtilsInfo2;
                 break;
             case Message.WARNING:
-                title = I18n.getString("Utils.Warning1");
-                message = I18n.getString("Utils.Warning2");
+                title = Messages.UtilsWarning1;
+                message = Messages.UtilsWarning2;
                 break;
             case Message.QUESTION:
-                title = I18n.getString("Utils.Request1");
-                message = I18n.getString("Utils.Request2");
+                title = Messages.UtilsRequest1;
+                message = Messages.UtilsRequest2;
                 labels = new String[] {
-                        I18n.getString("Utils.Yes"), 
-                        I18n.getString("Utils.No") };
+                    Messages.UtilsYes,
+                    Messages.UtilsNo };
                 imageID = MessageDialog.QUESTION;
                 break;
             default:
@@ -545,10 +551,10 @@ public class Utils {
                 || msg.getSeverity() == Message.QUESTION)) {
             StringBuilder messageBuilder = new StringBuilder(message);
             messageBuilder.append(msg.getMessage(params));
-            messageBuilder.append("\n");
+            messageBuilder.append(StringConstants.NEWLINE);
             for (IStatus s : status) {
                 if (s.getMessage() != Message.NO_DETAILS) {
-                    messageBuilder.append("\n");
+                    messageBuilder.append(StringConstants.NEWLINE);
                     messageBuilder.append(s.getMessage());
                 }
             }

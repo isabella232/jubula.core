@@ -27,9 +27,10 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.ObjectMappingSearchResultElementAction;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -57,8 +58,9 @@ public class ShowWhereUsedComponentNameQuery
     public String getLabel() {
         StringBuilder sb = new StringBuilder();
         sb.append(getTimestamp());
-        sb.append(": ");
-        sb.append(I18n.getString("UIJob.searchingCompNames"));
+        sb.append(StringConstants.COLON);
+        sb.append(StringConstants.SPACE);
+        sb.append(Messages.UIJobSearchingCompNames);
         sb.append(" \"");
         sb.append(getCompName().getName());
         sb.append("\"");

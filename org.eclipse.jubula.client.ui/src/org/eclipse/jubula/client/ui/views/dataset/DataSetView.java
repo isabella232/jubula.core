@@ -24,10 +24,10 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.views.AbstractJBTreeView;
 import org.eclipse.jubula.client.ui.views.CompNamesView;
 import org.eclipse.jubula.client.ui.views.IJBPart;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IViewSite;
@@ -60,7 +60,7 @@ public class DataSetView extends PageBookView
         MessagePage page = new MessagePage();
         initPage(page);
         page.createControl(book);
-        page.setMessage(I18n.getString("GDDataSetView.NoDataSetInfo")); //$NON-NLS-1$
+        page.setMessage(Messages.GDDataSetViewNoDataSetInfo);
         return page;
     }
 
@@ -176,7 +176,7 @@ public class DataSetView extends PageBookView
         }
         return super.getAdapter(adapter);
     }
-
+    //$NON-NLS-1$
     /**
      * @return Returns the parent.
      */

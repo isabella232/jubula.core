@@ -37,6 +37,7 @@ import org.eclipse.jubula.client.ui.businessprocess.ConnectServerBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.dialogs.RemoteFileBrowserDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -49,6 +50,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -111,7 +113,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 checkAll();
                 return;
             }
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.DOT);
         }
     }
 
@@ -142,7 +145,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 if (isRemoteRequest()) {
                     remoteBrowse(true, AutConfigConstants.WORKING_DIR,
                             m_autWorkingDirectoryTextField,
-                            I18n.getString("AUTConfigComponent.SelectWorkDir")); //$NON-NLS-1$
+                            Messages.AUTConfigComponentSelectWorkDir);
                 } else {
                     DirectoryDialog directoryDialog = new DirectoryDialog(
                             Plugin.getShell(), SWT.APPLICATION_MODAL
@@ -154,7 +157,9 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 return;
             }
 
-            Assert.notReached("Event activated by unknown widget(" + source + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.LEFT_PARENTHESES + source 
+                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
         }
 
 
@@ -257,7 +262,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         m_autName = autName;
         m_nameModified = !isDataNew(autConfig) 
             && autConfig.get(AutConfigConstants.CONFIG_NAME).equals(
-                I18n.getString("AUTConfigComponent.defaultAUTConfigName", //$NON-NLS-1$ 
+                NLS.bind(Messages.AUTConfigComponentDefaultAUTConfigName, 
                         new String [] {
                             autName, 
                             autConfig.get(AutConfigConstants.SERVER)
@@ -336,7 +341,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         if (StringConstants.EMPTY.equals(m_autConfigNameTextField.getText())) {
             m_autConfigNameTextField.setFocus();
             m_autConfigNameTextField.setText(
-                I18n.getString("AUTConfigComponent.defaultAUTConfigName", //$NON-NLS-1$
+                NLS.bind(Messages.AUTConfigComponentDefaultAUTConfigName,
                     new String [] {
                         m_autName, 
                         m_serverCombo.getText()
@@ -432,7 +437,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                     .defaultString(data.get(AutConfigConstants.SERVER))));
             m_autConfigNameTextField.setText(StringUtils.defaultString(
                 data.get(AutConfigConstants.CONFIG_NAME),
-                    I18n.getString("AUTConfigComponent.defaultAUTConfigName", //$NON-NLS-1$ 
+                    NLS.bind(Messages.AUTConfigComponentDefaultAUTConfigName, 
                         new String [] {
                             m_autName, 
                             m_serverCombo.getText()
@@ -447,7 +452,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 .defaultString(Constants.LOCALHOST1)));
 
             m_autConfigNameTextField.setText(
-                I18n.getString("AUTConfigComponent.defaultAUTConfigName", //$NON-NLS-1$ 
+                NLS.bind(Messages.AUTConfigComponentDefaultAUTConfigName, 
                     new String [] {
                         m_autName, 
                         m_serverCombo.getText()
@@ -538,7 +543,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         
         m_autWorkingDirectoryButton = new Button(UIComponentHelper
                 .createLayoutComposite(parent), SWT.PUSH);
-        m_autWorkingDirectoryButton.setText(I18n.getString("AUTConfigComponent.browse"));  //$NON-NLS-1$
+        m_autWorkingDirectoryButton.setText(Messages.AUTConfigComponentBrowse);
         m_autWorkingDirectoryButton.setLayoutData(BUTTON_LAYOUT);
     }
     
@@ -555,7 +560,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         m_serverCombo.setLayoutData(comboGrid);
         m_addServerButton = new Button(UIComponentHelper
             .createLayoutComposite(parent), SWT.PUSH);
-        m_addServerButton.setText(I18n.getString("AUTConfigComponent.addServer")); //$NON-NLS-1$
+        m_addServerButton.setText(Messages.AUTConfigComponentAddServer);
         m_addServerButton.setLayoutData(BUTTON_LAYOUT);
     }
 
@@ -676,8 +681,10 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                     Integer.valueOf(defaultServerPort)));
 
             Utils.createMessageDialog(MessageIDs.I_SERVER_NAME_ADDED, null, 
-                new String [] {"Server Name: " + currentlySelectedServer //$NON-NLS-1$
-                        + "\nServer Port (default): " + defaultServerPort}); //$NON-NLS-1$
+                new String [] {Messages.ServerName + StringConstants.COLON 
+                        + StringConstants.SPACE + currentlySelectedServer 
+                        + StringConstants.NEWLINE + Messages.ServerPortDefault 
+                        + defaultServerPort});
         }
         for (String serverName : m_listOfServers.getServerNames()) {
             m_serverCombo.add(serverName);
@@ -701,16 +708,16 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         modeButtons.setLayoutData(modeButtonsData);
         
         m_basicModeButton = new Button(modeButtons, SWT.TOGGLE);
-        m_basicModeButton.setText(I18n.getString("AUTConfigComponent.ShowBasic")); //$NON-NLS-1$
+        m_basicModeButton.setText(Messages.AUTConfigComponentShowBasic);
         m_basicModeButton.setSelection(true);
         m_buttonToModeMap.put(m_basicModeButton, Mode.BASIC);
 
         m_advancedModeButton = new Button(modeButtons, SWT.TOGGLE);
-        m_advancedModeButton.setText(I18n.getString("AUTConfigComponent.ShowAdvanced")); //$NON-NLS-1$
+        m_advancedModeButton.setText(Messages.AUTConfigComponentShowAdvanced);
         m_buttonToModeMap.put(m_advancedModeButton, Mode.ADVANCED);
         
         m_expertModeButton = new Button(modeButtons, SWT.TOGGLE);
-        m_expertModeButton.setText(I18n.getString("AUTConfigComponent.ShowExpert")); //$NON-NLS-1$
+        m_expertModeButton.setText(Messages.AUTConfigComponentShowExpert);
         m_buttonToModeMap.put(m_expertModeButton, Mode.EXPERT);
     }
 
@@ -857,7 +864,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      */
     DialogStatusParameter modifyAutConfigFieldAction() {
         m_nameModified = !m_autConfigNameTextField.getText().equals(
-            I18n.getString("AUTConfigComponent.defaultAUTConfigName", //$NON-NLS-1$
+            NLS.bind(Messages.AUTConfigComponentDefaultAUTConfigName,
                 new String [] {
                     m_autName, 
                     m_serverCombo.getText()
@@ -869,9 +876,11 @@ public abstract class AutConfigComponent extends ScrolledComposite {
 
         if (!isValid(m_autConfigNameTextField, false)) {
             if (m_autConfigNameTextField.getText().length() == 0) {
-                error = createErrorStatus(I18n.getString("AUTConfigComponent.emptyAUTConfigName")); //$NON-NLS-1$
+                error = createErrorStatus(
+                        Messages.AUTConfigComponentEmptyAUTConfigName);
             } else {
-                error = createErrorStatus(I18n.getString("AUTConfigComponent.wrongAUTConfigName")); //$NON-NLS-1$
+                error = createErrorStatus(
+                        Messages.AUTConfigComponentWrongAUTConfigName);
             }
         }
         return error;
@@ -1057,7 +1066,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             DialogStatusParameter param = new DialogStatusParameter();
             param.setButtonState(true);
             param.setStatusType(IMessageProvider.NONE);
-            param.setMessage(I18n.getString("ProjectWizard.AUTData")); //$NON-NLS-1$
+            param.setMessage(Messages.ProjectWizardAUTData);
             m_paramList.clear();
             m_paramList.add(param);
         }
@@ -1170,7 +1179,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                     deinstallListeners();
                 }
                 m_autConfigNameTextField.setText(
-                    I18n.getString("AUTConfigComponent.defaultAUTConfigName", //$NON-NLS-1$ 
+                        NLS.bind(
+                            Messages.AUTConfigComponentDefaultAUTConfigName,
                         new String [] {
                             m_autName, 
                             m_serverCombo.getText()
@@ -1182,7 +1192,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             return null;
         }
 
-        return createErrorStatus(I18n.getString("AUTConfigComponent.noServer")); //$NON-NLS-1$
+        return createErrorStatus(Messages.AUTConfigComponentNoServer);
     }
     
     /**
@@ -1238,17 +1248,19 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 }
                 if (!dir.isDirectory()) {
                     try {
-                        error = createWarningStatus(I18n.getString("AUTConfigComponent.noDir", //$NON-NLS-1$
+                        error = createWarningStatus(NLS.bind(
+                                Messages.AUTConfigComponentNoDir,
                             new String [] {dir.getCanonicalPath()}));
                     } catch (IOException e) {
-                        error = createWarningStatus(I18n.getString("AUTConfigComponent.fileNotFound", //$NON-NLS-1$
+                        error = createWarningStatus(NLS.bind(
+                                Messages.AUTConfigComponentFileNotFound,
                             new String [] {
                                 m_autWorkingDirectoryTextField.getText()}));
                     }
                 }
             }
         } else if (!isEmpty) {
-            error = createErrorStatus(I18n.getString("AUTConfigComponent.wrongWorkDir")); //$NON-NLS-1$
+            error = createErrorStatus(Messages.AUTConfigComponentWrongWorkDir);
         }
         
         putConfigValue(AutConfigConstants.WORKING_DIR, 
@@ -1271,8 +1283,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      */
     void handleWorkDirButtonEvent(DirectoryDialog directoryDialog) {
         String directory;
-        directoryDialog.setMessage(I18n.
-            getString("AUTConfigComponent.SelectWorkDir")); //$NON-NLS-1$
+        directoryDialog.setMessage(Messages.AUTConfigComponentSelectWorkDir);
         File path = new File(m_autWorkingDirectoryTextField.getText());
         String filterPath = Utils.getLastDirPath();
         if (path.exists()) {
@@ -1325,8 +1336,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                             .toString(), folderSelection));
             directoryDialog.setFSRoots(baseRemoteFS.getRootFSs());
             directoryDialog.setTitle(title);
-            directoryDialog.setMessage(I18n
-                    .getString("AUTConfigComponent.selectEntries")); //$NON-NLS-1$
+            directoryDialog.setMessage(
+                    Messages.AUTConfigComponentSelectEntries);
             if (directoryDialog.open() == Window.OK) {
                 final RemoteFileStore resDir = (RemoteFileStore)directoryDialog
                         .getFirstResult();
@@ -1339,6 +1350,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 }
             }
         } catch (ConnectionException e) {
+            //FIXME: tobi NLS not found
             ErrorDialog.openError(Plugin.getShell(), I18n
                     .getString("AutConfigComponent.ERROR_TITLE"), null, //$NON-NLS-1$
                     new Status(IStatus.WARNING, Plugin.PLUGIN_ID, I18n

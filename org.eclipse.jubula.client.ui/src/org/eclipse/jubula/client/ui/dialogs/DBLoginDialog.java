@@ -27,8 +27,9 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.widgets.JBText;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -81,7 +82,7 @@ public class DBLoginDialog extends TitleAreaDialog {
         "javax.persistence.jdbc.password"; //$NON-NLS-1$ 
     
     /** The message m_text */
-    private String m_message = I18n.getString("DBLoginDialog.Message");   //$NON-NLS-1$
+    private String m_message = Messages.DBLoginDialogMessage;
     
     /** the username m_text field */
     private JBText m_userText;
@@ -115,9 +116,9 @@ public class DBLoginDialog extends TitleAreaDialog {
      */
     protected Control createDialogArea(Composite parent) {
         setMessage(m_message);
-        setTitle(I18n.getString("DBLoginDialog.Title"));   //$NON-NLS-1$
+        setTitle(Messages.DBLoginDialogTitle);
         setTitleImage(IconConstants.DB_LOGIN_DIALOG_IMAGE);
-        getShell().setText(I18n.getString("DBLoginDialog.Shell"));   //$NON-NLS-1$
+        getShell().setText(Messages.DBLoginDialogShell);
         
         final GridLayout gridLayoutParent = new GridLayout();
         gridLayoutParent.numColumns = NUM_COLUMNS_1;
@@ -187,7 +188,7 @@ public class DBLoginDialog extends TitleAreaDialog {
         new Label(area, SWT.NONE).setLayoutData(new GridData(GridData.FILL, 
             GridData.CENTER, false, false, HORIZONTAL_SPAN + 1, 1));
         m_userLabel = new Label(area, SWT.NONE);
-        m_userLabel.setText(I18n.getString("DBLoginDialog.userLabel"));    //$NON-NLS-1$
+        m_userLabel.setText(Messages.DBLoginDialogUserLabel);
         m_userLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.userLabel"); //$NON-NLS-1$
         m_userText = new JBText(area, SWT.BORDER);
         m_userText.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.userTxf"); //$NON-NLS-1$
@@ -215,7 +216,7 @@ public class DBLoginDialog extends TitleAreaDialog {
         new Label(area, SWT.NONE).setLayoutData(new GridData(GridData.FILL, 
             GridData.CENTER, false, false, HORIZONTAL_SPAN + 1, 1));
         m_pwdLabel = new Label(area, SWT.NONE);
-        m_pwdLabel.setText(I18n.getString("DBLoginDialog.pwdLabel")); //$NON-NLS-1$
+        m_pwdLabel.setText(Messages.DBLoginDialogPwdLabel);
         m_pwdLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.pwdLabel"); //$NON-NLS-1$
         m_pwdText = new JBText(area, SWT.PASSWORD | SWT.BORDER);
         m_pwdText.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.pwdTxf"); //$NON-NLS-1$
@@ -242,7 +243,8 @@ public class DBLoginDialog extends TitleAreaDialog {
     private void createSchemaCombobox(Composite area) {
         new Label(area, SWT.NONE).setLayoutData(new GridData(GridData.FILL, 
             GridData.CENTER, false, false, HORIZONTAL_SPAN + 1, 1));
-        new Label(area, SWT.NONE).setText(I18n.getString("DBLoginDialog.ConnectionLabel"));    //$NON-NLS-1$
+        new Label(area, SWT.NONE).setText(
+                Messages.DBLoginDialogConnectionLabel);
         m_schemaCbx = new Combo(area, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gridData = newGridData();
         m_schemaCbx.setLayoutData(gridData);
@@ -358,9 +360,9 @@ public class DBLoginDialog extends TitleAreaDialog {
             setErrorMessage(null);
         } else {
             if (serverNameLength == 0) {
-                setErrorMessage(I18n.getString("DBLoginDialog.emptyUser")); //$NON-NLS-1$
+                setErrorMessage(Messages.DBLoginDialogEmptyUser);
             } else {
-                setErrorMessage(I18n.getString("DBLoginDialog.wrongUser"));  //$NON-NLS-1$
+                setErrorMessage(Messages.DBLoginDialogWrongUser);
             }
         }
         enableOKButton(isCorrect);
@@ -374,15 +376,15 @@ public class DBLoginDialog extends TitleAreaDialog {
      */
     boolean modifyPasswordFieldAction() {
         boolean isCorrect = true;
-        if ((m_pwdText.getText().startsWith(" ")) //$NON-NLS-1$
-            || (m_pwdText.getText().endsWith(" "))) { //$NON-NLS-1$
+        if ((m_pwdText.getText().startsWith(StringConstants.SPACE))
+            || (m_pwdText.getText().endsWith(StringConstants.SPACE))) {
             
             isCorrect = false;
         }
         if (isCorrect) {
             setMessage(m_message); 
         } else {
-            setErrorMessage(I18n.getString("DBLoginDialog.wrongPwd")); //$NON-NLS-1$ 
+            setErrorMessage(Messages.DBLoginDialogWrongPwd); 
         }
         enableOKButton(isCorrect);
         return isCorrect;
@@ -394,10 +396,10 @@ public class DBLoginDialog extends TitleAreaDialog {
     private void selectSchemaCbxAction() {
         boolean isCorrect = true;
         if (m_schemaCbx.getItemCount() == 0) {
-            setErrorMessage(I18n.getString("DBLoginDialog.noSchemaAvailable")); //$NON-NLS-1$
+            setErrorMessage(Messages.DBLoginDialogNoSchemaAvailable);
             isCorrect = false;
         } else if (m_schemaCbx.getSelectionIndex() == -1) {
-            setErrorMessage(I18n.getString("DBLoginDialog.noSchemaSelected")); //$NON-NLS-1$
+            setErrorMessage(Messages.DBLoginDialogNoSchemaSelected);
             isCorrect = false;
         } else {
             setErrorMessage(null); 

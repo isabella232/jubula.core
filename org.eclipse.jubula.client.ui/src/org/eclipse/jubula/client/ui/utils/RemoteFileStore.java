@@ -25,7 +25,9 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.ui.businessprocess.RemoteFileBrowserBP;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -55,7 +57,7 @@ public class RemoteFileStore extends FileStore {
      */
     public RemoteFileStore(Communicator com, String path, 
             boolean isDirectory) {
-        Assert.isNotNull(com, "no null connection allowed"); //$NON-NLS-1$
+        Assert.isNotNull(com, Messages.NoNullConnectionAllowed);
         m_com = com;
         m_path = (path != null) ? path : "."; //$NON-NLS-1$
         m_isDirectory = isDirectory;
@@ -87,7 +89,7 @@ public class RemoteFileStore extends FileStore {
         /* currentDir string which represents the working 
         * directory (for example '.' or './' on Unix, '.' or '.\' on Windows)
         * */
-        String currentDir = "." + m_remBrowser.getSepChar(); //$NON-NLS-1$
+        String currentDir = StringConstants.DOT + m_remBrowser.getSepChar();
         StringBuilder s = new StringBuilder(path);
         while (s.indexOf(currentDir) == 0) {
             s.delete(0, currentDir.length());

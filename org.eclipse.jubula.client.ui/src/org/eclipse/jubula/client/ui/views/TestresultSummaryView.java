@@ -59,6 +59,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestresultSummaryContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestresultSummaryViewColumnLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -68,7 +69,6 @@ import org.eclipse.jubula.client.ui.wizards.ExportTestResultDetailsWizard;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -125,157 +125,188 @@ public class TestresultSummaryView extends ViewPart
     /**
      * <code>NO_DATA_AVAILABLE</code>
      */
-    private static final String NO_DATA_AVAILABLE = I18n.getString("TestresultSummary.noData"); //$NON-NLS-1$
+    private static final String NO_DATA_AVAILABLE = 
+        Messages.TestresultSummaryNoData;
 
     /**
      * <code>TESTRESULT_SUMMARY_NUMBER_OF_FAILED_CAPS</code>
      */
-    private static final String TESTRESULT_SUMMARY_NUMBER_OF_FAILED_CAPS = I18n.getString("TestresultSummary.NumberOfFailedCaps"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_NUMBER_OF_FAILED_CAPS = 
+        Messages.TestresultSummaryNumberOfFailedCaps;
 
     /**
      * <code>TESTRESULT_SUMMARY_DETAILS_AVAILABLE</code>
      */
-    private static final String TESTRESULT_SUMMARY_DETAILS_AVAILABLE = I18n.getString("TestresultSummary.detailsAvailable"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_DETAILS_AVAILABLE = 
+        Messages.TestresultSummaryDetailsAvailable;
 
     /**
      * <code>TESTRESULT_SUMMARY_TESTRUN_RELEVANT</code>
      */
-    private static final String TESTRESULT_SUMMARY_TESTRUN_RELEVANT = I18n.getString("TestresultSummary.TestrunRelevant"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_TESTRUN_RELEVANT = 
+        Messages.TestresultSummaryTestrunRelevant;
 
     /**
      * <code>TESTRESULT_SUMMARY_CMD_PARAM</code>
      */
-    private static final String TESTRESULT_SUMMARY_CMD_PARAM = I18n.getString("TestresultSummary.CmdParam"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_CMD_PARAM = 
+        Messages.TestresultSummaryCmdParam;
 
     /**
      * <code>TESTRESULT_SUMMARY_HANDLER_CAPS</code>
      */
-    private static final String TESTRESULT_SUMMARY_HANDLER_CAPS = I18n.getString("TestresultSummary.HandlerCaps"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_HANDLER_CAPS = 
+        Messages.TestresultSummaryHandlerCaps;
 
     /**
      * <code>TESTRESULT_SUMMARY_EXECUTED_CAPS</code>
      */
-    private static final String TESTRESULT_SUMMARY_EXECUTED_CAPS = I18n.getString("TestresultSummary.ExecCaps"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_EXECUTED_CAPS = 
+        Messages.TestresultSummaryExecCaps;
 
     /**
      * <code>TESTRESULT_SUMMARY_EXPECTED_CAPS</code>
      */
-    private static final String TESTRESULT_SUMMARY_EXPECTED_CAPS = I18n.getString("TestresultSummary.ExpecCaps"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_EXPECTED_CAPS = 
+        Messages.TestresultSummaryExecCaps;
 
     /**
      * <code>TESTRESULT_SUMMARY_DURATION</code>
      */
-    private static final String TESTRESULT_SUMMARY_DURATION = I18n.getString("TestresultSummary.Duration"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_DURATION = 
+        Messages.TestresultSummaryDuration;
 
     /**
      * <code>TESTRESULT_SUMMARY_END_TIME</code>
      */
-    private static final String TESTRESULT_SUMMARY_END_TIME = I18n.getString("TestresultSummary.EndTime"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_END_TIME = 
+        Messages.TestresultSummaryEndTime;
 
     /**
      * <code>TESTRESULT_SUMMARY_START_TIME</code>
      */
-    private static final String TESTRESULT_SUMMARY_START_TIME = I18n.getString("TestresultSummary.StartTime"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_START_TIME = 
+        Messages.TestresultSummaryStartTime;
 
     /**
      * <code>TESTRESULT_SUMMARY_LANGUAGE</code>
      */
-    private static final String TESTRESULT_SUMMARY_LANGUAGE = I18n.getString("TestresultSummary.Language"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_LANGUAGE = 
+        Messages.TestresultSummaryLanguage;
 
     /**
      * <code>TESTRESULT_SUMMARY_TOOLKIT</code>
      */
-    private static final String TESTRESULT_SUMMARY_TOOLKIT = I18n.getString("TestresultSummary.Toolkit"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_TOOLKIT = 
+        Messages.TestresultSummaryToolkit;
 
     /**
      * <code>TESTRESULT_SUMMARY_AUT_OS</code>
      */
-    private static final String TESTRESULT_SUMMARY_AUT_OS = I18n.getString("TestresultSummary.AutOS"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_AUT_OS = 
+        Messages.TestresultSummaryAutOS;
 
     /**
      * <code>TESTRESULT_SUMMARY_AUT_AGENT_HOSTNAME</code>
      */
-    private static final String TESTRESULT_SUMMARY_AUT_AGENT_HOSTNAME = I18n.getString("TestresultSummary.AutAgentHostname"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_AUT_AGENT_HOSTNAME = 
+        Messages.TestresultSummaryAutAgentHostname;
 
     /**
      * <code>TESTRESULT_SUMMARY_AUT_HOSTNAME</code>
      */
-    private static final String TESTRESULT_SUMMARY_AUT_HOSTNAME = I18n.getString("TestresultSummary.AutHostname"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_AUT_HOSTNAME = 
+        Messages.TestresultSummaryAutHostname;
 
     /**
      * <code>TESTRESULT_SUMMARY_AUT_CONFIG</code>
      */
-    private static final String TESTRESULT_SUMMARY_AUT_CONFIG = I18n.getString("TestresultSummary.AutConf"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_AUT_CONFIG = 
+        Messages.TestresultSummaryAutConf;
 
     /**
      * <code>TESTRESULT_SUMMARY_AUT_ID</code>
      */
-    private static final String TESTRESULT_SUMMARY_AUT_ID = I18n.getString("TestresultSummary.AutId"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_AUT_ID = 
+        Messages.TestresultSummaryAutId;
 
     /**
      * <code>TESTRESULT_SUMMARY_AUT_NAME</code>
      */
-    private static final String TESTRESULT_SUMMARY_AUT_NAME = I18n.getString("TestresultSummary.AutName"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_AUT_NAME = 
+        Messages.TestresultSummaryAutName;
 
     /**
      * <code>TESTRESULT_SUMMARY_TESTSUITE_STATUS</code>
      */
-    private static final String TESTRESULT_SUMMARY_TESTSUITE_STATUS = I18n.getString("TestresultSummary.TestsuiteStatus"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_TESTSUITE_STATUS = 
+        Messages.TestresultSummaryTestsuiteStatus;
 
     /**
      * <code>TESTRESULT_SUMMARY_TESTSUITE</code>
      */
-    private static final String TESTRESULT_SUMMARY_TESTSUITE = I18n.getString("TestresultSummary.Testsuite"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_TESTSUITE = 
+        Messages.TestresultSummaryTestsuite;
 
     /**
      * <code>TESTRESULT_SUMMARY_PROJECT_NAME</code>
      */
-    private static final String TESTRESULT_SUMMARY_PROJECT_NAME = I18n.getString("TestresultSummary.ProjectName"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_PROJECT_NAME = 
+        Messages.TestresultSummaryProjectName;
 
     /**
      * <code>TESTRESULT_SUMMARY_TESTRUN_STATE</code>
      */
-    private static final String TESTRESULT_SUMMARY_TESTRUN_STATE = I18n.getString("TestresultSummary.TestrunState"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_TESTRUN_STATE = 
+        Messages.TestresultSummaryTestrunState;
 
     /**
      * <code>TESTRESULT_SUMMARY_DATE</code>
      */
-    private static final String TESTRESULT_SUMMARY_DATE = I18n.getString("TestresultSummary.Date"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_DATE = 
+        Messages.TestresultSummaryDate;
 
     /**
      * <code>TESTRESULT_SUMMARY_COMMENT_TITLE</code>
      */
-    private static final String TESTRESULT_SUMMARY_COMMENT_TITLE = I18n.getString("TestresultSummary.CommentTitle"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_COMMENT_TITLE =
+        Messages.TestresultSummaryCommentTitle;
     
     /**
      * <code>TESTRESULT_SUMMARY_TEST_JOB_START_TIME</code>
      */
-    private static final String TESTRESULT_SUMMARY_TEST_JOB_START_TIME = I18n.getString("TestresultSummary.TestJobStartTime"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_TEST_JOB_START_TIME = 
+        Messages.TestresultSummaryTestJobStartTime;
 
     /**
      * <code>TESTRESULT_SUMMARY_TEST_JOB</code>
      */
-    private static final String TESTRESULT_SUMMARY_TEST_JOB = I18n.getString("TestresultSummary.TestJob"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_TEST_JOB = 
+        Messages.TestresultSummaryTestJob;
 
     /**
      * <code>TESTRESULT_SUMMARY_TESTRUN_ID</code>
      */
-    private static final String TESTRESULT_SUMMARY_TESTRUN_ID = I18n.getString("TestresultSummary.TestrunID"); //$NON-NLS-1$
+    private static final String TESTRESULT_SUMMARY_TESTRUN_ID = 
+        Messages.TestresultSummaryTestrunID;
     
     /**
      * <code>MONITORING_ID</code>
      */
-    private static final String MONITORING_ID = I18n.getString("TestresultSummary.MonitoringId"); //$NON-NLS-1$
+    private static final String MONITORING_ID = 
+        Messages.TestresultSummaryMonitoringId;
     
     /**
      * <code>MONITORING_VALUE</code>
      */
-    private static final String MONITORING_VALUE = I18n.getString("TestresultSummary.MonitoringValue"); //$NON-NLS-1$
+    private static final String MONITORING_VALUE = 
+        Messages.TestresultSummaryMonitoringValue;
     
     /**
      * <code>MONITORING_DETAILS</code>
      */
-    private static final String MONITORING_DETAILS = I18n.getString("TestresultSummary.MonitoringDetails"); //$NON-NLS-1$
+    private static final String MONITORING_DETAILS = 
+        Messages.TestresultSummaryMonitoringDetails;
     /** standard logging */
     private static Log log = LogFactory.getLog(TestresultSummaryView.class);
     
@@ -334,7 +365,7 @@ public class TestresultSummaryView extends ViewPart
      * <code>m_filterJob</code>
      */
     private TestresultFilterJob m_filterJob = new TestresultFilterJob(
-            I18n.getString("Job.filterSummaryView"),  //$NON-NLS-1$
+            Messages.JobFilterSummaryView,
             StringConstants.EMPTY);
 
     /**
@@ -663,7 +694,7 @@ public class TestresultSummaryView extends ViewPart
     private void createSearchFilter(Composite parent) {
         // "filter by" label
         Label searchLabel = new Label(parent, SWT.NONE);
-        searchLabel.setText(I18n.getString("TestresultSummary.FilterLabel")); //$NON-NLS-1$
+        searchLabel.setText(Messages.TestresultSummaryFilterLabel);
 
         // combo box to change column for filter
         m_filterCombo = new Combo(parent, SWT.DROP_DOWN | SWT.READ_ONLY);
@@ -715,7 +746,7 @@ public class TestresultSummaryView extends ViewPart
 
         // "for Value" label
         Label forLabel = new Label(parent, SWT.NONE);
-        forLabel.setText(I18n.getString("TestresultSummary.ForLabel")); //$NON-NLS-1$
+        forLabel.setText(Messages.TestresultSummaryForLabel);
 
         // search filter textfield
         m_searchText = new Text(parent, SWT.BORDER | SWT.SEARCH);
@@ -725,7 +756,7 @@ public class TestresultSummaryView extends ViewPart
             public void keyReleased(KeyEvent ke) {
                 if (m_filterJob.cancel()) {
                     m_filterJob = new TestresultFilterJob(
-                            I18n.getString("Job.filterSummaryView"), //$NON-NLS-1$
+                            Messages.JobFilterSummaryView,
                             m_searchText.getText());
                     JobUtils.executeJob(m_filterJob, null, 
                             FILTER_CONTROL_INPUT_DELAY);
@@ -760,7 +791,7 @@ public class TestresultSummaryView extends ViewPart
      * @param testrunIds testruns which will be deleted
      */
     public void deleteTestresults(final Long[] testrunIds) {
-        final String jobName = I18n.getString("UIJob.deletingTestResultFromDB"); //$NON-NLS-1$
+        final String jobName = Messages.UIJobDeletingTestResultFromDB;
         Job job = new Job(jobName) {
             public IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
@@ -798,7 +829,7 @@ public class TestresultSummaryView extends ViewPart
                         m_tableViewer.setInput(metaList.toArray());
                     }
                 } catch (JBException e) {
-                    String msg = "Can't load metadata from database"; //$NON-NLS-1$
+                    String msg = Messages.CantLoadMetadataFromDatabase;
                     log.error(msg, e);
                     showErrorDialog(msg);
                 }
@@ -1389,11 +1420,9 @@ public class TestresultSummaryView extends ViewPart
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {  
                 if (((ITestResultSummaryPO)element).isReportWritten()) {
-                    return I18n.getString(
-                            "TestresultSummary.MonitoringDetailsAvailable"); ////$NON-NLS-1$
+                    return Messages.TestresultSummaryMonitoringDetailsAvailable;
                 }                
-                return I18n.getString(
-                        "TestresultSummary.MonitoringDetailsNotAvailable"); ////$NON-NLS-1$
+                return Messages.TestresultSummaryMonitoringDetailsNotAvailable;
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
@@ -1416,8 +1445,7 @@ public class TestresultSummaryView extends ViewPart
                 String id = 
                     ((ITestResultSummaryPO)element).getInternalMonitoringId();
                 if (StringUtils.isEmpty(id)) {
-                    return I18n.getString(
-                            "TestresultSummary.MonitoringIdNonSelected"); ////$NON-NLS-1$
+                    return Messages.TestresultSummaryMonitoringIdNonSelected;
                 }
                 return StringUtils.defaultString(id);
             }
@@ -1461,8 +1489,7 @@ public class TestresultSummaryView extends ViewPart
                     }
                     return StringUtils.defaultString(monitoringValue);
                 } 
-                return I18n.getString(
-                        "TestresultSummary.MonitoringValueNotAvailable"); //$NON-NLS-1$  
+                return Messages.TestresultSummaryMonitoringValueNotAvailable;  
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());

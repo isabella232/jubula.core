@@ -24,12 +24,12 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -95,12 +95,12 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
 
         noDefaultAndApplyButton();       
         String str = getProject().getName();
-        super.getShell().setText(I18n.getString(
-            "ProjectPropertyPage.shellTitle") + str); //$NON-NLS-1$
+        super.getShell().setText(Messages.ProjectPropertyPageShellTitle + str);
 
         createLabel(projectNameComposite, StringConstants.EMPTY);
         createLabel(projectNameComposite, StringConstants.EMPTY);
-        createLabel(composite, I18n.getString("ProjectSettingWizardPage.SelectLanguagesOfTD"));       //$NON-NLS-1$
+        createLabel(composite, Messages
+                .ProjectSettingWizardPageSelectLanguagesOfTD);
         Composite innerComposite = new Composite(composite, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
         compositeLayout.numColumns = NUM_COLUMNS_1;
@@ -249,7 +249,7 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
             GridData.BEGINNING, GridData.FILL, true, true);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_1, 
             GridData.FILL, GridData.FILL, true, true);
-        createLabel(leftComposite, I18n.getString("ProjectPropertyPage.languageLabel")); //$NON-NLS-1$
+        createLabel(leftComposite, Messages.ProjectPropertyPageLanguageLabel);
         m_defaultLangComboBox = new DirectCombo<Locale>(rightComposite, 
                 SWT.READ_ONLY, new ArrayList<Locale>(), new ArrayList<String>(),
                 false, true);
@@ -341,19 +341,19 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
         if (m_projectLangList.getItemCount() == 0
                 || m_defaultLangComboBox.getItemCount() == 0) {        
             m_defaultLangComboBox.setEnabled(false);
-            setErrorMessage(I18n.getString("ProjectPropertyPage.noProjectLanguage"));  //$NON-NLS-1$
+            setErrorMessage(Messages.ProjectPropertyPageNoProjectLanguage);
             setValid(false);
         } else {
             if (StringConstants.EMPTY.equals(m_defaultLangComboBox.
                 getText())) {
-                setErrorMessage(I18n.getString("ProjectPropertyPage.noProjectLanguage"));  //$NON-NLS-1$
+                setErrorMessage(Messages.ProjectPropertyPageNoProjectLanguage);
                 setValid(false);
                 m_defaultLangComboBox.setEnabled(true);
                 return;
             }
             m_defaultLangComboBox.setEnabled(true);
             setErrorMessage(null);
-            setMessage(I18n.getString("PropertiesAction.page1"), NONE); //$NON-NLS-1$
+            setMessage(Messages.PropertiesActionPage1, NONE);
             setValid(true);
             getProject().setDefaultLanguage(m_defaultLangComboBox.
                 getSelectedObject());
@@ -410,8 +410,8 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
          */
         private ProjectLanguageChooserComposite(Composite innerComposite, 
                 java.util.List leftList, java.util.List<String> rightList) {
-            super(innerComposite,  I18n.getString("ProjectPropertyPage.upperLabel"),  //$NON-NLS-1$
-                    leftList, I18n.getString("ProjectSettingWizardPage.bottomLabel"),  //$NON-NLS-1$
+            super(innerComposite,  Messages.ProjectPropertyPageUpperLabel,
+                    leftList, Messages.ProjectSettingWizardPageBottomLabel,
                     rightList, 15, 
                     new Image[] { IconConstants.RIGHT_ARROW_IMAGE, 
                                   IconConstants.DOUBLE_RIGHT_ARROW_IMAGE, 
@@ -422,10 +422,10 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
                                   IconConstants.LEFT_ARROW_DIS_IMAGE, 
                                   IconConstants.DOUBLE_LEFT_ARROW_DIS_IMAGE }, 
                     new String[] { 
-                        I18n.getString("ProjectPropertyPage.downToolTip"), //$NON-NLS-1$
-                        I18n.getString("ProjectSettingWizardPage.allDownToolTip"), //$NON-NLS-1$
-                        I18n.getString("ProjectPropertyPage.upToolTip"), //$NON-NLS-1$
-                        I18n.getString("ProjectSettingWizardPage.allUpToolTip")  //$NON-NLS-1$
+                        Messages.ProjectPropertyPageDownToolTip,
+                        Messages.ProjectSettingWizardPageAllDownToolTip,
+                        Messages.ProjectPropertyPageUpToolTip,
+                        Messages.ProjectSettingWizardPageAllUpToolTip
                     }, ListElementChooserComposite.VERTICAL);
         }
 
@@ -523,7 +523,8 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
                 enableLangCombo();
                 return;
             } 
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.DOT);
         }
 
         /**
@@ -539,7 +540,8 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
                 updateLanguages();
                 return;
             } 
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.DOT);
         }        
     }
 }

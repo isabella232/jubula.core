@@ -21,6 +21,7 @@ import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.handlers.ProjectPropertiesHandler;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.properties.AbstractProjectPropertyPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +85,7 @@ public final class ProjectPropertyExtensionHandler {
                     page = (AbstractProjectPropertyPage)prop
                             .createExecutableExtension(EP_CLASS);
                 } catch (CoreException e) {
-                    LOG.error("CoreException", e); //$NON-NLS-1$
+                    LOG.error(Messages.CoreException, e);
                     continue; // If the creation of the class fails
                 }
 

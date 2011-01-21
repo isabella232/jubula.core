@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.graphics.Image;
 
 
@@ -345,7 +346,9 @@ public abstract class GuiNode implements Serializable, Comparable<GuiNode> {
      * {@inheritDoc}
      */
     public String toString() {
-        return super.toString() + " (" + m_name + ")";  //$NON-NLS-1$//$NON-NLS-2$
+        return super.toString() + StringConstants.SPACE 
+            + StringConstants.LEFT_PARENTHESES + m_name 
+            + StringConstants.RIGHT_PARENTHESES;
     }
     
     

@@ -23,8 +23,8 @@ import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -52,7 +52,7 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
             final boolean autoScreenshots = Plugin.getDefault()
                     .getPreferenceStore().getBoolean(
                             Constants.AUTO_SCREENSHOT_KEY);
-            final String jobName = I18n.getString("UIJob.startTestJob"); //$NON-NLS-1$
+            final String jobName = Messages.UIJobStartTestJob;
             Job startTestJobJob = new Job(jobName) {
                 protected IStatus run(IProgressMonitor monitor) {
                     monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);

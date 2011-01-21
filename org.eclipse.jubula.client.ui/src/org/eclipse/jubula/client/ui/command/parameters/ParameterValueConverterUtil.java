@@ -13,6 +13,8 @@ package org.eclipse.jubula.client.ui.command.parameters;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.commands.ParameterValueConversionException;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -46,7 +48,7 @@ public class ParameterValueConverterUtil {
             return Long.parseLong(idString);
         } catch (NumberFormatException nfe) {
             throw new ParameterValueConversionException(
-                    "parameterValue must be a valid ID", nfe); //$NON-NLS-1$
+                    Messages.ParameterValueMustBeAValidID, nfe);
         }
         
     }
@@ -67,7 +69,8 @@ public class ParameterValueConverterUtil {
         Validate.notNull(type);
         if (!type.isInstance(parameterValue)) {
             throw new ParameterValueConversionException(
-                    "parameterValue must be of type: " + type.getName()); //$NON-NLS-1$
+                    Messages.ParameterValueMustBeOfType + StringConstants.COLON
+                    + StringConstants.SPACE + type.getName());
         }
     }
 

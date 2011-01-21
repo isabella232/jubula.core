@@ -29,9 +29,10 @@ import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
 import org.eclipse.jubula.client.ui.businessprocess.ExportFileBP;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.handlers.RefreshProjectHandler;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
@@ -88,7 +89,7 @@ public class ExportFileAction extends AbstractAction {
                     if (statusOfRefresh.get() != null
                             && statusOfRefresh.get().isOK()) {
                         SubMonitor subMonitor = SubMonitor.convert(monitor,
-                                I18n.getString("ExportFileAction.exporting"), //$NON-NLS-1$
+                                Messages.ExportFileActionExporting,
                                 1);
                         
                         XmlStorage.save(gstorage.getProject(), m_fileName, 
@@ -139,7 +140,7 @@ public class ExportFileAction extends AbstractAction {
     private void showExportDialog() {
         final FileDialog fileDialog = new FileDialog(Plugin.getShell(), 
             SWT.SAVE | SWT.APPLICATION_MODAL);
-        fileDialog.setText(I18n.getString("ActionBuilder.SaveAs")); //$NON-NLS-1$
+        fileDialog.setText(Messages.ActionBuilderSaveAs);
         fileDialog.setFilterExtensions(new String[]{"*.xml"}); //$NON-NLS-1$
         fileDialog.setFilterPath(Utils.getLastDirPath());
         
@@ -155,17 +156,15 @@ public class ExportFileAction extends AbstractAction {
         if (file.exists()) {
             MessageBox mb = new MessageBox(fileDialog.getParent(),
                     SWT.ICON_WARNING | SWT.YES | SWT.NO);
-            mb.setText(I18n.getString(
-                    "ExportFileAction.ConfirmOverwriteTitle")); //$NON-NLS-1$
-            mb.setMessage(I18n.getString(
-                    "ExportFileAction.ConfirmOverwrite",  //$NON-NLS-1$
+            mb.setText(Messages.ExportFileActionConfirmOverwriteTitle);
+            mb.setMessage(NLS.bind(Messages.ExportFileActionConfirmOverwrite,
                     new Object[] {fileNameTemp }));
             if (mb.open() == SWT.NO) {
                 return;
             }
         }
 
-        Plugin.startLongRunning(I18n.getString("ExportFileAction.waitWhileExporting")); //$NON-NLS-1$
+        Plugin.startLongRunning(Messages.ExportFileActionWaitWhileExporting);
         
         final String fileName = fileNameTemp;
         Utils.storeLastDirPath(fileDialog.getFilterPath());

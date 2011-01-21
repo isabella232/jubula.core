@@ -27,11 +27,12 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ServerManager;
 import org.eclipse.jubula.client.ui.utils.ServerManager.Server;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -81,7 +82,7 @@ public class NewServerPortDialog extends TitleAreaDialog {
     private static final int HORIZONTAL_SPAN = 3;
     
     /** The message m_text */
-    private String m_message = I18n.getString("NewServerPortDialog.message");  //$NON-NLS-1$
+    private String m_message = Messages.NewServerPortDialogMessage;
     
     /** the sever name combobox */
     private Combo m_serverCombo;
@@ -115,9 +116,9 @@ public class NewServerPortDialog extends TitleAreaDialog {
      */
     protected Control createDialogArea(Composite parent) {
         setMessage(m_message);
-        setTitle(I18n.getString("NewServerPortDialog.title"));  //$NON-NLS-1$
+        setTitle(Messages.NewServerPortDialogTitle);
         setTitleImage(IconConstants.SERVER_PORT_DIALOG_IMAGE);
-        getShell().setText(I18n.getString("NewServerPortDialog.shellTitle"));  //$NON-NLS-1$
+        getShell().setText(Messages.NewServerPortDialogShellTitle);
         
         // new Composite as container
         final GridLayout gridLayoutParent = new GridLayout();
@@ -173,13 +174,14 @@ public class NewServerPortDialog extends TitleAreaDialog {
     private void createServerCombo(Composite area) {
         new Label(area, SWT.NONE).setLayoutData(new GridData(GridData.FILL, 
             GridData.CENTER, false, false, HORIZONTAL_SPAN + 1, 1));
-        new Label(area, SWT.NONE).setText(I18n.getString("NewServerPortDialog.serverLabel"));   //$NON-NLS-1$
+        new Label(area, SWT.NONE).setText(
+                Messages.NewServerPortDialogServerLabel);
         m_serverCombo = new Combo(area, SWT.SINGLE | SWT.BORDER);
         GridData gridData = newGridData();
         Layout.addToolTipAndMaxWidth(gridData, m_serverCombo);
         m_serverCombo.setLayoutData(gridData);
         m_jreButton = new Button(area, SWT.PUSH);
-        m_jreButton.setText(I18n.getString("NewServerPortDialog.ManageJRE")); //$NON-NLS-1$
+        m_jreButton.setText(Messages.NewServerPortDialogManageJRE);
         m_jreButton.setLayoutData(buttonLayoutData());
     }
     
@@ -187,11 +189,11 @@ public class NewServerPortDialog extends TitleAreaDialog {
      * @param area The composite. Creates the m_text field to enter the port number.
      */
     private void createPortField(Composite area) {
-        newLabel(area, I18n.getString("NewServerPortDialog.portLabel",  //$NON-NLS-1$
+        newLabel(area, NLS.bind(Messages.NewServerPortDialogPortLabel,
                 new Object[] {
                     Constants.MIN_PORT_NUMBER, Constants.MAX_PORT_NUMBER}));
-        m_portText = new IntegerFieldEditor(StringConstants.EMPTY, I18n
-                .getString("NewServerPortDialog.portLabel", //$NON-NLS-1$
+        m_portText = new IntegerFieldEditor(StringConstants.EMPTY,
+                NLS.bind(Messages.NewServerPortDialogPortLabel,
                         new Object[] { Constants.MIN_PORT_NUMBER,
                             Constants.MAX_PORT_NUMBER }), area,
                 (StringConstants.EMPTY + Constants.MAX_PORT_NUMBER).length()) {
@@ -284,14 +286,14 @@ public class NewServerPortDialog extends TitleAreaDialog {
         }
         enableOKButton(isCorrect);
         if (isCorrect) {
-            setMessage(I18n.getString("ServerPreferencePage.title")); //$NON-NLS-1$
+            setMessage(Messages.ServerPreferencePageTitle);
             setErrorMessage(null);
             checkCompleteness(false);
         } else {
             if (serverNameLength == 0) {
-                setErrorMessage(I18n.getString("ServerPreferencePage.emptyServerName")); //$NON-NLS-1$
+                setErrorMessage(Messages.ServerPreferencePageEmptyServerName);
             } else {
-                setErrorMessage(I18n.getString("ServerPreferencePage.wrongServerName")); //$NON-NLS-1$
+                setErrorMessage(Messages.ServerPreferencePageWrongServerName);
             }
         }
         return isCorrect;
@@ -303,7 +305,7 @@ public class NewServerPortDialog extends TitleAreaDialog {
      */
     void checkCompleteness(boolean isPortFieldVerified) {
         if (!m_portText.isValid()) {
-            setErrorMessage(I18n.getString("NewServerPortDialog.portError",  //$NON-NLS-1$
+            setErrorMessage(NLS.bind(Messages.NewServerPortDialogPortError,
                 new Object[] {Constants.MIN_PORT_NUMBER,
                     Constants.MAX_PORT_NUMBER}));
             enableOKButton(false);
@@ -326,11 +328,11 @@ public class NewServerPortDialog extends TitleAreaDialog {
             List <String> jreList = 
                 new ArrayList<String>(m_serverMgr.getJREs(serverName));
             ComboBoxDialog dialog = new ComboBoxDialog(Plugin.getShell(),
-                jreList, I18n.getString("GDProblemView.message"), //$NON-NLS-1$
-                I18n.getString("GDProblemView.title"),  //$NON-NLS-1$
+                jreList, Messages.GDProblemViewMessage,
+                Messages.GDProblemViewTitle,
                 IconConstants.PROJECT_DIALOG_IMAGE,
-                I18n.getString("GDProblemView.shellTitle"), //$NON-NLS-1$
-                I18n.getString("GDProblemView.label")); //$NON-NLS-1$
+                Messages.GDProblemViewShellTitle,
+                Messages.GDProblemViewLabel);
             Plugin.getHelpSystem().setHelp(dialog.getShell(),
                 ContextHelpIds.JRE_CHOOSE_DIALOG);
             dialog.setHelpAvailable(true);
@@ -438,7 +440,9 @@ public class NewServerPortDialog extends TitleAreaDialog {
                 handleJreButtonEvent();
                 return;
             }
-            Assert.notReached("Event activated by unknown widget(" + o + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
+            Assert.notReached(Messages.EventActivatedUnknownWidget
+                + StringConstants.LEFT_PARENTHESES + o 
+                + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);    
         }
 
         /**
@@ -446,7 +450,9 @@ public class NewServerPortDialog extends TitleAreaDialog {
          */
         public void widgetDefaultSelected(SelectionEvent e) {
             Object o = e.getSource();
-            Assert.notReached("Event activated by unknown widget(" + o + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
+            Assert.notReached(Messages.EventActivatedUnknownWidget
+                    + StringConstants.LEFT_PARENTHESES + o 
+                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
         }
     }
 

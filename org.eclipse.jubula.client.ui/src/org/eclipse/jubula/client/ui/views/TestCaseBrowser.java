@@ -69,6 +69,7 @@ import org.eclipse.jubula.client.ui.controllers.dnd.TCBrowserDndSupport;
 import org.eclipse.jubula.client.ui.controllers.dnd.TestSpecDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CategoryGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
@@ -81,8 +82,8 @@ import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
@@ -239,9 +240,12 @@ public class TestCaseBrowser extends AbstractJBTreeView
      */
     protected void fillContextMenu(IMenuManager mgr) {
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        MenuManager submenuNew = new MenuManager(I18n.getString("TestSuiteBrowser.New"), NEW_ID); //$NON-NLS-1$
-        MenuManager submenuAdd = new MenuManager(I18n.getString("TestSuiteBrowser.Add"),  ADD_ID); //$NON-NLS-1$
-        MenuManager submenuOpenWith = new MenuManager(I18n.getString("TestSuiteBrowser.OpenWith"), OPEN_WITH_ID); //$NON-NLS-1$
+        MenuManager submenuNew = new MenuManager(
+                Messages.TestSuiteBrowserNew, NEW_ID);
+        MenuManager submenuAdd = new MenuManager(
+                Messages.TestSuiteBrowserAdd, ADD_ID);
+        MenuManager submenuOpenWith = new MenuManager(
+                Messages.TestSuiteBrowserOpenWith, OPEN_WITH_ID);
         // build menu
         mgr.add(submenuNew);
         mgr.add(submenuAdd);
@@ -374,7 +378,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
                             null, 
                             IWorkbenchPage.VIEW_VISIBLE);
                 } catch (PartInitException e) {
-                    LOG.error("unable to open GDPropertiesView!", e); //$NON-NLS-1$
+                    LOG.error(Messages.UnableToOpenGDPropertiesView 
+                            + StringConstants.EXCLAMATION_MARK, e);
                 }
                 CommandHelper.executeCommand(
                         CommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID, getSite());
@@ -706,7 +711,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
     private AbstractTestCaseEditor getTCEditor() {
         AbstractTestCaseEditor edit = Plugin.getDefault().getActiveTCEditor();
         if (edit == null) {
-            String msg = "no active TC editor, please fix the method"; //$NON-NLS-1$
+            String msg = Messages.NoActiveTCEditorPleaseFixTheMethod;
             LOG.fatal(msg); 
             throw new JBFatalException(msg, MessageIDs.E_NO_OPENED_EDITOR);
         }

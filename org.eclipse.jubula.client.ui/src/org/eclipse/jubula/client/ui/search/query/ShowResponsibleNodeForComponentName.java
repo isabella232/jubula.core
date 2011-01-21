@@ -28,8 +28,9 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -60,9 +61,11 @@ public class ShowResponsibleNodeForComponentName
     public String getLabel() {
         StringBuilder sb = new StringBuilder();
         sb.append(getTimestamp());
-        sb.append(": ");
-        sb.append(I18n.getString("UIJob.searchingResponsibleCompNames"));
-        sb.append(" \"");
+        sb.append(StringConstants.COLON);
+        sb.append(StringConstants.SPACE);
+        sb.append(Messages.UIJobSearchingResponsibleCompNames);
+        sb.append(StringConstants.SPACE);
+        sb.append("\"");
         sb.append(getCompName().getName());
         sb.append("\"");
         return sb.toString();

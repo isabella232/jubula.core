@@ -23,11 +23,11 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -41,14 +41,14 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 public class RefTestSuiteGUIPropertySource 
         extends AbstractGuiNodePropertySource {
     /** Constant for the String Specification Name */
-    private static final String P_REF_TS_DISPLAY_NAME = I18n
-            .getString("RefTestSuiteGUIPropertySource.refTSName"); //$NON-NLS-1$
+    private static final String P_REF_TS_DISPLAY_NAME = 
+        Messages.RefTestSuiteGUIPropertySourceRefTSName;
 
     /**
      * <code>P_AUT_ID_DISPLAY_NAME</code>
      */
-    private static final String P_AUT_ID_DISPLAY_NAME = I18n
-            .getString("RefTestSuiteGUIPropertySource.autIdName"); //$NON-NLS-1$
+    private static final String P_AUT_ID_DISPLAY_NAME =
+        Messages.RefTestSuiteGUIPropertySourceAutIdName;
 
     /** List of aut names */
     private String[] m_autIdList = new String[0];
@@ -124,7 +124,8 @@ public class RefTestSuiteGUIPropertySource
                         }
                         return m_autIdList[((Integer)element).intValue()];
                     }
-                    Assert.notReached("Wrong element type."); //$NON-NLS-1$
+                    Assert.notReached(Messages.WrongElementType 
+                            + StringConstants.DOT);
                     return String.valueOf(element);
                 }
             });

@@ -123,7 +123,6 @@ public class OMEditorBP {
                         catPath.push(category.getName());
                         category = category.getParent();
                     }
-                    
                     IObjectMappingCategoryPO newCategory = 
                         getEditor().getAut().getObjMap()
                             .getUnmappedTechnicalCategory();

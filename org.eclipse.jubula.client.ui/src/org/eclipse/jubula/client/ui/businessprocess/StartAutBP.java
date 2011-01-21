@@ -44,9 +44,9 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -164,7 +164,8 @@ public class StartAutBP extends AbstractActionBP {
                         m_autStarted = false;
                         break;
                     default:
-                        Assert.notReached("Unhandled connection state for server."); //$NON-NLS-1$
+                        Assert.notReached(Messages
+                                .UnhandledConnectionStateForServer);
                 }
                 fireAUTButtonStateCouldBeChanged();
             }
@@ -188,7 +189,7 @@ public class StartAutBP extends AbstractActionBP {
                     m_autStarted = false;
                     break;
                 default:
-                    Assert.notReached("Unhandled aut state."); //$NON-NLS-1$
+                    Assert.notReached(Messages.UnhandledAutState);
             }
             fireAUTButtonStateCouldBeChanged();
         }
@@ -496,7 +497,7 @@ public class StartAutBP extends AbstractActionBP {
      * start aut button is changed
      */
     private void fireAUTButtonStateCouldBeChanged() {
-        final String jobName = I18n.getString("UIJob.resolveStartableAuts"); //$NON-NLS-1$
+        final String jobName = Messages.UIJobResolveStartableAuts;
         Job resolveStartableAUTs = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);

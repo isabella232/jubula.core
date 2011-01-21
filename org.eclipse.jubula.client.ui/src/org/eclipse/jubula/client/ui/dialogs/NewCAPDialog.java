@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.widgets.CompNamePopUpTextField;
@@ -36,11 +37,11 @@ import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -124,10 +125,10 @@ public class NewCAPDialog extends TitleAreaDialog {
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
-        setTitle(I18n.getString("NewCapDialog.title")); //$NON-NLS-1$
-        setMessage(I18n.getString("NewCapDialog.message")); //$NON-NLS-1$
+        setTitle(Messages.NewCapDialogTitle);
+        setMessage(Messages.NewCapDialogMessage);
         setTitleImage(IconConstants.NEW_CAP_DIALOG_IMAGE);
-        getShell().setText(I18n.getString("NewCAPDialog.shellTitle")); //$NON-NLS-1$
+        getShell().setText(Messages.NewCAPDialogShellTitle);
 //      new Composite as container
         final GridLayout gridLayoutParent = new GridLayout();
         gridLayoutParent.numColumns = NUM_COLUMNS_1;
@@ -223,7 +224,7 @@ public class NewCAPDialog extends TitleAreaDialog {
      */
     private void createCapNameField(Composite area) {
         Label label = new Label(area, SWT.NONE);
-        label.setText(I18n.getString("NewCAPDialog.capNameLabel")); //$NON-NLS-1$
+        label.setText(Messages.NewCAPDialogCapNameLabel);
         m_capNameField = new JBText(area, SWT.SINGLE | SWT.BORDER);
         GridData gridData = newGridData();
         Layout.addToolTipAndMaxWidth(gridData, m_capNameField);
@@ -250,7 +251,7 @@ public class NewCAPDialog extends TitleAreaDialog {
     private void createComponentCombo(Composite area) {
         CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
         Label label = new Label(area, SWT.NONE);
-        label.setText(I18n.getString("NewCAPDialog.componentLabel")); //$NON-NLS-1$
+        label.setText(Messages.NewCAPDialogComponentLabel);
         List <String> valueList = new ArrayList <String> ();
         List <String> displayList = new ArrayList <String> ();
         
@@ -281,8 +282,7 @@ public class NewCAPDialog extends TitleAreaDialog {
      */
     private void createComponentName(Composite area) {
         m_compNameLabel = new Label(area, SWT.NONE);
-        m_compNameLabel.setText(I18n.getString(
-                "NewCAPDialog.componentNameLabel")); //$NON-NLS-1$
+        m_compNameLabel.setText(Messages.NewCAPDialogComponentNameLabel);
         m_compNameLabel.setEnabled(false);
         m_componentNameField = new CompNamePopUpTextField(
                 m_compMapper, area,
@@ -300,7 +300,7 @@ public class NewCAPDialog extends TitleAreaDialog {
      */
     private void createActionCombo(Composite area) {
         m_actionLabel = new Label(area, SWT.NONE);
-        m_actionLabel.setText(I18n.getString("NewCAPDialog.actionLabel")); //$NON-NLS-1$
+        m_actionLabel.setText(Messages.NewCAPDialogActionLabel);
         m_actionLabel.setEnabled(false);
         m_actionCombo = new DirectCombo<String>(
             area, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY, 
@@ -404,9 +404,9 @@ public class NewCAPDialog extends TitleAreaDialog {
         } else {
             getButton(IDialogConstants.OK_ID).setEnabled(false);
             if (capNameLength == 0) {
-                setErrorMessage(I18n.getString("NewCAPDialog.emptyStep")); //$NON-NLS-1$); 
+                setErrorMessage(Messages.NewCAPDialogEmptyStep); 
             } else {
-                setErrorMessage(I18n.getString("NewCAPDialog.notValidStep")); //$NON-NLS-1$); 
+                setErrorMessage(Messages.NewCAPDialogNotValidStep); 
             }
         }
         return isCorrect;
@@ -429,7 +429,7 @@ public class NewCAPDialog extends TitleAreaDialog {
             if (getButton(IDialogConstants.OK_ID) != null) {
                 getButton(IDialogConstants.OK_ID).setEnabled(false);
             }
-            setErrorMessage(I18n.getString("NewCAPDialog.emptyCompType")); //$NON-NLS-1$); 
+            setErrorMessage(Messages.NewCAPDialogEmptyCompType); 
         }
         return isCorrect;
     }
@@ -443,7 +443,8 @@ public class NewCAPDialog extends TitleAreaDialog {
         boolean isCorrect = true, defaultName = false;
         int componentNameLength = m_componentNameField.getText().length();
         if ((componentNameLength == 0)
-            || (m_componentNameField.getText().startsWith(" ")) //$NON-NLS-1$ 
+            || (m_componentNameField.getText().startsWith(
+                    StringConstants.SPACE)) 
             || (m_componentNameField.getText().charAt(
                 componentNameLength - 1) == ' ')) {
             
@@ -473,12 +474,12 @@ public class NewCAPDialog extends TitleAreaDialog {
         if (compatibilityErrorMsg != null) {
             setErrorMessage(compatibilityErrorMsg);
         } else if (componentNameLength == 0) {
-            setErrorMessage(I18n.getString("NewCAPDialog.emptyCompName")); //$NON-NLS-1$)
+            setErrorMessage(Messages.NewCAPDialogEmptyCompName);
         } else if (defaultName) {
-            setErrorMessage(I18n.getString("NewCAPDialog.reservedCompName", //$NON-NLS-1$ 
+            setErrorMessage(NLS.bind(Messages.NewCAPDialogReservedCompName, 
                     new Object[] { m_componentNameField.getText() }));
         } else {
-            setErrorMessage(I18n.getString("NewCAPDialog.notValidCompName")); //$NON-NLS-1$)  
+            setErrorMessage(Messages.NewCAPDialogNotValidCompName);  
         }
 
         if (isCorrect) {
@@ -534,7 +535,7 @@ public class NewCAPDialog extends TitleAreaDialog {
         boolean uniqueName = false;
         String capName = StringConstants.EMPTY;
         while (!uniqueName) {
-            capName = I18n.getString("NewCAPDialog.newCap") + index; //$NON-NLS-1$
+            capName = Messages.NewCAPDialogNewCap + index;
             uniqueName = true;
             for (GuiNode node : tc.getChildren()) {
                 if (node.getName().equals(capName)) {
@@ -565,7 +566,9 @@ public class NewCAPDialog extends TitleAreaDialog {
                 modifyComponentNameFieldAction();
                 return;
             } 
-            Assert.notReached("Event activated by unknown widget(" + o + ")."); //$NON-NLS-1$ //$NON-NLS-2$        
+            Assert.notReached(Messages.EventActivatedUnknownWidget 
+                + StringConstants.LEFT_PARENTHESES + o 
+                + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
         }     
     }
 }

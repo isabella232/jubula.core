@@ -35,12 +35,12 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CategoryGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -101,14 +101,14 @@ public class AddNewCategoryHandler extends AbstractHandler {
         }
         InputDialog dialog = new InputDialog(
             Plugin.getShell(), 
-            I18n.getString("CreateNewCategoryAction.CatTitle"),  //$NON-NLS-1$
-            I18n.getString("CreateNewCategoryAction.CatDefaultName"),    //$NON-NLS-1$
-            I18n.getString("CreateNewCategoryAction.CatMessage"), //$NON-NLS-1$
-            I18n.getString("CreateNewCategoryAction.CatLabel"), //$NON-NLS-1$
-            I18n.getString("CreateNewCategoryAction.CatError"), //$NON-NLS-1$
-            I18n.getString("CreateNewCategoryAction.doubleCatName"), //$NON-NLS-1$
+            Messages.CreateNewCategoryActionCatTitle,
+            Messages.CreateNewCategoryActionCatDefaultName,
+            Messages.CreateNewCategoryActionCatMessage,
+            Messages.CreateNewCategoryActionCatLabel,
+            Messages.CreateNewCategoryActionCatError,
+            Messages.CreateNewCategoryActionDoubleCatName,
             IconConstants.NEW_CAT_DIALOG_STRING,
-            I18n.getString("CreateNewCategoryAction.NewCategory"), false) { //$NON-NLS-1$
+            Messages.CreateNewCategoryActionNewCategory, false) {
             
             /**
              * @return False, if the input name already exists.

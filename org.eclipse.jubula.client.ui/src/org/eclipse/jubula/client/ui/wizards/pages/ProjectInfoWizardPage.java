@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.wizards.pages;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
@@ -82,7 +82,7 @@ public class ProjectInfoWizardPage extends WizardPage {
      * Sets the info text.
      */
     private void setInfoText() {
-        m_infoText.setText(I18n.getString("ProjectInfoWizardPage.infoText")); //$NON-NLS-1$
+        m_infoText.setText(Messages.ProjectInfoWizardPageInfoText);
         m_infoText.redraw();
     }
 }

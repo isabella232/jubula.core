@@ -16,7 +16,8 @@ import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -51,16 +52,14 @@ public class PersistentObjectPropertyTester extends PropertyTester {
                 return isInCurrentProject == expectedBoolean;
             }
 
-            LOG.warn(I18n.getString(
-                    "PropertyTester.PropertyNotSupported",  //$NON-NLS-1$
+            LOG.warn(NLS.bind(Messages.PropertyTesterPropertyNotSupported,
                     new String [] {property}));
             return false;
         }
 
         String receiverClass = 
             receiver != null ? receiver.getClass().getName() : "null"; //$NON-NLS-1$
-        LOG.warn(I18n.getString(
-                "PropertyTester.TypeNotSupported",  //$NON-NLS-1$
+        LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
                 new String [] {receiverClass}));
         return false;
     }

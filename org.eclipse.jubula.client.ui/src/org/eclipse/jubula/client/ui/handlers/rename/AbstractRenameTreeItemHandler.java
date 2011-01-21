@@ -34,11 +34,11 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PartInitException;
@@ -77,13 +77,12 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
     private InputDialog createRenameTestJobDialog(final INodePO node) {
         final IProjectPO project = GeneralStorage.getInstance().getProject();
         return new InputDialog(Plugin.getShell(), 
-                I18n.getString("RenameAction.TJTitle"),
-                node.getName(), I18n.getString("RenameAction.TJMessage"),
-                I18n.getString("RenameAction.TJLabel"),
-                I18n.getString("RenameAction.TJError"),
-                I18n.getString("RenameAction.doubleTJName"),
-                IconConstants.TJ_DIALOG_STRING, I18n
-                        .getString("RenameAction.TJShell"),
+                Messages.RenameActionTJTitle,
+                node.getName(), Messages.RenameActionTJMessage,
+                Messages.RenameActionTJLabel,
+                Messages.RenameActionTJError,
+                Messages.RenameActionDoubleTJName,
+                IconConstants.TJ_DIALOG_STRING, Messages.RenameActionTJShell,
                 false) {
             protected boolean isInputAllowed() {
                 String newName = getInputFieldText();
@@ -104,13 +103,13 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
     @SuppressWarnings("nls")
     private InputDialog createRenameCategoryDialog(final INodePO node) {
         return new InputDialog(Plugin.getShell(),
-            I18n.getString("RenameAction.CatTitle"), 
-            node.getName(), I18n.getString("RenameAction.CatMessage"), 
-            I18n.getString("RenameAction.CatLabel"), 
-            I18n.getString("RenameAction.CatError"),
-            I18n.getString("RenameAction.doubleCatName"),
+            Messages.RenameActionCatTitle, 
+            node.getName(), Messages.RenameActionCatMessage, 
+            Messages.RenameActionCatLabel, 
+            Messages.RenameActionCatError,
+            Messages.RenameActionDoubleCatName,
             IconConstants.RENAME_CAT_DIALOG_STRING,
-            I18n.getString("RenameAction.CatShell"),
+            Messages.RenameActionCatShell,
             false);
     }
 
@@ -125,13 +124,13 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
             name = ((IExecTestCasePO)node).getRealName();
         }
         return new InputDialog(Plugin.getShell(),
-            I18n.getString("RenameAction.TCTitle"),
-            name, I18n.getString("RenameAction.TCMessage"),
-            I18n.getString("RenameAction.TCLabel"),
-            I18n.getString("RenameAction.TCError"),
-            I18n.getString("RenameAction.doubleTCName"),
+            Messages.RenameActionTCTitle,
+            name, Messages.RenameActionTCMessage,
+            Messages.RenameActionTCLabel,
+            Messages.RenameActionTCError,
+            Messages.RenameActionDoubleTCName,
             IconConstants.RENAME_TC_DIALOG_STRING,
-            I18n.getString("RenameAction.TCShell"),
+            Messages.RenameActionTCShell,
             false);
     }
 
@@ -144,13 +143,13 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
         final IProjectPO project = GeneralStorage.getInstance().
             getProject();
         return new InputDialog(Plugin.getShell(),
-            I18n.getString("RenameAction.TSTitle"), 
-            node.getName(), I18n.getString("RenameAction.TSMessage"),
-            I18n.getString("RenameAction.TSLabel"),
-            I18n.getString("RenameAction.TSError"),
-            I18n.getString("RenameAction.doubleTSName"),
+            Messages.RenameActionTSTitle, 
+            node.getName(), Messages.RenameActionTSMessage,
+            Messages.RenameActionTSLabel,
+            Messages.RenameActionTSError,
+            Messages.RenameActionDoubleTSName,
             IconConstants.NEW_TS_DIALOG_STRING, 
-            I18n.getString("RenameAction.TSShell"),
+            Messages.RenameActionTSShell,
             false) {
             protected boolean isInputAllowed() {
                 String newName = getInputFieldText();

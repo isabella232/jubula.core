@@ -34,6 +34,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.nag.RCPAUTStartDelayNagTask;
 import org.eclipse.jubula.client.ui.handlers.AbstractStartTestHandler;
 import org.eclipse.jubula.client.ui.utils.JBThread;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ServerManager.Server;
@@ -46,9 +47,9 @@ import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -198,7 +199,7 @@ public class TestExecutionGUIController {
      *            combination and connect to selected server.
      */
     public static void connectToServer(final Server server) {
-        final String jobName = I18n.getString("UIJob.connectToAUTAgent",  //$NON-NLS-1$
+        final String jobName = NLS.bind(Messages.UIJobConnectToAUTAgent,
                 new Object[]{server.getName(), 
                     String.valueOf(server.getPort())});
         Job connectToAUTAgent = new Job(jobName) {

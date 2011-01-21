@@ -18,7 +18,6 @@ import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.databinding.validators.ComponentNameValidator;
 import org.eclipse.jubula.client.ui.widgets.JBText;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -117,8 +116,8 @@ public abstract class EnterLogicalCompNameDialog
      * @return the created text field.
      */
     private JBText createComponentName(Composite area) {
-        new Label(area, SWT.NONE).setText(I18n.getString(
-                "NewCAPDialog.componentNameLabel")); //$NON-NLS-1$
+        new Label(area, SWT.NONE).setText(org.eclipse.jubula.client.ui.i18n.
+                Messages.NewCAPDialogComponentNameLabel);
 
         JBText componentNameField = new JBText(area, SWT.SINGLE | SWT.BORDER);
         return componentNameField;

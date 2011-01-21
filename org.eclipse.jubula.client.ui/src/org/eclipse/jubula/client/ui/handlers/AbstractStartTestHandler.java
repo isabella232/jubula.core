@@ -26,9 +26,9 @@ import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.commands.ICommandService;
@@ -54,7 +54,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
             String htmlDir = null;
             if (xslUrl == null) {
                 Plugin.getDefault().handleError(
-                        new JBException("File not found: format.xsl", //$NON-NLS-1$
+                        new JBException(Messages.FileNotFoundFormatXsl,
                                 MessageIDs.E_FILE_NOT_FOUND));
                 return false;
             }
@@ -65,7 +65,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                 htmlDir = cssFile.getParentFile().getAbsolutePath();
             } catch (IOException e) {
                 Plugin.getDefault().handleError(
-                                new JBException("Can't resolve URL of 'format.xsl' or 'reportStyle.css'.", //$NON-NLS-1$
+                                new JBException(Messages.CantResolveURLOfFile,
                                 MessageIDs.E_FILE_IO));
                 return false;
             }
@@ -157,13 +157,13 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
         final int returnCodeCANCEL = -1;
         MessageDialogWithToggle dialog = new MessageDialogWithToggle(
                 Plugin.getShell(),
-                I18n.getString("TestExecRelevantDialog.Title"), //$NON-NLS-1$
+                Messages.TestExecRelevantDialogTitle,
                 null,
-                I18n.getString("TestExecRelevantDialog.Question"), //$NON-NLS-1$
+                Messages.TestExecRelevantDialogQuestion,
                 MessageDialog.QUESTION,
                 new String[] {
-                        I18n.getString("Utils.Yes"), I18n.getString("Utils.No") }, 0, //$NON-NLS-1$ //$NON-NLS-2$
-                I18n.getString("Utils.remember"), false) { //$NON-NLS-1$
+                    Messages.UtilsYes, Messages.UtilsNo }, 0, 
+                    Messages.UtilsRemember, false) {
 
             /**
              * {@inheritDoc}

@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.factory.AttributeRendererFactory;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -268,16 +269,16 @@ public class DefaultListRenderer extends AbstractAttributeRenderer {
         composite.setLayoutData(data);
         new Label(composite, SWT.NONE);
         m_addButton = new Button(composite, SWT.PUSH);
-        m_addButton.setText(I18n.getString("AUTPropertyPage.Add")); //$NON-NLS-1$
+        m_addButton.setText(Messages.AUTPropertyPageAdd);
         m_addButton.setLayoutData(buttonGrid());
         
         m_editButton = new Button(composite, SWT.PUSH);
-        m_editButton.setText(I18n.getString("AUTPropertyPage.Edit")); //$NON-NLS-1$
+        m_editButton.setText(Messages.AUTPropertyPageEdit);
         m_editButton.setLayoutData(buttonGrid());
         m_editButton.setEnabled(false);
         
         m_removeButton = new Button(composite, SWT.PUSH);
-        m_removeButton.setText(I18n.getString("AUTPropertyPage.Remove")); //$NON-NLS-1$
+        m_removeButton.setText(Messages.AUTPropertyPageRemove);
         m_removeButton.setLayoutData(buttonGrid());
         m_removeButton.setEnabled(false);
     }
@@ -354,7 +355,7 @@ public class DefaultListRenderer extends AbstractAttributeRenderer {
                 handleListEvent();
                 return;
             }
-            Assert.notReached("Event was created by an unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventWasCreatedByAnUnknownWidget);
         }
 
         /**
@@ -366,7 +367,8 @@ public class DefaultListRenderer extends AbstractAttributeRenderer {
                 handleEditButtonEvent();
                 return;
             }
-            Assert.notReached("DoubleClickEvent was created by an unknown widget."); //$NON-NLS-1$
+            Assert.notReached(
+                    Messages.DoubleClickEventWasCreatedByAnUnknownWidget);
         }
     }
 }

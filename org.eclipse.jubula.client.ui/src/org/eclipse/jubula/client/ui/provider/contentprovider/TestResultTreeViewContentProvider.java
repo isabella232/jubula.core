@@ -14,6 +14,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +52,7 @@ public class TestResultTreeViewContentProvider implements ITreeContentProvider {
             return elements;
         }
         
-        LOG.warn("Parent element has invalid type. Returning empty array.");  //$NON-NLS-1$
+        LOG.warn(Messages.ParentElementHasInvalidTypeReturningEmptyArray);
         return new Object[0];
     }
 
@@ -89,7 +90,7 @@ public class TestResultTreeViewContentProvider implements ITreeContentProvider {
             return elements;
         }
         
-        LOG.warn("Input element has invalid type. Returning empty array.");  //$NON-NLS-1$
+        LOG.warn(Messages.InputElementHasInvalidTypeReturningEmptyArray);
         return new Object[0];
     }
 

@@ -15,6 +15,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
@@ -39,14 +40,14 @@ public final class NagDialog extends MessageDialogWithToggle {
      */
     private NagDialog(Shell parentShell, String msgKey, String helpId) {
         super(parentShell, 
-                I18n.getString("InfoNagger.Dialog.Title"), //$NON-NLS-1$
+                Messages.InfoNaggerDialogTitle,
                 null, 
                 I18n.getString(msgKey), MessageDialog.INFORMATION,
                 new String[] { IDialogConstants.HELP_LABEL,
                     IDialogConstants.PROCEED_LABEL 
                 }, 
                 0, 
-                I18n.getString("InfoNagger.Dialog.ToggleMsg"),  //$NON-NLS-1$
+                Messages.InfoNaggerDialogToggleMsg,
                 false);
         m_helpId = helpId;
         this.setShellStyle(SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL);

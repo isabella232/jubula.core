@@ -49,12 +49,12 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.filter.JBBrowserPatternFilter;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.CentralTestDataContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.CentralTestDataLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.wizards.ImportTestDataSetsWizard;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
@@ -121,7 +121,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
      * creates and sets the partName
      */
     protected void createPartName() {
-        setPartName(I18n.getString("CentralTestDataEditor.name")); //$NON-NLS-1$
+        setPartName(Messages.CentralTestDataEditorName);
     }
 
     /**
@@ -185,7 +185,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
 
     /** {@inheritDoc} */
     public void doSave(IProgressMonitor monitor) {
-        monitor.beginTask(I18n.getString("Editors.saveEditors"), //$NON-NLS-1$
+        monitor.beginTask(Messages.EditorsSaveEditors,
                 IProgressMonitor.UNKNOWN);
         EditSupport editSupport = getEditorHelper().getEditSupport();
         try {
@@ -237,7 +237,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
 
     /** {@inheritDoc} */
     public String getEditorPrefix() {
-        return I18n.getString("Plugin.CTD"); //$NON-NLS-1$
+        return Messages.PluginCTD;
     }
 
     /** {@inheritDoc} */

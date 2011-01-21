@@ -39,6 +39,7 @@ import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -46,8 +47,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
@@ -97,16 +98,19 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
     private static final int INITIAL_SIZE = 600;
 
     /** Name of the name-column */
-    private static final String NAME_COL_NAME = I18n.getString("EditParametersDialog.NameTableColumnName"); //$NON-NLS-1$
+    private static final String NAME_COL_NAME = 
+        Messages.EditParametersDialogNameTableColumnName;
     
     /** Name of the type-column */
-    private static final String TYPE_COL_NAME = I18n.getString("EditParametersDialog.TypeTableColumnName"); //$NON-NLS-1$
+    private static final String TYPE_COL_NAME = 
+        Messages.EditParametersDialogTypeTableColumnName;
     
     /** Constant for an empty Cell entry */
     private static final String EMPTY_ENTRY = StringUtils.EMPTY;
     
     /** Default name of a new added Parameter */
-    private static final String DEFAULT_PARAM_NAME = I18n.getString("EditParametersDialog.defaultNewParameterName"); //$NON-NLS-1$
+    private static final String DEFAULT_PARAM_NAME = 
+        Messages.EditParametersDialogDefaultNewParameterName;
     
     /** Default type of a new added Parameter */
     private static final String DEFAULT_PARAM_TYPE = TestDataConstants.STR;
@@ -544,7 +548,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
      */
     private void createParameterTableArea(Composite parent) {
         final Label label = new Label(parent, SWT.NONE);
-        label.setText(I18n.getString("EditParametersDialog.Parameters")); //$NON-NLS-1$
+        label.setText(Messages.EditParametersDialogParameters);
         
         createAdditionalWidgetsAtTop(parent);
         
@@ -698,7 +702,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
      */
     private Button createDeleteButton(Composite parent, GridData layoutData) {
         final Button deleteButton = new Button(parent, SWT.NONE);
-        deleteButton.setText(I18n.getString("EditParametersDialog.Remove")); //$NON-NLS-1$
+        deleteButton.setText(Messages.EditParametersDialogRemove);
         deleteButton.setLayoutData(layoutData);
         deleteButton.addSelectionListener(new SelectionListener() {
             
@@ -747,7 +751,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
      */
     private Button createUpButton(Composite parent, GridData layoutData) {
         final Button upButton = new Button(parent, SWT.NONE);
-        upButton.setText(I18n.getString("EditParametersDialog.Up")); //$NON-NLS-1$
+        upButton.setText(Messages.EditParametersDialogUp);
         upButton.setLayoutData(layoutData);
         upButton.addSelectionListener(new SelectionListener() {
             
@@ -793,7 +797,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
      */
     private Button createDownButton(Composite parent, GridData layoutData) {
         final Button downButton = new Button(parent, SWT.NONE);
-        downButton.setText(I18n.getString("EditParametersDialog.Down")); //$NON-NLS-1$
+        downButton.setText(Messages.EditParametersDialogDown);
         downButton.setLayoutData(layoutData);
         downButton.addSelectionListener(new SelectionListener() {
             
@@ -839,7 +843,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
      */
     private Button createAddButton(Composite parent, GridData layoutData) {
         final Button addButton = new Button(parent, SWT.NONE);
-        addButton.setText(I18n.getString("EditParametersDialog.Add")); //$NON-NLS-1$
+        addButton.setText(Messages.EditParametersDialogAdd);
         addButton.setLayoutData(layoutData);
         addButton.addSelectionListener(new SelectionListener() {
             
@@ -1040,8 +1044,17 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
                 return CompSystemI18n.getString(paramType, true);
 
             default:
-                Assert.notReached("Column Index '" + columnIndex  //$NON-NLS-1$
-                        + "' does not exist!"); //$NON-NLS-1$
+                StringBuilder msg = new StringBuilder();
+                msg.append(Messages.ColumnIndex)
+                    .append(StringConstants.SPACE)
+                    .append(StringConstants.APOSTROPHE)
+                    .append(columnIndex)
+                    .append(StringConstants.APOSTROPHE)
+                    .append(StringConstants.SPACE)
+                    .append(Messages.DoesNotExist)
+                    .append(StringConstants.EXCLAMATION_MARK);
+                    
+                Assert.notReached(msg.toString());
                 break;
         }
         return EMPTY_ENTRY;
@@ -1065,8 +1078,16 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
                 break;
 
             default:
-                Assert.notReached("Column Index '" + columnIndex  //$NON-NLS-1$
-                    + "' does not exist!"); //$NON-NLS-1$
+                StringBuilder msg = new StringBuilder();
+                msg.append(Messages.ColumnIndex)
+                    .append(StringConstants.SPACE)
+                    .append(StringConstants.APOSTROPHE)
+                    .append(columnIndex)
+                    .append(StringConstants.APOSTROPHE)
+                    .append(StringConstants.SPACE)
+                    .append(Messages.DoesNotExist)
+                    .append(StringConstants.EXCLAMATION_MARK);
+                Assert.notReached(msg.toString());
                 break;
         }
         refreshTable();
@@ -1160,16 +1181,16 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         for (Parameter param : getParameters()) {
             if (EMPTY_ENTRY.equals(param.getName().trim())) {
                 setErrorMessage(
-                        I18n.getString("EditParametersDialog.EmptyParamName")); //$NON-NLS-1$
+                        Messages.EditParametersDialogEmptyParamName);
                 return false;
             } else if (EMPTY_ENTRY.equals(param.getType().trim())) {
                 setErrorMessage(
-                        I18n.getString("EditParametersDialog.EmptyParamType")); //$NON-NLS-1$
+                        Messages.EditParametersDialogEmptyParamName);
                 return false;
             } else if (isDuplicate(param)) {
                 setErrorMessage(
-                        I18n.getString(
-                                "EditParametersDialog.DuplicateParamName", //$NON-NLS-1$
+                        NLS.bind(
+                                Messages.EditParametersDialogDuplicateParamName,
                                 new String [] {param.getName()}));
                 return false;
             }

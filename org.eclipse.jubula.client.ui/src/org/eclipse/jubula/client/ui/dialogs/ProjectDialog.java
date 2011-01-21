@@ -26,8 +26,9 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -103,12 +104,12 @@ public class ProjectDialog extends TitleAreaDialog {
     /**
      * label of name combo
      */
-    private String m_label = I18n.getString("OpenProjectAction.label"); //$NON-NLS-1$;
+    private String m_label = Messages.OpenProjectActionLabel;
 
     /**
      * label of the version combo
      */
-    private String m_label2 = I18n.getString("OpenProjectAction.label2"); //$NON-NLS-1$;;
+    private String m_label2 = Messages.OpenProjectActionLabel2; 
 
     /**
      * <code>m_title</code> title
@@ -243,8 +244,9 @@ public class ProjectDialog extends TitleAreaDialog {
                 m_nameToVersionMap.get(projName).add(projVersion);
                 m_projectMap.put(new ProjectData(projName, projVersion), proj);
             } else  {
-                log.warn("Project with GUID " + proj.getGuid() //$NON-NLS-1$
-                        + " has no name."); //$NON-NLS-1$
+                log.warn(Messages.ProjectWithGUID + StringConstants.SPACE 
+                        + proj.getGuid() + StringConstants.SPACE 
+                        + Messages.HasNoName + StringConstants.DOT);
             }
         }
 
@@ -302,7 +304,8 @@ public class ProjectDialog extends TitleAreaDialog {
      */
     private void createDeleteTestresultsCheckbox(Composite composite) {
         m_keepTestresultSummaryButton = new Button(composite, SWT.CHECK);
-        m_keepTestresultSummaryButton.setText(I18n.getString("DeleteProjectAction.keepTestresultSummaryCheckbox")); //$NON-NLS-1$
+        m_keepTestresultSummaryButton.setText(
+                Messages.DeleteProjectActionKeepTestresultSummaryCheckbox);
         m_keepTestresultSummaryButton.setSelection(false);
         GridData data = new GridData();
         data.horizontalSpan = HORIZONTAL_SPAN;

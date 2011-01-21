@@ -45,6 +45,7 @@ import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TJEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.TestJobGUI;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestJobEditorContentProvider;
@@ -53,7 +54,6 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
@@ -78,7 +78,7 @@ public class TestJobEditor extends AbstractJBEditor {
      * {@inheritDoc}
      */
     public String getEditorPrefix() {
-        return I18n.getString("Plugin.TJ"); //$NON-NLS-1$
+        return Messages.PluginTJ;
     }
 
     /**
@@ -164,8 +164,8 @@ public class TestJobEditor extends AbstractJBEditor {
      * {@inheritDoc}
      */
     public void doSave(IProgressMonitor monitor) {
-        monitor.beginTask(I18n.getString(
-                "Editors.saveEditors"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+        monitor.beginTask(Messages.EditorsSaveEditors,
+                IProgressMonitor.UNKNOWN);
         try {
             EditSupport editSupport = getEditorHelper().getEditSupport();
             final IPersistentObject perObj = editSupport.getWorkVersion();
@@ -281,8 +281,8 @@ public class TestJobEditor extends AbstractJBEditor {
                             .getOriginal());
                 } catch (PMException e) {
                     Utils.createMessageDialog(MessageIDs.E_REFRESH_FAILED,
-                            null, new String[] { I18n
-                                    .getString("ErrorMessage.EDITOR_CLOSE") }); //$NON-NLS-1$
+                            null, new String[] {
+                                Messages.ErrorMessageEDITOR_CLOSE });
                     getSite().getPage().closeEditor(this, false);
                 }
                 return false;

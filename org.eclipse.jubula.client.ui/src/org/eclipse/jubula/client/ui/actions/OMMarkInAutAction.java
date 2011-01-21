@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedE
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.communication.message.AUTHighlightComponentMessage;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
@@ -126,7 +127,7 @@ public class OMMarkInAutAction extends AbstractAction
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 Utils.createMessageDialog((new JBException(
-                        "Component could not be found in running AUT.", //$NON-NLS-1$
+                        Messages.ComponentCouldNotBeFoundInRunningAut,
                         MessageIDs.E_COMPONENT_NOT_FOUND)), null, null); 
             }
         });

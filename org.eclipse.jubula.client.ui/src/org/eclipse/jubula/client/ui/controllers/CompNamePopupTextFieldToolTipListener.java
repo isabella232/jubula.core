@@ -16,6 +16,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.widgets.CompNamePopUpTextField;
 import org.eclipse.jubula.client.ui.widgets.JBText;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
@@ -76,7 +77,8 @@ public class CompNamePopupTextFieldToolTipListener implements Listener  {
             CompNamePopUpTextField textField = 
                 (CompNamePopUpTextField)event.widget;
             GC gc = new GC(textField);
-            int textPixels = gc.textExtent(textField.getText() + "  ").x; //$NON-NLS-1$
+            int textPixels = gc.textExtent(textField.getText()
+                    + StringConstants.SPACE + StringConstants.SPACE).x;
             gc.dispose();
             int textFieldPixels = textField.getBounds().width;
             if (textPixels <= textFieldPixels) {

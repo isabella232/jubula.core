@@ -53,6 +53,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.dialogs.ProjectDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -63,8 +64,8 @@ import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
@@ -115,7 +116,7 @@ public class OpenProjectAction extends AbstractAction {
             ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
             
             monitor.beginTask(
-                I18n.getString("OpenProjectOperation.OpeningProject", //$NON-NLS-1$
+                NLS.bind(Messages.OpenProjectOperationOpeningProject,
                     new Object[] {m_selectedProject.getName(),
                                   m_selectedProject.getMajorProjectVersion(),
                                   m_selectedProject.getMinorProjectVersion()}), 
@@ -185,8 +186,8 @@ public class OpenProjectAction extends AbstractAction {
             final int projMajVer = project.getMajorProjectVersion().intValue();
             final int projMinVer = project.getMinorProjectVersion().intValue();
             if (cleanupInterval > 0) {
-                Job job = new Job(I18n.getString(
-                        "UIJob.cleaningTestResultFromDB", //$NON-NLS-1$
+                Job job = new Job(NLS.bind(
+                        Messages.UIJobCleaningTestResultFromDB,
                         new String[] { project.getName() })) {
                     public IStatus run(IProgressMonitor monitor) {
                         TestResultPM.cleanTestresultDetails(cleanupInterval,
@@ -286,7 +287,7 @@ public class OpenProjectAction extends AbstractAction {
             
             if (proj == null) {
                 Plugin.stopLongRunning();
-                showErrorDialog(I18n.getString("OpenProjectAction.InternalError")); //$NON-NLS-1$
+                showErrorDialog(Messages.OpenProjectActionInternalError);
                 return;
             }
 
@@ -322,7 +323,7 @@ public class OpenProjectAction extends AbstractAction {
                     throw ce;
                 }
             } catch (PMReadException e) {
-                showErrorDialog(I18n.getString("ErrorMessage.CANT_READ_PROJECT")); //$NON-NLS-1$
+                showErrorDialog(Messages.ErrorMessageCantReadProject);
             } catch (OperationCanceledException oce) {
                 Utils.clearClient();
             } finally {
@@ -572,10 +573,10 @@ public class OpenProjectAction extends AbstractAction {
             final ProjectDialog dialog = 
                 new ProjectDialog(
                     Plugin.getShell(), projList,
-                    I18n.getString("OpenProjectAction.message"), //$NON-NLS-1$
-                    I18n.getString("OpenProjectAction.title"), //$NON-NLS-1$
+                    Messages.OpenProjectActionMessage,
+                    Messages.OpenProjectActionTitle,
                     IconConstants.OPEN_PROJECT_DIALOG_IMAGE, 
-                    I18n.getString("OpenProjectAction.caption"), false); //$NON-NLS-1$
+                    Messages.OpenProjectActionCaption, false);
             // set up help for dialog, with link
             dialog.setHelpAvailable(true);
             dialog.create();
@@ -584,7 +585,8 @@ public class OpenProjectAction extends AbstractAction {
                 ContextHelpIds.OPEN_PROJECT);
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
-                    Plugin.startLongRunning(I18n.getString("OpenProjectAction.loadProjectWaitMessage")); //$NON-NLS-1$
+                    Plugin.startLongRunning(
+                            Messages.OpenProjectActionLoadProjectWaitMessage);
                     dialog.open();
                 }
             });

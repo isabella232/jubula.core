@@ -22,12 +22,14 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDialogStatusLi
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.AutConfigComponent;
 import org.eclipse.jubula.client.ui.wizards.ProjectWizard;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.UnexpectedGenericTypeException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
@@ -117,7 +119,8 @@ public class AutConfigSettingWizardPage extends WizardPage
             }
             setPageComplete(false);
         } catch (ToolkitPluginException e) {
-            log.error("No AUT-Config-Page for Toolkit: "  //$NON-NLS-1$
+            log.error(Messages.NoAUTConfigPageForToolkit + StringConstants.COLON
+                + StringConstants.SPACE 
                 + String.valueOf(getWizard().getAutMain().getToolkit()), e);
             Utils.createMessageDialog(MessageIDs.E_NO_AUTCONFIG_DIALOG);
         }
@@ -180,8 +183,18 @@ public class AutConfigSettingWizardPage extends WizardPage
             type = DialogStatusParameter.class;
         }
         if (type != null) {
-            throw new UnexpectedGenericTypeException("Generic type " + type //$NON-NLS-1$
-                    + " was expected, but " + params.get(index).getClass() + " was found.", //$NON-NLS-1$ //$NON-NLS-2$
+            StringBuilder msg = new StringBuilder();
+            msg.append(Messages.GenericType)
+                .append(StringConstants.SPACE)
+                .append(type)
+                .append(StringConstants.SPACE)
+                .append(Messages.WasExpectedBut)
+                .append(StringConstants.SPACE)
+                .append(params.get(index).getClass())
+                .append(StringConstants.SPACE)
+                .append(Messages.WasFound)
+                .append(StringConstants.DOT);
+            throw new UnexpectedGenericTypeException(msg.toString(),
                     MessageIDs.E_UNEXPECTED_EXCEPTION);
         }
     }

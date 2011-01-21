@@ -29,10 +29,10 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -50,7 +50,7 @@ public abstract class AbstractNewTestCaseAction extends Action {
      * Constructor.
      */
     public AbstractNewTestCaseAction() {
-        super(I18n.getString("AbstractNewTestCaseAction.newTC")); //$NON-NLS-1$
+        super(Messages.AbstractNewTestCaseActionNewTC);
         setImageDescriptor(IconConstants.NEW_TC_IMAGE_DESCRIPTOR); 
         setDisabledImageDescriptor(IconConstants.
                 NEW_TC_DISABLED_IMAGE_DESCRIPTOR); 
@@ -73,15 +73,15 @@ public abstract class AbstractNewTestCaseAction extends Action {
             final ISpecTestCasePO editorNode = (ISpecTestCasePO)tce
                     .getEditorHelper().getEditSupport().getWorkVersion();
             INodePO selectedNode = selectedGuiNode.getContent();
-            InputDialog dialog = new InputDialog(Plugin.getShell(), I18n
-                    .getString("NewTestCaseAction.TCTitle"), //$NON-NLS-1$
-                    I18n.getString("NewTestCaseAction.newTestCase"), //$NON-NLS-1$
-                    I18n.getString("NewTestCaseAction.TCMessage"), //$NON-NLS-1$
-                    I18n.getString("RenameAction.TCLabel"), //$NON-NLS-1$
-                    I18n.getString("RenameAction.TCError"), //$NON-NLS-1$
-                    I18n.getString("NewTestCaseAction.doubleTCName"), //$NON-NLS-1$
-                    IconConstants.NEW_TC_DIALOG_STRING, I18n
-                            .getString("NewTestCaseAction.TCShell"), false); //$NON-NLS-1$
+            InputDialog dialog = new InputDialog(Plugin.getShell(),
+                    Messages.NewTestCaseActionTCTitle,
+                    Messages.NewTestCaseActionNewTestCase,
+                    Messages.NewTestCaseActionTCMessage,
+                    Messages.RenameActionTCLabel,
+                    Messages.RenameActionTCError,
+                    Messages.NewTestCaseActionDoubleTCName,
+                    IconConstants.NEW_TC_DIALOG_STRING,
+                    Messages.NewTestCaseActionTCShell, false);
             if (m_helpid != null) {
                 dialog.setHelpAvailable(true);
                 dialog.create();

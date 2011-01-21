@@ -49,12 +49,14 @@ import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.JBPropertiesView;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
@@ -109,6 +111,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
             new HashMap<String, String>();
 
         static {
+            //FIXME NLS
             eventIdReverseLookup.put(I18n.getString(
                     TestErrorEvent.ID.COMPONENT_NOT_FOUND_ERROR), 
                 TestErrorEvent.ID.COMPONENT_NOT_FOUND_ERROR);
@@ -345,7 +348,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
             setInput(input);
             setPartName(input.getName());
         } else {
-            throw new PartInitException(I18n.getString("EditorInit.CreateError")); //$NON-NLS-1$
+            throw new PartInitException(Messages.EditorInitCreateError);
         }
         
     }
@@ -375,7 +378,8 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         try {
             progressService.busyCursorWhile(operation);
         } catch (InvocationTargetException e) {
-            LOG.error("Error occurred while fetching Test Result information.", e); //$NON-NLS-1$
+            LOG.error(Messages.ErrorFetchingTestResultInformation 
+                + StringConstants.DOT, e);
         } catch (OperationCanceledException oce) {
             throw new InterruptedException();
         }
@@ -428,7 +432,8 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
             // Operation was cancelled by user
             m_viewer.getControl().dispose();
             m_viewer = null;
-            new Label(parent, SWT.NONE).setText(I18n.getString("Editors.openEditorOperationCanceled")); //$NON-NLS-1$
+            new Label(parent, SWT.NONE).setText(
+                    Messages.EditorsOpenEditorOperationCanceled);
         }
     }
 

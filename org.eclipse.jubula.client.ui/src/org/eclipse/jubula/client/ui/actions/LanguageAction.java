@@ -102,10 +102,12 @@ public class LanguageAction extends Action {
             }
             String editorNames = StringConstants.EMPTY;
             for (String name : editorsToClose) {
-                editorNames = editorNames + "   - " + name + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
+                // FIXME NLS
+                editorNames = editorNames + "   - " + name //$NON-NLS-1$
+                        + StringConstants.NEWLINE;
             }
-            Utils.createMessageDialog(MessageIDs.I_EDITORS_TO_CLOSE, 
-                    new Object[]{editorNames}, null);
+            Utils.createMessageDialog(MessageIDs.I_EDITORS_TO_CLOSE,
+                    new Object[] { editorNames }, null);
             for (String name : editorsToClose) {
                 IEditorPart editor = Plugin.getEditorByTitle(name);
                 Plugin.getActivePage().closeEditor(editor, false);
@@ -115,10 +117,12 @@ public class LanguageAction extends Action {
         if (!editorsToSave.isEmpty()) {
             String editorNames = StringConstants.EMPTY;
             for (String name : editorsToSave) {
-                editorNames = editorNames + "   - " + name + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
+                // FIXME NLS
+                editorNames = editorNames + "   - " + name //$NON-NLS-1$
+                    + StringConstants.NEWLINE;
             }
-            Utils.createMessageDialog(MessageIDs.I_EDITORS_TO_SAVE, 
-                    new Object[]{editorNames}, null);
+            Utils.createMessageDialog(MessageIDs.I_EDITORS_TO_SAVE,
+                    new Object[] { editorNames }, null);
             return false;
         }
         return true;

@@ -20,6 +20,7 @@ import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IntegerTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
@@ -28,7 +29,6 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -47,16 +47,20 @@ public class EventExecTestCaseGUIPropertySource extends
     ExecTestCaseGUIPropertySource {
     
     /** Constant for the String "EventHandler Name" */
-    private static final String P_EVHANDLER_DISPLAY_NAME = I18n.getString("EventExecTestCaseGUIPropertySource.EventHandlerName"); //$NON-NLS-1$
+    private static final String P_EVHANDLER_DISPLAY_NAME =
+        Messages.EventExecTestCaseGUIPropertySourceEventHandlerName;
     
     /** Constant for the String "Event Type" */
-    private static final String P_ELEMENT_DISPLAY_EVENTTYPE = I18n.getString("EventExecTestCaseGUIPropertySource.EventType"); //$NON-NLS-1$
+    private static final String P_ELEMENT_DISPLAY_EVENTTYPE =
+        Messages.EventExecTestCaseGUIPropertySourceEventType;
     
     /** Constant for the String "Reentry Type" */
-    private static final String P_ELEMENT_DISPLAY_REENTRYTYPE = I18n.getString("EventExecTestCaseGUIPropertySource.ReentryType"); //$NON-NLS-1$
+    private static final String P_ELEMENT_DISPLAY_REENTRYTYPE =
+        Messages.EventExecTestCaseGUIPropertySourceReentryType;
     
     /** Constant for the String "Maximum Number of Retries" */
-    private static final String P_ELEMENT_DISPLAY_MAXRETRIES = I18n.getString("EventExecTestCaseGUIPropertySource.MaxRetries"); //$NON-NLS-1$
+    private static final String P_ELEMENT_DISPLAY_MAXRETRIES =
+        Messages.EventExecTestCaseGUIPropertySourceMaxRetries;
     
     
     /** List of event types (short names)*/
@@ -139,7 +143,6 @@ public class EventExecTestCaseGUIPropertySource extends
                     P_EVHANDLER_DISPLAY_NAME);
         }
         addPropertyDescriptor(m_namePropDesc);
-        
         // Specification Name
         if (m_specNamePropDesc == null) {
             PropertyDescriptor propDes = new JBPropertyDescriptor(
@@ -160,7 +163,8 @@ public class EventExecTestCaseGUIPropertySource extends
                     if (element instanceof Integer) {
                         return EVENT_TYPES[((Integer)element).intValue()];
                     }
-                    Assert.notReached("Wrong element type!"); //$NON-NLS-1$
+                    Assert.notReached(Messages.WrongElementType 
+                            + StringConstants.EXCLAMATION_MARK);
                     return String.valueOf(element);
                 }
             });

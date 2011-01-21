@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers.propertysources;
 
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.ProjectGUI;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
@@ -24,7 +24,8 @@ public class ProjectGUIPropertySource extends AbstractGuiNodePropertySource {
 
     
     /** Constant for the String TestCase Name */
-    public static final String P_ELEMENT_DISPLAY_NAME = I18n.getString("ProjectGUIPropertySource.ProjectName"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_NAME =
+        Messages.ProjectGUIPropertySourceProjectName;
     
     /** cached property descriptor for name */
     private IPropertyDescriptor m_namePropDesc = null;

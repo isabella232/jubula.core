@@ -54,6 +54,7 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TCEditorDndSupport;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
@@ -63,7 +64,6 @@ import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.swt.graphics.Image;
@@ -216,7 +216,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
      * {@inheritDoc}
      */
     public String getEditorPrefix() {
-        return I18n.getString("Plugin.TC"); //$NON-NLS-1$
+        return Messages.PluginTC;
     }
     
     /**
@@ -391,12 +391,12 @@ public class TestCaseEditor extends AbstractTestCaseEditor
      * @return returnCode of Dialog
      */
     private int showSaveInObservModeDialog() {
-        MessageDialog dialog = new MessageDialog(Plugin.getShell(),
-                I18n.getString("SaveInObservationModeDialog.title"), //$NON-NLS-1$
-                null, I18n.getString("SaveInObservationModeDialog.question"), //$NON-NLS-1$
+        MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
+            Messages.SaveInObservationModeDialogTitle,
+                null, Messages.SaveInObservationModeDialogQuestion,
                 MessageDialog.QUESTION, new String[] {
-                        I18n.getString("NewProjectDialog.MessageButton0"), //$NON-NLS-1$
-                        I18n.getString("NewProjectDialog.MessageButton1") }, 0); //$NON-NLS-1$
+                    Messages.NewProjectDialogMessageButton0,
+                    Messages.NewProjectDialogMessageButton0 }, 0);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();

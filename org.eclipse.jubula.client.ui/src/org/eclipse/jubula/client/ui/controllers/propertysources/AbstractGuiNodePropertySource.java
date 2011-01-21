@@ -36,9 +36,9 @@ import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IVerifiable;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IParameterPropertyController.ParameterInputType;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
@@ -54,7 +54,8 @@ public abstract class AbstractGuiNodePropertySource
     extends AbstractPropertySource < GuiNode > {
 
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_COMMENT = I18n.getString("AbstractGuiNodePropertySource.Comment"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_COMMENT =
+        Messages.AbstractGuiNodePropertySourceComment;
           
     /**
      * The business process to handle the parameters and references.

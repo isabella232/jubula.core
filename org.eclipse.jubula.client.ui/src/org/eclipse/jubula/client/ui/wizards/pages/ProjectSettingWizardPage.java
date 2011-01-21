@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.factory.ControlFactory;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.CheckedProjectNameText;
@@ -37,7 +38,6 @@ import org.eclipse.jubula.client.ui.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.wizards.ProjectWizard;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -149,7 +149,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         createAutToolKit(projectNameComposite);
         separator(composite, NUM_COLUMNS_1);  
         ControlDecorator.decorateInfo(createLabel(composite, 
-                I18n.getString("ProjectSettingWizardPage.SelectLanguagesOfTD")),  //$NON-NLS-1$
+                Messages.ProjectSettingWizardPageSelectLanguagesOfTD),
                  "GDControlDecorator.NewProjectProjectLanguage", //$NON-NLS-1$ 
                 false); 
         Composite innerComposite = new Composite(composite, SWT.NONE);
@@ -182,7 +182,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         initFields();
         addListener();
         enableLangCombo();
-        setMessage(I18n.getString("ProjectWizard.newProject"), IMessageProvider.NONE); //$NON-NLS-1$
+        setMessage(Messages.ProjectWizardNewProject, IMessageProvider.NONE);
         resizeLists();
         Plugin.getHelpSystem().setHelp(composite, ContextHelpIds
             .PROJECT_WIZARD);
@@ -205,8 +205,9 @@ public class ProjectSettingWizardPage extends WizardPage {
             java.util.List<String> availableLanguages,
             java.util.List<String> usedLanguages) {
         return new ListElementChooserComposite(
-                innerComposite, I18n.getString("ProjectPropertyPage.upperLabel"), //$NON-NLS-1$
-                availableLanguages, I18n.getString("ProjectSettingWizardPage.bottomLabel"), //$NON-NLS-1$
+                innerComposite, Messages.ProjectPropertyPageUpperLabel,
+                availableLanguages, 
+                    Messages.ProjectSettingWizardPageBottomLabel,
                 usedLanguages, 15, 
                 new Image[]{IconConstants.RIGHT_ARROW_IMAGE,
                     IconConstants.DOUBLE_RIGHT_ARROW_IMAGE,
@@ -216,10 +217,10 @@ public class ProjectSettingWizardPage extends WizardPage {
                     IconConstants.DOUBLE_RIGHT_ARROW_DIS_IMAGE, 
                     IconConstants.LEFT_ARROW_DIS_IMAGE, 
                     IconConstants.DOUBLE_LEFT_ARROW_DIS_IMAGE },
-                new String[]{I18n.getString("ProjectPropertyPage.downToolTip"), //$NON-NLS-1$
-                    I18n.getString("ProjectSettingWizardPage.allDownToolTip"),  //$NON-NLS-1$
-                    I18n.getString("ProjectPropertyPage.upToolTip"), //$NON-NLS-1$
-                    I18n.getString("ProjectSettingWizardPage.allUpToolTip")},  //$NON-NLS-1$
+                new String[]{Messages.ProjectPropertyPageDownToolTip,
+                    Messages.ProjectSettingWizardPageAllDownToolTip,
+                    Messages.ProjectPropertyPageUpToolTip,
+                    Messages.ProjectSettingWizardPageAllUpToolTip},
                 ListElementChooserComposite.VERTICAL);
     }
 
@@ -234,7 +235,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         Composite rightComposite = createComposite(composite, NUM_COLUMNS_1, 
             GridData.FILL, true);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
-            I18n.getString("ProjectPropertyPage.isReusable")),   //$NON-NLS-1$
+            Messages.ProjectPropertyPageIsReusable),
             "GDControlDecorator.NewProjectIsReusable", false);  //$NON-NLS-1$
         m_projectReusabilityCheckbox = new Button(rightComposite, SWT.CHECK);
         m_projectReusabilityCheckbox.setSelection(false);
@@ -251,7 +252,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         Composite rightComposite = createComposite(composite, NUM_COLUMNS_1, 
             GridData.FILL, true);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
-            I18n.getString("ProjectPropertyPage.isProtected")),   //$NON-NLS-1$
+            Messages.ProjectPropertyPageIsProtected),
             "GDControlDecorator.NewProjectIsProtected", false);  //$NON-NLS-1$
         m_projectProtectionCheckbox = new Button(rightComposite, SWT.CHECK);
         m_projectProtectionCheckbox.setSelection(false);
@@ -263,7 +264,7 @@ public class ProjectSettingWizardPage extends WizardPage {
      */
     private void createNextLabel(Composite composite) {
         Label nextLabel = new Label(composite, SWT.NONE);
-        nextLabel.setText(I18n.getString("ProjectSettingWizardPage.clickNext")); //$NON-NLS-1$
+        nextLabel.setText(Messages.ProjectSettingWizardPageClickNext);
         GridData data = new GridData();
         data.grabExcessVerticalSpace = true;
         data.verticalAlignment = GridData.END;
@@ -284,7 +285,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         leftComposite.setLayout(gridLayout);
         rightComposite.setLayout(gridLayout);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
-                I18n.getString("ProjectSettingWizardPage.autToolKitLabel")), 
+                Messages.ProjectSettingWizardPageAutToolKitLabel), 
                  "GDControlDecorator.NewProjectToolkit", false); //$NON-NLS-1$
         m_autToolKitComboBox = ControlFactory.createToolkitCombo(
             rightComposite); 
@@ -381,7 +382,8 @@ public class ProjectSettingWizardPage extends WizardPage {
         gridLayout.marginWidth = 0;
         leftComposite.setLayout(gridLayout);
         rightComposite.setLayout(gridLayout);
-        createLabel(leftComposite, I18n.getString("ProjectSettingWizardPage.ProjectName")); //$NON-NLS-1$
+        createLabel(leftComposite, 
+                Messages.ProjectSettingWizardPageProjectName);
         m_projectNameTextField = new CheckedProjectNameText(rightComposite,
                 SWT.BORDER);
         GridData textGridData = new GridData();
@@ -389,7 +391,8 @@ public class ProjectSettingWizardPage extends WizardPage {
         textGridData.horizontalAlignment = GridData.FILL;
         m_projectNameTextField.setLayoutData(textGridData);
         Layout.setMaxChar(m_projectNameTextField);
-        m_projectNameTextField.setText(I18n.getString("ProjectSettingWizardPage.defaultProjectName")); //$NON-NLS-1$
+        m_projectNameTextField.setText(
+                Messages.ProjectSettingWizardPageDefaultProjectName);
         m_projectNameTextField.setSelection(0, m_projectNameTextField.getText()
             .length());
     }
@@ -406,7 +409,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_1, 
                 GridData.END, true);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
-                I18n.getString("ProjectSettingWizardPage.languageLabel")), 
+                Messages.ProjectSettingWizardPageLanguageLabel), 
                 "GDControlDecorator.NewProjectDefaultLanguage", 
                 false); //$NON-NLS-1$
         m_defaultLangComboBox = new DirectCombo<Locale>(middleComposite, 
@@ -541,20 +544,19 @@ public class ProjectSettingWizardPage extends WizardPage {
                 || m_defaultLangComboBox.getItemCount() == 0) {  
             
             m_defaultLangComboBox.setEnabled(false);
-            setMessage(I18n.getString("ProjectPropertyPage.noProjectLanguage"),  //$NON-NLS-1$
+            setMessage(Messages.ProjectPropertyPageNoProjectLanguage,
                 IMessageProvider.ERROR); 
         } else {
             if (StringConstants.EMPTY.equals(m_defaultLangComboBox
                 .getText())) {
                 
-                setMessage(I18n.getString(
-                    "ProjectPropertyPage.noProjectLanguage"),  //$NON-NLS-1$
+                setMessage(Messages.ProjectPropertyPageNoProjectLanguage,
                     IMessageProvider.ERROR); 
                 m_defaultLangComboBox.setEnabled(true);
                 return;
             }
             m_defaultLangComboBox.setEnabled(true);
-            setMessage(I18n.getString("ProjectWizard.newProject"), //$NON-NLS-1$
+            setMessage(Messages.ProjectWizardNewProject,
                 IMessageProvider.NONE);
             modifyProjectNameFieldAction(false);
         }
@@ -661,21 +663,24 @@ public class ProjectSettingWizardPage extends WizardPage {
             isCorrect = false;
         }
         if (isCorrect) {
-            setMessage(I18n.getString("ProjectWizard.newProject"), IMessageProvider.NONE); //$NON-NLS-1$
+            setMessage(Messages.ProjectWizardNewProject, IMessageProvider.NONE);
             if (isProjectNameModiyfied) {
                 enableLangCombo();
             }
             if (ProjectPM.doesProjectNameExist(projectName)
                 && !m_project.getName().equals(projectName)) {
                 
-                setMessage(I18n.getString("ProjectSettingWizardPage.doubleProjectName"), IMessageProvider.ERROR); //$NON-NLS-1$ 
+                setMessage(Messages.ProjectSettingWizardPageDoubleProjectName, 
+                    IMessageProvider.ERROR); 
                 isCorrect = false;
             }
         } else {
             if (projectNameLength == 0) {
-                setMessage(I18n.getString("ProjectWizard.emptyProject"), IMessageProvider.ERROR); //$NON-NLS-1$
+                setMessage(Messages.ProjectWizardEmptyProject, 
+                        IMessageProvider.ERROR);
             } else {
-                setMessage(I18n.getString("ProjectWizard.notValidProject"), IMessageProvider.ERROR); //$NON-NLS-1$
+                setMessage(Messages.ProjectWizardNotValidProject, 
+                        IMessageProvider.ERROR);
             }
         }
         return isCorrect;
@@ -732,8 +737,10 @@ public class ProjectSettingWizardPage extends WizardPage {
                 checkCompleteness(false);
                 return;
             }
-            Assert.notReached("Event activated by unknown widget: " + //$NON-NLS-1$
-                    "'" + String.valueOf(o) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                + StringConstants.COLON + StringConstants.SPACE 
+                + StringConstants.APOSTROPHE + String.valueOf(o) 
+                + StringConstants.APOSTROPHE);
         }
 
         
@@ -760,8 +767,10 @@ public class ProjectSettingWizardPage extends WizardPage {
                 handleDefaultLangCombo();
                 return;
             }
-            Assert.notReached("Event activated by unknown widget: " + //$NON-NLS-1$
-                    "'" + String.valueOf(o) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.notReached(Messages.EventActivatedByUnknownWidget 
+                    + StringConstants.COLON + StringConstants.SPACE 
+                    + StringConstants.APOSTROPHE + String.valueOf(o) 
+                    + StringConstants.APOSTROPHE);
         }
 
 

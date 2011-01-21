@@ -17,9 +17,9 @@ import java.util.List;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.labelprovider.PropertyControllerLabelProvider;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.swt.graphics.Image;
 
@@ -33,32 +33,32 @@ public class OMTechNameGUIPropertySource
 
     
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_COMP = 
-        I18n.getString("OMTechNameGUIPropertySource.Component"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_COMP =
+        Messages.OMTechNameGUIPropertySourceComponent;
 
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_COMPADDINFO = 
-        I18n.getString("OMTechNameGUIPropertySource.ComponentAddInfo"); //$NON-NLS-1$
-
-    /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_COMPNAME = 
-        I18n.getString("OMTechNameGUIPropertySource.ComponentName"); //$NON-NLS-1$
+        Messages.OMTechNameGUIPropertySourceComponentAddInfo;
     
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_COMPCLASS = 
-        I18n.getString("OMTechNameGUIPropertySource.CompClass");  //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_COMPNAME = 
+        Messages.OMTechNameGUIPropertySourceComponentName;
 
+    /** Property m_text on display */
+    public static final String P_ELEMENT_DISPLAY_COMPCLASS = 
+        Messages.OMTechNameGUIPropertySourceCompClass;
+    
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_COMPSUPPCLASS = 
-        I18n.getString("OMTechNameGUIPropertySource.CompSuppClass");  //$NON-NLS-1$
-
+        Messages.OMTechNameGUIPropertySourceCompSuppClass;
+    
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_HIERARCHY = 
-        I18n.getString("OMTechNameGUIPropertySource.Hierarchy");  //$NON-NLS-1$
-
+        Messages.OMTechNameGUIPropertySourceHierarchy;
+    
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_CONTEXT = 
-        I18n.getString("OMTechNameGUIPropertySource.Context");  //$NON-NLS-1$
+        Messages.OMTechNameGUIPropertySourceContext;
 
 
     /**

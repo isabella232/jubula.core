@@ -21,6 +21,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.graphics.Image;
@@ -151,7 +152,8 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
             IPropertyController pc = (IPropertyController)id;
             pc.setProperty(value);
         } else {
-            Assert.notReached("Property-ID inexistent: " + id); //$NON-NLS-1$
+            Assert.notReached(Messages.PropertyIDInexistent 
+                + StringConstants.COLON + StringConstants.SPACE + id);
         }
         initPropDescriptor();
         DataEventDispatcher.getInstance().firePropertyChanged(false);
@@ -168,7 +170,8 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
             obj = ((IPropertyController)id).getProperty();
             return obj != null ? obj : StringConstants.EMPTY;
         }
-        Assert.notReached("Property-ID inexistent: " + id); //$NON-NLS-1$
+        Assert.notReached(Messages.PropertyIDInexistent + StringConstants.COLON
+                + StringConstants.SPACE + id);
         return obj;
     }
     

@@ -15,7 +15,7 @@ import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -95,7 +95,7 @@ public class EditorPreferencePage extends PreferencePage
      */
     private void createInsertNodeAfterSelectedNodeButton(Composite composite) {
         Group group = new Group(composite, SWT.NONE);
-        group.setText(I18n.getString("PrefPageBasic.nodeInsertionGroup")); //$NON-NLS-1$
+        group.setText(Messages.PrefPageBasicNodeInsertionGroup);
         RowLayout layout = new RowLayout();
         layout.type = SWT.VERTICAL;
         group.setLayout(layout);
@@ -103,14 +103,14 @@ public class EditorPreferencePage extends PreferencePage
         layoutData.grabExcessHorizontalSpace = true;
         group.setLayoutData(layoutData);
         Label label = new Label(group, SWT.NONE);
-        label.setText(I18n.getString("EditorPreferencePage.addPositionText")); //$NON-NLS-1$
+        label.setText(Messages.EditorPreferencePageAddPositionText);
         new Label(group, SWT.NONE);
         m_nodeAddButton = new Button(group, SWT.RADIO);
-        m_nodeAddButton.setText(I18n.getString("PrefPageBasic.AddNewNode"));  //$NON-NLS-1$
+        m_nodeAddButton.setText(Messages.PrefPageBasicAddNewNode);
         m_nodeAddButton.setSelection(Plugin.getDefault()
                 .getPluginPreferences().getBoolean(Constants.NODE_INSERT_KEY));
         m_nodeInsertButton = new Button(group, SWT.RADIO);
-        m_nodeInsertButton.setText(I18n.getString("PrefPageBasic.InsertNewNode"));  //$NON-NLS-1$
+        m_nodeInsertButton.setText(Messages.PrefPageBasicInsertNewNode);
         m_nodeInsertButton.setSelection(!m_nodeAddButton.getSelection());
     }
 
@@ -137,7 +137,7 @@ public class EditorPreferencePage extends PreferencePage
      * {@inheritDoc}
      */
     public void init(IWorkbench workbench) {
-        setDescription(I18n.getString("EditorPreferencePage.description")); //$NON-NLS-1$
+        setDescription(Messages.EditorPreferencePageDescription);
     }
 
     /**

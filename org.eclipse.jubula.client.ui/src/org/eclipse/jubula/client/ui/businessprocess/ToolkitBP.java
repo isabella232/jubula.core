@@ -28,10 +28,11 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
 
@@ -110,24 +111,26 @@ public class ToolkitBP implements IProjectLoadedListener, IDataChangedListener {
         boolean loadProject = true;
         Integer messageID = null;
         final StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append(I18n.getString("OpenProjectAction.ToolkitVersionConflict1")); //$NON-NLS-1$
+        strBuilder.append(Messages.OpenProjectActionToolkitVersionConflict1);
         for (ToolkitPluginError error : errors) {
             String toolkitId = error.getToolkitId();
             ToolkitPluginDescriptor desc = 
                 ComponentBuilder.getInstance().getCompSystem()
                 .getToolkitPluginDescriptor(toolkitId);
             String toolkitName = desc != null ? desc.getName() : toolkitId;
-            strBuilder.append(I18n.getString("OpenProjectAction.ToolkitVersionConflict2")) //$NON-NLS-1$
+            strBuilder.append(Messages.OpenProjectActionToolkitVersionConflict2)
                 .append(toolkitName)
-                .append(I18n.getString("OpenProjectAction.ToolkitVersionConflict3")); //$NON-NLS-1$
+                .append(Messages.OpenProjectActionToolkitVersionConflict3);
             
             final ERROR errorType = error.getError();
-            final String descr = I18n.getString("OpenProjectAction.ToolkitVersionConflict5"); //$NON-NLS-1$
+            final String descr = 
+                Messages.OpenProjectActionToolkitVersionConflict5;
             switch (errorType) {
                 case MAJOR_VERSION_ERROR:
                     messageID = MessageIDs
                         .E_LOAD_PROJECT_TOOLKIT_MAJOR_VERSION_ERROR;
-                    strBuilder.append(I18n.getString("OpenProjectAction.ToolkitVersionConflict4a")); //$NON-NLS-1$
+                    strBuilder.append(Messages
+                            .OpenProjectActionToolkitVersionConflict4a);
                     strBuilder.append(descr);
                     loadProject = false;
                     break;
@@ -135,7 +138,8 @@ public class ToolkitBP implements IProjectLoadedListener, IDataChangedListener {
                 case MINOR_VERSION_HIGHER:
                     messageID = MessageIDs
                         .E_LOAD_PROJECT_TOOLKIT_MAJOR_VERSION_ERROR;
-                    strBuilder.append(I18n.getString("OpenProjectAction.ToolkitVersionConflict4b")); //$NON-NLS-1$
+                    strBuilder.append(Messages
+                            .OpenProjectActionToolkitVersionConflict4b);
                     strBuilder.append(descr);
                     loadProject = false;
                     break;
@@ -145,11 +149,13 @@ public class ToolkitBP implements IProjectLoadedListener, IDataChangedListener {
                         messageID = MessageIDs
                             .Q_LOAD_PROJECT_TOOLKIT_MINOR_VERSION_LOWER;
                     }
-                    strBuilder.append(I18n.getString("OpenProjectAction.ToolkitVersionConflict4c")); //$NON-NLS-1$
+                    strBuilder.append(Messages
+                            .OpenProjectActionToolkitVersionConflict4c);
                     break;
                     
                 default:
-                    Assert.notReached("Unknown error type: "  //$NON-NLS-1$
+                    Assert.notReached(Messages.UnknownErrorType 
+                        + StringConstants.COLON + StringConstants.SPACE
                         + String.valueOf(errorType));
             }
         }

@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.ui.businessprocess.ChooseTestSuiteBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.handlers.StartTestSuiteHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -148,9 +149,15 @@ public class RunningAutsStartTestSuiteContributionItem extends
         params.put(StartTestSuiteHandler.TEST_SUITE_TO_START, suiteToStart);
         params.put(StartTestSuiteHandler.RUNNING_AUT, autId);
         StringBuilder labelBuilder = new StringBuilder();
-        labelBuilder.append(suiteToStart.getAut().getName()).append(" (") //$NON-NLS-1$
-                .append(autId.getExecutableName()).append(")").append(" : ") //$NON-NLS-1$ //$NON-NLS-2$;
-                .append(suiteToStart.getName());
+        labelBuilder.append(suiteToStart.getAut().getName())
+            .append(StringConstants.SPACE)
+            .append(StringConstants.LEFT_PARENTHESES)
+            .append(autId.getExecutableName())
+            .append(StringConstants.RIGHT_PARENTHESES)
+            .append(StringConstants.SPACE)
+            .append(StringConstants.COLON)
+            .append(StringConstants.SPACE)
+            .append(suiteToStart.getName());
         return CommandHelper.createContributionItem(
                 CommandIDs.START_TEST_SUITE_COMMAND_ID, params, labelBuilder
                         .toString(), CommandContributionItem.STYLE_CHECK);

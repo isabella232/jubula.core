@@ -14,10 +14,10 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -210,7 +210,7 @@ public class InputDialog extends TitleAreaDialog {
         });
         if (m_browseable) {
             m_button = new Button(area, SWT.NONE);
-            m_button.setText(I18n.getString("InputDialog.browse")); //$NON-NLS-1$
+            m_button.setText(Messages.InputDialogBrowse);
             m_button.setLayoutData(newGridData(true));
             m_button.addSelectionListener(new SelectionAdapter() {
                 public void widgetSelected(SelectionEvent e) {
@@ -227,7 +227,7 @@ public class InputDialog extends TitleAreaDialog {
         FileDialog dialog = new FileDialog(Plugin.getShell(),
             SWT.APPLICATION_MODAL);
         dialog.setFilterPath(Utils.getLastDirPath());
-        dialog.setText(I18n.getString("InputDialog.selectJRE"));  //$NON-NLS-1$
+        dialog.setText(Messages.InputDialogSelectJRE);
         String path = dialog.open();
         if (path != null) {
             Utils.storeLastDirPath(dialog.getFilterPath());
@@ -242,8 +242,9 @@ public class InputDialog extends TitleAreaDialog {
     boolean modifyNameFieldAction() {
         boolean isCorrect = true;
         int nameLength = m_nameField.getText().length();
-        if ((nameLength == 0) || (m_nameField.getText().startsWith(" ")) || //$NON-NLS-1$
-                (m_nameField.getText().charAt(nameLength - 1) == ' ')) {
+        if ((nameLength == 0) || (m_nameField.getText().startsWith(
+                StringConstants.SPACE)) 
+                || (m_nameField.getText().charAt(nameLength - 1) == ' ')) {
             isCorrect = false;
         }
         if (isCorrect) {

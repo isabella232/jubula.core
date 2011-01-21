@@ -17,6 +17,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
@@ -88,7 +89,13 @@ public class TestResultEditorInput implements IEditorInput {
      * {@inheritDoc}
      */
     public String getToolTipText() {
-        return m_testSuiteName + " (" + m_testSuiteStartTime + ")";  //$NON-NLS-1$ //$NON-NLS-2$
+        StringBuilder msg = new StringBuilder();
+        msg.append(m_testSuiteName)
+            .append(StringConstants.SPACE)
+            .append(StringConstants.LEFT_PARENTHESES)
+            .append(m_testSuiteStartTime)
+            .append(StringConstants.RIGHT_PARENTHESES);
+        return msg.toString();
     }
 
     /**

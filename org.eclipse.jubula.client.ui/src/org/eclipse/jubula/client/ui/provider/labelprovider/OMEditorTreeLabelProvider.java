@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -124,7 +125,16 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
         
         String elementType = element != null 
             ? element.getClass().getName() : "null"; //$NON-NLS-1$
-        Assert.notReached("Element type '" + elementType + "' not supported."); //$NON-NLS-1$ //$NON-NLS-2$
+        StringBuilder msg = new StringBuilder();
+        msg.append(Messages.ElementType)
+            .append(StringConstants.SPACE)
+            .append(StringConstants.APOSTROPHE)
+            .append(elementType)
+            .append(StringConstants.APOSTROPHE)
+            .append(StringConstants.SPACE)
+            .append(Messages.NotSupported)
+            .append(StringConstants.DOT);
+        Assert.notReached(msg.toString());
         return null;
     }
     
@@ -161,7 +171,10 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
                     category.getUnmodifiableAssociationList().size();
                 childListSize += 
                     category.getUnmodifiableCategoryList().size();
-                nameBuilder.append(" (").append(childListSize).append(")");  //$NON-NLS-1$//$NON-NLS-2$
+                nameBuilder.append(StringConstants.SPACE 
+                        + StringConstants.LEFT_PARENTHESES)
+                            .append(childListSize).append(StringConstants
+                                    .RIGHT_PARENTHESES);
             }
             return nameBuilder.toString();
         } else if (element instanceof String) {
@@ -170,8 +183,8 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
         }
 
 
-        Assert.notReached("Unknown type of element in tree of type " //$NON-NLS-1$
-                + element.getClass().getName());
+        Assert.notReached(Messages.UnknownTypeOfElementInTreeOfType
+                + StringConstants.SPACE + element.getClass().getName());
         return StringConstants.EMPTY;
     }
     

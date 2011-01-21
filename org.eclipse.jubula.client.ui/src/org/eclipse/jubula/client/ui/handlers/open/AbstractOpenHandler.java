@@ -29,10 +29,12 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.editors.PersistableEditorInput;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -136,7 +138,8 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
                     editor = page.openEditor(input, editorId);
                 } catch (PartInitException e) {
                     if (e.getStatus().getSeverity() != IStatus.CANCEL) {
-                        final String msg = "Editor can not be opened."; //$NON-NLS-1$
+                        final String msg = Messages.EditorCanNotBeOpened 
+                            + StringConstants.DOT;
                         throw new JBFatalException(msg, e, 
                             MessageIDs.E_CANNOT_OPEN_EDITOR);
                     }

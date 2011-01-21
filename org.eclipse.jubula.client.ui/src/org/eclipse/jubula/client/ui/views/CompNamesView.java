@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.ui.views;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.views.dataset.DataSetView;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IViewSite;
@@ -48,7 +48,7 @@ public class CompNamesView extends PageBookView
         MessagePage page = new MessagePage();
         initPage(page);
         page.createControl(book);
-        page.setMessage(I18n.getString("CompNamesView.NoCompNameInfo")); //$NON-NLS-1$
+        page.setMessage(Messages.CompNamesViewNoCompNameInfo);
         return page;
     }
 

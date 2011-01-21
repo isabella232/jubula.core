@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
@@ -31,7 +32,6 @@ import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.graphics.Color;
@@ -61,11 +61,14 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     /**
      * <code>UNNAMED_NODE</code>
      */
-    private static final String UNNAMED_NODE = I18n.getString("GeneralGDLabelProvider.unnamedNode"); //$NON-NLS-1$
+    private static final String UNNAMED_NODE = 
+            Messages.GeneralGDLabelProviderUnnamedNode;
     /**
      * <code>COMMENT_PREFIX</code>
      */
-    private static final String COMMENT_PREFIX = I18n.getString("AbstractGuiNodePropertySource.Comment") + ": ";  //$NON-NLS-1$//$NON-NLS-2$
+    private static final String COMMENT_PREFIX = 
+        Messages.AbstractGuiNodePropertySourceComment + StringConstants.COLON
+        + StringConstants.SPACE;
     
     /** The color for disabled elements */
     private static final Color DISABLED_COLOR = Layout.GRAY_COLOR;

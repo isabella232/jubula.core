@@ -53,6 +53,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -60,7 +61,6 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -93,14 +93,14 @@ public class ExtractTestCaseHandler extends AbstractHandler {
             }
             String extractedTCName = getNewName(editor);
             InputDialog dialog = new InputDialog(Plugin.getShell(), 
-                        I18n.getString("NewTestCaseAction.TCTitle"), //$NON-NLS-1$
+                        Messages.NewTestCaseActionTCTitle,
                         extractedTCName,
-                        I18n.getString("NewTestCaseAction.TCMessage"),   //$NON-NLS-1$
-                        I18n.getString("RenameAction.TCLabel"),  //$NON-NLS-1$
-                        I18n.getString("RenameAction.TCError"), //$NON-NLS-1$
-                        I18n.getString("NewTestCaseAction.doubleTCName"), //$NON-NLS-1$
+                        Messages.NewTestCaseActionTCMessage,
+                        Messages.RenameActionTCLabel,
+                        Messages.RenameActionTCError,
+                        Messages.NewTestCaseActionDoubleTCName,
                         IconConstants.NEW_TC_DIALOG_STRING,
-                        I18n.getString("NewTestCaseAction.TCShell"), //$NON-NLS-1$
+                        Messages.NewTestCaseActionTCShell,
                         false);
             dialog.setHelpAvailable(true);
             dialog.create();
@@ -141,8 +141,8 @@ public class ExtractTestCaseHandler extends AbstractHandler {
                     }
                 }
             } else {
-                Utils.createMessageDialog((new JBException("editor will be closed", //$NON-NLS-1$
-                        MessageIDs.E_DELETED_TC)), null, null); 
+                Utils.createMessageDialog((new JBException(Messages
+                    .EditorWillBeClosed, MessageIDs.E_DELETED_TC)), null, null);
                 try {
                     GeneralStorage.getInstance().reloadMasterSession(
                             new NullProgressMonitor());
@@ -160,7 +160,7 @@ public class ExtractTestCaseHandler extends AbstractHandler {
      * @return the new extracted test case name
      */
     private String getNewName(AbstractTestCaseEditor editor) {
-        String newName = I18n.getString("NewTestCaseAction.newTestCase"); //$NON-NLS-1$
+        String newName = Messages.NewTestCaseActionNewTestCase;
         final IStructuredSelection cs = (IStructuredSelection)editor
                 .getTreeViewer().getSelection();
         if (cs.size() == 1) {
@@ -231,7 +231,7 @@ public class ExtractTestCaseHandler extends AbstractHandler {
     private void validateNode(INodePO node) {
         Assert.verify(node instanceof ISpecTestCasePO 
             || node instanceof ITestSuitePO, 
-            "Extract TestCase can only operate on ISpecTestCasePO or ITestSuitePO!"); //$NON-NLS-1$
+            Messages.ExtractTestCaseOperateISpecTestCasePO);
     }
 
     /**

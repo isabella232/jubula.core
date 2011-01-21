@@ -25,11 +25,11 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.AbstractTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -189,7 +189,7 @@ public class SearchResultPage extends AbstractSearchResultPage
     @SuppressWarnings("nls")
     public String getLabel() {
         StringBuilder sb = new StringBuilder();
-        sb.append(I18n.getString("SearchResultPage.ResultPageLabel"));
+        sb.append(Messages.SearchResultPageResultPageLabel);
         Object viewerInput = getTreeViewer().getInput();
         if (viewerInput != null) {
             BasicSearchResult sr = (BasicSearchResult) viewerInput;

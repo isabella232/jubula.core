@@ -36,6 +36,7 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ServerManager;
 import org.eclipse.jubula.client.ui.validator.cell.PortCellEditorValidator;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -318,7 +319,7 @@ public class AutAgentPreferencePage extends PreferencePage
      */
     private void createButtons(Composite parent) {
         Button addButton = new Button(parent, SWT.NONE);
-        addButton.setText(I18n.getString("AutAgentPreferencePage.button.add")); //$NON-NLS-1$
+        addButton.setText(Messages.AutAgentPreferencePageButtonAdd);
         addButton.addSelectionListener(new SelectionListener() {
 
             public void widgetDefaultSelected(SelectionEvent event) {
@@ -336,7 +337,7 @@ public class AutAgentPreferencePage extends PreferencePage
             
         });
         final Button deleteButton = new Button(parent, SWT.NONE);
-        deleteButton.setText(I18n.getString("AutAgentPreferencePage.button.delete")); //$NON-NLS-1$
+        deleteButton.setText(Messages.AutAgentPreferencePageButtonDelete);
         deleteButton.addSelectionListener(new SelectionListener() {
 
             public void widgetDefaultSelected(SelectionEvent event) {
@@ -371,7 +372,7 @@ public class AutAgentPreferencePage extends PreferencePage
      * {@inheritDoc}
      */
     public void init(IWorkbench workbench) {
-        setDescription(I18n.getString("AutAgentPreferencePage.description")); //$NON-NLS-1$
+        setDescription(Messages.AutAgentPreferencePageDescription);
     }
 
     /**
@@ -397,7 +398,8 @@ public class AutAgentPreferencePage extends PreferencePage
         tableLayout.addColumnData(new ColumnWeightData(15, 100));
         TableViewerColumn column = new TableViewerColumn(viewer,
                 SWT.NONE);
-        column.getColumn().setText(I18n.getString("AutAgentPreferencePage.columnHeader.hostName")); //$NON-NLS-1$
+        column.getColumn().setText(Messages
+                .AutAgentPreferencePageColumnHeaderHostName);
         column.setLabelProvider(new ColumnLabelProvider() {
             public String getText(Object element) {
                 return ((ServerManager.Server)element).getName();
@@ -409,7 +411,8 @@ public class AutAgentPreferencePage extends PreferencePage
         tableLayout.addColumnData(new ColumnWeightData(10, 100));
         column = new TableViewerColumn(viewer,
                 SWT.NONE);
-        column.getColumn().setText(I18n.getString("AutAgentPreferencePage.columnHeader.port")); //$NON-NLS-1$
+        column.getColumn().setText(Messages
+                .AutAgentPreferencePageColumnHeaderPort);
         column.setLabelProvider(new ColumnLabelProvider() {
             public String getText(Object element) {
                 return String.valueOf(

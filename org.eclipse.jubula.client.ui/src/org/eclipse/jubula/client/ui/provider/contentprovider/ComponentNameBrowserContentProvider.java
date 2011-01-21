@@ -34,11 +34,12 @@ import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.businessprocess.ComponentNameReuseBP;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 
@@ -264,7 +265,8 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
             IComponentNamePO cName = ((IComponentNamePO)element);
             String cType = CompSystemI18n.getString(cName.getComponentType());
             String displayName = cName.getName() 
-                                 + " [" + cType + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+                 + StringConstants.SPACE + StringConstants.LEFT_BRACKET 
+                 + cType + StringConstants.RIGHT_BRACKET;
 
             return displayName;
         }
@@ -277,7 +279,8 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
             return node.toString();
         }
         
-        Assert.notReached("Unknown type of element in tree of type " //$NON-NLS-1$
+        Assert.notReached(Messages.UnknownTypeOfElementInTreeOfType 
+                + StringConstants.SPACE
                 + element.getClass().getName());
         return super.getText(element);
     }
@@ -450,7 +453,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
          *            the parent object
          */
         public UsedCompnamesCategory(long parentID, Object parent) {
-            setName(I18n.getString("CompNameBrowser.usedCat")); //$NON-NLS-1$
+            setName(Messages.CompNameBrowserUnusedCat);
             setParentProjectID(parentID);
             setParent(parent);
         }
@@ -470,7 +473,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
          *            the parent object
          */
         public UnusedCompnamesCategory(long parentID, Object parent) {
-            setName(I18n.getString("CompNameBrowser.unusedCat")); //$NON-NLS-1$
+            setName(Messages.CompNameBrowserUnusedCat);
             setParentProjectID(parentID);
             setParent(parent);
         }
@@ -490,7 +493,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
          *            the parent object
          */
         public ReusedCompnamesCategory(long parentID, Object parent) {
-            setName(I18n.getString("CompNameBrowser.reusedCat")); //$NON-NLS-1$
+            setName(Messages.CompNameBrowserReusedCat);
             setParentProjectID(parentID);
             setParent(parent);
         }

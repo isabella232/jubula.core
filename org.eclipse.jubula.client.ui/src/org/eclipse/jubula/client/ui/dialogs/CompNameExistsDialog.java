@@ -15,13 +15,13 @@ import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -79,9 +79,9 @@ public class CompNameExistsDialog extends TitleAreaDialog {
     protected Control createDialogArea(Composite parent) {
         super.createDialogArea(parent);
         
-        final String dialogTitle = I18n.getString("CompNameExistsDialog.DialogTitle"); //$NON-NLS-1$
+        final String dialogTitle = Messages.CompNameExistsDialogDialogTitle;
         setTitle(dialogTitle);
-        setMessage(I18n.getString("CompNameExistsDialog.DefaultDlgMessage")); //$NON-NLS-1$
+        setMessage(Messages.CompNameExistsDialogDefaultDlgMessage);
         
         getShell().setText(dialogTitle);
         
@@ -122,14 +122,15 @@ public class CompNameExistsDialog extends TitleAreaDialog {
         final Label messageLabel = new Label(nameFieldArea, SWT.NONE);
         final String componentType = CompSystemI18n.getString(
                 m_existingCompName.getComponentType());
-        messageLabel.setText(I18n.getString("CompNameExistsDialog.CompAlreadyExistsInProj")); //$NON-NLS-1$
+        messageLabel.setText(
+                Messages.CompNameExistsDialogCompAlreadyExistsInProj);
         
         m_typeLabel = new Label(nameFieldArea, SWT.NONE);
-        m_typeLabel.setText(I18n.getString("CompNameExistsDialog.ComponentType") //$NON-NLS-1$
+        m_typeLabel.setText(Messages.CompNameExistsDialogComponentType
                 + componentType); 
         
         final Label messageLabel2 = new Label(nameFieldArea, SWT.NONE);
-        messageLabel2.setText(I18n.getString("CompNameExistsDialog.PressOkOrEnter")); //$NON-NLS-1$
+        messageLabel2.setText(Messages.CompNameExistsDialogPressOkOrEnter);
         
         m_nameField = new JBText(nameFieldArea, SWT.SINGLE | SWT.BORDER);
         final GridData nameFieldGridData = new GridData();
@@ -181,7 +182,7 @@ public class CompNameExistsDialog extends TitleAreaDialog {
      */
     private boolean isNameOK() throws JBException {
         if (StringConstants.EMPTY.equals(m_newName)) {
-            setErrorMessage(I18n.getString("CompNameExistsDialog.TypeComponentName")); //$NON-NLS-1$
+            setErrorMessage(Messages.CompNameExistsDialogTypeComponentName);
             return false;
         }
         final ComponentNamesBP compNameBP = ComponentNamesBP.getInstance();
@@ -206,8 +207,8 @@ public class CompNameExistsDialog extends TitleAreaDialog {
         }
         final String newTypeI18n = CompSystemI18n.getString(newType);
 
-        setErrorMessage(I18n.getString("CompNameExistsDialog.CompNameNotCompatible")); //$NON-NLS-1$
-        m_typeLabel.setText(I18n.getString("CompNameExistsDialog.ComponentType") //$NON-NLS-1$
+        setErrorMessage(Messages.CompNameExistsDialogCompNameNotCompatible);
+        m_typeLabel.setText(Messages.CompNameExistsDialogComponentType
                 + newTypeI18n); 
         m_nameField.selectAll();
         return false;

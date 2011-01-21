@@ -44,13 +44,14 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.ProjectDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
@@ -106,7 +107,7 @@ public class DeleteProjectAction extends AbstractAction {
          * {@inheritDoc}
          */
         public void run(IProgressMonitor monitor) throws InterruptedException {
-            monitor.beginTask(I18n.getString("DeleteProjectAction.deleting", //$NON-NLS-1$
+            monitor.beginTask(NLS.bind(Messages.DeleteProjectActionDeleting,
                     new Object[] {m_project.getName(),
                                   m_project.getMajorProjectVersion(),
                                   m_project.getMinorProjectVersion()}),  
@@ -130,7 +131,7 @@ public class DeleteProjectAction extends AbstractAction {
                 ProgressMonitorTracker.getInstance().setProgressMonitor(
                         monitor);
                 ProjectPM.deleteProject(m_project, m_deleteCurrentProject);
-                final String jobName = I18n.getString("UIJob.deletingTestResultDetails"); //$NON-NLS-1$
+                final String jobName = Messages.UIJobDeletingTestResultDetails;
                 Job job = new Job(jobName) {
                     public IStatus run(IProgressMonitor monitor) {
                         monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
@@ -266,7 +267,8 @@ public class DeleteProjectAction extends AbstractAction {
                 questionID = MessageIDs.Q_DELETE_PROJECT;
                 param = new Object[]{project.getName()};
             }
-            Plugin.startLongRunning(I18n.getString("DeleteProjectAction.waitWhileDeleting")); //$NON-NLS-1$
+            Plugin.startLongRunning(
+                   Messages.DeleteProjectActionWaitWhileDeleting);
             Dialog qDialog = Utils.createMessageDialog(questionID, param, null);
             if (qDialog.getReturnCode() == 0) {
                 try {
@@ -335,10 +337,10 @@ public class DeleteProjectAction extends AbstractAction {
         List <IProjectPO> projList) {
         ProjectDialog dialog = new ProjectDialog(Plugin.getShell(),
             projList,
-            I18n.getString("DeleteProjectAction.message"), //$NON-NLS-1$
-            I18n.getString("OpenProjectAction.title"), //$NON-NLS-1$,
+            Messages.DeleteProjectActionMessage,
+            Messages.OpenProjectActionTitle,
             IconConstants.DELETE_PROJECT_DIALOG_IMAGE, 
-            I18n.getString("DeleteProjectAction.caption"), true); //$NON-NLS-1$
+            Messages.DeleteProjectActionCaption, true);
         // set up help for the dialog
         dialog.setHelpAvailable(true);
         dialog.create();

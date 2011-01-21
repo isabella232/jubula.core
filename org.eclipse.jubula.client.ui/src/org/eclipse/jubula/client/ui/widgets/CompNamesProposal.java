@@ -41,10 +41,11 @@ public class CompNamesProposal implements IContentProposal {
         label.append(data.getName());
         if (!(data.getComponentType() == null || StringConstants.EMPTY
                 .equals(data.getComponentType()))) {
-            label.append(" ("); //$NON-NLS-1$
+            label.append(StringConstants.SPACE);
+            label.append(StringConstants.LEFT_PARENTHESES);
             label.append(StringHelper.getInstance().get(
                     data.getComponentType(), true));
-            label.append(")"); //$NON-NLS-1$
+            label.append(StringConstants.RIGHT_PARENTHESES);
         }
         m_label = label.toString();
         m_content = data.getName();

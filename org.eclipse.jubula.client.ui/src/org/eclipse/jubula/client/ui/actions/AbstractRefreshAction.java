@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.ui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.ui.actions.ActionFactory;
 
 
@@ -27,7 +27,7 @@ public class AbstractRefreshAction extends Action {
      */
     public AbstractRefreshAction() {
         super();
-        setText(I18n.getString("ActionBuilder.refreshItem")); //$NON-NLS-1$
+        setText(Messages.ActionBuilderRefreshItem);
         setActionDefinitionId("org.eclipse.ui.file.refresh"); //$NON-NLS-1$
         setImageDescriptor(IconConstants.REFRESH_IMAGE_DESCRIPTOR); 
         setDisabledImageDescriptor(IconConstants.

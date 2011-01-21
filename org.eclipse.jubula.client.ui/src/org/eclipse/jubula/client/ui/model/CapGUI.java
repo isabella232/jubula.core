@@ -24,8 +24,8 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertysources.CapGUIPropertySource;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertySource;
 
@@ -157,10 +157,10 @@ public class CapGUI extends GuiNode implements IAdaptable {
             ICapPO cap = (ICapPO)getContent();
             IComponentNameMapper compMapper = 
                 Plugin.getActiveCompMapper();
-            info.append(I18n.getString("CapGUI.Type"));  //$NON-NLS-1$
+            info.append(Messages.CapGUIType);
             info.append(map.get(cap.getComponentType())).append(
                     GeneralLabelProvider.SEPARATOR);
-            info.append(I18n.getString("CapGUI.Name"));  //$NON-NLS-1$
+            info.append(Messages.CapGUIName);
             String componentName = cap.getComponentName();
             if (compMapper != null) {
                 componentName = 
@@ -173,7 +173,7 @@ public class CapGUI extends GuiNode implements IAdaptable {
                 info.append(componentName);
             }
             info.append(GeneralLabelProvider.SEPARATOR);
-            info.append(I18n.getString("CapGUI.Action"));  //$NON-NLS-1$
+            info.append(Messages.CapGUIAction);
             info.append(map.get(cap.getActionName()));
             info.append(GeneralLabelProvider.CLOSE_BRACKED);
         }        

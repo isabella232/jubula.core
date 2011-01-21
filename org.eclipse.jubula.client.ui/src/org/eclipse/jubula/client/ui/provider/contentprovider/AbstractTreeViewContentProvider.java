@@ -13,8 +13,10 @@ package org.eclipse.jubula.client.ui.provider.contentprovider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 
 
@@ -70,7 +72,8 @@ public abstract class AbstractTreeViewContentProvider
                 || element instanceof SearchResultElement) {
             return null;
         }
-        Assert.notReached("Wrong type of element!"); //$NON-NLS-1$
+        Assert.notReached(Messages.WrongTypeOfElement 
+                + StringConstants.EXCLAMATION_MARK);
         return null;
     }
 }

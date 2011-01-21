@@ -27,8 +27,8 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -110,14 +110,14 @@ public class RenameCategoryHandlerOMEditor
             final OMEditorBP editorBp) {
         
         return new InputDialog(Plugin.getShell(), 
-                I18n.getString("RenameCategoryActionOMEditor.Title"), //$NON-NLS-1$
+                Messages.RenameCategoryActionOMEditorTitle,
                 category.getName(), 
-                I18n.getString("RenameCategoryActionOMEditor.Message"),  //$NON-NLS-1$
-                I18n.getString("RenameCategoryActionOMEditor.Label"), //$NON-NLS-1$
-                I18n.getString("RenameCategoryActionOMEditor.Error1"), //$NON-NLS-1$
-                I18n.getString("RenameCategoryActionOMEditor.doubleCatName"), //$NON-NLS-1$
+                Messages.RenameCategoryActionOMEditorMessage,
+                Messages.RenameCategoryActionOMEditorLabel,
+                Messages.RenameCategoryActionOMEditorError1,
+                Messages.RenameCategoryActionOMEditorDoubleCatName,
                 IconConstants.RENAME_CAT_DIALOG_STRING, 
-                I18n.getString("RenameCategoryActionOMEditor.Shell"), //$NON-NLS-1$
+                Messages.RenameCategoryActionOMEditorShell,
                 false) {
                 /**
                  * @return False, if the input name already exists.

@@ -30,10 +30,10 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.dialogs.AUTPropertiesDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -89,7 +89,7 @@ public class CreateAutDefinitionHandler extends AbstractHandler {
                         newAutDialog.create();
                         DialogUtils.setWidgetNameForModalDialog(newAutDialog);
                         newAutDialog.getShell().setText(
-                            I18n.getString("AUTPropertyPage.AUTConfig")); //$NON-NLS-1$
+                            Messages.AUTPropertyPageAUTConfig);
                         
                         if (newAutDialog.open() == Window.OK) {
                             es.getWorkProject().addAUTMain(newAut);

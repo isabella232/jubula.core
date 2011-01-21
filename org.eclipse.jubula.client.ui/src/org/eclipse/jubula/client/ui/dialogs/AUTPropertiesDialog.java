@@ -38,6 +38,7 @@ import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.AutIdListComposite;
@@ -51,7 +52,6 @@ import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -193,8 +193,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         
         createAUTNameEditor(leftComposite);
         createAutToolkitCombo(leftComposite);
-        m_autConfigList = newListField(leftComposite, I18n
-            .getString("AUTPropertiesDialog.AutConfigListText"), LINES_5); //$NON-NLS-1$
+        m_autConfigList = newListField(leftComposite, 
+                Messages.AUTPropertiesDialogAutConfigListText, LINES_5);
         createAutConfigButtons(rightComposite);
         createGenerateNamesCheckBox(leftComposite);
         separator(leftComposite);
@@ -245,7 +245,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         m_chooseLists.checkButtons();
         Plugin.getHelpSystem().setHelp(parent, 
                 ContextHelpIds.AUT_CONFIGURATION);
-        setTitle(I18n.getString("ProjectWizard.AutSettings")); //$NON-NLS-1$
+        setTitle(Messages.ProjectWizardAutSettings);
         scroll.setContent(composite);
         scroll.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         scroll.setExpandHorizontal(true);
@@ -277,9 +277,9 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         }
         m_chooseLists = new ListElementChooserComposite(
             innerComposite, 
-            I18n.getString("AUTPropertiesDialog.upperLabel"), //$NON-NLS-1$
+            Messages.AUTPropertiesDialogUpperLabel,
             leftList,  
-            I18n.getString("AUTPropertiesDialog.bottomLabel"), //$NON-NLS-1$
+            Messages.AUTPropertiesDialogBottomLabel,
             rightList,  
             15, 
             new Image[]{
@@ -291,10 +291,10 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                 IconConstants.DOUBLE_RIGHT_ARROW_DIS_IMAGE, 
                 IconConstants.LEFT_ARROW_DIS_IMAGE, 
                 IconConstants.DOUBLE_LEFT_ARROW_DIS_IMAGE },
-            new String[]{I18n.getString("AUTSettingWizardPage.downToolTip"), //$NON-NLS-1$
-                I18n.getString("AUTSettingWizardPage.allDownToolTip"),  //$NON-NLS-1$
-                I18n.getString("AUTSettingWizardPage.upToolTip"), //$NON-NLS-1$
-                I18n.getString("AUTSettingWizardPage.allUpToolTip")},  //$NON-NLS-1$
+            new String[]{Messages.AUTSettingWizardPageDownToolTip,
+                Messages.AUTSettingWizardPageAllDownToolTip,
+                Messages.AUTSettingWizardPageUpToolTip,
+                Messages.AUTSettingWizardPageAllUpToolTip},
             ListElementChooserComposite.VERTICAL);
     }
     
@@ -331,15 +331,15 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                 IAUTMainPO aut = (IAUTMainPO)iter.next();
                 if (!m_edit) {
                     if (aut.getName().equals(m_autNameText.getText())) {
-                        setMessage(I18n.getString(
-                            "AUTPropertiesDialog.doubleAUTName"), IMessageProvider.ERROR); //$NON-NLS-1$
+                        setMessage(Messages.AUTPropertiesDialogDoubleAUTName,
+                                IMessageProvider.ERROR);
                         isError |= true;
                     }
                 } else {
                     if (aut.getName().equals(m_autNameText.getText())
                             && !m_autNameText.getText().equals(m_origAUTName)) {
-                        setMessage(I18n.getString(
-                            "AUTPropertiesDialog.doubleAUTName"), IMessageProvider.ERROR); //$NON-NLS-1$
+                        setMessage(Messages.AUTPropertiesDialogDoubleAUTName,
+                                IMessageProvider.ERROR);
                         isError |= true;
                     }
                 }
@@ -347,16 +347,17 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         } 
         if (!isError) {
             if (autName.length() == 0) {
-                setMessage(I18n.getString(
-                    "AUTPropertiesDialog.emptyAUTName"), IMessageProvider.ERROR); //$NON-NLS-1$
+                setMessage(Messages.AUTPropertiesDialogEmptyAUTName,
+                        IMessageProvider.ERROR);
                 isError |= true;
             }
         }
         
         if (!isError) {
-            if (autName.startsWith(" ") || autName.charAt(autName.length() - 1) == ' ') { //$NON-NLS-1$
-                setMessage(I18n.getString(
-                    "AUTPropertiesDialog.InvalidAUTName"), IMessageProvider.ERROR); //$NON-NLS-1$
+            if (autName.startsWith(StringConstants.SPACE)
+                    || autName.charAt(autName.length() - 1) == ' ') {
+                setMessage(Messages.AUTPropertiesDialogInvalidAUTName,
+                        IMessageProvider.ERROR); //$NON-NLS-1$
                 isError |= true;
             }
         }
@@ -372,8 +373,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
     private boolean modifyAUTToolkitComboAction() {
         String selection = m_autToolKitComboBox.getSelectedObject();
         if (selection == null || selection.trim().length() == 0) {
-            setMessage(I18n.getString(
-                "AUTPropertiesDialog.noToolkitSelected"), IMessageProvider.ERROR); //$NON-NLS-1$
+            setMessage(Messages.AUTPropertiesDialogNoToolkitSelected,
+                IMessageProvider.ERROR);
             return true;
         }
         return false;
@@ -459,7 +460,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      * @param parent The parent composite.
      */
     private void createAUTNameEditor(Composite parent) {
-        newLabel(parent, I18n.getString("AUTPropertiesDialog.AUTName")); //$NON-NLS-1$
+        newLabel(parent, Messages.AUTPropertiesDialogAUTName);
         m_autNameText = newRequiredTextField(parent);
         Layout.setMaxChar(m_autNameText);
     }
@@ -469,7 +470,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      * @param parent The parent composite.
      */
     private void createAutToolkitCombo(Composite parent) {
-        newLabel(parent, I18n.getString("AUTPropertiesDialog.Toolkit")); //$NON-NLS-1$
+        newLabel(parent, Messages.AUTPropertiesDialogToolkit);
         try {
             m_autToolKitComboBox = ControlFactory.createAutToolkitCombo(
                 parent, m_project, m_autMain.getToolkit());
@@ -496,7 +497,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      * @param parent The parent composite.
      */
     private void createGenerateNamesCheckBox(Composite parent) {
-        Label infoLabel = newLabel(parent, I18n.getString("AUTPropertiesDialog.generateNames")); //$NON-NLS-1$
+        Label infoLabel = newLabel(parent,
+                Messages.AUTPropertiesDialogGenerateNames);
         ControlDecorator.decorateInfo(infoLabel, 
                 "AUTPropertiesDialog.generateNamesDescription", false); //$NON-NLS-1$
         m_generateNames = new Button(parent, SWT.CHECK);
@@ -545,25 +547,25 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         invisibleText2.setLayoutData(invisibleGrid);
         
         m_addButton = new Button(parent, SWT.PUSH);
-        m_addButton.setText(I18n.getString("AUTPropertyPage.Add")); //$NON-NLS-1$
+        m_addButton.setText(Messages.AUTPropertyPageAdd);
         m_addButton.setLayoutData(buttonGrid());
         String selectedObject = m_autToolKitComboBox.getSelectedObject();
         m_addButton.setEnabled(selectedObject != null 
                 && selectedObject.trim().length() > 0);
         
         m_duplicateButton = new Button(parent, SWT.PUSH);
-        m_duplicateButton.setText(I18n.getString("AUTPropertyPage.Duplicate")); //$NON-NLS-1$
+        m_duplicateButton.setText(Messages.AUTPropertyPageDuplicate);
         m_duplicateButton.setData("GD_COMP_NAME", "AUTPropertyPage.Duplicate");  //$NON-NLS-1$//$NON-NLS-2$
         m_duplicateButton.setLayoutData(buttonGrid());
         m_duplicateButton.setEnabled(false);
 
         m_editButton = new Button(parent, SWT.PUSH);
-        m_editButton.setText(I18n.getString("AUTPropertyPage.Edit")); //$NON-NLS-1$
+        m_editButton.setText(Messages.AUTPropertyPageEdit);
         m_editButton.setLayoutData(buttonGrid());
         m_editButton.setEnabled(false);
 
         m_removeButton = new Button(parent, SWT.PUSH);
-        m_removeButton.setText(I18n.getString("AUTPropertyPage.Remove")); //$NON-NLS-1$
+        m_removeButton.setText(Messages.AUTPropertyPageRemove);
         m_removeButton.setLayoutData(buttonGrid());
         m_removeButton.setEnabled(false);
     }
@@ -591,7 +593,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                         autConfig));
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
-        dialog.getShell().setText(I18n.getString("AUTPropertiesDialog.AUTConfigTitle")); //$NON-NLS-1$
+        dialog.getShell().setText(Messages.AUTPropertiesDialogAUTConfigTitle);
         dialog.open();
         if (dialog.getReturnCode() == Window.OK) {
             m_autConfigList.add(autConfig.getName());
@@ -631,7 +633,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                         autConfig));
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
-            dialog.getShell().setText(I18n.getString("AUTPropertiesDialog.AUTConfigTitle"));  //$NON-NLS-1$
+            dialog.getShell().setText(
+                    Messages.AUTPropertiesDialogAUTConfigTitle);
             dialog.open();
             if (dialog.getReturnCode() == Window.OK) {
                 final Set<IAUTConfigPO> autConfigSet = 
@@ -855,8 +858,10 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                 return;
             }
 
-            Assert.notReached("Event activated by unknown widget: '" //$NON-NLS-1$
-                + String.valueOf(e.getSource()) + "'"); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedUnknownWidget 
+                + StringConstants.COLON + StringConstants.SPACE 
+                + StringConstants.APOSTROPHE + String.valueOf(e.getSource()) 
+                + StringConstants.APOSTROPHE);
         }
 
         /**
@@ -906,7 +911,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                 m_autNameText.setBackground(Layout.WHITE_COLOR);
                 return;
             }
-            Assert.notReached("Event activated by unknown widget."); //$NON-NLS-1$
+            Assert.notReached(Messages.EventActivatedUnknownWidget 
+                + StringConstants.DOT);
         }
     }
 
@@ -925,8 +931,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         if (cfg != null) {
             final IAUTConfigPO newConfig = PoMaker.createAUTConfigPO(cfg);
             String name = newConfig.getName();
-            newConfig.setValue(AutConfigConstants.CONFIG_NAME, I18n
-                    .getString("AUTPropertyPage.DupPrefix") + name); //$NON-NLS-1$
+            newConfig.setValue(AutConfigConstants.CONFIG_NAME,
+                    Messages.AUTPropertyPageDupPrefix + name); 
             String autId = newConfig.getValue(AutConfigConstants.AUT_ID, null);
             if (autId != null && autId.length() > 0) {
                 IValidator val = new AutIdValidator(m_project);
@@ -934,7 +940,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                 boolean valid = false;
                 int i = 1;
                 while (!valid) {
-                    newAutId = autId + "_" + i++; //$NON-NLS-1$
+                    newAutId = autId + StringConstants.UNDERLINE + i++;
                     if (val.validate(newAutId).isOK()) {
                         valid = true;
                     }

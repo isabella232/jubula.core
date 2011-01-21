@@ -29,10 +29,10 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -82,15 +82,15 @@ public class NewTestJobHandler extends AbstractHandler {
         if (testJobCount > 0) {
             str = str + testJobCount;
         }
-        str = I18n.getString("InputDialog.newTJ") + str; //$NON-NLS-1$
-        InputDialog dialog = new InputDialog(Plugin.getShell(), I18n
-                .getString("NewTestJob.TJTitle"), //$NON-NLS-1$
-                str, I18n.getString("NewTestJob.TJMessage"), //$NON-NLS-1$
-                I18n.getString("NewTestJob.TJLabel"), //$NON-NLS-1$
-                I18n.getString("NewTestJob.TJError"), //$NON-NLS-1$
-                I18n.getString("NewTestJob.doubleTJName"), //$NON-NLS-1$
-                IconConstants.NEW_TJ_DIALOG_STRING, I18n
-                        .getString("NewTestJob.TJShell"), //$NON-NLS-1$
+        str = Messages.InputDialogNewTJ + str;
+        InputDialog dialog = new InputDialog(Plugin.getShell(), 
+                Messages.NewTestJobTJTitle,
+                str, Messages.NewTestJobTJMessage,
+                Messages.NewTestJobTJLabel,
+                Messages.NewTestJobTJError,
+                Messages.NewTestJobDoubleTJName,
+                IconConstants.NEW_TJ_DIALOG_STRING, 
+                Messages.NewTestJobTJShell,
                 false) {
             protected boolean isInputAllowed() {
                 String newName = getInputFieldText();

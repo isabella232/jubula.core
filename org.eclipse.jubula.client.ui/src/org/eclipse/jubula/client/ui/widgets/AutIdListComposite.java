@@ -22,9 +22,9 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.dialogs.EnterAutIdDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -72,7 +72,7 @@ public class AutIdListComposite extends Composite {
         compositeLayout.marginWidth = 0;
         setLayout(compositeLayout);
         Label idLabel = new Label(this, SWT.NONE);
-        idLabel.setText(I18n.getString("AUTPropertiesDialog.AutId")); //$NON-NLS-1$
+        idLabel.setText(Messages.AUTPropertiesDialogAutId);
         ControlDecorator.decorateInfo(idLabel, 
                 "AUTPropertiesDialog.AutId.helpText", false); //$NON-NLS-1$
         GridData data = new GridData(SWT.BEGINNING, SWT.FILL, false, false);
@@ -111,7 +111,7 @@ public class AutIdListComposite extends Composite {
             final List idList, final Collection<String> idListModel) {
         GridData data;
         final Button addButton = new Button(parent, SWT.NONE);
-        addButton.setText(I18n.getString("AUTConfigComponent.add")); //$NON-NLS-1$
+        addButton.setText(Messages.AUTConfigComponentAdd);
         data = new GridData(SWT.FILL, SWT.BEGINNING, false, false);
         addButton.setLayoutData(data);
         addButton.addSelectionListener(new SelectionListener() {
@@ -129,7 +129,7 @@ public class AutIdListComposite extends Composite {
         
         final Button editButton = new Button(parent, SWT.NONE);
         editButton.setEnabled(false);
-        editButton.setText(I18n.getString("AUTConfigComponent.edit")); //$NON-NLS-1$
+        editButton.setText(Messages.AUTConfigComponentEdit);
         data = new GridData(SWT.FILL, SWT.BEGINNING, false, false);
         editButton.setLayoutData(data);
         editButton.addSelectionListener(new SelectionListener() {
@@ -144,7 +144,7 @@ public class AutIdListComposite extends Composite {
 
         final Button removeButton = new Button(parent, SWT.NONE);
         removeButton.setEnabled(false);
-        removeButton.setText(I18n.getString("AUTConfigComponent.remove")); //$NON-NLS-1$
+        removeButton.setText(Messages.AUTConfigComponentRemove);
         data = new GridData(SWT.FILL, SWT.BEGINNING, false, false);
         removeButton.setLayoutData(data);
         removeButton.addSelectionListener(new SelectionListener() {

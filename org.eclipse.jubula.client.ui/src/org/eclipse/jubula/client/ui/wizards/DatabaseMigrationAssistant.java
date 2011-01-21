@@ -22,8 +22,10 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.wizards.pages.DatabaseMigrationAssistantIntroPage;
 import org.eclipse.jubula.client.ui.wizards.pages.ImportProjectsWizardPage;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.slf4j.Logger;
@@ -127,18 +129,22 @@ public class DatabaseMigrationAssistant extends Wizard
                             }
                         });
                     } catch (JBFatalException e) {
-                        LOG.error("An error occurred during migration.", e); //$NON-NLS-1$
+                        LOG.error(Messages.AnErrorOccurredDuringMigration 
+                                + StringConstants.DOT, e);
                     } catch (JBException e) {
-                        LOG.error("An error occurred during migration.", e); //$NON-NLS-1$
+                        LOG.error(Messages.AnErrorOccurredDuringMigration 
+                                + StringConstants.DOT, e);
                     } finally {
                         monitor.done();
                     }
                 }
             });
         } catch (InvocationTargetException e) {
-            LOG.error("An error occurred during migration.", e); //$NON-NLS-1$
+            LOG.error(Messages.AnErrorOccurredDuringMigration 
+                    + StringConstants.DOT, e);
         } catch (InterruptedException e) {
-            LOG.error("An error occurred during migration.", e); //$NON-NLS-1$
+            LOG.error(Messages.AnErrorOccurredDuringMigration 
+                    + StringConstants.DOT, e);
         }
 
         return true;

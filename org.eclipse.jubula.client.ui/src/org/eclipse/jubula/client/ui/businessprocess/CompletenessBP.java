@@ -33,7 +33,8 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -157,7 +158,7 @@ public class CompletenessBP implements
     private void runCheck(boolean runInJob, final INodePO root, 
         final Locale wl) {
         if (runInJob) {
-            final String jobName = I18n.getString("UIJob.runCompletenessCheck", //$NON-NLS-1$
+            final String jobName = NLS.bind(Messages.UIJobRunCompletenessCheck,
                     new String[] { root.getName() });
             Job job = new Job(jobName) {
                 @SuppressWarnings("synthetic-access")

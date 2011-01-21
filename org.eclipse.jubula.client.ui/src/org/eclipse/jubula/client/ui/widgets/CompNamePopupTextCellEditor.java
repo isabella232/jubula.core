@@ -14,6 +14,7 @@ import java.text.MessageFormat;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.CharacterConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -258,7 +259,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
         boolean newValidState = isCorrect(value);
         if (value == null && newValidState) {
             Assert.verify(false,
-                    "Validator isn't limiting the cell editor's type range"); //$NON-NLS-1$
+                    Messages.ValidatorIsntLimitingTheCellEditorsTypeRange);
         }
         if (!newValidState) {
             // try to insert the current value into the error message.

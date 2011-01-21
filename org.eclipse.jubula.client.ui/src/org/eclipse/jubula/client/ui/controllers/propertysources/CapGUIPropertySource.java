@@ -47,6 +47,7 @@ import org.eclipse.jubula.client.ui.controllers.propertydescriptors.PopupCompNam
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.ParameterValueLabelProvider;
@@ -54,7 +55,6 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
@@ -82,50 +82,50 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_COMPNAME = 
-        I18n.getString("CapGUIPropertySource.ComponentName"); //$NON-NLS-1$
+        Messages.CapGUIPropertySourceComponentName;
 
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_COMPTYPE = 
-                                I18n.getString("CapGUIPropertySource.CompType");  //$NON-NLS-1$
+                                Messages.CapGUIPropertySourceCompType;
 
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_STEPNAME = 
-                                I18n.getString("CapGUIPropertySource.StepName");  //$NON-NLS-1$
+                                Messages.CapGUIPropertySourceStepName;
     
     /** Property ID for Parameters*/ 
     public static final String P_ELEMENT_PARAMS = "Parameters"; //$NON-NLS-1$
     
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_PARAMS = 
-                                I18n.getString("CapGUIPropertySource.Params");  //$NON-NLS-1$
+                                Messages.CapGUIPropertySourceParams;
 
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_ACTIONTYPE = 
-                            I18n.getString("CapGUIPropertySource.ActionType");  //$NON-NLS-1$
+                            Messages.CapGUIPropertySourceActionType;
   
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_PARAMETERNAME = 
-                            I18n.getString("CapGUIPropertySource.ParamName");  //$NON-NLS-1$
+                            Messages.CapGUIPropertySourceParamName;
     
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_PARAMETERTYPE = 
-                I18n.getString("CapGUIPropertySource.ParamType");  //$NON-NLS-1$
+                Messages.CapGUIPropertySourceParamType;
     
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_PARAMETERVALUE = 
-                            I18n.getString("CapGUIPropertySource.ParamValue");  //$NON-NLS-1$
+                            Messages.CapGUIPropertySourceParamValue;
       
     /** Constant for Category Component */
     public static final String P_COMPONENT_CAT = 
-            I18n.getString("CapGUIPropertySource.Component");  //$NON-NLS-1$
+            Messages.CapGUIPropertySourceComponent;
     
     /** Constant for Category Action */
     public static final String P_ACTION_CAT = 
-                I18n.getString("CapGUIPropertySource.Action");  //$NON-NLS-1$
+                Messages.CapGUIPropertySourceAction;
     
     /** Constant for Category Parameter */
     public static final String P_PARAMETER_CAT = 
-                I18n.getString("CapGUIPropertySource.Parameter");  //$NON-NLS-1$
+                Messages.CapGUIPropertySourceParameter;
 
     /** for LOG messages */
     static final Log LOG = 
@@ -288,7 +288,8 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                     if (element instanceof Integer) {
                         return m_actionTypes[((Integer)element).intValue()];
                     }
-                    Assert.notReached("Wrong element type."); //$NON-NLS-1$
+                    Assert.notReached(Messages.WrongElementType 
+                            + StringConstants.DOT);
                     return String.valueOf(element);
                 }
             });
@@ -371,7 +372,8 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                             return index < componentTypes.length 
                                 ? componentTypes[index] : StringConstants.EMPTY;
                         }
-                        Assert.notReached("Wrong element type."); //$NON-NLS-1$
+                        Assert.notReached(Messages.WrongElementType 
+                                + StringConstants.DOT);
                         return String.valueOf(element);
                     }
                 });

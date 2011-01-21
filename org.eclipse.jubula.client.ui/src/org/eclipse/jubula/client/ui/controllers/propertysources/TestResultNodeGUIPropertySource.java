@@ -25,6 +25,7 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -41,39 +42,55 @@ import org.eclipse.swt.graphics.Image;
 public class TestResultNodeGUIPropertySource 
     extends AbstractPropertySource < TestResultNode > {
     /** Constant for Category Component */
-    public static final String P_TESTSTEP_CAT = I18n.getString("TestResultNodeGUIPropertySource.ResultStep");  //$NON-NLS-1$
+    public static final String P_TESTSTEP_CAT = 
+        Messages.TestResultNodeGUIPropertySourceResultStep;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_STEPNAME = I18n.getString("TestResultNodeGUIPropertySource.StepName"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_STEPNAME = 
+        Messages.TestResultNodeGUIPropertySourceStepName;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_STEPTYPE = I18n.getString("TestResultNodeGUIPropertySource.StepType"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_STEPTYPE = 
+        Messages.TestResultNodeGUIPropertySourceStepType;
     /** Constant for Category Component */
-    public static final String P_TESTRESULT_CAT = I18n.getString("TestResultNodeGUIPropertySource.TestResult");  //$NON-NLS-1$
+    public static final String P_TESTRESULT_CAT = 
+        Messages.TestResultNodeGUIPropertySourceTestResult;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_TIMESTAMP = I18n.getString("TestResultNodeGUIPropertySource.TimeStamp"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_TIMESTAMP = 
+        Messages.TestResultNodeGUIPropertySourceTimeStamp;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_STEPSTATUS = I18n.getString("TestResultNodeGUIPropertySource.StepStatus"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_STEPSTATUS = 
+        Messages.TestResultNodeGUIPropertySourceStepStatus;
     /** Constant for Category Component */
-    public static final String P_TESTERROR_CAT = I18n.getString("TestResultNodeGUIPropertySource.ErrorDetail");  //$NON-NLS-1$
+    public static final String P_TESTERROR_CAT = 
+        Messages.TestResultNodeGUIPropertySourceErrorDetail;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_ERRORTYPE = I18n.getString("TestResultNodeGUIPropertySource.ErrorType"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_ERRORTYPE = 
+        Messages.TestResultNodeGUIPropertySourceErrorType;        
 
     // CAP Details
     /** Constant for Category Component */
-    public static final String P_CAP_CAT = I18n.getString("TestResultNodeGUIPropertySource.CapDetail"); //$NON-NLS-1$
+    public static final String P_CAP_CAT = 
+        Messages.TestResultNodeGUIPropertySourceCapDetail;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_CAPCOMMENT = I18n.getString("TestResultNodeGUIPropertySource.Comment"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_CAPCOMMENT = 
+        Messages.TestResultNodeGUIPropertySourceComment;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_COMPNAME = I18n.getString("CapGUIPropertySource.ComponentName"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_COMPNAME = 
+        Messages.CapGUIPropertySourceComponentName;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_ACTIONTYPE = I18n.getString("CapGUIPropertySource.ActionType"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_ACTIONTYPE = 
+        Messages.CapGUIPropertySourceActionType;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_COMPTYPE = I18n.getString("CapGUIPropertySource.CompType"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_COMPTYPE = 
+        Messages.CapGUIPropertySourceCompType;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERNAME = I18n.getString("CapGUIPropertySource.ParamName"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_PARAMETERNAME = 
+        Messages.CapGUIPropertySourceParamName;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERVALUE = I18n.getString("CapGUIPropertySource.ParamValue"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_PARAMETERVALUE = 
+        Messages.CapGUIPropertySourceParamValue;
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERTYPE = I18n.getString("CapGUIPropertySource.ParamType"); //$NON-NLS-1$
+    public static final String P_ELEMENT_DISPLAY_PARAMETERTYPE = 
+        Messages.CapGUIPropertySourceParamType;
 
     /**
      * Constructor 
@@ -116,20 +133,16 @@ public class TestResultNodeGUIPropertySource
         propDes = new JBPropertyDescriptor(new ComponentController() {
             public Object getProperty() {
                 if (Hibernator.isPoSubclass(node, IEventExecTestCasePO.class)) {
-                    return I18n
-                        .getString("TestResultNodeGUIPropertySource.EventTestCase"); //$NON-NLS-1$
+                    return
+                        Messages.TestResultNodeGUIPropertySourceEventTestCase; 
                 } else if (Hibernator.isPoSubclass(node, ITestCasePO.class)) {
-                    return I18n
-                        .getString("TestResultNodeGUIPropertySource.TestCase"); //$NON-NLS-1$
+                    return Messages.TestResultNodeGUIPropertySourceTestCase;
                 } else if (Hibernator.isPoSubclass(node, ICapPO.class)) {
-                    return I18n
-                        .getString("TestResultNodeGUIPropertySource.TestStep"); //$NON-NLS-1$
+                    return Messages.TestResultNodeGUIPropertySourceTestStep; 
                 } else if (Hibernator.isPoSubclass(node, ITestSuitePO.class)) {
-                    return I18n
-                        .getString("TestResultNodeGUIPropertySource.TestSuite"); //$NON-NLS-1$
+                    return Messages.TestResultNodeGUIPropertySourceTestSuite; 
                 }
-                return I18n
-                    .getString("TestResultNodeGUIPropertySource.UnknownElement"); //$NON-NLS-1$
+                return Messages.TestResultNodeGUIPropertySourceUnknownElement; 
             }
             public Image getImage() {
                 return getImageForNode(node);
@@ -380,7 +393,6 @@ public class TestResultNodeGUIPropertySource
                     if (args != null) {
                         return I18n.getString(key, args);
                     }
-                    
                     return I18n.getString(key, true);
                 }
             }, I18n.getString(TestErrorEvent.Property.DESCRIPTION_KEY));
@@ -403,18 +415,20 @@ public class TestResultNodeGUIPropertySource
                 public Object getProperty() {
                     return I18n.getString(tc.getEventType());
                 }
-            } , I18n.getString("TestResultNodeGUIPropertySource.ErrorType")); //$NON-NLS-1$
-        propDes.setCategory(I18n.getString("TestResultNodeGUIPropertySource.Eventhandler")); //$NON-NLS-1$
+            } , Messages.TestResultNodeGUIPropertySourceErrorType);
+        propDes.setCategory(
+                Messages.TestResultNodeGUIPropertySourceEventhandler);
         addPropertyDescriptor(propDes);
         propDes = new JBPropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return tc.getReentryProp();
                 }
-            } , I18n.getString("TestResultNodeGUIPropertySource.Reentry")); //$NON-NLS-1$
-        propDes.setCategory(I18n.getString("TestResultNodeGUIPropertySource.Eventhandler")); //$NON-NLS-1$
+            } , Messages.TestResultNodeGUIPropertySourceReentry);
+        propDes.setCategory(
+                Messages.TestResultNodeGUIPropertySourceEventhandler);
         addPropertyDescriptor(propDes);
-        insertEmptyRow(I18n.getString("TestResultNodeGUIPropertySource.Eventhandler")); //$NON-NLS-1$
+        insertEmptyRow(Messages.TestResultNodeGUIPropertySourceEventhandler);
     }
 
     /**

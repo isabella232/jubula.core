@@ -26,11 +26,12 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
 import org.eclipse.jubula.client.ui.model.TestJobGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 
@@ -98,7 +99,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
                             && !workLangBP
                                 .isTestSuiteLanguage(locale, testSuite)) {
                         toolTip.append(Constants.BULLET).append(
-                                I18n.getString("TestDataDecorator.unsupportedAUTLanguage")); //$NON-NLS-1$
+                            Messages.TestDataDecoratorUnsupportedAUTLanguage);
                     } else {
                         checkNode(execTs, aut, locale, toolTip);
                     }
@@ -123,13 +124,12 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
             } 
             if (element instanceof TestJobGUI) {
                 if (!isTestJobGuiValid((TestJobGUI)element)) {
-                    addMessage(toolTip, I18n
-                            .getString("TestDataDecorator.TestJobIncompl")); //$NON-NLS-1$
+                    addMessage(toolTip, 
+                            Messages.TestDataDecoratorTestJobIncompl);
                 }
             } else if (element instanceof RefTestSuiteGUI) {
                 if (!isRefTestSuiteGuiValid((RefTestSuiteGUI)element)) {
-                    addMessage(toolTip, I18n
-                            .getString("TestDataDecorator.RefTsIncompl")); //$NON-NLS-1$
+                    addMessage(toolTip, Messages.TestDataDecoratorRefTsIncompl);
                 }
             }
             if (toolTip.length() == 0) {
@@ -151,19 +151,19 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
         Locale locale, StringBuilder toolTip) {
         if (!execTs.getContent().getSumOMFlag(aut) && aut != null) {
             addMessage(toolTip, 
-                I18n.getString("TestDataDecorator.OMTSIncompl")); //$NON-NLS-1$
+                Messages.TestDataDecoratorOMTSIncompl);
         }
         if (aut == null) {
             addMessage(toolTip, 
-                I18n.getString("TestDataDecorator.TestSuiteWithoutAUT")); //$NON-NLS-1$
+                Messages.TestDataDecoratorTestSuiteWithoutAUT);
         }
         if (!execTs.getContent().getSumTdFlag(locale)) {
             addMessage(toolTip, 
-                I18n.getString("TestDataDecorator.TDChildrenIncompl")); //$NON-NLS-1$
+                Messages.TestDataDecoratorTDChildrenIncompl);
         }
         if (!execTs.getContent().getSumSpecTcFlag()) {
             addMessage(toolTip, 
-                I18n.getString("TestDataDecorator.SpecTcChildrenMissing")); //$NON-NLS-1$
+                Messages.TestDataDecoratorSpecTcChildrenMissing);
         }
         return toolTip;
     }
@@ -176,7 +176,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
      */
     private void addWhitespace(StringBuilder toolTip) {
         if (toolTip.length() > 0) {
-            toolTip.append("\n"); //$NON-NLS-1$
+            toolTip.append(StringConstants.NEWLINE);
         }
     }
 
@@ -195,32 +195,36 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
             return toolTip;
         }
         if (!execTC.getCompleteSpecTcFlag()) {
-            addMessage(toolTip, I18n.getString("TestDataDecorator.SpecTcMissing")); //$NON-NLS-1$
+            addMessage(toolTip, Messages.TestDataDecoratorSpecTcMissing);
         } else {
             IParamNodePO realParamNode = execTC;
             if (execTC.getHasReferencedTD()) {
                 realParamNode = execTC.getSpecTestCase();
             }
             if ((aut != null) && !execTC.getSumOMFlag(aut)) {
-                addMessage(toolTip, I18n.getString("TestDataDecorator.OMChildrenIncompl"));  //$NON-NLS-1$
+                addMessage(toolTip, 
+                        Messages.TestDataDecoratorOMChildrenIncompl);
             } 
             if (execTC.getDataFile() == null
                 || execTC.getDataFile().length() == 0) {
                 
                 boolean isAlreadySet = false;
                 if (!realParamNode.getCompleteTdFlag(locale)) {
-                    addMessage(toolTip, I18n.getString("TestDataDecorator.TdInTestCaseIncompl")); //$NON-NLS-1$
+                    addMessage(toolTip, 
+                            Messages.TestDataDecoratorTdInTestCaseIncompl);
                     isAlreadySet = true;
                 } 
                 if (!isAlreadySet 
                         && !execTC.getCompleteTdFlag(locale)) {
-                    addMessage(toolTip, I18n.getString("TestDataDecorator.TdInTestCaseIncompl")); //$NON-NLS-1$
+                    addMessage(toolTip, 
+                            Messages.TestDataDecoratorTdInTestCaseIncompl);
                 }
             }
             if (!execTC.getSumTdFlag(locale) 
                 && execTC.getCompleteTdFlag(locale)) {
                 
-                addMessage(toolTip, I18n.getString("TestDataDecorator.TDChildrenIncompl")); //$NON-NLS-1$
+                addMessage(toolTip, 
+                        Messages.TestDataDecoratorTDChildrenIncompl);
             } else if (!execTC.getSumTdFlag(locale) 
                 && !execTC.getCompleteTdFlag(locale)) {
                 Iterator<IParamNodePO> it = execTC.getNodeListIterator();
@@ -235,13 +239,15 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
                     }
                 }
                 if (!tmpFlag) {
-                    addMessage(toolTip, I18n.getString("TestDataDecorator.TDChildrenIncompl")); //$NON-NLS-1$
+                    addMessage(toolTip, 
+                            Messages.TestDataDecoratorTDChildrenIncompl);
                 }               
             }
             boolean atLeastOneEvData = false;
 
             if (!execTC.getSumSpecTcFlag()) {
-                addMessage(toolTip, I18n.getString("TestDataDecorator.SpecTcChildrenMissing")); //$NON-NLS-1$
+                addMessage(toolTip, 
+                        Messages.TestDataDecoratorSpecTcChildrenMissing);
             }
             
             for (Object obj : execTC.getSpecTestCase()
@@ -249,7 +255,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
 
                 IEventExecTestCasePO ev = (IEventExecTestCasePO)obj;
                 if (!ev.getSumTdFlag(locale) && !atLeastOneEvData) {
-                    addMessage(toolTip, I18n.getString("TestDataDecorator.TDEvIncompl")); //$NON-NLS-1$
+                    addMessage(toolTip, Messages.TestDataDecoratorTDEvIncompl);
                     atLeastOneEvData = true;
                 }
             }
@@ -282,12 +288,10 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
         
         if (!overWrittenName
             && !cap.getCompleteOMFlag(aut)) {
-            addMessage(toolTip, 
-                I18n.getString("TestDataDecorator.OMInStepIncompl")); //$NON-NLS-1$
+            addMessage(toolTip, Messages.TestDataDecoratorOMInStepIncompl);
         }
         if (!cap.getCompleteTdFlag(locale)) {
-            addMessage(toolTip, 
-                I18n.getString("TestDataDecorator.TDInStepIncompl")); //$NON-NLS-1$
+            addMessage(toolTip, Messages.TestDataDecoratorTDInStepIncompl);
         }
         return toolTip; 
     }
