@@ -12,7 +12,7 @@
 	<property name="build.dir" value="build"/>
 	<property name="dist.dir" value="dist"/>
 	<property name="tools.lib" value="../org.eclipse.jubula.tools/lib"/>
-	<property name="orbit.libs" value="../org.eclipse.jubula.rc.orbit"/>
+	<property name="orbit.libs" value="../org.eclipse.jubula.rc.common.orbit"/>
 
 	<path id="classpath-common">
 		<fileset dir="${tools.lib}">

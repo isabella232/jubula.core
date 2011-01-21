@@ -22,7 +22,7 @@
 	<property name="build.lib" location="app/lib" />
 	<property name="java.dir" value="src" />
 	<property name="utils.dir" value="resources" />
-	<property name="apache.lib" value="../org.eclipse.jubula.rc.orbit" />
+	<property name="apache.lib" value="../org.eclipse.jubula.rc.common.orbit" />
 	<property name="GDTools" value="../org.eclipse.jubula.tools" />
 
 	<!-- 

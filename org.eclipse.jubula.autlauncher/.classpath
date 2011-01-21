@@ -6,6 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.tools"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.rc.common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.autagent"/>
-	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.orbit/org.apache.commons.cli_1.2.0.v201011021000.jar"/>
+	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.common.orbit/org.apache.commons.cli_1.2.0.v201011021000.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

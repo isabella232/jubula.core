@@ -6,6 +6,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.rc.common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.communication"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.rc.swt"/>
-	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.orbit/org.apache.commons.beanutils_1.7.0.v200902170505.jar"/>
+	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.common.orbit/org.apache.commons.beanutils_1.7.0.v200902170505.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
