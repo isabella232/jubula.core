@@ -16,5 +16,5 @@ Export-Package: org.eclipse.jubula.communication,
  org.eclipse.jubula.communication.writer
 Require-Bundle: org.eclipse.jubula.tools;bundle-version="[0.9.0,1.0.0)";visibility:=reexport,
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)"
-Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Eclipse-BundleShape: jar
