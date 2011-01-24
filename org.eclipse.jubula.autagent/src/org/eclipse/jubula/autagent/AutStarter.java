@@ -330,7 +330,7 @@ public class AutStarter {
      */
     public void start() {
         int exitCode = 0;
-        String infoMessage = I18n.getString("GuiDancerServer.StartErrorText"); //$NON-NLS-1$
+        String infoMessage = I18n.getString("AUTAgent.StartErrorText"); //$NON-NLS-1$
         try {
             if (m_cmd.hasOption("h")) { //$NON-NLS-1$
                 printHelp();
@@ -339,7 +339,7 @@ public class AutStarter {
             boolean killDuplicateAuts = !m_cmd.hasOption("l");
             getAgent().setKillDuplicateAuts(killDuplicateAuts);
             int port = getPortNumber();
-            infoMessage = I18n.getString("GuiDancerServer.StartCommErrorText",  //$NON-NLS-1$
+            infoMessage = I18n.getString("AUTAgent.StartCommErrorText",  //$NON-NLS-1$
                     new Object[] {StringConstants.EMPTY + port});
             if (!m_cmd.hasOption(COMMANDLINE_OPTION_STOP)) {
                 initClientConnectionSocket(port);
@@ -348,7 +348,7 @@ public class AutStarter {
                 di.setPort(port);
                 m_agent.addPropertyChangeListener(AutAgent.PROP_NAME_AUTS, di);
                 if (m_cmd.hasOption("v") && !m_cmd.hasOption("q")) { //$NON-NLS-1$ //$NON-NLS-2$
-                    infoMessage = I18n.getString("GuiDancerServer.StartSuccessText") + //$NON-NLS-1$
+                    infoMessage = I18n.getString("AUTAgent.StartSuccessText") + //$NON-NLS-1$
                         getCommunicator().getLocalPort() + "."; //$NON-NLS-1$
                 } else {
                     infoMessage = StringConstants.EMPTY;
@@ -542,7 +542,7 @@ public class AutStarter {
             };
             t.start();
             JOptionPane.showMessageDialog(null, infoMessage
-                + I18n.getString("GDServer.dialogClose"), //$NON-NLS-1$
+                + I18n.getString("AUTAgent.dialogClose"), //$NON-NLS-1$
                 I18n.getString("Constants.DefaultTextValue"), //$NON-NLS-1$
                 JOptionPane.INFORMATION_MESSAGE);
         }
