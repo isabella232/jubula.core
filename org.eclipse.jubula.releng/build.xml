@@ -7,7 +7,7 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 
-<project name="org.eclipse.jubula" default="help" basedir=".">
+<project name="org.eclipse.jubula.releng" default="help" basedir=".">
 
 	<!-- Whether to compile with debug informations or not. 
 		Set to "on" only for testing purposes,  
