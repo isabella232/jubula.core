@@ -10,14 +10,10 @@
 	<property file="build.properties" />
 
 	<target name="build">
-		<property name="baseLocation" value="${eclipse.home}" />
-
-		<property name="builder" value="${basedir}" />
-		<property name="buildDirectory" value="${basedir}/buildDirectory" />
-		<property name="pluginPath" value="${basedir}/.." />
+		<property name="buildDirectory" value="${writableBuildRoot}/buildDirectory" />
 		<property name="buildTempFolder" value="${buildDirectory}" />
 		
-		<property name="buildArtifactsFolder" value="${basedir}/artifacts" />
+		<property name="buildArtifactsFolder" value="${buildDirectory}/artifacts" />
 		
 		<delete dir="${buildArtifactsFolder}" />
 		
@@ -31,19 +27,19 @@
 			<arg value="org.eclipse.ant.core.antRunner"/>
 			<arg value="-buildfile"/>
 			<arg value="${relengBaseBuilderDir}/plugins/org.eclipse.pde.build_3.5.0.v20090527-1800/scripts/build.xml"/>
+			<arg value="-DbuildDirectory=${buildDirectory}"/>
 		</exec>
 		
 		<!--
 		<arg value="-Dbase=${basedir}"/>
-		<arg value="-DbuildDirectory=${buildDirectory}"/>
 		<arg value="-Dbuilder=${basedir}"/>
 		<mkdir dir="${buildArtifactsFolder}" />
 		<move todir="${buildArtifactsFolder}">
 			<fileset dir="${buildDirectory}/${buildLabel}" includes="*.zip" />
 		</move>
-		 -->
 		
 		<delete dir="${buildTempFolder}" />
 		<delete dir="${basedir}/eclipse" />
+		 -->
 	</target>
 </project>
