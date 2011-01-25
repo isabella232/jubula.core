@@ -28,11 +28,11 @@
 			<arg value="-buildfile"/>
 			<arg value="${relengBaseBuilderDir}/plugins/org.eclipse.pde.build_3.5.0.v20090527-1800/scripts/build.xml"/>
 			<arg value="-DbuildDirectory=${buildDirectory}"/>
+			<arg value="-Dbuilder=${basedir}"/>
 		</exec>
 		
 		<!--
 		<arg value="-Dbase=${basedir}"/>
-		<arg value="-Dbuilder=${basedir}"/>
 		<mkdir dir="${buildArtifactsFolder}" />
 		<move todir="${buildArtifactsFolder}">
 			<fileset dir="${buildDirectory}/${buildLabel}" includes="*.zip" />
