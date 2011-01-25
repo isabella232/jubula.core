@@ -35,6 +35,7 @@ import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.xml.businessmodell.ParamValueSet;
 import org.eclipse.jubula.tools.xml.businessmodell.ValueSetElement;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -96,22 +97,26 @@ public class TestDataControlFactory {
             if (!values.isEmpty()) {
                 return new CheckedParamText(parent, style, cap, paramDesc,
                         createParamValueValidator(TestDataConstants.COMBO,
-                                false,
+                                param.getValueSet().isCombinable(),
                                 values.toArray(new String[values.size()])));
             }
         }
         if (paramObj instanceof IParamNodePO) {
             IParamNodePO paramNode = (IParamNodePO)paramObj;
-            String[] valuesSet = ParamTextPropertyDescriptor.getValuesSet(
-                    paramNode, paramDesc.getUniqueId());
-
+            ParamValueSet valueSet = 
+                ParamTextPropertyDescriptor.getValuesSet(
+                        paramNode, paramDesc.getUniqueId());
+            String [] values = ParamTextPropertyDescriptor.getValues(valueSet);
             if (TestDataConstants.BOOLEAN.equals(paramDesc.getType())) {
-                valuesSet = BOOLEAN_VALUES;
+                values = BOOLEAN_VALUES;
             }
 
             return new CheckedParamTextContentAssisted(parent, style,
                     paramNode, paramDesc, createParamValueValidator(
-                            paramDesc.getType(), false, valuesSet), valuesSet);
+                            paramDesc.getType(), 
+                            valueSet != null ? valueSet.isCombinable() : false, 
+                            values), 
+                    values);
         }
 
         if (paramObj instanceof ITestDataCubePO) {

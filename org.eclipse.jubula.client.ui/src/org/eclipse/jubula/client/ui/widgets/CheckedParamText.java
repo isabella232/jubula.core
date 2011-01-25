@@ -81,6 +81,7 @@ public class CheckedParamText extends CheckedText {
                         getWorkingLanguage(), getDesc(), m_dataValidator);
                 state = setState((Text)e.getSource(), conv);
             }
+
             return state;
         }
         

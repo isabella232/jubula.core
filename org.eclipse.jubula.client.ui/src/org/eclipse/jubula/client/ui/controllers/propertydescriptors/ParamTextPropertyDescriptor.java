@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers.propertydescriptors;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +26,7 @@ import org.eclipse.jubula.client.ui.controllers.propertysources.AbstractGuiNodeP
 import org.eclipse.jubula.client.ui.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.widgets.ParamProposalProvider;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.xml.businessmodell.ParamValueSet;
 import org.eclipse.jubula.tools.xml.businessmodell.ValueSetElement;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
@@ -62,30 +63,46 @@ public class ParamTextPropertyDescriptor extends TextPropertyDescriptor
     }
 
     /**
-     * Find value sets for paarameters in reused test cases
-     * @param paramNode the Node to to check for values
-     * @param paramGUID the GUID of the parameter
-     * @return an array of values for this type of parameter which will be
-     * empty if no such
-     * set exists
+     * 
+     * @param valueSet Source for returned values. May be <code>null</code>.
+     * @return an array of values contained in <code>valueSet</code>, which is 
+     *         an empty array if <code>valueSet</code> is <code>null</code> or 
+     *         empty.
      */
-    public static String[] getValuesSet(IParamNodePO paramNode, 
+    public static String[] getValues(ParamValueSet valueSet) {
+        if (valueSet == null) {
+            return new String [0];
+        }
+        List<String> values = new LinkedList<String>();
+        Iterator<ValueSetElement> valueSetIter = valueSet.iterator();
+        while (valueSetIter.hasNext()) {
+            values.add(valueSetIter.next().getValue());
+        }
+
+        return values.toArray(new String[values.size()]);
+    }
+
+    /**
+     * 
+     * @param paramNode Node at which the Parameter is being examined.
+     * @param paramGUID GUID of the Parameter to examine.
+     * @return the value set for the given parameters. Returns 
+     *         <code>null</code> if the parameters do not represent 
+     *         <em>exactly</em> one value set.
+     */
+    public static ParamValueSet getValuesSet(IParamNodePO paramNode, 
             String paramGUID) {
         Set<Param> values = 
             TestCaseParamBP
                 .getValuesForParameter(paramNode, paramGUID, WorkingLanguageBP
                         .getInstance().getWorkingLanguage());
         if (values.size() != 1) {
-            return new String[0];
+            return null;
         }
-        List<String> strValues = new ArrayList<String>();
+
         Param p = values.iterator().next();
-    
-        for (Iterator it = p.valueSetIterator(); it.hasNext();) {
-            ValueSetElement vs = (ValueSetElement)it.next();
-            strValues.add(vs.getValue());            
-        }
-        return strValues.toArray(new String[strValues.size()]);
+
+        return p.getValueSet();
     }
 
     /**
@@ -96,8 +113,8 @@ public class ParamTextPropertyDescriptor extends TextPropertyDescriptor
             (AbstractParamValueController)getId();
         return new ContentAssistCellEditor(
                 parent, new ParamProposalProvider(
-                        getValuesSet(contr.getParamNode(), 
-                                contr.getParamDesc().getUniqueId()), 
+                        getValues(getValuesSet(contr.getParamNode(), 
+                                contr.getParamDesc().getUniqueId())), 
                         contr.getParamNode(), contr.getParamDesc()),
                 new CheckedParamText.StringTextValidator(
                         contr.getParamNode(), contr.getParamDesc(), 

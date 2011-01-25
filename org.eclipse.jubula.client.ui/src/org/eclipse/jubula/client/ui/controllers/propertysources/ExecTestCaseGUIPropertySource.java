@@ -39,6 +39,7 @@ import org.eclipse.jubula.client.ui.validator.TestDataCubeReferenceValidator;
 import org.eclipse.jubula.client.ui.widgets.CheckedText.IValidator;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.xml.businessmodell.ParamValueSet;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -201,14 +202,16 @@ public class ExecTestCaseGUIPropertySource extends
                 m_paramPropDescList.add(propDes);
                 
                 // Parameter value
-                
+                ParamValueSet valueSet = 
+                    ParamTextPropertyDescriptor.getValuesSet(
+                            paramNodePO, paramDescr.getUniqueId());
                 propDes = TestDataControlFactory.createValuePropertyDescriptor(
                         new ParameterValueController(this, 
                                 paramDescr, activeParamNameMapper), 
                                 P_ELEMENT_DISPLAY_PARAMETERVALUE, 
-                                ParamTextPropertyDescriptor.getValuesSet(
-                                        paramNodePO, paramDescr.getUniqueId()),
-                                        false);
+                                ParamTextPropertyDescriptor.getValues(valueSet),
+                                valueSet != null 
+                                    ? valueSet.isCombinable() : false);
                 propDes.setCategory(P_PARAMETER_CAT);
                 propDes.setLabelProvider(
                         new ParameterValueLabelProvider(INCOMPL_DATA_IMAGE));
