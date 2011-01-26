@@ -14,7 +14,8 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * 
@@ -42,7 +43,6 @@ public class PortCellEditorValidator implements ICellEditorValidator {
     }
     
     /**
-     * 
      * {@inheritDoc}
      */
     public String isValid(Object value) {
@@ -50,7 +50,7 @@ public class PortCellEditorValidator implements ICellEditorValidator {
             int portValue = Integer.parseInt(ObjectUtils.toString(value));
             if (portValue < Constants.MIN_PORT_NUMBER 
                     || portValue > Constants.MAX_PORT_NUMBER) {
-                return I18n.getString("Validation.Port.error.invalidPortNumber", //$NON-NLS-1$
+                return NLS.bind(Messages.ValidationPortErrorInvalidPortNumber,
                         m_i18nArguments);
             }
             return null;
@@ -58,7 +58,7 @@ public class PortCellEditorValidator implements ICellEditorValidator {
             // Fall through
         }
         
-        return I18n.getString("Validation.Port.error.invalidPortNumber", //$NON-NLS-1$
+        return NLS.bind(Messages.ValidationPortErrorInvalidPortNumber,
                 m_i18nArguments);
     }
 

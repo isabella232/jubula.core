@@ -11,10 +11,7 @@
 package org.eclipse.jubula.client.ui.businessprocess;
 
 import java.io.File;
-import java.util.Enumeration;
 
-import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -58,6 +55,12 @@ public final class ShowClientLogBP extends AbstractActionBP {
      *         null is returned.
      */
     public File getClientLogFile() {
+        Utils.createMessageDialog(MessageIDs.I_FILE_LOGGING_NOT_ENABLED,
+                new String[] {"Jubula"}, null); //$NON-NLS-1$
+        return null;
+        /*
+         * FIXME: the code has to be replaced for slf4j
+         * 
         final File clientLogFile;
         
         // Get location of log file
@@ -81,6 +84,7 @@ public final class ShowClientLogBP extends AbstractActionBP {
         }
             
         return clientLogFile;
+        */
     }
 
 }

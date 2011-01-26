@@ -15,12 +15,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Enumeration;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.FileAppender;
-import org.apache.log4j.Logger;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendServerLogMessage;
@@ -48,15 +46,16 @@ public class SendServerLogCommand implements ICommand {
 
         ServerLogResponseMessage response = new ServerLogResponseMessage();
         // Get location of log file
-        Enumeration appenders = Logger.getRootLogger().getAllAppenders();
-        FileAppender enumFileAppender = null;
-        Object enumElement = null;
-        while (appenders.hasMoreElements() && enumFileAppender == null) {
-            enumElement = appenders.nextElement();
-            if (enumElement instanceof FileAppender) {
-                enumFileAppender = (FileAppender)enumElement;
-            }
-        }
+        FileAppender enumFileAppender = null; 
+        // FIXME: replace with code for slf4j
+//        Enumeration appenders = Logger.getRootLogger().getAllAppenders();
+//        Object enumElement = null;
+//        while (appenders.hasMoreElements() && enumFileAppender == null) {
+//            enumElement = appenders.nextElement();
+//            if (enumElement instanceof FileAppender) {
+//                enumFileAppender = (FileAppender)enumElement;
+//            }
+//        }
         
         if (enumFileAppender != null) {
             // Send log

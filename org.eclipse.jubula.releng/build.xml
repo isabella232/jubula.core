@@ -45,7 +45,10 @@
 	</target>
 
 	<target name="release.j.feature.client">
-		<ant dir="${j.b.feature.client}" antfile="buildFeature.xml" target="build" inheritAll="false">
+		<ant dir="${j.b.feature.client}" 
+			 antfile="buildFeature.xml" 
+			 target="build" 
+		     inheritAll="false">
 			<property name="javacDebugInfo" value="${javac.debug}" />
 		</ant>
 	</target>
