@@ -83,7 +83,7 @@
 
 		<!-- move features to the "features" directory -->
 		<move todir="${featureFolder}/org.eclipse.jubula.feature.client">
-			<fileset dir="${buildDirectory}/../org.eclipse.jubula.feature.client" />
+			<fileset dir="${buildDirectory}/../../org.eclipse.jubula.feature.client" />
 		</move>
 		
 		<!-- cleanup old base location directory
