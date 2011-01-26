@@ -19,7 +19,7 @@
 		
 		<!-- <ant antfile="${eclipse.pdebuild.scripts}/build.xml" /> -->
 		
-		<exec executable="java" dir="${basedir}">
+		<exec executable="java" dir="${basedir}" failonerror="true">
 			<arg value="-jar"/>
 			<arg value="${relengBaseBuilderDir}/plugins/org.eclipse.equinox.launcher.jar" />
 			<arg value="-clean"/>
