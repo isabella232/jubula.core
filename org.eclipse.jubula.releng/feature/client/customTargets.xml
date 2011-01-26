@@ -83,10 +83,10 @@
 
 		<!-- move features to the "features" directory -->
 		<move todir="${featureFolder}/org.eclipse.jubula.feature.client">
-			<fileset dir="${pluginsFolder}/org.eclipse.jubula.feature.client" />
+			<fileset dir="${buildDirectory}/../../org.eclipse.jubula.feature.client" />
 		</move>
 		
-		<!-- cleanup old base location directory -->
+		<!-- cleanup old base location directory
 		<delete dir="${baseLocation}" />
 		<mkdir dir="${baseLocation}/plugins" />
 		<property name="targetPlatformLocation" value="${pluginsFolder}/org.eclipse.jubula.project.configuration/target/platform" />
@@ -96,6 +96,7 @@
 			<fileset dir="${targetPlatformLocation}/mylyn/plugins" />
 			<fileset dir="${targetPlatformLocation}/persistence/plugins" />
 		</move>
+		 -->
 	</target>
 
 	<!-- ===================================================================== -->
