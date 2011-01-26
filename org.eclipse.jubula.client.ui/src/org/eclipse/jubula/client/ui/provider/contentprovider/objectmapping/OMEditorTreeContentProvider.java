@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -188,6 +189,7 @@ public class OMEditorTreeContentProvider extends
     public void inputChanged(final Viewer viewer, Object oldInput, 
             final Object newInput) {
         Validate.isTrue(viewer instanceof TreeViewer);
+        m_childToParentMap.clear();
         if (m_modelListener != null) {
             DataEventDispatcher.getInstance()
                 .removeDataChangedListener(m_modelListener);
@@ -204,7 +206,13 @@ public class OMEditorTreeContentProvider extends
                         StructuredViewer structuredViewer = 
                             (StructuredViewer)viewer;
                         if (dataState == DataState.StructureModified) {
-                            if (newInput.equals(po)) {
+                            boolean objectsAreEqual = 
+                                structuredViewer.getComparer() != null 
+                                    ? structuredViewer.getComparer()
+                                            .equals(newInput, po) 
+                                    : newInput.equals(po);
+                            if (objectsAreEqual || po instanceof IAUTMainPO 
+                                    || po instanceof IObjectMappingPO) {
                                 structuredViewer.refresh();
                             } else {
                                 structuredViewer.refresh(po);

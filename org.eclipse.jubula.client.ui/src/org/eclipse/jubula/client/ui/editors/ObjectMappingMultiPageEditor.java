@@ -29,6 +29,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -114,7 +115,6 @@ import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.ObjectMappingEditorPatternFilter;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTableContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.ObjectMappingRow;
@@ -1052,13 +1052,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 new ObjectMappingEditorPatternFilter(), true);
         m_treeViewer = ft.getViewer();
         setTreeFilterText(ft.getFilterControl());
-        m_treeViewer.setContentProvider(
-                new OMEditorTreeContentProvider(getCompMapper()));
-        m_treeViewer.setLabelProvider(
-                new DecoratingCellLabelProvider(
-                    new OMEditorTreeLabelProvider(getCompMapper()), 
-                        Plugin.getDefault().getWorkbench().getDecoratorManager()
-                            .getLabelDecorator()));
+        setProviders(m_treeViewer, getCompMapper());
         m_treeViewer.setUseHashlookup(true);
         m_treeViewer.setSorter(new ObjectMappingTreeSorter());
         m_treeViewer.setComparer(new PersistentObjectComparer());
@@ -1201,13 +1195,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         
         viewer.getTree().setLayoutData(
                 GridDataFactory.fillDefaults().grab(true, true).create());
-        viewer.setContentProvider(
-                new OMEditorTreeContentProvider(getCompMapper()));
-        viewer.setLabelProvider(
-            new DecoratingCellLabelProvider(
-                    new OMEditorTreeLabelProvider(getCompMapper()), 
-                        Plugin.getDefault().getWorkbench().getDecoratorManager()
-                            .getLabelDecorator()));
+        setProviders(viewer, getCompMapper());
         viewer.setUseHashlookup(true);
         viewer.setSorter(new ObjectMappingTreeSorter());
         viewer.setComparer(new PersistentObjectComparer());
@@ -1816,14 +1804,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     public void reOpenEditor(IPersistentObject obj) throws PMException {
         getEditorHelper().setDirty(false);
         Object [] expandedElements = m_treeViewer.getExpandedElements();
-        Object [] expandedCompNames = 
-            m_compNameTreeViewer.getExpandedElements();
-        Object [] expandedUiElements = 
-            m_uiElementTreeViewer.getExpandedElements();
-        Object [] expandedMappedComponents = 
-            m_mappedComponentTreeViewer.getExpandedElements();
-        
-        getEditorHelper().getEditSupport().reloadEditSession();
+        getEditorHelper().getEditSupport().close();
         PersistableEditorInput input = new PersistableEditorInput(obj);
         try {
             init(getEditorSite(), input);
@@ -1838,57 +1819,55 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 new ComponentNameTreeViewerUpdater(m_treeViewer, 
                         getEditorHelper().getEditSupport().getCompMapper()
                             .getCompNameCache());
-            m_treeViewer.setContentProvider(
-                    new OMEditorTreeContentProvider(getCompMapper()));
-            m_treeViewer.setLabelProvider(
-                    new DecoratingCellLabelProvider(
-                    new OMEditorTreeLabelProvider(getCompMapper()), 
-                        Plugin.getDefault().getWorkbench().getDecoratorManager()
-                            .getLabelDecorator()));
+            setProviders(m_treeViewer, getCompMapper());
             m_treeViewer.setInput(getAut().getObjMap());
+            // Clearing the selection seems to help prevent the behavior 
+            // noted in 334269
+            m_treeViewer.setSelection(StructuredSelection.EMPTY);
             m_tableViewer.setInput(getAut().getObjMap());
             m_treeViewer.setExpandedElements(expandedElements);
             m_treeViewer.expandToLevel(2);
-            
-            m_compNameTreeViewer.setContentProvider(
-                    new OMEditorTreeContentProvider(getCompMapper()));
-            m_compNameTreeViewer.setLabelProvider(
-                    new DecoratingCellLabelProvider(
-                    new OMEditorTreeLabelProvider(getCompMapper()), 
-                        Plugin.getDefault().getWorkbench().getDecoratorManager()
-                            .getLabelDecorator()));
-            m_compNameTreeViewer.setInput(
-                    getAut().getObjMap().getUnmappedLogicalCategory());
-            m_compNameTreeViewer.setExpandedElements(expandedCompNames);
 
-            m_uiElementTreeViewer.setContentProvider(
-                    new OMEditorTreeContentProvider(getCompMapper()));
-            m_uiElementTreeViewer.setLabelProvider(
-                    new DecoratingCellLabelProvider(
-                    new OMEditorTreeLabelProvider(getCompMapper()), 
-                        Plugin.getDefault().getWorkbench().getDecoratorManager()
-                            .getLabelDecorator()));
-            m_uiElementTreeViewer.setInput(
+            Map<AbstractTreeViewer, IObjectMappingCategoryPO> viewerToInput = 
+                new HashMap<AbstractTreeViewer, IObjectMappingCategoryPO>();
+            viewerToInput.put(m_compNameTreeViewer, 
+                    getAut().getObjMap().getUnmappedLogicalCategory());
+            viewerToInput.put(m_uiElementTreeViewer, 
                     getAut().getObjMap().getUnmappedTechnicalCategory());
-            m_uiElementTreeViewer.setExpandedElements(expandedUiElements);
-            
-            m_mappedComponentTreeViewer.setContentProvider(
-                    new OMEditorTreeContentProvider(getCompMapper()));
-            m_mappedComponentTreeViewer.setLabelProvider(
-                    new DecoratingCellLabelProvider(
-                    new OMEditorTreeLabelProvider(getCompMapper()), 
-                        Plugin.getDefault().getWorkbench().getDecoratorManager()
-                            .getLabelDecorator()));
-            m_mappedComponentTreeViewer.setInput(
+            viewerToInput.put(m_mappedComponentTreeViewer, 
                     getAut().getObjMap().getMappedCategory());
-            m_mappedComponentTreeViewer.setExpandedElements(
-                    expandedMappedComponents);
+
+            for (AbstractTreeViewer splitViewer : viewerToInput.keySet()) {
+                Object [] expandedSplitViewerElements = 
+                    splitViewer.getExpandedElements();
+                setProviders(splitViewer, getCompMapper());
+                splitViewer.setInput(viewerToInput.get(splitViewer));
+                splitViewer.setExpandedElements(expandedSplitViewerElements);
+                // Clearing the selection seems to help prevent the behavior 
+                // noted in 334269
+                splitViewer.setSelection(StructuredSelection.EMPTY);
+            }
         } catch (PartInitException e) {
             getSite().getPage().closeEditor(this, false);
         }
         m_mappingConfigComponent.setInput(getAut().getObjMap());
     }
 
+    /**
+     * Assigns new (Object Mapping related) content and label providers to 
+     * the given viewer.
+     * 
+     * @param viewer The viewer to receive new providers.
+     * @param compNameMapper The mapper to use to initialize the providers.
+     */
+    private static void setProviders(AbstractTreeViewer viewer, 
+            IWritableComponentNameMapper compNameMapper) {
+
+        viewer.setContentProvider(
+                new OMEditorTreeContentProvider(compNameMapper));
+        viewer.setLabelProvider(new OMEditorTreeLabelProvider(compNameMapper));
+    }
+    
     /**
      * {@inheritDoc}
      */

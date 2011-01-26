@@ -179,9 +179,6 @@ public class OMEditorBP {
 
         IObjectMappingCategoryPO parent = toDelete.getCategory();
         parent.removeAssociation(toDelete);
-        // Delete empty association from session
-        getEditor().getEditorHelper().getEditSupport().getSession().remove(
-                toDelete);
         DataEventDispatcher.getInstance().fireDataChangedListener(
                 parent, DataState.StructureModified, 
                 UpdateState.onlyInEditor);

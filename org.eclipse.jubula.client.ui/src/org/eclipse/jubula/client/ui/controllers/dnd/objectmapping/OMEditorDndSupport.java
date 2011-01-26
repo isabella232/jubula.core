@@ -151,8 +151,6 @@ public class OMEditorDndSupport {
                 // Association has no logical names and no technical
                 // name. It should be deleted.
                 fromCategory.removeAssociation(assoc);
-                editor.getEditorHelper().getEditSupport()
-                    .getSession().remove(assoc);
             }
             DataEventDispatcher.getInstance()
                 .fireDataChangedListener(

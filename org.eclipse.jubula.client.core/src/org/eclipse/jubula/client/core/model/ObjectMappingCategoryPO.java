@@ -248,15 +248,13 @@ class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
     }
 
     /**
-     * Note: Do not use orphanRemoval = "true" because you will receive a
-     * "deleted object would be re-saved by cascade" error when moving an
-     * association from one category to another.
      * 
      * @return the associations belonging to this category.
      */
     @OneToMany(cascade = CascadeType.ALL,
                targetEntity = ObjectMappingAssoziationPO.class,
-               fetch = FetchType.EAGER)
+               fetch = FetchType.EAGER,
+               orphanRemoval = true)
     @JoinColumn(name = "FK_CATEGORY")
     @OrderColumn(name = "IDX")
     private List<IObjectMappingAssoziationPO> getHbmAssociationList() {
