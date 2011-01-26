@@ -48,7 +48,6 @@
 			sourcepath="../../../org.eclipse.jubula.tools/src:
 			../../../org.eclipse.jubula.rc.swing/src:
 			../../../org.eclipse.jubula.rc.common/src:
-			../../../org.eclipse.jubula.tools/resources:
 			../../../org.eclipse.jubula.communication/src" 
 			splitindex="true" 
 			use="true" 

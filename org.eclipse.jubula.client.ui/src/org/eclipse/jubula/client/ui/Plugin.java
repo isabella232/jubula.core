@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -114,6 +115,11 @@ import org.eclipse.ui.part.IContributedContentsView;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.joran.JoranConfigurator;
+import ch.qos.logback.core.joran.spi.JoranException;
 
 
 /**
@@ -1259,6 +1265,21 @@ public class Plugin extends AbstractUIPlugin
             }
         });
 
+        LoggerContext lc = (LoggerContext)LoggerFactory.getILoggerFactory();
+        try {
+            JoranConfigurator configurator = new JoranConfigurator();
+            configurator.setContext(lc);
+            // the context was probably already configured by default
+            // configuration
+            // rules
+            lc.reset();
+            InputStream is = context.getBundle().getResource("logback.xml") //$NON-NLS-1$
+                    .openStream();
+            configurator.doConfigure(is);
+        } catch (JoranException je) {
+            // no logging if logger fails :-(
+        }
+        
         new Thread(new Runnable() {
             public void run() {
                 // init (java)available languages
