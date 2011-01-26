@@ -29,11 +29,11 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.DatabaseConnectionDialog;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.DatabaseConnection;
 import org.eclipse.jubula.client.ui.model.H2ConnectionInfo;
 import org.eclipse.jubula.client.ui.model.OracleConnectionInfo;
 import org.eclipse.jubula.client.ui.widgets.JBText;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -143,7 +143,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
                     }
                 });
         editButton.setText(
-                I18n.getString("DatabaseConnectionPreferencePage.EditButton.label")); //$NON-NLS-1$
+                Messages.DatabaseConnectionPreferencePageEditButtonLabel);
         editButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent event) {
@@ -178,8 +178,8 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
                         throw new RuntimeException(e);
                     }
                 } else if (selectedObj != null) {
-                    throw new RuntimeException(I18n.getString(
-                            "DatabaseConnectionPreferencePage.Error.selectedObjectIsOfIncorrectType")); //$NON-NLS-1$
+                    throw new RuntimeException(Messages.
+                        DatabaseConnectionPrefPageSelecObjIsOfIncorrectType);
                 }
 
             }
@@ -210,7 +210,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
                 }
             };
         databaseConnectionWizard.setWindowTitle(
-                I18n.getString("DatabaseConnectionDialog.title")); //$NON-NLS-1$
+                Messages.DatabaseConnectionDialogTitle);
         dialog.setHelpAvailable(true);
         
         
@@ -253,7 +253,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
                     }
                 });
         removeButton.setText(
-                I18n.getString("DatabaseConnectionPreferencePage.RemoveButton.label")); //$NON-NLS-1$
+                Messages.DatabaseConnectionPreferencePageRemoveButtonLabel);
         removeButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -273,7 +273,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
             final IObservableList existingConnections) {
         Button addButton = new Button(parent, SWT.NONE);
         addButton.setText(
-                I18n.getString("DatabaseConnectionPreferencePage.AddButton.label")); //$NON-NLS-1$
+                Messages.DatabaseConnectionPreferencePageAddButtonLabel);
         addButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent event) {

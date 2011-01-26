@@ -39,7 +39,6 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ServerManager;
 import org.eclipse.jubula.client.ui.validator.cell.PortCellEditorValidator;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -104,7 +103,7 @@ public class AutAgentPreferencePage extends PreferencePage
             final TextCellEditor editor = 
                 new TextCellEditor((Composite)getViewer().getControl());
             editor.setValidator(new PortCellEditorValidator(
-                    I18n.getString("AutAgentPreferencePage.columnHeader.port"))); //$NON-NLS-1$
+                    Messages.AutAgentPreferencePageColumnHeaderPort));
             editor.addListener(new ICellEditorListener() {
                 public void applyEditorValue() {
                     AutAgentPreferencePage.this.setErrorMessage(null);

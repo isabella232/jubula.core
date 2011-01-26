@@ -11,10 +11,10 @@
 package org.eclipse.jubula.client.ui.dialogs;
 
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.DatabaseConnection;
 import org.eclipse.jubula.client.ui.model.H2ConnectionInfo;
 import org.eclipse.jubula.client.ui.wizards.pages.DatabaseConnectionWizardPage;
-import org.eclipse.jubula.tools.i18n.I18n;
 
 
 /**
@@ -38,7 +38,7 @@ public class DatabaseConnectionDialog extends Wizard {
      */
     public DatabaseConnectionDialog() {
         this(new DatabaseConnection(
-                I18n.getString("DatabaseConnectionDialog.defaultName"),  //$NON-NLS-1$
+                Messages.DatabaseConnectionDialogDefaultName,
                 new H2ConnectionInfo()));
     }
 
