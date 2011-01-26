@@ -74,9 +74,16 @@
 		<delete dir="${buildDirectory}" />
 		<mkdir dir="${buildDirectory}" />
 
+		<!-- manually retrieve the git resources -->
+		<exec executable="git" dir="${buildDirectory}">
+			<arg value="clone" />
+			<arg value="${gitRepositoryURL}" />
+			<arg value="${repCloneFolder}" />
+		</exec>
+
 		<!-- move features to the "features" directory -->
 		<move todir="${featureFolder}/org.eclipse.jubula.feature.client">
-			<fileset dir="${buildDirectory}/../../../org.eclipse.jubula.feature.client" />
+			<fileset dir="${repCloneFolder}/org.eclipse.jubula.feature.client" />
 		</move>
 		
 		<!-- cleanup old base location directory
