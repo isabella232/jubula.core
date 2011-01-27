@@ -41,11 +41,9 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IDocAttributeDescriptionPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IProjectNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
@@ -1259,21 +1257,9 @@ public class ProjectPM extends PersistenceManager {
      * 
      */
     private static void deleteProjectIndependentDBObjects(EntityManager s,
-        IProjectPO p) throws PMException, ProjectDeletedException {
+            IProjectPO p) throws PMException, ProjectDeletedException {
         UsedToolkitBP.getInstance().deleteToolkitsFromDB(s, p.getId(), false);
         ParamNamePM.deleteParamNames(s, p.getId(), false);
-
-        // Delete associations separately because they can't use the
-        // "delete-orphan" mapping property
-        for (IAUTMainPO aut : p.getAutMainList()) {
-            if (aut.getObjMap() != null) {
-                for (IObjectMappingAssoziationPO assoc 
-                        : aut.getObjMap().getMappings()) {
-                    s.remove(assoc);
-                }
-            }
-        }
-        
     }
 
     /**
