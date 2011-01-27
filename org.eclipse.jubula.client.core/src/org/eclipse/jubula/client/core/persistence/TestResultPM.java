@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
@@ -85,6 +86,7 @@ public class TestResultPM {
                 Hibernator.instance().getTransaction(session);
             
             executeDeleteTestresultOfSummary(session, resultId);
+            deleteMonitoringReports(session, resultId);
             
             Hibernator.instance().commitTransaction(session, tx);
         } catch (PMException e) {
@@ -97,6 +99,22 @@ public class TestResultPM {
             Hibernator.instance().dropSession(session);
         }
     }
+    
+    /**
+     * clean monitoring reports by age (days of existence)
+     * @param session The current session
+     * @param summaryId The summaryToDelete
+     */
+    public static void deleteMonitoringReports(
+            EntityManager session, Long summaryId) {
+    
+        ITestResultSummaryPO summary = (ITestResultSummaryPO)session.find(
+                PoMaker.getTestResultSummaryClass(), summaryId);
+        summary.setReport(null);
+        summary.setReportWritten(false); 
+               
+    }    
+    
     
     /**
      * execute delete-test-result of summary without commit
