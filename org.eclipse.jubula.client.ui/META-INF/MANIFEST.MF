@@ -4,7 +4,6 @@ Bundle-Name: Jubula UI (Incubation)
 Bundle-SymbolicName: org.eclipse.jubula.client.ui; singleton:=true
 Bundle-Version: 0.9.0.qualifier
 Bundle-ClassPath: ./icons/,
- resources/,
  org.eclipse.jubula.client.ui.jar
 Bundle-Activator: org.eclipse.jubula.client.ui.Plugin
 Bundle-Vendor: Eclipse Jubula
