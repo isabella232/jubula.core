@@ -22,8 +22,8 @@ import org.eclipse.jubula.client.ui.businessprocess.RemoteFileBrowserBP;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.widgets.AutConfigComponent;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -44,15 +44,14 @@ import org.eclipse.swt.widgets.Label;
 /**
  * @author BREDEX GmbH
  * @created Nov 4, 2009
- * 
- * 
  */
 public class HtmlAutConfigComponent extends AutConfigComponent {
-
     /** gui component */
     private JBText m_autUrlTextField;
     /** gui field for browser */
     private JBText m_browserTextField;
+    /** gui field for aut id attribute text field */
+    private JBText m_autIdAttibuteTextField;
     /** gui button for browser path */
     private Button m_browserPathButton;
     /** gui component */
@@ -109,12 +108,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                 basicAreaComposite, 2, "WebAutConfigComponent.Browser", //$NON-NLS-1$
                     Browser.class);
         m_browserCombo.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserCombo"); //$NON-NLS-1$
-
-        
     }
     
     /**
-     * 
      * {@inheritDoc}
      */
     protected void createAdvancedArea(Composite advancedAreaComposite) {
@@ -142,6 +138,14 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                     ActivationMethod.class);
         m_activationMethodCombo.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.activationMethodCombo"); //$NON-NLS-1$
         
+        // AUT ID Attribute property
+        Label autIdAttibuteLabel = UIComponentHelper.createLabel(
+                expertAreaComposite, "HTMLAutConfigComponent.AutIdAttibuteLabel"); //$NON-NLS-1$
+        autIdAttibuteLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autIdAttibuteLabel"); //$NON-NLS-1$
+        
+        m_autIdAttibuteTextField = UIComponentHelper.createTextField(
+                expertAreaComposite, 2);
+        m_autIdAttibuteTextField.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autIdAttibuteTextField"); //$NON-NLS-1$
     }
     
     /**
@@ -186,6 +190,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         
         getServerCombo().addModifyListener(modifyListener);
         m_autUrlTextField.addModifyListener(modifyListener);
+        m_autIdAttibuteTextField.addModifyListener(modifyListener);
         m_browserTextField.addModifyListener(modifyListener);
         m_browserPathButton.addSelectionListener(selectionListener);
         m_browserCombo.addSelectionListener(selectionListener);
@@ -203,6 +208,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         
         getServerCombo().removeModifyListener(modifyListener);
         m_autUrlTextField.removeModifyListener(modifyListener);
+        m_autIdAttibuteTextField.removeModifyListener(modifyListener);
         m_browserTextField.removeModifyListener(modifyListener);
         m_browserPathButton.removeSelectionListener(selectionListener);
         m_browserCombo.removeSelectionListener(selectionListener);
@@ -298,6 +304,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_activationMethodCombo.setEnabled(true);
         m_activationMethodCombo.setEnabled(true);
         m_autUrlTextField.setEnabled(true);
+        m_autIdAttibuteTextField.setEnabled(true);
         m_browserCombo.setEnabled(true);
         m_browserPathButton.setEnabled(true);
         m_browserTextField.setEnabled(true);
@@ -324,6 +331,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
             if (source.equals(m_autUrlTextField)) {
                 checked = true;
             } else if (source.equals(m_browserTextField)) {
+                checked = true;
+            } else if (source.equals(m_autIdAttibuteTextField)) {
                 checked = true;
             } else if (source.equals(getServerCombo())) {
                 checkLocalhostServer();
@@ -398,16 +407,20 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         
         return error;
     }
-
+    
     /**
      * @return <code>null</code> if the new value is valid. Otherwise, returns
      *         a status parameter indicating the cause of the problem.
      */
-    DialogStatusParameter modifyWebTagTextField() {
+    DialogStatusParameter modifyIDAttributeTextField() {
         DialogStatusParameter error = null;
-
-        putConfigValue(AutConfigConstants.WEB_ID_TAG, StringConstants.EMPTY);
-        
+        String idText = m_autIdAttibuteTextField.getText();
+        if (!idText.matches("[a-zA-Z]*")) { //$NON-NLS-1$
+            error = createErrorStatus(I18n
+                    .getString("HTMLAutConfigComponent.wrongAutIdAttribute")); //$NON-NLS-1$
+        } else {
+            putConfigValue(AutConfigConstants.WEB_ID_TAG, idText);
+        }
         return error;
     }
     
@@ -425,7 +438,6 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     }
     
     /**
-     * 
      * @return <code>null</code> if the new value is valid. Otherwise, returns
      *         a status parameter indicating the cause of the problem.
      */
@@ -478,6 +490,13 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         actMeth = actMeth.toUpperCase();
         m_activationMethodCombo.setSelectedObject(
             ActivationMethod.valueOf(actMeth));
+        if (!isDataNew(data)) {
+            String webIdTag = data.get(AutConfigConstants.WEB_ID_TAG);
+            if (webIdTag == null) {
+                webIdTag = StringConstants.EMPTY;
+            }
+            m_autIdAttibuteTextField.setText(webIdTag);
+        }
     }
 
     /**
@@ -514,7 +533,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     protected void checkAll(java.util.List<DialogStatusParameter> paramList) {
         super.checkAll(paramList);
         addError(paramList, modifyUrlTextField());
-        addError(paramList, modifyWebTagTextField());
+        addError(paramList, modifyIDAttributeTextField());
         addError(paramList, modifyBrowser());
         addError(paramList, modifyBrowserPathTextField());
 

@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.autagent.AutStarter;
@@ -30,9 +29,10 @@ import org.eclipse.jubula.tools.utils.EnvironmentUtils;
  * @created 01.09.2009
  */
 public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
-    
-    /** parameter map entry */
-    private static final String WEB_ID_TAG = "WEB_ID_TAG"; //$NON-NLS-1$
+    /**
+     * <code>DEFAULT_AUT_ID_ATTRIBUTE_NAME</code>
+     */
+    private static final String DEFAULT_AUT_ID_ATTRIBUTE_NAME = "id"; //$NON-NLS-1$
 
     /**
      * <code>LIB_DIR</code>
@@ -122,11 +122,14 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
         commands.add(String.valueOf(
                 parameters.get(AutConfigConstants.AUT_ID)));
         
-        final String idTag = (String)parameters.get(WEB_ID_TAG);
-        if (!StringUtils.isEmpty(idTag)) {
-            commands.add("/idtag:" + idTag); //$NON-NLS-1$
+        // additional parameters
+        Object idAttribute = parameters.get(AutConfigConstants.WEB_ID_TAG);
+        if (idAttribute != null) {
+            commands.add(String.valueOf(idAttribute));
+        } else {
+            commands.add(DEFAULT_AUT_ID_ATTRIBUTE_NAME);
         }
-        
+
         return commands.toArray(new String[commands.size()]);
     }
     
