@@ -284,8 +284,8 @@ public class Messages extends NLS {
     public static String OriginalObjectForCreatingOfWorkversionIsNull;
     public static String Param;
     public static String Parameter;
-    public static String parametersAreNotValid;
     public static String ParameterParsingErrorOccurred;
+    public static String parametersAreNotValid;
     public static String ParameterWithUniqueId;
     public static String ParentProjectDoesNotExistWithID;
     public static String ParentProjectId;
@@ -293,7 +293,13 @@ public class Messages extends NLS {
     public static String PluginConnectProgress;
     public static String PMExceptionWhileWritingUsedToolkitsInDB;
     public static String PrematureEndOfInput;
+    public static String ProblemIncompleteObjectMappingMarkerText;
+    public static String ProblemIncompleteObjectMappingMarkerTooltip;
+    public static String ProblemIncompleteTestDataMarkerText;
+    public static String ProblemIncompleteTestDataMarkerTooltip;
     public static String ProblemInstallingDBScheme;
+    public static String ProblemMissingReferencedTestCaseMarkerText;
+    public static String ProblemMissingReferencedTestCaseMarkerTooltip;
     public static String ProblemWithDatabaseSchemeConf;
     public static String ProblemWithInstallingDBScheme;
     public static String ProfessionalName;

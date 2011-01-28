@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -41,6 +42,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
 import org.eclipse.jubula.client.core.businessprocess.progress.InsertProgressListener;
 import org.eclipse.jubula.client.core.businessprocess.progress.RemoveProgressListener;
@@ -127,38 +130,11 @@ abstract class NodePO implements INodePO {
     private Map<IDocAttributeDescriptionPO, IDocAttributePO> m_docAttributes = 
         new HashMap/*<IDocAttributeDescriptionPO, IDocAttributePO>*/();
     
-    /**
-     * not to persist!
-     * <code>m_sumOmMap</code>manages the flags to summarize the information about  
-     * completeness of object mapping for all child nodes related to the
-     * associated AUT
-     * only relevant for ExecTestCasePO and TestSuitePO
-     * key: AUTMainPO, value: summarized OMFlag
-     */
-    private transient Map<IAUTMainPO, Boolean> m_sumOmMap = new HashMap();
-    
-    /** 
-     * not to persist!
-     * <code>m_sumTDMap</code>map to summarize the information about 
-     * completeness of testdata for all child nodes and the actual node itself
-     * for each supported language <br>
-     * key: supported languages, Type: string (string presentation of Locale)
-     * value: flag to summarize the completeness of testdata for the node 
-     * itself and its children
-     * only relevant for ExecTestCasePO and TestSuitePO
-     */
-    private transient Map<String, Boolean> m_sumTDMap = new HashMap();
-    
-    /** 
-     * not to persist!
-     * <code>m_sumSpecTcFlag</code>: Flag to summarize the information about 
-     * availablity of SpecTestCases for all child nodes and the actual node 
-     * itself <br>
-     */
-    private transient boolean m_sumSpecTcFlag = false;
-
     /** The timestamp */
     private long m_timestamp = 0;
+    
+    /** set of problems */
+    private Set<IProblem> m_problems = new HashSet<IProblem>();
 
     /**
      * constructor for a node with a pre-existing GUID
@@ -448,24 +424,20 @@ abstract class NodePO implements INodePO {
      * in map
      */
     public boolean getSumOMFlag(IAUTMainPO aut) {
-        if (m_sumOmMap == null) {
-            m_sumOmMap = new HashMap<IAUTMainPO, Boolean>();
-        }
-        if (aut != null) {
-            Boolean value = m_sumOmMap.get(aut);
-            return value != null ? value.booleanValue() : false;
-        }
-        return true;
+        IProblem p = ProblemFactory.createIncompleteObjectMappingProblem(aut);
+        return !m_problems.contains(p);
     }
     /**
      * @param aut aut, for which to set the sumOMFlag
      * @param sumOMFlag The sumOMFlag to set.
      */
     public void setSumOMFlag(IAUTMainPO aut, boolean sumOMFlag) {
-        if (m_sumOmMap == null) {
-            m_sumOmMap = new HashMap<IAUTMainPO, Boolean>();
+        IProblem p = ProblemFactory.createIncompleteObjectMappingProblem(aut);
+        if (sumOMFlag) {
+            m_problems.remove(p);
+        } else {
+            m_problems.add(p);
         }
-        m_sumOmMap.put(aut, Boolean.valueOf(sumOMFlag));
     }
     
     /**
@@ -474,14 +446,21 @@ abstract class NodePO implements INodePO {
      */
     @Transient
     public boolean getSumSpecTcFlag() {
-        return m_sumSpecTcFlag;
+        return !m_problems.contains(
+                ProblemFactory.createMissingReferencedSpecTestCasesProblem());
     }
     /**
      * 
      * {@inheritDoc}
      */
     public void setSumSpecTcFlag(boolean sumSpecTcFlag) {
-        m_sumSpecTcFlag = sumSpecTcFlag;
+        IProblem p = 
+            ProblemFactory.createMissingReferencedSpecTestCasesProblem();
+        if (sumSpecTcFlag) {
+            m_problems.remove(p);
+        } else {
+            m_problems.add(p);
+        }
     }
 
     /**
@@ -490,8 +469,8 @@ abstract class NodePO implements INodePO {
      * @return the state of sumTdFlag
      */
     public boolean getSumTdFlag(Locale loc) {
-        Boolean value = getSumTDMap().get(loc.toString());
-        return (value != null) ? value.booleanValue() : false;
+        return !m_problems.contains(
+                ProblemFactory.createIncompleteTestDataProblem(loc));
     }
     
     /**
@@ -500,7 +479,12 @@ abstract class NodePO implements INodePO {
      * @param flag the state of sumTdFlag to set
      */
     public void setSumTdFlag(Locale loc, boolean flag) {
-        getSumTDMap().put(loc.toString(), Boolean.valueOf(flag));
+        IProblem p = ProblemFactory.createIncompleteTestDataProblem(loc);
+        if (flag) {
+            m_problems.remove(p);
+        } else {
+            m_problems.add(p);
+        }
     }
     
     
@@ -591,17 +575,6 @@ abstract class NodePO implements INodePO {
         }
         INodePO o = (INodePO)obj;
         return getGuid().equals(o.getGuid());
-    }
-
-    /**
-     * @return Returns the sumTDMap.
-     */
-    @Transient
-    private Map<String, Boolean> getSumTDMap() {
-        if (m_sumTDMap == null) {
-            m_sumTDMap = new HashMap<String, Boolean>();
-        }
-        return m_sumTDMap;
     }
 
     /**
@@ -771,4 +744,19 @@ abstract class NodePO implements INodePO {
     public boolean isActive() {
         return m_isActive;
     }    
+    
+    /** {@inheritDoc} */
+    public boolean addProblem(IProblem problem) {
+        return m_problems.add(problem);
+    }
+    
+    /** {@inheritDoc} */
+    public boolean removeProblem(IProblem problem) {
+        return m_problems.remove(problem);
+    }
+    
+    /** {@inheritDoc} */
+    public Set<IProblem> getProblems() {
+        return Collections.unmodifiableSet(m_problems);
+    }
 }

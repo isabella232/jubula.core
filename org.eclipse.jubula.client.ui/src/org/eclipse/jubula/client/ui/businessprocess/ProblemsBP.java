@@ -26,6 +26,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -58,7 +61,6 @@ import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.constants.ProblemType;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.ReusedProjectGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -370,20 +372,53 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
             if (testSuite.getNodeListSize() == 0) {
                 problemNoEmptyTestSuiteAllowed(testSuite);
             } else if (testSuite.getAut() != null) {
-                if (!testSuite.getSumOMFlag(testSuite.getAut())) {
-                    problemNoCompleteOM(testSuite);
-                }
-                if (!testSuite.getSumTdFlag(WorkingLanguageBP.getInstance()
-                        .getWorkingLanguage())) {
-                    problemNoCompleteTD(testSuite);
-                }
-                if (!testSuite.getSumSpecTcFlag()) {
-                    problemMissingSpecTc(testSuite);
+                for (IProblem problem : testSuite.getProblems()) {
+                    if (!problem.isWithMarker()) {
+                        continue;
+                    }
+                    switch (problem.getProblemType()) {
+                        case REASON_OM_INCOMPLETE:
+                        case REASON_TD_INCOMPLETE:
+                        case REASON_MISSING_SPEC_TC:
+                            if (!checkTS(testSuite)) {
+                                return;
+                            }
+                        case EXTERNAL:
+                            createProblem(NLS.bind(
+                                    problem.getMarkerMessage(),
+                                    new String[] { testSuite.getName() }),
+                                getMarkerSeverity(problem),
+                                Messages.ProblemCheckerTestSuite 
+                                + testSuite.getName(),
+                                testSuite, 
+                                problem.getProblemType());
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
     }
     
+    /**
+     * 
+     * @param problem The problem for which the severity is considered.
+     * @return the marker severity (<code>SEVERITY_*</code> in {@link IMarker})
+     *         corresponding to the given problem's severity.
+     */
+    private int getMarkerSeverity(IProblem problem) {
+        int statusSeverity = problem.getSeverity();
+        int markerSeverity = IMarker.SEVERITY_INFO;
+        if (statusSeverity == IStatus.WARNING) {
+            markerSeverity = IMarker.SEVERITY_WARNING;
+        } else if (statusSeverity == IStatus.ERROR
+                || statusSeverity == IStatus.CANCEL) {
+            markerSeverity = IMarker.SEVERITY_ERROR;
+        }
+        
+        return markerSeverity;
+    }
     
     /**
      * If connected to a server, checks that each AUT has at least one config 
@@ -505,7 +540,6 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
         }
     }
     
-
     /**
      * Shows a message in the problems view.
      * 
@@ -754,54 +788,6 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
             Messages.ProblemCheckerTestSuite + testSuite.getName(),
             testSuite, 
             ProblemType.REASON_EMPTY_TESTSUITE);
-    }
-
-    /**
-     * called when a Test Suites has incomplete OM
-     * @param testSuite TestSuite where problem occurs
-     */
-    private void problemNoCompleteOM(ITestSuitePO testSuite) {
-        if (!checkTS(testSuite)) {
-            return;
-        }
-        createProblem(NLS.bind(Messages.ProblemCheckerOMIncomplete,
-                new String[] { testSuite.getName() }), 
-            IMarker.SEVERITY_ERROR,
-            Messages.ProblemCheckerTestSuite + testSuite.getName(),
-            testSuite, 
-            ProblemType.REASON_OM_INCOMPLETE);
-    }    
-    
-    /**
-     * called when a Test Suites has incomplete test data
-     * @param testSuite TestSuite where problem occurs
-     */
-    private void problemNoCompleteTD(ITestSuitePO testSuite) {
-        if (!checkTS(testSuite)) {
-            return;
-        }
-        createProblem(NLS.bind(Messages.ProblemCheckerTestDataIncomplete,
-                new String[] { testSuite.getName() }),
-            IMarker.SEVERITY_ERROR,
-            Messages.ProblemCheckerTestSuite + testSuite.getName(),
-            testSuite, 
-            ProblemType.REASON_TD_INCOMPLETE);
-    }
-
-    /**
-     * called when a Test Suites has a reference to a missing SpecTestCase.
-     * @param testSuite TestSuite where problem occurs
-     */
-    private void problemMissingSpecTc(ITestSuitePO testSuite) {
-        if (!checkTS(testSuite)) {
-            return;
-        }
-        createProblem(NLS.bind(Messages.ProblemCheckerMissingSpecTc,
-                new String[] { testSuite.getName() }),
-            IMarker.SEVERITY_ERROR,
-            Messages.ProblemCheckerTestSuite + testSuite.getName(),
-            testSuite, 
-            ProblemType.REASON_MISSING_SPEC_TC);
     }
 
     /**

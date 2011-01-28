@@ -24,6 +24,8 @@ public class IconConstants {
     public static final Image ERROR_IMAGE = Plugin.getImage("error.gif"); //$NON-NLS-1$
     /** warning image */
     public static final Image WARNING_IMAGE = Plugin.getImage("warning.gif"); //$NON-NLS-1$
+    /** warning small image */
+    public static final Image WARNING_SMALL_IMAGE = Plugin.getImage("warning_small.gif"); //$NON-NLS-1$
     /** info image */
     public static final Image INFO_IMAGE = Plugin.getImage("info.gif"); //$NON-NLS-1$
     /** testSuiteeditor image */

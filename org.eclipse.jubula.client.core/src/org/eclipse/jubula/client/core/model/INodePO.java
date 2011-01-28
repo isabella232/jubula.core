@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
+
 /**
  * @author BREDEX GmbH
  * @created 19.12.2005
@@ -245,4 +247,32 @@ public interface INodePO extends ITimestampPO {
      * @return the isActive
      */
     public boolean isActive();
+    
+    /**
+     * Adds a problem to this node. This problem will be used to display a 
+     * tooltip on the guinode, which represents this INodePO.
+     * 
+     * @param problem The problem that is added to this node.
+     * @return <code>true</code> if the problem was added and wasn't already
+     * in the list.
+     */
+    public boolean addProblem(IProblem problem);
+    
+    /** 
+     * Removes problem from this node. 2 Problems are equal, if their fields are
+     * equal. 
+     * 
+     * @param problem Problem that should be removed.
+     * @return <code>true</code> if the problem did exist on this node and was
+     * successfully removed.
+     */
+    public boolean removeProblem(IProblem problem);
+    
+    /**
+     * Returns an immutable list of problems. To remove or add problems, please
+     * use addProblem and removeProblem.
+     * 
+     * @return Unmodifiable set of problems.
+     */
+    public Set<IProblem> getProblems();
 }

@@ -12,8 +12,11 @@ package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
 import java.util.Locale;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
@@ -29,6 +32,7 @@ import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
 import org.eclipse.jubula.client.ui.model.TestJobGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestSuiteBrowserLabelProvider;
+import org.eclipse.swt.graphics.Image;
 
 
 /**
@@ -37,6 +41,9 @@ import org.eclipse.jubula.client.ui.provider.labelprovider.TestSuiteBrowserLabel
  */
 public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
     ILightweightLabelDecorator {
+    
+    /** indicator that there's no decoration */
+    private static final int NO_DECORATION = -1;
 
     /**
      * {@inheritDoc}
@@ -113,17 +120,44 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
         } else {
             flag = true;
         }
-        setIcon(decoration, flag);
+        int status = getStatus(node, flag);
+        setIcon(decoration, status);
+    }
+
+    /** 
+     * returns the status from the view of the external problems of the 
+     * object
+     * 
+     * @param flag Flag that is calculated in the method before
+     * @param element element that will be checked for external problems
+     * @return the status code. See {@link IStatus} for valid values.
+     */
+    private static int getStatus(INodePO element, boolean flag) {
+        if (!flag) {
+            return IStatus.ERROR; // if there's a flag, its an ERROR
+        }
+        int status = NO_DECORATION;
+        for (IProblem problem : element.getProblems()) {
+            if (problem.getSeverity() > status) {
+                status = problem.getSeverity();
+            }
+        }
+        return status;
     }
 
     /**
-     * @param decoration decoration
-     * @param flag flag for choice of wanted icon
+     * Adds an overlay to the given decoration based on the given status.
+     * 
+     * @param decoration The decoration that will be overlayed.
+     * @param status Determines the icon that will be used.
      */
-    private void setIcon(IDecoration decoration, boolean flag) {
-        if (!flag) {
+    private static void setIcon(IDecoration decoration, int status) {
+        if (status == IStatus.ERROR) {
             decoration.addOverlay(
                     IconConstants.INCOMPLETE_DATA_IMAGE_DESCRIPTOR);
+        } else if (status == IStatus.WARNING) {
+            Image warning = IconConstants.WARNING_SMALL_IMAGE;
+            decoration.addOverlay(ImageDescriptor.createFromImage(warning));
         }
     }
 }

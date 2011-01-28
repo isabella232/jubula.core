@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.constants;
+package org.eclipse.jubula.client.core.businessprocess.problems;
 
 /**
  * @author BREDEX GmbH
@@ -86,5 +86,8 @@ public enum ProblemType {
     REASON_REUSED_PROJECT_MISSING_LANG,
     
     /** An ExecTestase has unused Test Data  */
-    REASON_UNUSED_TESTDATA
+    REASON_UNUSED_TESTDATA,
+    
+    /** external reasons for failing */ 
+    EXTERNAL
 }

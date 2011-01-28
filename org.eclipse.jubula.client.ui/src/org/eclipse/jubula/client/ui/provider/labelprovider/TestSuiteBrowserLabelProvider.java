@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
@@ -149,21 +151,12 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
      */
     private StringBuilder checkNode(TestSuiteGUI execTs, IAUTMainPO aut,
         Locale locale, StringBuilder toolTip) {
-        if (!execTs.getContent().getSumOMFlag(aut) && aut != null) {
-            addMessage(toolTip, 
-                Messages.TestDataDecoratorOMTSIncompl);
-        }
         if (aut == null) {
             addMessage(toolTip, 
                 Messages.TestDataDecoratorTestSuiteWithoutAUT);
         }
-        if (!execTs.getContent().getSumTdFlag(locale)) {
-            addMessage(toolTip, 
-                Messages.TestDataDecoratorTDChildrenIncompl);
-        }
-        if (!execTs.getContent().getSumSpecTcFlag()) {
-            addMessage(toolTip, 
-                Messages.TestDataDecoratorSpecTcChildrenMissing);
+        for (IProblem problem : execTs.getContent().getProblems()) {
+            addMessage(toolTip, problem.getTooltipMessage());
         }
         return toolTip;
     }
@@ -260,8 +253,23 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
                 }
             }
         }
+        addExternalTooltips(toolTip, execTC);
         return toolTip;
     }
+
+    /**
+     * @param toolTip Tooltip in its present state
+     * @param node the node where the external problems tooltips will be added.
+     */
+    private void addExternalTooltips(StringBuilder toolTip,
+            INodePO node) {
+        for (IProblem problem : node.getProblems()) {
+            if (problem.getProblemType() == ProblemType.EXTERNAL) {
+                addMessage(toolTip, problem.getTooltipMessage());
+            }
+        }
+    }
+
 
     /**
      * Appends whitespace (if needed), a bullet, and the given message to the
@@ -293,6 +301,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
         if (!cap.getCompleteTdFlag(locale)) {
             addMessage(toolTip, Messages.TestDataDecoratorTDInStepIncompl);
         }
+        addExternalTooltips(toolTip, cap);
         return toolTip; 
     }
     
