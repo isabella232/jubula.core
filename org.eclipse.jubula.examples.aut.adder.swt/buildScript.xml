@@ -103,7 +103,7 @@
 		<jar basedir="${classes}" destfile="${jars}/${jarname}Gtk.jar">
 			<manifest>
 				<attribute name="Main-Class" value="${mainClass}"/>
-				<attribute name="Class-Path" value="${swtLibGtk}"/>
+				<attribute name="Class-Path" value="${swtLibGtkJARCp}"/>
 			</manifest>
 		</jar>
 	</target>
