@@ -44,8 +44,10 @@
 	<property name="lib" 			value="../../guidancer/com.bredexsw.guidancer.project.configuration/lib/org.eclipse.jubula.examples.aut.adder.swt"/>
 
 	<!-- JARs, DLLs -->
-	<property name="swtLibWin32" value="${lib}/win32-win32-x86/swt.jar"/>
-	<property name="swtLibGtk" value="${lib}/gtk-linux-x86/swt.jar"/>
+	<property name="swtLibWin32" value="win32-win32-x86/swt.jar"/>
+	<property name="swtLibCompile" value="${lib}/${swtLibWin32}"/>
+	<property name="swtLibWin32JARCp" value="./lib/${swtLibWin32}"/>
+	<property name="swtLibGtkJARCp" value="./lib/gtk-linux-x86/swt.jar"/>
 
 	<!-- main class -->
 	<property name="mainClass" value="org.eclipse.jubula.examples.aut.adder.swt.SimpleAdderSWT"/>
@@ -80,7 +82,7 @@
 		<mkdir dir="${jars}"/>
 		<javac srcdir="${src}" destdir="${classes}" debug="${javac.debug}" fork="true" executable="${javac}">
 			<classpath>
-				<pathelement path="${swtLibWin32}"/>
+				<pathelement path="${swtLibCompile}"/>
 			</classpath>
 		</javac>
 	</target>
@@ -92,7 +94,7 @@
 		<jar basedir="${classes}" destfile="${jars}/${jarname}Win32.jar">
 			<manifest>
 				<attribute name="Main-Class" value="${mainClass}"/>
-				<attribute name="Class-Path" value="${swtLibWin32}"/>
+				<attribute name="Class-Path" value="${swtLibWin32JARCp}"/>
 			</manifest>
 		</jar>
 	</target>
