@@ -19,6 +19,8 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -60,6 +62,13 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
     public static final String PREF_DATABASE_CONNECTIONS = 
         "org.eclipse.jubula.client.preference.databaseConnections"; //$NON-NLS-1$
 
+    /** 
+     * pre-configured factory for creating grid data for the buttons on the 
+     * side of the database list 
+     */
+    private static final GridDataFactory BUTTON_DATA_FACTORY =
+        GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING);
+    
     /** 
      * global listener to select/deselect text in text fields during widget 
      * traversal 
@@ -109,19 +118,26 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
 
     @Override
     protected Control createContents(Composite parent) {
+        Composite composite = new Composite(parent, SWT.NONE);
+        GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+        GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
+
         final IObservableList existingConnections = 
             parsePreferences(getPreferenceStore());
-        final ListViewer connectionViewer = new ListViewer(parent);
+        final ListViewer connectionViewer = new ListViewer(composite);
+        Control listControl = connectionViewer.getControl();
+        GridDataFactory.fillDefaults().grab(true, true).span(1, 3)
+            .hint(SWT.DEFAULT, SWT.DEFAULT).applyTo(listControl);
         ViewerSupport.bind(connectionViewer, existingConnections, 
                 BeanProperties.value(DatabaseConnection.PROP_NAME_NAME));
         
-        createAddButton(parent, existingConnections);
+        createAddButton(composite, existingConnections);
         
-        createRemoveButton(parent, existingConnections, connectionViewer);
+        createRemoveButton(composite, existingConnections, connectionViewer);
         
-        createEditButton(parent, connectionViewer);
+        createEditButton(composite, connectionViewer);
         
-        return null;
+        return composite;
     }
 
     /**
@@ -133,6 +149,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
     private void createEditButton(Composite parent,
             final ListViewer connectionViewer) {
         final Button editButton = new Button(parent, SWT.NONE);
+        BUTTON_DATA_FACTORY.applyTo(editButton);
         editButton.setEnabled(false);
         connectionViewer.addSelectionChangedListener(
                 new ISelectionChangedListener() {
@@ -244,6 +261,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
             final IObservableList existingConnections,
             final ListViewer connectionViewer) {
         final Button removeButton = new Button(parent, SWT.NONE);
+        BUTTON_DATA_FACTORY.applyTo(removeButton);
         removeButton.setEnabled(false);
         connectionViewer.addSelectionChangedListener(
                 new ISelectionChangedListener() {
@@ -272,6 +290,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
     private void createAddButton(Composite parent,
             final IObservableList existingConnections) {
         Button addButton = new Button(parent, SWT.NONE);
+        BUTTON_DATA_FACTORY.applyTo(addButton);
         addButton.setText(
                 Messages.DatabaseConnectionPreferencePageAddButtonLabel);
         addButton.addSelectionListener(new SelectionAdapter() {

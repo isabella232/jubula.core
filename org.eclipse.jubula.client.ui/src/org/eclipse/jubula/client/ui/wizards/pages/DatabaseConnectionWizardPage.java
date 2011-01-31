@@ -42,6 +42,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 
@@ -59,6 +60,9 @@ import org.eclipse.swt.widgets.Label;
  */
 public class DatabaseConnectionWizardPage extends WizardPage {
 
+    /** text to append to each label that corresponds to a text input */
+    private static final String LABEL_TERMINATOR = ":"; //$NON-NLS-1$
+    
     /**
      * Responsible for creating the detail area.
      * 
@@ -126,8 +130,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         public void createDetailArea(Composite parent, 
                 DataBindingContext dbc) {
 
-            new Label(parent, SWT.NONE).setText(I18n.getString("DatabaseConnection.H2.Location")); //$NON-NLS-1$
-            final JBText locationText = new JBText(parent, SWT.NONE);
+            createLabel(parent, I18n.getString("DatabaseConnection.H2.Location")); //$NON-NLS-1$
+            final JBText locationText = new JBText(parent, SWT.BORDER);
             dbc.bindValue(SWTObservables.observeText(locationText, SWT.Modify), 
                     PojoObservables.observeValue(
                             m_connInfo, H2ConnectionInfo.PROP_NAME_LOCATION));
@@ -169,16 +173,16 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         public void createDetailArea(Composite parent, 
                 DataBindingContext dbc) {
 
-            new Label(parent, SWT.NONE).setText(
+            createLabel(parent, 
                     I18n.getString("DatabaseConnection.Oracle.Hostname")); //$NON-NLS-1$
-            final JBText hostnameText = new JBText(parent, SWT.NONE);
+            final JBText hostnameText = new JBText(parent, SWT.BORDER);
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
                             OracleConnectionInfo.PROP_NAME_HOSTNAME));
 
-            new Label(parent, SWT.NONE).setText(
+            createLabel(parent, 
                     I18n.getString("DatabaseConnection.Oracle.Port")); //$NON-NLS-1$
-            final JBText portText = new JBText(parent, SWT.NONE);
+            final JBText portText = new JBText(parent, SWT.BORDER);
             UpdateValueStrategy portTargetToModelUpdateStrategy =
                 new UpdateValueStrategy();
             portTargetToModelUpdateStrategy
@@ -192,9 +196,9 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
             
-            new Label(parent, SWT.NONE).setText(
+            createLabel(parent, 
                     I18n.getString("DatabaseConnection.Oracle.Schema")); //$NON-NLS-1$
-            final JBText schemaText = new JBText(parent, SWT.NONE);
+            final JBText schemaText = new JBText(parent, SWT.BORDER);
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
                             OracleConnectionInfo.PROP_NAME_SCHEMA));
@@ -271,6 +275,9 @@ public class DatabaseConnectionWizardPage extends WizardPage {
      * {@inheritDoc}
      */
     public void createControl(Composite parent) {
+        setTitle(I18n.getString("DatabaseConnectionWizardPage.title")); //$NON-NLS-1$
+        setDescription(I18n.getString("DatabaseConnectionWizardPage.description")); //$NON-NLS-1$
+        
         final DataBindingContext dbc = new DataBindingContext();
         WizardPageSupport.create(this, dbc);
         GridDataFactory textGridDataFactory =
@@ -280,10 +287,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 GridLayoutFactory.fillDefaults().numColumns(2).create());
         setControl(composite);
         
-        Label nameLabel = new Label(composite, SWT.NONE);
-        nameLabel.setText(I18n.getString("DatabaseConnection.Name")); //$NON-NLS-1$
-        
-        JBText nameText = new JBText(composite, SWT.NONE);
+        createLabel(composite, I18n.getString("DatabaseConnection.Name")); //$NON-NLS-1$
+        JBText nameText = new JBText(composite, SWT.BORDER);
         nameText.setLayoutData(textGridDataFactory.create());
         dbc.bindValue(SWTObservables.observeText(nameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connectionToEdit, 
@@ -302,8 +307,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         nameText.setFocus();
         nameText.selectAll();
         
-        Label typeLabel = new Label(composite, SWT.NONE);
-        typeLabel.setText(I18n.getString("DatabaseConnection.Type")); //$NON-NLS-1$
+        createLabel(composite, I18n.getString("DatabaseConnection.Type")); //$NON-NLS-1$
         ComboViewer typeComboViewer = new ComboViewer(composite);
         typeComboViewer.setContentProvider(new ArrayContentProvider());
         typeComboViewer.setLabelProvider(new LabelProvider() {
@@ -316,7 +320,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         typeComboViewer.getControl().setLayoutData(
                 textGridDataFactory.create());
 
-        final Composite detailArea = new Composite(composite, SWT.NONE);
+        final Group detailArea = new Group(composite, SWT.NONE);
+        detailArea.setText(I18n.getString("DatabaseConnectionWizardPage.DetailArea.title")); //$NON-NLS-1$
         detailArea.setLayoutData(
                 GridDataFactory.fillDefaults().grab(true, true)
                     .span(2, 1).create());
@@ -329,7 +334,9 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         bindComboViewer(dbc, typeComboViewer, detailArea,
                 connectionInfoObservable);
         
-        Label url = new Label(composite, SWT.BORDER);
+        JBText url = new JBText(composite, SWT.BORDER);
+        url.setEditable(false);
+        url.setBackground(composite.getBackground());
         url.setLayoutData(
                 GridDataFactory.fillDefaults().grab(true, false)
                     .span(2, 1).create());
@@ -405,4 +412,16 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 }));
     }
 
+    /**
+     * Creates a label with appropriate text in the given composite.
+     * 
+     * @param parent The parent composite for the label.
+     * @param fieldName The internationalized name of the text input field for 
+     *                  which to create a label.
+     */
+    private static void createLabel(Composite parent, String fieldName) {
+        Label label = new Label(parent, SWT.NONE);
+        label.setText(fieldName + LABEL_TERMINATOR);
+    }
+    
 }
