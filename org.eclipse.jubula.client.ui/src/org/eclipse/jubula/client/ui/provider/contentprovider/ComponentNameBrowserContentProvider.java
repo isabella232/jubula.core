@@ -453,7 +453,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
          *            the parent object
          */
         public UsedCompnamesCategory(long parentID, Object parent) {
-            setName(Messages.CompNameBrowserUnusedCat);
+            setName(Messages.CompNameBrowserUsedCat);
             setParentProjectID(parentID);
             setParent(parent);
         }
