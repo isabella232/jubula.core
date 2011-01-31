@@ -316,12 +316,14 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     protected JBText getAutWorkingDirField() {
         return m_autWorkingDirectoryTextField;
     }
+    
     /**
      * @return the monitoringAreaComposite
      */
     public Composite getMonitoringAreaComposite() {
         return m_monitoringAreaComposite;
     }
+    
     /**
      * Populates all areas with data from the given map.
      * 
@@ -410,13 +412,17 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * @param data Map representing the data to use for population.
      */
     protected abstract void populateExpertArea(Map<String, String> data);
+
     /**
-     * Populates GUI for the advanced configuration section.
+     * Populates GUI for the advanced configuration section. Subclasses may
+     * override this empty implementation.
      * 
-     * @param data Map representing the data to use for population.
-     * 
+     * @param data
+     *            Map representing the data to use for population.
      */
-    protected abstract void populateMonitoringArea(Map<String, String> data);
+    protected void populateMonitoringArea(Map<String, String> data)  {
+        // by default do nothing 
+    }
      
     /**
      * Populates GUI for the advanced configuration section.

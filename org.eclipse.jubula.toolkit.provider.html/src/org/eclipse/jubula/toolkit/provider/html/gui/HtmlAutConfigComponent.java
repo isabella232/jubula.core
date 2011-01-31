@@ -540,13 +540,4 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         handleActivationComboEvent();
         //handleBrowserComboEvent();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected void populateMonitoringArea(Map<String, String> data) {
-        //do nothing 
-        
-    }
-
 }

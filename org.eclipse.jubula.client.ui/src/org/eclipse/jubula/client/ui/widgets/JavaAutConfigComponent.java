@@ -763,11 +763,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
 
     }
     /**
-     * 
      * {@inheritDoc}
      */
     protected void populateMonitoringArea(Map<String, String> data) {
-                       
         Composite compostie = getMonitoringAreaComposite();
         Control[] ca = compostie.getChildren();
 
