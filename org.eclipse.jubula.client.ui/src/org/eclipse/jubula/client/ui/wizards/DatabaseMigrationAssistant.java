@@ -123,9 +123,10 @@ public class DatabaseMigrationAssistant extends Wizard
                         Plugin.getDisplay().asyncExec(new Runnable() {
                             public void run() {
                                 NagDialog.runNagDialog(null,
-                                                "DatabaseMigrationAssistant.finalInfo", //$NON-NLS-1$
-                                                ContextHelpIds.
-                                                DATABASE_MIGRATION_ASSISTANT);
+                                            Messages
+                                           .DatabaseMigrationAssistantFinalInfo,
+                                            ContextHelpIds.
+                                            DATABASE_MIGRATION_ASSISTANT);
                             }
                         });
                     } catch (JBFatalException e) {
