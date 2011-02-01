@@ -236,6 +236,7 @@ public class Messages extends NLS {
     public static String CreateNewProjectVersionActionShellTitle;
     public static String CreateNewProjectVersionActionTitle;
     public static String CreateNewProjectVersionOperationCreatingNewVersion;
+    public static String DatabaseConnectionInvalidPreferenceString;
     public static String DatabaseConnectionDialogDefaultName;
     public static String DatabaseConnectionDialogTitle;
     public static String DatabaseConnectionPreferencePageAddButtonLabel;
