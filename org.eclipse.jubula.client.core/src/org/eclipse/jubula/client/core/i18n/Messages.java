@@ -110,6 +110,7 @@ public class Messages extends NLS {
     public static String CreatingAnMessageSharedInstanceFor;
     public static String CreatingMessageSharedInstanceFailed;
     public static String CurrenActionNotAvailabelForSelectedToolkit;
+    public static String DatabaseConnectionInvalidPreferenceString;
     public static String DataEventDispatcherReopenProject;
     public static String DataSource;
     public static String DBEntryMissingAmbiguous;

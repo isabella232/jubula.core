@@ -78,6 +78,7 @@ Export-Package: org.apache.poi,
  org.eclipse.jubula.client.core.model,
  org.eclipse.jubula.client.core.persistence,
  org.eclipse.jubula.client.core.persistence.locking,
+ org.eclipse.jubula.client.core.preferences.database,
  org.eclipse.jubula.client.core.progress,
  org.eclipse.jubula.client.core.serialization,
  org.eclipse.jubula.client.core.test,
@@ -93,7 +94,8 @@ Require-Bundle: org.eclipse.jubula.communication;bundle-version="[0.9.0,1.0.0)";
  org.apache.commons.collections;bundle-version="[3.2.0,4.0.0)",
  org.apache.commons.io;bundle-version="[1.4.0,2.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
- org.apache.commons.cli;bundle-version="[1.2.0,2.0.0)"
+ org.apache.commons.cli;bundle-version="[1.2.0,2.0.0)",
+ org.apache.commons.beanutils;bundle-version="[1.7.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Eclipse-BundleShape: jar
 Bundle-Activator: org.eclipse.jubula.client.core.Activator

@@ -9,5 +9,11 @@
 
 <plugin>
    <extension-point id="org.eclipse.jubula.client.core.databaseVersionErrorHandler" name="Database Version Error Handler" schema="schema/org.eclipse.jubula.client.core.databaseVersionErrorHandler.exsd"/>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionInitializer">
+      </initializer>
+   </extension>
 
 </plugin>

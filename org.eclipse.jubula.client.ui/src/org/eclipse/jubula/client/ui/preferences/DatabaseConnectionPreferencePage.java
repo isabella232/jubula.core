@@ -10,22 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.preferences;
 
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.BidiMap;
-import org.apache.commons.collections.bidimap.DualHashBidiMap;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -38,15 +28,13 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jubula.client.core.Activator;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.DatabaseConnectionDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.DatabaseConnection;
-import org.eclipse.jubula.client.ui.model.DatabaseConnectionInfo;
-import org.eclipse.jubula.client.ui.model.H2ConnectionInfo;
-import org.eclipse.jubula.client.ui.model.OracleConnectionInfo;
 import org.eclipse.jubula.client.ui.widgets.JBText;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -59,53 +47,16 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 /**
  * Preference page for configuring Database Connections.
  * 
  * @author BREDEX GmbH
- * @created 10.01.2005
+ * @created 10.01.2011
  */
 public class DatabaseConnectionPreferencePage extends PreferencePage 
     implements IWorkbenchPreferencePage {
-
-    /** ID of preference containing configured database connections */
-    public static final String PREF_DATABASE_CONNECTIONS = 
-        "org.eclipse.jubula.client.preference.databaseConnections"; //$NON-NLS-1$
-
-    /** 
-     * bidirectional mapping from a database connection type identifier 
-     * (String) to the corresponding connection info class (Class) 
-     */
-    public static final BidiMap CONNECTION_CLASS_LOOKUP = 
-        new DualHashBidiMap();
-    
-    static {
-        // these values are used for storing / retrieving Database Connection
-        // preferences, so change them with care
-        CONNECTION_CLASS_LOOKUP.put("H2", H2ConnectionInfo.class); //$NON-NLS-1$
-        CONNECTION_CLASS_LOOKUP.put("Oracle", OracleConnectionInfo.class); //$NON-NLS-1$
-    }
-    
-    /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(DatabaseConnectionPreferencePage.class);
-    
-    /** string for delimiting serialized Database Connections */
-    private static final String CONNECTION_SEPARATOR = "\n\n"; //$NON-NLS-1$
-    
-    /** string for splitting serialized Database Connections */
-    private static final String CONNECTION_SPLIT_REGEX = 
-        Pattern.quote(CONNECTION_SEPARATOR);
-
-    /** string for delimiting serialized Database Connection properties */
-    private static final String PROPERTY_SEPARATOR = "\n"; //$NON-NLS-1$
-
-    /** string for splitting serialized Database Connection properties */
-    private static final String PROPERTY_SPLIT_REGEX = 
-        Pattern.quote(PROPERTY_SEPARATOR);
 
     /** 
      * pre-configured factory for creating grid data for the buttons on the 
@@ -157,7 +108,8 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
      * {@inheritDoc}
      */
     public void init(IWorkbench workbench) {
-        setPreferenceStore(Plugin.getDefault().getPreferenceStore());
+        setPreferenceStore(new ScopedPreferenceStore(
+                new InstanceScope(), Activator.PLUGIN_ID));
     }
 
     @Override
@@ -353,9 +305,11 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
 
     @Override
     public boolean performOk() {
-        getPreferenceStore().setValue(PREF_DATABASE_CONNECTIONS, 
-                serializeDatabaseList(m_connectionList));
-        
+        getPreferenceStore().setValue(
+            DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS, 
+            DatabaseConnectionConverter.convert(
+                    (DatabaseConnection[])m_connectionList.toArray(
+                            new DatabaseConnection[m_connectionList.size()])));
         return super.performOk();
     }
 
@@ -371,103 +325,10 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
     private static IObservableList parsePreferences(
             IPreferenceStore prefStore) {
 
-        IObservableList connectionList = new WritableList();
-        String configString = prefStore.getString(PREF_DATABASE_CONNECTIONS);
-        if (StringUtils.isNotBlank(configString)) {
-            
-            for (String connection 
-                    : configString.split(CONNECTION_SPLIT_REGEX)) {
-                String[] connInfo = connection.split(PROPERTY_SPLIT_REGEX);
-                if (connInfo.length < 2 || connInfo.length % 2 != 0) {
-                    // either there are not enough entries, or the number of 
-                    // property names and values do not match
-                    LOG.error(NLS.bind(
-                            Messages.DatabaseConnectionInvalidPreferenceString, 
-                            connection));
-                    continue;
-                }
-                Map<String, Object> beanProps = new HashMap<String, Object>();
-                for (int i = 2; i < connInfo.length; i = i + 2) {
-                    beanProps.put(connInfo[i], connInfo[i + 1]);
-                }
-                Class<? extends DatabaseConnectionInfo> infoClass = 
-                    (Class)CONNECTION_CLASS_LOOKUP.get(connInfo[0]);
-                try {
-                    DatabaseConnectionInfo infoBean = infoClass.newInstance();
-                    BeanUtils.populate(infoBean, beanProps);
-                    connectionList.add(
-                            new DatabaseConnection(connInfo[1], infoBean));
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                } catch (InvocationTargetException e) {
-                    throw new RuntimeException(e);
-                } catch (InstantiationException e) {
-                    throw new RuntimeException(e);
-                }
-                
-            }
-        }
-
-        return connectionList;
+        return new WritableList(
+                DatabaseConnectionConverter.convert(prefStore.getString(
+                        DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS)),
+                DatabaseConnection.class);
     }
 
-    /**
-     * 
-     * @param connections The connections to serialize.
-     * @return a String containing all of the information provided in the 
-     *         method argument. 
-     */
-    private static String serializeDatabaseList(
-            List<DatabaseConnection> connections) {
-        
-        StringBuilder sb = new StringBuilder();
-        for (DatabaseConnection conn : connections) {
-            sb.append(CONNECTION_CLASS_LOOKUP.getKey(
-                    conn.getConnectionInfo().getClass()));
-            sb.append(PROPERTY_SEPARATOR);
-            sb.append(serialize(conn));
-            sb.append(CONNECTION_SEPARATOR);
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * 
-     * @param connection The connection to represent as a string. Must not be 
-     *                   <code>null</code>.
-     * @return a persistable String representation of the given object.
-     */
-    private static String serialize(DatabaseConnection connection) {
-        Validate.notNull(connection);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(connection.getName()).append(PROPERTY_SEPARATOR);
-        for (PropertyDescriptor propDesc 
-                : PropertyUtils.getPropertyDescriptors(
-                        connection.getConnectionInfo())) {
-            String propName = propDesc.getName();
-            try {
-                // only save writable properties, as we will not be able to 
-                // set read-only properties when reading connection info back 
-                // in from the preference store 
-                if (PropertyUtils.isWriteable(
-                        connection.getConnectionInfo(), propName)) {
-                    sb.append(propName).append(PROPERTY_SEPARATOR)
-                        .append(BeanUtils.getProperty(
-                                connection.getConnectionInfo(), propName))
-                        .append(PROPERTY_SEPARATOR);
-                }
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            } catch (InvocationTargetException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        sb.deleteCharAt(sb.length() - 1);
-        return sb.toString();
-    }
 }
