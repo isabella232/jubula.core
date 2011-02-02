@@ -11,9 +11,9 @@
 package org.eclipse.jubula.client.ui.dialogs;
 
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
+import org.eclipse.jubula.client.core.preferences.database.H2ConnectionInfo;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.DatabaseConnection;
-import org.eclipse.jubula.client.ui.model.H2ConnectionInfo;
 import org.eclipse.jubula.client.ui.wizards.pages.DatabaseConnectionWizardPage;
 
 

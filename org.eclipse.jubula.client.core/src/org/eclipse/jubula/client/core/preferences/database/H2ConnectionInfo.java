@@ -8,7 +8,9 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.model;
+package org.eclipse.jubula.client.core.preferences.database;
+
+import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
 
 /**
  * 

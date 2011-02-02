@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.model;
+package org.eclipse.jubula.client.core.persistence;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

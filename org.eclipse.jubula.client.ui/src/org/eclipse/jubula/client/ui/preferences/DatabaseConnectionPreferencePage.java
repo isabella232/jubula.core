@@ -11,12 +11,11 @@
 package org.eclipse.jubula.client.ui.preferences;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -29,12 +28,12 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jubula.client.core.Activator;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.DatabaseConnectionDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.DatabaseConnection;
-import org.eclipse.jubula.client.ui.model.H2ConnectionInfo;
-import org.eclipse.jubula.client.ui.model.OracleConnectionInfo;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -48,19 +47,16 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 /**
  * Preference page for configuring Database Connections.
  * 
  * @author BREDEX GmbH
- * @created 10.01.2005
+ * @created 10.01.2011
  */
 public class DatabaseConnectionPreferencePage extends PreferencePage 
     implements IWorkbenchPreferencePage {
-
-    /** ID of preference containing configured database connections */
-    public static final String PREF_DATABASE_CONNECTIONS = 
-        "org.eclipse.jubula.client.preference.databaseConnections"; //$NON-NLS-1$
 
     /** 
      * pre-configured factory for creating grid data for the buttons on the 
@@ -105,15 +101,15 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
         };
     
     /** list of managed connections */
-    private List<DatabaseConnection> m_connectionList = 
-        new ArrayList<DatabaseConnection>();
+    private IObservableList m_connectionList;
 
     /**
      * 
      * {@inheritDoc}
      */
     public void init(IWorkbench workbench) {
-        setPreferenceStore(Plugin.getDefault().getPreferenceStore());
+        setPreferenceStore(new ScopedPreferenceStore(
+                new InstanceScope(), Activator.PLUGIN_ID));
     }
 
     @Override
@@ -122,18 +118,17 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
         GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
         GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
 
-        final IObservableList existingConnections = 
-            parsePreferences(getPreferenceStore());
+        m_connectionList = parsePreferences(getPreferenceStore());
         final ListViewer connectionViewer = new ListViewer(composite);
         Control listControl = connectionViewer.getControl();
         GridDataFactory.fillDefaults().grab(true, true).span(1, 3)
             .hint(SWT.DEFAULT, SWT.DEFAULT).applyTo(listControl);
-        ViewerSupport.bind(connectionViewer, existingConnections, 
+        ViewerSupport.bind(connectionViewer, m_connectionList, 
                 BeanProperties.value(DatabaseConnection.PROP_NAME_NAME));
         
-        createAddButton(composite, existingConnections);
+        createAddButton(composite, m_connectionList);
         
-        createRemoveButton(composite, existingConnections, connectionViewer);
+        createRemoveButton(composite, m_connectionList, connectionViewer);
         
         createEditButton(composite, connectionViewer);
         
@@ -310,10 +305,11 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
 
     @Override
     public boolean performOk() {
-        getPreferenceStore().setValue(PREF_DATABASE_CONNECTIONS, 
-                serializeDatabaseList(m_connectionList));
-        storeDatabasePreferences(getPreferenceStore());
-        
+        getPreferenceStore().setValue(
+            DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS, 
+            DatabaseConnectionConverter.convert(
+                    (DatabaseConnection[])m_connectionList.toArray(
+                            new DatabaseConnection[m_connectionList.size()])));
         return super.performOk();
     }
 
@@ -328,39 +324,11 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
      */
     private static IObservableList parsePreferences(
             IPreferenceStore prefStore) {
-        // FIXME implement parsing
-        IObservableList dummyList = new WritableList();
-        dummyList.add(new DatabaseConnection(
-                "Example H2 Connection", new H2ConnectionInfo()));
-        dummyList.add(new DatabaseConnection(
-                "Example Oracle Connection", new OracleConnectionInfo()));
-        return dummyList;
+
+        return new WritableList(
+                DatabaseConnectionConverter.convert(prefStore.getString(
+                        DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS)),
+                DatabaseConnection.class);
     }
 
-    /**
-     * Persists the information from the provided preference store.
-     * 
-     * @param prefStore The information to persist.
-     */
-    private static void storeDatabasePreferences(
-            IPreferenceStore prefStore) {
-        // FIXME implement storing
-    }
-    
-    /**
-     * 
-     * @param connections The connections to serialize.
-     * @return a String containing all of the information provided in the 
-     *         method argument. 
-     */
-    private static String serializeDatabaseList(
-            List<DatabaseConnection> connections) {
-        
-        StringBuilder sb = new StringBuilder();
-        for (DatabaseConnection conn : connections) {
-            // FIXME implement serialization
-        }
-        
-        return sb.toString();
-    }
 }
