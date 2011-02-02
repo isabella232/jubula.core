@@ -31,6 +31,7 @@
 	 </profiles>
 
 	<modules>
+	<!-- 
 		<module>../org.eclipse.jubula.app</module>
 		<module>../org.eclipse.jubula.app.cmd</module>
 		<module>../org.eclipse.jubula.app.dbtool</module>
@@ -55,6 +56,7 @@
 		<module>../org.eclipse.jubula.toolkit.provider.rcp.gef</module>
 		<module>../org.eclipse.jubula.toolkit.provider.swing</module>
 		<module>../org.eclipse.jubula.toolkit.provider.swt</module>
+		-->
 		<module>../org.eclipse.jubula.tools</module>
 	</modules>
 	<url>http://www.eclipse.org/jubula</url>
