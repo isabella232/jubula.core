@@ -995,6 +995,11 @@
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
+			id="org.eclipse.jubula.client.ui.commands.continueWithoutEHCommand"
+			name="Continue without Event Handler">
+		</command>
+		<command
+			categoryId="org.eclipse.jubula.client.ui.commands"
 			description="%StartObservationToolTip"
 			id="org.eclipse.jubula.client.ui.commands.StartObservationModeCommand"
 			name="Start Observation Mode">
@@ -1148,6 +1153,10 @@
 		<key commandId="org.eclipse.jubula.client.ui.commands.togglePauseOnErrorCommand"
 			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F9">
+		</key>
+		<key commandId="org.eclipse.jubula.client.ui.commands.continueWithoutEHCommand"
+			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="F8">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
 			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
@@ -1373,6 +1382,16 @@
                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
           </reference>
        </visibleWhen>
+				</command>
+				<command
+					commandId="org.eclipse.jubula.client.ui.commands.continueWithoutEHCommand"
+					style="push">
+			       <visibleWhen
+			             checkEnabled="false">
+			          <reference
+			                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+			          </reference>
+			       </visibleWhen>
 				</command>
 				<separator name="GlobalActions">
 				</separator>
@@ -2146,6 +2165,15 @@
 			</enabledWhen>
 		</handler>
 		<handler
+			class="org.eclipse.jubula.client.ui.handlers.ContinueTestSuiteWOEHHandler"
+			commandId="org.eclipse.jubula.client.ui.commands.continueWithoutEHCommand">
+			<enabledWhen>
+				<with variable="org.eclipse.jubula.client.ui.variable.isTestPaused">
+					<equals value="true" />
+				</with>
+			</enabledWhen>
+		</handler>
+		<handler
 			class="org.eclipse.jubula.client.ui.handlers.StopTestSuiteHandler"
 			commandId="org.eclipse.jubula.client.ui.commands.StopSuiteCommand">
 			<enabledWhen>
@@ -2501,6 +2529,10 @@
   <image
         commandId="org.eclipse.jubula.client.ui.commands.OpenTestCase"
         icon="icons/openTestcase.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.continueWithoutEHCommand"
+        icon="icons/continueWithoutEH.gif">
   </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"
@@ -3128,6 +3160,9 @@
 		<sourceProvider
 			provider="org.eclipse.jubula.client.ui.sourceprovider.TestExecutionSourceProvider">
 			<variable name="org.eclipse.jubula.client.ui.variable.isTestRunning"
+				priorityLevel="workbench">
+			</variable>
+			<variable name="org.eclipse.jubula.client.ui.variable.isTestPaused"
 				priorityLevel="workbench">
 			</variable>
 		</sourceProvider>
