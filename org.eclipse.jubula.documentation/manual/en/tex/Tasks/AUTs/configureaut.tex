@@ -31,11 +31,11 @@
 \index{Application activation}
 \index{AUT ID}
 
-Once you have created a \gdproject{} \bxpref{newproject} and defined an \gdaut{} \bxpref{Defineaut}, you can add and edit \gdaut{} configurations. Use this option if you want \gd{} to start your \gdaut{} for you. 
-The details in the \gdaut{} configuration tell \gd{} how to start the \gdaut{}, e.g. on which machine. 
+Once you have created a \gdproject{} \bxpref{newproject} and defined an \gdaut{} \bxpref{Defineaut}, you can add and edit \gdaut{} configurations. Use this option if you want \jb{} to start your \gdaut{} for you. 
+The details in the \gdaut{} configuration tell \jb{} how to start the \gdaut{}, e.g. on which machine. 
 An \gdaut{} can have multiple configurations (for example, for local and remote testing).  
 
-\bxtipp{If you want to start your \gdaut{} yourself, and have \gd{} connect to it, then use the \bxname{gdrun} command to start the \gdaut{} \bxpref{gdrun}. In this case, you do not need to create an \gdaut{} configuration.}
+\bxtipp{If you want to start your \gdaut{} yourself, and have \jb{} connect to it, then use the \bxname{gdrun} command to start the \gdaut{} \bxpref{gdrun}. In this case, you do not need to create an \gdaut{} configuration.}
 
 The \gdaut{} configuration dialog has three different levels of detail: basic, advanced and expert. 
 
@@ -75,7 +75,7 @@ HTML applications have a considerably reduced configuration dialog. The informat
 \bxwarn{Relative paths to the URL cannot be used!}
 \item the browser you want to start the \gdaut{} in
 \item optionally, the browser path, to use a specific version of the browser (not available for Internet Explorer). 
-%\item you can also enter a \bxname{component ID tag}. If you have used a specific tag to name components in your application, enter the tag here. \gd{} will then use this information instead of the \bxname{name} attribute in the object recognition. 
+%\item you can also enter a \bxname{component ID tag}. If you have used a specific tag to name components in your application, enter the tag here. \jb{} will then use this information instead of the \bxname{name} attribute in the object recognition. 
 \end{enumerate}
 
 \bxtipp{HTML applications cannot currently be started using the \bxname{gdrun} command.}
@@ -99,9 +99,9 @@ You can use the advanced dialog (\bxfigref{autconfigadvanced}) if your \gdaut{} 
 
 This path can be relative (if you define a base/working directory), or absolute. This JAR file must contain a manifest file which contains the main class and the classpath. 
 
-\item You can optionally create a working/base directory to store files in. The \gdserver directory of the \gd{} installation is selected as default. To create a base directory elsewhere, browse to and select the location. 
+\item You can optionally create a working/base directory to store files in. The \gdserver directory of the \jb{} installation is selected as default. To create a base directory elsewhere, browse to and select the location. 
 
-The base directory is the working directory for any classpaths, classnames, JAR files and JRE binaries. If you create a base directory, you can enter the paths to these items using a relative path, with the base directory as the root. For more information on relative paths, read the section in the reference manual \bxextref{\gdrefman}{ref,relativepath}. 
+The base directory is the working directory for any classpaths, classnames, JAR files and JRE binaries. If you create a base directory, you can enter the paths to these items using a relative path, with the base directory as the root. For more information on relative paths, read the section in the reference manual \bxextref{\jb{}efman}{ref,relativepath}. 
 
 \item If your \gdaut{} must be started with the class name, add the main class name and the classpaths into their relative fields. The paths can be relative (if you have defined a base directory), or absolute. 
 \bxtipp{Add all the necessary files and directories to start the \gdaut{}. }
@@ -110,14 +110,14 @@ The base directory is the working directory for any classpaths, classnames, JAR 
 \item Browse to a JRE executable or add a new one by clicking \bxcaption{New}. 
 The Java version used must be 1.4 or later. For more information on adding a new JRE executable for this \gdserver, see the later section \bxpref{serverConfigPrefPage}. 
 
-Java is installed with \gd{}. You can find the Java file in:\\
-\bxmenu{\gd{}}{jre}{bin}.
+Java is installed with \jb{}. You can find the Java file in:\\
+\bxmenu{\jb{}}{jre}{bin}.
 Use java.exe if you want to use a console, use javaw.exe if you do not want a console. 
 \item For SWT and RCP \gdauts{}, select which keyboard layout is used on the machine on which the \gdaut{} will run. 
 
 \bxtipp{The keyboard layout is not the actual keyboard attached to the computer, but is based on the regional language settings for the operating system.}
 
-\gd{} supports English (US) and German (DE) keyboard layouts out-of-the box. If you want to use a different keyboard layout, see the reference manual for information on creating keyboard layouts \bxextref{\gdrefman}{ref,keyboardlayout}. 
+\jb{} supports English (US) and German (DE) keyboard layouts out-of-the box. If you want to use a different keyboard layout, see the reference manual for information on creating keyboard layouts \bxextref{\jb{}efman}{ref,keyboardlayout}. 
 \end{enumerate}
 For information on the expert properties for the \gdaut{} configuration, see the next section \bxpref{ExpertAUTConfig}. 
 
@@ -140,7 +140,7 @@ format \bxcaption{<VARNAME>=<value>}, i.e. \bxcaption{PATH=C:$\backslash$}.
 Separate each variable with a new line by pressing \bxkey{Enter}.
 
 \bxwarn{Please be advised that ''embedding'' the contents of one
-variable into another is not supported at this time by \GD{}. That is,
+variable into another is not supported at this time by \jb{}{}. That is,
 if you have a variable named \texttt{FOO} whose value is
 \bxcaption{abc}, and set the value of a second
 variable \texttt{BAR} to \bxcaption{\%FOO\%def}, the second variable will
@@ -150,11 +150,11 @@ variable \texttt{BAR} to \bxcaption{\%FOO\%def}, the second variable will
 
 \item Select an activation method for your \gdaut{}. 
 
-Activation makes sure that the  \gdaut{} is in focus at the beginning of test execution. This is acheived by clicking somewhere in the \gdaut{} window. You can specify the activation method (i.e. where to click) as part of a configuration for an \gdaut{}, or you can create a \gdstep{} within a test to do the same thing \bxextref{\gdrefman}{ref,activate}. 
+Activation makes sure that the  \gdaut{} is in focus at the beginning of test execution. This is acheived by clicking somewhere in the \gdaut{} window. You can specify the activation method (i.e. where to click) as part of a configuration for an \gdaut{}, or you can create a \gdstep{} within a test to do the same thing \bxextref{\jb{}efman}{ref,activate}. 
 
 The advantage of specifying an activation method here is that it is central and affects each test execution started on this \gdaut{} with this configuration. 
 
-Bear in mind that you may need to activate your \gdaut{} in order for tests to work, especially if the \gdaut{} runs on the same machine as \gd{}. 
+Bear in mind that you may need to activate your \gdaut{} in order for tests to work, especially if the \gdaut{} runs on the same machine as \jb{}. 
 
 
 \item Select \bxcaption{Finish} to create this \gdproject{}. 

@@ -1,4 +1,4 @@
-When it comes to executing tests, there are two important things to bear in mind when working with \gd{}:
+When it comes to executing tests, there are two important things to bear in mind when working with \jb{}:
 \begin{itemize}
 \item All the necessary keywords for a single \bxname{use case} should be grouped together in one \gdcase{}, which is named after the use case it tests. The use case should be complete -- it should not require any data or component names. This makes it much easier to add and remove whole use cases from \gdsuites{}.   
 \item Each use case should assume a well-defined state of the \gdaut{} and leave the \gdaut{} in a well-defined state. This is important for error handling later. It is a good idea to create a keyword called \bxname{app\_startup} which creates the right state for the \gdaut{}, and to use this keyword at the beginning of each use case (\bxfigref{UseCase}). 
@@ -13,7 +13,7 @@ When it comes to executing tests, there are two important things to bear in mind
 %% \end{center}
 %% \end{figure} 
 
-Use cases are then grouped together into \gdsuites{}. The \gd{} team uses the following \gdsuites{} in their tests:
+Use cases are then grouped together into \gdsuites{}. The \jb{} team uses the following \gdsuites{} in their tests:
 \begin{itemize}
 \item FULLTEST
 \item FULLTEST\_BROKEN
