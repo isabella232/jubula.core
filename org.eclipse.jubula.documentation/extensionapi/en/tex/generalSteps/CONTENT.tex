@@ -1,12 +1,12 @@
 \chapter{Introduction}
 \label{introduction}
 
-\GD starts, controls, and observes \gdauts using its server
+\jb{} starts, controls, and observes \gdauts using its server
 component. In order for the \gdserver to know how to control each
 element of a GUI, we have outfitted the \gdserver with a pluggable interface
-for graphic components. Using this interface, each component that \GD
+for graphic components. Using this interface, each component that \jb{}
 can test is described in a
-so-called \textbf{\gdimplclass{}}. Each GUI toolkit that \GD supports
+so-called \textbf{\gdimplclass{}}. Each GUI toolkit that \jb{} supports
 is described in a toolkit plugin.
 
 Because of the great flexibility that user customization allows, we
@@ -20,33 +20,33 @@ defining \gdimplclasses of your own, which we will refer to as
 \section{What does a \gdtesterclass look like?}
 
 The functionally important aspect of a \gdtesterclass is that it
-contains a public method for each \gd test action which will appear in
+contains a public method for each \jb{}test action which will appear in
 the client. These methods are linked to testable actions within a user-defined
-\GD Plugin, which is described later in this handbook. Each plugin
+\jb{} Plugin, which is described later in this handbook. Each plugin
 provides a XML configuration file,
-which tells \GD which method to call, what parameters it needs to
+which tells \jb{} which method to call, what parameters it needs to
 send, as well as string externalization information.
 
 \chapter{General Steps to take}
 \label{generalSteps}
 
-The following chapter describes the general steps to take when extending \GD with
+The following chapter describes the general steps to take when extending \jb{} with
 custom defined components and actions. Detailed information for each step can be found in the
 corresponding example extension files in 
 ''GUIdancerInstallationDirectory/examples/development/extension/src''
 
-In general you have to always extends two parts of \GD
+In general you have to always extends two parts of \jb{}
 \begin{itemize}
-\item The \GD Client by writing your own \bxshell{Toolkit-Plugin}:\\
+\item The \jb{} Client by writing your own \bxshell{Toolkit-Plugin}:\\
       This will tell the clients which new components and actions are available.
-\item The \GD Server Component by putting a compiled class file to a specific directory:\\
+\item The \jb{} Server Component by putting a compiled class file to a specific directory:\\
       This is the part which is acutally performing the actions on the new component.
 \end{itemize}
 
 \section{Requirements}
-To create your own \GD extension, you need:
+To create your own \jb{} extension, you need:
 \begin{itemize}
-\item \gd{} 2.0 or later
+\item \jb{} 2.0 or later
 \item a license for the toolkit you want to extend
 \item Eclipse 3.4 or later
 \item JDK 5.0
@@ -56,9 +56,9 @@ You must also have write access in the directories:\\
 guidancerInstallationDir$\backslash$guidancer$\backslash$plugins\\
 guidancerInstallationDir$\backslash$server$\backslash$lib$\backslash$extImplClasses 
 
-\section{\GD Client Extension}
+\section{\jb{} Client Extension}
 
-The following steps have to be done to extend the \GD Client:
+The following steps have to be done to extend the \jb{} Client:
 \begin{enumerate}
  \item Create an eclipse plug-in project
  \item Set ''guidancerInstallationDir$\backslash$guidancer$\backslash$plugins'' as your target platform
@@ -68,23 +68,23 @@ The following steps have to be done to extend the \GD Client:
  \item Define and configure the toolkit extension at the extension point
  \item Create a myComponentExtension.xml
  \begin{itemize}
-  \item Extend existing \gd{} components with new actions
-  \item Derive components from existing \gd{} components
+  \item Extend existing \jb{} components with new actions
+  \item Derive components from existing \jb{} components
   \item Define a new component
  \end{itemize}
  \item Manage the i18n keys
- \item Export the toolkit plugin to \gd{}
+ \item Export the toolkit plugin to \jb{}
 \end{enumerate}
 
 Under ''GUIdancerInstallationDirectory/examples/development/extension/src''
 you will find a \\ ''eclipseProjects\_ExampleSwingClientExtension.zip'' which contains
- an example \GD Client Extension for the Swing component ''JSlider''. This project 
+ an example \jb{} Client Extension for the Swing component ''JSlider''. This project 
  is a showcase for steps 1-8.
  
-\subsection{Exporting the toolkit plugin to \gd{}}
+\subsection{Exporting the toolkit plugin to \jb{}}
  The only step you have to do after importing this project into your eclipse workspace and 
- setting the target platform (step no. 2) is to export it to the \gd{} you want to 
- extend. To export the toolkit plugin to \gd{}:
+ setting the target platform (step no. 2) is to export it to the \jb{} you want to 
+ extend. To export the toolkit plugin to \jb{}:
 
 \begin{enumerate}
 \item In the package explorer, right click on the \bxname{plugin.xml} file and select:\\
@@ -102,17 +102,17 @@ from the context-sensitive menu.
 \item If you need to make changes and export the plugin again, delete the \\ \bxname{com.bredexsw.guidancer.examples.client.toolkitExtension\_1.0.0} from the \bxname{GUIdancerInstallationPath/guidancer/plugins/} folder first
 \end{enumerate}
 
-\section{\GD Server Extension}
+\section{\jb{} Server Extension}
 
 \gdauts{} are controlled by the server. There exists a \gdtesterclass for each component that
-\GD{} supports. This class implements the test actions that can be carried out on the component, To add your
-component to \GD, you need to write a \gdtesterclass for it.
+\jb{}{} supports. This class implements the test actions that can be carried out on the component, To add your
+component to \jb{}, you need to write a \gdtesterclass for it.
 
 Please follow the following guidelines for your \gdtesterclasses:
 \begin{itemize}
   \item Your build path must contain the following three JAR files:
   \bxshell{AUTServer.jar}, \bxshell{AUTServerBase.jar}, and
-  \bxshell{org.eclipse.jubula.tools.jar}, which contain our server classes and some utility classes. They are located in your \GD{} installation directory under
+  \bxshell{org.eclipse.jubula.tools.jar}, which contain our server classes and some utility classes. They are located in your \jb{}{} installation directory under
   \bxshell{server/lib}.
   \item The class must be compatible with \bxname{Java 1.4}.
   \item Its declared package name must begin with: \\
@@ -122,29 +122,29 @@ Please follow the following guidelines for your \gdtesterclasses:
   \item It must provide \textbf{public} methods for each action that is implemented for the component.
   \item Each method that implements an action must throw the following exception upon error:
     com.bredexsw.guidancer\\.autserverbase.exception.StepExecutionException
-    This way, \GD{} will be able to know that an action has failed.
+    This way, \jb{}{} will be able to know that an action has failed.
 \end{itemize}
 
 Under ''GUIdancerInstallationDirectory/examples/development/extension/src''
 you will find a \\ ''eclipseProjects\_ExampleSwingServerExtension.zip'' which contains
- an example \GD Server Extension for the Swing component ''JSlider''.
+ an example \jb{} Server Extension for the Swing component ''JSlider''.
 
 Now that you have written your \gdtesterclass, you still need to
-make \GD aware of its presence. This is done by first putting the
+make \jb{} aware of its presence. This is done by first putting the
 compiled class in a
-location where \GD can find it, then by altering the configuration
-file, so that \GD knows which component it refers to, and how it can
+location where \jb{} can find it, then by altering the configuration
+file, so that \jb{} knows which component it refers to, and how it can
 be used. The following sections explain how this is done.
 
 \section{Where to put your \gdtesterclasses}
 If you extend the SwingToolkitPlugin, your compiled \gdtesterclasses (\bxshell{*.class} files) need to
-be placed in your \GD installation directory under the following path:
+be placed in your \jb{} installation directory under the following path:
 
 \bxshell{server/lib/extImplClasses} ,
 
 using a directory structure that corresponds to the fully-qualified
 package name. Therefore, your \gdtesterclasses should be in some
-sub-directory of the following path within your \GD installation directory:
+sub-directory of the following path within your \jb{} installation directory:
 
 \texttt{server/lib/extImplClasses/com/bredexsw\\
     /guidancer/autserver/swing/implclasses}
@@ -160,10 +160,10 @@ directory.
 \bxtipp{Please note that if the \textit{extImplClasses} directory does
 not already exist, you must create it in the above-mentioned location.}
 
-\section{\GD Example Extension}
-\GD comes with a complete example extension implementation in source and binaries. 
-This example extension extends \GD for the Swing component ''JSlider''. After deploying the \GD Client plug-in and the \GD Server 
-extension you should be able to test the Swing component ''JSlider'' at ''Graphics Component''-level with \GD.
+\section{\jb{} Example Extension}
+\jb{} comes with a complete example extension implementation in source and binaries. 
+This example extension extends \jb{} for the Swing component ''JSlider''. After deploying the \jb{} Client plug-in and the \jb{} Server 
+extension you should be able to test the Swing component ''JSlider'' at ''Graphics Component''-level with \jb{}.
 The example extension code and binaries can be found in the ''GUIdancerInstallationDirectory/examples/development/extension'':
 
 \begin{itemize}
@@ -176,9 +176,9 @@ The example extension code and binaries can be found in the ''GUIdancerInstallat
  	\item \bxshell{eclipseProjects\_ExampleSwingAUT.zip} \\
  	This is the source code project for the example Swing AUT.
  	\item \bxshell{eclipseProjects\_ExampleSwingClientExtension.zip} \\
- 	This is the source code project of the extension plug-in for the \GD Client.
+ 	This is the source code project of the extension plug-in for the \jb{} Client.
  	\item \bxshell{eclipseProjects\_ExampleSwingServerExtension.zip} \\
- 	This is the source code project of the extension for the \GD Server.
+ 	This is the source code project of the extension for the \jb{} Server.
  \end{itemize}
  \item bin \\
  This directory contains the compiled sources as directly deployable units.
