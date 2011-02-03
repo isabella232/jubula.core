@@ -540,7 +540,7 @@ public class ExecutionController implements IAUTServerEventListener,
         // Hibernate.properties and mapping files
         // have to be in classpath
         ProgressEventDispatcher.addProgressListener(m_progressController);
-        Hibernator.setSchemaName(m_job.getDbscheme());
+        Hibernator.setDbConnectionName(m_job.getDbscheme());
         Hibernator.setUser(m_job.getDbuser());
         Hibernator.setPw(m_job.getDbpw());
         Hibernator.setUrl(m_job.getDb());

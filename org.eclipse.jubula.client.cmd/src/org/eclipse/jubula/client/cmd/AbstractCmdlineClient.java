@@ -405,6 +405,9 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         StringBuilder errorMsg = new StringBuilder();
         errorMsg.append(Messages.ClientMissingArgs);
         if (job.getDbscheme() == null) {
+            // FIXME this is now a misleading error message because the 
+            //       argument might be there but not correspond to any
+            //       DatabaseConnection in the preferences
             appendError(errorMsg, ClientTestStrings.DB_SCHEME, 
                     ClientTestStrings.SCHEME);
         }

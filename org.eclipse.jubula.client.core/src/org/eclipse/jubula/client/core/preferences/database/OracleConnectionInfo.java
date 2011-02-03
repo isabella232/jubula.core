@@ -40,7 +40,7 @@ public class OracleConnectionInfo extends DatabaseConnectionInfo {
     
     @Override
     public String getConnectionUrl() {
-        StringBuilder sb = new StringBuilder("jdbc:oracle:thin@"); //$NON-NLS-1$
+        StringBuilder sb = new StringBuilder("jdbc:oracle:thin:@"); //$NON-NLS-1$
         sb.append(StringUtils.defaultString(getHostname()))
             .append(":").append(getPort()) //$NON-NLS-1$
             .append(":").append(StringUtils.defaultString(getSchema())); //$NON-NLS-1$
@@ -97,5 +97,10 @@ public class OracleConnectionInfo extends DatabaseConnectionInfo {
     public void setSchema(String schema) {
         m_schema = schema;
         fireConnectionUrlChanged();
+    }
+
+    @Override
+    public String getDriverClassName() {
+        return "oracle.jdbc.driver.OracleDriver"; //$NON-NLS-1$
     }
 }

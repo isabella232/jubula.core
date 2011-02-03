@@ -10,31 +10,36 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.dialogs;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
-import org.eclipse.jubula.client.core.utils.DBSchemaPropertyCreator;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -73,14 +78,6 @@ public class DBLoginDialog extends TitleAreaDialog {
     /** horizontal span = 2 */
     private static final int HORIZONTAL_SPAN = 2;
     
-    /** key for the username property for Hibernate */
-    private static final String HIBERNATE_CONNECTION_USERNAME = 
-        "javax.persistence.jdbc.user"; //$NON-NLS-1$
-    
-    /** <code>HIBERNATE_CONNECTION_PASSWORD</code> */
-    private static final String HIBERNATE_CONNECTION_PASSWORD = 
-        "javax.persistence.jdbc.password"; //$NON-NLS-1$ 
-    
     /** The message m_text */
     private String m_message = Messages.DBLoginDialogMessage;
     
@@ -92,15 +89,18 @@ public class DBLoginDialog extends TitleAreaDialog {
     private JBText m_pwdText;
     /** the password label */
     private Label m_pwdLabel;
-    /** the schema combobox */
-    private Combo m_schemaCbx;
+    /** the connection combobox viewer */
+    private ComboViewer m_connectionComboViewer;
     
     /** the username */
     private String m_user;
     /** the password */
     private String m_pwd;
-    /** the schema name */
-    private String m_schemaName;
+    /** the database connection */
+    private DatabaseConnection m_dbConn;
+
+    /** the connections from which the user can choose */
+    private List<DatabaseConnection> m_availableConnections;
     
     /** true, if selected db is embedded db */
     private boolean m_isEmbeddedOrNoSelection = false; 
@@ -115,6 +115,9 @@ public class DBLoginDialog extends TitleAreaDialog {
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
+        m_availableConnections = 
+            DatabaseConnectionConverter.computeAvailableConnections();
+        
         setMessage(m_message);
         setTitle(Messages.DBLoginDialogTitle);
         setTitleImage(IconConstants.DB_LOGIN_DIALOG_IMAGE);
@@ -144,7 +147,7 @@ public class DBLoginDialog extends TitleAreaDialog {
         createSchemaCombobox(area);
         createUserTextField(area);
         createPasswordTextField(area);
-        fillSchemaCombobox();
+        fillConnectionCombobox();
         
         setUserAndPwdVisible(!m_isEmbeddedOrNoSelection);
         
@@ -173,8 +176,8 @@ public class DBLoginDialog extends TitleAreaDialog {
         Button button = 
             super.createButton(parent, id, label, defaultButton);
         if (m_userText.getText().length() == 0
-                || m_schemaCbx.getSelectionIndex() == -1
-                || m_schemaCbx.getItemCount() == 0) {
+                || m_connectionComboViewer.getSelection().isEmpty()
+                || m_availableConnections.isEmpty()) {
             getButton(IDialogConstants.OK_ID).setEnabled(false);
         }
         return button;
@@ -245,87 +248,99 @@ public class DBLoginDialog extends TitleAreaDialog {
             GridData.CENTER, false, false, HORIZONTAL_SPAN + 1, 1));
         new Label(area, SWT.NONE).setText(
                 Messages.DBLoginDialogConnectionLabel);
-        m_schemaCbx = new Combo(area, SWT.DROP_DOWN | SWT.READ_ONLY);
+        Combo connectionCombo = new Combo(area, SWT.DROP_DOWN | SWT.READ_ONLY);
         GridData gridData = newGridData();
-        m_schemaCbx.setLayoutData(gridData);
-        
+        connectionCombo.setLayoutData(gridData);
+        m_connectionComboViewer = new ComboViewer(connectionCombo);
+        m_connectionComboViewer.setContentProvider(new ArrayContentProvider());
+        m_connectionComboViewer.setLabelProvider(new LabelProvider() {
+            @Override
+            public String getText(Object element) {
+                if (element instanceof DatabaseConnection) {
+                    return ((DatabaseConnection)element).getName();
+                }
+                return super.getText(element);
+            }
+        });
     }
     
     /**
      * Fills the Combobox to select the Database Schema.
      */
-    private void fillSchemaCombobox() {
-        final Map<String, Properties> schemaMap = 
-            DBSchemaPropertyCreator.getSchemaMap();
+    private void fillConnectionCombobox() {
+        m_connectionComboViewer.setInput(m_availableConnections);       
         
-        String[] schemas = new String[schemaMap.size()];
-        Set keyset = schemaMap.keySet();
-        Iterator it = keyset.iterator();
-        int i = 0;
-        while (it.hasNext()) {
-            schemas[i] = it.next().toString();
-            i++;
-        }
-        
-        m_schemaCbx.setItems(schemas);       
-        
-        if (schemas.length == 1) {
-            m_schemaCbx.select(0);
+        if (m_availableConnections.size() == 1) {
+            m_connectionComboViewer.setSelection(
+                    new StructuredSelection(m_availableConnections.get(0)));
         } else {
-            IPreferenceStore store = Plugin.getDefault().getPreferenceStore();
-            int idx = m_schemaCbx.indexOf(store.getString(
-                    Constants.SCHEMA_KEY));
-            if (idx != -1) {
-                m_schemaCbx.select(idx);
+            String previouslySelectedConn = 
+                Plugin.getDefault().getPreferenceStore().getString(
+                        Constants.SCHEMA_KEY);
+            for (DatabaseConnection conn : m_availableConnections) {
+                if (conn.getName().equals(previouslySelectedConn)) {
+                    m_connectionComboViewer.setSelection(
+                            new StructuredSelection(conn));
+                    break;
+                }
             }
         }        
         
         //check if a schema is selected
         selectSchemaCbxAction();
         //if db is embedded hide textfields
-        isEmbeddedDbOrNoSchemaSelected(schemaMap);
+        IStructuredSelection sel = 
+            (IStructuredSelection)m_connectionComboViewer.getSelection();
+        selectSchemaCbxAction();
+        checkEmbeddedDbOrNoSchemaSelected(
+                (DatabaseConnection)sel.getFirstElement());
         
-        m_schemaCbx.addSelectionListener(new SelectionListener() {            
-            public void widgetSelected(SelectionEvent e) {
-                selectSchemaCbxAction();
-                isEmbeddedDbOrNoSchemaSelected(schemaMap);
-                setUserAndPwdVisible(!m_isEmbeddedOrNoSelection);
-            }
-            public void widgetDefaultSelected(SelectionEvent e) {
-                // do nothing here
-            }
-        });
+        m_connectionComboViewer.addSelectionChangedListener(
+                new ISelectionChangedListener() {
+            
+                    public void selectionChanged(SelectionChangedEvent event) {
+                        IStructuredSelection sel = 
+                            (IStructuredSelection)event.getSelection();
+                        selectSchemaCbxAction();
+                        checkEmbeddedDbOrNoSchemaSelected(
+                                (DatabaseConnection)sel.getFirstElement());
+                        setUserAndPwdVisible(!m_isEmbeddedOrNoSelection);
+                    }
+                });
     }
     
     /**
-     * verify if selected schema is embedded or no schema is selected
-     * @param schemMap schema map
+     * Checks whether the given connection is embedded or <code>null</code>
+     * and sets internal state based on the result.
+     * 
+     * @param connection The connection to check. May be <code>null</code>.
      */
-    private void isEmbeddedDbOrNoSchemaSelected(
-            Map<String, Properties> schemMap) {
+    private void checkEmbeddedDbOrNoSchemaSelected(
+            DatabaseConnection connection) {
+        
         //if no item is selected, hide user and password field
-        if (m_schemaCbx.getSelectionIndex() == -1) {
+        if (connection == null) {
             m_isEmbeddedOrNoSelection = true;
             return;
         }
-        Properties currentProps = schemMap.get(
-                m_schemaCbx.getItem(m_schemaCbx.getSelectionIndex()));
-        if (currentProps.containsKey(HIBERNATE_CONNECTION_USERNAME)
-                && currentProps.containsKey(
-                        HIBERNATE_CONNECTION_PASSWORD)) {
+        
+        DatabaseConnectionInfo connInfo = 
+            connection.getConnectionInfo();
+        String username = 
+            connInfo.getProperty(PersistenceUnitProperties.JDBC_USER);
+        String password = 
+            connInfo.getProperty(PersistenceUnitProperties.JDBC_PASSWORD);
+        if (username != null && password != null) {
             m_isEmbeddedOrNoSelection = true;
-            String user = currentProps.getProperty(
-                    HIBERNATE_CONNECTION_USERNAME);
-            String pwd = currentProps.getProperty(
-                    HIBERNATE_CONNECTION_PASSWORD);
-            Hibernator.setUser(user);
-            Hibernator.setPw(pwd);
-            m_userText.setText(user);
-            m_pwdText.setText(pwd);
+            Hibernator.setUser(username);
+            Hibernator.setPw(password);
+            m_userText.setText(username);
+            m_pwdText.setText(password);
             enableOKButton(true);            
         } else {
-            IPreferenceStore store = Plugin.getDefault().getPreferenceStore();
-            m_userText.setText(store.getString(Constants.USER_KEY));
+            m_userText.setText(
+                    Plugin.getDefault().getPreferenceStore().getString(
+                            Constants.USER_KEY));
             m_isEmbeddedOrNoSelection = false;
         }
     }
@@ -391,14 +406,14 @@ public class DBLoginDialog extends TitleAreaDialog {
     }
     
     /** 
-     * show warning if no scheme selected or avaliable and disable ok button.
+     * show warning if no scheme selected or available and disable ok button.
      */
     private void selectSchemaCbxAction() {
         boolean isCorrect = true;
-        if (m_schemaCbx.getItemCount() == 0) {
+        if (m_availableConnections.isEmpty()) {
             setErrorMessage(Messages.DBLoginDialogNoSchemaAvailable);
             isCorrect = false;
-        } else if (m_schemaCbx.getSelectionIndex() == -1) {
+        } else if (m_connectionComboViewer.getSelection().isEmpty()) {
             setErrorMessage(Messages.DBLoginDialogNoSchemaSelected);
             isCorrect = false;
         } else {
@@ -421,12 +436,14 @@ public class DBLoginDialog extends TitleAreaDialog {
      * This method is called, when the OK button was pressed
      */
     protected void okPressed() {
+        IStructuredSelection sel = 
+            ((IStructuredSelection)m_connectionComboViewer.getSelection());
         m_user = m_userText.getText(); 
         m_pwd = m_pwdText.getText();
-        m_schemaName = m_schemaCbx.getItem(m_schemaCbx.getSelectionIndex());
+        m_dbConn = (DatabaseConnection)sel.getFirstElement();
         IPreferenceStore store = Plugin.getDefault().getPreferenceStore();
         store.setValue(Constants.USER_KEY, m_user);
-        store.setValue(Constants.SCHEMA_KEY, m_schemaName);
+        store.setValue(Constants.SCHEMA_KEY, m_dbConn.getName());
         setReturnCode(OK);
         close();
     }
@@ -460,8 +477,8 @@ public class DBLoginDialog extends TitleAreaDialog {
     /**
      * @return Returns the schema name.
      */
-    public String getSchemaName() {
-        return m_schemaName;
+    public DatabaseConnection getDatabaseConnection() {
+        return m_dbConn;
     }
     
     /**

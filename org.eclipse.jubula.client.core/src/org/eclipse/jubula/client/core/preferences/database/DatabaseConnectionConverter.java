@@ -25,6 +25,8 @@ import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.bidimap.DualHashBidiMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
 import org.eclipse.osgi.util.NLS;
@@ -83,6 +85,18 @@ public class DatabaseConnectionConverter {
         // nothing to initialize
     }
 
+    /**
+     * 
+     * @return the 0..n Database Connections found in the Preferences.
+     */
+    public static List<DatabaseConnection> computeAvailableConnections() {
+        return DatabaseConnectionConverter.convert(
+                Platform.getPreferencesService().getString(
+                        Activator.PLUGIN_ID, 
+                        DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS, 
+                        StringUtils.EMPTY, null));
+    }
+    
     /**
      * 
      * @param preferenceValue String representation of 
