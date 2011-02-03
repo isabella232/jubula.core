@@ -27,7 +27,7 @@
 		<fileset dir="${basedir}">
 			<include name="lib/*.jar"/>
 		</fileset>
-		<fileset dir="../org.eclipse.jubula.tools/build">
+		<fileset dir="../org.eclipse.jubula.tools/target">
 			<include name="**/*.jar"/>
 		</fileset>
 		<pathelement location="${build.dir}"/>
@@ -50,9 +50,6 @@
 	<target name="init">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${dist.dir}"/>
-		<ant antfile="../org.eclipse.jubula.tools/buildScript.xml" target="jar" inheritall="false">
-			<reference refid="classpath-common"/>
-		</ant>
 	</target>
 
 	<!-- ================================= 

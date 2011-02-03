@@ -52,6 +52,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
+import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.commands.AUTStartedCommand;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.commands.DisconnectFromAutAgentResponseCommand;
@@ -617,8 +618,8 @@ public class ClientTest implements IClientTest {
     /**
      * {@inheritDoc}
      */
-    public void pauseTestExecution() {
-        TestExecution.getInstance().pauseExecution();
+    public void pauseTestExecution(PauseMode pm) {
+        TestExecution.getInstance().pauseExecution(pm);
     }
 
     /**

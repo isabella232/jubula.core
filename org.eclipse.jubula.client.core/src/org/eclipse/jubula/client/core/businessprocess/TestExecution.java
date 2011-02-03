@@ -118,6 +118,32 @@ import org.osgi.framework.Constants;
  */
 public class TestExecution {
     /**
+     * @author BREDEX GmbH
+     * @created Feb 2, 2011
+     */
+    public enum PauseMode {
+        /**
+         * <code>TOGGLE</code> between <code>PAUSE</code> and
+         * <code>UNPAUSE</code>
+         */
+        TOGGLE,
+        /**
+         * <code>PAUSE</code>
+         */
+        PAUSE,
+        /**
+         * <code>UNPAUSE</code>
+         */
+        UNPAUSE,
+        /**
+         * <code>CONTINUE_WITHOUT_EH</code> unpause test execution withou
+         * executing the next event handler
+         */
+        CONTINUE_WITHOUT_EH
+    }
+    
+    
+    /**
      * <code>CLIENT_TEST_PLUGIN_ID</code>
      */
     private static final String CLIENT_TEST_PLUGIN_ID = 
@@ -906,7 +932,7 @@ public class TestExecution {
                         GeneralStorage.getInstance().getProject().getId()));
                 final boolean testOk = !msg.hasTestErrorEvent();
                 if (msg.getState() == CAPTestResponseMessage.PAUSE_EXECUTION) {
-                    pauseExecution();
+                    pauseExecution(PauseMode.PAUSE);
                 }
                 if (testOk) {
                     resultNode.setResult(m_trav.getSuccessResult(), null);
@@ -934,7 +960,7 @@ public class TestExecution {
                         }
                         if (ClientTestFactory.getClientTest()
                                 .isPauseTestExecutionOnError()) {
-                            pauseExecution();
+                            pauseExecution(PauseMode.PAUSE);
                         }
                     }
                     try {
@@ -1208,40 +1234,53 @@ public class TestExecution {
 
     /**
      * Toggles the pause state of the test execution
+     * @param pm the pause mode to use
      */
-    public void pauseExecution() {
-        setPaused(!isPaused());
-        if (isPaused()) {
-            if (LOG.isInfoEnabled()) {
-                LOG.info(Messages.TestsuiteIsPaused);
-            }
-            ClientTestFactory.getClientTest().fireTestExecutionChanged(
-                new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_PAUSED));
-        } else {
-            if (LOG.isInfoEnabled()) {
-                LOG.info(Messages.TestexecutionHasResumed);
-            }
-            // FIXME key "ACTIVATE_APPLICATION" should NOT be fix!
-            if (m_autConfig != null) {
-                if (Boolean.valueOf(m_autConfig.getValue("ACTIVATE_APPLICATION",  //$NON-NLS-1$
-                        StringConstants.EMPTY))) {
-                    sendActivateAUTMessage();
+    public void pauseExecution(PauseMode pm) {
+        switch (pm) {
+            case PAUSE:
+                if (!isPaused()) {
+                    pauseExecution(PauseMode.TOGGLE);
                 }
-            }
-            ClientTestFactory.getClientTest().fireTestExecutionChanged(
-                new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_START));
-        }
-    }
-    
-    /**
-     * Pauses the TestExecution.
-     * @param paused if true, the execution pauses, 
-     * if false, the execution continues
-     * 
-     */
-    public void pauseExecution(boolean paused) {
-        if (isPaused() != paused) {
-            pauseExecution();
+                break;
+            case UNPAUSE:
+                if (isPaused()) {
+                    pauseExecution(PauseMode.TOGGLE);
+                }
+                break;
+            case TOGGLE:
+                setPaused(!isPaused());
+                if (isPaused()) {
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info(Messages.TestsuiteIsPaused);
+                    }
+                    ClientTestFactory.getClientTest().fireTestExecutionChanged(
+                            new TestExecutionEvent(
+                                    TestExecutionEvent.TEST_EXEC_PAUSED));
+                } else {
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info(Messages.TestexecutionHasResumed);
+                    }
+                    // FIXME key "ACTIVATE_APPLICATION" should NOT be fix!
+                    if (m_autConfig != null) {
+                        if (Boolean.valueOf(m_autConfig.getValue(
+                                "ACTIVATE_APPLICATION", //$NON-NLS-1$
+                                StringConstants.EMPTY))) {
+                            sendActivateAUTMessage();
+                        }
+                    }
+                    ClientTestFactory.getClientTest().fireTestExecutionChanged(
+                            new TestExecutionEvent(
+                                    TestExecutionEvent.TEST_EXEC_START));
+                }
+                break;
+            case CONTINUE_WITHOUT_EH:
+                if (isPaused()) {
+                    pauseExecution(PauseMode.TOGGLE);
+                }
+                break;
+            default:
+                break;
         }
     }
     
