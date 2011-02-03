@@ -20,6 +20,7 @@ import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListene
 import org.eclipse.jubula.client.core.businessprocess.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -170,9 +171,12 @@ public interface IClientTest {
 
     /**
      * Pauses test exectuion.
+     * 
+     * @param pm
+     *            the pause mode to use
      */
-    public abstract void pauseTestExecution();
-
+    public abstract void pauseTestExecution(PauseMode pm);
+    
     /**
      * set pause test execution on error flag.
      * 

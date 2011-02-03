@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 
 
@@ -26,7 +27,8 @@ public class PauseTestSuiteHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(ExecutionEvent event) {
-        TestExecutionContributor.getInstance().pauseTestSuiteAction();
+        TestExecutionContributor.getInstance()
+            .pauseTestSuiteAction(PauseMode.TOGGLE);
         return null;
     }
 }

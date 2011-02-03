@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.ui.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
+import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 
 /**
  * @author BREDEX GmbH
@@ -23,6 +25,8 @@ public class ContinueTestSuiteWOEHHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(ExecutionEvent event) {
+        TestExecutionContributor.getInstance().pauseTestSuiteAction(
+                PauseMode.CONTINUE_WITHOUT_EH);
         return null;
     }
 }
