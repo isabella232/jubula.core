@@ -30,9 +30,12 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.AbstractHostBasedConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.H2ConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.MySQLConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
 import org.eclipse.jubula.client.ui.databinding.SimpleIntegerToStringConverter;
 import org.eclipse.jubula.client.ui.databinding.SimpleStringToIntegerConverter;
 import org.eclipse.jubula.client.ui.databinding.validators.StringToPortValidator;
@@ -174,34 +177,34 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 DataBindingContext dbc) {
 
             createLabel(parent, 
-                    I18n.getString("DatabaseConnection.Oracle.Hostname")); //$NON-NLS-1$
+                    I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
             final JBText hostnameText = new JBText(parent, SWT.BORDER);
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
-                    BeansObservables.observeValue(m_connInfo, 
-                            OracleConnectionInfo.PROP_NAME_HOSTNAME));
+                BeansObservables.observeValue(m_connInfo, 
+                        AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
 
             createLabel(parent, 
-                    I18n.getString("DatabaseConnection.Oracle.Port")); //$NON-NLS-1$
+                    I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
             final JBText portText = new JBText(parent, SWT.BORDER);
             UpdateValueStrategy portTargetToModelUpdateStrategy =
                 new UpdateValueStrategy();
             portTargetToModelUpdateStrategy
                 .setConverter(new SimpleStringToIntegerConverter())
                 .setAfterGetValidator(new StringToPortValidator(
-                        I18n.getString("DatabaseConnection.Oracle.Port"))); //$NON-NLS-1$
+                        I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
-                            OracleConnectionInfo.PROP_NAME_PORT),
+                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT),
                     portTargetToModelUpdateStrategy,
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
             
             createLabel(parent, 
-                    I18n.getString("DatabaseConnection.Oracle.Schema")); //$NON-NLS-1$
+                    I18n.getString("DatabaseConnection.Oracle.SID")); //$NON-NLS-1$
             final JBText schemaText = new JBText(parent, SWT.BORDER);
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
-                            OracleConnectionInfo.PROP_NAME_SCHEMA));
+                            AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME));
         }
 
         /**
@@ -232,11 +235,169 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         
     }
 
+    /**
+     * Creates detail area for, and manages, a {@link PostGreSQLConnectionInfo}.
+     * 
+     * @author BREDEX GmbH
+     */
+    private static final class PostGreSQLDetailBuilder 
+        implements IDetailAreaBuilder {
+
+        /** the managed connection info */
+        private PostGreSQLConnectionInfo m_connInfo = 
+            new PostGreSQLConnectionInfo();
+        
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void createDetailArea(Composite parent, 
+                DataBindingContext dbc) {
+
+            createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
+            final JBText hostnameText = new JBText(parent, SWT.BORDER);
+            dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
+                BeansObservables.observeValue(m_connInfo, 
+                        AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
+
+            createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
+            final JBText portText = new JBText(parent, SWT.BORDER);
+            UpdateValueStrategy portTargetToModelUpdateStrategy =
+                new UpdateValueStrategy();
+            portTargetToModelUpdateStrategy
+                .setConverter(new SimpleStringToIntegerConverter())
+                .setAfterGetValidator(new StringToPortValidator(
+                        I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
+            dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
+                    BeansObservables.observeValue(m_connInfo, 
+                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT),
+                    portTargetToModelUpdateStrategy,
+                    new UpdateValueStrategy().setConverter(
+                            new SimpleIntegerToStringConverter()));
+            
+            createLabel(parent, 
+                    I18n.getString("DatabaseConnection.PostGreSQL.Database")); //$NON-NLS-1$
+            final JBText schemaText = new JBText(parent, SWT.BORDER);
+            dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
+                    BeansObservables.observeValue(m_connInfo, 
+                            AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME));
+        }
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public String getTypeName() {
+            return "PostGreSQL"; //$NON-NLS-1$
+        }
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void initializeInfo(DatabaseConnectionInfo sourceInfo) {
+            if (sourceInfo instanceof PostGreSQLConnectionInfo) {
+                m_connInfo = (PostGreSQLConnectionInfo)sourceInfo;
+            }
+        }
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public DatabaseConnectionInfo getConnectionInfo() {
+            return m_connInfo;
+        }
+        
+    }
+
+    /**
+     * Creates detail area for, and manages, a {@link PostGreSQLConnectionInfo}.
+     * 
+     * @author BREDEX GmbH
+     */
+    private static final class MySQLDetailBuilder 
+        implements IDetailAreaBuilder {
+
+        /** the managed connection info */
+        private MySQLConnectionInfo m_connInfo = 
+            new MySQLConnectionInfo();
+        
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void createDetailArea(Composite parent, 
+                DataBindingContext dbc) {
+
+            createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
+            final JBText hostnameText = new JBText(parent, SWT.BORDER);
+            dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
+                BeansObservables.observeValue(m_connInfo, 
+                        AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
+
+            createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
+            final JBText portText = new JBText(parent, SWT.BORDER);
+            UpdateValueStrategy portTargetToModelUpdateStrategy =
+                new UpdateValueStrategy();
+            portTargetToModelUpdateStrategy
+                .setConverter(new SimpleStringToIntegerConverter())
+                .setAfterGetValidator(new StringToPortValidator(
+                        I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
+            dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
+                    BeansObservables.observeValue(m_connInfo, 
+                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT),
+                    portTargetToModelUpdateStrategy,
+                    new UpdateValueStrategy().setConverter(
+                            new SimpleIntegerToStringConverter()));
+            
+            createLabel(parent, 
+                    I18n.getString("DatabaseConnection.MySQL.Database")); //$NON-NLS-1$
+            final JBText schemaText = new JBText(parent, SWT.BORDER);
+            dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
+                    BeansObservables.observeValue(m_connInfo, 
+                            AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME));
+        }
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public String getTypeName() {
+            return "MySQL"; //$NON-NLS-1$
+        }
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void initializeInfo(DatabaseConnectionInfo sourceInfo) {
+            if (sourceInfo instanceof MySQLConnectionInfo) {
+                m_connInfo = (MySQLConnectionInfo)sourceInfo;
+            }
+        }
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public DatabaseConnectionInfo getConnectionInfo() {
+            return m_connInfo;
+        }
+        
+    }
+
     /** all available detail area builders */
     private IDetailAreaBuilder[] m_detailAreaBuilders = 
             new IDetailAreaBuilder [] {
                 new H2DetailBuilder(),
-                new OracleDetailBuilder()
+                new OracleDetailBuilder(),
+                new PostGreSQLDetailBuilder(),
+                new MySQLDetailBuilder()
             };
 
     /** the connection to edit within this page */

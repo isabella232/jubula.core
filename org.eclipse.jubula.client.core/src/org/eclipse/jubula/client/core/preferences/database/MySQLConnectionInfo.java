@@ -10,33 +10,32 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.preferences.database;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * 
  * @author BREDEX GmbH
- * @created 19.01.2011
+ * @created 04.02.2011
  */
-public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
-    
+public class MySQLConnectionInfo extends AbstractHostBasedConnectionInfo {
+
     /**
      * Constructor
      */
-    public OracleConnectionInfo() {
-        super(1521);
+    public MySQLConnectionInfo() {
+        super(3306);
     }
     
     @Override
     public String getConnectionUrl() {
-        StringBuilder sb = new StringBuilder("jdbc:oracle:thin:@"); //$NON-NLS-1$
-        sb.append(StringUtils.defaultString(getHostname()))
+        StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder.append("jdbc:mysql://").append(getHostname()) //$NON-NLS-1$
             .append(":").append(getPort()) //$NON-NLS-1$
-            .append(":").append(StringUtils.defaultString(getDatabaseName())); //$NON-NLS-1$
-        return sb.toString();
+            .append("/").append(getDatabaseName()); //$NON-NLS-1$
+        return urlBuilder.toString();
     }
 
     @Override
     public String getDriverClassName() {
-        return "oracle.jdbc.driver.OracleDriver"; //$NON-NLS-1$
+        return "com.mysql.jdbc.Driver"; //$NON-NLS-1$
     }
+
 }
