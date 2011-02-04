@@ -180,6 +180,11 @@ public class TestExecution {
     private boolean m_paused = false;
     
     /**
+     * skip the next error
+     */
+    private boolean m_skipError = false;
+    
+    /**
      * is execution stopped ?
      */
     private boolean m_stopped = false;
@@ -955,35 +960,28 @@ public class TestExecution {
                     }
                 }
 
+                while (isPaused()) {
+                    testConnection();
+                    TimeUtil.delay(100);
+                }
+                
                 if (!m_stopped) {
                     try {
-                        nextCap = testOk ? m_trav.next() : m_trav.next(msg
-                                .getTestErrorEvent().getId());
+                        nextCap = testOk || m_skipError ? m_trav.next()
+                                : m_trav.next(msg.getTestErrorEvent().getId());
+                        m_skipError = false;
                     } catch (JBException e) {
                         LOG.error(Messages.IncompleteTestdata, e);
                         fireError(e);
                     }
-                }
-                
-                
-                if (nextCap != null) {
-                    while (isPaused()) {
-                        try {
-                            testConnection();
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            if (LOG.isDebugEnabled()) {
-                                LOG.debug(Messages.ThreadInterrupted, e);
-                            }
-                            return;
+                    if (nextCap != null) {
+                        processCap(nextCap);
+                    } else {
+                        if (LOG.isInfoEnabled()) {
+                            LOG.info(Messages.TestsuiteFinished);
                         }
+                        endTestExecution();
                     }
-                    processCap(nextCap);
-                } else {
-                    if (LOG.isInfoEnabled()) {
-                        LOG.info(Messages.TestsuiteFinished);
-                    }
-                    endTestExecution();
                 }
             }
         };
@@ -1068,7 +1066,7 @@ public class TestExecution {
      * Tests the connection to server (sends a NullMessage to server)
      * 
      */
-    private void testConnection() {
+    protected void testConnection() {
         try {
             AUTConnection.getInstance().send(new NullMessage());
         } catch (CommunicationException e) {
@@ -1269,9 +1267,8 @@ public class TestExecution {
                 }
                 break;
             case CONTINUE_WITHOUT_EH:
-                if (isPaused()) {
-                    pauseExecution(PauseMode.TOGGLE);
-                }
+                m_skipError = true;
+                pauseExecution(PauseMode.UNPAUSE);
                 break;
             default:
                 break;
