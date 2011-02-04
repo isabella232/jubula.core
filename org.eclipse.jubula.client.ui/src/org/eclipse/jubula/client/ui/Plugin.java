@@ -50,6 +50,7 @@ import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.core.utils.IProgressListener;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.core.utils.PrefStoreHelper;
+import org.eclipse.jubula.client.core.utils.ProgressEvent;
 import org.eclipse.jubula.client.core.utils.ProgressEventDispatcher;
 import org.eclipse.jubula.client.ui.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.businessprocess.ComponentNameReuseBP;
@@ -1402,6 +1403,9 @@ public class Plugin extends AbstractUIPlugin
         Display.getDefault().syncExec(new Runnable() {
             @SuppressWarnings("synthetic-access")
             public void run() {
+                // FIXME enhance / remove our progress event dispatching mechanism
+                ProgressEventDispatcher.notifyListener(new ProgressEvent(
+                        ProgressEvent.CLOSE_PROGRESS_BAR, null, null));
                 getStatusLineManager().setErrorMessage(null);
                 setNormalCursor();
             }

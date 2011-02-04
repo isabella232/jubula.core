@@ -3,6 +3,6 @@
 \index{Set Data}
 \index{RCP!Design For Testability}
 
-Although \gd{} can relocate components in the \gdaut{} even when they are not named by the developers, naming components is nevertheless a good idea. In SWT and RCP there is no method like the Swing \bxname{setName} method to name components in the program code. However, you can improve the testability of your application by using the following method in your SWT or RCP code for the current component class: \bxname{setData(String key, String ComponentName)}. For the key, use \bxname{GD\_COMP\_NAME}. 
+Although \jb{} can relocate components in the \gdaut{} even when they are not named by the developers, naming components is nevertheless a good idea. In SWT and RCP there is no method like the Swing \bxname{setName} method to name components in the program code. However, you can improve the testability of your application by using the following method in your SWT or RCP code for the current component class: \bxname{setData(String key, String ComponentName)}. For the key, use \bxname{GD\_COMP\_NAME}. 
 
-Even if you do not name components, you can choose to have \gd{} generate unique names for your components in the \gdaut{} in the \gdaut{} dialog \bxpref{Defineaut}. 
+Even if you do not name components, you can choose to have \jb{} generate unique names for your components in the \gdaut{} in the \gdaut{} dialog \bxpref{Defineaut}. 

@@ -20,6 +20,7 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
@@ -70,6 +71,9 @@ public class TestResultTreeViewLabelProvider extends LabelProvider {
         Class nodePoClass = Hibernator.getClass(node);
         if (Hibernator.isPoClassSubclass(nodePoClass, ITestSuitePO.class)) {
             image = IconConstants.TS_IMAGE;
+        } else if (Hibernator.isPoClassSubclass(nodePoClass,
+                ISpecTestCasePO.class)) {
+            image = IconConstants.TC_IMAGE;
         }
         if (Hibernator.isPoClassSubclass(nodePoClass, IExecTestCasePO.class)) {
             if (Hibernator.isPoClassSubclass(nodePoClass,

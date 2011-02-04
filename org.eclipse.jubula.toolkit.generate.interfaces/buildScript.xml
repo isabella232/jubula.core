@@ -5,17 +5,7 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-
-<!-- ====================================================================== 
-     Dec 2, 2009 2:17:55 PM                                                        
-
-     Generate Interfaces    
-     Generating interfaces for the toolkit-specific Impl-Classes
-                   
-     berndk                                                                
-     ====================================================================== -->
 <project name="org.eclipse.jubula.toolkit.generate.interfaces" default="generate">
-
 	<property name="build.classes" value="build/classes" />
 	<property name="build.jar" value="app" />
 	<property name="build.resources" value="app/resources" />
@@ -25,16 +15,8 @@
 	<property name="apache.lib" value="../org.eclipse.jubula.rc.common.orbit" />
 	<property name="GDTools" value="../org.eclipse.jubula.tools" />
 
-	<!-- 
-	load properties from build.properties file. We expect at least the 
-	following properties to be defined there:
-	 * javacSource
-	 * javacTarget 
-	-->
-	<property file="build.properties"/>
-	
 	<path id="classpathInterfaces">
-		<fileset dir="${GDTools}/build/jars">
+		<fileset dir="${GDTools}/target">
 			<include name="**/*.jar" />
 		</fileset>
 		<fileset dir="${apache.lib}">
@@ -57,13 +39,11 @@
 			</fileset>
 		</copy>
 		
-		<ant dir="${GDTools}" antfile="buildScript.xml" target="jar" inheritAll="false" />
-		
 		<copy todir="${build.lib}">
 			<fileset dir="${apache.lib}">
 				<include name="*.jar" />
 			</fileset>
-			<fileset dir="../org.eclipse.jubula.tools/build/jars">
+			<fileset dir="../org.eclipse.jubula.tools/target">
 				<include name="**/*.jar" />
 			</fileset>
 			<fileset dir="../org.eclipse.jubula.tools/lib">
@@ -79,8 +59,8 @@
 			destdir="${build.classes}" 
 			fork="true" 
 			executable="javac" 
-			source="${javacSource}" 
-			target="${javacTarget}">
+			source="1.5" 
+			target="1.5">
 			<classpath refid="classpathInterfaces" />
 		</javac>
 
@@ -88,8 +68,17 @@
 			<manifest>
 				<attribute name="Main-Class" value="org.eclipse.jubula.toolkit.generate.interfaces.GenerateInterfaces" />
 				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Class-Path" value="./resources/ lib/commons-configuration-1.1.jar lib/xstream-1.3.1.jar lib/commons-io-1.0.jar lib/org.apache.commons.lang_2.4.0.v201005080502.jar lib/org.eclipse.jubula.tools.jar lib/org.apache.commons.collections_3.2.0.v201005080500.jar lib/org.apache.commons.logging_1.1.1.v201005080502.jar lib/org.apache.log4j_1.2.15.v201005080500.jar lib/xpp3_min-1.1.3.4.O.jar" />
-
+				<attribute name="Class-Path" value="
+					./resources/ 
+					lib/commons-configuration-1.1.jar 
+					lib/xstream-1.3.1.jar 
+					lib/commons-io-1.0.jar 
+					lib/org.apache.commons.lang_2.4.0.v201005080502.jar 
+					lib/org.eclipse.jubula.tools-0.9.0-SNAPSHOT.jar
+					lib/org.apache.commons.collections_3.2.0.v201005080500.jar 
+					lib/org.apache.commons.logging_1.1.1.v201005080502.jar 
+					lib/org.apache.log4j_1.2.15.v201005080500.jar 
+					lib/xpp3_min-1.1.3.4.O.jar" />
 			</manifest>
 			<fileset dir="${build.classes}" />
 		</jar>
@@ -103,7 +92,6 @@
 
 	<target name="clean">
 		<delete dir="${build.classes}" />
-		<delete file="${build.jar}/*.jar" />
 		<delete dir="${build.jar}" />
 		<delete dir="${build.lib}" />
 	</target>

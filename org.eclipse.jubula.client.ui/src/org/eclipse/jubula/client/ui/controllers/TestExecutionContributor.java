@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListene
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
@@ -768,11 +769,12 @@ public class TestExecutionContributor
         getClientTest().stopTestExecution();
     }
 
+
     /**
-     * Stops the TestSuiteExecution
+     * {@inheritDoc}
      */
-    public void pauseTestSuiteAction() {
-        getClientTest().pauseTestExecution();
+    public void pauseTestSuiteAction(PauseMode pm) {
+        getClientTest().pauseTestExecution(pm);
     }
     
     /**

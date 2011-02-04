@@ -1,10 +1,10 @@
-One of the main advantages of \gd{} tests is their structure. Tests are made up of small, reusable modules called keywords. A keyword is simply a \gdcase{} which carries out a certain action or certain actions in the \gdaut{}. The \gdcase{} is named to reflect what it does and is designed to be reusable. 
+One of the main advantages of \jb{} tests is their structure. Tests are made up of small, reusable modules called keywords. A keyword is simply a \gdcase{} which carries out a certain action or certain actions in the \gdaut{}. The \gdcase{} is named to reflect what it does and is designed to be reusable. 
 
 \subsubsection{General guidelines for keywords}
 \label{BPKeywordsGeneral}
 As a rule of thumb, we recommend making a keyword for any action or actions you execute more than once in your test. This ensures that maintenance is much easier later -- you will only have one place to change in the test, instead of many.  
 
-So what is a keyword? A good example is \bxname{Login}. It is obvious from the name what this \gdcase{} does. It contains three of the \gd{} unbound modules from the library \gdproject{}:\\
+So what is a keyword? A good example is \bxname{Login}. It is obvious from the name what this \gdcase{} does. It contains three of the \jb{} unbound modules from the library \gdproject{}:\\
 \begin{itemize}
 \item ub\_cti\_replaceText (which has the parameter \bxshell{TEXT})
 \item ub\_cti\_replaceText (which has the parameter \bxshell{TEXT})

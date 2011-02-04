@@ -52,6 +52,7 @@ import org.eclipse.jubula.client.core.businessprocess.JobConfiguration;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
+import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -972,7 +973,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 m_clcServiceImpl.tsDone(isNoErrorWhileExecution() ? 0 : 1);
                 break;
             case TestExecutionEvent.TEST_EXEC_PAUSED:
-                TestExecution.getInstance().pauseExecution(false);
+                TestExecution.getInstance().pauseExecution(PauseMode.UNPAUSE);
                 break;
             case TestExecutionEvent.TEST_EXEC_ERROR:
             case TestExecutionEvent.TEST_EXEC_FAILED:

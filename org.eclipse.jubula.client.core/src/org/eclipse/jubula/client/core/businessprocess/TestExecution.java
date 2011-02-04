@@ -44,7 +44,6 @@ import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedE
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -58,6 +57,7 @@ import org.eclipse.jubula.client.core.model.ITDManagerPO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.model.ResultTreeBuilder;
 import org.eclipse.jubula.client.core.model.ResultTreeTracker;
@@ -88,8 +88,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -117,6 +117,32 @@ import org.osgi.framework.Constants;
  * @created 03.09.2004
  */
 public class TestExecution {
+    /**
+     * @author BREDEX GmbH
+     * @created Feb 2, 2011
+     */
+    public enum PauseMode {
+        /**
+         * <code>TOGGLE</code> between <code>PAUSE</code> and
+         * <code>UNPAUSE</code>
+         */
+        TOGGLE,
+        /**
+         * <code>PAUSE</code>
+         */
+        PAUSE,
+        /**
+         * <code>UNPAUSE</code>
+         */
+        UNPAUSE,
+        /**
+         * <code>CONTINUE_WITHOUT_EH</code> unpause test execution withou
+         * executing the next event handler
+         */
+        CONTINUE_WITHOUT_EH
+    }
+    
+    
     /**
      * <code>CLIENT_TEST_PLUGIN_ID</code>
      */
@@ -152,6 +178,11 @@ public class TestExecution {
      * is execution paused
      */
     private boolean m_paused = false;
+    
+    /**
+     * skip the next error
+     */
+    private boolean m_skipError = false;
     
     /**
      * is execution stopped ?
@@ -906,24 +937,14 @@ public class TestExecution {
                         GeneralStorage.getInstance().getProject().getId()));
                 final boolean testOk = !msg.hasTestErrorEvent();
                 if (msg.getState() == CAPTestResponseMessage.PAUSE_EXECUTION) {
-                    pauseExecution();
+                    pauseExecution(PauseMode.PAUSE);
                 }
                 if (testOk) {
                     resultNode.setResult(m_trav.getSuccessResult(), null);
-                    try {
-                        if (!m_stopped) {
-                            nextCap = m_trav.next();
-                        }
-                    } catch (JBException e) {
-                        LOG.error(Messages.IncompleteTestdata, e);
-                        fireError(e);
-                    }
                 } else {
                     // ErrorEvent has occured
                     TestErrorEvent event = msg.getTestErrorEvent();
-                    String eventType = event.getId();
-
-                    if (m_trav.getEventHandlerReentry(eventType).equals(
+                    if (m_trav.getEventHandlerReentry(event.getId()).equals(
                             ReentryProperty.RETRY)) {
                         resultNode.setResult(TestResultNode.RETRYING, event);
                     } else {
@@ -934,36 +955,33 @@ public class TestExecution {
                         }
                         if (ClientTestFactory.getClientTest()
                                 .isPauseTestExecutionOnError()) {
-                            pauseExecution();
+                            pauseExecution(PauseMode.PAUSE);
                         }
                     }
+                }
+
+                while (isPaused()) {
+                    testConnection();
+                    TimeUtil.delay(100);
+                }
+                
+                if (!m_stopped) {
                     try {
-                        if (!m_stopped) {
-                            nextCap = m_trav.next(eventType);
-                        }
+                        nextCap = testOk || m_skipError ? m_trav.next()
+                                : m_trav.next(msg.getTestErrorEvent().getId());
+                        m_skipError = false;
                     } catch (JBException e) {
                         LOG.error(Messages.IncompleteTestdata, e);
                         fireError(e);
                     }
-                }
-                if (nextCap != null) {
-                    while (isPaused()) {
-                        try {
-                            testConnection();
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            if (LOG.isDebugEnabled()) {
-                                LOG.debug(Messages.ThreadInterrupted, e);
-                            }
-                            return;
+                    if (nextCap != null) {
+                        processCap(nextCap);
+                    } else {
+                        if (LOG.isInfoEnabled()) {
+                            LOG.info(Messages.TestsuiteFinished);
                         }
+                        endTestExecution();
                     }
-                    processCap(nextCap);
-                } else {
-                    if (LOG.isInfoEnabled()) {
-                        LOG.info(Messages.TestsuiteFinished);
-                    }
-                    endTestExecution();
                 }
             }
         };
@@ -1048,7 +1066,7 @@ public class TestExecution {
      * Tests the connection to server (sends a NullMessage to server)
      * 
      */
-    private void testConnection() {
+    protected void testConnection() {
         try {
             AUTConnection.getInstance().send(new NullMessage());
         } catch (CommunicationException e) {
@@ -1208,40 +1226,52 @@ public class TestExecution {
 
     /**
      * Toggles the pause state of the test execution
+     * @param pm the pause mode to use
      */
-    public void pauseExecution() {
-        setPaused(!isPaused());
-        if (isPaused()) {
-            if (LOG.isInfoEnabled()) {
-                LOG.info(Messages.TestsuiteIsPaused);
-            }
-            ClientTestFactory.getClientTest().fireTestExecutionChanged(
-                new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_PAUSED));
-        } else {
-            if (LOG.isInfoEnabled()) {
-                LOG.info(Messages.TestexecutionHasResumed);
-            }
-            // FIXME key "ACTIVATE_APPLICATION" should NOT be fix!
-            if (m_autConfig != null) {
-                if (Boolean.valueOf(m_autConfig.getValue("ACTIVATE_APPLICATION",  //$NON-NLS-1$
-                        StringConstants.EMPTY))) {
-                    sendActivateAUTMessage();
+    public void pauseExecution(PauseMode pm) {
+        switch (pm) {
+            case PAUSE:
+                if (!isPaused()) {
+                    pauseExecution(PauseMode.TOGGLE);
                 }
-            }
-            ClientTestFactory.getClientTest().fireTestExecutionChanged(
-                new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_START));
-        }
-    }
-    
-    /**
-     * Pauses the TestExecution.
-     * @param paused if true, the execution pauses, 
-     * if false, the execution continues
-     * 
-     */
-    public void pauseExecution(boolean paused) {
-        if (isPaused() != paused) {
-            pauseExecution();
+                break;
+            case UNPAUSE:
+                if (isPaused()) {
+                    pauseExecution(PauseMode.TOGGLE);
+                }
+                break;
+            case TOGGLE:
+                setPaused(!isPaused());
+                if (isPaused()) {
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info(Messages.TestsuiteIsPaused);
+                    }
+                    ClientTestFactory.getClientTest().fireTestExecutionChanged(
+                            new TestExecutionEvent(
+                                    TestExecutionEvent.TEST_EXEC_PAUSED));
+                } else {
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info(Messages.TestexecutionHasResumed);
+                    }
+                    // FIXME key "ACTIVATE_APPLICATION" should NOT be fix!
+                    if (m_autConfig != null) {
+                        if (Boolean.valueOf(m_autConfig.getValue(
+                                "ACTIVATE_APPLICATION", //$NON-NLS-1$
+                                StringConstants.EMPTY))) {
+                            sendActivateAUTMessage();
+                        }
+                    }
+                    ClientTestFactory.getClientTest().fireTestExecutionChanged(
+                            new TestExecutionEvent(
+                                    TestExecutionEvent.TEST_EXEC_START));
+                }
+                break;
+            case CONTINUE_WITHOUT_EH:
+                m_skipError = true;
+                pauseExecution(PauseMode.UNPAUSE);
+                break;
+            default:
+                break;
         }
     }
     

@@ -10,9 +10,9 @@
 
 \index{Event Handler}
 \label{errortypes}
-\gd{} offers \gdehandlers{} to react to errors during test execution and to continue the test in a way you define. 
+\jb{} offers \gdehandlers{} to react to errors during test execution and to continue the test in a way you define. 
 
-An \gdehandler{} \gdmarpar{../../../share/PS/EventHandler}{\gdehandler} is a \gdcase{} used with a special function. It is only executed when a certain error occurs. There are four different types of error in \gd{}, and each \gdcase{} can have an \gdehandler{} for each error type.  You can specify different reactions to each different error type, so that serious errors can stop the test, but unimportant errors will not affect the execution.  
+An \gdehandler{} \gdmarpar{../../../share/PS/EventHandler}{\gdehandler} is a \gdcase{} used with a special function. It is only executed when a certain error occurs. There are four different types of error in \jb{}, and each \gdcase{} can have an \gdehandler{} for each error type.  You can specify different reactions to each different error type, so that serious errors can stop the test, but unimportant errors will not affect the execution.  
 
 Because \gdehandlers{} are normal \gdcases{}, they can also contain \gdehandlers{},  can do any of the things that a normal \gdcase{} can do. The only restriction is that you cannot add a \gdcase{} to itself as an \gdehandler{}. 
 

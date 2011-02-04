@@ -29,6 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -589,7 +590,7 @@ public class Traverser {
                     popEventStack();
                 }
             } else if (reentryProp.equals(ReentryProperty.STOP)) {
-                TestExecution.getInstance().pauseExecution(true);
+                TestExecution.getInstance().pauseExecution(PauseMode.PAUSE);
                 popEventStack();
             } else if (reentryProp.equals(ReentryProperty.RETRY)) {
                 popEventStack();

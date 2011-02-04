@@ -4,13 +4,13 @@ which should be considered when specifying your tests.
 
 \subsubsection{Batch vs. Interactive}
 
-Specifying tests with the \GD{}  GUI is necessarily an \emph{interactive}
+Specifying tests with the \jb{}  GUI is necessarily an \emph{interactive}
 process, as the user is actively working with the program, providing
 input and responding to feedback. 
 
 Test execution, however, can be
 carried out either in an interactive or a \emph{batch}
-process. \GD{} provides some test actions that are meant for interactive
+process. \jb{} provides some test actions that are meant for interactive
 use, such as the \bxcaption{Pause} action for the
 \bxcaption{Application}  component. This action pauses test
 execution, waiting for the user command to either continue or stop
@@ -19,7 +19,7 @@ test execution.
 However, when tests are intended for \emph{batch} execution, as is the
 case when using the Command Line Client, such
 actions lose their meaning, as no user is expected to be present to
-respond. \GD thus ignores interactive actions in this case.
+respond. \jb{} thus ignores interactive actions in this case.
 
 \bxtipp{We recommend starting tests with a \bxname{wait for component} action. This eliminates timing problems with batch runs. }
 

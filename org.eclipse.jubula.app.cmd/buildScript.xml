@@ -17,7 +17,6 @@
 					you can use projects name in 90%.
 	-->
   	<property name="app.name"       	value="org.eclipse.jubula.app.cmd"/>
-	<property name="manifest.classpath" value="manifest.classpath"/>
 
 	<!-- 
 		general definitions
