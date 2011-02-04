@@ -27,20 +27,18 @@
 \index{AUT Agent!Starting}
 \index{Start!AUT Agent}
 \label{otherportnumber}
-The \gdagent{} is the server part of \jb{}. It runs on the same machine as the \gdaut{} and allows \jb{} to communicate with the \gdaut{} and control it during test execution. 
+The \gdagent{} is the server component of \jb{}. It runs on the same machine as the \gdaut{} and allows \jb{} to communicate with the \gdaut{} and control it during test execution. 
 
 \subsection{Windows users}
 \begin{enumerate}
 \item Start the \gdagent{} via the start menu:\\
-\bxmenu{Start}{\jb{}}{Start \gdserver{}}. 
+\bxmenu{Start}{\jb{}}{Start \gdagent{}}. 
+\item The  \gdagent{} is started on port number 60000 unless you enter a different port number as a parameter \bxpref{tasksagentcmd}. 
 
-\item This starts the \gdserver on the 
-default port number given during installation (usually 60000).
-\bxtipp{You can find out/change the default port number in the Configuration Tool.}
+
 
 You can see and stop the \gdagent{} in the system tray.  
 
-\item  For information on using the command line interface to start the \gdserver, and which parameters can be used to start it, see the later section \bxpref{tasksservercmd}. 
 \end{enumerate}
 
 \subsection{Linux users}
@@ -50,53 +48,33 @@ Use the script:\\
 
 You can see and stop the \gdagent{} in the system tray. 
 
-\subsection{Starting the \gdserver from the command line}
-\label{tasksservercmd}
+\subsection{Starting the \gdagent{} from the command line: options and parameters}
+\index{AUT Agent!Quiet Mode}
+\index{AUT Agent!Parameters}
+\index{AUT Agent!Quiet Mode}
+\index{AUT Agent!Parameters}
+\label{tasksagentcmd}
+\label{TasksAgentLenient}
+
 \begin{enumerate}
-\item Start the \gdserver from the command line with this command:\\
+\item Start the \gdagent{} from the Windows command line with this command:\\
 \bxshell{autagent.exe (-p <port number>)}
 
-\item If no port number argument is given, 
-the \gdserver will start on the default port, specified during installation. 
+\item If no port number argument is given, the \gdagent{}  will start on the default port 60000. 
 
-\item  For information which parameters can be used to start the \gdserver{}, see the later section \bxpref{tasksservercmd}. 
+\item You can use the following parameters when starting the \gdagent{}:
 
-\end{enumerate}
-
-\subsubsection{Parameters for the \gdserver}
-\index{AUT Agent!Quiet Mode}
-\index{AUT Agent!Parameters}
-\begin{enumerate}
-\item If you are starting the \gdserver from the command line interface or shell you can start it in one of two modes: verbose and quiet by entering the following parameters after the \gdserver{} command:\\
 \begin{description}
-\item [Verbose: \bxshell{-v}]{You will see a dialog to tell you whether the \gdserver{} has started successfully or not.}
-\item [Quiet \bxshell{-q}]{You will see no dialog if the \gdserver{} starts successfully. If the \gdserver{} does not start successfully, the error is written to the console.}
+\item [\bxshell{-p}:]{Port number. Enter the port number you wish to start the \gdagent{} on. }
+\bxtipp{You can also use the environment variable \bxcaption{GD\_AUT\_AGENT\_PORT} to set the port number that should be used as a default when you start the \gdagent{}.}
+\item[\bxshell{-l}:]{Lenient mode. The lenient mode for the \gdagent{} allows \gdauts{} launched  by other \gdauts{} to be tested \bxpref{TasksLenientTest}. You can also change the mode of the currently running \gdagent{} via the system tray. Right-click the \gdagent{} icon and (de)select \bxname{Strict \gdaut{} Management} from the menu.}
+\bxtipp{The default mode for the \gdagent{} is \bxname{strict}.}
+\item [\bxshell{-v}:]{Verbose mode. You will see a dialog to tell you whether the \gdagent{} has started successfully or not.}
+\item [\bxshell{-q}:]{Quiet mode. You will see no dialog if the \gdagent{} starts successfully. If the \gdagent{} does not start successfully, the error is written to the console.}
+\item [\bxshell{-h}:]{Help. Enter this parameter to see a list of options for the \gdagent{}.}
 \end{description}
 
-\end{enumerate}
-\bxtipp{The parameter \bxshell{-h} displays a list of options for the \gdserver{}}. 
+\item The \gdagent{} can be started multiple times -- either on the same machine (using a different port number for each instance) or on multiple machines for distributed testing. 
 
-\subsubsection{Starting the \gdagent{} in lenient mode}
-\label{TasksAgentLenient}
-\index{AUT Agent!Quiet Mode}
-\index{AUT Agent!Parameters}
-
-The lenient mode for the \gdagent{} allows \gdauts{} launched  by other \gdauts{} to be tested \bxpref{TasksLenientTest}.
-
-To start the \gdagent{} in the lenient mode, ener \bxshell{-l} as a command line parameter when starting the \gdagent{}. 
-
-You can also change the mode of the currently running \gdagent{} via the system tray. Right-click the \gdagent{} icon and (de)select \bxname{Strict \gdaut{} Management} from the menu. 
-
-\bxtipp{The default mode for the \gdagent{} is \bxname{strict}.}
-
-
-\subsection{Starting the \gdserver more than once}
-\begin{enumerate}
-\item You can start the \gdserver{} multiple times using a different
-port number for each instance. 
-\item You can start the \gdserver on multiple machines, as long as the \gdserver is installed on them.
-\item Ask your system administrator for available  port numbers.
-\item Give the port number for each \gdserver either as an environment variable
-called \bxcaption{GD\_AUT\_AGENT\_PORT} or as a command line argument. 
 \end{enumerate}
 
