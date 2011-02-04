@@ -44,7 +44,6 @@ import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedE
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -58,6 +57,7 @@ import org.eclipse.jubula.client.core.model.ITDManagerPO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.model.ResultTreeBuilder;
 import org.eclipse.jubula.client.core.model.ResultTreeTracker;
@@ -88,8 +88,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
 import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -178,6 +178,11 @@ public class TestExecution {
      * is execution paused
      */
     private boolean m_paused = false;
+    
+    /**
+     * skip the next error
+     */
+    private boolean m_skipError = false;
     
     /**
      * is execution stopped ?
@@ -936,20 +941,10 @@ public class TestExecution {
                 }
                 if (testOk) {
                     resultNode.setResult(m_trav.getSuccessResult(), null);
-                    try {
-                        if (!m_stopped) {
-                            nextCap = m_trav.next();
-                        }
-                    } catch (JBException e) {
-                        LOG.error(Messages.IncompleteTestdata, e);
-                        fireError(e);
-                    }
                 } else {
                     // ErrorEvent has occured
                     TestErrorEvent event = msg.getTestErrorEvent();
-                    String eventType = event.getId();
-
-                    if (m_trav.getEventHandlerReentry(eventType).equals(
+                    if (m_trav.getEventHandlerReentry(event.getId()).equals(
                             ReentryProperty.RETRY)) {
                         resultNode.setResult(TestResultNode.RETRYING, event);
                     } else {
@@ -963,33 +958,30 @@ public class TestExecution {
                             pauseExecution(PauseMode.PAUSE);
                         }
                     }
+                }
+
+                while (isPaused()) {
+                    testConnection();
+                    TimeUtil.delay(100);
+                }
+                
+                if (!m_stopped) {
                     try {
-                        if (!m_stopped) {
-                            nextCap = m_trav.next(eventType);
-                        }
+                        nextCap = testOk || m_skipError ? m_trav.next()
+                                : m_trav.next(msg.getTestErrorEvent().getId());
+                        m_skipError = false;
                     } catch (JBException e) {
                         LOG.error(Messages.IncompleteTestdata, e);
                         fireError(e);
                     }
-                }
-                if (nextCap != null) {
-                    while (isPaused()) {
-                        try {
-                            testConnection();
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            if (LOG.isDebugEnabled()) {
-                                LOG.debug(Messages.ThreadInterrupted, e);
-                            }
-                            return;
+                    if (nextCap != null) {
+                        processCap(nextCap);
+                    } else {
+                        if (LOG.isInfoEnabled()) {
+                            LOG.info(Messages.TestsuiteFinished);
                         }
+                        endTestExecution();
                     }
-                    processCap(nextCap);
-                } else {
-                    if (LOG.isInfoEnabled()) {
-                        LOG.info(Messages.TestsuiteFinished);
-                    }
-                    endTestExecution();
                 }
             }
         };
@@ -1074,7 +1066,7 @@ public class TestExecution {
      * Tests the connection to server (sends a NullMessage to server)
      * 
      */
-    private void testConnection() {
+    protected void testConnection() {
         try {
             AUTConnection.getInstance().send(new NullMessage());
         } catch (CommunicationException e) {
@@ -1275,9 +1267,8 @@ public class TestExecution {
                 }
                 break;
             case CONTINUE_WITHOUT_EH:
-                if (isPaused()) {
-                    pauseExecution(PauseMode.TOGGLE);
-                }
+                m_skipError = true;
+                pauseExecution(PauseMode.UNPAUSE);
                 break;
             default:
                 break;
