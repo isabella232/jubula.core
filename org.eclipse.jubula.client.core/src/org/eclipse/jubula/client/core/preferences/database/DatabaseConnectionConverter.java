@@ -58,6 +58,8 @@ public class DatabaseConnectionConverter {
         // preferences, so change them with care
         CONNECTION_CLASS_LOOKUP.put("H2", H2ConnectionInfo.class); //$NON-NLS-1$
         CONNECTION_CLASS_LOOKUP.put("Oracle", OracleConnectionInfo.class); //$NON-NLS-1$
+        CONNECTION_CLASS_LOOKUP.put("PostGreSQL", PostGreSQLConnectionInfo.class); //$NON-NLS-1$
+        CONNECTION_CLASS_LOOKUP.put("MySQL", MySQLConnectionInfo.class); //$NON-NLS-1$
     }
     
     /** the logger */
@@ -125,6 +127,14 @@ public class DatabaseConnectionConverter {
                 }
                 Class<? extends DatabaseConnectionInfo> infoClass = 
                     (Class)CONNECTION_CLASS_LOOKUP.get(connInfo[0]);
+                if (infoClass == null) {
+                    // no corresponding class could be found for the 
+                    // connection type
+                    LOG.error(NLS.bind(
+                            Messages.DatabaseConnectionInvalidPreferenceString, 
+                            connection));
+                    continue;
+                }
                 try {
                     DatabaseConnectionInfo infoBean = infoClass.newInstance();
                     BeanUtils.populate(infoBean, beanProps);
