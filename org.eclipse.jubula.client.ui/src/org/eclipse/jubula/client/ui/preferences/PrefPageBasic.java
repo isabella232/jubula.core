@@ -172,7 +172,7 @@ public class PrefPageBasic extends PreferencePage implements
         createDataDirGroup(composite);
 
         Label hint = new Label(composite, SWT.NONE);
-        hint.setText(Messages.GuiDancerPrefPageBasicHint);
+        hint.setText(Messages.JubulaPrefPageBasicHint);
 
         addListener();
 
@@ -194,7 +194,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createShowOrigTestCaseName(Composite composite) {
         m_showOrigName = new Button(composite, SWT.CHECK);
-        m_showOrigName.setText(Messages.GuiDancerPrefPageBasicShowOrig);
+        m_showOrigName.setText(Messages.JubulaPrefPageBasicShowOrig);
         m_showOrigName.setSelection(getPreferenceStore()
                 .getBoolean(Constants.SHOWORIGINALNAME_KEY));
     }
@@ -428,7 +428,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createMinimizeClientButton(Composite composite) {
         m_minimize = new Button(composite, SWT.CHECK);
-        m_minimize.setText(Messages.GuiDancerPrefPageBasicMinimize);
+        m_minimize.setText(Messages.JubulaPrefPageBasicMinimize);
         m_minimize.setSelection(getPreferenceStore()
                 .getBoolean(Constants.MINIMIZEONSUITESTART_KEY));
     }
@@ -438,7 +438,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createAskStopAUTButton(Composite composite) {
         m_askStopAUT = new Button(composite, SWT.CHECK);
-        m_askStopAUT.setText(Messages.GuiDancerPrefPageBasicAskStopAUT);
+        m_askStopAUT.setText(Messages.JubulaPrefPageBasicAskStopAUT);
         m_askStopAUT.setSelection(getPreferenceStore()
                 .getBoolean(Constants.ASKSTOPAUT_KEY));
     }
@@ -448,7 +448,7 @@ public class PrefPageBasic extends PreferencePage implements
      */
     private void createTreeScrollButton(Composite composite) {
         m_treeScroll = new Button(composite, SWT.CHECK);
-        m_treeScroll.setText(Messages.GuiDancerPrefPageBasicScroll);
+        m_treeScroll.setText(Messages.JubulaPrefPageBasicScroll);
         m_treeScroll.setSelection(getPreferenceStore()
                 .getBoolean(Constants.TREEAUTOSCROLL_KEY));
     }

@@ -515,7 +515,7 @@ public class SpecTestCaseGUIPropertySource
                         Plugin.getDefault().getActiveGDEditor();
                     if (activeEditor == null) {
                         LOG.error(Messages
-                                .ActiveGUIdancerEditorReferenceNotNull);
+                                .ActiveJubulaEditorReferenceNotNull);
                         return false;
                     }
 

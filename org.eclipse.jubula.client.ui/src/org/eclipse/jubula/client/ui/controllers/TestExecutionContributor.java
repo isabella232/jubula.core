@@ -364,22 +364,24 @@ public class TestExecutionContributor
     private String getConnectionMessage(String message) {
         String msg = message;
         try {
-            msg = NLS.bind(Messages.
-                    TestExecutionContributorConnectedToGuiDancerServer1,
-                new Object[]{m_server, m_port});
+            msg = NLS.bind(
+                    Messages.TestExecutionContributorConnectedToAUTAgent1,
+                    new Object[] { m_server, m_port });
             if (Messages.StartAutBPLocalhost.equals(m_server.toLowerCase())) {
-                msg = NLS.bind(Messages.
-                        TestExecutionContributorConnectedToGuiDancerServer2,
-                    new Object[]{m_server, m_port});
-            } else if (m_server.equals(InetAddress.getLocalHost().getHostName())
-                || m_server.equals(InetAddress.getLocalHost().getHostAddress())
-                || m_server.equals(InetAddress.getLocalHost()
-                    .getCanonicalHostName())) {
-                
-                msg = NLS.bind(Messages.
-                        TestExecutionContributorConnectedToGuiDancerServer3,
-                    new Object[]{m_server,
-                        Messages.StartAutBPLocalhost, m_port});
+                msg = NLS.bind(
+                        Messages.TestExecutionContributorConnectedToAUTAgent2,
+                        new Object[] { m_server, m_port });
+            } else if (m_server
+                    .equals(InetAddress.getLocalHost().getHostName())
+                    || m_server.equals(InetAddress.getLocalHost()
+                            .getHostAddress())
+                    || m_server.equals(InetAddress.getLocalHost()
+                            .getCanonicalHostName())) {
+
+                msg = NLS.bind(
+                        Messages.TestExecutionContributorConnectedToAUTAgent3,
+                        new Object[] { m_server, Messages.StartAutBPLocalhost,
+                            m_port });
             }
         } catch (UnknownHostException e) {
             // really do nothing
@@ -472,7 +474,7 @@ public class TestExecutionContributor
                 // no changing for the actions, see AUTServerEvent
                 break;
             case AutStarterEvent.SERVER_CANNOT_CONNECTED:
-                error = Messages.InfoDetailConnGuiDancerServerFailed;
+                error = Messages.InfoDetailConnectToAutAgentFailed;
                 statusLineMessage = Messages.StatusLine_NotConnected;
                 DataEventDispatcher.getInstance().fireServerConnectionChanged(
                         ServerState.Disconnected);

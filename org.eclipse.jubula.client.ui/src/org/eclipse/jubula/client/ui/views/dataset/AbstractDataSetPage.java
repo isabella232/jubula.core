@@ -539,7 +539,7 @@ public abstract class AbstractDataSetPage extends Page
         // Create and configure the "Add" button
         setAddButton(new Button(parent, SWT.PUSH | SWT.CENTER));
         getAddButton().setData(WIDGET_NAME_KEY, "DataSetView.AddButton"); //$NON-NLS-1$
-        getAddButton().setText(Messages.GuiDancerDataSetViewAppend);
+        getAddButton().setText(Messages.JubulaDataSetViewAppend);
         GridData gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80;
         getAddButton().setLayoutData(gridData);
@@ -559,7 +559,7 @@ public abstract class AbstractDataSetPage extends Page
         //  Create and configure the "Delete" button
         setDeleteButton(new Button(parent, SWT.PUSH | SWT.CENTER));
         getDeleteButton().setData(WIDGET_NAME_KEY, "DataSetView.DeleteButton"); //$NON-NLS-1$
-        getDeleteButton().setText(Messages.GuiDancerDataSetViewDelete);
+        getDeleteButton().setText(Messages.JubulaDataSetViewDelete);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80; 
         getDeleteButton().setLayoutData(gridData); 
