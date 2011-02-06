@@ -68,13 +68,13 @@
 				<type>java.lang.String</type>
 				<defaultValue>AUT_DEFAULT</defaultValue>
 				<valueSet>
-					<element name="CompSystem.MethodDefault" value="AUT_DEFAULT"/>
-					<element name="CompSystem.None" value="NONE"/>
-					<element name="CompSystem.MethodTitle" value="TITLEBAR"/>
+					<element name="CompSystem.MethodDefault"   value="AUT_DEFAULT"/>
+					<element name="CompSystem.None"            value="NONE"/>
+					<element name="CompSystem.MethodTitle"     value="TITLEBAR"/>
 					<element name="CompSystem.MethodNorthWest" value="NW"/>
 					<element name="CompSystem.MethodNorthEast" value="NE"/>
 					<element name="CompSystem.MethodSouthWest" value="SW"/>
-					<element name="CompSystem.MethodSouthEast" value="SE"/>
+					<element name="CompSystem.MethodSouthEast" value="SE"/>					<element name="CompSystem.MethodCenter"    value="CENTER"/>
 				</valueSet>
 			</param>
 		</action>
