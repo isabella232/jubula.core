@@ -27,8 +27,8 @@
 		<fileset dir="${basedir}">
 			<include name="lib/*.jar"/>
 		</fileset>
-		<fileset dir="../org.eclipse.jubula.tools/target">
-			<include name="**/*.jar"/>
+		<fileset dir="../org.eclipse.jubula.site/target/site/plugins">
+			<include name="*.jar"/>
 		</fileset>
 		<pathelement location="${build.dir}"/>
 		<path refid="classpath-common">
