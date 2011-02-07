@@ -57,6 +57,7 @@
       <import plugin="org.apache.oro" version="2.0.8" match="compatible"/>
    </requires>
 
+<!--
    <plugin
          id="org.eclipse.jubula.client.archive"
          download-size="0"
@@ -166,7 +167,7 @@
          install-size="0"
          version="0.9.0.qualifier"
          unpack="false"/>
-
+-->
    <plugin
          id="org.eclipse.jubula.tools"
          download-size="0"
