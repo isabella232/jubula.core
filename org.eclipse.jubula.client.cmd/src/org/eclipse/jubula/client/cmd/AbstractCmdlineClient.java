@@ -13,7 +13,9 @@ package org.eclipse.jubula.client.cmd;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -35,6 +37,8 @@ import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -42,6 +46,7 @@ import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.Message;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -404,10 +409,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     private void preValidate(JobConfiguration job) throws PreValidateException {
         StringBuilder errorMsg = new StringBuilder();
         errorMsg.append(Messages.ClientMissingArgs);
-        if (job.getDbscheme() == null) {
-            // FIXME this is now a misleading error message because the 
-            //       argument might be there but not correspond to any
-            //       DatabaseConnection in the preferences
+        if (job.getDbConnectionName() == null) {
             appendError(errorMsg, ClientTestStrings.DB_SCHEME, 
                     ClientTestStrings.SCHEME);
         }
@@ -422,6 +424,18 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         extendValidate(job, errorMsg);
         if (errorOccured) {
             throw new PreValidateException(errorMsg.toString());
+        }
+        if (job.getDbscheme() == null) {
+            List<DatabaseConnection> availableConnections = 
+                DatabaseConnectionConverter.computeAvailableConnections();
+            List<String> connectionNames = new ArrayList<String>();
+            for (DatabaseConnection conn : availableConnections) {
+                connectionNames.add(conn.getName());
+            }
+            throw new PreValidateException(NLS.bind(
+                    Messages.NoSuchDatabaseConnection, 
+                    new String[] {job.getDbConnectionName(), 
+                            StringUtils.join(connectionNames, ", ")})); //$NON-NLS-1$
         }
     }
 

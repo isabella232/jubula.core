@@ -71,6 +71,8 @@ public class JobConfiguration {
     /** configuration detail */
     private DatabaseConnectionInfo m_dbConnectionInfo;
     /** configuration detail */
+    private String m_dbConnectionName;
+    /** configuration detail */
     private String m_dbuser;
     /** configuration detail */
     private String m_dbpw;
@@ -174,6 +176,21 @@ public class JobConfiguration {
      */
     private void setDbscheme(DatabaseConnectionInfo connectionInfo) {
         m_dbConnectionInfo = connectionInfo;
+    }
+
+    /**
+     * @return String
+     */
+    public String getDbConnectionName() {
+        return m_dbConnectionName;
+    }
+
+    /**
+     * @param connectionName The name of the connection information to use.
+     */
+    private void setDbConnectionName(String connectionName) {
+        m_dbConnectionName = connectionName;
+        setDbscheme(JobConfiguration.getConnectionInfoForName(connectionName));
     }
 
     /**
@@ -554,8 +571,8 @@ public class JobConfiguration {
             setDb(cmd.getOptionValue(ClientTestStrings.DBURL)); 
         }
         if (cmd.hasOption(ClientTestStrings.DB_SCHEME)) {
-            setDbscheme(JobConfiguration.getConnectionInfoForName(
-                    cmd.getOptionValue(ClientTestStrings.DB_SCHEME)));
+            setDbConnectionName(
+                    cmd.getOptionValue(ClientTestStrings.DB_SCHEME));
         }
         if (cmd.hasOption(ClientTestStrings.DB_USER)) { 
             setDbuser(cmd.getOptionValue(ClientTestStrings.DB_USER)); 
@@ -809,9 +826,11 @@ public class JobConfiguration {
 
         /**
          * {@inheritDoc}
+         * @throws IllegalArgumentException 
+         *              if no suitable Database Connection can be found.
          */
         public Object unmarshal(HierarchicalStreamReader arg0, 
-                UnmarshallingContext arg1) {
+                UnmarshallingContext arg1) throws IllegalArgumentException {
             
             JobConfiguration job = new JobConfiguration();
             while (arg0.hasMoreChildren()) {
@@ -835,8 +854,7 @@ public class JobConfiguration {
                     job.setDb(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DB_SCHEME)) {
-                    job.setDbscheme(JobConfiguration.getConnectionInfoForName(
-                            arg0.getValue()));
+                    job.setDbConnectionName(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DB_USER)) {
                     job.setDbuser(arg0.getValue());
