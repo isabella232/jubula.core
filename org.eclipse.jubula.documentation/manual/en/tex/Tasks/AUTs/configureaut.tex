@@ -55,8 +55,8 @@ You can use the basic setting (\bxfigref{autconfigbasic}) to configure your \gda
 \end{figure}
 
 \begin{enumerate}
-\item A suggested name for this \gdaut{} configuration is generated automatically based on your \gdaut{} name and the default \gdserver host, specified during installation. You can change this name if you wish. 
-\item The default \gdserver host is also automatically selected. You can select a new \gdserver from the combo box or add a new one by clicking \bxcaption{New}. For more information on adding and editing an \gdserver, see the  section later \bxpref{serverConfigPrefPage}.
+\item A suggested name for this \gdaut{} configuration is generated automatically based on your \gdaut{} name and the default \gdagent host, specified during installation. You can change this name if you wish. 
+\item The default \gdagent host is also automatically selected. You can select a new \gdagent from the combo box or add a new one by clicking \bxcaption{New}. For more information on adding and editing an \gdagent, see the  section later \bxpref{serverConfigPrefPage}.
 
 \item Enter the executable file name in the \bxname{Executable File Name} field. This path can be relative if you define a base/working directory \bxpref{AdvancedAUTConfig}).
 \item Enter the \gdaut{} ID that will be given to this \gdaut{} when it is started.  
@@ -68,8 +68,8 @@ For information on the advanced properties for the \gdaut{} configuration, see t
 HTML applications have a considerably reduced configuration dialog. The information needed to start the \gdaut{} is:
 \begin{enumerate}
 \item the \gdaut{} configuration name (automatically generated)
-\item the \gdserver{} host
-\item the \gdserver{} host\gdaut{} ID
+\item the \gdagent{} host
+\item the \gdagent{} host\gdaut{} ID
 \item the base directory
 \item the URL of your application
 \bxwarn{Relative paths to the URL cannot be used!}
@@ -99,7 +99,7 @@ You can use the advanced dialog (\bxfigref{autconfigadvanced}) if your \gdaut{} 
 
 This path can be relative (if you define a base/working directory), or absolute. This JAR file must contain a manifest file which contains the main class and the classpath. 
 
-\item You can optionally create a working/base directory to store files in. The \gdserver directory of the \jb{} installation is selected as default. To create a base directory elsewhere, browse to and select the location. 
+\item You can optionally create a working/base directory to store files in. The \gdagent directory of the \jb{} installation is selected as default. To create a base directory elsewhere, browse to and select the location. 
 
 The base directory is the working directory for any classpaths, classnames, JAR files and JRE binaries. If you create a base directory, you can enter the paths to these items using a relative path, with the base directory as the root. For more information on relative paths, read the section in the reference manual \bxextref{\jb{}efman}{ref,relativepath}. 
 
@@ -108,7 +108,7 @@ The base directory is the working directory for any classpaths, classnames, JAR 
 \item Enter any necessary command-line arguments for the \gdaut{} in the
  \bxname{AUT Arguments} field. 
 \item Browse to a JRE executable or add a new one by clicking \bxcaption{New}. 
-The Java version used must be 1.4 or later. For more information on adding a new JRE executable for this \gdserver, see the later section \bxpref{serverConfigPrefPage}. 
+The Java version used must be 1.4 or later. For more information on adding a new JRE executable for this \gdagent, see the later section \bxpref{serverConfigPrefPage}. 
 
 Java is installed with \jb{}. You can find the Java file in:\\
 \bxmenu{\jb{}}{jre}{bin}.

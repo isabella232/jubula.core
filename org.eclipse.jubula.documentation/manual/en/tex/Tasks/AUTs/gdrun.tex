@@ -14,11 +14,11 @@ The \bxname{gdrun} command can be used as an alternative to starting your \gdaut
 
 \bxwarn{The \bxname{gdrun} command cannot be used for HTML or pure SWT \gdauts{}.}
 
-The command allows you to start your \gdaut{} independently of \jb{}, on a machine where the \gdserver{} is running. The \jb{} client, when connected to this \gdserver{} will then recognize the running \gdaut{} as a testable application. 
+The command allows you to start your \gdaut{} independently of \jb{}, on a machine where the \gdagent{} is running. The \jb{} client, when connected to this \gdagent{} will then recognize the running \gdaut{} as a testable application. 
 
 To use the \bxname{gdrun} command:
 \begin{enumerate}
-\item Ensure that the \gdserver{} is installed on the machine where you will be starting the \gdaut{}. 
+\item Ensure that the \gdagent{} is installed on the machine where you will be starting the \gdaut{}. 
 \item Start your \gdaut{} via the command line by entering \bxshell{gdrun.exe} then the following parameters: 
 \begin{table}[h]
 \label{gdrunparams}
@@ -39,11 +39,11 @@ To use the \bxname{gdrun} command:
                   \hline
                   -a, \verb+--+autagenthost
                   & \bxshell{-a <hostname>}\\
-		  &Enter the hostname for the \gdserver{}\\
+		  &Enter the hostname for the \gdagent{}\\
                   \hline
                   -p, \verb+--+autagentport
                   & \bxshell{-p <port number>}\\
-		  &Enter the port number for the \gdserver{}\\
+		  &Enter the port number for the \gdagent{}\\
                   \hline
                   -swing
                   & \\

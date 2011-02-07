@@ -15,7 +15,6 @@ import java.awt.event.KeyEvent;
 
 import javax.print.attribute.standard.Severity;
 
-import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.preferences.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.JavaAutConfigComponent;
 import org.eclipse.jubula.tools.constants.InputConstants;
@@ -475,10 +474,10 @@ public interface Constants {
     public static final int MIN_PORT_NUMBER = 1024;
     
     /** Constant for "localhost" */
-    public static final String LOCALHOST1 = Messages.ConstantsLocalhost1;
+    public static final String LOCALHOST1 = "localhost"; //$NON-NLS-1$
     
     /** Constant for "127.0.0.1" */
-    public static final String LOCALHOST2 = Messages.ConstantsLocalhost2;
+    public static final String LOCALHOST2 = "127.0.0.1"; //$NON-NLS-1$
     
     /** change perspective automatically = yes */
     public static final int PERSPECTIVE_CHANGE_YES = 0;

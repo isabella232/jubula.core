@@ -81,9 +81,9 @@ public class DisconnectAction extends AbstractAction {
     private MessageDialog getConfirmDialog() {      
                 
         MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
-            Messages.ClientDisconnectFromServerTitle,
+            Messages.ClientDisconnectFromAutAgentTitle,
                 null,
-                Messages.ClientDisconnectFromServerMessage,
+                Messages.ClientDisconnectFromAutAgentMessage,
                 MessageDialog.QUESTION, new String[] {
                     Messages.NewProjectDialogMessageButton0,
                     Messages.NewProjectDialogMessageButton1

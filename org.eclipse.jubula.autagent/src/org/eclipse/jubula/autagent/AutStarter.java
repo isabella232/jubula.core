@@ -543,7 +543,7 @@ public class AutStarter {
             t.start();
             JOptionPane.showMessageDialog(null, infoMessage
                 + I18n.getString("AUTAgent.dialogClose"), //$NON-NLS-1$
-                I18n.getString("Constants.DefaultTextValue"), //$NON-NLS-1$
+                I18n.getString("AUTAgent.failedStartDialogTitle"), //$NON-NLS-1$
                 JOptionPane.INFORMATION_MESSAGE);
         }
     }
