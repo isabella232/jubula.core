@@ -76,8 +76,10 @@
 					lib/org.apache.commons.lang_2.4.0.v201005080502.jar 
 					lib/org.eclipse.jubula.tools-0.9.0-SNAPSHOT.jar
 					lib/org.apache.commons.collections_3.2.0.v201005080500.jar 
-					lib/org.apache.commons.logging_1.1.1.v201005080502.jar 
-					lib/org.apache.log4j_1.2.15.v201005080500.jar 
+					lib/org.slf4j.jcl_1.5.11.v20100419-1106.jar 
+					lib/org.slf4j.log4j_1.5.11.v20100419-1106.jar 
+					lib/org.slf4j.api_1.5.11.v20100519-1910.jar  
+					lib/slf4j-jdk14-1.5.11.jar 
 					lib/xpp3_min-1.1.3.4.O.jar" />
 			</manifest>
 			<fileset dir="${build.classes}" />
