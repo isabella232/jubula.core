@@ -22,6 +22,7 @@ import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
+import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 
@@ -243,4 +244,17 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             "AUTServer is already running"); //$NON-NLS-1$
     }
 
+    
+    /**
+     * Gets the absolute path of the logging config file.
+     * @return the absolute path
+     */
+    protected String getAbsoluteLoggingConfPath() {
+        final File confFile = new File("./resources/logging.properties"); //$NON-NLS-1$
+        final StringBuffer paths = 
+            new StringBuffer(confFile.getAbsolutePath());
+        String absPath = paths.toString();
+        return absPath.replace('\\', '/');
+    }
+ 
 }
