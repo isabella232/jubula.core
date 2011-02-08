@@ -352,7 +352,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             sb.append("_JAVA_OPTIONS="); //$NON-NLS-1$
             sb.append(this.getMonitoringAgent(parameters));
         }       
-        
+        sb.append("-Djava.util.logging.config.file=resources/logging.properties"); //$NON-NLS-1$
         return sb.toString();
     }
     
