@@ -127,7 +127,8 @@ class TDManagerPO implements ITDManagerPO {
     /**
      * @param id The id to set.
      */
-    void setId(Long id) {
+    @SuppressWarnings("unused")
+    private void setId(Long id) {
         m_id = id;
     }
 
@@ -152,21 +153,21 @@ class TDManagerPO implements ITDManagerPO {
     }
 
     /**
-     *    
-     * {@inheritDoc}
+     * 
+     * @return the ID of the Project to which the receiver belongs.
      */
     @Basic
     @Column(name = "PARENT_PROJ")
 //    @Index(name = "PI_TD_MANAGER_PARENT_PROJ")
-    Long getHbmParentProjectId() {
+    private Long getHbmParentProjectId() {
         return m_parentProjectId;
     }
 
     /**
      * 
-     * {@inheritDoc}
+     * @param projectId The ID of the Project to which the receiver belongs.
      */
-    void setHbmParentProjectId(Long projectId) {
+    private void setHbmParentProjectId(Long projectId) {
         m_parentProjectId = projectId;
     }
 
@@ -185,10 +186,11 @@ class TDManagerPO implements ITDManagerPO {
     }
 
     /**
-     * only for hibernate
+     * 
      * @param dataTable The dataTable to set.
      */
-    void setDataTable(List<IDataSetPO> dataTable) {
+    @SuppressWarnings("unused")
+    private void setDataTable(List<IDataSetPO> dataTable) {
         m_dataTable = dataTable;
     }
 
@@ -289,7 +291,7 @@ class TDManagerPO implements ITDManagerPO {
      *             If the parameter with the userdefined name
      *             <code>paramName</code> doesn't exist
      */
-    public ITestDataPO getCell(int dataSetRow, String uniqueId)
+    private ITestDataPO getCell(int dataSetRow, String uniqueId)
         throws IllegalArgumentException {
         int index = getUniqueIds().indexOf(uniqueId);
         if (index == -1) {
@@ -309,7 +311,7 @@ class TDManagerPO implements ITDManagerPO {
      *            The column
      * @return The test data
      */
-    public ITestDataPO getCell(int row, int column) {
+    private ITestDataPO getCell(int row, int column) {
         return getDataSet(row).getColumn(column);
     }
     
@@ -452,9 +454,11 @@ class TDManagerPO implements ITDManagerPO {
     }
 
     /** 
-     * {@inheritDoc}
+     * 
+     * @param version The version number to set for JPA optimistic-locking.
      */
-    void setVersion(Integer version) {
+    @SuppressWarnings("unused")
+    private void setVersion(Integer version) {
         m_version = version;
     }
     
