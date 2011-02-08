@@ -345,15 +345,18 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                 sb.append(" -Duser.country=").append(locale.getCountry()); //$NON-NLS-1$
                 sb.append(" -Duser.language=").append(locale.getLanguage()); //$NON-NLS-1$
             }
+            sb.append("-Djava.util.logging.config.file=" //$NON-NLS-1$
+                    + getAbsoluteLoggingConfPath());
         }
        
         if (isRunnigWithMonitoring(parameters) 
                 && !isRunningFromExecutable(parameters)) {            
             sb.append("_JAVA_OPTIONS="); //$NON-NLS-1$
             sb.append(this.getMonitoringAgent(parameters));
+            sb.append("-Djava.util.logging.config.file=" //$NON-NLS-1$
+                    + getAbsoluteLoggingConfPath());      
         }       
-        sb.append("-Djava.util.logging.config.file="  //$NON-NLS-1$
-                + getAbsoluteLoggingConfPath());
+
         return sb.toString();
     }
     
