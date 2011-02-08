@@ -508,6 +508,8 @@ public interface Constants {
     public static final String GD_OBJECT = "gdObject"; //$NON-NLS-1$
     /** Reason marker attribute. */
     public static final String GD_REASON = "gdReason"; //$NON-NLS-1$
+    /** Object marker name. */
+    public static final String TST_NODENAME = "tstNodeName"; //$NON-NLS-1$
 
     //  -------------------------------------------------------------
     

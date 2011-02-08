@@ -134,15 +134,21 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
         /** the name of the test suite for which to open the editor */
         private String m_tsName;
+        /** the displayed name of the test suite for which to open the editor */
+        private String m_nodeName;
 
         /**
          * Constructor
          * 
          * @param testSuiteName The name of the test suite for which to
          *                      open the editor.
+         * @param nodeName Name of the node (will be displayed in the quickfix
+         *                 dialog)
          */
-        public OpenTSEditorMarkerResolution(String testSuiteName) {
+        public OpenTSEditorMarkerResolution(String testSuiteName, 
+                String nodeName) {
             m_tsName = testSuiteName;
+            m_nodeName = nodeName;
         }
         
         /**
@@ -150,7 +156,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
          */
         public String getLabel() {
             return NLS.bind(Messages.GDProblemViewOpenTestSuiteEditor, 
-                    new String[] {m_tsName});
+                    new String[] {m_nodeName});
         }
 
         /**
@@ -183,15 +189,21 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
         /** the name of the test suite for which to open the editor */
         private String m_tsName;
+        /** the displayed name of the test suite for which to open the editor */
+        private String m_nodeName;
+
 
         /**
          * Constructor
          * 
          * @param testSuiteName The name of the test suite for which to
          *                      open the editor.
+         * @param nodeName the name which is displayed in the quickfix dialog
          */
-        public OpenOMEditorMarkerResolution(String testSuiteName) {
+        public OpenOMEditorMarkerResolution(String testSuiteName, 
+                String nodeName) {
             m_tsName = testSuiteName;
+            m_nodeName = nodeName;
         }
         
         /**
@@ -199,7 +211,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
          */
         public String getLabel() {
             return NLS.bind(Messages.GDProblemViewOpenObjectMappingEditor, 
-                    new String[] {m_tsName});
+                    new String[] {m_nodeName});
         }
 
         /**
@@ -238,8 +250,10 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                                                     .intValue()];
 
             Object gdObject = marker.getAttribute(Constants.GD_OBJECT); 
+            String gdNodeName = 
+                (String) marker.getAttribute(Constants.TST_NODENAME);
 
-            return getResolutions(type, gdObject);
+            return getResolutions(type, gdObject, gdNodeName);
         } catch (CoreException ce) {
             log.info(Messages
                     .ErrorOccurredWhileFindingResolutionsForProblemMarker, ce);
@@ -253,10 +267,11 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
      * 
      * @param type The type of the problem.
      * @param gdObject The object causing the problem.
+     * @param gdNodeName name of the object (will be displayed in the quickfix dialog)
      * @return resolutions for a problem with the given type and object.
      */
     private IMarkerResolution[] getResolutions(ProblemType type, 
-            Object gdObject) {
+            Object gdObject, String gdNodeName) {
 
         switch (type) {
             case REASON_CONNECTED_TO_NO_SERVER:
@@ -264,7 +279,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             case REASON_EMPTY_TESTSUITE:
             case REASON_NO_AUT_FOR_TESTSUITE_SELECTED:
             case REASON_TD_INCOMPLETE:
-                return getOpenTSEditorResolutions(gdObject);
+                return getOpenTSEditorResolutions(gdObject, gdNodeName);
             case REASON_NO_AUT_FOR_PROJECT_EXISTS:
             case REASON_NO_AUTCONFIG_FOR_SERVER_EXIST:
             case REASON_NOJAR_FOR_AUTCONFIG:
@@ -275,20 +290,20 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             case REASON_NO_TESTSUITE:
                 return getNoTestSuiteResolutions();
             case REASON_OM_INCOMPLETE:
-                return getOMIncompleteResolutions(gdObject);
+                return getOMIncompleteResolutions(gdObject, gdNodeName);
             case REASON_NO_SERVER_DEFINED:
                 return getNoServerDefinedResolutions();
             case REASON_DEPRECATED_ACTION:
             case REASON_DEPRECATED_COMP:
                 return getDeprecatedActionOrComponentResolutions(gdObject);
             case REASON_NO_COMPTYPE:
-                return getNoCompTypeResolutions(gdObject);
+                return getNoCompTypeResolutions(gdObject, gdNodeName);
             case REASON_PROJECT_DOES_NOT_EXIST:
                 return getMissingProjectResolutions();
             case REASON_MISSING_SPEC_TC:
                 return getMissingSpecTcResolutions(gdObject);
             case REASON_UNUSED_TESTDATA:
-                return getUnusedTestDataResolutions(gdObject);
+                return getUnusedTestDataResolutions(gdObject, gdNodeName);
             default:
                 return new IMarkerResolution[0];
         }
@@ -487,12 +502,13 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
     /**
      * 
      * @param gdObject the SpecTestCasePO
+     * @param nodeName name of the node which will be displayed in the quickfix dialog
      * @return resolutions for a component without a type.
      */
     private IMarkerResolution[] getNoCompTypeResolutions(
-            final Object gdObject) {
+            final Object gdObject, String nodeName) {
         if (gdObject.toString().contains("TestSuitePO")) { //$NON-NLS-1$
-            return getOpenTSEditorResolutions(gdObject);
+            return getOpenTSEditorResolutions(gdObject, nodeName);
         }
         
         return new IMarkerResolution [] {
@@ -645,12 +661,14 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
     /**
      * 
      * @param obj ObjectString to open an editor for
+     * @param nodeName displayed name of the node for the quickfix dialog
      * @return resolutions for incomplete object mapping.
      */
-    private IMarkerResolution[] getOMIncompleteResolutions(Object obj) {
+    private IMarkerResolution[] getOMIncompleteResolutions(Object obj,
+            String nodeName) {
         if (obj instanceof String) {
             return new IMarkerResolution[] {
-                new OpenOMEditorMarkerResolution((String)obj)
+                new OpenOMEditorMarkerResolution((String)obj, nodeName)
             };
         } 
         return new IMarkerResolution[0];
@@ -659,23 +677,27 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
     /**
      * 
      * @param gdObject should be an instance of ISpecTestCasePO
+     * @param nodeName name of the node
      * @return resolutions for unused test data in a Test Case.
      */
-    private IMarkerResolution[] getUnusedTestDataResolutions(Object gdObject) {
-        return getNoCompTypeResolutions(gdObject);
+    private IMarkerResolution[] getUnusedTestDataResolutions(Object gdObject,
+            String nodeName) {
+        return getNoCompTypeResolutions(gdObject, nodeName);
     }
     
     
     /**
      * 
      * @param obj ObjectString to open an editor for
+     * @param nodeName the name of the node for the quickfix
      * @return resolutions for problems that require opening a Test Suite in 
      *         the Test Suite Editor.
      */
-    private IMarkerResolution[] getOpenTSEditorResolutions(Object obj) {
+    private IMarkerResolution[] getOpenTSEditorResolutions(Object obj,
+            String nodeName) {
         if (obj instanceof String) {
             return new IMarkerResolution [] {
-                new OpenTSEditorMarkerResolution((String)obj)};
+                new OpenTSEditorMarkerResolution((String)obj, nodeName)};
         } 
         
         return new IMarkerResolution[0];
