@@ -163,8 +163,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         Composite projectNameComposite = createComposite(composite,
             NUM_COLUMNS_2, GridData.FILL, false);
         noDefaultAndApplyButton();       
-        String str = getProject().getName();
-        super.getShell().setText(Messages.ProjectPropertyPageShellTitle + str);
 
         createEmptyLabel(projectNameComposite);
         createEmptyLabel(projectNameComposite);
