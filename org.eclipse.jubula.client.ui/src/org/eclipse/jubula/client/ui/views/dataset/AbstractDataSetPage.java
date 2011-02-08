@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IResetFrameColo
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -1246,7 +1246,7 @@ public abstract class AbstractDataSetPage extends Page
         /** {@inheritDoc} */
         public Object[] getElements(Object inputElement) {
             ITDManagerPO tdMan = (ITDManagerPO)inputElement;
-            List <IListWrapperPO> rows = tdMan.getDataSets();
+            List <IDataSetPO> rows = tdMan.getDataSets();
             return rows.toArray();
         }
     }
@@ -1315,13 +1315,13 @@ public abstract class AbstractDataSetPage extends Page
     private class LanguageLabelProvider extends AbstractLabelProvider {
         /** {@inheritDoc} */
         public String getColumnText(Object element, int columnIndex) {
-            if (!(element instanceof IListWrapperPO)) {
+            if (!(element instanceof IDataSetPO)) {
                 // this happens when Content-/LabelProvider changes!
                 // see ...ComboListener
                 return StringConstants.EMPTY; 
             }
             ITDManagerPO tdMan = (ITDManagerPO)getTableViewer().getInput();
-            IListWrapperPO row = (IListWrapperPO)element;
+            IDataSetPO row = (IDataSetPO)element;
             int rowCount = tdMan.getDataTable().indexOf(row);
             if (columnIndex == 0) {                
                 getTable().getItem(rowCount).setBackground(
@@ -1367,13 +1367,13 @@ public abstract class AbstractDataSetPage extends Page
     private class ParameterLabelProvider extends AbstractLabelProvider {
         /** {@inheritDoc} */
         public String getColumnText(Object element, int columnIndex) {
-            if (!(element instanceof IListWrapperPO)) {
+            if (!(element instanceof IDataSetPO)) {
                 // this happens when Content-/LabelProvider changes!
                 // see ...ComboListener
                 return StringConstants.EMPTY; 
             }
             ITDManagerPO tdMan = (ITDManagerPO)getTableViewer().getInput();
-            IListWrapperPO row = (IListWrapperPO)element;
+            IDataSetPO row = (IDataSetPO)element;
             int rowCount = tdMan.getDataTable().indexOf(row);
             if (columnIndex == 0) {                
                 getTable().getItem(rowCount).setBackground(

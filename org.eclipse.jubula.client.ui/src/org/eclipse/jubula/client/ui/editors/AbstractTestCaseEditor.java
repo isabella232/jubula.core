@@ -49,7 +49,7 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IEventHandlerContainer;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
@@ -690,7 +690,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         ITDManagerPO mgr = testCase.getDataManager();
         Locale locale = WorkingLanguageBP.getInstance().getWorkingLanguage();
         for (int row = 0; row < mgr.getDataSetCount(); row++) {
-            IListWrapperPO row2 = mgr.getDataSet(row);
+            IDataSetPO row2 = mgr.getDataSet(row);
             for (int col = 0; col < row2.getColumnCount(); col++) {
                 ITestDataPO data = row2.getColumn(col);
                 String uniqueId = mgr.getUniqueIds().get(col);

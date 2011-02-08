@@ -63,13 +63,13 @@ public interface ITDManagerPO extends IPersistentObject {
      * @return the Data Set at the given index, or <code>null</code> if no
      *         Data Set exists for the given index.
      */
-    public abstract IListWrapperPO getDataSet(int idx);
+    public abstract IDataSetPO getDataSet(int idx);
 
     /**
      * 
      * @return all Data Sets managed by the receiver.
      */
-    public abstract List<IListWrapperPO> getDataSets();
+    public abstract List<IDataSetPO> getDataSets();
 
     /**
      * Updates the test data at the specified row and column. The data in the
@@ -125,9 +125,9 @@ public interface ITDManagerPO extends IPersistentObject {
     public abstract void clear();
 
     /**
-     * @return a List of IListWrapperPO
+     * @return a List of IDataSetPO
      */
-    public abstract List<IListWrapperPO> getDataTable();
+    public abstract List<IDataSetPO> getDataTable();
     
     /**
      * @param uniqueId uniqueId of a new parameter (independent of display order)

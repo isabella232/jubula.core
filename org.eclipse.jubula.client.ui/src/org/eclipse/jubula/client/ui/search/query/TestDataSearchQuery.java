@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.II18NStringPO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
@@ -141,7 +141,7 @@ public class TestDataSearchQuery extends AbstractSearchQuery {
         List<IParamDescriptionPO> usedParameters = paramObj.getParameterList();
         IParameterInterfacePO refDataCube = paramObj.getReferencedDataCube();
         ITDManagerPO testDataManager = paramObj.getDataManager();
-        for (IListWrapperPO dataSet : testDataManager.getDataSets()) {
+        for (IDataSetPO dataSet : testDataManager.getDataSets()) {
             for (IParamDescriptionPO paramDesc : usedParameters) {
                 int column = testDataManager.findColumnForParam(paramDesc
                         .getUniqueId());

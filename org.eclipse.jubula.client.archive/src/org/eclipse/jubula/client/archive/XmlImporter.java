@@ -61,7 +61,7 @@ import org.eclipse.jubula.client.core.model.IDocAttributePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.II18NStringPO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -1540,7 +1540,7 @@ class XmlImporter {
         IProjectPO proj) {
                 
         final ITDManagerPO tdman = owner.getDataManager();
-        List<IListWrapperPO> dataTable = tdman.getDataTable();
+        List<IDataSetPO> dataTable = tdman.getDataTable();
         List<ParamDescription> parDescList = xmlCap
             .getParameterDescriptionList();
         final TestData testData = xmlCap.getTestdata();
@@ -1711,7 +1711,7 @@ class XmlImporter {
         } else {
             tdman = PoMaker.createTDManagerPO(owner, uniqueIds);
         }
-        final List<IListWrapperPO> dataTable = tdman.getDataTable();
+        final List<IDataSetPO> dataTable = tdman.getDataTable();
         for (TestDataRow rowXml : xml.getRowList()) {
             final List<ITestDataPO> td = new ArrayList<ITestDataPO>(rowXml
                 .sizeOfDataArray());

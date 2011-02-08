@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IEventStackModificationListener;
 import org.eclipse.jubula.client.core.model.IExecStackModificationListener;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
@@ -278,7 +278,7 @@ public class Traverser {
         tdManager = m_externalTestDataBP.getExternalCheckedTDManager(exTc);
         
         ITestDataPO td = null;
-        IListWrapperPO dataSet = null;
+        IDataSetPO dataSet = null;
         
         if (tdManager.getDataSetCount() > 0) {
             dataSet = tdManager.getDataSet(0);
@@ -731,7 +731,7 @@ public class Traverser {
         int startIndex = 0;
         final ITDManagerPO mgr = eventExecTC.getDataManager();
         if (mgr.getDataSetCount() > 0) {
-            IListWrapperPO row = mgr.getDataSet(0);
+            IDataSetPO row = mgr.getDataSet(0);
             for (int col = 0; col < row.getColumnCount(); col++) {
                 ITestDataPO td = row.getColumn(col);
                 String uniqueId = mgr.getUniqueIds().get(col);

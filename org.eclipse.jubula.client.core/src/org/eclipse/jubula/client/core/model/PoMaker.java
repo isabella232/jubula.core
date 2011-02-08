@@ -133,10 +133,10 @@ public abstract class PoMaker {
     /**
      * factory method to replace constructor
      * @param list list
-     * @return ListWrapperPO
+     * @return DataSetPO
      */
-    public static IListWrapperPO createListWrapperPO(List<ITestDataPO> list) {
-        return new ListWrapperPO(list);
+    public static IDataSetPO createListWrapperPO(List<ITestDataPO> list) {
+        return new DataSetPO(list);
     }
 
     /**
@@ -543,7 +543,7 @@ public abstract class PoMaker {
      * @return the class instance of the PO
      */
     public static Class getListWrapperClass() {
-        return ListWrapperPO.class;
+        return DataSetPO.class;
     }
 
     /**

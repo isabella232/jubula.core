@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.businessprocess;
 
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -103,7 +103,7 @@ public class TestDataBP {
             }
         }
  
-        IListWrapperPO dataSet = testDataManager.getDataSet(dataSetNum);
+        IDataSetPO dataSet = testDataManager.getDataSet(dataSetNum);
         if (column != -1 && column < dataSet.getColumnCount()) {
             return dataSet.getColumn(column);
         }

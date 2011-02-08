@@ -42,7 +42,7 @@
 		<class>org.eclipse.jubula.client.core.model.TestDataCubePO</class>
 		<class>org.eclipse.jubula.client.core.model.TDManagerPO</class>
 		<class>org.eclipse.jubula.client.core.model.TestDataPO</class>
-		<class>org.eclipse.jubula.client.core.model.ListWrapperPO</class>
+		<class>org.eclipse.jubula.client.core.model.DataSetPO</class>
 		<class>org.eclipse.jubula.client.core.model.CompIdentifierPO</class>
 		<class>org.eclipse.jubula.client.core.model.ObjectMappingPO</class>
 		<class>org.eclipse.jubula.client.core.model.ObjectMappingAssoziationPO</class>
