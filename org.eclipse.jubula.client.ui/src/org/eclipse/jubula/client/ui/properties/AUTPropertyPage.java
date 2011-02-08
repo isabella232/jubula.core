@@ -93,9 +93,6 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
         composite.setLayoutData(compositeData);
         noDefaultAndApplyButton();
         createCompositeLayout(composite, compositeLayout, compositeData);
-        String str = getProject().getName();
-        super.getShell().setText(
-            Messages.ProjectPropertyPageShellTitle + str);
         createAUTList(composite);
         createButtons(composite);
         initFields();
