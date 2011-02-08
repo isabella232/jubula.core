@@ -301,6 +301,11 @@ public class ActionBuilder {
         CommandHelper.createContributionPushItem(fileMenu,
                 IWorkbenchCommandConstants.FILE_REFRESH);
         fileMenu.add(new Separator()); 
+        CommandHelper.createContributionPushItem(fileMenu,
+                ActionFactory.IMPORT.getCommandId());
+        CommandHelper.createContributionPushItem(fileMenu,
+                ActionFactory.EXPORT.getCommandId());
+        fileMenu.add(new Separator()); 
         fileMenu.add(m_quitAction);
         return fileMenu;
     }
