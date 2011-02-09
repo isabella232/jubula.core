@@ -21,6 +21,8 @@
 		<module>../org.eclipse.jubula.toolkit.provider.base</module>
 		<module>../org.eclipse.jubula.toolkit.provider.concrete</module>
 		<module>../org.eclipse.jubula.toolkit.common</module>
+		<module>../org.eclipse.jubula.client.ua.cheatsheets</module>
+		<module>../org.eclipse.jubula.client.ua.welcome</module>
 	</modules>
 	
 	<url>http://www.eclipse.org/jubula</url>
