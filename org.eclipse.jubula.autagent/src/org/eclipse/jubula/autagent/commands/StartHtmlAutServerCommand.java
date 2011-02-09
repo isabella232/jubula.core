@@ -96,6 +96,9 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
             commands.add("-agentlib:jdwp=transport=dt_socket,address="  //$NON-NLS-1$
                     + BXDEBUG + ",server=y,suspend=y"); //$NON-NLS-1$
         }
+        commands.add("-Djava.util.logging.config.file="  //$NON-NLS-1$
+                + getAbsoluteLoggingConfPath());
+        
         File serverDir = new File("."); //$NON-NLS-1$
         commands.add("-jar"); //$NON-NLS-1$
         StringBuffer cmd = new StringBuffer(LIB_DIR + MAIN_JAR);

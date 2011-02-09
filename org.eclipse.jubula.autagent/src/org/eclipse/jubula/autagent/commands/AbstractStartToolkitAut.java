@@ -243,4 +243,17 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             "AUTServer is already running"); //$NON-NLS-1$
     }
 
+    
+    /**
+     * Gets the absolute path of the logging config file.
+     * @return the absolute path
+     */
+    protected String getAbsoluteLoggingConfPath() {
+        final File confFile = new File("./resources/logging.properties"); //$NON-NLS-1$
+        final StringBuffer paths = 
+            new StringBuffer(confFile.getAbsolutePath());
+        String absPath = paths.toString();
+        return absPath.replace('\\', '/');
+    }
+ 
 }

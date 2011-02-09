@@ -96,9 +96,7 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
             GridData.FILL, false);
         Composite projectNameComposite = createComposite(composite,
             NUM_COLUMNS_2, GridData.FILL, false);
-        noDefaultAndApplyButton();       
-        String str = getProject().getName();
-        super.getShell().setText(Messages.ProjectPropertyPageShellTitle + str);
+        noDefaultAndApplyButton();
 
         createLabel(projectNameComposite, StringConstants.EMPTY);
         createLabel(projectNameComposite, StringConstants.EMPTY);

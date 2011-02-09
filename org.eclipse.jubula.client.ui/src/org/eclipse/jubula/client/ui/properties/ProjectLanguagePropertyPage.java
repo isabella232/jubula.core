@@ -94,8 +94,6 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
             NUM_COLUMNS_2, GridData.FILL, GridData.FILL, true, true);
 
         noDefaultAndApplyButton();       
-        String str = getProject().getName();
-        super.getShell().setText(Messages.ProjectPropertyPageShellTitle + str);
 
         createLabel(projectNameComposite, StringConstants.EMPTY);
         createLabel(projectNameComposite, StringConstants.EMPTY);

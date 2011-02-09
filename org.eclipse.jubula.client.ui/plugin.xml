@@ -145,6 +145,9 @@
 		<super type="org.eclipse.core.resources.problemmarker" />
 		<super type="org.eclipse.jubula.client.ui.gdMarker" />
 		<attribute name="gdObject" />
+  <attribute
+        name="tstNodeName">
+  </attribute>
 	</extension>
 	<extension point="org.eclipse.core.runtime.adapters">
 		<factory adaptableType="org.eclipse.jubula.client.core.model.IComponentNamePO"

@@ -586,6 +586,13 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                 marker.setAttribute(Constants.GD_OBJECT, null);
             }
             marker.setAttribute(Constants.GD_REASON, type.ordinal());
+            if (object instanceof INodePO) {
+                INodePO node = (INodePO) object;
+                marker.setAttribute(Constants.TST_NODENAME, node.getName());
+            } else {
+                marker.setAttribute(Constants.TST_NODENAME, 
+                        StringConstants.EMPTY);
+            }
             m_markerList.add(marker);
             m_markerToShowList.add(marker);
         } catch (CoreException e) {
