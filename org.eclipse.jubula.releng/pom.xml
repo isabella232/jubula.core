@@ -18,6 +18,7 @@
 		<module>../org.eclipse.jubula.feature</module>
 		<module>../org.eclipse.jubula.feature.client</module>
 		<module>../org.eclipse.jubula.tools</module>
+		<module>../org.eclipse.jubula.communication</module>
 		<module>../org.eclipse.jubula.toolkit.provider.base</module>
 		<module>../org.eclipse.jubula.toolkit.provider.concrete</module>
 		<module>../org.eclipse.jubula.toolkit.common</module>
