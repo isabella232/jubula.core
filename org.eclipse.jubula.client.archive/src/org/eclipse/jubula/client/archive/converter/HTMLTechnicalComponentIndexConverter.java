@@ -12,11 +12,11 @@ package org.eclipse.jubula.client.archive.converter;
 
 import java.util.List;
 
-import com.bredexsw.guidancer.client.importer.gdschema.Aut;
-import com.bredexsw.guidancer.client.importer.gdschema.OmCategory;
-import com.bredexsw.guidancer.client.importer.gdschema.OmEntry;
-import com.bredexsw.guidancer.client.importer.gdschema.Project;
-import com.bredexsw.guidancer.client.importer.gdschema.TechnicalName;
+import org.eclipse.jubula.client.archive.schema.Aut;
+import org.eclipse.jubula.client.archive.schema.OmCategory;
+import org.eclipse.jubula.client.archive.schema.OmEntry;
+import org.eclipse.jubula.client.archive.schema.Project;
+import org.eclipse.jubula.client.archive.schema.TechnicalName;
 
 /**
  * Converter for ticket #3546
