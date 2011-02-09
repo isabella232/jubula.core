@@ -209,13 +209,4 @@ class DataSetPO implements IDataSetPO {
         }
     }
     
-    /**
-     * Gets the index of this TDRow in the given data table of a TestDataManager.
-     * @param dataTable the data table to search in.
-     * @return the index of this TDRow or -1 if not containing.
-     */
-    public int getIndexInDataTable(List<IDataSetPO> dataTable) {
-        return dataTable.indexOf(this);
-    }
-
 }
