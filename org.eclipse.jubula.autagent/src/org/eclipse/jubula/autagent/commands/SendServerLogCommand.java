@@ -40,43 +40,44 @@ public class SendServerLogCommand implements ICommand {
         ServerLogResponseMessage response = new ServerLogResponseMessage();
         // Get location of log file
         // FIXME: replace with code for slf4j
-//      FileAppender enumFileAppender = null; 
-//        Enumeration appenders = Logger.getRootLogger().getAllAppenders();
-//        Object enumElement = null;
-//        while (appenders.hasMoreElements() && enumFileAppender == null) {
-//            enumElement = appenders.nextElement();
-//            if (enumElement instanceof FileAppender) {
-//                enumFileAppender = (FileAppender)enumElement;
-//            }
-//        }
-        
-//        if (enumFileAppender != null) {
-//            // Send log
-//            try {
-//                File logFile = new File(enumFileAppender.getFile());
-//                BufferedReader reader = 
-//                    new BufferedReader(new FileReader(logFile));
-//                StringBuffer sb = new StringBuffer();
-//                String line = null;
-//                while ((line = reader.readLine()) != null) {
-//                    sb.append(line + "\n"); //$NON-NLS-1$
-//                }
-//                response.setServerLog(sb.toString());
-//            } catch (FileNotFoundException e) {
-//                // Set error status
-//                response.setStatus(ServerLogResponseMessage.FILE_NOT_FOUND);
-//            } catch (IOException ioe) {
-//                // Set error status
-//                response.setStatus(ServerLogResponseMessage.IO_EXCEPTION);
-//            }
-//
-//        } else {
-            // No file logger found, set error status
-            response.setStatus(ServerLogResponseMessage.FILE_NOT_ENABLED);
-//        }
-        
+        // FileAppender enumFileAppender = null;
+        // Enumeration appenders = Logger.getRootLogger().getAllAppenders();
+        // Object enumElement = null;
+        // while (appenders.hasMoreElements() && enumFileAppender == null) {
+        // enumElement = appenders.nextElement();
+        // if (enumElement instanceof FileAppender) {
+        // enumFileAppender = (FileAppender)enumElement;
+        // }
+        // }
+
+        // if (enumFileAppender != null) {
+        // // Send log
+        // try {
+        // File logFile = new File(enumFileAppender.getFile());
+        // BufferedReader reader =
+        // new BufferedReader(new FileReader(logFile));
+        // StringBuffer sb = new StringBuffer();
+        // String line = null;
+        // while ((line = reader.readLine()) != null) {
+        //                    sb.append(line + "\n"); //$NON-NLS-1$
+        // }
+        // response.setServerLog(sb.toString());
+        // } catch (FileNotFoundException e) {
+        // // Set error status
+        // response.setStatus(ServerLogResponseMessage.FILE_NOT_FOUND);
+        // } catch (IOException ioe) {
+        // // Set error status
+        // response.setStatus(ServerLogResponseMessage.IO_EXCEPTION);
+        // }
+        //
+        // } else {
+        // No file logger found, set error status
+        // response.setStatus(ServerLogResponseMessage.FILE_NOT_ENABLED);
+        // }
+
+        response.setStatus(ServerLogResponseMessage.FILE_NOT_ENABLED);
         return response;
-        
+
     }
 
     /**
