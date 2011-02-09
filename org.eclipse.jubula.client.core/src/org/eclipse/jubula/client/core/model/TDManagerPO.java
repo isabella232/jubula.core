@@ -49,7 +49,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 @Entity
 @Table(name = "TD_MANAGER")
 @EntityListeners(value = { ElementLoadedProgressListener.class })
-class TDManagerPO implements ITDManagerPO {
+class TDManagerPO implements ITDManager {
     /** hibernate OID */
     private transient Long m_id = null;
 
@@ -421,7 +421,7 @@ class TDManagerPO implements ITDManagerPO {
      * @param tdMan the TDManager to copy the data to
      * @return the given TDManager with the new data.
      */
-    public ITDManagerPO deepCopy(ITDManagerPO tdMan) {
+    public ITDManager deepCopy(ITDManager tdMan) {
         for (String uniqueId : getUniqueIds()) {
             tdMan.addUniqueId(uniqueId);
         }

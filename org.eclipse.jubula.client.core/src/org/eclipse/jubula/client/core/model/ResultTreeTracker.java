@@ -205,7 +205,7 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         List<IParamDescriptionPO> parameterList = cap.getParameterList();
         String value = null;
         for (IParamDescriptionPO desc : parameterList) {
-            ITDManagerPO tdManager = null;
+            ITDManager tdManager = null;
             try {
                 tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(cap);

@@ -74,7 +74,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -1277,7 +1277,7 @@ class XmlImporter {
             cap.setComment(xml.getComment());
         }
         if (xml.getTestdata() != null) {
-            ITDManagerPO tdman = fillTDManager(cap, xml, proj);
+            ITDManager tdman = fillTDManager(cap, xml, proj);
             cap.setDataManager(tdman);                
         }
         return cap;
@@ -1536,10 +1536,10 @@ class XmlImporter {
      * @param proj The current Project
      * @return the filled TDManager of the given owner
      */
-    private ITDManagerPO fillTDManager(IParamNodePO owner, Cap xmlCap, 
+    private ITDManager fillTDManager(IParamNodePO owner, Cap xmlCap, 
         IProjectPO proj) {
                 
-        final ITDManagerPO tdman = owner.getDataManager();
+        final ITDManager tdman = owner.getDataManager();
         List<IDataSetPO> dataTable = tdman.getDataTable();
         List<ParamDescription> parDescList = xmlCap
             .getParameterDescriptionList();
@@ -1681,12 +1681,12 @@ class XmlImporter {
      * @param assignNewGuids <code>true</code> if the parameters were given
      *        new unique IDs. Otherwise <code>false</code>.
      */
-    private ITDManagerPO createTDManager(IParameterInterfacePO owner, 
+    private ITDManager createTDManager(IParameterInterfacePO owner, 
         TestData xml, IProjectPO proj, boolean assignNewGuids) {
 
         List<String> uniqueIds = new ArrayList<String>(
             xml.getUniqueIdsList());
-        final ITDManagerPO tdman;
+        final ITDManager tdman;
 
         if (assignNewGuids) {
             // Update list of unique IDs

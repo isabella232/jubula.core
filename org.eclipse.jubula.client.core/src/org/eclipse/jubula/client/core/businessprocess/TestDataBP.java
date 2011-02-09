@@ -15,7 +15,7 @@ import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
@@ -84,7 +84,7 @@ public class TestDataBP {
      *         Data exists.
      */
     public ITestDataPO getTestData(IParamNodePO paramNode, 
-            ITDManagerPO testDataManager, IParamDescriptionPO paramDesc,
+            ITDManager testDataManager, IParamDescriptionPO paramDesc,
             int dataSetNum) {
         IParameterInterfacePO refDataCube = paramNode.getReferencedDataCube();
         int column = 

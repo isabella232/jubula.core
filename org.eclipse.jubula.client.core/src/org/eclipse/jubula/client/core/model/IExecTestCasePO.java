@@ -72,7 +72,7 @@ public interface IExecTestCasePO extends ITestCasePO {
      * {@inheritDoc}
      * @return the TDManagerPO from the depending SpecTestCasePO.
      */
-    public abstract ITDManagerPO getDataManager();
+    public abstract ITDManager getDataManager();
 
     /**
      * Sets the data manager and changes the <code>hasReferencedTD</code> flag
@@ -81,7 +81,7 @@ public interface IExecTestCasePO extends ITestCasePO {
      * 
      * {@inheritDoc}
      */
-    public abstract void setDataManager(ITDManagerPO dataManager);
+    public abstract void setDataManager(ITDManager dataManager);
 
     /**
      * Resolves the reference to the test data manager of the associated
@@ -90,7 +90,7 @@ public interface IExecTestCasePO extends ITestCasePO {
      * 
      * @return The new test data manager
      */
-    public abstract ITDManagerPO resolveTDReference();
+    public abstract ITDManager resolveTDReference();
 
     /** 
      * {@inheritDoc}

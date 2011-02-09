@@ -56,7 +56,7 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ITimestampPO;
@@ -687,7 +687,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      */
     @SuppressWarnings("unchecked")
     private boolean checkRefsAndCompNames(ISpecTestCasePO testCase) {
-        ITDManagerPO mgr = testCase.getDataManager();
+        ITDManager mgr = testCase.getDataManager();
         Locale locale = WorkingLanguageBP.getInstance().getWorkingLanguage();
         for (int row = 0; row < mgr.getDataSetCount(); row++) {
             IDataSetPO row2 = mgr.getDataSet(row);

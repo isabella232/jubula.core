@@ -117,7 +117,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * {@inheritDoc}
      */
     @Transient
-    public ITDManagerPO getDataManager() {
+    public ITDManager getDataManager() {
         return getParameterInterface().getDataManager();
     }
 
@@ -126,7 +126,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * @return the data manager.
      */
     @Transient
-    protected ITDManagerPO getHbmDataManager() {
+    protected ITDManager getHbmDataManager() {
         return getParameterInterface().getHbmDataManager();
     }
 
@@ -252,7 +252,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * 
      * {@inheritDoc}
      */
-    public void setDataManager(ITDManagerPO dataManager) {
+    public void setDataManager(ITDManager dataManager) {
         getParameterInterface().setDataManager(dataManager);
     }
 
@@ -273,7 +273,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
         if (StringUtils.isEmpty(getDataFile())) {
             // Excel files are ignored. Other data is checked.
             final int paramListSize = getParameterListSize();
-            ITDManagerPO testDataManager = getDataManager();
+            ITDManager testDataManager = getDataManager();
             if ((testDataManager.getDataSetCount() == 0) 
                     && (paramListSize > 0)) {
                 return false;

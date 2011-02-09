@@ -26,7 +26,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.TDCell;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -246,7 +246,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             Iterator childrenIt) {
         while (childrenIt.hasNext()) {
             final IParamNodePO child = (IParamNodePO)childrenIt.next();
-            final ITDManagerPO mgr = child.getDataManager();
+            final ITDManager mgr = child.getDataManager();
             final Iterator<TDCell> refIt = 
                 child.getParamReferencesIterator(locale);
             while (refIt.hasNext()) {

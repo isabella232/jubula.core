@@ -40,7 +40,7 @@ import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
@@ -647,7 +647,7 @@ public abstract class AbstractDataSetPage extends Page
         final AbstractJBEditor editor = (AbstractJBEditor)m_currentPart;
         editor.getEditorHelper().requestEditableState();
         if (getParamInterfaceObj() instanceof IExecTestCasePO) {
-            ITDManagerPO man = ((IExecTestCasePO)getParamInterfaceObj())
+            ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
                     .resolveTDReference();
             if (!man.equals(getTableViewer().getInput())) {
                 getTableViewer().setInput(man);
@@ -1245,7 +1245,7 @@ public abstract class AbstractDataSetPage extends Page
         extends AbstractContentProvider {
         /** {@inheritDoc} */
         public Object[] getElements(Object inputElement) {
-            ITDManagerPO tdMan = (ITDManagerPO)inputElement;
+            ITDManager tdMan = (ITDManager)inputElement;
             List <IDataSetPO> rows = tdMan.getDataSets();
             return rows.toArray();
         }
@@ -1320,7 +1320,7 @@ public abstract class AbstractDataSetPage extends Page
                 // see ...ComboListener
                 return StringConstants.EMPTY; 
             }
-            ITDManagerPO tdMan = (ITDManagerPO)getTableViewer().getInput();
+            ITDManager tdMan = (ITDManager)getTableViewer().getInput();
             IDataSetPO row = (IDataSetPO)element;
             int rowCount = tdMan.getDataTable().indexOf(row);
             if (columnIndex == 0) {                
@@ -1372,7 +1372,7 @@ public abstract class AbstractDataSetPage extends Page
                 // see ...ComboListener
                 return StringConstants.EMPTY; 
             }
-            ITDManagerPO tdMan = (ITDManagerPO)getTableViewer().getInput();
+            ITDManager tdMan = (ITDManager)getTableViewer().getInput();
             IDataSetPO row = (IDataSetPO)element;
             int rowCount = tdMan.getDataTable().indexOf(row);
             if (columnIndex == 0) {                
@@ -1857,7 +1857,7 @@ public abstract class AbstractDataSetPage extends Page
         if (editor.getEditorHelper().requestEditableState() 
                 == JBEditorHelper.EditableState.OK) {
             if (getParamInterfaceObj() instanceof IExecTestCasePO) {
-                ITDManagerPO man = ((IExecTestCasePO)getParamInterfaceObj())
+                ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
                         .resolveTDReference();
                 if (!man.equals(getTableViewer().getInput())) {
                     getTableViewer().setInput(man);
@@ -2104,7 +2104,7 @@ public abstract class AbstractDataSetPage extends Page
      * @param paramInterface The object on which the input is based.
      * @return an object suitable for use as input in a DSV table.
      */
-    protected ITDManagerPO getInputForTable(
+    protected ITDManager getInputForTable(
             IParameterInterfacePO paramInterface) {
         return paramInterface.getDataManager();
     }

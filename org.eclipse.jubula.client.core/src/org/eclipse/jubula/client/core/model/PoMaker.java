@@ -398,7 +398,7 @@ public abstract class PoMaker {
      * @param node node
      * @return TDManagerPO
      */
-    public static ITDManagerPO createTDManagerPO(IParameterInterfacePO node) {
+    public static ITDManager createTDManagerPO(IParameterInterfacePO node) {
         return new TDManagerPO(node);
     }
 
@@ -408,7 +408,7 @@ public abstract class PoMaker {
      * @param uniqueIds uniqueIds
      * @return TDManagerPO
      */
-    public static ITDManagerPO createTDManagerPO(IParameterInterfacePO node, 
+    public static ITDManager createTDManagerPO(IParameterInterfacePO node, 
         List<String> uniqueIds) {
         
         return new TDManagerPO(node, uniqueIds);

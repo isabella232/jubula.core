@@ -32,7 +32,7 @@ import org.eclipse.jubula.client.core.model.II18NStringPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -71,10 +71,10 @@ public class ExternalTestDataBP {
     /**
      * Cache for ITDmanagerPOs
      * Key = IParamNodePO
-     * Value = ITDManagerPO
+     * Value = ITDManager
      */
-    private Map<IParamNodePO, ITDManagerPO> m_tdManagerCache = 
-        new HashMap<IParamNodePO, ITDManagerPO>();
+    private Map<IParamNodePO, ITDManager> m_tdManagerCache = 
+        new HashMap<IParamNodePO, ITDManager>();
 
     /**
      * Constructor
@@ -86,8 +86,8 @@ public class ExternalTestDataBP {
     }
 
     /**
-     * Creates a new ITDManagerPO for the given IParamNodePO filled with 
-     * the data of the given file or gets the ITDManagerPO from the cache.
+     * Creates a new ITDManager for the given IParamNodePO filled with 
+     * the data of the given file or gets the ITDManager from the cache.
      * @param dataDir
      *      directory for data files
      * @param file data source File
@@ -95,11 +95,11 @@ public class ExternalTestDataBP {
      * @throws JBException error occured while reading data source
      * @return filled TestDataManager
      */
-    private ITDManagerPO createFilledTDManager(File dataDir, String file, 
+    private ITDManager createFilledTDManager(File dataDir, String file, 
         IParamNodePO node) 
         throws JBException {
         
-        ITDManagerPO tdManager = m_tdManagerCache.get(node);
+        ITDManager tdManager = m_tdManagerCache.get(node);
         if (tdManager != null) {
             return tdManager;
         }
@@ -126,10 +126,10 @@ public class ExternalTestDataBP {
      *          data.
      * @return the created Test Data Manager.
      */
-    private ITDManagerPO createFilledTDManager(
+    private ITDManager createFilledTDManager(
             IParameterInterfacePO referencedDataCube, IParamNodePO node) {
             
-        ITDManagerPO tdManager = m_tdManagerCache.get(node);
+        ITDManager tdManager = m_tdManagerCache.get(node);
         if (tdManager != null) {
             return tdManager;
         }
@@ -240,7 +240,7 @@ public class ExternalTestDataBP {
      * @throws JBException
      *      error occured while reading data source
      */
-    private ITDManagerPO parseTable(DataTable filledTable,
+    private ITDManager parseTable(DataTable filledTable,
         IParameterInterfacePO paramPo, Locale locale) throws JBException {
         return parseTable(filledTable, paramPo, locale, false);
     }
@@ -261,7 +261,7 @@ public class ExternalTestDataBP {
      * @throws JBException
      *      error occured while reading data source
      */
-    public ITDManagerPO parseTable(DataTable filledTable,
+    public ITDManager parseTable(DataTable filledTable,
         IParameterInterfacePO paramPo, Locale locale,
         boolean updateCellValues) throws JBException {
         
@@ -355,16 +355,16 @@ public class ExternalTestDataBP {
     }
     
     /**
-     * Gets the ITDManagerPO for the given IParamNodePO which has a file as
+     * Gets the ITDManager for the given IParamNodePO which has a file as
      * data source.<br>
-     * If the given IParamNodePO has regular data,its ITDManagerPO 
+     * If the given IParamNodePO has regular data,its ITDManager 
      * will be returned.
      * @param paramNode ParamNode
      * @return the usable TDManager
      * @throws JBException
      *      occuring Exception while creating TDManager
      */
-    public ITDManagerPO getExternalCheckedTDManager(IParamNodePO paramNode)
+    public ITDManager getExternalCheckedTDManager(IParamNodePO paramNode)
         throws JBException {
         
         boolean isTestRunning = 
@@ -404,7 +404,7 @@ public class ExternalTestDataBP {
      * @throws JBException 
      *              if an error occurs while reading an external data source.
      */
-    public ITDManagerPO getExternalCheckedTDManager(
+    public ITDManager getExternalCheckedTDManager(
             IParamNodePO paramNode, Locale locale, 
             boolean retrieveExternalData) throws JBException {
         
@@ -421,7 +421,7 @@ public class ExternalTestDataBP {
         }
 
         if (!retrieveExternalData) {
-            ITDManagerPO tdManager = PoMaker.createTDManagerPO(paramNode);
+            ITDManager tdManager = PoMaker.createTDManagerPO(paramNode);
             return tdManager;
         }
 
