@@ -66,7 +66,7 @@ class TestDataCubePO implements ITestDataCubePO {
     /**
      * <code>m_dataManager</code> dataManager for handling of testdata
      */
-    private ITDManagerPO m_dataManager = null;
+    private ITDManager m_dataManager = null;
 
     /**
      * path to externalDataFile, could be Excel or sth. else
@@ -250,7 +250,7 @@ class TestDataCubePO implements ITestDataCubePO {
      * {@inheritDoc}
      */
     @Transient
-    public ITDManagerPO getDataManager() {
+    public ITDManager getDataManager() {
         if (getReferencedDataCube() != null) {
             return getReferencedDataCube().getDataManager();
         }
@@ -265,7 +265,7 @@ class TestDataCubePO implements ITestDataCubePO {
               fetch = FetchType.EAGER, 
               targetEntity = TDManagerPO.class)
     @JoinColumn(name = "TD_MANAGER")
-    protected ITDManagerPO getHbmDataManager() {
+    protected ITDManager getHbmDataManager() {
         return m_dataManager;
     }
     
@@ -273,16 +273,15 @@ class TestDataCubePO implements ITestDataCubePO {
      * Setter for internal data used by hibernate
      * @param dataManager data
      */
-    protected void setHbmDataManager(ITDManagerPO dataManager) {
+    protected void setHbmDataManager(ITDManager dataManager) {
         m_dataManager = dataManager;        
     }
     
     /**
      * @param dataManager The dataManager to set.
      */
-    public void setDataManager(ITDManagerPO dataManager) {
+    public void setDataManager(ITDManager dataManager) {
         setHbmDataManager(dataManager);
-        m_dataManager.setParentProjectId(getParentProjectId());
     }
     
     /**
@@ -291,10 +290,6 @@ class TestDataCubePO implements ITestDataCubePO {
     public void setParentProjectId(Long projectId) {
         for (IParamDescriptionPO paramDesc : getHbmParameterList()) {
             paramDesc.setParentProjectId(projectId);
-        }
-        if (getDataManager() != null 
-                && getDataManager().getParentProjectId() == null) {
-            getDataManager().setParentProjectId(projectId);
         }
     }
 

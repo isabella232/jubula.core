@@ -37,7 +37,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 @Entity
 @Table(name = "TEST_DATA_LIST")
-class ListWrapperPO implements IListWrapperPO {
+class DataSetPO implements IDataSetPO {
     
     /** hibernate OID */
     private transient Long m_id = null;
@@ -54,9 +54,9 @@ class ListWrapperPO implements IListWrapperPO {
     private Long m_parentProjectId = null;
 
     /**
-     * @param list list to manage from ListWrapperPO
+     * @param list list to manage from DataSetPO
      */
-    ListWrapperPO(List<ITestDataPO> list) {
+    DataSetPO(List<ITestDataPO> list) {
         if (list == null) {
             setList(new ArrayList<ITestDataPO>());
         } else {
@@ -72,7 +72,7 @@ class ListWrapperPO implements IListWrapperPO {
      * constructor
      *
      */
-    ListWrapperPO() {
+    DataSetPO() {
         // only for hibernate    
     }
 
@@ -214,7 +214,7 @@ class ListWrapperPO implements IListWrapperPO {
      * @param dataTable the data table to search in.
      * @return the index of this TDRow or -1 if not containing.
      */
-    public int getIndexInDataTable(List<IListWrapperPO> dataTable) {
+    public int getIndexInDataTable(List<IDataSetPO> dataTable) {
         return dataTable.indexOf(this);
     }
 

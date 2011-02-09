@@ -49,7 +49,7 @@ import org.eclipse.jubula.client.core.model.IDocAttributePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.II18NStringPO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -61,7 +61,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummary;
@@ -904,7 +904,7 @@ class XmlExporter {
             // ExecTestCasePO doesn't have an own parameter list.
             // It uses generally the parameter from the associated
             // SpecTestCase.
-            final ITDManagerPO dataManager = po.getDataManager();
+            final ITDManager dataManager = po.getDataManager();
             if (dataManager != null) {
                 TestData xmlTD = xml.addNewTestdata();
                 if (po.getReferencedDataCube() == null) {
@@ -982,7 +982,7 @@ class XmlExporter {
         if (po.getReferencedDataCube() != null) {
             xml.setReferencedTestData(po.getReferencedDataCube().getName());
         }
-        final ITDManagerPO dataManager = po.getDataManager();
+        final ITDManager dataManager = po.getDataManager();
         if (dataManager != null) {
             TestData xmlTD = xml.addNewTestdata();
             if (po.getReferencedDataCube() == null) {
@@ -1071,14 +1071,14 @@ class XmlExporter {
      * @param po
      *            The persistent object which contains the information
      */
-    private void fillTestData(TestData xml, ITDManagerPO po) {
+    private void fillTestData(TestData xml, ITDManager po) {
 
         for (String uniqueId : po.getUniqueIds()) {
             xml.addUniqueIds(uniqueId);
         }
 
         int rowCnt = 1;
-        for (IListWrapperPO row : po.getDataSets()) {
+        for (IDataSetPO row : po.getDataSets()) {
             TestDataRow xmlRow = xml.addNewRow();
             xmlRow.setRowCount(rowCnt++);
             int colCnt = 1;

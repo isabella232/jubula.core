@@ -36,11 +36,11 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IEventStackModificationListener;
 import org.eclipse.jubula.client.core.model.IExecStackModificationListener;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
@@ -207,7 +207,7 @@ public class Traverser {
             ExecObject stackObj = m_execStack.peek();
             INodePO node = stackObj.getExecNode();
             // next index
-            ITDManagerPO tdManager = null;
+            ITDManager tdManager = null;
             if (Hibernator.isPoSubclass(node, IParamNodePO.class)) {
                 tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(
@@ -274,11 +274,11 @@ public class Traverser {
         throws JBException {
         
         IExecTestCasePO exTc = childNode;
-        ITDManagerPO tdManager = null;
+        ITDManager tdManager = null;
         tdManager = m_externalTestDataBP.getExternalCheckedTDManager(exTc);
         
         ITestDataPO td = null;
-        IListWrapperPO dataSet = null;
+        IDataSetPO dataSet = null;
         
         if (tdManager.getDataSetCount() > 0) {
             dataSet = tdManager.getDataSet(0);
@@ -357,7 +357,7 @@ public class Traverser {
         if (Hibernator.isPoSubclass(node, IParamNodePO.class) 
                 && ((IParamNodePO)node).getDataManager() != null) {
             IParamNodePO paramNode = (IParamNodePO)node;
-            ITDManagerPO tdManager = 
+            ITDManager tdManager = 
                 m_externalTestDataBP.getExternalCheckedTDManager(paramNode);
             int ds = tdManager.getDataSetCount();
             if (ds > 0) {
@@ -729,9 +729,9 @@ public class Traverser {
         IEventExecTestCasePO eventExecTC = eventObj.getEventExecTc();
         
         int startIndex = 0;
-        final ITDManagerPO mgr = eventExecTC.getDataManager();
+        final ITDManager mgr = eventExecTC.getDataManager();
         if (mgr.getDataSetCount() > 0) {
-            IListWrapperPO row = mgr.getDataSet(0);
+            IDataSetPO row = mgr.getDataSet(0);
             for (int col = 0; col < row.getColumnCount(); col++) {
                 ITestDataPO td = row.getColumn(col);
                 String uniqueId = mgr.getUniqueIds().get(col);

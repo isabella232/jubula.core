@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.Locale;
 
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IModifiableParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -153,7 +153,7 @@ public abstract class AbstractParamInterfaceBP<T> {
         int col = srcNode.getDataManager().findColumnForParam(
                 srcDesc.getUniqueId());
         if (col > -1 && srcNode.getDataManager().getDataSetCount() > rowCount) {
-            IListWrapperPO row = srcNode.getDataManager().getDataSet(rowCount);
+            IDataSetPO row = srcNode.getDataManager().getDataSet(rowCount);
             try {
                 ITestDataPO td = row.getColumn(col);
                 ParamValueConverter conv = 

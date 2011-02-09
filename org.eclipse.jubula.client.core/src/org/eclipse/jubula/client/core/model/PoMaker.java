@@ -133,10 +133,10 @@ public abstract class PoMaker {
     /**
      * factory method to replace constructor
      * @param list list
-     * @return ListWrapperPO
+     * @return DataSetPO
      */
-    public static IListWrapperPO createListWrapperPO(List<ITestDataPO> list) {
-        return new ListWrapperPO(list);
+    public static IDataSetPO createListWrapperPO(List<ITestDataPO> list) {
+        return new DataSetPO(list);
     }
 
     /**
@@ -398,7 +398,7 @@ public abstract class PoMaker {
      * @param node node
      * @return TDManagerPO
      */
-    public static ITDManagerPO createTDManagerPO(IParameterInterfacePO node) {
+    public static ITDManager createTDManagerPO(IParameterInterfacePO node) {
         return new TDManagerPO(node);
     }
 
@@ -408,7 +408,7 @@ public abstract class PoMaker {
      * @param uniqueIds uniqueIds
      * @return TDManagerPO
      */
-    public static ITDManagerPO createTDManagerPO(IParameterInterfacePO node, 
+    public static ITDManager createTDManagerPO(IParameterInterfacePO node, 
         List<String> uniqueIds) {
         
         return new TDManagerPO(node, uniqueIds);
@@ -543,7 +543,7 @@ public abstract class PoMaker {
      * @return the class instance of the PO
      */
     public static Class getListWrapperClass() {
-        return ListWrapperPO.class;
+        return DataSetPO.class;
     }
 
     /**

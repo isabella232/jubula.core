@@ -117,7 +117,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * {@inheritDoc}
      */
     @Transient
-    public ITDManagerPO getDataManager() {
+    public ITDManager getDataManager() {
         return getParameterInterface().getDataManager();
     }
 
@@ -126,7 +126,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * @return the data manager.
      */
     @Transient
-    protected ITDManagerPO getHbmDataManager() {
+    protected ITDManager getHbmDataManager() {
         return getParameterInterface().getHbmDataManager();
     }
 
@@ -252,7 +252,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * 
      * {@inheritDoc}
      */
-    public void setDataManager(ITDManagerPO dataManager) {
+    public void setDataManager(ITDManager dataManager) {
         getParameterInterface().setDataManager(dataManager);
     }
 
@@ -273,7 +273,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
         if (StringUtils.isEmpty(getDataFile())) {
             // Excel files are ignored. Other data is checked.
             final int paramListSize = getParameterListSize();
-            ITDManagerPO testDataManager = getDataManager();
+            ITDManager testDataManager = getDataManager();
             if ((testDataManager.getDataSetCount() == 0) 
                     && (paramListSize > 0)) {
                 return false;
@@ -287,7 +287,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                 new ArrayList<IParamDescriptionPO>(getParameterList());
 
             IParameterInterfacePO refDataCube = getReferencedDataCube();
-            for (IListWrapperPO dataSet : testDataManager.getDataSets()) {
+            for (IDataSetPO dataSet : testDataManager.getDataSets()) {
                 for (IParamDescriptionPO paramDesc : requiredParameters) {
                     int column = 
                         testDataManager.findColumnForParam(
@@ -328,7 +328,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
     public Iterator<TDCell> getParamReferencesIterator(Locale locale) {
         List <TDCell> references = new ArrayList <TDCell> ();
         int row = 0;
-        for (IListWrapperPO dataSet : getDataManager().getDataSets()) {
+        for (IDataSetPO dataSet : getDataManager().getDataSets()) {
             addParamReferences(references, dataSet, row, locale);
             row++;
         }
@@ -342,7 +342,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
     public Iterator<TDCell> getParamReferencesIterator(
             int dataSetRow, Locale locale) {
         
-        IListWrapperPO row = getDataManager().getDataSet(dataSetRow);
+        IDataSetPO row = getDataManager().getDataSet(dataSetRow);
         List <TDCell> references = new ArrayList <TDCell> ();
         addParamReferences(references, row, dataSetRow, locale);
         return references.iterator();
@@ -359,7 +359,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      *            currently used locale
      */
     private void addParamReferences(List <TDCell> references, 
-            IListWrapperPO row, int dataSetRow, Locale locale) {
+            IDataSetPO row, int dataSetRow, Locale locale) {
         int col = 0;
         for (ITestDataPO testData : row.getList()) {
             String uniqueId = getDataManager().getUniqueIds().get(col);

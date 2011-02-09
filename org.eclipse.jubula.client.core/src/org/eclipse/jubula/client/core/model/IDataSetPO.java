@@ -23,7 +23,7 @@ import java.util.List;
  *
  *
  */
-public interface IListWrapperPO extends IPersistentObject {
+public interface IDataSetPO extends IPersistentObject {
     /**
      * @return Returns the list.
      */

@@ -22,13 +22,13 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.II18NStringPO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -140,8 +140,8 @@ public class TestDataSearchQuery extends AbstractSearchQuery {
 
         List<IParamDescriptionPO> usedParameters = paramObj.getParameterList();
         IParameterInterfacePO refDataCube = paramObj.getReferencedDataCube();
-        ITDManagerPO testDataManager = paramObj.getDataManager();
-        for (IListWrapperPO dataSet : testDataManager.getDataSets()) {
+        ITDManager testDataManager = paramObj.getDataManager();
+        for (IDataSetPO dataSet : testDataManager.getDataSets()) {
             for (IParamDescriptionPO paramDesc : usedParameters) {
                 int column = testDataManager.findColumnForParam(paramDesc
                         .getUniqueId());

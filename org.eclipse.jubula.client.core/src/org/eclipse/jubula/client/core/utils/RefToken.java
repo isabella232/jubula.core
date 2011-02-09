@@ -26,7 +26,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -315,7 +315,7 @@ public class RefToken implements IParamValueToken {
                 for (IParamDescriptionPO parDesc 
                         : execNode.getParameterList()) {
                     if (parDesc.getUniqueId().equals(refGuid)) {
-                        ITDManagerPO man = null;
+                        ITDManager man = null;
                         try {
                             // FIXME zeb instantiating a new BP object every 
                             //           time means that we do absolutely *NO* 

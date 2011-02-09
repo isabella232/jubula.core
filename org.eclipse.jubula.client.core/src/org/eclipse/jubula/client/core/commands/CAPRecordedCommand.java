@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.II18NStringPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -312,7 +312,7 @@ public class CAPRecordedCommand implements ICommand {
      * @param params The Test Step's Parameters.
      */
     private void addTestData(ICapPO recCap, List params) {
-        ITDManagerPO tdManager = recCap.getDataManager();
+        ITDManager tdManager = recCap.getDataManager();
         GeneralStorage genStorage = GeneralStorage.getInstance();
         int paramNumber = 0;
         Iterator msgParamIt = params.iterator();

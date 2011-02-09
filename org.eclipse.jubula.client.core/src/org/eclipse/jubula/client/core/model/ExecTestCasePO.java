@@ -337,7 +337,7 @@ class ExecTestCasePO extends TestCasePO implements
      * TestData are overwritten.
      */
     @Transient
-    public ITDManagerPO getDataManager() {
+    public ITDManager getDataManager() {
         if (getReferencedDataCube() == null 
                 && getHasReferencedTD() && getSpecTestCase() != null) {
             return getSpecTestCase().getDataManager();
@@ -397,7 +397,7 @@ class ExecTestCasePO extends TestCasePO implements
      */
     @SuppressWarnings("unused")
     @Transient
-    private ITDManagerPO getOwnDataManager() {
+    private ITDManager getOwnDataManager() {
         return super.getDataManager();
     }
     
@@ -410,7 +410,7 @@ class ExecTestCasePO extends TestCasePO implements
      * 
      * {@inheritDoc}
      */
-    public void setDataManager(ITDManagerPO dataManager) {
+    public void setDataManager(ITDManager dataManager) {
         super.setDataManager(dataManager);
         setHasReferencedTD(false);
     }
@@ -432,11 +432,11 @@ class ExecTestCasePO extends TestCasePO implements
      * 
      * @return The new test data manager
      */
-    public ITDManagerPO resolveTDReference() {
+    public ITDManager resolveTDReference() {
         if (getHasReferencedTD()) {
-            final ITDManagerPO specTDMan = getSpecTestCase().getDataManager();
-            final ITDManagerPO execTDMan = super.getHbmDataManager();
-            final ITDManagerPO modifiedExecTDMan = specTDMan.deepCopy(
+            final ITDManager specTDMan = getSpecTestCase().getDataManager();
+            final ITDManager execTDMan = super.getHbmDataManager();
+            final ITDManager modifiedExecTDMan = specTDMan.deepCopy(
                     execTDMan);
             this.setDataManager(modifiedExecTDMan);
         }
@@ -759,11 +759,11 @@ class ExecTestCasePO extends TestCasePO implements
     }
 
     /** {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.model.ITDManagerPO#synchronizeParameterIDs()
+     * @see org.eclipse.jubula.client.core.model.ITDManager#synchronizeParameterIDs()
      */
     public void synchronizeParameterIDs() {
         if (getReferencedDataCube() == null) {
-            ITDManagerPO tdMan = getDataManager();
+            ITDManager tdMan = getDataManager();
             List<IParamDescriptionPO> params = getParameterList();
             List<String> origParamIDs = new ArrayList<String>();
             List<String> header = new ArrayList<String>(tdMan.getUniqueIds());
