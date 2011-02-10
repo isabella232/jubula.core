@@ -1087,6 +1087,16 @@
         id="org.eclipse.jubula.client.ui.commands.OpenTestCase"
         name="%OpenTestCase">
   </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.CopyID"
+        name="Copy ID to clipboard">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.ShowFromClipboard"
+        name="Open Element from Clipboard">
+  </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<key
@@ -1220,6 +1230,12 @@
         contextId="org.eclipse.ui.contexts.window"
         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
         sequence="M1+M2+T">
+  </key>
+  <key
+        commandId="org.eclipse.jubula.client.ui.commands.ShowFromClipboard"
+        contextId="org.eclipse.ui.contexts.window"
+        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+        sequence="F9">
   </key>
 	</extension>
 	<extension id="gdMarkerResolution" name="%JubulaMarkerResolution"
@@ -2383,6 +2399,10 @@
         class="org.eclipse.jubula.client.ui.handlers.switchto.SwitchToTestSuiteBrowserHandler"
         commandId="org.eclipse.jubula.client.ui.commands.SwitchToTestSuiteBrowserCommand">
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.ShowFromClipboard"
+        commandId="org.eclipse.jubula.client.ui.commands.ShowFromClipboard">
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.commandImages">
 		<image commandId="org.eclipse.ui.edit.rename" disabledIcon="icons/rename_disabled.gif"
@@ -3127,6 +3147,24 @@
   <handler
         class="org.eclipse.jubula.client.ui.handlers.switchto.SwitchToPropertiesViewHandler"
         commandId="org.eclipse.jubula.client.ui.commands.SwitchToPropertiesViewCommand">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.CopyIdToClipboardHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.CopyID">
+     <activeWhen>
+        <and>
+           <count
+                 value="1">
+           </count>
+           <iterate
+                 ifEmpty="false"
+                 operator="and">
+              <instanceof
+                    value="org.eclipse.jubula.client.ui.model.SpecTestCaseGUI">
+              </instanceof>
+           </iterate>
+        </and>
+     </activeWhen>
   </handler>
 	</extension>
 	<extension point="org.eclipse.ui.services">
