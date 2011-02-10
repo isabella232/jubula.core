@@ -10,7 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.converter;
 
-import com.bredexsw.guidancer.client.importer.gdschema.Project;
+import org.eclipse.jubula.client.archive.schema.Project;
+
 
 /**
  * general interface for import converter

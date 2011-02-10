@@ -80,33 +80,13 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.client.ua.cheatsheets"
-         download-size="0"
-         install-size="0"
-         version="0.9.0.qualifier"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.jubula.client.ua.help"
          download-size="0"
          install-size="0"
          version="0.9.0.qualifier"/>
 
    <plugin
-         id="org.eclipse.jubula.client.ua.welcome"
-         download-size="0"
-         install-size="0"
-         version="0.9.0.qualifier"/>
-
-   <plugin
          id="org.eclipse.jubula.client.ui"
-         download-size="0"
-         install-size="0"
-         version="0.9.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jubula.communication"
          download-size="0"
          install-size="0"
          version="0.9.0.qualifier"
@@ -147,6 +127,25 @@
          version="0.9.0.qualifier"
          unpack="false"/>
 -->
+   <plugin
+         id="org.eclipse.jubula.communication"
+         download-size="0"
+         install-size="0"
+         version="0.9.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.ua.welcome"
+         download-size="0"
+         install-size="0"
+         version="0.9.0.qualifier"/>
+         
+   <plugin
+         id="org.eclipse.jubula.client.ua.cheatsheets"
+         download-size="0"
+         install-size="0"
+         version="0.9.0.qualifier"
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.toolkit.common"

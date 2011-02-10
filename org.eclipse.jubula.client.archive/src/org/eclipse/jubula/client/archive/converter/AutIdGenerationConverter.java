@@ -11,12 +11,11 @@
 package org.eclipse.jubula.client.archive.converter;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.archive.schema.Aut;
+import org.eclipse.jubula.client.archive.schema.AutConfig;
+import org.eclipse.jubula.client.archive.schema.MapEntry;
+import org.eclipse.jubula.client.archive.schema.Project;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-
-import com.bredexsw.guidancer.client.importer.gdschema.Aut;
-import com.bredexsw.guidancer.client.importer.gdschema.AutConfig;
-import com.bredexsw.guidancer.client.importer.gdschema.MapEntry;
-import com.bredexsw.guidancer.client.importer.gdschema.Project;
 
 /**
  * Generates unique (in the context of the Project) AUT IDs for all 

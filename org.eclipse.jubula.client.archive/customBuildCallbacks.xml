@@ -77,6 +77,18 @@
 			classpathref="project.class.path" />
 	</target>
 	
+   <target name="gen-xml-src">
+        <taskdef 
+            name="xmlbean" 
+            classname="org.apache.xmlbeans.impl.tool.XMLBean" 
+            classpathref="project.class.path" />
+        <xmlbean
+            schema="model/archiveModel.xsd" 
+        	srconly="true"
+        	srcgendir="src"
+            javasource="1.5" />
+    </target>
+	
 	<!-- ===================================================================== -->
 	<!-- END - Old buildScript.xml                                           -->
 	<!-- ===================================================================== -->

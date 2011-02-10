@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema elementFormDefault="qualified" xml:lang="EN" targetNamespace="http://www.bredexsw.com/guidancer/client/importer/gdschema" xmlns:gd="http://www.bredexsw.com/guidancer/client/importer/gdschema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema elementFormDefault="qualified" xml:lang="EN" targetNamespace="http://www.eclipse.org/jubula/client/archive/schema" xmlns:gd="http://www.eclipse.org/jubula/client/archive/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
     <xs:documentation xml:lang="en"> Schema for Jubula test projects. Used for
 			export/import and optional external generators. Copyright 2005 BREDEX GmbH.
