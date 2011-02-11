@@ -11,7 +11,7 @@
 			<arguments>
 				<dictionary>
 					<key>LaunchConfigHandle</key>
-					<value>&lt;project&gt;/.externalToolBuilders/gen-xml-jar.launch</value>
+					<value>&lt;project&gt;/.externalToolBuilders/gen-xml-src.launch</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
