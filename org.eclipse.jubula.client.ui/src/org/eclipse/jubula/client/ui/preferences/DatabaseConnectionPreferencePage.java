@@ -22,6 +22,8 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ListViewer;
@@ -143,24 +145,11 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
      */
     private void createEditButton(Composite parent,
             final ListViewer connectionViewer) {
-        final Button editButton = new Button(parent, SWT.NONE);
-        BUTTON_DATA_FACTORY.applyTo(editButton);
-        editButton.setEnabled(false);
-        connectionViewer.addSelectionChangedListener(
-                new ISelectionChangedListener() {
-                    public void selectionChanged(SelectionChangedEvent event) {
-                        IStructuredSelection sel =
-                            (IStructuredSelection)event.getSelection();
-                        editButton.setEnabled(sel.size() == 1);
-                    }
-                });
-        editButton.setText(
-                Messages.DatabaseConnectionPreferencePageEditButtonLabel);
-        editButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent event) {
+        
+        final IDoubleClickListener editListener = new IDoubleClickListener() {
+            public void doubleClick(DoubleClickEvent event) {
                 Object selectedObj = 
-                    ((IStructuredSelection)connectionViewer.getSelection())
+                    ((IStructuredSelection)event.getSelection())
                         .getFirstElement();
                 if (selectedObj instanceof DatabaseConnection) {
                     DatabaseConnection selectedConn = 
@@ -171,8 +160,9 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
                             new DatabaseConnectionDialog(
                                     new DatabaseConnection(selectedConn));
                             
-                        if (showDialog(databaseConnectionWizard, event.display) 
-                                == Window.OK) {
+                        if (showDialog(databaseConnectionWizard, 
+                                event.getViewer().getControl().getDisplay()) 
+                                    == Window.OK) {
                             DatabaseConnection modifiedConn = 
                                 databaseConnectionWizard
                                     .getEditedConnection();
@@ -193,10 +183,33 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
                     throw new RuntimeException(Messages.
                         DatabaseConnectionPrefPageSelecObjIsOfIncorrectType);
                 }
+            }
+        }; 
 
+        connectionViewer.addDoubleClickListener(editListener);
+        
+        final Button editButton = new Button(parent, SWT.NONE);
+        BUTTON_DATA_FACTORY.applyTo(editButton);
+        editButton.setEnabled(false);
+        connectionViewer.addSelectionChangedListener(
+                new ISelectionChangedListener() {
+                    public void selectionChanged(SelectionChangedEvent event) {
+                        IStructuredSelection sel =
+                            (IStructuredSelection)event.getSelection();
+                        editButton.setEnabled(sel.size() == 1);
+                    }
+                });
+        editButton.setText(
+                Messages.DatabaseConnectionPreferencePageEditButtonLabel);
+        editButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent event) {
+                editListener.doubleClick(new DoubleClickEvent(
+                        connectionViewer, connectionViewer.getSelection()));
             }
 
         });
+        
     }
 
     /**
