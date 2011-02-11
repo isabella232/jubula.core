@@ -4,13 +4,11 @@ Bundle-Name: Jubula Toolkit - HTML (Incubation)
 Bundle-SymbolicName: org.eclipse.jubula.toolkit.provider.html;singleton:=true
 Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.eclipse.jubula.toolkit.provider.html.PluginStarter
-Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.jubula.toolkit.common;bundle-version="[0.9.0,1.0.0)",
  org.eclipse.jubula.client.ui;bundle-version="[0.9.0,1.0.0)";resolution:=optional,
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse Jubula
-Bundle-ClassPath: org.eclipse.jubula.toolkit.provider.html.jar
+Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Eclipse-BundleShape: jar

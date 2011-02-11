@@ -20,9 +20,15 @@
 		<module>../org.eclipse.jubula.tools</module>
 		<module>../org.eclipse.jubula.communication</module>
 		<module>../org.eclipse.jubula.client.core</module>
+		<module>../org.eclipse.jubula.client.ui</module>
 		<module>../org.eclipse.jubula.client.archive</module>
 		<module>../org.eclipse.jubula.toolkit.provider.base</module>
 		<module>../org.eclipse.jubula.toolkit.provider.concrete</module>
+		<module>../org.eclipse.jubula.toolkit.provider.html</module>
+		<module>../org.eclipse.jubula.toolkit.provider.rcp</module>
+		<module>../org.eclipse.jubula.toolkit.provider.rcp.gef</module>
+		<module>../org.eclipse.jubula.toolkit.provider.swing</module>
+		<module>../org.eclipse.jubula.toolkit.provider.swt</module>
 		<module>../org.eclipse.jubula.toolkit.common</module>
 		<module>../org.eclipse.jubula.client.ua.cheatsheets</module>
 		<module>../org.eclipse.jubula.client.ua.welcome</module>
