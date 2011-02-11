@@ -1,0 +1,72 @@
+<!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<project name="org.eclipse.jubula.client.core" default="weaveMaven">
+
+	<path id="eclipselink.weaving.classpath">
+		<fileset dir="${basedir}/../../guidancer/com.bredexsw.guidancer.project.configuration/target/platform/persistence/plugins">
+			<include name="org.eclipse.persistence.*.jar" />
+			<include name="javax.persistence_*.jar" />
+		</fileset>
+	</path>
+
+	<target name="define-weaving-task" description="New task definition for EclipseLink static weaving">
+		<taskdef name="weave" classname="org.eclipse.persistence.tools.weaving.jpa.StaticWeaveAntTask">
+			<classpath refid="eclipselink.weaving.classpath" />
+		</taskdef>
+	</target>
+
+	<target name="eclipse-autobuild-weaving" description="Perform EclipseLink static weaving after Eclipse autobuild.">
+		<path id="weaving.classpath">
+			<pathelement location="${basedir}/../org.eclipse.jubula.tools/bin" />
+			<pathelement location="${basedir}/../org.eclipse.jubula.communication/bin" />
+			<fileset dir="${basedir}/../../guidancer/com.bredexsw.guidancer.project.configuration/target/platform/eclipse/plugins">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${basedir}/lib">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${basedir}/../org.eclipse.jubula.tools/lib">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<antcall target="weaving">
+			<param name="weaving.src" value="${basedir}/bin" />
+			<param name="weaving.persistence" value="${basedir}" />
+			<reference refid="weaving.classpath" torefid="weaving.classpath" />
+		</antcall>
+	</target>
+
+	<target name="weaving" description="Perform EclipseLink static weaving in-place during deployment." depends="define-weaving-task">
+		<weave source="${weaving.src}" target="${weaving.src}" persistenceinfo="${weaving.persistence}">
+			<classpath refid="weaving.classpath" />
+		</weave>
+	</target>
+
+	<property name="classes" value="target/classes" />
+
+	<target name="weaveMaven">
+		<path id="weaving.classpath">
+			<path refid="maven.compile.classpath" />
+			<fileset dir="${basedir}/../org.eclipse.jubula.tools/lib">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+		<property name="weaving.classpath.property" refid="weaving.classpath" />
+		<echo message="Executing EclipseLink static weaving..." />
+		<java fork="true" failonerror="true" classname="org.eclipse.persistence.tools.weaving.jpa.StaticWeave">
+			<classpath refid="weaving.classpath" />
+			<arg value="-classpath" />
+			<arg value="${weaving.classpath.property}" />
+			<arg value="-persistenceinfo" />
+			<arg value="${basedir}" />
+			<arg value="${basedir}/${classes}" />
+			<arg value="${basedir}/${classes}" />
+		</java>
+		<echo message="...EclipseLink static weaving finished successfully." />
+	</target>
+</project>
