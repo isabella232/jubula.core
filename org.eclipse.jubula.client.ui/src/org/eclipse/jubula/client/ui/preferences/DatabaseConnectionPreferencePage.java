@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.preferences;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -120,7 +121,9 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
         GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
         GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
 
-        m_connectionList = parsePreferences(getPreferenceStore());
+        m_connectionList = new WritableList(
+                parsePreferences(getPreferenceStore()),
+                DatabaseConnection.class);
         final ListViewer connectionViewer = new ListViewer(composite);
         Control listControl = connectionViewer.getControl();
         GridDataFactory.fillDefaults().grab(true, true).span(1, 3)
@@ -326,6 +329,15 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
         return super.performOk();
     }
 
+    @Override
+    protected void performDefaults() {
+        getPreferenceStore().setToDefault(
+                DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS);
+        m_connectionList.clear();
+        m_connectionList.addAll(parsePreferences(getPreferenceStore()));
+        super.performDefaults();
+    }
+    
     /**
      * Parses the configured database connections from the information 
      * contained in the given preference store.
@@ -335,13 +347,11 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
      * @return the list of configured database connections found in the given
      *         preference store.
      */
-    private static IObservableList parsePreferences(
+    private static List<DatabaseConnection> parsePreferences(
             IPreferenceStore prefStore) {
 
-        return new WritableList(
-                DatabaseConnectionConverter.convert(prefStore.getString(
-                        DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS)),
-                DatabaseConnection.class);
+        return DatabaseConnectionConverter.convert(prefStore.getString(
+                DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS));
     }
 
 }
