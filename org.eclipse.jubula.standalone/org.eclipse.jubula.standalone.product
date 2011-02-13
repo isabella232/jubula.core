@@ -45,6 +45,7 @@
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5</windows>
    </vm>
 
+
    <plugins>
       <plugin id="ch.qos.logback.classic"/>
       <plugin id="ch.qos.logback.core"/>
@@ -116,6 +117,7 @@
       <plugin id="org.eclipse.jubula.app"/>
       <plugin id="org.eclipse.jubula.client.archive"/>
       <plugin id="org.eclipse.jubula.client.core"/>
+      <plugin id="org.eclipse.jubula.client.inspector.ui"/>
       <plugin id="org.eclipse.jubula.client.ua.cheatsheets"/>
       <plugin id="org.eclipse.jubula.client.ua.welcome"/>
       <plugin id="org.eclipse.jubula.client.ui"/>
