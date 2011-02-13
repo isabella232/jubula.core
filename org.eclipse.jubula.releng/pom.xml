@@ -15,6 +15,8 @@
 
 	<modules>
 		<module>../org.eclipse.jubula.site</module>
+		<module>../org.eclipse.jubula.app</module>
+		<module>../org.eclipse.jubula.standalone</module>
 		<module>../org.eclipse.jubula.feature</module>
 		<module>../org.eclipse.jubula.feature.client</module>
 		<module>../org.eclipse.jubula.tools</module>
@@ -33,15 +35,15 @@
 		<module>../org.eclipse.jubula.client.ua.cheatsheets</module>
 		<module>../org.eclipse.jubula.client.ua.welcome</module>
 	</modules>
-	
+
 	<url>http://www.eclipse.org/jubula</url>
-	
+
 	<distributionManagement>
 		<repository>
-		
+
 		</repository>
 	</distributionManagement>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -64,6 +66,33 @@
 							<classifier>../org.eclipse.jubula.project.configuration/target/definitions/helios</classifier>
 						</artifact>
 					</target>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
 				</configuration>
 			</plugin>
 

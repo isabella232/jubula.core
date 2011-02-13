@@ -11,8 +11,6 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.6.1,4.0.0)";visibility:=reexpo
  org.eclipse.jubula.client.ui;bundle-version="[0.9.0,1.0.0)";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: .,
- org.eclipse.jubula.app.jar
+Bundle-ClassPath: .
 Export-Package: org.eclipse.jubula.app,
  org.eclipse.jubula.app.core
-Eclipse-BundleShape: jar
