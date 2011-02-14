@@ -308,9 +308,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                     }
                     
                     ITestDataPO testData = dataSet.getColumn(column);
-                    if (testData == null || testData.getValue() == null
-                        || testData.getValue().getValue(locale) == null) {
-                        
+                    if (testData == null || testData.getValue(locale) == null) {
                         return false;
                     }
                 }

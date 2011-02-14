@@ -869,7 +869,7 @@ public class TestExecution {
                     m_varStore.store(CURRENT_DATASET_NUMBER, String.valueOf(
                         dsNumber + 1)); // 1-based for the user!
                     ParamValueConverter conv = new ModelParamValueConverter(
-                        date.getValue().getValue(getLocale()), cap,
+                        date.getValue(getLocale()), cap,
                         getLocale(), desc);
                     List <ExecObject> stackList = 
                         new ArrayList<ExecObject>(m_trav.getExecStackAsList());
@@ -2084,7 +2084,7 @@ public class TestExecution {
             throws InvalidDataException {
             String value = StringConstants.EMPTY;
             ParamValueConverter conv = new ModelParamValueConverter(
-                date.getValue().getValue(getLocale()), cap, getLocale(), desc);
+                date.getValue(getLocale()), cap, getLocale(), desc);
             try {
                 List <ExecObject> stackList = 
                     new ArrayList<ExecObject>(m_trav.getExecStackAsList());

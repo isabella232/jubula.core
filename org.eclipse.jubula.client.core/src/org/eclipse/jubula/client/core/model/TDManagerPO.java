@@ -244,25 +244,36 @@ class TDManagerPO implements ITDManager {
     }
     
     /**
-     * Inserts a new empty row (data set) at the given position.
-     * @param position the position to insert.
+     * 
+     * {@inheritDoc}
      */
     public void insertDataSet(int position) {
         int colCount = getColumnCount();
-        if (position < getDataTable().size()) {
-            List <ITestDataPO> columns =
-                new ArrayList <ITestDataPO> (colCount);
-            for (int i = 0; i < colCount; i++) {
-                columns.add(TestDataBP.instance().createEmptyTestData());
-            }
-            IDataSetPO listW = PoMaker.createListWrapperPO(columns);
-            getDataTable().add(position, listW);
-            listW.setParentProjectId(getParentProjectId());
-        } else {
-            expandRows(position);
+        List <ITestDataPO> columns =
+            new ArrayList <ITestDataPO> (colCount);
+        for (int i = 0; i < colCount; i++) {
+            columns.add(TestDataBP.instance().createEmptyTestData());
         }
+
+        insertDataSet(PoMaker.createListWrapperPO(columns), position);
     }
-    
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void insertDataSet(IDataSetPO dataSet, int position) {
+        Validate.notNull(dataSet);
+
+        dataSet.setParentProjectId(getParentProjectId());
+        if (position > getDataTable().size()) {
+            // add empty columns up to the position where the given
+            // Data Set will be inserted
+            expandRows(position - 1);
+        }
+
+        getDataTable().add(position, dataSet);
+    }
     
     /**
      * Creates new columns in all rows with empty test data.
@@ -366,9 +377,9 @@ class TDManagerPO implements ITDManager {
         expandColumns(column);
         ITestDataPO td = getCell(row, column);
         if (testData != null) {
-            td.setValue(testData.getValue());
+            td.setData(testData);
         } else {
-            td.setValue(null);
+            td.clear();
         }
     }
     /**
@@ -425,14 +436,15 @@ class TDManagerPO implements ITDManager {
         for (String uniqueId : getUniqueIds()) {
             tdMan.addUniqueId(uniqueId);
         }
-        tdMan.getDataTable().clear();
+        tdMan.clear();
         for (IDataSetPO dataSet : getDataSets()) {
             List<ITestDataPO> newRow = new ArrayList<ITestDataPO> (
                     dataSet.getColumnCount());
             for (ITestDataPO testData : dataSet.getList()) {
                 newRow.add(testData.deepCopy());
             }
-            tdMan.getDataTable().add(PoMaker.createListWrapperPO(newRow));
+            tdMan.insertDataSet(PoMaker.createListWrapperPO(newRow), 
+                    tdMan.getDataSetCount());
         }
         return tdMan;
     }

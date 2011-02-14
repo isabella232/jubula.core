@@ -147,8 +147,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             for (IParamDescriptionPO pd : cap.getParameterList()) {
                 try {
                     String pID = 
-                        cap.getDataManager().getCell(0, pd).getValue()
-                            .getValue(loc);
+                        cap.getDataManager().getCell(0, pd).getValue(loc);
                     if ((pID != null)  // check for unset data
                             && pID.endsWith(paramGUID)) {
                         Component c = compSystem.findComponent(cap
@@ -185,7 +184,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                 try {
                     ITestDataPO cell = node.getDataManager().getCell(rowNum,
                             paramDesc);
-                    String value = cell.getValue().getValue(loc);
+                    String value = cell.getValue(loc);
                     if ((value != null) && value.endsWith(paramGUID)) {
                         result.add(paramDesc.getUniqueId());
                     }
@@ -261,7 +260,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                     final boolean isModified = conv.removeReference(
                             desc.getUniqueId());
                     if (isModified) {
-                        cell.getTestData().getValue().setValue(locale, 
+                        cell.getTestData().setValue(locale, 
                             conv.getModelString(), 
                             GeneralStorage.getInstance().getProject());
                     }

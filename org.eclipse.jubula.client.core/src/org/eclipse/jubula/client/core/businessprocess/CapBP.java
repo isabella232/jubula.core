@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.II18NStringPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -61,15 +61,12 @@ public class CapBP {
         for (String paramName : action.getParamNames()) {
             Param parameter = action.findParam(paramName);
             String defaultValue = parameter.getDefaultValue();
-            II18NStringPO i18nStr = PoMaker.createI18NStringPO(project
-                .getDefaultLanguage(), defaultValue, project);
-            for (Locale locale : project.getLangHelper()
-                .getLanguageList()) {
-
-                i18nStr.setValue(locale, defaultValue, project);
+            
+            ITestDataPO testData = PoMaker.createTestDataPO();
+            for (Locale locale : project.getLangHelper().getLanguageList()) {
+                testData.setValue(locale, defaultValue, project);
             }
-            cap.getDataManager().updateCell(
-                PoMaker.createTestDataPO(i18nStr), 0, paramName);
+            cap.getDataManager().updateCell(testData, 0, paramName);
         }
         return cap;
     }

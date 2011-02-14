@@ -43,6 +43,14 @@ public interface ITDManager {
     public abstract void insertDataSet(int index);
 
     /**
+     * Inserts a the given Data Set at the given index.
+     * 
+     * @param dataSet The Data Set to insert. Must not be <code>null</code>.
+     * @param index The index at which to insert.
+     */
+    public abstract void insertDataSet(IDataSetPO dataSet, int index);
+
+    /**
      * @param dataSetNumber
      *            The number (index) of the Data Set from which to retrieve the
      *            Test Data.
@@ -124,11 +132,6 @@ public interface ITDManager {
      */
     public abstract void clear();
 
-    /**
-     * @return a List of IDataSetPO
-     */
-    public abstract List<IDataSetPO> getDataTable();
-    
     /**
      * @param uniqueId uniqueId of a new parameter (independent of display order)
      */

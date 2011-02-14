@@ -342,7 +342,7 @@ public class RefToken implements IParamValueToken {
                                     execNode, man, parDesc, 0);
                         }
                         ParamValueConverter conv = new ModelParamValueConverter(
-                            data.getValue().getValue(locale), 
+                            data.getValue(locale), 
                             execNode, locale, m_desc);
                         stack.remove(stack.size() - 1);
                         return conv.getExecutionString(stack, locale); 

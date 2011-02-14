@@ -89,7 +89,6 @@ import org.eclipse.jubula.client.core.model.IDocAttributeListPO;
 import org.eclipse.jubula.client.core.model.IDocAttributePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.II18NStringPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -1084,21 +1083,15 @@ class XmlExporter {
             for (ITestDataPO td : row.getList()) {
                 TestDataCell xmlCell = xmlRow.addNewData();
                 xmlCell.setColumnCount(colCnt++);
-                II18NStringPO i18n = td.getValue();
-                if (i18n != null) {
-                    List<Locale> sortedLanguageList = 
-                        new ArrayList<Locale>(i18n.getLanguages());
-                    Collections.sort(sortedLanguageList, 
-                            LANG_CODE_ALPHA_COMPARATOR);
-                    for (Locale lang : sortedLanguageList) {
-                        String val = i18n.getValue(lang);
-                        I18NString xmlI18n = xmlCell.addNewData();
-                        xmlI18n.setLanguage(lang.toString());
-                        xmlI18n.setValue(val);
-                    }
-                } else {
+                List<Locale> sortedLanguageList = 
+                    new ArrayList<Locale>(td.getLanguages());
+                Collections.sort(sortedLanguageList, 
+                        LANG_CODE_ALPHA_COMPARATOR);
+                for (Locale lang : sortedLanguageList) {
+                    String val = td.getValue(lang);
                     I18NString xmlI18n = xmlCell.addNewData();
-                    xmlI18n.setNil();
+                    xmlI18n.setLanguage(lang.toString());
+                    xmlI18n.setValue(val);
                 }
             }
         }

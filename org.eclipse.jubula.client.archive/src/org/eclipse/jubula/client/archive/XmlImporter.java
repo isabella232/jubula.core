@@ -94,12 +94,10 @@ import org.eclipse.jubula.client.core.model.ICheckConfContPO;
 import org.eclipse.jubula.client.core.model.ICheckConfPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IDocAttributeDescriptionPO;
 import org.eclipse.jubula.client.core.model.IDocAttributePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.II18NStringPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -1541,7 +1539,6 @@ class XmlImporter {
         IProjectPO proj) {
                 
         final ITDManager tdman = owner.getDataManager();
-        List<IDataSetPO> dataTable = tdman.getDataTable();
         List<ParamDescription> parDescList = xmlCap
             .getParameterDescriptionList();
         final TestData testData = xmlCap.getTestdata();
@@ -1549,7 +1546,7 @@ class XmlImporter {
         for (TestDataRow rowXml : testData.getRowList()) {
             List<ITestDataPO> tdList = null;
             try {
-                tdList = dataTable.get(tdRow).getList();
+                tdList = tdman.getDataSet(tdRow).getList();
             } catch (IndexOutOfBoundsException ioobe) {
                 // Component, Action, and/or Parameter could not be found in config xml
                 // only log and continue -> import of projects with missing plugins
@@ -1578,26 +1575,26 @@ class XmlImporter {
                     .findColumnForParam(uniqueId);
                 if (ownerIndex > -1) {
                     // only relevant for old projects
-                    II18NStringPO val = PoMaker.createI18NStringPO();
-                    readData(proj, cellXml, val, owner);
-                    tdList.set(ownerIndex, PoMaker.createTestDataPO(val));
+                    tdList.set(ownerIndex, 
+                            PoMaker.createTestDataPO(readData(cellXml, owner)));
                 }
                 tdCell++;
             }
-            dataTable.set(tdRow, PoMaker.createListWrapperPO(tdList));
+            tdman.insertDataSet(PoMaker.createListWrapperPO(tdList), tdRow);
             tdRow++;
         }
         return tdman;
     }
 
     /**
-     * @param proj current project
      * @param cellXml associated cell from import
-     * @param val I18NString to fill with data
      * @param owner The owner of the data.
+     * @return the map read from the provided data.
      */
-    private void readData(IProjectPO proj, TestDataCell cellXml, 
-        II18NStringPO val, IParameterInterfacePO owner) {
+    private Map<Locale, String> readData(TestDataCell cellXml, 
+            IParameterInterfacePO owner) {
+        
+        Map<Locale, String> localeToValue = new HashMap<Locale, String>(); 
         for (I18NString i18nVal : cellXml.getDataList()) {
             if (i18nVal != null && !i18nVal.isNil()
                 && i18nVal.getValue() != null
@@ -1620,11 +1617,13 @@ class XmlImporter {
                     // The i18nValue uses the old format and can therefore
                     // not be parsed. This value will be converted in V1M42Converter.
                 }
-                val.setValue(LocaleUtil.convertStrToLocale(
-                    i18nVal.getLanguage()), i18nValString, 
-                    proj);
+                localeToValue.put(
+                        LocaleUtil.convertStrToLocale(i18nVal.getLanguage()), 
+                        i18nValString);
             } 
         }
+        
+        return localeToValue;
     }
     
     /**
@@ -1712,16 +1711,14 @@ class XmlImporter {
         } else {
             tdman = PoMaker.createTDManagerPO(owner, uniqueIds);
         }
-        final List<IDataSetPO> dataTable = tdman.getDataTable();
         for (TestDataRow rowXml : xml.getRowList()) {
             final List<ITestDataPO> td = new ArrayList<ITestDataPO>(rowXml
                 .sizeOfDataArray());
             for (TestDataCell cellXml : rowXml.getDataList()) {
-                II18NStringPO val = PoMaker.createI18NStringPO();
-                readData(proj, cellXml, val, owner);
-                td.add(PoMaker.createTestDataPO(val));
+                td.add(PoMaker.createTestDataPO(readData(cellXml, owner)));
             }
-            dataTable.add(PoMaker.createListWrapperPO(td));
+            tdman.insertDataSet(PoMaker.createListWrapperPO(td), 
+                    tdman.getDataSetCount());
         }
         return tdman;
     }

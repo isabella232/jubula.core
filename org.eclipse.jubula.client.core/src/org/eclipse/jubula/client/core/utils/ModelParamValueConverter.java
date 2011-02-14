@@ -65,7 +65,7 @@ public class ModelParamValueConverter extends ParamValueConverter {
     public ModelParamValueConverter(ITestDataPO td,
             IParameterInterfacePO currentNode, Locale locale, 
             IParamDescriptionPO desc) {
-        this(td.getValue().getValue(locale), currentNode, locale, desc);
+        this(td.getValue(locale), currentNode, locale, desc);
     }
     
     /**

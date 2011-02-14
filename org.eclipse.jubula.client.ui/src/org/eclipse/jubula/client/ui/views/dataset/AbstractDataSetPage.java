@@ -1322,8 +1322,8 @@ public abstract class AbstractDataSetPage extends Page
             }
             ITDManager tdMan = (ITDManager)getTableViewer().getInput();
             IDataSetPO row = (IDataSetPO)element;
-            int rowCount = tdMan.getDataTable().indexOf(row);
-            if (columnIndex == 0) {                
+            int rowCount = tdMan.getDataSets().indexOf(row);
+            if (columnIndex == 0) {
                 getTable().getItem(rowCount).setBackground(
                     columnIndex, Layout.LIGHT_GRAY_COLOR);
                 return StringConstants.EMPTY + (rowCount + 1); 
@@ -1374,7 +1374,7 @@ public abstract class AbstractDataSetPage extends Page
             }
             ITDManager tdMan = (ITDManager)getTableViewer().getInput();
             IDataSetPO row = (IDataSetPO)element;
-            int rowCount = tdMan.getDataTable().indexOf(row);
+            int rowCount = tdMan.getDataSets().indexOf(row);
             if (columnIndex == 0) {                
                 getTable().getItem(rowCount).setBackground(
                     columnIndex, Layout.LIGHT_GRAY_COLOR);

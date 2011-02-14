@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.core.businessprocess.importfilter.IDataImportFi
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.DataReadException;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.NoSupportForLocaleException;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.model.II18NStringPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -37,8 +36,8 @@ import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.IncompleteDataException;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 
@@ -283,22 +282,18 @@ public class ExternalTestDataBP {
                             .getParameterForName(paramNamesExcel.get(cellNr));
                     if (desc != null) {
                         int dataSetNo = row - 1;
-                        II18NStringPO i18nString;
                         ITestDataPO testData;
                         if (updateCellValues) {
                             testData = paramPo.getDataManager().getCell(
                                     dataSetNo, desc);
-                            i18nString = testData.getValue();
-                            i18nString.setValue(locale, cellString,
+                            testData.setValue(locale, cellString,
                                     GeneralStorage.getInstance().getProject());
                         } else {
                             testData = TestDataBP.instance()
                                     .createEmptyTestData();
-                            i18nString = PoMaker.createI18NStringPO(locale,
-                                    cellString, GeneralStorage.getInstance()
-                                            .getProject());
+                            testData.setValue(locale, cellString, 
+                                    GeneralStorage.getInstance().getProject());
                         }
-                        testData.setValue(i18nString);
                         paramPo.getDataManager().updateCell(testData,
                                 dataSetNo, desc.getUniqueId());
                     }

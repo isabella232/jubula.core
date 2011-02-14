@@ -51,7 +51,7 @@ public class TestDataBP {
      * @return The new test data instance
      */
     public ITestDataPO createEmptyTestData() {
-        return PoMaker.createTestDataPO(PoMaker.createI18NStringPO());
+        return PoMaker.createTestDataPO();
     }
     
     /**

@@ -320,7 +320,7 @@ public class TestCaseParamCheckBP {
                         try {
                             ITestDataPO td = parent.getDataManager().getCell(0,
                                 desc);
-                            String value = td.getValue().getValue(locale);
+                            String value = td.getValue(locale);
                             if (value != null) {
                                 ParamValueConverter conv = 
                                     new ModelParamValueConverter(

@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
-import org.eclipse.jubula.client.core.model.II18NStringPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
@@ -35,8 +34,8 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.search.data.TestDataSearchData;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData.SearchableType;
+import org.eclipse.jubula.client.ui.search.data.TestDataSearchData;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.TestDataCubeSearchResultElementAction;
 
@@ -159,17 +158,14 @@ public class TestDataSearchQuery extends AbstractSearchQuery {
                 if (column != -1 && column < dataSet.getColumnCount()) {
                     ITestDataPO testData = dataSet.getColumn(column);
                     if (testData != null) {
-                        II18NStringPO i18nValue = testData.getValue();
-                        if (i18nValue != null) {
-                            ModelParamValueConverter converter = 
-                                new ModelParamValueConverter(
-                                    testData, paramObj, workingLanguage, null);
-                            String value = converter.getGuiString();
-                            if (value != null
-                                    && compare(
-                                            value, searchString, operation)) {
-                                return true;
-                            }
+                        ModelParamValueConverter converter = 
+                            new ModelParamValueConverter(
+                                testData, paramObj, workingLanguage, null);
+                        String value = converter.getGuiString();
+                        if (value != null
+                                && compare(
+                                        value, searchString, operation)) {
+                            return true;
                         }
                     }
                 }
