@@ -41,6 +41,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.persistence.annotations.Index;
 
 
 /**
@@ -476,7 +477,7 @@ class ExecTestCasePO extends TestCasePO implements
      */
     @Basic
     @Column(name = "REF_FLAG")
-//    @Index(name = "PI_NODE_REF_FLAG")
+    @Index(name = "PI_NODE_REF_FLAG")
     public boolean getHasReferencedTD() {
         return m_hasReferencedTD;
     }
@@ -624,7 +625,7 @@ class ExecTestCasePO extends TestCasePO implements
      */
     @Basic
     @Column(name = "PARENT_PROJ_GUID")
-//    @Index(name = "PI_NODE_PARENT_PROJECT_GUID")
+    @Index(name = "PI_NODE_PARENT_PROJECT_GUID")
     public String getProjectGuid() {
         return m_projectGuid;
     }
@@ -635,7 +636,7 @@ class ExecTestCasePO extends TestCasePO implements
      */
     @Basic
     @Column(name = "SPEC_TC_GUID")
-//    @Index(name = "PI_NODE_SPEC_TC_GUID")
+    @Index(name = "PI_NODE_SPEC_TC_GUID")
     public String getSpecTestCaseGuid() {
         return m_specTestCaseGuid;
     }

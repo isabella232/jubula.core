@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.annotations.Index;
 
 
 /**
@@ -158,7 +159,7 @@ class TDManagerPO implements ITDManager {
      */
     @Basic
     @Column(name = "PARENT_PROJ")
-//    @Index(name = "PI_TD_MANAGER_PARENT_PROJ")
+    @Index(name = "PI_TD_MANAGER_PARENT_PROJ")
     private Long getHbmParentProjectId() {
         return m_parentProjectId;
     }

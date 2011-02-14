@@ -51,6 +51,7 @@ import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 import org.eclipse.jubula.client.core.utils.DependencyCheckerOp;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.annotations.Index;
 
 
 /**
@@ -535,7 +536,7 @@ abstract class NodePO implements INodePO {
      */
     @Basic
     @Column(name = "GUID")
-//    @Index(name = "PI_NODE_GUID")
+    @Index(name = "PI_NODE_GUID")
     public String getGuid() {
         return m_guid;
     }
@@ -609,7 +610,7 @@ abstract class NodePO implements INodePO {
      */
     @Basic
     @Column(name = "PARENT_PROJ")
-//    @Index(name = "PI_NODE_PARENT_PROJ")
+    @Index(name = "PI_NODE_PARENT_PROJ")
     Long getHbmParentProjectId() {
         return m_parentProjectId;
     }
