@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core;
 
-import java.net.URL;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -349,10 +348,8 @@ public interface IClientTest {
     
     /**
      * @param logPath The logPath to set.
-     * @param xsl URL to xsl file
-     * @param html html res dir
      */
-    public void setLogPath(String logPath, URL xsl, String html);
+    public void setLogPath(String logPath);
     
     /**
      * @param logStyle <code>String</code> representing the style the log

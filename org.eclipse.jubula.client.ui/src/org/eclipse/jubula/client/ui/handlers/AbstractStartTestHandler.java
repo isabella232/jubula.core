@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.handlers;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -51,32 +49,20 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                 Constants.GENERATEREPORT_KEY)) {
             URL xslUrl = TestResultBP.getInstance().getXslFileURL();
             
-            String htmlDir = null;
             if (xslUrl == null) {
                 Plugin.getDefault().handleError(
                         new JBException(Messages.FileNotFoundFormatXsl,
                                 MessageIDs.E_FILE_NOT_FOUND));
                 return false;
             }
-            try {
-                String cssFileName = TestResultBP.getInstance()
-                        .getCssFileName();
-                File cssFile = new File(cssFileName);
-                htmlDir = cssFile.getParentFile().getAbsolutePath();
-            } catch (IOException e) {
-                Plugin.getDefault().handleError(
-                                new JBException(Messages.CantResolveURLOfFile,
-                                MessageIDs.E_FILE_IO));
-                return false;
-            }
             ClientTestFactory.getClientTest().setLogPath(
                     Plugin.getDefault().getPreferenceStore().getString(
-                            Constants.RESULTPATH_KEY), xslUrl, htmlDir);
+                            Constants.RESULTPATH_KEY));
             ClientTestFactory.getClientTest().setLogStyle(
                     Plugin.getDefault().getPreferenceStore().getString(
                             Constants.REPORTGENERATORSTYLE_KEY));
         } else {
-            ClientTestFactory.getClientTest().setLogPath(null, null, null);
+            ClientTestFactory.getClientTest().setLogPath(null);
             ClientTestFactory.getClientTest().setLogStyle(null);
         }
         return true;

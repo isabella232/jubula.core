@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URL;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,10 +22,10 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jubula.app.cmd.i18n.Messages;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.batch.ProgressController;
@@ -43,16 +42,15 @@ import org.eclipse.jubula.client.core.IServerEventListener;
 import org.eclipse.jubula.client.core.ServerEvent;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
-import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
+import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.businessprocess.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.JobConfiguration;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
-import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
-import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
+import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -557,28 +555,10 @@ public class ExecutionController implements IAUTServerEventListener,
      * sets the log Directory
      */
     private void setLogDir() {
-        if (m_job.getResultDir() != null 
-            && m_job.getResultDir().length() != 0) {
-            Validate.isTrue(FileUtils.isValidPath(m_job.getResultDir()), 
+        if (StringUtils.isNotEmpty(m_job.getResultDir())) {
+            Validate.isTrue(FileUtils.isValidPath(m_job.getResultDir()),
                     Messages.ExecutionControllerLogPathError);
-            ClassLoader cl = ClientTestFactory.class.getClassLoader();
-            URL formatUrl = TestResultBP.getInstance().getXslFileURL();
-            URL cssUrl = cl.getResource("reportStyle.css"); //$NON-NLS-1$
-            if (cssUrl != null
-                && formatUrl != null) {
-                try {
-                    File cssFile = 
-                        new File(FileLocator.resolve(cssUrl).getFile());
-                    String htmlDir = cssFile.getParentFile().getAbsolutePath();
-                    String logDir = m_job.getResultDir();
-                    ClientTestFactory.getClientTest().setLogPath(
-                        logDir, 
-                        formatUrl, 
-                        htmlDir);
-                } catch (IOException ioe) {
-                    LOG.error(Messages.ErrorWhileInitializingTestResult, ioe);
-                }
-            }
+            ClientTestFactory.getClientTest().setLogPath(m_job.getResultDir());
         }
     }
 

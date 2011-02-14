@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core;
 
 import java.io.File;
 import java.net.InetAddress;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
@@ -162,17 +161,6 @@ public class ClientTest implements IClientTest {
      */
     private String m_logPath = null;
 
-    /**
-     * xsl transformation file for test result html
-     */
-    private URL m_xslURL = null;
-
-    /**
-     * directory to html res Files 
-     *     
-     */
-    private String m_htmlDir = null;
-    
     /** The last started AUT-configuration */
     private IAUTConfigPO m_lastAutConfig;
     
@@ -1155,8 +1143,7 @@ public class ClientTest implements IClientTest {
         String fileName = createFilename(
                 TestResultBP.getInstance().getResultTestModel());
         
-        IXMLReportWriter writer =  new FileXMLReportWriter(fileName, 
-            m_xslURL, m_htmlDir);
+        IXMLReportWriter writer =  new FileXMLReportWriter(fileName);
         writer.write(document);
     }
 
@@ -1283,10 +1270,8 @@ public class ClientTest implements IClientTest {
      * 
      * {@inheritDoc}
      */
-    public void setLogPath(String logPath, URL xsl, String html) {
+    public void setLogPath(String logPath) {
         m_logPath = logPath;
-        m_xslURL = xsl;
-        m_htmlDir = html;
     }
 
     /**

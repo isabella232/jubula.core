@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.wizards;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,6 @@ import org.eclipse.jubula.client.core.businessprocess.AbstractXMLReportGenerator
 import org.eclipse.jubula.client.core.businessprocess.CompleteXMLReportGenerator;
 import org.eclipse.jubula.client.core.businessprocess.FileXMLReportWriter;
 import org.eclipse.jubula.client.core.businessprocess.IXMLReportWriter;
-import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.SummarizedTestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
@@ -160,13 +158,6 @@ public class ExportTestResultDetailsWizard extends Wizard
         private void exportDocument(Document document, 
                 ITestResultSummaryPO summary, IProgressMonitor monitor) {
             try {
-                URL xslFileURL = TestResultBP.getInstance().getXslFileURL();
-                String cssFileName = TestResultBP.getInstance()
-                        .getCssFileName();
-
-                File cssFile = new File(cssFileName);
-                String htmlDir = 
-                    cssFile.getParentFile().getAbsolutePath();
                 File fileToWrite = new File(
                     m_destinationPage.getDestination(), 
                         summary.getTestsuiteName() + "_" + summary.getTestsuiteStartTime().getTime()); //$NON-NLS-1$
@@ -221,9 +212,8 @@ public class ExportTestResultDetailsWizard extends Wizard
                 }
                 
                 if (isWriteFile) {
-                    IXMLReportWriter writer =  new FileXMLReportWriter(
-                            fileToWrite.getAbsolutePath(), 
-                            xslFileURL, htmlDir);
+                    IXMLReportWriter writer = new FileXMLReportWriter(
+                            fileToWrite.getAbsolutePath());
                     writer.write(document);
                 }
                 monitor.worked(1);
