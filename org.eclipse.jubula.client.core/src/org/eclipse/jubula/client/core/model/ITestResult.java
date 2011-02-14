@@ -107,7 +107,7 @@ public interface ITestResult {
     /**
      * 
      * @return the name of the AUT Configuration used to start the tested AUT, 
-     *         or {@link TestresultSummaryBP#GDRUN} to indicate that no 
+     *         or {@link TestresultSummaryBP#AUTRUN} to indicate that no 
      *         AUT Configuration was used.
      */
     public String getAutConfigName();

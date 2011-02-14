@@ -7,7 +7,7 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 
-<project name="org.eclipse.jubula.autlauncher" default="compile" basedir=".">
+<project name="org.eclipse.jubula.autrun" default="compile" basedir=".">
 
 	<!-- 
 		general definitions
@@ -37,7 +37,7 @@
 
 	<!-- classpath -->
 	<property name="javac" value="javac"/>
-	<property name="javac.classpath" value="classpathGDRun"/>
+	<property name="javac.classpath" value="classpathAutRun"/>
 	<property name="javac.debug" value="javac.debug"/>
 
 	<!-- 
@@ -95,7 +95,7 @@
 			            excludes="**/*.java" />
 			<manifest>
 				<attribute name="Class-Path" value="${manifest.classpath} ./resources/"/>
-				<attribute name="Main-Class" value="org.eclipse.jubula.autlauncher.GDRun"/>
+				<attribute name="Main-Class" value="org.eclipse.jubula.autrun.AutRun"/>
 		    </manifest>
 		</jar>
 	</target>

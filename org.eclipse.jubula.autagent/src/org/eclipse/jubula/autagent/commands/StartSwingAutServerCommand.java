@@ -341,10 +341,10 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
      */
     private List createAutArguments(Map parameters) {
         List argsList = new Vector();
-        if (parameters.get(AutConfigConstants.GD_RUN_AUT_ARGUMENTS)
+        if (parameters.get(AutConfigConstants.AUT_RUN_AUT_ARGUMENTS)
                 instanceof String[]) {
             String[] autArgs = (String[])parameters
-                    .get(AutConfigConstants.GD_RUN_AUT_ARGUMENTS);
+                    .get(AutConfigConstants.AUT_RUN_AUT_ARGUMENTS);
             return Arrays.asList(autArgs);
         }
         String autArguments = 

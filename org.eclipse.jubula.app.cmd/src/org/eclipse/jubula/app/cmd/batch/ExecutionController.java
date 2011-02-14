@@ -597,7 +597,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 waitExternalTime();
             }
         } else {
-            // assume that the aut has already been started via e.g. gdrun
+            // assume that the aut has already been started via e.g. autrun
             m_idle = false;
             m_isFirstAutStart = false;
         }

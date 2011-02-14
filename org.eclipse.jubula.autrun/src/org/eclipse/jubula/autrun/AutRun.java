@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.autlauncher;
+package org.eclipse.jubula.autrun;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,14 +46,14 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created Dec 9, 2009
  */
-public class GDRun {
+public class AutRun {
     /** the logger */
-    private static final Logger LOG = LoggerFactory.getLogger(GDRun.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AutRun.class);
     
     /**
      * <code>LAUNCHER_NAME</code>
      */
-    private static final String LAUNCHER_NAME = "gdrun"; //$NON-NLS-1$
+    private static final String LAUNCHER_NAME = "autrun"; //$NON-NLS-1$
 
     /** <code>TOOLKIT_RCP</code> */
     private static final String TK_RCP = "rcp"; //$NON-NLS-1$
@@ -146,7 +146,7 @@ public class GDRun {
      * @throws InstantiationException 
      * @throws IllegalAccessException
      */
-    public GDRun(String autToolkit, AutIdentifier autIdentifier, 
+    public AutRun(String autToolkit, AutIdentifier autIdentifier, 
             InetSocketAddress agentAddr, Map<String, Object> autConfiguration) 
         throws ClassNotFoundException, InstantiationException, 
                IllegalAccessException {
@@ -213,7 +213,7 @@ public class GDRun {
             
             Map<String, Object> autConfiguration = createAutConfig(cmdLine);
             
-            GDRun runner = new GDRun(toolkit, autId, agentAddr,
+            AutRun runner = new AutRun(toolkit, autId, agentAddr,
                     autConfiguration);
             try {
                 runner.run();
@@ -281,7 +281,7 @@ public class GDRun {
         
         String[] autArguments = cmdLine.getOptionValues(OPT_EXECUTABLE);
         if (autArguments.length > 1) {
-            autConfig.put(AutConfigConstants.GD_RUN_AUT_ARGUMENTS, 
+            autConfig.put(AutConfigConstants.AUT_RUN_AUT_ARGUMENTS, 
                     ArrayUtils.subarray(autArguments, 1, autArguments.length));
         }
         
@@ -307,7 +307,7 @@ public class GDRun {
                 new InputStreamReader(agentSocket.getInputStream()));
         
         String clientTypeRequest = reader.readLine();
-        writer.println(ConnectionState.CLIENT_TYPE_GDRUN);
+        writer.println(ConnectionState.CLIENT_TYPE_AUTRUN);
         
         writer.println(
                 m_autConfiguration.get(AutConfigConstants.AUT_NAME));
@@ -331,7 +331,7 @@ public class GDRun {
                                         if (RestartAutProtocol.REQ_RESTART
                                             .equals(restartReq)) {
                                             
-                                            GDRun.this.run();
+                                            AutRun.this.run();
                                         }
                                     } catch (IOException e) {
                                         LOG.error("Error occured while restarting AUT.", e); //$NON-NLS-1$
