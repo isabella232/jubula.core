@@ -133,34 +133,21 @@ public class TestResultPM {
      * @param resultId id of testresult-summary-entry, or <code>null</code> if 
      *                 all test results should be deleted.
      */
-    @SuppressWarnings("unchecked")
     public static final void executeDeleteTestresultOfSummary(
             EntityManager session, Long resultId) {
         boolean isDeleteAll = resultId == null;
         
-        //get list of parameter detail ids to delete
-        List<Number> paramIdList = null;
-        if (!isDeleteAll) {
-            Query paramIdQuery = session.createNativeQuery(
-                    "select CHILD from PARAMETER_LIST where PARENT in "  //$NON-NLS-1$
-                    + "(select ID from TESTRESULT where INTERNAL_TESTRUN_ID = #resultId)"); //$NON-NLS-1$
-            paramIdQuery.setParameter("resultId", resultId); //$NON-NLS-1$
-            paramIdList = paramIdQuery.getResultList();
+        //delete parameter details of test results
+        String paramQueryBaseString = 
+            "delete from PARAMETER_DETAILS"; //$NON-NLS-1$
+        if (isDeleteAll) {
+            session.createNativeQuery(paramQueryBaseString).executeUpdate();
+        } else {
+            Query paramQuery = session.createNativeQuery(
+                    paramQueryBaseString + " where FK_TESTRESULT in (select ID from TESTRESULT where INTERNAL_TESTRUN_ID = #summaryId)"); //$NON-NLS-1$
+            paramQuery.setParameter("summaryId", resultId); //$NON-NLS-1$
+            paramQuery.executeUpdate();
         }
-
-        //delete parameter list of test result
-        StringBuilder paramListQueryBuilder = new StringBuilder();
-        paramListQueryBuilder.append("delete from PARAMETER_LIST "); //$NON-NLS-1$
-        if (!isDeleteAll) {
-            paramListQueryBuilder.append(" where PARENT in " + //$NON-NLS-1$
-                "(select ID from TESTRESULT where INTERNAL_TESTRUN_ID = #id)"); //$NON-NLS-1$
-        }
-        Query paramListQuery = 
-            session.createNativeQuery(paramListQueryBuilder.toString());
-        if (!isDeleteAll) {
-            paramListQuery.setParameter("id", resultId); //$NON-NLS-1$
-        }
-        paramListQuery.executeUpdate();
 
         //delete test result details
         StringBuilder resultQueryBuilder = new StringBuilder();
@@ -175,22 +162,6 @@ public class TestResultPM {
         }
         resultQuery.executeUpdate();
 
-        //delete parameter details of test results
-        
-        String paramQueryBaseString = 
-            "delete from ParameterDetailsPO details"; //$NON-NLS-1$
-        if (isDeleteAll) {
-            session.createQuery(paramQueryBaseString).executeUpdate();
-        } else {
-            if (paramIdList != null) {
-                for (Number paramId : paramIdList) {
-                    Query paramQuery = session.createQuery(paramQueryBaseString
-                            + " where details.id =:id"); //$NON-NLS-1$
-                    paramQuery.setParameter("id", paramId.longValue()); //$NON-NLS-1$
-                    paramQuery.executeUpdate();
-                }
-            }
-        }
     }
     
     /**
