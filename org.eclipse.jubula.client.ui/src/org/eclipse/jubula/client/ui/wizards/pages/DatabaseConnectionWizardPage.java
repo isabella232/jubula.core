@@ -47,6 +47,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 
 /**
@@ -134,7 +135,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 DataBindingContext dbc) {
 
             createLabel(parent, I18n.getString("DatabaseConnection.H2.Location")); //$NON-NLS-1$
-            final JBText locationText = new JBText(parent, SWT.BORDER);
+            final Text locationText = createDetailText(parent);
             dbc.bindValue(SWTObservables.observeText(locationText, SWT.Modify), 
                     PojoObservables.observeValue(
                             m_connInfo, H2ConnectionInfo.PROP_NAME_LOCATION));
@@ -178,14 +179,14 @@ public class DatabaseConnectionWizardPage extends WizardPage {
 
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
-            final JBText hostnameText = new JBText(parent, SWT.BORDER);
+            final Text hostnameText = createDetailText(parent);
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connInfo, 
                         AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
 
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
-            final JBText portText = new JBText(parent, SWT.BORDER);
+            final Text portText = createDetailText(parent);
             UpdateValueStrategy portTargetToModelUpdateStrategy =
                 new UpdateValueStrategy();
             portTargetToModelUpdateStrategy
@@ -201,7 +202,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.Oracle.SID")); //$NON-NLS-1$
-            final JBText schemaText = new JBText(parent, SWT.BORDER);
+            final Text schemaText = createDetailText(parent);
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
                             AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME));
@@ -256,14 +257,14 @@ public class DatabaseConnectionWizardPage extends WizardPage {
 
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
-            final JBText hostnameText = new JBText(parent, SWT.BORDER);
+            final Text hostnameText = createDetailText(parent);
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connInfo, 
                         AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
 
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
-            final JBText portText = new JBText(parent, SWT.BORDER);
+            final Text portText = createDetailText(parent);
             UpdateValueStrategy portTargetToModelUpdateStrategy =
                 new UpdateValueStrategy();
             portTargetToModelUpdateStrategy
@@ -279,7 +280,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.PostGreSQL.Database")); //$NON-NLS-1$
-            final JBText schemaText = new JBText(parent, SWT.BORDER);
+            final Text schemaText = createDetailText(parent);
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
                             AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME));
@@ -334,14 +335,14 @@ public class DatabaseConnectionWizardPage extends WizardPage {
 
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
-            final JBText hostnameText = new JBText(parent, SWT.BORDER);
+            final Text hostnameText = createDetailText(parent);
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connInfo, 
                         AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
 
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
-            final JBText portText = new JBText(parent, SWT.BORDER);
+            final Text portText = createDetailText(parent);
             UpdateValueStrategy portTargetToModelUpdateStrategy =
                 new UpdateValueStrategy();
             portTargetToModelUpdateStrategy
@@ -357,7 +358,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.MySQL.Database")); //$NON-NLS-1$
-            final JBText schemaText = new JBText(parent, SWT.BORDER);
+            final Text schemaText = createDetailText(parent);
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
                             AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME));
@@ -585,4 +586,17 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         label.setText(fieldName + LABEL_TERMINATOR);
     }
     
+    /**
+     * Creates and returns a text field with {@link GridData} suitable for
+     * sharing a row in a {@link GridLayout} with a label.
+     * 
+     * @param parent The parent for the created text field.
+     * @return the created text field.
+     */
+    private static Text createDetailText(Composite parent) {
+        final JBText detailText = new JBText(parent, SWT.BORDER);
+        GridDataFactory.fillDefaults().grab(true, false)
+            .align(SWT.FILL, SWT.CENTER).applyTo(detailText);
+        return detailText;
+    }
 }
