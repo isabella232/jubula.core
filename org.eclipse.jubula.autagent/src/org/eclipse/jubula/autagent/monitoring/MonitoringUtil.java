@@ -37,14 +37,13 @@ public abstract class MonitoringUtil {
      * @return true if an AUT with the given AUT_ID is already running or false if not.
      */
     public static boolean checkForDuplicateAutID(String autId) {
-        
         AutAgent agent = AutStarter.getInstance().getAgent();
         AutIdentifier autID = new AutIdentifier(autId);  
         Set<AutIdentifier> set = agent.getAuts();        
         Iterator<AutIdentifier>  it = set.iterator();        
         
         while (it.hasNext()) {
-            AutIdentifier val = (AutIdentifier)it.next();
+            AutIdentifier val = it.next();
             if (val.getExecutableName().equals(autID.getExecutableName())) {
                 return true;
             }
@@ -52,6 +51,7 @@ public abstract class MonitoringUtil {
         }       
         return false;
     }
+    
     /**
      * Checks whether duplicate AUTs will be killed or not.
      * @return true if AUT-Agent runs in strict mode false if not.
