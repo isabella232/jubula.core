@@ -292,7 +292,6 @@ class TestDataPO implements ITestDataPO {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public void setData(ITestDataPO testData) {
@@ -301,6 +300,9 @@ class TestDataPO implements ITestDataPO {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public void clear() {
         m_map.clear();
     }
