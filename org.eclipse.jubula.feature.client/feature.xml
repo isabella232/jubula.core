@@ -30,9 +30,10 @@
       <import plugin="org.apache.commons.beanutils" version="1.7.0" match="compatible"/>
       <import plugin="org.apache.commons.lang" version="2.4.0" match="compatible"/>
       <import plugin="org.junit4" version="4.8.1" match="compatible"/>
-      <import plugin="javax.persistence" version="2.0.1" match="compatible"/>
-      <import plugin="org.eclipse.persistence.core" version="2.1.1" match="compatible"/>
-      <import plugin="org.eclipse.persistence.jpa" version="2.1.1" match="compatible"/>
+      <import plugin="javax.persistence" version="2.0.3" match="compatible"/>
+      <import plugin="org.eclipse.persistence.core" version="2.2.0" match="compatible"/>
+      <import plugin="org.eclipse.persistence.jpa" version="2.2.0" match="compatible"/>
+      <import plugin="org.eclipse.persistence.jpa.osgi" version="2.2.0" match="compatible"/>
       <import plugin="org.h2" version="1.1.117" match="compatible"/>
       <import plugin="org.apache.commons.collections" version="3.2.0" match="compatible"/>
       <import plugin="org.apache.commons.io" version="1.4.0" match="compatible"/>
