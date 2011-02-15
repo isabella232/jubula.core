@@ -113,7 +113,7 @@ public class FileXMLReportWriter implements IXMLReportWriter {
             XMLWriter fileWriter = new XMLWriter(writer, htmlFormat);
             fileWriter.write(transformedDoc);
             fileWriter.close();
-            copyAdditionalFiles(htmlFile.getParentFile() + "html"); //$NON-NLS-1$
+            copyAdditionalFiles(htmlFile.getParentFile());
         } catch (TransformerConfigurationException e1) {
             LOG.error(Messages.ErrorFileWriting + StringConstants.DOT, e1);
         } catch (TransformerException e) {
@@ -127,8 +127,8 @@ public class FileXMLReportWriter implements IXMLReportWriter {
      * @param additionalFilesDir
      *            the path to the directory where to place the additional files
      */
-    private void copyAdditionalFiles(String additionalFilesDir) {
-        File destDir = new File(additionalFilesDir);
+    private void copyAdditionalFiles(File additionalFilesDir) {
+        File destDir = new File(additionalFilesDir, "html"); //$NON-NLS-1$
         if (!destDir.exists()) {
             destDir.mkdirs();
         }

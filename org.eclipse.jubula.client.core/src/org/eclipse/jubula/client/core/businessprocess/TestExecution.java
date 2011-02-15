@@ -460,9 +460,9 @@ public class TestExecution {
             varStore.store(TDVariableStore.VAR_AUTCONFIG, 
                     m_autConfig.getName());
         } else {
-            // write constant for AUTs which has been started via gdrun
+            // write constant for AUTs which has been started via autrun
             varStore.store(TDVariableStore.VAR_AUTCONFIG, 
-                    TestresultSummaryBP.GDRUN);
+                    TestresultSummaryBP.AUTRUN);
         }
 
         // gd.clientVersion
@@ -1310,7 +1310,7 @@ public class TestExecution {
                 }
             }
         } else {
-            hostname = TestresultSummaryBP.GDRUN;
+            hostname = TestresultSummaryBP.AUTRUN;
         }
         return hostname;
     }

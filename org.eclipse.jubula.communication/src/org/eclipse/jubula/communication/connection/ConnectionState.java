@@ -63,8 +63,8 @@ public class ConnectionState {
     /** client type that represents an AUT wishing to register with an AUT Agent */
     public static final String CLIENT_TYPE_AUT = "ClientType.Aut"; //$NON-NLS-1$
 
-    /** client type that represents an instance of "gdrun" */
-    public static final String CLIENT_TYPE_GDRUN = "ClientType.gdrun"; //$NON-NLS-1$
+    /** client type that represents an instance of "autrun" */
+    public static final String CLIENT_TYPE_AUTRUN = "ClientType.autrun"; //$NON-NLS-1$
 
     /** client type that represents an external request to shut down the server */
     public static final String CLIENT_TYPE_COMMAND_SHUTDOWN = "ClientType.Command.ShutDown"; //$NON-NLS-1$

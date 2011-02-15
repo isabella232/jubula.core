@@ -410,7 +410,7 @@ public class Utils {
     
     /**
      * Open the message dialog and logs the JBException.
-     * @param ex the actual GDRuntimeException
+     * @param ex the actual JBRuntimeException
      * @return the dialog.
      */
     public static Dialog createMessageDialog(JBRuntimeException ex) {

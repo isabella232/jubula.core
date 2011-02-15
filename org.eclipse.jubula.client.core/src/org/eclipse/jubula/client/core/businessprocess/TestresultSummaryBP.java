@@ -49,11 +49,11 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  */
 public class TestresultSummaryBP {
     /**
-     * <code>GDRUN</code>
-     * if autconfig is null because gdrun ist used,
+     * <code>autrun</code>
+     * if autconfig is null because autrun ist used,
      * use this constant for summary table
      */
-    public static final String GDRUN = "gdrun"; //$NON-NLS-1$
+    public static final String AUTRUN = "autrun"; //$NON-NLS-1$
 
     /** constant for keyword type Test Step */
     public static final int TYPE_TEST_STEP = 3;
@@ -94,11 +94,11 @@ public class TestresultSummaryBP {
             sum.setAutHostname(te.getLocalHostname());
             
         } else {
-            sum.setAutConfigName(GDRUN);
-            sum.setInternalAutConfigGuid(GDRUN);
-            sum.setAutCmdParameter(GDRUN);
-            sum.setAutAgentName(GDRUN);
-            sum.setAutHostname(GDRUN);
+            sum.setAutConfigName(AUTRUN);
+            sum.setInternalAutConfigGuid(AUTRUN);
+            sum.setAutCmdParameter(AUTRUN);
+            sum.setAutAgentName(AUTRUN);
+            sum.setAutHostname(AUTRUN);
         }
         sum.setAutOS(System.getProperty("os.name")); //$NON-NLS-1$
         if (aut != null) {
@@ -343,7 +343,7 @@ public class TestresultSummaryBP {
                 summary.setAutId(autConf.getConfigMap().get(
                         AutConfigConstants.AUT_ID));
             } else {
-                summary.setAutId(GDRUN);
+                summary.setAutId(AUTRUN);
             }
         } else {
             summary.setAutId(TestExecution.getInstance()

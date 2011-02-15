@@ -22,38 +22,38 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Restarts an AUT that was started with gdrun.
+ * Restarts an AUT that was started with autrun.
  *
  * @author BREDEX GmbH
  * @created Mar 26, 2010
  */
-public class RestartAutGDRun implements IRestartAutHandler {
+public class RestartAutAutRun implements IRestartAutHandler {
 
     /** the logger */
     private static final Logger LOG = 
-        LoggerFactory.getLogger(RestartAutGDRun.class);
+        LoggerFactory.getLogger(RestartAutAutRun.class);
     
     /** the ID of the started AUT */
     private AutIdentifier m_autId;
 
-    /** the socket used for communicating with gdrun */
-    private Socket m_gdrunSocket;
+    /** the socket used for communicating with autrun */
+    private Socket m_autrunSocket;
     
-    /** reader used for communicating with gdrun */
+    /** reader used for communicating with autrun */
     private BufferedReader m_socketReader;
     
     /**
      * Constructor
      * 
      * @param autId The ID of the started AUT.
-     * @param socket The socket used for communicating with gdrun.
+     * @param socket The socket used for communicating with autrun.
      * @param reader Reader for the given socket.
      */
-    public RestartAutGDRun(AutIdentifier autId, Socket socket,
+    public RestartAutAutRun(AutIdentifier autId, Socket socket,
             BufferedReader reader) {
 
         m_autId = autId;
-        m_gdrunSocket = socket;
+        m_autrunSocket = socket;
         m_socketReader = reader;
     }
 
@@ -63,7 +63,7 @@ public class RestartAutGDRun implements IRestartAutHandler {
     public void restartAut(AutAgent agent) {
         try {
             PrintWriter writer = new PrintWriter(
-                    m_gdrunSocket.getOutputStream(), true);
+                    m_autrunSocket.getOutputStream(), true);
 
             writer.println(RestartAutProtocol.REQ_PREPARE_FOR_RESTART);
             m_socketReader.readLine();

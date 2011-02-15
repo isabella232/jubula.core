@@ -38,8 +38,8 @@ public class AutConfigConstants {
     public static final String REPORT_DIR = "REPORT_DIR"; //$NON-NLS-1$
     /** The arguments of the AUT (main-args) */
     public static final String AUT_ARGUMENTS = "AUT_ARGUMENTS"; //$NON-NLS-1$    
-    /** The arguments of the GDRun AUT (main-args) */
-    public static final String GD_RUN_AUT_ARGUMENTS = "GD_RUN_AUT_ARGUMENTS"; //$NON-NLS-1$
+    /** The arguments of the Aut-Run AUT (main-args) */
+    public static final String AUT_RUN_AUT_ARGUMENTS = "AUT_RUN_AUT_ARGUMENTS"; //$NON-NLS-1$
     
     /** The name of the Main-Class */
     public static final String CLASSNAME = "CLASSNAME"; //$NON-NLS-1$

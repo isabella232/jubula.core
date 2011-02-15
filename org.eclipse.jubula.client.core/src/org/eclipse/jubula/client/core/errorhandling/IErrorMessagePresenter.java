@@ -22,7 +22,7 @@ public interface IErrorMessagePresenter {
 
     /**
      * 
-     * @param ex the actual GDRuntimeException
+     * @param ex the actual JBException
      * @param params Parameter of the message text or null, if not needed.
      * @param details use null, or overwrite in MessageIDs hardcoded details.
      */
