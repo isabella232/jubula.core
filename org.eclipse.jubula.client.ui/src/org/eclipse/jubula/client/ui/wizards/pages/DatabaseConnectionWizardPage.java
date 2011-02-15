@@ -439,7 +439,6 @@ public class DatabaseConnectionWizardPage extends WizardPage {
     public void createControl(Composite parent) {
         setTitle(I18n.getString("DatabaseConnectionWizardPage.title")); //$NON-NLS-1$
         setDescription(I18n.getString("DatabaseConnectionWizardPage.description")); //$NON-NLS-1$
-        
         final DataBindingContext dbc = new DataBindingContext();
         WizardPageSupport.create(this, dbc);
         GridDataFactory textGridDataFactory =
@@ -482,12 +481,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         typeComboViewer.getControl().setLayoutData(
                 textGridDataFactory.create());
 
-        final Group detailArea = new Group(composite, SWT.NONE);
-        detailArea.setText(I18n.getString("DatabaseConnectionWizardPage.DetailArea.title")); //$NON-NLS-1$
-        detailArea.setLayoutData(
-                GridDataFactory.fillDefaults().grab(true, true)
-                    .span(2, 1).create());
-        detailArea.setLayout(new GridLayout(2, false));
+        final Composite detailArea = createDetailArea(composite, 
+                nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
 
         IObservableValue connectionInfoObservable = 
             BeansObservables.observeValue(m_connectionToEdit, 
@@ -598,5 +593,36 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         GridDataFactory.fillDefaults().grab(true, false)
             .align(SWT.FILL, SWT.CENTER).applyTo(detailText);
         return detailText;
+    }
+    
+    /**
+     * Creates and returns a Composite for containing detailed Database 
+     * Connection information.
+     * 
+     * @param parent The parent of the detail area.
+     * @param fieldHeight The height of a text field. Used for layout.
+     * @return the created detail area.
+     */
+    private static Composite createDetailArea(
+            Composite parent, int fieldHeight) {
+        final GridLayout detailAreaLayout = new GridLayout(2, false);
+        final Group detailArea = new Group(parent, SWT.NONE);
+        final int numberOfDetailFields = 3;
+        final int totalFieldHeight = fieldHeight * numberOfDetailFields;
+        final int totalVerticalSpacing = 
+            detailAreaLayout.verticalSpacing * (numberOfDetailFields - 1);
+        final int totalMarginHeight = (detailAreaLayout.marginHeight * 2) 
+            + detailAreaLayout.marginBottom + detailAreaLayout.marginTop;
+        final int detailAreaVerticalHint = 
+            totalFieldHeight + totalVerticalSpacing + totalMarginHeight;
+
+        detailArea.setText(I18n.getString("DatabaseConnectionWizardPage.DetailArea.title")); //$NON-NLS-1$
+        detailArea.setLayoutData(
+                GridDataFactory.fillDefaults().grab(true, true)
+                    .span(2, 1).hint(SWT.DEFAULT, detailAreaVerticalHint)
+                    .create());
+        detailArea.setLayout(detailAreaLayout);
+        
+        return detailArea;
     }
 }
