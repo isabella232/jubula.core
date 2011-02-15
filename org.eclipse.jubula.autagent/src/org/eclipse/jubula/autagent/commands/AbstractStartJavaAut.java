@@ -30,6 +30,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.autagent.monitoring.IMonitoring;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
+import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -409,13 +410,15 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                     MonitoringConstants.AGENT_CLASS); 
         
         String autId = (String)parameters.get(
-                AutConfigConstants.AUT_ID); 
-        
+                AutConfigConstants.AUT_ID);         
+       
         MonitoringDataStore mds = MonitoringDataStore.getInstance();
-        mds.putConfigMap(autId, parameters);
-        
+        boolean duplicate = MonitoringUtil.checkForDuplicateAutID(autId);
+        if (!duplicate) {            
+            mds.putConfigMap(autId, parameters); 
+        }      
         String agentString = null;       
-        if (isRunnigWithMonitoring(parameters)) {                           
+        if (isRunnigWithMonitoring(parameters)) {
             try {  
                 ClassLoader loader = new URLClassLoader(getExtensions());
                 Class<?> monitoringClass = 
@@ -425,8 +428,9 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                     (IMonitoring)constructor.newInstance();
                 agentInstance.setAutId(autId);
                 agentString = agentInstance.createAgent();
-                mds.putMonitoringAgent(autId, agentInstance);
-                
+                if (!duplicate) {
+                    mds.putMonitoringAgent(autId, agentInstance);  
+                } 
             } catch (ClassNotFoundException e) {
                 String errorMsg = "The monitoring class could not be loaded via reflection "; //$NON-NLS-1$
                 LOG.error(errorMsg, e);
