@@ -1544,6 +1544,13 @@ class XmlImporter {
         final TestData testData = xmlCap.getTestdata();
         int tdRow = 0;
         for (TestDataRow rowXml : testData.getRowList()) {
+            if (rowXml.getDataList().isEmpty()) {
+                // Bug 337215 may have caused Test Steps in exported Projects 
+                // to incorrectly contain multiple Data Sets. These erroneous 
+                // Data Sets seem to always be empty, so ignore empty Data Sets 
+                // for imported Test Steps. 
+                continue;
+            }
             List<ITestDataPO> tdList = null;
             try {
                 tdList = tdman.getDataSet(tdRow).getList();
@@ -1580,6 +1587,11 @@ class XmlImporter {
                 }
                 tdCell++;
             }
+            // We need to clear the data manager first because a Test Step
+            // can only have one Data Set, and we want to insert the Data Set
+            // as a single unit (rather than updating each cell individually)
+            tdman.clear();
+
             tdman.insertDataSet(PoMaker.createListWrapperPO(tdList), tdRow);
             tdRow++;
         }
