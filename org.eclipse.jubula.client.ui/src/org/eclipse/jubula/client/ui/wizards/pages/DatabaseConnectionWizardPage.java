@@ -39,6 +39,7 @@ import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionI
 import org.eclipse.jubula.client.ui.databinding.SimpleIntegerToStringConverter;
 import org.eclipse.jubula.client.ui.databinding.SimpleStringToIntegerConverter;
 import org.eclipse.jubula.client.ui.databinding.validators.StringToPortValidator;
+import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
@@ -136,6 +137,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
 
             createLabel(parent, I18n.getString("DatabaseConnection.H2.Location")); //$NON-NLS-1$
             final Text locationText = createDetailText(parent);
+            DialogUtils.setWidgetName(locationText, "H2.Location"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(locationText, SWT.Modify), 
                     PojoObservables.observeValue(
                             m_connInfo, H2ConnectionInfo.PROP_NAME_LOCATION));
@@ -180,6 +182,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
+            DialogUtils.setWidgetName(hostnameText, "Oracle.Hostname"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connInfo, 
                         AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
@@ -187,6 +190,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
             final Text portText = createDetailText(parent);
+            DialogUtils.setWidgetName(portText, "Oracle.Port"); //$NON-NLS-1$
             UpdateValueStrategy portTargetToModelUpdateStrategy =
                 new UpdateValueStrategy();
             portTargetToModelUpdateStrategy
@@ -203,6 +207,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.Oracle.SID")); //$NON-NLS-1$
             final Text schemaText = createDetailText(parent);
+            DialogUtils.setWidgetName(schemaText, "Oracle.SID"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
                             AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME));
@@ -258,6 +263,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
+            DialogUtils.setWidgetName(hostnameText, "PostGreSQL.Hostname"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connInfo, 
                         AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
@@ -265,6 +271,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
             final Text portText = createDetailText(parent);
+            DialogUtils.setWidgetName(portText, "PostGreSQL.Port"); //$NON-NLS-1$
             UpdateValueStrategy portTargetToModelUpdateStrategy =
                 new UpdateValueStrategy();
             portTargetToModelUpdateStrategy
@@ -281,6 +288,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.PostGreSQL.Database")); //$NON-NLS-1$
             final Text schemaText = createDetailText(parent);
+            DialogUtils.setWidgetName(schemaText, "PostGreSQL.Database"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
                             AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME));
@@ -336,6 +344,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
+            DialogUtils.setWidgetName(hostnameText, "MySQL.Hostname"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connInfo, 
                         AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
@@ -343,6 +352,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
             final Text portText = createDetailText(parent);
+            DialogUtils.setWidgetName(portText, "MySQL.Port"); //$NON-NLS-1$
             UpdateValueStrategy portTargetToModelUpdateStrategy =
                 new UpdateValueStrategy();
             portTargetToModelUpdateStrategy
@@ -359,6 +369,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             createLabel(parent, 
                     I18n.getString("DatabaseConnection.MySQL.Database")); //$NON-NLS-1$
             final Text schemaText = createDetailText(parent);
+            DialogUtils.setWidgetName(schemaText, "MySQL.Database"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
                     BeansObservables.observeValue(m_connInfo, 
                             AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME));
@@ -450,6 +461,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         
         createLabel(composite, I18n.getString("DatabaseConnection.Name")); //$NON-NLS-1$
         JBText nameText = new JBText(composite, SWT.BORDER);
+        DialogUtils.setWidgetName(nameText, "DatabaseConnection.Name"); //$NON-NLS-1$
         nameText.setLayoutData(textGridDataFactory.create());
         dbc.bindValue(SWTObservables.observeText(nameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connectionToEdit, 
@@ -470,6 +482,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         
         createLabel(composite, I18n.getString("DatabaseConnection.Type")); //$NON-NLS-1$
         ComboViewer typeComboViewer = new ComboViewer(composite);
+        DialogUtils.setWidgetName(typeComboViewer.getControl(), "DatabaseConnection.Type"); //$NON-NLS-1$
         typeComboViewer.setContentProvider(new ArrayContentProvider());
         typeComboViewer.setLabelProvider(new LabelProvider() {
             @Override
@@ -483,6 +496,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
 
         final Composite detailArea = createDetailArea(composite, 
                 nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        DialogUtils.setWidgetName(detailArea, "DatabaseConnection.DetailArea"); //$NON-NLS-1$
 
         IObservableValue connectionInfoObservable = 
             BeansObservables.observeValue(m_connectionToEdit, 
@@ -492,6 +506,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 connectionInfoObservable);
         
         JBText url = new JBText(composite, SWT.BORDER);
+        DialogUtils.setWidgetName(url, "DatabaseConnection.URL"); //$NON-NLS-1$
         url.setEditable(false);
         url.setBackground(composite.getBackground());
         url.setLayoutData(
@@ -625,4 +640,5 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         
         return detailArea;
     }
+    
 }
