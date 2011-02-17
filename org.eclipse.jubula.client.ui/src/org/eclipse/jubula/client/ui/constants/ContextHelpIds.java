@@ -376,4 +376,9 @@ public interface ContextHelpIds {
      */
     public static final String ADD_COMMENT = PRAEFIX
         + "testResultSummaryAddCommentContextId"; //$NON-NLS-1$
+    
+    /** help context id for the Database Connection Configuration dialog */
+    public static final String DATABASE_CONNECTION_CONFIGURATION_DIALOG = 
+        PRAEFIX + "databaseConnectionConfigurationDialogContextId"; //$NON-NLS-1$
+    
 }
