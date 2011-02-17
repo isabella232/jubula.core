@@ -36,7 +36,6 @@
       <import plugin="org.eclipse.persistence.jpa.osgi" version="2.2.0" match="compatible"/>
       <import plugin="org.h2" version="1.1.117" match="compatible"/>
       <import plugin="org.apache.commons.collections" version="3.2.0" match="compatible"/>
-      <import plugin="org.apache.commons.io" version="1.4.0" match="compatible"/>
       <import plugin="org.eclipse.ui" version="3.6.1" match="compatible"/>
       <import plugin="org.eclipse.ui.cheatsheets" version="3.4.0" match="compatible"/>
       <import plugin="org.eclipse.help.webapp" version="3.5.2" match="compatible"/>
