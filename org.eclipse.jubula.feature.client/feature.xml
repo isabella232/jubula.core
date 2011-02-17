@@ -58,129 +58,129 @@
       <import plugin="org.apache.oro" version="2.0.8" match="compatible"/>
    </requires>
 
-<!--
-   <plugin
-         id="org.eclipse.jubula.client.ua.help"
-         download-size="0"
-         install-size="0"
-         version="0.9.0.qualifier"/>
--->
    <plugin
          id="org.eclipse.jubula.client.inspector.ui"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.app"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.toolkit.provider.html"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.toolkit.provider.rcp"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.toolkit.provider.rcp.gef"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.toolkit.provider.swing"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.toolkit.provider.swt"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.client.ui"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.client.archive"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.client.core"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.communication"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.client.ua.welcome"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"/>
-         
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.jubula.client.ua.cheatsheets"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.toolkit.common"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.toolkit.provider.base"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.toolkit.provider.concrete"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.tools"
          download-size="0"
          install-size="0"
-         version="0.9.0.qualifier"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.cmd"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

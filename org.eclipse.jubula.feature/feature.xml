@@ -32,14 +32,4 @@
    <includes
          id="org.eclipse.jubula.feature.client"
          version="0.9.0"/>
-
-<!--
-   <includes
-         id="org.eclipse.jubula.feature.cmd"
-         version="0.9.0"/>
-
-   <includes
-         id="org.eclipse.jubula.feature.dbtool"
-         version="0.9.0"/>
--->
 </feature>
