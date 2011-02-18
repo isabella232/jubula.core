@@ -27,14 +27,14 @@
 	</abstractComponent>
 	<toolkitComponent type="html.forms.Button" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
 		<componentClass name="html.forms.Button">
 			<property name="tagName" value="button" />
 		</componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Button" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Button">
 			<property name="tagName" value="input" />
 			<property name="type" value="=button" />
@@ -42,7 +42,7 @@
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Submit" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Submit">
 			<property name="tagName" value="input" />
 			<property name="type" value="=submit" />
@@ -50,7 +50,7 @@
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Reset" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Reset">
 			<property name="tagName" value="input" />
 			<property name="type" value="=reset" />
@@ -58,7 +58,7 @@
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Checkbox" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Checkbox">
 			<property name="tagName" value="input" />
 			<property name="type" value="=checkbox" />
@@ -66,7 +66,7 @@
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Radio" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Radio">
 			<property name="tagName" value="input" />
 			<property name="type" value="=radio" />
@@ -75,7 +75,7 @@
 	<!-- Button Button -->
 	<toolkitComponent type="html.forms.button.Button" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
 		<componentClass name="html.forms.button.Button">
 			<property name="tagName" value="button" />
 			<property name="type" value="=button" />
@@ -83,7 +83,7 @@
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.button.Submit" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
 		<componentClass name="html.forms.button.Submit">
 			<property name="tagName" value="button" />
 			<property name="type" value="=submit" />
@@ -91,7 +91,7 @@
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.button.Reset" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
 		<componentClass name="html.forms.button.Reset">
 			<property name="tagName" value="button" />
 			<property name="type" value="=reset" />
@@ -104,7 +104,7 @@
     </abstractComponent>
     <toolkitComponent type="html.forms.input.Text" visible="false">
         <realizes>abstract.html.Textfield</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
         <componentClass name="html.forms.input.Text">
             <property name="tagName" value="input" />
             <property name="type" value="=text" />
@@ -112,7 +112,7 @@
     </toolkitComponent>
     <toolkitComponent type="html.forms.input.Password" visible="false">
         <realizes>abstract.html.Textfield</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
         <componentClass name="html.forms.input.Password">
             <property name="tagName" value="input" />
             <property name="type" value="=password" />
@@ -120,7 +120,7 @@
     </toolkitComponent>
     <toolkitComponent type="html.forms.TextArea" visible="false">
         <realizes>abstract.html.Textfield</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
         <componentClass name="html.forms.TextArea">
             <property name="tagName" value="textarea" />
         </componentClass>
@@ -131,63 +131,63 @@
 	</abstractComponent>
 	<toolkitComponent type="html.forms.label.Label" visible="false">
         <realizes>abstract.html.Label</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Label">
             <property name="tagName" value="label" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header1" visible="false">
         <realizes>abstract.html.Label</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header1">
             <property name="tagName" value="h1" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header2" visible="false">
         <realizes>abstract.html.Label</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header2">
             <property name="tagName" value="h2" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header3" visible="false">
         <realizes>abstract.html.Label</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header3">
             <property name="tagName" value="h3" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header4" visible="false">
         <realizes>abstract.html.Label</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header4">
             <property name="tagName" value="h4" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header5" visible="false">
         <realizes>abstract.html.Label</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header5">
             <property name="tagName" value="h5" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header6" visible="false">
         <realizes>abstract.html.Label</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header6">
             <property name="tagName" value="h6" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Paragraph" visible="false">
         <realizes>abstract.html.Label</realizes>
-        <testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Paragraph">
             <property name="tagName" value="p" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.select.List" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.select.ListImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.select.ListImplClass</testerClass>
 		<componentClass name="html.forms.select.List">
             <property name="tagName" value="select" />
             <property name="size" value="!=1" />
@@ -195,7 +195,7 @@
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.select.ComboBox" visible="false">
 		<realizes>guidancer.concrete.ComboBox</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.select.ComboBoxImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.select.ComboBoxImplClass</testerClass>
 		<componentClass name="html.forms.select.ComboBox">
             <property name="tagName" value="select" />
             <property name="size" value="=1" />
@@ -203,14 +203,14 @@
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.Table" visible="false">
 		<realizes>guidancer.concrete.Table</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.TableImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.TableImplClass</testerClass>
 		<componentClass name="html.forms.Table">
             <property name="tagName" value="table" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.Anchor" visible="true">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.AnchorImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.AnchorImplClass</testerClass>
 		<componentClass name="html.forms.Anchor">
             <property name="tagName" value="a" />
         </componentClass>
@@ -245,14 +245,14 @@
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.Image" visible="false">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.ImageImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ImageImplClass</testerClass>
 		<componentClass name="html.forms.Image">
             <property name="tagName" value="img" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Image" visible="false">
 		<realizes>abstract.html.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.forms.input.ImageImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.ImageImplClass</testerClass>
 		<componentClass name="html.forms.input.Image">
             <property name="tagName" value="input" />
             <property name="type" value="=image" />
@@ -264,7 +264,7 @@
 			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
         <componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.GraphicApplication" />
 	</toolkitComponent>
     <toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" visible="true">
@@ -272,7 +272,7 @@
 			technicalName="Browser">
 			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" />
 		<action name="html.BrowserGotoAction" changed="1.0">
 			<method>gdGotoUrl</method>
@@ -308,26 +308,26 @@
 			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.MenuBar</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.HtmlMenuBarImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlMenuBarImplClass</testerClass>
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" />
 	</toolkitComponent>
 	<toolkitComponent type="html.Div" visible="false">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.DivImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.DivImplClass</testerClass>
 		<componentClass name="html.Div">
             <property name="tagName" value="div" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.text.Ol" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.text.OlImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.text.OlImplClass</testerClass>
 		<componentClass name="html.text.Ol">
             <property name="tagName" value="ol" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.text.Ul" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
-		<testerClass>org.eclipse.jubula.rc.html.web.implclasses.text.UlImplClass</testerClass>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.text.UlImplClass</testerClass>
 		<componentClass name="html.text.Ul">
             <property name="tagName" value="ul" />
         </componentClass>
