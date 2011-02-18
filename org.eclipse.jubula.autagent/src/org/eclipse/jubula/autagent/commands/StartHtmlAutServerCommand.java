@@ -43,7 +43,7 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
     /**
      * <code>MAIN_JAR</code>
      */
-    private static final String MAIN_JAR = "org.eclipse.jubula.rc.html.jar"; //$NON-NLS-1$
+    private static final String MAIN_JAR = "com.bredexsw.jubula.rc.html.jar"; //$NON-NLS-1$
 
     /** 
      * mapping from browser type (String) to corresponding 
