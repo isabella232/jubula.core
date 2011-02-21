@@ -27,10 +27,11 @@ pdf:	clean-pdf ReferenceManual.aux pdf-nocirc
 pdf-nocirc: images
 	if [ ! -d ${OUTPUTBASE} ]; then mkdir ${OUTPUTBASE}; fi
 	if [ ! -d ${OUTPUTPDF} ]; then mkdir ${OUTPUTPDF}; fi
-	pdflatex "\def\productname{jubula}\input{${DOC}}" -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error
-	pdflatex "\def\productname{jubula}\input{${DOC}}" -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error
+	echo ${OUTPUTPDF}
+	pdflatex -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error "\def\productname{jubula}\input{${DOC}}"
+	pdflatex -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error "\def\productname{jubula}\input{${DOC}}"
 	makeindex ${OUTPUTPDF}/${DOC} ;\
-	pdflatex "\def\productname{jubula}\input{${DOC}}" -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error
+	pdflatex -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error "\def\productname{jubula}\input{${DOC}}"
 pdf-manual: clean-pdf images ReferenceManual.aux
 	if [ ! -d ${OUTPUTBASE} ]; then mkdir ${OUTPUTBASE}; fi
 	if [ ! -d ${OUTPUTPDF} ]; then mkdir ${OUTPUTPDF}; fi
