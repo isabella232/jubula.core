@@ -1,4 +1,4 @@
-You can remote debug an \gdaut{} which has been started by \jb{}
+You can remote debug an \gdaut{} which has been started by \app{}
 by simply modifying or creating a \gdaut{} configuration. The following options must be added to your JRE Arguments:
 
 \begin{verbatim}
@@ -17,7 +17,7 @@ by simply modifying or creating a \gdaut{} configuration. The following options 
 
 \subsection{Configuring Eclipse for remote debugging}
 Create a new "Remote Java Application" in the "Launch configuration" dialog 
-and enter the hostname for the computer on which the \gdserver{} is running. The specified port has to be the same which you used in the \gdaut{} configuration (e.g. 4711).
+and enter the hostname for the computer on which the \gdagent{} is running. The specified port has to be the same which you used in the \gdaut{} configuration (e.g. 4711).
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{Debugging/PS/eclipseRemoteDebug}
@@ -27,8 +27,8 @@ and enter the hostname for the computer on which the \gdserver{} is running. The
 
 To get your \gdaut{} running using remote debugging options you have to take the following steps:
 \begin{enumerate}
- \item Start the \gdserver{}
- \item Connect the Client with the \gdserver{}, load the \gdproject{} in \jb{} and invoke the startup of the \gdaut{} in the \jb{}  client.
+ \item Start the \gdagent{}
+ \item Connect the Client with the \gdagent{}, load the \gdproject{} in \app{} and invoke the startup of the \gdaut{} in the \app{}  client.
  \item If ''suspend=y'', you now have to run your "Remote Java Application"-configuration 
  in Eclipse, as the JVM is waiting for the debugger to connect before starting the 
  application. As soon as you are connected you should see the default debug behaviour in your

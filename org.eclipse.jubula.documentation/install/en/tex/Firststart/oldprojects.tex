@@ -1,31 +1,31 @@
-If you have an older version of \jb{} installed, we recommend that you follow these steps:
+If you have an older version of \app{} installed, we recommend that you follow these steps:
 
-%\bxtipp{Please be aware that we can only guarantee that \gdprojects{} from the previous version can be successfully imported into a new version. \gdprojects{} from older versions of \jb{} may not be imported directly into the newest version.}
+%\bxtipp{Please be aware that we can only guarantee that \gdprojects{} from the previous version can be successfully imported into a new version. \gdprojects{} from older versions of \app{} may not be imported directly into the newest version.}
 
 \begin{enumerate}
-\item From the old version of \jb{}, export and backup all the \gdprojects{} from the database. 
+\item From the old version of \app{}, export and backup all the \gdprojects{} from the database. 
 \bxtipp{Make sure you also export and back up any library \gdprojects{} used in your tests, e.g. the unbound modules \gdprojects{}. }
-\item Back up any extensions you have made to \jb{}: any customized plugins and implementation classes you have written.  
+\item Back up any extensions you have made to \app{}: any customized plugins and implementation classes you have written.  
 \item Make a note of any configurations you have used in the configuration tool, e.g. port numbers, logging, the \gddb{} used etc. 
-\item Uninstall the old version of \jb{}. 
-\item If there has been a license change for \jb{}: Uninstall and reinstall the license server. Make sure you do the reinstall on the same computer and that you start the license server on the same port as previously. Customers with maintenance packages can request a new license from the support team.
+\item Uninstall the old version of \app{}. 
+\item If there has been a license change for \app{}: Uninstall and reinstall the license server. Make sure you do the reinstall on the same computer and that you start the license server on the same port as previously. Customers with maintenance packages can request a new license from the support team.
 
 \bxtipp{If there has been no license update, and you are running the license server centrally, you do not need to uninstall it.}
-%\item Clear (empty) the \gddb{} schema for all necessary \jb{} users. 
-\item Install the new version of \jb{}.
-\bxtipp{If you have \gdservers{} running on other machines, be sure to install the new version of the \gdserver{} there too.}
+%\item Clear (empty) the \gddb{} schema for all necessary \app{} users. 
+\item Install the new version of \app{}.
+\bxtipp{If you have \gdagents{} running on other machines, be sure to install the new version of the \gdagent{} there too.}
 \item Add any necessary configurations in the configuration tool. 
 \item Add any necessary \gddb{} configurations in the \gddb{} configuration tool.
 \item Add any extension plugins you backed up from the old version.
 \bxtipp{If you are testing RCP \gdauts{}, bear in mind that you will need to remove the old version of the RCP accessor from your application and insert the new version in its place. We also recommend starting your application with \bxshell{-clean} to ensure that the old RCP accessor is no longer used.}
-\item Start \jb{}.  
+\item Start \app{}.  
 \item When you first connect to the \gddb{}, you will be informed whether your \gddb{} scheme is compatible with the new version. If not, the migration wizard will guide you through the migration process.
 %\item First import any library \gdprojects{} your other \gdprojects{} use e.g. the unbound modules \gdprojects{}) into the \gddb{}. 
-%\item Then import your other \gdprojects{} into the new \jb{} \gddb{}.
+%\item Then import your other \gdprojects{} into the new \app{} \gddb{}.
 \end{enumerate}
 
 \section{Updating to the new version of the unbound modules}
-We recommend that you always update the version of the unbound modules \gdprojects{} to the new versions installed with \jb{}. You can do this via the \gdproject{} properties in the \jb{} client. This is described in the user manual in the \bxname{Tasks} section under \bxname{\gdprojects{}}. 
+We recommend that you always update the version of the unbound modules \gdprojects{} to the new versions installed with \app{}. You can do this via the \gdproject{} properties in the \app{} client. This is described in the user manual in the \bxname{Tasks} section under \bxname{\gdprojects{}}. 
 
 You should also check to make sure that your current tests do not use any modules that have become deprecated.
 

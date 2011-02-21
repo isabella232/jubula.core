@@ -17,11 +17,11 @@ be reused, and also allows test specification to begin before components
 have been developed. However, allowing the program to observe user actions 
 can have its advantages.
 
-\jb{} lets you observe \gdcases{} in a running \gdaut{}, using a method which differs considerably from  traditional recording options. You can record actions and checks in your \gdaut{}, but the output for these actions is \gdsteps{}, not code. 
+\app{} lets you observe \gdcases{} in a running \gdaut{}, using a method which differs considerably from  traditional recording options. You can record actions and checks in your \gdaut{}, but the output for these actions is \gdsteps{}, not code. 
 
 You can create the same tests with observing as you can with specification. The only real differences are:
 \begin{itemize}
-\item object mapping is carried out automatically in observing mode. Because of this, you do not provide a component name, but one is created by \jb{}. 
+\item object mapping is carried out automatically in observing mode. Because of this, you do not provide a component name, but one is created by \app{}. 
 \item you must use concrete values for parameters in the observation mode. You can, however, change these to references in the specification perspective later so that your tests are more reusable. 
 \end{itemize}
 
@@ -29,7 +29,7 @@ You can reuse observed \gdcases{} in the same ways as you can reuse specified \g
 
 \bxtipp{The observation mode supports high level actions. To find out
 exactly how an action works, look up the component and its action in
-\bxextref{\jb{}efman}{ref,actparam}}. 
+\bxextref{\app{}efman}{ref,actparam}}. 
 
 To  execute an observed test, you just need to nest the observed
 \gdcase in a \gdsuite{}. This is an example of a top-down approach to testing.

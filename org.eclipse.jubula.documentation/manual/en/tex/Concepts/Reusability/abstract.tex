@@ -2,11 +2,11 @@
 \index{Components!Abstract}
 \index{Abstract components}
 
-Another way to make your \gdcases{} more reusable is to increase the amount of components they can test. For each action, you choose a component type.  \jb{} has three levels of components:
+Another way to make your \gdcases{} more reusable is to increase the amount of components they can test. For each action, you choose a component type.  \app{} has three levels of components:
 \begin{description}
 \item [Abstract components]{are general, high-level components from which other components are derived. They are described in terms of what features a component has, e.g. graphics component, component with text. They group actions together which can all be executed on components of this type.}
 \item [Concrete components]{are components which are available to all graphical toolkits, but which are restricted to a certain component type, e.g. combo box, list.}
-\item [Toolkit specific components]{are the most specific components in \jb{}. They are only available for certain toolkits. For example, a HTML link is a component which is only available in Web applications.}
+\item [Toolkit specific components]{are the most specific components in \app{}. They are only available for certain toolkits. For example, a HTML link is a component which is only available in Web applications.}
 \end{description}
 
 We recommend that you specify your tests as abstractly as possible, and as concretely as necessary. If you want to create a \gdcase{} to click a button, it is better to use the abstract component \bxname{graphics component}. The \bxname{graphics component} also contains the \bxname{click} action, and has the advantage that the \gdcase{} can then be used on other components than buttons. If you want to select a cell from a table, however, you will have to use the concrete component \bxname{table}, because this is the highest level which offers this action. 

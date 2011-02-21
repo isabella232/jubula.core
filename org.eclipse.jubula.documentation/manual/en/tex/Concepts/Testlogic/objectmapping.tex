@@ -35,30 +35,30 @@ Object mapping consists of two steps:
 When you specify \gdsteps{}, you specify component names for the components you want to test. When you add \gdcases{} to a \gdsuite{}, all component names used in the \gdcases{} are collected by the \gdomeditor{}. You can then collect the technical names from the \gdaut{}. 
 
 \subsection{Technical names}
-You do not need to consult the developers to collect technical names; you use the running \gdaut{} to collect the names. If the developers have named the components, this name will be collected. If the developers have not named the component, \jb{} generates a name. 
+You do not need to consult the developers to collect technical names; you use the running \gdaut{} to collect the names. If the developers have named the components, this name will be collected. If the developers have not named the component, \app{} generates a name. 
 
-\bxtipp{\jb{} addresses high-level components in the mapping mode. You will not be able to map individual menu entries or tree nodes, for example. Instead, you map the tree component, and specify which entry/node to select/check as a parameter for the action. }
+\bxtipp{\app{} addresses high-level components in the mapping mode. You will not be able to map individual menu entries or tree nodes, for example. Instead, you map the tree component, and specify which entry/node to select/check as a parameter for the action. }
 
 \subsection{Assigning technical names to component names}
-Once you have collected the technical names from the \gdaut{}, you can ''assign'' them to the component names using drag-and-drop. In this way, you are telling \jb{} which real component you are referring to in each \gdstep{}. 
+Once you have collected the technical names from the \gdaut{}, you can ''assign'' them to the component names using drag-and-drop. In this way, you are telling \app{} which real component you are referring to in each \gdstep{}. 
 
 The fact that the object map is separate from the specification means that any changes that need to be made to update a test only need to be made once. 
 
 \subsection{Locating components during test execution}
-\jb{} then uses this information to locate components when the test is running. The component recognition system used by \jb{} uses various details about mapped components to find the right component during the test. The location of the component in the \gdaut{} hierarchy, the components near to it and the name of the component all play a role in component recognition. For each possible component, \jb{} calculates the similarity to the originally mapped component. The component with the highest result is selected. 
+\app{} then uses this information to locate components when the test is running. The component recognition system used by \app{} uses various details about mapped components to find the right component during the test. The location of the component in the \gdaut{} hierarchy, the components near to it and the name of the component all play a role in component recognition. For each possible component, \app{} calculates the similarity to the originally mapped component. The component with the highest result is selected. 
 
 This method makes object mapping generally resilient to changes in the \gdaut{}. 
  
 %% \subsection{Changes in the user interface}
 %% \label{abstractcomps1}
-%% If a component moves in the user interface (either on the surface or in the hierarchy, \jb{}'s component recognition method should find the component again. If the component changes type, then the recognition will depend on how large the change is. For example, changing a text field to a text pane should not alter the test, since both of these components are actually part of the same component in \jb{}. 
+%% If a component moves in the user interface (either on the surface or in the hierarchy, \app{}'s component recognition method should find the component again. If the component changes type, then the recognition will depend on how large the change is. For example, changing a text field to a text pane should not alter the test, since both of these components are actually part of the same component in \app{}. 
 
 %% A larger change may result in having to remap the component. You can make maintenance easier by specifying your \gdsteps{} using abstract components, which can be mapped to a larger range of real components.  
 
 %% \subsection{Importing and exporting object mapping}
 %% An additional feature of the \gdomeditor{} is the ability to export and import 
 %% the object mapping as an XML file (.map) for a \gdsuite{}. This 
-%% contributes to the reusability aspect of \jb{}, since another 
+%% contributes to the reusability aspect of \app{}, since another 
 %% \gdproject{} using the same \gdaut{} can make use of this object mapping. 
 
 

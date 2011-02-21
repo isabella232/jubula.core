@@ -27,7 +27,7 @@
 \item \bxshell{*} represents any number (zero or more) of any characters.  
 \end{itemize}
 
-\bxtipp{\jb{} applies your expression to your entire string. To search for a match within a string, wildcards need to be placed on either side. See the examples below for more information.}
+\bxtipp{\app{} applies your expression to your entire string. To search for a match within a string, wildcards need to be placed on either side. See the examples below for more information.}
 
 
 \bxtipp{The following syntax information can be useful, but is also more complex. We recommend that simple match expressions use only letters (upper- and lowercase), numbers, and the wildcards described above. In this way, you can avoid complex syntax.}
@@ -44,9 +44,9 @@
 \item The characters that are used to construct a simple match expression need to be escaped if they are to be matched within a string.
 \item The characters are: \newline
  [ ? * \newline 
-\item Because \jb{} already uses a backslash as an escape symbol, you will need to use two backslashes to escape simple match characters. 
-\item For example, to check for a tree node \bxcaption{x/y/z/***} where the slashes are a part of the node, your regular expression in \jb{}  would look like this: \verb1 x\/y\/z\/\\*\\*\\* 1\newline
-The backslashes before the ordinary slashes are an escape symbol to tell \jb{} that the following sign is not a path separator. The extra backslash before the stars tells \jb{} that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol.  
+\item Because \app{} already uses a backslash as an escape symbol, you will need to use two backslashes to escape simple match characters. 
+\item For example, to check for a tree node \bxcaption{x/y/z/***} where the slashes are a part of the node, your regular expression in \app{}  would look like this: \verb1 x\/y\/z\/\\*\\*\\* 1\newline
+The backslashes before the ordinary slashes are an escape symbol to tell \app{} that the following sign is not a path separator. The extra backslash before the stars tells \app{} that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol.  
 \end{itemize}
 
 \textbf{Useful examples}
