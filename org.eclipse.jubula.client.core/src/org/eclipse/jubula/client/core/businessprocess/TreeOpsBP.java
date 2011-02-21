@@ -200,8 +200,8 @@ public class TreeOpsBP {
                     }
                     // update TestDataPO of child with GUID for reference
                     conv.replaceGuidsInReferences(oldToNewGuids);
-                    cell.getTestData().getValue().setValue(lang, 
-                            conv.getModelString(), proj);
+                    cell.getTestData().setValue(
+                            lang, conv.getModelString(), proj);
                 }
             }
         }
@@ -262,12 +262,11 @@ public class TreeOpsBP {
                     break;
                 }
             }            
-            ITestDataPO data = PoMaker.createTestDataPO(
-                PoMaker.createI18NStringPO());
+            ITestDataPO data = PoMaker.createTestDataPO();
             String value = 
                 TestDataConstants.REFERENCE_CHAR_DEFAULT + builder.toString();
             for (Locale locale : languageList) {
-                data.getValue().setValue(locale, value, proj);
+                data.setValue(locale, value, proj);
                 execTc.getDataManager().updateCell(
                     data, 0, descr.getUniqueId());
             }

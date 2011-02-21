@@ -1,5 +1,5 @@
 /* Grammar for Client parameter values. */
-Package org.eclipse.jubula.client.core.parser.parameter;
+Package org.eclipse.jubula.client.core.gen.parser.parameter;
     
 Helpers
     literal_symbol = ''';

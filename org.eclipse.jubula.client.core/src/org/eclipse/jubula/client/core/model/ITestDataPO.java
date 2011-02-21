@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import java.util.Locale;
+import java.util.Set;
+
 /**
  * @author BREDEX GmbH
  * @created 20.12.2005
@@ -21,14 +24,25 @@ package org.eclipse.jubula.client.core.model;
 public interface ITestDataPO extends IPersistentObject {
   
     /**
-     * @return the value
+     * set the value for the given language
+     * @param lang language, for which to set the value
+     * @param value value
+     * @param project associated project
      */
-    public abstract II18NStringPO getValue();
+    public abstract void setValue(Locale lang, String value, 
+        IProjectPO project);
 
     /**
-     * @param value The value to set.
+     * get the value for a given locale
+     * @param lang language, for which to get the value
+     * @return value
      */
-    public abstract void setValue(II18NStringPO value);
+    public abstract String getValue(Locale lang);
+
+    /**
+     * @return a set of all Locale's used in this I18NString
+     */
+    public abstract Set<Locale> getLanguages();
 
     /**
      * Overides Object.equals()
@@ -50,4 +64,16 @@ public interface ITestDataPO extends IPersistentObject {
      * @return The new test data instance
      */
     public abstract ITestDataPO deepCopy();
+    
+    /**
+     * Copies the the given test data to the receiver.
+     * 
+     * @param testData The test data to copy.
+     */
+    public abstract void setData(ITestDataPO testData);
+
+    /**
+     * Removes all test data from the receiver.
+     */
+    public abstract void clear();
 }

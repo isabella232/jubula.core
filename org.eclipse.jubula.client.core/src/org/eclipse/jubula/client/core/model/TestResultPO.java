@@ -23,7 +23,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
@@ -471,7 +470,7 @@ class TestResultPO implements ITestResultPO {
      * @param parameter IParameterDetailsPO
      */
     public void addParameter(IParameterDetailsPO parameter) {
-        getParameterList().add(parameter);
+        getHbmParameterList().add(parameter);
     }
     
     /**
@@ -485,9 +484,7 @@ class TestResultPO implements ITestResultPO {
                 targetEntity = ParameterDetailsPO.class, 
                 fetch = FetchType.LAZY)
     @OrderColumn(name = "IDX")
-    @JoinTable(name = "PARAMETER_LIST", 
-               joinColumns = @JoinColumn(name = "PARENT"), 
-               inverseJoinColumns = @JoinColumn(name = "CHILD"))
+    @JoinColumn(name = "FK_TESTRESULT")
     List<IParameterDetailsPO> getHbmParameterList() {
         return m_parameterList;
     }
@@ -500,19 +497,11 @@ class TestResultPO implements ITestResultPO {
     }
     
     /**
-     * @return The List of children nodes
-     */
-    @Transient
-    List<IParameterDetailsPO> getParameterList() {
-        return getHbmParameterList();
-    }
-    
-    /**
      * @return the unmodifiable node list.
      */
     @Transient
     public List<IParameterDetailsPO> getUnmodifiableParameterList() {
-        return Collections.unmodifiableList(getParameterList());
+        return Collections.unmodifiableList(getHbmParameterList());
     }
     
     

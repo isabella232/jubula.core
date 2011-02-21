@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -29,6 +30,9 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.StringParsing;
@@ -65,7 +69,9 @@ public class JobConfiguration {
     /** configuration detail */
     private String m_db;
     /** configuration detail */
-    private String m_dbscheme;
+    private DatabaseConnectionInfo m_dbConnectionInfo;
+    /** configuration detail */
+    private String m_dbConnectionName;
     /** configuration detail */
     private String m_dbuser;
     /** configuration detail */
@@ -161,15 +167,30 @@ public class JobConfiguration {
     /**
      * @return String
      */
-    public String getDbscheme() {
-        return m_dbscheme;
+    public DatabaseConnectionInfo getDbscheme() {
+        return m_dbConnectionInfo;
     }
 
     /**
-     * @param dbscheme String
+     * @param connectionInfo The connection information to use.
      */
-    private void setDbscheme(String dbscheme) {
-        m_dbscheme = dbscheme;
+    private void setDbscheme(DatabaseConnectionInfo connectionInfo) {
+        m_dbConnectionInfo = connectionInfo;
+    }
+
+    /**
+     * @return String
+     */
+    public String getDbConnectionName() {
+        return m_dbConnectionName;
+    }
+
+    /**
+     * @param connectionName The name of the connection information to use.
+     */
+    private void setDbConnectionName(String connectionName) {
+        m_dbConnectionName = connectionName;
+        setDbscheme(JobConfiguration.getConnectionInfoForName(connectionName));
     }
 
     /**
@@ -545,11 +566,13 @@ public class JobConfiguration {
      * @param cmd CommandLine
      */
     private void parseDBOptions(CommandLine cmd) {
+        
         if (cmd.hasOption(ClientTestStrings.DBURL)) { 
             setDb(cmd.getOptionValue(ClientTestStrings.DBURL)); 
         }
-        if (cmd.hasOption(ClientTestStrings.DB_SCHEME)) { 
-            setDbscheme(cmd.getOptionValue(ClientTestStrings.DB_SCHEME)); 
+        if (cmd.hasOption(ClientTestStrings.DB_SCHEME)) {
+            setDbConnectionName(
+                    cmd.getOptionValue(ClientTestStrings.DB_SCHEME));
         }
         if (cmd.hasOption(ClientTestStrings.DB_USER)) { 
             setDbuser(cmd.getOptionValue(ClientTestStrings.DB_USER)); 
@@ -803,9 +826,12 @@ public class JobConfiguration {
 
         /**
          * {@inheritDoc}
+         * @throws IllegalArgumentException 
+         *              if no suitable Database Connection can be found.
          */
         public Object unmarshal(HierarchicalStreamReader arg0, 
-            UnmarshallingContext arg1) {
+                UnmarshallingContext arg1) throws IllegalArgumentException {
+            
             JobConfiguration job = new JobConfiguration();
             while (arg0.hasMoreChildren()) {
                 arg0.moveDown();
@@ -828,7 +854,7 @@ public class JobConfiguration {
                     job.setDb(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DB_SCHEME)) {
-                    job.setDbscheme(arg0.getValue());
+                    job.setDbConnectionName(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DB_USER)) {
                     job.setDbuser(arg0.getValue());
@@ -1022,5 +1048,26 @@ public class JobConfiguration {
      */
     public boolean isRelevant() {
         return m_relevant;
+    }
+    
+    /**
+     * 
+     * @param name The name of the info to find.
+     * @return the DatabaseConnectionInfo (from the Preferences) that matches 
+     *         the provided name, or <code>null</code> if no such 
+     *         DatabaseConnectionInfo can be found.
+     */
+    private static DatabaseConnectionInfo getConnectionInfoForName(
+            String name) {
+        
+        List<DatabaseConnection> availableConnections = 
+            DatabaseConnectionConverter.computeAvailableConnections();
+        for (DatabaseConnection conn : availableConnections) {
+            if (ObjectUtils.equals(conn.getName(), name)) {
+                return conn.getConnectionInfo();
+            }
+        }
+
+        return null;
     }
 }

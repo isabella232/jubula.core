@@ -6,6 +6,7 @@
     <file-match-pattern match-pattern="gen-src/*" include-pattern="false"/>
   </fileset>
   <filter name="FilesFromPackage" enabled="true">
+    <filter-data value="src/org/eclipse/jubula/client/core/gen"/>
     <filter-data value="src/org/eclipse/jubula/client/core/i18n"/>
     <filter-data value="src/org/eclipse/jubula/client/core/test"/>
   </filter>

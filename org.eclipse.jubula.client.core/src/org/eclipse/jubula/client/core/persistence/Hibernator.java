@@ -13,12 +13,9 @@ package org.eclipse.jubula.client.core.persistence;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -29,6 +26,8 @@ import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
@@ -45,11 +44,11 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.DBVersionPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
-import org.eclipse.jubula.client.core.utils.DBSchemaPropertyCreator;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
+import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.core.utils.ProgressEvent;
 import org.eclipse.jubula.client.core.utils.ProgressEventDispatcher;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
@@ -114,14 +113,8 @@ public class Hibernator {
     /** db connection string */
     private static String dburl = null;
 
-    /** schema name */
-    private static String schemaName = null;
-
-    /** map of schemas */
-    private static Map<String, Properties> schemaMap = null;
-
-    /** scheme properties */
-    private static Properties schemeProp = null;
+    /** contains information regarding how to connect to the database */
+    private static DatabaseConnectionInfo dbConnectionInfo = null;
 
     /** is Select DB action */
     private static boolean isSelectDbAction = false;
@@ -131,9 +124,6 @@ public class Hibernator {
 
     /** Hibernate configuration */
     private EntityManagerFactory m_sf;
-
-    /** the configuration */
-    private Properties m_cfg;
 
     /** list of known open sessions */
     private List<EntityManager> m_sessions = new ArrayList<EntityManager>();
@@ -156,21 +146,11 @@ public class Hibernator {
     private Hibernator(String userName, String pwd, String url)
         throws JBException, DatabaseVersionConflictException {
 
-        super();
         try {
             if (!isSelectDbAction) {
                 ProgressEventDispatcher.notifyListener(new ProgressEvent(
                         ProgressEvent.OPEN_PROGRESS_BAR, null, 
                             Messages.PluginConnectProgress));
-            }
-
-            m_cfg = new Properties();
-            // add schema properties
-            if (schemeProp != null) {
-                m_cfg.putAll(schemeProp);
-            } else {
-                throw new IllegalArgumentException(
-                        Messages.ExecutionControllerInvalidDBschemeError, null);
             }
 
             buildSessionFactoryWithLoginData(userName, pwd, url);
@@ -193,16 +173,17 @@ public class Hibernator {
      */
     public static synchronized boolean init() throws JBFatalException {
         if (instance == null) {
-            loadSchemaProperties();
             if (!isSelectDbAction) {
-                if (schemaMap.size() == 1) {
-                    connectWithoutDialog();
+                List<DatabaseConnection> availableConnections =
+                    DatabaseConnectionConverter.computeAvailableConnections();
+                if (availableConnections.size() == 1) {
+                    connectWithoutDialog(
+                            availableConnections.get(0).getConnectionInfo());
                 } else {
                     ProgressEventDispatcher.notifyListener(new ProgressEvent(
                             ProgressEvent.LOGIN, null, null));
                 }
             }
-            schemeProp = schemaMap.get(schemaName);
         } else {
             return true;
         }
@@ -275,37 +256,29 @@ public class Hibernator {
     }
 
     /**
-     * if only one scheme with user and password is defined, don't show login
-     * dialog
+     * Initializes the Hibernator using the given connection information.
+     * If the information contains a username <em>and</em> password, then these
+     * are used for initialization. If not, then a login dialog is presented.
+     * 
+     * @param connectionInfo The information to use to initialize the 
+     *                       Hibernator.
      */
-    private static void connectWithoutDialog() {
-        Collection<Properties> values = schemaMap.values();
-        Object[] keys = schemaMap.keySet().toArray();
-        Iterator<Properties> it = values.iterator();
-        if (it.hasNext()) {
-            schemeProp = it.next();
-            String predefinedUsername = schemeProp
-                    .getProperty(PersistenceUnitProperties.JDBC_USER);
-            String predefinedPassword = schemeProp
-                    .getProperty(PersistenceUnitProperties.JDBC_PASSWORD);
-            String schemName = keys[0].toString();
-            if (predefinedUsername != null && predefinedPassword != null) {
-                user = predefinedUsername;
-                pw = predefinedPassword;
-                schemaName = schemName;
-            } else {
-                ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                        ProgressEvent.LOGIN, null, null));
-            }
+    private static void connectWithoutDialog(
+            DatabaseConnectionInfo connectionInfo) {
+
+        String predefinedUsername = connectionInfo
+                .getProperty(PersistenceUnitProperties.JDBC_USER);
+        String predefinedPassword = connectionInfo
+                .getProperty(PersistenceUnitProperties.JDBC_PASSWORD);
+        if (predefinedUsername != null && predefinedPassword != null) {
+            user = predefinedUsername;
+            pw = predefinedPassword;
+            dbConnectionInfo = connectionInfo;
+        } else {
+            ProgressEventDispatcher.notifyListener(new ProgressEvent(
+                    ProgressEvent.LOGIN, null, null));
         }
 
-    }
-
-    /**
-     * Loads the schema properties file.
-     */
-    private static void loadSchemaProperties() throws JBFatalException {
-        schemaMap = DBSchemaPropertyCreator.getSchemaMap();
     }
 
     /**
@@ -328,60 +301,41 @@ public class Hibernator {
      * @throws PMDatabaseConfException
      *             in case of invalid db scheme
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public void buildSessionFactoryWithLoginData(String userName, String pwd,
+    private void buildSessionFactoryWithLoginData(String userName, String pwd,
             String url) throws PersistenceException, PMDatabaseConfException,
             JBException, DatabaseVersionConflictException {
 
-        if (m_cfg != null) {
-            m_cfg.setProperty(PersistenceUnitProperties.JDBC_USER, userName);
-            m_cfg.setProperty(PersistenceUnitProperties.JDBC_PASSWORD, pwd);
-            if (url != null) {
-                m_cfg.setProperty(PersistenceUnitProperties.JDBC_URL, url);
-            }
+        m_sf = createEntityManagerFactory(dbConnectionInfo, userName, pwd, url);
 
-            // use the classloader for this bundle when initializing 
-            // the EntityManagerFactory
-            Map properties = new HashMap(m_cfg);
-            properties.put(PersistenceUnitProperties.CLASSLOADER, 
-                    this.getClass().getClassLoader());
-            m_sf = new PersistenceProvider().createEntityManagerFactory(
-                    DEFAULT_PU_NAME, 
-                    properties);
-
-            EntityManager em = null;
+        EntityManager em = null;
+        try {
+            em = m_sf.createEntityManager();
             try {
-                em = m_sf.createEntityManager();
-                try {
-                    validateDBVersion(em);
+                validateDBVersion(em);
 
-                } catch (AmbiguousDatabaseVersionException e) {
-                    throw new PMDatabaseConfException(
-                            Messages.DBVersionProblem + StringConstants.DOT, 
-                            MessageIDs.E_NOT_CHECKABLE_DB_VERSION);
-                }
-            } catch (PersistenceException e) {
-                Throwable rootCause = ExceptionUtils.getRootCause(e);
-                if (rootCause instanceof SQLException) {
-                    if (("08001").equals(((SQLException)rootCause).getSQLState())) { //$NON-NLS-1$
-                        log.error(
-                            Messages.TheDatabaseIsAlreadyInUseByAnotherProcess, 
-                                e);
-                        throw new JBException(e.getMessage(),
-                                MessageIDs.E_DB_IN_USE);
-                    }
-                    log.error(Messages.NoOrWrongUsernameOrPassword, e);
-                    throw new JBException(e.getMessage(),
-                            MessageIDs.E_NO_DB_CONNECTION);
-                }
-            } finally {
-                if (em != null) {
-                    em.close();
-                }
+            } catch (AmbiguousDatabaseVersionException e) {
+                throw new PMDatabaseConfException(
+                        Messages.DBVersionProblem + StringConstants.DOT, 
+                        MessageIDs.E_NOT_CHECKABLE_DB_VERSION);
             }
-        } else {
-            Assert.verify(false,
-                    Messages.TheSessionConfigurationWasNotInitialized);
+        } catch (PersistenceException e) {
+            Throwable rootCause = ExceptionUtils.getRootCause(e);
+            if (rootCause instanceof SQLException) {
+                if (("08001").equals(((SQLException)rootCause).getSQLState())) { //$NON-NLS-1$
+                    log.error(
+                        Messages.TheDatabaseIsAlreadyInUseByAnotherProcess, 
+                            e);
+                    throw new JBException(e.getMessage(),
+                            MessageIDs.E_DB_IN_USE);
+                }
+                log.error(Messages.NoOrWrongUsernameOrPassword, e);
+                throw new JBException(e.getMessage(),
+                        MessageIDs.E_NO_DB_CONNECTION);
+            }
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
     }
 
@@ -1074,11 +1028,12 @@ public class Hibernator {
     }
 
     /**
-     * @param schemName
+     * @param connectionName
      *            The schema name.
      */
-    public static void setSchemaName(String schemName) {
-        Hibernator.schemaName = schemName;
+    public static void setDbConnectionName(
+            DatabaseConnectionInfo connectionName) {
+        Hibernator.dbConnectionInfo = connectionName;
     }
 
     /**
@@ -1136,33 +1091,59 @@ public class Hibernator {
     }
 
     /**
-     * @return current user of DB
+     * 
+     * @return the username used in the currently active
+     *         Entity Manager Factory. Returns <code>null</code> if no 
+     *         Entity Manager Factory is currently active or if the active
+     *         Entity Manager Factory does not use a username.
      */
     public String getCurrentDBUser() {
-        return m_cfg.getProperty(PersistenceUnitProperties.JDBC_USER);
+        return getFactoryProperty(m_sf, PersistenceUnitProperties.JDBC_USER);
     }
 
     /**
-     * @return current dbuser pw
+     * 
+     * @return the password used in the currently active
+     *         Entity Manager Factory. Returns <code>null</code> if no 
+     *         Entity Manager Factory is currently active or if the active
+     *         Entity Manager Factory does not use a password.
      */
     public String getCurrentDBPw() {
-        return m_cfg.getProperty(PersistenceUnitProperties.JDBC_PASSWORD);
+        return getFactoryProperty(
+                m_sf, PersistenceUnitProperties.JDBC_PASSWORD);
     }
 
     /**
-     * @return current db url
+     * 
+     * @return the connection URL used in the currently active
+     *         Entity Manager Factory. Returns <code>null</code> if no 
+     *         Entity Manager Factory is currently active or if the active
+     *         Entity Manager Factory does not use a connection URL.
      */
     public String getCurrentDBUrl() {
-        return m_cfg.getProperty(PersistenceUnitProperties.JDBC_URL);
+        return getFactoryProperty(m_sf, PersistenceUnitProperties.JDBC_URL);
     }
 
     /**
-     * @return current schema
+     * 
+     * @param factory The factory from which to retrieve the property.
+     * @param key The key/name of the property to retrieve.
+     * @return the string value of the retrieved property. Returns 
+     *         <code>null</code> if the factory does not contain the desired 
+     *         property or if the value of the property is <code>null</code>
+     *         or if the string representation of the property value is
+     *         <code>null</code>.
      */
-    public String getCurrentDBSchema() {
-        return m_cfg.getProperty("hibernate.default_schema"); //$NON-NLS-1$
+    private static String getFactoryProperty(
+            EntityManagerFactory factory, String key) {
+        
+        if (factory != null && factory.isOpen()) {
+            return ObjectUtils.toString(factory.getProperties().get(key));
+        }
+        
+        return null;
     }
-
+    
     /**
      * Migrates the structure of the database to match the version of the
      * currently running client. <em>This effectively deletes all Jubula data 
@@ -1181,25 +1162,8 @@ public class Hibernator {
         EntityManagerFactory migrationEntityManagerFactory = null;
 
         try {
-            Properties migrationConfig = new Properties();
-            migrationConfig.putAll(schemeProp);
-            migrationConfig.setProperty(
-                    PersistenceUnitProperties.JDBC_USER, user);
-            migrationConfig.setProperty(
-                    PersistenceUnitProperties.JDBC_PASSWORD, pw);
-            if (dburl != null) {
-                migrationConfig.setProperty(
-                        PersistenceUnitProperties.JDBC_URL, dburl);
-            }
-
-            // use the classloader for this bundle when initializing 
-            // the EntityManagerFactory
-            Map properties = new HashMap(migrationConfig);
-            properties.put(PersistenceUnitProperties.CLASSLOADER, 
-                    Hibernator.class.getClassLoader());
             migrationEntityManagerFactory = 
-                new PersistenceProvider().createEntityManagerFactory(
-                        DEFAULT_PU_NAME, properties);
+                createEntityManagerFactory(dbConnectionInfo, user, pw, dburl);
             installDbScheme(migrationEntityManagerFactory);
             instance = instance(user, pw, dburl);
             instance.m_newDbSchemeInstalled = true;
@@ -1211,6 +1175,38 @@ public class Hibernator {
         }
     }
 
+    /**
+     * 
+     * @param connectionInfo The information to use in initializing the 
+     *                       factory. Must not be <code>null</code>.
+     * @param username The username to use in initializing the factory.
+     * @param password The password to use in initializing the factory.
+     * @param url The connection URL to use in initializing the factory.
+     * @return the created factory.
+     */
+    private static EntityManagerFactory createEntityManagerFactory(
+            DatabaseConnectionInfo connectionInfo, 
+            String username, String password, String url) {
+     
+        Validate.notNull(connectionInfo);
+        
+        // use the classloader for this bundle when initializing 
+        // the EntityManagerFactory
+        Map<String, Object> properties = new HashMap<String, Object>();
+        properties.put(PersistenceUnitProperties.CLASSLOADER, 
+                Hibernator.class.getClassLoader());
+        properties.put(PersistenceUnitProperties.JDBC_DRIVER, 
+                connectionInfo.getDriverClassName());
+        properties.put(PersistenceUnitProperties.JDBC_USER, username);
+        properties.put(PersistenceUnitProperties.JDBC_PASSWORD, password);
+        properties.put(PersistenceUnitProperties.JDBC_URL, 
+                StringUtils.defaultString(url, 
+                        connectionInfo.getConnectionUrl()));
+        return new PersistenceProvider().createEntityManagerFactory(
+                DEFAULT_PU_NAME, 
+                properties);
+    }
+    
     /**
      * 
      */
@@ -1250,10 +1246,13 @@ public class Hibernator {
     }
 
     /**
-     * @return the JDBC connection class name
+     * @return the name of the JDBC driver class used in the currently active
+     *         Entity Manager Factory. Returns <code>null</code> if no 
+     *         Entity Manager Factory is currently active or if the active
+     *         Entity Manager Factory does not use a JDBC driver.
      */
     public String getCurrentDBDriverClass() {
-        return m_cfg.getProperty(PersistenceUnitProperties.JDBC_DRIVER);
+        return getFactoryProperty(m_sf, PersistenceUnitProperties.JDBC_DRIVER);
     }
     
 }

@@ -20,7 +20,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,6 +38,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.archive.output.NullImportOutput;
+import org.eclipse.jubula.client.archive.schema.ContentDocument;
+import org.eclipse.jubula.client.archive.schema.ContentDocument.Content;
+import org.eclipse.jubula.client.archive.schema.Project;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -46,14 +51,10 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ConverterException;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.exception.JBVersionException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-
-import com.bredexsw.guidancer.client.importer.gdschema.ContentDocument;
-import com.bredexsw.guidancer.client.importer.gdschema.ContentDocument.Content;
-import com.bredexsw.guidancer.client.importer.gdschema.Project;
 
 /**
  * @author BREDEX GmbH
@@ -61,7 +62,6 @@ import com.bredexsw.guidancer.client.importer.gdschema.Project;
  */
 @SuppressWarnings("synthetic-access")
 public class XmlStorage {
-    
     /**
      * Helper for IO-related tasks that can be cancelled.
      *
@@ -148,21 +148,26 @@ public class XmlStorage {
     /** centralized definition of characters for XML header */
     private static final char SPACE = ' ';
     /** centralized definition of characters for XML header */
-        
-    /** the namespace of the import/export XML schema for GUIdancer */
-    private static final String SCHEMA_NAMESPACE = 
-        "http://www.bredexsw.com/guidancer/client/importer/gdschema"; //$NON-NLS-1$
+
+    /**
+     * the current xml schema namespace
+     */
+    private static final String SCHEMA_NAMESPACE = "http://www.eclipse.org/jubula/client/archive/schema"; //$NON-NLS-1$
 
     /** name of GUIdancer import/export XML element representing Exec Test Cases */
     private static final String EXEC_TC_XML_ELEMENT_NAME = "usedTestcase"; //$NON-NLS-1$
 
     /** XPATH statement for selecting all Exec Test Cases */
-    private static final String XPATH_FOR_EXEC_TCS = 
-        "declare namespace s='" + SCHEMA_NAMESPACE + "' " +  //$NON-NLS-1$//$NON-NLS-2$
-        ".//s:" + EXEC_TC_XML_ELEMENT_NAME; //$NON-NLS-1$
-    
+    private static final String XPATH_FOR_EXEC_TCS = "declare namespace s='" + SCHEMA_NAMESPACE + "' " + //$NON-NLS-1$//$NON-NLS-2$
+            ".//s:" + EXEC_TC_XML_ELEMENT_NAME; //$NON-NLS-1$
+
     /** standard logging */
     private static Log log = LogFactory.getLog(XmlStorage.class);
+
+    /**
+     * the old xml schema namespace (< 5.0)
+     */
+    private static final String OLD_SCHEMA_NAMESPACE = "http://www.bredexsw.com/guidancer/client/importer/gdschema"; //$NON-NLS-1$
         
     /**
      * Generate an XML document representing the content of the project.
@@ -426,14 +431,18 @@ public class XmlStorage {
      * @throws XmlException  if the parsing fails
      * @throws PMReadException if the validation fails
      */
-    private static ContentDocument getContent(String xmlString) 
+    private static ContentDocument getContent(String xmlString)
         throws XmlException, PMReadException {
-        ContentDocument contentDoc;
-        contentDoc = ContentDocument.Factory.parse(xmlString);
+        Map<String, String> substitutes = new HashMap<String, String>();
+        substitutes.put(OLD_SCHEMA_NAMESPACE, SCHEMA_NAMESPACE);
         XmlOptions options = new XmlOptions();
+        options.setLoadSubstituteNamespaces(substitutes);
+
+        ContentDocument contentDoc = ContentDocument.Factory.parse(xmlString,
+                options);
         Collection errors = new ArrayList();
         options.setErrorListener(errors);
-        if (!contentDoc.validate(options)) {  
+        if (!contentDoc.validate(options)) {
             StringBuilder msgs = new StringBuilder(StringConstants.NEWLINE);
             for (Object msg : errors) {
                 msgs.append(msg);
@@ -443,9 +452,8 @@ public class XmlStorage {
                 log.debug(msgs);
                 log.debug(contentDoc);
             }
-            throw new PMReadException(
-                Messages.InvalidImportFile + msgs.toString(),
-                MessageIDs.E_LOAD_PROJECT);
+            throw new PMReadException(Messages.InvalidImportFile
+                    + msgs.toString(), MessageIDs.E_LOAD_PROJECT);
         }
         return contentDoc;
     }

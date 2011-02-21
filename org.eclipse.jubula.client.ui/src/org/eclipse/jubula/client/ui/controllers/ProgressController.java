@@ -164,7 +164,8 @@ public class ProgressController implements IProgressListener,
                         Hibernator.setUser(dialog.getUser());
                         Hibernator.setPw(dialog.getPwd());
                     }
-                    Hibernator.setSchemaName(dialog.getSchemaName());
+                    Hibernator.setDbConnectionName(
+                        dialog.getDatabaseConnection().getConnectionInfo());
                     
                     if (Hibernator.getSelectDBAction()) {
                         if (Hibernator.instance() != null) {

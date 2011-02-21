@@ -19,7 +19,6 @@
 		<class>org.eclipse.jubula.client.core.model.TestResultSummaryPO</class>
 		<class>org.eclipse.jubula.client.core.model.TestResultPO</class>
 		<class>org.eclipse.jubula.client.core.model.ParameterDetailsPO</class>
-		<class>org.eclipse.jubula.client.core.model.I18NStringPO</class>
 		<class>org.eclipse.jubula.client.core.model.AUTConfigPO</class>
 		<class>org.eclipse.jubula.client.core.model.NodePO</class>
 		<class>org.eclipse.jubula.client.core.model.ProjectPO</class>
@@ -42,7 +41,7 @@
 		<class>org.eclipse.jubula.client.core.model.TestDataCubePO</class>
 		<class>org.eclipse.jubula.client.core.model.TDManagerPO</class>
 		<class>org.eclipse.jubula.client.core.model.TestDataPO</class>
-		<class>org.eclipse.jubula.client.core.model.ListWrapperPO</class>
+		<class>org.eclipse.jubula.client.core.model.DataSetPO</class>
 		<class>org.eclipse.jubula.client.core.model.CompIdentifierPO</class>
 		<class>org.eclipse.jubula.client.core.model.ObjectMappingPO</class>
 		<class>org.eclipse.jubula.client.core.model.ObjectMappingAssoziationPO</class>
@@ -69,6 +68,7 @@
 		<properties>
 			<property name="eclipselink.weaving" value="static"/>
 			<property name="eclipselink.weaving.changetracking" value="false"/>
+			<property name="eclipselink.weaving.fetchgroups" value="false"/>
 		</properties>
 		
 	</persistence-unit>

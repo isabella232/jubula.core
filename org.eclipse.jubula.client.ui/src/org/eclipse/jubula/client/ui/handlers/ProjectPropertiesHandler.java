@@ -120,6 +120,9 @@ public class ProjectPropertiesHandler extends AbstractHandler {
             
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
+            //sets the title
+            dialog.getShell().setText(Messages.ProjectPropertyPageShellTitle 
+                    + generalPage.getProject().getName());
             dialog.open();
             es.close();
         } catch (PMObjectDeletedException e) { 

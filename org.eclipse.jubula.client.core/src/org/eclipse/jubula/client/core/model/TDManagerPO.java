@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.annotations.Index;
 
 
 /**
@@ -49,12 +50,12 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 @Entity
 @Table(name = "TD_MANAGER")
 @EntityListeners(value = { ElementLoadedProgressListener.class })
-class TDManagerPO implements ITDManagerPO {
+class TDManagerPO implements ITDManager {
     /** hibernate OID */
     private transient Long m_id = null;
 
     /**
-     * <code>m_dataTable</code> list with ListWrapperPO objects inside <br>
+     * <code>m_dataTable</code> list with DataSetPO objects inside <br>
      * <li>index of list corresponds to dataset number</li>
      * <li>listWrapper object contains the reference to a list with testdata
      * objects
@@ -63,7 +64,7 @@ class TDManagerPO implements ITDManagerPO {
      * <br>
      * 
      */
-    private List<IListWrapperPO> m_dataTable = new ArrayList<IListWrapperPO>();
+    private List<IDataSetPO> m_dataTable = new ArrayList<IDataSetPO>();
     
     /** 
      * unique id of each parameter to get the assignement between parameter and its testdata
@@ -127,7 +128,8 @@ class TDManagerPO implements ITDManagerPO {
     /**
      * @param id The id to set.
      */
-    void setId(Long id) {
+    @SuppressWarnings("unused")
+    private void setId(Long id) {
         m_id = id;
     }
 
@@ -146,27 +148,27 @@ class TDManagerPO implements ITDManagerPO {
      */
     public void setParentProjectId(Long projectId) {
         setHbmParentProjectId(projectId);
-        for (IListWrapperPO lWrapperPO : getDataTable()) {
+        for (IDataSetPO lWrapperPO : getDataTable()) {
             lWrapperPO.setParentProjectId(projectId);
         }
     }
 
     /**
-     *    
-     * {@inheritDoc}
+     * 
+     * @return the ID of the Project to which the receiver belongs.
      */
     @Basic
     @Column(name = "PARENT_PROJ")
-//    @Index(name = "PI_TD_MANAGER_PARENT_PROJ")
-    Long getHbmParentProjectId() {
+    @Index(name = "PI_TD_MANAGER_PARENT_PROJ")
+    private Long getHbmParentProjectId() {
         return m_parentProjectId;
     }
 
     /**
      * 
-     * {@inheritDoc}
+     * @param projectId The ID of the Project to which the receiver belongs.
      */
-    void setHbmParentProjectId(Long projectId) {
+    private void setHbmParentProjectId(Long projectId) {
         m_parentProjectId = projectId;
     }
 
@@ -177,18 +179,19 @@ class TDManagerPO implements ITDManagerPO {
      */
     @OneToMany(cascade = CascadeType.ALL, 
                orphanRemoval = true, 
-               targetEntity = ListWrapperPO.class,
+               targetEntity = DataSetPO.class,
                fetch = FetchType.EAGER)
     @OrderColumn(name = "IDX")
-    public List<IListWrapperPO> getDataTable() {
+    public List<IDataSetPO> getDataTable() {
         return m_dataTable;
     }
 
     /**
-     * only for hibernate
+     * 
      * @param dataTable The dataTable to set.
      */
-    void setDataTable(List<IListWrapperPO> dataTable) {
+    @SuppressWarnings("unused")
+    private void setDataTable(List<IDataSetPO> dataTable) {
         m_dataTable = dataTable;
     }
 
@@ -214,7 +217,7 @@ class TDManagerPO implements ITDManagerPO {
     public void removeColumn(String uniqueId) {
         int index = findColumnForParam(uniqueId);
         if (index >= 0) {
-            for (IListWrapperPO dataSet : getDataSets()) {
+            for (IDataSetPO dataSet : getDataSets()) {
                 dataSet.removeColumn(index);
             }
             if (getColumnCount() == 0) {
@@ -235,32 +238,43 @@ class TDManagerPO implements ITDManagerPO {
             for (int i = 0; i < colCount; i++) {
                 columns.add(TestDataBP.instance().createEmptyTestData());
             }
-            IListWrapperPO listW = PoMaker.createListWrapperPO(columns);
+            IDataSetPO listW = PoMaker.createListWrapperPO(columns);
             getDataTable().add(listW);
             listW.setParentProjectId(getParentProjectId());
         }
     }
     
     /**
-     * Inserts a new empty row (data set) at the given position.
-     * @param position the position to insert.
+     * 
+     * {@inheritDoc}
      */
     public void insertDataSet(int position) {
         int colCount = getColumnCount();
-        if (position < getDataTable().size()) {
-            List <ITestDataPO> columns =
-                new ArrayList <ITestDataPO> (colCount);
-            for (int i = 0; i < colCount; i++) {
-                columns.add(TestDataBP.instance().createEmptyTestData());
-            }
-            IListWrapperPO listW = PoMaker.createListWrapperPO(columns);
-            getDataTable().add(position, listW);
-            listW.setParentProjectId(getParentProjectId());
-        } else {
-            expandRows(position);
+        List <ITestDataPO> columns =
+            new ArrayList <ITestDataPO> (colCount);
+        for (int i = 0; i < colCount; i++) {
+            columns.add(TestDataBP.instance().createEmptyTestData());
         }
+
+        insertDataSet(PoMaker.createListWrapperPO(columns), position);
     }
-    
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void insertDataSet(IDataSetPO dataSet, int position) {
+        Validate.notNull(dataSet);
+
+        dataSet.setParentProjectId(getParentProjectId());
+        if (position > getDataTable().size()) {
+            // add empty columns up to the position where the given
+            // Data Set will be inserted
+            expandRows(position - 1);
+        }
+
+        getDataTable().add(position, dataSet);
+    }
     
     /**
      * Creates new columns in all rows with empty test data.
@@ -270,7 +284,7 @@ class TDManagerPO implements ITDManagerPO {
      */
     private void expandColumns(int column) {
         while (column >= getColumnCount()) {
-            for (IListWrapperPO dataSet : getDataSets()) {
+            for (IDataSetPO dataSet : getDataSets()) {
                 dataSet.addColumn(TestDataBP.instance().createEmptyTestData());
             }
         }
@@ -289,7 +303,7 @@ class TDManagerPO implements ITDManagerPO {
      *             If the parameter with the userdefined name
      *             <code>paramName</code> doesn't exist
      */
-    public ITestDataPO getCell(int dataSetRow, String uniqueId)
+    private ITestDataPO getCell(int dataSetRow, String uniqueId)
         throws IllegalArgumentException {
         int index = getUniqueIds().indexOf(uniqueId);
         if (index == -1) {
@@ -309,7 +323,7 @@ class TDManagerPO implements ITDManagerPO {
      *            The column
      * @return The test data
      */
-    public ITestDataPO getCell(int row, int column) {
+    private ITestDataPO getCell(int row, int column) {
         return getDataSet(row).getColumn(column);
     }
     
@@ -332,7 +346,7 @@ class TDManagerPO implements ITDManagerPO {
      *            dataSetRow of wanted dataset 
      * @return the list with testdata objects for specified dataset or null
      */
-    public IListWrapperPO getDataSet(int dataSetRow) {
+    public IDataSetPO getDataSet(int dataSetRow) {
         return getDataTable().get(dataSetRow);
     }
 
@@ -342,7 +356,7 @@ class TDManagerPO implements ITDManagerPO {
      * @return The list of data sets or an empty list if the manager is empty.
      */
     @Transient
-    public List<IListWrapperPO> getDataSets() {
+    public List<IDataSetPO> getDataSets() {
         return Collections.unmodifiableList(getDataTable());
     }
     
@@ -364,9 +378,9 @@ class TDManagerPO implements ITDManagerPO {
         expandColumns(column);
         ITestDataPO td = getCell(row, column);
         if (testData != null) {
-            td.setValue(testData.getValue());
+            td.setData(testData);
         } else {
-            td.setValue(null);
+            td.clear();
         }
     }
     /**
@@ -402,9 +416,9 @@ class TDManagerPO implements ITDManagerPO {
     public int getColumnCount() {
         int columns = 0;
         try {
-            List<IListWrapperPO> dataTable = getDataTable();
+            List<IDataSetPO> dataTable = getDataTable();
             if (dataTable.size() > 0) {
-                IListWrapperPO listW = dataTable.get(0);
+                IDataSetPO listW = dataTable.get(0);
                 columns = listW.getList().size();
             }
         
@@ -419,18 +433,19 @@ class TDManagerPO implements ITDManagerPO {
      * @param tdMan the TDManager to copy the data to
      * @return the given TDManager with the new data.
      */
-    public ITDManagerPO deepCopy(ITDManagerPO tdMan) {
+    public ITDManager deepCopy(ITDManager tdMan) {
         for (String uniqueId : getUniqueIds()) {
             tdMan.addUniqueId(uniqueId);
         }
-        tdMan.getDataTable().clear();
-        for (IListWrapperPO dataSet : getDataSets()) {
+        tdMan.clear();
+        for (IDataSetPO dataSet : getDataSets()) {
             List<ITestDataPO> newRow = new ArrayList<ITestDataPO> (
                     dataSet.getColumnCount());
             for (ITestDataPO testData : dataSet.getList()) {
                 newRow.add(testData.deepCopy());
             }
-            tdMan.getDataTable().add(PoMaker.createListWrapperPO(newRow));
+            tdMan.insertDataSet(PoMaker.createListWrapperPO(newRow), 
+                    tdMan.getDataSetCount());
         }
         return tdMan;
     }
@@ -452,9 +467,11 @@ class TDManagerPO implements ITDManagerPO {
     }
 
     /** 
-     * {@inheritDoc}
+     * 
+     * @param version The version number to set for JPA optimistic-locking.
      */
-    void setVersion(Integer version) {
+    @SuppressWarnings("unused")
+    private void setVersion(Integer version) {
         m_version = version;
     }
     

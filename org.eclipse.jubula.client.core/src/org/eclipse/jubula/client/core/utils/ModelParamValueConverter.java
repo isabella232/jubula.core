@@ -19,14 +19,14 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.Lexer;
+import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
+import org.eclipse.jubula.client.core.gen.parser.parameter.parser.Parser;
+import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
-import org.eclipse.jubula.client.core.parser.parameter.lexer.Lexer;
-import org.eclipse.jubula.client.core.parser.parameter.lexer.LexerException;
-import org.eclipse.jubula.client.core.parser.parameter.parser.Parser;
-import org.eclipse.jubula.client.core.parser.parameter.parser.ParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +65,7 @@ public class ModelParamValueConverter extends ParamValueConverter {
     public ModelParamValueConverter(ITestDataPO td,
             IParameterInterfacePO currentNode, Locale locale, 
             IParamDescriptionPO desc) {
-        this(td.getValue().getValue(locale), currentNode, locale, desc);
+        this(td.getValue(locale), currentNode, locale, desc);
     }
     
     /**

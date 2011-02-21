@@ -25,18 +25,17 @@ import org.eclipse.jubula.client.core.IRecordListener;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.businessprocess.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.II18NStringPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -312,7 +311,7 @@ public class CAPRecordedCommand implements ICommand {
      * @param params The Test Step's Parameters.
      */
     private void addTestData(ICapPO recCap, List params) {
-        ITDManagerPO tdManager = recCap.getDataManager();
+        ITDManager tdManager = recCap.getDataManager();
         GeneralStorage genStorage = GeneralStorage.getInstance();
         int paramNumber = 0;
         Iterator msgParamIt = params.iterator();
@@ -321,9 +320,8 @@ public class CAPRecordedCommand implements ICommand {
             MessageParam msgParam = (MessageParam)msgParamIt.next();
             String value = msgParam.getValue();
             if (value != null && !(value.equals(StringUtils.EMPTY))) {
-                II18NStringPO i18nStr = PoMaker.createI18NStringPO(
-                        recordLocale, value, genStorage.getProject());
-                ITestDataPO testData = PoMaker.createTestDataPO(i18nStr);
+                ITestDataPO testData = PoMaker.createTestDataPO();
+                testData.setValue(recordLocale, value, genStorage.getProject());
                 tdManager.updateCell(testData, 0, paramNumber);
             }
             boolean bool = 

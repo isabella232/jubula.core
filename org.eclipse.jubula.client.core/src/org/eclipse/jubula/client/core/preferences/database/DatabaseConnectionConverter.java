@@ -25,6 +25,8 @@ import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.bidimap.DualHashBidiMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
 import org.eclipse.osgi.util.NLS;
@@ -56,6 +58,8 @@ public class DatabaseConnectionConverter {
         // preferences, so change them with care
         CONNECTION_CLASS_LOOKUP.put("H2", H2ConnectionInfo.class); //$NON-NLS-1$
         CONNECTION_CLASS_LOOKUP.put("Oracle", OracleConnectionInfo.class); //$NON-NLS-1$
+        CONNECTION_CLASS_LOOKUP.put("PostGreSQL", PostGreSQLConnectionInfo.class); //$NON-NLS-1$
+        CONNECTION_CLASS_LOOKUP.put("MySQL", MySQLConnectionInfo.class); //$NON-NLS-1$
     }
     
     /** the logger */
@@ -85,6 +89,18 @@ public class DatabaseConnectionConverter {
 
     /**
      * 
+     * @return the 0..n Database Connections found in the Preferences.
+     */
+    public static List<DatabaseConnection> computeAvailableConnections() {
+        return DatabaseConnectionConverter.convert(
+                Platform.getPreferencesService().getString(
+                        Activator.PLUGIN_ID, 
+                        DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS, 
+                        StringUtils.EMPTY, null));
+    }
+    
+    /**
+     * 
      * @param preferenceValue String representation of 
      *                        0..n Database Connections.
      * @return the 0..n Database Connections represented by the given 
@@ -111,6 +127,14 @@ public class DatabaseConnectionConverter {
                 }
                 Class<? extends DatabaseConnectionInfo> infoClass = 
                     (Class)CONNECTION_CLASS_LOOKUP.get(connInfo[0]);
+                if (infoClass == null) {
+                    // no corresponding class could be found for the 
+                    // connection type
+                    LOG.error(NLS.bind(
+                            Messages.DatabaseConnectionInvalidPreferenceString, 
+                            connection));
+                    continue;
+                }
                 try {
                     DatabaseConnectionInfo infoBean = infoClass.newInstance();
                     BeanUtils.populate(infoBean, beanProps);

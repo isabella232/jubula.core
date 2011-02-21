@@ -15,11 +15,8 @@ import java.util.List;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 02.02.2006
- *
  */
 public class I18nStringCombo extends AbstractI18nCombo<String> {
     

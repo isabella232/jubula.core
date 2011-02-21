@@ -137,12 +137,13 @@ public class AutAgent {
     }
 
     /**
-     * Initializes the connection to an instance of gdrun.
+     * Initializes the connection to an instance of autrun.
      *
      * @author BREDEX GmbH
      * @created Mar 26, 2010
      */
-    private class GDRunConnectionInitializer implements IConnectionInitializer {
+    private class AutRunConnectionInitializer 
+        implements IConnectionInitializer {
 
         /**
          * {@inheritDoc}
@@ -150,7 +151,7 @@ public class AutAgent {
         public void initConnection(final Socket socket, 
                 final BufferedReader reader) throws IOException {
 
-            new Thread("Register gdrun") { //$NON-NLS-1$
+            new Thread("Register autrun") { //$NON-NLS-1$
                 /**
                  * {@inheritDoc}
                  */
@@ -164,15 +165,15 @@ public class AutAgent {
                             AutIdentifier autId = 
                                 new AutIdentifier(infoLine);
                             m_autIdToRestartHandler.put(autId, 
-                                new RestartAutGDRun(autId, socket, reader));
+                                new RestartAutAutRun(autId, socket, reader));
                         }
                     } catch (IOException ioe) {
                         // Error occurred while constructing the stream
-                        // or reading gdrun information. gdrun was not 
+                        // or reading autrun information. autrun was not 
                         // successfully registered.
                         // Let thread execution continue in order to
                         // close the connection.
-                        LOG.error("Error occurred while establishing communication with gdrun." , ioe); //$NON-NLS-1$
+                        LOG.error("Error occurred while establishing communication with autrun." , ioe); //$NON-NLS-1$
 
                         // Try to cleanup
                         try {
@@ -182,7 +183,7 @@ public class AutAgent {
                             // Do nothing.
                         }
                     } catch (SecurityException se) {
-                        LOG.error("Error occurred while establishing communication with gdrun." , se); //$NON-NLS-1$
+                        LOG.error("Error occurred while establishing communication with autrun." , se); //$NON-NLS-1$
 
                         // Try to cleanup
                         try {
@@ -365,8 +366,8 @@ public class AutAgent {
     private void initConnectionInitializers() {
         m_connectionInitializers.put(ConnectionState.CLIENT_TYPE_AUT, 
                 new AutRegistrationInitializer());
-        m_connectionInitializers.put(ConnectionState.CLIENT_TYPE_GDRUN, 
-                new GDRunConnectionInitializer());
+        m_connectionInitializers.put(ConnectionState.CLIENT_TYPE_AUTRUN, 
+                new AutRunConnectionInitializer());
     }
     
     /**

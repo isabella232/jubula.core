@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.annotations.Index;
 
 /**
  * @author BREDEX GmbH
@@ -26,6 +27,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 @Entity
 @Table(name = "PARAMETER_DETAILS")
+@Index(name = "PI_PARAM_LIST_CHILD", columnNames = { "FK_TESTRESULT" })
 public class ParameterDetailsPO implements IParameterDetailsPO {
 
     /** hibernate OID */

@@ -205,7 +205,7 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         List<IParamDescriptionPO> parameterList = cap.getParameterList();
         String value = null;
         for (IParamDescriptionPO desc : parameterList) {
-            ITDManagerPO tdManager = null;
+            ITDManager tdManager = null;
             try {
                 tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(cap);
@@ -216,8 +216,7 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             ITestDataPO date = tdManager.getCell(0, desc);
             TestExecution te = TestExecution.getInstance();
             ParamValueConverter conv = new ModelParamValueConverter(
-                date.getValue().getValue(te.getLocale()), cap, 
-                    te.getLocale(), desc);
+                date.getValue(te.getLocale()), cap, te.getLocale(), desc);
             List <ExecObject> stackList = 
                 new ArrayList<ExecObject>(te.getTrav().getExecStackAsList());
             try {

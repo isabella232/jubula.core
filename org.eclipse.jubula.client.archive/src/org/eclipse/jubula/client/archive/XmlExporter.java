@@ -30,6 +30,46 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.archive.i18n.Messages;
+import org.eclipse.jubula.client.archive.schema.ActivationMethodEnum;
+import org.eclipse.jubula.client.archive.schema.Attribute;
+import org.eclipse.jubula.client.archive.schema.Aut;
+import org.eclipse.jubula.client.archive.schema.AutConfig;
+import org.eclipse.jubula.client.archive.schema.Cap;
+import org.eclipse.jubula.client.archive.schema.Category;
+import org.eclipse.jubula.client.archive.schema.CheckActivatedContext;
+import org.eclipse.jubula.client.archive.schema.CheckAttribute;
+import org.eclipse.jubula.client.archive.schema.CheckConfiguration;
+import org.eclipse.jubula.client.archive.schema.CompNames;
+import org.eclipse.jubula.client.archive.schema.ComponentName;
+import org.eclipse.jubula.client.archive.schema.EventHandler;
+import org.eclipse.jubula.client.archive.schema.EventTestCase;
+import org.eclipse.jubula.client.archive.schema.I18NString;
+import org.eclipse.jubula.client.archive.schema.MapEntry;
+import org.eclipse.jubula.client.archive.schema.MonitoringValues;
+import org.eclipse.jubula.client.archive.schema.NamedTestData;
+import org.eclipse.jubula.client.archive.schema.Node;
+import org.eclipse.jubula.client.archive.schema.ObjectMapping;
+import org.eclipse.jubula.client.archive.schema.ObjectMappingProfile;
+import org.eclipse.jubula.client.archive.schema.OmCategory;
+import org.eclipse.jubula.client.archive.schema.OmEntry;
+import org.eclipse.jubula.client.archive.schema.ParamDescription;
+import org.eclipse.jubula.client.archive.schema.Project;
+import org.eclipse.jubula.client.archive.schema.ReentryProperty;
+import org.eclipse.jubula.client.archive.schema.RefTestCase;
+import org.eclipse.jubula.client.archive.schema.RefTestSuite;
+import org.eclipse.jubula.client.archive.schema.ReusedProject;
+import org.eclipse.jubula.client.archive.schema.SummaryAttribute;
+import org.eclipse.jubula.client.archive.schema.TechnicalName;
+import org.eclipse.jubula.client.archive.schema.TestCase;
+import org.eclipse.jubula.client.archive.schema.TestCase.Teststep;
+import org.eclipse.jubula.client.archive.schema.TestData;
+import org.eclipse.jubula.client.archive.schema.TestDataCell;
+import org.eclipse.jubula.client.archive.schema.TestDataRow;
+import org.eclipse.jubula.client.archive.schema.TestJobs;
+import org.eclipse.jubula.client.archive.schema.TestSuite;
+import org.eclipse.jubula.client.archive.schema.TestresultSummaries;
+import org.eclipse.jubula.client.archive.schema.TestresultSummary;
+import org.eclipse.jubula.client.archive.schema.UsedToolkit;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
@@ -43,13 +83,12 @@ import org.eclipse.jubula.client.core.model.ICheckConfPO;
 import org.eclipse.jubula.client.core.model.ICompIdentifierPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IDocAttributeDescriptionPO;
 import org.eclipse.jubula.client.core.model.IDocAttributeListPO;
 import org.eclipse.jubula.client.core.model.IDocAttributePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.II18NStringPO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -61,7 +100,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummary;
@@ -81,48 +120,6 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.objects.MonitoringValue;
-
-import com.bredexsw.guidancer.client.importer.gdschema.ActivationMethodEnum;
-import com.bredexsw.guidancer.client.importer.gdschema.Attribute;
-import com.bredexsw.guidancer.client.importer.gdschema.Aut;
-import com.bredexsw.guidancer.client.importer.gdschema.AutConfig;
-import com.bredexsw.guidancer.client.importer.gdschema.Cap;
-import com.bredexsw.guidancer.client.importer.gdschema.Category;
-import com.bredexsw.guidancer.client.importer.gdschema.CheckActivatedContext;
-import com.bredexsw.guidancer.client.importer.gdschema.CheckAttribute;
-import com.bredexsw.guidancer.client.importer.gdschema.CheckConfiguration;
-import com.bredexsw.guidancer.client.importer.gdschema.CompNames;
-import com.bredexsw.guidancer.client.importer.gdschema.ComponentName;
-import com.bredexsw.guidancer.client.importer.gdschema.EventHandler;
-import com.bredexsw.guidancer.client.importer.gdschema.EventTestCase;
-import com.bredexsw.guidancer.client.importer.gdschema.I18NString;
-import com.bredexsw.guidancer.client.importer.gdschema.MapEntry;
-import com.bredexsw.guidancer.client.importer.gdschema.MonitoringValues;
-import com.bredexsw.guidancer.client.importer.gdschema.NamedTestData;
-import com.bredexsw.guidancer.client.importer.gdschema.Node;
-import com.bredexsw.guidancer.client.importer.gdschema.ObjectMapping;
-import com.bredexsw.guidancer.client.importer.gdschema.ObjectMappingProfile;
-import com.bredexsw.guidancer.client.importer.gdschema.OmCategory;
-import com.bredexsw.guidancer.client.importer.gdschema.OmEntry;
-import com.bredexsw.guidancer.client.importer.gdschema.ParamDescription;
-import com.bredexsw.guidancer.client.importer.gdschema.Project;
-import com.bredexsw.guidancer.client.importer.gdschema.ReentryProperty;
-import com.bredexsw.guidancer.client.importer.gdschema.ReentryProperty.Enum;
-import com.bredexsw.guidancer.client.importer.gdschema.RefTestCase;
-import com.bredexsw.guidancer.client.importer.gdschema.RefTestSuite;
-import com.bredexsw.guidancer.client.importer.gdschema.ReusedProject;
-import com.bredexsw.guidancer.client.importer.gdschema.SummaryAttribute;
-import com.bredexsw.guidancer.client.importer.gdschema.TechnicalName;
-import com.bredexsw.guidancer.client.importer.gdschema.TestCase;
-import com.bredexsw.guidancer.client.importer.gdschema.TestCase.Teststep;
-import com.bredexsw.guidancer.client.importer.gdschema.TestData;
-import com.bredexsw.guidancer.client.importer.gdschema.TestDataCell;
-import com.bredexsw.guidancer.client.importer.gdschema.TestDataRow;
-import com.bredexsw.guidancer.client.importer.gdschema.TestJobs;
-import com.bredexsw.guidancer.client.importer.gdschema.TestSuite;
-import com.bredexsw.guidancer.client.importer.gdschema.TestresultSummaries;
-import com.bredexsw.guidancer.client.importer.gdschema.TestresultSummary;
-import com.bredexsw.guidancer.client.importer.gdschema.UsedToolkit;
 
 /**
  * @author BREDEX GmbH
@@ -835,7 +832,8 @@ class XmlExporter {
         for (Object o : po.getDefaultEventHandler().keySet()) {
             String eventType = (String)o;
             Integer evProp = po.getDefaultEventHandler().get(eventType);
-            Enum reentryProperty = ReentryProperty.Enum.forInt(evProp);
+            ReentryProperty.Enum reentryProperty = ReentryProperty.Enum
+                    .forInt(evProp);
             EventHandler xmlEvHandler = xml.addNewEventHandler();
             xmlEvHandler.setEvent(eventType);
             xmlEvHandler.setReentryProperty(reentryProperty);
@@ -904,7 +902,7 @@ class XmlExporter {
             // ExecTestCasePO doesn't have an own parameter list.
             // It uses generally the parameter from the associated
             // SpecTestCase.
-            final ITDManagerPO dataManager = po.getDataManager();
+            final ITDManager dataManager = po.getDataManager();
             if (dataManager != null) {
                 TestData xmlTD = xml.addNewTestdata();
                 if (po.getReferencedDataCube() == null) {
@@ -934,8 +932,8 @@ class XmlExporter {
     private void fillEventTestCase(EventTestCase xml, IEventExecTestCasePO po) {
         fillRefTestCase(xml, po);
         xml.setEventType(po.getEventType());
-        Enum reentryProperty = ReentryProperty.Enum.forInt(po.getReentryProp()
-                .getValue());
+        ReentryProperty.Enum reentryProperty = ReentryProperty.Enum.forInt(po
+                .getReentryProp().getValue());
         xml.setReentryProperty(reentryProperty);
         if (reentryProperty == ReentryProperty.RETRY) {
             Integer maxRetries = po.getMaxRetries();
@@ -982,7 +980,7 @@ class XmlExporter {
         if (po.getReferencedDataCube() != null) {
             xml.setReferencedTestData(po.getReferencedDataCube().getName());
         }
-        final ITDManagerPO dataManager = po.getDataManager();
+        final ITDManager dataManager = po.getDataManager();
         if (dataManager != null) {
             TestData xmlTD = xml.addNewTestdata();
             if (po.getReferencedDataCube() == null) {
@@ -1071,35 +1069,29 @@ class XmlExporter {
      * @param po
      *            The persistent object which contains the information
      */
-    private void fillTestData(TestData xml, ITDManagerPO po) {
+    private void fillTestData(TestData xml, ITDManager po) {
 
         for (String uniqueId : po.getUniqueIds()) {
             xml.addUniqueIds(uniqueId);
         }
 
         int rowCnt = 1;
-        for (IListWrapperPO row : po.getDataSets()) {
+        for (IDataSetPO row : po.getDataSets()) {
             TestDataRow xmlRow = xml.addNewRow();
             xmlRow.setRowCount(rowCnt++);
             int colCnt = 1;
             for (ITestDataPO td : row.getList()) {
                 TestDataCell xmlCell = xmlRow.addNewData();
                 xmlCell.setColumnCount(colCnt++);
-                II18NStringPO i18n = td.getValue();
-                if (i18n != null) {
-                    List<Locale> sortedLanguageList = 
-                        new ArrayList<Locale>(i18n.getLanguages());
-                    Collections.sort(sortedLanguageList, 
-                            LANG_CODE_ALPHA_COMPARATOR);
-                    for (Locale lang : sortedLanguageList) {
-                        String val = i18n.getValue(lang);
-                        I18NString xmlI18n = xmlCell.addNewData();
-                        xmlI18n.setLanguage(lang.toString());
-                        xmlI18n.setValue(val);
-                    }
-                } else {
+                List<Locale> sortedLanguageList = 
+                    new ArrayList<Locale>(td.getLanguages());
+                Collections.sort(sortedLanguageList, 
+                        LANG_CODE_ALPHA_COMPARATOR);
+                for (Locale lang : sortedLanguageList) {
+                    String val = td.getValue(lang);
                     I18NString xmlI18n = xmlCell.addNewData();
-                    xmlI18n.setNil();
+                    xmlI18n.setLanguage(lang.toString());
+                    xmlI18n.setValue(val);
                 }
             }
         }

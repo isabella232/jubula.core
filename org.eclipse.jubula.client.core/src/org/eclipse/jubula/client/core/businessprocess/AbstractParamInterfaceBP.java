@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.Locale;
 
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IModifiableParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -110,7 +110,7 @@ public abstract class AbstractParamInterfaceBP<T> {
             // do nothing, if parameter value is unchanged
             ITestDataPO data = 
                 paramNode.getDataManager().getCell(row, paramDescription);
-            String value = data.getValue().getValue(locale);
+            String value = data.getValue(locale);
             final String modelString = conv.getModelString();
             if (modelString != null && modelString.equals(value)) {
                 return;
@@ -153,11 +153,11 @@ public abstract class AbstractParamInterfaceBP<T> {
         int col = srcNode.getDataManager().findColumnForParam(
                 srcDesc.getUniqueId());
         if (col > -1 && srcNode.getDataManager().getDataSetCount() > rowCount) {
-            IListWrapperPO row = srcNode.getDataManager().getDataSet(rowCount);
+            IDataSetPO row = srcNode.getDataManager().getDataSet(rowCount);
             try {
                 ITestDataPO td = row.getColumn(col);
                 ParamValueConverter conv = 
-                    new ModelParamValueConverter(td.getValue().getValue(locale),
+                    new ModelParamValueConverter(td.getValue(locale),
                             srcNode, locale, srcDesc);
                 result = conv.getGuiString();
             } catch (IndexOutOfBoundsException e) {
@@ -218,17 +218,17 @@ public abstract class AbstractParamInterfaceBP<T> {
      * @param conv converter with value to update
      * @param locale the locale of the test data.
      * @return The (new) test data instance.
-     *             If the creation of the <code>I18NStringPO</code> fails
+     *             If the creation of the Test Data fails
      */
     private ITestDataPO createOrUpdateTestDataPO(ITestDataPO testData,
         ParamValueConverter conv, Locale locale) {
         ITestDataPO td = null;
-        if (testData != null && testData.getValue() != null) {
+        if (testData != null) {
             td = testData;
         } else {
             td = TestDataBP.instance().createEmptyTestData();            
         }
-        td.getValue().setValue(locale, conv.getModelString(), 
+        td.setValue(locale, conv.getModelString(), 
             GeneralStorage.getInstance().getProject());
         return td;
     }

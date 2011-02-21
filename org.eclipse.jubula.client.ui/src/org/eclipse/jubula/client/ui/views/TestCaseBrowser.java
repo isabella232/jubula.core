@@ -270,6 +270,9 @@ public class TestCaseBrowser extends AbstractJBTreeView
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         mgr.add(new Separator());
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.COPY_ID_COMMAND_ID);
+        mgr.add(new Separator());
         CommandHelper.createContributionPushItem(submenuOpenWith,
                 CommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID);
         mgr.add(new Separator());

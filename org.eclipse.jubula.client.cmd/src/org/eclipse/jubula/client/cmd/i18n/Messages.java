@@ -76,6 +76,7 @@ public class Messages extends NLS {
     public static String I18nUtilsTestSuite;
     public static String NoArgumentFor;
     public static String NoCorrespondingMessage;
+    public static String NoSuchDatabaseConnection;
     public static String UnrecognizedOption;
     
     static {

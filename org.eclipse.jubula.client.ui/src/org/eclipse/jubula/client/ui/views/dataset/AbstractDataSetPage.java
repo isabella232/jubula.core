@@ -36,11 +36,11 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IResetFrameColo
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
@@ -539,7 +539,7 @@ public abstract class AbstractDataSetPage extends Page
         // Create and configure the "Add" button
         setAddButton(new Button(parent, SWT.PUSH | SWT.CENTER));
         getAddButton().setData(WIDGET_NAME_KEY, "DataSetView.AddButton"); //$NON-NLS-1$
-        getAddButton().setText(Messages.GuiDancerDataSetViewAppend);
+        getAddButton().setText(Messages.JubulaDataSetViewAppend);
         GridData gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80;
         getAddButton().setLayoutData(gridData);
@@ -559,7 +559,7 @@ public abstract class AbstractDataSetPage extends Page
         //  Create and configure the "Delete" button
         setDeleteButton(new Button(parent, SWT.PUSH | SWT.CENTER));
         getDeleteButton().setData(WIDGET_NAME_KEY, "DataSetView.DeleteButton"); //$NON-NLS-1$
-        getDeleteButton().setText(Messages.GuiDancerDataSetViewDelete);
+        getDeleteButton().setText(Messages.JubulaDataSetViewDelete);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80; 
         getDeleteButton().setLayoutData(gridData); 
@@ -647,7 +647,7 @@ public abstract class AbstractDataSetPage extends Page
         final AbstractJBEditor editor = (AbstractJBEditor)m_currentPart;
         editor.getEditorHelper().requestEditableState();
         if (getParamInterfaceObj() instanceof IExecTestCasePO) {
-            ITDManagerPO man = ((IExecTestCasePO)getParamInterfaceObj())
+            ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
                     .resolveTDReference();
             if (!man.equals(getTableViewer().getInput())) {
                 getTableViewer().setInput(man);
@@ -1245,8 +1245,8 @@ public abstract class AbstractDataSetPage extends Page
         extends AbstractContentProvider {
         /** {@inheritDoc} */
         public Object[] getElements(Object inputElement) {
-            ITDManagerPO tdMan = (ITDManagerPO)inputElement;
-            List <IListWrapperPO> rows = tdMan.getDataSets();
+            ITDManager tdMan = (ITDManager)inputElement;
+            List <IDataSetPO> rows = tdMan.getDataSets();
             return rows.toArray();
         }
     }
@@ -1315,15 +1315,15 @@ public abstract class AbstractDataSetPage extends Page
     private class LanguageLabelProvider extends AbstractLabelProvider {
         /** {@inheritDoc} */
         public String getColumnText(Object element, int columnIndex) {
-            if (!(element instanceof IListWrapperPO)) {
+            if (!(element instanceof IDataSetPO)) {
                 // this happens when Content-/LabelProvider changes!
                 // see ...ComboListener
                 return StringConstants.EMPTY; 
             }
-            ITDManagerPO tdMan = (ITDManagerPO)getTableViewer().getInput();
-            IListWrapperPO row = (IListWrapperPO)element;
-            int rowCount = tdMan.getDataTable().indexOf(row);
-            if (columnIndex == 0) {                
+            ITDManager tdMan = (ITDManager)getTableViewer().getInput();
+            IDataSetPO row = (IDataSetPO)element;
+            int rowCount = tdMan.getDataSets().indexOf(row);
+            if (columnIndex == 0) {
                 getTable().getItem(rowCount).setBackground(
                     columnIndex, Layout.LIGHT_GRAY_COLOR);
                 return StringConstants.EMPTY + (rowCount + 1); 
@@ -1367,14 +1367,14 @@ public abstract class AbstractDataSetPage extends Page
     private class ParameterLabelProvider extends AbstractLabelProvider {
         /** {@inheritDoc} */
         public String getColumnText(Object element, int columnIndex) {
-            if (!(element instanceof IListWrapperPO)) {
+            if (!(element instanceof IDataSetPO)) {
                 // this happens when Content-/LabelProvider changes!
                 // see ...ComboListener
                 return StringConstants.EMPTY; 
             }
-            ITDManagerPO tdMan = (ITDManagerPO)getTableViewer().getInput();
-            IListWrapperPO row = (IListWrapperPO)element;
-            int rowCount = tdMan.getDataTable().indexOf(row);
+            ITDManager tdMan = (ITDManager)getTableViewer().getInput();
+            IDataSetPO row = (IDataSetPO)element;
+            int rowCount = tdMan.getDataSets().indexOf(row);
             if (columnIndex == 0) {                
                 getTable().getItem(rowCount).setBackground(
                     columnIndex, Layout.LIGHT_GRAY_COLOR);
@@ -1857,7 +1857,7 @@ public abstract class AbstractDataSetPage extends Page
         if (editor.getEditorHelper().requestEditableState() 
                 == JBEditorHelper.EditableState.OK) {
             if (getParamInterfaceObj() instanceof IExecTestCasePO) {
-                ITDManagerPO man = ((IExecTestCasePO)getParamInterfaceObj())
+                ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
                         .resolveTDReference();
                 if (!man.equals(getTableViewer().getInput())) {
                     getTableViewer().setInput(man);
@@ -2104,7 +2104,7 @@ public abstract class AbstractDataSetPage extends Page
      * @param paramInterface The object on which the input is based.
      * @return an object suitable for use as input in a DSV table.
      */
-    protected ITDManagerPO getInputForTable(
+    protected ITDManager getInputForTable(
             IParameterInterfacePO paramInterface) {
         return paramInterface.getDataManager();
     }

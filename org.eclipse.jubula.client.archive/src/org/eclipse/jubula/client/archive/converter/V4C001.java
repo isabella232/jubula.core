@@ -14,9 +14,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.bredexsw.guidancer.client.importer.gdschema.Aut;
-import com.bredexsw.guidancer.client.importer.gdschema.ComponentName;
-import com.bredexsw.guidancer.client.importer.gdschema.Project;
+import org.eclipse.jubula.client.archive.schema.Aut;
+import org.eclipse.jubula.client.archive.schema.ComponentName;
+import org.eclipse.jubula.client.archive.schema.Project;
 
 /**
  * Converter for ticket #2820

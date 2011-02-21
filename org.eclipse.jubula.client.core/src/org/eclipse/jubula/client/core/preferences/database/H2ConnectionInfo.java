@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.preferences.database;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
 
 /**
  * 
@@ -21,9 +23,24 @@ public class H2ConnectionInfo extends DatabaseConnectionInfo {
 
     /** name of <code>location</code> property */
     public static final String PROP_NAME_LOCATION = "location"; //$NON-NLS-1$
+
+    /** the username to use for connections of this type */
+    private static final String DEFAULT_USERNAME = "sa"; //$NON-NLS-1$
+    
+    /** the password to use for connections of this type */
+    private static final String DEFAULT_PASSWORD = StringUtils.EMPTY;
     
     /** the location of the database files (on the filesystem) */
     private String m_location = "~/jubula-db"; //$NON-NLS-1$
+
+    /**
+     * 
+     * Constructor
+     */
+    public H2ConnectionInfo() {
+        setProperty(PersistenceUnitProperties.JDBC_USER, DEFAULT_USERNAME);
+        setProperty(PersistenceUnitProperties.JDBC_PASSWORD, DEFAULT_PASSWORD);
+    }
     
     /**
      * 
@@ -49,6 +66,11 @@ public class H2ConnectionInfo extends DatabaseConnectionInfo {
             .append(getLocation())
             .append(";MVCC=TRUE;AUTO_SERVER=TRUE"); //$NON-NLS-1$
         return sb.toString();
+    }
+
+    @Override
+    public String getDriverClassName() {
+        return "org.h2.Driver"; //$NON-NLS-1$
     }
 
 }

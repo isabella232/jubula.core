@@ -41,6 +41,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.persistence.annotations.Index;
 
 
 /**
@@ -337,7 +338,7 @@ class ExecTestCasePO extends TestCasePO implements
      * TestData are overwritten.
      */
     @Transient
-    public ITDManagerPO getDataManager() {
+    public ITDManager getDataManager() {
         if (getReferencedDataCube() == null 
                 && getHasReferencedTD() && getSpecTestCase() != null) {
             return getSpecTestCase().getDataManager();
@@ -397,7 +398,7 @@ class ExecTestCasePO extends TestCasePO implements
      */
     @SuppressWarnings("unused")
     @Transient
-    private ITDManagerPO getOwnDataManager() {
+    private ITDManager getOwnDataManager() {
         return super.getDataManager();
     }
     
@@ -410,7 +411,7 @@ class ExecTestCasePO extends TestCasePO implements
      * 
      * {@inheritDoc}
      */
-    public void setDataManager(ITDManagerPO dataManager) {
+    public void setDataManager(ITDManager dataManager) {
         super.setDataManager(dataManager);
         setHasReferencedTD(false);
     }
@@ -432,11 +433,11 @@ class ExecTestCasePO extends TestCasePO implements
      * 
      * @return The new test data manager
      */
-    public ITDManagerPO resolveTDReference() {
+    public ITDManager resolveTDReference() {
         if (getHasReferencedTD()) {
-            final ITDManagerPO specTDMan = getSpecTestCase().getDataManager();
-            final ITDManagerPO execTDMan = super.getHbmDataManager();
-            final ITDManagerPO modifiedExecTDMan = specTDMan.deepCopy(
+            final ITDManager specTDMan = getSpecTestCase().getDataManager();
+            final ITDManager execTDMan = super.getHbmDataManager();
+            final ITDManager modifiedExecTDMan = specTDMan.deepCopy(
                     execTDMan);
             this.setDataManager(modifiedExecTDMan);
         }
@@ -476,7 +477,7 @@ class ExecTestCasePO extends TestCasePO implements
      */
     @Basic
     @Column(name = "REF_FLAG")
-//    @Index(name = "PI_NODE_REF_FLAG")
+    @Index(name = "PI_NODE_REF_FLAG")
     public boolean getHasReferencedTD() {
         return m_hasReferencedTD;
     }
@@ -624,7 +625,7 @@ class ExecTestCasePO extends TestCasePO implements
      */
     @Basic
     @Column(name = "PARENT_PROJ_GUID")
-//    @Index(name = "PI_NODE_PARENT_PROJECT_GUID")
+    @Index(name = "PI_NODE_PARENT_PROJECT_GUID")
     public String getProjectGuid() {
         return m_projectGuid;
     }
@@ -635,7 +636,7 @@ class ExecTestCasePO extends TestCasePO implements
      */
     @Basic
     @Column(name = "SPEC_TC_GUID")
-//    @Index(name = "PI_NODE_SPEC_TC_GUID")
+    @Index(name = "PI_NODE_SPEC_TC_GUID")
     public String getSpecTestCaseGuid() {
         return m_specTestCaseGuid;
     }
@@ -759,11 +760,11 @@ class ExecTestCasePO extends TestCasePO implements
     }
 
     /** {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.model.ITDManagerPO#synchronizeParameterIDs()
+     * @see org.eclipse.jubula.client.core.model.ITDManager#synchronizeParameterIDs()
      */
     public void synchronizeParameterIDs() {
         if (getReferencedDataCube() == null) {
-            ITDManagerPO tdMan = getDataManager();
+            ITDManager tdMan = getDataManager();
             List<IParamDescriptionPO> params = getParameterList();
             List<String> origParamIDs = new ArrayList<String>();
             List<String> header = new ArrayList<String>(tdMan.getUniqueIds());

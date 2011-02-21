@@ -74,16 +74,16 @@ public abstract class CommandConstants {
     public static final String SWING_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.swing.commands.CAPTestCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swt.commands.CAPTestCommand" */
     public static final String SWT_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.swt.commands.CAPTestCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.rc.html.commands.CAPTestCommand" */
-    public static final String HTML_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.html.commands.CAPTestCommand"; //$NON-NLS-1$
+    /** constant: "com.bredexsw.jubula.rc.html.commands.CAPTestCommand" */
+    public static final String HTML_CAP_TEST_COMMAND = "com.bredexsw.jubula.rc.html.commands.CAPTestCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand" */
     public static final String CHANGE_AUT_MODE_COMMAND = "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swing.commands.ChangeAUTModeCommand" */
     public static final String SWING_SEND_COMPONENTS_COMMAND = "org.eclipse.jubula.rc.swing.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swt.commands.SendAUTListOfSupportedComponentsCommand" */
     public static final String SWT_SEND_COMPONENTS_COMMAND = "org.eclipse.jubula.rc.swt.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand" */
-    public static final String HTML_SEND_COMPONENTS_COMMAND = "org.eclipse.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
+    /** constant: "com.bredexsw.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand" */
+    public static final String HTML_SEND_COMPONENTS_COMMAND = "com.bredexsw.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand" */
     public static final String HIGHLIGHT_COMPONENT_COMMAND = "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.AUTModeChangedCommand" */

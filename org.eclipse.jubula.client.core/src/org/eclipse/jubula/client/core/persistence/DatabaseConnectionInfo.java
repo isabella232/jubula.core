@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.persistence;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Properties;
 
 /**
  * 
@@ -27,13 +28,44 @@ public abstract class DatabaseConnectionInfo {
     private PropertyChangeSupport m_propChangeSupport = 
         new PropertyChangeSupport(this);
 
+    /** properties to use when initializing the JPA provider */
+    private Properties m_jpaProperties = new Properties();
+    
+    /**
+     * Sets the given property for the receiver, overwriting if the property 
+     * is already defined.
+     * 
+     * @param key The property key.
+     * @param value The new value for the property.
+     */
+    protected void setProperty(String key, String value) {
+        m_jpaProperties.setProperty(key, value);
+    }
+ 
+    /**
+     * 
+     * @param key The property key.
+     * @return the value of the property with the given key. Returns 
+     *         <code>null</code> if no such property is defined or if the 
+     *         value of the property is <code>null</code>.
+     */
+    public String getProperty(String key) {
+        return m_jpaProperties.getProperty(key);
+    }
+    
     /**
      * 
      * @return the connection URL constructed based on the receiver's current
      *         information.
      */
     public abstract String getConnectionUrl();
-    
+
+    /**
+     * 
+     * @return the name of the JDBC driver class to use with receiver.
+     */
+    public abstract String getDriverClassName();
+
     /**
      * Informs all property change listeners that the 
      * <code>connectionUrl</code> property has changed.

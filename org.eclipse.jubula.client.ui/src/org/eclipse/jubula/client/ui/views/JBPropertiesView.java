@@ -417,7 +417,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
         TreeViewerColumn propertyNameColumn = 
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
         propertyNameColumn.getColumn().setText(
-                Messages.GuiDancerPropertiesViewProperty);
+                Messages.JubulaPropertiesViewProperty);
         propertyNameColumn.getColumn().setWidth(175);
         propertyNameColumn.setLabelProvider(new PropertyNameLabelProvider());
         
@@ -425,7 +425,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
         TreeViewerColumn propertyValueColumn = 
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
         propertyValueColumn.getColumn().setText(
-                Messages.GuiDancerPropertiesViewValue);
+                Messages.JubulaPropertiesViewValue);
         propertyValueColumn.getColumn().setWidth(300);
         propertyValueColumn.setLabelProvider(new PropertyValueLabelProvider());
         propertyValueColumn.setEditingSupport(

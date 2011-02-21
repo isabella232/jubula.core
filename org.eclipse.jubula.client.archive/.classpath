@@ -9,6 +9,5 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="lib/archiveModel.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

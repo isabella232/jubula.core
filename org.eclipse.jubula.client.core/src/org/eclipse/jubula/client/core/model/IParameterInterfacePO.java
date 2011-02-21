@@ -69,12 +69,12 @@ public interface IParameterInterfacePO extends IPersistentObject {
     /**
      * @return Returns the dataManager.
      */
-    public abstract ITDManagerPO getDataManager();
+    public abstract ITDManager getDataManager();
 
     /**
      * @param dataManager The dataManager to set.
      */
-    public abstract void setDataManager(ITDManagerPO dataManager);
+    public abstract void setDataManager(ITDManager dataManager);
 
     /**
      * method to get the CompleteTdFlag for a given Locale

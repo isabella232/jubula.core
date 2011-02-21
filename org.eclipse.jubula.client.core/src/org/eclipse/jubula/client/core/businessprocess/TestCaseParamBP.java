@@ -26,7 +26,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.TDCell;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -147,8 +147,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             for (IParamDescriptionPO pd : cap.getParameterList()) {
                 try {
                     String pID = 
-                        cap.getDataManager().getCell(0, pd).getValue()
-                            .getValue(loc);
+                        cap.getDataManager().getCell(0, pd).getValue(loc);
                     if ((pID != null)  // check for unset data
                             && pID.endsWith(paramGUID)) {
                         Component c = compSystem.findComponent(cap
@@ -185,7 +184,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                 try {
                     ITestDataPO cell = node.getDataManager().getCell(rowNum,
                             paramDesc);
-                    String value = cell.getValue().getValue(loc);
+                    String value = cell.getValue(loc);
                     if ((value != null) && value.endsWith(paramGUID)) {
                         result.add(paramDesc.getUniqueId());
                     }
@@ -246,7 +245,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             Iterator childrenIt) {
         while (childrenIt.hasNext()) {
             final IParamNodePO child = (IParamNodePO)childrenIt.next();
-            final ITDManagerPO mgr = child.getDataManager();
+            final ITDManager mgr = child.getDataManager();
             final Iterator<TDCell> refIt = 
                 child.getParamReferencesIterator(locale);
             while (refIt.hasNext()) {
@@ -261,7 +260,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                     final boolean isModified = conv.removeReference(
                             desc.getUniqueId());
                     if (isModified) {
-                        cell.getTestData().getValue().setValue(locale, 
+                        cell.getTestData().setValue(locale, 
                             conv.getModelString(), 
                             GeneralStorage.getInstance().getProject());
                     }

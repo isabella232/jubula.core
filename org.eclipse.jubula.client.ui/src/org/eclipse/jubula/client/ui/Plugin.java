@@ -172,6 +172,11 @@ public class Plugin extends AbstractUIPlugin
     private MessageConsoleStream m_standardMessageStream;
     /** error message stream for the console */
     private MessageConsoleStream m_errorMessageStream;
+    
+    /**
+     * the currently running application title
+     */
+    private String m_runningApplicationTitle = null;
 
     /**
      * <code>m_treeViewerContainer</code> a list of tree viewer container
@@ -1464,7 +1469,7 @@ public class Plugin extends AbstractUIPlugin
             Integer majorVersion, Integer minorVersion) {
         
         StringBuilder sb = new StringBuilder(
-                Messages.ConstantsDefaultTextValue);
+                Plugin.getDefault().getRunningApplicationTitle());
         
         Hibernator hibernator = Hibernator.instance();
         if (hibernator != null) {
@@ -1525,5 +1530,16 @@ public class Plugin extends AbstractUIPlugin
      */
     public void writeLine(String line) {
         writeLineToConsole(line, true);
+    }
+
+    /**
+     * @return the running application title
+     */
+    public String getRunningApplicationTitle() {
+        if (m_runningApplicationTitle == null) {
+            m_runningApplicationTitle = getActiveWorkbenchWindowShell()
+                    .getText();
+        }
+        return m_runningApplicationTitle;
     }
 }

@@ -11,11 +11,11 @@
 package org.eclipse.jubula.client.core.businessprocess;
 
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
@@ -51,7 +51,7 @@ public class TestDataBP {
      * @return The new test data instance
      */
     public ITestDataPO createEmptyTestData() {
-        return PoMaker.createTestDataPO(PoMaker.createI18NStringPO());
+        return PoMaker.createTestDataPO();
     }
     
     /**
@@ -84,7 +84,7 @@ public class TestDataBP {
      *         Data exists.
      */
     public ITestDataPO getTestData(IParamNodePO paramNode, 
-            ITDManagerPO testDataManager, IParamDescriptionPO paramDesc,
+            ITDManager testDataManager, IParamDescriptionPO paramDesc,
             int dataSetNum) {
         IParameterInterfacePO refDataCube = paramNode.getReferencedDataCube();
         int column = 
@@ -103,7 +103,7 @@ public class TestDataBP {
             }
         }
  
-        IListWrapperPO dataSet = testDataManager.getDataSet(dataSetNum);
+        IDataSetPO dataSet = testDataManager.getDataSet(dataSetNum);
         if (column != -1 && column < dataSet.getColumnCount()) {
             return dataSet.getColumn(column);
         }

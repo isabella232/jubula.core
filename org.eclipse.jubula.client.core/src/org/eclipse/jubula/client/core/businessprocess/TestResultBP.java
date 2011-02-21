@@ -10,13 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import java.io.IOException;
 import java.net.URL;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.client.core.Activator;
-import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.utils.BundleUtils;
 
@@ -29,7 +26,6 @@ import org.eclipse.jubula.client.core.utils.BundleUtils;
  *
  */
 public class TestResultBP {
-    
     /**
      * instance
      */
@@ -68,18 +64,6 @@ public class TestResultBP {
      */
     public URL getXslFileURL() {
         return BundleUtils.getFileURL(Platform.getBundle(Activator.PLUGIN_ID),
-                Activator.RESOURCES_DIR + "html/format.xsl"); //$NON-NLS-1$
-    }
-
-    /**
-     * 
-     * @return The name of the CSS file to use for formatting HTML Test 
-     *         Result Reports.
-     * @throws IOException if the CSS file cannot be found.
-     */
-    public String getCssFileName() throws IOException {
-        URL cssUrl = ClientTestFactory.class.getClassLoader().getResource(
-                "reportStyle.css"); //$NON-NLS-1$
-        return FileLocator.resolve(cssUrl).getFile();
+                Activator.RESOURCES_DIR + "format.xsl"); //$NON-NLS-1$
     }
 }

@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
@@ -112,31 +113,11 @@ public abstract class PoMaker {
 
     /**
      * factory method to replace constructor
-     * @return I18NStringPO
-     */
-    public static II18NStringPO createI18NStringPO() {
-        return new I18NStringPO();
-    }
-
-    /**
-     * factory method to replace constructor
-     * @param loc loc
-     * @param value value
-     * @param project project
-     * @return I18NStringPO
-     */
-    public static II18NStringPO createI18NStringPO(Locale loc, String value,
-        IProjectPO project) {
-        return new I18NStringPO(loc, value, project);
-    }
-
-    /**
-     * factory method to replace constructor
      * @param list list
-     * @return ListWrapperPO
+     * @return DataSetPO
      */
-    public static IListWrapperPO createListWrapperPO(List<ITestDataPO> list) {
-        return new ListWrapperPO(list);
+    public static IDataSetPO createListWrapperPO(List<ITestDataPO> list) {
+        return new DataSetPO(list);
     }
 
     /**
@@ -398,7 +379,7 @@ public abstract class PoMaker {
      * @param node node
      * @return TDManagerPO
      */
-    public static ITDManagerPO createTDManagerPO(IParameterInterfacePO node) {
+    public static ITDManager createTDManagerPO(IParameterInterfacePO node) {
         return new TDManagerPO(node);
     }
 
@@ -408,7 +389,7 @@ public abstract class PoMaker {
      * @param uniqueIds uniqueIds
      * @return TDManagerPO
      */
-    public static ITDManagerPO createTDManagerPO(IParameterInterfacePO node, 
+    public static ITDManager createTDManagerPO(IParameterInterfacePO node, 
         List<String> uniqueIds) {
         
         return new TDManagerPO(node, uniqueIds);
@@ -429,13 +410,21 @@ public abstract class PoMaker {
     
     /**
      * factory method to replace constructor
-     * @param value value
+     * @param initialValues The initial values for the created object.
      * @return TestDataPO
      */
-    public static ITestDataPO createTestDataPO(II18NStringPO value) {
-        return new TestDataPO(value);
+    public static ITestDataPO createTestDataPO(
+            Map<Locale, String> initialValues) {
+        return new TestDataPO(initialValues);
     }
    
+    /**
+     * factory method to replace constructor
+     * @return TestDataPO
+     */
+    public static ITestDataPO createTestDataPO() {
+        return new TestDataPO();
+    }
 
     /**
      * factory method to replace constructor
@@ -534,16 +523,8 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Hibernator)
      * @return the class instance of the PO
      */
-    public static Class getI18NStringClass() {
-        return I18NStringPO.class;
-    }
-
-    /**
-     * get the class instance of the PO (needed by Hibernator)
-     * @return the class instance of the PO
-     */
     public static Class getListWrapperClass() {
-        return ListWrapperPO.class;
+        return DataSetPO.class;
     }
 
     /**

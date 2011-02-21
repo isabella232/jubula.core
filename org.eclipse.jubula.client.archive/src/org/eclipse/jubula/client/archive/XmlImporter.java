@@ -39,6 +39,44 @@ import org.eclipse.jubula.client.archive.converter.IXmlConverter;
 import org.eclipse.jubula.client.archive.converter.V4C001;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.archive.output.NullImportOutput;
+import org.eclipse.jubula.client.archive.schema.ActivationMethodEnum;
+import org.eclipse.jubula.client.archive.schema.Attribute;
+import org.eclipse.jubula.client.archive.schema.Aut;
+import org.eclipse.jubula.client.archive.schema.AutConfig;
+import org.eclipse.jubula.client.archive.schema.Cap;
+import org.eclipse.jubula.client.archive.schema.Category;
+import org.eclipse.jubula.client.archive.schema.CheckActivatedContext;
+import org.eclipse.jubula.client.archive.schema.CheckAttribute;
+import org.eclipse.jubula.client.archive.schema.CheckConfiguration;
+import org.eclipse.jubula.client.archive.schema.CompNames;
+import org.eclipse.jubula.client.archive.schema.ComponentName;
+import org.eclipse.jubula.client.archive.schema.EventHandler;
+import org.eclipse.jubula.client.archive.schema.EventTestCase;
+import org.eclipse.jubula.client.archive.schema.I18NString;
+import org.eclipse.jubula.client.archive.schema.MapEntry;
+import org.eclipse.jubula.client.archive.schema.MonitoringValues;
+import org.eclipse.jubula.client.archive.schema.NamedTestData;
+import org.eclipse.jubula.client.archive.schema.ObjectMapping;
+import org.eclipse.jubula.client.archive.schema.ObjectMappingProfile;
+import org.eclipse.jubula.client.archive.schema.OmCategory;
+import org.eclipse.jubula.client.archive.schema.OmEntry;
+import org.eclipse.jubula.client.archive.schema.ParamDescription;
+import org.eclipse.jubula.client.archive.schema.Project;
+import org.eclipse.jubula.client.archive.schema.RefTestCase;
+import org.eclipse.jubula.client.archive.schema.RefTestSuite;
+import org.eclipse.jubula.client.archive.schema.ReusedProject;
+import org.eclipse.jubula.client.archive.schema.SummaryAttribute;
+import org.eclipse.jubula.client.archive.schema.TechnicalName;
+import org.eclipse.jubula.client.archive.schema.TestCase;
+import org.eclipse.jubula.client.archive.schema.TestCase.Teststep;
+import org.eclipse.jubula.client.archive.schema.TestData;
+import org.eclipse.jubula.client.archive.schema.TestDataCell;
+import org.eclipse.jubula.client.archive.schema.TestDataRow;
+import org.eclipse.jubula.client.archive.schema.TestJobs;
+import org.eclipse.jubula.client.archive.schema.TestSuite;
+import org.eclipse.jubula.client.archive.schema.TestresultSummaries;
+import org.eclipse.jubula.client.archive.schema.TestresultSummary;
+import org.eclipse.jubula.client.archive.schema.UsedToolkit;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.DocAttributeDescriptionBP;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
@@ -60,8 +98,6 @@ import org.eclipse.jubula.client.core.model.IDocAttributeDescriptionPO;
 import org.eclipse.jubula.client.core.model.IDocAttributePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.II18NStringPO;
-import org.eclipse.jubula.client.core.model.IListWrapperPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -74,7 +110,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -112,44 +148,6 @@ import org.eclipse.jubula.tools.objects.MonitoringValue;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
 import org.eclipse.osgi.util.NLS;
 
-import com.bredexsw.guidancer.client.importer.gdschema.ActivationMethodEnum.Enum;
-import com.bredexsw.guidancer.client.importer.gdschema.Attribute;
-import com.bredexsw.guidancer.client.importer.gdschema.Aut;
-import com.bredexsw.guidancer.client.importer.gdschema.AutConfig;
-import com.bredexsw.guidancer.client.importer.gdschema.Cap;
-import com.bredexsw.guidancer.client.importer.gdschema.Category;
-import com.bredexsw.guidancer.client.importer.gdschema.CheckActivatedContext;
-import com.bredexsw.guidancer.client.importer.gdschema.CheckAttribute;
-import com.bredexsw.guidancer.client.importer.gdschema.CheckConfiguration;
-import com.bredexsw.guidancer.client.importer.gdschema.CompNames;
-import com.bredexsw.guidancer.client.importer.gdschema.ComponentName;
-import com.bredexsw.guidancer.client.importer.gdschema.EventHandler;
-import com.bredexsw.guidancer.client.importer.gdschema.EventTestCase;
-import com.bredexsw.guidancer.client.importer.gdschema.I18NString;
-import com.bredexsw.guidancer.client.importer.gdschema.MapEntry;
-import com.bredexsw.guidancer.client.importer.gdschema.MonitoringValues;
-import com.bredexsw.guidancer.client.importer.gdschema.NamedTestData;
-import com.bredexsw.guidancer.client.importer.gdschema.ObjectMapping;
-import com.bredexsw.guidancer.client.importer.gdschema.ObjectMappingProfile;
-import com.bredexsw.guidancer.client.importer.gdschema.OmCategory;
-import com.bredexsw.guidancer.client.importer.gdschema.OmEntry;
-import com.bredexsw.guidancer.client.importer.gdschema.ParamDescription;
-import com.bredexsw.guidancer.client.importer.gdschema.Project;
-import com.bredexsw.guidancer.client.importer.gdschema.RefTestCase;
-import com.bredexsw.guidancer.client.importer.gdschema.RefTestSuite;
-import com.bredexsw.guidancer.client.importer.gdschema.ReusedProject;
-import com.bredexsw.guidancer.client.importer.gdschema.SummaryAttribute;
-import com.bredexsw.guidancer.client.importer.gdschema.TechnicalName;
-import com.bredexsw.guidancer.client.importer.gdschema.TestCase;
-import com.bredexsw.guidancer.client.importer.gdschema.TestCase.Teststep;
-import com.bredexsw.guidancer.client.importer.gdschema.TestData;
-import com.bredexsw.guidancer.client.importer.gdschema.TestDataCell;
-import com.bredexsw.guidancer.client.importer.gdschema.TestDataRow;
-import com.bredexsw.guidancer.client.importer.gdschema.TestJobs;
-import com.bredexsw.guidancer.client.importer.gdschema.TestSuite;
-import com.bredexsw.guidancer.client.importer.gdschema.TestresultSummaries;
-import com.bredexsw.guidancer.client.importer.gdschema.TestresultSummary;
-import com.bredexsw.guidancer.client.importer.gdschema.UsedToolkit;
 import com.thoughtworks.xstream.converters.ConversionException;
 
 /**
@@ -1166,7 +1164,8 @@ class XmlImporter {
             String.valueOf(xml.getActivateApp()));
         conf.setValue(AutConfigConstants.CONFIG_NAME, 
                 String.valueOf(xml.getName()));
-        final Enum activationMethod = xml.getActivationMethod();
+        final ActivationMethodEnum.Enum activationMethod = 
+            xml.getActivationMethod();
         if (activationMethod != null) {
             conf.setValue(AutConfigConstants.ACTIVATION_METHOD, 
                 ActivationMethod.valueOf(activationMethod.toString()
@@ -1277,7 +1276,7 @@ class XmlImporter {
             cap.setComment(xml.getComment());
         }
         if (xml.getTestdata() != null) {
-            ITDManagerPO tdman = fillTDManager(cap, xml, proj);
+            ITDManager tdman = fillTDManager(cap, xml, proj);
             cap.setDataManager(tdman);                
         }
         return cap;
@@ -1536,19 +1535,25 @@ class XmlImporter {
      * @param proj The current Project
      * @return the filled TDManager of the given owner
      */
-    private ITDManagerPO fillTDManager(IParamNodePO owner, Cap xmlCap, 
+    private ITDManager fillTDManager(IParamNodePO owner, Cap xmlCap, 
         IProjectPO proj) {
                 
-        final ITDManagerPO tdman = owner.getDataManager();
-        List<IListWrapperPO> dataTable = tdman.getDataTable();
+        final ITDManager tdman = owner.getDataManager();
         List<ParamDescription> parDescList = xmlCap
             .getParameterDescriptionList();
         final TestData testData = xmlCap.getTestdata();
         int tdRow = 0;
         for (TestDataRow rowXml : testData.getRowList()) {
+            if (rowXml.getDataList().isEmpty()) {
+                // Bug 337215 may have caused Test Steps in exported Projects 
+                // to incorrectly contain multiple Data Sets. These erroneous 
+                // Data Sets seem to always be empty, so ignore empty Data Sets 
+                // for imported Test Steps. 
+                continue;
+            }
             List<ITestDataPO> tdList = null;
             try {
-                tdList = dataTable.get(tdRow).getList();
+                tdList = tdman.getDataSet(tdRow).getList();
             } catch (IndexOutOfBoundsException ioobe) {
                 // Component, Action, and/or Parameter could not be found in config xml
                 // only log and continue -> import of projects with missing plugins
@@ -1577,26 +1582,31 @@ class XmlImporter {
                     .findColumnForParam(uniqueId);
                 if (ownerIndex > -1) {
                     // only relevant for old projects
-                    II18NStringPO val = PoMaker.createI18NStringPO();
-                    readData(proj, cellXml, val, owner);
-                    tdList.set(ownerIndex, PoMaker.createTestDataPO(val));
+                    tdList.set(ownerIndex, 
+                            PoMaker.createTestDataPO(readData(cellXml, owner)));
                 }
                 tdCell++;
             }
-            dataTable.set(tdRow, PoMaker.createListWrapperPO(tdList));
+            // We need to clear the data manager first because a Test Step
+            // can only have one Data Set, and we want to insert the Data Set
+            // as a single unit (rather than updating each cell individually)
+            tdman.clear();
+
+            tdman.insertDataSet(PoMaker.createListWrapperPO(tdList), tdRow);
             tdRow++;
         }
         return tdman;
     }
 
     /**
-     * @param proj current project
      * @param cellXml associated cell from import
-     * @param val I18NString to fill with data
      * @param owner The owner of the data.
+     * @return the map read from the provided data.
      */
-    private void readData(IProjectPO proj, TestDataCell cellXml, 
-        II18NStringPO val, IParameterInterfacePO owner) {
+    private Map<Locale, String> readData(TestDataCell cellXml, 
+            IParameterInterfacePO owner) {
+        
+        Map<Locale, String> localeToValue = new HashMap<Locale, String>(); 
         for (I18NString i18nVal : cellXml.getDataList()) {
             if (i18nVal != null && !i18nVal.isNil()
                 && i18nVal.getValue() != null
@@ -1619,11 +1629,13 @@ class XmlImporter {
                     // The i18nValue uses the old format and can therefore
                     // not be parsed. This value will be converted in V1M42Converter.
                 }
-                val.setValue(LocaleUtil.convertStrToLocale(
-                    i18nVal.getLanguage()), i18nValString, 
-                    proj);
+                localeToValue.put(
+                        LocaleUtil.convertStrToLocale(i18nVal.getLanguage()), 
+                        i18nValString);
             } 
         }
+        
+        return localeToValue;
     }
     
     /**
@@ -1681,12 +1693,12 @@ class XmlImporter {
      * @param assignNewGuids <code>true</code> if the parameters were given
      *        new unique IDs. Otherwise <code>false</code>.
      */
-    private ITDManagerPO createTDManager(IParameterInterfacePO owner, 
+    private ITDManager createTDManager(IParameterInterfacePO owner, 
         TestData xml, IProjectPO proj, boolean assignNewGuids) {
 
         List<String> uniqueIds = new ArrayList<String>(
             xml.getUniqueIdsList());
-        final ITDManagerPO tdman;
+        final ITDManager tdman;
 
         if (assignNewGuids) {
             // Update list of unique IDs
@@ -1711,16 +1723,14 @@ class XmlImporter {
         } else {
             tdman = PoMaker.createTDManagerPO(owner, uniqueIds);
         }
-        final List<IListWrapperPO> dataTable = tdman.getDataTable();
         for (TestDataRow rowXml : xml.getRowList()) {
             final List<ITestDataPO> td = new ArrayList<ITestDataPO>(rowXml
                 .sizeOfDataArray());
             for (TestDataCell cellXml : rowXml.getDataList()) {
-                II18NStringPO val = PoMaker.createI18NStringPO();
-                readData(proj, cellXml, val, owner);
-                td.add(PoMaker.createTestDataPO(val));
+                td.add(PoMaker.createTestDataPO(readData(cellXml, owner)));
             }
-            dataTable.add(PoMaker.createListWrapperPO(td));
+            tdman.insertDataSet(PoMaker.createListWrapperPO(td), 
+                    tdman.getDataSetCount());
         }
         return tdman;
     }

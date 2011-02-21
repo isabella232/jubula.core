@@ -379,13 +379,11 @@ class CapPO extends ParamNodePO implements ICapPO {
         for (String paramName : action.getParamNames()) {
             Param parameter = action.findParam(paramName);
             String defaultValue = parameter.getDefaultValue();
-            II18NStringPO i18nStr = PoMaker.createI18NStringPO(
-                project.getDefaultLanguage(), defaultValue, project);
+            ITestDataPO testData = PoMaker.createTestDataPO();
             for (Locale locale : project.getLangHelper().getLanguageList()) {
-                i18nStr.setValue(locale, defaultValue, project);
+                testData.setValue(locale, defaultValue, project);
             }
-            getDataManager().updateCell(PoMaker.createTestDataPO(i18nStr), 
-                0, paramName);
+            getDataManager().updateCell(testData, 0, paramName);
         }
     }
 

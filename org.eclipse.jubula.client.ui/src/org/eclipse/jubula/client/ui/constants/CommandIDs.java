@@ -33,6 +33,9 @@ public interface CommandIDs {
     /** the ID of the "add comment" command */
     public static final String ADD_COMMENT_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.AddComment"; //$NON-NLS-1$
     
+    /** the ID of the "copy ID" command */
+    public static final String COPY_ID_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.CopyID"; //$NON-NLS-1$
+    
     /** the ID of the "delete" command */
     public static final String DELETE_COMMAND_ID = "org.eclipse.ui.edit.delete"; //$NON-NLS-1$
     

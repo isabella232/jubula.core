@@ -33,6 +33,9 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -70,6 +73,7 @@ import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -744,9 +748,7 @@ public class TestresultSummaryView extends ViewPart
             m_filterCombo.select(0);
         }
 
-        // "for Value" label
-        Label forLabel = new Label(parent, SWT.NONE);
-        forLabel.setText(Messages.TestresultSummaryForLabel);
+        createLabel(parent);
 
         // search filter textfield
         m_searchText = new Text(parent, SWT.BORDER | SWT.SEARCH);
@@ -765,6 +767,27 @@ public class TestresultSummaryView extends ViewPart
         });
     }
     
+    /**
+     * @param parent
+     *            the parent to use for label creation
+     */
+    private void createLabel(Composite parent) {
+        IPreferenceStore ps = Plugin.getDefault().getPreferenceStore();
+        final Label forLabel = new Label(parent, SWT.NONE);
+        forLabel.setText(NLS.bind(Messages.TestresultSummaryForLabel,
+                ps.getInt(Constants.MAX_NUMBER_OF_DAYS_KEY)));
+        ps.addPropertyChangeListener(new IPropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent event) {
+                if (event.getProperty()
+                        .equals(Constants.MAX_NUMBER_OF_DAYS_KEY)) {
+                    forLabel.setText(NLS.bind(
+                            Messages.TestresultSummaryForLabel,
+                            event.getNewValue()));
+                }
+            }
+        });
+    }
+
     /**
      * get the testrun ids of selected testruns
      * @return the testrun ids of selected testruns

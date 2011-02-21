@@ -4,13 +4,13 @@
 <target name="helios">
 <locations>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.eclipse.persistence.sdk.feature.group" version="2.1.1.v20100817-r8050"/>
-<repository location="http://download.eclipse.org/releases/helios"/>
-</location>
-<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.eclipse.rcp.feature.group" version="3.6.1.r361_v20100827-9OArFLdFjY-ThSQXmKvKz0_T"/>
 <unit id="org.eclipse.rcp.sdk.id" version="3.6.0.M20100909-0800"/>
 <repository location="http://download.eclipse.org/releases/helios"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<unit id="org.eclipse.persistence.sdk.feature.group" version="2.2.0.v20110202-r8913"/>
+<repository location="http://download.eclipse.org/rt/eclipselink/milestone-updates"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.apache.commons.beanutils" version="1.7.0.v200902170505"/>
@@ -24,9 +24,6 @@
 <unit id="org.slf4j.api" version="1.5.11.v20100519-1910"/>
 <unit id="org.slf4j.jcl" version="1.5.11.v20100419-1106"/>
 <unit id="org.slf4j.log4j" version="1.5.11.v20100419-1106"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository"/>
-</location>
-<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.w3c.dom.events.source" version="3.0.0.draft20060413_v200905140418"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository"/>
 </location>

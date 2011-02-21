@@ -10,15 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.commands;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.FileAppender;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendServerLogMessage;
@@ -46,44 +39,45 @@ public class SendServerLogCommand implements ICommand {
 
         ServerLogResponseMessage response = new ServerLogResponseMessage();
         // Get location of log file
-        FileAppender enumFileAppender = null; 
         // FIXME: replace with code for slf4j
-//        Enumeration appenders = Logger.getRootLogger().getAllAppenders();
-//        Object enumElement = null;
-//        while (appenders.hasMoreElements() && enumFileAppender == null) {
-//            enumElement = appenders.nextElement();
-//            if (enumElement instanceof FileAppender) {
-//                enumFileAppender = (FileAppender)enumElement;
-//            }
-//        }
-        
-        if (enumFileAppender != null) {
-            // Send log
-            try {
-                File logFile = new File(enumFileAppender.getFile());
-                BufferedReader reader = 
-                    new BufferedReader(new FileReader(logFile));
-                StringBuffer sb = new StringBuffer();
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line + "\n"); //$NON-NLS-1$
-                }
-                response.setServerLog(sb.toString());
-            } catch (FileNotFoundException e) {
-                // Set error status
-                response.setStatus(ServerLogResponseMessage.FILE_NOT_FOUND);
-            } catch (IOException ioe) {
-                // Set error status
-                response.setStatus(ServerLogResponseMessage.IO_EXCEPTION);
-            }
+        // FileAppender enumFileAppender = null;
+        // Enumeration appenders = Logger.getRootLogger().getAllAppenders();
+        // Object enumElement = null;
+        // while (appenders.hasMoreElements() && enumFileAppender == null) {
+        // enumElement = appenders.nextElement();
+        // if (enumElement instanceof FileAppender) {
+        // enumFileAppender = (FileAppender)enumElement;
+        // }
+        // }
 
-        } else {
-            // No file logger found, set error status
-            response.setStatus(ServerLogResponseMessage.FILE_NOT_ENABLED);
-        }
-        
+        // if (enumFileAppender != null) {
+        // // Send log
+        // try {
+        // File logFile = new File(enumFileAppender.getFile());
+        // BufferedReader reader =
+        // new BufferedReader(new FileReader(logFile));
+        // StringBuffer sb = new StringBuffer();
+        // String line = null;
+        // while ((line = reader.readLine()) != null) {
+        //                    sb.append(line + "\n"); //$NON-NLS-1$
+        // }
+        // response.setServerLog(sb.toString());
+        // } catch (FileNotFoundException e) {
+        // // Set error status
+        // response.setStatus(ServerLogResponseMessage.FILE_NOT_FOUND);
+        // } catch (IOException ioe) {
+        // // Set error status
+        // response.setStatus(ServerLogResponseMessage.IO_EXCEPTION);
+        // }
+        //
+        // } else {
+        // No file logger found, set error status
+        // response.setStatus(ServerLogResponseMessage.FILE_NOT_ENABLED);
+        // }
+
+        response.setStatus(ServerLogResponseMessage.FILE_NOT_ENABLED);
         return response;
-        
+
     }
 
     /**

@@ -582,9 +582,8 @@ public class ProjectPM extends PersistenceManager {
         // adds all project ids of reused projects to set
         findReusedProjects(projectIds, 
                 key.getProjectProperties().getUsedProjects());
-        preloadDataPerClass(s, projectIds, "I18NStringPO");
         preloadDataPerClass(s, projectIds, "TestDataPO");
-        preloadDataPerClass(s, projectIds, "ListWrapperPO");        
+        preloadDataPerClass(s, projectIds, "DataSetPO");        
         preloadDataPerClass(s, projectIds, "TDManagerPO");
         preloadDataPerClass(s, projectIds, "CompNamesPairPO");
         preloadDataPerClass(s, projectIds, "ComponentNamePO");

@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
+import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
@@ -54,9 +55,12 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
         throws IOException {
         StartAUTServerStateMessage envCheckMsg = validateEnvironment();
         if (envCheckMsg == null) {
-            MonitoringDataStore cm = MonitoringDataStore.getInstance();
-            cm.putConfigMap((String)parameters.get(
-                    AutConfigConstants.AUT_ID), parameters);
+            if (!MonitoringUtil.checkForDuplicateAutID(String.valueOf(
+                    parameters.get(AutConfigConstants.AUT_ID)))) {
+                MonitoringDataStore cm = MonitoringDataStore.getInstance();
+                cm.putConfigMap((String)parameters.get(
+                      AutConfigConstants.AUT_ID), parameters);
+            }
             File workingDir = getWorkingDir(parameters);
             String java = createBaseCmd(parameters);
             String[] cmdArray = createCmdArray(java, parameters);
@@ -243,4 +247,17 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             "AUTServer is already running"); //$NON-NLS-1$
     }
 
+    
+    /**
+     * Gets the absolute path of the logging config file.
+     * @return the absolute path
+     */
+    protected String getAbsoluteLoggingConfPath() {
+        final File confFile = new File("./resources/logging.properties"); //$NON-NLS-1$
+        final StringBuffer paths = 
+            new StringBuffer(confFile.getAbsolutePath());
+        String absPath = paths.toString();
+        return absPath.replace('\\', '/');
+    }
+ 
 }

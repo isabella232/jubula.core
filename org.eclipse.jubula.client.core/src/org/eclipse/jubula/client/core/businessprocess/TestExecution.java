@@ -53,7 +53,7 @@ import org.eclipse.jubula.client.core.model.IExecStackModificationListener;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
-import org.eclipse.jubula.client.core.model.ITDManagerPO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -460,9 +460,9 @@ public class TestExecution {
             varStore.store(TDVariableStore.VAR_AUTCONFIG, 
                     m_autConfig.getName());
         } else {
-            // write constant for AUTs which has been started via gdrun
+            // write constant for AUTs which has been started via autrun
             varStore.store(TDVariableStore.VAR_AUTCONFIG, 
-                    TestresultSummaryBP.GDRUN);
+                    TestresultSummaryBP.AUTRUN);
         }
 
         // gd.clientVersion
@@ -831,7 +831,7 @@ public class TestExecution {
      */
     private MessageCap configureMessageCap(ICapPO cap, MessageCap messageCap,
         Action action, boolean runIncomplete) throws InvalidDataException {
-        ITDManagerPO tdManager = null;
+        ITDManager tdManager = null;
         try {
             tdManager = m_externalTestDataBP.getExternalCheckedTDManager(cap);
         } catch (JBException gde) {
@@ -869,7 +869,7 @@ public class TestExecution {
                     m_varStore.store(CURRENT_DATASET_NUMBER, String.valueOf(
                         dsNumber + 1)); // 1-based for the user!
                     ParamValueConverter conv = new ModelParamValueConverter(
-                        date.getValue().getValue(getLocale()), cap,
+                        date.getValue(getLocale()), cap,
                         getLocale(), desc);
                     List <ExecObject> stackList = 
                         new ArrayList<ExecObject>(m_trav.getExecStackAsList());
@@ -1310,7 +1310,7 @@ public class TestExecution {
                 }
             }
         } else {
-            hostname = TestresultSummaryBP.GDRUN;
+            hostname = TestresultSummaryBP.AUTRUN;
         }
         return hostname;
     }
@@ -1515,7 +1515,7 @@ public class TestExecution {
             IParamDescriptionPO desc = 
                 m_currentCap.getParameterList().get(0); 
             try {
-                ITDManagerPO tdManager = 
+                ITDManager tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(
                             m_currentCap);
                 ITestDataPO date = 
@@ -1965,7 +1965,7 @@ public class TestExecution {
             IParamDescriptionPO desc = 
                 m_currentCap.getParameterForUniqueId("CompSystem.RunLocal"); //$NON-NLS-1$
             try {
-                ITDManagerPO tdManager = 
+                ITDManager tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(
                             m_currentCap);
                 ITestDataPO date = 
@@ -2084,7 +2084,7 @@ public class TestExecution {
             throws InvalidDataException {
             String value = StringConstants.EMPTY;
             ParamValueConverter conv = new ModelParamValueConverter(
-                date.getValue().getValue(getLocale()), cap, getLocale(), desc);
+                date.getValue(getLocale()), cap, getLocale(), desc);
             try {
                 List <ExecObject> stackList = 
                     new ArrayList<ExecObject>(m_trav.getExecStackAsList());
@@ -2104,7 +2104,7 @@ public class TestExecution {
         protected String getValueForParam(String paramID) throws JBException {
             IParamDescriptionPO desc = m_currentCap
                     .getParameterForUniqueId(paramID);
-            ITDManagerPO tdManager = 
+            ITDManager tdManager = 
                 m_externalTestDataBP.getExternalCheckedTDManager(m_currentCap);
             ITestDataPO date = tdManager.getCell(0, desc);
             return this.getValueForParam(date, m_currentCap, desc);

@@ -484,7 +484,7 @@ public class DBToolClient extends AbstractCmdlineClient {
      * 
      */
     private void setupDB() {
-        Hibernator.setSchemaName(getJob().getDbscheme());
+        Hibernator.setDbConnectionName(getJob().getDbscheme());
         Hibernator.setUser(getJob().getDbuser());
         Hibernator.setPw(getJob().getDbpw());
         Hibernator.setUrl(getJob().getDb());

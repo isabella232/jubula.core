@@ -14,15 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.gen.parser.parameter.analysis.DepthFirstAdapter;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.AAlphanumericParamToken;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.AAnySequenceParamToken;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.AEscapeSequenceParamToken;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.ALiteral;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.AReference;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.AVariable;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.parser.parameter.analysis.DepthFirstAdapter;
-import org.eclipse.jubula.client.core.parser.parameter.node.AAlphanumericParamToken;
-import org.eclipse.jubula.client.core.parser.parameter.node.AAnySequenceParamToken;
-import org.eclipse.jubula.client.core.parser.parameter.node.AEscapeSequenceParamToken;
-import org.eclipse.jubula.client.core.parser.parameter.node.ALiteral;
-import org.eclipse.jubula.client.core.parser.parameter.node.AReference;
-import org.eclipse.jubula.client.core.parser.parameter.node.AVariable;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
