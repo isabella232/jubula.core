@@ -17,21 +17,23 @@ It is assumed that you are working locally on your machine. If not, change the A
    <item title="Configuring the AUT" dialog="true" skip="false">
       <description>
          Select:<br/>
-<b>Project &gt; Properties</b>
+<b>Test &gt; Properties</b>
 <br/>
-Select <b>AUT&apos;s</b> from the list and select  the <b>Adder</b> AUT and click <b>Edit</b>.
+Select <b>AUT&apos;s</b> from the list on the left, select  the <b>Adder</b> AUT and click <b>Edit</b>.
 <br/>
 Click <b>Add</b> to add a configuration. 
 <br/>
 Enter or browse to the executable file:  
 <br/><br/>
-<b>C:\Program Files\GUIdancer\examples\AUTs\SimpleAdder\Swing\SimpleAdder.cmd</b>
+<b>InstallationDirectory\examples\AUTs\SimpleAdder\Swing\SimpleAdder.cmd</b>
+<br/><br/>
 Unix users select <b>SimpleAdder.sh</b>.
+<br/><br/>
 Click <b>Open</b>.
 <br/>
+<br/><br/>
 Enter <b>SimpleAdder_1</b> as the AUT ID.
 <br/>
-Click <b>OK</b>, then <b>OK</b> in the other dialogs.
-      </description>
+Click <b>OK</b>, then <b>OK</b> in the other dialogs. in the other dialogs.er dialogs.    </description>
    </item>
 </cheatsheet>

@@ -9,7 +9,7 @@
 <cheatsheet title="Checklist">
    <intro>
       <description>
-         Check that you have understood the main concepts and techniques of GUIdancer
+         Check that you have understood the main concepts and techniques.
       </description>
    </intro>
    <item title="Project creation" dialog="true" skip="false">
@@ -38,14 +38,9 @@ If you have multilingual AUT&apos;s, you can specify Project languages.
       </subitem>
       <subitem label="Data can be kept separate from the test flow, which also reduces maintenance effort." skip="false">
       </subitem>
-      <subitem label="By spending some time thinking about structuring your tests, you can save time and money while improving quality." skip="false">
+      <subitem label="By spending By spending some time thinking about structuring your tests, you can save time and effort while improving quality.e">
       </subitem>
-      <subitem label="The value of test automation is in the stability of regression testing. GUIdancer lets you gain maximum benefit from regression tests, because maintenance efforts are so low." skip="false">
+      <subitem label="The value oThe value of test automation is in the stability of regression testing. You can gain the maximum benefit from regression tests if the maintenance efforts are low.se">
       </subitem>
-   </item>
-   <item title="Finally:" dialog="true" skip="false">
-      <description>
-         Questions? Problems? Visit our website, look in the help or contact<br/><br/> <b>gdsupport@bredex.de</b>
-      </description>
    </item>
 </cheatsheet>

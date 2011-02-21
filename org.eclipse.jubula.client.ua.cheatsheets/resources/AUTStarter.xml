@@ -15,7 +15,7 @@
    <item title="Starting the AUT Agent" dialog="true" skip="false">
       <description>
          Start the AUT Agent via the start menu in windows: <br/>
-<b>Start &gt; GUIdancer &gt;  Start AUT Agent </b>
+<b>Start AUT Agent</b>
 <br/>
 or start it from the command line on Unix systems.
       </description>

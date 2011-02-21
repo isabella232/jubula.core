@@ -9,14 +9,14 @@
 <cheatsheet title="Create a Project">
    <intro>
       <description>
-         This cheat sheet shows you how to create a Project in GUIdancer.<br/><br/>
+         This cheat sheet shows you how to create a Project.
       </description>
    </intro>
    <item title="Creating a Project" dialog="true" skip="false">
       <description>
          Select: 
 <br/>
-<b>Project &gt; New</b>
+<b>Test &gt; New</b>
 <br/>
 If you are not using the default database, you will need to log in.
  <br/>

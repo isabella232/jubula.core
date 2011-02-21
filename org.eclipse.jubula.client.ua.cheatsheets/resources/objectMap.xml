@@ -16,7 +16,7 @@
       <description>
          Start the object mapping mode using the toolbar button.
       </description>
-      <subitem label="Switch to the AUT" skip="false">
+      <subitem label="Switch to the AUT and click in it to bring it into focus." skip="false">
       </subitem>
    </item>
    <item title="Collect the first component" dialog="true" skip="false">
@@ -39,7 +39,7 @@
       <description>
          In the object mapping editor, take your component name for the first text field (<b>adder_value1_txf</b>) and drag it onto the technical name for the first text field.
       </description>
-      <subitem label="Repeat this process for the other component names. In this way, you tell GUIdancer which components to test in your specification." skip="false">
+      <subitem label="Repeat this process for the other component names. In this way, you specify which components should be found when you run your test." skip="false">
       </subitem>
    </item>
    <item title="Save the editor" dialog="true" skip="false">

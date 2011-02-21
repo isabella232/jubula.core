@@ -9,20 +9,20 @@
 <cheatsheet title="Open the Samples Project">
    <intro>
       <description>
-         We recommend using the Samples Project (installed with GUIdancer) to do this cheat sheet.
+         We recommend using the Samples Project (installed with the tool) to do this cheat sheet.
       </description>
    </intro>
    <item
          skip="true"
-         title="Import the Samples Projects">
+         title="Import the Samples Project">
       <description>
-         If you have not already done so, import the Samples Projects. <br/><br/>
-Select <b>Project &gt; Import</b>.
+         If you have not already done so, import the Samples Project. <br/><br/>
+Select <b>Test &gt; Import</b>.
 <br/><br/>
 If you have not already logged into the database, do so when prompted.
 <br/><br/>
  In the import dialog browse to:<br/>
-<b>guidancer/examples/projects</b>
+<b>InstallationDirectory/examples/projects</b>
 <br/><br/>
 Select <b>Samples.xml</b> and <b>bound_modules_samples.xml</b> and import them into the database.
       </description>

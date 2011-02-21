@@ -7,10 +7,10 @@
  -->
 
 <cheatsheet
-      title="Selecting from context menus in GUIdancer">
+      title="Selecting from context menus">
    <intro>
       <description>
-         This cheat sheet shows you how to use GUIdancer to select an item from a context menu which opens on a node in a tree. The Test Cases to select from the context menu open the context menu and select the item you specify.
+         This cheat sheet shows you how to select an item from a context menu which opens on a node in a tree.
       </description>
    </intro>
    <item
@@ -26,7 +26,7 @@ Open the Test Case Editor for this Test Case.
          From the unbound modules, browse to the category: <br/> <b>Actions (basic) &gt; Select &gt; Tree</b>.
       </description>
       <subitem
-            label="Select the Test Case &quot;ub_tre_selectNode_byTextpath&quot;. Drag it into the Test Case Editor so that it appears under the &quot;Select item from context menu on tree node&quot; Test Case.">
+            label="Select the Test Case &quot;ub_tre_selectNode_byTextpath&quot;. Drag it into the Test Case Editor.">
       </subitem>
    </item>
    <item
@@ -72,7 +72,7 @@ Open the Test Case Editor for this Test Case.
          From the unbound modules, browse to the category: <br/> <b>Actions (basic) &gt; Select &gt; Context Menu </b>.
       </description>
       <subitem
-            label="Select the Test Case &quot;ub_grc_selectContextMenuEntry_byTextpath&quot;. Drag it into the Test Case Editor so that it appears under the &quot;ub_tre_selectNode_byTextpath&quot; Test Case.">
+            label="Select the Test Case &quot;ub_grc_selectContextMenuEntry_byTextpath&quot;. Drag it into the Test Case Editor.">
       </subitem>
    </item>
    <item

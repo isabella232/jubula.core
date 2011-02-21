@@ -27,11 +27,26 @@
       <description>
          From the unbound modules, browse to the category: <b>Actions (basic) &gt; Check &gt; Tree</b>.
       </description>
-      <subitem label="You will see that there is a Test Case to check the text of a selected node." skip="false">
+      <subitem label="You will see that there are Test Cases to check the text of a selected node and to check the test at the mouse position." skip="false">
       </subitem>
-      <subitem label="To execute this Test Case, you must have already selected the node." skip="false">
+      <subitem label="To execute the &quot;selected node&quot; Test Case, you must have already selected the node." skip="false">
       </subitem>
-      <subitem label="The Test Case requires the following parameters: the text to check, and the operator to perform the check with (simple match, equals, matches or not equals)." skip="false">
+      <subitem label="To execute the &quot;mouse position&quot; Test Case, you must have selected the node with 0 clicks (i.e. hovered over the node)." skip="false">
+      </subitem>
+      <subitem label="The Test Cases require the following parameters: the text to check, and the operator to perform the check with (simple match, equals, matches or not equals)." skip="false">
       </subitem>
    </item>
+   <item title="Storing the value on a node">
+     <description>
+         From the unbound modules, browse to the category: <b>Actions (basic) &gt; Store  &gt; Tree</b>.
+     </description>
+     <subitem label="You will see that there is a Test Case to store the value  of a selected node and a Test Case to store the value of the node where the mouse is.">
+     </subitem>
+     <subitem label="To execute the &quot;Store Text of selected node&quot; Test Case, you must have already selected the node, e.g. with one click.">
+     </subitem>
+     <subitem label="To execute the &quot;Store text of node at mouse position&quot; Test Case, you must have already selected the node with 0 clicks (i.e. hovered over the node).">
+     </subitem>
+     <subitem label="The Test Cases require the variable name you wish to store the value in. Use $VARIABLE_NAME when you use the variable in another Test Case.">
+     </subitem>
+  </item>
 </cheatsheet>

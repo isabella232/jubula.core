@@ -29,9 +29,9 @@ Click <b> OK</b>.
    </item>
    <item title="Add Test Cases to the Test Suite" dialog="true" skip="false">
       <description>
-         Drag the <b>PerformAddition</b> Test Case from the Test Case Browser into the Test Suite Editor.
+         Drag the <b>Perform Addition</b> Test Case from the Test Case Browser into the Test Suite Editor.
       </description>
-      <subitem label="Save the editor." skip="false">
+      <subitem label="Save the Test Suite editor." skip="false">
       </subitem>
    </item>
 </cheatsheet>

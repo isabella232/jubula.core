@@ -24,9 +24,8 @@ Because this test will run locally, do not move the mouse during the test.
       <description>
          Look in the results view for information on the test execution.
       </description>
-      <subitem label="In the Reporting Perspective, you can see a table of all of the test runs you have done. 
-
-Double click on a test run to open it again in the Test Result View." skip="false">
+      <subitem
+            label="If you used the data set 17,4,21 then you will see that the &quot;Check result&quot; step for this data set was insuccessful. Use the properties view and the image view to see what happened.sult&quot;">
       </subitem>
       <subitem
             label="You can export a report for the test run from the Test Result Summary View.">

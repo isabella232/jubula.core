@@ -1,13 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-    Copyright (c) 2004, 2010 BREDEX GmbH.
-    All rights reserved. This program and the accompanying materials
-    are made available under the terms of the Eclipse Public License v1.0
-    which accompanies this distribution, and is available at
-    http://www.eclipse.org/legal/epl-v10.html
- -->
-
-<compositeCheatsheet name="GUIdancer Cheat Sheets">
-   <taskGroup kind="sequence" name="Creating and executing your first test" skip="false">
+<?xml version="1.0" encoding="UTF-8"?>
+<compositeCheatsheet name="Writing your first test">
+   <taskGroup kind="set" name="Creating and executing your first test" skip="false">
       <intro>
          These cheat sheets take you step-by-step through your first test. 
 <br/><br/>
@@ -19,15 +12,15 @@ The requirements for the program we want to test are as follows:
 <br/>
 Your task is to create a test which will test this functionality via the GUI.
 <br/><br/>
-Make sure that your GUIdancer client is maximized to complete these cheat sheets!
+Make sure that the Integrated Test Environment (ITE)  is maximized to complete these cheat sheets!
       </intro>
-      <taskGroup kind="sequence" name="Setting up the Project" skip="false">
+      <taskGroup kind="set" name="Setting up the Project" skip="false">
          <intro>
             This group of tasks deals with creating a Project, and adding and configuring an AUT.
          </intro>
          <task kind="cheatsheet" name="Create a Project" skip="false">
             <intro>
-               A GUIdancer Project contains information about the AUT and also contains the Test Cases to test the AUT.
+               A Project contains information about the AUT and also contains the Test Cases to test the AUT.
             </intro>
             <onCompletion>
                You will notice that there are grayed out Test Cases in the Test Case browser. This is a pre-defined library of Test Cases to make test creation easier. We will use these later to create the test.
@@ -48,7 +41,7 @@ Make sure that your GUIdancer client is maximized to complete these cheat sheets
 <br/><br/>
 A configuration contains details about how to start the AUT.
 <br/><br/>
-For example, you need to tell GUIdancer where to start your AUT (on what computer) and with what arguments. 
+For example, you need to define where to start your AUT (on what computer) and with what arguments. 
 <br/><br/>
 Some AUT&apos;s will need different configurations so that they can be tested on different platforms.
             </intro>
@@ -61,7 +54,7 @@ You can also see context-sensitive help by pressing <b>F1</b> in the AUT configu
             </param>
          </task>
       </taskGroup>
-      <taskGroup kind="sequence" name="Creating the test specification" skip="false">
+      <taskGroup kind="set" name="Creating the test specification" skip="false">
          <intro>
             This group of tasks deals with Test Case creation.
          </intro>
@@ -81,10 +74,10 @@ Note that the following steps are all completed based on the requirements for th
          </task>
          <task kind="cheatsheet" name="Reference Test Cases from the library" skip="false">
             <intro>
-               GUIdancer&apos;s strength is in reusability. To help with this, you can use the library of reused Test Cases.
+               The majority of actions you will require to write tests are already in the  library of reused Test Cases.
             </intro>
             <onCompletion>
-               This task has shown you how to use the library of Test Cases to create tests. GUIdancer does not copy Test Cases, it references them. You always only have one source - which makes maintainability easier later.
+               This task has shown you how to use the library of Test Cases to create tests. Test Cases are not copied, they are referenced. You always only have one source - which makes maintainability easier later.
             </onCompletion>
             <param name="path" value="addReusedTestCases.xml">
             </param>
@@ -94,26 +87,26 @@ Note that the following steps are all completed based on the requirements for th
                Now that the test specification is ready, data can be added to the Test Case.
             </intro>
             <onCompletion>
-               The benefit of adding the data here is that it is separate from the test flow. It can easily be changed, read from an Excel file, or translated.
+               The benefit of adding the data here is that it is separate from the test flow. It can easily be changed, read from a central test data set, or translated.
             </onCompletion>
             <param name="path" value="addData.xml">
             </param>
          </task>
       </taskGroup>
-      <taskGroup kind="sequence" name="Preparing for execution" skip="false">
+      <taskGroup kind="set" name="Preparing for execution" skip="false">
          <intro>
             This group of tasks shows you how to add Test Cases to a Test Suite to be executed, and also tell you how to start the AUT Agent.
          </intro>
          <task kind="cheatsheet" name="Create and fill a Test Suite" skip="false">
             <intro>
-               Test Suites are the executable units in GUIdancer.
+               Test Suites are the executable units.
             </intro>
             <param name="path" value="createTestSuite.xml">
             </param>
          </task>
          <task kind="cheatsheet" name="Open the object mapping editor" skip="false">
             <intro>
-               The object mapping editor is where you manage the object (GUI) map in GUIdancer.
+               The object mapping editor is where you manage the object (GUI) map.
             </intro>
             <param name="path" value="openOME.xml">
             </param>
@@ -121,7 +114,7 @@ Note that the following steps are all completed based on the requirements for th
          <task kind="cheatsheet" name="Start and connect to the AUT Agent" skip="false">
             <intro>
                The AUT Agent should be installed on the machine or machines you want to run your test on. <br/><br/>
-You need to start and connect to the AUT Starter in order to run tests. 
+You need to start and connect to the AUT Agent in order to run tests. 
 <br/><br/>
 By default, the AUT Agent was installed on the same machine as the client.
             </intro>
@@ -136,7 +129,7 @@ By default, the AUT Agent was installed on the same machine as the client.
             </param>
          </task>
       </taskGroup>
-      <taskGroup kind="sequence" name="Object Mapping" skip="false">
+      <taskGroup kind="set" name="Object Mapping" skip="false">
          <intro>
             Up until now, the test specification has been separate from the actual AUT. <br/><br/>
 Now the AUT can be joined with the specification so that the test can be executed.
@@ -149,7 +142,7 @@ Now the AUT can be joined with the specification so that the test can be execute
             </param>
          </task>
       </taskGroup>
-      <taskGroup kind="sequence" name="Executing the test" skip="false">
+      <taskGroup kind="set" name="Executing the test" skip="false">
          <intro>
             This group of tasks shows you how to execute a test.
          </intro>
@@ -163,7 +156,7 @@ Now the AUT can be joined with the specification so that the test can be execute
       </taskGroup>
       <task kind="cheatsheet" name="Checklist for this tutorial" skip="false">
          <intro>
-            This checklist provides the main benefits of GUIdancer that this tutorial has shown.
+            This checklist provides the main benefits that this tutorial has shown.
          </intro>
          <param name="path" value="checklist.xml">
          </param>
