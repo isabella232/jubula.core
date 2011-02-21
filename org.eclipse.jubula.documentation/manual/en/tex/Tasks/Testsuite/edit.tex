@@ -31,7 +31,7 @@ To configure a \gdsuite{}, you must first create one \bxpref{TSeditor}.
 \item Add a comment to the \gdsuite{}. 
 \item Enter a value in the \bxname{step delay} field. 
 
-\bxtipp{The step delay is the time \jb{} leaves between each \gdstep{} during test execution. The default is 0 milliseconds. }
+\bxtipp{The step delay is the time \app{} leaves between each \gdstep{} during test execution. The default is 0 milliseconds. }
 
 \item Select the \gdaut{} for this \gdsuite{}. To be able to select an \gdaut{} (and object map, and execute your test) you must have added at least one \gdaut{} to the \gdproject{} \bxpref{Defineaut}.
 
@@ -39,7 +39,7 @@ To configure a \gdsuite{}, you must first create one \bxpref{TSeditor}.
 
 \bxtipp{You don't have to choose an \gdaut{} for a \gdsuite{} as soon as you have created it, but you will have to choose one before object mapping, for example.}
 
-\item Choose a default reentry type for each of the four error types in \jb{} from the combo-boxes. 
+\item Choose a default reentry type for each of the four error types in \app{} from the combo-boxes. 
 
 \gdehandlers{} are \gdcases{} used to deal with errors during test execution. When an error occurs, the current \gdcase{} is searched for an \gdehandler{} for that error type. If none is found, the parent \gdcase{} is searched, and so on. If no \gdehandler{} for the test is found, then a default \gdehandler{} (specified in the \gdsuite{} properties)is activated.  
 

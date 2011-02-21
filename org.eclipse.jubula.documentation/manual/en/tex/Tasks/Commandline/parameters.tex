@@ -17,9 +17,9 @@
 %% \end{document}
 \index{Command Line Client}
 \begin{enumerate}
-\item Once you have browsed to the \jb{} installation directory and entered \bxshell{GUIdancerCMD}, you can enter the parameters for the test execution.
+\item Once you have browsed to the \app{} installation directory and entered \bxshell{GUIdancerCMD}, you can enter the parameters for the test execution.
 \item The command line client has various parameters \bxfigref{cmdlineparams}:
-\bxtipp{A list of language codes is available in the reference manual (\bxextref{\jb{}efman}{ref,langcodes}).}
+\bxtipp{A list of language codes is available in the reference manual (\bxextref{\app{}efman}{ref,langcodes}).}
 
 \label{cmdlineparams}
 \tablehead{\hline\textbf{Detail}&\textbf{Parameter}\\\hline}
@@ -235,7 +235,7 @@
 %\bxshell{-testsuites ''Test$\backslash$Part1,Test$\backslash$Part2''}
 %\item If you have used quotes in your \gdsuite{} name, and these are a special symbol for your operating system, then the quotes must be masked with backslashes. 
 
-\bxtipp{The \jb{} Command Line Client also accepts arguments to pass on to the Java Virtual Machine. This means that you can, for example, increase the initial and maximum amount of system memory allocated to the JVM with the parameters \bxshell{-Xms<memory\_size>} and \bxshell{-Xmx<memory\_size>}, respectively. For example, the parameter \bxshell{-Xmx128M} would make a maximum of 128 MB of system memory available to the Command Line Client. When entering the standard parameters for the Command Line Client, you may add \bxshell{-J<JVM\_parameter>} for each JVM parameter you wish to set. For example, \bxshell{-J-Xmx128M}. Multiple parameters, like standard parameters, are separated by spaces. \\
+\bxtipp{The \app{} Command Line Client also accepts arguments to pass on to the Java Virtual Machine. This means that you can, for example, increase the initial and maximum amount of system memory allocated to the JVM with the parameters \bxshell{-Xms<memory\_size>} and \bxshell{-Xmx<memory\_size>}, respectively. For example, the parameter \bxshell{-Xmx128M} would make a maximum of 128 MB of system memory available to the Command Line Client. When entering the standard parameters for the Command Line Client, you may add \bxshell{-J<JVM\_parameter>} for each JVM parameter you wish to set. For example, \bxshell{-J-Xmx128M}. Multiple parameters, like standard parameters, are separated by spaces. \\
 Here is an example of defining mutliple JVM parameters: \bxshell{-J-Xmx128M -JXms128M}.}
 \item Using the no run option will check the completeness of the \gdprojects{}, test data and the validity of the \gddb{} connection. The \gdagent{} connection is not checked. 
 \item Once you have entered all the necessary parameters, press \bxkey{enter}. 

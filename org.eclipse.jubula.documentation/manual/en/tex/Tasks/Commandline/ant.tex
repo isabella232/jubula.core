@@ -1,5 +1,5 @@
-\jb{} tests can be performed as part of an \bxname{Apache Ant} build
-process. If you are already familiar with ant tasks, integrating \jb{}
+\app{} tests can be performed as part of an \bxname{Apache Ant} build
+process. If you are already familiar with ant tasks, integrating \app{}
 tests into your production process is straightforward. The following is a snippet of an example \bxshell{build.xml}
 file:
 
@@ -32,11 +32,11 @@ file:
 \end{verbatim}
 \normalsize
 
-The above \bxshell{basedir} attribute of the \bxshell{project} element should be set to the \jb{}
+The above \bxshell{basedir} attribute of the \bxshell{project} element should be set to the \app{}
 installation directory, i.e. 
 \bxshell{C:$\backslash$Program Files$\backslash$guidancer}. A relative
 path can also be used, as seen above. The contents of the
-\bxshell{taskdef} section should be left as is. These set up \jb{}'s
+\bxshell{taskdef} section should be left as is. These set up \app{}'s
 running environment and include necessary libraries and resource files.
 
 \bxwarn{Changing the \bxshell{taskdef} settings may prevent your tests
@@ -58,9 +58,9 @@ enclosed in the \bxshell{guidancer} tag should be set as follows:
   \item{\textbf{server}} The name of the computer that \gdagent{} is running
   on.
   \item{\textbf{port}} The port number that the \gdagent{} is running on.
-  \item{\textbf{dburl}} The JDBC URL of the \gddb{} containing your \jb{}
+  \item{\textbf{dburl}} The JDBC URL of the \gddb{} containing your \app{}
   \gdprojects. This option may be omitted, in which case the \gddb{}
-  configured using \jb{}'s configuration tool will be used.
+  configured using \app{}'s configuration tool will be used.
   \item{\textbf{dbuser}} The login name to the \gddb. When using the \gdintdb{} (default installation), this should be set to ''sa''.
   \item{\textbf{dbpw}} The password to login to the \gddb. When using the
   \gdintdb{} (default installation), this should left blank

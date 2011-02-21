@@ -1,11 +1,11 @@
-The \jb{} BIRT reports are examples of how you could document your quality over time. You can also create other reports to generate depending on which details you want to see in the reports. To create reports, you will need to use the BIRT designer from Actuate. There is an open source version and a commerical version of the designer. 
+The \app{} BIRT reports are examples of how you could document your quality over time. You can also create other reports to generate depending on which details you want to see in the reports. To create reports, you will need to use the BIRT designer from Actuate. There is an open source version and a commerical version of the designer. 
 
-The following information describes what information from the \jb{} \gddb{} can be used to generate BIRT reports. For help using BIRT, please see the BIRT documentation. 
+The following information describes what information from the \app{} \gddb{} can be used to generate BIRT reports. For help using BIRT, please see the BIRT documentation. 
 
-There are four \gddb{} tables in \jb{} that contain relevant data for test results:
+There are four \gddb{} tables in \app{} that contain relevant data for test results:
 
 \begin{description}
-\item [testresult\_summary]{This table contains one row per executed \gdsuite{} and corresponds to the \gdtestsummaryview{} in \jb{}.}
+\item [testresult\_summary]{This table contains one row per executed \gdsuite{} and corresponds to the \gdtestsummaryview{} in \app{}.}
 \item [testresult]{This table contains further information about each test run (each row in the \bxname{testresult\_summary} table), including all executed nodes. }
 \item [parameter\_details]{This table contains the name, type and value for all parameters (data) in the executed test.}
 \item [parameter\_list]{This table gives a parent-child relation between the executed nodes from the \bxname{testresult} table and the parameters in the \bxname{parameter\_details} table.}
@@ -14,21 +14,21 @@ There are four \gddb{} tables in \jb{} that contain relevant data for test resul
 \subsubsection{Creating a BIRT report}
 Using the BIRT report designer, you can create your own reports which will display specific information from these tables. 
 
-In the \jb{} installation directory, in:
+In the \app{} installation directory, in:
 
 \bxname{plugins/com.bredexsw.guidancer.reporting.birt.viewer}
 
 there is the directory \bxname{reports}. 
 
-In this directory, the templates for the reports available in \jb{} are stored. There is also a library which uses the \jb{} \gddb{} as a data source and contains data sets (SQL queries) to this \gddb{}. The following information is contained in the library:
+In this directory, the templates for the reports available in \app{} are stored. There is also a library which uses the \app{} \gddb{} as a data source and contains data sets (SQL queries) to this \gddb{}. The following information is contained in the library:
 
 \begin{description}
 \item [Datasets:]{there are views to show details from the four tables for reporting in the \gddb{}.}
 \item [Report parameters:]{These are parameters for the \gddb{} queries that can be used to limit the scope of a report.}
 \item [Report items:]{These are examples of  pre-defined tables and graphs which can be used in other reports.}
 \item [Master pages:]{These define the layout of the reports}
-\item[Themes:]{The themes contain information about colors, fonts etc. The \jb{} themes are in the guidancer.css file.}
+\item[Themes:]{The themes contain information about colors, fonts etc. The \app{} themes are in the guidancer.css file.}
 \end{description}
 
-\bxwarn{Be careful when working with the reports and themes that you do not break the existing reports in \jb{}!}
+\bxwarn{Be careful when working with the reports and themes that you do not break the existing reports in \app{}!}
  
