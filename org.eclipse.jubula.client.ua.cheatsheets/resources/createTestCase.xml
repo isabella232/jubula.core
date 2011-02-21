@@ -9,7 +9,7 @@
 <cheatsheet title="Create a Test Case">
    <intro>
       <description>
-         Test Cases in GUIdancer are the reusable modules. They can contain references to other Test Cases, and can contain Test Steps. 
+         Test Cases are reusable modules. They can contain references to other Test Cases, and can contain Test Steps. 
 <br/><br/>
 The following steps show you how to create a Test Case.
       </description>
@@ -20,7 +20,7 @@ The following steps show you how to create a Test Case.
 <br/><br/>
 <b> New &gt; New Test Case</b>  from the context-sensitive menu.
 <br/>
-Enter <b>PerformAddition</b> as the Test Case name.
+Enter <b>Perform Addition</b> as the Test Case name.
 <br/>
 Click <b>OK</b>.
 <br/>

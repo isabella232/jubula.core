@@ -9,7 +9,7 @@
 <cheatsheet title="Add reused Test Cases">
    <intro>
       <description>
-         The next steps show you how to work with the library of Test Cases installed with GUIdancer to create your tests. The library contains all the actions you will need to automate your tests, and is organized into categories based on the action to perform, and the component to perform the action on.
+         The next steps show you how to work with the library of Test Cases to create your tests. The library contains actions you will need to automate your tests, and is organized into categories based on the action to perform, and the component to perform the action on.
       </description>
    </intro>
    <item
@@ -27,13 +27,12 @@
 <b>unbound_modules_concrete &gt; Actions (basic) &gt;Activate Application </b>
       </description>
       <subitem
-            label="&quot;Drag the &quot;ub_app_activate[ACTIVATION_METHOD]&quot; Test Case from this category and drop it into the Test Case Editor (in the middle of the perspective).">
+            label="&quot;Drag the &quot;ub_app_activate[ACTIVATION_METHOD]&quot; Test Case from this category and drop it into the Test Case Editor (in the middle of the perspective)."
+            skip="false">
       </subitem>
       <subitem
-            label="Hint: When adding Test Cases to an editor, make sure you drop the Test Case directly onto the Test Case node after which you want your new Test Case to appear.">
-      </subitem>
-      <subitem
-            label="The &quot;activate application&quot; Test Case clicks once in the place you specify to ensure that your application has focus before beginning the test.">
+            label="The &quot;activate application&quot; Test Case clicks once in the place you specify to ensure that your application has focus before beginning the test."
+            skip="false">
       </subitem>
    </item>
    <item
@@ -81,7 +80,6 @@ This makes the test more readable.
       <description>
          In the Component Names View, enter <b>adder_value1_txf</b> in the <b>new name</b> field for the first &quot;ub_cti_replaceText&quot; Test Case. Enter <b>adder_value2_txf</b> for the second &quot;ub_cti_replaceText&quot; Test Case.  
 <br/><br/>
-Reassigning component names like this means you can use the same actions on different components in the interface. It makes your tests more reusable. We recommend having conventions for naming components.
       </description>
    </item>
    <item title="Add a &quot;Click&quot; Test Case" dialog="true" skip="false">
@@ -91,7 +89,7 @@ Reassigning component names like this means you can use the same actions on diff
 <b>unbound_modules_concrete &gt; Actions (basic) &gt; Click </b>
 <br/><br/>
       </description>
-      <subitem label="Drag the &quot;ub_grc_clickLeft_single&quot; Test Case into the Test Case Editor, underneath the other items.  &quot;Graphics component&quot; covers all sorts of interface components that can be clicked and checked." skip="false">
+      <subitem label="Drag the &quot;ub_grc_clickLeft_single&quot; Test Case into the Test Case Editor, underneath the other items.clicked and checked." skip="false">
       </subitem>
    </item>
    <item
@@ -104,7 +102,7 @@ Reassigning component names like this means you can use the same actions on diff
    </item>
    <item title="Reassign the component name" dialog="true" skip="false">
       <description>
-         In the Component Names View, enter <b>adder_equals_bt</b> in the <b>new name</b> field.
+         In the Component Names View, enter <b>adder_equals_btn</b> in the <b>new name</b> field.
       </description>
    </item>
    <item title="Add a &quot;Check Text&quot; Test Case" dialog="true" skip="false">
@@ -125,11 +123,9 @@ Reassigning component names like this means you can use the same actions on diff
    </item>
    <item title="Add a reference and a parameter" dialog="true" skip="false">
       <description>
-         In the Properties View, enter <b>=RESULT</b> as the  <b>Text</b> parameter and press enter.
+        In the Properties View, enter <b>=RESULT</b> as the  <b>Text</b> parameter and press enter.
 <br/><br/>
-Enter <b>equals</b> as the <b>operator</b> parameter and press enter.
-<br/><br/>
-GUIdancer gives you the choice about how to design your tests - which data you set for the Test Case, and which data you parameterize.
+Enter <b>equals</b> as the <b>operator</b> parameter and press enter..
       </description>
    </item>
    <item title="Reassign the component name" dialog="true" skip="false">

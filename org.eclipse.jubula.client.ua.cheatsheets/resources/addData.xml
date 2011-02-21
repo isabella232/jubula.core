@@ -14,7 +14,7 @@
    </intro>
    <item title="Select the parent Test Case" dialog="true" skip="false">
       <description>
-         In the Test Case Editor, click on the <b>PerformAddition</b> Test Case.
+         In the Test Case Editor, click on the <b>Perform Addition</b> Test Case.
       </description>
    </item>
    <item title="Add data to the Test Case" dialog="true" skip="false">
@@ -34,7 +34,9 @@
       <description>
          In the Data Sets View, click <b>Add</b> and enter another set of data to test (e.g. 5,6,11).
 <br/><br/>
-The whole Test Case will be executed twice because there are two data sets.
+Click <b>Add</b> again and enter a third set of data to test (17,4,21).
+<br/><br/>
+The whole Test Case will be executed three times because there are three data sets.
       </description>
       <subitem label="Make sure that you have no extra, empty data sets in the data sets view." skip="false">
       </subitem>

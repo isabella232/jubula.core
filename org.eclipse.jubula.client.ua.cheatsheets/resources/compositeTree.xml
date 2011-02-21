@@ -1,21 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-    Copyright (c) 2004, 2010 BREDEX GmbH.
-    All rights reserved. This program and the accompanying materials
-    are made available under the terms of the Eclipse Public License v1.0
-    which accompanies this distribution, and is available at
-    http://www.eclipse.org/legal/epl-v10.html
- -->
-
-<compositeCheatsheet name="Testing trees with GUIdancer">
-   <taskGroup kind="set" name="Testing trees with GUIdancer" skip="false">
+<?xml version="1.0" encoding="UTF-8"?>
+<compositeCheatsheet name="Testing trees">
+   <taskGroup kind="set" name="Testing trees" skip="false">
       <intro>
-         This cheat sheet shows you how to use GUIdancer to test trees in your application.<br/><br/>
+         This cheat sheet shows you how to test trees in your application.<br/><br/>
 Trees usually look like the windows explorer <b>folders</b> view. They contain <b>nodes</b>, which have other nodes within them. <br/><br/>
 Refer to the reference manual for more information on trees.<br/><br/>
-If you have not already completed the <b>GUIdancer First Steps</b> cheat sheet, we recommend doing this first.
+If you have not already completed the <b>First Steps</b> cheat sheet, we recommend doing this first.
       </intro>
       <onCompletion>
-         Now you should have a good overview of how to use the GUIdancer actions to test trees in your application.
+         Now you should have a good overview of how to use the  actions to test trees in your application.
       </onCompletion>
       <taskGroup kind="set" name="Import or open the test project" skip="false">
          <intro>
@@ -31,9 +24,9 @@ If you have not already completed the <b>GUIdancer First Steps</b> cheat sheet, 
       </taskGroup>
       <taskGroup kind="set" name="Testing trees" skip="false">
          <intro>
-            GUIdancer offers a variety of actions for trees. These tasks introduce you to a couple of them, and the parameters you will need to enter to make them work.
+            There are variety of actions for trees. These tasks introduce you to a couple of them, and the parameters you will need to enter to make them work.
          </intro>
-         <task kind="cheatsheet" name="Using GUIdancer to select a node from a tree" skip="false">
+         <task kind="cheatsheet" name="Selecting a node from a tree" skip="false">
             <intro>
                One of the most frequently needed actions on trees is selecting a node.
             </intro>

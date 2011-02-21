@@ -20,7 +20,7 @@
    </item>
    <item title="Check component names" dialog="true" skip="false">
       <description>
-         In the object mapping editor, check that you can see all the component names you used in this Test Suite. If you cannot see them, press <b>F5</b>.
+         In the object mapping editor, check that you can see all four component names you used in this Test Suite. If you cannot see them, press <b>F5</b>.
       </description>
    </item>
 </cheatsheet>

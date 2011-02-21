@@ -6,10 +6,10 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 
-<cheatsheet title="Selecting nodes from trees in GUIdancer">
+<cheatsheet title="Selecting nodes from trees">
    <intro>
       <description>
-         This cheat sheet shows you how to use GUIdancer to select a node in a tree. When you select a node, the tree is automatically &quot;expanded&quot; to the node.
+         This cheat sheet shows you how to select a node in a tree. When you select a node, the tree is automatically &quot;expanded&quot; to the node.
       </description>
    </intro>
    <item title="Create a Test Case" dialog="true" skip="false">
@@ -22,7 +22,7 @@ Open the Test Case Editor for this Test Case.
       <description>
          From the unbound modules, browse to the category: <br/> <b>Actions (basic) &gt; Select &gt; Tree</b>.
       </description>
-      <subitem label="Select the Test Case &quot;ub_tre_selectNode_byTextpath&quot;. Drag it into the Test Case Editor so that it appears under the &quot;Select node from tree&quot; Test Case." skip="false">
+      <subitem label="Select the Test Case &quot;ub_tre_selectNode_byTextpath&quot;. Drag it into the Test Case Editor." skip="false">
       </subitem>
    </item>
    <item title="Enter the parameter details for the Test Case" dialog="true" skip="false">

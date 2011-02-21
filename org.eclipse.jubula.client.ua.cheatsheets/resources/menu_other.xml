@@ -9,7 +9,7 @@
 <cheatsheet title="Other actions available for testing menus">
    <intro>
       <description>
-         You can also perform checks on menus with GUIdancer. You can check the enablement of an item, whether an item exists, and whether an item is selected.
+         You can also perform checks on menus. You can check the enablement of an item, whether an item exists, and whether an item is selected.
       </description>
    </intro>
    <item title="Finding the check actions for menus" dialog="true" skip="false">

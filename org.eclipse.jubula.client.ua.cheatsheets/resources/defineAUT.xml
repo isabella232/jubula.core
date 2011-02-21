@@ -15,15 +15,14 @@
    <item title="Defining the AUT" dialog="true" skip="false">
       <description>
          Select:<br/>
-<b>Project &gt; Properties</b>
+<b>Test &gt; Properties</b>
 <br/>
-Select <b>AUT&apos;s</b> from the list and click <b>Add</b>.
+Select <b>AUT&apos;s</b> from the list on the left and click <b>Add</b>.
 <br/>
 Enter <b>Adder</b> as the AUT name.
 <br/>
 Choose <b>Swing</b> as the toolkit. 
 <br/>
-Click <b>OK</b> and then <b>OK</b> again.
-      </description>
+Click <b>OK</b> and then <b>OK</b> again.    </description>
    </item>
 </cheatsheet>
