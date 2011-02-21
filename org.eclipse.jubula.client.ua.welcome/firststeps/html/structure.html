@@ -16,7 +16,7 @@
 			<div id="right">
 			
 				<div id="right_bluediv">
-						<span class="rightheadline">INFO</span>	
+						<span class="rightheadline">Info</span>	
 				</div>
 				
 					<span class="tab"><b>Hierarchy</b></span>
@@ -26,7 +26,7 @@
 					
 					<span class="tab"><b>Reusing Test Cases</b></span>
 					<div class="righttxt">
-					GUI<i>dancer</i> offers many way to make your Test Cases 
+					There are various ways to make your Test Cases 
 					more reusable. 													
 					</div>
 			</div>
@@ -38,28 +38,36 @@
 					<a class="navipoint" href="keywords.html">Keywords</a>
 				</div>
 				
-			<p class="headline1">GUI<i>dancer</i> test structure</p>
+			<p class="headline1">Test structure</p>
 			
 			<div class="maincontent">
 				
 			<p class="maintxt">
-			The following terms will be useful for understanding how to work with GUI<i>dancer</i>:
+			Useful terms:
 			</p>
 			
 			<ol>
 			<li class="list"><b>Projects</b> are containers for your Test Cases and Test Suites. 
-			They also contain information about your application under test, including
+			They also contain information about your application under test (AUT), including
 			how and where to start it. 
 			<br>
 			Projects are stored in a database, and can also be exported and imported in
 			XML format.
 			</li>
 			
-			<li class="list"><b>Test Suites</b> are the executable elements in GUI<i>dancer</i>. 
+			<li class="list"><b>Test Suites</b> are the executable elements. 
 			Fill your Test Suites with the Test Cases you want to execute. 
 			<br>
-			Test Suites are bound to an application under test. 
+			Test Suites are bound to an AUT. 
 			</li>
+			
+			<li class="list"><b>Test Jobs</b> are collections of Test Suites. 
+			A Test Job can be used to test different instances of the same AUT, 
+			or different AUTs within one test run.  
+			<br>
+			Test Jobs are bound to an AUT via its ID. 
+			</li>
+			
 			
 			<li class="list"><b>Test Cases</b> are the building blocks (keywords) for your tests. 
 			They can contain Test Steps and other Test Cases. 
@@ -67,7 +75,7 @@
 			Combine Test Cases to create larger, more complex Test Cases. 
 			</li>
 		
-			<li class="list"><b>Test Steps</b> are the smallest units in GUI<i>dancer</i>. 
+			<li class="list"><b>Test Steps</b> are the smallest available units. 
 			Each Test Step contains three pieces of information:
 			<br>
 			<ol>
@@ -78,10 +86,10 @@
 			<br>
 			You also enter a <i>component name</i>, which is your own name for this 
 			interface component. This name is joined to the real component name in the 
-			application under test later.  
+			AUT later.  
 			</li>
 			<li class="list">Most of the time, you will not be working with Test Steps, but with 
-			the GUI<i>dancer</i> library of unbound modules, which contains ready made Test Cases to reference in
+			the library of unbound modules, which contains ready made Test Cases to reference in
 			your tests. Each unbound module represents one Test Step to carry out a particular action. The library 
 			makes test creation easier by allowing you to drag and drop modules to create your Test Cases. 
 			</li>
