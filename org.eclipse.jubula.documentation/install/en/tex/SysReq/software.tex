@@ -9,7 +9,7 @@
 % --------------------------------------------------------
 
 \subsection{Supported operating systems}
-The following operating systems are supported by \jb{}{}:
+The following operating systems are supported by \app{}:
 \begin{itemize}
   \item Microsoft Windows (tested on XP, Vista and Windows 7)
   \item  Linux (tested on fedora 11 and centos 5 with GTK)
@@ -17,21 +17,21 @@ The following operating systems are supported by \jb{}{}:
 
 \end{itemize}
 
-Although the software may run on other systems, we cannot guarantee that \jb{}{} will run properly on them; nor can we support an installation on such systems.
+Although the software may run on other systems, we cannot guarantee that \app{} will run properly on them; nor can we support an installation on such systems.
 
 \subsection{Supported \bxname{Java} environments}
 \begin{description}
-\item [\jb{} client (standalone):]{JRE version 1.5 minimum}
-%\item [\jb{} client (Eclipse plugin):]{JRE version 1.5 minimum}
-\item [\jb{} server component (\gdserver):]{JRE version 1.4 minimum}
+\item [\app{} client (standalone):]{JRE version 1.5 minimum}
+%\item [\app{} client (Eclipse plugin):]{JRE version 1.5 minimum}
+\item [\app{} server component (\gdagent):]{JRE version 1.4 minimum}
 \item [\gdaut{}:]{JRE version 1.4 minimum}
 \end{description}
-Java 1.6 is provided in the \jb{} installation.  
+Java 1.6 is provided in the \app{} installation.  
 
-For the \jb{} client and the license administrator, you will need a 32-bit Java version. The operating system you use can be 32 or 64 bit, however. 
+For the \app{} client and the license administrator, you will need a 32-bit Java version. The operating system you use can be 32 or 64 bit, however. 
 
 \subsection{\gdDB requirements}
-\jb{} supports  \bxname{Oracle 9-10} as a multi-user \gddb{}. There is an embedded \gddb{} which is installed with \jb{}, but we only recommend using this for demo purposes. 
+\app{} supports  \bxname{Oracle 9-10} as a multi-user \gddb{}. There is an embedded \gddb{} which is installed with \app{}, but we only recommend using this for demo purposes. 
 
 Other databases may work, as supported by the \bxname{Hibernate} engine, but we can offer neither guarantee of their proper use nor technical support. Example configuration files for Postgres and MySQL are included in the installation. 
 
@@ -41,31 +41,31 @@ Other databases may work, as supported by the \bxname{Hibernate} engine, but we 
 %% \begin{itemize}
 %% \item  Microsoft .NET Framework Version 2.0 Redistributable Package (x86)
 %% \item Microsoft Visual J\# 2.0 Redistributable Package  Second Edition (x86)
-%% \item vs\_piaredist.exe (available on the \jb{} website)
+%% \item vs\_piaredist.exe (available on the \app{} website)
 %% \end{itemize}
 
 %% If you do not have these installed, you will not be able to run web tests. 
 
-%% There is an example \gdproject{} in the \jb{} installation called \bxname{WebTest}. It can be found under \bxname{guidancer/examples/projects}.  Try running this test on the \jb{} test site (which is the \gdaut{} for the test). If the test runs, you have everything installed that you need. If not, check that you have the .NET and J\# packages installed in the correct version. 
+%% There is an example \gdproject{} in the \app{} installation called \bxname{WebTest}. It can be found under \bxname{guidancer/examples/projects}.  Try running this test on the \app{} test site (which is the \gdaut{} for the test). If the test runs, you have everything installed that you need. If not, check that you have the .NET and J\# packages installed in the correct version. 
 %% \bxtipp{You will need internet access to run the example test.}
 
 %% \bxwarn{Web testing does not work on Microsoft Windows 64-bit operating systems.}
-\subsection{Firewalls and \jb{}}
-\jb{} has to be able to perform interprocess communication in order to run tests. No information is sent to external sources during this process. 
+\subsection{Firewalls and \app{}}
+\app{} has to be able to perform interprocess communication in order to run tests. No information is sent to external sources during this process. 
 
-The ports required by \jb{} are:
+The ports required by \app{} are:
 \begin{enumerate}
-\item From \jb{} to the \gdagent{}: this port is defined in the \jb{}  preferences.
-\item From the \gdaut{} to \jb{}: this port is dynamically chosen, and cannot currently be defined. Therefore, any ports available on your test machine must also be open on the machine from which the test is being run.
+\item From \app{} to the \gdagent{}: this port is defined in the \app{}  preferences.
+\item From the \gdaut{} to \app{}: this port is dynamically chosen, and cannot currently be defined. Therefore, any ports available on your test machine must also be open on the machine from which the test is being run.
 \end{enumerate}
 
- If opening all ports in this way is not an option, we recommend using the \jb{} command line client on the test machine to run the tests, so that all communication is done locally. 
+ If opening all ports in this way is not an option, we recommend using the \app{} command line client on the test machine to run the tests, so that all communication is done locally. 
 
 
 %In addition, the Windows firewall must be switched off to be able to start the \gdaut{}. 
 
 
 \subsection{Supported Eclipse versions}
-%The \jb{} plugin can run in Eclipse version Ganymede (3.4). % and Galileo (3.5).
+%The \app{} plugin can run in Eclipse version Ganymede (3.4). % and Galileo (3.5).
 
-Eclipse RCP \gdauts{} must be based on version 3.1 or higher of Eclipse to be tested with \jb{}. 
+Eclipse RCP \gdauts{} must be based on version 3.1 or higher of Eclipse to be tested with \app{}. 
