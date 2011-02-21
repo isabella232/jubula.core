@@ -33,10 +33,10 @@ pdf-nocirc: images texgen
 pdf-manual: clean-pdf images texgen UserManual.aux
 	if [ ! -d ${OUTPUTBASE} ]; then mkdir ${OUTPUTBASE}; fi
 	if [ ! -d ${OUTPUTPDF} ]; then mkdir ${OUTPUTPDF}; fi
-	pdflatex -output-directory ${OUTPUTPDF} -shell-escape ${DOC}
-	pdflatex -output-directory ${OUTPUTPDF} -shell-escape ${DOC}
+	pdflatex -output-directory ${OUTPUTPDF} -shell-escape "\def\productname{jubula}\input{${DOC}}"
+	pdflatex -output-directory ${OUTPUTPDF} -shell-escape "\def\productname{jubula}\input{${DOC}}"
 	makeindex ${OUTPUTPDF}/${DOC} ;\
-	pdflatex -output-directory ${OUTPUTPDF} -shell-escape ${DOC}
+	pdflatex -output-directory ${OUTPUTPDF} -shell-escape "\def\productname{jubula}\input{${DOC}}"
 # just the raw html please
 html-simple: 
 	if [ ! -d ${OUTPUTHTML}/tmp ]; then mkdir -p ${OUTPUTHTML}/tmp; fi
@@ -45,10 +45,10 @@ html-simple:
 htmlandpdf: clean-html pdf userlabels.pl
 	if [ ! -d ${OUTPUTHTML}/tex ]; then mkdir -p ${OUTPUTHTML}/tex; fi
 	if [ ! -d ${OUTPUTHTML}/html ]; then mkdir ${OUTPUTHTML}/html; fi
-	latex -output-directory ${OUTPUTHTML}/tex -shell-escape --halt-on-error ${DOC} ;\
-	latex -output-directory ${OUTPUTHTML}/tex -shell-escape --halt-on-error ${DOC} ;\
+	latex -output-directory ${OUTPUTHTML}/tex -shell-escape --halt-on-error "\def\productname{jubula}\input{${DOC}}" ;\
+	latex -output-directory ${OUTPUTHTML}/tex -shell-escape --halt-on-error "\def\productname{jubula}\input{${DOC}}" ;\
 	makeindex ${OUTPUTHTML}/tex/${DOC} ;\
-	latex -output-directory ${OUTPUTHTML}/tex -shell-escape --halt-on-error ${DOC} ;\
+	latex -output-directory ${OUTPUTHTML}/tex -shell-escape --halt-on-error "\def\productname{jubula}\input{${DOC}}" ;\
 # l2h uses the aux file for numbering, etc.
 	cp ${OUTPUTHTML}/tex/${DOC}.aux .
 	latex2html -dir ${OUTPUTHTML}/html -mkdir -address "'Copyright BREDEX GmbH ${MYDATE}'" -nonavigation -noinfo -html_version 4.0 -verbosity 0 ${DOC}
