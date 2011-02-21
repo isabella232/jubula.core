@@ -98,10 +98,7 @@
 
 .whatsnew_pic
 {
-	width:300px;
-	height:200px;
-	background-image:url(graphics/whatsnew.png);
-	background-repeat:no-repeat;
+	
 }
 
 .websources_pic
@@ -216,11 +213,8 @@ a.faq:hover {
 
 #gdlogo
 {
-	background-image:url(graphics/jubula_final.png);
-  	background-repeat:no-repeat;
-  	background-position:15px 0px;
-  	width:auto;
-  	height:150px;
+	
+
 }
 	
 
