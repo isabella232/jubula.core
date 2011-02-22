@@ -8,16 +8,16 @@
 
 <introContent>
 	<extensionContent id="GDWelcome-firststepsExtension"
-		style="./css/guidancer.css" name="Your first steps with GUIdancer"
+		style="./css/guidancer.css" name="Your first steps with Functional Testing"
 		path="firststeps/@">
 		<group style-id="content-group"
 			id="GDWelcome-firststepsLink-group">
-			<link label="Go to the GUIdancer first steps page" 
+			<link label="Go to the Functional Testing first steps page" 
 				url="html/firststep.html"
 				id="GDWelcome-introLink" style-id="content-link">
 				<text>
 					The 'first steps' section provides you with information about
-					the structure of GUIdancer tests and explains some of the most
+					the structure of functional tests and explains some of the most
 					commonly used terms in the program. 
 				</text>
 			</link>

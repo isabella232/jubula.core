@@ -7,9 +7,9 @@
  -->
 
 <introContent>
-  	<extensionContent id="GDWelcome-whatsnewExtension" style="css/guidancer.css" name="Whats's new in GUIdancer 2.2" path="whatsnew/@">
+  	<extensionContent id="GDWelcome-whatsnewExtension" style="css/guidancer.css" name="Whats's new in Functional Testing" path="whatsnew/@">
 		<group style-id="content-group" id="GDWelcome-whatsnewLink-group">
-       		<link label="Go to the GUIdancer what's new page" url="html/whatsnew.html" id="GDWelcome-introLink" style-id="content-link">
+       		<link label="Go to the Functional Testing what's new page" url="html/whatsnew.html" id="GDWelcome-introLink" style-id="content-link">
           		<text>
           		A quick overview of the new features can be found on the 'what's new' page. 
           		</text>

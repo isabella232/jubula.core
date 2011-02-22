@@ -7,15 +7,11 @@
  -->
 
 <introContent>
-  	<extensionContent id="GDWelcome-overviewExtension" style="css/guidancer.css" name="GUIdancer Overview" path="overview/@">
+  	<extensionContent id="GDWelcome-overviewExtension" style="css/guidancer.css" name="Functional Testing Overview" path="overview/@">
 		<group style-id="content-group" id="GDWelcome-overviewLink-group">
-       		<link label="Go to the GUIdancer overview page" url="html/overview.html" id="GDWelcome-introLink" style-id="content-link">
-          		<text>
-          		The 'overview' page tells you about the main information sources for GUIdancer. 
-          		Use these sources to find out about the features of GUIdancer, how to use GUIdancer, 
-          		and to answer any questions you may have. 
-          		
-          		</text>
+       		<link label="Go to the Functional Testing overview page" url="html/overview.html" id="GDWelcome-introLink" style-id="content-link">
+          		<text>The 'overview' page lists the main information sources for Functional Testing. 
+          		Use these sources to find out more about Functional Testing and working with the tool.</text>
        		</link>
        	</group>
   	</extensionContent>

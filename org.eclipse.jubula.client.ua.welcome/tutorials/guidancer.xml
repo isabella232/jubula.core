@@ -7,9 +7,9 @@
  -->
 
 <introContent>
-  	<extensionContent id="GDWelcome-tutorialsExtension" style="css/guidancer.css" name="GUIdancer Tutorials" path="tutorials/@">
+  	<extensionContent id="GDWelcome-tutorialsExtension" style="css/guidancer.css" name="Functional Testing Tutorials" path="tutorials/@">
 		<group style-id="content-group" id="GDWelcome-tutorialsLink-group">
-       		<link label="Go to the GUIdancer tutorials page" url="html/tutorials.html" id="GDWelcome-introLink" style-id="content-link">
+       		<link label="Go to the Functional Testing tutorials page" url="html/tutorials.html" id="GDWelcome-introLink" style-id="content-link">
           		<text>The tutorials page explains how to open the cheat sheets in your client. </text>
        		</link>
        	</group>

@@ -7,10 +7,10 @@
  -->
 
 <introContent>
-  	<extensionContent id="GDWelcome-migrateExtension" style="css/guidancer.css" name="How to migrate from an earlier version of GUIdancer" path="migrate/@">
+  	<extensionContent id="GDWelcome-migrateExtension" style="css/guidancer.css" name="How to migrate your functional tests to a new version" path="migrate/@">
 		<group style-id="content-group" id="GDWelcome-migrateLink-group">
-       		<link label="Migrate to the new GUIdancer version" url="html/migrate.html" id="GDWelcome-introLink" style-id="content-link">
-          		<text>Click to get more information about updating to new GUIdancer versions!</text>
+       		<link label="Migrate your functional tests" url="html/migrate.html" id="GDWelcome-introLink" style-id="content-link">
+          		<text>Click to get more information about how to migrate your functional tests to a new version!</text>
        		</link>
        	</group>
   	</extensionContent>
