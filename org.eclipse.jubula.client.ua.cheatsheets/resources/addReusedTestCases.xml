@@ -55,11 +55,9 @@
    <item
          title="Rename the referenced Test Cases">
       <description>
-         In the Properties View, rename the first &quot;ub_cti_replaceText&quot; Test Case to:
+         In the Test Case Editor, select the first &quot;ub_cti_replaceText&quot; test Case and rename it in the Properties View, in the <b>Test Case Reference Name</b> field:
 <br/>
 <b>Enter first value</b>
-<br/>
-by entering this new name in the <b>Test Case Reference Name</b> field.
 <br/><br/>
 Rename the second &quot;ub_cti_replaceText&quot; Test Case to:
 <br/>
@@ -70,7 +68,7 @@ This makes the test more readable.
    </item>
    <item title="Add references as parameters" dialog="true" skip="false">
       <description>
-         In the Properties View, enter <b>=VALUE1</b> into the empty <b>parameter value</b> field for the first &quot;ub_cti_replaceText&quot; Test Case and press enter.
+         In the Test Case Editor, select the &quot;Enter first value&quot; Test Case and enter <b>=VALUE1</b> into the empty <b>parameter value</b> in the Properties View.  Press enter to confirm the parameter.
       </description>
       <subitem
             label="In the Properties View for the second &quot;ub_cti_replaceText&quot; Test Case, enter =VALUE2 into the parameter value field and press enter.">
@@ -78,7 +76,7 @@ This makes the test more readable.
    </item>
    <item title="Reassign the component names" dialog="true" skip="false">
       <description>
-         In the Component Names View, enter <b>adder_value1_txf</b> in the <b>new name</b> field for the first &quot;ub_cti_replaceText&quot; Test Case. Enter <b>adder_value2_txf</b> for the second &quot;ub_cti_replaceText&quot; Test Case.  
+         In the Test Case Editor, select the &quot;Enter first value&quot; Test Case and select the Component Names View. In the Component Names View, enter <b>adder_value1_txf</b> in the <b>new name</b> field. In the same way, enter <b>adder_value2_txf</b> for the second &quot;ub_cti_replaceText&quot; Test Case.  
 <br/><br/>
       </description>
    </item>
@@ -89,7 +87,7 @@ This makes the test more readable.
 <b>unbound_modules_concrete &gt; Actions (basic) &gt; Click </b>
 <br/><br/>
       </description>
-      <subitem label="Drag the &quot;ub_grc_clickLeft_single&quot; Test Case into the Test Case Editor, underneath the other items.clicked and checked." skip="false">
+      <subitem label="Drag the &quot;ub_grc_clickLeft_single&quot; Test Case into the Test Case Editor, underneath the other items." skip="false">
       </subitem>
    </item>
    <item

@@ -25,9 +25,7 @@
       </subitem>
       <subitem label="Enter &quot;2&quot; in the VALUE2 column" skip="false">
       </subitem>
-      <subitem label="Enter &quot;3&quot; in the RESULT column" skip="false">
-      </subitem>
-      <subitem label="This creates one data set which tests that the value &quot;3&quot; is given when &quot;1&quot; and &quot;2&quot; are added." skip="false">
+      <subitem label="Enter &quot;3&quot; in the RESULT column. Now you have a data set which checks that the result of &quot;1&quot; and &quot;2&quot; is &quot;3&quot;.ULT column" skip="false">
       </subitem>
    </item>
    <item title="Add more data" dialog="true" skip="false">

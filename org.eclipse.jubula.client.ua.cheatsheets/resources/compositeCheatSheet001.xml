@@ -14,6 +14,21 @@ Your task is to create a test which will test this functionality via the GUI.
 <br/><br/>
 Make sure that the Integrated Test Environment (ITE)  is maximized to complete these cheat sheets!
       </intro>
+      <taskGroup kind="set" name="Working with the cheat sheets" skip="false">
+         <intro>
+            This task gives you a quick introduction to working with the cheat sheets.
+         </intro>
+         <onCompletion>
+            <b>Conclusion</b>
+         </onCompletion>
+         <task kind="cheatsheet" name="Navigating through the cheat sheets" skip="false">
+            <onCompletion>
+               Once a task is done, you can either review it or click to move to the next task.
+            </onCompletion>
+            <param name="path" value="cheatSheetNav.xml">
+            </param>
+         </task>
+      </taskGroup>
       <taskGroup kind="set" name="Setting up the Project" skip="false">
          <intro>
             This group of tasks deals with creating a Project, and adding and configuring an AUT.
@@ -23,7 +38,7 @@ Make sure that the Integrated Test Environment (ITE)  is maximized to complete t
                A Project contains information about the AUT and also contains the Test Cases to test the AUT.
             </intro>
             <onCompletion>
-               You will notice that there are grayed out Test Cases in the Test Case browser. This is a pre-defined library of Test Cases to make test creation easier. We will use these later to create the test.
+               You will notice that there is a category of blue Test Cases in the Test Case browser. This is a pre-defined library of Test Cases to make test creation easier. We will use these later to create the test.
             </onCompletion>
             <param name="path" value="createProject.xml">
             </param>
@@ -154,12 +169,5 @@ Now the AUT can be joined with the specification so that the test can be execute
             </param>
          </task>
       </taskGroup>
-      <task kind="cheatsheet" name="Checklist for this tutorial" skip="false">
-         <intro>
-            This checklist provides the main benefits that this tutorial has shown.
-         </intro>
-         <param name="path" value="checklist.xml">
-         </param>
-      </task>
    </taskGroup>
 </compositeCheatsheet>

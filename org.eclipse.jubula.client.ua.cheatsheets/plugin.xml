@@ -12,16 +12,16 @@
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <category
             id="GDCheatSheets.category1"
-            name="GUIdancer">
+            name="Functional Testing">
       </category>
       <cheatsheet
             category="GDCheatSheets.category1"
             composite="true"
             contentFile="$nl$/resources/compositeCheatSheet001.xml"
             id="GDCheatSheets.cheatsheet001"
-            name="001 GUIdancer First Steps Cheat Sheet">
+            name="001 First Steps Cheat Sheet">
          <description>
-            Cheat sheet for creating a first test with GUIdancer.
+            Cheat sheet for creating a first test.
          </description>
       </cheatsheet>
       <cheatsheet
@@ -31,7 +31,7 @@
             id="GDCheatSheets.cheatsheetmenu"
             name="002 Learning to test menus">
          <description>
-            Cheat sheet to learn how to test menus with GUIdancer.
+            Cheat sheet to learn how to test menus.
          </description>
       </cheatsheet>
       <cheatsheet
@@ -41,7 +41,7 @@
             id="GDCheatSheets.cheatsheettree"
             name="003 Learning to test trees">
          <description>
-            Cheat sheet to learn how to test trees with GUIdancer.
+            Cheat sheet to learn how to test trees.
          </description>
       </cheatsheet>
       <cheatsheet
@@ -51,7 +51,7 @@
             id="GDCheatSheets.cheatsheetcontextmenu"
             name="004 Learning to test context menus">
          <description>
-            Cheat sheet to learn how to test context menus with GUIdancer.
+            Cheat sheet to learn how to test context menus.
          </description>
       </cheatsheet>
    </extension>

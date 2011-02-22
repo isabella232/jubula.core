@@ -18,7 +18,7 @@
 <br/>
 <b>Test &gt; New</b>
 <br/>
-If you are not using the default database, you will need to log in.
+If you are not using the embedded database, you will need to log in.
  <br/>
  Enter <b>SimpleAdder</b> as the Project Name.
  <br/>

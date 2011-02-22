@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="Navigating through the cheat sheets">
+   <intro>
+   <description>
+         Each cheat sheet begins with an introduction. You can then press "Click to Begin".
+      </description>
+   </intro>
+   <item title="Working through steps">
+      <description>
+         For each main step, click &quot;Click to Complete&quot; once you have done it.
+       </description>
+   </item>
+   <item title="Working through sub steps">
+      <description>
+         Some steps include sub steps.
+       </description>
+       <subitem label="Sub steps must be confirmed using the button on the right hand side of the cheat sheet. Click when you have completed the sub step." skip="false">
+       </subitem>
+   </item>
+</cheatsheet>

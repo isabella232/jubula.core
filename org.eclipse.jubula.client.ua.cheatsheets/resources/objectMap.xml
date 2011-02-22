@@ -37,7 +37,7 @@
    </item>
    <item title="Assign the technical names to the component names" dialog="true" skip="false">
       <description>
-         In the object mapping editor, take your component name for the first text field (<b>adder_value1_txf</b>) and drag it onto the technical name for the first text field.
+         In the object mapping editor, take your component name for the first text field (<b>adder_value1_txf</b>) and drag it onto the technical name for the first text field (<b>value1</b>).
       </description>
       <subitem label="Repeat this process for the other component names. In this way, you specify which components should be found when you run your test." skip="false">
       </subitem>

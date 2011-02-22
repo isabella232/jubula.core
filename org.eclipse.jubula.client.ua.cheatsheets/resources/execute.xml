@@ -25,10 +25,10 @@ Because this test will run locally, do not move the mouse during the test.
          Look in the results view for information on the test execution.
       </description>
       <subitem
-            label="If you used the data set 17,4,21 then you will see that the &quot;Check result&quot; step for this data set was insuccessful. Use the properties view and the image view to see what happened.sult&quot;">
+            label="If you used the data set 17,4,21 then you will see that the &quot;Check result&quot; step for this data set was insuccessful. Use the Properties View and the image view to see what happened.">
       </subitem>
       <subitem
-            label="You can export a report for the test run from the Test Result Summary View.">
+            label="You can view and export a test report for the test run from the Test Result Summary View in the Functional Test Reporting Perspective.">
       </subitem>
    </item>
 </cheatsheet>
