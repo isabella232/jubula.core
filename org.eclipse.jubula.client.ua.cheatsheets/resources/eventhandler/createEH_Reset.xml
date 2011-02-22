@@ -43,9 +43,6 @@
             label="In the properties view, enter the textpath &quot;File.*/reset.*&quot; for the TEXTPATH parameter.">
       </subitem>
       <subitem
-            label="In the properties view, enter  &quot;matches&quot; as the OPERATOR parameter. &#x0A;&#x0A;This allows you to use regular expressions (.*) in the textpath for the menu.">
-      </subitem>
-      <subitem
             label="Save the Test Case Editor.">
       </subitem>
    </item>

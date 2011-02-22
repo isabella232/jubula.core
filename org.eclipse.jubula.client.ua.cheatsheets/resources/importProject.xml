@@ -29,7 +29,7 @@ Select <b>Samples.xml</b> and <b>bound_modules_samples.xml</b> and import them i
    </item>
    <item title="Open the Samples Project" dialog="true" skip="false">
       <description>
-         Select: <b>Project &gt; Open</b> and choose to open the <b>Samples</b> Project.
+         Select: <b>Test &gt; Open</b> and choose to open the <b>Samples</b> Project.
       </description>
    </item>
 </cheatsheet>
