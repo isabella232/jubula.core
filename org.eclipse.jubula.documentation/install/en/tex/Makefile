@@ -24,10 +24,10 @@ pdf:	clean-pdf images
 	fi ;\
 	if [ ! -d ${OUTPUTBASE} ]; then mkdir ${OUTPUTBASE}; fi
 	if [ ! -d ${OUTPUTPDF} ]; then mkdir ${OUTPUTPDF}; fi
-	pdflatex -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error "\def\productname{jubula}\input{${DOC}}"
+	pdflatex -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error ${DOC}
 	makeindex ${OUTPUTPDF}/${DOC} ;\
-	pdflatex -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error "\def\productname{jubula}\input{${DOC}}"
-	pdflatex -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error "\def\productname{jubula}\input{${DOC}}"
+	pdflatex -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error ${DOC}
+	pdflatex -output-directory ${OUTPUTPDF} -shell-escape --halt-on-error ${DOC}
 
 clean-pdf:
 	@rm -Rf ${OUTPUTPDF}
