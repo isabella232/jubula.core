@@ -10,8 +10,8 @@ default:
 pdf:	clean
 	mkdir ../build
 	mkdir ../build/pdf
-	pdflatex -output-directory ../build/pdf -shell-escape --halt-on-error "\def\productname{jubula}\input{releaseNotes}"
-	pdflatex -output-directory ../build/pdf -shell-escape --halt-on-error "\def\productname{jubula}\input{releaseNotes}"
+	pdflatex -output-directory ../build/pdf -shell-escape --halt-on-error releaseNotes
+	pdflatex -output-directory ../build/pdf -shell-escape --halt-on-error releaseNotes
 
 clean:
 	@rm -Rf ../build
