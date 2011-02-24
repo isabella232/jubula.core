@@ -1,0 +1,48 @@
+% Local IspellDict: english
+% --------------------------------------------------------
+% Installation Manual content
+% copyright by BREDEX GmbH 2004
+% --------------------------------------------------------
+
+%\include{bxtypography}
+\title{\app{} Installation Manual}
+\author*{\app{} Team}{}
+\bxbanner{../../../share/PS/splash}
+\maketitle
+
+% ----------------------------------------------------------------------
+\input{../../../share/version}
+\bxdocinfo{RELEASE}{BREDEX GmbH}{\today}{}
+%\bxdocinfo{RELEASE}{BREDEX GmbH}{\today}{}
+\tableofcontents
+% ----------------------------------------------------------------------
+% uncomment the following line to hide all \bxcomment's (i.e. for a
+% release)
+% FIXME MH: L2H doesn't like \renewcommand, find other solution
+\renewcommand{\bxcomment}[2]{}%
+% ----------------------------------------------------------------------
+\clearpage
+% ----------------------------------------------------------------------
+\setcounter{secnumdepth}{2}%{secnumdepth}{0}
+
+\chapter{System requirements}
+\input{SysReq/CONTENT}
+\clearpage
+\chapter{Important! Migration information}
+\input{Firststart/CONTENT}
+\clearpage
+\chapter{Installation}
+\input{Installation/CONTENT}
+\clearpage
+\chapter{Windows installation}
+\input{Windows/CONTENT}
+\clearpage
+\chapter{Mac installation}
+\input{Mac/CONTENT}
+\clearpage
+\chapter{Unix installation}
+\label{Unix}
+\input{Unix/CONTENT}
+\clearpage
+\chapter{Uninstalling \app{}}
+\input{Uninstall/CONTENT}
