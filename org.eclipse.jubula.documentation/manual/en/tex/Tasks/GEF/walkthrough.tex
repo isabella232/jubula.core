@@ -1,4 +1,4 @@
-The first step to implementing your accessibility plug-in is to create Identifiers for each type of GEF component that you wish to make accessible for \app{} tests. An Identifier is a Java class that implements \bxname{com.bredexsw.guidancer.gef.identifier.IEditPartIdentifier} and provides \app{} with additional and/or more precise information about a specific org.eclipse.gef.EditPart. The granularity of your Identifier classes will depend on the class hierarchy of the EditParts in the \gdaut{}. For example, if many of the EditParts share a common superclass, then you can write a single Identifier for that superclass that will be able to provide accessibility for all EditParts that inherit from that superclass. See \bxpref{gefreference} for a sample implementation.
+The first step to implementing your accessibility plug-in is to create Identifiers for each type of GEF component that you wish to make accessible for \app{} tests. An Identifier is a Java class that implements \bxname{org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier} and provides \app{} with additional and/or more precise information about a specific org.eclipse.gef.EditPart. The granularity of your Identifier classes will depend on the class hierarchy of the EditParts in the \gdaut{}. For example, if many of the EditParts share a common superclass, then you can write a single Identifier for that superclass that will be able to provide accessibility for all EditParts that inherit from that superclass. See \bxpref{gefreference} for a sample implementation.
 
 The next step is to create an Adapter Factory. This extension will provide \app{} with information regarding which Identifier to use for each Edit Part.
 \begin{enumerate}
@@ -13,7 +13,7 @@ The next step is to create an Adapter Factory. This extension will provide \app{
 \end{figure}
 
 \item Add an instance of the \bxname{org.eclipse.core.runtime.adapters} extension. 
-\item Add a 'factory' to the new extension for each type of GEF component for which you wish to provide accessibility. Each factory must provide adapters from the GEF component that implements \bxname{org.eclipse.gef.EditPart} to \bxname{com.bredexsw.guidancer.gef.identifier.IEditPartIdentifier} (\bxfigref{factory}).
+\item Add a 'factory' to the new extension for each type of GEF component for which you wish to provide accessibility. Each factory must provide adapters from the GEF component that implements \bxname{org.eclipse.gef.EditPart} to \bxname{org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier} (\bxfigref{factory}).
 
 \begin{figure}[h]
 \begin{center}
