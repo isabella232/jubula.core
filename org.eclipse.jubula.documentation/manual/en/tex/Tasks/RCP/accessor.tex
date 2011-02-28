@@ -7,12 +7,12 @@ If you want to test a \bxname{Rich Client Platform} application, you
 must first unzip our \bxcaption{RCP Remote Control} plugin into your
 \gdaut{}. This can be done as follows:
 
-%TODO - check names of rcp accessor
+
 \begin{enumerate}
-\item Locate the  \app{} installation directory.
-\item Extract the content of the \bxname{rcpremotecontrol.zip} folder into the \bxname{plugins} directory for your RCP \gdaut{}.
+\item Locate the \app{} installation directory.
+\item Extract the content of the \bxname{rcpsupport.zip} folder into the \bxname{plugins} directory for your RCP \gdaut{}.
 \bxtipp{When you install a new version of \app{}, you must repeat these steps with the new RCP remote control plugin. We recommend starting your \gdaut{} once with \bxshell{-clean} to ensure that the new remote control plugin is used. }
-\item RCP applications generally have a configuration/config.ini file which contains the parameter \bxname{osgi.bundles}. This parameter may need to be modified to allow the RCP remote control plugin to load on \gdaut{} startup. The \bxname{org.eclipse.update.configurator} plugin automatically loads all plugins found in the plugins directory, which means that the RCP remote control plugin should start with the \gdaut{} if \bxname{org.eclipse.update.configurator@3:start} is already defined in the \bxname{osgi.bundles} parameter. Otherwise, you may need to add  \bxname{com.bredexsw.guidancer.rcpremotecontrol} to the end of the \bxname{osgi.bundles} parameter.
+\item RCP applications generally have a configuration/config.ini file which contains the parameter \bxname{osgi.bundles}. This parameter may need to be modified to allow the RCP remote control plugin to load on \gdaut{} startup. The \bxname{org.eclipse.update.configurator} plugin automatically loads all plugins found in the plugins directory, which means that the RCP remote control plugin should start with the \gdaut{} if \bxname{org.eclipse.update.configurator@3:start} is already defined in the \bxname{osgi.bundles} parameter. Otherwise, you may need to add  \bxname{org.eclipse.jubula.rc.rcp} to the end of the \bxname{osgi.bundles} parameter.
 \end{enumerate}
 
 If you do not follow the above steps, the \gdagent{} will not be able to

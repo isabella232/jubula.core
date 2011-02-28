@@ -33,9 +33,9 @@ You can import whole \gdprojects{} \bxpref{ImportProject} or the \gdcases{} \bxp
 \label{ImportProject}
 
 \begin{enumerate} 
-\item To import whole \gdprojects{} from a \gdproject{}, select:\\
- \bxmenu{Project}{Import}{}. 
-\item In the dialog which appears (\bxfigref{Import}), enter or browse to the \gdproject{} you want to import. 
+\item To import whole \gdprojects{},  select:\\
+ \bxmenu{Test}{Import}{}. 
+\item In the dialog which appears (\bxfigref{Import}), enter or browse to the \gdprojects{} you want to import. 
 
 \item If you have entered the path to a \gdproject{}, click \bxcaption{Add} to add it to the list of \gdprojects{} to be imported. 
 
@@ -52,8 +52,8 @@ If you add multiple \gdprojects{} to be imported, you can change the order they 
 \subsection{Importing \gdcases{} from \gdprojects{}}
 \label{ImportTestCases}
 \begin{enumerate}
-\item To import the \gdcases{} from one or more \gdprojects{}, select:\\
- \bxmenu{Project}{Import}{}. 
+\item To import the \gdcases{} from a \gdproject{}, select:\\
+ \bxmenu{Test}{Import}{}. 
 \item In the dialog which appears (\bxfigref{Import}), enter or browse to the \gdprojects{} whose \gdcases{} you want to import. 
 
 \bxtipp{You can only import \gdcases{} from \gdprojects{} whose toolkit is supported by the current \gdproject{}.}
@@ -70,12 +70,8 @@ If you add multiple \gdprojects{} to be imported, you can change the order they 
 
 \bxtipp{Note that the \bxcaption{Add} button will only be activated if the path you have entered is correct.} 
 
-If you add multiple \gdprojects{}, you can change the order in which their \gdcases{} are imported in using the arrows next to the list of \gdprojects{}. You can also remove a \gdproject{} from the list of \gdprojects{}. 
-
-\bxtipp{If you are importing \gdprojects{} whose \gdcases{} are dependent on other \gdprojects{} (i.e. they reuse other \gdprojects{}), import the supporting \gdprojects{} first.}
-
-\item Select the option to import partial \gdprojects{}. 
-\item When you have finished your selection, click \bxcaption{OK}. The \gdcases{} from \gdprojects{} you selected will be imported in the order specified. 
+\item Select the option to  merge elements into the active \gdproject{}. 
+\item When you have finished your selection, click \bxcaption{OK}. The \gdcases{} from the \gdproject{} you selected will be imported.
 \item The \gdcases{} are imported directly into the currently opened \gdproject{}. They can be found in the category \bxname{ImportedTCs}. 
 \end{enumerate}
 

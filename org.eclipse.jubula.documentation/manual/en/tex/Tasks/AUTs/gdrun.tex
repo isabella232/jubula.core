@@ -6,20 +6,20 @@
 
 %% \end{document}
 
-\index{gdrun command!Define AUT}
-\index{Define AUT!gdrun command}
+\index{autrun command!Define AUT}
+\index{Define AUT!autrun command}
 
-The \bxname{gdrun} command can be used as an alternative to starting your \gdaut{} via \app{} (i.e. with an \gdaut{} configuration \bxpref{configuringaut}). It can only be used if your \gdaut{} can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Sun VM. 
+The \bxname{autrun} command can be used as an alternative to starting your \gdaut{} via \app{} (i.e. with an \gdaut{} configuration \bxpref{configuringaut}). It can only be used if your \gdaut{} can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Sun VM. 
 
 
-\bxwarn{The \bxname{gdrun} command cannot be used for HTML or pure SWT \gdauts{}.}
+\bxwarn{The \bxname{autrun} command cannot be used for HTML or pure SWT \gdauts{}.}
 
-The command allows you to start your \gdaut{} independently of \app{}, on a machine where the \gdagent{} is running. The \app{} client, when connected to this \gdagent{} will then recognize the running \gdaut{} as a testable application. 
+The command allows you to start your \gdaut{} independently of \app{}, on a machine where the \gdagent{} is running. The \app{} \ite{}, when connected to this \gdagent{} will then recognize the running \gdaut{} as a testable application. 
 
-To use the \bxname{gdrun} command:
+To use the \bxname{autrun} command:
 \begin{enumerate}
 \item Ensure that the \gdagent{} is installed on the machine where you will be starting the \gdaut{}. 
-\item Start your \gdaut{} via the command line by entering \bxshell{gdrun.exe} then the following parameters: 
+\item Start your \gdaut{} via the command line by entering \bxshell{autrun.exe} then the following parameters: 
 \begin{table}[h]
 \label{gdrunparams}
 	\centering
@@ -75,17 +75,16 @@ To use the \bxname{gdrun} command:
                   \hline
                  
 	\end{tabular}
-	\caption{Parameters for gdrun command}
-	\label{paramscmd}
+	\caption{Parameters for autrun command}
 \end{table}
 \end{enumerate}
 
 \subsubsection{Creating an \gdaut{} definition from a running \gdaut{}}
 \label{createAUTDef}
-Once you have started an \gdaut{} using the \bxname{gdrun} command, you can automatically generate an \gdaut{} definition \bxpref{Defineaut} for this \gdaut{}:
+Once you have started an \gdaut{} using the \bxname{autrun} command, you can automatically generate an \gdaut{} definition \bxpref{Defineaut} for this \gdaut{}:
 
 \begin{itemize}
-\item In the \app{}unautview{}, select the \gdaut{} you want to define (it will be marked as an unknown \gdaut{} ID).
+\item In the \gdrunautview{}, select the \gdaut{} you want to define (it will be marked as an unknown \gdaut{} ID).
 \item Select:\\
  \bxmenu{Create AUT Definition}{}{}\\
 from the context menu.

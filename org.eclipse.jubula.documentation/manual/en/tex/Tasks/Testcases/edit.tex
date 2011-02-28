@@ -1,98 +1,15 @@
 \index{Test Case!Edit}
 \index{Edit!Test Case}
 
-\begin{enumerate}
-\item To edit a \gdcase{}, double-click on the \gdcase{} you want to edit in the \gdtestcasebrowser{}. 
-\item The \gdtestcaseeditor{} for this \gdcase{} will appear in the middle of the specification perspective. 
-
-\bxtipp{When you are working in the \gdtestcaseeditor{}, the \gdpropview{}, \gddatasetsview{} and \gdcompnamesview{} on the right hand side of the screen contain information about this \gdcase{}.} 
-\item From the \gdtestcaseeditor{}, you can edit this \gdcase{}. You can:
+From the \gdtestcaseeditor{}, you can edit a \gdcase{}. You can:
 
 \begin{itemize}
-\item add other \gdcases{} \bxpref{addtestcase}.
+\item add other \gdcases{} \bxpref{TasksEditorAdd}.
 \item add and edit \gdsteps{} \bxpref{specsteps}.
-\item rename the \gdcase{} \bxpref{renamingtc}.
-\item add a comment to the \gdcase{} \bxpref{taskscomment}.
+\item rename the \gdcase{} \bxpref{TasksBrowserRename} or the \gdcases{} it contains \bxpref{TasksEditorRename}.
+\item add a comment to the \gdcase{} \bxpref{TasksEditorAddComment}.
 \item add, edit or translate data for the \gdcase{} \bxpref{TasksDataSetsView}. 
 \end{itemize}
-\end{enumerate}
-
-\subsection{Renaming \gdcases}
-\index{Test Case!Renaming}
-\index{Renaming!Test Cases}
-\label{renamingtc}
-\subsubsection{Renaming \gdcases{} from the \gdtestcasebrowser{}}
-\gdhelpid{dialogRenameContextId}{Renaming}
-\begin{enumerate}
-\item There are two ways to rename a \gdcase{} from the \gdtestcasebrowser{}:
-\begin{enumerate}
-\item Select the (non-reused) \gdcase{} you want to rename in the \gdtestcasebrowser{}. Select:\\
-\bxmenu{Rename}{}{}\\
-from the context-sensitive menu. In the dialog which appears, enter a new name and click \bxcaption{OK}. 
-\item Open the \gdtestcaseeditor{} by double-clicking on the \gdcase{} you want to edit in the \gdtestcasebrowser{}.  In the \gdpropview{}, change the \gdcase{} name. Save the changes in the editor. 
-\end{enumerate}
-
-Renaming a \gdcase{} in the \gdtestcasebrowser{} or in its \gdtestcaseeditor{} changes the \bxname{specification name} of the \gdcase{}. 
-
-If you have reused this \gdcase{} in other \gdcases{} or \gdsuites{}, the name will also be changed in the places where you have reused it but not renamed it. 
 
 
-\end{enumerate}
 
-\subsubsection{Renaming a \gdcase{} reused in another \gdcase{}}
-\gdhelpid{dialogRenameContextId}{Renaming}
-\begin{enumerate}
-\item Open the \gdtestcaseeditor{} by double-clicking on the \gdcase{} you want to edit in the \gdtestcasebrowser{}. 
-\item In the \gdtestcaseeditor{}, select the \gdcase{} you want to rename.
-\item In the \gdpropview{}, enter the new name for the \gdcase{} in the \bxname{Test Case name} field. 
-
-The angled brackets from the \gdcase{} you just edited will disappear from the \gdtestcaseeditor{}. This indicates that the \gdcase{} has been renamed. You will still see the original \gdcase{} name behind the new name in brackets. In the preferences, you can opt not to see the original name when you have renamed a \gdcase{} reference \bxpref{gdprefs}. 
-
-The original \gdcase{} in the \gdtestcasebrowser{} still has its original name. The reused \gdcase{} you just renamed will keep its new name even if you rename the original \gdcase{}. 
-
-If you want to reset the original specification name in a reused \gdcase{}, empty the \bxname{Test Case name} field and save the editor. The \gdcase{} will redisplay the angled brackets and will have the same name as the specification name.  
-\end{enumerate}
-
-\subsubsection{Renaming a reused \gdcase{} in a \gdsuite{}}
-\gdhelpid{testSuiteEditorContextId}{Test Suite Editor}
-%\gdhelpid{testExecViewContextId}{Test Suite Browser}
-\begin{enumerate}
-\item Open the \gdtestsuiteeditor{} by double-clicking on the \gdsuite{} you want to edit in the \gdtestsuitebrowser{}. 
-\item In the \gdtestsuiteeditor{}, select the \gdcase{} you want to rename.
-\item In the \gdpropview{}, enter the new name for the \gdcase{} in the \bxname{Test Case name} field. 
-
-You will still be able to see the original \gdcase{} name (the specification name) in the \gdpropview{}. The angled brackets from the \gdcase{} you just edited will disappear from the \gdtestsuiteeditor{}. This indicates that the \gdcase{} has been renamed. 
-
-The original \gdcase{} in the \gdtestcasebrowser{} still has its original name. The reused \gdcase{} you just renamed will keep its new name even if you rename the original \gdcase{}. 
-
-If you want to reset the original specification name in a reused \gdcase{}, empty the \bxname{Test Case name} field and save the editor. The \gdcase{} will redisplay the angled brackets and will have the same name as the specification name.  
-\end{enumerate}
-
-
-\subsection{Adding comments to \gdcases{} and \gdsuites{}}
-\index{Add!Comments}
-\index{Comment!Add}
-\label{taskscomment}
-\begin{enumerate}
-\item Open the \gdtestcaseeditor{} or \gdsuiteeditor{} by double-clicking on the  \gdcase{} or \gdsuite{} you want to add a comment to.
-\item This will open the editor for the \gdcase{} or \gdsuite{}. 
-\item Enter a comment in the \bxname{comment} field in the  \gdpropview{}. 
-\item Save the changes
-\item Comments can be overwritten when a \gdcase{} is reused.
-\bxtipp{You can see the comment for a \gdcase{} when you hover over it in the \gdtestcasebrowser{} or the \gdtestsuitebrowser{} or in the search results view.}
-\end{enumerate}
-
-
-\subsection{Deleting \gdsteps{} and \gdcases{} from a \gdcase{}}
-\index{Delete!Test Steps}
-\index{Delete!Test Cases}
-\index{Test Case!Delete}
-\index{Test Step!Delete}
-\begin{enumerate}
-\item Open the \gdtestcaseeditor{} by double-clicking on the \gdcase{} you want to edit in the \gdtestcasebrowser{}.  
-\item Right-click on the item to be deleted in the \gdtestcaseeditor{}
- and select 
-\bxcaption{Delete} from the context-sensitive menu.  
-\item You can also use \bxkey{DELETE} to delete items.  
-\item Save the changes in the editor.
-\end{enumerate}
