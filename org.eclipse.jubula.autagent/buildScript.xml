@@ -39,7 +39,7 @@
 	<!-- classpath -->
 	<property name="javac" value="javac"/>
 	<property name="javac.classpath" value="classpath"/>
-	<property name="javac.debug" value="on"/>
+	<property name="javac.debug" value="javac.debug"/>
 
 	<!-- 
 		Targets
