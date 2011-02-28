@@ -16,9 +16,13 @@
 	</target>
 
 	<target name="deleteScreens">
-		<exec dir="." executable="/bin/bash">
-			<arg line="deleteScreens.sh" />
-		</exec>
+		<delete>
+			<fileset dir="../..">
+				<include name="**/*.jpg"/>
+				<include name="**/*.eps"/>
+				<exclude name="**/build/**"/>
+			</fileset>
+		</delete>
 	</target>
 	
 </project>

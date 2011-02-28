@@ -20,6 +20,11 @@ To use the \gdcases{} from the library, you will first need to create a \gdcase{
 \item You can add the \gdcase{} by dragging and dropping from the \gdtestcasebrowser{} to the \gdtestcaseeditor{} or you can right click on the \gdcase{} in the \gdtestcaseeditor{} and select:\\
 \bxmenu{Reference Existing \gdcase{}}{}\\
 to see a list of all \gdcases{} that you can add to this \gdcase{}. 
+
+\bxtipp{You can filter in this dialog using the field at the top. Use star \bxshell{*} as a wild card.}
+
+\bxtipp{You can open the dialog to reference an existing \gdcase{} by pressing \bxkey{Enter} on a \gdcase{} in the \gdtestcaseeditor{}.}
+
 \item Once you have added the \gdcase{}, you will need to enter a component name in the \gdcompnamesview{} \bxpref{TasksReassignCompName} and you will need to enter data for the \gdcase{} in the \gdpropview{} \bxpref{WorkingWithData}. 
 \bxtipp{See the Best Practices section for information on how to best structure your \gdcases{} and tests \bxpref{BPKeywordDesign}.}
 \end{enumerate}
@@ -28,7 +33,7 @@ to see a list of all \gdcases{} that you can add to this \gdcase{}.
 \subsubsection{Information about the library}
 \label{LibraryInformation}
 \begin{enumerate}
-\item The \app{} team uses a highly reusable library of \gdcases{} to specify tests. These \gdcases{} are installed with the software to reduce the effort spent creating your tests.  
+\item \app{} lets you use a  highly reusable library of \gdcases{} to specify tests. 
 \item The \gdprojects{} containing the \gdcase{} libraries are located under:\\
 \bxname{examples/testcaseLibrary}.
 
@@ -37,11 +42,12 @@ to see a list of all \gdcases{} that you can add to this \gdcase{}.
 \item unbound\_modules\_concrete
 \item unbound\_modules\_web
 \item unbound\_modules\_swt
+\item unbound\_modules\_rcp
 \end{itemize}
 
 \item These \gdprojects{} contain reusable \gdcases{} which have been created in advance so you do not have to specify them yourself.
 \bxtipp{Refer to the chapter on Components, Actions, and Parameters
-(\bxextref{\app{}efman}{ref,actparam}) for information on components, the
+(\bxextref{\gdrefman}{ref,actparam}) for information on components, the
 actions they support, and their parameters.}
 \item The library is split into categories of \bxname{actions} on components. To select something in your \gdaut{}, open the \bxname{select} category and then open the category for the type of component you want to select something from. 
 
@@ -72,7 +78,7 @@ The \gdcase{} finds the menu, opens it, and clicks the item you specify. \\
 \textbf{Abstract components}\\
 There are some actions which are executable on many different components. Clicks, for example can be executed on pratically all components in the interface. You can also check text on labels, combo boxes and text fields. Obviously, it makes sense to specify your \gdcases{} as abstractly as possible so that they can be reused in more places. This helps keep the maintenance low later. 
 
-You will notice in the library that there is no \bxname{Button} category under the \bxname{Click} category. Instead, you will find various click actions specified for \bxname{Graphics Component}. This is because all components which support clicks belong to the \bxname{Graphics Component} group. 
+You will notice in the library that there is no \bxname{Button} category under the \bxname{Click} category. Instead, you will find various click actions specified for \bxname{Graphics Component (grc)}. This is because all components which support clicks belong to the \bxname{Graphics Component} group. 
 
 In the same way, you will find the category \bxname{Check/Component with Text}. You can use the check actions from this category to check text on any component with text -- buttons, text fields, combo boxes, labels. \\
 

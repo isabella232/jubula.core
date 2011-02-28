@@ -10,9 +10,9 @@
 \gdcases{} are the ''building blocks'' (keywords) in \app{}. They can: 
 \begin{itemize}
 
-\item contain other (referenced) \gdcases{} \bxpref{addtestcase}
+\item contain other (referenced) \gdcases{} \bxpref{TasksEditorAdd}
 \item contain \gdsteps{} \bxpref{specsteps}
-\item be used in \gdsuites{} \bxpref{addtestsuite}
+\item be used in \gdsuites{} \bxpref{TasksEditorAdd}
 \item be used as \gdehandlers{} \bxpref{customizedehandler}
 \end{itemize}
 
@@ -30,30 +30,19 @@
 \label{usingtemplate}
 \input{Tasks/Testcases/library}
 
-\subsection{Opening \gdcases{}}
+\subsection{Opening existing \gdcases{}}
 \gdhelpid{guidancerSpecTestCaseEditorContextId}{Test Case Editor}
 \gdhelpid{testCaseOpenExistingContextId}{Open Existing Test Case}
+\label{TasksOpenExistingTC}
 \input{Tasks/Testcases/openexisting}
 
-\subsection{Deleting \gdcases}
-\gdhelpid{testSpecificationViewContextId}{Test Case Browser}
-\input{Tasks/Testcases/delete}
-
-\subsection{Editing \gdcases{}: renaming, adding comments, deleting items}
+\subsection{Editing \gdcases{}}
 \gdhelpid{testSpecificationViewContextId}{Test Case Browser}
 \gdhelpid{guidancerSpecTestCaseEditorContextId}{Test Case Editor}
-%% \gdhelpid{testSuiteEditorContextId}{Test Suite Editor}
-%% \gdhelpid{testExecViewContextId}{Test Suite Browser}
 \label{edittestcase}
 \input{Tasks/Testcases/edit}
 
-\subsection{Adding existing \gdcases{} to a \gdcase{}}
-\gdhelpid{guidancerSpecTestCaseEditorContextId}{Test Case Editor}
-\gdhelpid{testCaseAddExistingContextId}{Existing Test Case Dialog}
-\label{addtestcase}
-\input{Tasks/Testcases/addexisting}
-
-\subsection{Adding new \gdcases{} to a \gdcase{}}
+\subsection{Adding and inserting new \gdcases{} to a \gdcase{}}
 \gdhelpid{dialogTestcaseAddNewContextId}{Add New Test Case Dialog}
 \gdhelpid{dialogTestcaseInsertNewContextId}{Insert New Test Case Dialog}
 \input{Tasks/Testcases/addnew}
@@ -64,29 +53,8 @@
 \label{TasksTCCats}
 \input{Tasks/Testcases/Categories}
 
-\subsection{Commenting out \gdcases{} and \gdsteps{}}
-\gdhelpid{guidancerSpecTestCaseEditorContextId}{Test Case Editor}
-\gdhelpid{testSuiteEditorContextId}{Test Suite Editor}
-\input{Tasks/Testcases/comment}
-
-\subsection{Extracting a new \gdcase{} (refactoring)}
-\gdhelpid{guidancerSpecTestCaseEditorContextId}{Test Case Editor}
-\gdhelpid{testSuiteEditorContextId}{Test Suite Editor}
-\label{extract}
-\input{Tasks/Testcases/Extracting}
-
-\subsection{Reverting changes in an editor}
-\gdhelpid{guidancerSpecTestCaseEditorContextId}{Test Case Editor}
-\gdhelpid{testSuiteEditorContextId}{Test Suite Editor}
-\input{Tasks/Testcases/revert}
-
 \subsection{Moving \gdcases{} to external \gdprojects{}}
 \gdhelpid{testCaseMoveExternalContextId}{Move Test Cases to an External Project}
 \gdhelpid{testSpecificationViewContextId}{Test Case Browser}
 \label{movetoexternal}
 \input{Tasks/Testcases/move}
-
-
-\subsection{Working with tasks and repositories: Mylyn and \app{}}
-\gdhelpid{testSpecificationViewContextId}{Test Case Browser}
-\input{Tasks/Testcases/mylyn}
