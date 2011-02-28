@@ -40,7 +40,7 @@ installDoc:
 	cd ./install/en/tex ; make pdf
 
 releaseNotes:
-	cd ./releasenotes/en/tex ; make pdf html
+	cd ./releasenotes/en/tex ; make pdf
 
 extensionapi:
 	cd ./extensionapi/en/tex ; make pdf

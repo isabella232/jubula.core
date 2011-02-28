@@ -8,11 +8,14 @@ OUTPUTHTML=${OUTPUTBASE}/html
 
 default:
 	@echo
-	@echo "    make pdf             - to generate the release notes pdf"
-	@echo "    make clean-pdf       - to clean up the pdf artifacts"
+	@echo "    make htmlandpdf      - to generate the release notes PDF and HTML"
+	@echo "    make pdf             - to generate the release notes PDF"
+	@echo "    make clean-pdf       - to clean up the PDF artifacts"
 	@echo "    make html            - to generate the release notes HTML"
-	@echo "    make clean-html       - to clean up the HTML artifacts"
+	@echo "    make clean-html      - to clean up the HTML artifacts"
 	@echo
+
+htmlandpdf:	pdf html
 
 pdf:	clean-pdf
 	if [ ! -d ${OUTPUTBASE} ]; then mkdir -p ${OUTPUTBASE}; fi
