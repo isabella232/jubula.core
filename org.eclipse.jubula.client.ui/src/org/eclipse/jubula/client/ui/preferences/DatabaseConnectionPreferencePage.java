@@ -60,6 +60,8 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
  */
 public class DatabaseConnectionPreferencePage extends PreferencePage 
     implements IWorkbenchPreferencePage {
+    public DatabaseConnectionPreferencePage() {
+    }
 
     /** 
      * pre-configured factory for creating grid data for the buttons on the 
