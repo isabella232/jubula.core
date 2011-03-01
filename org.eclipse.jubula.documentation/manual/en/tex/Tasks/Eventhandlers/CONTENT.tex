@@ -5,7 +5,7 @@
 \index{Verify failed}
 \index{Configuration error}
 
-\gdehandlers{} are \gdcases{} used to deal with expected errors during test execution. When an error occurs, the current \gdcase{} is searched for an \gdehandler{} for that error type. If none is found, the parent \gdcase{} is searched, and so on. If no \gdehandler{} for the test is found, then a default \gdehandler{} is activated. Default \gdehandlers{} are specified in the \gdsuite{} properties \bxpref{confsuite}. 
+\gdehandlers{} are \gdcases{} used to deal with deviations during test execution. When an error occurs, the current \gdcase{} is searched for an \gdehandler{} for that error type. If none is found, the parent \gdcase{} is searched, and so on. If no \gdehandler{} for the test is found, then a default \gdehandler{} is activated. Default \gdehandlers{} are specified in the \gdsuite{} properties \bxpref{confsuite}. 
 
 The advantage of adding your own \gdehandlers{} is that you can define specific behavior for certain errors in each \gdcase{}. An \gdehandler{} can be an empty \gdcase{}, or can contain \gdcases{} to be executed when the error occurs. 
 
@@ -16,6 +16,7 @@ For each \gdehandler{}, you must specify:
 \end{description}
 
 \subsection{Adding \gdehandlers{} to a \gdcase{}}
+\gdhelpid{guidancerSpecTestCaseEditorContextId}{Test Case Editor}
 \input{Tasks/Eventhandlers/add}
 
 \subsection{Event types}

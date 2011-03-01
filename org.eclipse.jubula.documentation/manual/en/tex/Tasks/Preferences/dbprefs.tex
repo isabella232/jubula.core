@@ -1,0 +1,27 @@
+
+\index{Preferences!Database connection}
+\index{Database!Preferences}
+
+
+You can find the \gddb{} connection preference page under:\\
+\bxname{Test-\gddb{} Connections}\\
+in the preferences dialog.
+
+When you start \app{} for the first time, it is automatically configured to use an embedded \gddb{}. If this is the only \gddb{} configured, then the \gddb{} login is performed automatically. 
+
+In this preference page, you can configure other \gddb{} connections for your productive \gddb{}. We do not recommend using the embedded \gddb{} for productive use of \app{}. 
+
+
+\subsubsection{Adding, editing and removing \gddb{} configurations}
+
+To add a new \gddb{} for use with \app{}:
+
+\begin{enumerate}
+\item In the \gddb{} Connections preference page, click \bxcaption{Add}.
+\item In the dialog that appears, enter a meaningful configuration name.
+\item Select the type of \gddb{} that this configuration is for. 
+\bxtipp{\app{} is thoroughly tested with Oracle. PostGreSQL and MySQL have been successfully tried out with \app{}, but we cannot guarantee their usage in productive environments.}
+\item Based on the \gddb{} type you choose, you must enter more details about the \gddb{} connection. Speak to your \gddb{} administrator if you are unsure of the connection details. 
+\end{enumerate}
+
+You can edit and delete \gddb{} configurations using the buttons in the \gddb{} Connections preference page. 

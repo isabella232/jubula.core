@@ -8,22 +8,23 @@
 % copyright by BREDEX GmbH 2004
 % --------------------------------------------------------
 
-Open the \app{} preferences dialog (\bxfigref{gdprefs}) by selecting:\\
-\bxmenu{Window}{Preferences}{}.
+Open the preferences dialog (\bxfigref{gdprefs}) by selecting:\\
+\bxmenu{Window}{Preferences}{}. 
 
-\subsection{\app{} preferences}
-\gdhelpid{prefPageBasicContextId}{GUIdancer Preferences}
+\subsection{Test preferences}
+\gdhelpid{prefPageBasicContextId}{Test Preferences}
 \input{Tasks/Preferences/gdprefs}
-
-\subsection{Appearance preferences}
-\gdhelpid{appearancePrefPageContextId}{Appearance Preferences}
-\input{Tasks/Preferences/appearance}
 
 \subsection{\gdagent preferences}
 \gdhelpid{prefPageServerContextId}{AUT Agent Preferences}
 \gdhelpid{autConfigPropDialogContextId}{Adding/editing AUT configurations}
 \gdhelpid{autConfigSettingWizardPagePageContextId}{Configuring an AUT}
 \input{Tasks/Preferences/serverConfigPrefPage}
+
+\subsection{\gddb{} preferences}
+\gdhelpid{databaseConnectionConfigurationDialogContextId}{Database connection preferences}
+\label{TasksPrefsDB}
+\input{Tasks/Preferences/dbprefs}
 
 
 \subsection{Editor preferences}
@@ -32,6 +33,7 @@ Open the \app{} preferences dialog (\bxfigref{gdprefs}) by selecting:\\
 
 \subsection{Object mapping preferences}
 \gdhelpid{prefPageObjectMapContextId}{Object Mapping Preferences}
+\gdhelpid{objectMapEditorContextId}{Object Mapping}
 \label{TasksPrefsOMM}
 \input{Tasks/Preferences/omprefs}
 
@@ -40,18 +42,9 @@ Open the \app{} preferences dialog (\bxfigref{gdprefs}) by selecting:\\
 \label{TasksPrefsObsModeJava}
 \input{Tasks/Preferences/obsprefsjava}
 
-%% \subsection{Observation mode preferences -- for Web}
-%% \gdhelpid{prefPageObserveWebContextId}{Observation Mode Preferences}
-%% \input{Tasks/Preferences/obsprefsweb}
-
-
-\subsection{\gdcase{} diagram preferences}
-\gdhelpid{prefPageTCDGeneralContextId}{Test Case Diagram Preferences}
-\label{TasksPrefsModel}
-\input{Tasks/Preferences/diagramprefs}
-
 \subsection{Test result preferences}
 \gdhelpid{prefPageTestResultContextId}{Test Result Preferences}
+\gdhelpid{testResultSummaryViewContextId}{Test Result Summary View}
 \label{testresprefs}
 \input{Tasks/Preferences/testresultprefs}
 

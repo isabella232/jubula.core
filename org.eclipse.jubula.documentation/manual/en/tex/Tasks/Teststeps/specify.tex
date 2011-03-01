@@ -54,7 +54,7 @@ purposes, but should be easily identifiable at a later point.
 
 If any of the names are grayed out, this means they have been used for other component types and cannot be used for the currently selected component type. 
 
-You can change, or \bxname{reassign} component names later when you reuse this \gdcase{}. Doing this means that you can execute the same actions on different components in the interface. The section on the \gdcompnamesview{} \bxpref{reass} contains information on reassigning component names. 
+You can change, or \bxname{reassign} component names later when you reuse this \gdcase{}. Doing this means that you can execute the same actions on different components in the interface. The section on the \gdcompnamesview{} \bxpref{TasksReassignCompName} contains information on reassigning component names. 
 
 \textbf{Action}
 
@@ -72,13 +72,4 @@ You can see and edit the details of any selected \gdstep{} in the \gdpropview{}.
 The next step is to add parameter values (data) for \gdsteps{} in the \gdpropview{} \bxpref{WorkingWithData}. 
 \end{enumerate}
 
-%% \textbf{Concrete and abstract components in \gdsteps{}}
-%% \label{teststepcomponent}
-%% \begin{description}
-%% \item[Concrete components]{ are components like \bxname{Combo Box} or \bxname{Text Field/Text Area/...} They refer to one single component or a few closely related components. Choosing a concrete component for a \gdstep{} restricts this \gdstep{} to this component. This isn't a problem if you are sure which component you will be testing.}
-%% \item[Abstract components]{ are components like \bxname{Graphics Component} and \bxname{Button Component}. They are families of components, which all share similar features, and therefore similar action choices. Choosing an abstract component means that you have a larger choice of which real component  to test with this \gdstep{}. This is useful if you are at an early stage of development and are not exactly sure which component you will need to test. Choosing abstract components improves the  reusability of \gdcases{} because it makes the \gdcase{} more general and  flexible. It also makes the test easier to maintain because it increases the chance of being able to simply remap a changed component in the \gdaut{}. } 
-%% \end{description}
-
-%% If you have specified a specific toolkit or the \bxname{concrete} toolkit in the \gdaut{} configuration, you will be able to choose between abstract and concrete components. If you specified the \bxname{abstract} toolkit in the \gdaut{} configuration, you can only use abstract components. 
-
-
+ 
