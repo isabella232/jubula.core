@@ -1,8 +1,8 @@
 \subsubsection{Actions}
 
-\app{}supports ''high-level'' actions. By this we mean that some of the actions which can be chosen for a component actually carry out a number of actions. This makes the creation of \gdcases{} easier and quicker, and makes them more understandable. 
+\app{} supports ''high-level'' actions. By this we mean that some of the actions which can be chosen for a component actually carry out a number of actions. This makes the creation of \gdcases{} easier and quicker, and makes them more understandable. 
 
-For example, \app{} offers 2 actions to enter text into a text field. The action \bxname{Replace Text} selects the whole text in the component and then enters the text input. This effectively overwrites any text which was already in the component. The \bxname{Input Text} action clicks once in the component and then enters the text, which means that any text previously in the component remains. 
+For example, \app{} offers two actions to enter text into a text field. The action \bxname{Replace Text} selects the whole text in the component and then enters the text input. This effectively overwrites any text which was already in the component. The \bxname{Input Text} action clicks once in the component and then enters the text, which means that any text previously in the component remains. 
 
 Another example is the selection and navigation through trees and menus. Like a human tester, \app{} works using the path to the item to select, and doesn't first have to select the individual sub-items in the path. 
 
@@ -13,7 +13,7 @@ When writing tests, it helps to be aware of things that a human tester does impl
 \subsubsection{Test execution}
 \app{} generally executes tests on your \gdaut{} by sending real clicks and key presses, in the same way that a manual tester would. This means that a \app{} test will give you the same results as a manual test -- if a menu is disabled, an item can't be selected and so on. 
 
-In the cases where real clicks and key presses can't be sent, \app{} ensures thatonly actions which would be possible for a user can be completed in a test. 
+%In the cases where real clicks and key presses can't be sent, \app{} ensures that only actions which would be possible for a user can be completed in a test. 
 
 Once clicks and key presses have been sent, \app{} waits for confirmation from the \gdaut{} that they have arrived (manual testers use their eyes, \app{} uses confirmers). 
 
