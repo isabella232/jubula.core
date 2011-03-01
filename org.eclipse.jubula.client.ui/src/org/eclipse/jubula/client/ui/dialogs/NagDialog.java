@@ -34,15 +34,15 @@ public final class NagDialog extends MessageDialogWithToggle {
     /**
      * create a user info dialog
      * 
-     * @param parentShell the shell to be used as a parent
-     * @param msgKey I18N key of the message
+     * @param msgText I18N text of the message
      * @param helpId references the specific help instance
+     * @param parentShell the shell to be used as a parent
      */
-    private NagDialog(Shell parentShell, String msgKey, String helpId) {
+    private NagDialog(String msgText, String helpId, Shell parentShell) {
         super(parentShell, 
                 Messages.InfoNaggerDialogTitle,
                 null, 
-                I18n.getString(msgKey), MessageDialog.INFORMATION,
+                msgText, MessageDialog.INFORMATION,
                 new String[] { IDialogConstants.HELP_LABEL,
                     IDialogConstants.PROCEED_LABEL 
                 }, 
@@ -54,6 +54,17 @@ public final class NagDialog extends MessageDialogWithToggle {
         // setBlockOnOpen has to be true for using NagDialog in 
         // AUTConfigPropertiesDialog and NewProjectWizard
         this.setBlockOnOpen(true);        
+    }
+    
+    /**
+     * create a user info dialog
+     * 
+     * @param parentShell the shell to be used as a parent
+     * @param msgKey I18N key of the message
+     * @param helpId references the specific help instance
+     */
+    private NagDialog(Shell parentShell, String msgKey, String helpId) {
+        this(I18n.getString(msgKey), helpId, parentShell);
     }
 
     /**
@@ -79,6 +90,36 @@ public final class NagDialog extends MessageDialogWithToggle {
                 MessageDialogWithToggle.ALWAYS)) {
             NagDialog dialog = 
                 new NagDialog(parent, msgKey, helpId);
+            dialog.setPrefStore(preferenceStore);
+            dialog.setPrefKey(prefKey);
+            dialog.open();
+        }
+    }
+
+    /**
+     * create a user info dialog
+     * 
+     * @param parentShell the shell to be used as a parent or null for the
+     * plug-ins default shell.
+     * @param msgKey key of the message, used by preference store
+     * @param msgText Text to be display, must already be internationalized
+     * @param helpId references the specific help instance
+     */
+    public static void runNagDialog(Shell parentShell,
+            final String msgKey, String msgText, final String helpId) {        
+        Shell parent;
+        if (parentShell == null) {
+            parent = Plugin.getShell();
+        } else {
+            parent = parentShell;
+        }
+        String prefKey = "InfoNagger." + msgKey; //$NON-NLS-1$
+        IPreferenceStore preferenceStore = 
+            Plugin.getDefault().getPreferenceStore();
+        if (!preferenceStore.getString(prefKey).equals(
+                MessageDialogWithToggle.ALWAYS)) {
+            NagDialog dialog = 
+                new NagDialog(msgText, helpId, parent);
             dialog.setPrefStore(preferenceStore);
             dialog.setPrefKey(prefKey);
             dialog.open();

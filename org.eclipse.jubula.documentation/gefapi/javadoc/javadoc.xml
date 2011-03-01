@@ -8,6 +8,11 @@
 
 <project default="javadoc">
 	<target name="javadoc">
+		<property name="cp" refid="rc.gef.extension.classpath"/>
+		<echo message="Classpath is ${cp}"/>
+		<property name="sp" refid="rc.gef.extension.sourcepath"/>
+		<echo message="Sourcepath is ${sp}"/>
+
 		<javadoc access="protected" 
 			author="false" 
 			destdir="${outputdir}" 
@@ -18,8 +23,8 @@
 			nonavbar="false" 
 			notree="false" 
 			packagenames="org.eclipse.jubula.rc.rcp.gef.identifier" 
-			classpath="../../../../guidancer/com.bredexsw.guidancer.project.configuration/target/platform/eclipse/plugins/org.eclipse.gef_3.6.1.v20100712-1224.jar" 
-			sourcepath="../../../org.eclipse.jubula.rc.rcp/src" 
+			classpathref="rc.gef.extension.classpath"
+			sourcepathref="rc.gef.extension.sourcepath"
 			splitindex="true" 
 			use="true" 
 			version="false">
