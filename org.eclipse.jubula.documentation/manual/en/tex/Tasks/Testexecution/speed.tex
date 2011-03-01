@@ -1,0 +1,11 @@
+\index{Test execution!Speed}
+\index{Speed of test execution}
+
+You can alter the speed of the test execution in two ways:
+
+\begin{description}
+\item [System settings:]{You can increase or decrease the speed of double clicks bia the system settings to increase or decrease the speed at which \app{} can work when executing tests. }
+\item [In \gdsuites{}:]{In the \bxname{step delay} field in the \gdpropview{} for a \gdsuite{}, you can add a delay in ms to a \gdsuite{} which should be left between the execution of each step. }
+\end{description}
+
+\bxwarn{When increasing the settings for double click speed, bear in mind that your \gdaut{} and the libraries it uses must be able to deal with the increased click speed. If you notice that your \gdaut{} is having timing problems related to the click speed, then you may have to reduce it.}

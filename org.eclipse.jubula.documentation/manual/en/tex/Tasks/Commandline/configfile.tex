@@ -15,9 +15,9 @@
 %% % ----------------------------------------------------------------------
 
 %% \end{document}
-\index{Command Line Client}
+\index{Test Executor}
 \begin{enumerate}
-\item You can also enter command line client details in an XML configuration file.
+\item You can also enter test executor parameters in an XML configuration file.
 \item This saves you typing in the same details each time you start a test.
 \item To enter the configuration file path, enter the following command:\\
 \bxshell{-c <path to file>}
@@ -36,10 +36,11 @@ For example:
     <project>ExampleProject</project>
     <version>1.0</version>
     <autconfig>local configuration</autconfig>
+           OR
     <autid>Adder</autid>
     <dbscheme>Embedded</dbscheme>
-    <dbuser>joebloggs</dbuser>
-    <dbpw>mypassword</dbpw>
+    <dbuser></dbuser>
+    <dbpw></dbpw>
     <server>localhost</server>
     <port>60000</port>
     <language>EN_US</language>
@@ -57,5 +58,5 @@ For example:
 \bxtipp{Java Virtual Machine parameters can only be entered in the command line interface. They cannot be entered in the configuration file.}
 \end{enumerate}
 \item A template configuration file was installed with \app{}. It can be found under:\\
-\bxname{GDInstallationDir/examples/scripts}
+\bxname{InstallationDirectory/examples/scripts}
 \end{enumerate}
