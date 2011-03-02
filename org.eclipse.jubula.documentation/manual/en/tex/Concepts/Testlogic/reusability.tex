@@ -1,8 +1,20 @@
+\gdcases{} are the reusable units in \app{}. \gdcases{} can be referenced in other \gdcases{} to create modularly built tests. 
 
-\index{Components!Abstract}
-\index{Abstract components}
+Being able to reuse \gdcases{} means that you should put some thought into how to design them so that they are as specific as they need to be while also being generic enough to reuse in different situations. 
 
-Another way to make your \gdcases{} more reusable is to increase the amount of components they can test. For each action, you choose a component type.  \app{} has three levels of components:
+You can improve the flexibility of a \gdcase{} by:
+
+\begin{itemize}
+\item Using references \bxpref{TasksTestdataReferences} instead of concrete data if the data can change. References allow you to feed a \gdcase{} with different data each time you reuse it. 
+\item Using the abstract components (e.g. component with text, component with text input, graphics component) \bxpref{ConceptsAbstractComps} to specify your tests wherever possible. 
+\item Allowing the component it tests to be defined when you reuse it \bxpref{TasksReassignCompName}. 
+\end{itemize}
+
+
+\subsubsection{Abstract, concrete and toolkit specific components}
+\label{ConceptsAbstractComps}
+
+\app{} has three levels of components:
 \begin{description}
 \item [Abstract components]{are general, high-level components from which other components are derived. They are described in terms of what features a component has, e.g. graphics component, component with text. They group actions together which can all be executed on components of this type.}
 \item [Concrete components]{are components which are available to all graphical toolkits, but which are restricted to a certain component type, e.g. combo box, list.}
@@ -11,7 +23,5 @@ Another way to make your \gdcases{} more reusable is to increase the amount of c
 
 We recommend that you specify your tests as abstractly as possible, and as concretely as necessary. If you want to create a \gdcase{} to click a button, it is better to use the abstract component \bxname{graphics component}. The \bxname{graphics component} also contains the \bxname{click} action, and has the advantage that the \gdcase{} can then be used on other components than buttons. If you want to select a cell from a table, however, you will have to use the concrete component \bxname{table}, because this is the highest level which offers this action. 
 
-The more abstract your specification, the more reusable your \gdcases{} are. Abstract specifications are also easier to maintain after changes in the user-interface. If the object mapping needs to be adapted to a change in the GUI, there is a larger chance that the new GUI-component can be mapped to the original specification if abstract components were used. 
-
-
+The more abstract your specification, the more flexible your \gdcases{} are. 
 

@@ -1,4 +1,4 @@
-When automated tests are running, it is important to ensure that an error in the test will not result in the rest of the test not running. To do this, the \app{} team adds general \gdehandlers{} to each use case, at the very top level of the use case. 
+When automated tests are running, it is important to ensure that an error in the test will not result in the rest of the test not running. To do this, we recommend adding general \gdehandlers{} to each use case, at the very top level of the use case. 
 
 The aim of adding \gdehandlers{} here is:
 \begin{enumerate}
@@ -28,14 +28,17 @@ they are activated when an error occurs.
 
 \begin{enumerate}
 \item Open a use case in the \gdtestcaseeditor{}. Remember that each use case should be independent, and entirely contained in one single top level \gdcase{} \bxpref{BPKeywordSuites}. 
-\item Add the \bxname{Action Error} \gdcase{} to the use case as an \gdehandler{}. Specify \bxname{Action Error} as the error type, and \bxname{return} as the reentry type. 
+\item Add the \bxname{Action Error} \gdcase{} to the use case as an \gdehandler{} \bxpref{customizedehandler}. Specify \bxname{Action Error} as the error type, and \bxname{return} as the reentry type. 
 \item Add the \bxname{Check Failed} \gdcase{} to the use case as an \gdehandler{}. Specify \bxname{Check Failed} as the error type, and \bxname{continue} as the reentry type. 
 \item Add the \bxname{Component Not Found} \gdcase{} to the use case as an \gdehandler{}. Specify \bxname{Component Not Found} as the error type, and \bxname{return} as the reentry type. 
 \item Add the \bxname{Configuration Error} \gdcase{} to the use case as an \gdehandler{}. Specify \bxname{Configuration Error} as the error type, and \bxname{return} as the reentry type. 
-\item Now, any error in this use case (which is not handled by a local \gdehandler{} within the use case) will result in one of these \gdehandlers{} being activated. \bxname{Check failed} errors will mean that the test continues.  \bxname{Action errors}, \bxname{Component not found} and \bxname{Configuration errors} will provoke a restart of the \gdaut{}. The test execution leaves the branch in which the \gdehandler{} was nested (the use case) and carries on at the next \gdcase{} (use case) or \gdsuite{}. 
-\bxtipp{The \bxname{app\_startup} \gdcase{} is important at the beginning of each use case in case the \gdaut{} has just been restarted \bxpref{BPKeywordSuites}. }
-\item Carry out these steps for each use case as you create it. 
 \end{enumerate}
+
+Now, any error in this use case (which is not handled by a local \gdehandler{} within the use case) will result in one of these \gdehandlers{} being activated. \bxname{Check failed} errors will mean that the test continues.  \bxname{Action errors}, \bxname{Component not found} and \bxname{Configuration errors} will provoke a restart of the \gdaut{}. The test execution leaves the branch in which the \gdehandler{} was nested (the use case) and carries on at the next \gdcase{} (use case) or \gdsuite{}. 
+\bxtipp{The \bxname{app\_startup} \gdcase{} is important at the beginning of each use case in case the \gdaut{} has just been restarted \bxpref{BPKeywordSuites}. }
+
+Carry out these steps for each use case as you create it. 
+
 
 
 In this way, unexpected errors can be dealt with in a way that allows them to be identified later on. The test does not stop at the error, but tries to carry on at the next relevant point. This is the reason why use cases should be independent from each other -- to stop further errors occurring. 

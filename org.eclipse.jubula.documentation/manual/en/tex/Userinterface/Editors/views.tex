@@ -26,8 +26,6 @@
 \index{Navigator View}
 \index{Console!View}
 \index{View!Console}
-\index{View!Outline}
-\index{Outline!View}
 \index{Test Result Summary View}
 \index{View!Test Result Summary}
 \index{View!Running AUT's}
@@ -47,7 +45,6 @@
 \item \gdprobview{}
 \item Search result view
 \item \gdnavview{}
-\item Outline view
 \item Console
 \item \gdinspector{}
 \item \gdtestsummaryview{}
@@ -57,16 +54,11 @@
 
 The first three views are \emph{support views}. Their content changes depending on the current selection -- they show details corresponding to the currently selected item.
 
+Use \bxmenu{Window}{Show View}{Other} to see a full list of views that can be opened in the \ite{}.
 \subsection{The \gdpropview{}}
 \gdhelpid{guidancerPropertiesViewContextId}{Properties View}
 
-The \gdpropview{} is in the upper right-hand corner of each perspective. Depending on the currently selected item, the \gdpropview{} shows details about:
-\begin{itemize}
-    \item \gdsuites{} 
-    \item \gdcase{} details
-    \item \gdstep{} details
-    \item Test result details
-\end{itemize}
+The \gdpropview{} is in the upper right-hand corner of each perspective. The \gdpropview{} shows details about the selected item in a browser or editor. 
 
 If you select something from a browser, you can see its details in the \gdpropview{}, but you can't edit them. You can only edit details from within an editor. Read-only fields in the \gdpropview{} have a lock icon at their left-hand side. 
  \gdmarpar{../../../share/PS/readonly}{read only}
@@ -89,11 +81,9 @@ If you select a \gdcase{}, the \gdpropview{} shows the following:
 \begin{itemize}
 \item The \gdcase{} name.
 \item Any comments for the \gdcase{}. 
-\item The path to the Excel file for this \gdcase{}, if there is one. 
-\item Any parameters/parameter values if references have been used to move up parameters in the \gdcase{}. 
+\item The data source details for this \gdcase{}
+\item Any parameters/parameter values if references have been used in the \gdcase{}. 
 \end{itemize}
-
-If you select a \gdcase{} from the \gdtestsuitebrowser{}, you will see the same details as above, but also the \emph{specification name} for the \gdcase{}, if you  renamed the \gdcase{} when you reused it. 
 
 
 \textbf{\gdstep{} details}
@@ -123,7 +113,7 @@ If you select an item from the \gdtestresultview{}, you will see the following:
 \item The result details:
 \begin{itemize}
 \item The name of the item.
-\item What type of item it was (\gdsuite{}, \gdcase{}, \gdstep{}). 
+\item What type of item it is.
 \item Any comments for the item.
 \end{itemize}
 \item The test result -- if it passed or failed.
@@ -147,33 +137,29 @@ yellow diamond.
 
 \subsection{The \gddatasetsview{}}
 \gdhelpid{guidancerDataSetViewContextId}{Data Sets View}
-The \gddatasetsview{} is in the lower right-hand corner of the specification perspective by default. It lets you add, modify, delete and see any data for \gdcases{}. For each \gdcase{} containing references, you can add data sets in this view. This is also the view where you can translate your data and overwrite data when you reuse a \gdcase{}. 
+The \gddatasetsview{} is in the lower right-hand corner of the \specpersp{}  by default. It lets you add, modify, delete and see any data for \gdcases{}. For each \gdcase{} containing references or for each central test data set, you can add data sets in this view. This is also the view where you can translate your data and overwrite data when you reuse a \gdcase{}. 
  When data in the \gddatasetsview are uneditable, they are shown in gray. Values in black may be edited.
 
 To make entering data easier, pressing \bxkey{Enter} will spring to the next cell or row, or to the \bxcaption{Add} button if no more rows have been added. The \bxkey{Tab} key  springs to the \bxcaption{Add} button. 
 
 \subsection{The \gdcompnamesview{}}
 \gdhelpid{compNameViewContextId}{Component Names}
-The \gdcompnamesview{} is in the lower right-hand corner of the specification perspective by default, just behind the \gddatasetsview{}. It lets you see the component names used in a reused \gdcase{}, and add more component names. This means that you can use a \gdcase{} to execute the same actions on different components. 
+The \gdcompnamesview{} is in the lower right-hand corner of the \specpersp{}  by default, just behind the \gddatasetsview{}. It lets you see the component names used in a reused \gdcase{}, and add more component names. This means that you can use a \gdcase{} to execute the same actions on different components. 
 
 \subsection{The \gdtestresultview{}} 
  \gdhelpid{testResultViewContextId}{Test Results View}
 
-The \gdtestresultview{} is in the middle of the execution perspective by default. It can also be displayed in the bottom right-hand corner of the specification perspective via the preferences. It follows and displays the results of the test execution. Each \gdstep{} and \gdcase{} is marked with a green tick or a red cross depending on if it passed or failed. 
+The \gdtestresultview{} is in the middle of the \execpersp{}  by default. It can also be displayed in the bottom right-hand corner of the \specpersp{} via the preferences. It follows and displays the results of the test execution. Each \gdstep{} and \gdcase{} is marked with a green tick or a red cross depending on if it passed or failed. 
 
-If you select an item in the \gdtestresultview{}, you can see its details in the \gdpropview{} in the execution perspective. If you double-click on a \gdstep{} or \gdcase{} in the \gdtestresultview{}, it will be highlighted in the \gdtestsuitebrowser{} in the execution perspective. Double-clicking on this item in the \gdtestsuitebrowser{} will open the editor for this item in the specfication perspective. 
-
-You can also find specified \gdcases{} by right-clicking on an item in the \gdtestresultview{} and selecting \bxcaption{show specification}. 
+If you select an item in the \gdtestresultview{}, you can see its details in the \gdpropview{}. If the \gdproject{} is open and the item is still available, you can double-click on a \gdstep{} or \gdcase{} in the \gdtestresultview{}, to highlight it in the \gdtestsuitebrowser{}. Double-clicking on this item in the \gdtestsuitebrowser{} will open the editor for this item in the \specpersp{}. 
 
 \subsection{The \gdprobview{}}
 \gdhelpid{problemViewContextId}{Problem View}
-The \gdprobview{} is by default at the bottom of the specification perspective, under the editor area. The \gdpropview{} helps you to work with \app{} by giving you information, warnings and errors. Double-clicking on a message will either carry out the necessary action or open a dialog/editor to sort out the problem, if this is possible. 
+The \gdprobview{} is by default at the bottom of the \specpersp{}, under the editor area. The \gdpropview{} helps you to work with \app{} by giving you information, warnings and errors. Double-clicking on a message will either carry out the necessary action or open a dialog/editor to sort out the problem, if this is possible. 
 
 \subsection{The search result view}
 \gdhelpid{searchResultViewContextId}{Search Result View}
-The search result view (\bxfigref{showresultview}) is at the bottom of the specification perspective, under the editor area, and just behind the \gdprobview{} by default. When you choose to see where a \gdcase{} has been reused, the places where it has been reused are listed in this view. If you double-click on an item in the search result view, the corresponding item is highlighted in the \gdtestcasebrowser{} or \gdtestsuitebrowser{}.  
-
-
+The search result view (\bxfigref{showresultview}) is at the bottom of the \specpersp{}, under the editor area, and just behind the \gdprobview{} by default. If you perform searches with \app{}, the results are shown here. If you double-click on an item in the search result view, the corresponding item is highlighted in the \gdtestcasebrowser{} or \gdtestsuitebrowser{}.  
 
 \begin{figure}[hbtp]
 \begin{center}
@@ -185,22 +171,20 @@ The search result view (\bxfigref{showresultview}) is at the bottom of the speci
 
 \subsection{The \gdnavview{}}
 \protect\gdhelpid{org.eclipse.ui.resource_view_context}{Navigator View}
-The \gdnavview{} is at the top right-hand corner of the modeling perspective by default. The \gdnavview{} gives you a view of your workspace and can be used to manage your modeling \gdprojects{} as well as test data and test reports. 
+The \gdnavview{} is at the top right-hand corner of the workspace perspective by default. The \gdnavview{} gives you a view of your workspace and the files in it. 
 
-\subsection{The outline view}
-The outline view provides an overview of the \gdmodeleditor{}. If you have zoomed in in the editor, or if your model is larger than the editor itself, you can use the outline to orient yourself in the \gdmodeleditor{}. 
 
 \subsection{The console}
-The console is underneath the \gdmodeleditor{} in the modeling perspective and behind the \gdcompnamesview{} lets you follow certain processes in \app{}, for example, the import of \gdprojects{}, validation of models and model generation. 
+The console is shown in the bottom right-hand corner of the \specpersp{}. It lets you follow certain processes in \app{}, for example, the import of \gdprojects{}.  
 
 \subsection{The \gdinspector{}}
-The \gdinspector{} can be used to help you test RCP \gdauts{} which use the GEF framework. When the inspector is activated, figures can be clicked in the GEF canvas, and their textpath (used to identify them in the test) is shown. The \gdinspector{} is shown by default in the bottom right-hand corner of the specification perspective. 
+The \gdinspector{} can be used to help you test RCP \gdauts{} which use the GEF framework. When the inspector is activated, figures can be clicked in the GEF canvas, and their textpath (used to identify them in the test) is shown. The \gdinspector{} is shown by default in the bottom right-hand corner of the \specpersp{}. 
 
 \subsection{The \gdtestsummaryview{}}
 The \gdtestsummaryview{} offers an overview of all tests that have run in this \gddb{}. It can be filtered and sorted.  The \gdtestsummaryview{} is displayed in the \reportpersp{}. 
 
 \subsection{The \gdrunautview{}}
-The \gdrunautview{} is above the \gdtestsuitebrowser{} in the specification perspective. It shows an overview of all running \gdauts{} and can be used to stop \gdauts{} and to start \gdsuites{}.  
+The \gdrunautview{} is above the \gdtestsuitebrowser{} in the \specpersp{}. It shows an overview of all running \gdauts{} and can be used to stop \gdauts{} and to start \gdsuites{}.  
 
 \subsection{The \gdimgview{}}
 The \gdimgview{} is used to see automatically generated screenshots of errors that have occurred in tests.

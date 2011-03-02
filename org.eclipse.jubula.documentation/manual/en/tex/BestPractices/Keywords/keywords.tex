@@ -11,13 +11,13 @@ So what is a keyword? A good example is \bxname{Login}. It is obvious from the n
 \item ub\_grc\_clickLeftSingle (no parameters)
 \end{itemize}
 
-In this keyword, the two TEXT parameters from the replace text modules would be referenced as \bxshell{=USERNAME} and \bxshell{PASSWORD}.
+In this keyword, the two TEXT parameters from the replace text modules would be referenced as \bxshell{=USERNAME} and \bxshell{PASSWORD} \bxpref{TasksTestdataReferences}.
 
 Any time you need to perform a login in your test, you can reuse this keyword and enter the specific use data each time. This has the advantage that your tests will be easy to read, and that any maintenance you need to do to this keyword can be done in one place. 
 
 Other things that lend themselves well to being made into keywords are:
 \begin{itemize}
-\item Synchronized clicks on buttons (e.g. wait for component, check enablement, click). 
+\item Synchronized clicks on buttons (e.g. wait for component, then check enablement, then click). 
 \item Tab selections (e.g. Select Content Tab, Select Options Tab in Tools Dialog). 
 \item Recurring workflows (e.g. carrying out a search).
 \item Anything that you use more than once.
@@ -39,10 +39,11 @@ In designing your tests, it may sometimes occur to you that there is a level bet
 \begin{itemize}
 \item ub\_grc\_waitForComponent 
 \item ub\_grc\_checkEnablement
+\item ub\_grc\_checkEditability
 \item ub\_cti\_replaceText
 \end{itemize}
 
-It is very likely that a test will have to enter various texts. The only difference for each case will be the text to enter and the component to enter it into. All other things (amount of time to wait for the component, the fact that the component should be enabled etc) will remain the same. A utility module to perform a synchronized replace text can solve this problem. It can be reused in \gdcases{} to replace the text on any component \bxpref{TasksCompNamesCheckbox} and only requires the text to enter as a parameter. 
+It is very likely that a test will have to enter various texts. The only difference for each case will be the text to enter and the component to enter it into. All other things (amount of time to wait for the component, the fact that the component should be enabled and editable etc.) will remain the same. A utility module to perform a synchronized replace text can solve this problem. It can be reused in \gdcases{} to replace the text on any component \bxpref{TasksCompNamesCheckbox} and only requires the text to enter as a parameter. 
 
 Generally, it is worth making a utility module when the unbound module contains one or more parameters whose values will remain constant in your test (typically things like file paths, operators, path types etc.). The utility module can parameterize the data that will change (e.g. boolean values, text entries, what to check etc.) and make your test specification and maintanence quicker. 
 

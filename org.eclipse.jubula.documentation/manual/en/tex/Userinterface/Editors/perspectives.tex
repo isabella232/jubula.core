@@ -7,26 +7,7 @@
 % User documentation
 % copyright by BREDEX GmbH 2004
 % --------------------------------------------------------
-\index{Perspective!Execution}
-\index{Execution!Perspective}
-\index{View!Test Result}
-\index{Test Result!View}
-
-There are five perspectives in \app{}: 
-\begin{itemize}
-\item Specification
-\gdmarpar{../../../share/PS/perspectivesp}{specification}
- \item Execution
-\gdmarpar{../../../share/PS/perspectiveex}{execution}
-\item Modeling
-%\gdmarpar{../../../share/PS/perspectiveex}{execution}
-\item Workspace
-\item Reporting
-
-\end{itemize} 
-
-
-\subsection{The specification perspective}
+\subsection{The \specpersp{}}
 \index{Specification!Perspective}
 \index{Perspective!Specification}
 \index{Browser!Test Suite}
@@ -45,7 +26,9 @@ There are five perspectives in \app{}:
 \index{Problem View}
 \index{Component!Names!View}
 \index{View!Component Names}
-The specification perspective (\bxfigref{clientwindow}) provides browsers, editors and views to let you create tests. It contains:
+The \specpersp{} (\bxfigref{clientwindow}) provides browsers, editors and views to let you create and edit tests.
+
+It contains:
 
 \begin{itemize}
 \item The \gdtestsuitebrowser{} 
@@ -60,72 +43,67 @@ The specification perspective (\bxfigref{clientwindow}) provides browsers, edito
 \item The \gdrunautview{}
 \end{itemize}
 
+The \gdcompnamesview{}, \gddatasetsview{} and \gdpropview{} show you details about the currently selected item in the browser or editor. 
+
 \begin{figure}
 \includegraphics[width=12.5cm]{Userinterface/Editors/PS/client}
 \caption{\app{} Specification Perspective}
 \label{clientwindow}
 \end{figure}
 
-\clearpage
 
-The \gdtestcasebrowser{} and the \gdtestsuitebrowser{} let you see your \gdcases{} and \gdsuites{}. If you double-click an item in one of these browsers, an editor for this item opens. Using the editor and its support views (numbers 4-6) you can edit the contents and properties of \gdsuites{}, \gdcases{} and \gdsteps{}. The content of the support view changes according to the currently selected item. 
  \clearpage
-\subsection{The execution perspective}
+\subsection{The \execpersp{}}
 \index{Execution!Perspective}
 \index{Perspective!Execution}
 \index{Views!Test Result}
 \index{Test Result!View}
 
-In the execution perspective, you can see the following (\bxfigref{executionclient}):
+In the \execpersp{}, you can see the following (\bxfigref{executionclient}):
 
 
 \begin{itemize}
-\item \gdtestsuitebrowser 
-\item \gdtestresultview 
-\item \gdpropview 
-\item \gddatasetsview
+\item The \gdtestsuitebrowser{}
+\item The \gdtestresultview{}
+\item The \gdpropview{} 
+\item The \gdimgview{}
 \end{itemize}
 
 
 \begin{figure}
 \includegraphics{Userinterface/Editors/PS/executionclient}
-\caption{\app{} Execution Perspective}
+\caption{\execpersp{}}
 \label{executionclient}
 \end{figure}
 
-You cannot edit in the execution perspective, but you can see your \gdsuite{} and its results. 
+You cannot edit in the \execpersp{}, but you can see the results of tests that have been started interactively.. 
 \clearpage
 
-\subsection{The modeling perspective}
-\index{Perspective!Modeling}
-\index{Modeling!Perspective}
-\index{Views!Navigator}
-\index{Navigator View}
-\index{Outline View}
-\index{Views!Outline}
-\index{Editor!Test Case Model}
-\index{Test Case!Model Editor}
+\subsection{The \reportpersp{}}
+\index{Reporting!Perspective}
+\index{Perspective!Reporting}
+\index{Views!Test Result Summary}
+\index{Test Result Summary!View}
 
-In the modeling perspective (\bxfigref{modelperspective}), you can create \gdprojects{} in your workspace to create and import model diagrams which can then be generated into a \gdcase{\ structure. The modeling perspective contains the following:
+In the \reportpersp{}, you can see an overview of all the test runs in the current \gddb{}, for all \gdprojects{} it contains. You can reopen test runs if the details for the report are still in the \gddb{} \bxpref{TasksReopenTestResult} and analyze the test using the \gdpropview{} and the \gdimgview{}. 
 
+The \reportpersp{} (\bxfigref{reportingperspective}) contains the following views:
 
 \begin{itemize}
-\item \gdnavview{} 
-\item \gdmodeleditor{}
-\item \bxname{Outline View}
-\item \gdpropview{}
-\item \bxname{Console}
-\item \gdtestcasebrowser{}
-\item \gdprobview{}
+\item The \gdtestresultview{}
+\item The \gdpropview{} 
+\item The \gdimgview{}
+\item The \gdtestsummaryview{}
 \end{itemize}
 
-\begin{figure}
-\includegraphics{Userinterface/Editors/PS/modelperspective}
-\caption{\app{} Modeling Perspective}
-\label{modelperspective}
-\end{figure}
 
+\begin{figure}
+\includegraphics[width=12.5cm]{Userinterface/Editors/PS/reportingperspective}
+\caption{\app{} Reporting Perspective}
+\label{reportingperspective}
+\end{figure}
 \clearpage
+
 
 \subsection{The \app{} workspace perspective}
 \index{Perspective!Workspace}
@@ -134,7 +112,7 @@ In the modeling perspective (\bxfigref{modelperspective}), you can create \gdpro
 \index{Navigator View}
 
 
-In the workspace perspective (\bxfigref{workspaceperspective}), you can view the \gdprojects{} and files in your \app{} workspace. The workspace perspective contains the following:
+In the workspace perspective (\bxfigref{workspaceperspective}), you can view the \gdprojects{} and files in your workspace. The workspace perspective contains the following:
 
 
 \begin{itemize}
@@ -149,16 +127,4 @@ In the workspace perspective (\bxfigref{workspaceperspective}), you can view the
 \end{figure}
 \clearpage
 
-\subsection{The \app{} reporting perspective}
-\index{Perspective!Reporting}
-\index{Reporting!Perspective}
-\index{Views!Test Result Summary}
-\index{Test Result Summary View}
-In the reporting perspective, the only view is the \gdtestsummaryview{}. You can see an overview of all tests that have run in this \gddb{}.
 
-\begin{figure}
-\includegraphics[width=12.5cm]{Userinterface/Editors/PS/reportingperspective}
-\caption{\app{} Reporting Perspective}
-\label{reportingperspective}
-\end{figure}
-\clearpage
