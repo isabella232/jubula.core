@@ -594,13 +594,13 @@ public class ProjectPM extends PersistenceManager {
         preloadDataPerClass(s, projectIds, "ReusedProjectPO");
         preloadDataPerClass(s, projectIds, "UsedToolkitPO");
         preloadDataPerClass(s, projectIds, "AUTContPO");
+        List nodes = preloadDataPerClass(s, projectIds, "NodePO");
         preloadDataPerClass(s, projectIds, "SpecObjContPO");
         preloadDataPerClass(s, projectIds, "TestDataCubeContPO");
         preloadDataPerClass(s, projectIds, "TestJobContPO");
         preloadDataPerClass(s, projectIds, "TestSuiteContPO");
         preloadDataPerClass(s, projectIds, "ObjectMappingAssoziationPO");
         preloadDataPerClass(s, projectIds, "ParamDescriptionPO");
-        List nodes = preloadDataPerClass(s, projectIds, "NodePO");
         
         // for performance reasons, we prefill the cachedSpecTestCase
         // in ExecTestCasePOs

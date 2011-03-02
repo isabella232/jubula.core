@@ -87,18 +87,19 @@ public class ProjectNameBP {
         String res =  null;
         if (useCache) {
             res = m_transientNames.get(guid);
-            if (res == null) {
-                res = m_names.get(guid);
+            if (res == null && m_names.containsKey(guid)) {
+                return m_names.get(guid);
             }
         }
         if (res == null) {
             try {
                 res = readProjectNameFromDB(guid);
-                m_names.put(guid, res);
             } catch (PMException e) {
                 log.warn(e);
             }
         }
+        
+        m_names.put(guid, res);
         return res;
     }
     
