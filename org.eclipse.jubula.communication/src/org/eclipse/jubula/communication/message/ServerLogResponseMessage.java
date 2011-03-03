@@ -40,6 +40,9 @@ public class ServerLogResponseMessage extends Message {
     /** an IOException occurred */
     public static final int IO_EXCEPTION = 3;
 
+    /** configuration problem */
+    public static final int CONFIG_ERROR = 4;
+    
     /**
      * Static version
      */
