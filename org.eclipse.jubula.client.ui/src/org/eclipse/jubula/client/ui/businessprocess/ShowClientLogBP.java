@@ -11,9 +11,18 @@
 package org.eclipse.jubula.client.ui.businessprocess;
 
 import java.io.File;
+import java.util.Iterator;
 
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.Appender;
+import ch.qos.logback.core.FileAppender;
+
+
 
 
 /**
@@ -55,36 +64,32 @@ public final class ShowClientLogBP extends AbstractActionBP {
      *         null is returned.
      */
     public File getClientLogFile() {
-        Utils.createMessageDialog(MessageIDs.I_FILE_LOGGING_NOT_ENABLED,
-                new String[] {"Jubula"}, null); //$NON-NLS-1$
-        return null;
-        /*
-         * FIXME: the code has to be replaced for slf4j
-         * 
         final File clientLogFile;
-        
+
         // Get location of log file
-        Enumeration appenders = Logger.getRootLogger().getAllAppenders();
-        FileAppender enumFileAppender = null;
-        while (appenders.hasMoreElements() && enumFileAppender == null) {
-            Object enumElement = appenders.nextElement();
+        Logger logger = (Logger)LoggerFactory.getLogger("ROOT"); //$NON-NLS-1$
+        Iterator<Appender<ILoggingEvent>> appenders = logger
+                .iteratorForAppenders();
+        FileAppender fileAppender = null;
+        while (appenders.hasNext() && fileAppender == null) {
+            Object enumElement = appenders.next();
             if (enumElement instanceof FileAppender) {
-                enumFileAppender = (FileAppender)enumElement;
+                fileAppender = (FileAppender)enumElement;
             }
         }
-        
-        if (enumFileAppender != null) {
-            clientLogFile = new File(enumFileAppender.getFile());
+
+        if (fileAppender != null) {
+            clientLogFile = new File(fileAppender.getFile());
         } else {
             clientLogFile = null;
-            
+
             // Ask user to turn on file logging
             Utils.createMessageDialog(MessageIDs.I_FILE_LOGGING_NOT_ENABLED,
-                new String[] {"Jubula"}, null); //$NON-NLS-1$
+                    new String[] { "Jubula" }, null); //$NON-NLS-1$
         }
-            
+
         return clientLogFile;
-        */
+
     }
 
 }
