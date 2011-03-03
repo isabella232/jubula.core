@@ -527,6 +527,8 @@ public class TestresultSummaryView extends ViewPart
                 CommandIDs.REFRESH_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.TOGGLE_RELEVANCE_COMMAND_ID);
         Map<String, String> params = new HashMap<String, String>();
         params.put(CommandIDs.EXPORT_WIZARD_PARAM_ID, 
                 ExportTestResultDetailsWizard.ID);

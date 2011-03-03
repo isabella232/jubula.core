@@ -1097,6 +1097,11 @@
         id="org.eclipse.jubula.client.ui.commands.ShowFromClipboard"
         name="Open Element from Clipboard">
   </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.ToggleRelevance"
+        name="Toggle relevance">
+  </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<key
@@ -2375,6 +2380,20 @@
         <activeWhen>
 	        <and>
 		        <count value="+" />
+				<with variable="activePartId">
+					<equals
+						value="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
+					</equals>
+				</with>
+			</and>
+		</activeWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.ToggleRelevanceHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.ToggleRelevance">
+        <activeWhen>
+	        <and>
+		        <count value="1" />
 				<with variable="activePartId">
 					<equals
 						value="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
