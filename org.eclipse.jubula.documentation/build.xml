@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<project name="org.eclipse.jubula.documentation">
+	<property name="buildRoot" value="${basedir}" />
+	<property name="buildLogDir" value="${buildRoot}/buildLog" />
+
+	<target name="setupBuildDocumentation">
+		<mkdir dir="${buildLogDir}" />
+		<exec executable="make" failonerror="true" dir="${buildRoot}">
+			<arg line="setversion TAG=V${build.version}" />
+		</exec>
+		<exec executable="make" failonerror="true" dir="${buildRoot}">
+			<arg line="convert" />
+		</exec>
+		<exec executable="make" failonerror="true" dir="${buildRoot}">
+			<arg line="checksplash" />
+		</exec>
+	</target>
+	
+	<target name="buildDocumentation" depends="
+		buildInstallationManual,
+		buildExtensionManual,
+		buildReferenceManual,
+		buildReleaseNotes,
+		buildUserManual">
+		<exec executable="make" failonerror="true" dir="${buildRoot}">
+			<arg line="remove" />
+		</exec>
+	</target>
+
+	<target name="buildInstallationManual" depends="setupBuildDocumentation">
+		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
+			<arg value="-c" />
+			<arg value="make installDoc &gt; ${buildLogDir}/installDoc.log 2&gt;&amp;1" />
+		</exec>
+	</target>
+
+	<target name="buildReleaseNotes" depends="setupBuildDocumentation">
+		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
+			<arg value="-c" />
+			<arg value="make releaseNotes &gt; ${buildLogDir}/releaseNotes.log 2&gt;&amp;1" />
+		</exec>
+	</target>
+
+	<target name="buildUserManual" depends="setupBuildDocumentation">
+		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
+			<arg value="-c" />
+			<arg value="make user-manual-html &gt; ${buildLogDir}/user-manual-html.log 2&gt;&amp;1" />
+		</exec>
+	</target>
+
+	<target name="buildExtensionManual" depends="setupBuildDocumentation">
+		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
+			<arg value="-c" />
+			<arg value="make extensionapi &gt; ${buildLogDir}/extensionapi.log 2&gt;&amp;1" />
+		</exec>
+		<ant dir="${buildRoot}/extensionapi/javadoc" antfile="javadoc.xml" 
+			target="javadoc" inheritAll="false" inheritRefs="false">
+			<property name="outputdir" location="${buildRoot}/extensionapi/javadoc/html" />
+			<reference refid="rc.extension.classpath" />
+			<reference refid="rc.extension.sourcepath" />
+		</ant>
+		<delete dir="${buildRoot}/extensionapi/javadoc/zip" />
+		<mkdir dir="${buildRoot}/extensionapi/javadoc/zip" />
+		<zip basedir="${buildRoot}/extensionapi/javadoc/html" destfile="${buildRoot}/extensionapi/javadoc/zip/javadoc.zip">
+		</zip>
+		<ant dir="${buildRoot}/gefapi/javadoc" antfile="javadoc.xml" 
+			target="javadoc" inheritAll="false" inheritRefs="false">
+			<property name="outputdir" location="${buildRoot}/gefapi/javadoc/html" />
+			<reference refid="rc.gef.extension.classpath" />
+			<reference refid="rc.gef.extension.sourcepath" />
+		</ant>
+		<delete dir="${buildRoot}/gefapi/javadoc/zip" />
+		<mkdir dir="${buildRoot}/gefapi/javadoc/zip" />
+		<zip basedir="${buildRoot}/gefapi/javadoc/html" destfile="${buildRoot}/gefapi/javadoc/zip/javadoc.zip">
+		</zip>
+	</target>
+
+	<target name="buildReferenceManual" depends="setupBuildDocumentation">
+		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
+			<arg value="-c" />
+			<arg value="make reference-html &gt; ${buildLogDir}/reference-html.log 2&gt;&amp;1" />
+		</exec>
+	</target>
+</project>
