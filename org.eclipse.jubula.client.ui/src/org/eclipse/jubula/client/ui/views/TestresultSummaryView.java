@@ -860,6 +860,12 @@ public class TestresultSummaryView extends ViewPart
                 }
             }
         });
+        // re-set the selection as this could otherwise lead to cached selected
+        // POs which are not up-to-date and lead to db-problems on
+        // EntityManager.merge();
+        ISelection s = m_tableViewer.getSelection();
+        m_tableViewer.setSelection(null);
+        m_tableViewer.setSelection(s);
     }
 
     /**
