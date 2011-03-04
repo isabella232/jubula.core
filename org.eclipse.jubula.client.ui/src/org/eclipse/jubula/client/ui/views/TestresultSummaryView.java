@@ -172,7 +172,7 @@ public class TestresultSummaryView extends ViewPart
      * <code>TESTRESULT_SUMMARY_EXPECTED_CAPS</code>
      */
     private static final String TESTRESULT_SUMMARY_EXPECTED_CAPS = 
-        Messages.TestresultSummaryExecCaps;
+        Messages.TestresultSummaryExpecCaps;
 
     /**
      * <code>TESTRESULT_SUMMARY_DURATION</code>

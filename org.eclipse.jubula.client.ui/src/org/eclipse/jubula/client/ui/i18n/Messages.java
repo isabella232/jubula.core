@@ -982,6 +982,7 @@ public class Messages extends NLS {
     public static String TestresultSummaryDuration;
     public static String TestresultSummaryEndTime;
     public static String TestresultSummaryExecCaps;
+    public static String TestresultSummaryExpecCaps;
     public static String TestresultSummaryFilterLabel;
     public static String TestresultSummaryForLabel;
     public static String TestresultSummaryHandlerCaps;
@@ -1006,7 +1007,6 @@ public class Messages extends NLS {
     public static String TestresultSummaryTestsuite;
     public static String TestresultSummaryTestsuiteStatus;
     public static String TestresultSummaryToolkit;
-    public static String TestresultSummaryxpecCaps;
     public static String TestResultTreeViewCouldNotInitialised;
     public static String TestResultViewPreferencePageAutoScreenshots;
     public static String TestResultViewPreferencePageBrowse;
