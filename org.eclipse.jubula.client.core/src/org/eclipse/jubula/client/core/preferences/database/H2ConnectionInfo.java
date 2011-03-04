@@ -31,7 +31,7 @@ public class H2ConnectionInfo extends DatabaseConnectionInfo {
     private static final String DEFAULT_PASSWORD = StringUtils.EMPTY;
     
     /** the location of the database files (on the filesystem) */
-    private String m_location = "~/jubula-db/jubula-db"; //$NON-NLS-1$
+    private String m_location = "~/.jubula-db/jubula-db"; //$NON-NLS-1$
 
     /**
      * 
