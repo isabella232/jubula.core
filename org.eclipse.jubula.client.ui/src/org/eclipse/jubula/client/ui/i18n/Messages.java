@@ -853,13 +853,6 @@ public class Messages extends NLS {
     public static String StopAUTActionShellTitle;
     public static String StoringOfMetadataFailed;
     public static String Suite;
-    public static String SupportRequestMailDialogAddAutStarterLogLabel;
-    public static String SupportRequestMailDialogAddClientLogLabel;
-    public static String SupportRequestMailDialogAddConfigInfoLabel;
-    public static String SupportRequestMailDialogAddProjectsLabel;
-    public static String SupportRequestMailDialogMessage;
-    public static String SupportRequestMailDialogShellTitle;
-    public static String SupportRequestMailDialogTitle;
     public static String TestCaseBrowserLinkWithEditor;
     public static String TestCaseEditorCantDelete;
     public static String TestCaseEditorCcantDelete;
