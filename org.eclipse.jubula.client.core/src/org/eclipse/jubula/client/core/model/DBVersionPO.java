@@ -66,7 +66,6 @@ public class DBVersionPO implements IPersistentObject {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Version
@@ -83,7 +82,6 @@ public class DBVersionPO implements IPersistentObject {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Id

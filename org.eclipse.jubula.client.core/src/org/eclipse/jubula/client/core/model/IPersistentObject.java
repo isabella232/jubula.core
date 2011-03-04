@@ -16,10 +16,6 @@ import java.io.Serializable;
  * interface to bundle all PO-classes
  * @author BREDEX GmbH
  * @created 20.06.2005
- *
- *
- *
- *
  */
 public interface IPersistentObject extends Serializable {
 
