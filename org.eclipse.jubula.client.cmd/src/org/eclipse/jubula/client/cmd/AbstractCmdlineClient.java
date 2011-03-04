@@ -480,7 +480,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         return args;
     }
 
-
     /**
      * 
      * @param errorMsg Stringbuilder with message
@@ -498,7 +497,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         errorMsg.append(StringConstants.NEWLINE);   
     }
 
-
     /** 
      * printusage prints the command line syntax
      *
@@ -507,11 +505,11 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         Options options = createOptions(true);
         HelpFormatter formatter = new HelpFormatter();
     
-        formatter.printHelp(getCmdlineClientName(), options, true);
+        formatter.printHelp(getCmdlineClientExecName(), options, true);
     }
 
-    /** @return the descriptive name for the commandline Client */
-    public abstract String getCmdlineClientName();
+    /** @return the name of the executable for the commandline Client */
+    public abstract String getCmdlineClientExecName();
 
     /**
      * @return the noRun

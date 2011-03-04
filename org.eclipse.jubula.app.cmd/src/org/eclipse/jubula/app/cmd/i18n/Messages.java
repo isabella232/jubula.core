@@ -20,6 +20,7 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.app.cmd.i18n.messages"; //$NON-NLS-1$
     
     public static String ConnectionToAUT_Agent;
+    public static String ClientNameShort;
     public static String ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE;
     public static String ErrorWhileInitializingTestResult;
     public static String ErrorWhileStoppingAUT;

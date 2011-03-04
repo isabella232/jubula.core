@@ -224,7 +224,7 @@ public class Client extends AbstractCmdlineClient {
     }
     
     /** {@inheritDoc} */
-    public String getCmdlineClientName() {
-        return Messages.ClientName;
+    public String getCmdlineClientExecName() {
+        return org.eclipse.jubula.app.cmd.i18n.Messages.ClientNameShort;
     }
 }

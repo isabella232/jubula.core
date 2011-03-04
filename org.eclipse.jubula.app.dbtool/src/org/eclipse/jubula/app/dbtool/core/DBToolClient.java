@@ -496,7 +496,7 @@ public class DBToolClient extends AbstractCmdlineClient {
     }
 
     /** {@inheritDoc} */
-    public String getCmdlineClientName() {
+    public String getCmdlineClientExecName() {
         return Messages.DBToolName;
     }
 }
