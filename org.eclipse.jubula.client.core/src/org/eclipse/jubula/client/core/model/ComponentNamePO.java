@@ -17,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -52,6 +53,9 @@ class ComponentNamePO extends AbstractGuidNamePO
     
     /** The context of creation */
     private String m_creationContext = null;
+
+    /** version of this in db*/
+    private transient Integer m_version;
 
     /**
      * Default Constructor. Only for Hibernate!
@@ -261,8 +265,16 @@ class ComponentNamePO extends AbstractGuidNamePO
     /**
      * {@inheritDoc}
      */
-    @Transient
+    @Version
     public Integer getVersion() {
-        return 0;
+        return m_version;
+    }
+
+    /**
+     * @param version version
+     */
+    @SuppressWarnings("unused")
+    private void setVersion(Integer version) {
+        m_version  = version;        
     }
 }

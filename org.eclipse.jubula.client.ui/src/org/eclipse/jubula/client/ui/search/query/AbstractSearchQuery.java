@@ -123,7 +123,7 @@ public abstract class AbstractSearchQuery implements ISearchQuery {
      * @param viewId
      *            the viewId to open before jumping to search result; may be
      *            <code>null</code>
-     * @return a list of GDSearchResultElements for the given node po's
+     * @return a list of SearchResultElements for the given NodePOs
      */
     protected List<SearchResultElement> getSearchResultList(
             Set<INodePO> reuse, String viewId) {

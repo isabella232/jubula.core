@@ -527,6 +527,8 @@ public class TestresultSummaryView extends ViewPart
                 CommandIDs.REFRESH_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.TOGGLE_RELEVANCE_COMMAND_ID);
         Map<String, String> params = new HashMap<String, String>();
         params.put(CommandIDs.EXPORT_WIZARD_PARAM_ID, 
                 ExportTestResultDetailsWizard.ID);
@@ -856,6 +858,12 @@ public class TestresultSummaryView extends ViewPart
                     log.error(msg, e);
                     showErrorDialog(msg);
                 }
+                // re-set the selection as this could otherwise lead to cached selected
+                // POs which are not up-to-date and lead to db-problems on
+                // EntityManager.merge();
+                ISelection s = m_tableViewer.getSelection();
+                m_tableViewer.setSelection(null);
+                m_tableViewer.setSelection(s);
             }
         });
     }

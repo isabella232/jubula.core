@@ -138,6 +138,9 @@ public interface CommandIDs {
     /** the ID of the "Pause on Error" command */
     public static final String TOGGLE_PAUSE_ON_ERROR_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.togglePauseOnErrorCommand"; //$NON-NLS-1$
 
+    /** the ID of the "Toggle relevance" command */
+    public static final String TOGGLE_RELEVANCE_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.ToggleRelevance"; //$NON-NLS-1$
+    
     /** the ID of the "Open test result detail" command */
     public static final String OPEN_TEST_RESULT_DETAIL_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.OpenTestResultViewer"; //$NON-NLS-1$
 

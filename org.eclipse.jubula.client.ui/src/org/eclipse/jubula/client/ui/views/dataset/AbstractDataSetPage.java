@@ -998,10 +998,10 @@ public abstract class AbstractDataSetPage extends Page
                 return;
             }
 
+            initTableViewerLanguageColumns(false);
             getTableViewer().setContentProvider(new DataSetContentProvider());
             getTableViewer().setLabelProvider(new DataSetLabelProvider());
             getComboTracker().setComboSelection(getDataSetCombo());
-            initTableViewerLanguageColumns(false);
             getTableViewer().refresh();
         }
     }
@@ -1049,10 +1049,10 @@ public abstract class AbstractDataSetPage extends Page
                 return;
             }
 
+            initTableViewerLanguageColumns(true);
             getTableViewer().setContentProvider(new ParameterContentProvider());
             getTableViewer().setLabelProvider(new ParameterLabelProvider());
             getComboTracker().setComboSelection(m_paramCombo);
-            initTableViewerLanguageColumns(true);
             getTableViewer().refresh();
         }
     }

@@ -14,13 +14,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
@@ -41,7 +38,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author BREDEX GmbH
  * @created Aug 23, 2010
  */
-public class AddTestResultSummaryCommentHandler extends AbstractHandler {
+public class AddTestResultSummaryCommentHandler 
+    extends AbstractTestResultViewHandler {
     /**
      * {@inheritDoc}
      */
@@ -83,25 +81,6 @@ public class AddTestResultSummaryCommentHandler extends AbstractHandler {
     }
 
     /**
-     * @param event
-     *            the execution event
-     * @return the selected summary or null if no selection available
-     */
-    private ITestResultSummaryPO getSelectedSummary(ExecutionEvent event) {
-        ISelection selection = HandlerUtil.getCurrentSelection(event);
-        if (selection instanceof IStructuredSelection) {
-            IStructuredSelection structuredSelection = 
-                (IStructuredSelection)selection;
-            Object selectedObject = structuredSelection.getFirstElement();
-            if (selectedObject instanceof ITestResultSummaryPO) {
-                return (ITestResultSummaryPO)selectedObject;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * perform model changes
      * 
      * @param selectedSummary the summary to change the comment for
@@ -133,6 +112,5 @@ public class AddTestResultSummaryCommentHandler extends AbstractHandler {
         } finally {
             Hibernator.instance().dropSession(sess);
         }
-        
     }
 }
