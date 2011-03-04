@@ -147,12 +147,17 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     /**
      * 
      * @param args
-     *      the command line
-     * @throws FileNotFoundException if config file is missing
-     * @throws ParseException if wrong options are present
-     * @throws IOException if io error
+     *            the command line
+     * @throws FileNotFoundException
+     *             if config file is missing
+     * @throws ParseException
+     *             if wrong options are present
+     * @throws IOException
+     *             if io error
+     * @return true to continue processing the commandline run; false to stop
+     *         processing further execution.
      */
-    protected void parseCommandLine(String[] args)
+    protected boolean parseCommandLine(String[] args)
         throws FileNotFoundException, ParseException, IOException {
         String[] cloneArgs = args.clone();
         Options options = createOptions(false);
@@ -175,6 +180,11 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                 }
             }
 
+            if (m_cmd.hasOption(ClientStrings.HELP)) {
+                printUsage();
+                return false;
+            }
+            
             // The first thing to check is, if there is a config file
             // if there is a config file we read this first,
             if (m_cmd.hasOption(ClientStrings.CONFIG)) {
@@ -216,6 +226,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
             printUsage();
             throw new ParseException(StringConstants.EMPTY);
         }
+        return true;
     }
 
     /**
@@ -362,7 +373,9 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
             }
         });
         try {
-            parseCommandLine(args);
+            if (!parseCommandLine(args)) {
+                return EXIT_CODE_ERROR;
+            }
         } catch (ParseException e) {
             log.error(e);
             return EXIT_CODE_ERROR;
