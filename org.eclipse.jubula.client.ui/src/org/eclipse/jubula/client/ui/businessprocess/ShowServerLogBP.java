@@ -138,6 +138,8 @@ public final class ShowServerLogBP extends AbstractActionBP
                 Utils.createMessageDialog(MessageIDs.E_FILE_NOT_FOUND);
             } else if (status == ServerLogResponseMessage.IO_EXCEPTION) {
                 Utils.createMessageDialog(MessageIDs.E_IO_EXCEPTION);
+            } else if (status == ServerLogResponseMessage.CONFIG_ERROR) {
+                Utils.createMessageDialog(MessageIDs.E_CONFIG_ERROR);
             }
         } else {
             Utils.createMessageDialog(MessageIDs.E_MESSAGE_REQUEST);
