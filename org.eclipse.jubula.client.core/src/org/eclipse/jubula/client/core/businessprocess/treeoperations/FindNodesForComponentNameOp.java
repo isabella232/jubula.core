@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.core.businessprocess.treeoperations;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -37,9 +36,6 @@ public class FindNodesForComponentNameOp
 
     /** GUID of Component Name to use for this operation */
     private String m_compNameGuid;
-
-    /** The business process that performs component name operations. */
-    private CompNamesBP m_compNamesBP = new CompNamesBP();
 
     /**
      * Constructor

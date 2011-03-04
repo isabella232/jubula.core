@@ -57,7 +57,6 @@ public class ShowResponsibleNodeForComponentName
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("nls")
     public String getLabel() {
         StringBuilder sb = new StringBuilder();
         sb.append(getTimestamp());
@@ -65,9 +64,9 @@ public class ShowResponsibleNodeForComponentName
         sb.append(StringConstants.SPACE);
         sb.append(Messages.UIJobSearchingResponsibleCompNames);
         sb.append(StringConstants.SPACE);
-        sb.append("\"");
+        sb.append(StringConstants.QUOTE);
         sb.append(getCompName().getName());
-        sb.append("\"");
+        sb.append(StringConstants.QUOTE);
         return sb.toString();
     }
     

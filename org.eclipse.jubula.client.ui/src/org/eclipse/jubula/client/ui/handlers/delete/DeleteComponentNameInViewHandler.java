@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
@@ -64,20 +65,21 @@ public class DeleteComponentNameInViewHandler extends AbstractHandler {
             }
 
             if (DeleteHandlerHelper.confirmDelete(itemNames)) {
-                EntityManager s = null;
+                EntityManager s = GeneralStorage.getInstance()
+                        .getMasterSession();
+                
                 try {
-                    s = Hibernator.instance().openSession();
-                    EntityTransaction tx = 
-                        Hibernator.instance().getTransaction(s);
+                    EntityTransaction tx = Hibernator.instance()
+                            .getTransaction(s); 
                     Hibernator.instance().lockPOSet(s, toDelete);
                     for (IComponentNamePO compName : toDelete) {
-                        s.remove(compName);
+                        s.remove(s.merge(compName));
                     }
                     Hibernator.instance().commitTransaction(s, tx);
                     for (IComponentNamePO compName : toDelete) {
                         DataEventDispatcher.getInstance()
-                            .fireDataChangedListener(
-                                compName, DataState.Deleted, UpdateState.all);
+                                .fireDataChangedListener(compName,
+                                        DataState.Deleted, UpdateState.all);
                         ComponentNamesBP.getInstance().removeComponentNamePO(
                                 compName.getGuid());
                     }
@@ -85,8 +87,6 @@ public class DeleteComponentNameInViewHandler extends AbstractHandler {
                     PMExceptionHandler.handlePMExceptionForMasterSession(e);
                 } catch (ProjectDeletedException e) {
                     PMExceptionHandler.handleGDProjectDeletedException();
-                } finally {
-                    Hibernator.instance().dropSession(s);
                 }
             }
         }

@@ -16,9 +16,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
  * This class holds a component name and the node that is responsible for
  * defining the name.
  * 
- * {@inheritDoc}
- *      CapPO)
- * 
  * @author BREDEX GmbH
  * @created 14.09.2005
  *

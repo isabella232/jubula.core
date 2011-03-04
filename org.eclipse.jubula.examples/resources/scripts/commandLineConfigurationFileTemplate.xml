@@ -15,7 +15,7 @@
     <server>YourAUTAgentHostname</server>
     <port>PortNumberForAUTAgent</port>
     <language>en_US</language>
-    <testsuite>TestSuite</testsuite>
+    <testsuite><entry>TestSuite</entry></testsuite>
     <datadir>DirectoryWhereExternalDataIsStored</datadir>
     <resultdir>DirectoryToStoreTestResultFiles</resultdir>
 </configuration>

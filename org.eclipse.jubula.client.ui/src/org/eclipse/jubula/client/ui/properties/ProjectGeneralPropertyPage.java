@@ -75,8 +75,6 @@ import org.eclipse.swt.widgets.Label;
 public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
 
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created Aug 21, 2007
      */
@@ -243,7 +241,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
             Messages.ProjectPropertyPageProjectGuid), 
-            "GDControlDecorator.ProjectPropertiesGUID", false);
+            "GDControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
         
         JBText projectGuid = new JBText(rightComposite, 
             SWT.READ_ONLY | SWT.BORDER);

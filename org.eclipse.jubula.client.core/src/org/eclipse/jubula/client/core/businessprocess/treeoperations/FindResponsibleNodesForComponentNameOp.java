@@ -55,7 +55,11 @@ public class FindResponsibleNodesForComponentNameOp
                         cap, cap.getComponentName(),
                         ComponentNamesBP.getInstance());
             if (getCompNameGuid().equals(result.getCompName())) {
-                getNodes().add(result.getResponsibleNode());
+                INodePO responsibleNode = result.getResponsibleNode();
+                if (Hibernator.isPoSubclass(responsibleNode, ICapPO.class)) {
+                    getNodes().add(parent);
+                }
+                getNodes().add(responsibleNode);
             }
         }
         return true;
