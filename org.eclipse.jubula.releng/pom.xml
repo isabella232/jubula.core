@@ -35,6 +35,7 @@
 		<module>../org.eclipse.jubula.toolkit.common</module>
 		<module>../org.eclipse.jubula.client.ua.cheatsheets</module>
 		<module>../org.eclipse.jubula.client.ua.welcome</module>
+		<module>../org.eclipse.jubula.client.ua.help</module>
 		<module>../org.eclipse.jubula.client.cmd</module>
 	</modules>
 
