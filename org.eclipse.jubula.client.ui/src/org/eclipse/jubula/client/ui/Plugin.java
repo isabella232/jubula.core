@@ -1465,32 +1465,33 @@ public class Plugin extends AbstractUIPlugin
      *                     <code>null</code> if <code>projectName</code> is also
      *                     <code>null</code>.
      */
-    public static void setProjectNameInTitlebar(String projectName, 
+    public static void setProjectNameInTitlebar(String projectName,
             Integer majorVersion, Integer minorVersion) {
-        
-        StringBuilder sb = new StringBuilder(
-                Plugin.getDefault().getRunningApplicationTitle());
-        
+
+        StringBuilder sb = new StringBuilder(Plugin.getDefault()
+                .getRunningApplicationTitle());
+
         Hibernator hibernator = Hibernator.instance();
         if (hibernator != null) {
             String user = hibernator.getCurrentDBUser();
             if (user != null && user.length() != 0) {
-                sb.append(StringConstants.SPACE
-                        + StringConstants.MINUS
-                        + StringConstants.SPACE)
-                        .append(user);
+                sb.append(StringConstants.SPACE)
+                      .append(StringConstants.MINUS)
+                      .append(StringConstants.SPACE)
+                      .append(user);
             }
         }
-        
+
         if (projectName != null && projectName.length() != 0) {
-            sb.append(StringConstants.SPACE
-                    + StringConstants.MINUS
-                    + StringConstants.SPACE).append(projectName);
-            sb.append(StringConstants.SPACE).append(majorVersion.intValue())
-            .append(StringConstants.DOT);
-            sb.append(minorVersion.intValue());
+            sb.append(StringConstants.SPACE)
+                  .append(StringConstants.MINUS)
+                  .append(StringConstants.SPACE)
+                  .append(projectName)
+                  .append(StringConstants.SPACE)
+                  .append(majorVersion.intValue())
+                  .append(StringConstants.DOT)
+                  .append(minorVersion.intValue());
         }
-        
         getActiveWorkbenchWindowShell().setText(sb.toString());
     }
 
