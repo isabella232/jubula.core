@@ -195,14 +195,11 @@ public class GeneralStorage {
             NodePM.getInstance().setUseCache(true);
 
             if (m_project != null) {
-                IProjectPO oldProject = getProject();
                 // loadProjectInROSession will do a complete reset
                 ProjectPM.loadProjectInROSession(m_project); 
                 
                 if (m_project == null) {
                     reset();
-                    // temporarely restore the project 
-                    setProject(oldProject);
                     throw new ProjectDeletedException(
                             Messages.ProjectWasDeleted,
                             MessageIDs.E_CURRENT_PROJ_DEL);
