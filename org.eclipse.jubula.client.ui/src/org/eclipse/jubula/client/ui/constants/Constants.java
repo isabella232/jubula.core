@@ -340,7 +340,7 @@ public interface Constants {
     /**
      * <code>MAX_NUMBER_OF_DAYS_KEY_DEFAULT</code>
      */
-    public static final int MAX_NUMBER_OF_DAYS_KEY_DEFAULT = 2;
+    public static final int MAX_NUMBER_OF_DAYS_KEY_DEFAULT = 30;
     
     /** Key for m_text value to be stored as a resource property */
     public static final boolean CLEAN_TESTRESULTS_KEY_DEFAULT = false;
