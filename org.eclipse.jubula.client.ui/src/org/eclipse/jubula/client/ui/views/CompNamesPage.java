@@ -32,7 +32,6 @@ import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ReusedCompNameValidator;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IResetFrameColourListener;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -48,12 +47,11 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.TestSuiteEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.CompNameCellValidator;
 import org.eclipse.jubula.client.ui.widgets.CompNamePopupTextCellEditor;
@@ -134,24 +132,8 @@ public class CompNamesPage extends Page implements ISelectionListener {
      */
     private CheckboxTableViewer m_tableViewer;
     
-    /** adapter to set the frame colour */
-    private ResetColourAdapter m_colourAdapter;
-    
     /** the primary control for this page */
     private Control m_control;
-
-    /** observation of events need a reset of frame colour */
-    private IResetFrameColourListener m_resetFrameColourListener = 
-        new IResetFrameColourListener() {
-        
-            public void eventOccured(List< ? extends Object> params) {
-                m_colourAdapter.resetColouredFrame();
-            }
-            public void checkGenericListElementType(
-                    List< ? extends Object> params) {
-            // do nothing
-            }
-        };
     
     /**
      * The currently selected compNamesPair, or <code>nully</code> if no 
@@ -752,7 +734,6 @@ public class CompNamesPage extends Page implements ISelectionListener {
         setParentLayout(topLevelComposite);
         m_control = topLevelComposite;
         
-        m_colourAdapter = new ResetColourAdapter(topLevelComposite);
         setParentLayout(topLevelComposite);
         Table table = new Table(topLevelComposite, SWT.BORDER | SWT.CHECK
                 | SWT.FULL_SELECTION);

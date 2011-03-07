@@ -33,7 +33,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IResetFrameColourListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -53,7 +52,6 @@ import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -88,22 +86,6 @@ public class TestResultTreeView extends ViewPart
     private TreeViewer m_treeViewer;
     /** the parent composite */
     private Composite m_parentComposite;
-    /** adapter to set the frame colour */
-    private ResetColourAdapter m_colourAdapter;
-    
-    /** observation of events need a reset of frame colour */
-    @SuppressWarnings("synthetic-access") 
-    private IResetFrameColourListener m_resetFrameColourListener = 
-        new IResetFrameColourListener() {
-        
-            public void eventOccured(List< ? extends Object> list) {
-                m_colourAdapter.resetColouredFrame();
-            }
-            public void checkGenericListElementType(
-                    List< ? extends Object> params) {
-                // do nothing
-            }
-        };
 
     /**
      * The default constructor.
@@ -116,9 +98,7 @@ public class TestResultTreeView extends ViewPart
      * {@inheritDoc}
      */
     public Object getAdapter(Class adapter) {
-        if (adapter.equals(ResetColourAdapter.class)) {
-            return m_colourAdapter;
-        } else if (adapter.equals(IPropertySheetPage.class)) {
+        if (adapter.equals(IPropertySheetPage.class)) {
             return new JBPropertiesView(false, null);
         }
         return super.getAdapter(adapter);
@@ -129,7 +109,6 @@ public class TestResultTreeView extends ViewPart
      */
     public void createPartControl(Composite parent) {
         m_parentComposite = parent;
-        m_colourAdapter = new ResetColourAdapter(parent);
         GridLayout layout = new GridLayout();
         layout.numColumns = NUM_COLUMNS_1;
         layout.verticalSpacing = VERTICAL_SPACING;

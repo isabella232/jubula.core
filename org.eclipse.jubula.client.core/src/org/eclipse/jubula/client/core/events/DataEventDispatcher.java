@@ -394,11 +394,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         notRunning
     }
     
-    /** listeners to observe reset of frame colour of a view part */
-    private ListenerManager<IResetFrameColourListener> 
-    m_frameColourListenerMgr = 
-        new ListenerManager<IResetFrameColourListener>();
-    
     /** listeners to observe button status of a dialog or wizard page */
     private ListenerManager<IDialogStatusListener> m_dialogStatusListenerMgr = 
         new ListenerManager<IDialogStatusListener>();
