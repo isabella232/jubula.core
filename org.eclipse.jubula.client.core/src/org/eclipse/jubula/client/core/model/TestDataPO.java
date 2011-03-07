@@ -236,7 +236,7 @@ class TestDataPO implements ITestDataPO {
         if (value != null && value.length() != 0) {
             getMap().put(lang.toString(), value);
         } else {
-            getMap().remove(lang);
+            getMap().remove(lang.toString());
         }
     }
     
