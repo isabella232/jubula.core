@@ -18,10 +18,6 @@ import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 /**
  * @author BREDEX GmbH
  * @created 20.12.2005
- *
- *
- *
- *
  */
 public interface ISpecObjContPO extends IPersistentObject {
     /**

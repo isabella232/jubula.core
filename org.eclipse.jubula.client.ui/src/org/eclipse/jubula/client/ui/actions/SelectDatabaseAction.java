@@ -68,6 +68,13 @@ public class SelectDatabaseAction extends AbstractAction {
             return;
         }
 
+        if ((Hibernator.instance() != null)
+                && Hibernator.instance().isDBLocked()) {
+            Plugin.stopLongRunning();
+            Utils.createMessageDialog(MessageIDs.I_DB_BACKGROUND_JOB, 
+                    null, null);
+            return;
+        }
         new Loader().start();
     }
 

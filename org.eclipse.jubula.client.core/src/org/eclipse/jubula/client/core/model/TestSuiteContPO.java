@@ -27,10 +27,6 @@ import javax.persistence.Transient;
  *
  * @author BREDEX GmbH
  * @created 02.12.2005
- *
- *
- *
- *
  */
 @Entity
 @Table(name = "SUITE_CONT")
@@ -47,7 +43,6 @@ public class TestSuiteContPO extends WrapperPO implements ITestSuiteContPO {
     }
     
     /**
-     * 
      * @return Returns the topLevelNodeList.
      */
     @OneToMany(cascade = CascadeType.ALL, 

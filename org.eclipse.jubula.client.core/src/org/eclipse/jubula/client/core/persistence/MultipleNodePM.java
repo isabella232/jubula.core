@@ -746,7 +746,7 @@ public class MultipleNodePM  extends PersistenceManager {
      */
     public static class DeleteTCHandle extends AbstractCmdHandle {
 
-        /** test suite to delete */
+        /** test case to delete */
         private ISpecTestCasePO m_testCase;
         /**
          * <code>m_mapper</code> to manage param names for deletion in db
@@ -764,8 +764,7 @@ public class MultipleNodePM  extends PersistenceManager {
             m_dec = mapper;
             getObjsToLock().add(tc);
             
-            if (tc.getParentNode() != null
-                && !(m_testCase.getParentNode() instanceof IProjectPO)) {
+            if (isNestedTestCase(tc)) {
                 getObjsToLock().add(tc.getParentNode());
             } else {
                 IProjectPO proj = GeneralStorage.getInstance().getProject();
@@ -777,8 +776,7 @@ public class MultipleNodePM  extends PersistenceManager {
          * {@inheritDoc}
          */
         public MessageInfo execute(EntityManager sess) {
-            if (m_testCase.getParentNode() != null
-                && !(m_testCase.getParentNode() instanceof IProjectPO)) {
+            if (isNestedTestCase(m_testCase)) {
                 m_testCase.getParentNode().removeNode(m_testCase);
             } else {
                 IProjectPO proj = GeneralStorage.getInstance().getProject();
@@ -788,6 +786,21 @@ public class MultipleNodePM  extends PersistenceManager {
             sess.remove(m_testCase);
             
             return null;
+        }
+
+        /**
+         * @param tc
+         *            the test case to check wheter its nested = non-top level
+         *            test case
+         * @return true if non top-level test case
+         */
+        private boolean isNestedTestCase(ISpecTestCasePO tc) {
+            boolean isNested = false;
+            if (tc.getParentNode() != null
+                    && !(tc.getParentNode() instanceof IProjectPO)) {
+                isNested = true;
+            }
+            return isNested;
         }
         
         /**
