@@ -7,13 +7,14 @@ If you have an older version of \app{} installed, we recommend that you follow t
 %\item Make a note of any configurations you have used in the configuration tool, e.g. port numbers, logging, the \gddb{} used etc. 
 \item Export your workspace preferences.
 \item Uninstall the old version of \app{}. 
-%\item Clear (empty) the \gddb{} schema for all necessary \app{} users. 
+\item Clear (empty) the \gddb{} schema for all necessary \app{} users. You can do this via a database administration tool which will let you carry out the action \bxname{Drop Tables}. 
+%Oracle users can use the script from the website 
 \item Install the new version of \app{}.
 \bxtipp{If you have \gdagents{} running on other machines, be sure to install the new version of the \gdagent{} there too.}
 \item Add any extension plugins you backed up from the old version.
 \bxtipp{If you are testing RCP \gdauts{}, bear in mind that you will need to remove the old version of the RCP Remote Control plugin  from your application and insert the new version in its place. We also recommend starting your application with \bxshell{-clean} to ensure that the old RCP Remote Remote Control plugin is no longer used.}
 \item Start \app{}.  
-\item When you first connect to the \gddb{}, you will be informed whether your \gddb{} scheme is compatible with the new version. If not, the migration wizard will guide you through the migration process.
+%\item When you first connect to the \gddb{}, you will be informed whether your \gddb{} scheme is compatible with the new version. If not, the migration wizard will guide you through the migration process.
 
 \end{enumerate}
 
