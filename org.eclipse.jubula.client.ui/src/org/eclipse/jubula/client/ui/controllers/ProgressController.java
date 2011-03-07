@@ -196,17 +196,14 @@ public class ProgressController implements IProgressListener,
                             Plugin.getDefault().writeLineToConsole(Messages.
                                 SelectDatabaseActionInfoConnectSuccessful,
                                     true);
-                            Plugin.stopLongRunning();
                         } else {
-                            Utils.clearClientUI();
+                            Utils.clearClient(true);
                             Plugin.getDefault().writeLineToConsole(Messages.
                                     SelectDatabaseActionInfoConnectFailed
                                     , true);
-                            Plugin.stopLongRunning();
                         }
+                        Plugin.stopLongRunning();
                     }
-                    
-                    
                 } else {
                     Hibernator.setUser(null);
                 }

@@ -331,39 +331,18 @@ public class Utils {
      * clears the content of client
      */
     public static void clearClient() {
-        TestExecution.getInstance().stopExecution();
-        GeneralStorage.getInstance().reset();
-        Plugin.getDisplay().syncExec(new Runnable() {
-            public void run() {
-                Plugin.setProjectNameInTitlebar(null, null, null);
-                Plugin.closeAllOpenedJubulaEditors();
-                if (Plugin.getView(Constants.TESTRE_ID) != null) {
-                    ((TestResultTreeView)Plugin.getView(Constants.TESTRE_ID))
-                        .clear();
-                }
-                if (Plugin.getView(Constants.TC_BROWSER_ID) != null) {
-                    ((TestCaseBrowser)Plugin.getView(Constants.TC_BROWSER_ID))
-                        .getTreeViewer().setInput(null);
-                }
-                if (Plugin.getView(Constants.TS_BROWSER_ID) != null) {
-                    ((TestSuiteBrowser)Plugin.getView(Constants.TS_BROWSER_ID))
-                        .getTreeViewer().setInput(null);
-                }
-                if (Plugin.getView(Constants.COMPNAMEBROWSER_ID) != null) {
-                    ((ComponentNameBrowser)Plugin.getView(
-                            Constants.COMPNAMEBROWSER_ID))
-                        .getTreeViewer().setInput(null);
-                }
-            }
-        });
-        DataEventDispatcher.getInstance().fireProjectLoadedListener(
-                new NullProgressMonitor());
+        clearClient(false);
     }
     
     /**
-     * clears the content of client, when the client is not connected to database
+     * clears the content of client
+     * @param onlyUI true to clear the client ui only
      */
-    public static void clearClientUI() {
+    public static void clearClient(boolean onlyUI) {
+        if (!onlyUI) {
+            TestExecution.getInstance().stopExecution();
+            GeneralStorage.getInstance().reset();
+        }
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 Plugin.setProjectNameInTitlebar(null, null, null);

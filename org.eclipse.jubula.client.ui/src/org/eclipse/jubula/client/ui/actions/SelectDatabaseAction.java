@@ -160,15 +160,14 @@ public class SelectDatabaseAction extends AbstractAction {
                             Plugin.getDefault().writeLineToConsole(Messages.
                                 SelectDatabaseActionInfoConnectSuccessful,
                                 true);
-                            Plugin.stopLongRunning();
                         } else {
-                            Utils.clearClientUI();
+                            Utils.clearClient(true);
                             Plugin.getDefault().writeLineToConsole(
                                             Messages.
                                     SelectDatabaseActionInfoConnectFailed,
                                             true);
-                            Plugin.stopLongRunning();
                         }
+                        Plugin.stopLongRunning();
                     } else {
                         ProgressEventDispatcher
                                 .notifyListener(new ProgressEvent(
