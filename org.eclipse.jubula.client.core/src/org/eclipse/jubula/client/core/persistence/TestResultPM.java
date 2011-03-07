@@ -73,21 +73,22 @@ public class TestResultPM {
      * delete test result elements of selected summary
      * @param resultId id of test result
      */
-    public static final void deleteTestresultOfSummary(
+    private static final void deleteTestresultOfSummary(
             Long resultId) {
         
-        if (Hibernator.instance() == null) {
+        Hibernator hibernator = Hibernator.instance();
+        if (hibernator == null) {
             return;
         }
-        final EntityManager session = Hibernator.instance().openSession();
+        final EntityManager session = hibernator.openSession();
         try {
             final EntityTransaction tx = 
-                Hibernator.instance().getTransaction(session);
-            
+                hibernator.getTransaction(session);
+            hibernator.lockDB();
             executeDeleteTestresultOfSummary(session, resultId);
             deleteMonitoringReports(session, resultId);
             
-            Hibernator.instance().commitTransaction(session, tx);
+            hibernator.commitTransaction(session, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.DeleteTestresultElementFailed, 
                     e, MessageIDs.E_DATABASE_GENERAL);
@@ -95,7 +96,8 @@ public class TestResultPM {
             throw new JBFatalException(Messages.DeleteTestresultElementFailed, 
                     e, MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Hibernator.instance().dropSession(session);
+            hibernator.dropSession(session);
+            hibernator.unlockDB();
         }
     }
     
@@ -104,7 +106,7 @@ public class TestResultPM {
      * @param session The current session
      * @param summaryId The summaryToDelete
      */
-    public static void deleteMonitoringReports(
+    private static void deleteMonitoringReports(
             EntityManager session, Long summaryId) {
 
         StringBuilder queryBuilder = new StringBuilder();

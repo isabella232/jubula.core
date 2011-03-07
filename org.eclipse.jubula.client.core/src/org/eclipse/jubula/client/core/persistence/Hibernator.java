@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -131,7 +132,10 @@ public class Hibernator {
     /** set to true if a new scheme was installed */
     private boolean m_newDbSchemeInstalled = false;
 
-    /**
+    /** counts the number of threads which needs this instance of the DB.*/
+    private AtomicInteger m_dbLockCnt = new AtomicInteger();
+    
+     /**
      * Create the instance.
      * 
      * @param userName
@@ -1254,5 +1258,31 @@ public class Hibernator {
     public String getCurrentDBDriverClass() {
         return getFactoryProperty(m_sf, PersistenceUnitProperties.JDBC_DRIVER);
     }
+
+   /**
+     * this method counts the lock requests for the DB. It will not prevent any
+     * action but provide a hint that some thread needs this DB now.
+     */
+    public void lockDB() {
+        m_dbLockCnt.incrementAndGet();
+    }
+
+    /**
+     * Decrements the lock count. See lockDB()
+     */
+    public void unlockDB() {
+        if (m_dbLockCnt.decrementAndGet() < 0) {
+            m_dbLockCnt.set(0);
+        }
+    }
     
+    /**
+     * 
+     * @return <code>true</code> if there are threads relying on this DB 
+     * instance.
+     */
+    public boolean isDBLocked() {
+        return m_dbLockCnt.get() > 0;
+    }
+
 }
