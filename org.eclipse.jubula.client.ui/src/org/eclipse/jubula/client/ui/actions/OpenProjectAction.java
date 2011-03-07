@@ -102,15 +102,7 @@ public class OpenProjectAction extends AbstractAction {
         public void run(IProgressMonitor monitor) 
             throws InterruptedException {
 
-            IProjectPO clearedProject = 
-                GeneralStorage.getInstance().getProject();
-            if (clearedProject != null) {
-                Utils.clearClient();
-                GeneralStorage.getInstance().setProject(null);
-                DataEventDispatcher.getInstance()
-                    .fireDataChangedListener(clearedProject, DataState.Deleted,
-                        UpdateState.all);
-            }
+            Utils.clearClient();
 
             int totalWork = getTotalWork();
             ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
