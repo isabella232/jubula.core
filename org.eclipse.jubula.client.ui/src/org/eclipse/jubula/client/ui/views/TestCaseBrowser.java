@@ -30,7 +30,6 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -642,13 +641,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
         } else if (po instanceof IProjectPO) {
             handleProjectLoaded();
         }
-    }
-    
-    /**
-     * @return a TestCaseParamBP object.
-     */
-    public TestCaseParamBP getTestCaseParamBP() {
-        return new TestCaseParamBP();
     }
     
     /**

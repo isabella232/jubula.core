@@ -336,7 +336,7 @@ public class Utils {
     
     /**
      * clears the content of client
-     * @param onlyUI true to clear the client ui only
+     * @param onlyUI true to clear the client UI part only
      */
     public static void clearClient(boolean onlyUI) {
         if (!onlyUI) {
