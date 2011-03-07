@@ -229,10 +229,10 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
                 parameters, StartSwtAutServerCommand.ENV_VAR_PREFIX, 
                 StartSwtAutServerCommand.ENV_VALUE_SEP));
         
-        if (isRunnigWithMonitoring(parameters)) {
+        if (isRunningWithMonitoring(parameters)) {
             
             StringBuffer sb = new StringBuffer();
-            sb.append("_JAVA_OPTIONS="); //$NON-NLS-1$
+            sb.append(JAVA_OPTIONS_INTRO);
             sb.append(this.getMonitoringAgent(parameters));
             envList.add(sb.toString());   
             envArray = super.createEnvArray(parameters, true);

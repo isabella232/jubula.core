@@ -33,7 +33,11 @@ import org.eclipse.jubula.tools.utils.EnvironmentUtils;
  *
  */
 public abstract class AbstractStartToolkitAut implements IStartAut {
-
+    /**
+     * <code>JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY</code>
+     */
+    protected static final String JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY = "-Djava.util.logging.config.file="; //$NON-NLS-1$
+    
     /** the logger */
     private static Log log = LogFactory.getLog(AbstractStartToolkitAut.class);
 

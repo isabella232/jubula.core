@@ -42,10 +42,23 @@ import org.eclipse.jubula.tools.jarutils.MainClassLocator;
 /**
  * @author BREDEX GmbH
  * @created Jul 9, 2007
- * 
  */
 public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
-    
+    /**
+     * <code>JAVA_OPTIONS_INTRO</code>
+     */
+    protected static final String JAVA_OPTIONS_INTRO = "_JAVA_OPTIONS="; //$NON-NLS-1$
+
+    /**
+     * <code>JAVA_LANGUAGE_PROPERTY</code>
+     */
+    private static final String JAVA_LANGUAGE_PROPERTY = "-Duser.language="; //$NON-NLS-1$
+
+    /**
+     * <code>JAVA_COUNTRY_PROPERTY</code>
+     */
+    private static final String JAVA_COUNTRY_PROPERTY = "-Duser.country="; //$NON-NLS-1$
+
     /** the logger */
     private static final Log LOG = 
         LogFactory.getLog(AbstractStartJavaAut.class);
@@ -258,11 +271,11 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         if (locale != null) {
             if (locale.getCountry() != null 
                 && locale.getCountry().length() > 0) {
-                cmds.add("-Duser.country=" + locale.getCountry()); //$NON-NLS-1$
+                cmds.add(JAVA_COUNTRY_PROPERTY + locale.getCountry());
             }
             if (locale.getLanguage() != null 
                 && locale.getLanguage().length() > 0) {
-                cmds.add("-Duser.language=" + locale.getLanguage()); //$NON-NLS-1$
+                cmds.add(JAVA_LANGUAGE_PROPERTY + locale.getLanguage());
             }
         }
     }
@@ -301,7 +314,6 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     protected abstract String[] createCmdArray(String baseCmd, Map parameters);
     
     /**
-     * 
      * @param parameters The parameters for starting the AUT.
      * @return <code>true</code> if the AUT is being started via an executable
      *         file or script. Otherwise, <code>false</code>.
@@ -309,13 +321,13 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     protected boolean isRunningFromExecutable(Map parameters) {
         return parameters.containsKey(AutConfigConstants.EXECUTABLE);
     }
+    
     /**
-     * 
      * @param parameters The parameters for starting the AUT.
      * @return <code>true</code> if the AUT is being started with a 
      * monitoring agent. Otherwise, <code>false</code>.
      */
-    protected boolean isRunnigWithMonitoring(Map parameters) {
+    protected boolean isRunningWithMonitoring(Map parameters) {
         
         String monitoringId = (String)parameters.get(
                 AutConfigConstants.MONITORING_AGENT_ID);        
@@ -324,6 +336,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         }                 
         return false;         
     }
+    
     /**
      * Sets -javaagent and JRE arguments as SUN environment variable.
      * @param parameters The parameters for starting the AUT
@@ -336,27 +349,39 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             Locale locale = (Locale)parameters.get(IStartAut.LOCALE);
             // set agent and locals
             
-            sb.append("_JAVA_OPTIONS=\"-javaagent:"); //$NON-NLS-1$
-            sb.append(getAbsoluteAgentJarPath()).append(StringConstants.QUOTE);
-            if (isRunnigWithMonitoring(parameters)) {
-                sb.append(" "); //$NON-NLS-1$
-                sb.append(this.getMonitoringAgent(parameters));
+            sb.append(JAVA_OPTIONS_INTRO)
+                .append(StringConstants.QUOTE)
+                .append("-javaagent:") //$NON-NLS-1$
+                .append(getAbsoluteAgentJarPath())
+                .append(StringConstants.QUOTE);
+            if (isRunningWithMonitoring(parameters)) {
+                sb.append(StringConstants.SPACE)
+                    .append(getMonitoringAgent(parameters));
             }         
             if (locale != null) {
-                sb.append(" -Duser.country=").append(locale.getCountry()); //$NON-NLS-1$
-                sb.append(" -Duser.language=").append(locale.getLanguage()); //$NON-NLS-1$
+                sb.append(StringConstants.SPACE)
+                    .append(JAVA_COUNTRY_PROPERTY)
+                    .append(locale.getCountry());
+                sb.append(StringConstants.SPACE)
+                    .append(JAVA_LANGUAGE_PROPERTY)
+                    .append(locale.getLanguage());
             }
-            sb.append("-Djava.util.logging.config.file=" //$NON-NLS-1$
-                    + getAbsoluteLoggingConfPath());
+            sb.append(StringConstants.SPACE)
+                .append(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY)
+                .append(StringConstants.QUOTE)
+                .append(getAbsoluteLoggingConfPath())
+                .append(StringConstants.QUOTE);  
+        } else {
+            if (isRunningWithMonitoring(parameters)) {            
+                sb.append(JAVA_OPTIONS_INTRO)
+                    .append(getMonitoringAgent(parameters))
+                    .append(StringConstants.SPACE)
+                    .append(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY)
+                    .append(StringConstants.QUOTE)
+                    .append(getAbsoluteLoggingConfPath())
+                    .append(StringConstants.QUOTE);      
+            }
         }
-       
-        if (isRunnigWithMonitoring(parameters) 
-                && !isRunningFromExecutable(parameters)) {            
-            sb.append("_JAVA_OPTIONS="); //$NON-NLS-1$
-            sb.append(this.getMonitoringAgent(parameters));
-            sb.append("-Djava.util.logging.config.file=" //$NON-NLS-1$
-                    + getAbsoluteLoggingConfPath());      
-        }       
 
         return sb.toString();
     }
@@ -418,7 +443,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             mds.putConfigMap(autId, parameters); 
         }      
         String agentString = null;       
-        if (isRunnigWithMonitoring(parameters)) {
+        if (isRunningWithMonitoring(parameters)) {
             try {  
                 ClassLoader loader = new URLClassLoader(getExtensions());
                 Class<?> monitoringClass = 

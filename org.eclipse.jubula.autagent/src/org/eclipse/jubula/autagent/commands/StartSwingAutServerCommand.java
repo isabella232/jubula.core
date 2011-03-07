@@ -51,7 +51,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
     protected String[] createEnvArray(Map parameters, boolean isAgentSet) {
         
         if (isRunningFromExecutable(parameters) 
-                || isRunnigWithMonitoring(parameters)) {
+                || isRunningWithMonitoring(parameters)) {
             setEnv(parameters);
             boolean agentActive = true;
             return super.createEnvArray(parameters, agentActive);
@@ -94,39 +94,6 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         // create environment
         parameters.put(AutConfigConstants.ENVIRONMENT, env);
     }
-    
-//    /**
-//     * Sets -javaagent and JRE arguments as SUN environment variable.
-//     * @param parameters The parameters for starting the AUT
-//     * @return the _JAVA_OPTIONS environment variable including -javaagent
-//     * and jre arguments
-//     */
-//    protected String setJavaOptions(Map parameters) {
-//        StringBuffer sb = new StringBuffer();
-//        if (isRunningFromExecutable(parameters)) {
-//            Locale locale = (Locale)parameters.get(IStartAut.LOCALE);
-//            // set agent and locals
-//            
-//            sb.append("_JAVA_OPTIONS=\"-javaagent:"); //$NON-NLS-1$
-//            sb.append(getAbsoluteAgentJarPath()).append(StringConstants.QUOTE);
-//            if (isRunnigWithMonitoring(parameters)) {
-//                sb.append(" "); //$NON-NLS-1$ 
-//                sb.append(this.getMonitoringAgent(parameters));
-//            }         
-//            if (locale != null) {
-//                sb.append(" -Duser.country=").append(locale.getCountry()); //$NON-NLS-1$
-//                sb.append(" -Duser.language=").append(locale.getLanguage()); //$NON-NLS-1$
-//            }
-//        }
-//       
-//        if (isRunnigWithMonitoring(parameters) 
-//                && !isRunningFromExecutable(parameters)) {            
-//            sb.append("_JAVA_OPTIONS="); //$NON-NLS-1$
-//            sb.append(this.getMonitoringAgent(parameters));
-//        }       
-//        
-//        return sb.toString();
-//    }
     
     /**
      * {@inheritDoc}
@@ -176,8 +143,10 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         // add locale
         addLocale(cmds, (Locale)parameters.get(IStartAut.LOCALE)); 
         
-        cmds.add("-Djava.util.logging.config.file=" //$NON-NLS-1$
-                + getAbsoluteLoggingConfPath());      
+        cmds.add(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY
+                + StringConstants.QUOTE
+                + getAbsoluteLoggingConfPath()
+                + StringConstants.QUOTE);      
             
         // add jre params
         final String jreParams = (String)parameters.get(
@@ -401,6 +370,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         }
         return paths.toString();
     }
+    
     /**
      * Gets/loads external jars from the ext directory
      * @return the absolute path  
@@ -425,8 +395,6 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         return paths.toString();
         
     }
-    
-    
     
     /**
      * Gets the absolute path of the GDAgent.jar file.

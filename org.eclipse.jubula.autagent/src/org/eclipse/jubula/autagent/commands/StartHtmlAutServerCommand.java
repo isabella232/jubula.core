@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 
 
@@ -96,9 +97,11 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
             commands.add("-agentlib:jdwp=transport=dt_socket,address="  //$NON-NLS-1$
                     + BXDEBUG + ",server=y,suspend=y"); //$NON-NLS-1$
         }
-        commands.add("-Djava.util.logging.config.file="  //$NON-NLS-1$
-                + getAbsoluteLoggingConfPath());
-        
+        commands.add(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY
+                + StringConstants.QUOTE
+                + getAbsoluteLoggingConfPath()
+                + StringConstants.QUOTE);
+
         File serverDir = new File("."); //$NON-NLS-1$
         commands.add("-jar"); //$NON-NLS-1$
         StringBuffer cmd = new StringBuffer(LIB_DIR + MAIN_JAR);
