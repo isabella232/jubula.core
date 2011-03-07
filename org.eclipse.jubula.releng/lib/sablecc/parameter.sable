@@ -47,7 +47,7 @@ Tokens
     
 
 Productions
-    parameter = param_token+;
+    parameter = param_token*;
     param_token = {literal}P.literal | 
                   {escape_sequence}escaped_symbol | 
                   {reference}P.reference | 

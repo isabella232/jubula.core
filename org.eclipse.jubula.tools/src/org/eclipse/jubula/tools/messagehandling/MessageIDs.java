@@ -572,7 +572,9 @@ public class MessageIDs {
     public static final Integer I_REUSED_TDC = new Integer(125);
     /** if sb. wants to open an editor for a node from a different project */
     public static final Integer I_NON_EDITABLE_NODE = new Integer(126);
-    
+    /** DB locked by background job (cleanup, data gathering, ...) */
+    public static final Integer I_DB_BACKGROUND_JOB = new Integer(127);
+
     // ---------------------------------------------------------------------
     /** key = message id, message object */
     private static MessageMap messageMap = null;
@@ -940,6 +942,7 @@ public class MessageIDs {
         messageMap.put(I_SERVER_CANNOT_CONNECTED, i, "InfoMessage.connGuiDancerServerFailed", null); //$NON-NLS-1$
         messageMap.put(I_REUSED_TDC, i, "InfoMessage.I_REUSED_TDC", null); //$NON-NLS-1$
         messageMap.put(I_NON_EDITABLE_NODE, i, "InfoMessage.I_NON_EDITABLE_NODE", null); //$NON-NLS-1$
+        messageMap.put(I_DB_BACKGROUND_JOB, i, "InfoMessage.DB_BACKGROUND_JOB", null); //$NON-NLS-1$
     }
     
     /**
