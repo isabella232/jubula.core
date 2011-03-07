@@ -26,13 +26,8 @@ import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 
 
 /**
- * 
  * @author BREDEX GmbH
  * @created 02.12.2005
- *
- *
- *
- *
  */
 @Entity
 @Table(name = "SPEC_CONT")
@@ -50,7 +45,6 @@ public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Transient
@@ -59,7 +53,6 @@ public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
     }
 
     /**
-     * 
      * @return Returns the specObjList.
      */
     // FIXME zeb hibernate: although this property is semantically a OneToMany, 
