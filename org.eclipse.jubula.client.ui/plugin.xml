@@ -1685,7 +1685,7 @@
         locationURI="menu:org.eclipse.ui.main.menu?after=edit">
      <menu
            id="org.eclipse.jubula.client.ui.menu.test"
-           label="Test">
+           label="&amp;Test">
         <separator
               name="JubulaProjectSeparator1"
               visible="true">
