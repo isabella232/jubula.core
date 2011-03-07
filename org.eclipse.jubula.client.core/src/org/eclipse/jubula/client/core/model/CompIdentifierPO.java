@@ -114,12 +114,12 @@ class CompIdentifierPO extends ComponentIdentifier implements
      * 
      * @return Returns the hierarchyNames.
      */
-    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "HIERARCHY_NAMES")
     @Column(name = "HIERARCHY_NAME", length = 4000)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_COMP_ID")
-    public List getHierarchyNames() { // NOPMD by al on 3/19/07 1:26 PM
+    public List<String> getHierarchyNames() { // NOPMD by al on 3/19/07 1:26 PM
         return super.getHierarchyNames();
     }
     
@@ -236,7 +236,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
      * {@inheritDoc}
      */
     @Basic
-    @Column(name = "ALTERNATIVE_DISPLAY_NAME")
+    @Column(name = "ALTERNATIVE_DISPLAY_NAME", length = 4000)
     public String getAlternativeDisplayName() {
         return super.getAlternativeDisplayName();
     }
