@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IAutStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -159,6 +158,7 @@ public class ProgressController implements IProgressListener,
                 DialogUtils.setWidgetNameForModalDialog(dialog);
                 dialog.open();
                 if (dialog.getReturnCode() == Window.OK) {
+                    Utils.clearClient();
                     //if db is embedded do not set user and pwd here
                     if (!(dialog.isEmbeddedDb())) {
                         Hibernator.setUser(dialog.getUser());
@@ -175,9 +175,6 @@ public class ProgressController implements IProgressListener,
                                 LockManager.instance().dispose();
                             }                
                             Hibernator.instance().dispose();
-                            DataEventDispatcher.getInstance()
-                                .fireTestresultChanged(
-                                        TestresultState.Clear);
                         }                       
                         
                         ConnectDbOperation connDbOp = new ConnectDbOperation();
@@ -191,13 +188,11 @@ public class ProgressController implements IProgressListener,
                         }
                         
                         if (hibernateInit) {
-                            Utils.clearClient();
                             LockManager.instance();
                             Plugin.getDefault().writeLineToConsole(Messages.
                                 SelectDatabaseActionInfoConnectSuccessful,
                                     true);
                         } else {
-                            Utils.clearClient(true);
                             Plugin.getDefault().writeLineToConsole(Messages.
                                     SelectDatabaseActionInfoConnectFailed
                                     , true);

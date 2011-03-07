@@ -187,7 +187,7 @@ public class ComponentNameBrowser extends ViewPart implements
      * @param treeViewer
      *            the treeViewer to set
      */
-    public void setTreeViewer(TreeViewer treeViewer) {
+    private void setTreeViewer(TreeViewer treeViewer) {
         m_treeViewer = treeViewer;
     }
 
