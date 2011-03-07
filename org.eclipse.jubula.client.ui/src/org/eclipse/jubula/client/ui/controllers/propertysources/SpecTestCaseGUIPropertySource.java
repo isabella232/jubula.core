@@ -737,7 +737,7 @@ public class SpecTestCaseGUIPropertySource
             final ISpecTestCasePO specTc = (ISpecTestCasePO)getPoNode();
             final boolean isInterfaceLocked = specTc.isInterfaceLocked();
             return isInterfaceLocked ? Messages.UtilsYes
-                    : Messages.UtilsYes;
+                    : Messages.UtilsNo;
         }
 
         /**
