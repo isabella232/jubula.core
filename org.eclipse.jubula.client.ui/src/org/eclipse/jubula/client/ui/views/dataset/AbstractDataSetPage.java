@@ -32,11 +32,10 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedLis
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IResetFrameColourListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -58,7 +57,6 @@ import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
-import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamTextContentAssisted;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
@@ -151,24 +149,10 @@ public abstract class AbstractDataSetPage extends Page
     /** bp class */
     private AbstractParamInterfaceBP m_paramBP;
     
-    /** adapter to set the frame colour */
-    private ResetColourAdapter m_colourAdapter;
     /** the corresponding part */
     private IWorkbenchPart m_currentPart;
     /** The current selection */
     private IStructuredSelection m_currentSelection;
-    
-    /** observation of events need a reset of frame colour */
-    private IResetFrameColourListener m_resetFrameColourListener = 
-        new IResetFrameColourListener() {
-            public void eventOccured(List< ? extends Object> params) {
-                getColourAdapter().resetColouredFrame();
-            }
-            public void checkGenericListElementType(
-                    List< ? extends Object> params) {
-                // do nothing
-            }
-        };
     
     /** Constants for the button actions */
     private enum TestDataRowAction { ADDED, INSERTED, DELETED }
@@ -491,7 +475,6 @@ public abstract class AbstractDataSetPage extends Page
         layoutData.grabExcessHorizontalSpace = true;
         topLevelComposite.setLayoutData(layoutData);
         m_control = topLevelComposite;
-        setColourAdapter(new ResetColourAdapter(topLevelComposite));
 
         Composite buttonComp = new Composite(topLevelComposite, SWT.BORDER);
 
@@ -692,10 +675,6 @@ public abstract class AbstractDataSetPage extends Page
      * {@inheritDoc}
      */
     public Object getAdapter(Class adapter) {
-        if (adapter.equals(ResetColourAdapter.class)) {
-            return getColourAdapter();
-        }
-        
         return null;
     }
     
@@ -756,20 +735,6 @@ public abstract class AbstractDataSetPage extends Page
      */
     private Button getDeleteButton() {
         return m_deleteButton;
-    }
-
-    /**
-     * @param colourAdapter the colourAdapter to set
-     */
-    private void setColourAdapter(ResetColourAdapter colourAdapter) {
-        m_colourAdapter = colourAdapter;
-    }
-
-    /**
-     * @return the colourAdapter
-     */
-    private ResetColourAdapter getColourAdapter() {
-        return m_colourAdapter;
     }
 
     /**

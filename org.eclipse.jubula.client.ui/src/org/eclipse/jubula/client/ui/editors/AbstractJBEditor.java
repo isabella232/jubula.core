@@ -32,7 +32,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IPropertyChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IResetFrameColourListener;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -51,7 +50,6 @@ import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
-import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -130,24 +128,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     
     /** PartListener of this WokbenchPart */
     private PartListener m_partListener = new PartListener();
-    
-    /**
-     * adapter to set the frame colour<br>
-     * please set the colourAdapter in the createPartControl()-method
-     */
-    private ResetColourAdapter m_colourAdapter;
-    
-    /** observation of events need a reset of frame colour */
-    private IResetFrameColourListener m_resetFrameColourListener = 
-        new IResetFrameColourListener() {
-            public void eventOccured(List< ? extends Object> params) {
-                m_colourAdapter.resetColouredFrame();
-            }
-            public void checkGenericListElementType(
-                    List< ? extends Object> params) {
-                // do nothing
-            }
-        };
     
     /**
      * @author BREDEX GmbH
@@ -390,7 +370,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         layout.marginWidth = Layout.MARGIN_WIDTH;
         layout.marginHeight = Layout.MARGIN_HEIGHT;
         parent.setLayout(layout);
-        m_colourAdapter = new ResetColourAdapter(parent);
         getEditorSite().getPage().addPartListener(m_partListener);
         setHelp(parent);
         createPartControlImpl(parent);

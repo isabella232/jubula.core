@@ -23,7 +23,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IResetFrameColourListener;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -42,7 +41,6 @@ import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.sorter.GuiNodeNameViewerSorter;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
-import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -91,27 +89,8 @@ public abstract class AbstractJBTreeView extends ViewPart implements
      */
     private List<Object> m_expElemList;
     
-    /** adapter to set the frame colour
-     * please initialize the ColourAdapter in the creatPartControl()-method
-     */
-    private ResetColourAdapter m_colourAdapter;
-    
     /** the parent composite */
     private Composite m_parentComposite;
-    
-    /** observation of events need a reset of frame colour */
-    @SuppressWarnings("synthetic-access") 
-    private IResetFrameColourListener m_resetFrameColourListener = 
-        new IResetFrameColourListener() {
-        
-            public void eventOccured(List< ? extends Object> params) {
-                m_colourAdapter.resetColouredFrame();
-            }
-            public void checkGenericListElementType(
-                    List< ? extends Object> params) {
-            // do nothing
-            }
-        };
 
     /** 
      * This part's reference to the clipboard.
@@ -254,8 +233,6 @@ public abstract class AbstractJBTreeView extends ViewPart implements
     public Object getAdapter(Class adapter) {
         if (adapter.equals(AbstractJBTreeView.class)) {
             return this;
-        } else if (adapter.equals(ResetColourAdapter.class)) {
-            return m_colourAdapter;
         } else if (adapter.equals(IPropertySheetPage.class)) {
             return new JBPropertiesView(false, null);
         }
@@ -339,7 +316,6 @@ public abstract class AbstractJBTreeView extends ViewPart implements
      */
     public void createPartControl(Composite parent) {
         m_parentComposite = parent;
-        setColourAdapter(new ResetColourAdapter(parent)); 
         m_clipboard = new Clipboard(parent.getDisplay());
         
         GridLayout layout = new GridLayout();
@@ -445,14 +421,6 @@ public abstract class AbstractJBTreeView extends ViewPart implements
     }
 
     /**
-     * @param colourAdapter the colourAdapter to set
-     */
-    protected void setColourAdapter(ResetColourAdapter colourAdapter) {
-        m_colourAdapter = colourAdapter;
-    }
-
-    /**
-     * 
      * @return a reference to the clipboard.
      */
     public Clipboard getClipboard() {

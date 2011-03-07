@@ -82,7 +82,6 @@ import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.contextprovider.JBContextProvider;
-import org.eclipse.jubula.client.ui.utils.ResetColourAdapter;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.utils.generator.ActionInfo;
@@ -155,9 +154,6 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
     
     /** the corresponding part */
     private IWorkbenchPart m_correspondingPart;
-
-    /** adapter to set the frame colour */
-    private ResetColourAdapter m_colourAdapter;
 
     /**
      * Label provider for property names.
@@ -371,7 +367,6 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
      * {@inheritDoc}
      */
     public void createPartControl(Composite parent) {
-        m_colourAdapter = new ResetColourAdapter(parent);
         buildTree(parent);
 
         getSite().setSelectionProvider(this);
@@ -1110,15 +1105,11 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public Object getAdapter(Class adapter) {
         if (adapter.equals(IContextProvider.class)) {
             return m_contextProvider;
-        } else if (adapter.equals(ResetColourAdapter.class)) {
-            return m_colourAdapter;
         } else if (adapter.equals(IPropertySheetPage.class)) {
             return this;
         } else if (adapter.equals(IComponentNameMapper.class) 

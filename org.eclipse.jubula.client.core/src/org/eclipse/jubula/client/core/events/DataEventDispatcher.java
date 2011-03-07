@@ -296,14 +296,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         public void handlePrefServerChanged();
     }
     
-    /** to notify clients about modification of version control preferences */
-    public interface IVersionControlPrefListener {
-        /**
-         * callback
-         */
-        public void handlePrefVCChanged();
-    }
-    
     /** to notify clients about reset of frame colour */
     public interface IResetFrameColourListener extends IGenericListener {
         // nothing
@@ -401,11 +393,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         /** Record Mode is not running */
         notRunning
     }
-    
-    /** listeners to observe reset of frame colour of a view part */
-    private ListenerManager<IResetFrameColourListener> 
-    m_frameColourListenerMgr = 
-        new ListenerManager<IResetFrameColourListener>();
     
     /** listeners to observe button status of a dialog or wizard page */
     private ListenerManager<IDialogStatusListener> m_dialogStatusListenerMgr = 
@@ -626,20 +613,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      */
     private Set<IServerPrefListener> m_serverPrefListenersPost =
         new HashSet<IServerPrefListener>();
-    
-    /**
-     * <code>m_versionControlPrefListeners</code>listener for modification
-     * of version control preferences
-     */
-    private Set<IVersionControlPrefListener> m_versionControlPrefListeners =
-        new HashSet<IVersionControlPrefListener>();
-    /**
-     * <code>m_versionControlPrefListeners</code>listener for modification
-     * of version control preferences
-     *  POST-Event for gui updates 
-     */
-    private Set<IVersionControlPrefListener> m_versionControlPrefListenersPost =
-        new HashSet<IVersionControlPrefListener>();
     
     /** The ICompletenessCheckListener Listeners */
     private Set<ICompletenessCheckListener> m_completenessCheckListeners = 
@@ -1666,6 +1639,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             }
         }
     }
+    
     /**
      * @param l listener for project is opened
      */
@@ -1710,65 +1684,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         if (System.getProperty(DebugConstants.VM_DEBUG) != null
             && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
             System.out.println("fireServerPreferencesChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
-        }
-    }
-    
-    /**
-     * @param l listener for modification of version control preferences
-     * @param guiMode
-     *      should this listener be called after the model listener 
-     */
-    public void addVersionControlPrefListener(IVersionControlPrefListener l, 
-        boolean guiMode) {
-        if (guiMode) {
-            m_versionControlPrefListenersPost.add(l);
-        } else {
-            m_versionControlPrefListeners.add(l);
-        }
-    }
-    /**
-     * @param l listener for modification of version control preferences
-     */
-    public void removeVersionControlPrefListener(IVersionControlPrefListener 
-        l) {
-        m_versionControlPrefListeners.remove(l);
-        m_versionControlPrefListenersPost.remove(l);
-    }
-    
-    /**
-     * notify listener about modification of version control preferences
-     */
-    public void fireVersionControlPrefChanged() {
-        long start = System.currentTimeMillis();
-
-        // model updates
-        final Set<IVersionControlPrefListener> stableListeners = 
-            new HashSet<IVersionControlPrefListener>
-            (m_versionControlPrefListeners);
-        for (IVersionControlPrefListener l : stableListeners) {
-            try {
-                l.handlePrefVCChanged();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-
-        // gui updates
-        final Set<IVersionControlPrefListener> stableListenersPost = 
-            new HashSet<IVersionControlPrefListener>(
-                m_versionControlPrefListenersPost);
-        for (IVersionControlPrefListener l : stableListenersPost) {
-            try {
-                l.handlePrefVCChanged();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireVersionControlPrefChanged():"  //$NON-NLS-1$
                 + (System.currentTimeMillis() - start));
         }
     }

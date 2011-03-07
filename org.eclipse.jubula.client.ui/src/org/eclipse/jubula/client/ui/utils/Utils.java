@@ -38,6 +38,9 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -45,6 +48,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
@@ -55,10 +59,7 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.views.ComponentNameBrowser;
-import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
-import org.eclipse.jubula.client.ui.views.TestResultTreeView;
-import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
+import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBRuntimeException;
@@ -70,6 +71,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
@@ -331,43 +333,41 @@ public class Utils {
      * clears the content of client
      */
     public static void clearClient() {
-        clearClient(false);
-    }
-    
-    /**
-     * clears the content of client
-     * @param onlyUI true to clear the client ui only
-     */
-    public static void clearClient(boolean onlyUI) {
-        if (!onlyUI) {
-            TestExecution.getInstance().stopExecution();
-            GeneralStorage.getInstance().reset();
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        TestExecution.getInstance().stopExecution();
+        GeneralStorage gs = GeneralStorage.getInstance();
+        if (gs != null && Hibernator.instance() != null) {
+            IProjectPO currProj = gs.getProject();
+            if (currProj != null) {
+                gs.setProject(null);
+                ded.fireDataChangedListener(currProj, DataState.Deleted,
+                        UpdateState.all);
+            }
+            gs.reset();
         }
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 Plugin.setProjectNameInTitlebar(null, null, null);
                 Plugin.closeAllOpenedJubulaEditors();
-                if (Plugin.getView(Constants.TESTRE_ID) != null) {
-                    ((TestResultTreeView)Plugin.getView(Constants.TESTRE_ID))
-                        .clear();
-                }
-                if (Plugin.getView(Constants.TC_BROWSER_ID) != null) {
-                    ((TestCaseBrowser)Plugin.getView(Constants.TC_BROWSER_ID))
-                        .getTreeViewer().setInput(null);
-                }
-                if (Plugin.getView(Constants.TS_BROWSER_ID) != null) {
-                    ((TestSuiteBrowser)Plugin.getView(Constants.TS_BROWSER_ID))
-                        .getTreeViewer().setInput(null);
-                }
-                if (Plugin.getView(Constants.COMPNAMEBROWSER_ID) != null) {
-                    ((ComponentNameBrowser)Plugin.getView(
-                            Constants.COMPNAMEBROWSER_ID))
-                        .getTreeViewer().setInput(null);
-                }
+                ded.fireTestresultChanged(TestresultState.Refresh);
+                setTreeViewerInputNull(Constants.TESTRE_ID);
+                setTreeViewerInputNull(Constants.TC_BROWSER_ID);
+                setTreeViewerInputNull(Constants.TS_BROWSER_ID);
+                setTreeViewerInputNull(Constants.COMPNAMEBROWSER_ID);
             }
         });
-        DataEventDispatcher.getInstance().fireProjectLoadedListener(
-                new NullProgressMonitor());
+        ded.fireProjectLoadedListener(new NullProgressMonitor());
+    }
+    
+    /**
+     * @param viewID
+     *            the id of the view to set it's tree viewer input to null.
+     */
+    private static void setTreeViewerInputNull(String viewID) {
+        IViewPart view = Plugin.getView(viewID);
+        if (view instanceof ITreeViewerContainer) {
+            ((ITreeViewerContainer)view).getTreeViewer().setInput(null);
+        }
     }
     
     /**
