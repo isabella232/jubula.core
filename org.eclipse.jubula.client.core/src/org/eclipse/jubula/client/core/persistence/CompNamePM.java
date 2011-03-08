@@ -164,8 +164,8 @@ public class CompNamePM extends AbstractNamePM {
      * that reference other Component Names.
      */
     private static final String Q_REF_COMP_NAME_GUIDS = 
-        "select compName.hbmGuid from ComponentNamePO as compName " //$NON-NLS-1$
-        + "where compName.hbmReferencedGuid is not null" //$NON-NLS-1$
+        "select compName.hbmGuid from ComponentNamePO as compName" //$NON-NLS-1$
+        + " where compName.hbmReferencedGuid is not null" //$NON-NLS-1$
         + " and compName.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
