@@ -117,10 +117,10 @@ public class CompNamePM extends AbstractNamePM {
      * pairs.
      */
     private static final String Q_REUSE_TYPE_PAIRS = 
-        "select compNamePair from CompNamesPairPO as compNamePair, " //$NON-NLS-1$
-        + "ComponentNamePO as secondCompName, " //$NON-NLS-1$
-        + "ComponentNamePO as firstCompName " //$NON-NLS-1$
-        + "where compNamePair.secondName = :" + P_COMP_NAME_GUID //$NON-NLS-1$
+        "select compNamePair from CompNamesPairPO as compNamePair," //$NON-NLS-1$
+        + " ComponentNamePO as secondCompName," //$NON-NLS-1$
+        + " ComponentNamePO as firstCompName" //$NON-NLS-1$
+        + " where compNamePair.secondName = :" + P_COMP_NAME_GUID //$NON-NLS-1$
         + " and compNamePair.hbmParentProjectId = :" + P_PARENT_PROJECT_ID //$NON-NLS-1$
         + " and compNamePair.firstName = firstCompName.hbmGuid"; //$NON-NLS-1$
 
@@ -136,21 +136,21 @@ public class CompNamePM extends AbstractNamePM {
      * associations.
      */
     private static final String Q_REUSE_TYPE_ASSOCS = 
-        "select assoc from ObjectMappingAssoziationPO as assoc, " //$NON-NLS-1$
-        + "CompIdentifierPO as compId, " //$NON-NLS-1$
-        + "ComponentNamePO as compName " //$NON-NLS-1$
-        + "join assoc.logicalNames as logicalName " //$NON-NLS-1$
-        + "where logicalName = compName.hbmGuid " //$NON-NLS-1$
-        + "and logicalName = :" + P_COMP_NAME_GUID + " " //$NON-NLS-1$ //$NON-NLS-2$
-        + "and assoc.technicalName = compId " //$NON-NLS-1$
-        + "and compName.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
+        "select assoc from ObjectMappingAssoziationPO as assoc," //$NON-NLS-1$
+        + " CompIdentifierPO as compId," //$NON-NLS-1$
+        + " ComponentNamePO as compName" //$NON-NLS-1$
+        + " join assoc.logicalNames as logicalName" //$NON-NLS-1$
+        + " where logicalName = compName.hbmGuid" //$NON-NLS-1$
+        + " and logicalName = :" + P_COMP_NAME_GUID //$NON-NLS-1$
+        + " and assoc.technicalName = compId" //$NON-NLS-1$
+        + " and compName.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
      * Query to find the types of reuse of a component name by test steps.
      */
     private static final String Q_REUSE_TYPE_CAPS = 
-        "select cap.componentType from CapPO as cap " //$NON-NLS-1$
-        + "where cap.componentName = :" + P_COMP_NAME_GUID //$NON-NLS-1$
+        "select cap.componentType from CapPO as cap" //$NON-NLS-1$
+        + " where cap.componentName = :" + P_COMP_NAME_GUID //$NON-NLS-1$
         + " and cap.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
@@ -173,24 +173,24 @@ public class CompNamePM extends AbstractNamePM {
      * one or more Test Steps in a given Project.
      */
     private static final String Q_CAP_COMP_NAME_GUIDS = 
-        "select cap.componentName from CapPO as cap " //$NON-NLS-1$
-        + "where cap.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
+        "select cap.componentName from CapPO as cap" //$NON-NLS-1$
+        + " where cap.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
      * Query to find the GUIDs of all Component Names that are referenced by
      * the First Name of one or more Component Name Pairs in a given Project.
      */
     private static final String Q_PAIR_FIRST_COMP_NAME_GUIDS = 
-        "select pair.firstName from CompNamesPairPO as pair " //$NON-NLS-1$
-        + "where pair.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
+        "select pair.firstName from CompNamesPairPO as pair" //$NON-NLS-1$
+        + " where pair.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
      * Query to find the GUIDs of all Component Names that are referenced by
      * the Second Name of one or more Component Name Pairs in a given Project.
      */
     private static final String Q_PAIR_SECOND_COMP_NAME_GUIDS = 
-        "select pair.secondName from CompNamesPairPO as pair " //$NON-NLS-1$
-        + "where pair.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
+        "select pair.secondName from CompNamesPairPO as pair" //$NON-NLS-1$
+        + " where pair.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
      * Query to find the GUIDs of all Component Names that are referenced by
@@ -198,16 +198,16 @@ public class CompNamePM extends AbstractNamePM {
      */
     private static final String Q_ASSOC_COMP_NAME_GUIDS = 
         "select logicalName from ObjectMappingAssoziationPO as assoc" //$NON-NLS-1$
-        + " join assoc.logicalNames as logicalName " //$NON-NLS-1$
-        + "where assoc.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
+        + " join assoc.logicalNames as logicalName" //$NON-NLS-1$
+        + " where assoc.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
      * Query to find the GUIDs of all Component Names that are referenced by
      * one or more other Component Names in a given Project.
      */
     private static final String Q_COMP_NAME_REF_GUIDS = 
-        "select compName.hbmReferencedGuid from ComponentNamePO as compName " //$NON-NLS-1$
-        + "where compName.hbmReferencedGuid is not null" //$NON-NLS-1$
+        "select compName.hbmReferencedGuid from ComponentNamePO as compName" //$NON-NLS-1$
+        + " where compName.hbmReferencedGuid is not null" //$NON-NLS-1$
         + " and compName.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
@@ -216,8 +216,8 @@ public class CompNamePM extends AbstractNamePM {
      */
     private static final String Q_EXEC_TCS_WITH_PAIR = 
         "select execTc from ExecTestCasePO execTc" //$NON-NLS-1$
-        + " left outer join execTc.hbmCompNamesMap as compNamesMap " //$NON-NLS-1$
-        + "where compNamesMap.id in :" + P_PAIR_LIST; //$NON-NLS-1$
+        + " left outer join execTc.hbmCompNamesMap as compNamesMap" //$NON-NLS-1$
+        + " where compNamesMap.id in :" + P_PAIR_LIST; //$NON-NLS-1$
 
     /** GUIDs of Component Names to delete from the DB */
     private static final String P_COMP_NAME_REMOVAL_LIST = "compNameRemovalList"; //$NON-NLS-1$
@@ -227,7 +227,7 @@ public class CompNamePM extends AbstractNamePM {
      */
     private static final String Q_DELETE_COMP_NAMES = 
         "delete from ComponentNamePO compName" //$NON-NLS-1$
-        + "where compName.hbmParentProjectId = :" + P_PARENT_PROJECT_ID //$NON-NLS-1$
+        + " where compName.hbmParentProjectId = :" + P_PARENT_PROJECT_ID //$NON-NLS-1$
         + " and compName.hbmGuid in :" + P_COMP_NAME_REMOVAL_LIST; //$NON-NLS-1$
 
     /**
