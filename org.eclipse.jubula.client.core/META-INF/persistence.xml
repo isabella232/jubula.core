@@ -69,6 +69,11 @@
 			<property name="eclipselink.weaving" value="static"/>
 			<property name="eclipselink.weaving.changetracking" value="false"/>
 			<property name="eclipselink.weaving.fetchgroups" value="false"/>
+			<!-- 
+			disabled second level cache, as this may otherwise lead to some strange behavior:
+			https://bugs.eclipse.org/bugs/show_bug.cgi?id=339069
+			 -->
+			<property name="eclipselink.cache.shared.default" value="false"/>
 		</properties>
 		
 	</persistence-unit>
