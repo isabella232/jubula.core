@@ -323,19 +323,10 @@ public class Hibernator {
                         MessageIDs.E_NOT_CHECKABLE_DB_VERSION);
             }
         } catch (PersistenceException e) {
-            Throwable rootCause = ExceptionUtils.getRootCause(e);
-            if (rootCause instanceof SQLException) {
-                if (("08001").equals(((SQLException)rootCause).getSQLState())) { //$NON-NLS-1$
-                    log.error(
-                        Messages.TheDatabaseIsAlreadyInUseByAnotherProcess, 
-                            e);
-                    throw new JBException(e.getMessage(),
-                            MessageIDs.E_DB_IN_USE);
-                }
-                log.error(Messages.NoOrWrongUsernameOrPassword, e);
-                throw new JBException(e.getMessage(),
-                        MessageIDs.E_NO_DB_CONNECTION);
-            }
+
+            log.error(Messages.NoOrWrongUsernameOrPassword, e);
+            throw new JBException(e.getMessage(), 
+                    MessageIDs.E_NO_DB_CONNECTION);
         } finally {
             if (em != null) {
                 em.close();
