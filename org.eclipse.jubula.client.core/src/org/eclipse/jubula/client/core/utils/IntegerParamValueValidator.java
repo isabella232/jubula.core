@@ -105,7 +105,14 @@ public class IntegerParamValueValidator implements IParamValueValidator {
                     token.setErrorKey(MessageIDs.E_BAD_INT);
                 }
             }
+        } else {
+            // no spaces in integers allowed
+            val = ConvValidationState.invalid;
+            if (tokens.size() != 0) {
+                tokens.get(0).setErrorKey(MessageIDs.E_BAD_INT);
+            }
         }
+
         return val;
     }
 }
