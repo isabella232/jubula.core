@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor.JBEditorDecorationContext;
 import org.eclipse.jubula.client.ui.model.GuiNode;
+import org.eclipse.jubula.client.ui.model.ProjectGUI;
 import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
 import org.eclipse.jubula.client.ui.model.TestJobGUI;
 import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
@@ -51,13 +52,10 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
     public void decorate(Object element, IDecoration decoration) {
         decoration.setForegroundColor(Layout.DEFAULT_OS_COLOR);
         GuiNode gnode = (GuiNode)element;
-        INodePO node = gnode.getContent();
-        if (node == null || gnode.getParentNode() == null
-                || TestSuiteGUI.getTestSuiteForNode(gnode) == null
-                || decoration.getDecorationContext() 
-                    instanceof JBEditorDecorationContext) {
+        if (shouldNotDecorate(gnode, decoration)) {
             return;
         }
+        INodePO node = gnode.getContent();
         boolean flag = false;
         if (isNodeActive(gnode)) {
             ITestSuitePO testSuite = (ITestSuitePO)(TestSuiteGUI
@@ -120,8 +118,23 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
         } else {
             flag = true;
         }
-        int status = getStatus(node, flag);
-        setIcon(decoration, status);
+        setIcon(decoration, getStatus(node, flag));
+    }
+
+    /**
+     * @param gnode
+     *            the gui node
+     * @param decoration
+     *            the decoration
+     * @return wheter decoration should continue for this element or not
+     */
+    private boolean shouldNotDecorate(GuiNode gnode, IDecoration decoration) {
+        return gnode.getContent() == null
+                || gnode.getParentNode() == null
+                || TestSuiteGUI.getTestSuiteForNode(gnode) == null
+                || decoration.getDecorationContext() 
+                    instanceof JBEditorDecorationContext
+                || gnode instanceof ProjectGUI;
     }
 
     /** 
