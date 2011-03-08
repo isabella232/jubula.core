@@ -13,6 +13,8 @@ package org.eclipse.jubula.client.ui.constants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 
 
 /**
@@ -25,7 +27,8 @@ public class IconConstants {
     /** warning image */
     public static final Image WARNING_IMAGE = Plugin.getImage("warning.gif"); //$NON-NLS-1$
     /** warning small image */
-    public static final Image WARNING_SMALL_IMAGE = Plugin.getImage("warning_small.gif"); //$NON-NLS-1$
+    public static final Image WARNING_SMALL_IMAGE = PlatformUI.getWorkbench()
+            .getSharedImages().getImage(ISharedImages.IMG_DEC_FIELD_WARNING);
     /** info image */
     public static final Image INFO_IMAGE = Plugin.getImage("info.gif"); //$NON-NLS-1$
     /** testSuiteeditor image */
