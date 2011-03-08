@@ -50,6 +50,6 @@ public interface ITestCasePO extends IParamNodePO {
     /**
      * @return all EventExecTestCases of this SpecTestCasePO.
      */
-    public abstract Collection getAllEventEventExecTC();
+    public abstract Collection<IEventExecTestCasePO> getAllEventEventExecTC();
 
 }
