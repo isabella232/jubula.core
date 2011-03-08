@@ -572,6 +572,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
         m_selection = selection;
         if (firstElement == null) {
             // e.g. when a project was opened and no view has a selection
+            m_treeViewer.setSelection(null);
             m_treeViewer.setInput(null);
             m_currentNode = null;
         } else if (!firstElement.equals(oldSelection.getFirstElement())) {
