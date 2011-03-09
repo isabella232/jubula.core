@@ -234,13 +234,13 @@ public class TreeElementChooserComposite extends Composite {
         int style) {
         
         Composite compositeLeft = createComposite(parent, NUM_COLUMNS_1, 
-            GridData.FILL, false);
+            GridData.FILL, true);
 
         Composite compositeMiddle = createComposite(parent, NUM_COLUMNS_1, 
             GridData.FILL, false);
         
         Composite compositeRight = createComposite(parent, NUM_COLUMNS_1, 
-            GridData.FILL, false);
+            GridData.FILL, true);
         
         m_availableTree = createAvailableTree(compositeLeft, listOneLabel, 
             lineNumber); 

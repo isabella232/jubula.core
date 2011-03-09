@@ -94,23 +94,17 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
     protected Control createContents(Composite parent) {
         Composite composite = createComposite(parent, NUM_COLUMNS_1,
             GridData.FILL, false);
-        Composite projectNameComposite = createComposite(composite,
-            NUM_COLUMNS_2, GridData.FILL, false);
         noDefaultAndApplyButton();
 
-        createLabel(projectNameComposite, StringConstants.EMPTY);
-        createLabel(projectNameComposite, StringConstants.EMPTY);
         createLabel(composite, 
             Messages.ProjectPropertyPageSelectReusedProjects);
         Composite innerComposite = new Composite(composite, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
-        compositeLayout.numColumns = NUM_COLUMNS_1;
         compositeLayout.marginHeight = 0;
         compositeLayout.marginWidth = 0;
         innerComposite.setLayout(compositeLayout);
         GridData compositeData = new GridData();
-        compositeData.horizontalSpan = NUM_COLUMNS_2;
-        compositeData.horizontalAlignment = GridData.FILL;
+        compositeData.horizontalAlignment = SWT.FILL;
         compositeData.grabExcessHorizontalSpace = true;
         innerComposite.setLayoutData(compositeData);
         try {
