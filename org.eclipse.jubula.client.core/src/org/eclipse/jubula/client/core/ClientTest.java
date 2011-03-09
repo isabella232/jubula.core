@@ -1032,10 +1032,7 @@ public class ClientTest implements IClientTest {
         }
         TestResultSummaryPM
                 .mergeTestResultSummaryInDB(
-                        getTestresultSummary());
-        result.setMonitoringValues(null); 
-        result.setMonitoringId(StringConstants.EMPTY); 
-        result.setReportData(null);
+                        currentSummary);        
         fireTestresultSummaryChanged();        
     }
     /**

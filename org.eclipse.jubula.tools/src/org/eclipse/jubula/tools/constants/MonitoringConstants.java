@@ -47,10 +47,17 @@ public class MonitoringConstants {
     
     /** key for ConfigMap */
     public static final String AGENT_CLASS = "AGENT_CLASS"; //$NON-NLS-1$   
+    /** key for ConfigMap */
+    public static final String RESET_AGENT = "RESET_AGENT"; //$NON-NLS-1$
+       
+    /** monitoring error, this text will be displayed in the properties view*/
+    public static final String MONITORING_ERROR_TOO_LARGE = "Monitoring Report was too large to send"; //$NON-NLS-1$
+    /** default type for monitoring value */
+    public static final String DEFAULT_TYPE = "DEFAULT_TYPE"; //$NON-NLS-1$
     
-    /** default empty values if value, id or report are null. This happens when
-     *  monitoring methods are not implemented. */
-    
+    /** the maximum size of the monitoring report 
+     *  40000000 byte = 38.1469727 megabyte*/
+    public static final int MAX_REPORT_SIZE = 40000000; 
     /** default value */
     public static final String EMPTY_MONITORING_ID = "none selected"; //$NON-NLS-1$
     /** default value */
@@ -72,6 +79,10 @@ public class MonitoringConstants {
     public static final String RENDER_AS_TEXTFIELD = "string"; //$NON-NLS-1$
     /** a type "boolean" (set in the extension point) will be rendered as a checkbox*/
     public static final String RENDER_AS_CHECKBOX = "boolean"; //$NON-NLS-1$ 
+    
+    
+    /** key to identify code coverage widgets */
+    public static final String MONITORING_KEY = "MONITORING_KEY";
     
     /** private constructor */
     private MonitoringConstants() {        

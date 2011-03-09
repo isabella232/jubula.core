@@ -19,27 +19,16 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  */
 public class SendMonitoringReportMessage extends Message {
         
-    /** data */
-    private byte[] m_data;
-    
-    
-    /** default constructor 
-     * @deprecated don't use the defaul constructor 
-     * */
-    public SendMonitoringReportMessage() {
-        //for contruction
-    }
-    
+    /** the report data */
+    private byte[] m_data;   
+    /** path to the monitoring report (if it was too large to send) */
+    private String m_reportPath;  
     /**
-     * constructor to build the message
-     * @param data data 
+     * Default Constructor    
      */
-    public SendMonitoringReportMessage(byte[] data) {
-    
-        this.m_data = data;
-       
-                
-    }
+    public SendMonitoringReportMessage() {
+        
+    }    
         
     /**
      * {@inheritDoc}
@@ -69,6 +58,20 @@ public class SendMonitoringReportMessage extends Message {
      */
     public void setData(byte[] data) {
         m_data = data;
+    }
+    /**
+     * 
+     * @return the reportPath if the report was too large to send
+     */
+    public String getReportPath() {
+        return m_reportPath;
+    }
+    /**
+     * 
+     * @param path Sets the report path
+     */
+    public void setReportPath(String path) {
+        this.m_reportPath = path;
     }
 
 }
