@@ -16,6 +16,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -102,7 +103,7 @@ public class AddNewCategoryHandler extends AbstractHandler {
         InputDialog dialog = new InputDialog(
             Plugin.getShell(), 
             Messages.CreateNewCategoryActionCatTitle,
-            Messages.CreateNewCategoryActionCatDefaultName,
+            InitialValueConstants.DEFAULT_CATEGORY_NAME,
             Messages.CreateNewCategoryActionCatMessage,
             Messages.CreateNewCategoryActionCatLabel,
             Messages.CreateNewCategoryActionCatError,

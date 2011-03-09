@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.businessprocess.TreeOpsBP;
 import org.eclipse.jubula.client.core.businessprocess.TreeOpsBP.TreeOpFailedException;
+import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -160,7 +161,7 @@ public class ExtractTestCaseHandler extends AbstractHandler {
      * @return the new extracted test case name
      */
     private String getNewName(AbstractTestCaseEditor editor) {
-        String newName = Messages.NewTestCaseActionNewTestCase;
+        String newName = InitialValueConstants.DEFAULT_TEST_CASE_NAME;
         final IStructuredSelection cs = (IStructuredSelection)editor
                 .getTreeViewer().getSelection();
         if (cs.size() == 1) {
@@ -180,8 +181,6 @@ public class ExtractTestCaseHandler extends AbstractHandler {
     }
 
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 12.09.2005
      */

@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapp
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
+import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
@@ -48,8 +49,8 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
-import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -263,21 +264,22 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
      */
     private TestCaseEditor askForNewTC() {
         TestCaseEditor editor = null;
-        String standartName = Messages.RecordTestCaseActionStandardName;
+        String standardName = 
+            InitialValueConstants.DEFAULT_TEST_CASE_NAME_OBSERVED;
         int index = 1;
-        String newName = standartName + index;
+        String newName = standardName + index;
         final Set<String> usedNames = new HashSet<String>();
         // generate a unique name
         for (Object node : GeneralStorage.getInstance().getProject()
                 .getSpecObjCont().getSpecObjList()) {
             if (Hibernator.isPoSubclass((INodePO)node, ITestCasePO.class)
-                    && ((INodePO)node).getName().startsWith(standartName)) {
+                    && ((INodePO)node).getName().startsWith(standardName)) {
                 usedNames.add(((INodePO)node).getName());
             }
         }
         while (usedNames.contains(newName)) {
             index++;
-            newName = standartName + index;
+            newName = standardName + index;
         }
         InputDialog dialog = createDialog(newName, usedNames);
         dialog.setHelpAvailable(true);

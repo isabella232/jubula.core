@@ -22,6 +22,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -535,7 +536,7 @@ public class NewCAPDialog extends TitleAreaDialog {
         boolean uniqueName = false;
         String capName = StringConstants.EMPTY;
         while (!uniqueName) {
-            capName = Messages.NewCAPDialogNewCap + index;
+            capName = InitialValueConstants.DEFAULT_CAP_NAME + index;
             uniqueName = true;
             for (GuiNode node : tc.getChildren()) {
                 if (node.getName().equals(capName)) {
