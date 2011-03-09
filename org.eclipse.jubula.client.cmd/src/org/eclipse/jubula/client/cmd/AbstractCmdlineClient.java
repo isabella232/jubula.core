@@ -516,6 +516,15 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      */
     private void printUsage() {
         Options options = createOptions(true);
+        
+        // The "-data" argument is parsed and handled by the Eclipse RCP
+        // before we get a chance to see it, but we want to make sure that the
+        // user is aware that it's an option. In order to accomplish this, we 
+        // add it to the options used in generating usage, but not the the 
+        // options actually used in parsing the command line.
+        options.addOption(createOption(ClientTestStrings.WORKSPACE, true, 
+                ClientTestStrings.WORKSPACE_ARG, 
+                Messages.ClientWorkspaceOpt, false));
         HelpFormatter formatter = new HelpFormatter();
     
         formatter.printHelp(getCmdlineClientExecName(), options, true);
