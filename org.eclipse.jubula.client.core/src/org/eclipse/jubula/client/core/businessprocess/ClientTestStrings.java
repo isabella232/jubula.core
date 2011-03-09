@@ -84,6 +84,11 @@ public class ClientTestStrings {
     public static final String AUTO_SCREENSHOT = "s"; //$NON-NLS-1$
     /** object attribute */
     public static final String TEST_EXECUTION_RELEVANT = "r"; //$NON-NLS-1$
+
+    /** command line option for supplying a workspace location */
+    public static final String WORKSPACE = "data"; //$NON-NLS-1$
+    /** workspace location argument label */
+    public static final String WORKSPACE_ARG = "workspace_location"; //$NON-NLS-1$
     
     
     /** to prevent instantiation */
