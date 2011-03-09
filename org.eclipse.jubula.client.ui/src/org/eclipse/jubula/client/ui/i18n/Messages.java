@@ -218,7 +218,6 @@ public class Messages extends NLS {
     public static String CouldNotOpenOMEditorForAUT;
     public static String CouldNotOpenOMEditorNoAUT;
     public static String CouldNotRetrieveTypeForMarker;
-    public static String CreateNewCategoryActionCatDefaultName;
     public static String CreateNewCategoryActionCatError;
     public static String CreateNewCategoryActionCatLabel;
     public static String CreateNewCategoryActionCatMessage;
@@ -458,8 +457,6 @@ public class Messages extends NLS {
     public static String InfoNaggerObjectMappingProfileChanged;
     public static String InfoNaggerRunRcpAut;
     public static String InputDialogBrowse;
-    public static String InputDialogNewTJ;
-    public static String InputDialogNewTS;
     public static String InputDialogSelectJRE;
     public static String InputElementHasInvalidTypeReturningEmptyArray;
     public static String InternalGefError;
@@ -500,7 +497,6 @@ public class Messages extends NLS {
     public static String NewCAPDialogEmptyStep;
     public static String NewCapDialogMessage;
     public static String NewCAPDialogNameNotAllowed;
-    public static String NewCAPDialogNewCap;
     public static String NewCAPDialogNotValidCompName;
     public static String NewCAPDialogNotValidStep;
     public static String NewCAPDialogReservedCompName;
@@ -523,7 +519,6 @@ public class Messages extends NLS {
     public static String NewServerPortDialogShellTitle;
     public static String NewServerPortDialogTitle;    
     public static String NewTestCaseActionDoubleTCName;
-    public static String NewTestCaseActionNewTestCase;
     public static String NewTestCaseActionTCLabel;
     public static String NewTestCaseActionTCMessage;
     public static String NewTestCaseActionTCShell;
@@ -742,7 +737,6 @@ public class Messages extends NLS {
     public static String ProtectedProject;
     public static String RecomputeProposals;
     public static String RecordTestCaseActionDoubleTCName;
-    public static String RecordTestCaseActionStandardName;
     public static String RecordTestCaseActionTCLabel;
     public static String RecordTestCaseActionTCMessage;
     public static String RecordTestCaseActionTCShell;

@@ -14,6 +14,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
+import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -48,7 +49,7 @@ public class NewTestCaseActionTCBrowser extends AbstractNewTestCaseAction {
     public void run() {
         InputDialog dialog = new InputDialog(Plugin.getShell(), 
                 Messages.NewTestCaseActionTCTitle,
-                Messages.NewTestCaseActionNewTestCase,
+                InitialValueConstants.DEFAULT_TEST_CASE_NAME,
                 Messages.NewTestCaseActionTCMessage,
                 Messages.NewTestCaseActionTCLabel,
                 Messages.RenameActionTCError,
