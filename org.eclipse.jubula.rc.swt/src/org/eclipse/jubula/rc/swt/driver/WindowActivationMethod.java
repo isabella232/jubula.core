@@ -213,9 +213,6 @@ public abstract class WindowActivationMethod {
                 m_robot.mouseMove(pos.x + cp.x, pos.y + cp.y);
                 m_robot.mousePress(ACTIVATE_BTN);
                 m_robot.mouseRelease(ACTIVATE_BTN);
-                m_robot.mouseMove(
-                    pos.x + SwtUtils.getWidgetBounds(window).width / 2,
-                    pos.y + SwtUtils.getWidgetBounds(window).height / 2);
                 RobotTiming.sleepPostWindowActivationDelay();
                 return null;
             }
