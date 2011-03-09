@@ -44,7 +44,7 @@ public class ShowClientLogAction extends AbstractAction {
         
         File clientLogFile = ShowClientLogBP.getInstance().getClientLogFile();
         
-        if (clientLogFile != null) {
+        if (clientLogFile != null && clientLogFile.canRead()) {
             IWorkbenchPage currentPage = 
                 PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                     .getActivePage();
@@ -65,6 +65,8 @@ public class ShowClientLogAction extends AbstractAction {
                     Utils.createMessageDialog(MessageIDs.E_CANNOT_OPEN_EDITOR);
                 }
             }
+        } else {
+            Utils.createMessageDialog(MessageIDs.I_NO_CLIENT_LOG_FOUND);
         }
     }
 

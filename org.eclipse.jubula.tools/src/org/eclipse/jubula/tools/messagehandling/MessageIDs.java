@@ -574,6 +574,8 @@ public class MessageIDs {
     public static final Integer I_NON_EDITABLE_NODE = new Integer(126);
     /** DB locked by background job (cleanup, data gathering, ...) */
     public static final Integer I_DB_BACKGROUND_JOB = new Integer(127);
+    /** No log file found */
+    public static final Integer I_NO_CLIENT_LOG_FOUND = new Integer(128);
 
     // ---------------------------------------------------------------------
     /** key = message id, message object */
@@ -943,6 +945,7 @@ public class MessageIDs {
         messageMap.put(I_REUSED_TDC, i, "InfoMessage.I_REUSED_TDC", null); //$NON-NLS-1$
         messageMap.put(I_NON_EDITABLE_NODE, i, "InfoMessage.I_NON_EDITABLE_NODE", null); //$NON-NLS-1$
         messageMap.put(I_DB_BACKGROUND_JOB, i, "InfoMessage.DB_BACKGROUND_JOB", null); //$NON-NLS-1$
+        messageMap.put(I_NO_CLIENT_LOG_FOUND, i, "InfoMessage.NO_CLIENT_LOG_FOUND", null); //$NON-NLS-1$
     }
     
     /**
