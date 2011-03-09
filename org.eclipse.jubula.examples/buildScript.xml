@@ -151,7 +151,12 @@
 		<copy todir="../${ExampleSwingExtensionServer}/lib" overwrite="true">
 			<fileset file="${release}/server/lib/org.eclipse.jubula.rc.common.jar"/>
 			<fileset file="${release}/server/lib/org.eclipse.jubula.rc.swing.jar"/>
-			<fileset file="${release}/server/lib/org.eclipse.jubula.tools.jar"/>
+		</copy>
+		<copy todir="../${ExampleSwingExtensionServer}/lib" overwrite="true">
+			<fileset dir="${release}/server/lib/">
+				<include name="*tools*.jar"/>
+			</fileset>
+			<mapper type="merge" to="org.eclipse.jubula.tools.jar"/>
 		</copy>
 		
 		<mkdir dir="${examples.development.dir}/extension/bin"/>
