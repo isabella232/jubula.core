@@ -64,7 +64,7 @@ public class H2ConnectionInfo extends DatabaseConnectionInfo {
         StringBuilder sb = new StringBuilder();
         sb.append("jdbc:h2:") //$NON-NLS-1$
             .append(getLocation())
-            .append(";MVCC=TRUE;AUTO_SERVER=TRUE"); //$NON-NLS-1$
+            .append(";MVCC=TRUE;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE"); //$NON-NLS-1$
         return sb.toString();
     }
 
