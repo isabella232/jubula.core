@@ -66,6 +66,7 @@
 		<class>org.eclipse.jubula.client.core.model.MonitoringValuePO</class>  
 		
 		<properties>
+			<property name="eclipselink.logging.level" value="SEVERE"/>
 			<property name="eclipselink.weaving" value="static"/>
 			<property name="eclipselink.weaving.changetracking" value="false"/>
 			<property name="eclipselink.weaving.fetchgroups" value="false"/>
