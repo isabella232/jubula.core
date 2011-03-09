@@ -88,7 +88,7 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
     protected Control createContents(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
-        GridData compositeData = new GridData(GridData.FILL_BOTH);
+        GridData compositeData = new GridData(SWT.FILL, SWT.FILL, true, true);
         createCompositeLayout(composite, compositeLayout, compositeData);
         composite.setLayoutData(compositeData);
         noDefaultAndApplyButton();

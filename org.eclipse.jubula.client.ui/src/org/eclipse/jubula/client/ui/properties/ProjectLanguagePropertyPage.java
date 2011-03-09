@@ -88,17 +88,13 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
      * {@inheritDoc}
      */
     protected Control createContents(Composite parent) {
+        createLabel(parent, Messages
+                .ProjectSettingWizardPageSelectLanguagesOfTD);
         Composite composite = createComposite(parent, NUM_COLUMNS_1,
-            GridData.FILL, GridData.FILL, true, true);
-        Composite projectNameComposite = createComposite(composite,
-            NUM_COLUMNS_2, GridData.FILL, GridData.FILL, true, true);
+            SWT.FILL, SWT.FILL, true, true);
 
         noDefaultAndApplyButton();       
 
-        createLabel(projectNameComposite, StringConstants.EMPTY);
-        createLabel(projectNameComposite, StringConstants.EMPTY);
-        createLabel(composite, Messages
-                .ProjectSettingWizardPageSelectLanguagesOfTD);
         Composite innerComposite = new Composite(composite, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
         compositeLayout.numColumns = NUM_COLUMNS_1;
@@ -107,7 +103,7 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
         innerComposite.setLayout(compositeLayout);
         GridData compositeData = new GridData();
         compositeData.horizontalSpan = NUM_COLUMNS_2;
-        compositeData.horizontalAlignment = GridData.FILL;
+        compositeData.horizontalAlignment = SWT.FILL;
         compositeData.grabExcessHorizontalSpace = true;
         innerComposite.setLayoutData(compositeData);
         createLanguageLists(innerComposite);
@@ -243,10 +239,10 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
      * @param parent The parent composite.
      */
     private void createLanguageCombo(Composite parent) {
-        Composite leftComposite = createComposite(parent, NUM_COLUMNS_1, 
-            GridData.BEGINNING, GridData.FILL, true, true);
-        Composite rightComposite = createComposite(parent, NUM_COLUMNS_1, 
-            GridData.FILL, GridData.FILL, true, true);
+        Composite leftComposite = createComposite(parent, NUM_COLUMNS_1,
+                SWT.BEGINNING, SWT.NONE, false, false);
+        Composite rightComposite = createComposite(parent, NUM_COLUMNS_1,
+                SWT.FILL, SWT.FILL, true, true);
         createLabel(leftComposite, Messages.ProjectPropertyPageLanguageLabel);
         m_defaultLangComboBox = new DirectCombo<Locale>(rightComposite, 
                 SWT.READ_ONLY, new ArrayList<Locale>(), new ArrayList<String>(),

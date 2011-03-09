@@ -57,14 +57,11 @@ public class ProjectPropertiesHandler extends AbstractHandler {
         "org.eclipse.jubula.client.ui.commands.PropertiesCommand.parameter.sectionToOpen"; //$NON-NLS-1$
     
     /**
-     * 
      * {@inheritDoc}
      */
     public Object execute(ExecutionEvent event) throws ExecutionException {
         IWorkbenchWindow activeWindow = 
             HandlerUtil.getActiveWorkbenchWindow(event);
-        
-        
         Shell shell = activeWindow != null ? activeWindow.getShell() : null;
 
         PreferenceManager mgr = new PreferenceManager();
@@ -117,11 +114,11 @@ public class ProjectPropertiesHandler extends AbstractHandler {
             if (sectionToOpen != null) {
                 dialog.setSelectedNode(sectionToOpen);
             }
-            
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
             //sets the title
-            dialog.getShell().setText(Messages.ProjectPropertyPageShellTitle 
+            Shell s = dialog.getShell();
+            s.setText(Messages.ProjectPropertyPageShellTitle 
                     + generalPage.getProject().getName());
             dialog.open();
             es.close();
