@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers.propertysources;
 
 
@@ -18,8 +28,8 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 /**
  * This class loads the monitoring values that will be shown by the PropertiesView
- * @author marc
- *
+ * @author BREDEX GmbH
+ * @created 05.12.2010 
  */
 public class MonitoringValuePropertySource implements IPropertySource {
        
@@ -28,7 +38,7 @@ public class MonitoringValuePropertySource implements IPropertySource {
     private IPropertyDescriptor [] m_descriptors = null;    
     
     /** found MonitoringValues */
-    private Map<String, IMonitoringValue> m_monitoringValueMap = null;    
+    private Map<String, IMonitoringValue> m_monitoringValueMap = null;     
     /**
      * 
      * @param summary the Summary which was selected
@@ -37,6 +47,7 @@ public class MonitoringValuePropertySource implements IPropertySource {
                 
         Long id = summary.getId();
         m_monitoringValueMap = MonitoringValuePM.loadMonitoringValues(id);
+       
     }    
     /**
      * {@inheritDoc}
@@ -64,7 +75,7 @@ public class MonitoringValuePropertySource implements IPropertySource {
             }            
             tmpList.add(p);
 
-        }
+        }             
         m_descriptors = 
             tmpList.toArray(new IPropertyDescriptor[tmpList.size()]);
         return m_descriptors;
@@ -74,14 +85,14 @@ public class MonitoringValuePropertySource implements IPropertySource {
      * @param id the id 
      */
     public Object getPropertyValue(Object id) {
-               
+                      
         IMonitoringValue m = m_monitoringValueMap.get(id);         
         if (m.getType().equals(MonitoringConstants.PERCENT_VALUE)) {  
-            DecimalFormat n = new DecimalFormat("0.0#%"); ////$NON-NLS-1$
+            DecimalFormat n = new DecimalFormat("0.0#%"); //$NON-NLS-1$
             Double doubleValue = Double.valueOf(m.getValue());
             return StringUtils.defaultString(
                     n.format(doubleValue.doubleValue())); 
-        }
+        }        
         return m.getValue();
 
     }

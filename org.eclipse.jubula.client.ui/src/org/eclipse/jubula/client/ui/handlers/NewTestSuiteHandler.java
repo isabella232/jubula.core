@@ -14,6 +14,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -123,7 +124,7 @@ public class NewTestSuiteHandler extends AbstractHandler {
         if (testSuiteCount > 0) {
             str = str + testSuiteCount;
         }
-        str = Messages.InputDialogNewTS + str;
+        str = InitialValueConstants.DEFAULT_TEST_SUITE_NAME + str;
         InputDialog dialog = new InputDialog(Plugin.getShell(), 
                 Messages.NewTestSuiteActionTSTitle,
                 str, Messages.NewTestSuiteActionTSMessage,

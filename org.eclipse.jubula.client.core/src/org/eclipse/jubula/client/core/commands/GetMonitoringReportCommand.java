@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.commands;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
@@ -21,6 +22,7 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendMonitoringReportMessage;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.objects.MonitoringValue;
 
 
 /** 
@@ -39,8 +41,15 @@ public class GetMonitoringReportCommand implements ICommand {
      * {@inheritDoc}
      */
     public Message execute() {
-        TestResult result = TestResultBP.getInstance().getResultTestModel();
-        byte[] report = m_message.getData();
+        TestResult result = TestResultBP.getInstance().getResultTestModel(); 
+        //m_message.getReportPath() is not null if report was too large to send
+        if (!StringUtils.isEmpty(m_message.getReportPath())) {            
+            result.getMonitoringValues().put(
+                    MonitoringConstants.MONITORING_ERROR_TOO_LARGE, 
+                    new MonitoringValue(m_message.getReportPath(),
+                    MonitoringConstants.DEFAULT_TYPE));
+        } 
+        byte[] report = m_message.getData();               
         if (report == null) {
             result.setReportData(MonitoringConstants.EMPTY_REPORT);
         } else {

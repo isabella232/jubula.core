@@ -90,7 +90,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     
     /** default jre path for Windows */
     private static final String DEFAULT_WIN_JRE = "../jre/bin/java.exe"; //$NON-NLS-1$
-    
+     
     /** for check if the executable text field is empty */
     private static boolean isExecFieldEmpty = true;
        
@@ -99,7 +99,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
 
     /** for check if the executable text field is valid */
     private boolean m_isExecFieldValid = true;
-    
+        
     // internally used classes for data handling
     // internally used GUI components
     /** gui component */
@@ -181,9 +181,11 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     /**
      * {@inheritDoc}
      */
-    protected void createMonitoringArea(Composite monitoringComposite, 
-            java.util.List<DialogStatusParameter> liste) {      
-        modifyMonitoringLayout(monitoringComposite);
+    protected void createMonitoringArea(Composite monitoringComposite) {     
+        
+        GridLayout result = (GridLayout)monitoringComposite.getLayout();        
+        result.horizontalSpacing = 40;
+        monitoringComposite.setLayout(result);
         final String monitoringID = super.getConfigValue(
                 AutConfigConstants.MONITORING_AGENT_ID);
               
@@ -192,108 +194,133 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 (ArrayList<MonitoringAttribute>)MonitoringUtils
                     .getAttributes(MonitoringUtils.getElement(
                             monitoringID));            
-            createGuiComponents(monitoringComposite, list, liste);
+            createGuiComponents(monitoringComposite, list);
         }
         resize();
         getShell().pack();
-        super.createMonitoringArea(monitoringComposite, liste);
+        super.createMonitoringArea(monitoringComposite);
                
     }
     /**
-     * Dynamically creates GUI components 
+     * Dynamically creates GUI components for monitoring composite
      * @param monitoringComposite The composite to add the components to
      * @param guiCompList This list contains attributes from the extension point
-     * @param statusParamterList This list contains DialogStatusParamters
+     * 
      */
     private void createGuiComponents(Composite monitoringComposite, 
-            java.util.List<MonitoringAttribute> guiCompList, 
-            java.util.List<DialogStatusParameter> statusParamterList) {
+            java.util.List<MonitoringAttribute> guiCompList) {
         
-        final java.util.List<DialogStatusParameter> errorListe = 
-            statusParamterList;
-        final String autId = super.getConfigValue(AutConfigConstants.AUT_ID);
         for (int i = 0; i < guiCompList.size(); i++) {                
-            final MonitoringAttribute ca = guiCompList.get(i);   
+            final MonitoringAttribute ca = guiCompList.get(i);               
             if (!ca.isRender()) { 
                 putConfigValue(ca.getId(), ca.getDefaultValue());
             }   
             if (ca.isRender()) {                     
                 if (ca.getType().equalsIgnoreCase(
                         MonitoringConstants.RENDER_AS_TEXTFIELD)) { 
-                    if (!StringUtils.isEmpty(ca.getInfoBobbleText())) {
-                        Label l = UIComponentHelper.createLabel(
-                                monitoringComposite, ca.getDescription());
-                        ControlDecorator.decorateInfo(l, 
-                                ca.getInfoBobbleText(), false);
-                    } else {
-                        UIComponentHelper.createLabel(monitoringComposite, 
-                                ca.getDescription());
-                    }
-                    final JBText t = UIComponentHelper.createTextField(
-                            monitoringComposite, 1);
-                    t.setId(ca.getId());  
-                    t.setText(getConfigValue(ca.getId()));
-                    final IValidator validator = ca.getValidator();
-                    t.addModifyListener(new ModifyListener() {              
-                        public void modifyText(ModifyEvent e) {  
-                            if (validator != null) {                      
-                                IStatus status = 
-                                    validator.validate(t.getText());      
-                                if (!status.isOK()) {
-                                    DialogStatusParameter error = 
-                                        createErrorStatus(status.getMessage());
-                                    errorListe.add(error);
-                                    checkAll();             
-                                } else {
-                                    checkAll();  
-                                }                                
-                            }
-                            putConfigValue(ca.getId(), t.getText());     
-                        }
-                    });  
-                    t.addFocusListener(new FocusListener() {            
-                        private String m_oldText = StringConstants.EMPTY;
-                        public void focusLost(FocusEvent e) {
-                            String currentText = t.getText();
-                            if (!currentText.equals(m_oldText)) {
-                                showMonitoringInfoDialog(autId);       
-                            } 
-                            putConfigValue(ca.getId(), t.getText()); 
-                        }                            
-                        public void focusGained(FocusEvent e) {
-                            m_oldText = t.getText();
-                        }
-                    });                    
+                    createMonitoingTextFieldWidget(
+                            monitoringComposite, ca);
                 }
                 if (ca.getType().equalsIgnoreCase(
                         MonitoringConstants.RENDER_AS_CHECKBOX)) { 
-                    UIComponentHelper.createLabel(monitoringComposite, 
-                            ca.getDescription());
-                    final Button b = UIComponentHelper.createToggleButton(
-                            monitoringComposite, 2);                 
-                    b.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
-                            showMonitoringInfoDialog(autId); 
-                            putConfigValue(ca.getId(), 
-                                    String.valueOf(b.getSelection()));     
-                        }
-                    });
+                    createMonitoringCheckBoxWidget(
+                            monitoringComposite, ca);
                 }
             }
         }
     }
     /**
-     * modifies the default layout for monitoring composite.
-     * @param c The Composite to modify
+     * Creates a Checkbox for the given monitoring composite, 
+     * which was specified in the extension point.     * 
+     * @param composite The composite to add the widget on
+     * @param att The current attribute
+     * 
      */
-    private void modifyMonitoringLayout(Composite c) {
-       
-        GridLayout result = (GridLayout)c.getLayout();        
-        result.horizontalSpacing = 40;
-        c.setLayout(result);
+    private void createMonitoringCheckBoxWidget(Composite composite, 
+            MonitoringAttribute att) {
+        
+        final MonitoringAttribute ca = att;
+        final String autId = super.getConfigValue(AutConfigConstants.AUT_ID);
+        if (!StringUtils.isEmpty(ca.getInfoBobbleText())) {
+            Label l = UIComponentHelper.createLabel(
+                    composite, ca.getDescription());
+            ControlDecorator.decorateInfo(l, 
+                    ca.getInfoBobbleText(), false);
+        } else {
+            UIComponentHelper.createLabel(composite, 
+                    ca.getDescription());
+        }                   
+        final Button b = UIComponentHelper.createToggleButton(
+                composite, 2);
+        b.setData(MonitoringConstants.MONITORING_KEY, ca.getId());
+        b.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent event) {
+                showMonitoringInfoDialog(autId); 
+                putConfigValue(ca.getId(), 
+                        String.valueOf(b.getSelection()));     
+            }
+        });
         
     }
-    
+    /**
+     * creates a Textfield for a given monitoring composite,
+     * which was specified in the extension point.
+     * @param composite the monitoring composite
+     * @param att the MonitoringAttribute
+     * 
+     */
+    private void createMonitoingTextFieldWidget(Composite composite, 
+            MonitoringAttribute att) {
+        
+        final MonitoringAttribute ca = att;       
+        final String autId = super.getConfigValue(AutConfigConstants.AUT_ID);
+        if (!StringUtils.isEmpty(ca.getInfoBobbleText())) {
+            Label l = UIComponentHelper.createLabel(
+                    composite, ca.getDescription());
+            ControlDecorator.decorateInfo(l, 
+                    ca.getInfoBobbleText(), false);
+        } else {
+            UIComponentHelper.createLabel(composite, 
+                    ca.getDescription());
+        }
+        final JBText t = UIComponentHelper.createTextField(
+                composite, 2);
+        t.setData(MonitoringConstants.MONITORING_KEY, ca.getId());
+        t.setText(getConfigValue(ca.getId()));
+        final IValidator validator = ca.getValidator();
+        t.addModifyListener(new ModifyListener() {              
+            public void modifyText(ModifyEvent e) {  
+                if (validator != null) {                      
+                    IStatus status = 
+                        validator.validate(t.getText());      
+                    if (!status.isOK()) {
+                        DialogStatusParameter error = 
+                            createErrorStatus(status.getMessage());
+                        addError(error);
+                        checkAll();             
+                    } else {
+                        checkAll();  
+                    }                                
+                }
+                putConfigValue(ca.getId(), t.getText());     
+            }
+        });  
+        t.addFocusListener(new FocusListener() {            
+            private String m_oldText = StringConstants.EMPTY;
+            public void focusLost(FocusEvent e) {
+                String currentText = t.getText();
+                if (!currentText.equals(m_oldText)) {
+                    showMonitoringInfoDialog(autId);       
+                } 
+                putConfigValue(ca.getId(), t.getText()); 
+            }                            
+            public void focusGained(FocusEvent e) {
+                m_oldText = t.getText();
+            }
+        });            
+        
+        
+    }    
     /** if monitoring parameters changed, the AUT must be restarted, only than
      *  the changes will be active. This must be done, because at start up the
      *  autConfigMap will be stored in the MonitoringDataStore. 
@@ -317,7 +344,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     }
     /**
      * This method handles the event which was fired when an item in the
-     * combobox is selected.    
+     * Combobox is selected.    
      */
     private void handleMonitoringComboEvent() {  
         
@@ -327,8 +354,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                     m_monitoringCombo.getSelectedObject().toString()); 
           
             cleanComposite(getMonitoringAreaComposite());
-            createMonitoringArea(getMonitoringAreaComposite(), 
-                    new ArrayList());    
+            createMonitoringArea(getMonitoringAreaComposite());    
             
         } else {
             cleanComposite(getMonitoringAreaComposite());
@@ -426,7 +452,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * installs all listeners to the gui components. All components visualizing
      * a property do have some sort of modification listeners which store edited
      * data in the edited instance. Some gui components have additional
-     * listeners for data validatuion or permission reevaluation.
+     * listeners for data validation or permission reevaluation.
      */
     protected void installListeners() {
         super.installListeners();
@@ -766,20 +792,30 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * {@inheritDoc}
      */
     protected void populateMonitoringArea(Map<String, String> data) {
-        Composite compostie = getMonitoringAreaComposite();
-        Control[] ca = compostie.getChildren();
-
-        for (int i = 0; i < ca.length; i++) {
-            if (ca[i] instanceof JBText) {
-                JBText t = (JBText)ca[i];
-                String tmp = data.get(t.getId());
-                if (tmp != null && !tmp.equals(StringConstants.EMPTY)) {
-                    t.setText(tmp);
-                }
-            }
-            
-        }
+        Composite composite = getMonitoringAreaComposite();
+        Control[] ca = composite.getChildren();
         
+        for (int i = 0; i < ca.length; i++) {                       
+            if (ca[i].getData(MonitoringConstants.MONITORING_KEY) != null) {
+                if (ca[i] instanceof JBText) {
+                    JBText t = (JBText) ca[i];
+                    String value = data.get(String.valueOf(
+                            t.getData(MonitoringConstants.MONITORING_KEY)));
+                    if (value != null && !value.equals(StringConstants.EMPTY)) {
+                        t.setText(value);
+                    }
+                }
+                if (ca[i] instanceof Button) {
+                    Button b = (Button) ca[i];
+                    String value = data.get(String.valueOf(b
+                            .getData(MonitoringConstants.MONITORING_KEY)));
+                    if (value != null) {
+                        b.setSelection(Boolean.valueOf(value));
+                    }
+                }
+        
+            }
+        }
     }
     /**
      * Populates GUI for the advanced configuration section.
@@ -893,7 +929,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * Sets the enablement for the move classpath entry up button.
      * @param enabled if the button should be enabled.
      */
-    void setClasspathUpEnabled(boolean enabled) {
+    public void setClasspathUpEnabled(boolean enabled) {
         m_moveElementUpButton.setEnabled(enabled);
         if (enabled) {
             m_moveElementUpButton.setImage(IconConstants.UP_ARROW_IMAGE);
@@ -906,7 +942,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * Sets the enablement for the move classpath entry down button.
      * @param enabled if the button should be enabled.
      */
-    void setClasspathDownEnabled(boolean enabled) {
+    public void setClasspathDownEnabled(boolean enabled) {
         m_moveElementDownButton.setEnabled(enabled);
         if (enabled) {
             m_moveElementDownButton.setImage(IconConstants.DOWN_ARROW_IMAGE);
@@ -951,7 +987,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     /**
      * Handle the selection event of the move element up button
      */
-    void handleUpButtonEvent() {
+    public void handleUpButtonEvent() {
         int [] selectedIndices = m_classPathListField.getSelectionIndices();
         Arrays.sort(selectedIndices);
         int [] newSelectedIndices = new int [selectedIndices.length];
@@ -1020,7 +1056,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * Handles the button event.
      * @param fileDialog The file dialog.
      */
-    private void handleExecButtonEvent(FileDialog fileDialog) {
+    void handleExecButtonEvent(FileDialog fileDialog) {
         String directory;
         fileDialog.setText(
             Messages.AUTConfigComponentSelectExecutable);
@@ -1128,7 +1164,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     /**
      * Checks and sets the enablement for classpath area buttons
      */
-    void checkClasspathButtons() {
+    public void checkClasspathButtons() {
         if (m_classPathListField.getItemCount() == 0) {
             m_removeElementButton.setEnabled(false);
             m_editElementButton.setEnabled(false);
@@ -1166,7 +1202,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     /**
      * Handles the button event.
      */
-    void handleRemoveButtonEvent() {
+    public void handleRemoveButtonEvent() {
         int selectionIndex = m_classPathListField.getSelectionIndex();
         m_classPathListField.remove(m_classPathListField
                 .getSelection()[0]);
@@ -1223,7 +1259,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * Handles the button event.
      * @param editButtonWasPressed true, if edit button was pressed
      */
-    void handleAddElementButtonEvent(boolean editButtonWasPressed) {
+    public void handleAddElementButtonEvent(boolean editButtonWasPressed) {
         int maxLength = IAUTConfigPO.MAX_CLASSPATH_LENGTH 
             - getClassPathLength();
         if (maxLength < 1) {
@@ -1504,7 +1540,10 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         
         // AUT directory editor
         createAutDirectoryEditor(advancedAreaComposite);
-        
+        //create AUT installation directory widgets
+        createAutInstallationDirectory(advancedAreaComposite);
+        //create AUT source directory widgets
+        createAutSourceDirectory(advancedAreaComposite);
         // class name editor
         UIComponentHelper.createLabel(advancedAreaComposite,
                 "AUTConfigComponent.className"); //$NON-NLS-1$ 
@@ -1551,7 +1590,6 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @param expertAreaComposite Composite representing the expert area.
      */
     protected void createExpertArea(Composite expertAreaComposite) {
-          
         
         // JRE parameter editor
         UIComponentHelper.createLabel(expertAreaComposite,
@@ -1576,7 +1614,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         m_monitoringCombo = UIComponentHelper.createCombo(
                 expertAreaComposite, 2, 
                 MonitoringUtils.getAllRegisteredMonitoringIds(), 
-                MonitoringUtils.getAllRegisteredMonitoringNames(), true);      
+                MonitoringUtils.getAllRegisteredMonitoringNames(), true); 
         
         super.createExpertArea(expertAreaComposite);
        

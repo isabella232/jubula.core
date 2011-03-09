@@ -84,6 +84,7 @@ import org.eclipse.jubula.communication.message.ResetMonitoringDataMessage;
 import org.eclipse.jubula.communication.message.RestartAutMessage;
 import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
@@ -485,7 +486,8 @@ public class TestExecution {
         m_stepCounter.reset();
         IClientTest clientTest = ClientTestFactory.getClientTest();
         clientTest.setLastConnectedAutId(
-                getConnectedAutId().getExecutableName());       
+                getConnectedAutId().getExecutableName()); 
+        resetMonitoringData();
         try {
             // build and show result Tree
             Traverser copier = new Traverser(testSuite, locale);
@@ -1180,25 +1182,33 @@ public class TestExecution {
     }
     
     /**
-     * This method will reset the profiling agent. Actually the message will
-     * invoke the rest metod.
-     * 
+     * This method will reset the profiling agent.
      */
-    public void resetMonitoringData() {
-             
-        try {
-            ResetMonitoringDataMessage message = 
-                new ResetMonitoringDataMessage(AUTConnection.getInstance()
-                        .getConnectedAutId().getExecutableName());
-            ServerConnection.getInstance().send(message);
+    private void resetMonitoringData() {
+        
+        if (m_autConfig != null) {
+            boolean reset = 
+                Boolean.valueOf(m_autConfig.getValue(
+                        MonitoringConstants.RESET_AGENT, "false"));            
+            if (reset) {
+                try {
+                    ResetMonitoringDataMessage message = 
+                        new ResetMonitoringDataMessage(
+                                AUTConnection.getInstance()
+                                .getConnectedAutId().getExecutableName());
+                    ServerConnection.getInstance().send(message);
 
-        } catch (NotConnectedException nce) {
-            LOG.error(nce);
-            
-        } catch (CommunicationException ce) {
-            LOG.error(ce);
-           
+                } catch (NotConnectedException nce) {
+                    LOG.error(nce);
+                    
+                } catch (CommunicationException ce) {
+                    LOG.error(ce);
+                   
+                }
+            }
+        
         }
+        
          
     }
     /**

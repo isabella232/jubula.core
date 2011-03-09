@@ -33,23 +33,8 @@ public class JBText extends Text {
      */
     public JBText(Composite parent, int style) {
         super(parent, style);
-    }
-    
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return m_id;
-    }
-
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.m_id = id;
-    }
-
+    }   
+   
 
     /**
      * {@inheritDoc}

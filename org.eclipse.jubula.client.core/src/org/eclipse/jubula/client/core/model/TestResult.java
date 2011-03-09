@@ -53,12 +53,15 @@ public class TestResult extends AbstractTestResult {
     
     /** the proifling agent id*/
     private String m_monitoringId;
+    
     /** the calculated monitoring values*/
     private Map<String, IMonitoringValue> m_monitoringValues;
     /** the monitoring report blob as byte array */
     private byte[] m_reportData;   
     /** is monitoring report written? */
-    private boolean m_reportWritten;
+    private boolean m_reportWritten;    
+    /** the path to the report, if it was too large to send */
+    private String m_pathToReport;
     /**
      * Constructor
      * 
@@ -252,6 +255,20 @@ public class TestResult extends AbstractTestResult {
      */
     public void setReportWritten(boolean reportWritten) {
         this.m_reportWritten = reportWritten;
+    }    
+    /**
+     * 
+     * @return The path to the report
+     */
+    public String getPathToReport() {
+        return m_pathToReport;
+    }
+    /**
+     * 
+     * @param pathToReport Sets the path to the report
+     */
+    public void setPathToReport(String pathToReport) {
+        this.m_pathToReport = pathToReport;
     }
        
     
