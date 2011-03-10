@@ -13,12 +13,10 @@ package org.eclipse.jubula.tools.constants;
 /**
  * @author BREDEX GmbH
  * @created 17.07.2007
- * 
  */
 public interface ConfigurationConstants {
-    
     /** Constants for the Environmant Variable to get the AutStarter-port */
-    public static final String AUTSTARTER_PORT = "GDAutStarterPort"; //$NON-NLS-1$
+    public static final String AUTSTARTER_PORT = "TEST_AUT_AGENT_PORT"; //$NON-NLS-1$
     
     /**
      * <code>AUT_AGENT_DEFAULT_PORT</code>
