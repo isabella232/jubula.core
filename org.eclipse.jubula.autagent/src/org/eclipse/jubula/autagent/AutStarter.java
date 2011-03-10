@@ -101,9 +101,6 @@ public class AutStarter {
     /** exit code in case of an io exception */
     private static final int EXIT_IO_EXCEPTION = 2;
 
-    /** exit code in case of an configuration error */
-    private static final int EXIT_CONFIGURATION_ERROR = 3;
-
     /** exit code in case of a version error between Client and AutStarter */
     private static final int EXIT_CLIENT_SERVER_VERSION_ERROR = 4;
 
@@ -124,9 +121,6 @@ public class AutStarter {
      * JubulaClient was closed, defaults to 10 seconds
      */
     private int m_stopAUTServerTimeout = 10000;
-
-    /** abort the current startup? */
-    private volatile boolean m_abortRequested;
 
     /** the AUT Agent that is used for AUT registration and deregistration */
     private AutAgent m_agent;
