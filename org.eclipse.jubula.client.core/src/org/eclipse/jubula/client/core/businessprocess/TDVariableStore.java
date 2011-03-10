@@ -27,7 +27,7 @@ public class TDVariableStore {
     public static final String USERDEF_ENV_VAR_PREFIX = "TEST_UDV_"; //$NON-NLS-1$
         
     /** Prefix for a pre-defined test variable */
-    public static final String PREDEF_VAR_PREFIX = "GD_"; //$NON-NLS-1$
+    public static final String PREDEF_VAR_PREFIX = "TEST_"; //$NON-NLS-1$
     
     /** id for the predefined language variable */
     public static final String VAR_LANG = PREDEF_VAR_PREFIX + "LANGUAGE"; //$NON-NLS-1$
@@ -42,9 +42,9 @@ public class TDVariableStore {
     public static final String VAR_DBUSERNAME = 
         PREDEF_VAR_PREFIX + "DBUSERNAME"; //$NON-NLS-1$
 
-    /** id for the predefined AutStarter hostname variable */
-    public static final String VAR_AUTSTARTER = 
-        PREDEF_VAR_PREFIX + "AUTSTARTER"; //$NON-NLS-1$
+    /** id for the predefined AUT-Agent hostname variable */
+    public static final String VAR_AUTAGENT = 
+        PREDEF_VAR_PREFIX + "AUTAGENT"; //$NON-NLS-1$
 
     /** id for the predefined AutStarter port variable */
     public static final String VAR_PORT = PREDEF_VAR_PREFIX + "PORTNUMBER"; //$NON-NLS-1$

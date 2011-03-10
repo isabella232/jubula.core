@@ -441,7 +441,7 @@ public class TestExecution {
             ServerConnection serverConn = ServerConnection.getInstance();
 
             // gd.autstarter
-            varStore.store(TDVariableStore.VAR_AUTSTARTER, 
+            varStore.store(TDVariableStore.VAR_AUTAGENT, 
                     serverConn.getCommunicator().getHostName());
             
             // gd.portnumber
