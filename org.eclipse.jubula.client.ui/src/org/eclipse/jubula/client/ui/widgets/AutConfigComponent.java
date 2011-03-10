@@ -108,12 +108,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 checked = true;
             } else if (source.equals(m_autWorkingDirectoryTextField)) {
                 checked = true;
-            } else if (source.equals(m_autInstallDirectoryTextField)) {
-                checked = true;
-                handleInstallationDirModifyEvent();
-            } else if (source.equals(m_autSourceDirectoryTextField)) {
-                checked = true;
-                handleSourceDirModifyEvent();
             }
             if (checked) {
                 checkAll();
@@ -157,32 +151,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                             Plugin.getShell(), SWT.APPLICATION_MODAL
                                     | SWT.ON_TOP);
                     handleWorkDirButtonEvent(directoryDialog);
-
-                }
-                return;
-            } else if (source.equals(m_autInstallDirectoryButton)) {
-                if (isRemoteRequest()) {
-                    remoteBrowse(true, AutConfigConstants.INST_DIR,
-                            m_autInstallDirectoryTextField,
-                            Messages.AUTConfigComponentSelectInstDir);
-                } else {
-                    DirectoryDialog directoryDialog = new DirectoryDialog(
-                            Plugin.getShell(), SWT.APPLICATION_MODAL
-                                    | SWT.ON_TOP);
-                    handleInstallationDirButtonEvent(directoryDialog);
-
-                }
-                return;
-            } else if (source.equals(m_autSourceDirectoryButton)) {
-                if (isRemoteRequest()) {
-                    remoteBrowse(true, AutConfigConstants.SOURCE_DIR,
-                            m_autSourceDirectoryTextField,
-                            Messages.AUTConfigComponentSelectSourceDir);
-                } else {
-                    DirectoryDialog directoryDialog = new DirectoryDialog(
-                            Plugin.getShell(), SWT.APPLICATION_MODAL
-                                    | SWT.ON_TOP);
-                    handleSourceDirButtonEvent(directoryDialog);
 
                 }
                 return;
@@ -256,15 +224,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /** gui component */
     private JBText m_autWorkingDirectoryTextField;
     /** gui component */
-    private JBText m_autInstallDirectoryTextField;
-    /** gui component */
-    private JBText m_autSourceDirectoryTextField;
-    /** gui component */
-    private Button m_autSourceDirectoryButton;
-    /** gui component */
     private Button m_autWorkingDirectoryButton;
-    /** gui component */
-    private Button m_autInstallDirectoryButton;
     /** gui component */
     private JBText m_autIdTextField;
     /** validator for the AUT ID text field */
@@ -487,10 +447,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                     data.get(AutConfigConstants.AUT_ID)));
             m_autWorkingDirectoryTextField.setText(StringUtils
                     .defaultString(data.get(AutConfigConstants.WORKING_DIR)));
-            m_autInstallDirectoryTextField.setText(StringUtils
-                    .defaultString(data.get(AutConfigConstants.INST_DIR)));
-            m_autSourceDirectoryTextField.setText(StringUtils.defaultString(
-                    data.get(AutConfigConstants.SOURCE_DIR)));
         } else {
             // set some default values
             m_serverCombo.select(m_serverCombo.indexOf(StringUtils
@@ -590,41 +546,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 .createLayoutComposite(parent), SWT.PUSH);
         m_autWorkingDirectoryButton.setText(Messages.AUTConfigComponentBrowse);
         m_autWorkingDirectoryButton.setLayoutData(BUTTON_LAYOUT);
-    }
-    /**
-     * creates the AUT installation directory textfield and browse button
-     * @param parent The parent Composite
-     */
-    protected void createAutInstallationDirectory(Composite parent) {
-        
-        ControlDecorator.decorateInfo(
-                UIComponentHelper.createLabel(parent, "AUTConfigComponent.instDir"), //$NON-NLS-1$, 
-                "AUTConfigComponent.labelInstDirectory", false); //$NON-NLS-1$        
-        m_autInstallDirectoryTextField = 
-            UIComponentHelper.createTextField(parent, 1);
-        
-        m_autInstallDirectoryButton = new Button(
-                UIComponentHelper.createLayoutComposite(parent), SWT.PUSH);
-        m_autInstallDirectoryButton.setText(Messages.AUTConfigComponentBrowse);
-        m_autInstallDirectoryButton.setLayoutData(BUTTON_LAYOUT);
-        
-    }
-    /**
-     * creates the AUT source directory textfield and browse button
-     * @param parent The where the widgets will be added
-     */
-    protected void createAutSourceDirectory(Composite parent) {
-        
-        ControlDecorator.decorateInfo(
-                UIComponentHelper.createLabel(parent, "AUTConfigComponent.srcDir"), //$NON-NLS-1$, 
-                "AUTConfigComponent.labelSourceDirectory", false); //$NON-NLS-1$   
-        m_autSourceDirectoryTextField = 
-            UIComponentHelper.createTextField(parent, 1);
-        m_autSourceDirectoryButton = new Button(
-                UIComponentHelper.createLayoutComposite(parent), SWT.PUSH);  
-        m_autSourceDirectoryButton.setText(Messages.AUTConfigComponentBrowse);
-        m_autSourceDirectoryButton.setLayoutData(BUTTON_LAYOUT);
-        
     }
     
     
@@ -823,12 +744,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         m_autWorkingDirectoryButton.addSelectionListener(selectionListener);
         m_autWorkingDirectoryTextField.addModifyListener(modifyListener);
         
-        m_autInstallDirectoryTextField.addModifyListener(modifyListener);
-        m_autInstallDirectoryButton.addSelectionListener(selectionListener);
-        
-        m_autSourceDirectoryButton.addSelectionListener(selectionListener);
-        m_autSourceDirectoryTextField.addModifyListener(modifyListener);
-        
     }
     
     /**
@@ -852,11 +767,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             selectionListener);        
         m_autWorkingDirectoryTextField.removeModifyListener(modifyListener);
         
-        m_autInstallDirectoryTextField.removeModifyListener(modifyListener);
-        m_autInstallDirectoryButton.removeSelectionListener(selectionListener);
-        
-        m_autSourceDirectoryButton.removeSelectionListener(selectionListener);
-        m_autSourceDirectoryTextField.removeModifyListener(modifyListener);
     }
 
     /**
@@ -1405,78 +1315,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             putConfigValue(AutConfigConstants.WORKING_DIR, 
                 m_autWorkingDirectoryTextField.getText());
         }
-    }
-    /**
-     * handles the button event, which was thrown by the browse button for
-     * the m_autInstallDirectoryTextField       
-     * @param directoryDialog The DirectoryDialog
-     */
-    private void handleInstallationDirButtonEvent(
-            DirectoryDialog directoryDialog) {
-        String directory = null;
-        directoryDialog.setMessage(Messages.AUTConfigComponentSelectInstDir);
-        File path = new File(m_autInstallDirectoryTextField.getText());
-        String filterPath = Utils.getLastDirPath();
-        if (path.exists()) {
-            try {
-                filterPath = path.getCanonicalPath();
-            } catch (IOException e) {
-                //empty
-            }
-        }
-        directoryDialog.setFilterPath(filterPath);
-        directory = directoryDialog.open();
-        if (directory != null) {
-            m_autInstallDirectoryTextField.setText(directory);
-            Utils.storeLastDirPath(directoryDialog.getFilterPath());            
-            putConfigValue(AutConfigConstants.INST_DIR, 
-                m_autInstallDirectoryTextField.getText());
-        }
-    }
-    /**
-     * handles the button event, which was fired by the browse button from the
-     * m_autSourceDirectoryTextField
-     * @param directoryDialog A DirectoryDialog instance
-     */
-    private void handleSourceDirButtonEvent(DirectoryDialog 
-            directoryDialog) {
-        String directory = null;
-        directoryDialog.setMessage(Messages.AUTConfigComponentSelectSourceDir);
-        File path = new File(m_autSourceDirectoryTextField.getText());
-        String lastPath = Utils.getLastDirPath();
-        if (path.exists()) {
-            try {
-                lastPath = path.getCanonicalPath();
-            } catch (IOException e) {
-                //empty
-            }            
-        }
-        directoryDialog.setFilterPath(lastPath);
-        directory = directoryDialog.open();
-        if (directory != null) {
-            m_autSourceDirectoryTextField.setText(directory);
-            Utils.storeLastDirPath(directoryDialog.getFilterPath());
-            putConfigValue(AutConfigConstants.SOURCE_DIR, 
-                    m_autSourceDirectoryTextField.getText());
-        }
-        
-        
-    }   
-    
-    /**
-     * handles a modify event from the installation directory textfield
-     */
-    private void handleInstallationDirModifyEvent() {
-        putConfigValue(AutConfigConstants.INST_DIR, 
-                m_autInstallDirectoryTextField.getText());          
-    }
-    /**
-     * handles a modify event from the source directory textfield
-     */
-    private void handleSourceDirModifyEvent() {
-        putConfigValue(AutConfigConstants.SOURCE_DIR, 
-                m_autSourceDirectoryTextField.getText());
-        
     }
     
     /**
