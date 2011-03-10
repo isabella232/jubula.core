@@ -519,12 +519,10 @@ public class TestExecutionContributor
             case TestExecutionEvent.TEST_EXEC_STOP:
                 icon = Constants.AUT_UP;
                 message = Messages.TestExecutionContributorSuiteStop;
-                setAllTestSuitesStopped();
                 break;
             case TestExecutionEvent.TEST_EXEC_FAILED:
                 error = getTestSuiteErrorText(event);
                 message = Messages.TestExecutionContributorSuiteFailed;
-                setAllTestSuitesStopped();
                 break;
             case TestExecutionEvent.TEST_EXEC_START:
                 setClientMinimized(true);
@@ -539,7 +537,6 @@ public class TestExecutionContributor
             case TestExecutionEvent.TEST_EXEC_FINISHED:
                 message = Messages.TestExecutionContributorSuiteFinished;
                 icon = Constants.AUT_UP;
-                setAllTestSuitesStopped();
                 break;
             case TestExecutionEvent.TEST_EXEC_COMPONENT_FAILED:
                 cap = TestExecution.getInstance().getActualCap();
@@ -549,7 +546,6 @@ public class TestExecutionContributor
                 error = NLS.bind(Messages.TestExecutionContributorCompFailure,
                         new Object[]{componentName, testCaseName, capName});
                 message = Messages.TestExecutionContributorSuiteFailed;
-                setAllTestSuitesStopped();
                 break;
             case TestExecutionEvent.TEST_EXEC_PAUSED:
                 setClientMinimized(false);
@@ -574,7 +570,7 @@ public class TestExecutionContributor
                 break;
             default:
                 log.error(Messages.UnknownTestExecutionEvent);
-                setAllTestSuitesStopped();
+                endTestExecution();
         }
         showErrorAndStatus(event, message, error, icon);
     }
@@ -623,7 +619,7 @@ public class TestExecutionContributor
                     new Object[]{testCaseName, capName});
             default:
                 log.error(Messages.UnknownTestExecutionEvent);
-                setAllTestSuitesStopped();  
+                endTestExecution();  
         }
         return StringConstants.EMPTY;
     }
@@ -683,7 +679,7 @@ public class TestExecutionContributor
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     try {
-                        Plugin.getActivePage().showView("org.eclipse.jubula.client.ui.views.TestResultTreeView"); //$NON-NLS-1$
+                        Plugin.getActivePage().showView(Constants.TESTRE_ID);
                     } catch (PartInitException pie) {
                         log.error(Messages
                             .TestResultTreeViewCouldNotInitialised, pie);
@@ -793,14 +789,6 @@ public class TestExecutionContributor
      * {@inheritDoc}
      */
     public void endTestExecution() {
-        // nothing
-    }
-    
-    /**
-     * Sets all TestSuites stopped.
-     */
-    private void setAllTestSuitesStopped() {
-        setClientMinimized(false);
         IProjectPO project = GeneralStorage.getInstance().getProject();
         if (project == null) {
             return;
@@ -819,5 +807,6 @@ public class TestExecutionContributor
         } catch (ConnectionException e) {
             log.error(e);
         }
+        setClientMinimized(false);
     }
 }

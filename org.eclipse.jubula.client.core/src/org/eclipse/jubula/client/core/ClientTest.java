@@ -918,7 +918,8 @@ public class ClientTest implements IClientTest {
             log.error(ce);
         }
         
-    }    
+    }
+    
     /** 
      * {@inheritDoc}
      */
@@ -936,7 +937,8 @@ public class ClientTest implements IClientTest {
                         .endTestExecution();
             }
         } 
-    } 
+    }
+    
     /**
      * creating the job that is building and writing test data to DB. 
      * @param results The test results  
