@@ -142,6 +142,14 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     private DirectCombo<String> m_monitoringCombo;
     /** gui component */
     private JBText m_envTextArea;
+    /** gui component */
+    private JBText m_autInstallDirectoryTextField;
+    /** gui component */
+    private Button m_autInstallDirectoryButton;
+    /** gui component */
+    private JBText m_autSourceDirectoryTextField;
+    /** gui component */
+    private Button m_autSourceDirectoryButton;
     /** the WidgetModifyListener */
     private WidgetModifyListener m_modifyListener;
     /** the WidgetFocusListener */
@@ -482,7 +490,13 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         m_execTextField.addModifyListener(modifyListener);
         m_execButton.addSelectionListener(selectionListener);
         m_monitoringCombo.addSelectionListener(selectionListener);
-       
+
+        m_autInstallDirectoryTextField.addModifyListener(modifyListener);
+        m_autInstallDirectoryButton.addSelectionListener(selectionListener);
+        
+        m_autSourceDirectoryButton.addSelectionListener(selectionListener);
+        m_autSourceDirectoryTextField.addModifyListener(modifyListener);
+        
     }
 
     /**
@@ -518,6 +532,11 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         m_execButton.removeSelectionListener(selectionListener);
         m_monitoringCombo.removeSelectionListener(selectionListener);
       
+        m_autInstallDirectoryTextField.removeModifyListener(modifyListener);
+        m_autInstallDirectoryButton.removeSelectionListener(selectionListener);
+        
+        m_autSourceDirectoryButton.removeSelectionListener(selectionListener);
+        m_autSourceDirectoryTextField.removeModifyListener(modifyListener);
     }
     /**
      * 
@@ -876,6 +895,10 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 .get(AutConfigConstants.JAR_FILE)));
             m_execTextField.setText(StringUtils.defaultString(data
                 .get(AutConfigConstants.EXECUTABLE)));
+            m_autInstallDirectoryTextField.setText(StringUtils
+                    .defaultString(data.get(AutConfigConstants.INST_DIR)));
+            m_autSourceDirectoryTextField.setText(StringUtils.defaultString(
+                    data.get(AutConfigConstants.SOURCE_DIR)));
         }
  
     }
@@ -1005,7 +1028,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         
         checkClasspathButtons();
     }
-    
+
     /**
      * handle the browse request locally
      * 
@@ -1352,8 +1375,12 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 if (checkListeners) {
                     installListeners();
                 }
-               
+            } else if (source.equals(m_autInstallDirectoryTextField)) {
+                handleInstallationDirModifyEvent();
+            } else if (source.equals(m_autSourceDirectoryTextField)) {
+                handleSourceDirModifyEvent();
             }
+
             checkAll();         
         }
     }
@@ -1492,11 +1519,52 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             } else if (source.equals(m_monitoringCombo)) {
                 handleMonitoringComboEvent();
                 return;
-
+            } else if (source.equals(m_autInstallDirectoryButton)) {
+                autInstallDirectoryButtonSelected();
+                return;
+            } else if (source.equals(m_autSourceDirectoryButton)) {
+                autSourceDirectoryButtonSelected();
+                return;
             }
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
                     + StringConstants.LEFT_PARENTHESES + source 
                     + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
+        }
+
+        /**
+         * Handles selection of the "Browse" button corresponding to the 
+         * AUT Installation Directory text field.
+         */
+        private void autInstallDirectoryButtonSelected() {
+            if (isRemoteRequest()) {
+                remoteBrowse(true, AutConfigConstants.INST_DIR,
+                        m_autInstallDirectoryTextField,
+                        Messages.AUTConfigComponentSelectInstDir);
+            } else {
+                DirectoryDialog directoryDialog = new DirectoryDialog(
+                        Plugin.getShell(), SWT.APPLICATION_MODAL
+                                | SWT.ON_TOP);
+                handleInstallationDirButtonEvent(directoryDialog);
+
+            }
+        }
+        
+        /**
+         * Handles selection of the "Browse" button corresponding to the 
+         * AUT Source Directory text field.
+         */
+        private void autSourceDirectoryButtonSelected() {
+            if (isRemoteRequest()) {
+                remoteBrowse(true, AutConfigConstants.SOURCE_DIR,
+                        m_autSourceDirectoryTextField,
+                        Messages.AUTConfigComponentSelectSourceDir);
+            } else {
+                DirectoryDialog directoryDialog = new DirectoryDialog(
+                        Plugin.getShell(), SWT.APPLICATION_MODAL
+                                | SWT.ON_TOP);
+                handleSourceDirButtonEvent(directoryDialog);
+
+            }
         }
 
         /**
@@ -1740,5 +1808,114 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     public void dispose() {
         RemoteFileBrowserBP.clearCache(); // get rid of cached directories
         super.dispose();
+    }
+
+    /**
+     * handles the button event, which was thrown by the browse button for
+     * the m_autInstallDirectoryTextField       
+     * @param directoryDialog The DirectoryDialog
+     */
+    private void handleInstallationDirButtonEvent(
+            DirectoryDialog directoryDialog) {
+        String directory = null;
+        directoryDialog.setMessage(Messages.AUTConfigComponentSelectInstDir);
+        File path = new File(m_autInstallDirectoryTextField.getText());
+        String filterPath = Utils.getLastDirPath();
+        if (path.exists()) {
+            try {
+                filterPath = path.getCanonicalPath();
+            } catch (IOException e) {
+                //empty
+            }
+        }
+        directoryDialog.setFilterPath(filterPath);
+        directory = directoryDialog.open();
+        if (directory != null) {
+            m_autInstallDirectoryTextField.setText(directory);
+            Utils.storeLastDirPath(directoryDialog.getFilterPath());            
+            putConfigValue(AutConfigConstants.INST_DIR, 
+                m_autInstallDirectoryTextField.getText());
+        }
+    }
+    /**
+     * handles the button event, which was fired by the browse button from the
+     * m_autSourceDirectoryTextField
+     * @param directoryDialog A DirectoryDialog instance
+     */
+    private void handleSourceDirButtonEvent(DirectoryDialog 
+            directoryDialog) {
+        String directory = null;
+        directoryDialog.setMessage(Messages.AUTConfigComponentSelectSourceDir);
+        File path = new File(m_autSourceDirectoryTextField.getText());
+        String lastPath = Utils.getLastDirPath();
+        if (path.exists()) {
+            try {
+                lastPath = path.getCanonicalPath();
+            } catch (IOException e) {
+                //empty
+            }            
+        }
+        directoryDialog.setFilterPath(lastPath);
+        directory = directoryDialog.open();
+        if (directory != null) {
+            m_autSourceDirectoryTextField.setText(directory);
+            Utils.storeLastDirPath(directoryDialog.getFilterPath());
+            putConfigValue(AutConfigConstants.SOURCE_DIR, 
+                    m_autSourceDirectoryTextField.getText());
+        }
+        
+        
+    }   
+    
+    /**
+     * handles a modify event from the installation directory textfield
+     */
+    private void handleInstallationDirModifyEvent() {
+        putConfigValue(AutConfigConstants.INST_DIR, 
+                m_autInstallDirectoryTextField.getText());          
+    }
+    /**
+     * handles a modify event from the source directory textfield
+     */
+    private void handleSourceDirModifyEvent() {
+        putConfigValue(AutConfigConstants.SOURCE_DIR, 
+                m_autSourceDirectoryTextField.getText());
+        
+    }
+
+    /**
+     * creates the AUT installation directory textfield and browse button
+     * @param parent The parent Composite
+     */
+    protected void createAutInstallationDirectory(Composite parent) {
+        
+        ControlDecorator.decorateInfo(
+                UIComponentHelper.createLabel(parent, "AUTConfigComponent.instDir"), //$NON-NLS-1$, 
+                "AUTConfigComponent.labelInstDirectory", false); //$NON-NLS-1$        
+        m_autInstallDirectoryTextField = 
+            UIComponentHelper.createTextField(parent, 1);
+        
+        m_autInstallDirectoryButton = new Button(
+                UIComponentHelper.createLayoutComposite(parent), SWT.PUSH);
+        m_autInstallDirectoryButton.setText(Messages.AUTConfigComponentBrowse);
+        m_autInstallDirectoryButton.setLayoutData(BUTTON_LAYOUT);
+        
+    }
+    /**
+     * creates the AUT source directory textfield and browse button
+     * @param parent The where the widgets will be added
+     */
+    protected void createAutSourceDirectory(Composite parent) {
+        
+        ControlDecorator.decorateInfo(
+                UIComponentHelper.createLabel(parent, "AUTConfigComponent.srcDir"), //$NON-NLS-1$, 
+                "AUTConfigComponent.labelSourceDirectory", false); //$NON-NLS-1$   
+        m_autSourceDirectoryTextField = 
+            UIComponentHelper.createTextField(parent, 1);
+        m_autSourceDirectoryButton = new Button(
+                UIComponentHelper.createLayoutComposite(parent), SWT.PUSH);  
+        m_autSourceDirectoryButton.setText(Messages.AUTConfigComponentBrowse);
+        m_autSourceDirectoryButton.setLayoutData(BUTTON_LAYOUT);
+        
     }
 } 
