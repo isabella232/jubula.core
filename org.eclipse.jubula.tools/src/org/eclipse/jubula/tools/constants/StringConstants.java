@@ -20,6 +20,11 @@ public interface StringConstants {
      * <code>EMPTY</code>
      */
     public static final String EMPTY = ""; //$NON-NLS-1$
+    
+    /**
+     * <code>BACKSLASH</code>
+     */
+    public static final String BACKSLASH = "\\"; //$NON-NLS-1$
 
     /**
      * <code>TAB</code>
