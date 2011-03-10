@@ -168,7 +168,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
                 FigureCanvas figureCanvas = (FigureCanvas)graphicsComponent;
                 Composite parent = figureCanvas;
                 while (parent != null
-                        && !(parent.getData(Startup.GD_GEF_VIEWER_DATA_KEY) 
+                        && !(parent.getData(Startup.TEST_GEF_VIEWER_DATA_KEY) 
                                 instanceof GraphicalViewer)) {
                     parent = parent.getParent();
                 }
@@ -177,7 +177,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
                     m_composite = parent;
                     m_viewer = 
                         (GraphicalViewer)parent.getData(
-                                Startup.GD_GEF_VIEWER_DATA_KEY);
+                                Startup.TEST_GEF_VIEWER_DATA_KEY);
                 }
                 return null;
             }

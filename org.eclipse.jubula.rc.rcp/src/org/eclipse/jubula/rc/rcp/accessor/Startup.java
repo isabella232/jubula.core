@@ -69,15 +69,14 @@ import org.eclipse.ui.internal.WorkbenchPartReference;
  * @created Oct 5, 2007
  */
 public class Startup implements IStartup {
-
     /** Key for GEF Viewer in component data */
-    public static final String GD_GEF_VIEWER_DATA_KEY = "GD_GEF_VIEWER"; //$NON-NLS-1$
+    public static final String TEST_GEF_VIEWER_DATA_KEY = "TEST_GEF_VIEWER"; //$NON-NLS-1$
 
     /** bundle ID for Eclipse Graphical Editing Framework (GEF) */
     public static final String GEF_BUNDLE_ID = "org.eclipse.gef"; //$NON-NLS-1$
     
     /** Key for RCP partId in component data */
-    private static final String GD_RCP_DATA_KEY = 
+    private static final String TEST_RCP_DATA_KEY = 
         SwtAUTHierarchyConstants.RCP_NAME;
     
     /** ID suffix for toolbars belonging to a part (view/editor) */
@@ -177,7 +176,7 @@ public class Startup implements IStartup {
         private void addNameData(Widget widget) {
             // Assign name
             if (widget != null && !widget.isDisposed()) {
-                if (widget.getData(Startup.GD_RCP_DATA_KEY) != null) {
+                if (widget.getData(Startup.TEST_RCP_DATA_KEY) != null) {
                     // Component already has a name, so we don't need to
                     // assign a new one.
                     return;
@@ -189,7 +188,7 @@ public class Startup implements IStartup {
                     // they represent, if possible.
                     String actionId = ((IContributionItem)data).getId();
                     if (actionId != null && actionId.trim().length() > 0) {
-                        widget.setData(Startup.GD_RCP_DATA_KEY, actionId);
+                        widget.setData(Startup.TEST_RCP_DATA_KEY, actionId);
                         
                         // AutHierarchy will only know about the new name
                         // after a repaint, so we send a paint event for the
@@ -323,8 +322,8 @@ public class Startup implements IStartup {
             }
             if (ret instanceof Button) {
                 Button button = (Button)ret;
-                if (button.getData(GD_RCP_DATA_KEY) == null) {
-                    button.setData(GD_RCP_DATA_KEY, buttonName);
+                if (button.getData(TEST_RCP_DATA_KEY) == null) {
+                    button.setData(TEST_RCP_DATA_KEY, buttonName);
                 }
             }
         }
@@ -357,12 +356,12 @@ public class Startup implements IStartup {
                     if (pageControl != null 
                         && !pageControl.isDisposed()
                         && pageControl.getData(
-                            Startup.GD_RCP_DATA_KEY) == null
+                            Startup.TEST_RCP_DATA_KEY) == null
                         && prefNodeId != null
                         && prefNodeId.trim().length() > 0) {
                        
                         pageControl.setData(
-                            Startup.GD_RCP_DATA_KEY, prefNodeId);
+                            Startup.TEST_RCP_DATA_KEY, prefNodeId);
                        
                         Shell prefShell = 
                             pageControl.getDisplay().getActiveShell();
@@ -453,7 +452,7 @@ public class Startup implements IStartup {
 
                 if (partContent != null 
                     && !partContent.isDisposed()
-                    && partContent.getData(GD_RCP_DATA_KEY) == null) {
+                    && partContent.getData(TEST_RCP_DATA_KEY) == null) {
                     
                     // Name pane control based on part
                     String partId = workbenchPartRef.getId();
@@ -471,14 +470,14 @@ public class Startup implements IStartup {
                         // Don't assign a name if the id is unusable
                         return;
                     }
-                    partContent.setData(GD_RCP_DATA_KEY, partId);
+                    partContent.setData(TEST_RCP_DATA_KEY, partId);
 
                     // Assign a corresponding id to the part's toolbar, if
                     // possible/usable.
                     Control partToolbar = 
                         workbenchPartRef.getPane().getToolBar();
                     if (partToolbar != null) {
-                        partToolbar.setData(GD_RCP_DATA_KEY, 
+                        partToolbar.setData(TEST_RCP_DATA_KEY, 
                                 partId + TOOLBAR_ID_SUFFIX);
                     }
                     

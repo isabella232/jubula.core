@@ -220,7 +220,7 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
                 (FigureCanvas)selectedWidget;
             Composite parent = figureCanvas;
             while (parent != null
-                    && !(parent.getData(Startup.GD_GEF_VIEWER_DATA_KEY) 
+                    && !(parent.getData(Startup.TEST_GEF_VIEWER_DATA_KEY) 
                             instanceof GraphicalViewer)) {
                 parent = parent.getParent();
             }
@@ -231,7 +231,7 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
             }
 
             Object gefData = 
-                parent.getData(Startup.GD_GEF_VIEWER_DATA_KEY);
+                parent.getData(Startup.TEST_GEF_VIEWER_DATA_KEY);
             
             if (gefData instanceof EditPartViewer) {
                 EditPartViewer viewer = (EditPartViewer)gefData;

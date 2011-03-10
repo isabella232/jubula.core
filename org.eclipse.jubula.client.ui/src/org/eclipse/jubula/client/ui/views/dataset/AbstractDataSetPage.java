@@ -62,6 +62,7 @@ import org.eclipse.jubula.client.ui.widgets.CheckedParamTextContentAssisted;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.constants.CharacterConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ControlEditor;
@@ -105,11 +106,6 @@ public abstract class AbstractDataSetPage extends Page
     implements ISelectionListener, IAdaptable, IParamChangedListener,
                IProjectLoadedListener, ILanguageChangedListener, 
                IDataChangedListener {
-    /** 
-     * the key for widget.setData(key, value) to set the widget name 
-     * (design for testability) 
-     */
-    protected static final String WIDGET_NAME_KEY = "GD_COMP_NAME"; //$NON-NLS-1$
     /** Constant for the width of the DataSet column in the table */
     protected static final int DATASET_NUMBER_COLUMNWIDTH = 20;
     /** Constant for the default column witdh */ 
@@ -464,7 +460,8 @@ public abstract class AbstractDataSetPage extends Page
      */
     public void createControl(Composite parent) {
         Composite topLevelComposite = new Composite(parent, SWT.NONE);
-        topLevelComposite.setData(WIDGET_NAME_KEY, "DataSetViewPage"); //$NON-NLS-1$
+        topLevelComposite.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+                "DataSetViewPage"); //$NON-NLS-1$
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         layout.verticalSpacing = 2;
@@ -503,15 +500,15 @@ public abstract class AbstractDataSetPage extends Page
     private void createComboLabels(Composite parent) {
         Label paramLabel = new Label(parent, SWT.NONE);
         paramLabel.setText(Messages.GDDataSetViewParameter);
-        paramLabel.setData(WIDGET_NAME_KEY, "DataSetView.ParamLabel"); //$NON-NLS-1$
+        paramLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.ParamLabel"); //$NON-NLS-1$
         
         Label dataSetLabel = new Label(parent, SWT.NONE);
         dataSetLabel.setText(Messages.GDDataSetViewDataSet);
-        dataSetLabel.setData(WIDGET_NAME_KEY, "DataSetView.DataSetLabel"); //$NON-NLS-1$
+        dataSetLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.DataSetLabel"); //$NON-NLS-1$
         
         Label languageLabel = new Label(parent, SWT.NONE);
         languageLabel.setText(Messages.GDDataSetViewLanguage);
-        languageLabel.setData(WIDGET_NAME_KEY, "DataSetView.DataSetLabel"); //$NON-NLS-1$
+        languageLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.DataSetLabel"); //$NON-NLS-1$
     }
     
     /**
@@ -521,7 +518,7 @@ public abstract class AbstractDataSetPage extends Page
     private void createButtons(Composite parent) {
         // Create and configure the "Add" button
         setAddButton(new Button(parent, SWT.PUSH | SWT.CENTER));
-        getAddButton().setData(WIDGET_NAME_KEY, "DataSetView.AddButton"); //$NON-NLS-1$
+        getAddButton().setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.AddButton"); //$NON-NLS-1$
         getAddButton().setText(Messages.JubulaDataSetViewAppend);
         GridData gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80;
@@ -531,7 +528,7 @@ public abstract class AbstractDataSetPage extends Page
         
         // Create and configure the "Insert" button
         setInsertButton(new Button(parent, SWT.PUSH | SWT.CENTER));
-        getInsertButton().setData(WIDGET_NAME_KEY, "DataSetView.InsertButton"); //$NON-NLS-1$
+        getInsertButton().setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.InsertButton"); //$NON-NLS-1$
         getInsertButton().setText(Messages.GDDataSetViewInsert);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80;
@@ -541,7 +538,7 @@ public abstract class AbstractDataSetPage extends Page
         
         //  Create and configure the "Delete" button
         setDeleteButton(new Button(parent, SWT.PUSH | SWT.CENTER));
-        getDeleteButton().setData(WIDGET_NAME_KEY, "DataSetView.DeleteButton"); //$NON-NLS-1$
+        getDeleteButton().setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.DeleteButton"); //$NON-NLS-1$
         getDeleteButton().setText(Messages.JubulaDataSetViewDelete);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80; 
@@ -560,7 +557,7 @@ public abstract class AbstractDataSetPage extends Page
         setTableViewer(new TableViewer(parent, 
                 SWT.SINGLE | SWT.FULL_SELECTION));
         Table table = getTable();
-        table.setData(WIDGET_NAME_KEY, "DataSetView.DataTable"); //$NON-NLS-1$
+        table.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.DataTable"); //$NON-NLS-1$
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
         GridData gridData = new GridData(GridData.FILL_BOTH);
@@ -905,7 +902,7 @@ public abstract class AbstractDataSetPage extends Page
         List<String> a2 = new ArrayList<String>(0);
         m_paramCombo = new DirectCombo<IParamDescriptionPO>(parent, SWT.NONE, 
             a1, a2, true, false);
-        m_paramCombo.setData(WIDGET_NAME_KEY, "DataSetView.ParamCombo"); //$NON-NLS-1$
+        m_paramCombo.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.ParamCombo"); //$NON-NLS-1$
         m_paramCombo.addSelectionListener(new ParameterComboListener());
         GridData paramComboLayoutData = new GridData ();
         paramComboLayoutData.horizontalAlignment = GridData.FILL;
@@ -917,7 +914,7 @@ public abstract class AbstractDataSetPage extends Page
         List<String> b2 = new ArrayList<String>(0);
         setDataSetCombo(new DirectCombo<Integer>(parent, SWT.NONE, b1, 
             b2, true, false));
-        getDataSetCombo().setData(WIDGET_NAME_KEY, "DataSetView.DataSetCombo"); //$NON-NLS-1$
+        getDataSetCombo().setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.DataSetCombo"); //$NON-NLS-1$
         getDataSetCombo().addSelectionListener(new DataSetComboListener());
         getDataSetCombo().setSize(100, getDataSetCombo().getItemHeight());
         GridData dataSetComboLayoutData = new GridData ();
@@ -930,7 +927,7 @@ public abstract class AbstractDataSetPage extends Page
         List<String> c2 = new ArrayList<String>(0);
         setLanguageCombo(new DirectCombo<Locale>(parent, SWT.NONE, c1, 
             c2, true, false));
-        getLanguageCombo().setData(WIDGET_NAME_KEY, "DataSetView.LanguageCombo"); //$NON-NLS-1$
+        getLanguageCombo().setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.LanguageCombo"); //$NON-NLS-1$
         getLanguageCombo().addSelectionListener(new LanguageComboListener());
         getLanguageCombo().setSize(100, getLanguageCombo().getItemHeight());
         GridData languageComboLayoutData = new GridData ();

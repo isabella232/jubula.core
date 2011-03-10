@@ -48,7 +48,7 @@ public class FigureCanvasUtil {
     public static GraphicalViewer getViewer(FigureCanvas figureCanvas) {
         Composite parent = figureCanvas;
         while (parent != null
-                && !(parent.getData(Startup.GD_GEF_VIEWER_DATA_KEY) 
+                && !(parent.getData(Startup.TEST_GEF_VIEWER_DATA_KEY) 
                         instanceof GraphicalViewer)) {
             parent = parent.getParent();
         }
@@ -56,7 +56,7 @@ public class FigureCanvasUtil {
         if (parent != null) {
 
             return (GraphicalViewer)parent
-                    .getData(Startup.GD_GEF_VIEWER_DATA_KEY);
+                    .getData(Startup.TEST_GEF_VIEWER_DATA_KEY);
         }
 
         return null;

@@ -132,7 +132,8 @@ public class GefPartListener implements IPartListener2 {
                     ((WorkbenchPartReference)partRef).getPane().getControl();
 
                 if (partContent != null && !partContent.isDisposed()) {
-                    partContent.setData(Startup.GD_GEF_VIEWER_DATA_KEY, viewer);
+                    partContent.setData(Startup.TEST_GEF_VIEWER_DATA_KEY,
+                            viewer);
                 }
             }
         }

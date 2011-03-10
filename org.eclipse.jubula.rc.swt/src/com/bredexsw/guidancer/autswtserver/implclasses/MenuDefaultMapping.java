@@ -26,8 +26,6 @@ import org.eclipse.swt.widgets.Shell;
  * @created 02.04.2007
  */
 public class MenuDefaultMapping extends Menu {
-
-    
     /**
      * Create a new Menu
      */

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.examples.aut.adder.swt.gui;
 
-
 import org.eclipse.jubula.examples.aut.adder.swt.model.PlusOperator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -23,8 +22,6 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-
-
 /**
  * The frame of the Application Under Test.
  * 
@@ -32,9 +29,8 @@ import org.eclipse.swt.widgets.Text;
  * @created 23.02.2006
  */
 public class AutShell extends Shell {
-
     /** constant for naming the swt components */
-    private static final String NAME = "GD_COMP_NAME"; //$NON-NLS-1$
+    private static final String WIDGET_NAME = "TEST_COMP_NAME"; //$NON-NLS-1$
     /** sum field */
     private Text m_sumField;
     /** value2 field */
@@ -104,7 +100,7 @@ public class AutShell extends Shell {
         setLayout (shellLayout);
         
         Composite composite = new Composite(this, SWT.NONE);
-        composite.setData(NAME, "SWTAdder.Composite"); //$NON-NLS-1$
+        composite.setData(WIDGET_NAME, "SWTAdder.Composite"); //$NON-NLS-1$
         GridLayout compositeLayout = new GridLayout (2, false);
         composite.setLayout (compositeLayout);
         GridData data = new GridData ();
@@ -124,7 +120,7 @@ public class AutShell extends Shell {
         m_value1Field.setLayoutData (value1FieldData);
         
         m_operator = new Label (composite, SWT.NONE);
-        m_operator.setData(NAME, "SWTAdder.Operator"); //$NON-NLS-1$
+        m_operator.setData(WIDGET_NAME, "SWTAdder.Operator"); //$NON-NLS-1$
         PlusOperator plus = new PlusOperator();
         m_operator.setText (plus.toString()); 
         m_operator.setData("op", plus); //$NON-NLS-1$
@@ -141,13 +137,13 @@ public class AutShell extends Shell {
         
         m_equalsButton = new Button (composite, SWT.PUSH);
         m_equalsButton.setText ("="); //$NON-NLS-1$
-        m_equalsButton.setData(NAME, "SWTAdder.EqualsButton"); //$NON-NLS-1$
+        m_equalsButton.setData(WIDGET_NAME, "SWTAdder.EqualsButton"); //$NON-NLS-1$
         GridData equalsButtonData = new GridData ();
         equalsButtonData.horizontalAlignment = GridData.END;
         m_equalsButton.setLayoutData (equalsButtonData);
         
         m_sumField = new Text (composite, SWT.BORDER | SWT.RIGHT);
-        m_sumField.setData(NAME, "SWTAdder.SumField"); //$NON-NLS-1$
+        m_sumField.setData(WIDGET_NAME, "SWTAdder.SumField"); //$NON-NLS-1$
         m_sumField.setEditable(false);
         GridData sumFieldData = new GridData ();
         sumFieldData.horizontalAlignment = GridData.FILL;

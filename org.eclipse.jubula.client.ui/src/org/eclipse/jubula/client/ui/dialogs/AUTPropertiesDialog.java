@@ -51,6 +51,7 @@ import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -555,7 +556,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         
         m_duplicateButton = new Button(parent, SWT.PUSH);
         m_duplicateButton.setText(Messages.AUTPropertyPageDuplicate);
-        m_duplicateButton.setData("GD_COMP_NAME", "AUTPropertyPage.Duplicate");  //$NON-NLS-1$//$NON-NLS-2$
+        m_duplicateButton.setData(SwtAUTHierarchyConstants.WIDGET_NAME, 
+                "AUTPropertyPage.Duplicate");  //$NON-NLS-1$
         m_duplicateButton.setLayoutData(buttonGrid());
         m_duplicateButton.setEnabled(false);
 

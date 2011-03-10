@@ -15,15 +15,20 @@ package org.eclipse.jubula.tools.constants;
  * @created Apr 17, 2008
  */
 public final class SwtAUTHierarchyConstants {
+    /**
+     * the key for widget.getData(key); to get the hardcoded widget name (-->
+     * convention)
+     */
+    public static final String WIDGET_NAME = "TEST_COMP_NAME"; //$NON-NLS-1$
 
-    /** the key for widget.getData(key); to get the hardcoded widget name (--> GUIdancer convention) */
-    public static final String WIDGET_NAME = "GD_COMP_NAME"; //$NON-NLS-1$
-    /** Used for assigning components generated names based on their ID in the corresponding plugin.xml */
-    public static final String RCP_NAME = "GD_RCP_COMP_NAME"; //$NON-NLS-1$
+    /**
+     * Used for assigning components generated names based on their ID in the
+     * corresponding plugin.xml
+     */
+    public static final String RCP_NAME = "TEST_RCP_COMP_NAME"; //$NON-NLS-1$
 
     /** private constructor */
     private SwtAUTHierarchyConstants() {
         // constant class
     }
-    
 }
