@@ -24,7 +24,7 @@ import org.eclipse.jubula.tools.exception.Assert;
  */
 public class TDVariableStore {
     /** Prefix for a user defined variable of the system environment */
-    public static final String USERDEF_ENV_VAR_PREFIX = "GDUDV_"; //$NON-NLS-1$
+    public static final String USERDEF_ENV_VAR_PREFIX = "TEST_UDV_"; //$NON-NLS-1$
         
     /** Prefix for a pre-defined test variable */
     public static final String PREDEF_VAR_PREFIX = "GD_"; //$NON-NLS-1$
