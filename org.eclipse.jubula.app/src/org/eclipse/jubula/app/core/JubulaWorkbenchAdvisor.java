@@ -140,6 +140,12 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
                 IDEInternalWorkbenchImages.IMG_DLCL_QUICK_FIX_DISABLED,
                 dlclPath + "smartmode_co.gif",
                 true);
+        
+        declareWorkbenchImage(configurer, ideBundle,
+                IDEInternalWorkbenchImages.IMG_DLGBAN_QUICKFIX_DLG,
+                wizbanPath + "quick_fix.png", 
+                true);
+        
         declareWorkbenchImage(configurer, ideBundle,
                 IDEInternalWorkbenchImages.IMG_DLGBAN_SAVEAS_DLG,
                 wizbanPath + "saveas_wiz.gif", true); //$NON-NLS-1$
