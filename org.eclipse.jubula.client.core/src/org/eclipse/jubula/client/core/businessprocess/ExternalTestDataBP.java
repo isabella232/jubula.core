@@ -264,6 +264,8 @@ public class ExternalTestDataBP {
         IParameterInterfacePO paramPo, Locale locale,
         boolean updateCellValues) throws JBException {
         
+        ITDManager tdMan = PoMaker.createTDManagerPO(paramPo);
+        
         // iterate over rows
         List<String> paramNamesExcel = 
             new ArrayList<String>();
@@ -284,7 +286,7 @@ public class ExternalTestDataBP {
                         int dataSetNo = row - 1;
                         ITestDataPO testData;
                         if (updateCellValues) {
-                            testData = paramPo.getDataManager().getCell(
+                            testData = tdMan.getCell(
                                     dataSetNo, desc);
                             testData.setValue(locale, cellString,
                                     GeneralStorage.getInstance().getProject());
@@ -294,7 +296,7 @@ public class ExternalTestDataBP {
                             testData.setValue(locale, cellString, 
                                     GeneralStorage.getInstance().getProject());
                         }
-                        paramPo.getDataManager().updateCell(testData,
+                        tdMan.updateCell(testData,
                                 dataSetNo, desc.getUniqueId());
                     }
                 }
@@ -316,7 +318,7 @@ public class ExternalTestDataBP {
                 Messages.ErrorMessageDATASOURCE_MISSING_VALUES,
                 MessageIDs.E_DATASOURCE_MISSING_VALUES);
         }
-        return paramPo.getDataManager();
+        return tdMan;
     }
 
     /**
