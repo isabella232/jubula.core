@@ -25,14 +25,14 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  */
 public class RobotTiming extends TimingConstantsServer {
     /**
-     * <code>EXTERNAL_PROPERTY_NAME_POST_MOUSE_DOWN_DELAY</code>
+     * <code>EXTERNAL_PROPERTY_NAME_PRE_MOUSE_UP_DELAY</code>
      */
-    private static final String EXTERNAL_PROPERTY_NAME_POST_MOUSE_DOWN_DELAY = "GDPRESSRELEASEDELAY"; //$NON-NLS-1$
+    private static final String EXTERNAL_PROPERTY_NAME_PRE_MOUSE_UP_DELAY = "TEST_DELAY_PRE_MOUSE_UP"; //$NON-NLS-1$
 
     /**
      * <code>EXTERNAL_PROPERTY_NAME_POST_MOUSE_UP_DELAY</code>
      */
-    private static final String EXTERNAL_PROPERTY_NAME_POST_MOUSE_UP_DELAY = "GD_DELAY_POST_MOUSE_UP"; //$NON-NLS-1$
+    private static final String EXTERNAL_PROPERTY_NAME_POST_MOUSE_UP_DELAY = "TEST_DELAY_POST_MOUSE_UP"; //$NON-NLS-1$
 
     /**
      * <code>NO_EXTERNAL_WAIT</code>
@@ -119,7 +119,7 @@ public class RobotTiming extends TimingConstantsServer {
         }
 
         int externalWait = getExternalWait(
-                EXTERNAL_PROPERTY_NAME_POST_MOUSE_DOWN_DELAY);
+                EXTERNAL_PROPERTY_NAME_PRE_MOUSE_UP_DELAY);
         if (externalWait != NO_EXTERNAL_WAIT) {
             postMouseDown = externalWait;
             return postMouseDown;
