@@ -731,9 +731,9 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
     private synchronized void name(SwtHierarchyContainer hierarchyContainer) {
         if (hierarchyContainer != null) {
             Widget component = 
-                hierarchyContainer.getComponentID().getRealComponent(); 
-            Object compName = 
-                component.getData(SwtAUTHierarchyConstants.WIDGET_NAME);
+                hierarchyContainer.getComponentID().getRealComponent();
+            
+            String compName = FindSWTComponentBP.getComponentName(component);
             SwtHierarchyContainer hierarchyParent = null;
             Widget parent = SwtUtils.getWidgetParent(component);
             if (parent != null) {
@@ -802,8 +802,8 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
                 compIDs[index].getComponentID().getRealComponent();
             
             if (childWidget != null && !childWidget.isDisposed()) {
-                Object childWidgetName = 
-                    childWidget.getData(SwtAUTHierarchyConstants.WIDGET_NAME);
+                String childWidgetName = FindSWTComponentBP
+                        .getComponentName(childWidget);
                 
                 if ((childWidget != widget) && name.equals(childWidgetName)) {
                     return false;
