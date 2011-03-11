@@ -70,8 +70,7 @@ public class FindSWTComponentBP extends FindComponentBP {
      * {@inheritDoc}
      */
     protected String getCompName(Object currentComponent) {
-        return (String)((Widget)currentComponent).getData(
-                SwtAUTHierarchyConstants.WIDGET_NAME);
+        return getComponentName((Widget)currentComponent);
     }
 
     /**
@@ -86,5 +85,24 @@ public class FindSWTComponentBP extends FindComponentBP {
                 && ((Control)currComp).isVisible();
         }
         return !((Widget)currComp).isDisposed();
+    }
+    
+    /**
+     * @param w the widget to get the component name for
+     * @return the components name (if set) or null if not found
+     */
+    public static String getComponentName(Widget w) {
+        String compName = null;
+        Object o = w.getData(SwtAUTHierarchyConstants.WIDGET_NAME);
+        if (o != null) {
+            compName = o.toString();
+        } else {
+            o = w.getData(SwtAUTHierarchyConstants.WIDGET_NAME_FALLBACK);
+            if (o != null) {
+                compName = o.toString();
+            }
+        }
+
+        return compName;
     }
 }

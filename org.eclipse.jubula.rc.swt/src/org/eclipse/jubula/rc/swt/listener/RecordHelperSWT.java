@@ -17,9 +17,9 @@ import java.util.Set;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.swt.components.FindSWTComponentBP;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.MappingConstants;
 import org.eclipse.jubula.tools.utils.NameValidator;
@@ -350,7 +350,8 @@ public class RecordHelperSWT {
     protected String generateLogicalName(Widget w, IComponentIdentifier id) {
         String logName = null;
         String logicalName = null;
-        if (w.getData(SwtAUTHierarchyConstants.WIDGET_NAME) == null) {
+        String compName = FindSWTComponentBP.getComponentName(w);
+        if (compName == null) {
             if (!(w instanceof TabFolder) && !(w instanceof CTabFolder)) {
                 logName = getTextOfComponent(w);
             }            
@@ -358,8 +359,7 @@ public class RecordHelperSWT {
                 logName = minimizeCapName(id.getComponentName());
             }
         } else {
-            logName = w.getData(
-                    SwtAUTHierarchyConstants.WIDGET_NAME).toString();
+            logName = compName;
         }
         
         logicalName = logName + getAbbreviations(w);
