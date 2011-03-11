@@ -32,7 +32,7 @@ import javax.persistence.Transient;
 class CheckConfContPO extends WrapperPO implements ICheckConfContPO {
     
     /** is teststyle enabled? */
-    private boolean m_enabled = false;
+    private boolean m_enabled = true;
 
     /** map of the checkconf and the checkid */
     private Map<String, CheckConfPO> m_confMap = 

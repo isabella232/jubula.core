@@ -22,6 +22,12 @@ public final class SwtAUTHierarchyConstants {
     public static final String WIDGET_NAME = "TEST_COMP_NAME"; //$NON-NLS-1$
 
     /**
+     * the key for widget.getData(key); to get the hardcoded widget name (-->
+     * convention) as a fallback (old key)
+     */
+    public static final String WIDGET_NAME_FALLBACK = "GD_COMP_NAME"; //$NON-NLS-1$
+    
+    /**
      * Used for assigning components generated names based on their ID in the
      * corresponding plugin.xml
      */
