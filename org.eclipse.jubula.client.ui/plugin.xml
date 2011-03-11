@@ -1106,97 +1106,97 @@
 	<extension point="org.eclipse.ui.bindings">
 		<key
 			commandId="org.eclipse.jubula.client.ui.commands.CreateNewCategoryCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+Y" />
 		<key
 			commandId="org.eclipse.jubula.client.ui.commands.StartTestSuiteCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+J" />
 		<key
 			commandId="org.eclipse.jubula.client.ui.commands.PauseTestSuiteCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+K" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.StopSuiteCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+L" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.ChooseAutCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+R" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.StopAUTCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+T" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.ChooseServerCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+C" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.ImportFileCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+I" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+X" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.PropertiesCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+P" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+O" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.DeleteProjectCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+D" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.EditParameters"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+A" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F6" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.ShowWhereUsed"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F7" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.newTestCaseReference"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="ENTER">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.newCap"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M2+ENTER">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.RevertChanges"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F3">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.ToggleActiveStatus"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+7">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.togglePauseOnErrorCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F9">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.continueWithoutEHCommand"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F8">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M3+ARROW_DOWN">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.GoToPreviousError"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M3+ARROW_UP">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.AddNewTestDataManager"
-			contextId="org.eclipse.ui.contexts.dialogAndWindow" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="INSERT">
 		</key>
   <key
         commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
-        contextId="org.eclipse.ui.contexts.dialogAndWindow"
+        contextId="org.eclipse.ui.contexts.window"
         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
         sequence="M2+F6">
   </key>
   <key
         commandId="org.eclipse.jubula.client.ui.commands.AddEventHandler"
-        contextId="org.eclipse.ui.contexts.dialogAndWindow"
+        contextId="org.eclipse.ui.contexts.window"
         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
         sequence="M1+ENTER">
   </key>
@@ -1240,7 +1240,7 @@
         commandId="org.eclipse.jubula.client.ui.commands.ShowFromClipboard"
         contextId="org.eclipse.ui.contexts.window"
         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        sequence="F9">
+        sequence="M2+F9">
   </key>
 	</extension>
 	<extension id="gdMarkerResolution" name="%JubulaMarkerResolution"
