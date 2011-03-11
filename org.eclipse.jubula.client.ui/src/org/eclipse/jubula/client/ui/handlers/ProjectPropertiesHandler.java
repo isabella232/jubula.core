@@ -120,7 +120,7 @@ public class ProjectPropertiesHandler extends AbstractHandler {
             Shell s = dialog.getShell();
             s.setText(Messages.ProjectPropertyPageShellTitle 
                     + generalPage.getProject().getName());
-            s.setMaximized(true);
+            DialogUtils.adjustShellSizeRelativeToClientSize(s, .8f, .9f);
             dialog.open();
             es.close();
         } catch (PMObjectDeletedException e) { 
@@ -133,5 +133,4 @@ public class ProjectPropertiesHandler extends AbstractHandler {
 
         return null;
     }
-     
 }

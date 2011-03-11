@@ -11,8 +11,11 @@
 package org.eclipse.jubula.client.ui.utils;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 
@@ -83,4 +86,55 @@ public final class DialogUtils {
         return shortClassName;
     }
     
+    /**
+     * @param shell
+     *            the shell which size to adjust
+     * @param relWidth
+     *            the relative width factor; must be 0 <= relWidth <= 1
+     * @param relHeight
+     *            the relative height factor; must be 0 <= relWidth <= 1
+     */
+    public static void adjustShellSizeRelativeToClientSize(Shell shell,
+        float relWidth, float relHeight) {
+        adjustShellSizeRelativeToRectangleSize(shell, relWidth, relHeight,
+                Plugin.getActiveWorkbenchWindowShell().getBounds());
+    }
+    
+    /**
+     * @param shell
+     *            the shell which size to adjust
+     * @param relWidth
+     *            the relative width factor; must be 0 <= relWidth <= 1
+     * @param relHeight
+     *            the relative height factor; must be 0 <= relWidth <= 1
+     */
+    public static void adjustShellSizeRelativeToDisplaySize(Shell shell,
+            float relWidth, float relHeight) {
+        Display display = Display.getCurrent();
+        Rectangle r = display.getClientArea();
+        adjustShellSizeRelativeToRectangleSize(shell, relWidth, relHeight, r);
+    }
+    
+    /**
+     * @param shell
+     *            the shell which size to adjust
+     * @param relWidth
+     *            the relative width factor; must be 0 <= relWidth <= 1
+     * @param relHeight
+     *            the relative height factor; must be 0 <= relWidth <= 1
+     * @param relativeTo
+     *            the rectangle the size should be computed relative to
+     */
+    private static void adjustShellSizeRelativeToRectangleSize(Shell shell,
+            float relWidth, float relHeight, Rectangle relativeTo) {
+        int dWidth = relativeTo.width;
+        int dHeight = relativeTo.height;
+
+        int newShellWidth = Math.round(relWidth * dWidth);
+        int newShellHeight = Math.round(relHeight * dHeight);
+
+        shell.setSize(newShellWidth, newShellHeight);
+        shell.setLocation(((dWidth - shell.getSize().x) / 2) + relativeTo.x,
+                ((dHeight - shell.getSize().y) / 2) + relativeTo.y);
+    }
 }
