@@ -53,7 +53,7 @@ public abstract class AbstractShowSpecificationHandler extends AbstractHandler {
                     .getActivePage().getPerspective().getId().equals(
                             Constants.SPEC_PERSPECTIVE)) {
                 Utils.createMessageDialog(// show error must be in SpecPers
-                        MessageIDs.E_NO_PERSPECTIVE_CHANGE);
+                        MessageIDs.I_NO_PERSPECTIVE_CHANGE);
                 return;
             }
             view = Plugin.showView(viewId, null, IWorkbenchPage.VIEW_ACTIVATE);

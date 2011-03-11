@@ -167,8 +167,6 @@ public class MessageIDs {
     public static final Integer E_ITEM_NOT_FOUND = new Integer(3008);
     /** if an perspective could not opened */ 
     public static final Integer E_NO_PERSPECTIVE = new Integer(3009);
-    /** if Automatic perspective changeover has been disabled */ 
-    public static final Integer E_NO_PERSPECTIVE_CHANGE = new Integer(3010);
     /** if there is a problem while refreshing problemView */ 
     public static final Integer E_PROBLEM_VIEW_REFRESH = new Integer(3011);
     /** if an error occured while gui-synchronization */
@@ -576,6 +574,8 @@ public class MessageIDs {
     public static final Integer I_DB_BACKGROUND_JOB = new Integer(127);
     /** No log file found */
     public static final Integer I_NO_CLIENT_LOG_FOUND = new Integer(128);
+    /** if Automatic perspective changeover has been disabled */ 
+    public static final Integer I_NO_PERSPECTIVE_CHANGE = new Integer(129);
 
     // ---------------------------------------------------------------------
     /** key = message id, message object */
@@ -694,7 +694,7 @@ public class MessageIDs {
         messageMap.put(E_UNKNOWN_OBJECT, e, "ErrorMessage.UNKNOWN_OBJECT", null);  //$NON-NLS-1$
         messageMap.put(E_ITEM_NOT_FOUND, e, "ErrorMessage.ITEM_NOT_FOUND", null); //$NON-NLS-1$
         messageMap.put(E_NO_PERSPECTIVE, e, "ErrorMessage.NO_PERSPECTIVE", new String[]{"ErrorDetail.NO_PERSPECTIVE"}); //$NON-NLS-1$ //$NON-NLS-2$
-        messageMap.put(E_NO_PERSPECTIVE_CHANGE, e, "ErrorMessage.NO_PERSPECTIVE_CHANGE", null); //$NON-NLS-1$
+        messageMap.put(I_NO_PERSPECTIVE_CHANGE, e, "ErrorMessage.NO_PERSPECTIVE_CHANGE", null); //$NON-NLS-1$
         messageMap.put(E_PROBLEM_VIEW_REFRESH, e, "ErrorMessage.PROBLEM_VIEW_REFRESH", null); //$NON-NLS-1$
         messageMap.put(E_SYNCHRONIZATION, e, "ErrorMessage.SYNCHRONIZATION", null); //$NON-NLS-1$        
         messageMap.put(E_UNSUPPORTED_OS, e, "ErrorMessage.UNSUPPORTED_OS", null); //$NON-NLS-1$        
@@ -946,6 +946,7 @@ public class MessageIDs {
         messageMap.put(I_NON_EDITABLE_NODE, i, "InfoMessage.I_NON_EDITABLE_NODE", null); //$NON-NLS-1$
         messageMap.put(I_DB_BACKGROUND_JOB, i, "InfoMessage.DB_BACKGROUND_JOB", null); //$NON-NLS-1$
         messageMap.put(I_NO_CLIENT_LOG_FOUND, i, "InfoMessage.NO_CLIENT_LOG_FOUND", null); //$NON-NLS-1$
+        messageMap.put(I_NO_PERSPECTIVE_CHANGE, i, "InfoMessage.NO_PERSPECTIVE_CHANGE", null); //$NON-NLS-1$
     }
     
     /**
