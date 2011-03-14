@@ -50,11 +50,11 @@ Read the following sections for more information on:
 
 You will need to set environment variables which have the form:\\
 
-\bxshell{GDUDV\_<variablename>}\\
+\bxshell{TEST\_UDV\_<variablename>}\\
 
 %\bxname{GDUDV} stands for \bxcaption{\app{} user-defined variable}. 
 
-To use the variable in your tests, enter the variable name (everything after the underscore) preceded by a dollar sign. Do not enter the \bxcaption{GDUDV\_} part.
+To use the variable in your tests, enter the variable name (everything after the underscore) preceded by a dollar sign. Do not enter the \bxcaption{TEST\_UDV\_} part.
 
 \bxwarn{After entering or changing a system variable, you will need to restart \app{}.}
 
@@ -71,15 +71,15 @@ Your system administrator will be able to help you with operating-system specifi
 \item \app{} contains pre-defined test execution variables which you can use in your tests. 
 \item The following variables are automatically initialized when executing a \gdsuite{}:
  \begin{description}
- \item [GD\_TESTSUITE:]{The \gdsuite{} name.}
- \item [GD\_USERNAME:]{The account name you are logged into your computer under.}
- \item [GD\_DBUSERNAME:]{The \gddb{} user.}
- \item [GD\_AUTSTARTER:]{The hostname for the \gdagent{} the test is running on.}
- \item [GD\_PORTNUMBER:]{The port number for the \gdagent{} the test is running on.}
- \item [GD\_AUT:]{The \gdaut{} name.}
- \item [GD\_AUTCONFIG:]{The \gdaut{} configuration name.}
- \item [GD\_CLIENTVERSION:]{The version of the \app{} client you are using.}
- \item [GD\_LANGUAGE:]{The language the AUT and the test are running in, e.g en\_US. }
+ \item [TEST\_TESTSUITE:]{The \gdsuite{} name.}
+ \item [TEST\_USERNAME:]{The account name you are logged into your computer under.}
+ \item [TEST\_DBUSERNAME:]{The \gddb{} user.}
+ \item [TEST\_AUTAGENT:]{The hostname for the \gdagent{} the test is running on.}
+ \item [TEST\_PORTNUMBER:]{The port number for the \gdagent{} the test is running on.}
+ \item [TEST\_AUT:]{The \gdaut{} name.}
+ \item [TEST\_AUTCONFIG:]{The \gdaut{} configuration name.}
+ \item [TEST\_CLIENTVERSION:]{The version of the \app{} client you are using.}
+ \item [TEST\_LANGUAGE:]{The language the AUT and the test are running in, e.g en\_US. }
  \end{description}
 \item To use the value of one of these variables in your test, enter: \\
 \verb+${VARIABLE_NAME}+\\
