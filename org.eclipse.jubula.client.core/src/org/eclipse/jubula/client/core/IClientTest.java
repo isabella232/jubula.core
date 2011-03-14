@@ -26,7 +26,6 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.exception.CommunicationException;
@@ -390,16 +389,6 @@ public interface IClientTest {
      * Writes test result to database
      */
     public void writeTestresultToDB();
-    
-    /**
-     * @param summary of testrun
-     */
-    public void setTestresultSummary(ITestResultSummaryPO summary);
-
-    /**
-     * @return Returns the summary of testrun
-     */
-    public ITestResultSummaryPO getTestresultSummary();
     
     /** @return the last connectedAut */
     public String getLastConnectedAutId();

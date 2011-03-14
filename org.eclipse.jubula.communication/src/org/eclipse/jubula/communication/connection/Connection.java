@@ -16,6 +16,7 @@ import java.io.InterruptedIOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.HashSet;
@@ -277,6 +278,14 @@ public class Connection {
             IExceptionHandler exceptionHandler) {
         
         m_exceptionHandler = exceptionHandler;
+    }
+    
+    /**
+     * @return the remote IP address for this connection, or 
+     *         <code>null</code> if not connected.
+     */
+    public InetAddress getAddress() {
+        return m_socket.getInetAddress();
     }
     
     /**

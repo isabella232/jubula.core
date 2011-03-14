@@ -13,8 +13,6 @@ package org.eclipse.jubula.client.core.businessprocess;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +54,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
@@ -306,10 +305,13 @@ public class TestExecution {
      *            The ID of the Running AUT on which the test will take place.
      * @param externalVars
      *            a map of externally set variables; may be <code>null</code>
+     * @param summary
+     *            The Test Result Summary for the executed test. 
+     *            Must not be <code>null</code>.
      */
     public void executeTestSuite(ITestSuitePO testSuite, Locale locale, 
         AutIdentifier autId, boolean autoScreenshot,
-        Map<String, String> externalVars) {
+        Map<String, String> externalVars, ITestResultSummary summary) {
         
         final IProgressMonitor monitor = new NullProgressMonitor();
         m_stopped = false;
@@ -356,6 +358,13 @@ public class TestExecution {
                 return;
             }
             if (AUTConnection.getInstance().connectToAut(autId, monitor)) {
+                summary.setAutHostname(
+                        AUTConnection.getInstance().getCommunicator()
+                            .getConnection().getAddress()
+                            .getCanonicalHostName());
+                summary.setAutAgentName(ServerConnection.getInstance()
+                        .getCommunicator().getHostName());
+
                 startTestSuite(testSuite, locale);
             } else {
                 handleNoConnectionToAUT(testSuite, autId);
@@ -1301,30 +1310,6 @@ public class TestExecution {
         return m_currentCap;
     }
     
-    /**
-     * get hostname of localhost
-     * 
-     * @return aut hostname
-     */
-    public String getLocalHostname() {
-        String hostname = StringConstants.EMPTY;
-        if (m_autConfig != null) {
-            hostname = m_autConfig.getServer();
-            if (hostname.equals("localhost")) { //$NON-NLS-1$
-                InetAddress addr;
-                try {
-                    addr = InetAddress.getLocalHost();
-                    hostname = addr.getHostName();
-                } catch (UnknownHostException e) {
-                    // ignore
-                }
-            }
-        } else {
-            hostname = TestresultSummaryBP.AUTRUN;
-        }
-        return hostname;
-    }
-
     /**
      * 
      * @return Locale of Execution

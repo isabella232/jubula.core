@@ -26,7 +26,7 @@ import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
@@ -71,81 +71,79 @@ public class TestresultSummaryBP {
     private Long m_parentKeyWordId;
     
     /**
-     * @param result TestResultNode
-     * @return test result summary to persist in database
+     * @param result The Test Result containing the source data.
+     * @param summary The Test Result Summary to fill with data.
      */
-    public ITestResultSummaryPO createTestResultSummary(TestResult result) {
-        ITestResultSummaryPO sum = PoMaker.createTestResultSummaryPO();
+    public void populateTestResultSummary(
+            TestResult result, ITestResultSummary summary) {
         TestExecution te = TestExecution.getInstance();
         ITestJobPO tj = te.getStartedTestJob();
         ITestSuitePO ts = te.getStartedTestSuite();
         IAUTMainPO startedAut = te.getConnectedAut();
         IAUTMainPO aut = startedAut != null ? startedAut : ts.getAut();
+        
         IAUTConfigPO autConfig = ClientTestFactory.getClientTest()
                 .getLastAutConfig();
-        addAutId(sum, autConfig);
+        addAutId(summary, autConfig);
         if (autConfig != null) {
-            sum.setAutConfigName(autConfig.getName());
-            sum.setInternalAutConfigGuid(autConfig.getGuid());
-            sum.setAutCmdParameter(autConfig.getValue("AUT_ARGUMENTS",  //$NON-NLS-1$
+            summary.setAutConfigName(autConfig.getName());
+            summary.setInternalAutConfigGuid(autConfig.getGuid());
+            summary.setAutCmdParameter(autConfig.getValue("AUT_ARGUMENTS",  //$NON-NLS-1$
                     StringConstants.EMPTY));
-            sum.setAutAgentName(autConfig.getServer());
-            // FIXME MT: Workaround for correct localhost resolving (#2818)
-            sum.setAutHostname(te.getLocalHostname());
-            
         } else {
-            sum.setAutConfigName(AUTRUN);
-            sum.setInternalAutConfigGuid(AUTRUN);
-            sum.setAutCmdParameter(AUTRUN);
-            sum.setAutAgentName(AUTRUN);
-            sum.setAutHostname(AUTRUN);
+            summary.setAutConfigName(AUTRUN);
+            summary.setInternalAutConfigGuid(AUTRUN);
+            summary.setAutCmdParameter(AUTRUN);
         }
-        sum.setAutOS(System.getProperty("os.name")); //$NON-NLS-1$
+        
+        summary.setAutOS(System.getProperty("os.name")); //$NON-NLS-1$
         if (aut != null) {
-            sum.setInternalAutGuid(aut.getGuid());
-            sum.setAutName(aut.getName());
-            sum.setAutToolkit(aut.getToolkit());
+            summary.setInternalAutGuid(aut.getGuid());
+            summary.setAutName(aut.getName());
+            summary.setAutToolkit(aut.getToolkit());
         }
-        sum.setTestsuiteDate(new Date());
-        sum.setInternalTestsuiteGuid(ts.getGuid());
-        sum.setTestsuiteName(ts.getName());
+        summary.setTestsuiteDate(new Date());
+        summary.setInternalTestsuiteGuid(ts.getGuid());
+        summary.setTestsuiteName(ts.getName());
 
-        sum.setInternalProjectGuid(result.getProjectGuid());
-        sum.setInternalProjectID(result.getProjectId());
-        sum.setProjectName(result.getProjectName() + StringConstants.SPACE
+        summary.setInternalProjectGuid(result.getProjectGuid());
+        summary.setInternalProjectID(result.getProjectId());
+        summary.setProjectName(result.getProjectName() + StringConstants.SPACE
                 + result.getProjectMajorVersion() + StringConstants.DOT
                 + result.getProjectMinorVersion());
-        sum.setProjectMajorVersion(result.getProjectMajorVersion());
-        sum.setProjectMinorVersion(result.getProjectMinorVersion());
+        summary.setProjectMajorVersion(result.getProjectMajorVersion());
+        summary.setProjectMinorVersion(result.getProjectMinorVersion());
         Date startTime = ClientTestFactory.getClientTest()
                 .getTestsuiteStartTime();
-        sum.setTestsuiteStartTime(startTime);
+        summary.setTestsuiteStartTime(startTime);
         Date endTime = new Date();
-        sum.setTestsuiteEndTime(endTime);
+        summary.setTestsuiteEndTime(endTime);
         if (startTime != null && endTime != null) {
-            sum.setTestsuiteDuration(getDurationString(startTime, endTime));
+            summary.setTestsuiteDuration(getDurationString(startTime, endTime));
         }
-        sum.setTestsuiteExecutedTeststeps(te.getNumberOfTestedSteps());
-        sum.setTestsuiteExpectedTeststeps(te.getExpectedNumberOfSteps());
-        sum.setTestsuiteEventHandlerTeststeps(te.getNumberOfEventHandlerSteps()
-                + te.getNumberOfRetriedSteps());
-        sum.setTestsuiteFailedTeststeps(te.getNumberOfFailedSteps());
-        sum.setTestsuiteLanguage(te.getLocale().getDisplayName());
-        sum.setTestsuiteRelevant(ClientTestFactory.getClientTest()
+        summary.setTestsuiteExecutedTeststeps(te.getNumberOfTestedSteps());
+        summary.setTestsuiteExpectedTeststeps(te.getExpectedNumberOfSteps());
+        summary.setTestsuiteEventHandlerTeststeps(
+                te.getNumberOfEventHandlerSteps() 
+                    + te.getNumberOfRetriedSteps());
+        summary.setTestsuiteFailedTeststeps(te.getNumberOfFailedSteps());
+        summary.setTestsuiteLanguage(te.getLocale().getDisplayName());
+        summary.setTestsuiteRelevant(ClientTestFactory.getClientTest()
                         .isRelevant());
         if (tj != null) {
-            sum.setTestJobName(tj.getName());
-            sum.setInternalTestJobGuid(tj.getGuid());
-            sum.setTestJobStartTime(ClientTestFactory.getClientTest()
+            summary.setTestJobName(tj.getName());
+            summary.setInternalTestJobGuid(tj.getGuid());
+            summary.setTestJobStartTime(ClientTestFactory.getClientTest()
                     .getTestjobStartTime());
         }
-        sum.setTestsuiteStatus(result.getRootResultNode().getStatus());      
+        summary.setTestsuiteStatus(
+                result.getRootResultNode().getStatus());      
         //set default monitoring values.       
-        sum.setInternalMonitoringId(MonitoringConstants.EMPTY_MONITORING_ID); 
-        sum.setReport(MonitoringConstants.EMPTY_REPORT);
-        sum.setReportWritten(false);
-        sum.setMonitoringValueType(MonitoringConstants.EMPTY_TYPE); 
-        return sum;
+        summary.setInternalMonitoringId(
+                MonitoringConstants.EMPTY_MONITORING_ID); 
+        summary.setReport(MonitoringConstants.EMPTY_REPORT);
+        summary.setReportWritten(false);
+        summary.setMonitoringValueType(MonitoringConstants.EMPTY_TYPE); 
     }
     
     /**
@@ -337,7 +335,7 @@ public class TestresultSummaryBP {
      * @param summary ITestResultSummaryPO
      * @param autConf IAUTConfigPO
      */
-    private void addAutId(ITestResultSummaryPO summary, IAUTConfigPO autConf) {
+    private void addAutId(ITestResultSummary summary, IAUTConfigPO autConf) {
         if (TestExecution.getInstance().getConnectedAutId() == null) {
             if (autConf != null) {
                 summary.setAutId(autConf.getConfigMap().get(

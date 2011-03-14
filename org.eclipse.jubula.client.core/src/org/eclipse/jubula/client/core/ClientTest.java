@@ -69,6 +69,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -501,8 +502,9 @@ public class ClientTest implements IClientTest {
         TestExecution.getInstance().setStartedTestSuite(execTestSuite);
         execTestSuite.setStarted(true);
         m_testsuiteStartTime = new Date();
+        setTestresultSummary(PoMaker.createTestResultSummaryPO());
         TestExecution.getInstance().executeTestSuite(execTestSuite, locale,
-                autId, autoScreenshot, externalVars);
+                autId, autoScreenshot, externalVars, getTestresultSummary());
     }
 
     /** {@inheritDoc} */
@@ -1094,8 +1096,8 @@ public class ClientTest implements IClientTest {
     public void writeTestresultToDB() {
         TestResult result = TestResultBP.getInstance().getResultTestModel();
         if (result != null) {
-            setTestresultSummary(TestresultSummaryBP.getInstance()
-                .createTestResultSummary(result));
+            TestresultSummaryBP.getInstance()
+                .populateTestResultSummary(result, getTestresultSummary());
 
             if (getTestresultSummary() != null) {
                 TestResultSummaryPM.storeTestResultSummaryInDB(
@@ -1307,17 +1309,18 @@ public class ClientTest implements IClientTest {
     
     /**
      * 
-     * {@inheritDoc}
+     * @return the Test Result Summary for the current test execution, or for
+     *         the previous test execution if no test is currently running.
      */
-    public ITestResultSummaryPO getTestresultSummary() {
+    private ITestResultSummaryPO getTestresultSummary() {
         return m_summary;
     }
     
     /**
      * 
-     * {@inheritDoc}
+     * @param summary The Test Result Summary to set.
      */
-    public void setTestresultSummary(ITestResultSummaryPO summary) {
+    private void setTestresultSummary(ITestResultSummaryPO summary) {
         m_summary = summary;
     }
 
