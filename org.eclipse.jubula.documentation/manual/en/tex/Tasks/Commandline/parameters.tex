@@ -136,7 +136,7 @@
 
 \bxtipp{The test executor also accepts arguments to pass on to the Java Virtual Machine. This means that you can, for example, increase the initial and maximum amount of system memory allocated to the JVM with the parameters \bxshell{-Xms<memory\_size>} and \bxshell{-Xmx<memory\_size>}, respectively. For example, the parameter \bxshell{-Xmx128M} would make a maximum of 128 MB of system memory available to the test executor. When entering the standard parameters for the test executor, you may add \bxshell{-J<JVM\_parameter>} for each JVM parameter you wish to set. For example, \bxshell{-J-Xmx128M}. Multiple parameters, like standard parameters, are separated by spaces. \\
 Here is an example of defining mutliple JVM parameters: \bxshell{-J-Xmx128M -JXms128M}.}
-\item Using the no run option will check the completeness of the \gdprojects{}, test data and the validity of the \gddb{} connection. The \gdagent{} connection is not checked. 
+\item Using the no run option will check the completeness of the \gdproject{}, test data and the validity of the \gddb{} connection. The \gdagent{} connection is not checked. 
 \item Once you have entered all the necessary parameters, press \bxkey{enter}. 
 \item The client will connect to the \gdagent, connect to the \gddb{}, open the \gdproject{}, start the \gdaut{} and then execute the \gdsuite{} you specified.
 \item Once the test has finished, the client will show an exit code.
