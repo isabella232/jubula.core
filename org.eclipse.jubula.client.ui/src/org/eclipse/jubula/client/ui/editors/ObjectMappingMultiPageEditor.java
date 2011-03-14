@@ -855,7 +855,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         GuiEventDispatcher.getInstance().addEditorDirtyStateListener(
                 this, true);
         getEditorHelper().addListeners();
-        checkAndFixInconsistentData();
         getOmEditorBP().collectNewLogicalComponentNames();
         
         int splitPaneViewIndex = addPage(
@@ -902,6 +901,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                     getEditorHelper().getEditSupport().getCompMapper()
                         .getCompNameCache());
 
+        checkAndFixInconsistentData();
         m_treeViewer.expandToLevel(2);
     }
 

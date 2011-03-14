@@ -120,10 +120,9 @@ public class OMEditorTreeContentProvider extends
                             m_compNameMapper.getCompNameCache()
                                 .getCompNamePo(compNameGuid);
                         if (compName != null) {
+                            // Only add the Component Name if it hasn't been
+                            // deleted.
                             childList.add(compName);
-                        } else {
-                            // Missing Component Name
-                            childList.add(compNameGuid);
                         }
                     }
                 }
