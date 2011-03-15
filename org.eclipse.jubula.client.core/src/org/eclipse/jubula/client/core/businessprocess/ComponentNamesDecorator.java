@@ -284,20 +284,6 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
     }
     
     /**
-     * 
-     * {@inheritDoc}
-     */
-    public void deleteComponentName(IComponentNamePO toDelete) {
-        
-        m_deleted.add(toDelete);
-
-        String guid = toDelete.getGuid();
-        m_added.remove(guid);
-        m_reuseChanged.remove(guid);
-        m_renamed.remove(guid);
-    }
-    
-    /**
      * {@inheritDoc}
      */
     public void clear() {

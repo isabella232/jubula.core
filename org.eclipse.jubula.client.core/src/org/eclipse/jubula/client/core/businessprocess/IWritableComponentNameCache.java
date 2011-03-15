@@ -99,13 +99,6 @@ public interface IWritableComponentNameCache extends IComponentNameCache {
     public void renameComponentName(String guid, String newName);
 
     /**
-     * Marks the given Component Name for deletion.
-     * 
-     * @param toDelete The Component Name to mark as deleted.
-     */
-    public void deleteComponentName(IComponentNamePO toDelete);
-
-    /**
      * For performance reasons we want to preload cache
      * @param guids IComponentNamePO
      */
