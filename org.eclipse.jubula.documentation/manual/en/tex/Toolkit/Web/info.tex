@@ -1,0 +1,10 @@
+\app{} supports \gdauts{} written with the HTML GUI toolkit according to the following points:
+
+\begin{itemize}
+\item \gdauts{} can be run in Internet Explorer (versions 7 and 8), Firefox (3.0 to 3.5) and Safari (version 5). 
+\item We strongly recommend writing HTML \gdauts{} so that they are conform to the \bxname{W3C} standard. You can check whether your \gdaut{} is \bxname{W3C} conform using an online validator: http://validator.w3.org
+\item Frames and IFrames are not supported.
+\item Some of the \app{} actions in the \bxname{concrete} toolkit (i.e. which are theoretically valid for all \gdaut{} types) may not (yet) be supported. In some cases, this is because the component doesn't exist as such in HTML \gdauts{} (menu bars for example). In other cases, text components such as tables or lists do not have a concept for dealing with selection as they do in e.g. Swing. 
+\item The \bxname{autrun} option to start \gdauts{} \bxpref{autrun} cannot be used for HTML \gdauts{}. 
+\item Unlike other toolkits supported by \app{}, real clicks and key events are not sent to HTML \gdauts{}.
+\end{itemize}
