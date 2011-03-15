@@ -66,7 +66,7 @@ public abstract class PersistenceManager {
         String msg = null;
         String objName = null;
         if (obj == null) {
-            objName = Messages.UnknownObject; //$NON-NLS-1$
+            objName = Messages.UnknownObject;
         } else {
             objName = obj.getName();
         }
@@ -111,16 +111,17 @@ public abstract class PersistenceManager {
      * @return true if e is caused by a failed lock attempt
      */
     private static boolean isLockException(PersistenceException e) {
-        Throwable rootCause = ExceptionUtils.getRootCause(e);
-        if (e instanceof PessimisticLockException) {
-            return true;
-        } else if (e instanceof LockTimeoutException) {
-            return true;
-        } else if (rootCause instanceof SQLException) {
-            if (((SQLException)rootCause).getSQLState() != null
-                    && ((SQLException)rootCause).getSQLState().startsWith("61000")) {  //$NON-NLS-1$ // NOPMD by al on 3/19/07 1:38 PM
-                // error state in Oracle
+        for (Throwable cause : ExceptionUtils.getThrowables(e)) {
+            if (cause instanceof PessimisticLockException
+                    || cause instanceof OptimisticLockException
+                    || cause instanceof LockTimeoutException) {
                 return true;
+            } else if (cause instanceof SQLException) {
+                if (((SQLException)cause).getSQLState() != null
+                        && ((SQLException)cause).getSQLState().startsWith("61000")) {  //$NON-NLS-1$ // NOPMD by al on 3/19/07 1:38 PM
+                    // error state in Oracle
+                    return true;
+                }
             }
         }
         return false;
