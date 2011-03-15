@@ -110,6 +110,7 @@
             <fileset dir="../${guidancerWS}/${GEFExample}/build"/>
         </copy>
         <chmod file="${examples.aut.dir}/GEFExample/GEFExample-lin" perm="775"/>
+        <chmod file="${examples.aut.dir}/GEFExample/GEFExample.app/Contents/MacOS/GEFExample" perm="775"/>
     </target>
 	
 	<target name="clean">
