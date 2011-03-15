@@ -14,12 +14,14 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -50,6 +52,7 @@ import org.eclipse.jubula.client.core.businessprocess.ITestresultSummaryEventLis
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
+import org.eclipse.jubula.client.core.model.ITestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -99,12 +102,12 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.part.ViewPart;
 
-
 /**
  * View for presenting summaries of Test Results.
  * 
  * @author BREDEX GmbH
  */
+@SuppressWarnings("unchecked")
 public class TestresultSummaryView extends ViewPart
     implements ITestresultSummaryEventListener, ITestresultChangedListener {
     /**
@@ -440,7 +443,7 @@ public class TestresultSummaryView extends ViewPart
         m_tableViewer.getTable().setSortDirection(SWT.DOWN);
         ColumnSortListener sortListener = new ColumnSortListener(
                 m_tableViewer, sortColumn);
-        m_tableViewer.setComparator(sortListener);
+
         for (TableColumn col : m_tableViewer.getTable().getColumns()) {
             col.addSelectionListener(sortListener);
         }
@@ -561,6 +564,16 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1)
+                            .getTestsuiteFailedTeststeps(), 
+                        ((ITestResultSummaryPO)e2)
+                            .getTestsuiteFailedTeststeps());
+            }
+        };
         return column;
     }
 
@@ -584,6 +597,16 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                    m_detailedSummaryIds
+                        .contains(((ITestResultSummaryPO)e1).getId()), 
+                    m_detailedSummaryIds
+                        .contains(((ITestResultSummaryPO)e2).getId()));
+            }
+        };
         return column;
     }
 
@@ -899,6 +922,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getTestJobName(), 
+                        ((ITestResultSummaryPO)e2).getTestJobName());
+            }
+        };
         return column;
     }
     
@@ -925,6 +956,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getTestJobStartTime(), 
+                        ((ITestResultSummaryPO)e2).getTestJobStartTime());
+            }
+        };
         return column;
     }
 
@@ -975,6 +1014,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getTestRunState(), 
+                        ((ITestResultSummaryPO)e2).getTestRunState());
+            }
+        };
         return column;
     }
 
@@ -996,6 +1043,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getProjectName(), 
+                        ((ITestResultSummaryPO)e2).getProjectName());
+            }
+        };
         return column;
     }
 
@@ -1016,6 +1071,14 @@ public class TestresultSummaryView extends ViewPart
                     ((ITestResultSummaryPO)element).getTestsuiteName());
             }
         });
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getTestsuiteName(), 
+                        ((ITestResultSummaryPO)e2).getTestsuiteName());
+            }
+        };
         createMenuItem(m_headerMenu, column.getColumn());
         return column;
     }
@@ -1038,6 +1101,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getStatusString(), 
+                        ((ITestResultSummaryPO)e2).getStatusString());
+            }
+        };
         return column;
     }
 
@@ -1059,6 +1130,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAutName(), 
+                        ((ITestResultSummaryPO)e2).getAutName());
+            }
+        };
         return column;
     }
     
@@ -1080,6 +1159,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAutId(), 
+                        ((ITestResultSummaryPO)e2).getAutId());
+            }
+        };
         return column;
     }
 
@@ -1101,6 +1188,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAutConfigName(), 
+                        ((ITestResultSummaryPO)e2).getAutConfigName());
+            }
+        };
         return column;
     }
 
@@ -1122,6 +1217,14 @@ public class TestresultSummaryView extends ViewPart
                     ((ITestResultSummaryPO)element).getAutAgentName());
             }
         });
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAutAgentName(), 
+                        ((ITestResultSummaryPO)e2).getAutAgentName());
+            }
+        };
         createMenuItem(m_headerMenu, column.getColumn());
         return column;
     }
@@ -1144,6 +1247,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAutHostname(), 
+                        ((ITestResultSummaryPO)e2).getAutHostname());
+            }
+        };
         return column;
     }
     
@@ -1165,6 +1276,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAutOS(), 
+                        ((ITestResultSummaryPO)e2).getAutOS());
+            }
+        };
         return column;
     }
 
@@ -1186,6 +1305,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getTestsuiteLanguage(), 
+                        ((ITestResultSummaryPO)e2).getTestsuiteLanguage());
+            }
+        };
         return column;
     }
 
@@ -1207,6 +1334,14 @@ public class TestresultSummaryView extends ViewPart
         });
 
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAutToolkit(), 
+                        ((ITestResultSummaryPO)e2).getAutToolkit());
+            }
+        };
 
         return column;
     }
@@ -1224,10 +1359,18 @@ public class TestresultSummaryView extends ViewPart
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
                 return DTF_DEFAULT.format(
-                        ((ITestResultSummaryPO)element).getTestsuiteDate());
+                        ((ITestResultSummary)element).getTestsuiteDate());
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummary)e1).getTestsuiteDate(), 
+                        ((ITestResultSummary)e2).getTestsuiteDate());
+            }
+        };
         return column;
     }
     
@@ -1248,6 +1391,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getCommentTitle(), 
+                        ((ITestResultSummaryPO)e2).getCommentTitle());
+            }
+        };
         return column;
     }
     
@@ -1269,6 +1420,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getTestsuiteStartTime(), 
+                        ((ITestResultSummaryPO)e2).getTestsuiteStartTime());
+            }
+        };
         return column;
     }
 
@@ -1290,6 +1449,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getTestsuiteEndTime(), 
+                        ((ITestResultSummaryPO)e2).getTestsuiteEndTime());
+            }
+        };
         return column;
     }
 
@@ -1310,6 +1477,14 @@ public class TestresultSummaryView extends ViewPart
                     ((ITestResultSummaryPO)element).getTestsuiteDuration());
             }
         });
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getTestsuiteDuration(), 
+                        ((ITestResultSummaryPO)e2).getTestsuiteDuration());
+            }
+        };
         createMenuItem(m_headerMenu, column.getColumn());
         return column;
     }
@@ -1332,6 +1507,16 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1)
+                            .getTestsuiteExpectedTeststeps(), 
+                        ((ITestResultSummaryPO)e2)
+                            .getTestsuiteExpectedTeststeps());
+            }
+        };
         return column;
     }
 
@@ -1353,6 +1538,16 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1)
+                            .getTestsuiteExecutedTeststeps(), 
+                        ((ITestResultSummaryPO)e2)
+                            .getTestsuiteExecutedTeststeps());
+            }
+        };
         return column;
     }
 
@@ -1375,6 +1570,16 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1)
+                            .getTestsuiteEventHandlerTeststeps(), 
+                        ((ITestResultSummaryPO)e2)
+                            .getTestsuiteEventHandlerTeststeps());
+            }
+        };
         return column;
     }
 
@@ -1395,6 +1600,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAutCmdParameter(), 
+                        ((ITestResultSummaryPO)e2).getAutCmdParameter());
+            }
+        };
         return column;
     }
     
@@ -1415,6 +1628,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getId(), 
+                        ((ITestResultSummaryPO)e2).getId());
+            }
+        };
         return column;
     }
     
@@ -1435,6 +1656,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).isTestsuiteRelevant(), 
+                        ((ITestResultSummaryPO)e2).isTestsuiteRelevant());
+            }
+        };
         return column;
     }
     /**
@@ -1457,9 +1686,17 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).isReportWritten(), 
+                        ((ITestResultSummaryPO)e2).isReportWritten());
+            }
+        };
         return column;
     }
-/**
+    /**
      * 
      * @param tableViewer the tableViewer
      *            
@@ -1473,15 +1710,20 @@ public class TestresultSummaryView extends ViewPart
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
-                String id = 
-                    ((ITestResultSummaryPO)element).getInternalMonitoringId();
-                if (StringUtils.isEmpty(id)) {
-                    return Messages.TestresultSummaryMonitoringIdNonSelected;
-                }
-                return StringUtils.defaultString(id);
+                return StringUtils.defaultIfEmpty(
+                    ((ITestResultSummaryPO)element).getInternalMonitoringId(), 
+                    Messages.TestresultSummaryMonitoringIdNonSelected);
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getInternalMonitoringId(), 
+                        ((ITestResultSummaryPO)e2).getInternalMonitoringId());
+            }
+        };
         return column;
     }
  /**
@@ -1524,6 +1766,14 @@ public class TestresultSummaryView extends ViewPart
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getMonitoringValue(), 
+                        ((ITestResultSummaryPO)e2).getMonitoringValue());
+            }
+        };
         return column;
     }
     /**
@@ -1748,4 +1998,17 @@ public class TestresultSummaryView extends ViewPart
             return m_filterType;
         }
     }
+    
+    /**
+     * Creates and returns a comparator for natural comparison that can also 
+     * handle <code>null</code> values. 
+     * 
+     * @return the created comparator.
+     */
+    @SuppressWarnings("rawtypes")
+    private static Comparator getCommonsComparator() {
+        return ComparatorUtils.nullHighComparator(
+                ComparatorUtils.naturalComparator());
+    }
+    
 }
