@@ -5,10 +5,10 @@ If you have an older version of \app{} installed, we recommend that you follow t
 \bxtipp{Make sure you also export and back up any library \gdprojects{} used in your tests, e.g. the unbound modules \gdprojects{}. }
 \item Back up any extensions you have made to \app{}: any customized plugins and implementation classes you have written.  
 %\item Make a note of any configurations you have used in the configuration tool, e.g. port numbers, logging, the \gddb{} used etc. 
-\item Export your workspace preferences.
+%\item Export your workspace preferences.
 \item Uninstall the old version of \app{}. 
 \item Clear (empty) the \gddb{} schema for all necessary \app{} users. You can do this via a database administration tool which will let you carry out the action \bxname{Drop Tables}. 
-%Oracle users can use the script from the website 
+\bxtipp{If you have an Oracle \gddb{} and are upgrading from \app{} 4.3, then you can use the SQL script installed with \app{} in the \bxname{migration} directory to clear your \gddb{}.} 
 \item Install the new version of \app{}.
 \bxtipp{If you have \gdagents{} running on other machines, be sure to install the new version of the \gdagent{} there too.}
 \item Add any extension plugins you backed up from the old version.
