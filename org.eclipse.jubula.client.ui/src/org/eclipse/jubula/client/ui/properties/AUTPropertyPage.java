@@ -97,7 +97,7 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
         createButtons(composite);
         initFields();
         addListeners();
-        Plugin.getHelpSystem().setHelp(composite,
+        Plugin.getHelpSystem().setHelp(parent,
             ContextHelpIds.AUT_PROPERTY_PAGE);
         return composite;
     }
