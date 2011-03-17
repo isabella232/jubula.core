@@ -41,22 +41,25 @@ import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IEventHandlerContainer;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
+import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ITimestampPO;
@@ -71,9 +74,12 @@ import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.core.utils.StringHelper;
+import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.AddNewTestCaseAction;
 import org.eclipse.jubula.client.ui.actions.InsertNewTestCaseAction;
@@ -97,8 +103,8 @@ import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
-import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
+import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseEditorContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -108,8 +114,8 @@ import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
@@ -181,6 +187,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         getTreeViewer().setSelection(new StructuredSelection(getTopGuiNode()));
         GuiEventDispatcher.getInstance()
             .addEditorDirtyStateListener(this, true);
+        DataEventDispatcher.getInstance().addDataChangedListener(
+                new CentralTestDataUpdateListener(), false);
     }
     
     /**
@@ -304,7 +312,64 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             }
         }
     }
-   
+
+    /**
+     * Refreshes all referenced Test Data Cubes within the context of this 
+     * editor when Central Test Data changes.
+     * 
+     * @author BREDEX GmbH
+     * @created 17.03.2011
+     */
+    private class CentralTestDataUpdateListener 
+            implements IDataChangedListener {
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void handleDataChanged(IPersistentObject po,
+                DataState dataState, UpdateState updateState) {
+
+            if (po instanceof ITestDataCubeContPO 
+                    && dataState == DataState.StructureModified 
+                    && updateState != UpdateState.notInEditor) {
+
+                ITreeNodeOperation<INodePO> refreshRefDataCubeOp =
+                    new ITreeNodeOperation<INodePO>() {
+                        public boolean operate(
+                                ITreeTraverserContext<INodePO> ctx,
+                                INodePO parent, INodePO node,
+                                boolean alreadyVisited) {
+                            
+                            if (node instanceof IParamNodePO) {
+                                IParameterInterfacePO referencedCube = 
+                                    ((IParamNodePO)node)
+                                        .getReferencedDataCube();
+                                if (referencedCube != null) {
+                                    getEditorHelper().getEditSupport()
+                                        .getSession().refresh(referencedCube);
+                                }
+                            }
+                            return true;
+                        }
+
+                        public void postOperate(
+                                ITreeTraverserContext<INodePO> ctx,
+                                INodePO parent, INodePO node,
+                                boolean alreadyVisited) {
+                            // no-op
+                        }
+                    };
+
+                TreeTraverser refDataCubeRefresher = 
+                    new TreeTraverser(getTopGuiNode().getContent(), 
+                            refreshRefDataCubeOp, true, 2);
+                refDataCubeRefresher.traverse(true);
+                
+            }
+        }
+    }
+
     /**
      * Sets the input of the tree viewer for specificaion.
      */

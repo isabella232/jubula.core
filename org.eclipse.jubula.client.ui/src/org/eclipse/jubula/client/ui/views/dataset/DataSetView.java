@@ -14,13 +14,10 @@ import java.util.Locale;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
@@ -50,8 +47,8 @@ import org.eclipse.ui.views.properties.PropertySheet;
  */
 public class DataSetView extends PageBookView 
     implements IProjectLoadedListener, ILanguageChangedListener, 
-               IDataChangedListener, IParamChangedListener, 
-               IContributedContentsView, ISelectionListener {
+               IParamChangedListener, IContributedContentsView, 
+               ISelectionListener {
 
     /**
      * {@inheritDoc}
@@ -78,6 +75,8 @@ public class DataSetView extends PageBookView
             }
             initPage(page);
             page.createControl(getPageBook());
+            DataEventDispatcher.getInstance().addDataChangedListener(
+                    page, true);
             return new PageRec(part, page);
         } else if (part instanceof IJBPart) {
             return new PageRec(part, createDefaultPage(getPageBook()));
@@ -91,6 +90,10 @@ public class DataSetView extends PageBookView
      * {@inheritDoc}
      */
     protected void doDestroyPage(IWorkbenchPart part, PageRec pageRecord) {
+        if (pageRecord.page instanceof IDataChangedListener) {
+            DataEventDispatcher.getInstance().removeDataChangedListener(
+                    (IDataChangedListener)pageRecord.page);
+        }
         pageRecord.page.dispose();
         pageRecord.dispose();
     }
@@ -131,7 +134,6 @@ public class DataSetView extends PageBookView
         DataEventDispatcher dispatcher = DataEventDispatcher.getInstance();
         dispatcher.addParamChangedListener(this, true);
         dispatcher.addLanguageChangedListener(this, true);
-        dispatcher.addDataChangedListener(this, true);
         dispatcher.addProjectLoadedListener(this, true);
         super.init(site);
     }
@@ -144,7 +146,6 @@ public class DataSetView extends PageBookView
             DataEventDispatcher.getInstance();
         dispatcher.removeParamChangedListener(this);
         dispatcher.removeLanguageChangedListener(this);
-        dispatcher.removeDataChangedListener(this);
         dispatcher.removeProjectLoadedListener(this);
         dispatcher.removeParamChangedListener(this);
         super.dispose();
@@ -214,20 +215,6 @@ public class DataSetView extends PageBookView
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
-
-        IPage curPage = getCurrentPage();
-        if (curPage instanceof IDataChangedListener) {
-            ((IDataChangedListener)curPage).handleDataChanged(
-                    po, dataState, updateState);
-        }
-        
-    }
- 
     /**
      * {@inheritDoc}
      */
