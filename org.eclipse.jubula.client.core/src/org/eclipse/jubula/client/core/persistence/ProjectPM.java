@@ -452,18 +452,29 @@ public class ProjectPM extends PersistenceManager {
         String projGuid, Integer projMajVers, Integer projMinVers) 
         throws JBException {
         
+        return loadReusedProjects(
+                findProjectId(projGuid, projMajVers, projMinVers));
+    }
+    
+    /**
+     * Gets a List of IReusedProjectPO of the Project with the given ID.
+     * @param projectId the ID of the Project which IReusedProjectPOs are wanted.
+     * @return a List of IReusedProjectPO or an empty List of nothing found. 
+     * @throws JBException ...
+     */
+    public static final List<IReusedProjectPO> loadReusedProjects(
+            Long projectId) throws JBException {
+        
         EntityManager session = null;
         final List<IReusedProjectPO> list = new ArrayList<IReusedProjectPO>();
         try {
-            final Long parentProjId = findProjectId(projGuid, projMajVers, 
-                    projMinVers);
-            if (parentProjId != null) {
+            if (projectId != null) {
                 session = Hibernator.instance().openSession();
                 final Query query = 
                     session.createQuery(
                         "select reusedProj from ReusedProjectPO reusedProj" //$NON-NLS-1$
                         + " where reusedProj.hbmParentProjectId = :parentProjId"); //$NON-NLS-1$
-                query.setParameter("parentProjId", parentProjId); //$NON-NLS-1$
+                query.setParameter("parentProjId", projectId); //$NON-NLS-1$
                 list.addAll(query.getResultList());
             }
         } catch (PersistenceException e) {
@@ -476,7 +487,6 @@ public class ProjectPM extends PersistenceManager {
         return list;
         
     }
-    
     
     /**
      * Load an instance of ProjectPO into the readonly session. The read
