@@ -12,6 +12,11 @@
          The next steps show you how to add data using the Data Sets View.
       </description>
    </intro>
+   <item
+         title="Make sure the Data Sets View is visible">
+      <description>
+      </description>
+   </item>
    <item title="Select the parent Test Case" dialog="true" skip="false">
       <description>
          In the Test Case Editor, click on the <b>Perform Addition</b> Test Case.
@@ -21,11 +26,7 @@
       <description>
          Click on the Data Sets View, and click the <b>Add</b> button.
       </description>
-      <subitem label="Enter &quot;1&quot; in the VALUE1 column" skip="false">
-      </subitem>
-      <subitem label="Enter &quot;2&quot; in the VALUE2 column" skip="false">
-      </subitem>
-      <subitem label="Enter &quot;3&quot; in the RESULT column. Now you have a data set which checks that the result of &quot;1&quot; and &quot;2&quot; is &quot;3&quot;.ULT column" skip="false">
+      <subitem label="Enter &quot;1&quot; in the VALUE1 column, &quot;2&quot; in the VALUE2 column and &quot;3&quot; in the RESULT column (all values without the quotes).the VALUE2 column an">cks that the result of &quot;1&quot; and &quot;2&quot; is &quot;3&quot;.ULT column" skip="false">
       </subitem>
    </item>
    <item title="Add more data" dialog="true" skip="false">

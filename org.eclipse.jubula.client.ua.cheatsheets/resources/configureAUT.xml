@@ -19,7 +19,7 @@ It is assumed that you are working locally on your machine. If not, change the A
          Select:<br/>
 <b>Test &gt; Properties</b>
 <br/>
-Select <b>AUT&apos;s</b> from the list on the left, select  the <b>Adder</b> AUT and click <b>Edit</b>.
+Select <b>AUT&apos;s</b> from the list on the left, select  the <b>Adder</b> AUT from the main panel and click <b>Edit</b>.
 <br/>
 Click <b>Add</b> to add a configuration. 
 <br/>

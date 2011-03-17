@@ -22,11 +22,7 @@ If you are not using the embedded database, you will need to log in.
  <br/>
  Enter <b>SimpleAdder</b> as the Project Name.
  <br/>
- Choose <b>concrete</b> as the toolkit.
-  <br/>
-  Choose <b>English (United States)</b> as the Project language.
-  <br/>
-  Click <b>Finish</b>.
+ Click <b>Finish</b>.
       </description>
    </item>
 </cheatsheet>

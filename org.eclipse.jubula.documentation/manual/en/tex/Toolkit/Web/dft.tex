@@ -2,4 +2,13 @@
 \index{Design For Testability!Web}
 \index{ID attribute name}
 
-Although \app{} does not require you to name components in your \gdaut{}, you neverthless make your \gdaut{} more testable by doing so. In HTML \gdauts{}, you can enter a name for your components in the id tag.  You can also specify your own \bxname{ID attribute name} to be used as an identifier and enter this attribute name in the \gdaut{} configuration \bxpref{autconfigbasic} so that it is recognized as the component name for object recognition. 
+Although \app{} does not require you to name components in your \gdaut{}, you neverthless make your \gdaut{} more testable by doing so.
+
+\begin{itemize}
+\item Each supported component in HTML \gdauts{} can have its own attribute used to identify it during test execution.
+\item In your \gdaut{} configuration  \bxpref{autconfigbasic} , you can define an attribute name which should be used as an identifier for components. 
+\item For example if your attribute name is \bxshell{testid} (e.g. \bxshell{<div testid=''Username''></div>}) then you would enter \bxname{testid} in the \gdaut{} configuration. 
+\end{itemize}
+
+
+ 

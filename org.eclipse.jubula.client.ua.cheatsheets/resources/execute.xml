@@ -17,18 +17,18 @@ Because this test will run locally, do not move the mouse during the test.
       <description>
          Start the Test Suite using the button in the running AUT&apos;s view or in the Test Suite Browser.
       </description>
-      <subitem label="In the dialog, choose to switch to the execution perspective. When the test starts, do not move the mouse. Wait until the test has finished until carrying on." skip="false">
+      <subitem label="In the prompt dialogs, choose to switch to the execution perspective and opt to make the test run relevant. When the test starts, do not move the mouse. Wait until the test has finished until carrying on." skip="false">
       </subitem>
    </item>
-   <item title="Analyse the results" dialog="true" skip="false">
+   <item title="Analyze the results" dialog="true" skip="false">
       <description>
          Look in the results view for information on the test execution.
       </description>
-      <subitem
-            label="If you used the data set 17,4,21 then you will see that the &quot;Check result&quot; step for this data set was insuccessful. Use the Properties View and the image view to see what happened.">
+      <subitem label="If you used the data set 17,4,21 then you will see that the &quot;Check result&quot; step for this data set was unsuccessful. Click on the failed step to see information in the Properties View and the Image View." skip="false">
       </subitem>
-      <subitem
-            label="You can view and export a test report for the test run from the Test Result Summary View in the Functional Test Reporting Perspective.">
+      <subitem label="Switch to the Reporting Perspective using the buttons on the top right of the toolbar." skip="false">
+      </subitem>
+      <subitem label="In the Test Result Summary View, find your test run and double click it to reopen the Test Result View. This lets you see test runs even if they were started by e.g. the Test Executor." skip="false">
       </subitem>
    </item>
 </cheatsheet>

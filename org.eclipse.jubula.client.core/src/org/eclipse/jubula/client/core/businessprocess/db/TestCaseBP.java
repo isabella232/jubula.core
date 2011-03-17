@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.db;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -18,6 +19,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
@@ -187,5 +189,21 @@ public class TestCaseBP  extends NodeBP {
             parentClass = Hibernator.getClass(parent);
         }
         return parent;
+    }
+    
+    /**
+     * @param specTc
+     *            the spec test case to test
+     * @return true if editable --> belongs to current project; false otherwise
+     *         or if specTc == null
+     */
+    public static boolean belongsToCurrentProject(ISpecTestCasePO specTc) {
+        if (specTc != null) {
+            EqualsBuilder eb = new EqualsBuilder();
+            eb.append(specTc.getParentProjectId(), GeneralStorage.getInstance()
+                    .getProject().getId());
+            return eb.isEquals();
+        }
+        return false;
     }
 }
