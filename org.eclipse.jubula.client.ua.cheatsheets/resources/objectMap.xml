@@ -16,12 +16,10 @@
       <description>
          Start the object mapping mode using the toolbar button.
       </description>
-      <subitem label="Switch to the AUT and click in it to bring it into focus." skip="false">
-      </subitem>
    </item>
    <item title="Collect the first component" dialog="true" skip="false">
       <description>
-         Hover over the top text field. It will have a green border
+         Switch to the AUT and click in it to bring it into focus. Hover over the top text field. It will have a green border
       </description>
       <subitem label="Press Ctrl+Shift+Q to &quot;collect&quot; the component." skip="false">
       </subitem>

@@ -30,10 +30,6 @@
             label="&quot;Drag the &quot;ub_app_activate[ACTIVATION_METHOD]&quot; Test Case from this category and drop it into the Test Case Editor (in the middle of the perspective)."
             skip="false">
       </subitem>
-      <subitem
-            label="The &quot;activate application&quot; Test Case clicks once in the place you specify to ensure that your application has focus before beginning the test."
-            skip="false">
-      </subitem>
    </item>
    <item
          title="Add a parameter value">
@@ -55,7 +51,7 @@
    <item
          title="Rename the referenced Test Cases">
       <description>
-         In the Test Case Editor, select the first &quot;ub_cti_replaceText&quot; test Case and rename it in the Properties View, in the <b>Test Case Reference Name</b> field:
+         In the Test Case Editor, select the first &quot;ub_cti_replaceText&quot; Test Case and rename it in the Properties View, in the <b>Test Case Reference Name</b> field:
 <br/>
 <b>Enter first value</b>
 <br/><br/>
@@ -68,7 +64,7 @@ This makes the test more readable.
    </item>
    <item title="Add references as parameters" dialog="true" skip="false">
       <description>
-         In the Test Case Editor, select the &quot;Enter first value&quot; Test Case and enter <b>=VALUE1</b> into the empty <b>parameter value</b> in the Properties View.  Press enter to confirm the parameter.
+         In the Test Case Editor, select the &quot;Enter first value&quot; Test Case and enter <b>=VALUE1</b> (including the equals sign) into the empty <b>parameter value</b> in the Properties View.  Press enter to confirm the parameter.
       </description>
       <subitem
             label="In the Properties View for the second &quot;ub_cti_replaceText&quot; Test Case, enter =VALUE2 into the parameter value field and press enter.">
@@ -76,7 +72,7 @@ This makes the test more readable.
    </item>
    <item title="Reassign the component names" dialog="true" skip="false">
       <description>
-         In the Test Case Editor, select the &quot;Enter first value&quot; Test Case and select the Component Names View. In the Component Names View, enter <b>adder_value1_txf</b> in the <b>new name</b> field. In the same way, enter <b>adder_value2_txf</b> for the second &quot;ub_cti_replaceText&quot; Test Case.  
+         Make sure the Component Names View is visible then select the &quot;Enter first value&quot; Test Case in the Test Case Editor. In the Component Names View, enter <b>adder_value1_txf</b> in the <b>new name</b> field. In the same way, enter <b>adder_value2_txf</b> for the second &quot;ub_cti_replaceText&quot; Test Case.  
 <br/><br/>
       </description>
    </item>
@@ -123,7 +119,7 @@ This makes the test more readable.
       <description>
         In the Properties View, enter <b>=RESULT</b> as the  <b>Text</b> parameter and press enter.
 <br/><br/>
-Enter <b>equals</b> as the <b>operator</b> parameter and press enter..
+Enter <b>equals</b> as the <b>operator</b> parameter and press enter.
       </description>
    </item>
    <item title="Reassign the component name" dialog="true" skip="false">
