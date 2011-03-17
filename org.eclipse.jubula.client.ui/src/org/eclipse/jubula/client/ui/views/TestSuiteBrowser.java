@@ -77,7 +77,6 @@ import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
@@ -86,8 +85,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -194,14 +191,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                         runCommand(CommandIDs.NEW_TESTSUITE_COMMAND_ID);
                     } else if (categoryName.equals(TreeBuilder.TJ_CAT_NAME)) {
                         runCommand(CommandIDs.NEW_TESTJOB_COMMAND_ID);
-                    }
-                } else {
-                    try {
-                        getSite().getPage().showView(Constants.PROPVIEW_ID,
-                                null, IWorkbenchPage.VIEW_VISIBLE);
-                    } catch (PartInitException e) {
-                        LOG.error(Messages.UnableToOpenGDPropertiesView
-                                + StringConstants.EXCLAMATION_MARK, e);
                     }
                 }
             }

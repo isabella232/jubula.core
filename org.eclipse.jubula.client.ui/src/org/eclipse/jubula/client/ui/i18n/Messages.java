@@ -1060,7 +1060,6 @@ public class Messages extends NLS {
     public static String UIJobSearchingTestCases;
     public static String UIJobSearchingTestDataCube;
     public static String UIJobStartTestJob;
-    public static String UnableToOpenGDPropertiesView;
     public static String UnexpectedDialogReturnCode;
     public static String UnexpectedError;
     public static String UnhandledAutState;
