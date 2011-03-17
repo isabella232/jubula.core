@@ -97,8 +97,7 @@ public class Messages extends NLS {
     public static String AUTConfigComponentSelectJAR;
     public static String AUTConfigComponentSelectJRE;
     public static String AUTConfigComponentSelectWorkDir;
-    public static String AUTConfigComponentSelectInstDir;
-    public static String AUTConfigComponentSelectSourceDir;
+    public static String AUTConfigComponentSelectDir;
     public static String AUTConfigComponentServer;
     public static String AUTConfigComponentShellText;
     public static String AUTConfigComponentShowAdvanced;

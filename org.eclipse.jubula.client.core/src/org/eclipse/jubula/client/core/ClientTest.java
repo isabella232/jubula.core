@@ -126,8 +126,9 @@ public class ClientTest implements IClientTest {
     
     /** used in filenames for reports for failed tests */
     private static final String TEST_FAILED = "failed"; //$NON-NLS-1$
-    /** timeout for report job, after this time the job will be canceled */
-    private static final int BUILD_REPORT_TIMEOUT = 600000;
+    /** timeout for report job, after this time the job will be canceled 
+     * 1200000ms = 20min */
+    private static final int BUILD_REPORT_TIMEOUT = 1200000;
     /** timeout for requesting AutConfigMap from Agent */
     private static final int REQUEST_CONFIG_MAP_TIMEOUT = 10000;
     /**
