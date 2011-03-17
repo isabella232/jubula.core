@@ -20,7 +20,7 @@ defining \gdimplclasses of your own, which we will refer to as
 \section{What does a \gdtesterclass look like?}
 
 The functionally important aspect of a \gdtesterclass is that it
-contains a public method for each \app{}test action which will appear in
+contains a public method for each \app{} test action which will appear in
 the client. These methods are linked to testable actions within a user-defined
 \app{} Plugin, which is described later in this handbook. Each plugin
 provides a XML configuration file,
@@ -33,7 +33,7 @@ send, as well as string externalization information.
 The following chapter describes the general steps to take when extending \app{} with
 custom defined components and actions. Detailed information for each step can be found in the
 corresponding example extension files in 
-''GUIdancerInstallationDirectory/examples/development/extension/src''
+''InstallationDirectory/examples/development/extension/src''
 
 In general you have to always extends two parts of \app{}
 \begin{itemize}
@@ -53,15 +53,15 @@ To create your own \app{} extension, you need:
 \end{itemize}
 
 You must also have write access in the directories:\\
-guidancerInstallationDir$\backslash$guidancer$\backslash$plugins\\
-guidancerInstallationDir$\backslash$server$\backslash$lib$\backslash$extImplClasses 
+InstallationDir$\backslash$\app{}$\backslash$plugins\\
+InstallationDir$\backslash$server$\backslash$lib$\backslash$extImplClasses 
 
 \section{\app{} Client Extension}
 
 The following steps have to be done to extend the \app{} Client:
 \begin{enumerate}
  \item Create an eclipse plug-in project
- \item Set ''guidancerInstallationDir$\backslash$guidancer$\backslash$plugins'' as your target platform
+ \item Set ''InstallationDir$\backslash$\app{}$\backslash$plugins'' as your target platform
  \item Define plugin dependencies to the toolkit support plugin
  \item Enter the toolkit support plugin in your toolkit plugin project
  \item Create a MyToolkitProvider class
@@ -76,13 +76,13 @@ The following steps have to be done to extend the \app{} Client:
  \item Export the toolkit plugin to \app{}
 \end{enumerate}
 
-Under ''GUIdancerInstallationDirectory/examples/development/extension/src''
+Under ''InstallationDirectory/examples/development/extension/src''
 you will find a \\ ''eclipseProjects\_ExampleSwingClientExtension.zip'' which contains
  an example \app{} Client Extension for the Swing component ''JSlider''. This project 
  is a showcase for steps 1-8.
  
 \subsection{Exporting the toolkit plugin to \app{}}
- The only step you have to do after importing this project into your eclipse workspace and 
+ The only step you have to do after importing this project into your Eclipse workspace and 
  setting the target platform (step no. 2) is to export it to the \app{} you want to 
  extend. To export the toolkit plugin to \app{}:
 
@@ -96,10 +96,10 @@ from the context-sensitive menu.
 \item In the package explorer, right click on the project and select \bxname{export} from the context-sensitive menu.
 \item In the dialog that appears, select \bxname{deployable plugins and fragments} and click \bxcaption{next}.
 \item In the next dialog, in the \bxname{destination} tab, enter the location where the plugin should be exported to in the \bxname{directory} field:\\
-\bxname{GUIdancerInstallationPath/guidancer}
+\bxname{InstallationPath/\app{}}
 \item In the \bxname{options} tab, deselect the checkbox which will export the plugin as individual jar archives and click \bxcaption{finish}.
-\item You should be able to find the folder \\ \bxcaption{com.bredexsw.guidancer.examples.client.toolkitExtension\_1.0.0} in the \bxname{GUIdancerInstallationPath/guidancer/plugins/} folder. The exported plugin is in this folder. 
-\item If you need to make changes and export the plugin again, delete the \\ \bxname{com.bredexsw.guidancer.examples.client.toolkitExtension\_1.0.0} from the \bxname{GUIdancerInstallationPath/guidancer/plugins/} folder first
+\item You should be able to find the folder \\ \bxcaption{org.eclipse.jubula.examples.extension.swing.toolkit} in the \bxname{InstallationPath/\app{}/plugins/} folder. The exported plugin is in this folder. 
+\item If you need to make changes and export the plugin again, delete the \\ \bxname{org.eclipse.jubula.examples.extension.swing.toolkit} from the \bxname{InstallationPath/\app{}/plugins/} folder first.
 \end{enumerate}
 
 \section{\app{} Server Extension}
@@ -111,21 +111,21 @@ component to \app{}, you need to write a \gdtesterclass for it.
 Please follow the following guidelines for your \gdtesterclasses:
 \begin{itemize}
   \item Your build path must contain the following three JAR files:
-  \bxshell{AUTServer.jar}, \bxshell{AUTServerBase.jar}, and
+  \bxshell{org.eclipse.jubula.rc.swing.jar}, \bxshell{org.eclipse.jubula.rc.common.jar}, and
   \bxshell{org.eclipse.jubula.tools.jar}, which contain our server classes and some utility classes. They are located in your \app{} installation directory under
   \bxshell{server/lib}.
   \item The class must be compatible with \bxname{Java 1.4}.
   \item Its declared package name must begin with: \\
-    ''com.bredexsw.guidancer.autserver\\.swing.implclasses''
+    ''org.eclipse.jubula.rc.swing.swing.implclasses''
   \item It must implement the following interface: \\
-    ''com.bredexsw.guidancer.autserver\\.swing.implclasses.IImplementationClass''
+    ''org.eclipse.jubula.rc.\\.swing.swing.implclasses.IImplementationClass''
   \item It must provide \textbf{public} methods for each action that is implemented for the component.
   \item Each method that implements an action must throw the following exception upon error:
-    com.bredexsw.guidancer\\.autserverbase.exception.StepExecutionException
+    org.eclipse.jubula.rc.common.exception.StepExecutionException
     This way, \app{} will be able to know that an action has failed.
 \end{itemize}
 
-Under ''GUIdancerInstallationDirectory/examples/development/extension/src''
+Under ''InstallationDirectory/examples/development/extension/src''
 you will find a \\ ''eclipseProjects\_ExampleSwingServerExtension.zip'' which contains
  an example \app{} Server Extension for the Swing component ''JSlider''.
 
