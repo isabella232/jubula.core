@@ -10,10 +10,9 @@ so-called \textbf{\gdimplclass{}}. Each GUI toolkit that \app{} supports
 is described in a toolkit plugin.
 
 Because of the great flexibility that user customization allows, we
-have opened up this interface to our users. You are now able to add
-and to the existing functionality of our officially-supported
+have opened up this interface to our users. You can add to the existing functionality of our officially-supported
 \gdimplclasses{},
-or provide support for in-house graphic components, by
+or provide support for in-house graphic components by
 defining \gdimplclasses of your own, which we will refer to as
 \textbf{\gdtesterclasses}.
 
@@ -35,10 +34,10 @@ custom defined components and actions. Detailed information for each step can be
 corresponding example extension files in 
 ''InstallationDirectory/examples/development/extension/src''
 
-In general you have to always extends two parts of \app{}
+In general you always have to extend two parts of \app{}
 \begin{itemize}
 \item The \app{} Client by writing your own \bxshell{Toolkit-Plugin}:\\
-      This will tell the clients which new components and actions are available.
+      This will tell the client which new components and actions are available.
 \item The \app{} Server Component by putting a compiled class file to a specific directory:\\
       This is the part which is acutally performing the actions on the new component.
 \end{itemize}
@@ -47,7 +46,6 @@ In general you have to always extends two parts of \app{}
 To create your own \app{} extension, you need:
 \begin{itemize}
 \item \app{} 2.0 or later
-\item a license for the toolkit you want to extend
 \item Eclipse 3.4 or later
 \item JDK 5.0
 \end{itemize}
@@ -58,7 +56,7 @@ InstallationDir$\backslash$server$\backslash$lib$\backslash$extImplClasses
 
 \section{\app{} Client Extension}
 
-The following steps have to be done to extend the \app{} Client:
+The following steps have to be done to extend the \app{} client:
 \begin{enumerate}
  \item Create an eclipse plug-in project
  \item Set ''InstallationDir$\backslash$\app{}$\backslash$plugins'' as your target platform
@@ -146,15 +144,15 @@ using a directory structure that corresponds to the fully-qualified
 package name. Therefore, your \gdtesterclasses should be in some
 sub-directory of the following path within your \app{} installation directory:
 
-\texttt{server/lib/extImplClasses/com/bredexsw\\
-    /guidancer/autserver/swing/implclasses}
+\texttt{server/lib/extImplClasses/org/eclipse\\
+    /jubula/swing/swing/implclasses}
 
 As \bxname{Eclipse} already stores compiled classes according to this
 structure, you need only (recursively) copy the directory structure,
-starting with \bxshell{com}, into the extImplClasses directory.
+starting with \bxshell{org}, into the extImplClasses directory.
 
 Alternatively, you may place a JAR containing the above structure
-(also starting with \bxshell{com}) into the \bxshell{extImplClasses}
+(also starting with \bxshell{org}) into the \bxshell{extImplClasses}
 directory.
 
 \bxtipp{Please note that if the \textit{extImplClasses} directory does
@@ -164,12 +162,12 @@ not already exist, you must create it in the above-mentioned location.}
 \app{} comes with a complete example extension implementation in source and binaries. 
 This example extension extends \app{} for the Swing component ''JSlider''. After deploying the \app{} Client plug-in and the \app{} Server 
 extension you should be able to test the Swing component ''JSlider'' at ''Graphics Component''-level with \app{}.
-The example extension code and binaries can be found in the ''GUIdancerInstallationDirectory/examples/development/extension'':
+The example extension code and binaries can be found in the ''InstallationDirectory/examples/development/extension'':
 
 \begin{itemize}
  \item AUT \\
  This directory contains a trivial example AUT which uses the originally unsupported component "JSlider". 
- After installing the extensions, your GUIdancer will be able to test this new component.
+ After installing the extensions, your \app{} will be able to test this new component.
  \item src \\
  This directory contains several archive files which are all importable Eclipse projects:
  \begin{itemize}
