@@ -45,10 +45,21 @@ public class MonitoringConstants {
     /** the query syntax for the extensions validator */
     public static final String M_ATTR_VALIDATOR = "validator"; ////$NON-NLS-1$    
     
+    /** a type "string" (set in the extension point) will be rendered as a Textfield*/
+    public static final String RENDER_AS_TEXTFIELD = "string"; //$NON-NLS-1$
+    /** a type "boolean" (set in the extension point) will be rendered as a checkbox*/
+    public static final String RENDER_AS_CHECKBOX = "boolean"; //$NON-NLS-1$ 
+    /** a type "filebrowse" (set in the extension point) will be rendered as a Textfield with additional "browse" button */
+    public static final String RENDER_AS_FILEBROWSE = "filebrowse"; //$NON-NLS-1$
+    
     /** key for ConfigMap */
     public static final String AGENT_CLASS = "AGENT_CLASS"; //$NON-NLS-1$   
     /** key for ConfigMap */
     public static final String RESET_AGENT = "RESET_AGENT"; //$NON-NLS-1$
+    /** key for ConfigMap */
+    public static final String INSTALL_DIR = "INSTALL_DIR"; //$NON-NLS-1$    
+    /** key for ConfigMap */
+    public static final String SOURCE_DIR = "SOURCE_DIR"; //$NON-NLS-1$    
        
     /** monitoring error, this text will be displayed in the properties view*/
     public static final String MONITORING_ERROR_TOO_LARGE = "Monitoring Report was too large to send"; //$NON-NLS-1$
@@ -73,16 +84,11 @@ public class MonitoringConstants {
     /** Monitoring-Value type */ 
     public static final String INTEGER_VALUE = "INTEGER"; //$NON-NLS-1$
     /** Monitoring category  */
-    public static final String NO_CATEGORY = "NO_CATEGORY"; //$NON-NLS-1$
-    
-    /** a type "string" (set in the extension point) will be rendered as a Textfield*/
-    public static final String RENDER_AS_TEXTFIELD = "string"; //$NON-NLS-1$
-    /** a type "boolean" (set in the extension point) will be rendered as a checkbox*/
-    public static final String RENDER_AS_CHECKBOX = "boolean"; //$NON-NLS-1$ 
+    public static final String NO_CATEGORY = "NO_CATEGORY"; //$NON-NLS-1$   
     
     
     /** key to identify code coverage widgets */
-    public static final String MONITORING_KEY = "MONITORING_KEY";
+    public static final String MONITORING_KEY = "MONITORING_KEY"; //$NON-NLS-1$
     
     /** private constructor */
     private MonitoringConstants() {        

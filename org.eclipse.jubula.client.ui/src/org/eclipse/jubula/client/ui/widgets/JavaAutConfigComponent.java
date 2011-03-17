@@ -142,14 +142,6 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     private DirectCombo<String> m_monitoringCombo;
     /** gui component */
     private JBText m_envTextArea;
-    /** gui component */
-    private JBText m_autInstallDirectoryTextField;
-    /** gui component */
-    private Button m_autInstallDirectoryButton;
-    /** gui component */
-    private JBText m_autSourceDirectoryTextField;
-    /** gui component */
-    private Button m_autSourceDirectoryButton;
     /** the WidgetModifyListener */
     private WidgetModifyListener m_modifyListener;
     /** the WidgetFocusListener */
@@ -192,17 +184,19 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     protected void createMonitoringArea(Composite monitoringComposite) {     
         
         GridLayout result = (GridLayout)monitoringComposite.getLayout();        
-        result.horizontalSpacing = 40;
-        monitoringComposite.setLayout(result);
+        result.horizontalSpacing = 40;       
+        result.numColumns = 2;
+        monitoringComposite.setLayout(result);        
         final String monitoringID = super.getConfigValue(
                 AutConfigConstants.MONITORING_AGENT_ID);
               
         if (!StringUtils.isEmpty(monitoringID)) {  
-            ArrayList<MonitoringAttribute> list = 
+            ArrayList<MonitoringAttribute> monitoringAttributelist = 
                 (ArrayList<MonitoringAttribute>)MonitoringUtils
                     .getAttributes(MonitoringUtils.getElement(
                             monitoringID));            
-            createGuiComponents(monitoringComposite, list);
+            createMonitoringUIComponents(monitoringComposite, 
+                    monitoringAttributelist);
         }
         resize();
         getShell().pack();
@@ -212,31 +206,77 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     /**
      * Dynamically creates GUI components for monitoring composite
      * @param monitoringComposite The composite to add the components to
-     * @param guiCompList This list contains attributes from the extension point
+     * @param monitoringAttributeList This list contains attributes from the extension point
      * 
      */
-    private void createGuiComponents(Composite monitoringComposite, 
-            java.util.List<MonitoringAttribute> guiCompList) {
+    private void createMonitoringUIComponents(Composite monitoringComposite, 
+            java.util.List<MonitoringAttribute> monitoringAttributeList) {
         
-        for (int i = 0; i < guiCompList.size(); i++) {                
-            final MonitoringAttribute ca = guiCompList.get(i);               
-            if (!ca.isRender()) { 
-                putConfigValue(ca.getId(), ca.getDefaultValue());
-            }   
-            if (ca.isRender()) {                     
-                if (ca.getType().equalsIgnoreCase(
+        for (int i = 0; i < monitoringAttributeList.size(); i++) {
+            final MonitoringAttribute attribute = 
+                monitoringAttributeList.get(i);
+            if (!attribute.isRender()) { 
+                putConfigValue(attribute.getId(), attribute.getDefaultValue());
+            } else {                     
+                if (attribute.getType().equalsIgnoreCase(
                         MonitoringConstants.RENDER_AS_TEXTFIELD)) { 
-                    createMonitoingTextFieldWidget(
-                            monitoringComposite, ca);
+                    createMonitoringWidgetLabel(monitoringComposite, attribute);
+                    createMonitoringTextFieldWidget(
+                            monitoringComposite, attribute);
+                }                
+                if (attribute.getType().equalsIgnoreCase(
+                        MonitoringConstants.RENDER_AS_FILEBROWSE)) {
+                    createMonitoringWidgetLabel(monitoringComposite, attribute);
+                    createMonitoringFilebrowse(monitoringComposite, attribute);
                 }
-                if (ca.getType().equalsIgnoreCase(
+                if (attribute.getType().equalsIgnoreCase(
                         MonitoringConstants.RENDER_AS_CHECKBOX)) { 
+                    createMonitoringWidgetLabel(monitoringComposite, attribute);
                     createMonitoringCheckBoxWidget(
-                            monitoringComposite, ca);
+                            monitoringComposite, attribute);
                 }
             }
         }
     }
+    /**
+     * Creates the label for the monitoring widget
+     * @param composite The monitoringComposite
+     * @param attribute The MonitoringAttribute to get the information from
+     */
+    public void createMonitoringWidgetLabel(Composite composite, 
+            MonitoringAttribute attribute) {
+        
+        Label widgetLabel = UIComponentHelper.createLabel(composite, 
+                attribute.getDescription());
+        if (!StringUtils.isEmpty(attribute.getInfoBobbleText())) {
+            ControlDecorator.decorateInfo(widgetLabel, 
+                    attribute.getInfoBobbleText(), false);
+        }
+    }    
+    /**
+     * Creates a text field and a browse button
+     * for the given monitoring composite 
+     * @param composite The composite to add the widget on
+     * @param att The current attribute to render   
+     */
+    private void createMonitoringFilebrowse(Composite composite, 
+            MonitoringAttribute att) {
+        
+        Composite c = UIComponentHelper.createLayoutComposite(composite, 2);
+        final JBText textField = createMonitoringTextFieldWidget(c, att);
+        final Button browseButton = new Button(c, SWT.PUSH);
+        browseButton.setText(Messages.AUTConfigComponentBrowse);
+        browseButton.setLayoutData(BUTTON_LAYOUT);
+        browseButton.setData(
+                MonitoringConstants.MONITORING_KEY, att.getId());
+        browseButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent event) { 
+                monitoringBrowseButtonSelected(textField);
+            }
+        });    
+        
+    }
+       
     /**
      * Creates a Checkbox for the given monitoring composite, 
      * which was specified in the extension point.     * 
@@ -245,26 +285,16 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * 
      */
     private void createMonitoringCheckBoxWidget(Composite composite, 
-            MonitoringAttribute att) {
+            final MonitoringAttribute att) {
         
-        final MonitoringAttribute ca = att;
-        final String autId = super.getConfigValue(AutConfigConstants.AUT_ID);
-        if (!StringUtils.isEmpty(ca.getInfoBobbleText())) {
-            Label l = UIComponentHelper.createLabel(
-                    composite, ca.getDescription());
-            ControlDecorator.decorateInfo(l, 
-                    ca.getInfoBobbleText(), false);
-        } else {
-            UIComponentHelper.createLabel(composite, 
-                    ca.getDescription());
-        }                   
-        final Button b = UIComponentHelper.createToggleButton(
-                composite, 2);
-        b.setData(MonitoringConstants.MONITORING_KEY, ca.getId());
+        final String autId = super.getConfigValue(AutConfigConstants.AUT_ID);  
+        final Button b = 
+            UIComponentHelper.createToggleButton(composite, 1);
+        b.setData(MonitoringConstants.MONITORING_KEY, att.getId());
         b.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {
                 showMonitoringInfoDialog(autId); 
-                putConfigValue(ca.getId(), 
+                putConfigValue(att.getId(), 
                         String.valueOf(b.getSelection()));     
             }
         });
@@ -273,62 +303,53 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     /**
      * creates a Textfield for a given monitoring composite,
      * which was specified in the extension point.
-     * @param composite the monitoring composite
+     * @param composite The monitoring composite
      * @param att the MonitoringAttribute
+     * @return A monitoring textfield
      * 
      */
-    private void createMonitoingTextFieldWidget(Composite composite, 
-            MonitoringAttribute att) {
+    private JBText createMonitoringTextFieldWidget(Composite composite, 
+            final MonitoringAttribute att) {
         
-        final MonitoringAttribute ca = att;       
-        final String autId = super.getConfigValue(AutConfigConstants.AUT_ID);
-        if (!StringUtils.isEmpty(ca.getInfoBobbleText())) {
-            Label l = UIComponentHelper.createLabel(
-                    composite, ca.getDescription());
-            ControlDecorator.decorateInfo(l, 
-                    ca.getInfoBobbleText(), false);
-        } else {
-            UIComponentHelper.createLabel(composite, 
-                    ca.getDescription());
-        }
-        final JBText t = UIComponentHelper.createTextField(
-                composite, 2);
-        t.setData(MonitoringConstants.MONITORING_KEY, ca.getId());
-        t.setText(getConfigValue(ca.getId()));
-        final IValidator validator = ca.getValidator();
-        t.addModifyListener(new ModifyListener() {              
-            public void modifyText(ModifyEvent e) {  
+        final JBText textField = UIComponentHelper.createTextField(
+                composite, 1);
+        textField.setData(MonitoringConstants.MONITORING_KEY, 
+                att.getId());
+        textField.setText(getConfigValue(att.getId()));
+        final IValidator validator = att.getValidator();
+        textField.addModifyListener(new ModifyListener() {              
+            public void modifyText(ModifyEvent e) {                  
                 if (validator != null) {                      
                     IStatus status = 
-                        validator.validate(t.getText());      
+                        validator.validate(textField.getText());      
                     if (!status.isOK()) {
                         DialogStatusParameter error = 
                             createErrorStatus(status.getMessage());
-                        addError(error);
-                        checkAll();             
-                    } else {
-                        checkAll();  
-                    }                                
+                        addError(error);                                     
+                    } 
+                    checkAll();                   
                 }
-                putConfigValue(ca.getId(), t.getText());     
+                putConfigValue(att.getId(), textField.getText());     
             }
         });  
-        t.addFocusListener(new FocusListener() {            
+        final String autId = super.getConfigValue(AutConfigConstants.AUT_ID);
+        textField.addFocusListener(new FocusListener() {            
             private String m_oldText = StringConstants.EMPTY;
             public void focusLost(FocusEvent e) {
-                String currentText = t.getText();
+                String currentText = textField.getText();
                 if (!currentText.equals(m_oldText)) {
                     showMonitoringInfoDialog(autId);       
                 } 
-                putConfigValue(ca.getId(), t.getText()); 
+                putConfigValue(att.getId(), textField.getText()); 
             }                            
             public void focusGained(FocusEvent e) {
-                m_oldText = t.getText();
+                m_oldText = textField.getText();
             }
         });            
-        
+        return textField;
         
     }    
+        
     /** if monitoring parameters changed, the AUT must be restarted, only than
      *  the changes will be active. This must be done, because at start up the
      *  autConfigMap will be stored in the MonitoringDataStore. 
@@ -490,12 +511,6 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         m_execTextField.addModifyListener(modifyListener);
         m_execButton.addSelectionListener(selectionListener);
         m_monitoringCombo.addSelectionListener(selectionListener);
-
-        m_autInstallDirectoryTextField.addModifyListener(modifyListener);
-        m_autInstallDirectoryButton.addSelectionListener(selectionListener);
-        
-        m_autSourceDirectoryButton.addSelectionListener(selectionListener);
-        m_autSourceDirectoryTextField.addModifyListener(modifyListener);
         
     }
 
@@ -531,12 +546,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         m_execTextField.removeModifyListener(modifyListener);
         m_execButton.removeSelectionListener(selectionListener);
         m_monitoringCombo.removeSelectionListener(selectionListener);
-      
-        m_autInstallDirectoryTextField.removeModifyListener(modifyListener);
-        m_autInstallDirectoryButton.removeSelectionListener(selectionListener);
-        
-        m_autSourceDirectoryButton.removeSelectionListener(selectionListener);
-        m_autSourceDirectoryTextField.removeModifyListener(modifyListener);
+
     }
     /**
      * 
@@ -895,10 +905,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 .get(AutConfigConstants.JAR_FILE)));
             m_execTextField.setText(StringUtils.defaultString(data
                 .get(AutConfigConstants.EXECUTABLE)));
-            m_autInstallDirectoryTextField.setText(StringUtils
-                    .defaultString(data.get(AutConfigConstants.INST_DIR)));
-            m_autSourceDirectoryTextField.setText(StringUtils.defaultString(
-                    data.get(AutConfigConstants.SOURCE_DIR)));
+
         }
  
     }
@@ -1375,16 +1382,12 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 if (checkListeners) {
                     installListeners();
                 }
-            } else if (source.equals(m_autInstallDirectoryTextField)) {
-                handleInstallationDirModifyEvent();
-            } else if (source.equals(m_autSourceDirectoryTextField)) {
-                handleSourceDirModifyEvent();
-            }
+            } 
 
             checkAll();         
         }
     }
-    
+        
     /**
      * This private inner class contains a new FocusListener.
      * 
@@ -1519,52 +1522,11 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             } else if (source.equals(m_monitoringCombo)) {
                 handleMonitoringComboEvent();
                 return;
-            } else if (source.equals(m_autInstallDirectoryButton)) {
-                autInstallDirectoryButtonSelected();
-                return;
-            } else if (source.equals(m_autSourceDirectoryButton)) {
-                autSourceDirectoryButtonSelected();
-                return;
-            }
+            } 
+
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
                     + StringConstants.LEFT_PARENTHESES + source 
                     + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
-        }
-
-        /**
-         * Handles selection of the "Browse" button corresponding to the 
-         * AUT Installation Directory text field.
-         */
-        private void autInstallDirectoryButtonSelected() {
-            if (isRemoteRequest()) {
-                remoteBrowse(true, AutConfigConstants.INST_DIR,
-                        m_autInstallDirectoryTextField,
-                        Messages.AUTConfigComponentSelectInstDir);
-            } else {
-                DirectoryDialog directoryDialog = new DirectoryDialog(
-                        Plugin.getShell(), SWT.APPLICATION_MODAL
-                                | SWT.ON_TOP);
-                handleInstallationDirButtonEvent(directoryDialog);
-
-            }
-        }
-        
-        /**
-         * Handles selection of the "Browse" button corresponding to the 
-         * AUT Source Directory text field.
-         */
-        private void autSourceDirectoryButtonSelected() {
-            if (isRemoteRequest()) {
-                remoteBrowse(true, AutConfigConstants.SOURCE_DIR,
-                        m_autSourceDirectoryTextField,
-                        Messages.AUTConfigComponentSelectSourceDir);
-            } else {
-                DirectoryDialog directoryDialog = new DirectoryDialog(
-                        Plugin.getShell(), SWT.APPLICATION_MODAL
-                                | SWT.ON_TOP);
-                handleSourceDirButtonEvent(directoryDialog);
-
-            }
         }
 
         /**
@@ -1608,10 +1570,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         
         // AUT directory editor
         createAutDirectoryEditor(advancedAreaComposite);
-        //create AUT installation directory widgets
-        createAutInstallationDirectory(advancedAreaComposite);
-        //create AUT source directory widgets
-        createAutSourceDirectory(advancedAreaComposite);
+
         // class name editor
         UIComponentHelper.createLabel(advancedAreaComposite,
                 "AUTConfigComponent.className"); //$NON-NLS-1$ 
@@ -1800,6 +1759,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         addError(paramList, modifyJREFieldAction());
         addError(paramList, modifyJreParamFieldAction());
         addError(paramList, modifyServerComboAction());
+
     }
 
     /**
@@ -1808,18 +1768,18 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     public void dispose() {
         RemoteFileBrowserBP.clearCache(); // get rid of cached directories
         super.dispose();
-    }
-
+    }    
     /**
      * handles the button event, which was thrown by the browse button for
      * the m_autInstallDirectoryTextField       
      * @param directoryDialog The DirectoryDialog
+     * @param textField The textField
      */
-    private void handleInstallationDirButtonEvent(
+    private void handleBrowseDirButtonEvent(JBText textField,
             DirectoryDialog directoryDialog) {
         String directory = null;
-        directoryDialog.setMessage(Messages.AUTConfigComponentSelectInstDir);
-        File path = new File(m_autInstallDirectoryTextField.getText());
+        directoryDialog.setMessage(Messages.AUTConfigComponentSelectDir);
+        File path = new File(textField.getText());
         String filterPath = Utils.getLastDirPath();
         if (path.exists()) {
             try {
@@ -1831,91 +1791,36 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         directoryDialog.setFilterPath(filterPath);
         directory = directoryDialog.open();
         if (directory != null) {
-            m_autInstallDirectoryTextField.setText(directory);
-            Utils.storeLastDirPath(directoryDialog.getFilterPath());            
-            putConfigValue(AutConfigConstants.INST_DIR, 
-                m_autInstallDirectoryTextField.getText());
+            textField.setText(directory);
+            Utils.storeLastDirPath(directoryDialog.getFilterPath());      
+            System.out.println("KEY= " 
+                    + textField.getData(MonitoringConstants.MONITORING_KEY));
+            System.out.println(textField.getText());
+            putConfigValue(String.valueOf(textField.getData(
+                    MonitoringConstants.MONITORING_KEY)), 
+                    textField.getText());
         }
     }
-    /**
-     * handles the button event, which was fired by the browse button from the
-     * m_autSourceDirectoryTextField
-     * @param directoryDialog A DirectoryDialog instance
-     */
-    private void handleSourceDirButtonEvent(DirectoryDialog 
-            directoryDialog) {
-        String directory = null;
-        directoryDialog.setMessage(Messages.AUTConfigComponentSelectSourceDir);
-        File path = new File(m_autSourceDirectoryTextField.getText());
-        String lastPath = Utils.getLastDirPath();
-        if (path.exists()) {
-            try {
-                lastPath = path.getCanonicalPath();
-            } catch (IOException e) {
-                //empty
-            }            
-        }
-        directoryDialog.setFilterPath(lastPath);
-        directory = directoryDialog.open();
-        if (directory != null) {
-            m_autSourceDirectoryTextField.setText(directory);
-            Utils.storeLastDirPath(directoryDialog.getFilterPath());
-            putConfigValue(AutConfigConstants.SOURCE_DIR, 
-                    m_autSourceDirectoryTextField.getText());
-        }
-        
-        
-    }   
     
     /**
-     * handles a modify event from the installation directory textfield
+     * Handles a selection of the "Browse" button,
+     * corresponding to the text field in the monitoring area.
+     * @param textField The text field to set the path to.
      */
-    private void handleInstallationDirModifyEvent() {
-        putConfigValue(AutConfigConstants.INST_DIR, 
-                m_autInstallDirectoryTextField.getText());          
-    }
-    /**
-     * handles a modify event from the source directory textfield
-     */
-    private void handleSourceDirModifyEvent() {
-        putConfigValue(AutConfigConstants.SOURCE_DIR, 
-                m_autSourceDirectoryTextField.getText());
-        
-    }
+    private void monitoringBrowseButtonSelected(JBText textField) {
+        if (isRemoteRequest()) {
+            remoteBrowse(true, 
+                    String.valueOf(textField.getData(
+                            MonitoringConstants.MONITORING_KEY)),
+                    textField,
+                    Messages.AUTConfigComponentSelectDir);
+        } else {
+            DirectoryDialog directoryDialog = new DirectoryDialog(
+                    Plugin.getShell(), SWT.APPLICATION_MODAL
+                            | SWT.ON_TOP);
+            handleBrowseDirButtonEvent(textField, directoryDialog);
 
-    /**
-     * creates the AUT installation directory textfield and browse button
-     * @param parent The parent Composite
-     */
-    protected void createAutInstallationDirectory(Composite parent) {
-        
-        ControlDecorator.decorateInfo(
-                UIComponentHelper.createLabel(parent, "AUTConfigComponent.instDir"), //$NON-NLS-1$, 
-                "AUTConfigComponent.labelInstDirectory", false); //$NON-NLS-1$        
-        m_autInstallDirectoryTextField = 
-            UIComponentHelper.createTextField(parent, 1);
-        
-        m_autInstallDirectoryButton = new Button(
-                UIComponentHelper.createLayoutComposite(parent), SWT.PUSH);
-        m_autInstallDirectoryButton.setText(Messages.AUTConfigComponentBrowse);
-        m_autInstallDirectoryButton.setLayoutData(BUTTON_LAYOUT);
-        
-    }
-    /**
-     * creates the AUT source directory textfield and browse button
-     * @param parent The where the widgets will be added
-     */
-    protected void createAutSourceDirectory(Composite parent) {
-        
-        ControlDecorator.decorateInfo(
-                UIComponentHelper.createLabel(parent, "AUTConfigComponent.srcDir"), //$NON-NLS-1$, 
-                "AUTConfigComponent.labelSourceDirectory", false); //$NON-NLS-1$   
-        m_autSourceDirectoryTextField = 
-            UIComponentHelper.createTextField(parent, 1);
-        m_autSourceDirectoryButton = new Button(
-                UIComponentHelper.createLayoutComposite(parent), SWT.PUSH);  
-        m_autSourceDirectoryButton.setText(Messages.AUTConfigComponentBrowse);
-        m_autSourceDirectoryButton.setLayoutData(BUTTON_LAYOUT);
-        
-    }
+        }
+    }    
+
 } 

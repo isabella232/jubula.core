@@ -204,8 +204,8 @@ public class TreeTraverser {
                         ISpecTestCasePO testCase;
                         if (Hibernator.isPoClassSubclass(
                                 nodePoClass, IExecTestCasePO.class)) {
-                            testCase = ((IExecTestCasePO)node)
-                            .getSpecTestCase();
+                            testCase = 
+                                ((IExecTestCasePO)node).getSpecTestCase();
                         } else {
                             testCase = (ISpecTestCasePO)node;
                         }

@@ -66,13 +66,7 @@ public class AutConfigConstants {
 
     /** The working directory of the AUT */
     public static final String WORKING_DIR = "WORKING_DIR"; //$NON-NLS-1$
-    
-    /** the sourcefile directory of the AUT */
-    public static final String SOURCE_DIR = "SOURCE_DIR"; //$NON-NLS-1$
-    
-    /** the installation directory of the AUT */
-    public static final String INST_DIR = "INST_DIR"; //$NON-NLS-1$
-    
+        
     /** the id tag for the aut */
     public static final String WEB_ID_TAG = "WEB_ID_TAG"; //$NON-NLS-1$
     

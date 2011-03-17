@@ -14,11 +14,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -34,7 +36,6 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -42,6 +43,8 @@ import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.persistence.annotations.Index;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -54,6 +57,10 @@ import org.eclipse.persistence.annotations.Index;
 @DiscriminatorValue(value = "E")
 class ExecTestCasePO extends TestCasePO implements 
     IEventHandlerContainer, IExecTestCasePO {
+    
+    /** the logger */
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(ExecTestCasePO.class);
     
     /**
      * reference to SpecTestCasePO from specification tree
@@ -233,35 +240,32 @@ class ExecTestCasePO extends TestCasePO implements
         ISpecTestCasePO specTc = null;
         // Search by GUID
         
-        IProjectPO parentProject = GeneralStorage.getInstance().getProject();
         try {
-            if (parentProject == null
-                || !parentProject.getId().equals(getParentProjectId())) {
-
-                // Parent project is not the currently loaded project
-                parentProject = ProjectPM.loadProjectById(
-                    getParentProjectId());
+            if (getParentProjectId() != null) {
+                if (getProjectGuid() == null
+                        || getProjectGuid().equals(
+                                ProjectPM.getGuidOfProjectId(
+                                        getParentProjectId()))) {
+    
+                    // Referenced TC is in the same project
+                    specTc = NodePM.getSpecTestCase(getParentProjectId(), 
+                        getSpecTestCaseGuid());
+                    
+                } else {
+                    // Referenced TC is in a different project
+                    Set<IReusedProjectPO> reusedProjects = 
+                        new HashSet<IReusedProjectPO>();
+                    reusedProjects.addAll(
+                            ProjectPM.loadReusedProjects(getParentProjectId()));
+                    specTc = NodePM.getSpecTestCase(
+                            reusedProjects, getProjectGuid(), 
+                            getSpecTestCaseGuid());
+                }
             }
         } catch (JBException e) {
-            // FIXME zeb Could not find spec test case
-            return null;
+            LOG.warn("Could not retrieve referenced Test Case.", e); //$NON-NLS-1$
         }
- 
-        if (parentProject != null) {
-            if (getProjectGuid() == null 
-                || parentProject.getGuid().equals(getProjectGuid())) {
 
-                // Referenced TC is in the same project
-                specTc = NodePM.getSpecTestCase(getParentProjectId(), 
-                    getSpecTestCaseGuid());
-                
-            } else {
-                // Referenced TC is in a different project
-                specTc = NodePM.getSpecTestCase(
-                    parentProject.getUsedProjects(),
-                    getProjectGuid(), getSpecTestCaseGuid());
-            }
-        }
         m_cachedSpecTestCase = specTc;
         return specTc;
     }
