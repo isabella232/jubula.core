@@ -11,9 +11,9 @@
 package org.eclipse.jubula.client.ui.handlers.open;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -79,28 +78,12 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
      * @param specTc the spec to open the editor for
      */
     protected void openEditorForSpecTC(ISpecTestCasePO specTc) {
-        boolean isNodeEditable = isEditableNode(specTc);
+        boolean isNodeEditable = TestCaseBP.belongsToCurrentProject(specTc);
         if (isNodeEditable) {
             openEditor(specTc);
         } else {
             Utils.createMessageDialog(MessageIDs.I_NON_EDITABLE_NODE);
         }
-    }
-    
-    /**
-     * @param specTc
-     *            the spec test case to test
-     * @return true if editable --> belongs to current project; false otherwise
-     *         or if specTc == null
-     */
-    private boolean isEditableNode(ISpecTestCasePO specTc) {
-        if (specTc != null) {
-            EqualsBuilder eb = new EqualsBuilder();
-            eb.append(specTc.getParentProjectId(), GeneralStorage.getInstance()
-                    .getProject().getId());
-            return eb.isEquals();
-        }
-        return false;
     }
     
     /**
