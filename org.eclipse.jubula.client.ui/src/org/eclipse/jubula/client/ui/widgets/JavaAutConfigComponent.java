@@ -1792,10 +1792,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         directory = directoryDialog.open();
         if (directory != null) {
             textField.setText(directory);
-            Utils.storeLastDirPath(directoryDialog.getFilterPath());      
-            System.out.println("KEY= " 
-                    + textField.getData(MonitoringConstants.MONITORING_KEY));
-            System.out.println(textField.getText());
+            Utils.storeLastDirPath(directoryDialog.getFilterPath());  
             putConfigValue(String.valueOf(textField.getData(
                     MonitoringConstants.MONITORING_KEY)), 
                     textField.getText());

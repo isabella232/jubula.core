@@ -90,6 +90,10 @@ public class MonitoringConstants {
     /** key to identify code coverage widgets */
     public static final String MONITORING_KEY = "MONITORING_KEY"; //$NON-NLS-1$
     
+    /** tmp folder name where jacoco exec files are stored to */
+    public static final String TEMP_FOLDER_NAME = "c.b.g.m.j_"; //$NON-NLS-1$
+    
+    
     /** private constructor */
     private MonitoringConstants() {        
         //do nothing
