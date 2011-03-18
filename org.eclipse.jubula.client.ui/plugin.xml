@@ -3246,10 +3246,16 @@
  <extension
        point="org.eclipse.ui.exportWizards">
     <wizard
+          category="org.eclipse.jubula.client.ui.test"
           class="org.eclipse.jubula.client.ui.wizards.ExportTestResultDetailsWizard"
+          icon="icons/testResultTree.gif"
           id="org.eclipse.jubula.client.ui.exportWizard.ExportTestResultDetailsWizard"
           name="Test Result Details">
     </wizard>
+    <category
+          id="org.eclipse.jubula.client.ui.test"
+          name="%FunctionalTestCategory.name">
+    </category>
  </extension>
  <extension
        point="org.eclipse.search.searchPages">
@@ -3279,10 +3285,16 @@
  <extension
        point="org.eclipse.ui.importWizards">
     <wizard
+          category="org.eclipse.jubula.client.ui.test"
           class="org.eclipse.jubula.client.ui.wizards.ImportTestDataSetsWizard"
+          icon="icons/centralTestData.gif"
           id="org.eclipse.jubula.client.ui.importWizard.ImportTestDataSetsWizard"
-          name="Import Central Test Data Sets">
+          name="Central Test Data Sets">
     </wizard>
+    <category
+          id="org.eclipse.jubula.client.ui.test"
+          name="%FunctionalTestCategory.name">
+    </category>
  </extension>
 	<extension point="org.eclipse.ui.activities">
 		<activity id="org.eclipse.jubula.app.activity.nonTestEditor"
