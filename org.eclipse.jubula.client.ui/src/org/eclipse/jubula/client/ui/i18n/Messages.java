@@ -445,6 +445,7 @@ public class Messages extends NLS {
     public static String ImportXLSTestDataWizardImportOperationFinished;
     public static String ImportXLSTestDataWizardImportOperationName;
     public static String ImportXLSTestDataWizardSuccessfullImport;
+    public static String ImportXLSTestDataWizardTitle;
     public static String InCurrentProject;
     public static String InfoDetailCannotMoveTc;
     public static String InfoDetailConnectToAutAgentFailed;

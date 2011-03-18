@@ -354,7 +354,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
      */
     public ImportXLSTestdataWizardPage(String name) {
         super(name, StructuredSelection.EMPTY);
-        setTitle(DataTransferMessages.DataTransfer_fileSystemTitle);
+        setTitle(Messages.ImportXLSTestDataWizardTitle);
         setDescription(DataTransferMessages.FileImport_importFileSystem);
     }
 
