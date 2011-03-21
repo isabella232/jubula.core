@@ -302,7 +302,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
          * {@inheritDoc}
          */
         public String getTypeName() {
-            return "PostGreSQL"; //$NON-NLS-1$
+            return "(unsupported) PostGreSQL"; //$NON-NLS-1$
         }
 
         /**
@@ -383,7 +383,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
          * {@inheritDoc}
          */
         public String getTypeName() {
-            return "MySQL"; //$NON-NLS-1$
+            return "(unsupported) MySQL"; //$NON-NLS-1$
         }
 
         /**
