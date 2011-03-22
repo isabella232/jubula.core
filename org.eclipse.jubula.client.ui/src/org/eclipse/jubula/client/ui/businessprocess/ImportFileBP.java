@@ -73,20 +73,10 @@ public class ImportFileBP implements IProjectNameConflictResolver {
         public String [] getFiles();
         
         /**
-         * return 0 if whole project should be imported otherwise, sth greater 0
-         * @return int
-         */
-        public int getImportTarget();
-        
-        /**
          * @return the selection state of the open project checkbox
          */
         public boolean getIsOpenProject();
 
-        /**
-         * @return what elements should be imported
-         */
-        public int getSelectedElements();
     }
     
     /** the logger */
@@ -302,16 +292,10 @@ public class ImportFileBP implements IProjectNameConflictResolver {
             IProgressMonitor monitor) throws InterruptedException {
         String [] fileNames = importInfo.getFiles();
         boolean openProject = importInfo.getIsOpenProject();
-        int importTarget = importInfo.getImportTarget();
+
         try {
-            if (importTarget == FileStorageBP.IMPORT_ALL) {
-                FileStorageBP.importProject(0, fileNames, monitor, 
-                        Plugin.getDefault(), openProject);
-            } else if (importTarget == FileStorageBP.IMPORT_TESTCASES) {
-                FileStorageBP.importProject(
-                    importInfo.getSelectedElements(), 
-                    fileNames, monitor, Plugin.getDefault(), openProject);
-            }
+            FileStorageBP.importProject(0, fileNames, monitor, 
+                    Plugin.getDefault(), openProject);
         } catch (PMException pme) {
             PMExceptionHandler
                 .handlePMExceptionForMasterSession(pme);
@@ -329,14 +313,7 @@ public class ImportFileBP implements IProjectNameConflictResolver {
     public void importProjects(IProjectImportInfoProvider importInfo) {
         String [] fileNames = importInfo.getFiles();
         boolean openProject = importInfo.getIsOpenProject();
-        int importTarget = importInfo.getImportTarget();
-        if (importTarget == FileStorageBP.IMPORT_ALL) {
-            importProject(0, fileNames, openProject);
-        } else if (importTarget == FileStorageBP.IMPORT_TESTCASES) {
-            importProject(
-                importInfo.getSelectedElements(), fileNames,
-                openProject);
-        }
+        importProject(0, fileNames, openProject);
     }
 
     /**

@@ -422,9 +422,6 @@ public class Messages extends NLS {
     public static String ImportOperationCancelledByUser;
     public static String ImportProjectDialogAdd;
     public static String ImportProjectDialogBrowse;
-    public static String ImportProjectDialogElements;
-    public static String ImportProjectDialogElementsCheckBox1;
-    public static String ImportProjectDialogElementsCheckBox2;
     public static String ImportProjectDialogFileLabel;
     public static String ImportProjectDialogFileSelector;
     public static String ImportProjectDialogInvalidFile;
@@ -433,11 +430,7 @@ public class Messages extends NLS {
     public static String ImportProjectDialogMoveDownToolTip;
     public static String ImportProjectDialogMoveUpToolTip;
     public static String ImportProjectDialogNoFilesToImport;
-    public static String ImportProjectDialogNoProjectError;
-    public static String ImportProjectDialogNoSelectError;
     public static String ImportProjectDialogOpenProjectCheckbox;
-    public static String ImportProjectDialogRadio1;
-    public static String ImportProjectDialogRadio2;
     public static String ImportProjectDialogRemoveToolTip;
     public static String ImportProjectDialogTitle;
     public static String ImportTestDataSetsWizardWindowTitle;
