@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -464,8 +465,9 @@ public class TestExecution {
         Map<String, String> autConfigMap = 
             getConnectedAUTsConfigMap();
         if (autConfigMap != null) {
-            varStore.store(TDVariableStore.VAR_AUTCONFIG, 
-                    autConfigMap.get(AutConfigConstants.CONFIG_NAME));
+            varStore.store(TDVariableStore.VAR_AUTCONFIG, MapUtils.getString(
+                    autConfigMap, AutConfigConstants.CONFIG_NAME, 
+                    TestresultSummaryBP.AUTRUN));
         } else {
             // write constant for AUTs which has been started via autrun
             varStore.store(TDVariableStore.VAR_AUTCONFIG, 

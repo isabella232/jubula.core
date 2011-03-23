@@ -14,11 +14,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 
 
@@ -94,21 +97,24 @@ public class TestResult extends AbstractTestResult {
      * {@inheritDoc}
      */
     public String getAutAgentHostName() {
-        return getAutConfigMap().get(AutConfigConstants.SERVER);
+        return MapUtils.getString(getAutConfigMap(),
+                AutConfigConstants.SERVER, StringConstants.EMPTY);
     }
 
     /**
      * {@inheritDoc}
      */
     public String getAutArguments() {
-        return getAutConfigMap().get(AutConfigConstants.AUT_ARGUMENTS);
+        return MapUtils.getString(getAutConfigMap(),
+                AutConfigConstants.AUT_ARGUMENTS, StringConstants.EMPTY);
     }
 
     /**
      * {@inheritDoc}
      */
     public String getAutConfigName() {
-        return getAutConfigMap().get(AutConfigConstants.CONFIG_NAME);
+        return MapUtils.getString(getAutConfigMap(),
+                AutConfigConstants.CONFIG_NAME, TestresultSummaryBP.AUTRUN);
     }
 
     /**

@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -79,11 +78,8 @@ public class TestresultSummaryBP {
         TestExecution te = TestExecution.getInstance();
         ITestSuitePO ts = te.getStartedTestSuite();
         IAUTMainPO startedAut = te.getConnectedAut();
-        Map<String, String> autConfig = result.getAutConfigMap();
-        if (autConfig != null) {
-            String autConfigName = autConfig
-                    .get(AutConfigConstants.CONFIG_NAME);
-            summary.setAutConfigName(autConfigName);
+        if (result.getAutConfigMap() != null) {
+            String autConfigName = result.getAutConfigName();
             for (IAUTConfigPO conf : startedAut.getAutConfigSet()) {
                 if (conf.getValue(AutConfigConstants.CONFIG_NAME, "invalid") //$NON-NLS-1$
                         .equals(autConfigName)) {
@@ -91,15 +87,13 @@ public class TestresultSummaryBP {
                     break;
                 }
             }
-            summary.setAutCmdParameter(autConfig
-                    .get(AutConfigConstants.AUT_ARGUMENTS));
-            summary.setAutId(te.getConnectedAutId().getExecutableName());
         } else {
-            summary.setAutConfigName(AUTRUN);
             summary.setInternalAutConfigGuid(AUTRUN);
-            summary.setAutCmdParameter(AUTRUN);
-            summary.setAutId(AUTRUN);
         }
+        summary.setAutConfigName(result.getAutConfigName());
+        summary.setAutCmdParameter(result.getAutArguments());
+        summary.setAutId(te.getConnectedAutId().getExecutableName());
+        
         summary.setAutOS(System.getProperty("os.name")); //$NON-NLS-1$
         IAUTMainPO aut = startedAut != null ? startedAut : ts.getAut();
         if (aut != null) {
