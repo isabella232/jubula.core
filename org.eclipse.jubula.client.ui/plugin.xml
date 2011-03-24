@@ -51,21 +51,19 @@
 			id="org.eclipse.jubula.client.ui.expression.canConnectToAut">
 			<and>
 				<with variable="org.eclipse.jubula.client.ui.variable.isAutStarterConnected">
-					<equals value="true">
-					</equals>
+					<equals value="true" />
 				</with>
 				<with variable="org.eclipse.jubula.client.ui.variable.autConnectionStatus">
-       <equals
-             value="Disconnected">
-       </equals>
+			       <equals value="Disconnected" />
 				</with>
 				<with variable="org.eclipse.jubula.client.ui.variable.isTestRunning">
-					<equals value="false">
-					</equals>
+					<equals value="false" />
 				</with>
 				<with variable="org.eclipse.jubula.client.ui.variable.runningAuts">
-					<count value="+">
-					</count>
+					<count value="+" />
+				</with>
+				<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
+					<equals value="true" />
 				</with>
 			</and>
 		</definition>
