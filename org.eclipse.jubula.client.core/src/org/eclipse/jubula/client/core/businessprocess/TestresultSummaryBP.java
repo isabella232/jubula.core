@@ -78,7 +78,7 @@ public class TestresultSummaryBP {
         TestExecution te = TestExecution.getInstance();
         ITestSuitePO ts = te.getStartedTestSuite();
         IAUTMainPO startedAut = te.getConnectedAut();
-        if (result.getAutConfigMap() != null) {
+        if (result.getAutConfigMap() != null && startedAut != null) {
             String autConfigName = result.getAutConfigName();
             for (IAUTConfigPO conf : startedAut.getAutConfigSet()) {
                 if (conf.getValue(AutConfigConstants.CONFIG_NAME, "invalid") //$NON-NLS-1$
