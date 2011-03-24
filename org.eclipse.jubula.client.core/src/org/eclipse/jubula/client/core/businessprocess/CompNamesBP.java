@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -554,7 +555,10 @@ public class CompNamesBP {
         for (Object o : node.getUnmodifiableNodeList()) {
             if (o instanceof IExecTestCasePO) {
                 IExecTestCasePO exec = (IExecTestCasePO)o;
-                for (ICompNamesPairPO pair : exec.getCompNamesPairs()) {
+                // we need to iterate over a copy of the collection
+                // because we are removing elements during iteration
+                for (ICompNamesPairPO pair : new LinkedList<ICompNamesPairPO>(
+                        exec.getCompNamesPairs())) {
                     searchCompType(pair, exec);
                     if (pair.getType().length() == 0) {
                         exec.removeCompNamesPair(pair.getFirstName());
