@@ -20,6 +20,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,7 +28,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.client.core.ClientTestFactory;
-import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
@@ -42,7 +42,6 @@ import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedE
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -83,6 +82,7 @@ import org.eclipse.jubula.communication.message.ResetMonitoringDataMessage;
 import org.eclipse.jubula.communication.message.RestartAutMessage;
 import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
@@ -218,9 +218,6 @@ public class TestExecution {
      */
     private StepCounter m_stepCounter = new StepCounter();
     
-    /** the current AUTConfig */
-    private IAUTConfigPO m_autConfig;
-    
     /**
      * <code>m_resultTree</code> associated resultTree
      */
@@ -341,14 +338,10 @@ public class TestExecution {
                     });
         }
         
-        m_autConfig = ClientTestFactory.getClientTest().getLastAutConfig();
         m_autoScreenshot = autoScreenshot;
         setPaused(false);
         Validate.notNull(testSuite, Messages.TestsuiteMustNotBeNull);
         m_executionLanguage = locale;
-        m_varStore.storeEnvironmentVariables();
-        storePredefinedVariables(m_varStore, testSuite);
-        storeExternallyDefinedVariables(m_varStore, externalVars);
         
         m_externalTestDataBP.clearExternalData();
 
@@ -364,6 +357,10 @@ public class TestExecution {
                             .getCanonicalHostName());
                 summary.setAutAgentName(ServerConnection.getInstance()
                         .getCommunicator().getHostName());
+                
+                m_varStore.storeEnvironmentVariables();
+                storePredefinedVariables(m_varStore, testSuite);
+                storeExternallyDefinedVariables(m_varStore, externalVars);
 
                 startTestSuite(testSuite, locale);
             } else {
@@ -407,9 +404,8 @@ public class TestExecution {
         ClientTestFactory.getClientTest().fireTestExecutionChanged(
                 new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_FAILED,
                         new JBException(Messages.CouldNotConnectToAUT 
-                                + StringConstants.COLON + StringConstants.SPACE
-                                + autName, 
-                                    MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
+                            + StringConstants.COLON + StringConstants.SPACE
+                            + autName, MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
     }
     
     /**
@@ -431,29 +427,29 @@ public class TestExecution {
     private void storePredefinedVariables(TDVariableStore varStore, 
             ITestSuitePO testSuite) {
 
-        // gd.language
+        // TEST_language
         varStore.store(TDVariableStore.VAR_LANG, 
                 m_executionLanguage.toString());
 
-        // gd.testsuite
+        // TEST_testsuite
         varStore.store(TDVariableStore.VAR_TS, testSuite.getName());
 
-        // gd.username
+        // TEST_username
         varStore.store(TDVariableStore.VAR_USERNAME, 
                 System.getProperty("user.name")); //$NON-NLS-1$
         
-        // gd.dbusername
+        // TEST_dbusername
         varStore.store(TDVariableStore.VAR_DBUSERNAME, 
                 Hibernator.instance().getCurrentDBUser());
         
         try {
             ServerConnection serverConn = ServerConnection.getInstance();
 
-            // gd.autstarter
+            // TEST_autstarter
             varStore.store(TDVariableStore.VAR_AUTAGENT, 
                     serverConn.getCommunicator().getHostName());
             
-            // gd.portnumber
+            // TEST_portnumber
             varStore.store(TDVariableStore.VAR_PORT, 
                     String.valueOf(serverConn.getCommunicator().getPort()));
 
@@ -462,20 +458,23 @@ public class TestExecution {
             // Do nothing.
         }
         
-        // gd.aut
+        // TEST_aut
         varStore.store(TDVariableStore.VAR_AUT, testSuite.getAut().getName());
         
-        // gd.autconfig
-        if (m_autConfig != null) {
-            varStore.store(TDVariableStore.VAR_AUTCONFIG, 
-                    m_autConfig.getName());
+        // TEST_autconfig
+        Map<String, String> autConfigMap = 
+            getConnectedAUTsConfigMap();
+        if (autConfigMap != null) {
+            varStore.store(TDVariableStore.VAR_AUTCONFIG, MapUtils.getString(
+                    autConfigMap, AutConfigConstants.CONFIG_NAME, 
+                    TestresultSummaryBP.AUTRUN));
         } else {
             // write constant for AUTs which has been started via autrun
             varStore.store(TDVariableStore.VAR_AUTCONFIG, 
                     TestresultSummaryBP.AUTRUN);
         }
 
-        // gd.clientVersion
+        // TEST_clientVersion
         varStore.store(TDVariableStore.VAR_CLIENTVERSION, 
                 (String)Platform.getBundle(
                         CLIENT_TEST_PLUGIN_ID).getHeaders().get(
@@ -483,6 +482,20 @@ public class TestExecution {
         
     }
 
+    /**
+     * @return the aut config map of the currently connected aut or null if
+     *         there is no currently connected aut
+     */
+    protected Map<String, String> getConnectedAUTsConfigMap() {
+        if (TestExecution.getInstance().getConnectedAutId() != null) {
+            String autID = getConnectedAutId().getExecutableName();
+            return ClientTestFactory.getClientTest()
+                .requestAutConfigMapFromAgent(autID);
+        }
+        return null;
+    }
+    
+    
     /**
      * @param testSuite testSuite
      * @param locale language valid for testexecution
@@ -493,10 +506,6 @@ public class TestExecution {
         m_expectedNumberOfSteps = 0;
         m_trav = new Traverser(testSuite, locale);
         m_stepCounter.reset();
-        IClientTest clientTest = ClientTestFactory.getClientTest();
-        clientTest.setLastConnectedAutId(
-                getConnectedAutId().getExecutableName()); 
-        resetMonitoringData();
         try {
             // build and show result Tree
             Traverser copier = new Traverser(testSuite, locale);
@@ -507,11 +516,13 @@ public class TestExecution {
                 iterNode = copier.next();
                 m_expectedNumberOfSteps++;
             }
+            Map<String, String> autConfigMap = getConnectedAUTsConfigMap();
+            resetMonitoringData(autConfigMap);
             // end build tree
             TestResultBP.getInstance().setResultTestModel(
-                    new TestResult(GeneralStorage.getInstance().getProject(),
-                    resultTreeBuilder.getRootNode()));
-            initTestExecutionMessage();
+                    new TestResult(resultTreeBuilder.getRootNode(),
+                            autConfigMap));
+            initTestExecutionMessage(autConfigMap);
             if (LOG.isInfoEnabled()) {
                 LOG.info(Messages.StartTestSuite + StringConstants.COLON
                         + StringConstants.SPACE + testSuite.getName());
@@ -541,38 +552,6 @@ public class TestExecution {
         }
     }
 
-    /**
-     * Checks if the given CAP is executable.<br>
-     * It tries to build a capMessage. If this method does not catch an
-     * exception, the given cap is executable because a complete cap message
-     * was built.
-     * <b>This method should only be called if an 
-     * incomplete TestSuite is running!</b>
-     * @param cap the cap to check
-     * @return <code>null</code> if everything is OK, a thrown Exception otherwise.
-     */
-    private JBException isCapExecutable(ICapPO cap) {
-        try {
-            buildMessageCap(cap, true);
-        } catch (LogicComponentNotManagedException e) {
-            return new JBException(Messages.IncompleteTSRun 
-                    + StringConstants.COLON + StringConstants.SPACE 
-                    + Messages.MissingObjectMapping,
-                TestExecutionEvent.TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR);
-        } catch (InvalidDataException ide) {
-            return new JBException(Messages.IncompleteTSRun 
-                    + StringConstants.COLON + StringConstants.SPACE 
-                    + Messages.MissingTestData,
-                TestExecutionEvent.TEST_RUN_INCOMPLETE_TESTDATA_ERROR);
-        } catch (IndexOutOfBoundsException iobe) {
-            return new JBException(Messages.IncompleteTSRun 
-                    + StringConstants.COLON + StringConstants.SPACE 
-                    + Messages.MissingTestData,
-                TestExecutionEvent.TEST_RUN_INCOMPLETE_TESTDATA_ERROR);
-        }
-        return null;
-    }
-    
     /**
      * Invokes the next step
      * 
@@ -1089,17 +1068,18 @@ public class TestExecution {
 
     /**
      * Sends a init test execution message
+     * 
+     * @param autConfigMap
+     *            the config map to use
      */
-    private void initTestExecutionMessage() {
+    private void initTestExecutionMessage(Map<String, String> autConfigMap) {
         try {
             InitTestExecutionMessage msg = new InitTestExecutionMessage();
-            // FIXME key "ACTIVATION_METHOD" should NOT be fix!
-            if (m_autConfig != null) {
-                final ActivationMethod activateMethod = 
-                        ActivationMethod.valueOf(
-                                m_autConfig.getValue("ACTIVATION_METHOD",  //$NON-NLS-1$
-                                        ActivationMethod.NONE.name())
-                                            .toUpperCase());
+            if (autConfigMap != null) {
+                final ActivationMethod activateMethod = ActivationMethod
+                        .valueOf(autConfigMap.get(
+                                AutConfigConstants.ACTIVATION_METHOD)
+                                .toUpperCase());
                 if (activateMethod != null) {
                     msg.setDefaultActivationMethod(activateMethod.name());
                 }
@@ -1189,37 +1169,36 @@ public class TestExecution {
             }
         }
     }
-    
+
     /**
      * This method will reset the profiling agent.
+     * 
+     * @param autConfigMap
+     *            the aut config map to use
      */
-    private void resetMonitoringData() {
-        
-        if (m_autConfig != null) {
-            boolean reset = 
-                Boolean.valueOf(m_autConfig.getValue(
-                        MonitoringConstants.RESET_AGENT, "false"));            
-            if (reset) {
-                try {
-                    ResetMonitoringDataMessage message = 
-                        new ResetMonitoringDataMessage(
-                                AUTConnection.getInstance()
-                                .getConnectedAutId().getExecutableName());
-                    ServerConnection.getInstance().send(message);
-
-                } catch (NotConnectedException nce) {
-                    LOG.error(nce);
-                    
-                } catch (CommunicationException ce) {
-                    LOG.error(ce);
-                   
+    private void resetMonitoringData(Map<String, String> autConfigMap) {
+        if (autConfigMap != null) {
+            String resetString = autConfigMap
+                    .get(MonitoringConstants.RESET_AGENT);
+            if (resetString != null) {
+                boolean reset = Boolean.valueOf(resetString);
+                if (reset) {
+                    try {
+                        ResetMonitoringDataMessage message = 
+                            new ResetMonitoringDataMessage(
+                                AUTConnection.getInstance().getConnectedAutId()
+                                        .getExecutableName());
+                        ServerConnection.getInstance().send(message);
+                    } catch (NotConnectedException nce) {
+                        LOG.error(nce);
+                    } catch (CommunicationException ce) {
+                        LOG.error(ce);
+                    }
                 }
             }
-        
         }
-        
-         
     }
+
     /**
      * end the test execution normally
      */
@@ -1272,11 +1251,13 @@ public class TestExecution {
                     if (LOG.isInfoEnabled()) {
                         LOG.info(Messages.TestexecutionHasResumed);
                     }
-                    // FIXME key "ACTIVATE_APPLICATION" should NOT be fix!
-                    if (m_autConfig != null) {
-                        if (Boolean.valueOf(m_autConfig.getValue(
-                                "ACTIVATE_APPLICATION", //$NON-NLS-1$
-                                StringConstants.EMPTY))) {
+                    Map<String, String> autConfigMap = 
+                        getConnectedAUTsConfigMap();
+                    if (autConfigMap != null) {
+                        String activateAUT = autConfigMap
+                                .get(AutConfigConstants.ACTIVATE_APPLICATION);
+                        if (activateAUT != null 
+                                && Boolean.valueOf(activateAUT)) {
                             sendActivateAUTMessage();
                         }
                     }
@@ -1772,7 +1753,7 @@ public class TestExecution {
                 if (wasInterrupted) {
                     Thread.currentThread().interrupt();
                 }
-                initTestExecutionMessage();
+                initTestExecutionMessage(getConnectedAUTsConfigMap());
                 return null;
             } finally {
                 AutAgentRegistration.getInstance().removeListener(

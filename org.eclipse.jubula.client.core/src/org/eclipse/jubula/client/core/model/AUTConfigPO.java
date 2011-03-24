@@ -28,6 +28,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.apache.commons.collections.MapUtils;
 import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -90,16 +91,18 @@ class AUTConfigPO implements IAUTConfigPO {
     }
     
     /**
-     * Gets a value of this AutConfig.
-     * Keys are defined in {@link IAutConfigKeys}.<br>
+     * Gets a value of this AutConfig. Keys are defined in
+     * {@link IAutConfigKeys}.<br>
      * If the given key does not exists, it returns an empty String!
-     * @param key an AutConfigKey enum.
-     * @param defaultValue a defaut value to return if the given key is unknown.
+     * 
+     * @param key
+     *            an AutConfigKey enum.
+     * @param defaultValue
+     *            a defaut value to return if the given key is unknown.
      * @return the value of the given key.
      */
     public String getValue(String key, String defaultValue) {
-        String value = getHbmConfigMap().get(key);
-        return value != null ? value : defaultValue;
+        return MapUtils.getString(getHbmConfigMap(), key, defaultValue);
     }
     
     /**
@@ -116,10 +119,7 @@ class AUTConfigPO implements IAUTConfigPO {
         }
     }
     
-
-    
     /**
-     *
      * @return Returns the aut config name.
      */
     @Transient
@@ -157,7 +157,6 @@ class AUTConfigPO implements IAUTConfigPO {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public void setParentProjectId(Long projectId) {
@@ -165,7 +164,6 @@ class AUTConfigPO implements IAUTConfigPO {
     }
 
     /**
-     *    
      * {@inheritDoc}
      */
     @Basic
@@ -175,7 +173,6 @@ class AUTConfigPO implements IAUTConfigPO {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     void setHbmParentProjectId(Long projectId) {
@@ -183,7 +180,6 @@ class AUTConfigPO implements IAUTConfigPO {
     }
 
     /** 
-     * 
      * {@inheritDoc}
      */
     @Version

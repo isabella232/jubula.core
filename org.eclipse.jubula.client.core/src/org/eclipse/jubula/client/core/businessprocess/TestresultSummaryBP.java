@@ -40,10 +40,9 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
-
 /**
- * class to get keywords and summary from testresultnode to persist in database
- *
+ * Class to get keywords and summary from testresultnode to persist in database
+ * 
  * @author BREDEX GmbH
  * @created Mar 4, 2010
  */
@@ -74,29 +73,29 @@ public class TestresultSummaryBP {
      * @param result The Test Result containing the source data.
      * @param summary The Test Result Summary to fill with data.
      */
-    public void populateTestResultSummary(
-            TestResult result, ITestResultSummary summary) {
+    public void populateTestResultSummary(TestResult result,
+            ITestResultSummary summary) {
         TestExecution te = TestExecution.getInstance();
-        ITestJobPO tj = te.getStartedTestJob();
         ITestSuitePO ts = te.getStartedTestSuite();
         IAUTMainPO startedAut = te.getConnectedAut();
-        IAUTMainPO aut = startedAut != null ? startedAut : ts.getAut();
-        
-        IAUTConfigPO autConfig = ClientTestFactory.getClientTest()
-                .getLastAutConfig();
-        addAutId(summary, autConfig);
-        if (autConfig != null) {
-            summary.setAutConfigName(autConfig.getName());
-            summary.setInternalAutConfigGuid(autConfig.getGuid());
-            summary.setAutCmdParameter(autConfig.getValue("AUT_ARGUMENTS",  //$NON-NLS-1$
-                    StringConstants.EMPTY));
+        if (result.getAutConfigMap() != null) {
+            String autConfigName = result.getAutConfigName();
+            for (IAUTConfigPO conf : startedAut.getAutConfigSet()) {
+                if (conf.getValue(AutConfigConstants.CONFIG_NAME, "invalid") //$NON-NLS-1$
+                        .equals(autConfigName)) {
+                    summary.setInternalAutConfigGuid(conf.getGuid());
+                    break;
+                }
+            }
         } else {
-            summary.setAutConfigName(AUTRUN);
             summary.setInternalAutConfigGuid(AUTRUN);
-            summary.setAutCmdParameter(AUTRUN);
         }
+        summary.setAutConfigName(result.getAutConfigName());
+        summary.setAutCmdParameter(result.getAutArguments());
+        summary.setAutId(te.getConnectedAutId().getExecutableName());
         
         summary.setAutOS(System.getProperty("os.name")); //$NON-NLS-1$
+        IAUTMainPO aut = startedAut != null ? startedAut : ts.getAut();
         if (aut != null) {
             summary.setInternalAutGuid(aut.getGuid());
             summary.setAutName(aut.getName());
@@ -105,7 +104,6 @@ public class TestresultSummaryBP {
         summary.setTestsuiteDate(new Date());
         summary.setInternalTestsuiteGuid(ts.getGuid());
         summary.setTestsuiteName(ts.getName());
-
         summary.setInternalProjectGuid(result.getProjectGuid());
         summary.setInternalProjectID(result.getProjectId());
         summary.setProjectName(result.getProjectName() + StringConstants.SPACE
@@ -118,9 +116,7 @@ public class TestresultSummaryBP {
         summary.setTestsuiteStartTime(startTime);
         Date endTime = new Date();
         summary.setTestsuiteEndTime(endTime);
-        if (startTime != null && endTime != null) {
-            summary.setTestsuiteDuration(getDurationString(startTime, endTime));
-        }
+        summary.setTestsuiteDuration(getDurationString(startTime, endTime));
         summary.setTestsuiteExecutedTeststeps(te.getNumberOfTestedSteps());
         summary.setTestsuiteExpectedTeststeps(te.getExpectedNumberOfSteps());
         summary.setTestsuiteEventHandlerTeststeps(
@@ -130,6 +126,7 @@ public class TestresultSummaryBP {
         summary.setTestsuiteLanguage(te.getLocale().getDisplayName());
         summary.setTestsuiteRelevant(ClientTestFactory.getClientTest()
                         .isRelevant());
+        ITestJobPO tj = te.getStartedTestJob();
         if (tj != null) {
             summary.setTestJobName(tj.getName());
             summary.setInternalTestJobGuid(tj.getGuid());
@@ -327,25 +324,6 @@ public class TestresultSummaryBP {
             if (node.getScreenshot() != null) {
                 keyword.setImage(node.getScreenshot());
             }
-        }
-    }
-    
-    /**
-     * add aut id to summary
-     * @param summary ITestResultSummaryPO
-     * @param autConf IAUTConfigPO
-     */
-    private void addAutId(ITestResultSummary summary, IAUTConfigPO autConf) {
-        if (TestExecution.getInstance().getConnectedAutId() == null) {
-            if (autConf != null) {
-                summary.setAutId(autConf.getConfigMap().get(
-                        AutConfigConstants.AUT_ID));
-            } else {
-                summary.setAutId(AUTRUN);
-            }
-        } else {
-            summary.setAutId(TestExecution.getInstance()
-                    .getConnectedAutId().getExecutableName());
         }
     }
 

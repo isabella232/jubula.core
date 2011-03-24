@@ -368,16 +368,6 @@ public interface IClientTest {
      *            reporting
      */
     public boolean isRelevant();
-
-    /**
-     * @return Returns the last started AUTConfig.
-     */
-    public IAUTConfigPO getLastAutConfig();
-
-    /**
-     * @return Returns the last Locale of the last started AUT.
-     */
-    public Locale getLastAutLocale();
     
     /**
      * Writes a test result report of the executed test on disc
@@ -389,29 +379,12 @@ public interface IClientTest {
      * Writes test result to database
      */
     public void writeTestresultToDB();
-    
-    /** @return the last connectedAut */
-    public String getLastConnectedAutId();
-    
-    /** 
-     * @param autId the last connectAutId
-     */
-    public void setLastConnectedAutId(String autId);
-    
+
     /**
-     * @return The autConfigMap from the last connected AUT.  
-     */     
-    public Map getLastConnectedAutConfigMap();
-    /** 
-     * @param autConfigMap The autConfigMap from the last connected AUT 
+     * sending a request to the agent to get the config map from the last
+     * connected AUT.
+     * @param autId the AUT id to retrieve the map for
+     * @return null if no config map available; otherwise the map
      */
-    public void setLastConnectedAutConfigMap(Map autConfigMap);
-    /**
-     * checks if last connected AUT was running with monitoring
-     * @return true if last connected AUT was running with monitoring else
-     * false
-     */
-    public boolean isRunningWithMonitoring();
-    
-          
+    public Map<String, String> requestAutConfigMapFromAgent(String autId);
 }

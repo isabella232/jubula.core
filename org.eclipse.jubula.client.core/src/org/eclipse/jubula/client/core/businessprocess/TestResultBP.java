@@ -19,11 +19,8 @@ import org.eclipse.jubula.client.core.utils.BundleUtils;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created Nov 8, 2005
- *
  */
 public class TestResultBP {
     /**
