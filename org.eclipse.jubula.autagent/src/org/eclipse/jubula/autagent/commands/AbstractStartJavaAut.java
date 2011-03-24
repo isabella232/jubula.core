@@ -349,15 +349,16 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             Locale locale = (Locale)parameters.get(IStartAut.LOCALE);
             // set agent and locals
             
-            sb.append(JAVA_OPTIONS_INTRO)
-                .append(StringConstants.QUOTE)
+            sb.append(JAVA_OPTIONS_INTRO);
+            if (isRunningWithMonitoring(parameters)) {
+                sb.append(getMonitoringAgent(parameters))
+                    .append(StringConstants.SPACE);
+            }                 
+            sb.append(StringConstants.QUOTE)
                 .append("-javaagent:") //$NON-NLS-1$
                 .append(getAbsoluteAgentJarPath())
                 .append(StringConstants.QUOTE);
-            if (isRunningWithMonitoring(parameters)) {
-                sb.append(StringConstants.SPACE)
-                    .append(getMonitoringAgent(parameters));
-            }         
+               
             if (locale != null) {
                 sb.append(StringConstants.SPACE)
                     .append(JAVA_COUNTRY_PROPERTY)
@@ -372,14 +373,14 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                 .append(getAbsoluteLoggingConfPath())
                 .append(StringConstants.QUOTE);  
         } else {
-            if (isRunningWithMonitoring(parameters)) {            
+            if (isRunningWithMonitoring(parameters)) {
                 sb.append(JAVA_OPTIONS_INTRO)
                     .append(getMonitoringAgent(parameters))
                     .append(StringConstants.SPACE)
                     .append(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY)
                     .append(StringConstants.QUOTE)
                     .append(getAbsoluteLoggingConfPath())
-                    .append(StringConstants.QUOTE);      
+                    .append(StringConstants.QUOTE);
             }
         }
 
