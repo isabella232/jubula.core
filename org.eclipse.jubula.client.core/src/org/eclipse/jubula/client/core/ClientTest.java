@@ -974,7 +974,8 @@ public class ClientTest implements IClientTest {
                         }
                     }
                     writeMonitoringResults(result);              
-                }          
+                }
+                fireTestresultSummaryChanged();
                 monitor.done();
                 return Status.OK_STATUS;
             }
@@ -1024,7 +1025,6 @@ public class ClientTest implements IClientTest {
         TestResultSummaryPM
                 .mergeTestResultSummaryInDB(
                         currentSummary);        
-        fireTestresultSummaryChanged();        
     }
     /**
      * find the significant monitoring value
