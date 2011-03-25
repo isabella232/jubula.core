@@ -137,12 +137,11 @@ public class DeleteTreeItemHandlerOMEditor
      */
     private boolean willAncestorBeDeleted(
             IObjectMappingCategoryPO category, Object[] toDelete) {
-        IObjectMappingCategoryPO parent = 
-            category != null ? category.getParent() : null;
-        while (parent != null) {
-            parent = parent.getParent();
+        IObjectMappingCategoryPO ancestor = category;
+        while (ancestor != null) {
+            ancestor = ancestor.getParent();
             for (Object possibleAncestor : toDelete) {
-                if (ObjectUtils.equals(parent, possibleAncestor)) {
+                if (ObjectUtils.equals(ancestor, possibleAncestor)) {
                     return true;
                 }
             }
