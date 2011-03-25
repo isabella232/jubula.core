@@ -108,9 +108,9 @@ public class I18n {
         } catch (MissingResourceException e) {
             log.error(e.toString());
             StringBuffer buf = new StringBuffer(key);
-            for (int i = 0; i < args.length; i++) {
+            for (int i = 0; args != null && i < args.length; i++) {
                 if (args[i] != null) {
-                    buf.append(" "); //$NON-NLS-1$
+                    buf.append(StringConstants.SPACE);
                     buf.append(args[i]);
                 }
             }
