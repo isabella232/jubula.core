@@ -492,7 +492,6 @@ public class Utils {
      * @param parent the parent shell to use for this message dialog
      * @return the dialog.
      */
-    @SuppressWarnings("nls")
     public static Dialog createMessageDialog(final Integer messageID, 
         final Object[] params, final String[] details, final Shell parent) {
         String title = StringConstants.EMPTY;
