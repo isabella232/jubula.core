@@ -116,6 +116,14 @@ public class TestResult extends AbstractTestResult {
         return MapUtils.getString(getAutConfigMap(),
                 AutConfigConstants.CONFIG_NAME, TestresultSummaryBP.AUTRUN);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String getAutId() {
+        return MapUtils.getString(getAutConfigMap(),
+                AutConfigConstants.AUT_ID, TestresultSummaryBP.AUTRUN);
+    }
 
     /**
      * {@inheritDoc}

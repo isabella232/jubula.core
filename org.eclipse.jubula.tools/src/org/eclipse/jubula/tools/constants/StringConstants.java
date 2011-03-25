@@ -58,10 +58,15 @@ public interface StringConstants {
     public static final String QUOTE = "\""; //$NON-NLS-1$
     
     /**
+     * <code>QUESTION_MARK</code> "?"
+     */
+    public static final String QUESTION_MARK = "?"; //$NON-NLS-1$
+    
+    /**
      * <code>SLASH</code>
      */
     public static final String SLASH = "/"; //$NON-NLS-1$
-
+    
     /**
      * <code>SEMICOLON</code>
      */
@@ -137,4 +142,8 @@ public interface StringConstants {
      */
     public static final String RIGHT_INEQUALITY_SING = ">"; //$NON-NLS-1$
     
+    /**
+     * <code>PIPE "|"</code>
+     */
+    public static final String PIPE = "|"; //$NON-NLS-1$
 }

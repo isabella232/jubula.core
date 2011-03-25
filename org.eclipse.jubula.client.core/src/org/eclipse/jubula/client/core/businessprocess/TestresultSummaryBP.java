@@ -92,7 +92,7 @@ public class TestresultSummaryBP {
         }
         summary.setAutConfigName(result.getAutConfigName());
         summary.setAutCmdParameter(result.getAutArguments());
-        summary.setAutId(te.getConnectedAutId().getExecutableName());
+        summary.setAutId(result.getAutId());
         
         summary.setAutOS(System.getProperty("os.name")); //$NON-NLS-1$
         IAUTMainPO aut = startedAut != null ? startedAut : ts.getAut();
