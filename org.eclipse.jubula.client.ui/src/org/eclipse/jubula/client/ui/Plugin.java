@@ -1187,6 +1187,11 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                     return true;
                 }
             }
+            // Recursive activation on MacOSX on expand tree item #3618
+            String detailMessage = work.getMessage();
+            if (detailMessage != null && detailMessage.indexOf("WARNING: Prevented recursive attempt to activate part") != -1) { //$NON-NLS-1$
+                return true;
+            }
             work = work.getCause();
         } while (work != null);
         return false;
