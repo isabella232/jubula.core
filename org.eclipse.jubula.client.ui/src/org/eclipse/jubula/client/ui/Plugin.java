@@ -34,7 +34,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.core.IErrorListener;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
@@ -123,8 +122,7 @@ import org.osgi.framework.BundleContext;
  * @author BREDEX GmbH
  * @created 06.07.2004
  */
-public class Plugin extends AbstractUIPlugin 
-    implements IErrorListener, IProgressConsole {
+public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     
     /** plugin id */
     public static final String PLUGIN_ID = "org.eclipse.jubula.client.ui"; //$NON-NLS-1$
