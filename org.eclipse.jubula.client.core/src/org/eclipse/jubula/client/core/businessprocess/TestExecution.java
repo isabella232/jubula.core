@@ -1076,15 +1076,11 @@ public class TestExecution {
         try {
             InitTestExecutionMessage msg = new InitTestExecutionMessage();
             if (autConfigMap != null) {
-                final ActivationMethod activateMethod = ActivationMethod
-                        .valueOf(autConfigMap.get(
-                                AutConfigConstants.ACTIVATION_METHOD)
-                                .toUpperCase());
-                if (activateMethod != null) {
-                    msg.setDefaultActivationMethod(activateMethod.name());
-                }
+                msg.setDefaultActivationMethod(ActivationMethod
+                        .getRCString(autConfigMap
+                                .get(AutConfigConstants.ACTIVATION_METHOD)));
+                AUTConnection.getInstance().send(msg);
             }
-            AUTConnection.getInstance().send(msg);
         } catch (CommunicationException exc) {
             fireError(exc);
         }

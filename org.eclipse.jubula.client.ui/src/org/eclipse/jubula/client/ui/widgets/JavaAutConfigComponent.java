@@ -694,9 +694,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @return true
      */
     boolean handleActivationComboEvent() {
-        putConfigValue(AutConfigConstants.ACTIVATION_METHOD, 
-                m_activationMethodCombo.getSelectedObject().
-                toString().toUpperCase());
+        putConfigValue(AutConfigConstants.ACTIVATION_METHOD,
+                ActivationMethod.getRCString(m_activationMethodCombo
+                        .getSelectedObject()));
         return true;
     }
 
@@ -793,14 +793,10 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      */    
     
     protected void populateExpertArea(Map<String, String> data) {
-        
-        String actMeth = data.get(AutConfigConstants.ACTIVATION_METHOD);
-        if (actMeth == null) {
-            actMeth = ActivationMethod.NONE.toString();
-        }
-        actMeth = actMeth.toUpperCase();
-        m_activationMethodCombo.setSelectedObject(ActivationMethod
-                .valueOf(actMeth));
+
+        m_activationMethodCombo.setSelectedObject(
+                ActivationMethod.getEnum(data
+                        .get(AutConfigConstants.ACTIVATION_METHOD)));
         
         String monitoringAgentId = data.get(
                 AutConfigConstants.MONITORING_AGENT_ID);

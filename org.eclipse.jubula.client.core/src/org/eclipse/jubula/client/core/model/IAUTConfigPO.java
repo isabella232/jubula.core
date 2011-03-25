@@ -13,14 +13,13 @@ package org.eclipse.jubula.client.core.model;
 import java.util.Map;
 import java.util.Set;
 
-
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author BREDEX GmbH
  * @created 20.12.2005
  */
 public interface IAUTConfigPO extends IPersistentObject, Comparable {
-    
     /**
      * max length of classpath allowed
      */
@@ -41,7 +40,50 @@ public interface IAUTConfigPO extends IPersistentObject, Comparable {
         /** Click in corner */
         SW, 
         /** click in the center of the window */
-        CENTER
+        CENTER;
+        
+        /**
+         * @param method
+         *            the activation method; may be <code>null</code>
+         * @return a valid string which may be used in our rc components
+         */
+        public static String getRCString(ActivationMethod method) {
+            ActivationMethod m = method;
+            if (method == null) {
+                m = ActivationMethod.NONE;
+            }
+            return m.name().toUpperCase();
+        }
+
+        /**
+         * @param stringMethod
+         *            a string representation of the activation method; may also
+         *            be <code>null</code>
+         * @return a valid string which may be used in our rc components
+         */
+        public static String getRCString(String stringMethod) {
+            return getRCString(getEnum(stringMethod));
+        }
+
+        /**
+         * @param stringMethod
+         *            a string representation of the activation method; may also
+         *            be <code>null</code>
+         * @return a valid activation method; if string method conversion fails
+         *         ActivationMethod.NONE is returned.
+         */
+        public static ActivationMethod getEnum(String stringMethod) {
+            ActivationMethod m = NONE;
+            if (StringUtils.isNotBlank(stringMethod)) {
+                String name = StringUtils.trim(stringMethod).toUpperCase();
+                try {
+                    m = ActivationMethod.valueOf(name);
+                } catch (IllegalArgumentException e) {
+                    // ignore
+                }
+            }
+            return m;
+        }
     }
     
     /** Browser for Html-Test */
