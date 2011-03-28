@@ -1837,7 +1837,7 @@ class XmlImporter {
             // Trac#1908 no place to store the max. number of retries
         }
         ts.setDefaultEventHandler(defaultEventHandler);
-        
+        ts.setStepDelay(xml.getStepDelay());
         return ts;
     }
     
