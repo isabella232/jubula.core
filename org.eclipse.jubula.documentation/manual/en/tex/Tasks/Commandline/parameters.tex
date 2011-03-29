@@ -132,7 +132,7 @@
 
 
 \item You can either enter a \gdsuite{} to be executed or a \gdjob{}. Only one of these two commands is accepted for the test executor. 
-\bxtipp{If you are starting a \gdsuite{}, \app{} will start your \gdaut{} from its configuration if you have entered one. If you are starting a \gdjob{}, you must make sure that the first \gdaut{} you require is  already started with the \bxname{autrun} command.}
+\bxtipp{If you are starting a \gdsuite{}, \app{} will start your \gdaut{} from its configuration if you have entered one. If you are starting a \gdjob{}, you must make sure that the first \gdaut{} you require is already started with the \bxname{autrun} command. Other \gdauts{} required during the test must either also be started already, or started as a part of the test itself.}
 \item If the \gdaut{} you want to test was started with the \bxname{autrun} command, you must enter an \gdaut{} ID. If your \gdaut{} will be started with an \gdaut{} configuration, then enter the configuration name. 
 
 \bxtipp{The test executor also accepts arguments to pass on to the Java Virtual Machine. This means that you can, for example, increase the initial and maximum amount of system memory allocated to the JVM with the parameters \bxshell{-Xms<memory\_size>} and \bxshell{-Xmx<memory\_size>}, respectively. For example, the parameter \bxshell{-Xmx128M} would make a maximum of 128 MB of system memory available to the test executor. When entering the standard parameters for the test executor, you may add \bxshell{-J<JVM\_parameter>} for each JVM parameter you wish to set. For example, \bxshell{-J-Xmx128M}. Multiple parameters, like standard parameters, are separated by spaces. \\
