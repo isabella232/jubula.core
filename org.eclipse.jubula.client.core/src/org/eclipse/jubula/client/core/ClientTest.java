@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.event.EventListenerList;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -1052,14 +1053,16 @@ public class ClientTest implements IClientTest {
      * @return true if last connected AUT was running with monitoring else false
      */
     private boolean isRunningWithMonitoring() {
-        Map<String, String> m = requestAutConfigMapFromAgent(
-                TestExecution.getInstance().getConnectedAutId()
-                .getExecutableName());
-        if (m != null) {
-            String monitoringID = m.get(AutConfigConstants.MONITORING_AGENT_ID);
-            if (monitoringID != null
-                    && !monitoringID.equals(StringConstants.EMPTY)) {
-                return true;
+        AutIdentifier autID = TestExecution.getInstance().getConnectedAutId();
+        if (autID != null) {
+            Map<String, String> m = requestAutConfigMapFromAgent(
+                    autID.getExecutableName());
+            if (m != null) {
+                String monitoringID = m.get(
+                        AutConfigConstants.MONITORING_AGENT_ID);
+                if (!StringUtils.isEmpty(monitoringID)) {
+                    return true;
+                }
             }
         }
         return false;
