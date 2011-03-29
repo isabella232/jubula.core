@@ -241,31 +241,37 @@ public class ExternalTestDataBP {
      */
     private ITDManager parseTable(DataTable filledTable,
         IParameterInterfacePO paramPo, Locale locale) throws JBException {
-        return parseTable(filledTable, paramPo, locale, false);
+        return parseTable(filledTable, paramPo, locale, false, false);
     }
-    
+
     /**
      * update a given TestDataManager with data
      * 
      * @param filledTable
-     *      data extracted from File
+     *            data extracted from File
      * @param paramPo
-     *      Parameter po we would like to update
+     *            Parameter po we would like to update
      * @param locale
-     *      What Locale the TestData should be
+     *            What Locale the TestData should be
      * @param updateCellValues
-     *      whether the
-     * @return
-     *      filled TestDataManager with new data
+     *            whether the
+     * @param useParamInterfaceTDMan
+     *            true to use the original td manager of the passed param po;
+     *            falso to create a new one
+     * @return filled TestDataManager with new data
      * @throws JBException
-     *      error occured while reading data source
+     *             error occured while reading data source
      */
     public ITDManager parseTable(DataTable filledTable,
         IParameterInterfacePO paramPo, Locale locale,
-        boolean updateCellValues) throws JBException {
-        
-        ITDManager tdMan = PoMaker.createTDManagerPO(paramPo);
-        
+        boolean updateCellValues, boolean useParamInterfaceTDMan)
+        throws JBException {
+        ITDManager tdMan;
+        if (useParamInterfaceTDMan) {
+            tdMan = paramPo.getDataManager();
+        } else {
+            tdMan = PoMaker.createTDManagerPO(paramPo);
+        }
         // iterate over rows
         List<String> paramNamesExcel = 
             new ArrayList<String>();
@@ -286,8 +292,7 @@ public class ExternalTestDataBP {
                         int dataSetNo = row - 1;
                         ITestDataPO testData;
                         if (updateCellValues) {
-                            testData = tdMan.getCell(
-                                    dataSetNo, desc);
+                            testData = tdMan.getCell(dataSetNo, desc);
                             testData.setValue(locale, cellString,
                                     GeneralStorage.getInstance().getProject());
                         } else {

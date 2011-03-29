@@ -18,8 +18,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.WizardPage;
-import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP.IProjectImportInfoProvider;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -46,7 +44,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
@@ -59,13 +56,6 @@ import org.eclipse.ui.PlatformUI;
  */
 public class ImportProjectsWizardPage extends WizardPage 
         implements IProjectImportInfoProvider {
-
-    /** Bit set for importing all */
-    public static final int IMPORT_ALL = 0;
-    /** Bit set for importing testcases */
-    public static final int IMPORT_TESTCASES = 1; 
-    /** Bit set for importing AUT */
-    public static final int IMPORT_AUTS = 2; 
 
     /** the logger */
     private static Log log = LogFactory.getLog(ImportProjectsWizardPage.class);
@@ -91,22 +81,8 @@ public class ImportProjectsWizardPage extends WizardPage
     private Button m_openProjectCheckbox;
     /** The status of m_openProjectCheckbox */
     private boolean m_isOpenProject;
-    /** radio button */
-    private Button m_radio1; 
-    /** radio button */
-    private Button m_radio2; 
-    /** checkbox for elements selector */
-    private Button m_elementsCheckBox1; 
-    /** checkbox for elements selector */
-    private Button m_elementsCheckBox2; 
     /** fileNames */
     private String [] m_fileNames; 
-    /** importTarget: <p>0 = all; <p>1 = not all */
-    private int m_importTarget; 
-    /** what elements should be imported */
-    private int m_selectedElements;
-    /** Whether the page should include "import target" options */
-    private boolean m_includeTargetOptions;
     
     /**
      * Constructor
@@ -114,25 +90,9 @@ public class ImportProjectsWizardPage extends WizardPage
      * @param pageName The name of the page.
      */
     public ImportProjectsWizardPage(String pageName) {
-        this(pageName, true);
+        super(pageName);
     }
 
-    /**
-     * Constructor
-     * 
-     * @param pageName The name of the page.
-     * @param includeTargetOptions Whether the page should include 
-     *                             "import target" options (open project 
-     *                             immediately after import, import specific 
-     *                             parts of the project(s), etc).
-     */
-    public ImportProjectsWizardPage(String pageName, 
-            boolean includeTargetOptions) {
-        
-        super(pageName);
-        m_includeTargetOptions = includeTargetOptions;
-    }
-    
     /**
      * @param fileName the user defined filename
      */
@@ -200,39 +160,7 @@ public class ImportProjectsWizardPage extends WizardPage
         m_openProjectCheckbox.setText(Messages
                 .ImportProjectDialogOpenProjectCheckbox);
         DialogUtils.setWidgetName(m_openProjectCheckbox, "openProjectCheckbox"); //$NON-NLS-1$
-        addBlankLine(parent);
 
-        m_radio1 = new Button(parent, SWT.RADIO);
-        gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.horizontalSpan = NUM_COLUMS;
-        gridData.grabExcessHorizontalSpace = true;
-        m_radio1.setLayoutData(gridData);
-        m_radio1.setText(Messages.ImportProjectDialogRadio1);
-        DialogUtils.setWidgetName(m_radio1, "radio1"); //$NON-NLS-1$
-        
-        m_radio2 = new Button(parent, SWT.RADIO);
-        m_radio2.setLayoutData(gridData);
-        m_radio2.setText(Messages.ImportProjectDialogRadio2);
-        DialogUtils.setWidgetName(m_radio2, "radio2"); //$NON-NLS-1$
-        Group elements = new Group(parent, SWT.SHADOW_IN);
-        elements.setLayout(new GridLayout());
-        gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.horizontalSpan = NUM_COLUMS;
-        gridData.verticalSpan = 5;
-        gridData.grabExcessHorizontalSpace = true;
-        elements.setLayoutData(gridData);
-        
-        elements.setText(Messages.ImportProjectDialogElements);
-        m_elementsCheckBox1 = new Button(elements, SWT.CHECK);
-        m_elementsCheckBox1.setText(
-                Messages.ImportProjectDialogElementsCheckBox1);
-        DialogUtils.setWidgetName(m_elementsCheckBox1, "elementsCheckBox1"); //$NON-NLS-1$
-
-        m_elementsCheckBox2 = new Button(elements, SWT.CHECK);
-        m_elementsCheckBox2.setText(
-                Messages.ImportProjectDialogElementsCheckBox2);
-        m_elementsCheckBox2.setEnabled(false);
-        DialogUtils.setWidgetName(m_elementsCheckBox2, "elementsCheckBox2"); //$NON-NLS-1$
     }
 
     /**
@@ -452,103 +380,29 @@ public class ImportProjectsWizardPage extends WizardPage
     }
     
     /**
-     * Inits the selection state of every button.
-     */
-    private void initButtons() {
-        m_radio1.setSelection(true);
-        m_elementsCheckBox1.setSelection(true);
-        m_elementsCheckBox1.setEnabled(false);
-        m_elementsCheckBox2.setVisible(false);
-    }
-    
-    /**
      * checks if all is complete
      *
      */
     void checkCompletness() {
         // Update model values
         m_fileNames = m_filesToImport.getItems();
-        if (m_includeTargetOptions) {
-            m_importTarget = m_radio1.getSelection() 
-                ? IMPORT_ALL : IMPORT_TESTCASES;
-            if (m_elementsCheckBox1.getSelection()) {
-                m_selectedElements = m_selectedElements | IMPORT_TESTCASES;
-            }
-            if (m_elementsCheckBox2.getSelection()) {
-                m_selectedElements = m_selectedElements | IMPORT_AUTS;
-            }
-            m_isOpenProject = m_openProjectCheckbox.getSelection();
-        } else {
-            m_importTarget = FileStorageBP.IMPORT_ALL;
-            m_isOpenProject = false;
-        }
+        m_isOpenProject = m_openProjectCheckbox.getSelection();
 
-
-        // check completeness
-        if (m_includeTargetOptions) {
-            m_openProjectCheckbox.setEnabled(m_radio1.getSelection() 
-                    && m_filesToImport.getItemCount() <= 1);
-            if (!m_openProjectCheckbox.isEnabled()) {
-                m_openProjectCheckbox.setSelection(false);
-                m_isOpenProject = false;
-            }
-        }
         if (m_fileNames.length < 1) {
             setErrorMessage(Messages.ImportProjectDialogNoFilesToImport);
-            setPageComplete(false);
-        } else if (m_importTarget != FileStorageBP.IMPORT_ALL 
-                && !isProjectOpen()) {
-            setErrorMessage(Messages.ImportProjectDialogNoProjectError);
-            setPageComplete(false);
-        } else if (m_importTarget != FileStorageBP.IMPORT_ALL 
-                && m_selectedElements == 0) {
-            
-            setErrorMessage(Messages.ImportProjectDialogNoSelectError);
             setPageComplete(false);
         } else {
             setErrorMessage(null);
             setPageComplete(true);
-            if (m_includeTargetOptions) {
-                m_radio1.setEnabled(true);
-                m_radio2.setEnabled(true);
-            }
         }
-        handleFile(m_fileToAdd.getText());
-    }
-    
-    /**
-     * checks if a project is open and shows Error Message
-     * @return isopen ?
-     */
-    private boolean isProjectOpen() {
-        if (GeneralStorage.getInstance().getProject() == null) {
-            return false;
+        
+        m_openProjectCheckbox.setEnabled(m_filesToImport.getItemCount() <= 1);
+        if (!m_openProjectCheckbox.isEnabled()) {
+            m_openProjectCheckbox.setSelection(false);
+            m_isOpenProject = false;
         }
-        return true;
-    }
 
-    /**
-     * selection Listener for radio button
-     * @author BREDEX GmbH
-     */
-    private class RadioSelectionListener extends SelectionAdapter {
-        /**
-         * event widget selected
-         * @param e SelectionEvent
-         */
-        public void widgetSelected(SelectionEvent e) {
-            checkCompletness();
-            if (e.getSource() == m_radio1) {
-                m_elementsCheckBox1.setEnabled(false);
-                m_elementsCheckBox2.setEnabled(false);
-            } else if ((e.getSource() == m_radio2) && isProjectOpen()) {
-                m_elementsCheckBox1.setEnabled(true);
-                m_elementsCheckBox2.setEnabled(false);
-                // FIXME: remove the following lines, if AUT-Import is allowed -
-                m_elementsCheckBox1.setSelection(true);
-                // -------------------------------------------------------------
-            }
-        }        
+        handleFile(m_fileToAdd.getText());
     }
     
     /**
@@ -646,14 +500,6 @@ public class ImportProjectsWizardPage extends WizardPage
      * 
      * {@inheritDoc}
      */
-    public int getImportTarget() {
-        return m_importTarget;
-    }
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
     public String [] getFiles() {
         return m_fileNames;
     }
@@ -666,14 +512,6 @@ public class ImportProjectsWizardPage extends WizardPage
         return m_isOpenProject;
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public int getSelectedElements() {
-        return m_selectedElements;
-    }
-    
     /**
      * Sets the enablement for the button.
      * 
@@ -788,21 +626,10 @@ public class ImportProjectsWizardPage extends WizardPage
         addImportList(composite);
         addListButtons(composite);
 
-        if (m_includeTargetOptions) {
-            addBlankLine(composite);
-            
-            addButtons(composite);
-            RadioSelectionListener listener = new RadioSelectionListener();
-            
-            initButtons();
-            
-            addBlankLine(composite);
-            m_radio1.addSelectionListener(listener);
-            m_radio2.addSelectionListener(listener);
-            m_elementsCheckBox1.addSelectionListener(listener);
-            m_elementsCheckBox2.addSelectionListener(listener);
-        }
-
+        addBlankLine(composite);
+        
+        addButtons(composite);
+        
         Plugin.getHelpSystem().setHelp(composite, ContextHelpIds
                 .IMPORT_PROJECT_DIALOG);
         setPageComplete(false);

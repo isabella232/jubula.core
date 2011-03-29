@@ -245,7 +245,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                 bp.clearExternalData();
                 DataTable dt = bp.createDataTable(
                         null, absoluteFilePath, loc);
-                bp.parseTable(dt, testdata, loc, !firstLocale);
+                bp.parseTable(dt, testdata, loc, !firstLocale, true);
                 firstLocale = false;
             }
         }
@@ -354,7 +354,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
      */
     public ImportXLSTestdataWizardPage(String name) {
         super(name, StructuredSelection.EMPTY);
-        setTitle(DataTransferMessages.DataTransfer_fileSystemTitle);
+        setTitle(Messages.ImportXLSTestDataWizardTitle);
         setDescription(DataTransferMessages.FileImport_importFileSystem);
     }
 

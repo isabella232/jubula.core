@@ -39,6 +39,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -53,6 +55,7 @@ import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.SpecRefreshTreeIterator;
+import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.editors.PersistableEditorInput;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -347,6 +350,10 @@ public class Utils {
         }
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
+                TestExecutionContributor.getInstance().getClientTest()
+                        .resetToTesting();
+                ded.fireRecordModeStateChanged(RecordModeState.notRunning);
+                ded.fireOMStateChanged(OMState.notRunning);
                 Plugin.setProjectNameInTitlebar(null, null, null);
                 Plugin.closeAllOpenedJubulaEditors();
                 ded.fireTestresultChanged(TestresultState.Refresh);
@@ -485,7 +492,6 @@ public class Utils {
      * @param parent the parent shell to use for this message dialog
      * @return the dialog.
      */
-    @SuppressWarnings("nls")
     public static Dialog createMessageDialog(final Integer messageID, 
         final Object[] params, final String[] details, final Shell parent) {
         String title = StringConstants.EMPTY;

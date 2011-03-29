@@ -370,9 +370,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * @return true
      */
     boolean handleActivationComboEvent() {
-        putConfigValue(AutConfigConstants.ACTIVATION_METHOD, 
-                m_activationMethodCombo
-                    .getSelectedObject().toString().toUpperCase());
+        putConfigValue(AutConfigConstants.ACTIVATION_METHOD,
+                ActivationMethod.getRCString(m_activationMethodCombo
+                        .getSelectedObject()));
         return true;
     }
     
@@ -483,13 +483,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * {@inheritDoc}
      */
     protected void populateExpertArea(Map<String, String> data) {
-        String actMeth = data.get(AutConfigConstants.ACTIVATION_METHOD);
-        if (actMeth == null) {
-            actMeth = ActivationMethod.NONE.toString();
-        }
-        actMeth = actMeth.toUpperCase();
         m_activationMethodCombo.setSelectedObject(
-            ActivationMethod.valueOf(actMeth));
+                ActivationMethod.getEnum(data
+                        .get(AutConfigConstants.ACTIVATION_METHOD)));
         if (!isDataNew(data)) {
             String webIdTag = data.get(AutConfigConstants.WEB_ID_TAG);
             if (webIdTag == null) {

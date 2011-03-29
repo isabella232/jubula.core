@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.event.EventListenerList;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -163,19 +164,8 @@ public class ClientTest implements IClientTest {
      */
     private String m_logPath = null;
 
-    /** The last started AUT-configuration */
-    private IAUTConfigPO m_lastAutConfig;
-    
-    /** The last connected AUT-configuration */
-    private Map m_autConfigMap;
-    
-    /** The last started Locale of th elast started AUT */
-    private Locale m_lastAutLocale;
-    
     /** The test result summary */
     private ITestResultSummaryPO m_summary;   
-    /** The last connected AUT id */
-    private String m_lastAutId;
     
     /**
      * <code>m_relevant</code> the relevant flag
@@ -253,9 +243,6 @@ public class ClientTest implements IClientTest {
             throw new ToolkitPluginException(
                     Messages.ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE);
         }
-        
-        m_lastAutConfig = conf;
-        m_lastAutLocale = locale;
         
         try {
             // start the AUTServer
@@ -859,9 +846,9 @@ public class ClientTest implements IClientTest {
      * is send to the AutAgent to collect the data.
      */
     public void getMonitoringData() {
-        
         GetMonitoringDataMessage message = new GetMonitoringDataMessage(
-                this.getLastConnectedAutId());
+                TestExecution.getInstance().getConnectedAutId()
+                .getExecutableName());
         try {
             ServerConnection.getInstance().send(message);
         } catch (NotConnectedException nce) {
@@ -876,9 +863,10 @@ public class ClientTest implements IClientTest {
      * from the execution data, 
      */
     public void buildMonitoringReport() {
-        
         BuildMonitoringReportMessage message = 
-            new BuildMonitoringReportMessage(this.getLastConnectedAutId());
+            new BuildMonitoringReportMessage(
+                TestExecution.getInstance().getConnectedAutId()
+                        .getExecutableName());
        
         try {
             ServerConnection.getInstance().send(message);
@@ -889,38 +877,37 @@ public class ClientTest implements IClientTest {
         }
          
     } 
+
     /**
-     * sending a request to the agent to get the config map from the last 
-     * connected AUT.
+     * {@inheritDoc}
      */
-    public void requestAutConfigMapFromAgent() {
-        
-        setLastConnectedAutConfigMap(null);
-        GetAutConfigMapMessage message = 
-            new GetAutConfigMapMessage(this.getLastConnectedAutId());
-        ICommand response = new GetAutConfigMapResponseCommand();
+    public Map<String, String> requestAutConfigMapFromAgent(String autId) {
+        Map<String, String> autConfigMap = null;
+        GetAutConfigMapMessage message = new GetAutConfigMapMessage(autId);
+        GetAutConfigMapResponseCommand response = 
+            new GetAutConfigMapResponseCommand();
         try {
-            ServerConnection.getInstance().request(
-                    message, response, REQUEST_CONFIG_MAP_TIMEOUT);
+            ServerConnection.getInstance().request(message, response,
+                    REQUEST_CONFIG_MAP_TIMEOUT);
             final AtomicBoolean timeoutFlag = new AtomicBoolean(true);
             final Timer timerTimeout = new Timer();
             timerTimeout.schedule(new TimerTask() {
-                public void run() {                    
+                public void run() {
                     timeoutFlag.set(false);
                     timerTimeout.cancel();
                 }
-            }, REQUEST_CONFIG_MAP_TIMEOUT);            
-            while (m_autConfigMap == null && timeoutFlag.get()) {
-                TimeUtil.delay(200);  
+            }, REQUEST_CONFIG_MAP_TIMEOUT);
+            while (response.getAutConfigMap() == null && timeoutFlag.get()) {
+                TimeUtil.delay(200);
                 log.info(Messages.WaitingForAutConfigMapFromAgent);
             }
-           
+            autConfigMap = response.getAutConfigMap();
         } catch (NotConnectedException nce) {
-            log.error(nce);           
+            log.error(nce);
         } catch (CommunicationException ce) {
             log.error(ce);
         }
-        
+        return autConfigMap;
     }
     
     /** 
@@ -988,7 +975,8 @@ public class ClientTest implements IClientTest {
                         }
                     }
                     writeMonitoringResults(result);              
-                }          
+                }
+                fireTestresultSummaryChanged();
                 monitor.done();
                 return Status.OK_STATUS;
             }
@@ -1038,7 +1026,6 @@ public class ClientTest implements IClientTest {
         TestResultSummaryPM
                 .mergeTestResultSummaryInDB(
                         currentSummary);        
-        fireTestresultSummaryChanged();        
     }
     /**
      * find the significant monitoring value
@@ -1060,25 +1047,27 @@ public class ClientTest implements IClientTest {
         return null;
     }
     
-    
     /**
      * checks if last connected AUT was running with monitoring agent.
-     * @return true if last connected AUT was running with monitoring else
-     * false
+     * 
+     * @return true if last connected AUT was running with monitoring else false
      */
-    public boolean isRunningWithMonitoring() {
-                
-        Map m = getLastConnectedAutConfigMap();
-        if (m != null) {
-            String monitoringID =
-                (String)m.get(AutConfigConstants.MONITORING_AGENT_ID);        
-            if (monitoringID != null && !monitoringID.equals(
-                    StringConstants.EMPTY)) {
-                return true;
+    private boolean isRunningWithMonitoring() {
+        AutIdentifier autID = TestExecution.getInstance().getConnectedAutId();
+        if (autID != null) {
+            Map<String, String> m = requestAutConfigMapFromAgent(
+                    autID.getExecutableName());
+            if (m != null) {
+                String monitoringID = m.get(
+                        AutConfigConstants.MONITORING_AGENT_ID);
+                if (!StringUtils.isEmpty(monitoringID)) {
+                    return true;
+                }
             }
-        } 
+        }
         return false;
-    }     
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -1286,30 +1275,12 @@ public class ClientTest implements IClientTest {
 
     /**
      * {@inheritDoc}
-     * 
      */
     public void stateChanged(TestExecutionEvent event) {
         // do nothing
     }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public IAUTConfigPO getLastAutConfig() {
-        return m_lastAutConfig;
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public Locale getLastAutLocale() {
-        return m_lastAutLocale;
-    }
     
     /**
-     * 
      * @return the Test Result Summary for the current test execution, or for
      *         the previous test execution if no test is currently running.
      */
@@ -1318,7 +1289,6 @@ public class ClientTest implements IClientTest {
     }
     
     /**
-     * 
      * @param summary The Test Result Summary to set.
      */
     private void setTestresultSummary(ITestResultSummaryPO summary) {
@@ -1351,35 +1321,5 @@ public class ClientTest implements IClientTest {
      */
     public void pauseTestExecutionOnError(boolean pauseOnError) {
         m_pauseOnError = pauseOnError;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getLastConnectedAutId() {
-        
-        return m_lastAutId;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setLastConnectedAutId(String autId) {
-        m_lastAutId = autId;
-        
-    }
-    /**
-     * {@inheritDoc}
-     */
-    public Map getLastConnectedAutConfigMap() {        
-        requestAutConfigMapFromAgent();
-        return m_autConfigMap;
-    }
-    /**
-     * {@inheritDoc}
-     */
-    public void setLastConnectedAutConfigMap(Map autConfigMap) {
-        this.m_autConfigMap = autConfigMap;
-        
     }
 }

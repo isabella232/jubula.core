@@ -10,7 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import java.util.Map;
+
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.GetAutConfigMapResponseMessage;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This command is handling the incoming autConfigMap from the Agent.
+ * 
  * @author BREDEX GmbH
  * @created 05.08.2010
  * */
@@ -28,42 +30,58 @@ public class GetAutConfigMapResponseCommand implements ICommand {
 
     /** the logger */
     private static final Logger LOG = LoggerFactory
-            .getLogger(GetAutConfigMapResponseCommand.class);    
-    
-    /** the message*/
+            .getLogger(GetAutConfigMapResponseCommand.class);
+
+    /** the message */
     private GetAutConfigMapResponseMessage m_message;
-        
+
+    /** The returned AutConfigMap from the agent */
+    private Map<String, String> m_autConfigMap;
+
     /**
      * {@inheritDoc}
      */
     public Message execute() {
-       
-        ClientTestFactory.getClientTest().
-                    setLastConnectedAutConfigMap(m_message.getAutConfigMap());
-        
+        setAutConfigMap(m_message.getAutConfigMap());
         return null;
     }
+
     /**
      * {@inheritDoc}
      */
     public Message getMessage() {
-       
         return m_message;
     }
+
     /**
      * {@inheritDoc}
      */
     public void setMessage(Message message) {
         m_message = (GetAutConfigMapResponseMessage)message;
-
     }
+
     /**
      * {@inheritDoc}
      */
     public void timeout() {
-                
+
         LOG.error(this.getClass().getName() + StringConstants.DOT
                 + Messages.TimeoutCalled);
 
+    }
+
+    /**
+     * @param autConfigMap
+     *            the autConfigMap to set
+     */
+    private void setAutConfigMap(Map autConfigMap) {
+        m_autConfigMap = autConfigMap;
+    }
+
+    /**
+     * @return the autConfigMap
+     */
+    public Map<String, String> getAutConfigMap() {
+        return m_autConfigMap;
     }
 }

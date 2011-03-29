@@ -694,9 +694,9 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @return true
      */
     boolean handleActivationComboEvent() {
-        putConfigValue(AutConfigConstants.ACTIVATION_METHOD, 
-                m_activationMethodCombo.getSelectedObject().
-                toString().toUpperCase());
+        putConfigValue(AutConfigConstants.ACTIVATION_METHOD,
+                ActivationMethod.getRCString(m_activationMethodCombo
+                        .getSelectedObject()));
         return true;
     }
 
@@ -793,14 +793,10 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      */    
     
     protected void populateExpertArea(Map<String, String> data) {
-        
-        String actMeth = data.get(AutConfigConstants.ACTIVATION_METHOD);
-        if (actMeth == null) {
-            actMeth = ActivationMethod.NONE.toString();
-        }
-        actMeth = actMeth.toUpperCase();
-        m_activationMethodCombo.setSelectedObject(ActivationMethod
-                .valueOf(actMeth));
+
+        m_activationMethodCombo.setSelectedObject(
+                ActivationMethod.getEnum(data
+                        .get(AutConfigConstants.ACTIVATION_METHOD)));
         
         String monitoringAgentId = data.get(
                 AutConfigConstants.MONITORING_AGENT_ID);
@@ -1792,10 +1788,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         directory = directoryDialog.open();
         if (directory != null) {
             textField.setText(directory);
-            Utils.storeLastDirPath(directoryDialog.getFilterPath());      
-            System.out.println("KEY= " 
-                    + textField.getData(MonitoringConstants.MONITORING_KEY));
-            System.out.println(textField.getText());
+            Utils.storeLastDirPath(directoryDialog.getFilterPath());  
             putConfigValue(String.valueOf(textField.getData(
                     MonitoringConstants.MONITORING_KEY)), 
                     textField.getText());

@@ -14,10 +14,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 
 
@@ -62,55 +66,63 @@ public class TestResult extends AbstractTestResult {
     private boolean m_reportWritten;    
     /** the path to the report, if it was too large to send */
     private String m_pathToReport;
+    
+    /**
+     * <code>autConfigMap</code> the aut config map
+     */
+    private Map<String, String> m_autConfigMap;
+
     /**
      * Constructor
      * 
-     * @param project The project within which the test was executed. Must
-     *                not be <code>null</code>.
-     * @param rootResultNode The root of the Test Result tree. Must not be 
-     *                       <code>null</code>.
+     * @param rootResultNode
+     *            The root of the Test Result tree. Must not be
+     *            <code>null</code>.
+     * @param autConfigMap
+     *            the aut config map
      */
-    public TestResult(IProjectPO project, TestResultNode rootResultNode) {
+    public TestResult(TestResultNode rootResultNode,
+            Map<String, String> autConfigMap) {
         super(rootResultNode);
+        IProjectPO project = GeneralStorage.getInstance().getProject();
         m_projectName = project.getName();
         m_projectGuid = project.getGuid();
         m_projectMajorVersionNumber = project.getMajorProjectVersion();
         m_projectMinorVersionNumber = project.getMinorProjectVersion();
         m_projectId = project.getId();
+        setAutConfigMap(autConfigMap);
     }
 
-    /**
-     * 
-     * @return the most recently started AUT Configuration. 
-     */
-    private IAUTConfigPO getAutConfig() {
-        return ClientTestFactory.getClientTest().getLastAutConfig();
-    }
-    
     /**
      * {@inheritDoc}
      */
     public String getAutAgentHostName() {
-        IAUTConfigPO autConfig = getAutConfig();
-        return autConfig != null ? autConfig.getServer() : StringUtils.EMPTY;
+        return MapUtils.getString(getAutConfigMap(),
+                AutConfigConstants.SERVER, StringConstants.EMPTY);
     }
 
     /**
      * {@inheritDoc}
      */
     public String getAutArguments() {
-        IAUTConfigPO autConfig = getAutConfig();
-        return autConfig != null 
-            ? autConfig.getValue(AutConfigConstants.AUT_ARGUMENTS, 
-                    StringUtils.EMPTY) : StringUtils.EMPTY;
+        return MapUtils.getString(getAutConfigMap(),
+                AutConfigConstants.AUT_ARGUMENTS, StringConstants.EMPTY);
     }
 
     /**
      * {@inheritDoc}
      */
     public String getAutConfigName() {
-        IAUTConfigPO autConfig = getAutConfig();
-        return autConfig != null ? autConfig.getName() : StringUtils.EMPTY;
+        return MapUtils.getString(getAutConfigMap(),
+                AutConfigConstants.CONFIG_NAME, TestresultSummaryBP.AUTRUN);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String getAutId() {
+        return MapUtils.getString(getAutConfigMap(),
+                AutConfigConstants.AUT_ID, TestresultSummaryBP.AUTRUN);
     }
 
     /**
@@ -270,6 +282,18 @@ public class TestResult extends AbstractTestResult {
     public void setPathToReport(String pathToReport) {
         this.m_pathToReport = pathToReport;
     }
-       
-    
+
+    /**
+     * @param autConfigMap the autConfigMap to set
+     */
+    private void setAutConfigMap(Map<String, String> autConfigMap) {
+        m_autConfigMap = autConfigMap;
+    }
+
+    /**
+     * @return the autConfigMap
+     */
+    public Map<String, String> getAutConfigMap() {
+        return m_autConfigMap;
+    }
 }

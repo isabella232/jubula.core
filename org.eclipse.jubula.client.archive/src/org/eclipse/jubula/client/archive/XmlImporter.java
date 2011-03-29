@@ -39,7 +39,6 @@ import org.eclipse.jubula.client.archive.converter.IXmlConverter;
 import org.eclipse.jubula.client.archive.converter.V4C001;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.archive.output.NullImportOutput;
-import org.eclipse.jubula.client.archive.schema.ActivationMethodEnum;
 import org.eclipse.jubula.client.archive.schema.Attribute;
 import org.eclipse.jubula.client.archive.schema.Aut;
 import org.eclipse.jubula.client.archive.schema.AutConfig;
@@ -1164,16 +1163,8 @@ class XmlImporter {
             String.valueOf(xml.getActivateApp()));
         conf.setValue(AutConfigConstants.CONFIG_NAME, 
                 String.valueOf(xml.getName()));
-        final ActivationMethodEnum.Enum activationMethod = 
-            xml.getActivationMethod();
-        if (activationMethod != null) {
-            conf.setValue(AutConfigConstants.ACTIVATION_METHOD, 
-                ActivationMethod.valueOf(activationMethod.toString()
-                    .toUpperCase()).toString());
-        } else {
-            conf.setValue(AutConfigConstants.ACTIVATION_METHOD, 
-                ActivationMethod.NONE.name());
-        }
+        conf.setValue(AutConfigConstants.ACTIVATION_METHOD, ActivationMethod
+                .getRCString(xml.getActivationMethod().toString()));
         // FIXME END
         
         final List<MapEntry> confAttrMapList = xml.getConfAttrMapEntryList();
@@ -1846,7 +1837,7 @@ class XmlImporter {
             // Trac#1908 no place to store the max. number of retries
         }
         ts.setDefaultEventHandler(defaultEventHandler);
-        
+        ts.setStepDelay(xml.getStepDelay());
         return ts;
     }
     

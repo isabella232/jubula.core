@@ -51,21 +51,19 @@
 			id="org.eclipse.jubula.client.ui.expression.canConnectToAut">
 			<and>
 				<with variable="org.eclipse.jubula.client.ui.variable.isAutStarterConnected">
-					<equals value="true">
-					</equals>
+					<equals value="true" />
 				</with>
 				<with variable="org.eclipse.jubula.client.ui.variable.autConnectionStatus">
-       <equals
-             value="Disconnected">
-       </equals>
+			       <equals value="Disconnected" />
 				</with>
 				<with variable="org.eclipse.jubula.client.ui.variable.isTestRunning">
-					<equals value="false">
-					</equals>
+					<equals value="false" />
 				</with>
 				<with variable="org.eclipse.jubula.client.ui.variable.runningAuts">
-					<count value="+">
-					</count>
+					<count value="+" />
+				</with>
+				<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
+					<equals value="true" />
 				</with>
 			</and>
 		</definition>
@@ -130,13 +128,20 @@
 			namespace="org.eclipse.jubula.client.ui.propertytester.EditorPart"
 			properties="isDirty" type="org.eclipse.ui.IEditorPart">
 		</propertyTester>
-  <propertyTester
-        class="org.eclipse.jubula.client.ui.propertytester.RunningAutPropertyTester"
-        id="org.eclipse.jubula.client.ui.propertytester.RunningAut"
-        namespace="org.eclipse.jubula.client.ui.propertytester.RunningAut"
-        properties="isDefined"
-        type="org.eclipse.jubula.tools.registration.AutIdentifier">
-  </propertyTester>
+	    <propertyTester
+	        class="org.eclipse.jubula.client.ui.propertytester.RunningAutPropertyTester"
+	        id="org.eclipse.jubula.client.ui.propertytester.RunningAut"
+	        namespace="org.eclipse.jubula.client.ui.propertytester.RunningAut"
+	        properties="isDefined"
+	        type="org.eclipse.jubula.tools.registration.AutIdentifier">
+        </propertyTester>
+	    <propertyTester
+	        class="org.eclipse.jubula.client.ui.propertytester.TestResultSummaryPropertyTester"
+	        id="org.eclipse.jubula.client.ui.propertytester.TestResultSummary"
+	        namespace="org.eclipse.jubula.client.ui.propertytester.TestResultSummary"
+	        properties="hasMonitoringData"
+	        type="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
+  		</propertyTester>
 	</extension>
 	<extension id="gdMarker" name="%JubulaMarker"
 		point="org.eclipse.core.resources.markers" />
@@ -3246,10 +3251,16 @@
  <extension
        point="org.eclipse.ui.exportWizards">
     <wizard
+          category="org.eclipse.jubula.client.ui.test"
           class="org.eclipse.jubula.client.ui.wizards.ExportTestResultDetailsWizard"
+          icon="icons/testResultTree.gif"
           id="org.eclipse.jubula.client.ui.exportWizard.ExportTestResultDetailsWizard"
           name="Test Result Details">
     </wizard>
+    <category
+          id="org.eclipse.jubula.client.ui.test"
+          name="%FunctionalTestCategory.name">
+    </category>
  </extension>
  <extension
        point="org.eclipse.search.searchPages">
@@ -3279,10 +3290,16 @@
  <extension
        point="org.eclipse.ui.importWizards">
     <wizard
+          category="org.eclipse.jubula.client.ui.test"
           class="org.eclipse.jubula.client.ui.wizards.ImportTestDataSetsWizard"
+          icon="icons/centralTestData.gif"
           id="org.eclipse.jubula.client.ui.importWizard.ImportTestDataSetsWizard"
-          name="Import Central Test Data Sets">
+          name="Central Test Data Sets">
     </wizard>
+    <category
+          id="org.eclipse.jubula.client.ui.test"
+          name="%FunctionalTestCategory.name">
+    </category>
  </extension>
 	<extension point="org.eclipse.ui.activities">
 		<activity id="org.eclipse.jubula.app.activity.nonTestEditor"

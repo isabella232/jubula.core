@@ -762,6 +762,7 @@ public class TestresultSummaryView extends ViewPart
                     Combo cbx = (Combo)e.widget;
                     m_filter.setFilterType(cbx.getItem(
                             cbx.getSelectionIndex()));
+                    m_tableViewer.refresh();
                 }
             }
         });
@@ -1910,15 +1911,16 @@ public class TestresultSummaryView extends ViewPart
         @SuppressWarnings("synthetic-access")
         public boolean isElementVisible(Viewer viewer, Object element) {
             ITestResultSummaryPO m = (ITestResultSummaryPO) element;
-            String metaValue = String.valueOf(m.getTestsuiteDate());
-            
+            String metaValue = StringConstants.EMPTY;
             if (m_filterType.equals(TESTRESULT_SUMMARY_DATE)) {
-                metaValue = String.valueOf(m.getTestsuiteDate());
+                metaValue = DTF_DEFAULT.format(m.getTestsuiteDate());
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTRUN_ID)) {
                 metaValue = String.valueOf(m.getId());
             } else if (m_filterType
                     .equals(TESTRESULT_SUMMARY_TEST_JOB_START_TIME)) {
-                metaValue = String.valueOf(m.getTestJobStartTime());
+                Date date = m.getTestJobStartTime();
+                metaValue = 
+                    date != null ? DTF_LONG.format(date) : StringUtils.EMPTY;
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TEST_JOB)) {
                 metaValue = m.getTestJobName();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTRUN_STATE)) {
@@ -1948,9 +1950,9 @@ public class TestresultSummaryView extends ViewPart
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_LANGUAGE)) {
                 metaValue = m.getTestsuiteLanguage();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_START_TIME)) {
-                metaValue = String.valueOf(m.getTestsuiteStartTime());
+                metaValue = DTF_LONG.format(m.getTestsuiteStartTime());
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_END_TIME)) {
-                metaValue = String.valueOf(m.getTestsuiteEndTime());
+                metaValue = DTF_LONG.format(m.getTestsuiteEndTime());
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_DURATION)) {
                 metaValue = m.getTestsuiteDuration();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_EXPECTED_CAPS)) {
@@ -1974,13 +1976,12 @@ public class TestresultSummaryView extends ViewPart
                 metaValue = String.valueOf(m.getTestsuiteFailedTeststeps());
             } else if (m_filterType
                     .equals(TESTRESULT_SUMMARY_COMMENT_TITLE)) {
-                metaValue = String.valueOf(m.getCommentTitle());
+                metaValue = StringUtils.defaultString(m.getCommentTitle());
             }
             
             if (wordMatches(metaValue)) {
                 return true;
             }
-
             return false;
         }
 

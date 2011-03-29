@@ -17,45 +17,52 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 05.08.2010
  */
 public class GetAutConfigMapMessage extends Message {
-
-    
     /** The AUT_ID */
     private String m_autId;
-    
-    /** default constructor 
-     * @deprecated*/
+
+    /**
+     * default constructor
+     * 
+     * @deprecated
+     */
     public GetAutConfigMapMessage() {
-        //do not use
+        // do not use
     }
-    /**    
-     * @param autId The AutConfigMap to this AUT_ID will be returned
+
+    /**
+     * @param autId
+     *            The AutConfigMap to this AUT_ID will be returned
      */
     public GetAutConfigMapMessage(String autId) {
         this.m_autId = autId;
     }
+
     /**
      * {@inheritDoc}
      */
     public String getCommandClass() {
-      
         return CommandConstants.GET_AUT_CONFIGMAP_COMMAND;
     }
+
     /**
      * {@inheritDoc}
      */
     public double getVersion() {
-       
         return 1.0;
     }
-    /**  
-     * @return The AutID*/
+
+    /**
+     * @return The AutID
+     */
     public String getAutId() {
         return m_autId;
     }
-    /** @param autId sets the AUT_ID */
+
+    /**
+     * @param autId
+     *            sets the AUT_ID
+     */
     public void setAutId(String autId) {
         this.m_autId = autId;
     }
- 
-
 }
