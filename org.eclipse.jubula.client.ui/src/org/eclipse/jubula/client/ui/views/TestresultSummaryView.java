@@ -1910,9 +1910,9 @@ public class TestresultSummaryView extends ViewPart
         @SuppressWarnings("synthetic-access")
         public boolean isElementVisible(Viewer viewer, Object element) {
             ITestResultSummaryPO m = (ITestResultSummaryPO) element;
-            String metaValue = DTF_DEFAULT.format(m.getTestsuiteDate());
+            String metaValue = StringConstants.EMPTY;
             if (m_filterType.equals(TESTRESULT_SUMMARY_DATE)) {
-                metaValue = DTF_DEFAULT.format(m.getTestsuiteStartTime());
+                metaValue = DTF_DEFAULT.format(m.getTestsuiteDate());
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTRUN_ID)) {
                 metaValue = String.valueOf(m.getId());
             } else if (m_filterType
