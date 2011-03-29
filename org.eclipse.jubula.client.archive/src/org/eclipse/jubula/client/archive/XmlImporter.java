@@ -1820,6 +1820,11 @@ class XmlImporter {
         } else {
             ts = NodeMaker.createTestSuitePO(xml.getName());
         }
+        
+        if (assignNewGuid) {
+            m_oldToNewGuids.put(xml.getGUID(), ts.getGuid());
+        }
+        
         ts.setComment(xml.getComment());
         ts.setCmdLineParameter(xml.getCommandLineParameter());
         if (xml.getSelectedAut() != null) {
@@ -1865,8 +1870,17 @@ class XmlImporter {
         for (RefTestSuite xmlRts : xml.getRefTestSuiteList()) {
             IRefTestSuitePO rts;
             if (assignNewGuid) {
-                rts = NodeMaker.createRefTestSuitePO(xmlRts.getName(), xmlRts
-                        .getTsGuid(), xmlRts.getAutId());
+                // Only Test Suites from the same project can be referenced,
+                // and all Test Suites for this Project have already been 
+                // initialized (so they have already been entered into the 
+                // old to new GUID map). This is why we can simply directly use 
+                // the old to new GUID map.
+                String testSuiteGuid = m_oldToNewGuids.get(xmlRts.getTsGuid());
+                if (testSuiteGuid == null) {
+                    log.error("Test Suite Reference: No new GUID found for Test Suite with old GUID: " + xmlRts.getTsGuid()); //$NON-NLS-1$
+                }
+                rts = NodeMaker.createRefTestSuitePO(xmlRts.getName(), 
+                        testSuiteGuid, xmlRts.getAutId());
             } else {
                 rts = NodeMaker.createRefTestSuitePO(xmlRts.getName(), xmlRts
                         .getGUID(), xmlRts.getTsGuid(), xmlRts.getAutId());
