@@ -762,6 +762,7 @@ public class TestresultSummaryView extends ViewPart
                     Combo cbx = (Combo)e.widget;
                     m_filter.setFilterType(cbx.getItem(
                             cbx.getSelectionIndex()));
+                    m_tableViewer.refresh();
                 }
             }
         });
