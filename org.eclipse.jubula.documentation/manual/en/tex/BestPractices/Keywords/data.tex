@@ -4,7 +4,7 @@ Keywords that enter text, select from trees and check boolean values are all lik
 
 Parameters that deal with operators, search/path types, timeouts and delays can generally be fixed for your keywords and do not need to be parameterized. This reduces the amount you have to enter each time you reuse a \gdcase{} and also means that data that will remain the same can be managed in a central place. 
 
-\bxtipp{Don't worry if you are not sure at the beginning what will or won't change. You can add parameter references later in the \gdpropview{} and can remove unnecessary references in the \bxname{edit parameters} dialog \bxpref{editparams}. }
+\bxtipp{Don't worry if you are not sure at the beginning what will or won't change. You can add parameter references later in the \gdpropview{} and can remove unnecessary references in the \bxname{edit parameters} dialog \bxpref{TasksTestdataEditParams}. }
 
 If your \gdcase{} needs to refer to the same data more than once, it may be worth thinking about parameterizing the data to the parent \gdcase{}, so that you only have to enter the concrete data once. So, if your test creates a new project and then checks to see if the project name appears correctly, you should probably have the project name as a parameter of the whole \gdcase{} to avoid having to enter the name in two places. 
 

@@ -1,7 +1,7 @@
 When it comes to executing tests, there are two important things to bear in mind when working with \app{}:
 \begin{itemize}
 \item All the necessary keywords for a single \bxname{use case} should be grouped together in one \gdcase{}, which is named after the use case it tests. The use case should be complete -- it should not require any data or component names. This makes it much easier to add and remove whole use cases from \gdsuites{} and gives you a good overview of which use cases you have tested.   
-\item Each use case should assume (and create) a well-defined state of the \gdaut{} and leave the \gdaut{} in a well-defined state. This is important for error handling later. It is a good idea to create a keyword called \bxname{app\_startup} which creates the right state for the \gdaut{}, and to use this keyword at the beginning of each use case (\bxfigref{UseCase}). 
+\item Each use case should assume (and create) a well-defined state of the \gdaut{} and leave the \gdaut{} in a well-defined state. This is important for error handling later. It is a good idea to create a keyword called \bxname{app\_startup} which creates the right state for the \gdaut{}, and to use this keyword at the beginning of each use case. 
 \bxtipp{The well-defined state of your \gdaut{} may be completely empty, or may contain test data. Deciding what data your test needs and what data it will create itself is an important part of an automation strategy.}
 \end{itemize}
 
