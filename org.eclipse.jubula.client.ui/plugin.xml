@@ -420,11 +420,6 @@
 				disabledIcon="icons/saveas_d.gif" icon="icons/saveas_e.gif"
 				id="org.eclipse.jubula.client.ui.actions.SaveProjectAsAction"
 				label="%SaveAs" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" />
-			<action class="org.eclipse.jubula.client.ui.actions.OpenProjectAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
-				disabledIcon="icons/loadDB_disabled.gif" icon="icons/loadDB.gif"
-				id="org.eclipse.jubula.client.ui.actions.OpenProjectDBAction"
-				label="%OpenProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" />
 			<action class="org.eclipse.jubula.client.ui.actions.ExportAllAction"
 				id="org.eclipse.jubula.client.ui.actions.ExportAllAction"
 				label="%ExportAll" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" style="push"
@@ -1088,6 +1083,11 @@
         id="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
         name="%CreateNewVersion">
   </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.OpenProject"
+        name="%OpenProject">
+  </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<key
@@ -1685,6 +1685,10 @@
            label="&amp;Test">
         <command
               commandId="org.eclipse.jubula.client.ui.commands.NewProject"
+              style="push">
+        </command>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.OpenProject"
               style="push">
         </command>
         <separator
@@ -2466,6 +2470,10 @@
 			</with>
         </activeWhen>
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.OpenProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.OpenProject">
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.commandImages">
 		<image commandId="org.eclipse.ui.edit.rename" disabledIcon="icons/rename_disabled.gif"
@@ -2573,6 +2581,10 @@
 		<image
 			commandId="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
 			disabledIcon="icons/project_dis.gif" icon="icons/newProjectIcon.gif">
+		</image>
+		<image
+			commandId="org.eclipse.jubula.client.ui.commands.OpenProject"
+			disabledIcon="icons/loadDB_disabled.gif" icon="icons/loadDB.gif">
 		</image>
   <image
         commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
