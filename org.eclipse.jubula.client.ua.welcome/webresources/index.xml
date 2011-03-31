@@ -7,7 +7,7 @@
  -->
 
 <introContent>
-  	<extensionContent id="GDWelcome-webresourcesExtension" style="css/guidancer.css" name="Functional Testing on the Web" path="webresources/@">
+  	<extensionContent id="GDWelcome-webresourcesExtension" style="css/layout.css" name="Functional Testing on the Web" path="webresources/@">
 		<group style-id="content-group" id="GDWelcome-webresourcesLink-group">
        		<link label="Functional Testing Web Resources" url="html/websources.html" id="GDWelcome-introLink" style-id="content-link">
           		<text>Click here for an overview of some of the resources available online.</text>

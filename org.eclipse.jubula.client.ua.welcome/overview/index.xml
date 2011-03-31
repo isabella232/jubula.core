@@ -7,7 +7,7 @@
  -->
 
 <introContent>
-  	<extensionContent id="GDWelcome-overviewExtension" style="css/guidancer.css" name="Functional Testing Overview" path="overview/@">
+  	<extensionContent id="GDWelcome-overviewExtension" style="css/layout.css" name="Functional Testing Overview" path="overview/@">
 		<group style-id="content-group" id="GDWelcome-overviewLink-group">
        		<link label="Go to the Functional Testing overview page" url="html/overview.html" id="GDWelcome-introLink" style-id="content-link">
           		<text>The 'overview' page lists the main information sources for Functional Testing. 

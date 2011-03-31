@@ -8,7 +8,7 @@
 
 <introContent>
 	<extensionContent id="GDWelcome-firststepsExtension"
-		style="./css/guidancer.css" name="Your first steps with Functional Testing"
+		style="./css/layout.css" name="Your first steps with Functional Testing"
 		path="firststeps/@">
 		<group style-id="content-group"
 			id="GDWelcome-firststepsLink-group">
