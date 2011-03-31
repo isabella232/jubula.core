@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.actions;
+package org.eclipse.jubula.client.ui.handlers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -16,10 +16,11 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.archive.XmlStorage;
@@ -41,8 +42,6 @@ import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
-import org.eclipse.jubula.client.ui.businessprocess.CreateNewVersionBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
@@ -54,12 +53,11 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
 
@@ -69,11 +67,11 @@ import org.eclipse.ui.progress.IProgressService;
  * @created Jun 29, 2007
  */
 @SuppressWarnings("synthetic-access")
-public class CreateNewVersionAction extends AbstractAction {
-
+public class CreateNewProjectVersionHandler extends AbstractHandler {
     /** standard logging */
-    private static Log log = LogFactory.getLog(CreateNewVersionAction.class);
-    
+    private static Log log = LogFactory
+            .getLog(CreateNewProjectVersionHandler.class);
+
     /**
      * Operation for Create New Version action.
      * 
@@ -281,44 +279,6 @@ public class CreateNewVersionAction extends AbstractAction {
         }
     }
 
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void runWithEvent(IAction action, Event event) {
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
-        Plugin.startLongRunning(Messages.SaveProjectAsActionWaitWhileSaving);
-        VersionDialog dialog = openVersionDialog();
-        if (dialog != null && dialog.getReturnCode() == Window.OK) {
-            final Integer majorVersionNumber = dialog.getMajorVersionNumber();
-            final Integer minorVersionNumber = dialog.getMinorVersionNumber();
-            IRunnableWithProgress op = createOperation(majorVersionNumber, 
-                minorVersionNumber);
-            try {
-                IProgressService progressService = 
-                    PlatformUI.getWorkbench().getProgressService();
-                progressService.busyCursorWhile(op);
-                fireReady();
-                
-            } catch (InvocationTargetException e) {
-                // Error occurred during operation.
-                // Do nothing. The operation has already handled the error.
-            } catch (InterruptedException e) {
-                // Operation was canceled.
-                // We have to clear the GUI because all of 
-                // the save work was done in the Master Session, which has been 
-                // rolled back.
-                Utils.clearClient();
-            }
-        } else {
-            Plugin.stopLongRunning();
-        }
-
-    }
-
-
     /**
      * call this if the "save as" has ended to update the GUI.
      */
@@ -347,13 +307,6 @@ public class CreateNewVersionAction extends AbstractAction {
         
         return new NewVersionOperation(
             majorVersionNumber, minorVersionNumber);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected AbstractActionBP getActionBP() {
-        return CreateNewVersionBP.getInstance();
     }
 
     /**
@@ -432,4 +385,37 @@ public class CreateNewVersionAction extends AbstractAction {
         return dialog;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object execute(ExecutionEvent event) {
+        Plugin.startLongRunning(Messages.SaveProjectAsActionWaitWhileSaving);
+        VersionDialog dialog = openVersionDialog();
+        if (dialog != null && dialog.getReturnCode() == Window.OK) {
+            final Integer majorVersionNumber = dialog.getMajorVersionNumber();
+            final Integer minorVersionNumber = dialog.getMinorVersionNumber();
+            IRunnableWithProgress op = createOperation(majorVersionNumber, 
+                minorVersionNumber);
+            try {
+                IProgressService progressService = 
+                    PlatformUI.getWorkbench().getProgressService();
+                progressService.busyCursorWhile(op);
+                fireReady();
+                
+            } catch (InvocationTargetException e) {
+                // Error occurred during operation.
+                // Do nothing. The operation has already handled the error.
+            } catch (InterruptedException e) {
+                // Operation was canceled.
+                // We have to clear the GUI because all of 
+                // the save work was done in the Master Session, which has been 
+                // rolled back.
+                Utils.clearClient();
+            }
+        } else {
+            Plugin.stopLongRunning();
+        }
+        return null;
+    }
 }

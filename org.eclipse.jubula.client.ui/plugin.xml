@@ -487,12 +487,6 @@
 				id="org.eclipse.jubula.client.ui.actions.ShowServerLogAction"
 				label="%ShowAutStarterLog" menubarPath="help/helpEnd" style="push" />
 			<action
-				class="org.eclipse.jubula.client.ui.actions.CreateNewVersionAction"
-				disabledIcon="icons/project_dis.gif" icon="icons/newProjectIcon.gif"
-				id="org.eclipse.jubula.client.ui.actions.CreateNewVersionAction"
-				label="%CreateNewVersion" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" style="push"
-				tooltip="%CreateNewVersionTooltip" />
-			<action
 				class="org.eclipse.jubula.client.ui.actions.SelectDatabaseAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.SelectDBCommand"
 				icon="icons/selectDB.gif"
@@ -1088,6 +1082,11 @@
         categoryId="org.eclipse.jubula.client.ui.commands"
         id="org.eclipse.jubula.client.ui.commands.DeleteProject"
         name="%DeleteProject">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
+        name="%CreateNewVersion">
   </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
@@ -1696,6 +1695,10 @@
               name="JubulaProjectSeparator2"
               visible="true">
         </separator>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
+              style="push">
+        </command>
         <command
               commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
               style="push">
@@ -2454,6 +2457,15 @@
         class="org.eclipse.jubula.client.ui.handlers.ImportProjectHandler"
         commandId="org.eclipse.jubula.client.ui.commands.ImportProject">
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.CreateNewProjectVersionHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion">
+        <activeWhen>
+			<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
+				<equals value="true" />
+			</with>
+        </activeWhen>
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.commandImages">
 		<image commandId="org.eclipse.ui.edit.rename" disabledIcon="icons/rename_disabled.gif"
@@ -2557,6 +2569,10 @@
 		<image
 			commandId="org.eclipse.jubula.client.ui.commands.togglePauseOnErrorCommand"
 			icon="icons/togglePauseOnError.gif">
+		</image>
+		<image
+			commandId="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
+			disabledIcon="icons/project_dis.gif" icon="icons/newProjectIcon.gif">
 		</image>
   <image
         commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
