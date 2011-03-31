@@ -483,14 +483,6 @@
 				toolbarPath="org.eclipse.jubula.client.ui.toolbar.AutStarterToolbar/GlobalActions"
 				tooltip="%ConnectToolTip" />
 			<action
-				class="org.eclipse.jubula.client.ui.actions.StopObservationModeAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.StopRecordTestCaseCommand"
-				disabledIcon="icons/stopcam_disabled.gif" icon="icons/stopcam.gif"
-				id="org.eclipse.jubula.client.ui.actions.StopRecordTestCaseAction"
-				label="%StopRecord" menubarPath="org.eclipse.ui.run/JubulaRunSeparator4"
-				toolbarPath="org.eclipse.jubula.client.ui.toolbar.ObservationToolbar/GlobalActions"
-				tooltip="%StopRecordToolTip" />
-			<action
 				class="org.eclipse.jubula.client.ui.actions.OMStopMappingModeAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
 				disabledIcon="icons/stopOM_disabled.gif" icon="icons/stopOM.gif"
@@ -1107,6 +1099,11 @@
         id="org.eclipse.jubula.client.ui.commands.ToggleRelevance"
         name="Toggle relevance">
   </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.StopObservationMode"
+        name="%StopRecord">
+  </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<key
@@ -1431,12 +1428,23 @@
 					commandId="org.eclipse.jubula.client.ui.commands.StartObservationModeCommand"
 					id="org.eclipse.jubula.client.ui.toolbar.ObservationToolbar.StartObservationModeCommand"
 					style="pulldown">
-       <visibleWhen
-             checkEnabled="false">
-          <reference
-                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
-          </reference>
-       </visibleWhen>
+					<visibleWhen
+		             checkEnabled="false">
+		          <reference
+		                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+		          </reference>
+		       </visibleWhen>
+				</command>
+				<command
+					commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
+					id="org.eclipse.jubula.client.ui.toolbar.ObservationToolbar.StopObservationMode"
+					style="push">
+		       <visibleWhen
+		             checkEnabled="false">
+		          <reference
+		                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+		          </reference>
+		       </visibleWhen>
 				</command>
 				<separator name="GlobalActions" visible="false">
 				</separator>
@@ -2306,6 +2314,16 @@
 				</reference>
 			</enabledWhen>
 		</handler>
+		<handler
+			class="org.eclipse.jubula.client.ui.handlers.StopObservationModeHandler"
+			commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode">
+			<enabledWhen>
+				<with
+					variable="org.eclipse.jubula.client.ui.variable.isObservationRunning">
+					<equals value="true" />
+				</with>
+			</enabledWhen>
+		</handler>
   <handler
         class="org.eclipse.jubula.client.ui.handlers.CreateAutDefinitionHandler"
         commandId="org.eclipse.jubula.client.ui.commands.CreateAutDefinitionCommand">
@@ -2580,6 +2598,11 @@
   <image
         commandId="org.eclipse.jubula.client.ui.commands.continueWithoutEHCommand"
         icon="icons/continueWithoutEH.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
+        disabledIcon="icons/stopcam_disabled.gif"
+        icon="icons/stopcam.gif">
   </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"
@@ -3228,6 +3251,12 @@
 				priorityLevel="workbench">
 			</variable>
 			<variable name="org.eclipse.jubula.client.ui.variable.isTestPaused"
+				priorityLevel="workbench">
+			</variable>
+		</sourceProvider>
+		<sourceProvider
+			provider="org.eclipse.jubula.client.ui.sourceprovider.ObservationModeSourceProvider">
+			<variable name="org.eclipse.jubula.client.ui.variable.isObservationRunning"
 				priorityLevel="workbench">
 			</variable>
 		</sourceProvider>
