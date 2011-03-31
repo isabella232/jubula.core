@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.actions.OpenProjectAction;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.utils.JBThread;
@@ -92,7 +91,7 @@ public class NewProjectHandler extends AbstractHandler {
                     final IProjectPO project = 
                         GeneralStorage.getInstance().getProject(); 
                     IRunnableWithProgress op = 
-                        new OpenProjectAction.OpenProjectOperation(project);
+                        new OpenProjectHandler.OpenProjectOperation(project);
                     try {
                         PlatformUI.getWorkbench().getProgressService()
                             .busyCursorWhile(op);

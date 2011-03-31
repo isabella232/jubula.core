@@ -34,13 +34,13 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.progress.AbstractRunnableWithProgress;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.actions.OpenProjectAction;
-import org.eclipse.jubula.client.ui.actions.OpenProjectAction.OpenProjectOperation;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.ComboBoxDialog;
 import org.eclipse.jubula.client.ui.dialogs.ImportProjectDialog;
+import org.eclipse.jubula.client.ui.handlers.OpenProjectHandler;
+import org.eclipse.jubula.client.ui.handlers.OpenProjectHandler.OpenProjectOperation;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -213,7 +213,7 @@ public class ImportFileBP implements IProjectNameConflictResolver {
             final IProjectPO projectToOpen = importProjectRunnable.getResult();
             if (projectToOpen != null) { 
                 OpenProjectOperation openOp = 
-                    new OpenProjectAction.OpenProjectOperation(
+                    new OpenProjectHandler.OpenProjectOperation(
                             projectToOpen);
                 try {
                     PlatformUI.getWorkbench().getProgressService()

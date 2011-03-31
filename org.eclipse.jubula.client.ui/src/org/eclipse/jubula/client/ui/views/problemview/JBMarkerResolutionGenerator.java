@@ -38,7 +38,6 @@ import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.ChooseServerAction;
-import org.eclipse.jubula.client.ui.actions.OpenProjectAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
@@ -645,13 +644,11 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                 }
 
                 public void run(IMarker marker) {
-                    OpenProjectAction.getAction().runWithEvent(new Event());
+                    CommandHelper.executeCommand(
+                            CommandIDs.OPEN_PROJECT_COMMAND_ID);
                 }
-                
             },
-                        
         };
-        
     }
     
     /**

@@ -20,7 +20,6 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.actions.OpenProjectAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -47,7 +46,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -345,7 +343,8 @@ public class NewServerPortDialog extends TitleAreaDialog {
                     CommandHelper.executeCommand(
                             CommandIDs.IMPORT_PROJECT_COMMAND_ID);
                 } else if (dialog.getSelectionIndex() == 2) { // open
-                    OpenProjectAction.getAction().runWithEvent(new Event());
+                    CommandHelper.executeCommand(
+                            CommandIDs.OPEN_PROJECT_COMMAND_ID);
                 }
             }
         }
