@@ -8,13 +8,15 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.actions;
+package org.eclipse.jubula.client.ui.handlers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
@@ -32,14 +34,13 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
 
 /**
  * @author BREDEX GmbH
  * @created 18.04.2005
  */
-public class SelectDatabaseAction extends AbstractAction {
+public class SelectDatabaseHandler extends AbstractHandler {
     /**
      * <code>HIBERNATE_CONNECTION_PASSWORD</code>
      */
@@ -52,31 +53,6 @@ public class SelectDatabaseAction extends AbstractAction {
 
     /** true, if hibernate init was successful */
     private static boolean hibernateInit = false;
-
-    /**
-     * {@inheritDoc} + check unsaved editors
-     */
-    public void runWithEvent(IAction action, Event event) {
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
-        if (GeneralStorage.getInstance().getProject() != null
-                && Plugin.getDefault().anyDirtyStar()
-                && !Plugin.getDefault().showSaveEditorDialog()) {
-
-            Plugin.stopLongRunning();
-            return;
-        }
-
-        if ((Hibernator.instance() != null)
-                && Hibernator.instance().isDBLocked()) {
-            Plugin.stopLongRunning();
-            Utils.createMessageDialog(MessageIDs.I_DB_BACKGROUND_JOB, 
-                    null, null);
-            return;
-        }
-        new Loader().start();
-    }
 
     /**
      * Runnable to connect to DB
@@ -224,5 +200,28 @@ public class SelectDatabaseAction extends AbstractAction {
         protected void errorOccured() {
             Plugin.stopLongRunning();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        if (GeneralStorage.getInstance().getProject() != null
+                && Plugin.getDefault().anyDirtyStar()
+                && !Plugin.getDefault().showSaveEditorDialog()) {
+
+            Plugin.stopLongRunning();
+            return null;
+        }
+
+        if ((Hibernator.instance() != null)
+                && Hibernator.instance().isDBLocked()) {
+            Plugin.stopLongRunning();
+            Utils.createMessageDialog(MessageIDs.I_DB_BACKGROUND_JOB, 
+                    null, null);
+            return null;
+        }
+        new Loader().start();
+        return null;
     }
 }

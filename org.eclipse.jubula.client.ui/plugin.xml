@@ -470,12 +470,6 @@
 				disabledIcon="icons/serverLogView_disabled.gif" icon="icons/serverLogView.gif"
 				id="org.eclipse.jubula.client.ui.actions.ShowServerLogAction"
 				label="%ShowAutStarterLog" menubarPath="help/helpEnd" style="push" />
-			<action
-				class="org.eclipse.jubula.client.ui.actions.SelectDatabaseAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.SelectDBCommand"
-				icon="icons/selectDB.gif"
-				id="org.eclipse.jubula.client.ui.actions.SelectDatabaseAction"
-				label="%SelectDatabase" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" />
 		</actionSet>
 		<actionSet description="all actions, that are not in the main menu- or toolbar"
 			id="org.eclipse.jubula.client.ui.globalActions" label="Jubula Global Action Set">
@@ -793,10 +787,10 @@
 			name="Export" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.PropertiesCommand"
-			name="%Properties">
+			id="org.eclipse.jubula.client.ui.commands.ProjectProperties"
+			name="%ProjectProperties">
 			<commandParameter
-				id="org.eclipse.jubula.client.ui.commands.PropertiesCommand.parameter.sectionToOpen"
+				id="org.eclipse.jubula.client.ui.commands.ProjectProperties.parameter.sectionToOpen"
 				name="Section" optional="true">
 			</commandParameter>
 		</command>
@@ -919,7 +913,7 @@
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.SelectDBCommand" name="SelectDatabase">
+			id="org.eclipse.jubula.client.ui.commands.SelectDatabase" name="%SelectDatabase">
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
@@ -1105,7 +1099,7 @@
 		<key commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+X" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.PropertiesCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.ProjectProperties"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+P" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.OpenProject"
@@ -1247,13 +1241,6 @@
 					label="%Show.UnusedTestCases" style="toggle">
 				</command>
 			</menu>
-		</menuContribution>
-		<menuContribution
-			locationURI="menu:org.eclipse.jubula.client.ui.menu.test?before=JubulaProjectSeparator5">
-			<command
-				commandId="org.eclipse.jubula.client.ui.commands.PropertiesCommand"
-				label="%Properties" style="push" tooltip="%PropertiesToolTip">
-			</command>
 		</menuContribution>
 		<menuContribution
 			locationURI="menu:edit?before=JubulaEditSeparator3">
@@ -1677,6 +1664,13 @@
               style="push">
         </command>
         <separator
+              name="JubulaProjectSeparator0">
+        </separator>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase"
+              style="push">
+        </command>
+        <separator
               name="JubulaProjectSeparator1"
               visible="true">
         </separator>
@@ -1693,11 +1687,11 @@
               visible="true">
         </separator>
         <command
-              commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
+              commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
               style="push">
         </command>
         <command
-              commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
+              commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
               style="push">
         </command>
         <separator
@@ -1716,6 +1710,10 @@
               name="JubulaProjectSeparator5"
               visible="true">
         </separator>
+		<command
+			commandId="org.eclipse.jubula.client.ui.commands.ProjectProperties"
+			style="push">
+		</command>
 		<visibleWhen checkEnabled="false">
      <reference
            definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
@@ -2172,7 +2170,7 @@
 		</handler>
 		<handler
 			class="org.eclipse.jubula.client.ui.handlers.ProjectPropertiesHandler"
-			commandId="org.eclipse.jubula.client.ui.commands.PropertiesCommand">
+			commandId="org.eclipse.jubula.client.ui.commands.ProjectProperties">
 			<enabledWhen>
 				<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
 					<equals value="true">
@@ -2485,6 +2483,10 @@
 			</with>
         </activeWhen>
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.SelectDatabaseHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase">
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.commandImages">
 		<image commandId="org.eclipse.ui.edit.rename" disabledIcon="icons/rename_disabled.gif"
@@ -2676,6 +2678,10 @@
         commandId="org.eclipse.jubula.client.ui.commands.SaveProjectAs"
         disabledIcon="icons/saveas_d.gif"
         icon="icons/saveas_e.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase"
+        icon="icons/selectDB.gif">
   </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"

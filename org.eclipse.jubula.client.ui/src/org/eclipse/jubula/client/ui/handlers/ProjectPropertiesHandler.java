@@ -54,7 +54,7 @@ public class ProjectPropertiesHandler extends AbstractHandler {
      * dialog to activate.
      */
     public static final String SECTION_TO_OPEN = 
-        "org.eclipse.jubula.client.ui.commands.PropertiesCommand.parameter.sectionToOpen"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.commands.ProjectProperties.parameter.sectionToOpen"; //$NON-NLS-1$
     
     /**
      * {@inheritDoc}
