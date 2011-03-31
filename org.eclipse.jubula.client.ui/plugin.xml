@@ -414,10 +414,6 @@
 				<separator name="JubulaAddSeparator1" />
 			</menu>
 
-			<action class="org.eclipse.jubula.client.ui.actions.ExportAllAction"
-				id="org.eclipse.jubula.client.ui.actions.ExportAllAction"
-				label="%ExportAll" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" style="push"
-				tooltip="%ExportAllToolTip" />
 			<action class="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
 				definitionId="org.eclipse.ui.edit.findReplace" icon="icons/search.gif"
 				id="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
@@ -785,6 +781,10 @@
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.ExportProject"
 			name="Export" />
+		<command
+			categoryId="org.eclipse.jubula.client.ui.commands"
+			id="org.eclipse.jubula.client.ui.commands.ExportAll"
+			name="%ExportAll" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.ProjectProperties"
@@ -1694,6 +1694,10 @@
               commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
               style="push">
         </command>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.ExportAll"
+              style="push">
+        </command>
         <separator
               name="JubulaProjectSeparator3"
               visible="true">
@@ -2464,6 +2468,10 @@
   <handler
         class="org.eclipse.jubula.client.ui.handlers.OpenProjectHandler"
         commandId="org.eclipse.jubula.client.ui.commands.OpenProject">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.ExportAllHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.ExportAll">
   </handler>
   <handler
         class="org.eclipse.jubula.client.ui.handlers.SaveProjectAsHandler"

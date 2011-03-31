@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.actions;
+package org.eclipse.jubula.client.ui.handlers;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -18,8 +18,9 @@ import javax.persistence.EntityManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -27,16 +28,14 @@ import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
 import org.eclipse.jubula.client.ui.businessprocess.ExportAllBP;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.PlatformUI;
 
@@ -45,14 +44,12 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created Jul 25, 2007
  */
-public class ExportAllAction extends AbstractAction {
+public class ExportAllHandler extends AbstractHandler {
     
     /** the logger */
-    private static Log log = LogFactory.getLog(ExportAllAction.class);
+    private static Log log = LogFactory.getLog(ExportAllHandler.class);
 
     /**
-     * 
-     * 
      * @author BREDEX GmbH
      * @created Jul 25, 2007
      */
@@ -128,52 +125,6 @@ public class ExportAllAction extends AbstractAction {
         }
 
     }
-    
-    /**
-     * {@inheritDoc}
-     *      org.eclipse.swt.widgets.Event)
-     */
-    public void runWithEvent(IAction action, Event event) { 
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
-        
-        JBThread showDialog = new JBThread() {
-
-            public void run() {
-                Plugin.startLongRunning();
-                if (Hibernator.init()) {
-                    Plugin.getDisplay().syncExec(new Runnable() {
-                        public void run() {
-                            if (GeneralStorage.getInstance().getProject() 
-                                    != null
-                                && Plugin.getDefault().anyDirtyStar()) {
-                               
-                                if (Plugin.getDefault().
-                                    showSaveEditorDialog()) {
-
-                                    showExportDialog();
-                                }
-                                Plugin.stopLongRunning();
-                                return;
-                            }
-                            showExportDialog(); 
-                            Plugin.stopLongRunning();
-                        }
-                    });
-                } else {
-                    Plugin.stopLongRunning();
-                }
-            }
-
-            protected void errorOccured() {
-                Plugin.stopLongRunning();
-            }
-            
-        };
-        
-        showDialog.start();
-    }
 
     /**
      * 
@@ -229,11 +180,45 @@ public class ExportAllAction extends AbstractAction {
             }
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    protected AbstractActionBP getActionBP() {
-        return ExportAllBP.getInstance();
+    public Object execute(ExecutionEvent event) {
+        JBThread showDialog = new JBThread() {
+
+            public void run() {
+                Plugin.startLongRunning();
+                if (Hibernator.init()) {
+                    Plugin.getDisplay().syncExec(new Runnable() {
+                        public void run() {
+                            if (GeneralStorage.getInstance()
+                                    .getProject() != null
+                                    && Plugin.getDefault().anyDirtyStar()) {
+
+                                if (Plugin.getDefault()
+                                        .showSaveEditorDialog()) {
+                                    showExportDialog();
+                                }
+                                Plugin.stopLongRunning();
+                                return;
+                            }
+                            showExportDialog();
+                            Plugin.stopLongRunning();
+                        }
+                    });
+                } else {
+                    Plugin.stopLongRunning();
+                }
+            }
+
+            protected void errorOccured() {
+                Plugin.stopLongRunning();
+            }
+
+        };
+
+        showDialog.start();
+        return null;
     }
 }

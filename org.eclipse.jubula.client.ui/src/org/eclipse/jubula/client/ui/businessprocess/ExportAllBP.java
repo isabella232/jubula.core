@@ -28,7 +28,7 @@ import org.eclipse.osgi.util.NLS;
  * @author BREDEX GmbH
  * @created 14.04.2008
  */
-public class ExportAllBP extends AbstractActionBP {
+public class ExportAllBP {
 
     /** single instance */
     private static ExportAllBP instance = null;
@@ -117,12 +117,4 @@ public class ExportAllBP extends AbstractActionBP {
         Plugin.getDefault().writeLineToConsole(
             Messages.ExportAllBPInfoStartingExport, true);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isEnabled() {
-        return true;
-    }
-
 }
