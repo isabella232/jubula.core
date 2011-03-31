@@ -12,35 +12,35 @@
    <extension
          point="org.eclipse.ui.intro.configExtension">
       <configExtension
-            content="overview/guidancer.xml"
+            content="overview/jubula.xml"
             configId="org.eclipse.ui.intro.universalConfig">
       </configExtension>
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
-            content="whatsnew/guidancer.xml">
+            content="whatsnew/jubula.xml">
       </configExtension>
    </extension>
    <extension
          point="org.eclipse.ui.intro.configExtension">
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
-            content="tutorials/guidancer.xml">
+            content="tutorials/jubula.xml">
       </configExtension>
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
-            content="firststeps/guidancer.xml">
+            content="firststeps/jubula.xml">
       </configExtension>
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
-            content="samples/guidancer.xml">
+            content="samples/jubula.xml">
       </configExtension>
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
-            content="migrate/guidancer.xml">
+            content="migrate/jubula.xml">
       </configExtension>
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
-            content="webresources/guidancer.xml">
+            content="webresources/jubula.xml">
       </configExtension>
    </extension>
    <extension
