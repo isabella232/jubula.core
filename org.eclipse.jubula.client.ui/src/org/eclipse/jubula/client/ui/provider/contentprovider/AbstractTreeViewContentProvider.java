@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
@@ -25,22 +26,7 @@ import org.eclipse.jubula.tools.exception.Assert;
  * @created 13.09.2005
  */
 public abstract class AbstractTreeViewContentProvider 
-    implements ISortableTreeViewContentProvider {
-    
-    /** should getChildren returns sorted lists */
-    private boolean m_outPutSorted = false;
-
-    /** {@inheritDoc} */
-    public void setSorting(boolean sort) {
-        if (sort != m_outPutSorted) {
-            m_outPutSorted = sort;
-        }
-    }
-    
-    /** {@inheritDoc} */
-    public boolean isSorting() {
-        return m_outPutSorted;
-    }
+        implements ITreeContentProvider {
     
     /** {@inheritDoc} */
     public Object[] getElements(Object inputElement) {

@@ -10,12 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers;
 
-import java.util.Iterator;
-
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.provider.contentprovider.ISortableTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 
 
@@ -35,25 +31,6 @@ public class TreeViewContainerGUIController {
     private TreeViewContainerGUIController() {
         // private
     }
-
-    /**
-     * toggles the sorting of a SortableTreeViewer
-     * @param owner ITreeViewerContainer
-     */
-    public static void sortTree(ITreeViewerContainer owner) {
-        ITreeViewerContainer editor = owner;
-        if (editor == null) {
-            editor = ((ITreeViewerContainer)Plugin.getActivePart());
-        }
-        if (editor.getTreeViewer().getContentProvider() 
-                instanceof ISortableTreeViewContentProvider) {
-            ISortableTreeViewContentProvider prov = 
-                (ISortableTreeViewContentProvider)
-                    editor.getTreeViewer().getContentProvider();
-            prov.setSorting(!prov.isSorting());
-            editor.getTreeViewer().refresh();
-        }
-    }    
 
     /**
      * collapse or expand the give TreeViewer
@@ -91,27 +68,5 @@ public class TreeViewContainerGUIController {
             }
         }
     }
-
-    /**
-     * checks if the expand action is allowed
-     * 
-     * @param owner ITreeViewerContainer
-     * @return true if any selected element got at least a child
-     */
-    public static boolean isExpandAllowed(ITreeViewerContainer owner) {
-        if (owner.getTreeViewer().getSelection() 
-                instanceof IStructuredSelection) {
-            IStructuredSelection selection = 
-                (IStructuredSelection)owner.getTreeViewer().getSelection();
-            Iterator iter = selection.iterator();
-            while (iter.hasNext()) {
-                Object obj = iter.next();
-                if (owner.getTreeViewer().isExpandable(obj)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }    
 
 }
