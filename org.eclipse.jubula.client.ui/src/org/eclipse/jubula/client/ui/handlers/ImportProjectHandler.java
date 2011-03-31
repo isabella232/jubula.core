@@ -8,36 +8,23 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.actions;
+package org.eclipse.jubula.client.ui.handlers;
 
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
-import org.eclipse.jubula.client.ui.businessprocess.AlwaysEnabledBP;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP;
-import org.eclipse.swt.widgets.Event;
 
 
 /**
  * @author BREDEX GmbH
  * @created 08.11.2004
  */
-public class ImportFileAction extends AbstractAction {
-
+public class ImportProjectHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
-     *      org.eclipse.swt.widgets.Event)
      */
-    public void runWithEvent(IAction action, Event event) {
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
+    public Object execute(ExecutionEvent event) {
         ImportFileBP.getInstance().importFile();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected AbstractActionBP getActionBP() {
-        return AlwaysEnabledBP.getInstance();
+        return null;
     }
 }

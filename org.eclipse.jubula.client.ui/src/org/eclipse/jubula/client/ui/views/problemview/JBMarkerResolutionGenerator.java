@@ -38,8 +38,6 @@ import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.ChooseServerAction;
-import org.eclipse.jubula.client.ui.actions.ImportFileAction;
-import org.eclipse.jubula.client.ui.actions.NewProjectAction;
 import org.eclipse.jubula.client.ui.actions.OpenProjectAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
@@ -623,9 +621,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                 }
 
                 public void run(IMarker marker) {
-                    // FIXME zeb not sure if this is the correct way
-                    //           to globally access an action
-                    new NewProjectAction().runWithEvent(null, new Event());
+                    CommandHelper.executeCommand(
+                            CommandIDs.NEW_PROJECT_COMMAND_ID);
                 }
                 
             },
@@ -636,9 +633,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                 }
 
                 public void run(IMarker marker) {
-                    // FIXME zeb not sure if this is the correct way to
-                    //          globally access an action
-                    new ImportFileAction().runWithEvent(null, new Event());
+                    CommandHelper.executeCommand(
+                            CommandIDs.IMPORT_PROJECT_COMMAND_ID);
                 }
                 
             },

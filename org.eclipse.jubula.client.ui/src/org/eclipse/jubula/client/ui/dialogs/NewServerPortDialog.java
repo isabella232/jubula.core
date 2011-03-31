@@ -20,14 +20,14 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.actions.ImportFileAction;
-import org.eclipse.jubula.client.ui.actions.NewProjectAction;
 import org.eclipse.jubula.client.ui.actions.OpenProjectAction;
+import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.ServerManager;
 import org.eclipse.jubula.client.ui.utils.ServerManager.Server;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -339,13 +339,11 @@ public class NewServerPortDialog extends TitleAreaDialog {
             dialog.open();
             if (dialog.getReturnCode() == Window.OK) {
                 if (dialog.getSelectionIndex() == 0) { // create
-                    // FIXME zeb not sure if this is the correct way
-                    //           to globally access an action
-                    new NewProjectAction().runWithEvent(null, new Event());
+                    CommandHelper.executeCommand(
+                            CommandIDs.NEW_PROJECT_COMMAND_ID);
                 } else if (dialog.getSelectionIndex() == 1) { // import
-                    // FIXME zeb not sure if this is the correct way
-                    //           to globally access an action
-                    new ImportFileAction().runWithEvent(null, new Event());
+                    CommandHelper.executeCommand(
+                            CommandIDs.IMPORT_PROJECT_COMMAND_ID);
                 } else if (dialog.getSelectionIndex() == 2) { // open
                     OpenProjectAction.getAction().runWithEvent(new Event());
                 }

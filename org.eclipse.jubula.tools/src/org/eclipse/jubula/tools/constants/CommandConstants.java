@@ -13,11 +13,6 @@ package org.eclipse.jubula.tools.constants;
 /**
  * @author BREDEX GmbH
  * @created 19.12.2006
- *
- * 
- *
- *
- *
  */
 public abstract class CommandConstants {
     /** constant: "org.eclipse.jubula.rc.swt.SwtAUTServer" */

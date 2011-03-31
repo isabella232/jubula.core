@@ -420,23 +420,11 @@
 				disabledIcon="icons/saveas_d.gif" icon="icons/saveas_e.gif"
 				id="org.eclipse.jubula.client.ui.actions.SaveProjectAsAction"
 				label="%SaveAs" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" />
-			<action
-				class="org.eclipse.jubula.client.ui.actions.DeleteProjectAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.DeleteProjectCommand"
-				disabledIcon="icons/deleteProject_disabled.gif" icon="icons/deleteProject.gif"
-				id="org.eclipse.jubula.client.ui.actions.DeleteProjectAction"
-				label="%DeleteProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" />
 			<action class="org.eclipse.jubula.client.ui.actions.OpenProjectAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
 				disabledIcon="icons/loadDB_disabled.gif" icon="icons/loadDB.gif"
 				id="org.eclipse.jubula.client.ui.actions.OpenProjectDBAction"
 				label="%OpenProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" />
-
-			<action class="org.eclipse.jubula.client.ui.actions.NewProjectAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.NewProjectCommand"
-				disabledIcon="icons/project_dis.gif" icon="icons/newProjectIcon.gif"
-				id="org.eclipse.jubula.client.ui.actions.NewProjectAction"
-				label="%NewProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" tooltip="%NewProjectToolTip" />
 			<action class="org.eclipse.jubula.client.ui.actions.ExportAllAction"
 				id="org.eclipse.jubula.client.ui.actions.ExportAllAction"
 				label="%ExportAll" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" style="push"
@@ -445,20 +433,11 @@
 				definitionId="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
 				disabledIcon="icons/export_disabled.gif" icon="icons/export.gif"
 				id="org.eclipse.jubula.client.ui.actions.ExportFileAction"
-				label="%Export" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" tooltip="%ExportToolTip">
-			</action>
-			<action class="org.eclipse.jubula.client.ui.actions.ImportFileAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.ImportFileCommand"
-				disabledIcon="icons/import_disabled.gif" icon="icons/import.gif"
-				id="org.eclipse.jubula.client.ui.actions.ImportFileAction"
-				label="%Import" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" tooltip="%ImportToolTip">
-			</action>
-
+				label="%Export" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" tooltip="%ExportToolTip" />
 			<action class="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
 				definitionId="org.eclipse.ui.edit.findReplace" icon="icons/search.gif"
 				id="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
 				label="%Search" menubarPath="edit/JubulaEditSeparator3" tooltip="%SearchToolTip" />
-
 			<action
 				class="org.eclipse.jubula.client.ui.actions.ChooseLanguageAction"
 				disabledIcon="icons/globe_disabled.gif" icon="icons/globe.gif"
@@ -466,7 +445,6 @@
 				label="%ChooseLanguage" style="pulldown"
 				toolbarPath="org.eclipse.jubula.client.ui.toolbar.LanguageToolbar/GlobalActions"
 				tooltip="%ChooseLanguageToolTip" />
-
 			<action class="org.eclipse.jubula.client.ui.actions.DisconnectAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
 				disabledIcon="icons/stopServer_disabled.gif" icon="icons/stopServer.gif"
@@ -846,16 +824,8 @@
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.NewProjectCommand"
-			name="New" />
-		<command
-			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
 			name="Open" />
-		<command
-			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.DeleteProjectCommand"
-			name="Delete" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.SaveProjectAsCommand"
@@ -1104,6 +1074,21 @@
         id="org.eclipse.jubula.client.ui.commands.StopObservationMode"
         name="%StopRecord">
   </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.NewProject"
+        name="%NewProject">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.ImportProject"
+        name="%Import">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.DeleteProject"
+        name="%DeleteProject">
+  </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<key
@@ -1130,7 +1115,7 @@
 		<key commandId="org.eclipse.jubula.client.ui.commands.ChooseServerCommand"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+C" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.ImportFileCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+I" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
@@ -1142,7 +1127,7 @@
 		<key commandId="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+O" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.DeleteProjectCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.DeleteProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+D" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.EditParameters"
@@ -1699,6 +1684,10 @@
      <menu
            id="org.eclipse.jubula.client.ui.menu.test"
            label="&amp;Test">
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.NewProject"
+              style="push">
+        </command>
         <separator
               name="JubulaProjectSeparator1"
               visible="true">
@@ -1707,10 +1696,18 @@
               name="JubulaProjectSeparator2"
               visible="true">
         </separator>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
+              style="push">
+        </command>
         <separator
               name="JubulaProjectSeparator3"
               visible="true">
         </separator>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.DeleteProject"
+              style="push">
+        </command>
         <separator
               name="JubulaProjectSeparator4"
               visible="true">
@@ -2445,6 +2442,18 @@
         class="org.eclipse.jubula.client.ui.handlers.ShowFromClipboard"
         commandId="org.eclipse.jubula.client.ui.commands.ShowFromClipboard">
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.DeleteProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.DeleteProject">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.NewProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.NewProject">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.ImportProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.ImportProject">
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.commandImages">
 		<image commandId="org.eclipse.ui.edit.rename" disabledIcon="icons/rename_disabled.gif"
@@ -2603,6 +2612,21 @@
         commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
         disabledIcon="icons/stopcam_disabled.gif"
         icon="icons/stopcam.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
+        disabledIcon="icons/import_disabled.gif"
+        icon="icons/import.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.DeleteProject"
+        disabledIcon="icons/deleteProject_disabled.gif"
+        icon="icons/deleteProject.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.NewProject"
+        disabledIcon="icons/project_dis.gif"
+        icon="icons/newProjectIcon.gif">
   </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"

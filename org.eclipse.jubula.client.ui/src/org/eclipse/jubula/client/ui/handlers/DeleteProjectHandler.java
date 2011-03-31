@@ -8,19 +8,20 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.actions;
+package org.eclipse.jubula.client.ui.handlers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
@@ -38,8 +39,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
-import org.eclipse.jubula.client.ui.businessprocess.AlwaysEnabledBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
@@ -53,7 +52,6 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -61,7 +59,7 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created 06.07.2005
  */
-public class DeleteProjectAction extends AbstractAction {
+public class DeleteProjectHandler extends AbstractHandler {
 
     /** number of hibernate event types with progress listeners */
     // Event types:
@@ -200,39 +198,6 @@ public class DeleteProjectAction extends AbstractAction {
             return totalWork;
         }
     }
-    
-    /**
-     * {@inheritDoc}
-     *      org.eclipse.swt.widgets.Event)
-     */
-    public void runWithEvent(IAction action, Event event) {
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
-        Plugin.startLongRunning();
-        JBThread t = new JBThread() {
-                public void run() {
-                    if (!Hibernator.init()) {
-                        Plugin.stopLongRunning();
-                        return;
-                    }
-                    Display.getDefault().syncExec(new Runnable() {
-                        public void run() {
-                            try {
-                                selectProject();
-                            } finally {
-                                Plugin.stopLongRunning();
-                            }
-                        }
-                    });
-                }
-    
-                protected void errorOccured() {
-                    Plugin.stopLongRunning();
-                }
-            };
-        t.start();
-    }
 
     /**
      * Opens a dialog to select a project to delete.
@@ -354,8 +319,30 @@ public class DeleteProjectAction extends AbstractAction {
     /**
      * {@inheritDoc}
      */
-    protected AbstractActionBP getActionBP() {
-        return AlwaysEnabledBP.getInstance();
+    public Object execute(ExecutionEvent event) {
+        Plugin.startLongRunning();
+        JBThread t = new JBThread() {
+                public void run() {
+                    if (!Hibernator.init()) {
+                        Plugin.stopLongRunning();
+                        return;
+                    }
+                    Display.getDefault().syncExec(new Runnable() {
+                        public void run() {
+                            try {
+                                selectProject();
+                            } finally {
+                                Plugin.stopLongRunning();
+                            }
+                        }
+                    });
+                }
+    
+                protected void errorOccured() {
+                    Plugin.stopLongRunning();
+                }
+            };
+        t.start();
+        return null;
     }
-
 }
