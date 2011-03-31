@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.actions;
+package org.eclipse.jubula.client.ui.handlers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -16,10 +16,11 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.archive.XmlStorage;
@@ -41,8 +42,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
-import org.eclipse.jubula.client.ui.businessprocess.SaveProjectAsBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
@@ -53,12 +52,11 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ConverterException;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -67,10 +65,10 @@ import org.eclipse.ui.PlatformUI;
  * @created 11.05.2005
  */
 @SuppressWarnings("synthetic-access")
-public class SaveProjectAsAction extends AbstractAction {
+public class SaveProjectAsHandler extends AbstractHandler {
     
     /** standard logging */
-    private static Log log = LogFactory.getLog(SaveProjectAsAction.class);
+    private static Log log = LogFactory.getLog(SaveProjectAsHandler.class);
     
     /**
      * Worker operation for SaveProjectAs action.
@@ -235,37 +233,6 @@ public class SaveProjectAsAction extends AbstractAction {
             Plugin.stopLongRunning();
         }
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void runWithEvent(IAction action, Event event) {
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
-        Plugin.startLongRunning(Messages.SaveProjectAsActionWaitWhileSaving);
-        InputDialog dialog = openInputDialog();
-        if (dialog.getReturnCode() == Window.OK) {
-            final String newProjectName = dialog.getName();
-            IRunnableWithProgress op = createOperation(newProjectName);
-            try {
-                PlatformUI.getWorkbench().getProgressService()
-                    .busyCursorWhile(op);
-                fireReady();
-            } catch (InvocationTargetException ite) {
-                // Exception occurred during operation
-                log.error(ite.getCause());
-            } catch (InterruptedException e) {
-                // Operation was canceled.
-                // We have to clear the GUI because all of 
-                // the save work was done in the Master Session, which has been 
-                // rolled back.
-                Utils.clearClient();
-            }
-        } else {
-            Plugin.stopLongRunning();
-        }
-    }
 
     /**
      * @param newProjectName name of new project
@@ -325,13 +292,6 @@ public class SaveProjectAsAction extends AbstractAction {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    protected AbstractActionBP getActionBP() {
-        return SaveProjectAsBP.getInstance();
-    }
-
-    /**
      * call this if the "save as" has ended to update the GUI.
      */
     private void fireReady() {
@@ -375,6 +335,35 @@ public class SaveProjectAsAction extends AbstractAction {
             return content;
         }
         
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object execute(ExecutionEvent event) {
+        Plugin.startLongRunning(Messages.SaveProjectAsActionWaitWhileSaving);
+        InputDialog dialog = openInputDialog();
+        if (dialog.getReturnCode() == Window.OK) {
+            final String newProjectName = dialog.getName();
+            IRunnableWithProgress op = createOperation(newProjectName);
+            try {
+                PlatformUI.getWorkbench().getProgressService()
+                        .busyCursorWhile(op);
+                fireReady();
+            } catch (InvocationTargetException ite) {
+                // Exception occurred during operation
+                log.error(ite.getCause());
+            } catch (InterruptedException e) {
+                // Operation was canceled.
+                // We have to clear the GUI because all of
+                // the save work was done in the Master Session, which has been
+                // rolled back.
+                Utils.clearClient();
+            }
+        } else {
+            Plugin.stopLongRunning();
+        }
         return null;
     }
 }

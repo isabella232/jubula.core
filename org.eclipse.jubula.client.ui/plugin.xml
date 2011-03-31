@@ -414,21 +414,10 @@
 				<separator name="JubulaAddSeparator1" />
 			</menu>
 
-			<action
-				class="org.eclipse.jubula.client.ui.actions.SaveProjectAsAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.SaveProjectAsCommand"
-				disabledIcon="icons/saveas_d.gif" icon="icons/saveas_e.gif"
-				id="org.eclipse.jubula.client.ui.actions.SaveProjectAsAction"
-				label="%SaveAs" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" />
 			<action class="org.eclipse.jubula.client.ui.actions.ExportAllAction"
 				id="org.eclipse.jubula.client.ui.actions.ExportAllAction"
 				label="%ExportAll" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" style="push"
 				tooltip="%ExportAllToolTip" />
-			<action class="org.eclipse.jubula.client.ui.actions.ExportFileAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
-				disabledIcon="icons/export_disabled.gif" icon="icons/export.gif"
-				id="org.eclipse.jubula.client.ui.actions.ExportFileAction"
-				label="%Export" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" tooltip="%ExportToolTip" />
 			<action class="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
 				definitionId="org.eclipse.ui.edit.findReplace" icon="icons/search.gif"
 				id="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
@@ -800,7 +789,7 @@
 			name="Import" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
+			id="org.eclipse.jubula.client.ui.commands.ExportProject"
 			name="Export" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
@@ -813,11 +802,7 @@
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
-			name="Open" />
-		<command
-			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.SaveProjectAsCommand"
+			id="org.eclipse.jubula.client.ui.commands.SaveProjectAs"
 			name="Save As" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
@@ -1117,13 +1102,13 @@
 		<key commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+I" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+X" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.PropertiesCommand"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+P" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.OpenProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+O" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.DeleteProject"
@@ -1695,12 +1680,20 @@
               name="JubulaProjectSeparator1"
               visible="true">
         </separator>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.SaveProjectAs"
+              style="push">
+        </command>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
+              style="push">
+        </command>
         <separator
               name="JubulaProjectSeparator2"
               visible="true">
         </separator>
         <command
-              commandId="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
+              commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
               style="push">
         </command>
         <command
@@ -2474,6 +2467,24 @@
         class="org.eclipse.jubula.client.ui.handlers.OpenProjectHandler"
         commandId="org.eclipse.jubula.client.ui.commands.OpenProject">
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.SaveProjectAsHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.SaveProjectAs">
+        <activeWhen>
+			<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
+				<equals value="true" />
+			</with>
+        </activeWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.ExportProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.ExportProject">
+        <activeWhen>
+			<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
+				<equals value="true" />
+			</with>
+        </activeWhen>
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.commandImages">
 		<image commandId="org.eclipse.ui.edit.rename" disabledIcon="icons/rename_disabled.gif"
@@ -2655,6 +2666,16 @@
         commandId="org.eclipse.jubula.client.ui.commands.NewProject"
         disabledIcon="icons/project_dis.gif"
         icon="icons/newProjectIcon.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
+        disabledIcon="icons/export_disabled.gif"
+        icon="icons/export.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.SaveProjectAs"
+        disabledIcon="icons/saveas_d.gif"
+        icon="icons/saveas_e.gif">
   </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"

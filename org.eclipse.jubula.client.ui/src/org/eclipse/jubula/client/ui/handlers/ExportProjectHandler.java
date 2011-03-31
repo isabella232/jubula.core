@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.actions;
+package org.eclipse.jubula.client.ui.handlers;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -16,25 +16,22 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.archive.XmlStorage;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
-import org.eclipse.jubula.client.ui.businessprocess.ExportFileBP;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.handlers.RefreshProjectHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.PlatformUI;
@@ -44,11 +41,8 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created 08.11.2004
  */
-public class ExportFileAction extends AbstractAction {
-       
+public class ExportProjectHandler extends AbstractHandler {
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created Jan 22, 2010
      */
@@ -66,7 +60,6 @@ public class ExportFileAction extends AbstractAction {
         }
 
         /**
-         * 
          * {@inheritDoc}
          */
         public void run(IProgressMonitor monitor) {
@@ -110,28 +103,7 @@ public class ExportFileAction extends AbstractAction {
     }
 
     /** the logger */
-    private static Log log = LogFactory.getLog(ExportFileAction.class);
-
-    /**
-     * {@inheritDoc}
-     *      org.eclipse.swt.widgets.Event)
-     */
-    public void runWithEvent(IAction action, Event event) { 
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
-        if (Plugin.getDefault().anyDirtyStar()) {
-            if (Plugin.getDefault().
-                showSaveEditorDialog()) {
-
-                showExportDialog();
-            }
-            Plugin.stopLongRunning();
-            return;
-        }
-        showExportDialog(); 
-        Plugin.stopLongRunning();
-    }
+    private static Log log = LogFactory.getLog(ExportProjectHandler.class);
 
     /**
      * 
@@ -181,11 +153,22 @@ public class ExportFileAction extends AbstractAction {
             // Do nothing.
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    protected AbstractActionBP getActionBP() {
-        return ExportFileBP.getInstance();
+    public Object execute(ExecutionEvent event) {
+        if (Plugin.getDefault().anyDirtyStar()) {
+            if (Plugin.getDefault().
+                showSaveEditorDialog()) {
+
+                showExportDialog();
+            }
+            Plugin.stopLongRunning();
+            return null;
+        }
+        showExportDialog(); 
+        Plugin.stopLongRunning();
+        return null;
     }
 }
