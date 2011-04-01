@@ -8,22 +8,19 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.handlers;
+package org.eclipse.jubula.client.ui.handlers.project;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.dialogs.NagDialog;
-import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.widgets.JavaAutConfigComponent;
 import org.eclipse.jubula.client.ui.wizards.ProjectWizard;
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -35,7 +32,7 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created 07.02.2005
  */
-public class NewProjectHandler extends AbstractHandler {
+public class NewProjectHandler extends AbstractProjectHandler {
     /** was the nag dialog for the executable field already shown? */
     private boolean m_alreadyNagged = false;
   
@@ -145,37 +142,16 @@ public class NewProjectHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         m_alreadyNagged = false;
-        Plugin.startLongRunning();
-        JBThread t = new JBThread() {
-                public void run() {
-                    if (!Hibernator.init()) {
-                        Plugin.stopLongRunning();
-                        return;
-                    }  
-                    Display.getDefault().syncExec(new Runnable() {
-                        public void run() {
-                            if (GeneralStorage.getInstance().getProject() 
-                                    != null
-                                && Plugin.getDefault().anyDirtyStar()) {
-                                
-                                if (!Plugin.getDefault()
-                                    .showSaveEditorDialog()) {
+        if (GeneralStorage.getInstance().getProject() != null
+                && Plugin.getDefault().anyDirtyStar()) {
 
-                                    return;
-                                } 
-                            }     
-                            openNewProjectWizard();
-                        }
-                    });
-                }
-    
-                protected void errorOccured() {
-                    Plugin.stopLongRunning();
-                }                   
-            };
-        t.start();
+            if (!Plugin.getDefault().showSaveEditorDialog()) {
+                return null;
+            }
+        }
+        openNewProjectWizard();
         return null;
     }
 }

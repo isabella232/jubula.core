@@ -43,7 +43,7 @@ public class AddTestResultSummaryCommentHandler
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         ITestResultSummaryPO selectedSummary = getSelectedSummary(event);
 
         if (selectedSummary != null) {

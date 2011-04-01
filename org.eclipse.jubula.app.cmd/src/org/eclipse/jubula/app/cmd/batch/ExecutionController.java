@@ -28,7 +28,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.app.cmd.i18n.Messages;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
-import org.eclipse.jubula.client.cmd.batch.ProgressController;
 import org.eclipse.jubula.client.cmd.controller.IClcServer;
 import org.eclipse.jubula.client.cmd.controller.intern.RmiBase;
 import org.eclipse.jubula.client.core.AUTEvent;
@@ -66,7 +65,6 @@ import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
-import org.eclipse.jubula.client.core.utils.ProgressEventDispatcher;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -286,8 +284,6 @@ public class ExecutionController implements IAUTServerEventListener,
     
     /** process for watching test execution */
     private TestExecutionWatcher m_progress = new TestExecutionWatcher();
-    /** controller to listen to db connection progress */
-    private ProgressController m_progressController = new ProgressController();
 
     /** the ID of the AUT that was started for test execution */
     private AutIdentifier m_startedAutId = null;
@@ -538,7 +534,6 @@ public class ExecutionController implements IAUTServerEventListener,
         // init Hibernator
         // Hibernate.properties and mapping files
         // have to be in classpath
-        ProgressEventDispatcher.addProgressListener(m_progressController);
         Hibernator.setDbConnectionName(m_job.getDbscheme());
         Hibernator.setUser(m_job.getDbuser());
         Hibernator.setPw(m_job.getDbpw());

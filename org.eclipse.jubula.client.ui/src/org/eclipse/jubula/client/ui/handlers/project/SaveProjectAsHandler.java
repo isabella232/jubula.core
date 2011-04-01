@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.handlers;
+package org.eclipse.jubula.client.ui.handlers.project;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -65,8 +64,7 @@ import org.eclipse.ui.PlatformUI;
  * @created 11.05.2005
  */
 @SuppressWarnings("synthetic-access")
-public class SaveProjectAsHandler extends AbstractHandler {
-    
+public class SaveProjectAsHandler extends AbstractProjectHandler {
     /** standard logging */
     private static Log log = LogFactory.getLog(SaveProjectAsHandler.class);
     
@@ -341,8 +339,7 @@ public class SaveProjectAsHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
-        Plugin.startLongRunning(Messages.SaveProjectAsActionWaitWhileSaving);
+    public Object executeImpl(ExecutionEvent event) {
         InputDialog dialog = openInputDialog();
         if (dialog.getReturnCode() == Window.OK) {
             final String newProjectName = dialog.getName();
@@ -361,8 +358,6 @@ public class SaveProjectAsHandler extends AbstractHandler {
                 // rolled back.
                 Utils.clearClient();
             }
-        } else {
-            Plugin.stopLongRunning();
         }
         return null;
     }

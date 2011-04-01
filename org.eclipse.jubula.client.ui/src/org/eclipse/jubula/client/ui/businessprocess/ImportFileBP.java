@@ -20,34 +20,32 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.archive.errorhandling.IProjectNameConflictResolver;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.progress.AbstractRunnableWithProgress;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
+import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
+import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
+import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.ComboBoxDialog;
-import org.eclipse.jubula.client.ui.dialogs.ImportProjectDialog;
-import org.eclipse.jubula.client.ui.handlers.OpenProjectHandler;
-import org.eclipse.jubula.client.ui.handlers.OpenProjectHandler.OpenProjectOperation;
+import org.eclipse.jubula.client.ui.handlers.project.OpenProjectHandler;
+import org.eclipse.jubula.client.ui.handlers.project.OpenProjectHandler.OpenProjectOperation;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -56,8 +54,8 @@ import org.eclipse.ui.PlatformUI;
  * @created 08.11.2004
  */
 @SuppressWarnings("synthetic-access")
-public class ImportFileBP implements IProjectNameConflictResolver {
-
+public class ImportFileBP implements IProjectNameConflictResolver,
+        IDatabaseStateListener {
     /**
      * Interface for classes wishing to provide information for an import 
      * operation (i.e. which projects to import and which parts to import).
@@ -88,6 +86,7 @@ public class ImportFileBP implements IProjectNameConflictResolver {
     /** Constructor */
     public ImportFileBP() {
         FileStorageBP.setProjectNameConflictResolver(this);
+        DatabaseStateDispatcher.addDatabaseStateListener(this);
     }
 
     /**
@@ -101,74 +100,6 @@ public class ImportFileBP implements IProjectNameConflictResolver {
         }
         return instance;
     }     
-    
-    /**
-     * 
-     *
-     */
-    public void importFile() {
-        Plugin.startLongRunning();
-        JBThread t = new JBThread() {
-            public void run() {
-                if (!Hibernator.init()) {
-                    Plugin.stopLongRunning();
-                    return;
-                }
-                Plugin.getDisplay().syncExec(new Runnable() {
-                    public void run() {
-                        if (GeneralStorage.getInstance().getProject() != null
-                            && Plugin.getDefault().anyDirtyStar()) {
-
-                            if (Plugin.getDefault().
-                                showSaveEditorDialog()) {
-
-                                showImportDialog();
-                            }
-                            Plugin.stopLongRunning();
-                            return;
-                        }
-                        showImportDialog();
-                    }
-                });
-            }
-            /**
-             * {@inheritDoc}
-             */
-            protected void errorOccured() {
-                Plugin.stopLongRunning();
-            }
-        };
-        t.start();
-        Plugin.stopLongRunning();
-    }
-    
-    /**
-     * 
-     */
-    public void importUnboundModules() {
-        Plugin.startLongRunning();
-        JBThread t = new JBThread() {
-            public void run() {
-                Plugin.getDisplay().syncExec(new ImportUnboundThread());
-            }
-            /**
-             * {@inheritDoc}
-             */
-            protected void errorOccured() {
-                Plugin.stopLongRunning();
-            }
-        };
-        t.start();
-        while (t.isAlive()) {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                // ignore
-            }
-        }
-        Plugin.stopLongRunning();
-        
-    }
 
     /**
      * Imports a choosed project from a file.
@@ -181,9 +112,8 @@ public class ImportFileBP implements IProjectNameConflictResolver {
      *            Flag indicating whether the imported project should be 
      *            immediately opened after import.
      */
-    private void importProject(final int elements, final String [] fileNames, 
+    public void importProject(final int elements, final String [] fileNames, 
             final boolean openProject) {
-        Plugin.startLongRunning(Messages.ImportFileBPWaitWhileImporting);
         try {
             if (fileNames == null) {
                 return;
@@ -193,7 +123,8 @@ public class ImportFileBP implements IProjectNameConflictResolver {
 
                     public void run(IProgressMonitor monitor)
                         throws InterruptedException {
-
+                        monitor.setTaskName(Messages.
+                                ImportFileBPWaitWhileImporting);
                         try {
                             setResult(FileStorageBP.importProject(
                                 elements, fileNames, 
@@ -252,34 +183,6 @@ public class ImportFileBP implements IProjectNameConflictResolver {
     }
 
     /**
-     * brings up the ImportDiaog
-     * 
-     */
-    void showImportDialog() {
-        ImportProjectDialog importProjectWizard = new ImportProjectDialog();
-        WizardDialog dialog = 
-            new WizardDialog(Plugin.getShell(), importProjectWizard) {
-                protected void createButtonsForButtonBar(Composite parent) {
-                    super.createButtonsForButtonBar(parent);
-                    Button finishButton = getButton(IDialogConstants.FINISH_ID);
-                    finishButton.setText(IDialogConstants.OK_LABEL);
-                }
-            };
-        importProjectWizard.setWindowTitle(
-                org.eclipse.jubula.client.ui.i18n.
-                Messages.ImportProjectDialogTitle);
-        dialog.setHelpAvailable(true);
-        
-        int val = dialog.open();
-        if (val == Window.OK) {
-            importProjects(importProjectWizard.getImportInfoProvider());
-        }
-
-    }
-
-    
-    
-    /**
      * Performs an import using the information provided by the argument.
      * 
      * @param importInfo Provides information relevant to the import.
@@ -306,30 +209,32 @@ public class ImportFileBP implements IProjectNameConflictResolver {
     }
     
     /**
-     * Performs an import using the information provided by the argument.
-     * 
-     * @param importInfo Provides information relevant to the import.
-     */
-    public void importProjects(IProjectImportInfoProvider importInfo) {
-        String [] fileNames = importInfo.getFiles();
-        boolean openProject = importInfo.getIsOpenProject();
-        importProject(0, fileNames, openProject);
-    }
-
-    /**
      * 
      * Import the unbound modules library into a database
      * 
      * @author BREDEX GmbH
      * @created 05.06.2008
      */
-    private final class ImportUnboundThread implements Runnable {
-        
+    private final class ImportUnboundModulesJob extends Job {
+        /**
+         * @param name
+         *            the name of the job
+         */
+        public ImportUnboundModulesJob(String name) {
+            super(name);
+        }
+
         /**
          * {@inheritDoc}
          */
-        public void run() {
-            importProject(0, findUnboundModules(), false); // load all elements
+        protected IStatus run(IProgressMonitor monitor) {
+            Plugin.getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    // load all elements;
+                    importProject(0, findUnboundModules(), false);
+                }
+            });
+            return Status.OK_STATUS;
         }
 
         /**
@@ -469,4 +374,19 @@ public class ImportFileBP implements IProjectNameConflictResolver {
                         ImportOperationCancelledByUser}));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void reactOnProgressEvent(DatabaseStateEvent e) {
+        switch (e.getState()) {
+            case DB_SCHEME_CREATED:
+                Job importUnboundModules = new ImportUnboundModulesJob(
+                        Messages.ImportUnboundModulesJob);
+                importUnboundModules.setUser(true);
+                importUnboundModules.schedule();
+                break;
+            default:
+                break;
+        }
+    }
 }

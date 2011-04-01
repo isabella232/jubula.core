@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.handlers;
+package org.eclipse.jubula.client.ui.handlers.project;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -41,7 +40,7 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created 08.11.2004
  */
-public class ExportProjectHandler extends AbstractHandler {
+public class ExportProjectHandler extends AbstractProjectHandler {
     /**
      * @author BREDEX GmbH
      * @created Jan 22, 2010
@@ -73,7 +72,7 @@ public class ExportProjectHandler extends AbstractHandler {
                         public void run() {
                             RefreshProjectHandler rph = 
                                 new RefreshProjectHandler();
-                            statusOfRefresh.set((IStatus)rph.execute(null));
+                            statusOfRefresh.set((IStatus)rph.executeImpl(null));
                         }
                     });
                     
@@ -157,17 +156,15 @@ public class ExportProjectHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         if (Plugin.getDefault().anyDirtyStar()) {
-            if (Plugin.getDefault().
-                showSaveEditorDialog()) {
-
+            if (Plugin.getDefault().showSaveEditorDialog()) {
                 showExportDialog();
             }
             Plugin.stopLongRunning();
             return null;
         }
-        showExportDialog(); 
+        showExportDialog();
         Plugin.stopLongRunning();
         return null;
     }

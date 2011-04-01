@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.ui.actions.AbstractAction;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
-import org.eclipse.jubula.client.ui.handlers.RefreshProjectHandler.RefreshProjectOperation;
+import org.eclipse.jubula.client.ui.handlers.project.RefreshProjectHandler.RefreshProjectOperation;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;

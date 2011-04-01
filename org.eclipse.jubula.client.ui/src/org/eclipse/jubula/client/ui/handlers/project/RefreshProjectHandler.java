@@ -8,13 +8,12 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.handlers;
+package org.eclipse.jubula.client.ui.handlers.project;
 
 import java.lang.reflect.InvocationTargetException;
 
 import javax.persistence.EntityManager;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -38,9 +37,9 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created 01.06.2006
  */
-public class RefreshProjectHandler extends AbstractHandler {
+public class RefreshProjectHandler extends AbstractProjectHandler {
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         return refreshProject();
     }
     

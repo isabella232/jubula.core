@@ -8,23 +8,21 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.handlers;
-
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP;
-
+package org.eclipse.jubula.client.core.utils;
 
 /**
+ * Listener interface to show a ProgressMonitor for a long running operation.
+ * 
  * @author BREDEX GmbH
- * @created 08.11.2004
+ * @created 25.08.2005
  */
-public class ImportProjectHandler extends AbstractHandler {
+public interface IDatabaseStateListener {
+
     /**
-     * {@inheritDoc}
+     * Updates the object, which listens to this listener.
+     * 
+     * @param e
+     *            The ProgressEvent.
      */
-    public Object execute(ExecutionEvent event) {
-        ImportFileBP.getInstance().importFile();
-        return null;
-    }
+    public void reactOnProgressEvent(DatabaseStateEvent e);
 }

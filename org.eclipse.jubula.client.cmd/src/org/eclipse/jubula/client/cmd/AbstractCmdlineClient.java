@@ -27,7 +27,9 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.cmd.i18n.Messages;
+import org.eclipse.jubula.client.cmd.progess.HeadlessProgressProvider;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.client.core.businessprocess.JobConfiguration;
@@ -285,7 +287,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      *      Message
      *      @param printTimestamp should a timestamp be printed
      */
-
     public static void printConsoleLn(String text, boolean printTimestamp) {
         if (printTimestamp) {
             Date now = new Date();
@@ -344,6 +345,8 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      *      Exit Code
      */
     public int run(String[] args) {
+        Job.getJobManager().setProgressProvider(new HeadlessProgressProvider());
+        
         ErrorMessagePresenter.setPresenter(new IErrorMessagePresenter() {
             public void showErrorMessage(JBException ex, Object[] params,
                     String[] details) {
@@ -578,12 +581,10 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         return exitCode;
     }
 
-
     /**
      * @return the job
      */
     public JobConfiguration getJob() {
         return m_job;
     }
-
 }

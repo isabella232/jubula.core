@@ -83,6 +83,7 @@ public class Messages extends NLS {
     public static String ConnectingFailed;
     public static String ConnectingTheAUTAgentFailed;
     public static String ConnectingToAUT;
+    public static String ConnectingToDatabase;
     public static String ConnectionEstablishedOnPort;
     public static String ConnectionToAUTAgentClosed;
     public static String ConnectionToAUTCouldNotBeEstablished;
@@ -111,6 +112,7 @@ public class Messages extends NLS {
     public static String CreatingMessageSharedInstanceFailed;
     public static String CurrenActionNotAvailabelForSelectedToolkit;
     public static String DatabaseConnectionInvalidPreferenceString;
+    public static String DatabaseConnectionEstablished;
     public static String DataEventDispatcherReopenProject;
     public static String DataSource;
     public static String DBEntryMissingAmbiguous;

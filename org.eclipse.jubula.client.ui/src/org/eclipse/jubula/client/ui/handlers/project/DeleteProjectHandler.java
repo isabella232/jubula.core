@@ -8,14 +8,13 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.handlers;
+package org.eclipse.jubula.client.ui.handlers.project;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -45,13 +44,11 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.ProjectDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -59,7 +56,7 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created 06.07.2005
  */
-public class DeleteProjectHandler extends AbstractHandler {
+public class DeleteProjectHandler extends AbstractProjectHandler {
 
     /** number of hibernate event types with progress listeners */
     // Event types:
@@ -319,30 +316,8 @@ public class DeleteProjectHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
-        Plugin.startLongRunning();
-        JBThread t = new JBThread() {
-                public void run() {
-                    if (!Hibernator.init()) {
-                        Plugin.stopLongRunning();
-                        return;
-                    }
-                    Display.getDefault().syncExec(new Runnable() {
-                        public void run() {
-                            try {
-                                selectProject();
-                            } finally {
-                                Plugin.stopLongRunning();
-                            }
-                        }
-                    });
-                }
-    
-                protected void errorOccured() {
-                    Plugin.stopLongRunning();
-                }
-            };
-        t.start();
+    public Object executeImpl(ExecutionEvent event) {
+        selectProject();
         return null;
     }
 }

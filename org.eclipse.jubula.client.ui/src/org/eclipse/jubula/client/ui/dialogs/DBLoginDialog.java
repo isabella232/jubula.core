@@ -480,11 +480,4 @@ public class DBLoginDialog extends TitleAreaDialog {
     public DatabaseConnection getDatabaseConnection() {
         return m_dbConn;
     }
-    
-    /**
-     * @return true, if selected database if embedded db.
-     */
-    public boolean isEmbeddedDb() {
-        return m_isEmbeddedOrNoSelection;
-    }
 }

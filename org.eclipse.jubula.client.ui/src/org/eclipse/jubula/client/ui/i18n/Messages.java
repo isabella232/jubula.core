@@ -797,8 +797,8 @@ public class Messages extends NLS {
     public static String SaveProjectAsOperationSavingProject;
     public static String SearchingIn;
     public static String SearchResultPageResultPageLabel;
-    public static String SelectDatabaseActionInfoConnectFailed;
-    public static String SelectDatabaseActionInfoConnectSuccessful;
+    public static String SelectDatabaseConnectFailed;
+    public static String SelectDatabaseConnectSuccessful;
     public static String SelectedElementIsNotTestResultSummary;
     public static String ServerLogViewerName;
     public static String ServerName;

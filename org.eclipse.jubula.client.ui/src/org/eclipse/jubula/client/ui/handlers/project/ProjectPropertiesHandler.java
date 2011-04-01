@@ -8,11 +8,9 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.handlers;
+package org.eclipse.jubula.client.ui.handlers.project;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
@@ -47,7 +45,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author BREDEX GmbH
  * @created Apr 30, 2009
  */
-public class ProjectPropertiesHandler extends AbstractHandler {
+public class ProjectPropertiesHandler extends AbstractProjectHandler {
 
     /** 
      * ID of command parameter for the section of the Project Properties
@@ -59,7 +57,7 @@ public class ProjectPropertiesHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchWindow activeWindow = 
             HandlerUtil.getActiveWorkbenchWindow(event);
         Shell shell = activeWindow != null ? activeWindow.getShell() : null;

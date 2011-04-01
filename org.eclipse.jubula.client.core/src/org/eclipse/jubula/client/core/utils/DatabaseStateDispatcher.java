@@ -14,50 +14,56 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-
 /**
  * @author BREDEX GmbH
  * @created Nov 17, 2006
  */
-public class ProgressEventDispatcher {
-    
+public class DatabaseStateDispatcher {
+
     /**
      * gui listener for showing connection window
      */
-    private static transient Set<IProgressListener> listener;
+    private static transient Set<IDatabaseStateListener> listener;
 
     /**
      * Private utility constructor.
      */
-    private ProgressEventDispatcher() {
+    private DatabaseStateDispatcher() {
         // do nothing
     }
-    
+
     /**
      * Adds a new progress listener to progress listener list.
-     * @param l The progressListener to add.
+     * 
+     * @param l
+     *            The progressListener to add.
      */
-    public static void addProgressListener(IProgressListener l) {
+    public static void addDatabaseStateListener(IDatabaseStateListener l) {
         getListeners().add(l);
     }
 
     /**
      * Removes a new progress listener from progress listener list.
-     * @param l The progressListener to remove.
+     * 
+     * @param l
+     *            The progressListener to remove.
      */
-    public static void removeProgressListener(IProgressListener l) {
+    public static void removeDatabaseStateListener(IDatabaseStateListener l) {
         getListeners().remove(l);
     }
 
     /**
-     * Notifies all progressListeners of the progress listener list and calls <code>progressListener.reactOnProgressEvent(ProgressEvent e)</code>
-     * @param e the progressEvent
+     * Notifies all progressListeners of the progress listener list and calls
+     * <code>progressListener.reactOnProgressEvent(ProgressEvent e)</code>
+     * 
+     * @param e
+     *            the progressEvent
      */
-    public static void notifyListener(ProgressEvent e) {
+    public static void notifyListener(DatabaseStateEvent e) {
         Iterator iter = getListeners().iterator();
         while (iter.hasNext()) {
-            IProgressListener progressListener = (IProgressListener)iter
-                .next();
+            IDatabaseStateListener progressListener = 
+                (IDatabaseStateListener)iter.next();
             if (progressListener != null) {
                 progressListener.reactOnProgressEvent(e);
             } else {
@@ -69,11 +75,11 @@ public class ProgressEventDispatcher {
     }
 
     /**
-     * @return Set<IProgressListener> 
+     * @return Set<IProgressListener>
      */
-    private static Set<IProgressListener> getListeners() {
+    private static Set<IDatabaseStateListener> getListeners() {
         if (listener == null) {
-            listener = new HashSet<IProgressListener>();
+            listener = new HashSet<IDatabaseStateListener>();
         }
         return listener;
     }

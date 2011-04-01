@@ -22,9 +22,9 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
-import org.eclipse.jubula.client.core.utils.IProgressListener;
-import org.eclipse.jubula.client.core.utils.ProgressEvent;
-import org.eclipse.jubula.client.core.utils.ProgressEventDispatcher;
+import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
+import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
+import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
 import org.eclipse.ui.ISources;
 
 
@@ -36,8 +36,7 @@ import org.eclipse.ui.ISources;
  */
 public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
         implements IProjectLoadedListener, IDataChangedListener,
-        IProgressListener {
-
+        IDatabaseStateListener {
     /** 
      * ID of variable that indicates whether a Project is currently active/open.
      */
@@ -62,7 +61,7 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
     public ActiveProjectSourceProvider() {
         DataEventDispatcher.getInstance().addProjectLoadedListener(this, true);
         DataEventDispatcher.getInstance().addDataChangedListener(this, true);
-        ProgressEventDispatcher.addProgressListener(this);
+        DatabaseStateDispatcher.addDatabaseStateListener(this);
     }
 
     /**
@@ -72,7 +71,7 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
     public void dispose() {
         DataEventDispatcher.getInstance().removeProjectLoadedListener(this);
         DataEventDispatcher.getInstance().removeDataChangedListener(this);
-        ProgressEventDispatcher.removeProgressListener(this);
+        DatabaseStateDispatcher.removeDatabaseStateListener(this);
     }
 
     /**
@@ -140,7 +139,7 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
     /**
      * {@inheritDoc}
      */
-    public void reactOnProgressEvent(ProgressEvent e) {
+    public void reactOnProgressEvent(DatabaseStateEvent e) {
         fireSourceChanged();
     }
 }

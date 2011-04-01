@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.handlers;
+package org.eclipse.jubula.client.ui.handlers.project;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -21,7 +21,6 @@ import java.util.TreeMap;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -56,7 +55,6 @@ import org.eclipse.jubula.client.ui.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.dialogs.ProjectDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
@@ -70,12 +68,11 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
-
 /**
  * @author BREDEX GmbH
  * @created 18.04.2005
  */
-public class OpenProjectHandler extends AbstractHandler {
+public class OpenProjectHandler extends AbstractProjectHandler {
     /**
      * @author BREDEX GmbH
      * @created Jan 2, 2008
@@ -85,12 +82,13 @@ public class OpenProjectHandler extends AbstractHandler {
          * <code>TESTRESULT_DETAIL_JOB_CLEANUP_DELAY</code> is 10 minutes
          */
         private static final int TESTRESULT_DETAIL_JOB_CLEANUP_DELAY = 600000;
-        
+
         /** The project to open */
         private IProjectPO m_selectedProject;
 
         /**
-         * @param selectedProject The project that is being opened.
+         * @param selectedProject
+         *            The project that is being opened.
          */
         public OpenProjectOperation(IProjectPO selectedProject) {
             m_selectedProject = selectedProject;
@@ -99,20 +97,19 @@ public class OpenProjectHandler extends AbstractHandler {
         /**
          * {@inheritDoc}
          */
-        public void run(IProgressMonitor monitor) 
-            throws InterruptedException {
+        public void run(IProgressMonitor monitor) throws InterruptedException {
 
             Utils.clearClient();
 
             int totalWork = getTotalWork();
             ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
-            
-            monitor.beginTask(
-                NLS.bind(Messages.OpenProjectOperationOpeningProject,
-                    new Object[] {m_selectedProject.getName(),
-                                  m_selectedProject.getMajorProjectVersion(),
-                                  m_selectedProject.getMinorProjectVersion()}), 
-                totalWork);
+
+            monitor.beginTask(NLS.bind(
+                    Messages.OpenProjectOperationOpeningProject,
+                    new Object[] { m_selectedProject.getName(),
+                            m_selectedProject.getMajorProjectVersion(),
+                            m_selectedProject.getMinorProjectVersion() }),
+                    totalWork);
             try {
                 if (!checkProjectToolkits(m_selectedProject)) {
                     throw new InterruptedException();
@@ -120,11 +117,12 @@ public class OpenProjectHandler extends AbstractHandler {
                 checkToolkitAvailable(m_selectedProject.getToolkit());
                 try {
                     EntityManager s = Hibernator.instance().openSession();
-                    EntityTransaction tx = 
-                        Hibernator.instance().getTransaction(s);
-                    IProjectPO proj = (IProjectPO)s.find(NodeMaker
-                            .getProjectPOClass(), m_selectedProject.getId());
-                    
+                    EntityTransaction tx = Hibernator.instance()
+                            .getTransaction(s);
+                    IProjectPO proj = (IProjectPO)s.find(
+                            NodeMaker.getProjectPOClass(),
+                            m_selectedProject.getId());
+
                     ProjectPM.initAttributeDescriptions(s, proj);
                     ProjectPM.initAttributes(proj);
 
@@ -161,11 +159,10 @@ public class OpenProjectHandler extends AbstractHandler {
                 ProgressMonitorTracker.getInstance().setProgressMonitor(null);
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();
-                DataEventDispatcher.getInstance().
-                    fireProjectOpenedListener();
+                DataEventDispatcher.getInstance().fireProjectOpenedListener();
             }
         }
-        
+
         /**
          * set persisted values for cleaning testresults in database
          * 
@@ -201,16 +198,17 @@ public class OpenProjectHandler extends AbstractHandler {
          */
         private void checkToolkitAvailable(String toolkitId) {
             try {
-                if (!ComponentBuilder.getInstance()
-                        .getLevelToolkitIds().contains(toolkitId)
-                    && ToolkitConstants.LEVEL_TOOLKIT.equals(
-                        ToolkitSupportBP.getToolkitLevel(toolkitId))) {
-                    Utils.createMessageDialog(
-                            MessageIDs.W_PROJECT_TOOLKIT_NOT_AVAILABLE);
+                if (!ComponentBuilder.getInstance().getLevelToolkitIds()
+                        .contains(toolkitId)
+                        && ToolkitConstants.LEVEL_TOOLKIT
+                                .equals(ToolkitSupportBP
+                                        .getToolkitLevel(toolkitId))) {
+                    Utils.createMessageDialog(MessageIDs.
+                            W_PROJECT_TOOLKIT_NOT_AVAILABLE);
                 }
             } catch (ToolkitPluginException e) {
-                Utils.createMessageDialog(
-                        MessageIDs.W_PROJECT_TOOLKIT_NOT_AVAILABLE);
+                Utils.createMessageDialog(MessageIDs.
+                        W_PROJECT_TOOLKIT_NOT_AVAILABLE);
             }
         }
 
@@ -220,45 +218,40 @@ public class OpenProjectHandler extends AbstractHandler {
          */
         private int getTotalWork() {
             int totalWork = 0;
-            EntityManager masterSession = 
-                GeneralStorage.getInstance().getMasterSession();
+            EntityManager masterSession = GeneralStorage.getInstance()
+                    .getMasterSession();
             long selectedProjectId = m_selectedProject.getId();
-            
+
             // (node=1)
-            totalWork += NodePM.getNumNodes(selectedProjectId, 
-                    masterSession);
+            totalWork += NodePM.getNumNodes(selectedProjectId, masterSession);
 
             // (tdMan=1)
-            totalWork += NodePM.getNumTestDataManagers(
-                    selectedProjectId, 
+            totalWork += NodePM.getNumTestDataManagers(selectedProjectId,
                     masterSession);
-            
+
             // (execTC=1 [each corresponding specTC needs to be fetched])
-            totalWork += NodePM.getNumExecTestCases(
-                    selectedProjectId, 
+            totalWork += NodePM.getNumExecTestCases(selectedProjectId,
                     masterSession);
-            
-            for (IReusedProjectPO reused 
-                    : m_selectedProject.getUsedProjects()) {
-                
+
+            for (IReusedProjectPO reused : m_selectedProject.
+                    getUsedProjects()) {
                 try {
-                    IProjectPO reusedProject = 
-                        ProjectPM.loadReusedProject(reused);
+                    IProjectPO reusedProject = ProjectPM
+                            .loadReusedProject(reused);
                     if (reusedProject != null) {
                         long reusedId = reusedProject.getId();
-                        
+
                         // (node=1)
-                        totalWork += NodePM.getNumNodes(reusedId, 
-                                masterSession);
+                        totalWork += NodePM
+                                .getNumNodes(reusedId, masterSession);
 
                         // (tdMan=1)
-                        totalWork += NodePM.getNumTestDataManagers(
-                                reusedId, 
+                        totalWork += NodePM.getNumTestDataManagers(reusedId,
                                 masterSession);
 
-                        // (execTC=1 [each corresponding specTC needs to be fetched])
-                        totalWork += NodePM.getNumExecTestCases(
-                                reusedId, 
+                        // (execTC=1 [each corresponding specTC needs to be
+                        // fetched])
+                        totalWork += NodePM.getNumExecTestCases(reusedId,
                                 masterSession);
                     }
                 } catch (JBException e) {
@@ -267,16 +260,18 @@ public class OpenProjectHandler extends AbstractHandler {
             }
             return totalWork;
         }
-        
+
         /**
          * 
-         * @param proj the project to open.
-         * @param monitor The progress monitor for this operation.
-         * @throws InterruptedException if the operation was canceled.
+         * @param proj
+         *            the project to open.
+         * @param monitor
+         *            The progress monitor for this operation.
+         * @throws InterruptedException
+         *             if the operation was canceled.
          */
-        private void load(IProjectPO proj, IProgressMonitor monitor) 
+        private void load(IProjectPO proj, IProgressMonitor monitor)
             throws InterruptedException {
-            
             if (proj == null) {
                 Plugin.stopLongRunning();
                 showErrorDialog(Messages.OpenProjectActionInternalError);
@@ -292,13 +287,13 @@ public class OpenProjectHandler extends AbstractHandler {
                 IProjectPO prevProj = GeneralStorage.getInstance().getProject();
                 ProjectPM.loadProjectInROSession(proj);
                 try {
-                    final IProjectPO project = 
-                        GeneralStorage.getInstance().getProject();
+                    final IProjectPO project = GeneralStorage.getInstance()
+                            .getProject();
                     try {
                         UsedToolkitBP.getInstance().refreshToolkitInfo(project);
                     } catch (PMException e1) {
-                        PMExceptionHandler.handlePMExceptionForMasterSession(
-                            e1);
+                        PMExceptionHandler
+                                .handlePMExceptionForMasterSession(e1);
                     } catch (ProjectDeletedException e1) {
                         PMExceptionHandler.handleGDProjectDeletedException();
                     }
@@ -311,7 +306,7 @@ public class OpenProjectHandler extends AbstractHandler {
                     } else {
                         ProjectPM.loadProjectInROSession(prevProj);
                     }
-                    
+
                     throw ce;
                 }
             } catch (PMReadException e) {
@@ -322,59 +317,60 @@ public class OpenProjectHandler extends AbstractHandler {
                 Plugin.stopLongRunning();
             }
         }
-        
+
         /**
          * Handles an exception thrown while opening a project.
          */
         public void handleOperationException() {
             // Clear all current project data
-            IProjectPO clearedProject = 
-                GeneralStorage.getInstance().getProject();
+            IProjectPO clearedProject = GeneralStorage.getInstance()
+                    .getProject();
             if (clearedProject != null) {
                 Utils.clearClient();
                 GeneralStorage.getInstance().setProject(null);
-                DataEventDispatcher.getInstance()
-                    .fireDataChangedListener(clearedProject, DataState.Deleted,
-                        UpdateState.all);
+                DataEventDispatcher.getInstance().fireDataChangedListener(
+                        clearedProject, DataState.Deleted, UpdateState.all);
             }
         }
 
         /**
-         * Checks that the toolkits and toolkit versions are correct enough to 
+         * Checks that the toolkits and toolkit versions are correct enough to
          * be able to load the project.
          * 
-         * @param proj the project for which to check the toolkits
-         * @return <code>true</code> if project can be loaded. Otherwise 
+         * @param proj
+         *            the project for which to check the toolkits
+         * @return <code>true</code> if project can be loaded. Otherwise
          *         <code>false</code>.
          */
-        private boolean checkProjectToolkits(IProjectPO proj) 
+        private boolean checkProjectToolkits(IProjectPO proj)
             throws PMException {
-            
-            final Set<IUsedToolkitPO> usedToolkits = 
-                UsedToolkitBP.getInstance().readUsedToolkitsFromDB(proj);
+            final Set<IUsedToolkitPO> usedToolkits = UsedToolkitBP
+                    .getInstance().readUsedToolkitsFromDB(proj);
             return ToolkitBP.getInstance().checkXMLVersion(usedToolkits);
         }
 
         /**
          * Create an appropriate error dialog.
          * 
-         * @param ce The exception that prevented the loading of 
-         *           project.
+         * @param ce
+         *            The exception that prevented the loading of project.
          */
         private void handleCapDataNotFound(GDConfigXmlException ce) {
             Utils.createMessageDialog(
-                MessageIDs.E_LOAD_PROJECT_CONFIG_CONFLICT, null, 
-                new String[] {ce.getMessage()});
+                    MessageIDs.E_LOAD_PROJECT_CONFIG_CONFLICT, null,
+                    new String[] { ce.getMessage() });
         }
-        
+
         /**
          * Opens an error dialog.
-         * @param message the messag eto show in the dialog.
+         * 
+         * @param message
+         *            the messag eto show in the dialog.
          */
         private void showErrorDialog(String message) {
-            Utils.createMessageDialog(new JBException(message, 
-                    MessageIDs.E_UNEXPECTED_EXCEPTION), null, new String[]{
-                        message});
+            Utils.createMessageDialog(new JBException(message,
+                    MessageIDs.E_UNEXPECTED_EXCEPTION), null,
+                    new String[] { message });
         }
 
         /**
@@ -387,180 +383,139 @@ public class OpenProjectHandler extends AbstractHandler {
     }
 
     /**
-     * Runnable to load Projects from DB
-     * @author BREDEX GmbH
-     *
+     * Opens a dialog to select a project to open.
      */
-    private static class Loader extends JBThread {
-        
-        /**
-         * run method
-         */
-        public void run() {
-            Plugin.startLongRunning();
-            if (Hibernator.init()) {
-                Display.getDefault().syncExec(new Runnable() {
-                    public void run() {
-                        try {
-                            selectProjects();
-                        } finally {
-                            Plugin.stopLongRunning();
-                        }
-                    }
-                });
-            } else {
-                Plugin.stopLongRunning();
-            }
-        }
-        
-        /**
-         * Opens a dialog to select a project to open.
-         */
-        void selectProjects() {
-            if (GeneralStorage.getInstance().getProject() != null
-                && Plugin.getDefault().anyDirtyStar() 
+    void selectProjects() {
+        if (GeneralStorage.getInstance().getProject() != null
+                && Plugin.getDefault().anyDirtyStar()
                 && !Plugin.getDefault().showSaveEditorDialog()) {
 
+            Plugin.stopLongRunning();
+            return;
+        }
+        List<IProjectPO> projList = null;
+        try {
+            projList = ProjectPM.findAllProjects();
+            if (projList.isEmpty()) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
+                        Utils.createMessageDialog(
+                                MessageIDs.I_NO_PROJECT_IN_DB);
+                    }
+                });
                 Plugin.stopLongRunning();
                 return;
             }
-            List <IProjectPO> projList = null;
-            try {
-                projList = ProjectPM.findAllProjects();
-                if (projList.isEmpty()) {
-                    Display.getDefault().asyncExec(new Runnable() {
-                        public void run() {
-                            Utils.createMessageDialog(
-                                    MessageIDs.I_NO_PROJECT_IN_DB);
-                        }
-                    });
-                    Plugin.stopLongRunning();
-                    return;
-                }
 
-                SortedMap<String, List<String>> projNameToVersionMap = 
-                    new TreeMap<String, List<String>>();
-                for (IProjectPO proj : projList) {
-                    String projName = proj.getName();
-                    String projVersion = proj.getVersionString();
-                    if (!projNameToVersionMap.containsKey(projName)) {
-                        projNameToVersionMap.put(
-                            projName, new ArrayList<String>());
-                    }
-                    projNameToVersionMap.get(projName).add(projVersion);
+            SortedMap<String, List<String>> projNameToVersionMap = 
+                new TreeMap<String, List<String>>();
+            for (IProjectPO proj : projList) {
+                String projName = proj.getName();
+                String projVersion = proj.getVersionString();
+                if (!projNameToVersionMap.containsKey(projName)) {
+                    projNameToVersionMap.put(projName, new ArrayList<String>());
                 }
-                ProjectDialog dialog = 
-                    openProjectSelectionDialog(
-                        projList);
-                if (dialog.getReturnCode() == Window.CANCEL) {
-                    Plugin.stopLongRunning();
-                    return;
-                }
-                final IProjectPO selectedProject = dialog.getSelection();
-
-                OpenProjectOperation openOperation = 
-                    new OpenProjectOperation(selectedProject);
-                try {
-                    PlatformUI.getWorkbench().getProgressService()
-                        .busyCursorWhile(openOperation);
-
-                    Plugin.getDisplay().syncExec(new Runnable() {
-                        public void run() {
-                            Plugin.setProjectNameInTitlebar(
-                                    selectedProject.getName(),
-                                    selectedProject.getMajorProjectVersion(),
-                                    selectedProject.getMinorProjectVersion());
-                        }
-                    });
-                    checkAndNagForMissingProjects();
-                } catch (InvocationTargetException ite) {
-                    openOperation.handleOperationException();
-                } catch (InterruptedException ie) {
-                    openOperation.handleOperationException();
-                }
-                
-            } catch (final JBException e) {
-                Display.getDefault().asyncExec(new Runnable() {
-                    public void run() {
-                        Utils.createMessageDialog(e, null, null);
-                    }
-                });
+                projNameToVersionMap.get(projName).add(projVersion);
+            }
+            ProjectDialog dialog = openProjectSelectionDialog(projList);
+            if (dialog.getReturnCode() == Window.CANCEL) {
+                Plugin.stopLongRunning();
                 return;
             }
+            final IProjectPO selectedProject = dialog.getSelection();
 
+            OpenProjectOperation openOperation = new OpenProjectOperation(
+                    selectedProject);
+            try {
+                PlatformUI.getWorkbench().getProgressService()
+                        .busyCursorWhile(openOperation);
+
+                Plugin.getDisplay().syncExec(new Runnable() {
+                    public void run() {
+                        Plugin.setProjectNameInTitlebar(
+                                selectedProject.getName(),
+                                selectedProject.getMajorProjectVersion(),
+                                selectedProject.getMinorProjectVersion());
+                    }
+                });
+                checkAndNagForMissingProjects();
+            } catch (InvocationTargetException ite) {
+                openOperation.handleOperationException();
+            } catch (InterruptedException ie) {
+                openOperation.handleOperationException();
+            }
+
+        } catch (final JBException e) {
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    Utils.createMessageDialog(e, null, null);
+                }
+            });
+            return;
         }
+    }
 
-        /**
-         * checks for missing reused projects after project loading
-         */
-        private void checkAndNagForMissingProjects() {
-            List<String> missingProjects = new LinkedList<String>();
-            final IProjectPO project = GeneralStorage
-                    .getInstance().getProject();
-            if (project != null) {
-                final Set<IReusedProjectPO> usedProjects = project
-                        .getUsedProjects();
-                if (usedProjects != null) {
-                    for (IReusedProjectPO rProjects : usedProjects) {
-                        if (!ProjectPM.doesProjectVersionExist(rProjects
-                                .getProjectGuid(), rProjects.getMajorNumber(),
-                                rProjects.getMinorNumber())) {
-                            missingProjects.add(rProjects.getProjectGuid());
-                        }
+    /**
+     * checks for missing reused projects after project loading
+     */
+    private void checkAndNagForMissingProjects() {
+        List<String> missingProjects = new LinkedList<String>();
+        final IProjectPO project = GeneralStorage.getInstance().getProject();
+        if (project != null) {
+            final Set<IReusedProjectPO> usedProjects = project
+                    .getUsedProjects();
+            if (usedProjects != null) {
+                for (IReusedProjectPO rProjects : usedProjects) {
+                    if (!ProjectPM.doesProjectVersionExist(
+                            rProjects.getProjectGuid(),
+                            rProjects.getMajorNumber(),
+                            rProjects.getMinorNumber())) {
+                        missingProjects.add(rProjects.getProjectGuid());
                     }
                 }
             }
-            if (!missingProjects.isEmpty()) {
-                NagDialog.runNagDialog(Plugin.getShell(), 
-                        "InfoNagger.ImportAllRequiredProjects",  //$NON-NLS-1$
-                        ContextHelpIds.IMPORT_ALL_REQUIRED_PROJECTS);
-            }
         }
-        
-        /**
-         * @param projList the list of projects in the database
-         * @return the dialog
-         */
-        private ProjectDialog 
-        openProjectSelectionDialog(List<IProjectPO> projList) {
-            
-            final ProjectDialog dialog = 
-                new ProjectDialog(
-                    Plugin.getShell(), projList,
-                    Messages.OpenProjectActionMessage,
-                    Messages.OpenProjectActionTitle,
-                    IconConstants.OPEN_PROJECT_DIALOG_IMAGE, 
-                    Messages.OpenProjectActionCaption, false);
-            // set up help for dialog, with link
-            dialog.setHelpAvailable(true);
-            dialog.create();
-            DialogUtils.setWidgetNameForModalDialog(dialog);
-            Plugin.getHelpSystem().setHelp(dialog.getShell(),
-                ContextHelpIds.OPEN_PROJECT);
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    Plugin.startLongRunning(
-                            Messages.OpenProjectActionLoadProjectWaitMessage);
-                    dialog.open();
-                }
-            });
-            return dialog;
+        if (!missingProjects.isEmpty()) {
+            NagDialog.runNagDialog(Plugin.getShell(),
+                    "InfoNagger.ImportAllRequiredProjects", //$NON-NLS-1$
+                    ContextHelpIds.IMPORT_ALL_REQUIRED_PROJECTS);
         }
-                
-        /**
-         * {@inheritDoc}
-         */
-        protected void errorOccured() {
-            Plugin.stopLongRunning();
-        }
-        
     }
+
+    /**
+     * @param projList
+     *            the list of projects in the database
+     * @return the dialog
+     */
+    private ProjectDialog openProjectSelectionDialog(
+            List<IProjectPO> projList) {
+        final ProjectDialog dialog = new ProjectDialog(Plugin.getShell(),
+                projList, Messages.OpenProjectActionMessage,
+                Messages.OpenProjectActionTitle,
+                IconConstants.OPEN_PROJECT_DIALOG_IMAGE,
+                Messages.OpenProjectActionCaption, false);
+        // set up help for dialog, with link
+        dialog.setHelpAvailable(true);
+        dialog.create();
+        DialogUtils.setWidgetNameForModalDialog(dialog);
+        Plugin.getHelpSystem().setHelp(dialog.getShell(),
+                ContextHelpIds.OPEN_PROJECT);
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                Plugin.startLongRunning(Messages.
+                        OpenProjectActionLoadProjectWaitMessage);
+                dialog.open();
+            }
+        });
+        return dialog;
+    }
+
 
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
-        new Loader().start();
+    public Object executeImpl(ExecutionEvent event) {
+        selectProjects();
         return null;
     }
 }

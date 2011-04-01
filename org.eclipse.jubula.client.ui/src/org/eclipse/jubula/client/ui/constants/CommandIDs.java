@@ -161,4 +161,7 @@ public interface CommandIDs {
 
     /** the ID of the "open project" command */
     public static final String OPEN_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.OpenProject"; //$NON-NLS-1$
+    
+    /** the ID of the "select database" command */
+    public static final String SELECT_DATABASE_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.SelectDatabase"; //$NON-NLS-1$
 }

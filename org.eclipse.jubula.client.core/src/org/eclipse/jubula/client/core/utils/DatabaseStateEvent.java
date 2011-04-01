@@ -10,19 +10,36 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
-
-
 /**
- * Listener interface to show a ProgressMonitor for a long running operation.
- *
  * @author BREDEX GmbH
  * @created 25.08.2005
  */
-public interface IProgressListener {
-    
+public class DatabaseStateEvent {
+    /** The available database states */
+    public enum DatabaseState {
+        /** the database scheme has just been created */
+        DB_SCHEME_CREATED,
+        /** successfull login */
+        DB_LOGIN_SUCCEEDED
+    }
+
+    /** The ID of the event */
+    private DatabaseState m_state;
+
     /**
-     * Updates the object, which listens to this listener.
-     * @param e The ProgressEvent.
+     * The constructor.
+     * 
+     * @param state
+     *            the database state event
      */
-    public void reactOnProgressEvent(ProgressEvent e);
+    public DatabaseStateEvent(DatabaseState state) {
+        m_state = state;
+    }
+
+    /**
+     * @return Returns the ID of the Event.
+     */
+    public DatabaseState getState() {
+        return m_state;
+    }
 }

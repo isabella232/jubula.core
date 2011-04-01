@@ -2181,7 +2181,7 @@
 			</enabledWhen>
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.handlers.ProjectPropertiesHandler"
+			class="org.eclipse.jubula.client.ui.handlers.project.ProjectPropertiesHandler"
 			commandId="org.eclipse.jubula.client.ui.commands.ProjectProperties">
 			<enabledWhen>
 				<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
@@ -2238,7 +2238,7 @@
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.handlers.RefreshProjectHandler"
+			class="org.eclipse.jubula.client.ui.handlers.project.RefreshProjectHandler"
 			commandId="org.eclipse.ui.file.refresh">
 			<activeWhen>
 				<and>
@@ -2453,15 +2453,15 @@
         commandId="org.eclipse.jubula.client.ui.commands.ShowFromClipboard">
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.handlers.DeleteProjectHandler"
+        class="org.eclipse.jubula.client.ui.handlers.project.DeleteProjectHandler"
         commandId="org.eclipse.jubula.client.ui.commands.DeleteProject">
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.handlers.NewProjectHandler"
+        class="org.eclipse.jubula.client.ui.handlers.project.NewProjectHandler"
         commandId="org.eclipse.jubula.client.ui.commands.NewProject">
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.handlers.ImportProjectHandler"
+        class="org.eclipse.jubula.client.ui.handlers.project.ImportProjectHandler"
         commandId="org.eclipse.jubula.client.ui.commands.ImportProject">
   </handler>
   <handler
@@ -2474,15 +2474,15 @@
         </activeWhen>
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.handlers.OpenProjectHandler"
+        class="org.eclipse.jubula.client.ui.handlers.project.OpenProjectHandler"
         commandId="org.eclipse.jubula.client.ui.commands.OpenProject">
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.handlers.ExportAllHandler"
+        class="org.eclipse.jubula.client.ui.handlers.project.ExportAllHandler"
         commandId="org.eclipse.jubula.client.ui.commands.ExportAll">
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.handlers.SaveProjectAsHandler"
+        class="org.eclipse.jubula.client.ui.handlers.project.SaveProjectAsHandler"
         commandId="org.eclipse.jubula.client.ui.commands.SaveProjectAs">
         <activeWhen>
 			<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
@@ -2491,7 +2491,7 @@
         </activeWhen>
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.handlers.ExportProjectHandler"
+        class="org.eclipse.jubula.client.ui.handlers.project.ExportProjectHandler"
         commandId="org.eclipse.jubula.client.ui.commands.ExportProject">
         <activeWhen>
 			<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
@@ -2500,7 +2500,7 @@
         </activeWhen>
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.handlers.SelectDatabaseHandler"
+        class="org.eclipse.jubula.client.ui.handlers.project.SelectDatabaseHandler"
         commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase">
   </handler>
 	</extension>
