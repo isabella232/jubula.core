@@ -425,13 +425,6 @@
 				label="%ChooseLanguage" style="pulldown"
 				toolbarPath="org.eclipse.jubula.client.ui.toolbar.LanguageToolbar/GlobalActions"
 				tooltip="%ChooseLanguageToolTip" />
-			<action class="org.eclipse.jubula.client.ui.actions.DisconnectAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
-				disabledIcon="icons/stopServer_disabled.gif" icon="icons/stopServer.gif"
-				id="org.eclipse.jubula.client.ui.actions.DisconnectAction"
-				label="%Disconnect" menubarPath="org.eclipse.ui.run/JubulaRunSeparator1"
-				toolbarPath="org.eclipse.jubula.client.ui.toolbar.AutStarterToolbar/GlobalActions"
-				tooltip="%DisconnectToolTip" />
 			<action
 				class="org.eclipse.jubula.client.ui.actions.ChooseServerAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.ChooseServerCommand"
@@ -1317,6 +1310,10 @@
 				id="org.eclipse.jubula.client.ui.toolbar.AutStarterToolbar">
 				<separator name="GlobalActions">
 				</separator>
+                <command
+                    commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
+                    style="push">
+                </command>
 			</toolbar>
 			<toolbar id="org.eclipse.jubula.client.ui.toolbar.AutToolbar">
 				<command
@@ -1735,6 +1732,10 @@
         locationURI="menu:org.eclipse.ui.run">
      <command
            commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
+           style="push">
+     </command>
+     <command
+           commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
            style="push">
      </command>
   </menuContribution>
@@ -2699,6 +2700,11 @@
         commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase"
         icon="icons/selectDB.gif">
   </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
+        disabledIcon="icons/stopServer_disabled.gif"
+        icon="icons/stopServer.gif">
+  </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"
 		point="org.eclipse.ui.handlers">
@@ -3306,6 +3312,15 @@
               </instanceof>
            </iterate>
         </and>
+     </activeWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.AUTAgentDisconnectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand">
+     <activeWhen>
+        <with variable="org.eclipse.jubula.client.ui.variable.isAutStarterConnected">
+            <equals value="true" />
+        </with>
      </activeWhen>
   </handler>
 	</extension>

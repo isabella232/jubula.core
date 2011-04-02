@@ -8,66 +8,35 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.actions;
+package org.eclipse.jubula.client.ui.handlers;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
-import org.eclipse.jubula.client.ui.businessprocess.DisconnectServerBP;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionGUIController;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.swt.widgets.Event;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 11.05.2005
- *
  */
-public class DisconnectAction extends AbstractAction {
-
+public class AUTAgentDisconnectHandler extends AbstractHandler {
     /** The eclipse job manager */
     private IJobManager m_jobManager = Job.getJobManager();
     /** The job family String */
     private String m_jobFamily = Messages.ClientCollectingInformation;
-    
-    /**
-     * {@inheritDoc}
-     *      org.eclipse.swt.widgets.Event)
-     */
-    public void runWithEvent(IAction action, Event event) {
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
-        if (isJobRunning()) {
-            MessageDialog dialog = getConfirmDialog();
-            if (dialog.getReturnCode() != Window.OK) {
-                return;
-            }
-            m_jobManager.cancel(m_jobFamily);
-        }
-        TestExecutionGUIController.disconnectFromServer();
-    }
 
-    /**
-     * @return the ActionBP object associated with this Action
-     */
-    protected AbstractActionBP getActionBP() {
-        return DisconnectServerBP.getInstance();
-    }    
     /**
      * Checks whether a monitoring job is running or not.
      * @return true if jobs are running, or false if no monitoring job is running
      */
     private boolean isJobRunning() {
-        
         Job[] jobs = m_jobManager.find(m_jobFamily);        
         if (jobs.length > 0) {
             return true;
@@ -92,5 +61,20 @@ public class DisconnectAction extends AbstractAction {
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();
         return dialog;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object execute(ExecutionEvent event) {
+        if (isJobRunning()) {
+            MessageDialog dialog = getConfirmDialog();
+            if (dialog.getReturnCode() != Window.OK) {
+                return null;
+            }
+            m_jobManager.cancel(m_jobFamily);
+        }
+        TestExecutionGUIController.disconnectFromServer();
+        return null;
     }
 }
