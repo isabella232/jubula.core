@@ -8,64 +8,40 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.actions;
+package org.eclipse.jubula.client.ui.handlers;
 
-
-import org.eclipse.jface.action.IAction;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
-import org.eclipse.jubula.client.ui.businessprocess.AbstractActionBP;
-import org.eclipse.jubula.client.ui.businessprocess.OMStopMappingModeBP;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.ui.IEditorActionDelegate;
-import org.eclipse.ui.IEditorPart;
-
 
 /**
  * @author BREDEX GmbH
  * @created 27.04.2005
  */
-public class OMStopMappingModeAction extends AbstractAction 
-    implements IEditorActionDelegate {
-    
+public class StopObjectMappingModeHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public void runWithEvent(IAction action, Event event) {
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
+    public Object execute(ExecutionEvent event) throws ExecutionException {
         if (TestExecution.getInstance().getConnectedAut() == null) {
             String message = Messages.OMStopMappingModeActionError1;
-            Utils.createMessageDialog(new JBException(message, 
-                    MessageIDs.E_UNEXPECTED_EXCEPTION), null, new String[]{
-                        message});
+            Utils.createMessageDialog(new JBException(message,
+                    MessageIDs.E_UNEXPECTED_EXCEPTION), null,
+                    new String[] { message });
         } else {
-            TestExecutionContributor.getInstance().
-                getClientTest().resetToTesting();
-            DataEventDispatcher.getInstance()
-                .fireOMStateChanged(OMState.notRunning);
+            TestExecutionContributor.getInstance().getClientTest()
+                    .resetToTesting();
+            DataEventDispatcher.getInstance().fireOMStateChanged(
+                    OMState.notRunning);
         }
+        return null;
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-        registerAction(action);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected AbstractActionBP getActionBP() {
-        return OMStopMappingModeBP.getInstance();
-    }
-
 }

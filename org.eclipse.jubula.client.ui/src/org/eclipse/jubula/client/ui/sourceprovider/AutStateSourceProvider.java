@@ -42,7 +42,6 @@ public class AutStateSourceProvider extends AbstractJBSourceProvider
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public void dispose() {
@@ -50,7 +49,6 @@ public class AutStateSourceProvider extends AbstractJBSourceProvider
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public Map<String, Object> getCurrentState() {
@@ -63,7 +61,6 @@ public class AutStateSourceProvider extends AbstractJBSourceProvider
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public String[] getProvidedSourceNames() {

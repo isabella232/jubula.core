@@ -26,41 +26,53 @@ import org.eclipse.ui.ISources;
 
 /**
  * @author BREDEX GmbH
- * @created Nov 9, 2006
+ * @created Nov 8, 2006
  */
-public class ObservationModeSourceProvider extends AbstractJBSourceProvider
-    implements IAutStateListener, IRecordModeStateListener, IOMStateListener {
+public class ObjectMappingModeSourceProvider extends AbstractJBSourceProvider
+    implements IOMStateListener, IAutStateListener, IRecordModeStateListener {
+    /**
+     * the id of this source provider
+     */
+    public static final String ID = "org.eclipse.jubula.client.ui.sourceprovider.ObjectMappingModeSourceProvider"; //$NON-NLS-1$
+
     /**
      * ID of variable that indicates whether the observation mode is currently
      * running
      */
-    public static final String IS_OBSERVATION_RUNNING = "org.eclipse.jubula.client.ui.variable.isObservationRunning"; //$NON-NLS-1$
+    public static final String IS_OBJECT_MAPPING_RUNNING = "org.eclipse.jubula.client.ui.variable.isObjectMappingRunning"; //$NON-NLS-1$
 
-    /** is Record Mode running */
-    private boolean m_isRecordModeRunning;
+    /** is the Object Mapping Mode running */
+    private boolean m_isOMRunning;
 
     /**
      * Private constructor
      */
-    public ObservationModeSourceProvider() {
-        m_isRecordModeRunning = false;
+    public ObjectMappingModeSourceProvider() {
+        m_isOMRunning = false;
 
         DataEventDispatcher dispatch = DataEventDispatcher.getInstance();
-        dispatch.addRecordModeStateListener(this, true);
-        dispatch.addAutStateListener(this, true);
         dispatch.addOMStateListener(this, true);
+        dispatch.addAutStateListener(this, true);
+        dispatch.addRecordModeStateListener(this, true);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void handleOMStateChanged(OMState state) {
+        m_isOMRunning = (state == OMState.running);
+        fireModeChanged();
     }
 
     /**
-     * @param state
-     *            state from AUT
+     * {@inheritDoc}
      */
     public void handleAutStateChanged(AutState state) {
         switch (state) {
             case running:
                 break;
             case notRunning:
-                m_isRecordModeRunning = false;
+                m_isOMRunning = false;
                 break;
             default:
                 Assert.notReached(Messages.UnhandledAutState);
@@ -72,19 +84,11 @@ public class ObservationModeSourceProvider extends AbstractJBSourceProvider
      * {@inheritDoc}
      */
     public void handleRecordModeStateChanged(RecordModeState state) {
-        m_isRecordModeRunning = (state == RecordModeState.running);
-        fireModeChanged();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void handleOMStateChanged(OMState state) {
         switch (state) {
             case running:
-                // Starting of Object Mapping mode implicitly stops the
-                // Observation mode
-                m_isRecordModeRunning = false;
+                // Starting of Observation mode implicitly stops the
+                // Object Mapping mode
+                m_isOMRunning = false;
                 break;
             case notRunning:
                 break;
@@ -98,15 +102,15 @@ public class ObservationModeSourceProvider extends AbstractJBSourceProvider
      * Fires a source changed event for <code>IS_OBJECT_MAPPING_RUNNING</code>.
      */
     private void fireModeChanged() {
-        gdFireSourceChanged(ISources.WORKBENCH, IS_OBSERVATION_RUNNING,
+        gdFireSourceChanged(ISources.WORKBENCH, IS_OBJECT_MAPPING_RUNNING,
                 isRunning());
     }
 
     /**
-     * @return whether it's running or not
+     * {@inheritDoc}
      */
     public boolean isRunning() {
-        return m_isRecordModeRunning;
+        return m_isOMRunning;
     }
 
     /**
@@ -114,9 +118,9 @@ public class ObservationModeSourceProvider extends AbstractJBSourceProvider
      */
     public void dispose() {
         DataEventDispatcher dispatch = DataEventDispatcher.getInstance();
-        dispatch.removeRecordModeStateListener(this);
-        dispatch.removeAutStateListener(this);
         dispatch.removeOMStateListener(this);
+        dispatch.removeAutStateListener(this);
+        dispatch.removeRecordModeStateListener(this);
     }
 
     /**
@@ -124,7 +128,7 @@ public class ObservationModeSourceProvider extends AbstractJBSourceProvider
      */
     public Map<String, Object> getCurrentState() {
         Map<String, Object> values = new HashMap<String, Object>();
-        values.put(IS_OBSERVATION_RUNNING, isRunning());
+        values.put(IS_OBJECT_MAPPING_RUNNING, isRunning());
         return values;
     }
 
@@ -132,6 +136,6 @@ public class ObservationModeSourceProvider extends AbstractJBSourceProvider
      * {@inheritDoc}
      */
     public String[] getProvidedSourceNames() {
-        return new String[] { IS_OBSERVATION_RUNNING };
+        return new String[] { IS_OBJECT_MAPPING_RUNNING };
     }
 }

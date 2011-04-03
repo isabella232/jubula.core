@@ -433,14 +433,6 @@
 				label="%Connect" style="pulldown"
 				toolbarPath="org.eclipse.jubula.client.ui.toolbar.AutStarterToolbar/GlobalActions"
 				tooltip="%ConnectToolTip" />
-			<action
-				class="org.eclipse.jubula.client.ui.actions.OMStopMappingModeAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
-				disabledIcon="icons/stopOM_disabled.gif" icon="icons/stopOM.gif"
-				id="org.eclipse.jubula.client.ui.actions.OMStopMappingModeAction"
-				label="%StopMapping" menubarPath="org.eclipse.ui.run/JubulaRunSeparator5"
-				toolbarPath="org.eclipse.jubula.client.ui.toolbar.ObjectMappingToolbar/GlobalActions"
-				tooltip="%StopMappingToolTip" />
 			<action disabledIcon="icons/newTestCaseIcon.gif" icon="icons/newTestCaseIcon.gif"
 				id="org.eclipse.jubula.client.ui.actions.AbstractNewTestCaseAction_INSERT"
 				label="%TestCase" menubarPath="edit/JubulaInsertMenu/JubulaInsertSeparator1" retarget="true"
@@ -1399,8 +1391,6 @@
 		          </reference>
 		       </visibleWhen>
 				</command>
-				<separator name="GlobalActions" visible="false">
-				</separator>
 			</toolbar>
 			<toolbar
 				id="org.eclipse.jubula.client.ui.toolbar.ObjectMappingToolbar">
@@ -1408,15 +1398,23 @@
 					commandId="org.eclipse.jubula.client.ui.commands.OMStartMappingModeCommand"
 					id="org.eclipse.jubula.client.ui.toolbar.ObjectMappingToolbar.OMStartMappingModeCommand"
 					style="pulldown">
-       <visibleWhen
-             checkEnabled="false">
-          <reference
-                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
-          </reference>
-       </visibleWhen>
+                   <visibleWhen
+                         checkEnabled="false">
+                      <reference
+                            definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+                      </reference>
+                   </visibleWhen>
 				</command>
-				<separator name="GlobalActions" visible="false">
-				</separator>
+                <command
+                      commandId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
+                      style="push">
+                  <visibleWhen
+                         checkEnabled="false">
+                      <reference
+                            definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+                      </reference>
+                    </visibleWhen>
+                </command>
 				<command
 					commandId="org.eclipse.jubula.client.ui.commands.CreateNewLogicalNameCommand"
 					style="push" tooltip="%NewLogicalNameToolTip">
@@ -1731,11 +1729,15 @@
         allPopups="false"
         locationURI="menu:org.eclipse.ui.run">
      <command
-           commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
+           commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
            style="push">
      </command>
      <command
-           commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
+           commandId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
+           style="push">
+     </command>
+     <command
+           commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
            style="push">
      </command>
   </menuContribution>
@@ -2705,6 +2707,11 @@
         disabledIcon="icons/stopServer_disabled.gif"
         icon="icons/stopServer.gif">
   </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
+        disabledIcon="icons/stopOM_disabled.gif"
+        icon="icons/stopOM.gif">
+  </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"
 		point="org.eclipse.ui.handlers">
@@ -3323,6 +3330,16 @@
         </with>
      </activeWhen>
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.StopObjectMappingModeHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand">
+        <enabledWhen>
+            <with
+                variable="org.eclipse.jubula.client.ui.variable.isObjectMappingRunning">
+                <equals value="true" />
+            </with>
+        </enabledWhen>
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.services">
 		<sourceProvider
@@ -3370,6 +3387,12 @@
 				priorityLevel="workbench">
 			</variable>
 		</sourceProvider>
+        <sourceProvider
+            provider="org.eclipse.jubula.client.ui.sourceprovider.ObjectMappingModeSourceProvider">
+            <variable name="org.eclipse.jubula.client.ui.variable.isObjectMappingRunning"
+                priorityLevel="workbench">
+            </variable>
+        </sourceProvider>
 		<sourceProvider
 			provider="org.eclipse.jubula.client.ui.sourceprovider.AutServerSourceProvider">
 			<variable name="org.eclipse.jubula.client.ui.variable.autConnectionStatus"
