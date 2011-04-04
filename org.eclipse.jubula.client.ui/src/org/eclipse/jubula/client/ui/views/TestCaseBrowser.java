@@ -498,7 +498,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
                     handleProjectLoaded();
                     return;
                 }
-                INodePO root = (INodePO)getTreeViewer().getInput();
                 switch (dataState) {
                     case Added:
                         handleDataAdded(po, new NullProgressMonitor());
@@ -510,7 +509,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
                         handleDataRenamed(po);
                         break;
                     case StructureModified:
-                        handleDataStructureModified(po, root);
+                        handleDataStructureModified(po);
                         break;
                     default:
                         break;
@@ -521,10 +520,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
 
     /**
      * @param po The persistent object for which the structure has changed
-     * @param root The root of the GUI tree
      */
-    private void handleDataStructureModified(final IPersistentObject po, 
-        INodePO root) {
+    private void handleDataStructureModified(final IPersistentObject po) {
         
         if (po instanceof INodePO) {  
             getTreeViewer().getTree().getParent().setRedraw(false);
