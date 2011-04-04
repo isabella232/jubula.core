@@ -50,6 +50,7 @@ import org.eclipse.jubula.client.ui.controllers.dnd.TSEditorDndSupport;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseEditorContentProvider;
+import org.eclipse.jubula.client.ui.provider.contentprovider.TestSuiteEditorContentProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -78,6 +79,8 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      */
     public void createPartControlImpl(Composite parent) {
         super.createPartControlImpl(parent);
+        getMainTreeViewer().setContentProvider(
+                new TestSuiteEditorContentProvider());  
         ActionListener actionListener = new ActionListener();
         getTreeViewer().addSelectionChangedListener(actionListener);
         addTreeListener();
