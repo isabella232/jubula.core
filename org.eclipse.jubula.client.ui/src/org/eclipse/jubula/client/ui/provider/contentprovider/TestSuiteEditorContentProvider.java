@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
-import java.util.Arrays;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -63,8 +61,7 @@ public class TestSuiteEditorContentProvider implements ITreeContentProvider {
     public Object[] getElements(Object inputElement) {
         Validate.isTrue(inputElement instanceof INodePO[]);
 
-        INodePO[] inputArray = (INodePO[])inputElement;
-        return Arrays.copyOf(inputArray, inputArray.length);
+        return (INodePO[])inputElement;
     }
 
     /**

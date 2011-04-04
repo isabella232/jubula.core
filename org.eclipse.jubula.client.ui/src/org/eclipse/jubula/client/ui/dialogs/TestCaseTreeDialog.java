@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.dialogs;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,8 +24,6 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
@@ -40,7 +37,7 @@ import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseBrowserContentProvider;
+import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseDialogContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.sorter.GuiNodeNameViewerSorter;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -235,30 +232,7 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
         m_treeViewer.setUseHashlookup(true);
         getInitialInput();
         m_treeViewer.setLabelProvider(new LabelProvider());
-        m_treeViewer.setContentProvider(new TestCaseBrowserContentProvider());
-        ViewerFilter[] filters = m_treeViewer.getFilters();
-        ViewerFilter[] newFilters = Arrays.copyOf(filters, filters.length + 1);
-        newFilters[newFilters.length - 1] = new ViewerFilter() {
-            @Override
-            public boolean select(Viewer viewer, 
-                    Object parentElement, Object element) {
-                
-                if (element instanceof ISpecTestCasePO 
-                        || element instanceof ICategoryPO) {
-                    return true;
-                }
-                
-                if (m_typeToAdd != OPEN_TESTCASE 
-                        && element instanceof IReusedProjectPO) {
-                    // also include content from reused projects
-                    return true;
-                }
-                
-                return false;
-                
-            }
-        };
-        m_treeViewer.setFilters(newFilters);
+        m_treeViewer.setContentProvider(new TestCaseDialogContentProvider());
         m_treeViewer.setInput(GeneralStorage.getInstance().getProject());
         m_treeViewer.setSorter(new GuiNodeNameViewerSorter());
         Plugin.createSeparator(parent);
