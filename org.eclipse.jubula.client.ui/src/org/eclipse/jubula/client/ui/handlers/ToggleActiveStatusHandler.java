@@ -20,7 +20,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -47,9 +46,9 @@ public class ToggleActiveStatusHandler extends AbstractHandler {
             }
             IStructuredSelection structuredSelection = 
                 (IStructuredSelection)currentSelection;
-            for (Iterator<GuiNode> it = structuredSelection.iterator(); it
+            for (Iterator<INodePO> it = structuredSelection.iterator(); it
                     .hasNext();) {
-                INodePO node = it.next().getContent();
+                INodePO node = it.next();
                 node.setActive(!node.isActive());
                 tce.getEditorHelper().setDirty(true);
             }

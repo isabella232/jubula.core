@@ -13,13 +13,12 @@ package org.eclipse.jubula.client.ui.controllers.dnd;
 import java.util.List;
 
 import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.swt.dnd.DND;
@@ -50,8 +49,8 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
     @SuppressWarnings("unchecked")
     public boolean performDrop(Object data) {
         LocalSelectionTransfer transfer = LocalSelectionTransfer.getInstance();
-        GuiNode target = (GuiNode)getCurrentTarget();
-        List <GuiNode> nodesToBeMoved = transfer.getSelection().toList();
+        INodePO target = (INodePO)getCurrentTarget();
+        List <INodePO> nodesToBeMoved = transfer.getSelection().toList();
         try {
             TCBrowserDndSupport.moveNodes(nodesToBeMoved, target);
             return true;
@@ -83,23 +82,18 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
             && !transfer.getSource().equals(getViewer())) {
             return false;
         }
-        if (target instanceof TestCaseBrowserRootGUI 
-                && getCurrentLocation() == LOCATION_BEFORE) {
-                
-            return false;
-        }
 
         return TCBrowserDndSupport.canMove(transfer.getSelection(), target);
     }
 
     /**
-     * no expand of SpecTestCaseGUI nodes
+     * no expand of ISpecTestCasePO nodes
      * {@inheritDoc}
      */
     public void dragOver(DropTargetEvent event) {
         super.dragOver(event);
         if (event.item != null
-            && event.item.getData() instanceof SpecTestCaseGUI) {
+            && event.item.getData() instanceof ISpecTestCasePO) {
             event.feedback &= ~DND.FEEDBACK_EXPAND;
         }
         if (getCurrentLocation() == LOCATION_BEFORE

@@ -56,7 +56,6 @@ import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamTextContentAssisted;
@@ -1918,11 +1917,6 @@ public abstract class AbstractDataSetPage extends Page
         Object firstSel = selection.getFirstElement();
         if (firstSel instanceof IParameterInterfacePO) {
             paramInterfacePO = (IParameterInterfacePO)firstSel;
-        } else if (firstSel instanceof GuiNode) {
-            GuiNode gn = ((GuiNode)firstSel);
-            if (gn.getContent() instanceof IParameterInterfacePO) {
-                paramInterfacePO = (IParameterInterfacePO)gn.getContent();
-            }
         }
         return paramInterfacePO;
     }

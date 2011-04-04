@@ -10,11 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers.dnd;
 
-import java.util.List;
-
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 
 
 /**
@@ -29,31 +26,4 @@ public abstract class GuiNodeViewerDropAdapter extends ViewerDropAdapter {
         super(viewer);
     }
     
-    /**
-     * @param viewer
-     *            the target viewer
-     * @return the fallback target for dropping
-     */
-    protected Object getFallbackTarget(Viewer viewer) {
-        if (viewer != null) {
-            Object fallbackTarget = null;
-            Object viewerInput = viewer.getInput();
-            if (viewerInput instanceof GuiNode) {
-                GuiNode viewerRoot = ((GuiNode)viewerInput)
-                    .getChildren().get(0);
-                List<GuiNode> viewerRootChildren = viewerRoot.getChildren();
-                int childrenCount = -1;
-                if (viewerRootChildren != null) {
-                    childrenCount = viewerRootChildren.size();
-                }
-                if (childrenCount > 0) {
-                    fallbackTarget = viewerRootChildren.get(childrenCount - 1);
-                } else {
-                    fallbackTarget = viewerRoot;
-                }
-            }
-            return fallbackTarget;
-        }
-        return null;
-    }
 }

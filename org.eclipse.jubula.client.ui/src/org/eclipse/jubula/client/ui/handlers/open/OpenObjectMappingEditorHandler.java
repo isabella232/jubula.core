@@ -15,9 +15,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -37,10 +36,9 @@ public class OpenObjectMappingEditorHandler extends AbstractOpenHandler {
                 (IStructuredSelection)selection;
             Object firstSelElement = 
                 structuredSelection.getFirstElement();
-            if (firstSelElement instanceof TestSuiteGUI) {
+            if (firstSelElement instanceof ITestSuitePO) {
                 IEditorPart editor = null;
-                ITestSuitePO suite = 
-                    (ITestSuitePO)((TestSuiteGUI)firstSelElement).getContent();
+                ITestSuitePO suite = (ITestSuitePO)firstSelElement;
                 if (suite != null && suite.getAut() != null) {
                     IAUTMainPO aut = suite.getAut();
                     editor = openEditor(aut);
@@ -56,7 +54,7 @@ public class OpenObjectMappingEditorHandler extends AbstractOpenHandler {
     /**
      * {@inheritDoc}
      */
-    protected boolean isEditableImpl(GuiNode selected) {
-        return (selected instanceof TestSuiteGUI);
+    protected boolean isEditableImpl(INodePO selected) {
+        return (selected instanceof ITestSuitePO);
     }
 }

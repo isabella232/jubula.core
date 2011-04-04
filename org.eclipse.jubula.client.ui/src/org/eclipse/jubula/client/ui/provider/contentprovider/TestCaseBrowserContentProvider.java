@@ -10,7 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
-import org.eclipse.jubula.client.ui.model.GuiNode;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.ArrayUtils;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.exception.JBException;
 
 /**
  * @author BREDEX GmbH
@@ -19,15 +30,61 @@ import org.eclipse.jubula.client.ui.model.GuiNode;
 public class TestCaseBrowserContentProvider 
     extends AbstractTreeViewContentProvider {
 
+    @Override
+    public Object[] getElements(Object inputElement) {
+        if (inputElement instanceof IProjectPO[]) {
+            return (IProjectPO[])inputElement;
+        }
+
+        return getChildren(inputElement);
+    }
+    
     /**
      * {@inheritDoc}
      * @param parentElement Object
      * @return object array
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof GuiNode) {
-            return ((GuiNode) parentElement).getChildren().toArray();
+        if (parentElement instanceof IExecTestCasePO) {
+            ISpecTestCasePO referencedTestCase = 
+                ((IExecTestCasePO)parentElement).getSpecTestCase();
+            if (referencedTestCase != null) {
+                return referencedTestCase.getUnmodifiableNodeList().toArray();
+            }
+            
+            return ArrayUtils.EMPTY_OBJECT_ARRAY;
         }
-        return new Object[0];
+        
+        if (parentElement instanceof IProjectPO) {
+            IProjectPO project = (IProjectPO)parentElement;
+            List<Object> elements = new ArrayList<Object>();
+            elements.addAll(project.getSpecObjCont().getSpecObjList());
+            elements.addAll(project.getUsedProjects());
+            return elements.toArray();
+        }
+
+        if (parentElement instanceof INodePO) {
+            return ((INodePO)parentElement).getUnmodifiableNodeList().toArray();
+        }
+        
+        if (parentElement instanceof IReusedProjectPO) {
+            try {
+                IProjectPO reusedProject = 
+                    ProjectPM.loadReusedProjectInMasterSession(
+                            (IReusedProjectPO)parentElement);
+
+                if (reusedProject != null) {
+                    return reusedProject.getSpecObjCont()
+                        .getSpecObjList().toArray();
+                }
+
+                return ArrayUtils.EMPTY_OBJECT_ARRAY;
+            } catch (JBException e) {
+                Utils.createMessageDialog(e, null, null);
+                return ArrayUtils.EMPTY_OBJECT_ARRAY;
+            }
+        }
+        
+        return ArrayUtils.EMPTY_OBJECT_ARRAY;
     }  
 }

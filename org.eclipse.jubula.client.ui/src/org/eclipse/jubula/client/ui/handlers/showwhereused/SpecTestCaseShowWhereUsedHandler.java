@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.ui.handlers.showwhereused;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.search.query.ShowWhereUsedSpecTcQuery;
 import org.eclipse.search.ui.NewSearchUI;
 
@@ -30,8 +29,7 @@ public class SpecTestCaseShowWhereUsedHandler extends
     public Object execute(ExecutionEvent event) {
         init(event);
         final Object first = getCurrentSelection().getFirstElement();
-        ISpecTestCasePO specTC = (ISpecTestCasePO)((SpecTestCaseGUI)first)
-                .getContent();
+        ISpecTestCasePO specTC = (ISpecTestCasePO)first;
         NewSearchUI.runQueryInBackground(new ShowWhereUsedSpecTcQuery(specTC));
         return null;
     }

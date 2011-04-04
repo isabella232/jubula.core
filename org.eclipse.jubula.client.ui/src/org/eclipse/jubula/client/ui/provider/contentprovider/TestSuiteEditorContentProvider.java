@@ -18,22 +18,22 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 
 
 /**
  * @author BREDEX GmbH
- * @created 05.04.2005
+ * @created 04.04.2011
  */
-public class TestCaseEditorContentProvider implements ITreeContentProvider {
+public class TestSuiteEditorContentProvider implements ITreeContentProvider {
 
     /**
      * 
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof ISpecTestCasePO) {
-            return ((ISpecTestCasePO)parentElement)
+        if (parentElement instanceof ITestSuitePO) {
+            return ((ITestSuitePO)parentElement)
                 .getUnmodifiableNodeList().toArray();
         }
         
@@ -84,8 +84,8 @@ public class TestCaseEditorContentProvider implements ITreeContentProvider {
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {
-        if (element instanceof ISpecTestCasePO) {
-            return ((ISpecTestCasePO)element).getNodeListSize() > 0;
+        if (element instanceof ITestSuitePO) {
+            return ((ITestSuitePO)element).getNodeListSize() > 0;
         }
         
         return false;

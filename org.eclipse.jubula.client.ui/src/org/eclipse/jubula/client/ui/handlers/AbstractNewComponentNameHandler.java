@@ -12,9 +12,9 @@ package org.eclipse.jubula.client.ui.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;

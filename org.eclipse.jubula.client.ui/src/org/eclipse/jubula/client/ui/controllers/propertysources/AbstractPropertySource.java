@@ -59,14 +59,14 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
     private List<IPropertyDescriptor> m_propDescriptors = 
         new ArrayList<IPropertyDescriptor>();
     
-    /** The GuiNode for this PropertySource*/
+    /** The INodePO for this PropertySource*/
     private GUINODE_TYPE m_guiNode;
     
     
     
     /**
      * Constructor.
-     * @param guiNode the GuiNode for this PropertySource.
+     * @param guiNode the INodePO for this PropertySource.
      */
     public AbstractPropertySource(GUINODE_TYPE guiNode) {
         m_guiNode = guiNode;

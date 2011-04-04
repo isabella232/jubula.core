@@ -11,8 +11,8 @@
 package org.eclipse.jubula.client.ui.filter;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.ui.model.CapGUI;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
+import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 
 
 /**
@@ -28,7 +28,7 @@ public class JBBrowserPatternFilter extends JBPatternFilter {
      * {@inheritDoc}
      */
     public boolean isElementVisible(Viewer viewer, Object element) {
-        if (element instanceof CapGUI || element instanceof ExecTestCaseGUI) {
+        if (element instanceof ICapPO || element instanceof IExecTestCasePO) {
             return false;
         }
         return super.isElementVisible(viewer, element);

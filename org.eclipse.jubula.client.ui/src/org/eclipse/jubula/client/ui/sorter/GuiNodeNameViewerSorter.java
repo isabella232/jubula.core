@@ -12,11 +12,11 @@ package org.eclipse.jubula.client.ui.sorter;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.jubula.client.ui.model.CapGUI;
-import org.eclipse.jubula.client.ui.model.CategoryGUI;
-import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
+import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 
 
 /**
@@ -29,32 +29,32 @@ public class GuiNodeNameViewerSorter extends ViewerSorter {
      */
     public int compare(Viewer viewer, Object e1, Object e2) {
         // Show categories before all other elements
-        if (e1 instanceof CategoryGUI && !(e2 instanceof CategoryGUI)) {
+        if (e1 instanceof ICategoryPO && !(e2 instanceof ICategoryPO)) {
             return -1;
         }
 
-        if (e2 instanceof CategoryGUI && !(e1 instanceof CategoryGUI)) {
+        if (e2 instanceof ICategoryPO && !(e1 instanceof ICategoryPO)) {
             return 1;
         }
         
         // Show Event Handler before all other nested exec test cases
-        if (e1 instanceof EventExecTestCaseGUI 
-                && !(e2 instanceof EventExecTestCaseGUI)) {
+        if (e1 instanceof IEventExecTestCasePO 
+                && !(e2 instanceof IEventExecTestCasePO)) {
             return -1;
         }
 
-        if (e2 instanceof EventExecTestCaseGUI 
-                && !(e1 instanceof EventExecTestCaseGUI)) {
+        if (e2 instanceof IEventExecTestCasePO 
+                && !(e1 instanceof IEventExecTestCasePO)) {
             return 1;
         }
         
         // do not sort the sequence of exec test cases or caps in spec test cases
-        if (e1 instanceof ExecTestCaseGUI 
-                || e2 instanceof ExecTestCaseGUI
-                || e1 instanceof CapGUI 
-                || e2 instanceof CapGUI
-                || e1 instanceof RefTestSuiteGUI 
-                || e2 instanceof RefTestSuiteGUI) {
+        if (e1 instanceof IExecTestCasePO 
+                || e2 instanceof IExecTestCasePO
+                || e1 instanceof ICapPO 
+                || e2 instanceof ICapPO
+                || e1 instanceof IRefTestSuitePO 
+                || e2 instanceof IRefTestSuitePO) {
             return 0;
         }
         

@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.StringHelper;
@@ -42,7 +43,6 @@ import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDe
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.ParameterValueLabelProvider;
 import org.eclipse.jubula.client.ui.validator.TestDataCubeReferenceValidator;
@@ -66,7 +66,7 @@ import org.slf4j.LoggerFactory;
  * {@inheritDoc}
  */
 public class SpecTestCaseGUIPropertySource 
-    extends AbstractGuiNodePropertySource {
+        extends AbstractGuiNodePropertySource {
     
     /** Constant for the String TestCase Name */
     public static final String P_ELEMENT_DISPLAY_NAME =
@@ -126,10 +126,10 @@ public class SpecTestCaseGUIPropertySource
 
     /**
      * Constructor.
-     * Use this only for SpecTestCaseGUI!
+     * Use this only for ISpecTestCasePO!
      * @param testCase the dependened SpecTestCase.
      */
-    public SpecTestCaseGUIPropertySource(GuiNode testCase) {
+    public SpecTestCaseGUIPropertySource(ITestCasePO testCase) {
         super(testCase);
     }
 

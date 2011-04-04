@@ -15,13 +15,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 
@@ -36,19 +32,14 @@ public class OpenSpecificationHandlerRefTS extends AbstractOpenHandler {
         if (sel instanceof IStructuredSelection) {
             IStructuredSelection iss = (IStructuredSelection)sel;
             Object firstElement = iss.getFirstElement();
-            if (firstElement instanceof RefTestSuiteGUI) {
-                RefTestSuiteGUI refTS = (RefTestSuiteGUI)firstElement;
-                INodePO node = refTS.getContent();
-                if (node instanceof IRefTestSuitePO) {
-
-                    String tsGUID = ((IRefTestSuitePO)node).getTestSuiteGuid();
-                    ITestSuitePO testSuite = NodePM.getTestSuite(tsGUID);
-                    openEditor(testSuite);
-                    GuiNode gNode = GuiNodeBP.getGuiNodeForNodePO(testSuite);
-                    InteractionEventDispatcher.getDefault().
-                        fireProgammableSelectionEvent(
-                                new StructuredSelection(gNode));
-                }
+            if (firstElement instanceof IRefTestSuitePO) {
+                IRefTestSuitePO refTS = (IRefTestSuitePO)firstElement;
+                String tsGUID = refTS.getTestSuiteGuid();
+                ITestSuitePO testSuite = NodePM.getTestSuite(tsGUID);
+                openEditor(testSuite);
+                InteractionEventDispatcher.getDefault().
+                    fireProgammableSelectionEvent(
+                            new StructuredSelection(testSuite));
             }
         }
         return null;

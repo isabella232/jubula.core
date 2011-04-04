@@ -16,7 +16,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -33,11 +32,10 @@ public class CopyIdToClipboardHandler extends AbstractClipboardHandler {
             IStructuredSelection selection = (IStructuredSelection)sel;
             Iterator iter = selection.iterator();
             while (iter.hasNext()) {
-                GuiNode selectedNode = (GuiNode)iter.next();
-                GuiNode editableNode = findEditableNode(selectedNode);
+                INodePO selectedNode = (INodePO)iter.next();
+                INodePO editableNode = findEditableNode(selectedNode);
                 if (editableNode != null) {
-                    INodePO node = editableNode.getContent();
-                    copyIDToClipboard(node);
+                    copyIDToClipboard(editableNode);
                 }
             }
         }

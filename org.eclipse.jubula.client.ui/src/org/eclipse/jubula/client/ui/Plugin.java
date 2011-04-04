@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -39,11 +38,7 @@ import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentName
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
-import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.core.utils.PrefStoreHelper;
@@ -59,8 +54,6 @@ import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.provider.contentprovider.DirtyStarListContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DirtyStarListLabelProvider;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
@@ -70,7 +63,6 @@ import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.views.TestResultTreeView;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
-import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.client.ui.widgets.StatusLineContributionItem;
 import org.eclipse.jubula.tools.constants.ConfigurationConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -150,10 +142,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     
     /** the client status */
     private ClientStatus m_status = ClientStatus.STARTING;
-    /** single invisible root instance of view */
-    private TestSuiteGUI m_testSuiteBrowserRootGUI = null;
-    /** single invisible root instance of view */
-    private TestCaseBrowserRootGUI m_testCaseBrowserRootGUI = null;
     /** a list with the unsaved editors*/
     private List < String > m_dirtyEditors;
     /** true, if preference store was initialized */
@@ -390,59 +378,10 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     }
 
     /**
-     * TMP model
-     * @return TestSuiteBrowserRootGUI
-     */
-    public TestSuiteGUI getTestSuiteBrowserRootGUI() {
-        return m_testSuiteBrowserRootGUI;
-    }
-
-    /**
-     * TMP model
-     * @return TestCaseBrowserRootGUI
-     */
-    public TestCaseBrowserRootGUI getTestCaseBrowserRootGUI() {
-        if (m_testCaseBrowserRootGUI == null) {
-            IProjectPO currentProject = 
-                GeneralStorage.getInstance().getProject();
-            if (currentProject != null) {
-                List<ISpecPersistable> specList = 
-                    currentProject.getSpecObjCont().getSpecObjList();
-                List<IReusedProjectPO> reusedList = 
-                    new ArrayList<IReusedProjectPO>(
-                        currentProject.getUsedProjects());
-                Collections.sort(reusedList);
-
-                // Calls setTestCaseBrowserRootGUI()
-                TreeBuilder.buildTestCaseBrowserTree(specList, reusedList);
-            }
-        }
-        return m_testCaseBrowserRootGUI;
-    }
-    
-    /**
      * @return a list of currently available ITreeViewerContainer
      */
     public List<ITreeViewerContainer> getTreeViewerContainer() {
         return m_treeViewerContainer;
-    }
-
-    /**
-     * TMP model
-     * @param execTestSuite TestSuiteBrowserRootGUI
-     */
-    public void setTestSuiteBrowserRootGUI(TestSuiteGUI execTestSuite) {
-        m_testSuiteBrowserRootGUI = execTestSuite;
-    }
- 
-    /**
-     * Model of the TestCases.
-     * @param specTestSuite TestSuiteBrowserRootGUI
-     */
-    public void setTestCaseBrowserRootGUI(
-            TestCaseBrowserRootGUI specTestSuite) {
-        
-        m_testCaseBrowserRootGUI = specTestSuite;
     }
 
     /**

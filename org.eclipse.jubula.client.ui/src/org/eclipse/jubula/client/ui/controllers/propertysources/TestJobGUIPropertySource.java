@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers.propertysources;
 
+import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.TestJobGUI;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
@@ -29,11 +29,11 @@ public class TestJobGUIPropertySource extends AbstractGuiNodePropertySource {
     private IPropertyDescriptor m_namePropDesc = null;
     
     /**
-     * @param testJobGui
+     * @param testJob
      *            the test job gui node
      */
-    public TestJobGUIPropertySource(TestJobGUI testJobGui) {
-        super(testJobGui);
+    public TestJobGUIPropertySource(ITestJobPO testJob) {
+        super(testJob);
         initPropDescriptor();
     }
 

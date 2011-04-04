@@ -24,7 +24,6 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -63,19 +62,18 @@ public class RefTestSuiteGUIPropertySource
      * @param reftestsuiteGui
      *            the test job gui node
      */
-    public RefTestSuiteGUIPropertySource(RefTestSuiteGUI reftestsuiteGui) {
+    public RefTestSuiteGUIPropertySource(IRefTestSuitePO reftestsuiteGui) {
         super(reftestsuiteGui);
         fillAutIdList(reftestsuiteGui);
     }
 
     /**
-     * @param reftestsuiteGui
-     *            the ref test suite gui node
+     * @param refTestSuite
+     *            the Test Suite Reference
      */
-    private void fillAutIdList(RefTestSuiteGUI reftestsuiteGui) {
+    private void fillAutIdList(IRefTestSuitePO refTestSuite) {
         Set<String> idSet = new HashSet<String>();
-        IRefTestSuitePO rts = (IRefTestSuitePO)reftestsuiteGui.getContent();
-        ITestSuitePO ts = NodePM.getTestSuite(rts.getTestSuiteGuid());
+        ITestSuitePO ts = NodePM.getTestSuite(refTestSuite.getTestSuiteGuid());
         IAUTMainPO aut = ts.getAut();
         if (aut != null) {
             idSet.addAll(aut.getAutIds());

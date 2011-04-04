@@ -12,10 +12,10 @@ package org.eclipse.jubula.client.ui.actions;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.FindDialog;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.client.ui.views.TestResultTreeView;
 import org.eclipse.swt.widgets.Event;
@@ -53,7 +53,7 @@ public class SearchTreeAction extends AbstractAction {
                     m_dialog = new FindDialog<TestResultNode>(
                             Plugin.getShell(), (ITreeViewerContainer) part);
                 } else {
-                    m_dialog = new FindDialog<GuiNode>(Plugin.getShell(), 
+                    m_dialog = new FindDialog<INodePO>(Plugin.getShell(), 
                             (ITreeViewerContainer) part);
                 }
             }

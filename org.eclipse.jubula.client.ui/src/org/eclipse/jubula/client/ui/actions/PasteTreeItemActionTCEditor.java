@@ -12,11 +12,11 @@ package org.eclipse.jubula.client.ui.actions;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TCEditorDndSupport;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 
 
 /**
@@ -50,7 +50,7 @@ public class PasteTreeItemActionTCEditor extends AbstractPasteTreeItemAction {
             IStructuredSelection selection = 
                 (IStructuredSelection)tce.getSelection();
             Object [] selArray = selection.toArray();
-            GuiNode target = (GuiNode)selArray[selArray.length - 1];
+            INodePO target = (INodePO)selArray[selArray.length - 1];
             
             if (TCEditorDndSupport.performDrop(tce, pasteSelection, target, 
                     ViewerDropAdapter.LOCATION_ON)) {

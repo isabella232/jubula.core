@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.businessprocess;
 
 import org.eclipse.jubula.client.core.IServerLogListener;
 import org.eclipse.jubula.client.core.commands.ServerLogResponseCommand;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
+import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;

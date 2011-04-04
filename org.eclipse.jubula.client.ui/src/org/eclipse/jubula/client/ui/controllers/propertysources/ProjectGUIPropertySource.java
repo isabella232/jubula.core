@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers.propertysources;
 
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.ProjectGUI;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
@@ -34,7 +34,7 @@ public class ProjectGUIPropertySource extends AbstractGuiNodePropertySource {
     /**
      * @param guiNode the ProjectGUI
      */
-    public ProjectGUIPropertySource(ProjectGUI guiNode) {
+    public ProjectGUIPropertySource(IProjectPO guiNode) {
         super(guiNode);
     }
 

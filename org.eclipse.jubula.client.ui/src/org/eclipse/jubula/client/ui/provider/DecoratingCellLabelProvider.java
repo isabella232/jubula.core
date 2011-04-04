@@ -478,7 +478,8 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
      * Set the decoration context that will be based to the decorator for this
      * label provider if that decorator implements {@link LabelDecorator}.
      * 
-     * If this decorationContext has a {@link ResourceManager} stored for the
+     * If this decorationContext has a 
+     * {@link org.eclipse.jface.resource.ResourceManager} stored for the
      * {@link DecorationContext#RESOURCE_MANAGER_KEY} property it will be
      * disposed when the label provider is disposed.
      * 

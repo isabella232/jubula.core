@@ -16,7 +16,6 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -24,24 +23,19 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.AbstractPartListener;
-import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.filter.JBBrowserPatternFilter;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.sorter.GuiNodeNameViewerSorter;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
-import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.layout.GridData;
@@ -170,52 +164,15 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         if (part != null) {
             Object obj = part.getAdapter(AbstractTestCaseEditor.class);
             AbstractTestCaseEditor tce = (AbstractTestCaseEditor)obj;
-            if (obj != null && m_isLinkedWithEditor && tce != null 
-                    &&  tce.getEditorInputGuiNode() != null) {
-                INodePO editorNode = tce.getEditorInputGuiNode().getContent();
-                
-                // check if node already selected
-                StructuredViewer v = getTreeViewer();
-                if (v != null) {
-                    ISelection treeSelection = v.getSelection();
-                    if (treeSelection instanceof IStructuredSelection) {
-                        IStructuredSelection selection = 
-                            (IStructuredSelection) treeSelection;
-                        if (selection.size() == 1) {
-                            Object firstElement = selection.getFirstElement();
-                            if (firstElement instanceof GuiNode) {
-                                GuiNode gn = (GuiNode) firstElement;
-                                INodePO content = gn.getContent();
-                                if (content != null
-                                        && content.equals(editorNode)) {
-                                    v.reveal(selection.getFirstElement());
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                    // search for node in GDTreeViewer and select it
-                    Object viewerInput = v.getInput();
-                    if (viewerInput instanceof GuiNode) {
-                        TreeIterator iter = new TreeIterator(
-                                (GuiNode) viewerInput, new Class[] {
-                                    SpecTestCaseGUI.class,
-                                    TestSuiteGUI.class });
-                        while (iter.hasNext()) {
-                            GuiNode currentNode = iter.next();
-                            if (currentNode != null) {
-                                INodePO content = currentNode.getContent();
-                                if (!(currentNode.getParentNode() 
-                                        instanceof ExecTestCaseGUI)
-                                        && content != null
-                                        && content.equals(editorNode)) {
-                                    v.refresh();
-                                    v.setSelection(new StructuredSelection(
-                                            currentNode));
-                                    return;
-                                }
-                            }
-                        }
+            if (obj != null && m_isLinkedWithEditor && tce != null) {
+                final IPersistentObject editorWorkVersion = 
+                    tce.getEditorHelper().getEditSupport().getWorkVersion();
+
+                if (editorWorkVersion != null) {
+                    StructuredViewer v = getTreeViewer();
+                    if (v != null) {
+                        v.setSelection(
+                                new StructuredSelection(editorWorkVersion));
                     }
                 }
             }
@@ -251,36 +208,22 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         }
         Plugin.startLongRunning();
         
-        try {
-            Plugin.getDisplay().syncExec(new Runnable() {
-                public void run() {
-                    m_selElemList = Utils.getSelectedTreeItems(
-                            getTreeViewer());
-                    m_expElemList = 
-                        Utils.getExpandedTreeItems(getTreeViewer());
-                }
-            });
-            rebuildTree();
-            Plugin.getDisplay().syncExec(new Runnable() {
-                public void run() {
-                    Utils.restoreTreeState(
-                            getTreeViewer(), m_expElemList, m_selElemList);
-                }
-            });
-        } catch (OperationCanceledException oce) {
-            Plugin.getDisplay().syncExec(new Runnable() {
-                public void run() {
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                try {
+                    Object[] expandedElements = 
+                        getTreeViewer().getExpandedElements();
+                    final ISelection selection = getTreeViewer().getSelection();
+                    rebuildTree();
+                    getTreeViewer().setExpandedElements(expandedElements);
+                    getTreeViewer().setSelection(selection);
+                } catch (OperationCanceledException oce) {
                     getTreeViewer().setInput(null);
                 }
-            });
-        } finally {
-            Plugin.getDisplay().syncExec(new Runnable() {
-                public void run() {
-                    getTreeViewer().refresh();
-                }
-            });
-            Plugin.stopLongRunning();
-        }
+            }
+        });
+
+        Plugin.stopLongRunning();
     }
 
     /**
@@ -396,30 +339,10 @@ public abstract class AbstractJBTreeView extends ViewPart implements
      * @param node the node to select.
      */
     public void setSelection(INodePO node) {
-        GuiNode nodeGUI = TreeBuilder.getGuiNodeByContent(
-            (GuiNode)m_treeViewer.getInput(), node);
-        if (nodeGUI == null) {
-            return;
-        }
-        ISelection selection = new StructuredSelection(nodeGUI);
+        ISelection selection = new StructuredSelection(node);
         m_treeViewer.setSelection(selection, true);
     }
     
-    /**
-     * @return the root guiNode of the tree of the actual treeViewer
-     */
-    public GuiNode getRootGuiNode() {
-        return (GuiNode)m_treeViewer.getInput();
-    }
-    
-    /**
-     * @param po the actual nodePO
-     * @return the quantity of nodes, where the nodePO is used.
-     */
-    public int countNodePOsInTree(INodePO po) {
-        return new TreeIterator(getRootGuiNode()).getGuiNodeOfNodePO(po).size();
-    }
-
     /**
      * @return a reference to the clipboard.
      */

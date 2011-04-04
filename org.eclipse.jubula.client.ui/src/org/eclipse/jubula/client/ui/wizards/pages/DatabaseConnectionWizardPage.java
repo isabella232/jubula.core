@@ -610,8 +610,9 @@ public class DatabaseConnectionWizardPage extends WizardPage {
     }
     
     /**
-     * Creates and returns a text field with {@link GridData} suitable for
-     * sharing a row in a {@link GridLayout} with a label.
+     * Creates and returns a text field with 
+     * {@link org.eclipse.swt.layout.GridData} suitable for
+     * sharing a row in a {@link org.eclipse.swt.layout.GridLayout} with a label.
      * 
      * @param parent The parent for the created text field.
      * @return the created text field.

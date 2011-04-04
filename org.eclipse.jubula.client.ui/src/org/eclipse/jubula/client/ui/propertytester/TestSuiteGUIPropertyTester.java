@@ -15,7 +15,6 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -40,13 +39,11 @@ public class TestSuiteGUIPropertyTester extends PropertyTester {
     public boolean test(Object receiver, String property, Object[] args,
             Object expectedValue) {
         
-        if (receiver instanceof TestSuiteGUI) {
-            TestSuiteGUI tsg = 
-                (TestSuiteGUI)receiver;
+        if (receiver instanceof ITestSuitePO) {
+            ITestSuitePO testSuite = (ITestSuitePO)receiver;
             if (property.equals(HAS_AUT)) {
-                ITestSuitePO ts = (ITestSuitePO)tsg.getContent();
                 
-                boolean hasAUT = ts.getAut() != null ? true : false;
+                boolean hasAUT = testSuite.getAut() != null ? true : false;
                 boolean expectedBoolean = expectedValue instanceof Boolean 
                     ? ((Boolean)expectedValue).booleanValue() : true;
                 return hasAUT == expectedBoolean;

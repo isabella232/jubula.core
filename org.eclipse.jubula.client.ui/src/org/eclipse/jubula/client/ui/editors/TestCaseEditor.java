@@ -55,10 +55,6 @@ import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TCEditorDndSupport;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.CapGUI;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
@@ -228,8 +224,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         if (newCap == null) {
             Utils.createMessageDialog(MessageIDs.E_TEST_STEP_NOT_CREATED);
         } else {
-            final SpecTestCaseGUI tc = (SpecTestCaseGUI)((GuiNode)
-                    getTreeViewer().getInput()).getChildren().get(0);
             final IAUTMainPO recordAut = 
                 TestExecution.getInstance().getConnectedAut();
 
@@ -239,8 +233,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                             != JBEditorHelper.EditableState.OK) {
                         return;
                     }
-                    final CapGUI capGUI = 
-                        new CapGUI(newCap.getName(), tc, newCap);
+
                     // Cap added to model
                     // recorded action with default mapping not being 
                     // added to objmap
@@ -256,7 +249,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                     getTreeViewer().refresh(false);
 
                     getTreeViewer().setSelection(
-                            new StructuredSelection(capGUI), true);
+                            new StructuredSelection(newCap), true);
                     getEditorHelper().setDirty(true);
                 }
             });
@@ -299,7 +292,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                 getCutTreeItemAction().setEnabled(false);
                 getPasteTreeItemAction().setEnabled(false);
             } else {
-                List<GuiNode> selList = sel.toList();
+                List<INodePO> selList = sel.toList();
                 enableCutAction(selList);
                 enablePasteAction(selList);
             }
@@ -309,12 +302,12 @@ public class TestCaseEditor extends AbstractTestCaseEditor
          * en-/disable cut-action
          * @param selList actual selection 
          */
-        private void enableCutAction(List<GuiNode> selList) {
+        private void enableCutAction(List<INodePO> selList) {
             getCutTreeItemAction().setEnabled(true);
 
-            for (GuiNode node : selList) {
-                if (!(node instanceof ExecTestCaseGUI
-                        || node instanceof CapGUI)) {
+            for (INodePO node : selList) {
+                if (!(node instanceof IExecTestCasePO
+                        || node instanceof ICapPO)) {
                     getCutTreeItemAction().setEnabled(false);
                     return;
                 }
@@ -325,7 +318,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
          * en-/disable paste-action
          * @param selList actual selection 
          */
-        private void enablePasteAction(List<GuiNode> selList) {
+        private void enablePasteAction(List<INodePO> selList) {
             
             getPasteTreeItemAction().setEnabled(false);
             LocalSelectionClipboardTransfer transfer = 
@@ -337,7 +330,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                 return;
             }
 
-            for (GuiNode guiNode : selList) {
+            for (INodePO guiNode : selList) {
                 if (guiNode == null
                         || !(cbContents instanceof StructuredSelection)
                         || !TCEditorDndSupport.validateDrop(
@@ -370,10 +363,8 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         m_objectMappingManager.clear();
         ((ISpecTestCasePO)node).setIsReused(null);
         super.reOpenEditor(node);
-        ISpecTestCasePO recSpecTc = CAPRecordedCommand.getRecSpecTestCase();
-        if (recSpecTc != null && recSpecTc.equals(node)) {
-            CAPRecordedCommand.setRecSpecTestCase(
-                    (ISpecTestCasePO)getEditorInputGuiNode().getContent());
+        if (node instanceof ISpecTestCasePO) {
+            CAPRecordedCommand.setRecSpecTestCase((ISpecTestCasePO)node);
         }
     }
     

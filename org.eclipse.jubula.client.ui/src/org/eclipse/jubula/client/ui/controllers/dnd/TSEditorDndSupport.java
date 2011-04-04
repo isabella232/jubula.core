@@ -14,11 +14,10 @@ import java.util.Iterator;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 
 
 /**
@@ -49,7 +48,7 @@ public class TSEditorDndSupport {
      *         Otherwise <code>false</code>.
      */
     public static boolean performDrop(AbstractTestCaseEditor targetEditor,
-            IStructuredSelection toDrop, GuiNode dropTarget, int dropPosition) {
+            IStructuredSelection toDrop, INodePO dropTarget, int dropPosition) {
     
         return TCEditorDndSupport.performDrop(targetEditor, toDrop, dropTarget, 
                 dropPosition);
@@ -94,13 +93,13 @@ public class TSEditorDndSupport {
         Iterator iter = selection.iterator();
         while (iter.hasNext()) {
             Object transferObj = iter.next();
-            if (!(transferObj instanceof GuiNode)) {
+            if (!(transferObj instanceof INodePO)) {
                 return false;
             } 
-            GuiNode transferGUI = (GuiNode)transferObj;
-            if (!((transferGUI instanceof ExecTestCaseGUI
-                && transferGUI.getParentNode() instanceof TestSuiteGUI)
-                 || (transferGUI instanceof SpecTestCaseGUI))) {
+            INodePO transferGUI = (INodePO)transferObj;
+            if (!((transferGUI instanceof IExecTestCasePO
+                    && sourceViewer == targetViewer)
+                    || (transferGUI instanceof ISpecTestCasePO))) {
                 
                 return false;
             }

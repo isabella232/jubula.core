@@ -28,21 +28,18 @@ import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
+import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
+import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTJHandle;
+import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTSHandle;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
-import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
-import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTJHandle;
-import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTSHandle;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.editors.TestSuiteEditor;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.TestJobGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -112,13 +109,13 @@ public class DeleteTreeItemHandlerTSBrowser
         IProjectPO project = GeneralStorage.getInstance().getProject();
         List<AbstractCmdHandle> cmds = new ArrayList<AbstractCmdHandle>();
         List<INodePO> tsbList = new ArrayList<INodePO>();
-        if (selection.getFirstElement() instanceof TestSuiteGUI
-                || selection.getFirstElement() instanceof TestJobGUI) {
+        if (selection.getFirstElement() instanceof ITestSuitePO
+                || selection.getFirstElement() instanceof ITestJobPO) {
             while (iter.hasNext()) {
-                GuiNode execTS = (GuiNode)iter.next();
+                INodePO execTS = (INodePO)iter.next();
                 AbstractCmdHandle cmd = null;
-                if (execTS instanceof TestSuiteGUI) {
-                    ITestSuitePO testSuite = (ITestSuitePO)execTS.getContent();
+                if (execTS instanceof ITestSuitePO) {
+                    ITestSuitePO testSuite = (ITestSuitePO)execTS;
                     List<IRefTestSuitePO> refTs = NodePM
                         .getInternalRefTestSuites(
                             testSuite.getGuid(), 
@@ -131,8 +128,8 @@ public class DeleteTreeItemHandlerTSBrowser
                     closeEditors(project, testSuite, editors);
                     tsbList.add(testSuite);
                     cmd = new DeleteTSHandle(testSuite);
-                } else if (execTS instanceof TestJobGUI) {
-                    ITestJobPO testjob = (ITestJobPO)execTS.getContent();
+                } else if (execTS instanceof ITestJobPO) {
+                    ITestJobPO testjob = (ITestJobPO)execTS;
                     closeEditors(testjob, editors);
                     tsbList.add(testjob);
                     cmd = new DeleteTJHandle(testjob);

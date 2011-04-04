@@ -87,7 +87,7 @@
 			class="org.eclipse.jubula.client.ui.propertytester.GuiNodePropertyTester"
 			id="org.eclipse.jubula.client.ui.propertytester.GuiNodePropertyTester"
 			namespace="org.eclipse.jubula.client.ui.model" properties="isEditable"
-			type="org.eclipse.jubula.client.ui.model.GuiNode">
+			type="org.eclipse.jubula.client.core.model.INodePO">
 		</propertyTester>
 		<propertyTester
 			class="org.eclipse.jubula.client.ui.propertytester.ComponentNameCollectionPropertyTester"
@@ -119,8 +119,8 @@
 		<propertyTester
 			class="org.eclipse.jubula.client.ui.propertytester.TestSuiteGUIPropertyTester"
 			id="org.eclipse.jubula.client.ui.propertytester.TestSuite"
-			namespace="org.eclipse.jubula.client.ui.model.TestSuiteGUI"
-			properties="hasAUT" type="org.eclipse.jubula.client.ui.model.TestSuiteGUI">
+			namespace="org.eclipse.jubula.client.core.model.ITestSuitePO"
+			properties="hasAUT" type="org.eclipse.jubula.client.core.model.ITestSuitePO">
 		</propertyTester>
 		<propertyTester
 			class="org.eclipse.jubula.client.ui.propertytester.EditorPartPropertyTester"
@@ -340,7 +340,7 @@
 			id="org.eclipse.jubula.client.ui.decorators.incompleteTestDataDecorator" label="Incomplete Testdata Decorator"
 			lightweight="true" state="true">
 			<enablement>
-				<objectClass name="org.eclipse.jubula.client.ui.model.GuiNode" />
+				<objectClass name="org.eclipse.jubula.client.core.model.INodePO" />
 			</enablement>
 			<description>
 				This decorator decorates Test Suites, Test Cases or Test Steps with
@@ -353,7 +353,7 @@
 		</decorator>
 		<decorator
 			class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.MissingReferenceDecorator"
-			id="org.eclipse.jubula.client.ui.model.ExecTestCaseGUI" label="Missing Reference Decorator"
+			id="org.eclipse.jubula.client.core.model.IExecTestCasePO" label="Missing Reference Decorator"
 			lightweight="true" location="BOTTOM_LEFT" state="true">
 			<description>
 				Decorates Test Cases with references to Test Cases that
@@ -370,7 +370,7 @@
 			id="org.eclipse.jubula.client.ui.decorators.excelDecorator" label="Excel Decorator"
 			lightweight="true" location="BOTTOM_RIGHT" state="true">
 			<enablement>
-				<objectClass name="org.eclipse.jubula.client.ui.model.GuiNode">
+				<objectClass name="org.eclipse.jubula.client.core.model.INodePO">
 				</objectClass>
 			</enablement>
 			<description>
@@ -384,7 +384,7 @@
 			lightweight="true" location="BOTTOM_RIGHT" state="true">
 			<enablement>
       <objectClass
-            name="org.eclipse.jubula.client.ui.model.GuiNode">
+            name="org.eclipse.jubula.client.core.model.INodePO">
       </objectClass>
 			</enablement>
 			<description>
@@ -1845,10 +1845,10 @@
 					</count>
 					<iterate ifEmpty="false" operator="and">
 						<or>
-							<instanceof value="org.eclipse.jubula.client.ui.model.CategoryGUI">
+							<instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO">
 							</instanceof>
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.SpecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
 							</instanceof>
 						</or>
 						<test property="org.eclipse.jubula.client.ui.model.isEditable">
@@ -1873,8 +1873,8 @@
 					<iterate ifEmpty="false" operator="and">
 						<or>
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.TestSuiteGUI" />
-							<instanceof value="org.eclipse.jubula.client.ui.model.TestJobGUI" />
+								value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+							<instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
 						</or>
 					</iterate>
 				</and>
@@ -1931,10 +1931,10 @@
 				<and>
 					<iterate ifEmpty="false" operator="and">
 						<or>
-							<instanceof value="org.eclipse.jubula.client.ui.model.CategoryGUI">
+							<instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO">
 							</instanceof>
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.SpecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
 							</instanceof>
 						</or>
 						<test property="org.eclipse.jubula.client.ui.model.isEditable">
@@ -1960,20 +1960,20 @@
 					<iterate ifEmpty="false" operator="and">
 						<or>
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.ExecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.IExecTestCasePO">
 							</instanceof>
-							<instanceof value="org.eclipse.jubula.client.ui.model.CapGUI">
+							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO">
 							</instanceof>
 						</or>
 						<not>
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO">
 							</instanceof>
 						</not>
 					</iterate>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
-							value="org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI">
+							value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO">
 						</instanceof>
 					</iterate>
 				</or>
@@ -1991,7 +1991,7 @@
 			<enabledWhen>
 				<iterate ifEmpty="false" operator="and">
 					<not>
-						<instanceof value="org.eclipse.jubula.client.ui.model.TestSuiteGUI">
+						<instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO">
 						</instanceof>
 					</not>
 				</iterate>
@@ -2009,7 +2009,7 @@
 			<enabledWhen>
 				<iterate ifEmpty="false" operator="and">
 					<not>
-						<instanceof value="org.eclipse.jubula.client.ui.model.TestJobGUI">
+						<instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO">
 						</instanceof>
 					</not>
 				</iterate>
@@ -2027,8 +2027,8 @@
 			<enabledWhen>
 				<iterate ifEmpty="false" operator="and">
 					<or>
-						<instanceof value="org.eclipse.jubula.client.ui.model.TestSuiteGUI" />
-						<instanceof value="org.eclipse.jubula.client.ui.model.TestJobGUI" />
+						<instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+						<instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
 					</or>
 				</iterate>
 			</enabledWhen>
@@ -2046,7 +2046,7 @@
 					</count>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
-							value="org.eclipse.jubula.client.ui.model.SpecTestCaseGUI">
+							value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
 						</instanceof>
 					</iterate>
 				</and>
@@ -2080,7 +2080,7 @@
 						</with>
 						<iterate ifEmpty="false" operator="and">
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.SpecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
 							</instanceof>
 						</iterate>
 					</and>
@@ -2092,7 +2092,7 @@
 						</with>
 						<iterate ifEmpty="false" operator="and">
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.TestSuiteGUI">
+								value="org.eclipse.jubula.client.core.model.ITestSuitePO">
 							</instanceof>
 						</iterate>
 					</and>
@@ -2121,9 +2121,9 @@
 					<iterate ifEmpty="false" operator="or">
 						<or>
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.ExecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.IExecTestCasePO">
 							</instanceof>
-							<instanceof value="org.eclipse.jubula.client.ui.model.CapGUI">
+							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO">
 							</instanceof>
 						</or>
 					</iterate>
@@ -2140,7 +2140,7 @@
 					</with>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
-							value="org.eclipse.jubula.client.ui.model.SpecTestCaseGUI">
+							value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
 						</instanceof>
 					</iterate>
 				</and>
@@ -2159,9 +2159,9 @@
 					<iterate ifEmpty="false" operator="or">
 						<or>
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.ExecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.IExecTestCasePO">
 							</instanceof>
-							<instanceof value="org.eclipse.jubula.client.ui.model.CapGUI">
+							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO">
 							</instanceof>
 						</or>
 					</iterate>
@@ -2836,16 +2836,16 @@
 					<iterate ifEmpty="false" operator="and">
 						<or>
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.ExecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.IExecTestCasePO">
 							</instanceof>
-							<instanceof value="org.eclipse.jubula.client.ui.model.CapGUI">
+							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO">
 							</instanceof>
 						</or>
 					</iterate>
 					<not>
 						<iterate ifEmpty="true" operator="or">
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO">
 							</instanceof>
 						</iterate>
 					</not>
@@ -2872,16 +2872,16 @@
 					<iterate ifEmpty="false" operator="and">
 						<or>
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.ExecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.IExecTestCasePO">
 							</instanceof>
-							<instanceof value="org.eclipse.jubula.client.ui.model.CapGUI">
+							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO">
 							</instanceof>
 						</or>
 					</iterate>
 					<not>
 						<iterate ifEmpty="true" operator="or">
 							<instanceof
-								value="org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI">
+								value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO">
 							</instanceof>
 						</iterate>
 					</not>
@@ -2966,7 +2966,7 @@
 					</count>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
-							value="org.eclipse.jubula.client.ui.model.SpecTestCaseGUI">
+							value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
 						</instanceof>
 					</iterate>
 					<with variable="org.eclipse.jubula.client.ui.variable.isProjectProtected">
@@ -3001,11 +3001,11 @@
 					<iterate ifEmpty="false" operator="and">
 						<and>
 							<not>
-								<instanceof value="org.eclipse.jubula.client.ui.model.ProjectGUI">
+								<instanceof value="org.eclipse.jubula.client.core.model.IProjectPO">
 								</instanceof>
 							</not>
 							<test
-								property="org.eclipse.jubula.client.ui.model.TestSuiteGUI.hasAUT"
+								property="org.eclipse.jubula.client.core.model.ITestSuitePO.hasAUT"
 								value="true">
 							</test>
 						</and>
@@ -3023,7 +3023,7 @@
 						</equals>
 					</with>
 					<iterate ifEmpty="false" operator="and">
-						<instanceof value="org.eclipse.jubula.client.ui.model.TestSuiteGUI">
+						<instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO">
 						</instanceof>
 					</iterate>
 				</and>
@@ -3039,7 +3039,7 @@
 						</equals>
 					</with>
 					<iterate ifEmpty="false" operator="and">
-						<instanceof value="org.eclipse.jubula.client.ui.model.TestJobGUI">
+						<instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO">
 						</instanceof>
 					</iterate>
 				</and>
@@ -3058,8 +3058,7 @@
 						<and>
 							<not>
 								<or>
-									<instanceof value="org.eclipse.jubula.client.ui.model.CategoryGUI" />
-									<instanceof value="org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI" />
+									<instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
 								</or>
 							</not>
 							<test property="org.eclipse.jubula.client.ui.model.isEditable"
@@ -3079,7 +3078,7 @@
 					</count>
 					<iterate>
 						<or>
-							<instanceof value="org.eclipse.jubula.client.ui.model.GuiNode">
+							<instanceof value="org.eclipse.jubula.client.core.model.INodePO">
 							</instanceof>
 							<instanceof
 								value="org.eclipse.jubula.client.core.model.TestResultNode">
@@ -3109,10 +3108,10 @@
 					<count value="1" />
 					<iterate operator="and">
 						<or>
-							<instanceof value="org.eclipse.jubula.client.ui.model.ExecTestCaseGUI" />
+							<instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
 							<instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
 							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
-							<instanceof value="org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI" />
+							<instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
 							<instanceof value="org.eclipse.jubula.client.core.model.TestResultNode" />
 						</or>
 					</iterate>
@@ -3133,9 +3132,9 @@
 					<count value="1" />
 					<iterate operator="and">
 						<or>
-							<instanceof value="org.eclipse.jubula.client.ui.model.ExecTestCaseGUI" />
 							<instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-							<instanceof value="org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI" />
+							<instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+							<instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
 							<instanceof value="org.eclipse.jubula.client.core.model.TestResultNode" />
 						</or>
 					</iterate>
@@ -3150,7 +3149,7 @@
 					<count value="1" />
 					<iterate operator="and">
 						<or>
-							<instanceof value="org.eclipse.jubula.client.ui.model.RefTestSuiteGUI" />
+							<instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
 						</or>
 					</iterate>
 				</and>
@@ -3164,7 +3163,7 @@
 					<count value="1" />
 					<iterate operator="and">
 						<or>
-							<instanceof value="org.eclipse.jubula.client.ui.model.RefTestSuiteGUI" />
+							<instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
 						</or>
 					</iterate>
 				</and>
@@ -3315,7 +3314,7 @@
                  ifEmpty="false"
                  operator="and">
               <instanceof
-                    value="org.eclipse.jubula.client.ui.model.SpecTestCaseGUI">
+                    value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
               </instanceof>
            </iterate>
         </and>

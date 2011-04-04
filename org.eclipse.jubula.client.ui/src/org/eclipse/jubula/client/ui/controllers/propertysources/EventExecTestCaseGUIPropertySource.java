@@ -21,8 +21,6 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IntegerTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -89,7 +87,7 @@ public class EventExecTestCaseGUIPropertySource extends
      *            the dependend EventExecTestCase.
      */
     public EventExecTestCaseGUIPropertySource(
-        EventExecTestCaseGUI eventExTestCase) {
+        IEventExecTestCasePO eventExTestCase) {
         
         super(eventExTestCase);
     }
@@ -223,9 +221,8 @@ public class EventExecTestCaseGUIPropertySource extends
             boolean propSet = false;
             IEventExecTestCasePO eventTc = (IEventExecTestCasePO) getPoNode();
             final String oldType = eventTc.getEventType();
-            SpecTestCaseGUI specTcGUI = (SpecTestCaseGUI)getGuiNode()
-                .getParentNode();
-            ISpecTestCasePO specTc = (ISpecTestCasePO)specTcGUI.getContent();
+            ISpecTestCasePO specTc = 
+                (ISpecTestCasePO)getGuiNode().getParentNode();
             specTc.removeNode(eventTc);
             String evType = EVENT_TYPES[((Integer)value).intValue()];
             evType = StringHelper.getInstance().getMap().get(evType);

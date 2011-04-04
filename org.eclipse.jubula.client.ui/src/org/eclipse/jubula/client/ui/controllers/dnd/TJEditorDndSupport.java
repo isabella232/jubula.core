@@ -20,6 +20,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamCheckBP.SpecTcParamRefCheck;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
@@ -31,10 +33,6 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
-import org.eclipse.jubula.client.ui.model.TestJobGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.ui.IViewPart;
 
@@ -67,7 +65,7 @@ public class TJEditorDndSupport {
      *         Otherwise <code>false</code>.
      */
     public static boolean performDrop(TestJobEditor targetEditor,
-            IStructuredSelection toDrop, GuiNode dropTarget, int dropPosition) {
+            IStructuredSelection toDrop, INodePO dropTarget, int dropPosition) {
         if (targetEditor.getEditorHelper().requestEditableState() 
                 != JBEditorHelper.EditableState.OK) {
             return false;
@@ -76,27 +74,16 @@ public class TJEditorDndSupport {
         Collections.reverse(selectedElements);
         Iterator iter = selectedElements.iterator();
         while (iter.hasNext()) {
-            GuiNode droppedNode = null;
             Object obj = iter.next();
-            if (!(obj instanceof GuiNode)) {
-                return false;
-            }
-            GuiNode node = (GuiNode)obj;
-            if (node instanceof RefTestSuiteGUI) {
-                GuiNode target = dropTarget;
-                if (target != node
-                    && (target instanceof RefTestSuiteGUI)) {
-                    droppedNode = moveNode(node, target);
-                }
-            }
-            if (node instanceof TestSuiteGUI) {
-                GuiNode target = dropTarget;
-                if (target != node) {
+            if (obj instanceof ITestSuitePO) {
+                ITestSuitePO testSuite = (ITestSuitePO)obj;
+                if (dropTarget != testSuite) {
                     try {
-                        if (target instanceof RefTestSuiteGUI) {
-                            dropOnRefTS(node, target, dropPosition);
-                        } else if (target instanceof TestJobGUI) {
-                            dropOnTJ(node, target);
+                        if (dropTarget instanceof IRefTestSuitePO) {
+                            dropOnRefTS(
+                                    testSuite, dropTarget, dropPosition);
+                        } else if (dropTarget instanceof ITestJobPO) {
+                            dropOnTJ(testSuite, dropTarget);
                         } 
                     } catch (PMException e) {
                         NodeEditorInput inp = (NodeEditorInput)targetEditor.
@@ -131,7 +118,17 @@ public class TJEditorDndSupport {
                     }
                 }
             }
-            postDropAction(droppedNode, targetEditor);
+            if (obj instanceof INodePO) {
+                INodePO node = (INodePO)obj;
+                if (node instanceof IRefTestSuitePO) {
+                    INodePO target = dropTarget;
+                    if (target != node
+                            && (target instanceof IRefTestSuitePO)) {
+                        INodePO droppedNode = moveNode(node, target);
+                        postDropAction(droppedNode, targetEditor);
+                    }
+                }
+            }
         }
         return true;
     }
@@ -149,7 +146,7 @@ public class TJEditorDndSupport {
      */
     public static boolean validateDrop(Viewer sourceViewer,
             Viewer targetViewer, IStructuredSelection toDrop,
-            GuiNode dropTarget, boolean allowFromBrowser) {
+            INodePO dropTarget, boolean allowFromBrowser) {
         if (toDrop == null || toDrop.isEmpty() || dropTarget == null) {
             return false;
         }
@@ -163,18 +160,14 @@ public class TJEditorDndSupport {
                 return false;
             }
         }
-        Iterator iter = toDrop.iterator();
-        while (iter.hasNext()) {
-            Object obj = iter.next();
-            if (!(obj instanceof GuiNode)) {
-                return false;
-            }
-            GuiNode transferGUI = (GuiNode)obj;
-            if (!(transferGUI instanceof TestSuiteGUI 
-                    || transferGUI instanceof RefTestSuiteGUI)) {
+
+        for (Object toDropElement : toDrop.toArray()) {
+            if (!(toDropElement instanceof ITestSuitePO 
+                    || toDropElement instanceof IRefTestSuitePO)) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -197,12 +190,12 @@ public class TJEditorDndSupport {
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
      */
-    private static void dropOnTJ(GuiNode node, GuiNode target)
+    private static void dropOnTJ(ITestSuitePO node, INodePO target)
         throws PMReadException, PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
         if (getTSBrowser() != null) {
             getTSBrowser().addReferencedTestSuite(
-                    (ITestSuitePO)node.getContent(), target.getContent(), 0);
+                    node, target, 0);
         }
     }
 
@@ -217,34 +210,27 @@ public class TJEditorDndSupport {
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
      */
-    private static void dropOnRefTS(GuiNode node, GuiNode target, 
+    private static void dropOnRefTS(ITestSuitePO node, INodePO target, 
             int location) throws PMReadException, PMAlreadyLockedException, 
             PMDirtyVersionException, PMException {
-        TestSuiteGUI tsGUItoDrop = (TestSuiteGUI)node;
-        GuiNode parentGUI = target.getParentNode();
+        INodePO parentGUI = target.getParentNode();
         int position = parentGUI.indexOf(target);
         if (location != ViewerDropAdapter.LOCATION_BEFORE) {
             position++;
         }
         getTSBrowser().addReferencedTestSuite(
-                (ITestSuitePO)tsGUItoDrop.getContent(),
-                parentGUI.getContent(), position);
+                node, parentGUI, position);
     }
 
     /**
      * @param node the node to be moved.
      * @param target the target node.
-     * @return the dropped GuiNode.
+     * @return the dropped node.
      */
-    private static GuiNode moveNode(GuiNode node, GuiNode target) {
-        int actualPos = node.getParentNode().getChildren().indexOf(node);
+    private static INodePO moveNode(INodePO node, INodePO target) {
         int newPos = target.getParentNode().indexOf(target);
-        node.getParentNode().moveNode(actualPos, newPos);
-        // the real model
-        node.getParentNode().getContent()
-            .removeNode(node.getContent());
-        target.getParentNode().getContent()
-            .addNode(newPos, node.getContent());
+        node.getParentNode().removeNode(node);
+        target.getParentNode().addNode(newPos, node);
         return node;
     }
 
@@ -253,7 +239,7 @@ public class TJEditorDndSupport {
      * @param node the dropped node. 
      * @param targetEditor The editor to which the item has been dropped/pasted.
      */
-    private static void postDropAction(GuiNode node, 
+    private static void postDropAction(INodePO node, 
             TestJobEditor targetEditor) {
         targetEditor.setFocus();
         if (node != null) {

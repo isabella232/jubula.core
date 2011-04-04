@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.ui.businessprocess.ComponentNameReuseBP;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -298,9 +297,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
         if (element instanceof AbstractCompNamesCategory) {
             return IconConstants.CATEGORY_IMAGE;
         }
-        if (element instanceof GuiNode) {
-            return ((GuiNode)element).getImage();
-        }
+
         return super.getImage(element);
     }
     

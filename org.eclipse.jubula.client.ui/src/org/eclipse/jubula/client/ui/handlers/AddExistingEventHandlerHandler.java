@@ -21,6 +21,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -29,8 +30,6 @@ import org.eclipse.jubula.client.ui.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -92,17 +91,16 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
      * @param editor The test case editor.
      */
     private void openTestCasePopUp(final AbstractTestCaseEditor editor) {  
-        final SpecTestCaseGUI parentNode = (SpecTestCaseGUI)editor
+        final ISpecTestCasePO parentNode = (ISpecTestCasePO)editor
             .getTreeViewer().getTree().getItem(0).getData(); 
-        if (hasTestCaseAllEventHandler((ISpecTestCasePO)parentNode
-            .getContent())) {
+        if (hasTestCaseAllEventHandler((ISpecTestCasePO)parentNode)) {
             
             return;
         }
         String title = Messages.AddEventHandlerActionAddEventHandler;
         TestCaseTreeDialog dialog = new TestCaseTreeDialog(Plugin
             .getShell(), title, StringConstants.EMPTY, 
-            (ISpecTestCasePO)parentNode.getContent(), title, SWT.SINGLE, 
+            (ISpecTestCasePO)parentNode, title, SWT.SINGLE, 
             IconConstants.ADD_EH_IMAGE, TestCaseTreeDialog.EVENTHANDLER); 
         final SelectionTransfer selTransferObj = new SelectionTransfer();
         ISelectionListener selListener = new ISelectionListener() {
@@ -163,13 +161,13 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
      * @param nodeGUI The selected nodeGUI.
      * @param editor the editor
      */
-    void addEventHandler(ISelection selection, GuiNode nodeGUI, 
+    void addEventHandler(ISelection selection, INodePO nodeGUI, 
         AbstractTestCaseEditor editor) {
         if (!(selection instanceof IStructuredSelection)) {
             return;
         }
-        SpecTestCaseGUI eventHandler = (SpecTestCaseGUI)
+        ISpecTestCasePO eventHandler = (ISpecTestCasePO)
             ((IStructuredSelection)selection).getFirstElement();
-        editor.addEventHandler(eventHandler, (SpecTestCaseGUI)nodeGUI);
+        editor.addEventHandler(eventHandler, (ISpecTestCasePO)nodeGUI);
     }
 }

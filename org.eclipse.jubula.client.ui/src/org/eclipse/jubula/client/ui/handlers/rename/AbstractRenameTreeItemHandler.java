@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -235,8 +234,7 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
      * @param sel The actual selection.
      */
     protected void dialogPopUp(IStructuredSelection sel) {
-        GuiNode guiNode = (GuiNode)sel.getFirstElement();
-        INodePO node = guiNode.getContent();
+        INodePO node = (INodePO)sel.getFirstElement();
         InputDialog dialog = createDialog(node);
         if (dialog != null) {
             dialog.setHelpAvailable(true);

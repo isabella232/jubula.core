@@ -13,12 +13,12 @@ package org.eclipse.jubula.client.ui.actions;
 import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TCBrowserDndSupport;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 
@@ -46,7 +46,7 @@ public class PasteTreeItemActionTCBrowser extends AbstractPasteTreeItemAction {
         IStructuredSelection pasteSelection = 
             (IStructuredSelection)tstv.getClipboard().getContents(transfer);
         if (pasteSelection != null) {
-            List <GuiNode> nodesToBeMoved = pasteSelection.toList();
+            List <INodePO> nodesToBeMoved = pasteSelection.toList();
             
             // Paste will always occur at the most recently selected node.
             if (!(tstv.getSelection() instanceof IStructuredSelection)) {
@@ -55,7 +55,7 @@ public class PasteTreeItemActionTCBrowser extends AbstractPasteTreeItemAction {
             IStructuredSelection selection = 
                 (IStructuredSelection)tstv.getSelection();
             Object [] selArray = selection.toArray();
-            GuiNode target = (GuiNode)selArray[selArray.length - 1];
+            INodePO target = (INodePO)selArray[selArray.length - 1];
             
             tstv.getClipboard().clearContents();
             transfer.setSelection(null, null);

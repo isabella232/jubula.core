@@ -23,11 +23,11 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
@@ -43,12 +43,11 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.PopupCompNameTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.PopupCompNameTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.CapGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.ParameterValueLabelProvider;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -184,7 +183,7 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
      * Constructor 
      * @param cap a cap-reference
      */
-    public CapGUIPropertySource(CapGUI cap) {
+    public CapGUIPropertySource(ICapPO cap) {
         
         super(cap);
         initCompTypes();

@@ -37,9 +37,6 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.CategoryGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.ui.IWorkbenchPart;
@@ -88,18 +85,17 @@ public class AddNewCategoryHandler extends AbstractHandler {
     private void createNewCategory(IStructuredSelection selection)
         throws PMSaveException, PMAlreadyLockedException, PMException, 
         ProjectDeletedException {
-        final INodePO catParentPO;
+        INodePO catParentPO;
         if (!selection.isEmpty()) {
-            GuiNode catParentGUI = (GuiNode)selection.getFirstElement();
-            while (!(catParentGUI instanceof CategoryGUI) 
-                    && !(catParentGUI instanceof TestCaseBrowserRootGUI)) {
-                catParentGUI = catParentGUI.getParentNode();
+            catParentPO = (INodePO)selection.getFirstElement();
+            while (!(catParentPO instanceof ICategoryPO) 
+                    && !(catParentPO instanceof IProjectPO)) {
+                catParentPO = catParentPO.getParentNode();
             }
-            catParentPO = catParentGUI.getContent();
         } else {
             catParentPO = GeneralStorage.getInstance().getProject();
-
         }
+        final INodePO finalCatParent = catParentPO;
         InputDialog dialog = new InputDialog(
             Plugin.getShell(), 
             Messages.CreateNewCategoryActionCatTitle,
@@ -115,7 +111,7 @@ public class AddNewCategoryHandler extends AbstractHandler {
              * @return False, if the input name already exists.
              */
             protected boolean isInputAllowed() {
-                return !existCategory(catParentPO, getInputFieldText());
+                return !existCategory(finalCatParent, getInputFieldText());
             }
 
         };

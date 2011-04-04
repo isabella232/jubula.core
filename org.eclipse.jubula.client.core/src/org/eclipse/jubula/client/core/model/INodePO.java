@@ -41,7 +41,7 @@ public interface INodePO extends ITimestampPO {
     /**
      * @return the unmodifiable node list.
      */
-    public abstract List getUnmodifiableNodeList();
+    public abstract List<INodePO> getUnmodifiableNodeList();
 
     /**
      * @return Returns the m_comment.

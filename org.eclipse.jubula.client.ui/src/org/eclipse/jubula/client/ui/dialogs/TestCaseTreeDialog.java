@@ -10,20 +10,26 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.dialogs;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.DependencyFinderOp;
@@ -34,16 +40,14 @@ import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.CategoryGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
+import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseBrowserContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.sorter.GuiNodeNameViewerSorter;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -51,8 +55,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.dialogs.FilteredTree;
 
@@ -81,8 +83,6 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
     private static final int MARGIN_HEIGHT = 2;
     /** width hint = 300 */
     private static final int WIDTH_HINT = 300;
-    /** <code>m_rootGUINode</code> */
-    private TestCaseBrowserRootGUI m_rootGuiNode;
       
     /** the local tree viewer */
     private TreeViewer m_treeViewer;
@@ -187,9 +187,8 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
     
     
     /**
+     * 
      * {@inheritDoc}
-     * createDialogArea(org.eclipse.swt.widgets.Composite) Hier wird der
-     * mittlere Bereich des Dialogs erzeugt
      */
     protected Control createDialogArea(Composite parent) {
         setTitle(m_title);
@@ -236,8 +235,31 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
         m_treeViewer.setUseHashlookup(true);
         getInitialInput();
         m_treeViewer.setLabelProvider(new LabelProvider());
-        m_treeViewer.setContentProvider(new ContentProvider());
-        m_treeViewer.setInput(m_rootGuiNode);
+        m_treeViewer.setContentProvider(new TestCaseBrowserContentProvider());
+        ViewerFilter[] filters = m_treeViewer.getFilters();
+        ViewerFilter[] newFilters = Arrays.copyOf(filters, filters.length + 1);
+        newFilters[newFilters.length - 1] = new ViewerFilter() {
+            @Override
+            public boolean select(Viewer viewer, 
+                    Object parentElement, Object element) {
+                
+                if (element instanceof ISpecTestCasePO 
+                        || element instanceof ICategoryPO) {
+                    return true;
+                }
+                
+                if (m_typeToAdd != OPEN_TESTCASE 
+                        && element instanceof IReusedProjectPO) {
+                    // also include content from reused projects
+                    return true;
+                }
+                
+                return false;
+                
+            }
+        };
+        m_treeViewer.setFilters(newFilters);
+        m_treeViewer.setInput(GeneralStorage.getInstance().getProject());
         m_treeViewer.setSorter(new GuiNodeNameViewerSorter());
         Plugin.createSeparator(parent);
         return area;
@@ -247,9 +269,6 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
      * gets a list of all test cases
      */
     private void getInitialInput() {
-        m_rootGuiNode = (TestCaseBrowserRootGUI)Plugin.getDefault()
-            .getTestCaseBrowserRootGUI().getChildren().get(0);
-        
         if (m_parentTestCase != null) {
             DependencyFinderOp op = new DependencyFinderOp(m_parentTestCase);
             TreeTraverser traverser = new TreeTraverser(GeneralStorage.
@@ -283,24 +302,22 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
                 }
             });
         
-        m_treeViewer.getTree().addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
-                for (TreeItem item : ((Tree) e.getSource()).getSelection()) {
-                    Object itemData = item.getData();
-                    if (itemData != null) {
-                        if (m_circDependList.contains(((GuiNode) itemData)
-                                .getContent())
-                                || itemData instanceof CategoryGUI) {
+        m_treeViewer.addSelectionChangedListener(
+            new ISelectionChangedListener() {
+                public void selectionChanged(SelectionChangedEvent event) {
+                    IStructuredSelection selection = 
+                        (IStructuredSelection)event.getSelection();
+                    for (Object selectedObj : selection.toArray()) {
+                        if (m_circDependList.contains(selectedObj)
+                                || selectedObj instanceof ICategoryPO) {
                             m_addButton.setEnabled(false);
                         }
                     }
                 }
-            }
+            });
+        m_treeViewer.addDoubleClickListener(new IDoubleClickListener() {
             
-            /**
-             * {@inheritDoc}
-             */
-            public void widgetDefaultSelected(SelectionEvent e) {
+            public void doubleClick(DoubleClickEvent event) {
                 if (!m_addButton.getEnabled()) {
                     return;
                 }
@@ -309,6 +326,7 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
                 close();
             }
         });
+
         // Cancel-Button
         Button cancelButton = 
             createButton(parent, CANCEL , Messages.TestCaseTableDialogCancel,
@@ -356,57 +374,25 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
      * @author BREDEX GmbH
      * @created 14.06.2005
      */
-    private class LabelProvider implements ILabelProvider {
+    private class LabelProvider implements IColorProvider, ILabelProvider {
 
-        /**
-         * @param item the current item
-         * @param o the object to compare with
-         * @return the item that equals with o
-         */
-        private TreeItem getItem(TreeItem item, Object o) {
-            TreeItem returnItem = null;
-            if (o.equals(item.getData())) {
-                return item;
-            }
-            for (TreeItem ti : item.getItems()) {
-                returnItem = getItem(ti, o);
-                if (returnItem != null) {
-                    break;
-                }
-            }
-            return returnItem;
-        }
-        
         /**
          * {@inheritDoc}
          */
         public Image getImage(Object element) {
-            TreeItem currentItem = null;
-            for (TreeItem item : m_treeViewer.getTree().getItems()) {
-                currentItem = getItem(item, element);
-                if (currentItem != null) {
-                    break;
-                }
-            }
-            if (element instanceof SpecTestCaseGUI) {
-                if (m_circDependList.contains(((SpecTestCaseGUI)element).
-                    getContent())) {
-                    if (currentItem != null) {
-                        currentItem.setForeground(Layout.GRAY_COLOR);
-                    }
-                    return (IconConstants.TC_DISABLED_IMAGE); 
+            if (element instanceof ISpecTestCasePO) {
+                if (m_circDependList.contains((ISpecTestCasePO)element)) {
+                    return IconConstants.TC_DISABLED_IMAGE; 
                 } 
-                if (currentItem != null) {
-                    currentItem.setForeground(Layout.DEFAULT_OS_COLOR);
-                }
-                return ((GuiNode)element).getImage();
+                return IconConstants.TC_IMAGE;
             }
-            if (currentItem != null) {
-                // Attention: grayed text for categories
-                currentItem.setForeground(Layout.GRAY_COLOR);
+
+            if (element instanceof ICategoryPO
+                    || element instanceof IReusedProjectPO) {
+                return IconConstants.CATEGORY_IMAGE;
             }
-            // Attention: no grayed icon for categories
-            return ((GuiNode)element).getImage();
+            
+            return null;
         }
 
         /**
@@ -443,73 +429,35 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
          */
         public void removeListener(ILabelProviderListener listener) {
             // do nothing
-        }        
-    }
-    
-    /**
-     * @author BREDEX GmbH
-     * @created 26.06.2006
-     */
-    private class ContentProvider implements ITreeContentProvider {
-        /**
-         * {@inheritDoc}
-         */
-        public void dispose() {
-            // do nothing
         }
 
         /**
+         * 
          * {@inheritDoc}
          */
-        public void inputChanged(Viewer viewer, Object oldInput, 
-                Object newInput) {
+        public Color getForeground(Object element) {
+            if (element instanceof ISpecTestCasePO) {
+                if (m_circDependList.contains((ISpecTestCasePO)element)) {
+                    return Layout.GRAY_COLOR; 
+                } 
+                return Layout.DEFAULT_OS_COLOR;
+            }
             
-            // do nothing
-        }
+            if (element instanceof ICategoryPO
+                    || element instanceof IReusedProjectPO) {
 
-        /**
-         * {@inheritDoc}
-         */
-        public Object[] getElements(Object inputElement) {
-            List<GuiNode> children = ((GuiNode)inputElement).getChildren();
-            List<GuiNode> childrenToDisplay = new ArrayList<GuiNode>();
-            if (m_typeToAdd == OPEN_TESTCASE) {
-                for (GuiNode gn : children) {
-                    if (gn.isEditable()) {
-                        childrenToDisplay.add(gn);
-                    }
-                }
-            } else {
-                childrenToDisplay.addAll(children);
+                return Layout.GRAY_COLOR;
             }
-            return childrenToDisplay.toArray();
-        }
 
-        /**
-         * {@inheritDoc}
-         */
-        public Object[] getChildren(Object parentElement) {
-            if ((parentElement instanceof TestCaseBrowserRootGUI 
-                    || parentElement instanceof CategoryGUI)) {
-                List<GuiNode> children = ((GuiNode)parentElement).getChildren();
-                return children.toArray();
-            }
-            return ArrayUtils.EMPTY_OBJECT_ARRAY;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public Object getParent(Object element) {
             return null;
         }
 
         /**
+         * 
          * {@inheritDoc}
          */
-        public boolean hasChildren(Object element) {
-            return (element instanceof CategoryGUI && !((CategoryGUI)element)
-                    .getChildren().isEmpty());
-        }
+        public Color getBackground(Object element) {
+            return null;
+        }        
     }
 }

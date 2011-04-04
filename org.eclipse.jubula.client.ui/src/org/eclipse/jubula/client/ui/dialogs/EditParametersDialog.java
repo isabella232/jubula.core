@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.dialogs;
 
 import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;

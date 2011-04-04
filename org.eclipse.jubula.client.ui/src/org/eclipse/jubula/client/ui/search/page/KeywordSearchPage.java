@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData;
-import org.eclipse.jubula.client.ui.search.data.StructureSearchData;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData.SearchableType;
+import org.eclipse.jubula.client.ui.search.data.StructureSearchData;
 import org.eclipse.jubula.client.ui.search.query.StructureSearchQuery;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.ISearchQuery;

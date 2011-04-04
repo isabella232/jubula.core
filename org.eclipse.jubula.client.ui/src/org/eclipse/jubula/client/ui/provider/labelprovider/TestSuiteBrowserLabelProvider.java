@@ -25,14 +25,12 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
-import org.eclipse.jubula.client.ui.model.TestJobGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.tools.constants.StringConstants;
 
 
@@ -46,71 +44,77 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
     /** {@inheritDoc} */
     public String getToolTipText(Object element) {
-        if (element instanceof GuiNode) {
-            return createToolTipText((GuiNode)element);
+        if (element instanceof INodePO) {
+            return createToolTipText((INodePO)element);
         }
+        
+        if (element instanceof ITestSuitePO) {
+            StringBuilder toolTip = new StringBuilder();
+            ITestSuitePO testSuite = (ITestSuitePO)element;
+            final WorkingLanguageBP workLangBP = 
+                WorkingLanguageBP.getInstance();
+            Locale locale = workLangBP.getWorkingLanguage();
+            IAUTMainPO aut = testSuite.getAut();
+            if (testSuite.getAut() != null 
+                    && !workLangBP
+                        .isTestSuiteLanguage(locale, testSuite)) {
+                toolTip.append(Constants.BULLET).append(
+                    Messages.TestDataDecoratorUnsupportedAUTLanguage);
+            } else {
+                checkNode(testSuite, aut, locale, toolTip);
+            }
+
+            return toolTip.toString();
+        }
+        
         return super.getToolTipText(element);
     }
     
 
     /**
-     * @param gnode
+     * @param node
      *            the node to check
      * @return whether the given node or one of it's parent is active or not
      */
-    protected boolean isNodeActive(GuiNode gnode) {
-        INodePO node = gnode.getContent();
+    protected boolean isNodeActive(INodePO node) {
         if (node == null || !node.isActive()) {
             return false;
         }
-        GuiNode parentGNode = gnode.getParentNode();
-        while (parentGNode != null) {
-            node = parentGNode.getContent();
+        INodePO parentNode = node.getParentNode();
+        while (parentNode != null) {
             if (node != null) {
                 if (!node.isActive()) {
                     return false;
                 }
             }
-            parentGNode = parentGNode.getParentNode();
+            parentNode = parentNode.getParentNode();
         }
         return true;
     }
     
     /**
      * creates the ToolTip Text
-     * @param element
+     * @param node
      *      GuiNode
      * @return
      *      String
      */
-    private String createToolTipText(GuiNode element) {
+    private String createToolTipText(INodePO node) {
         StringBuilder toolTip = new StringBuilder();
-        INodePO node = element.getContent();
 
         final WorkingLanguageBP workLangBP = WorkingLanguageBP.getInstance();
         Locale locale = workLangBP.getWorkingLanguage();
-        ITestSuitePO testSuite = (ITestSuitePO)
-            (TestSuiteGUI.getTestSuiteForNode(element))
-                .getContent();
-        if (node != null && isNodeActive(element)) {
+        ITestSuitePO testSuite = GuiNodeBP.getTestSuiteOfNode(node);
+        if (node != null && isNodeActive(node)) {
             if (testSuite != null) {
                 IAUTMainPO aut = testSuite.getAut();
-                if (element instanceof TestSuiteGUI) {
-                    TestSuiteGUI execTs = (TestSuiteGUI)element;
-                    if (testSuite.getAut() != null 
-                            && !workLangBP
-                                .isTestSuiteLanguage(locale, testSuite)) {
-                        toolTip.append(Constants.BULLET).append(
-                            Messages.TestDataDecoratorUnsupportedAUTLanguage);
-                    } else {
-                        checkNode(execTs, aut, locale, toolTip);
-                    }
-                } else if (node instanceof IExecTestCasePO) {
+                if (node instanceof IExecTestCasePO) {
                     checkNode((IExecTestCasePO)node, aut, locale, toolTip);
                 } else if (node instanceof ICapPO) {
                     ICapPO cap = (ICapPO)node;
-                    IExecTestCasePO execTC = (IExecTestCasePO)(element).
-                    getParentNode().getParentNode().getContent();
+                    IExecTestCasePO execTC = 
+                        (IExecTestCasePO)node.getParentNode()
+                            .getParentNode();
                     boolean overWrittenName = false;
                     for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
                         if (pair.getFirstName().equals(cap.getComponentName())
@@ -124,18 +128,18 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
                     checkNode(aut, locale, cap, toolTip, overWrittenName);
                 }
             } 
-            if (element instanceof TestJobGUI) {
-                if (!isTestJobGuiValid((TestJobGUI)element)) {
+            if (node instanceof ITestJobPO) {
+                if (!isTestJobGuiValid((ITestJobPO)node)) {
                     addMessage(toolTip, 
                             Messages.TestDataDecoratorTestJobIncompl);
                 }
-            } else if (element instanceof RefTestSuiteGUI) {
-                if (!isRefTestSuiteGuiValid((RefTestSuiteGUI)element)) {
+            } else if (node instanceof IRefTestSuitePO) {
+                if (!isRefTestSuiteGuiValid((IRefTestSuitePO)node)) {
                     addMessage(toolTip, Messages.TestDataDecoratorRefTsIncompl);
                 }
             }
             if (toolTip.length() == 0) {
-                return super.getToolTipText(element);
+                return super.getToolTipText(node);
             }
         }
         return toolTip.length() > 0 ? toolTip.toString() : null;
@@ -143,19 +147,19 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
 
     /**
      * Checks an TestSuiteGUI for decoration 
-     * @param execTs the Node
+     * @param testSuite the Node
      * @param aut the aut
      * @param locale the local
      * @param toolTip the tool tip
      * @return the changed tooltip
      */
-    private StringBuilder checkNode(TestSuiteGUI execTs, IAUTMainPO aut,
-        Locale locale, StringBuilder toolTip) {
+    private StringBuilder checkNode(ITestSuitePO testSuite, IAUTMainPO aut,
+            Locale locale, StringBuilder toolTip) {
         if (aut == null) {
             addMessage(toolTip, 
                 Messages.TestDataDecoratorTestSuiteWithoutAUT);
         }
-        for (IProblem problem : execTs.getContent().getProblems()) {
+        for (IProblem problem : testSuite.getProblems()) {
             addMessage(toolTip, problem.getTooltipMessage());
         }
         return toolTip;
@@ -310,11 +314,11 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
      *            the test job gui to check
      * @return whether invalid decoration is necessary
      */
-    protected boolean isTestJobGuiValid(TestJobGUI tj) {
+    protected boolean isTestJobGuiValid(ITestJobPO tj) {
         // if aut does not contain children, do not decorate
-        List<IRefTestSuitePO> refTsList = tj.getContent()
-                .getUnmodifiableNodeList();
-        for (IRefTestSuitePO refTs : refTsList) {
+        List<INodePO> refTsList = tj.getUnmodifiableNodeList();
+        for (INodePO node : refTsList) {
+            IRefTestSuitePO refTs = (IRefTestSuitePO)node;
             if (TestExecution.isAutNameSet(refTs.getTestSuiteAutID())) {
                 return false;
             }
@@ -324,12 +328,11 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
     
 
     /**
-     * @param element
-     *            the referenced test suite gui node
+     * @param refTs
+     *            the Test Suite Reference
      * @return whether invalid decoration is necessary
      */
-    protected boolean isRefTestSuiteGuiValid(RefTestSuiteGUI element) {
-        IRefTestSuitePO refTs = (IRefTestSuitePO)element.getContent();
+    protected boolean isRefTestSuiteGuiValid(IRefTestSuitePO refTs) {
         if (TestExecution.isAutNameSet(refTs.getTestSuiteAutID())) {
             return false;
         }

@@ -22,8 +22,8 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.objectmapping.OMEditorDndSupport;
-import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 
 
 /**

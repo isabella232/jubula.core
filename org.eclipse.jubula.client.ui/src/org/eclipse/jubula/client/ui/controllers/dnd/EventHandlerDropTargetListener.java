@@ -13,13 +13,13 @@ package org.eclipse.jubula.client.ui.controllers.dnd;
 import java.util.Iterator;
 
 import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
-import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.swt.dnd.TransferData;
 
 
@@ -56,13 +56,13 @@ public class EventHandlerDropTargetListener extends ViewerDropAdapter {
         Iterator iter = (transfer.getSelection()).iterator();
         while (iter.hasNext()) {
             Object obj = iter.next();
-            if (!(obj instanceof GuiNode)) {
+            if (!(obj instanceof INodePO)) {
                 return false;
             }
-            GuiNode node = (GuiNode)obj;
-            if (node instanceof SpecTestCaseGUI) {
-                GuiNode target = (GuiNode)getCurrentTarget();
-                SpecTestCaseGUI specTcGUI = (SpecTestCaseGUI)node;
+            INodePO node = (INodePO)obj;
+            if (node instanceof ISpecTestCasePO) {
+                INodePO target = (INodePO)getCurrentTarget();
+                ISpecTestCasePO specTcGUI = (ISpecTestCasePO)node;
                 if (target != node) {
                     addEventHandler(target, specTcGUI);
                 }
@@ -77,10 +77,10 @@ public class EventHandlerDropTargetListener extends ViewerDropAdapter {
      * @param specTcGUI
      *            the TestCase used as EventHandler.
      */
-    private void addEventHandler(GuiNode target, SpecTestCaseGUI specTcGUI) {
-        if (target == null || target instanceof EventExecTestCaseGUI) {
+    private void addEventHandler(INodePO target, ISpecTestCasePO specTcGUI) {
+        if (target == null || target instanceof IEventExecTestCasePO) {
 
-            m_editor.addEventHandler(specTcGUI, (SpecTestCaseGUI)m_editor
+            m_editor.addEventHandler(specTcGUI, (ISpecTestCasePO)m_editor
                     .getEventHandlerTreeViewer().getInput());
             LocalSelectionTransfer.getInstance().setSelection(null);
         }
@@ -99,16 +99,15 @@ public class EventHandlerDropTargetListener extends ViewerDropAdapter {
         Iterator iter = transfer.getSelection().iterator();
         while (iter.hasNext()) {
             Object obj = iter.next();
-            if (!(obj instanceof GuiNode)) {
+            if (!(obj instanceof INodePO)) {
                 return false;
             }
-            GuiNode node = (GuiNode)obj;
-            if (!(node instanceof SpecTestCaseGUI)) {
+            INodePO node = (INodePO)obj;
+            if (!(node instanceof ISpecTestCasePO)) {
                 return false;
             }
-            GuiNode parent = (GuiNode)getViewer().getInput();
-            if (node.getContent().hasCircularDependences(
-                parent.getContent())) {
+            INodePO parent = (INodePO)getViewer().getInput();
+            if (node.hasCircularDependences(parent)) {
                 return false;
             }
         }

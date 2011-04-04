@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -48,16 +49,10 @@ import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TSEditorDndSupport;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.CapGUI;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseEditorContentProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
@@ -111,13 +106,19 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      * Sets the input of the tree viewer for specificaion.
      */
     public void setInitialInput() {
-        GuiNode root = new TestCaseBrowserRootGUI(EXEC_TC_ED_ROOT_NAME);
         ITestSuitePO rootPO = 
             (ITestSuitePO)getEditorHelper().getEditSupport().getWorkVersion();
-        TreeBuilder.buildTestSuiteEditorTree(rootPO, root);
+        
         getTreeViewer().setContentProvider(
             new TestCaseEditorContentProvider());
-        initTopTreeViewer(root);
+        initTopTreeViewer(rootPO);
+        try {
+            getMainTreeViewer().getTree().getParent().setRedraw(false);
+            getMainTreeViewer().setInput(new ITestSuitePO[] {rootPO});
+            getMainTreeViewer().expandAll();
+        } finally {
+            getMainTreeViewer().getTree().getParent().setRedraw(true);
+        }
     }
     
     /**
@@ -339,11 +340,12 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
             Object target = getCurrentTarget();
             int location = getCurrentLocation();
             if (target == null) {
-                target = getFallbackTarget(getTreeViewer());
+                target = m_editor.getEditorHelper()
+                    .getEditSupport().getWorkVersion();
                 location = ViewerDropAdapter.LOCATION_AFTER;
             }
-            if (target instanceof GuiNode) {
-                GuiNode targetGuiNode = (GuiNode)target;
+            if (target instanceof INodePO) {
+                INodePO targetGuiNode = (INodePO)target;
                 IStructuredSelection toDrop = transfer.getSelection();
                 return TSEditorDndSupport.performDrop(m_editor, toDrop,
                         targetGuiNode, location);
@@ -362,7 +364,8 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                     .getInstance();
             Object targetNode = target;
             if (targetNode == null) {
-                targetNode = getFallbackTarget(getTreeViewer());
+                targetNode = m_editor.getEditorHelper()
+                    .getEditSupport().getWorkVersion();
             }
 
             return TSEditorDndSupport.validateDrop(transfer.getSource(),
@@ -398,7 +401,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 getCutTreeItemAction().setEnabled(false);
                 getPasteTreeItemAction().setEnabled(false);
             } else {
-                List<GuiNode> selList = sel.toList();
+                List<INodePO> selList = sel.toList();
                 enableCutAction(selList);
                 enablePasteAction(selList);
             }
@@ -408,12 +411,12 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
          * en-/disable cut-action
          * @param selList actual selection 
          */
-        private void enableCutAction(List<GuiNode> selList) {
+        private void enableCutAction(List<INodePO> selList) {
             getCutTreeItemAction().setEnabled(true);
 
-            for (GuiNode node : selList) {
-                if (!(node instanceof ExecTestCaseGUI
-                        || node instanceof CapGUI)) {
+            for (INodePO node : selList) {
+                if (!(node instanceof IExecTestCasePO
+                        || node instanceof ICapPO)) {
                     getCutTreeItemAction().setEnabled(false);
                     return;
                 }
@@ -424,7 +427,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
          * en-/disable paste-action
          * @param selList actual selection 
          */
-        private void enablePasteAction(List<GuiNode> selList) {
+        private void enablePasteAction(List<INodePO> selList) {
             
             getPasteTreeItemAction().setEnabled(true);
             LocalSelectionClipboardTransfer transfer = 
@@ -435,7 +438,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
             if (cbContents instanceof IStructuredSelection) {
                 IStructuredSelection cbSelection = 
                     (IStructuredSelection)cbContents;
-                for (GuiNode guiNode : selList) {
+                for (INodePO guiNode : selList) {
                     if (guiNode == null
                             || !(cbContents instanceof StructuredSelection)
                             || !TSEditorDndSupport.validateDrop(
@@ -467,23 +470,26 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      * @return the displayable Languages
      */
     private DisplayableLanguages getDisplayableLanguages() {
-        if (!(getTreeViewer().getSelection() instanceof IStructuredSelection)) {
-            return new DisplayableLanguages(new ArrayList<Locale>());
+        if (getTreeViewer().getSelection() instanceof IStructuredSelection) {
+            Object firstSelectedElement = 
+                ((IStructuredSelection)getTreeViewer().getSelection())
+                    .getFirstElement();
+            if (firstSelectedElement instanceof INodePO) {
+                ITestSuitePO testSuite = 
+                    GuiNodeBP.getTestSuiteOfNode((INodePO)firstSelectedElement);
+                List<Locale> langList = 
+                    WorkingLanguageBP.getInstance()
+                        .getLanguages(testSuite.getAut());
+                if (langList.size() > 0) {
+                    return new DisplayableLanguages(langList);
+                }
+                langList = new ArrayList<Locale>(1);  
+                langList.add(GeneralStorage.getInstance().getProject()
+                        .getDefaultLanguage());
+                return new DisplayableLanguages(langList);
+            }
         }
-        GuiNode selNode = (GuiNode)((IStructuredSelection)getTreeViewer()
-                .getSelection()).getFirstElement();
-        GuiNodeBP.getTestSuiteOfNode(selNode);
-        TestSuiteGUI tsGUI = GuiNodeBP.getTestSuiteOfNode(selNode);
-        ITestSuitePO ts = (ITestSuitePO)tsGUI.getContent();
-        List<Locale> langList = WorkingLanguageBP.getInstance()
-            .getLanguages(ts.getAut());
-        if (langList.size() > 0) {
-            return new DisplayableLanguages(langList);
-        }
-        langList = new ArrayList<Locale>(1);  
-        langList.add(GeneralStorage.getInstance().getProject()
-            .getDefaultLanguage());
-        return new DisplayableLanguages(langList);
+        return new DisplayableLanguages(new ArrayList<Locale>());
     }
     
     /**

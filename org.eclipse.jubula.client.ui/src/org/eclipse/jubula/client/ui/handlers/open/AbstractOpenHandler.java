@@ -29,9 +29,6 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.editors.PersistableEditorInput;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -56,8 +53,8 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
      * @param selected Node to check
      * @return the first match for an editable node
      */
-    public GuiNode findEditableNode(GuiNode selected) {
-        GuiNode candidate = selected;
+    public INodePO findEditableNode(INodePO selected) {
+        INodePO candidate = selected;
         while (candidate != null && !isEditableImpl(candidate)) {
             candidate = candidate.getParentNode();
         }
@@ -65,11 +62,11 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
     }
     
     /**
-     * Check if this GuiNode is the correct selection for the open action.
+     * Check if this INodePO is the correct selection for the open action.
      * @param selected Node to check
      * @return true if the selection is applicable; subclasses may override
      */
-    protected boolean isEditableImpl(GuiNode selected) {
+    protected boolean isEditableImpl(INodePO selected) {
         return true;
     }
 
@@ -143,11 +140,10 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
      */
     protected static String getEditorId(Object node) {
         if (node instanceof ISpecTestCasePO
-                || node instanceof SpecTestCaseGUI) {
+                || node instanceof ISpecTestCasePO) {
             return Constants.TEST_CASE_EDITOR_ID;
         }
-        if (node instanceof ITestSuitePO
-                || node instanceof TestSuiteGUI) {
+        if (node instanceof ITestSuitePO) {
             return Constants.TEST_SUITE_EDITOR_ID;
         }
         if (node instanceof IAUTMainPO) {

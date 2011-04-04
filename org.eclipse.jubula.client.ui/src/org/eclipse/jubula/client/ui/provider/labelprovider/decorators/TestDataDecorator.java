@@ -16,22 +16,22 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor.JBEditorDecorationContext;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.ProjectGUI;
-import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
-import org.eclipse.jubula.client.ui.model.TestJobGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestSuiteBrowserLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
@@ -51,22 +51,21 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
      */
     public void decorate(Object element, IDecoration decoration) {
         decoration.setForegroundColor(Layout.DEFAULT_OS_COLOR);
-        GuiNode gnode = (GuiNode)element;
-        if (shouldNotDecorate(gnode, decoration)) {
+
+        INodePO node = (INodePO)element;
+        if (shouldNotDecorate(node, decoration)) {
             return;
         }
-        INodePO node = gnode.getContent();
         boolean flag = false;
-        if (isNodeActive(gnode)) {
-            ITestSuitePO testSuite = (ITestSuitePO)(TestSuiteGUI
-                    .getTestSuiteForNode((GuiNode)element)).getContent();
+        if (isNodeActive(node)) {
+            ITestSuitePO testSuite = NodeBP.getOwningTestSuite(node);
             if (testSuite != null) {
                 final WorkingLanguageBP workLangBP = WorkingLanguageBP
                     .getInstance();
                 Locale locale = workLangBP.getWorkingLanguage();
                 IAUTMainPO aut = testSuite.getAut();
-                if (element instanceof TestSuiteGUI) {
-                    TestSuiteGUI execTs = (TestSuiteGUI)element;
+                if (element instanceof ITestSuitePO) {
+                    ITestSuitePO execTs = (ITestSuitePO)element;
                     if (testSuite.getAut() != null
                             && !workLangBP
                                 .isTestSuiteLanguage(locale, testSuite)) {
@@ -77,7 +76,7 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
                             && node.getSumOMFlag(aut) 
                             && node.getSumSpecTcFlag();
                     }
-                    if (execTs.getChildren().size() == 0) {
+                    if (execTs.getNodeListSize() == 0) {
                         flag = true;
                     }
                     if (testSuite.getAut() == null) {
@@ -88,8 +87,8 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
                         && node.getSumSpecTcFlag();
                 } else if (node instanceof ICapPO) {
                     ICapPO cap = (ICapPO)node;
-                    IExecTestCasePO execTC = (IExecTestCasePO)((GuiNode)element)
-                        .getParentNode().getParentNode().getContent();
+                    IExecTestCasePO execTC = (IExecTestCasePO)((INodePO)element)
+                        .getParentNode().getParentNode();
                     boolean overWrittenName = false;
                     for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
                         if (pair.getFirstName().equals(cap.getComponentName())
@@ -107,10 +106,10 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
                     }
                 }
             } else {
-                if (element instanceof TestJobGUI) {
-                    flag = isTestJobGuiValid((TestJobGUI)element);
-                } else if (element instanceof RefTestSuiteGUI) {
-                    flag = isRefTestSuiteGuiValid((RefTestSuiteGUI)element);
+                if (element instanceof ITestJobPO) {
+                    flag = isTestJobGuiValid((ITestJobPO)element);
+                } else if (element instanceof IRefTestSuitePO) {
+                    flag = isRefTestSuiteGuiValid((IRefTestSuitePO)element);
                 } else {
                     flag = true;
                 }
@@ -128,13 +127,13 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
      *            the decoration
      * @return wheter decoration should continue for this element or not
      */
-    private boolean shouldNotDecorate(GuiNode gnode, IDecoration decoration) {
-        return gnode.getContent() == null
+    private boolean shouldNotDecorate(INodePO gnode, IDecoration decoration) {
+        return gnode == null
                 || gnode.getParentNode() == null
-                || TestSuiteGUI.getTestSuiteForNode(gnode) == null
+                || GuiNodeBP.getTestSuiteOfNode(gnode) == null
                 || decoration.getDecorationContext() 
                     instanceof JBEditorDecorationContext
-                || gnode instanceof ProjectGUI;
+                || gnode instanceof IProjectPO;
     }
 
     /** 

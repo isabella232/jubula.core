@@ -23,6 +23,8 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -30,8 +32,6 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.widgets.CompNamePopUpTextField;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.JBText;
@@ -99,8 +99,8 @@ public class NewCAPDialog extends TitleAreaDialog {
     private Label m_actionLabel;
     /** The label of the componentTextField */
     private Label m_compNameLabel;
-    /** the SpecTestCaseGUI */
-    private SpecTestCaseGUI m_specTCGui;
+    /** the ISpecTestCasePO */
+    private ISpecTestCasePO m_specTCGui;
     /** the modifyListener */
     private final WidgetModifyListener m_modifyListener = 
         new WidgetModifyListener();
@@ -111,10 +111,10 @@ public class NewCAPDialog extends TitleAreaDialog {
     /**
      * The constructor.
      * @param parentShell the parent shell
-     * @param specTCGui the SpecTestCaseGUI.
+     * @param specTCGui the ISpecTestCasePO.
      * @param compMapper The Component Name mapper to use.
      */
-    public NewCAPDialog(Shell parentShell, SpecTestCaseGUI specTCGui, 
+    public NewCAPDialog(Shell parentShell, ISpecTestCasePO specTCGui, 
             IComponentNameMapper compMapper) {
        
         super(parentShell);
@@ -531,14 +531,14 @@ public class NewCAPDialog extends TitleAreaDialog {
      * @param tc Parent TestCase
      * @return name for Next Cap
      */
-    private String getNextChildrenName(SpecTestCaseGUI tc) {
-        int index = tc.getChildren().size() + 1;
-        boolean uniqueName = false;
+    private String getNextChildrenName(ISpecTestCasePO tc) {
         String capName = StringConstants.EMPTY;
+        int index = tc.getNodeListSize() + 1;
+        boolean uniqueName = false;
         while (!uniqueName) {
             capName = InitialValueConstants.DEFAULT_CAP_NAME + index;
             uniqueName = true;
-            for (GuiNode node : tc.getChildren()) {
+            for (INodePO node : tc.getUnmodifiableNodeList()) {
                 if (node.getName().equals(capName)) {
                     uniqueName = false;
                     index++;

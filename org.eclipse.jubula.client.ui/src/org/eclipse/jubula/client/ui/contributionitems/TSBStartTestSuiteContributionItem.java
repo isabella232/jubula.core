@@ -25,7 +25,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -34,7 +33,6 @@ import org.eclipse.jubula.client.ui.businessprocess.ChooseTestSuiteBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.handlers.StartTestJobHandler;
 import org.eclipse.jubula.client.ui.handlers.StartTestSuiteHandler;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
@@ -181,12 +179,6 @@ public class TSBStartTestSuiteContributionItem
                 for (Object selectedObj : structuredSel.toArray()) {
                     if (selectedObj instanceof ITestSuitePO) {
                         selectedSuites.add((ITestSuitePO)selectedObj);
-                    } else if (selectedObj instanceof TestSuiteGUI) {
-                        INodePO content = 
-                            ((TestSuiteGUI)selectedObj).getContent();
-                        if (content instanceof ITestSuitePO) {
-                            selectedSuites.add((ITestSuitePO)content);
-                        }
                     }
                 }
             }

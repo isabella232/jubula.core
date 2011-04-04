@@ -13,10 +13,10 @@ package org.eclipse.jubula.client.ui.controllers.dnd;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.swt.dnd.TransferData;
 
 
@@ -52,12 +52,13 @@ public class TCEditorDropTargetListener extends GuiNodeViewerDropAdapter {
         if (selection instanceof StructuredSelection) {
             int location = getCurrentLocation();
             if (target == null) {
-                target = getFallbackTarget(getViewer());
-                location = ViewerDropAdapter.LOCATION_AFTER;
+                target = m_editor.getEditorHelper()
+                    .getEditSupport().getWorkVersion();
+                location = ViewerDropAdapter.LOCATION_ON;
             }
-            if (target instanceof GuiNode) {
+            if (target instanceof INodePO) {
                 return TCEditorDndSupport.performDrop(m_editor, selection,
-                        (GuiNode)target, location);
+                        (INodePO)target, location);
             }
         }
 
@@ -75,11 +76,12 @@ public class TCEditorDropTargetListener extends GuiNodeViewerDropAdapter {
         if (selection instanceof StructuredSelection) {
             Object targetObject = target;
             if (targetObject == null) {
-                targetObject = getFallbackTarget(getViewer());
+                targetObject = m_editor.getEditorHelper()
+                    .getEditSupport().getWorkVersion();
             }
-            if (targetObject instanceof GuiNode) {
+            if (targetObject instanceof INodePO) {
                 return TCEditorDndSupport.validateDrop(transfer.getSource(),
-                        getViewer(), selection, (GuiNode)targetObject, true);
+                        getViewer(), selection, (INodePO)targetObject, true);
             }
         }
         return false;

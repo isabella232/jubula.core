@@ -221,7 +221,7 @@ public class OMEditorBP {
     /**
      * checks if a category name exists
      * 
-     * !! does not work recursivly, just checks in given GuiNode !!
+     * !! does not work recursivly, just checks in given INodePO !!
      * 
      * @param name      String
      * @param start     GuiNode

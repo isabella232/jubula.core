@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.actions;
 
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -24,14 +25,12 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -41,7 +40,7 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
  * @author BREDEX GmbH
  * @created 27.06.2006
  */
-public class NewTestCaseActionTCBrowser extends AbstractNewTestCaseAction {
+public class NewTestCaseActionTCBrowser extends Action {
 
     /**
      * {@inheritDoc}
@@ -73,7 +72,7 @@ public class NewTestCaseActionTCBrowser extends AbstractNewTestCaseAction {
                 
                 IStructuredSelection sel = 
                     (IStructuredSelection)tstv.getTreeViewer().getSelection();
-                parent = ((GuiNode)sel.getFirstElement()).getContent();
+                parent = (INodePO)sel.getFirstElement();
                 parent = TestCaseBP.getSpecTestCaseContainer(parent);
             } else {
                 parent = GeneralStorage.getInstance().getProject();
@@ -83,10 +82,9 @@ public class NewTestCaseActionTCBrowser extends AbstractNewTestCaseAction {
                     .createNewSpecTestCase(tcName, parent, null);
                 DataEventDispatcher.getInstance().fireDataChangedListener(
                     newSpecTC, DataState.Added, UpdateState.all);
-                GuiNode node = GuiNodeBP.getGuiNodeForNodePO(newSpecTC);
                 InteractionEventDispatcher.getDefault().
                     fireProgammableSelectionEvent(
-                            new StructuredSelection(node));
+                            new StructuredSelection(newSpecTC));
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
@@ -95,12 +93,4 @@ public class NewTestCaseActionTCBrowser extends AbstractNewTestCaseAction {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Integer getPositionToInsert(ISpecTestCasePO workTC, 
-            GuiNode selectedNodeGUI) {
-        
-        return null;
-    }
 }

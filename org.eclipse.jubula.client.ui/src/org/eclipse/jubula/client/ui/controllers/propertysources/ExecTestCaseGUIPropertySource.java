@@ -28,11 +28,10 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.contentassist.TestDataCubeRefContentProposalProvider;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ContentAssistedTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ParamTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertydescriptors.ParamTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.ParameterValueLabelProvider;
 import org.eclipse.jubula.client.ui.validator.TestDataCubeReferenceValidator;
@@ -95,7 +94,7 @@ public class ExecTestCaseGUIPropertySource extends
      * Constructor
      * @param testCase the dependened TestCase.
      */
-    public ExecTestCaseGUIPropertySource(ExecTestCaseGUI testCase) {
+    public ExecTestCaseGUIPropertySource(IExecTestCasePO testCase) {
         super(testCase);
     }
        

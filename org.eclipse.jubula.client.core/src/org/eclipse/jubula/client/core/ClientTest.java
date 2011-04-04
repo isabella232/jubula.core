@@ -65,6 +65,7 @@ import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -535,9 +536,10 @@ public class ClientTest implements IClientTest {
                         removeTestExecutionEventListener(this);
                     }
                 };
-            List<IRefTestSuitePO> refTestSuiteList = 
+            List<INodePO> refTestSuiteList = 
                 testJob.getUnmodifiableNodeList();
-            for (IRefTestSuitePO refTestSuite : refTestSuiteList) {
+            for (INodePO node : refTestSuiteList) {
+                IRefTestSuitePO refTestSuite = (IRefTestSuitePO)node;
                 isTestExecutionFailed.set(false);
                 isTestExecutionFinished.set(false);
                 addTestExecutionEventListener(executionListener);

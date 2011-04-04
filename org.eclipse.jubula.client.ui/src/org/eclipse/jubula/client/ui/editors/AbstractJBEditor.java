@@ -32,7 +32,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IPropertyChangedListener;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
@@ -43,10 +42,8 @@ import org.eclipse.jubula.client.ui.actions.PasteTreeItemActionTCEditor;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.AbstractPartListener;
 import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
-import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
@@ -207,14 +204,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
                 listener.selectionChanged(selChangedEvent);
             }
         }
-    }
-    
-    /**
-     * @return The GuiNode (the work version) of this editor.
-     */
-    public GuiNode getEditorInputGuiNode() {
-        GuiNode guiNode = (GuiNode)getMainTreeViewer().getInput();
-        return guiNode.getChildren().get(0);
     }
     
     /**
@@ -486,13 +475,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     }
     
     /**
-     * @return the first guiNode of the tree of the topTreeViewer
-     */
-    protected GuiNode getTopGuiNode() {
-        return ((GuiNode)getMainTreeViewer().getInput()).getChildren().get(0);
-    }
-
-    /**
      * fill the context menu
      * @param mgr IMenuManager
      */
@@ -687,15 +669,9 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      *            The corresponding NodePO.
      */
     protected void renameGUINode(IPersistentObject po) {
-        List<GuiNode> topGuiNodes = new TreeIterator(getTopGuiNode())
-                .getGuiNodeOfNodePO((INodePO)po);
-        if (topGuiNodes.size() > 0) {
-            getMainTreeViewer().refresh();
-        }
-        if (getTopGuiNode().getContent().equals(po)) {
-            // rename the editor, too
-            createPartName();
-        }
+        getMainTreeViewer().update(po, null);
+        // rename the editor based on currently edited node
+        createPartName();
     }
     
     

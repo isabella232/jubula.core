@@ -51,7 +51,6 @@ import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.TestSuiteEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.CompNameCellValidator;
 import org.eclipse.jubula.client.ui.widgets.CompNamePopupTextCellEditor;
@@ -790,9 +789,8 @@ public class CompNamesPage extends Page implements ISelectionListener {
         }
         boolean isEditor = (part instanceof AbstractTestCaseEditor);
         IStructuredSelection sel = (IStructuredSelection)selection;
-        if (sel.getFirstElement() instanceof ExecTestCaseGUI) {
-            m_selectedExecNode = (IExecTestCasePO)
-                ((ExecTestCaseGUI)sel.getFirstElement()).getContent();
+        if (sel.getFirstElement() instanceof IExecTestCasePO) {
+            m_selectedExecNode = (IExecTestCasePO)sel.getFirstElement();
             m_selectedExecNodeOwner = part;
         } else {
             m_selectedExecNode = null;

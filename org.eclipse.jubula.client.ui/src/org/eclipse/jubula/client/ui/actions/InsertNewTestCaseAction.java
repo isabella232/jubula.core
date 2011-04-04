@@ -10,10 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.actions;
 
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 
 
 /**
@@ -25,21 +23,12 @@ public class InsertNewTestCaseAction extends AbstractNewTestCaseAction {
      * Constructor.
      */
     public InsertNewTestCaseAction() {
+        super(ContextHelpIds.DIALOG_TC_INSERT_NEW);
         setText(super.getText());
         setImageDescriptor(IconConstants.NEW_REF_TC_IMAGE_DESCRIPTOR); 
         setDisabledImageDescriptor(IconConstants.
                 NEW_REF_TC_DISABLED_IMAGE_DESCRIPTOR);
         setEnabled(false);
-        setHelpid(ContextHelpIds.DIALOG_TC_INSERT_NEW);
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    protected Integer getPositionToInsert(ISpecTestCasePO workTC, 
-            GuiNode selectedNodeGUI) {
-        
-        int positionToAdd = selectedNodeGUI.getPositionInParent();
-        return positionToAdd;
-    }
 }

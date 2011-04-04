@@ -266,7 +266,7 @@ abstract class NodePO implements INodePO {
      * @return the unmodifiable node list.
      */
     @Transient
-    public List getUnmodifiableNodeList() {
+    public List<INodePO> getUnmodifiableNodeList() {
         return Collections.unmodifiableList(getNodeList());
     }
     

@@ -55,8 +55,6 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -166,14 +164,10 @@ public class ExtractTestCaseHandler extends AbstractHandler {
                 .getTreeViewer().getSelection();
         if (cs.size() == 1) {
             Object e = cs.getFirstElement();
-            if (e instanceof ExecTestCaseGUI) {
-                IExecTestCasePO exec = ((IExecTestCasePO)((ExecTestCaseGUI)e)
-                        .getContent());
-                if (exec != null) {
-                    String execName = exec.getName();
-                    if (!StringUtils.isBlank(execName)) {
-                        newName = execName;
-                    }
+            if (e instanceof IExecTestCasePO) {
+                String execName = ((IExecTestCasePO)e).getName();
+                if (!StringUtils.isBlank(execName)) {
+                    newName = execName;
                 }
             }
         }
@@ -247,8 +241,7 @@ public class ExtractTestCaseHandler extends AbstractHandler {
             new ArrayList<IParamNodePO>(selection.size());
         Iterator it = selection.iterator();
         while (it.hasNext()) {
-            GuiNode selNode = (GuiNode)it.next();
-            modNodes.add((IParamNodePO)selNode.getContent());
+            modNodes.add((IParamNodePO)it.next());
         }
         try {
             ExtractionReturn extractionRet = 

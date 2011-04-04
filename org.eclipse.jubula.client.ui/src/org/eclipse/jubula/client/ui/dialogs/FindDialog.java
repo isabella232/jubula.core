@@ -63,7 +63,7 @@ import org.eclipse.swt.widgets.Shell;
  * 
  * @author BREDEX GmbH
  * @created 22.02.2005
- * @param <NODE> GuiNode or TestResultNodeGUI
+ * @param <NODE> INodePO or TestResultNodeGUI
  */
 public class FindDialog <NODE> implements DisposeListener {
 
@@ -450,7 +450,7 @@ public class FindDialog <NODE> implements DisposeListener {
     }
 
     /**
-     * First flattens GuiNode hierarchy to list, then iterate over list
+     * First flattens INodePO hierarchy to list, then iterate over list
      * 
      * @param queryString
      *            queryString

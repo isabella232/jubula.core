@@ -80,7 +80,6 @@ import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyControl
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.contextprovider.JBContextProvider;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -576,9 +575,9 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
             m_treeViewer.setInput(null);
             m_currentNode = null;
         } else if (!firstElement.equals(oldSelection.getFirstElement())) {
-            if (m_selection.getFirstElement() instanceof GuiNode) {
-                GuiNode guiNode = (GuiNode)m_selection.getFirstElement();
-                m_currentNode = guiNode.getContent();
+            if (m_selection.getFirstElement() instanceof INodePO) {
+                INodePO guiNode = (INodePO)m_selection.getFirstElement();
+                m_currentNode = guiNode;
                 m_treeViewer.setInput(guiNode);
                 workaroundSpringySelection(m_focusCellManager);
             } else {
@@ -779,8 +778,8 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
          *         is a valid gui node. Otherwise returns an empty array.
          */
         private IPropertyDescriptor[] getPropertyDescriptors(Object element) {
-            if (element instanceof GuiNode) {
-                GuiNode guiNodeInput = (GuiNode)element;
+            if (element instanceof INodePO) {
+                INodePO guiNodeInput = (INodePO)element;
                 if (isValid(guiNodeInput)) {
                     IPropertySource propertySource = getPropertySource(element);
                     if (propertySource != null) {
@@ -799,12 +798,11 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
         
         /**
          * 
-         * @param guiNode The gui node to check.
+         * @param node The node to check.
          * @return <code>false</code> if the node is a Test Step with an invalid
          *         component. Otherwise, <code>true</code>. 
          */
-        private boolean isValid(GuiNode guiNode) {
-            INodePO node = guiNode.getContent();
+        private boolean isValid(INodePO node) {
             return node != null && node.isValid();
         }
         

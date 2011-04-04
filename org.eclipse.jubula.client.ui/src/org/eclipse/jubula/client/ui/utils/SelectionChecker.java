@@ -15,17 +15,16 @@ import java.util.Iterator;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
-import org.eclipse.jubula.client.ui.model.CapGUI;
-import org.eclipse.jubula.client.ui.model.CategoryGUI;
-import org.eclipse.jubula.client.ui.model.EventExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.ProjectGUI;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 
 
 /**
@@ -46,9 +45,6 @@ public class SelectionChecker {
     
     /** Constant for ExecTestCases (= every selection is an execTestCase) */
     public static final int EXEC_TESTCASE = 3;
-    
-    /** Constant for SpecTestSuites (= every selection is a specTestSuite) */
-    public static final int SPEC_TESTSUITE = 4;
     
     /** Constant for ExecTestCases with a SpecTestCase as parent (= every selection is an execTestCase with a specTestCase as parent) */
     public static final int CHILD_EXEC_TC = 5;
@@ -113,26 +109,24 @@ public class SelectionChecker {
         Iterator iter = selection.iterator();
         while (iter.hasNext()) {
             Object sel = iter.next();
-            if (sel instanceof TestSuiteGUI) {
+            if (sel instanceof ITestSuitePO) {
                 counter[EXEC_TESTSUITE]++;
-            } else if (sel instanceof SpecTestCaseGUI) {
+            } else if (sel instanceof ISpecTestCasePO) {
                 counter[SPEC_TESTCASE]++;
-            } else if (sel instanceof CapGUI) {
+            } else if (sel instanceof ICapPO) {
                 counter[CAP]++;
-            } else if (sel instanceof EventExecTestCaseGUI) {
+            } else if (sel instanceof IEventExecTestCasePO) {
                 counter[EVENT_TESTCASE]++;
-            } else if (sel instanceof ExecTestCaseGUI) {
-                if (((ExecTestCaseGUI)sel).getParentNode() 
-                        instanceof SpecTestCaseGUI) {
+            } else if (sel instanceof IExecTestCasePO) {
+                if (((IExecTestCasePO)sel).getParentNode() 
+                        instanceof ISpecTestCasePO) {
                     counter[CHILD_EXEC_TC]++;
                 } else {
                     counter[EXEC_TESTCASE]++;
                 }
-            } else if (sel instanceof TestCaseBrowserRootGUI) {
-                counter[SPEC_TESTSUITE]++;
-            } else if (sel instanceof CategoryGUI) {
+            } else if (sel instanceof ICategoryPO) {
                 counter[CATEGORY]++;
-            } else if (sel instanceof ProjectGUI) {
+            } else if (sel instanceof IProjectPO) {
                 counter[PROJECT]++;
             } else if (sel instanceof IObjectMappingAssoziationPO) {
                 counter[OM_TECH_NAME]++;

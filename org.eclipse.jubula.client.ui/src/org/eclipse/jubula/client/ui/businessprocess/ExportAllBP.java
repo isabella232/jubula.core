@@ -19,8 +19,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.osgi.util.NLS;
 
 

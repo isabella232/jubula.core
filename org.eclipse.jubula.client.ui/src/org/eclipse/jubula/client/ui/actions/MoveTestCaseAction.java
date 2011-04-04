@@ -25,6 +25,7 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.CollectComponentNameUsersOp;
 import org.eclipse.jubula.client.core.datastructure.CompNameUsageMap;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -44,18 +45,14 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.ReusedProjectSelectionDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.CategoryGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
-import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
-import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
@@ -78,41 +75,28 @@ public class MoveTestCaseAction extends Action {
      */
     private static class MoveProblem {
         
-        /** referenced test case */
-        private SpecTestCaseGUI m_refNode;
-        
         /** indicated problem node */
-        private GuiNode m_problemNode; 
+        private INodePO m_problemNode; 
 
         /**
          * Constructor
          * 
          * @param problemNode The node that is causing the 
          *                    problem.
-         * @param refNode The referenced test case that is causing the problem.
          */
-        public MoveProblem(GuiNode problemNode, 
-            SpecTestCaseGUI refNode) {
+        public MoveProblem(INodePO problemNode) {
             
             m_problemNode = problemNode;
-            m_refNode = refNode;
         }
 
         /**
          * 
          * @return The node that iscausing the problem.
          */
-        public GuiNode getCause() {
+        public INodePO getCause() {
             return m_problemNode;
         }
         
-        /**
-         * 
-         * @return The reference that is causing the problem.
-         */
-        public SpecTestCaseGUI getReference() {
-            return m_refNode;
-        }
     }
     
     /**
@@ -127,16 +111,16 @@ public class MoveTestCaseAction extends Action {
         private List<MoveProblem> m_problems = new ArrayList<MoveProblem>();
         
         /** list of nodes that are being moved */
-        private List<GuiNode> m_nodesToMove;
+        private List<INodePO> m_nodesToMove;
         
         /**
          * Constructor
          * 
          * @param nodesToMove The nodes that are to be moved.
          */
-        public ProblemSet(List<GuiNode> nodesToMove) {
-            m_nodesToMove = new ArrayList<GuiNode>();
-            for (GuiNode node : nodesToMove) {
+        public ProblemSet(List<INodePO> nodesToMove) {
+            m_nodesToMove = new ArrayList<INodePO>();
+            for (INodePO node : nodesToMove) {
                 addCatChildren(node, m_nodesToMove);
             }
         }
@@ -148,15 +132,11 @@ public class MoveTestCaseAction extends Action {
          * 
          * @param problemNode The node that is causing the 
          *                    problem.
-         * @param refTestCase The referenced test case that is causing the 
-         *                    problem.
          */
-        public void addProblem(GuiNode problemNode, 
-            SpecTestCaseGUI refTestCase) {
+        public void addProblem(INodePO problemNode) {
             
-            if (!m_nodesToMove.contains(refTestCase)) {
-                m_problems.add(new MoveProblem(problemNode.getParentNode(), 
-                    refTestCase));
+            if (!m_nodesToMove.contains(problemNode)) {
+                m_problems.add(new MoveProblem(problemNode.getParentNode()));
             }
         }
         
@@ -208,7 +188,7 @@ public class MoveTestCaseAction extends Action {
             return;
         }
         IStructuredSelection sel = (IStructuredSelection)tcb.getSelection();
-        List<GuiNode> selectionList = sel.toList();
+        List<INodePO> selectionList = sel.toList();
 
         if (!closeRelatedEditors(selectionList)) {
             return;
@@ -268,12 +248,12 @@ public class MoveTestCaseAction extends Action {
      * @return <code>true</code> if all editors were successfully closed. 
      *         Otherwise, <code>false</code>.
      */
-    private boolean closeRelatedEditors(List<GuiNode> selectionList) {
+    private boolean closeRelatedEditors(List<INodePO> selectionList) {
         List<IEditorReference> editorsToClose = 
             new ArrayList<IEditorReference>(); 
-        for (GuiNode guiNode : selectionList) {
+        for (INodePO node : selectionList) {
             IEditorReference editor = 
-                Utils.getEditorRefByPO(guiNode.getContent());
+                Utils.getEditorRefByPO(node);
             if (editor != null) {
                 editorsToClose.add(editor);
             }
@@ -291,7 +271,7 @@ public class MoveTestCaseAction extends Action {
      * @param selectionList the selected Nodes to move.
      * @param selectedProject the selected Project to move to.
      */
-    private void doMove(TestCaseBrowser tcb, List<GuiNode> selectionList, 
+    private void doMove(TestCaseBrowser tcb, List<INodePO> selectionList, 
         IReusedProjectPO selectedProject) {
         // Prepare modification to selected project
         EntityManager sess = null;
@@ -324,10 +304,6 @@ public class MoveTestCaseAction extends Action {
                         GeneralStorage.getInstance().getProject()
                             .getSpecObjCont());
                 
-                // Reparent GuiNodes
-                GuiNode parentNode = TreeBuilder.getGuiNodeByContent(
-                        tcb.getRootGuiNode(), extProject);
-                reparentGuiNodes(selectionList, parentNode);
                 tcb.getTreeViewer().refresh();
             } else {
                 Utils.createMessageDialog(
@@ -354,7 +330,7 @@ public class MoveTestCaseAction extends Action {
      * @throws ToolkitPluginException in case of a ToolkitPlugin error.
      */
     private List<ICapPO> getMoveProblem(IProjectPO extProject, 
-        List<GuiNode> selectionList) throws ToolkitPluginException {
+        List<INodePO> selectionList) throws ToolkitPluginException {
         
         final List<ICapPO> problemCaps = new ArrayList<ICapPO>();
         final String extToolkitId = extProject.getToolkit();
@@ -382,11 +358,10 @@ public class MoveTestCaseAction extends Action {
      * @param selectionList a List of {@link GuiNode}s
      * @return a List of {@link ICapPO}s
      */
-    private List<ICapPO> getCaps(List<GuiNode> selectionList) {
+    private List<ICapPO> getCaps(List<INodePO> selectionList) {
         List<ICapPO> caps = new ArrayList<ICapPO>();
-        for (GuiNode guiNode : selectionList) {
-            final INodePO nodePO = guiNode.getContent();
-            CapBP.getCaps(nodePO, caps);
+        for (INodePO node : selectionList) {
+            CapBP.getCaps(node, caps);
         }
         return caps;
     }
@@ -421,7 +396,7 @@ public class MoveTestCaseAction extends Action {
      * @return The commands necessary to move the given nodes.
      */
     private List<MultipleNodePM.AbstractCmdHandle> createCommands(
-        List<GuiNode> selectionList, 
+        List<INodePO> selectionList, 
         ISpecObjContPO newParent, IProjectPO extProject) throws JBException {
         
         List<MultipleNodePM.AbstractCmdHandle> commands = 
@@ -431,18 +406,15 @@ public class MoveTestCaseAction extends Action {
         final String projGuid = 
             GeneralStorage.getInstance().getProject().getGuid();
         final Long projId = GeneralStorage.getInstance().getProject().getId();
-        for (GuiNode selNode : selectionList) {
+        for (INodePO selNode : selectionList) {
             commands.add(new MultipleNodePM.MoveNodeHandle(
-                selNode.getContent(), 
-                selNode.getParentNode().getContent(), 
-                newParent));
+                selNode, selNode.getParentNode(), newParent));
             
-            List<GuiNode> specTcs = new ArrayList<GuiNode>();
+            List<INodePO> specTcs = new ArrayList<INodePO>();
             List<ISpecTestCasePO> specTcPOs = new ArrayList<ISpecTestCasePO>();
             addCatChildren(selNode, specTcs);
-            for (GuiNode spec : specTcs) {
-                ISpecTestCasePO specTestCasePo = 
-                    (ISpecTestCasePO)spec.getContent();
+            for (INodePO spec : specTcs) {
+                ISpecTestCasePO specTestCasePo = (ISpecTestCasePO)spec;
                 specTcPOs.add(specTestCasePo);
                 CollectComponentNameUsersOp op = 
                     new CollectComponentNameUsersOp(projGuid, projId);
@@ -470,25 +442,6 @@ public class MoveTestCaseAction extends Action {
     }
     
     /**
-     * Reparents the nodes in the given list to the given node.
-     * 
-     * @param selectionList List of nodes to reparent.
-     * @param newParent The new parent for the given nodes.
-     */
-    private void reparentGuiNodes(List<GuiNode> selectionList, 
-        GuiNode newParent) {
-  
-        for (GuiNode node : selectionList) {
-            node.setEditable(false);
-            GuiNode oldParent = node.getParentNode();
-            oldParent.removeNode(node);
-            if (newParent != null) {
-                newParent.addNode(node);
-            }
-        }
-    }
-
-    /**
      * Indicates whether there is a problem with moving the given selection. If
      * there is a problem, it is described by the return value.
      * 
@@ -497,7 +450,7 @@ public class MoveTestCaseAction extends Action {
      *         items. Otherwise, returns a <code>String</code> that represents
      *         the problem.
      */
-    private ProblemSet getMoveProblem(List<GuiNode> selectionList) {
+    private ProblemSet getMoveProblem(List<INodePO> selectionList) {
         ProblemSet problems = new ProblemSet(selectionList);
         getMoveProblem(selectionList, problems);
         return problems;
@@ -510,25 +463,23 @@ public class MoveTestCaseAction extends Action {
      * @param selectionList The elements that are to be moved
      * @param problems All problems with moving the given nodes.
      */
-    private void getMoveProblem(List<GuiNode> selectionList, 
+    private void getMoveProblem(List<INodePO> selectionList, 
         ProblemSet problems) {
         
-        for (GuiNode node : selectionList) {
-            if (node.getContent() instanceof IExecTestCasePO) {
+        for (INodePO node : selectionList) {
+            if (node instanceof IExecTestCasePO) {
                 ISpecTestCasePO refTestCase = 
-                    ((IExecTestCasePO)node.getContent()).getSpecTestCase();
+                    ((IExecTestCasePO)node).getSpecTestCase();
                 if (refTestCase != null) {
                     Long curProjectId = 
                         GeneralStorage.getInstance().getProject().getId();
                     if (refTestCase.getParentProjectId().equals(curProjectId)) {
-                        problems.addProblem(node, 
-                            (SpecTestCaseGUI)recursivlyfindNode(
-                                refTestCase, getSpecView().getRootGuiNode()));
+                        problems.addProblem(node);
                         
                     }
                 }
             } else {
-                getMoveProblem(node.getChildren(), problems);
+                getMoveProblem(node.getUnmodifiableNodeList(), problems);
             }
         }
     }
@@ -552,13 +503,13 @@ public class MoveTestCaseAction extends Action {
      * @param nodeList The node list.
      */
     private static void addCatChildren(
-        GuiNode parentNode, Collection<GuiNode> nodeList) {
+        INodePO parentNode, Collection<INodePO> nodeList) {
         
-        if (parentNode instanceof CategoryGUI) {
-            for (GuiNode node : parentNode.getChildren()) {
+        if (parentNode instanceof ICategoryPO) {
+            for (INodePO node : parentNode.getUnmodifiableNodeList()) {
                 addCatChildren(node, nodeList);
             }
-        } else if (parentNode instanceof SpecTestCaseGUI) {
+        } else if (parentNode instanceof ISpecTestCasePO) {
             nodeList.add(parentNode);
         }
     }
@@ -567,15 +518,15 @@ public class MoveTestCaseAction extends Action {
      * recursivly find the SpecTestCase to an ExecTestCase and shows it in Specification View
      * @param spec the SpecTestCase you are looking for
      * @param current the current GuiNode
-     * @return GuiNode  
+     * @return INodePO  
      */
-    private GuiNode recursivlyfindNode(ISpecTestCasePO spec, 
-        GuiNode current) {
-        if (current.getContent().equals(spec)) {
+    private INodePO recursivlyfindNode(ISpecTestCasePO spec, 
+        INodePO current) {
+        if (current.equals(spec)) {
             return current;
         }
-        for (GuiNode nextNode : current.getChildren()) {
-            GuiNode result = recursivlyfindNode(spec, nextNode);
+        for (INodePO nextNode : current.getUnmodifiableNodeList()) {
+            INodePO result = recursivlyfindNode(spec, nextNode);
             if (result != null) {
                 return result;
             }

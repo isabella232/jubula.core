@@ -25,13 +25,13 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 
@@ -46,16 +46,27 @@ public abstract class AbstractNewTestCaseAction extends Action {
 
     /** the help id */
     private String m_helpid = null;
-    
+
     /**
-     * Constructor.
+     * Constructor
      */
     public AbstractNewTestCaseAction() {
+        this(null);
+    }
+    
+    /**
+     * Constructor
+     * 
+     * @param helpId The Help Context ID to use for the opened dialog.
+     *               May be <code>null</code>.
+     */
+    public AbstractNewTestCaseAction(String helpId) {
         super(Messages.AbstractNewTestCaseActionNewTC);
         setImageDescriptor(IconConstants.NEW_TC_IMAGE_DESCRIPTOR); 
         setDisabledImageDescriptor(IconConstants.
                 NEW_TC_DISABLED_IMAGE_DESCRIPTOR); 
         setEnabled(false);
+        m_helpid = helpId;
     }
 
     /**
@@ -69,11 +80,10 @@ public abstract class AbstractNewTestCaseAction extends Action {
         }
         if (JBEditorHelper.EditableState.OK == tce.getEditorHelper()
                 .requestEditableState()) {
-            GuiNode selectedGuiNode = (GuiNode)((IStructuredSelection)tce
+            INodePO selectedNode = (INodePO)((IStructuredSelection)tce
                     .getTreeViewer().getSelection()).getFirstElement();
             final ISpecTestCasePO editorNode = (ISpecTestCasePO)tce
                     .getEditorHelper().getEditSupport().getWorkVersion();
-            INodePO selectedNode = selectedGuiNode.getContent();
             InputDialog dialog = new InputDialog(Plugin.getShell(),
                     Messages.NewTestCaseActionTCTitle,
                     InitialValueConstants.DEFAULT_TEST_CASE_NAME,
@@ -109,8 +119,9 @@ public abstract class AbstractNewTestCaseAction extends Action {
             }
             if (newSpecTC != null) {
                 Integer index = null;
-                if (!(selectedNode instanceof ISpecTestCasePO)) {
-                    index = getPositionToInsert(editorNode, selectedGuiNode);
+                if (selectedNode instanceof IExecTestCasePO) {
+                    index = getPositionToInsert(
+                            editorNode, (IExecTestCasePO)selectedNode);
                 }
 
                 try {
@@ -133,17 +144,19 @@ public abstract class AbstractNewTestCaseAction extends Action {
     }
     
     /**
-     * @param selectedNodeGUI the currently selected guiNode
+     * @param selectedNode the currently selected guiNode
      * @param workTC the workversion of the current specTC
      * @return the position to add
      */
-    protected abstract Integer getPositionToInsert(ISpecTestCasePO workTC,
-            GuiNode selectedNodeGUI);
-
-    /**
-     * @param helpid the helpid to set
-     */
-    public void setHelpid(String helpid) {
-        m_helpid = helpid;
+    private Integer getPositionToInsert(ISpecTestCasePO workTC, 
+            IExecTestCasePO selectedNode) {
+        
+        int positionToAdd = workTC.indexOf(selectedNode) + 1;
+        if (Plugin.getDefault().getPreferenceStore().getBoolean(
+                Constants.NODE_INSERT_KEY)) {
+            
+            positionToAdd = workTC.getUnmodifiableNodeList().size() + 1;      
+        }
+        return positionToAdd;
     }
 }

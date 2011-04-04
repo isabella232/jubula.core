@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.views;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -30,6 +28,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -45,7 +44,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -56,12 +54,10 @@ import org.eclipse.jubula.client.ui.actions.MoveTestCaseAction;
 import org.eclipse.jubula.client.ui.actions.NewTestCaseActionTCBrowser;
 import org.eclipse.jubula.client.ui.actions.PasteTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
-import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TCBrowserDndSupport;
@@ -69,18 +65,12 @@ import org.eclipse.jubula.client.ui.controllers.dnd.TestSpecDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.CategoryGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseBrowserContentProvider;
-import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.TestCaseBrowserLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
-import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
-import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
@@ -142,7 +132,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         getTreeViewer().setContentProvider(
                 new TestCaseBrowserContentProvider());
         getTreeViewer().setLabelProvider(new DecoratingCellLabelProvider(
-            new GeneralLabelProvider(), Plugin.getDefault()
+            new TestCaseBrowserLabelProvider(), Plugin.getDefault()
                     .getWorkbench().getDecoratorManager().getLabelDecorator()));
         m_cutTreeItemAction = new CutTreeItemActionTCBrowser();
         m_pasteTreeItemAction = new PasteTreeItemActionTCBrowser();
@@ -324,19 +314,13 @@ public class TestCaseBrowser extends AbstractJBTreeView
      * {@inheritDoc}
      */
     protected void rebuildTree() {
-        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
-        List<ISpecPersistable> specList = 
-            currentProject.getSpecObjCont().getSpecObjList();
-        List<IReusedProjectPO> reusedList = new ArrayList<IReusedProjectPO>(
-            currentProject.getUsedProjects());
-        Collections.sort(reusedList);
-        final TestCaseBrowserRootGUI root = 
-            TreeBuilder.buildTestCaseBrowserTree(specList, reusedList);
-        Plugin.getDisplay().syncExec(new Runnable() {
-            public void run() {
-                getTreeViewer().setInput(root);
-            }
-        });
+        IProjectPO activeProject = GeneralStorage.getInstance().getProject();
+        if (activeProject != null) {
+            getTreeViewer().setInput(new IProjectPO[] {activeProject});
+            getTreeViewer().expandToLevel(DEFAULT_EXPANSION);
+        } else {
+            getTreeViewer().setInput(null);
+        }
     }
     
     /**
@@ -363,7 +347,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         public void doubleClick(DoubleClickEvent event) {
             IStructuredSelection selection = getActualSelection();
             int[] counter = SelectionChecker.selectionCounter(selection);
-            if (counter[SelectionChecker.SPEC_TESTSUITE] 
+            if (counter[SelectionChecker.PROJECT] 
                         == selection.size() 
                         || counter[SelectionChecker.CATEGORY] 
                                   == selection.size()) { 
@@ -388,12 +372,12 @@ public class TestCaseBrowser extends AbstractJBTreeView
          * en-/disable cut-action
          * @param selList actual selection list
          */
-        private void enableCutAction(List<GuiNode> selList) {
+        private void enableCutAction(List<INodePO> selList) {
             m_cutTreeItemAction.setEnabled(false);
-            for (GuiNode guiNode : selList) {
-                if (!(guiNode instanceof CategoryGUI 
-                        || guiNode instanceof SpecTestCaseGUI)
-                        || !guiNode.isEditable()) {
+            for (INodePO guiNode : selList) {
+                if (!(guiNode instanceof ICategoryPO 
+                        || guiNode instanceof ISpecTestCasePO)
+                        || !NodeBP.isEditable(guiNode)) {
                     
                     m_cutTreeItemAction.setEnabled(false);
                     return;
@@ -406,15 +390,14 @@ public class TestCaseBrowser extends AbstractJBTreeView
          * en-/disable cut-action
          * @param selList actual selection list
          */
-        private void enablePasteAction(List<GuiNode> selList) {
+        private void enablePasteAction(List<INodePO> selList) {
             m_pasteTreeItemAction.setEnabled(false);
             Object cbContents = getClipboard().getContents(
                     LocalSelectionClipboardTransfer.getInstance());
-            for (GuiNode guiNode : selList) {
-                if (!(guiNode instanceof CategoryGUI 
-                        || guiNode instanceof SpecTestCaseGUI
-                        || guiNode instanceof TestCaseBrowserRootGUI)
-                        || !guiNode.isEditable()
+            for (INodePO guiNode : selList) {
+                if (!(guiNode instanceof ICategoryPO 
+                        || guiNode instanceof ISpecTestCasePO)
+                        || !NodeBP.isEditable(guiNode)
                         || !(cbContents instanceof IStructuredSelection)
                         || !TCBrowserDndSupport.canMove(
                                 (IStructuredSelection)cbContents, guiNode)) {
@@ -430,12 +413,12 @@ public class TestCaseBrowser extends AbstractJBTreeView
          * en-/disable move-action
          * @param selList actual selection list
          */
-        private void enableMoveAction(List<GuiNode> selList) {
+        private void enableMoveAction(List<INodePO> selList) {
             m_moveTestCaseAction.setEnabled(false);
-            for (GuiNode guiNode : selList) {
-                if (!(guiNode instanceof CategoryGUI 
-                        || guiNode instanceof SpecTestCaseGUI)
-                        || !guiNode.isEditable()) {
+            for (INodePO guiNode : selList) {
+                if (!(guiNode instanceof ICategoryPO 
+                        || guiNode instanceof ISpecTestCasePO)
+                        || !NodeBP.isEditable(guiNode)) {
                     
                     m_moveTestCaseAction.setEnabled(false);
                     return;
@@ -448,8 +431,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
          * en-/disable new-action
          * @param selList actual selection list
          */
-        private void enableNewAction(List<GuiNode> selList) {
-            if ((selList.size() > 0) && selList.get(0).isEditable()) {
+        private void enableNewAction(List<INodePO> selList) {
+            if ((selList.size() > 0) && NodeBP.isEditable(selList.get(0))) {
                 m_newTestCaseAction.setEnabled(true);
             } else {
                 m_newTestCaseAction.setEnabled(false);
@@ -484,7 +467,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 m_moveTestCaseAction.setEnabled(false);
             } else {
                 IStructuredSelection sel = (IStructuredSelection)selection;
-                List<GuiNode> selList = sel.toList();
+                List<INodePO> selList = sel.toList();
                 enableCutAction(selList);
                 enablePasteAction(selList);
                 enableMoveAction(selList);
@@ -515,13 +498,13 @@ public class TestCaseBrowser extends AbstractJBTreeView
                     handleProjectLoaded();
                     return;
                 }
-                GuiNode root = (GuiNode)getTreeViewer().getInput();
+                INodePO root = (INodePO)getTreeViewer().getInput();
                 switch (dataState) {
                     case Added:
-                        handleDataAdded(po, root, new NullProgressMonitor());
+                        handleDataAdded(po, new NullProgressMonitor());
                         break;
                     case Deleted:
-                        handleDataDeleted(po, root);
+                        handleDataDeleted(po);
                         break;
                     case Renamed:
                         handleDataRenamed(po);
@@ -541,26 +524,25 @@ public class TestCaseBrowser extends AbstractJBTreeView
      * @param root The root of the GUI tree
      */
     private void handleDataStructureModified(final IPersistentObject po, 
-        GuiNode root) {
+        INodePO root) {
         
         if (po instanceof INodePO) {  
-            // get old expand status
             getTreeViewer().getTree().getParent().setRedraw(false);
-            List<NodeSelection> selElemList = 
-                Utils.getSelectedTreeItems(getTreeViewer());
-            List<Object> expElemList = 
-                Utils.getExpandedTreeItems(getTreeViewer());
+            // retrieve tree state
+            Object[] expandedElements = getTreeViewer().getExpandedElements();
+            ISelection selection = getTreeViewer().getSelection();
+
             // update elements
             if (po instanceof IProjectPO) {
                 rebuildTree();
-            } else {
-                GuiNodeBP.rebuildBrowserGuiNode(root, (INodePO)po);
             }
+
             // refresh treeview
             getTreeViewer().refresh();
-            // restore expand status
-            Utils.restoreTreeState(
-                getTreeViewer(), expElemList, selElemList);
+
+            // restore tree state
+            getTreeViewer().setExpandedElements(expandedElements);
+            getTreeViewer().setSelection(selection);
             getTreeViewer().getTree().getParent().setRedraw(true);
         }
     }
@@ -570,31 +552,22 @@ public class TestCaseBrowser extends AbstractJBTreeView
      */
     private void handleDataRenamed(final IPersistentObject po) {
         if ((po instanceof ISpecTestCasePO || po instanceof ICategoryPO 
-                || po instanceof IExecTestCasePO)
-            && countNodePOsInTree((INodePO)po) > 0) {
+                || po instanceof IExecTestCasePO)) {
   
-            getTreeViewer().refresh();
+            getTreeViewer().update(po, null);
         }
     }
 
     /**
      * @param po The persistent object that was deleted
-     * @param root The root of the GUI tree
      */
-    private void handleDataDeleted(final IPersistentObject po, GuiNode root) {
+    private void handleDataDeleted(final IPersistentObject po) {
         if (po instanceof ISpecTestCasePO
             || po instanceof ICategoryPO) {
-            if (root != null) {
-                GuiNode rootChild = root.getChildren().get(0);
-                TreeIterator ti = new TreeIterator(rootChild);
-                final GuiNode parentGui = ti.getGuiNodeOfNodePO(
-                    (INodePO)po).get(0).getParentNode();
-                GuiNodeBP.deleteGuiNode(rootChild, (INodePO)po);
+            if (getTreeViewer() != null) {
                 Plugin.getDisplay().syncExec(new Runnable() {
                     public void run() {
                         getTreeViewer().refresh();
-                        getTreeViewer().setSelection(
-                            new StructuredSelection(parentGui));
                     }
                 });
             }
@@ -610,22 +583,16 @@ public class TestCaseBrowser extends AbstractJBTreeView
 
     /**
      * @param po The persistent object that was added
-     * @param root The root of the GUI tree
      * @param monitor The progress monitor for this potentially long-running 
      *                operation.
      */
-    private void handleDataAdded(final IPersistentObject po, GuiNode root, 
-        IProgressMonitor monitor) {
+    private void handleDataAdded(final IPersistentObject po, 
+            IProgressMonitor monitor) {
         if (po instanceof ISpecTestCasePO
                 || po instanceof ICategoryPO) {
-            if (root != null) {
-                GuiNode rootChild = root.getChildren().get(0);
-                GuiNode newNode = GuiNodeBP.addGUINode(rootChild, 
-                    (INodePO)po, null, monitor);
-                getTreeViewer().refresh();
-                getTreeViewer().setSelection(
-                    new StructuredSelection(newNode), true);
-            }
+            getTreeViewer().refresh();
+            getTreeViewer().setSelection(
+                new StructuredSelection(po), true);
         } else if (po instanceof IProjectPO) {
             handleProjectLoaded();
         }

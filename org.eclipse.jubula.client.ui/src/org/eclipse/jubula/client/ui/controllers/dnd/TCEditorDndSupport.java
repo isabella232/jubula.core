@@ -19,8 +19,13 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamCheckBP.SpecTcParamRefCheck;
+import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -31,13 +36,6 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
-import org.eclipse.jubula.client.ui.model.CapGUI;
-import org.eclipse.jubula.client.ui.model.CategoryGUI;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.ui.IViewPart;
 
@@ -70,7 +68,7 @@ public class TCEditorDndSupport {
      *         Otherwise <code>false</code>.
      */
     public static boolean performDrop(AbstractTestCaseEditor targetEditor,
-            IStructuredSelection toDrop, GuiNode dropTarget, int dropPosition) {
+            IStructuredSelection toDrop, INodePO dropTarget, int dropPosition) {
         if (targetEditor.getEditorHelper().requestEditableState() 
                 != JBEditorHelper.EditableState.OK) {
             return false;
@@ -79,35 +77,35 @@ public class TCEditorDndSupport {
         Collections.reverse(selectedElements);
         Iterator iter = selectedElements.iterator();
         while (iter.hasNext()) {
-            GuiNode droppedNode = null;
+            INodePO droppedNode = null;
             Object obj = iter.next();
-            if (!(obj instanceof GuiNode)) {
+            if (!(obj instanceof INodePO)) {
                 return false;
             }
-            GuiNode node = (GuiNode)obj;
-            if (node instanceof CapGUI || node instanceof ExecTestCaseGUI) {
-                GuiNode target = dropTarget;
+            INodePO node = (INodePO)obj;
+            if (node instanceof ICapPO || node instanceof IExecTestCasePO) {
+                INodePO target = dropTarget;
                 if (target != node
-                    && (target instanceof CapGUI 
-                        || target instanceof ExecTestCaseGUI)) {
+                    && (target instanceof ICapPO 
+                        || target instanceof IExecTestCasePO)) {
                         
                     droppedNode = moveNode(node, target);
                 }
             }
-            if (node instanceof SpecTestCaseGUI) {
-                GuiNode target = dropTarget;
+            if (node instanceof ISpecTestCasePO) {
+                INodePO target = dropTarget;
                 if (target != node) {
                     try {
-                        if (target instanceof CapGUI 
-                            || target instanceof ExecTestCaseGUI) {
+                        if (target instanceof ICapPO 
+                            || target instanceof IExecTestCasePO) {
                             dropOnCAPorExecTc(node, target, dropPosition);
-                        } else if (target instanceof SpecTestCaseGUI) {
+                        } else if (target instanceof ISpecTestCasePO) {
                             dropOnSpecTc(node, target);
-                        } else if (node instanceof SpecTestCaseGUI 
-                                && target instanceof TestSuiteGUI) {
+                        } else if (node instanceof ISpecTestCasePO 
+                                && target instanceof ITestSuitePO) {
                                 
-                            dropOnTestsuite((TestSuiteGUI)target, 
-                                    (SpecTestCaseGUI)node);
+                            dropOnTestsuite((ITestSuitePO)target, 
+                                    (ISpecTestCasePO)node);
                         }
                     } catch (PMException e) {
                         NodeEditorInput inp = (NodeEditorInput)targetEditor.
@@ -158,7 +156,7 @@ public class TCEditorDndSupport {
      *         drop/paste is valid. Otherwise <code>false</code>.
      */
     public static boolean validateDrop(Viewer sourceViewer, Viewer targetViewer,
-            IStructuredSelection toDrop, GuiNode dropTarget, 
+            IStructuredSelection toDrop, INodePO dropTarget, 
             boolean allowFromBrowser) {
         
         if (toDrop == null || toDrop.isEmpty() || dropTarget == null) {
@@ -182,33 +180,32 @@ public class TCEditorDndSupport {
         Iterator iter = toDrop.iterator();
         while (iter.hasNext()) {
             Object obj = iter.next();
-            if (!(obj instanceof GuiNode)) {
+            if (!(obj instanceof INodePO)) {
                 return false;
             } 
-            GuiNode transferGUI = (GuiNode)obj;
-            GuiNode parentNode = transferGUI.getParentNode();
-            if (!(parentNode instanceof SpecTestCaseGUI)
-                    && !(parentNode instanceof TestCaseBrowserRootGUI)
-                    && !(parentNode instanceof CategoryGUI)) {
+            INodePO transferGUI = (INodePO)obj;
+            INodePO parentNode = transferGUI.getParentNode();
+            if (!(parentNode instanceof ISpecTestCasePO)
+                    && !(parentNode instanceof IProjectPO)
+                    && !(parentNode instanceof ICategoryPO)) {
                 return false;
             }
-            if (!(transferGUI instanceof SpecTestCaseGUI) 
+            if (!(transferGUI instanceof ISpecTestCasePO) 
                     && transferGUI.getParentNode() 
                         != dropTarget.getParentNode()) {
                 return false;
             }
-            SpecTestCaseGUI specTcGUI;
-            if (!(dropTarget instanceof SpecTestCaseGUI)) {
-                specTcGUI = (SpecTestCaseGUI)dropTarget.getParentNode();
+            ISpecTestCasePO specTcGUI;
+            if (!(dropTarget instanceof ISpecTestCasePO)) {
+                specTcGUI = (ISpecTestCasePO)dropTarget.getParentNode();
             } else {
-                specTcGUI = (SpecTestCaseGUI)dropTarget;
+                specTcGUI = (ISpecTestCasePO)dropTarget;
             }
-            if (!(transferGUI instanceof SpecTestCaseGUI)) {
+            if (!(transferGUI instanceof ISpecTestCasePO)) {
                 continue;
             }
-            SpecTestCaseGUI childGUI = (SpecTestCaseGUI)transferGUI;
-            if (childGUI.getContent().hasCircularDependences(
-                specTcGUI.getContent())) {
+            ISpecTestCasePO childGUI = (ISpecTestCasePO)transferGUI;
+            if (childGUI.hasCircularDependences(specTcGUI)) {
                 
                 return false;
             }
@@ -236,32 +233,31 @@ public class TCEditorDndSupport {
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
      */
-    private static void dropOnSpecTc(GuiNode node, GuiNode target)
+    private static void dropOnSpecTc(INodePO node, INodePO target)
         throws PMReadException, PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
-        getTCBrowser().addReferencedTestCase(
-                (ISpecTestCasePO)node.getContent(), target.getContent(), 0);
+        getTCBrowser().addReferencedTestCase((ISpecTestCasePO)node, target, 0);
     }
     
     /**
      * Drops the given TestCase on the given TestSuite.
      * The TestCase will be inserted at the end.
-     * @param testSuiteGUI the TestSuite to drop on
+     * @param testSuite the TestSuite to drop on
      * @param testcaseGUI the TestCAse to drop
-     * @throws PMReadException in case of persistance error
-     * @throws PMAlreadyLockedException in case of persistance error
-     * @throws PMDirtyVersionException in case of persistance error
-     * @throws PMException in case of persistance error
+     * @throws PMReadException in case of persistence error
+     * @throws PMAlreadyLockedException in case of persistence error
+     * @throws PMDirtyVersionException in case of persistence error
+     * @throws PMException in case of persistence error
      */
-    private static void dropOnTestsuite(TestSuiteGUI testSuiteGUI, 
-            SpecTestCaseGUI testcaseGUI) 
+    private static void dropOnTestsuite(ITestSuitePO testSuite, 
+            ISpecTestCasePO testcaseGUI) 
         throws PMReadException, PMAlreadyLockedException, 
         PMDirtyVersionException, PMException {
         
         if (getTCBrowser() != null) {
             getTCBrowser().addReferencedTestCase(
-                    (ISpecTestCasePO)testcaseGUI.getContent(), 
-                    testSuiteGUI.getContent(), 0);
+                    (ISpecTestCasePO)testcaseGUI, 
+                    testSuite, 0);
         }
     }
 
@@ -276,18 +272,17 @@ public class TCEditorDndSupport {
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
      */
-    private static void dropOnCAPorExecTc(GuiNode node, GuiNode target,
+    private static void dropOnCAPorExecTc(INodePO node, INodePO target,
             int location) throws PMReadException, PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
-        SpecTestCaseGUI specTcGUItoDrop = (SpecTestCaseGUI)node;
-        GuiNode parentGUI = target.getParentNode();
+        ISpecTestCasePO specTcGUItoDrop = (ISpecTestCasePO)node;
+        INodePO parentGUI = target.getParentNode();
         int position = parentGUI.indexOf(target);
         if (location != ViewerDropAdapter.LOCATION_BEFORE) {
             position++;
         }
         getTCBrowser().addReferencedTestCase(
-                (ISpecTestCasePO)specTcGUItoDrop.getContent(),
-                parentGUI.getContent(), position);
+                (ISpecTestCasePO)specTcGUItoDrop, parentGUI, position);
     }
 
     /**
@@ -295,15 +290,10 @@ public class TCEditorDndSupport {
      * @param target the target node.
      * @return the dropped GuiNode.
      */
-    private static GuiNode moveNode(GuiNode node, GuiNode target) {
-        int actualPos = node.getParentNode().getChildren().indexOf(node);
+    private static INodePO moveNode(INodePO node, INodePO target) {
         int newPos = target.getParentNode().indexOf(target);
-        node.getParentNode().moveNode(actualPos, newPos);
-        // the real model
-        node.getParentNode().getContent()
-            .removeNode(node.getContent());
-        target.getParentNode().getContent()
-            .addNode(newPos, node.getContent());
+        node.getParentNode().removeNode(node);
+        target.getParentNode().addNode(newPos, node);
         return node;
     }
 
@@ -312,7 +302,7 @@ public class TCEditorDndSupport {
      * @param node the dropped node. 
      * @param targetEditor The editor to which the item has been dropped/pasted.
      */
-    private static void postDropAction(GuiNode node, 
+    private static void postDropAction(INodePO node, 
             AbstractTestCaseEditor targetEditor) {
         targetEditor.setFocus();
         if (node != null) {

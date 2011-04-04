@@ -37,7 +37,7 @@ public class ContentAssistedTextPropertyDescriptor extends PropertyDescriptor {
     /**
      * The integer style that indicates how an accepted proposal affects the 
      * control's content. 
-     * See {@link ContentProposalAdapter#setProposalAcceptanceStyle(int)}.
+     * See {@link org.eclipse.jface.fieldassist.ContentProposalAdapter#setProposalAcceptanceStyle(int)}.
      */
     private int m_proposalAcceptanceStyle;
     
@@ -55,7 +55,7 @@ public class ContentAssistedTextPropertyDescriptor extends PropertyDescriptor {
      * @param proposalAcceptanceStyle
      *         The integer style that indicates how an accepted proposal 
      *         affects the control's content. See 
-     *         {@link ContentProposalAdapter#setProposalAcceptanceStyle(int)}.
+     *         {@link org.eclipse.jface.fieldassist.ContentProposalAdapter#setProposalAcceptanceStyle(int)}.
      */
     public ContentAssistedTextPropertyDescriptor(Object id, String displayName, 
             IContentProposalProvider contentProposalProvider, 

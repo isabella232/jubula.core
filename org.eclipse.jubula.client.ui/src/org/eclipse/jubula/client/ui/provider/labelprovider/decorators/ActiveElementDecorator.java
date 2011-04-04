@@ -15,7 +15,6 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 
 
 /**
@@ -34,9 +33,8 @@ public class ActiveElementDecorator extends LabelProvider implements
      * {@inheritDoc}
      */
     public void decorate(Object element, IDecoration decoration) {
-        if (element instanceof GuiNode) {
-            GuiNode gnode = (GuiNode) element;
-            INodePO node = gnode.getContent();
+        if (element instanceof INodePO) {
+            INodePO node = (INodePO)element;
             if (node != null && !node.isActive()) {
                 decoration.addPrefix(INACTIVE_PREFIX);
                 decoration.setForegroundColor(Layout.INACTIVE_COLOR);

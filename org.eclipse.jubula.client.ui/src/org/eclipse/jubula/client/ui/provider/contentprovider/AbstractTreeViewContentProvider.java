@@ -12,10 +12,13 @@ package org.eclipse.jubula.client.ui.provider.contentprovider;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
+import org.eclipse.jubula.client.core.model.ITestJobContPO;
+import org.eclipse.jubula.client.core.model.ITestSuiteContPO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -50,8 +53,12 @@ public abstract class AbstractTreeViewContentProvider
 
     /** {@inheritDoc} */
     public Object getParent(Object element) {
-        if (element instanceof GuiNode) {
-            return ((GuiNode)element).getParentNode();
+        if (element instanceof INodePO) {
+            return ((INodePO)element).getParentNode();
+        }
+        if (element instanceof ITestSuiteContPO
+                || element instanceof ITestJobContPO) {
+            return GeneralStorage.getInstance().getProject();
         }
         if (element instanceof ITestDataCubeContPO
                 || element instanceof ITestDataCubePO
@@ -62,4 +69,5 @@ public abstract class AbstractTreeViewContentProvider
                 + StringConstants.EXCLAMATION_MARK);
         return null;
     }
+
 }

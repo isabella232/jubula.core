@@ -15,17 +15,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.MoveNodeHandle;
+import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.model.CategoryGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.ui.IViewPart;
@@ -62,24 +61,21 @@ public class TCBrowserDndSupport {
         while (iter.hasNext()) {
             Object obj = iter.next();
             // check the object to drag
-            if ((!(obj instanceof SpecTestCaseGUI) 
-                    && !(obj instanceof CategoryGUI))
-                || (obj instanceof GuiNode 
-                    && !((GuiNode)obj).isEditable())) {
+            if ((!(obj instanceof ISpecTestCasePO) 
+                    && !(obj instanceof ICategoryPO))
+                || (obj instanceof INodePO 
+                    && !NodeBP.isEditable((INodePO)obj))) {
                 
                 return false;
             }
             // check the object to drop on (target)
-            if ((!(target instanceof CategoryGUI) 
-                    && !(target instanceof TestCaseBrowserRootGUI))
-                || (target instanceof GuiNode
-                    && !((GuiNode)target).isEditable())) {
+            if (!(target instanceof ICategoryPO)
+                    || (target instanceof INodePO
+                            && !NodeBP.isEditable((INodePO)target))) {
                 
                 return false;
             }
-            if (((GuiNode)obj).getContent().hasCircularDependences(
-                ((GuiNode)target).getContent())) {
-                
+            if (((INodePO)obj).hasCircularDependences(((INodePO)target))) {
                 return false;
             }
         }
@@ -93,8 +89,8 @@ public class TCBrowserDndSupport {
      * @param nodesToBeMoved The nodes to move.
      * @param target The target location.
      */
-    public static void moveNodes(List<GuiNode> nodesToBeMoved, 
-            GuiNode target) throws PMException, ProjectDeletedException {
+    public static void moveNodes(List<INodePO> nodesToBeMoved, 
+            INodePO target) throws PMException, ProjectDeletedException {
         if (getSpecView() != null) {
             doMove(nodesToBeMoved, target);
         }
@@ -106,32 +102,28 @@ public class TCBrowserDndSupport {
      * @param target
      *      GuiNode
      * @param nodes
-     *      List <GuiNode>
+     *      List <INodePO>
      */
-    private static void doMove(List <GuiNode> nodes, GuiNode target) 
+    private static void doMove(List <INodePO> nodes, INodePO target) 
         throws PMException, ProjectDeletedException {
 
         // persist changes into database
         List<AbstractCmdHandle> cmds = new ArrayList<AbstractCmdHandle>();
-        for (GuiNode node : nodes) {
-            INodePO nodeToMove = node.getContent();
+        for (INodePO nodeToMove : nodes) {
 
             // determine old parent
-            INodePO oldParent = node.getParentNode().getContent();
-            
-            // determine new parent
-            INodePO newParent = target.getContent();
+            INodePO oldParent = nodeToMove.getParentNode();
             
             // create command
-            cmds.add(new MoveNodeHandle(nodeToMove, oldParent, newParent));
+            cmds.add(new MoveNodeHandle(nodeToMove, oldParent, target));
         }
         
         // execute commands in mastersession
         MultipleNodePM.getInstance().executeCommands(cmds);
 
         // do gui updates
-        for (GuiNode node : nodes) {
-            GuiNode oldParent = node.getParentNode();
+        for (INodePO node : nodes) {
+            INodePO oldParent = node.getParentNode();
             oldParent.removeNode(node);
             target.addNode(node);
         }

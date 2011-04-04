@@ -28,8 +28,6 @@ import org.eclipse.jubula.client.ui.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.editors.NodeEditorInput;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.ISelectionListener;
@@ -56,12 +54,12 @@ public abstract class AbstractReferenceExistingTestCase
                     instanceof IStructuredSelection)) {
                 return null;
             }
-            GuiNode guiNode = (GuiNode)((IStructuredSelection)tce
+            INodePO guiNode = (INodePO)((IStructuredSelection)tce
                     .getTreeViewer().getSelection()).getFirstElement();
             if (guiNode == null) { // check for existing selection
                 return null;
             }
-            final Integer index = getPositionToInsert(editorNode, guiNode);
+            final Integer index = editorNode.indexOf(guiNode);
             ISelectionListener listener = new ISelectionListener() {
                 public void selectionChanged(IWorkbenchPart part,
                         ISelection selection) {
@@ -74,11 +72,8 @@ public abstract class AbstractReferenceExistingTestCase
                     Iterator iter = selectedElements.iterator();
                     try {
                         while (iter.hasNext()) {
-                            SpecTestCaseGUI specTcGUI = (SpecTestCaseGUI)iter
-                                    .next();
                             ISpecTestCasePO specTcToInsert = 
-                                (ISpecTestCasePO)specTcGUI
-                                    .getContent();
+                                (ISpecTestCasePO)iter.next();
                             try {
                                 tce.getTCBrowser().addReferencedTestCase(
                                         specTcToInsert, editorNode, index);
@@ -118,11 +113,4 @@ public abstract class AbstractReferenceExistingTestCase
         return null;
     }
     
-    /**
-     * @param selectedNodeGUI the currently selected guiNode
-     * @param workVersion the workversion of the current nodePO
-     * @return the position to add
-     */
-    protected abstract Integer getPositionToInsert(INodePO workVersion,
-            GuiNode selectedNodeGUI);
 }

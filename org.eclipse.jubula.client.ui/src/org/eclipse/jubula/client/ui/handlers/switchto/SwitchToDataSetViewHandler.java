@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.handlers.switchto;
 
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.views.dataset.AbstractDataSetPage;
-import org.eclipse.jubula.client.ui.views.dataset.DataSetView;
 import org.eclipse.jubula.client.ui.views.dataset.AbstractDataSetPage.DSVTableCursor;
+import org.eclipse.jubula.client.ui.views.dataset.DataSetView;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.IPage;
 

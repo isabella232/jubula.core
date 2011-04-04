@@ -15,14 +15,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 
 
 /**
- * This class iterates in trees based on <code>GuiNodes</code>.
+ * This class iterates in trees based on <code>INodePO</code>s.
  *
  * @author BREDEX GmbH
  * @created 08.01.2005
@@ -30,15 +29,15 @@ import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 public class TreeIterator {
 
     /** Linear List of tree elements */
-    private List<GuiNode> m_elements = new LinkedList<GuiNode>();
+    private List<INodePO> m_elements = new LinkedList<INodePO>();
     /** Iterator to iterate over the element list */
-    private Iterator<GuiNode> m_iter;
+    private Iterator<INodePO> m_iter;
  
     /**
      * Constructor.
      * @param root the root of the tree.
      */
-    public TreeIterator(GuiNode root) {
+    public TreeIterator(INodePO root) {
         m_elements.add(root);
         setElements(root);
         m_iter = m_elements.iterator();
@@ -50,7 +49,7 @@ public class TreeIterator {
      * @param filter An array of Class. 
      * Only objects of instance of the given classes will be iterated.
      */
-    public TreeIterator(GuiNode root, Class[] filter) {
+    public TreeIterator(INodePO root, Class[] filter) {
         this(root);
         filterElements(filter);
     }
@@ -59,11 +58,11 @@ public class TreeIterator {
      * @param filter the classes of the elements which are to be iterated.
      */
     private void filterElements(Class[] filter) {
-        List<GuiNode> filteredElements = new ArrayList<GuiNode>(25);
+        List<INodePO> filteredElements = new ArrayList<INodePO>(25);
         int filterLength = filter.length;
         for (int i = 0; i < filterLength; i++) {
             Class filteredClass = filter[i];
-            for (GuiNode element : m_elements) {
+            for (INodePO element : m_elements) {
                 if (filteredClass.isInstance(element)) {
                     filteredElements.add(element);
                 }
@@ -76,7 +75,7 @@ public class TreeIterator {
     /**
      * @return The next element in the iteration.
      */
-    public GuiNode next() {
+    public INodePO next() {
         return m_iter.next();
     }
     
@@ -92,16 +91,16 @@ public class TreeIterator {
      * Creates the linear list of tree elements inclusive the root.
      * @param root a <code>GuiNode</code> value. The root of the tree.
      */
-    protected void setElements(GuiNode root) {
+    protected void setElements(INodePO root) {
         if (root == null) {
             return;
         }
-        final List<GuiNode> nodes = root.getChildren();
-        for (GuiNode nextNode : nodes) {
+        final List<INodePO> nodes = root.getUnmodifiableNodeList();
+        for (INodePO nextNode : nodes) {
             if (nextNode != null) {
                 m_elements.add(nextNode);
-                if (nextNode instanceof ExecTestCaseGUI) {
-                    final SpecTestCaseGUI specTestCase = ((ExecTestCaseGUI)
+                if (nextNode instanceof IExecTestCasePO) {
+                    final ISpecTestCasePO specTestCase = ((IExecTestCasePO)
                             nextNode).getSpecTestCase();
                     if (specTestCase != null) {
                         m_elements.add(specTestCase);
@@ -116,11 +115,11 @@ public class TreeIterator {
      * @param node the nodePO
      * @return the equivalent GuiNode(s) of the given nodePO
      */
-    public List<GuiNode> getGuiNodeOfNodePO(INodePO node) {
-        List<GuiNode> guiNodeList = new ArrayList<GuiNode>(0);
+    public List<INodePO> getGuiNodeOfNodePO(INodePO node) {
+        List<INodePO> guiNodeList = new ArrayList<INodePO>(0);
         if (node != null) {
-            for (GuiNode guiNode : m_elements) {
-                if ((guiNode != null) && (node.equals(guiNode.getContent()))) {
+            for (INodePO guiNode : m_elements) {
+                if (node.equals(guiNode)) {
                     guiNodeList.add(guiNode);
                 }
             }
@@ -131,7 +130,7 @@ public class TreeIterator {
     /**
      * @return Returns the elements.
      */
-    protected List<GuiNode> getElements() {
+    protected List<INodePO> getElements() {
         return m_elements;
     }
 }

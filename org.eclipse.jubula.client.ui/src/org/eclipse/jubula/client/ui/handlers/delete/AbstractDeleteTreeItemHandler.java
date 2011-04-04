@@ -16,8 +16,8 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 
 
 /**
@@ -38,8 +38,8 @@ public abstract class AbstractDeleteTreeItemHandler extends AbstractHandler {
     protected boolean confirmDelete(IStructuredSelection sel) {
         List<String> itemNames = new ArrayList<String>();
         for (Object obj : sel.toList()) {
-            if (obj instanceof GuiNode) {
-                itemNames.add(((GuiNode)obj).getName());
+            if (obj instanceof INodePO) {
+                itemNames.add(((INodePO)obj).getName());
             } else {
                 String name = getName(obj);
                 if (!StringUtils.isBlank(name)) {

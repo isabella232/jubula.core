@@ -13,10 +13,10 @@ package org.eclipse.jubula.client.ui.controllers.dnd;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.swt.dnd.TransferData;
 
 
@@ -48,13 +48,14 @@ public class TJEditorDropTargetListener extends GuiNodeViewerDropAdapter {
         Object target = getCurrentTarget();
         int location = getCurrentLocation();
         if (target == null) {
-            target = getFallbackTarget(getViewer());
+            target = m_editor.getEditorHelper()
+                .getEditSupport().getWorkVersion();
             location = ViewerDropAdapter.LOCATION_AFTER;
         }
         if (selection instanceof StructuredSelection 
-                && target instanceof GuiNode) {
+                && target instanceof INodePO) {
             return TJEditorDndSupport.performDrop(m_editor, 
-                    selection, (GuiNode)target, 
+                    selection, (INodePO)target, 
                     location);
         }
 
@@ -71,11 +72,12 @@ public class TJEditorDropTargetListener extends GuiNodeViewerDropAdapter {
         if (selection instanceof StructuredSelection) {
             Object targetNode = target;
             if (targetNode == null) {
-                targetNode = getFallbackTarget(getViewer());
+                targetNode = m_editor.getEditorHelper()
+                    .getEditSupport().getWorkVersion();
             }
-            if (targetNode instanceof GuiNode) {
+            if (targetNode instanceof INodePO) {
                 return TJEditorDndSupport.validateDrop(transfer.getSource(),
-                        getViewer(), selection, (GuiNode)targetNode, true);
+                        getViewer(), selection, (INodePO)targetNode, true);
             }
         }
 

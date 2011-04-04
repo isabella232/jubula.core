@@ -33,15 +33,14 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
-import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteCatHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteEvHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTCHandle;
+import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -86,11 +85,11 @@ public class DeleteTreeItemHandlerTCBrowser
      */
     private void deleteSelection(IStructuredSelection selection) {
         // cleanup set for entries, that are children of other contained nodes
-        Set <GuiNode> set = new HashSet<GuiNode>(selection.toList());
+        Set <INodePO> set = new HashSet<INodePO>(selection.toList());
         Set <INodePO> topNodesToDelete = new HashSet<INodePO>();
-        for (GuiNode node : set) {
+        for (INodePO node : set) {
             if (!containsParent(set, node)) {
-                topNodesToDelete.add(node.getContent());
+                topNodesToDelete.add(node);
             }
         }
 
@@ -214,14 +213,14 @@ public class DeleteTreeItemHandlerTCBrowser
     /**
      * checks if a set contains any parent node of a  specified node
      * @param set
-     *      Set<GuiNode> set
+     *      Set<INodePO> set
      * @param node
      *      GuiNode
      * @return
      *      true if any parent is already in set
      */
-    private boolean containsParent(Set<GuiNode> set, GuiNode node) {
-        GuiNode parent = node.getParentNode();
+    private boolean containsParent(Set<INodePO> set, INodePO node) {
+        INodePO parent = node.getParentNode();
         while (parent != null) {
             if (set.contains(parent)) {
                 return true;
@@ -232,7 +231,7 @@ public class DeleteTreeItemHandlerTCBrowser
     }
 
     /**
-     * Creates a String with the locations of use of the given SpecTestCaseGUI.
+     * Creates a String with the locations of use of the given ISpecTestCasePO.
      * @param specTcPO a SpecTestCasePO
      * @param reusesSet
      *      List <IExecTestCasePO>

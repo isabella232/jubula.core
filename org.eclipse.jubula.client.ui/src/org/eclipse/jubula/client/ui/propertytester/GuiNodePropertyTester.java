@@ -13,13 +13,14 @@ package org.eclipse.jubula.client.ui.propertytester;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.osgi.util.NLS;
 
 
 /**
- * PropertyTester for GuiNode objects.
+ * PropertyTester for INodePO objects.
  *
  * @author BREDEX GmbH
  * @created Jan 13, 2009
@@ -40,8 +41,8 @@ public class GuiNodePropertyTester extends PropertyTester {
     public boolean test(Object receiver, String property, Object[] args,
             Object expectedValue) {
 
-        if (receiver instanceof GuiNode) {
-            GuiNode guiNode = (GuiNode)receiver;
+        if (receiver instanceof INodePO) {
+            INodePO guiNode = (INodePO)receiver;
             if (property.equals(EDITABLE_PROP)) {
                 boolean isEditable = testIsEditable(guiNode);
                 boolean expectedBoolean = expectedValue instanceof Boolean 
@@ -63,10 +64,10 @@ public class GuiNodePropertyTester extends PropertyTester {
 
     /**
      * 
-     * @param guiNode The node for which to check the editabilty.
+     * @param node The node for which to check the editabilty.
      * @return the results of <code>guiNode.isEditable()</code>.
      */
-    private boolean testIsEditable(GuiNode guiNode) {
-        return guiNode.isEditable();
+    private boolean testIsEditable(INodePO node) {
+        return NodeBP.isEditable(node);
     }
 }

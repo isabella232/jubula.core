@@ -19,8 +19,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.ui.search.data.StructureSearchData;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData.SearchableType;
+import org.eclipse.jubula.client.ui.search.data.StructureSearchData;
 
 
 /**

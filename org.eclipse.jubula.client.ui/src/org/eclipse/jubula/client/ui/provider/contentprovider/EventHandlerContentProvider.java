@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2004, 2011 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,35 +10,17 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
-import java.util.Arrays;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-
 
 /**
  * @author BREDEX GmbH
- * @created 05.04.2005
+ * @created 01.04.2011
  */
-public class TestCaseEditorContentProvider implements ITreeContentProvider {
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof ISpecTestCasePO) {
-            return ((ISpecTestCasePO)parentElement)
-                .getUnmodifiableNodeList().toArray();
-        }
-        
-        return ArrayUtils.EMPTY_OBJECT_ARRAY;
-    }
+public class EventHandlerContentProvider implements ITreeContentProvider {
 
     /**
      * 
@@ -53,7 +35,9 @@ public class TestCaseEditorContentProvider implements ITreeContentProvider {
      * {@inheritDoc}
      */
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-        // no-op
+        // only accept a Test Case
+        Validate.isTrue(
+                newInput == null || newInput instanceof ISpecTestCasePO);
     }
 
     /**
@@ -61,10 +45,16 @@ public class TestCaseEditorContentProvider implements ITreeContentProvider {
      * {@inheritDoc}
      */
     public Object[] getElements(Object inputElement) {
-        Validate.isTrue(inputElement instanceof INodePO[]);
+        ISpecTestCasePO testCase = (ISpecTestCasePO)inputElement;
+        return testCase.getEventExecTcMap().values().toArray();
+    }
 
-        INodePO[] inputArray = (INodePO[])inputElement;
-        return Arrays.copyOf(inputArray, inputArray.length);
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public Object[] getChildren(Object parentElement) {
+        return ArrayUtils.EMPTY_OBJECT_ARRAY;
     }
 
     /**
@@ -72,10 +62,8 @@ public class TestCaseEditorContentProvider implements ITreeContentProvider {
      * {@inheritDoc}
      */
     public Object getParent(Object element) {
-        if (element instanceof IExecTestCasePO) {
-            return ((IExecTestCasePO)element).getParentNode();
-        }
-        
+        // since the tree is only 1 level deep, there's no need to worry about
+        // proper expansion. so we can just return null here.
         return null;
     }
 
@@ -84,11 +72,8 @@ public class TestCaseEditorContentProvider implements ITreeContentProvider {
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {
-        if (element instanceof ISpecTestCasePO) {
-            return ((ISpecTestCasePO)element).getNodeListSize() > 0;
-        }
-        
+        // since the tree is only 1 level deep, no element will have children.
         return false;
-    }   
-    
+    }
+
 }

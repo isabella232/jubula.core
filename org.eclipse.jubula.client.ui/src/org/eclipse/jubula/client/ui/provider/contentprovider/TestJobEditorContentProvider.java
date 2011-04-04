@@ -10,25 +10,84 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
-import org.eclipse.jubula.client.ui.model.GuiNode;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.Validate;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
 
 
 /**
  * @author BREDEX GmbH
  * @created Mar 17, 2010
  */
-public class TestJobEditorContentProvider extends
-        AbstractTreeViewContentProvider {
+public class TestJobEditorContentProvider implements ITreeContentProvider {
 
     /**
+     * 
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
-        GuiNode data = (GuiNode)parentElement;
-        List<GuiNode> list = new ArrayList<GuiNode>(data.getChildren());
-        return list.toArray();
+        if (parentElement instanceof ITestJobPO) {
+            return ((ITestJobPO)parentElement)
+                .getUnmodifiableNodeList().toArray();
+        }
+
+        return ArrayUtils.EMPTY_OBJECT_ARRAY;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void dispose() {
+        // no-op
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+        // no-op
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public Object[] getElements(Object inputElement) {
+        Validate.isTrue(inputElement instanceof INodePO[]);
+
+        INodePO[] inputArray = (INodePO[])inputElement;
+        return Arrays.copyOf(inputArray, inputArray.length);
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public Object getParent(Object element) {
+        if (element instanceof IRefTestSuitePO) {
+            return ((IRefTestSuitePO)element).getParentNode();
+        }
+        
+        return null;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public boolean hasChildren(Object element) {
+        if (element instanceof ITestJobPO) {
+            return ((ITestJobPO)element).getNodeListSize() > 0;
+        }
+
+        return false;
     }
 }

@@ -11,11 +11,10 @@
 package org.eclipse.jubula.client.ui.handlers.open;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.ProjectGUI;
 import org.eclipse.ui.IEditorPart;
 
 
@@ -27,8 +26,8 @@ public class OpenCentralTestDataEditorHandler extends AbstractOpenHandler {
     /**
      * {@inheritDoc}
      */
-    protected boolean isEditableImpl(GuiNode selected) {
-        return (selected instanceof ProjectGUI);
+    protected boolean isEditableImpl(INodePO selected) {
+        return (selected instanceof IProjectPO);
     }
 
     /**

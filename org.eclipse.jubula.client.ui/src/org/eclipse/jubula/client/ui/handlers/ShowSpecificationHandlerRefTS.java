@@ -13,13 +13,13 @@ package org.eclipse.jubula.client.ui.handlers;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.model.RefTestSuiteGUI;
+import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 
@@ -37,15 +37,15 @@ public class ShowSpecificationHandlerRefTS extends
         if (sel instanceof IStructuredSelection) {
             IStructuredSelection iss = (IStructuredSelection)sel;
             Object firstElement = iss.getFirstElement();
-            if (firstElement instanceof RefTestSuiteGUI) {
-                RefTestSuiteGUI refTS = (RefTestSuiteGUI)firstElement;
-                INodePO node = refTS.getContent();
-                if (node instanceof IRefTestSuitePO) {
-                    String tsGUID = ((IRefTestSuitePO)node).getTestSuiteGuid();
-                    ITestSuitePO testSuite = NodePM.getTestSuite(tsGUID);
-                    showSpecGUINode(testSuite, Plugin.getDefault()
-                            .getTestSuiteBrowserRootGUI(),
-                            Constants.TS_BROWSER_ID);
+            if (firstElement instanceof IRefTestSuitePO) {
+                IRefTestSuitePO refTS = (IRefTestSuitePO)firstElement;
+                String tsGUID = refTS.getTestSuiteGuid();
+                ITestSuitePO testSuite = NodePM.getTestSuite(tsGUID);
+                IViewPart activatedView = 
+                    Plugin.showView(Constants.TS_BROWSER_ID);
+                if (activatedView instanceof TestSuiteBrowser) {
+                    ((TestSuiteBrowser)activatedView).setSelection(
+                            testSuite);
                 }
             }
         }

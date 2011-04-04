@@ -17,7 +17,6 @@ import org.apache.commons.collections.IteratorUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -27,7 +26,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
-import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ITimestampPO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -46,12 +44,9 @@ import org.eclipse.jubula.client.ui.controllers.dnd.TJEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.TestJobGUI;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestJobEditorContentProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.client.ui.views.TreeBuilder;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -107,13 +102,11 @@ public class TestJobEditor extends AbstractJBEditor {
      * {@inheritDoc}
      */
     public void setInitialInput() {
-        GuiNode rootTop = new TestJobGUI(TEST_JOB_EDITOR_ROOT_NAME);
-        INodePO rootPOTop = (INodePO)getEditorHelper().getEditSupport()
-                .getWorkVersion();
-        TreeBuilder.buildTestJobEditorTree((ITestJobPO)rootPOTop, rootTop);
+        INodePO root = 
+            (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
         try {
             getTreeViewer().getTree().getParent().setRedraw(false);
-            getTreeViewer().setInput(rootTop);
+            getTreeViewer().setInput(new INodePO[] {root});
             getTreeViewer().expandAll();
 
         } finally {
@@ -203,7 +196,6 @@ public class TestJobEditor extends AbstractJBEditor {
     public void handleDataChanged(IPersistentObject po, DataState dataState,
             UpdateState updateState) {
         if (po instanceof INodePO) {
-            GuiNode root = (GuiNode)getTreeViewer().getInput();
             TreeViewer tv = getTreeViewer();
             switch (dataState) {
                 case Added:
@@ -211,8 +203,6 @@ public class TestJobEditor extends AbstractJBEditor {
                     INodePO editorNode = (INodePO)getEditorHelper()
                             .getEditSupport().getWorkVersion();
                     if (editorNode.indexOf(addedNode) > -1) {
-                        root = root.getChildren().get(0);
-                        GuiNodeBP.rebuildEditorGuiNode(root, editorNode);
                         getTreeViewer().refresh();
                         getTreeViewer().expandAll();
                         GuiNodeBP.setSelectionAndFocusToNode(addedNode, tv);
@@ -220,17 +210,8 @@ public class TestJobEditor extends AbstractJBEditor {
                     break;
                 case Deleted:
                     if (!(po instanceof IProjectPO)) {
-                        boolean deleted = GuiNodeBP.deleteGuiNode(root,
-                                (INodePO)po);
-                        if (deleted) {
-                            GuiNode guiNode = (GuiNode)getTreeViewer()
-                                    .getInput();
-                            guiNode = guiNode.getChildren().get(0);
-                            getTreeViewer().refresh();
-                            setFocus();
-                            getTreeViewer().setSelection(
-                                    new StructuredSelection(guiNode));
-                        }
+                        getTreeViewer().refresh();
+                        setFocus();
                     }
                     break;
                 case Renamed:

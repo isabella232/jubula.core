@@ -173,7 +173,7 @@ public class TestCaseBP  extends NodeBP {
     }
 
     /**
-     * Returns a GuiNode which is able to contain SpecTestCasePOs in 
+     * Returns a INodePO which is able to contain SpecTestCasePOs in 
      * hierarchical relation to the given node. If the current node is not a 
      * possible container, its parent will be checked and so on.
      * @param currentNode the current node to check

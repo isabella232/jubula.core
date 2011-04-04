@@ -37,7 +37,6 @@ import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IVerifiable;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IParameterPropertyController.ParameterInputType;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
 import org.eclipse.swt.graphics.Image;
@@ -51,7 +50,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @created 04.08.2005
  */
 public abstract class AbstractGuiNodePropertySource 
-    extends AbstractPropertySource < GuiNode > {
+    extends AbstractPropertySource<INodePO> {
 
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_COMMENT =
@@ -77,7 +76,7 @@ public abstract class AbstractGuiNodePropertySource
     /**
      * @param guiNode the depending GuiNode.
      */
-    public AbstractGuiNodePropertySource(GuiNode guiNode) {
+    public AbstractGuiNodePropertySource(INodePO guiNode) {
         super(guiNode);
         m_testCaseParamBP = new TestCaseParamBP();
     }
@@ -315,7 +314,7 @@ public abstract class AbstractGuiNodePropertySource
      * @return the corresponding NodePO object
      */
     protected INodePO getPoNode() {
-        return getGuiNode().getContent();
+        return getGuiNode();
     }
     
     /**

@@ -13,12 +13,16 @@ package org.eclipse.jubula.client.core.businessprocess.db;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 
 import org.apache.commons.collections.ListUtils;
+import org.apache.commons.lang.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
@@ -30,7 +34,6 @@ import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import javax.persistence.PersistenceException;
 
 
 /**
@@ -99,5 +102,36 @@ public class NodeBP {
                     gs.getProject().getId(), gs.getMasterSession());
         }
         return ListUtils.EMPTY_LIST;
+    }
+    
+    /**
+     * 
+     * @param node The node to check.
+     * @return <code>true</code> if the given node can be modified within
+     *         the active project. Otherwise <code>false</code>.
+     */
+    public static boolean isEditable(INodePO node) {
+        Validate.notNull(node);
+        IProjectPO activeProject = GeneralStorage.getInstance().getProject();
+        if (activeProject == node) {
+            return true;
+        }
+        return activeProject != null 
+            && activeProject.getId().equals(node.getParentProjectId());
+    }
+
+    /**
+     * 
+     * @param node The node to check.
+     * @return the Test Suite that (recursively) contains <code>node</code>, or
+     *         <code>null</code> if <code>node</code> does not belong to any 
+     *         Test Suite.
+     */
+    public static ITestSuitePO getOwningTestSuite(INodePO node) {
+        INodePO tmpNode = node;
+        while (tmpNode != null && !(tmpNode instanceof ITestSuitePO)) {
+            tmpNode = tmpNode.getParentNode();
+        }
+        return (ITestSuitePO)tmpNode;
     }
 }

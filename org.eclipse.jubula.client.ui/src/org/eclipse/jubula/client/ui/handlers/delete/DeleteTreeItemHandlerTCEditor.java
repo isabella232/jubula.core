@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.ui.handlers.delete;
 
 import java.util.Iterator;
 
+import javax.persistence.PersistenceException;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -24,10 +26,8 @@ import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
-import javax.persistence.PersistenceException;
 
 
 /**
@@ -56,10 +56,10 @@ public class DeleteTreeItemHandlerTCEditor
                         != JBEditorHelper.EditableState.OK) {
                     return null;
                 }
-                for (Iterator<GuiNode> it = structuredSelection.iterator(); 
+                for (Iterator<INodePO> it = structuredSelection.iterator(); 
                         it.hasNext();) {
                     
-                    INodePO node = it.next().getContent();
+                    INodePO node = it.next();
                     try {
                         node.getParentNode().removeNode(node);
                         if (node.getId() != null) {

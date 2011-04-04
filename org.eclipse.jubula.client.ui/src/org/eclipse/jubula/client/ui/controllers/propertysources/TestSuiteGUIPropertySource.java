@@ -31,7 +31,6 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IntegerTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
@@ -93,7 +92,7 @@ public class TestSuiteGUIPropertySource
     /**
      * @param testSuite The dependened test suite.
      */
-    public TestSuiteGUIPropertySource(TestSuiteGUI testSuite) {
+    public TestSuiteGUIPropertySource(ITestSuitePO testSuite) {
         super(testSuite);
         initAUTList();
         initPropDescriptor();

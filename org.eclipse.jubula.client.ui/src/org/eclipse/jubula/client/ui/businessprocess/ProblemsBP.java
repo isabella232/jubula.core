@@ -62,7 +62,6 @@ import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.ReusedProjectGUI;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -171,13 +170,13 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     }
 
     /**
-     * @param node The gui node that is causing the problem.
+     * @param node The node that is causing the problem.
      * @param label Name or GUID of the reused project. This string will be
      *              displayed in the problem description. If this string is
      *              <code>null</code>, the string displayed by the gui node
      *              will be used instead.
      */
-    private void problemMissingReusedProject(ReusedProjectGUI node, 
+    private void problemMissingReusedProject(IReusedProjectPO node, 
             String label) {
         createProblem(NLS.bind(Messages.ProblemCheckerProjectDoesNotExist,
                 new String[] {label}),

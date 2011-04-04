@@ -16,12 +16,13 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -30,8 +31,6 @@ import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.NewCAPDialog;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.ui.IWorkbenchPart;
@@ -59,32 +58,21 @@ public abstract class AbstractNewCAP extends AbstractHandler {
                 }
                 IStructuredSelection selection = (IStructuredSelection)tse
                         .getTreeViewer().getSelection();
-                GuiNode selectedNodeGUI = (GuiNode)selection.getFirstElement();
+                INodePO selectedNodeGUI = (INodePO)selection.getFirstElement();
                 if (selectedNodeGUI != null) { // using the CTRL modifier, you
                     // may get a click without a selection
-                    SpecTestCaseGUI specTcGUI = null;
-                    int posistionToAdd = getPositionToInsert(workTC,
-                            selectedNodeGUI);
-                    while (!(selectedNodeGUI instanceof SpecTestCaseGUI)) {
+                    ISpecTestCasePO specTcGUI = null;
+                    int posistionToAdd = workTC.indexOf(selectedNodeGUI);
+                    while (!(selectedNodeGUI instanceof ISpecTestCasePO)) {
                         selectedNodeGUI = selectedNodeGUI.getParentNode();
                     }
-                    specTcGUI = (SpecTestCaseGUI)selectedNodeGUI;
+                    specTcGUI = (ISpecTestCasePO)selectedNodeGUI;
                     addCap(specTcGUI, workTC, posistionToAdd, tse);
                 }
             }
         }
         return null;
     }
-    
-    /**
-     * @param selectedNodeGUI
-     *            the currently selected guiNode
-     * @param workTC
-     *            the workversion of the current specTC
-     * @return the position to add
-     */
-    protected abstract Integer getPositionToInsert(ISpecTestCasePO workTC,
-            GuiNode selectedNodeGUI);
     
     /**
      * Adds a new CAP to the given workVersion SpecTestCase at the given
@@ -99,7 +87,7 @@ public abstract class AbstractNewCAP extends AbstractHandler {
      * @param tse
      *            the editor.
      */
-    private void addCap(SpecTestCaseGUI specTcGUI, ISpecTestCasePO workTC, 
+    private void addCap(ISpecTestCasePO specTcGUI, ISpecTestCasePO workTC, 
         Integer position, AbstractTestCaseEditor tse) {
 
         final NewCAPDialog dialog = 

@@ -16,7 +16,6 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 
 
 /**
@@ -30,17 +29,14 @@ public class ExternalDataDecorator extends LabelProvider implements
      * {@inheritDoc}
      */
     public void decorate(Object element, IDecoration decoration) {
-        if (element instanceof GuiNode) {
-            GuiNode stcg = (GuiNode)element;
-            if (stcg.getContent() instanceof IParamNodePO) {
-                IParamNodePO pnpo = (IParamNodePO)stcg.getContent();
-                if (!StringUtils.isEmpty(pnpo.getDataFile())) {
-                    decoration.addOverlay(
-                            IconConstants.EXCEL_DATA_IMAGE_DESCRIPTOR);
-                } else if (pnpo.getReferencedDataCube() != null) {
-                    decoration.addOverlay(
-                            IconConstants.TDC_DECORATION_IMAGE_DESCRIPTOR);
-                }
+        if (element instanceof IParamNodePO) {
+            IParamNodePO pnpo = (IParamNodePO)element;
+            if (!StringUtils.isEmpty(pnpo.getDataFile())) {
+                decoration.addOverlay(
+                        IconConstants.EXCEL_DATA_IMAGE_DESCRIPTOR);
+            } else if (pnpo.getReferencedDataCube() != null) {
+                decoration.addOverlay(
+                        IconConstants.TDC_DECORATION_IMAGE_DESCRIPTOR);
             }
         }
 

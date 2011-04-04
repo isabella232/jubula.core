@@ -11,26 +11,36 @@
 package org.eclipse.jubula.client.ui.provider.labelprovider;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
+import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestJobContPO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestSuiteContPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.utils.StringHelper;
+import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.CapGUI;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
-import org.eclipse.jubula.client.ui.model.SpecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.TestCaseBrowserRootGUI;
-import org.eclipse.jubula.client.ui.model.TestSuiteGUI;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -99,17 +109,14 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * {@inheritDoc}
      */
     public String getToolTipText(Object element) {
-        if (element instanceof GuiNode) {
-            GuiNode gnode = (GuiNode)element;
-            INodePO node = gnode.getContent();
-            if (node != null) {
-                StringBuilder toolTip = new StringBuilder();
-                String comment = node.getComment();
-                if (!StringUtils.isBlank(comment)) {
-                    toolTip.append(COMMENT_PREFIX);
-                    toolTip.append(ObjectUtils.toString(comment));
-                    return toolTip.toString();
-                }
+        if (element instanceof INodePO) {
+            INodePO node = (INodePO)element;
+            StringBuilder toolTip = new StringBuilder();
+            String comment = node.getComment();
+            if (!StringUtils.isBlank(comment)) {
+                toolTip.append(COMMENT_PREFIX);
+                toolTip.append(ObjectUtils.toString(comment));
+                return toolTip.toString();
             }
         }
         return super.getToolTipText(element);
@@ -148,23 +155,60 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * @return a descriptive text for the given element
      */
     public static String getGDText (Object element) {
-        if (element instanceof GuiNode) {
-            if (((GuiNode)element).getName() == null) {
+        if (element instanceof INodePO) {
+            INodePO node = (INodePO)element;
+            if (node.getName() == null) {
                 return UNNAMED_NODE;
             }
-            GuiNode nodeGUI = (GuiNode)element;
-            if (nodeGUI instanceof TestCaseBrowserRootGUI) {
-                // because content is current project
-                return nodeGUI.getName();
-            }
-            INodePO node = ((GuiNode)element).getContent();
-            if (node != null) {
-                StringBuilder builder = new StringBuilder(nodeGUI.getName());
-                nodeGUI.getInfoString(builder);
-                return builder.toString();
-            }
-            return nodeGUI.getName();
+            if (node instanceof ICapPO 
+                    && Plugin.getDefault().getPreferenceStore().getBoolean(
+                            Constants.SHOWCAPINFO_KEY)) {
+                ICapPO testStep = (ICapPO)node;
+                StringBuilder nameBuilder = 
+                    new StringBuilder(testStep.getName());
+                nameBuilder.append(GeneralLabelProvider.OPEN_BRACKED);
+                final Map<String, String> map = 
+                    StringHelper.getInstance().getMap();
+                IComponentNameMapper compMapper = 
+                    Plugin.getActiveCompMapper();
+                nameBuilder.append(Messages.CapGUIType)
+                    .append(map.get(testStep.getComponentType()))
+                    .append(GeneralLabelProvider.SEPARATOR)
+                    .append(Messages.CapGUIName);
+                String componentName = testStep.getComponentName();
+                if (compMapper != null) {
+                    componentName = 
+                        compMapper.getCompNameCache().getName(componentName);
+                } else {
+                    componentName = 
+                        ComponentNamesBP.getInstance().getName(componentName);
+                }
+                if (componentName != null) {
+                    nameBuilder.append(componentName);
+                }
+                nameBuilder.append(GeneralLabelProvider.SEPARATOR)
+                    .append(Messages.CapGUIAction)
+                    .append(map.get(testStep.getActionName()))
+                    .append(GeneralLabelProvider.CLOSE_BRACKED);
+            } 
+            
+            return node.getName();
         }
+
+        if (element instanceof ITestSuiteContPO) {
+            return Messages.TSBCategoryTS;
+        }
+        
+        if (element instanceof ITestJobContPO) {
+            return Messages.TSBCategoryTJ;
+        }
+
+        if (element instanceof IReusedProjectPO) {
+            IReusedProjectPO reusedProject = (IReusedProjectPO)element;
+            return reusedProject.getProjectName() 
+                + reusedProject.getVersionString();
+        }
+        
         return element == null ? StringConstants.EMPTY : element.toString();
     }
     
@@ -172,38 +216,61 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * @param element the element to get the image for 
      * @return an image for the given element
      */
+    // FIXME generated elements should be tinted green
+    // FIXME elements that have been "cut" to the clipboard should be grayscale
     public static Image getGDImage(Object element) {
-        if (element instanceof TestSuiteGUI) {
-            TestSuiteGUI tsGUI = (TestSuiteGUI)element;
-            ITestSuitePO ts = (ITestSuitePO)tsGUI.getContent();
-            if (ts != null) {
+        if (element instanceof ITestSuitePO) {
+            ITestSuitePO testSuite = (ITestSuitePO)element;
+            if (testSuite != null) {
                 Locale workLang = WorkingLanguageBP.getInstance()
                     .getWorkingLanguage();
-                if (ts.getAut() != null 
+                if (testSuite.getAut() != null 
                     && !WorkingLanguageBP.getInstance().isTestSuiteLanguage(
-                        workLang, ts)) {
-                    return tsGUI.getDisabledImage();
+                        workLang, testSuite)) {
+                    return IconConstants.TS_DISABLED_IMAGE;
                 }
             }
         }
-        if (element instanceof GuiNode) {
-            GuiNode guiNode = (GuiNode)element;
-            Object cbContents = clipboard
-                    .getContents(LocalSelectionClipboardTransfer.getInstance());
-            if (cbContents instanceof IStructuredSelection) {
-                IStructuredSelection sel = (IStructuredSelection)cbContents;
-                for (Object selObject : sel.toArray()) {
-                    if (element == selObject) {
-                        return guiNode.getCutImage();
-                    }
-                }
-            }
-            if (guiNode.getContent() != null
-                    && guiNode.getContent().isGenerated()) {
-                return guiNode.getGeneratedImage();
-            }
-            return guiNode.getImage();
+        
+        if (element instanceof ICapPO) {
+            return IconConstants.CAP_IMAGE;
         }
+        
+        if (element instanceof IProjectPO) {
+            return IconConstants.PROJECT_IMAGE;
+        }
+
+        if (element instanceof ITestSuitePO) {
+            return IconConstants.TS_IMAGE;
+        }
+
+        if (element instanceof IEventExecTestCasePO) {
+            return IconConstants.EH_IMAGE;
+        }
+        
+        if (element instanceof IExecTestCasePO) {
+            return IconConstants.TC_REF_IMAGE;
+        }
+
+        if (element instanceof ISpecTestCasePO) {
+            return IconConstants.TC_IMAGE;
+        }
+
+        if (element instanceof ITestJobPO) {
+            return IconConstants.TJ_IMAGE;
+        }
+
+        if (element instanceof ITestSuiteContPO
+                || element instanceof ITestJobContPO
+                || element instanceof ICategoryPO
+                || element instanceof IReusedProjectPO) {
+            return IconConstants.CATEGORY_IMAGE;
+        }
+
+        if (element instanceof IRefTestSuitePO) {
+            return IconConstants.TS_REF_IMAGE;
+        }
+        
         return null;
     }
 
@@ -218,19 +285,20 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * {@inheritDoc}
      */
     public Color getForeground(Object element) {
-        if (element instanceof ExecTestCaseGUI || element instanceof CapGUI) {
+        if (element instanceof IExecTestCasePO || element instanceof ICapPO) {
             return DISABLED_COLOR;
         }
-        if (element instanceof GuiNode && !((GuiNode)element).isEditable()) {
-            if (element instanceof SpecTestCaseGUI) {
-                return null;
-            }
-            if (element instanceof ExecTestCaseGUI 
-                    || element instanceof CapGUI) {
-                return DISABLED_COLOR;
-            }
+
+        if (element instanceof ISpecTestCasePO) {
+            return null;
+        }
+        
+        if (element instanceof IReusedProjectPO
+                || (element instanceof INodePO 
+                && !NodeBP.isEditable((INodePO)element))) {
             return REUSED_PROJECTS_COLOR;
         }
+
         return null;
     }
 }

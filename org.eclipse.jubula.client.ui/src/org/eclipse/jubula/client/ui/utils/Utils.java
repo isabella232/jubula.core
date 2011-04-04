@@ -15,7 +15,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -33,8 +32,6 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -46,7 +43,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -54,14 +50,9 @@ import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.controllers.SpecRefreshTreeIterator;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
-import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.editors.PersistableEditorInput;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.model.CapGUI;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -211,40 +202,6 @@ public class Utils {
     }
     
     /**
-     * A List of selected items of the given TreeViewer
-     * @param tv the TreeViewer
-     * @return a List of selected items
-     */
-    public static List<NodeSelection> getSelectedTreeItems(TreeViewer tv) {
-        List<NodeSelection> selElements = new ArrayList<NodeSelection>();
-        if (tv.getSelection() instanceof IStructuredSelection) {
-            IStructuredSelection selection = 
-                (IStructuredSelection)tv.getSelection();
-            Iterator selIt = selection.iterator();
-            while (selIt.hasNext()) {
-                GuiNode node = (GuiNode)selIt.next();
-                if (node instanceof CapGUI) {
-                    CapGUI cap = (CapGUI)node;
-                    if (cap.getParentNode().getParentNode() != null 
-                            && cap.getParentNode().getParentNode() 
-                            instanceof ExecTestCaseGUI) {
-                        
-                        selElements.add(new NodeSelection(cap.getParentNode()
-                                .getParentNode().getContent(), 
-                                (ICapPO)cap.getContent()));
-                    } else {
-                        selElements.add(new NodeSelection(cap.getParentNode()
-                                .getContent(), (ICapPO)cap.getContent()));
-                    }
-                } else {
-                    selElements.add(new NodeSelection(node.getContent(), null));
-                }
-            }
-        }
-        return selElements;
-    }
-    
-    /**
      * Gets a List of expanded items of the given TreeViewer.
      * @param tv the TreeViewer
      * @return a List of expanded items
@@ -252,55 +209,6 @@ public class Utils {
     public static List<Object> getExpandedTreeItems(TreeViewer tv) {
         Object[] expandedElems = tv.getExpandedElements();
         return new ArrayList<Object>(Arrays.asList(expandedElems));
-    }
-    
-    /**
-     * Restores the state (selected items, expanded items) of the given
-     * TreeViewer of <b>GUINodes</b> with the given Lists of expanded 
-     * and selected items.
-     * @param tv the TreeViewer
-     * @param expandedItems a List of expanded items
-     * @param selectedItems a List of selected items
-     */
-    public static void restoreTreeState(TreeViewer tv, 
-        List<Object> expandedItems, 
-        List<NodeSelection> selectedItems) {
-        
-        GuiNode newRootGui = (GuiNode)tv.getInput();
-        TreeIterator treeIter = new SpecRefreshTreeIterator(newRootGui);
-        List<GuiNode> elemsToSelect = new ArrayList<GuiNode>(selectedItems
-            .size());
-        boolean hasExpandedNode = false;
-        while (treeIter.hasNext()) {
-            GuiNode newNode = treeIter.next();
-            final INodePO content = newNode.getContent();
-            for (Object expElement : expandedItems) {
-                if (content != null && content.equals(
-                    ((GuiNode)expElement).getContent())) {
-                    hasExpandedNode = true;
-                    tv.setExpandedState(newNode, true);
-                    tv.expandToLevel(newNode, 1); 
-                }
-            }
-            for (NodeSelection selElem : selectedItems) {
-                if (content != null && content.equals(selElem.getNode())) {
-                    if (selElem.getCap() != null) {
-                        for (GuiNode guiNode : newNode.getChildren()) {
-                            if (guiNode.getContent().equals(selElem.getCap())) {
-                                elemsToSelect.add(guiNode);
-                                break;
-                            }
-                        }
-                    } else {
-                        elemsToSelect.add(newNode);
-                    }
-                }
-            }
-        }
-        if (!hasExpandedNode) {
-            tv.expandToLevel(2);
-        }
-        tv.setSelection(new StructuredSelection(elemsToSelect));
     }
     
     /**

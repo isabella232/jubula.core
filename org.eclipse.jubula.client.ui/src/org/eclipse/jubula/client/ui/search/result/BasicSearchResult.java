@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -30,8 +31,6 @@ import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
-import org.eclipse.jubula.client.ui.model.ExecTestCaseGUI;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.AbstractJBTreeView;
 import org.eclipse.search.ui.ISearchQuery;
@@ -428,26 +427,25 @@ public class BasicSearchResult implements ISearchResult {
          * @return true if node was selected, false otherwise
          */
         private INodePO selectNodeInTree(Long id, TreeViewer tv) {
-            INodePO foundNode = null;
-            GuiNode rootGUI = (GuiNode)tv.getInput();
+            INodePO rootGUI = (INodePO)tv.getInput();
             TreeIterator iter = new TreeIterator(rootGUI);
             while (iter.hasNext()) {
-                GuiNode current = iter.next();
-                if (current.getContent() != null 
-                    && id.equals(current.getContent().getId())
+                INodePO current = iter.next();
+                if (current != null 
+                    && id.equals(current.getId())
                     && isTopLevelSpecTestCase(current.getParentNode())) {
                     InteractionEventDispatcher.getDefault().
                         fireProgammableSelectionEvent(
                             new StructuredSelection(current));
-                    foundNode = current.getContent();
                     tv.refresh();
                     tv.expandToLevel(current, 0);
                     tv.setSelection(new StructuredSelection(current), true);
                     tv.reveal(current);
-                    return foundNode;
+                    return current;
                 }
             }
-            return foundNode;
+            
+            return null;
         }
 
         /**
@@ -458,12 +456,12 @@ public class BasicSearchResult implements ISearchResult {
          *            the gui node to check
          * @return true, if toplevel; false otherwise
          */
-        private boolean isTopLevelSpecTestCase(GuiNode stc) {
+        private boolean isTopLevelSpecTestCase(INodePO stc) {
             if (stc == null) {
                 return false;
             }
-            GuiNode parent = stc.getParentNode();
-            if (!(parent instanceof ExecTestCaseGUI)) {
+            INodePO parent = stc.getParentNode();
+            if (!(parent instanceof IExecTestCasePO)) {
                 return true;
             }
             return false;

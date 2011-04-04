@@ -34,7 +34,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -48,7 +47,6 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
-import org.eclipse.jubula.client.ui.model.GuiNode;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -459,31 +457,6 @@ public class TestResultTreeView extends ViewPart
                 getSite());
     }
     
-    /**
-     * recursivly find the SpecTestCase to an ExecTestCase and shows it in Specification View
-     * @param spec the SpecTestCase you are looking for
-     * @param current the current GuiNode
-     * @return GuiNode  
-     */
-    private GuiNode recursivlyfindNode(INodePO spec, GuiNode current) {
-        if (current == null) {
-            // GuiNode does not exist. This happens with Reused Projects
-            // because we don't show the lower-level test cases/steps.
-            return null;
-        }
-        if (current.getContent() != null 
-                && current.getContent().equals(spec)) {
-            return current;
-        }
-        for (GuiNode nextNode : current.getChildren()) {
-            GuiNode result = recursivlyfindNode(spec, nextNode);
-            if (result != null) {
-                return result;
-            }
-        }
-        return null;
-    }
-
     /**
      * {@inheritDoc}
      */

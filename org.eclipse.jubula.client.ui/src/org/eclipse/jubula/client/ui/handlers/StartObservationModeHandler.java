@@ -360,8 +360,9 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
 
         final Locale localeForRecord = WorkingLanguageBP.getInstance()
                 .getWorkingLanguage();
-        final ISpecTestCasePO workCopy = (ISpecTestCasePO)editor
-                .getEditorInputGuiNode().getContent();
+        final ISpecTestCasePO workCopy = 
+            (ISpecTestCasePO)editor.getEditorHelper().getEditSupport()
+                .getWorkVersion();
         final IWritableComponentNameMapper compNamesMapper = editor
                 .getEditorHelper().getEditSupport().getCompMapper();
         
