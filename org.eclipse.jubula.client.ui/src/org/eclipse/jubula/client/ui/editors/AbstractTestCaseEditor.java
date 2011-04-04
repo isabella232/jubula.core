@@ -138,11 +138,7 @@ import org.eclipse.ui.IWorkbenchPartConstants;
  */
 @SuppressWarnings("synthetic-access")
 public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
-    /**
-     * <code>TEST_CASE_EDITOR_ROOT_NAME</code>
-     */
-    public static final String TEST_CASE_EDITOR_ROOT_NAME = 
-        "TestCaseEditor_root"; //$NON-NLS-1$
+
     /** Constants for the editor segmentation */
     private static final int[] SASH_WEIGHT = {75, 25};
     /** TreeViewer for ErrorHandling */

@@ -64,10 +64,6 @@ import org.eclipse.swt.widgets.Composite;
  * @created Mar 17, 2010
  */
 public class TestJobEditor extends AbstractJBEditor {
-    /**
-     * <code>TEST_JOB_EDITOR_ROOT_NAME</code>
-     */
-    public static final String TEST_JOB_EDITOR_ROOT_NAME = "TestJobEditor_root"; //$NON-NLS-1$
 
     /**
      * {@inheritDoc}

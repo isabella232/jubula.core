@@ -71,10 +71,6 @@ import org.eclipse.ui.IWorkbenchActionConstants;
  * @created 05.09.2005
  */
 public class TestSuiteEditor extends AbstractTestCaseEditor {
-    /**
-     * <code>EXEC_TC_ED_ROOT_NAME</code>
-     */
-    public static final String EXEC_TC_ED_ROOT_NAME = "ExecTCEd_root"; //$NON-NLS-1$
 
     /**
      * {@inheritDoc}
