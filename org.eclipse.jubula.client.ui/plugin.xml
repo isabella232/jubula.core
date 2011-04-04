@@ -757,7 +757,7 @@
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
-			name="Disconnect from Server" />
+			name="%Disconnect" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.ImportFileCommand"
