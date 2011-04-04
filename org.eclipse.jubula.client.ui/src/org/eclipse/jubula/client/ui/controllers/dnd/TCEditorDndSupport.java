@@ -255,9 +255,7 @@ public class TCEditorDndSupport {
         PMDirtyVersionException, PMException {
         
         if (getTCBrowser() != null) {
-            getTCBrowser().addReferencedTestCase(
-                    (ISpecTestCasePO)testcaseGUI, 
-                    testSuite, 0);
+            getTCBrowser().addReferencedTestCase(testcaseGUI, testSuite, 0);
         }
     }
 
@@ -281,8 +279,8 @@ public class TCEditorDndSupport {
         if (location != ViewerDropAdapter.LOCATION_BEFORE) {
             position++;
         }
-        getTCBrowser().addReferencedTestCase(
-                (ISpecTestCasePO)specTcGUItoDrop, parentGUI, position);
+        getTCBrowser().addReferencedTestCase(specTcGUItoDrop, parentGUI, 
+                position);
     }
 
     /**

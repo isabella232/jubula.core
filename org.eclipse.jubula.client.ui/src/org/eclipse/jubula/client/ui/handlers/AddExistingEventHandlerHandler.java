@@ -93,14 +93,14 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
     private void openTestCasePopUp(final AbstractTestCaseEditor editor) {  
         final ISpecTestCasePO parentNode = (ISpecTestCasePO)editor
             .getTreeViewer().getTree().getItem(0).getData(); 
-        if (hasTestCaseAllEventHandler((ISpecTestCasePO)parentNode)) {
+        if (hasTestCaseAllEventHandler(parentNode)) {
             
             return;
         }
         String title = Messages.AddEventHandlerActionAddEventHandler;
         TestCaseTreeDialog dialog = new TestCaseTreeDialog(Plugin
             .getShell(), title, StringConstants.EMPTY, 
-            (ISpecTestCasePO)parentNode, title, SWT.SINGLE, 
+            parentNode, title, SWT.SINGLE, 
             IconConstants.ADD_EH_IMAGE, TestCaseTreeDialog.EVENTHANDLER); 
         final SelectionTransfer selTransferObj = new SelectionTransfer();
         ISelectionListener selListener = new ISelectionListener() {

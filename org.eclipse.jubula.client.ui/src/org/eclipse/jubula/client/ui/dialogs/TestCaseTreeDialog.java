@@ -355,7 +355,7 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
          */
         public Image getImage(Object element) {
             if (element instanceof ISpecTestCasePO) {
-                if (m_circDependList.contains((ISpecTestCasePO)element)) {
+                if (m_circDependList.contains(element)) {
                     return IconConstants.TC_DISABLED_IMAGE; 
                 } 
                 return IconConstants.TC_IMAGE;
@@ -411,7 +411,7 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
          */
         public Color getForeground(Object element) {
             if (element instanceof ISpecTestCasePO) {
-                if (m_circDependList.contains((ISpecTestCasePO)element)) {
+                if (m_circDependList.contains(element)) {
                     return Layout.GRAY_COLOR; 
                 } 
                 return Layout.DEFAULT_OS_COLOR;

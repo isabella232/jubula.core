@@ -483,6 +483,12 @@
 				minimized="false" ratio="0.33" relationship="top"
 				relative="org.eclipse.jubula.client.ui.views.TestSuiteBrowser">
 			</view>
+   <view
+         id="org.eclipse.ui.views.ProgressView"
+         minimized="false"
+         relationship="stack"
+         relative="org.eclipse.jubula.client.ui.views.RunningAuts">
+   </view>
 			<view id="org.eclipse.ui.views.PropertySheet" minimized="false"
 				ratio="0.6" relationship="right" relative="org.eclipse.ui.editorss">
 			</view>

@@ -27,6 +27,9 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jubula.client.core.Activator;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
@@ -141,14 +144,6 @@ public class TestExecution {
          */
         CONTINUE_WITHOUT_EH
     }
-    
-    
-    /**
-     * <code>CLIENT_TEST_PLUGIN_ID</code>
-     */
-    private static final String CLIENT_TEST_PLUGIN_ID = 
-        "org.eclipse.jubula.client.core"; //$NON-NLS-1$
-
     /** The logger */
     private static final Log LOG = LogFactory.getLog(TestExecution.class);
 
@@ -216,7 +211,7 @@ public class TestExecution {
      * responsible for keeping track of the number of test steps executed
      * during this test execution 
      */
-    private StepCounter m_stepCounter = new StepCounter();
+    private StepCounter m_stepCounter;
     
     /**
      * <code>m_resultTree</code> associated resultTree
@@ -305,39 +300,14 @@ public class TestExecution {
      * @param summary
      *            The Test Result Summary for the executed test. 
      *            Must not be <code>null</code>.
+     * @param monitor the monitor to use
      */
-    public void executeTestSuite(ITestSuitePO testSuite, Locale locale, 
+    public void executeTestSuite(ITestSuitePO testSuite, Locale locale,
         AutIdentifier autId, boolean autoScreenshot,
-        Map<String, String> externalVars, ITestResultSummary summary) {
-        
-        final IProgressMonitor monitor = new NullProgressMonitor();
+        Map<String, String> externalVars, ITestResultSummary summary,
+        final IProgressMonitor monitor) {
         m_stopped = false;
-        synchronized (this) {
-            if (m_stopped) {
-                // Test execution was stopped in another thread.
-                // Just return without performing any additional test 
-                // execution initialization.
-                return;
-            }
-            ClientTestFactory.getClientTest().addTestExecutionEventListener(
-                    new ITestExecutionEventListener() {
-                        public void endTestExecution() {
-                            try {
-                                AUTConnection.getInstance().close();
-                            } catch (ConnectionException e) {
-                                // Do nothing. Connection is already closed.
-                            }
-                            ClientTestFactory.getClientTest()
-                                .removeTestExecutionEventListener(this);
-                            monitor.setCanceled(true);
-                        }
-                        
-                        public void stateChanged(TestExecutionEvent event) {
-                            // Do nothing
-                        }
-                    });
-        }
-        
+
         m_autoScreenshot = autoScreenshot;
         setPaused(false);
         Validate.notNull(testSuite, Messages.TestsuiteMustNotBeNull);
@@ -346,23 +316,43 @@ public class TestExecution {
         m_externalTestDataBP.clearExternalData();
 
         try {
-            if (m_stopped) {
-                // Test execution already stopped. No need to continue.
-                return;
-            }
-            if (AUTConnection.getInstance().connectToAut(autId, monitor)) {
+            if (AUTConnection.getInstance().connectToAut(
+                    autId, new SubProgressMonitor(monitor, 0))) {
                 summary.setAutHostname(
                         AUTConnection.getInstance().getCommunicator()
                             .getConnection().getAddress()
                             .getCanonicalHostName());
                 summary.setAutAgentName(ServerConnection.getInstance()
                         .getCommunicator().getHostName());
-                
+                monitor.subTask(Messages.
+                        StartingTestSuite_resolvingPredefinedVariables);
                 m_varStore.storeEnvironmentVariables();
                 storePredefinedVariables(m_varStore, testSuite);
                 storeExternallyDefinedVariables(m_varStore, externalVars);
 
-                startTestSuite(testSuite, locale);
+                startTestSuite(testSuite, locale, monitor);
+                
+                final AtomicBoolean testSuiteFinished = new AtomicBoolean();
+                ClientTestFactory.getClientTest().addTestExecutionEventListener(
+                        new ITestExecutionEventListener() {
+                            public void endTestExecution() {
+                                try {
+                                    AUTConnection.getInstance().close();
+                                } catch (ConnectionException e) {
+                                    // Do nothing. Connection is already closed.
+                                }
+                                ClientTestFactory.getClientTest()
+                                        .removeTestExecutionEventListener(this);
+                                testSuiteFinished.set(true);
+                            }
+
+                            public void stateChanged(TestExecutionEvent event) {
+                                // Do nothing
+                            }
+                        });
+                while (!testSuiteFinished.get()) {
+                    TimeUtil.delay(250);
+                }
             } else {
                 handleNoConnectionToAUT(testSuite, autId);
             }
@@ -477,7 +467,7 @@ public class TestExecution {
         // TEST_clientVersion
         varStore.store(TDVariableStore.VAR_CLIENTVERSION, 
                 (String)Platform.getBundle(
-                        CLIENT_TEST_PLUGIN_ID).getHeaders().get(
+                        Activator.PLUGIN_ID).getHeaders().get(
                                 Constants.BUNDLE_VERSION));
         
     }
@@ -499,15 +489,18 @@ public class TestExecution {
     /**
      * @param testSuite testSuite
      * @param locale language valid for testexecution
+     * @param monitor the progress monitor to use
      */
-    private void startTestSuite(ITestSuitePO testSuite, Locale locale) {
+    private void startTestSuite(ITestSuitePO testSuite, Locale locale,
+        IProgressMonitor monitor) {
         Validate.notNull(testSuite, "No testsuite available"); //$NON-NLS-1$
         ICapPO firstCap = null;
         m_expectedNumberOfSteps = 0;
         m_trav = new Traverser(testSuite, locale);
-        m_stepCounter.reset();
         try {
             // build and show result Tree
+            monitor.subTask(Messages.
+                    StartingTestSuite_resolvingTestStepsToExecute);
             Traverser copier = new Traverser(testSuite, locale);
             ResultTreeBuilder resultTreeBuilder = new ResultTreeBuilder(copier);
             copier.addExecStackModificationListener(resultTreeBuilder);
@@ -517,26 +510,26 @@ public class TestExecution {
                 m_expectedNumberOfSteps++;
             }
             Map<String, String> autConfigMap = getConnectedAUTsConfigMap();
-            resetMonitoringData(autConfigMap);
+            resetMonitoringData(autConfigMap, monitor);
             // end build tree
             TestResultBP.getInstance().setResultTestModel(
                     new TestResult(resultTreeBuilder.getRootNode(),
                             autConfigMap));
-            initTestExecutionMessage(autConfigMap);
-            if (LOG.isInfoEnabled()) {
-                LOG.info(Messages.StartTestSuite + StringConstants.COLON
-                        + StringConstants.SPACE + testSuite.getName());
-            }
+            initTestExecutionMessage(autConfigMap, monitor);
             
             m_resultTreeTracker = new ResultTreeTracker(resultTreeBuilder.
                     getRootNode(), m_externalTestDataBP);
-            m_trav.addExecStackModificationListener(m_resultTreeTracker);
-            m_trav.addEventStackModificationListener(m_stepCounter);
-            m_trav.addExecStackModificationListener(m_stepCounter);
+            IProgressMonitor subMonitor = new SubProgressMonitor(monitor,
+                    ClientTest.TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT);
+            subMonitor.beginTask(Messages.ExecutingTestSuite, 
+                    m_expectedNumberOfSteps);
+            m_stepCounter = new StepCounter(subMonitor);
+            addTestExecutionListener();
             
             ClientTestFactory.getClientTest().
                 fireTestExecutionChanged(new TestExecutionEvent(
                         TestExecutionEvent.TEST_EXEC_RESULT_TREE_READY));
+            monitor.subTask(testSuite.getName());
             firstCap = m_trav.next();
         } catch (JBException e) {
             LOG.error(Messages.IncompleteTestdata, e);
@@ -550,6 +543,15 @@ public class TestExecution {
         } else {
             endTestExecution();
         }
+    }
+
+    /**
+     * add the listener to the test execution traverser
+     */
+    private void addTestExecutionListener() {
+        m_trav.addExecStackModificationListener(m_resultTreeTracker);
+        m_trav.addEventStackModificationListener(m_stepCounter);
+        m_trav.addExecStackModificationListener(m_stepCounter);
     }
 
     /**
@@ -949,7 +951,6 @@ public class TestExecution {
                         }
                     }
                 }
-
                 while (isPaused()) {
                     testConnection();
                     TimeUtil.delay(100);
@@ -1071,11 +1072,15 @@ public class TestExecution {
      * 
      * @param autConfigMap
      *            the config map to use
+     * @param monitor the monitor to use
      */
-    private void initTestExecutionMessage(Map<String, String> autConfigMap) {
+    private void initTestExecutionMessage(Map<String, String> autConfigMap, 
+        IProgressMonitor monitor) {
         try {
             InitTestExecutionMessage msg = new InitTestExecutionMessage();
             if (autConfigMap != null) {
+                monitor.subTask(Messages.
+                        StartingTestSuite_activatingAUT);
                 msg.setDefaultActivationMethod(ActivationMethod
                         .getRCString(autConfigMap
                                 .get(AutConfigConstants.ACTIVATION_METHOD)));
@@ -1171,8 +1176,10 @@ public class TestExecution {
      * 
      * @param autConfigMap
      *            the aut config map to use
+     * @param monitor the monitor to use
      */
-    private void resetMonitoringData(Map<String, String> autConfigMap) {
+    private void resetMonitoringData(Map<String, String> autConfigMap, 
+        IProgressMonitor monitor) {
         if (autConfigMap != null) {
             String resetString = autConfigMap
                     .get(MonitoringConstants.RESET_AGENT);
@@ -1180,6 +1187,8 @@ public class TestExecution {
                 boolean reset = Boolean.valueOf(resetString);
                 if (reset) {
                     try {
+                        monitor.subTask(Messages.
+                                StartingTestSuite_resettingMonitoringData);
                         ResetMonitoringDataMessage message = 
                             new ResetMonitoringDataMessage(
                                 AUTConnection.getInstance().getConnectedAutId()
@@ -1304,10 +1313,9 @@ public class TestExecution {
     }
 
     /**
-     * 
      * @return true if Test Suite is paused
      */
-    public boolean isPaused() {
+    protected boolean isPaused() {
         return m_paused;
     }
 
@@ -1749,7 +1757,8 @@ public class TestExecution {
                 if (wasInterrupted) {
                     Thread.currentThread().interrupt();
                 }
-                initTestExecutionMessage(getConnectedAUTsConfigMap());
+                initTestExecutionMessage(getConnectedAUTsConfigMap(),
+                        new NullProgressMonitor());
                 return null;
             } finally {
                 AutAgentRegistration.getInstance().removeListener(
@@ -1757,8 +1766,7 @@ public class TestExecution {
                 if (LOG.isDebugEnabled()) {
                     LOG.debug(Messages.ContinueTestExecution);
                 }
-                if (!m_stopped) { // the AUT/TS may be stopped by a project
-                                  // load
+                if (!m_stopped) { // the AUT/TS may be stopped by a project load
                     ClientTestFactory.getClientTest().fireTestExecutionChanged(
                             new TestExecutionEvent(
                                     TestExecutionEvent.TEST_EXEC_RESTART));
@@ -1806,11 +1814,25 @@ public class TestExecution {
         private int m_currentEventStackDepth = 0;
         
         /**
+         * <code>m_monitor</code> the progress monitor
+         */
+        private IProgressMonitor m_monitor;
+        
+        /**
+         * @param monitor the progress monitor to use
+         */
+        public StepCounter(IProgressMonitor monitor) {
+            m_monitor = monitor;
+        }
+
+        /**
          * {@inheritDoc}
          */
         public void nextCap(ICapPO cap) {
             if (m_currentEventStackDepth > 0) {
                 m_eventHandlerSteps++;
+            } else {
+                m_monitor.worked(1);
             }
             m_totalSteps++;
         }
@@ -1846,14 +1868,6 @@ public class TestExecution {
          */
         public void stackIncremented(INodePO node) {
             // Do nothing
-        }
-
-        /**
-         * Reset all attributes and counters to their initial values.
-         */
-        public void reset() {
-            resetCounter();
-            m_currentEventStackDepth = 0;
         }
         
         /**

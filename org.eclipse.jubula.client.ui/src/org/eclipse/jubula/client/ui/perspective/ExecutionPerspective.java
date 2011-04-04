@@ -40,6 +40,7 @@ public class ExecutionPerspective implements IPerspectiveFactory {
     public ExecutionPerspective() { 
         super();
     }
+    
     /**
      * Creates the initial layout for a page.
      * @param layout IPageLayout
@@ -47,16 +48,22 @@ public class ExecutionPerspective implements IPerspectiveFactory {
     public void createInitialLayout(IPageLayout layout) { 
         String editorArea = layout.getEditorArea();
         layout.setEditorAreaVisible(false);
-        IFolderLayout topLeft = layout.createFolder("topLeft", //$NON-NLS-1$
+        IFolderLayout left = layout.createFolder("left", //$NON-NLS-1$
                 IPageLayout.LEFT, RATIO_0_27, editorArea);
+        IFolderLayout topLeft = layout.createFolder("topLeft", //$NON-NLS-1$
+                IPageLayout.TOP, RATIO_0_27, "left"); //$NON-NLS-1$
         IFolderLayout topRight = layout.createFolder("topRight", //$NON-NLS-1$
                 IPageLayout.RIGHT, RATIO_0_6, editorArea);
         IFolderLayout bottomRight = layout.createFolder("bottomRight", //$NON-NLS-1$
                 IPageLayout.BOTTOM, RATIO_0_5, "topRight"); //$NON-NLS-1$
         IFolderLayout middle = layout.createFolder("middle", //$NON-NLS-1$
                 IPageLayout.LEFT, RATIO_0_27, editorArea);
-        topLeft.addView(Constants.TS_BROWSER_ID);
+        IFolderLayout middleBottom = layout.createFolder("middleBottom", //$NON-NLS-1$
+                IPageLayout.BOTTOM, 0.8f, "middle"); //$NON-NLS-1$
+        left.addView(Constants.TS_BROWSER_ID);
+        topLeft.addView(Constants.RUNNING_AUTS_VIEW_ID);
         middle.addView(Constants.TESTRE_ID);
+        middleBottom.addView(IPageLayout.ID_PROGRESS_VIEW);
         topRight.addView(Constants.PROPVIEW_ID);
         bottomRight.addView(Constants.IMAGEVIEW_ID);
 
