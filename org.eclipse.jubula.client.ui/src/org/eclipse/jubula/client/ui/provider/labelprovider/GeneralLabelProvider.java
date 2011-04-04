@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.labelprovider;
 
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
@@ -160,41 +162,18 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             if (node.getName() == null) {
                 return UNNAMED_NODE;
             }
-            if (node instanceof ICapPO 
-                    && Plugin.getDefault().getPreferenceStore().getBoolean(
-                            Constants.SHOWCAPINFO_KEY)) {
-                ICapPO testStep = (ICapPO)node;
-                StringBuilder nameBuilder = 
-                    new StringBuilder(testStep.getName());
-                nameBuilder.append(GeneralLabelProvider.OPEN_BRACKED);
-                final Map<String, String> map = 
-                    StringHelper.getInstance().getMap();
-                IComponentNameMapper compMapper = 
-                    Plugin.getActiveCompMapper();
-                nameBuilder.append(Messages.CapGUIType)
-                    .append(map.get(testStep.getComponentType()))
-                    .append(GeneralLabelProvider.SEPARATOR)
-                    .append(Messages.CapGUIName);
-                String componentName = testStep.getComponentName();
-                if (compMapper != null) {
-                    componentName = 
-                        compMapper.getCompNameCache().getName(componentName);
-                } else {
-                    componentName = 
-                        ComponentNamesBP.getInstance().getName(componentName);
-                }
-                if (componentName != null) {
-                    nameBuilder.append(componentName);
-                }
-                nameBuilder.append(GeneralLabelProvider.SEPARATOR)
-                    .append(Messages.CapGUIAction)
-                    .append(map.get(testStep.getActionName()))
-                    .append(GeneralLabelProvider.CLOSE_BRACKED);
+            if (node instanceof ICapPO) {
+                return getText((ICapPO)node);
             } 
             
+            if (node instanceof IExecTestCasePO) {
+                return getText((IExecTestCasePO)node);
+            }
+
             return node.getName();
         }
 
+        
         if (element instanceof ITestSuiteContPO) {
             return Messages.TSBCategoryTS;
         }
@@ -300,5 +279,76 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         }
 
         return null;
+    }
+
+    /**
+     * 
+     * @param testStep The Test Step to examine.
+     * @return label text for the given Test Step.
+     */
+    private static String getText(ICapPO testStep) {
+        if (Plugin.getDefault().getPreferenceStore().getBoolean(
+                Constants.SHOWCAPINFO_KEY)) {
+            StringBuilder nameBuilder = 
+                new StringBuilder(testStep.getName());
+            nameBuilder.append(GeneralLabelProvider.OPEN_BRACKED);
+            final Map<String, String> map = 
+                StringHelper.getInstance().getMap();
+            IComponentNameMapper compMapper = 
+                Plugin.getActiveCompMapper();
+            nameBuilder.append(Messages.CapGUIType)
+                .append(map.get(testStep.getComponentType()))
+                .append(GeneralLabelProvider.SEPARATOR)
+                .append(Messages.CapGUIName);
+            String componentName = testStep.getComponentName();
+            if (compMapper != null) {
+                componentName = 
+                    compMapper.getCompNameCache().getName(componentName);
+            } else {
+                componentName = 
+                    ComponentNamesBP.getInstance().getName(componentName);
+            }
+            if (componentName != null) {
+                nameBuilder.append(componentName);
+            }
+            nameBuilder.append(GeneralLabelProvider.SEPARATOR)
+                .append(Messages.CapGUIAction)
+                .append(map.get(testStep.getActionName()))
+                .append(GeneralLabelProvider.CLOSE_BRACKED);
+            return nameBuilder.toString();
+        } 
+        
+        return testStep.getName();
+    }
+
+    /**
+     * 
+     * @param testCaseRef The Test Reference to examine.
+     * @return label text for the given Test Case Reference.
+     */
+    private static String getText(IExecTestCasePO testCaseRef) {
+        StringBuilder nameBuilder = new StringBuilder();
+        nameBuilder.append(testCaseRef.getName());
+        Iterator<IParamDescriptionPO> iter = 
+            testCaseRef.getParameterList().iterator();
+        boolean parameterExist = false;
+        if (iter.hasNext()) {
+            parameterExist = true;
+            nameBuilder.append(GeneralLabelProvider.OPEN_BRACKED);
+        }
+        if (iter.hasNext()) {
+            while (iter.hasNext()) {
+                IParamDescriptionPO descr = 
+                    (IParamDescriptionPO)iter.next();
+                nameBuilder.append(descr.getName());
+                if (iter.hasNext()) {
+                    nameBuilder.append(GeneralLabelProvider.SEPARATOR);
+                }
+            }
+        }
+        if (parameterExist) {
+            nameBuilder.append(GeneralLabelProvider.CLOSE_BRACKED);
+        }
+        return nameBuilder.toString();
     }
 }
