@@ -178,8 +178,7 @@ public class AUTConnection extends BaseConnection {
             DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
                     ServerState.Connecting);
             try {
-                monitor.beginTask(Messages.ConnectingToAUT,
-                        IProgressMonitor.UNKNOWN);
+                monitor.subTask(Messages.ConnectingToAUT);
                 log.info(Messages.EstablishingConnectionToAUT);
                 run();
                 getCommunicator().addCommunicationErrorListener(

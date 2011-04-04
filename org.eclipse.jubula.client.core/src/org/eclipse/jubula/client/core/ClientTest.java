@@ -117,6 +117,11 @@ import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
  * @created 16.07.2004
  */
 public class ClientTest implements IClientTest {
+    /**
+     * <code>TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT</code>
+     */
+    public static final int TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT = 1000;
+
     /** the logger */
     private static Log log = LogFactory.getLog(ClientTest.class);
 
@@ -481,19 +486,36 @@ public class ClientTest implements IClientTest {
             AutIdentifier autId, boolean autoScreenshot) {
         startTestSuite(execTestSuite, locale, autId, autoScreenshot, null);
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    public void startTestSuite(ITestSuitePO execTestSuite,
-            Locale locale, AutIdentifier autId, boolean autoScreenshot,
-            Map<String, String> externalVars) {
-        TestExecution.getInstance().setStartedTestSuite(execTestSuite);
-        execTestSuite.setStarted(true);
-        m_testsuiteStartTime = new Date();
-        setTestresultSummary(PoMaker.createTestResultSummaryPO());
-        TestExecution.getInstance().executeTestSuite(execTestSuite, locale,
-                autId, autoScreenshot, externalVars, getTestresultSummary());
+    public void startTestSuite(final ITestSuitePO execTestSuite,
+            final Locale locale, final AutIdentifier autId,
+            final boolean autoScreenshot, 
+            final Map<String, String> externalVars) {
+        Job runningTestSuite = new Job(Messages.ExecutingTestSuite) {
+            protected IStatus run(IProgressMonitor monitor) {
+                monitor.beginTask(Messages.ExecutingTestSuite, 
+                        TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT);
+                TestExecution.getInstance().setStartedTestSuite(execTestSuite);
+                execTestSuite.setStarted(true);
+                m_testsuiteStartTime = new Date();
+                setTestresultSummary(PoMaker.createTestResultSummaryPO());
+                TestExecution.getInstance().executeTestSuite(execTestSuite,
+                        locale, autId, autoScreenshot, externalVars,
+                        getTestresultSummary(), monitor);
+                return Status.OK_STATUS;
+            }
+            
+            /**
+             * {@inheritDoc}
+             */
+            protected void canceling() {
+                stopTestExecution();
+            }
+        };
+        runningTestSuite.schedule();
     }
 
     /** {@inheritDoc} */
@@ -603,7 +625,6 @@ public class ClientTest implements IClientTest {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public void getAllComponentsFromAUT(IAUTInfoListener listener, 

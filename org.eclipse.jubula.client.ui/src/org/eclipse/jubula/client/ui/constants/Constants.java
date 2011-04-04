@@ -127,6 +127,10 @@ public interface Constants {
     /** ID of the TestresultSummaryView */
     public static final String TESTRESULT_SUMMARY_VIEW_ID = 
         "org.eclipse.jubula.client.ui.views.TestresultSummaryView"; //$NON-NLS-1$
+
+    /** ID of the TestresultSummaryView */
+    public static final String RUNNING_AUTS_VIEW_ID = 
+        "org.eclipse.jubula.client.ui.views.RunningAuts"; //$NON-NLS-1$
     
     /** ID of the Start Incomplete Test Suite Action */
     public static final String START_INCOMPLETE_TEST_SUITE_ACTION_ID = 
