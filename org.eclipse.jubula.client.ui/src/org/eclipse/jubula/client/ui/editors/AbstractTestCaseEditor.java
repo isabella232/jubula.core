@@ -588,8 +588,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         if (getCurrentSelection().getFirstElement() != null
                 && (pair.getType() == null || StringConstants.EMPTY.equals(pair
                         .getType()))) {
-            searchCompType(pair, 
-                    ((INodePO)getCurrentSelection().getFirstElement()));
+            searchCompType(pair, getCurrentSelection().getFirstElement());
         }
     }
 
@@ -1154,16 +1153,15 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         final EditSupport editSupport = getEditorHelper().getEditSupport();
         ISpecTestCasePO workSpecTcPO = (ISpecTestCasePO)editSupport
             .getWorkVersion();
-        ISpecTestCasePO eventHandlerInputPO = 
-            (ISpecTestCasePO)eventHandlerInput;
+        ISpecTestCasePO eventHandlerInputPO = eventHandlerInput;
         IEventExecTestCasePO eventHandlerPO = null;
         try {           
             ISpecTestCasePO eventHandlerWorkV = (ISpecTestCasePO)editSupport
                 .createWorkVersion(eventHandlerInputPO);
             eventHandlerPO = NodeMaker.createEventExecTestCasePO(
                 eventHandlerWorkV, workSpecTcPO);
-            final int status = openAddEventHandlerDlg(
-                (ISpecTestCasePO)evHandlerOwner, eventHandlerPO);
+            final int status = openAddEventHandlerDlg(evHandlerOwner, 
+                    eventHandlerPO);
             if (Window.OK == status) {
                 editSupport.lockWorkVersion();
                 TestCaseBP.addEventHandler(editSupport, workSpecTcPO, 
