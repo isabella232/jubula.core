@@ -91,7 +91,7 @@ public interface CommandIDs {
     public static final String PAUSE_TEST_SUITE_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.PauseTestSuiteCommand"; //$NON-NLS-1$
     
     /** the ID of the "open project properties" command */
-    public static final String PROJECT_PROPERTIES_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.PropertiesCommand"; //$NON-NLS-1$
+    public static final String PROJECT_PROPERTIES_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.ProjectProperties"; //$NON-NLS-1$
     
     /** the ID of the "reference test case" command */
     public static final String REFERENCE_TC_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.newTestCaseReference"; //$NON-NLS-1$
