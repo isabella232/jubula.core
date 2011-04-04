@@ -292,8 +292,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         layoutData.horizontalAlignment = GridData.FILL;
         layoutData.verticalAlignment = GridData.FILL;
         getTreeViewer().getControl().setLayoutData(layoutData);
-        
-        getViewSite().setSelectionProvider(getTreeViewer());
+        getSite().setSelectionProvider(getTreeViewer());
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
         
         final DataEventDispatcher dispatcher = 

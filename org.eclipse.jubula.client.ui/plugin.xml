@@ -157,42 +157,66 @@
 	<extension point="org.eclipse.core.runtime.adapters">
 		<factory adaptableType="org.eclipse.jubula.client.core.model.IComponentNamePO"
 			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
-			<adapter type="org.eclipse.ui.views.properties.IPropertySource">
-			</adapter>
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+		</factory>
+		<factory adaptableType="org.eclipse.jubula.client.core.model.ITestSuitePO"
+			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+		</factory>
+		<factory adaptableType="org.eclipse.jubula.client.core.model.ISpecTestCasePO"
+			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+		</factory>
+		<factory adaptableType="org.eclipse.jubula.client.core.model.ICapPO"
+			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+		</factory>
+		<factory adaptableType="org.eclipse.jubula.client.core.model.IEventExecTestCasePO"
+			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+		</factory>
+		<factory adaptableType="org.eclipse.jubula.client.core.model.IExecTestCasePO"
+			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+		</factory>
+		<factory adaptableType="org.eclipse.jubula.client.core.model.IProjectPO"
+			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+		</factory>
+		<factory adaptableType="org.eclipse.jubula.client.core.model.IRefTestSuitePO"
+			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+		</factory>
+		<factory adaptableType="org.eclipse.jubula.client.core.model.ITestJobPO"
+			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
 		</factory>
 		<factory
 			adaptableType="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO"
 			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
-			<adapter type="org.eclipse.ui.views.properties.IPropertySource">
-			</adapter>
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
 		</factory>
 		<factory adaptableType="org.eclipse.jubula.tools.registration.AutIdentifier"
 			class="org.eclipse.jubula.client.ui.adapter.PropertySourceAdapterFactory">
-			<adapter type="org.eclipse.ui.views.properties.IPropertySource">
-			</adapter>
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
 		</factory>
 		<factory adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
 			class="org.eclipse.jubula.client.ui.adapter.TestResultNodeAdapterFactory">
-			<adapter type="org.eclipse.ui.views.properties.IPropertySource">
-			</adapter>
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
 		</factory>
 		<factory
 			adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
 			class="org.eclipse.jubula.client.ui.adapter.TestResultNodeAdapterFactory">
-			<adapter type="org.eclipse.jubula.client.core.model.TestResultNode">
-			</adapter>
+			<adapter type="org.eclipse.jubula.client.core.model.TestResultNode" />
 		</factory>
 		<factory adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
 			class="org.eclipse.jubula.client.ui.adapter.TestResultNodeAdapterFactory">
-			<adapter type="org.eclipse.jubula.client.ui.views.imageview.ImageProvider">
-			</adapter>
+			<adapter type="org.eclipse.jubula.client.ui.views.imageview.ImageProvider" />
 		</factory>
         <factory
             adaptableType="org.eclipse.jubula.client.core.model.ITestResultSummaryPO"
             class="org.eclipse.jubula.client.ui.adapter.MonitoringSourceAdapterFactory">
-           <adapter
-               type="org.eclipse.ui.views.properties.IPropertySource">
-           </adapter>
+           <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
         </factory>
 	</extension>
 	<extension point="org.eclipse.ui.perspectives">
