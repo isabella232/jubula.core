@@ -149,4 +149,19 @@ public interface CommandIDs {
     
     /** the ID of the "file import" command */
     public static final String ECLIPSE_RCP_FILE_IMPORT_COMMAND_ID = "org.eclipse.ui.file.import"; //$NON-NLS-1$
+    
+    /** the ID of the "import project" command */
+    public static final String IMPORT_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.ImportProject"; //$NON-NLS-1$
+    
+    /** the ID of the "delete project" command */
+    public static final String DELETE_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.DeleteProject"; //$NON-NLS-1$
+    
+    /** the ID of the "new project" command */
+    public static final String NEW_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.NewProject"; //$NON-NLS-1$
+
+    /** the ID of the "open project" command */
+    public static final String OPEN_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.OpenProject"; //$NON-NLS-1$
+    
+    /** the ID of the "select database" command */
+    public static final String SELECT_DATABASE_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.SelectDatabase"; //$NON-NLS-1$
 }

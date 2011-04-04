@@ -39,25 +39,21 @@ import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentName
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
-import org.eclipse.jubula.client.core.utils.IProgressListener;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.core.utils.PrefStoreHelper;
-import org.eclipse.jubula.client.core.utils.ProgressEvent;
-import org.eclipse.jubula.client.core.utils.ProgressEventDispatcher;
 import org.eclipse.jubula.client.ui.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.businessprocess.ComponentNameReuseBP;
+import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.businessprocess.ToolkitBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.controllers.ProgressController;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
@@ -162,8 +158,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private List < String > m_dirtyEditors;
     /** true, if preference store was initialized */
     private boolean m_isPrefStoreInitialized = false;
-    /** the global progress controller */
-    private IProgressListener m_progressController = new ProgressController();
     /** the console */
     private MessageConsole m_console;
     /** standard message stream for the console */
@@ -228,12 +222,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      * {@inheritDoc}
      */
     public void stop(BundleContext context) throws Exception {
-        try {
-            ProgressEventDispatcher.removeProgressListener(
-                m_progressController);
-        } finally {
-            super.stop(context);
-        }
+        super.stop(context);
     }
 
     /**
@@ -1285,10 +1274,8 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      * - ComponentNamesListBP
      */
     private void registerPermanentServices() {
-        // register progress controller
-        ProgressEventDispatcher.addProgressListener(
-            m_progressController);
-
+        ImportFileBP.getInstance();
+        
         // register service for checking completeness
         CompletenessBP.getInstance();
 
@@ -1296,11 +1283,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         ComponentNameReuseBP.getInstance();
         
         // register service for toolkit
-        final ToolkitBP toolkitBP = ToolkitBP.getInstance();
-        DataEventDispatcher.getInstance().addProjectLoadedListener(
-            toolkitBP, true);
-        DataEventDispatcher.getInstance().addDataChangedListener(
-            toolkitBP, true);
+        ToolkitBP.getInstance();
     }
 
     /**
@@ -1411,9 +1394,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         Display.getDefault().syncExec(new Runnable() {
             @SuppressWarnings("synthetic-access")
             public void run() {
-                // FIXME enhance / remove our progress event dispatching mechanism
-                ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                        ProgressEvent.CLOSE_PROGRESS_BAR, null, null));
                 getStatusLineManager().setErrorMessage(null);
                 setNormalCursor();
             }

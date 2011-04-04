@@ -20,7 +20,7 @@ import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
-import org.eclipse.jubula.client.ui.handlers.ProjectPropertiesHandler;
+import org.eclipse.jubula.client.ui.handlers.project.ProjectPropertiesHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.properties.AbstractProjectPropertyPage;
 import org.slf4j.Logger;

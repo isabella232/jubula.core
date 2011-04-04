@@ -24,7 +24,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-
 /**
  * @author BREDEX GmbH
  * @created Feb 7, 2007

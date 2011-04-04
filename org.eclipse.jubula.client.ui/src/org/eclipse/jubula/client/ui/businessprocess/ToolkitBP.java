@@ -18,6 +18,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError.ERROR;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
@@ -54,8 +55,10 @@ public class ToolkitBP implements IProjectLoadedListener, IDataChangedListener {
     /**
      * Constructor
      */
-    private  ToolkitBP() {
-        // nothing
+    private ToolkitBP() {
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(this, true);
+        ded.addDataChangedListener(this, true);
     }
     
     /**

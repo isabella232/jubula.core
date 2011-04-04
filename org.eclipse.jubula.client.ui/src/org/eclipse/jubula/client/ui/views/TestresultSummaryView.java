@@ -857,7 +857,7 @@ public class TestresultSummaryView extends ViewPart
      * refresh view
      */
     public void refreshView() {
-        m_tableViewer.getControl().getDisplay().syncExec(new Runnable() {
+        m_tableViewer.getControl().getDisplay().asyncExec(new Runnable() {
             public void run() {
                 List<ITestResultSummaryPO> metaList;
                 try {

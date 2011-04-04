@@ -414,51 +414,10 @@
 				<separator name="JubulaAddSeparator1" />
 			</menu>
 
-			<action
-				class="org.eclipse.jubula.client.ui.actions.SaveProjectAsAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.SaveProjectAsCommand"
-				disabledIcon="icons/saveas_d.gif" icon="icons/saveas_e.gif"
-				id="org.eclipse.jubula.client.ui.actions.SaveProjectAsAction"
-				label="%SaveAs" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" />
-			<action
-				class="org.eclipse.jubula.client.ui.actions.DeleteProjectAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.DeleteProjectCommand"
-				disabledIcon="icons/deleteProject_disabled.gif" icon="icons/deleteProject.gif"
-				id="org.eclipse.jubula.client.ui.actions.DeleteProjectAction"
-				label="%DeleteProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" />
-			<action class="org.eclipse.jubula.client.ui.actions.OpenProjectAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
-				disabledIcon="icons/loadDB_disabled.gif" icon="icons/loadDB.gif"
-				id="org.eclipse.jubula.client.ui.actions.OpenProjectDBAction"
-				label="%OpenProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" />
-
-			<action class="org.eclipse.jubula.client.ui.actions.NewProjectAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.NewProjectCommand"
-				disabledIcon="icons/project_dis.gif" icon="icons/newProjectIcon.gif"
-				id="org.eclipse.jubula.client.ui.actions.NewProjectAction"
-				label="%NewProject" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator1" tooltip="%NewProjectToolTip" />
-			<action class="org.eclipse.jubula.client.ui.actions.ExportAllAction"
-				id="org.eclipse.jubula.client.ui.actions.ExportAllAction"
-				label="%ExportAll" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" style="push"
-				tooltip="%ExportAllToolTip" />
-			<action class="org.eclipse.jubula.client.ui.actions.ExportFileAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
-				disabledIcon="icons/export_disabled.gif" icon="icons/export.gif"
-				id="org.eclipse.jubula.client.ui.actions.ExportFileAction"
-				label="%Export" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" tooltip="%ExportToolTip">
-			</action>
-			<action class="org.eclipse.jubula.client.ui.actions.ImportFileAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.ImportFileCommand"
-				disabledIcon="icons/import_disabled.gif" icon="icons/import.gif"
-				id="org.eclipse.jubula.client.ui.actions.ImportFileAction"
-				label="%Import" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" tooltip="%ImportToolTip">
-			</action>
-
 			<action class="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
 				definitionId="org.eclipse.ui.edit.findReplace" icon="icons/search.gif"
 				id="org.eclipse.jubula.client.ui.actions.SearchTreeAction"
 				label="%Search" menubarPath="edit/JubulaEditSeparator3" tooltip="%SearchToolTip" />
-
 			<action
 				class="org.eclipse.jubula.client.ui.actions.ChooseLanguageAction"
 				disabledIcon="icons/globe_disabled.gif" icon="icons/globe.gif"
@@ -466,14 +425,6 @@
 				label="%ChooseLanguage" style="pulldown"
 				toolbarPath="org.eclipse.jubula.client.ui.toolbar.LanguageToolbar/GlobalActions"
 				tooltip="%ChooseLanguageToolTip" />
-
-			<action class="org.eclipse.jubula.client.ui.actions.DisconnectAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
-				disabledIcon="icons/stopServer_disabled.gif" icon="icons/stopServer.gif"
-				id="org.eclipse.jubula.client.ui.actions.DisconnectAction"
-				label="%Disconnect" menubarPath="org.eclipse.ui.run/JubulaRunSeparator1"
-				toolbarPath="org.eclipse.jubula.client.ui.toolbar.AutStarterToolbar/GlobalActions"
-				tooltip="%DisconnectToolTip" />
 			<action
 				class="org.eclipse.jubula.client.ui.actions.ChooseServerAction"
 				definitionId="org.eclipse.jubula.client.ui.commands.ChooseServerCommand"
@@ -482,22 +433,6 @@
 				label="%Connect" style="pulldown"
 				toolbarPath="org.eclipse.jubula.client.ui.toolbar.AutStarterToolbar/GlobalActions"
 				tooltip="%ConnectToolTip" />
-			<action
-				class="org.eclipse.jubula.client.ui.actions.StopObservationModeAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.StopRecordTestCaseCommand"
-				disabledIcon="icons/stopcam_disabled.gif" icon="icons/stopcam.gif"
-				id="org.eclipse.jubula.client.ui.actions.StopRecordTestCaseAction"
-				label="%StopRecord" menubarPath="org.eclipse.ui.run/JubulaRunSeparator4"
-				toolbarPath="org.eclipse.jubula.client.ui.toolbar.ObservationToolbar/GlobalActions"
-				tooltip="%StopRecordToolTip" />
-			<action
-				class="org.eclipse.jubula.client.ui.actions.OMStopMappingModeAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
-				disabledIcon="icons/stopOM_disabled.gif" icon="icons/stopOM.gif"
-				id="org.eclipse.jubula.client.ui.actions.OMStopMappingModeAction"
-				label="%StopMapping" menubarPath="org.eclipse.ui.run/JubulaRunSeparator5"
-				toolbarPath="org.eclipse.jubula.client.ui.toolbar.ObjectMappingToolbar/GlobalActions"
-				tooltip="%StopMappingToolTip" />
 			<action disabledIcon="icons/newTestCaseIcon.gif" icon="icons/newTestCaseIcon.gif"
 				id="org.eclipse.jubula.client.ui.actions.AbstractNewTestCaseAction_INSERT"
 				label="%TestCase" menubarPath="edit/JubulaInsertMenu/JubulaInsertSeparator1" retarget="true"
@@ -516,18 +451,6 @@
 				disabledIcon="icons/serverLogView_disabled.gif" icon="icons/serverLogView.gif"
 				id="org.eclipse.jubula.client.ui.actions.ShowServerLogAction"
 				label="%ShowAutStarterLog" menubarPath="help/helpEnd" style="push" />
-			<action
-				class="org.eclipse.jubula.client.ui.actions.CreateNewVersionAction"
-				disabledIcon="icons/project_dis.gif" icon="icons/newProjectIcon.gif"
-				id="org.eclipse.jubula.client.ui.actions.CreateNewVersionAction"
-				label="%CreateNewVersion" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" style="push"
-				tooltip="%CreateNewVersionTooltip" />
-			<action
-				class="org.eclipse.jubula.client.ui.actions.SelectDatabaseAction"
-				definitionId="org.eclipse.jubula.client.ui.commands.SelectDBCommand"
-				icon="icons/selectDB.gif"
-				id="org.eclipse.jubula.client.ui.actions.SelectDatabaseAction"
-				label="%SelectDatabase" menubarPath="org.eclipse.jubula.client.ui.menu.test/JubulaProjectSeparator3" />
 		</actionSet>
 		<actionSet description="all actions, that are not in the main menu- or toolbar"
 			id="org.eclipse.jubula.client.ui.globalActions" label="Jubula Global Action Set">
@@ -834,39 +757,31 @@
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
-			name="Disconnect from Server" />
+			name="%Disconnect" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.ImportFileCommand"
 			name="Import" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
+			id="org.eclipse.jubula.client.ui.commands.ExportProject"
 			name="Export" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.PropertiesCommand"
-			name="%Properties">
+			id="org.eclipse.jubula.client.ui.commands.ExportAll"
+			name="%ExportAll" />
+		<command
+			categoryId="org.eclipse.jubula.client.ui.commands"
+			id="org.eclipse.jubula.client.ui.commands.ProjectProperties"
+			name="%ProjectProperties">
 			<commandParameter
-				id="org.eclipse.jubula.client.ui.commands.PropertiesCommand.parameter.sectionToOpen"
+				id="org.eclipse.jubula.client.ui.commands.ProjectProperties.parameter.sectionToOpen"
 				name="Section" optional="true">
 			</commandParameter>
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.NewProjectCommand"
-			name="New" />
-		<command
-			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
-			name="Open" />
-		<command
-			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.DeleteProjectCommand"
-			name="Delete" />
-		<command
-			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.SaveProjectAsCommand"
+			id="org.eclipse.jubula.client.ui.commands.SaveProjectAs"
 			name="Save As" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
@@ -983,7 +898,7 @@
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.jubula.client.ui.commands.SelectDBCommand" name="SelectDatabase">
+			id="org.eclipse.jubula.client.ui.commands.SelectDatabase" name="%SelectDatabase">
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
@@ -1107,6 +1022,36 @@
         id="org.eclipse.jubula.client.ui.commands.ToggleRelevance"
         name="Toggle relevance">
   </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.StopObservationMode"
+        name="%StopRecord">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.NewProject"
+        name="%NewProject">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.ImportProject"
+        name="%Import">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.DeleteProject"
+        name="%DeleteProject">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
+        name="%CreateNewVersion">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.OpenProject"
+        name="%OpenProject">
+  </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<key
@@ -1133,19 +1078,19 @@
 		<key commandId="org.eclipse.jubula.client.ui.commands.ChooseServerCommand"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+C" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.ImportFileCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+I" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.ExportFileCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+X" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.PropertiesCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.ProjectProperties"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+M2+P" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.OpenProjectDBCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.OpenProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+O" />
-		<key commandId="org.eclipse.jubula.client.ui.commands.DeleteProjectCommand"
+		<key commandId="org.eclipse.jubula.client.ui.commands.DeleteProject"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+D" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.EditParameters"
@@ -1283,13 +1228,6 @@
 			</menu>
 		</menuContribution>
 		<menuContribution
-			locationURI="menu:org.eclipse.jubula.client.ui.menu.test?before=JubulaProjectSeparator5">
-			<command
-				commandId="org.eclipse.jubula.client.ui.commands.PropertiesCommand"
-				label="%Properties" style="push" tooltip="%PropertiesToolTip">
-			</command>
-		</menuContribution>
-		<menuContribution
 			locationURI="menu:edit?before=JubulaEditSeparator3">
 			<command commandId="org.eclipse.ui.edit.delete" style="push">
 			</command>
@@ -1364,6 +1302,10 @@
 				id="org.eclipse.jubula.client.ui.toolbar.AutStarterToolbar">
 				<separator name="GlobalActions">
 				</separator>
+                <command
+                    commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
+                    style="push">
+                </command>
 			</toolbar>
 			<toolbar id="org.eclipse.jubula.client.ui.toolbar.AutToolbar">
 				<command
@@ -1431,15 +1373,24 @@
 					commandId="org.eclipse.jubula.client.ui.commands.StartObservationModeCommand"
 					id="org.eclipse.jubula.client.ui.toolbar.ObservationToolbar.StartObservationModeCommand"
 					style="pulldown">
-       <visibleWhen
-             checkEnabled="false">
-          <reference
-                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
-          </reference>
-       </visibleWhen>
+					<visibleWhen
+		             checkEnabled="false">
+		          <reference
+		                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+		          </reference>
+		       </visibleWhen>
 				</command>
-				<separator name="GlobalActions" visible="false">
-				</separator>
+				<command
+					commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
+					id="org.eclipse.jubula.client.ui.toolbar.ObservationToolbar.StopObservationMode"
+					style="push">
+		       <visibleWhen
+		             checkEnabled="false">
+		          <reference
+		                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+		          </reference>
+		       </visibleWhen>
+				</command>
 			</toolbar>
 			<toolbar
 				id="org.eclipse.jubula.client.ui.toolbar.ObjectMappingToolbar">
@@ -1447,15 +1398,23 @@
 					commandId="org.eclipse.jubula.client.ui.commands.OMStartMappingModeCommand"
 					id="org.eclipse.jubula.client.ui.toolbar.ObjectMappingToolbar.OMStartMappingModeCommand"
 					style="pulldown">
-       <visibleWhen
-             checkEnabled="false">
-          <reference
-                definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
-          </reference>
-       </visibleWhen>
+                   <visibleWhen
+                         checkEnabled="false">
+                      <reference
+                            definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+                      </reference>
+                   </visibleWhen>
 				</command>
-				<separator name="GlobalActions" visible="false">
-				</separator>
+                <command
+                      commandId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
+                      style="push">
+                  <visibleWhen
+                         checkEnabled="false">
+                      <reference
+                            definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+                      </reference>
+                    </visibleWhen>
+                </command>
 				<command
 					commandId="org.eclipse.jubula.client.ui.commands.CreateNewLogicalNameCommand"
 					style="push" tooltip="%NewLogicalNameToolTip">
@@ -1691,18 +1650,57 @@
      <menu
            id="org.eclipse.jubula.client.ui.menu.test"
            label="&amp;Test">
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.NewProject"
+              style="push">
+        </command>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.OpenProject"
+              style="push">
+        </command>
+        <separator
+              name="JubulaProjectSeparator0">
+        </separator>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase"
+              style="push">
+        </command>
         <separator
               name="JubulaProjectSeparator1"
               visible="true">
         </separator>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.SaveProjectAs"
+              style="push">
+        </command>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
+              style="push">
+        </command>
         <separator
               name="JubulaProjectSeparator2"
               visible="true">
         </separator>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
+              style="push">
+        </command>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
+              style="push">
+        </command>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.ExportAll"
+              style="push">
+        </command>
         <separator
               name="JubulaProjectSeparator3"
               visible="true">
         </separator>
+        <command
+              commandId="org.eclipse.jubula.client.ui.commands.DeleteProject"
+              style="push">
+        </command>
         <separator
               name="JubulaProjectSeparator4"
               visible="true">
@@ -1711,6 +1709,10 @@
               name="JubulaProjectSeparator5"
               visible="true">
         </separator>
+		<command
+			commandId="org.eclipse.jubula.client.ui.commands.ProjectProperties"
+			style="push">
+		</command>
 		<visibleWhen checkEnabled="false">
      <reference
            definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
@@ -1722,6 +1724,22 @@
 			-->
 		</visibleWhen>
      </menu>
+  </menuContribution>
+  <menuContribution
+        allPopups="false"
+        locationURI="menu:org.eclipse.ui.run">
+     <command
+           commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
+           style="push">
+     </command>
+     <command
+           commandId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
+           style="push">
+     </command>
+     <command
+           commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
+           style="push">
+     </command>
   </menuContribution>
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
@@ -2166,8 +2184,8 @@
 			</enabledWhen>
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.handlers.ProjectPropertiesHandler"
-			commandId="org.eclipse.jubula.client.ui.commands.PropertiesCommand">
+			class="org.eclipse.jubula.client.ui.handlers.project.ProjectPropertiesHandler"
+			commandId="org.eclipse.jubula.client.ui.commands.ProjectProperties">
 			<enabledWhen>
 				<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
 					<equals value="true">
@@ -2223,7 +2241,7 @@
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.handlers.RefreshProjectHandler"
+			class="org.eclipse.jubula.client.ui.handlers.project.RefreshProjectHandler"
 			commandId="org.eclipse.ui.file.refresh">
 			<activeWhen>
 				<and>
@@ -2304,6 +2322,16 @@
 				<reference
 					definitionId="org.eclipse.jubula.client.ui.expression.canConnectToAut">
 				</reference>
+			</enabledWhen>
+		</handler>
+		<handler
+			class="org.eclipse.jubula.client.ui.handlers.StopObservationModeHandler"
+			commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode">
+			<enabledWhen>
+				<with
+					variable="org.eclipse.jubula.client.ui.variable.isObservationRunning">
+					<equals value="true" />
+				</with>
 			</enabledWhen>
 		</handler>
   <handler
@@ -2427,6 +2455,57 @@
         class="org.eclipse.jubula.client.ui.handlers.ShowFromClipboard"
         commandId="org.eclipse.jubula.client.ui.commands.ShowFromClipboard">
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.project.DeleteProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.DeleteProject">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.project.NewProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.NewProject">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.project.ImportProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.ImportProject">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.CreateNewProjectVersionHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion">
+        <activeWhen>
+			<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
+				<equals value="true" />
+			</with>
+        </activeWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.project.OpenProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.OpenProject">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.project.ExportAllHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.ExportAll">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.project.SaveProjectAsHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.SaveProjectAs">
+        <activeWhen>
+			<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
+				<equals value="true" />
+			</with>
+        </activeWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.project.ExportProjectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.ExportProject">
+        <activeWhen>
+			<with variable="org.eclipse.jubula.client.ui.variable.isProjectActive">
+				<equals value="true" />
+			</with>
+        </activeWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.project.SelectDatabaseHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase">
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.commandImages">
 		<image commandId="org.eclipse.ui.edit.rename" disabledIcon="icons/rename_disabled.gif"
@@ -2531,6 +2610,14 @@
 			commandId="org.eclipse.jubula.client.ui.commands.togglePauseOnErrorCommand"
 			icon="icons/togglePauseOnError.gif">
 		</image>
+		<image
+			commandId="org.eclipse.jubula.client.ui.commands.CreateNewProjectVersion"
+			disabledIcon="icons/project_dis.gif" icon="icons/newProjectIcon.gif">
+		</image>
+		<image
+			commandId="org.eclipse.jubula.client.ui.commands.OpenProject"
+			disabledIcon="icons/loadDB_disabled.gif" icon="icons/loadDB.gif">
+		</image>
   <image
         commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
         icon="icons/goToNextError.gif">
@@ -2580,6 +2667,50 @@
   <image
         commandId="org.eclipse.jubula.client.ui.commands.continueWithoutEHCommand"
         icon="icons/continueWithoutEH.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
+        disabledIcon="icons/stopcam_disabled.gif"
+        icon="icons/stopcam.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.ImportProject"
+        disabledIcon="icons/import_disabled.gif"
+        icon="icons/import.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.DeleteProject"
+        disabledIcon="icons/deleteProject_disabled.gif"
+        icon="icons/deleteProject.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.NewProject"
+        disabledIcon="icons/project_dis.gif"
+        icon="icons/newProjectIcon.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.ExportProject"
+        disabledIcon="icons/export_disabled.gif"
+        icon="icons/export.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.SaveProjectAs"
+        disabledIcon="icons/saveas_d.gif"
+        icon="icons/saveas_e.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase"
+        icon="icons/selectDB.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
+        disabledIcon="icons/stopServer_disabled.gif"
+        icon="icons/stopServer.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
+        disabledIcon="icons/stopOM_disabled.gif"
+        icon="icons/stopOM.gif">
   </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"
@@ -3190,6 +3321,25 @@
         </and>
      </activeWhen>
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.AUTAgentDisconnectHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand">
+     <activeWhen>
+        <with variable="org.eclipse.jubula.client.ui.variable.isAutStarterConnected">
+            <equals value="true" />
+        </with>
+     </activeWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.StopObjectMappingModeHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand">
+        <enabledWhen>
+            <with
+                variable="org.eclipse.jubula.client.ui.variable.isObjectMappingRunning">
+                <equals value="true" />
+            </with>
+        </enabledWhen>
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.services">
 		<sourceProvider
@@ -3231,6 +3381,18 @@
 				priorityLevel="workbench">
 			</variable>
 		</sourceProvider>
+		<sourceProvider
+			provider="org.eclipse.jubula.client.ui.sourceprovider.ObservationModeSourceProvider">
+			<variable name="org.eclipse.jubula.client.ui.variable.isObservationRunning"
+				priorityLevel="workbench">
+			</variable>
+		</sourceProvider>
+        <sourceProvider
+            provider="org.eclipse.jubula.client.ui.sourceprovider.ObjectMappingModeSourceProvider">
+            <variable name="org.eclipse.jubula.client.ui.variable.isObjectMappingRunning"
+                priorityLevel="workbench">
+            </variable>
+        </sourceProvider>
 		<sourceProvider
 			provider="org.eclipse.jubula.client.ui.sourceprovider.AutServerSourceProvider">
 			<variable name="org.eclipse.jubula.client.ui.variable.autConnectionStatus"

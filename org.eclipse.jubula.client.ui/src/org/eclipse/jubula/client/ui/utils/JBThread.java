@@ -26,84 +26,11 @@ public abstract class JBThread extends Thread {
     }
 
     /**
-     * @param target
-     *      Runnable
-     * @param name
-     *      String
-     */
-    public JBThread(Runnable target, String name) {
-        super(target, name);
-        addErrorHandler();
-
-    }
-
-    /**
-     * @param target
-     *      Runnable
-     */
-    public JBThread(Runnable target) {
-        super(target);
-        addErrorHandler();
-    }
-
-    /**
      * @param name
      *      String
      */
     public JBThread(String name) {
         super(name);
-        addErrorHandler();
-    }
-
-    /**
-     * @param group
-     *      ThreadGroup
-     * @param target
-     *      Runnable
-     * @param name
-     *      Runnable
-     * @param stackSize
-     *      long
-     */
-    public JBThread(ThreadGroup group, Runnable target, 
-        String name, long stackSize) {
-        super(group, target, name, stackSize);
-        addErrorHandler();
-    }
-
-    /**
-     * @param group
-     * ThreadGroup
-     * @param target
-     * Runnable
-     * @param name
-     * String
-     */
-    public JBThread(ThreadGroup group, Runnable target, String name) {
-        super(group, target, name);
-        addErrorHandler();
-    }
-
-    /**
-     * @param group
-     * ThreadGroup
-     * @param target
-     * String
-     */
-    public JBThread(ThreadGroup group, Runnable target) {
-        super(group, target);
-        addErrorHandler();
-    }
-
-    /**
-     * 
-     * @param group
-     * ThreadGroup
-     * @param name
-     * String
-     */
-    public JBThread(ThreadGroup group, String name) {
-        super(group, name);
         addErrorHandler();
     }
 

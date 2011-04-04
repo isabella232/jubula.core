@@ -21,13 +21,14 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.OMSetCategoryToMapInto;
 import org.eclipse.jubula.client.ui.businessprocess.OMEditorBP;
-import org.eclipse.jubula.client.ui.businessprocess.OMStopMappingModeBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.sourceprovider.AbstractJBSourceProvider;
+import org.eclipse.jubula.client.ui.sourceprovider.ObjectMappingModeSourceProvider;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -87,9 +88,13 @@ public class RenameCategoryHandlerOMEditor
                     editor.getEditorHelper().setDirty(true);
                     DataEventDispatcher.getInstance().fireDataChangedListener(
                         category, DataState.Renamed, UpdateState.onlyInEditor);
-                    if (categoryToMapIn != null 
-                        && OMStopMappingModeBP.getInstance().isEnabled()) {
-                        
+                    ObjectMappingModeSourceProvider omsp = 
+                        (ObjectMappingModeSourceProvider) 
+                            AbstractJBSourceProvider
+                                .getSourceProviderInstance(null,
+                                        ObjectMappingModeSourceProvider.ID);
+                    if (categoryToMapIn != null && omsp != null
+                            && omsp.isRunning()) {
                         OMSetCategoryToMapInto action = 
                             new OMSetCategoryToMapInto();
                         action.runWithEvent(null, null);

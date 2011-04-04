@@ -35,20 +35,26 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ISafeRunnable;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SafeRunner;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.constants.PluginConstants;
 import org.eclipse.jubula.client.core.errorhandling.IDatabaseVersionErrorHandler;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.DBVersionPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
-import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
-import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
-import org.eclipse.jubula.client.core.utils.ProgressEvent;
-import org.eclipse.jubula.client.core.utils.ProgressEventDispatcher;
+import org.eclipse.jubula.client.core.progress.JobChangeListener;
+import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
+import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
+import org.eclipse.jubula.client.core.utils.DatabaseStateEvent.DatabaseState;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalAbortException;
@@ -117,9 +123,6 @@ public class Hibernator {
     /** contains information regarding how to connect to the database */
     private static DatabaseConnectionInfo dbConnectionInfo = null;
 
-    /** is Select DB action */
-    private static boolean isSelectDbAction = false;
-
     /** is headless */
     private static boolean headless = false;
 
@@ -134,8 +137,8 @@ public class Hibernator {
 
     /** counts the number of threads which needs this instance of the DB.*/
     private AtomicInteger m_dbLockCnt = new AtomicInteger();
-    
-     /**
+
+    /**
      * Create the instance.
      * 
      * @param userName
@@ -144,20 +147,16 @@ public class Hibernator {
      *            The password.
      * @param url
      *            The password.
+     * @param monitor
+     *            the progress monitor to use
      * @throws JBException
      *             in case of configuration problems.
      */
-    private Hibernator(String userName, String pwd, String url)
+    private Hibernator(String userName, String pwd, String url, 
+        IProgressMonitor monitor)
         throws JBException, DatabaseVersionConflictException {
-
         try {
-            if (!isSelectDbAction) {
-                ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                        ProgressEvent.OPEN_PROGRESS_BAR, null, 
-                            Messages.PluginConnectProgress));
-            }
-
-            buildSessionFactoryWithLoginData(userName, pwd, url);
+            buildSessionFactoryWithLoginData(userName, pwd, url, monitor);
         } catch (PersistenceException e) {
             String msg = Messages.CantSetupHibernate;
             log.fatal(msg, e);
@@ -177,112 +176,78 @@ public class Hibernator {
      */
     public static synchronized boolean init() throws JBFatalException {
         if (instance == null) {
-            if (!isSelectDbAction) {
-                List<DatabaseConnection> availableConnections =
-                    DatabaseConnectionConverter.computeAvailableConnections();
-                if (availableConnections.size() == 1) {
-                    connectWithoutDialog(
-                            availableConnections.get(0).getConnectionInfo());
-                } else {
-                    ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                            ProgressEvent.LOGIN, null, null));
-                }
-            }
-        } else {
-            return true;
+            return connectToDB();
         }
-        while (user != null) {
-            try {
-                instance(user, pw, dburl);
-                user = null;
-                pw = null;
-                if (instance.m_newDbSchemeInstalled) {
-                    instance.m_newDbSchemeInstalled = false;
-                    instance.importUnboundModules();
-                }
-                fireTestresultSummaryChanged();
-                return true;
-            } catch (PMDatabaseConfException e) {
-                if (e.getErrorId().equals(MessageIDs.E_INVALID_DB_VERSION)) {
-                    ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                            ProgressEvent.SHOW_MESSAGE,
-                            MessageIDs.E_INVALID_DB_VERSION, null));
-                } else if (e.getErrorId().equals(
-                        MessageIDs.E_NOT_CHECKABLE_DB_VERSION)) {
-                    ProgressEventDispatcher
-                            .notifyListener(new ProgressEvent(
-                                    ProgressEvent.SHOW_MESSAGE,
-                                    MessageIDs.E_NOT_CHECKABLE_DB_VERSION,
-                                    null));
-                } else if (e.getErrorId().equals(MessageIDs.E_NO_DB_SCHEME)) {
-                    ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                            ProgressEvent.SHOW_MESSAGE,
-                            MessageIDs.E_NO_DB_SCHEME, null));
-                } else if (e.getErrorId().equals(
-                        MessageIDs.E_ERROR_IN_SCHEMA_CONFIG)) {
-                    ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                            ProgressEvent.SHOW_MESSAGE,
-                            MessageIDs.E_ERROR_IN_SCHEMA_CONFIG, null));
-
-                } else {
-                    ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                            ProgressEvent.SHOW_MESSAGE,
-                            MessageIDs.E_UNEXPECTED_EXCEPTION, null));
-                }
-                return false;
-            } catch (JBException e) {
-                ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                        ProgressEvent.CLOSE_PROGRESS_BAR, null, null));
-                if (e.getErrorId().equals(MessageIDs.E_NO_DB_CONNECTION)) {
-                    ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                            ProgressEvent.SHOW_MESSAGE,
-                            MessageIDs.E_NO_DB_CONNECTION, null));
-                }
-                if (e.getErrorId().equals(MessageIDs.E_DB_IN_USE)) {
-                    ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                            ProgressEvent.SHOW_MESSAGE, MessageIDs.E_DB_IN_USE,
-                            null));
-                }
-                ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                        ProgressEvent.LOGIN, null, null));
-            }
-        }
-        return false;
+        return true;
     }
 
     /**
-     * fire test result summary changed event, when new connected to database
+     * @return true if successfull; false otherwise
      */
-    private static void fireTestresultSummaryChanged() {
-        if (!headless) {
-            ClientTestFactory.getClientTest().fireTestresultSummaryChanged();
+    private static boolean connectToDB() {
+        Job connectToDBJob = new Job(Messages.ConnectingToDatabase) {
+            protected IStatus run(IProgressMonitor monitor) {
+                monitor.beginTask(Messages.ConnectingToDatabase,
+                        IProgressMonitor.UNKNOWN);
+                Integer message = 0;
+                try {
+                    instance(user, pw, dburl, monitor);
+                    user = null;
+                    pw = null;
+                    if (instance.m_newDbSchemeInstalled) {
+                        instance.m_newDbSchemeInstalled = false;
+                        DatabaseStateDispatcher
+                                .notifyListener(new DatabaseStateEvent(
+                                        DatabaseState.DB_SCHEME_CREATED));
+                    }
+                    return Status.OK_STATUS;
+                } catch (PMDatabaseConfException e) {
+                    if (e.getErrorId().equals(MessageIDs.
+                            E_INVALID_DB_VERSION)) {
+                        message = MessageIDs.E_INVALID_DB_VERSION;
+                    } else if (e.getErrorId().equals(
+                            MessageIDs.E_NOT_CHECKABLE_DB_VERSION)) {
+                        message = MessageIDs.E_NOT_CHECKABLE_DB_VERSION;
+                    } else if (e.getErrorId().equals(MessageIDs.
+                            E_NO_DB_SCHEME)) {
+                        message = MessageIDs.E_NO_DB_SCHEME;
+                    } else if (e.getErrorId().equals(
+                            MessageIDs.E_ERROR_IN_SCHEMA_CONFIG)) {
+                        message = MessageIDs.E_ERROR_IN_SCHEMA_CONFIG;
+                    } else {
+                        message = MessageIDs.E_UNEXPECTED_EXCEPTION;
+                    }
+                    return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            StringConstants.EMPTY, e);
+                } catch (JBException e) {
+                    if (e.getErrorId().equals(MessageIDs.E_NO_DB_CONNECTION)) {
+                        message = MessageIDs.E_NO_DB_CONNECTION;
+                    }
+                    if (e.getErrorId().equals(MessageIDs.E_DB_IN_USE)) {
+                        message = MessageIDs.E_DB_IN_USE;
+                    }
+                    return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            StringConstants.EMPTY, e);
+                }
+            }
+        };
+        final AtomicBoolean connectionGained = new AtomicBoolean();
+        connectToDBJob.addJobChangeListener(new JobChangeListener() {
+            /** {@inheritDoc} */
+            public void done(IJobChangeEvent event) {
+                connectionGained.set(event.getResult().isOK());
+            }
+        });
+        connectToDBJob.setUser(true);
+        connectToDBJob.schedule();
+        try {
+            connectToDBJob.join();
+        } catch (InterruptedException e) {
+            log.error(e);
+            connectionGained.set(false);
         }
-    }
 
-    /**
-     * Initializes the Hibernator using the given connection information.
-     * If the information contains a username <em>and</em> password, then these
-     * are used for initialization. If not, then a login dialog is presented.
-     * 
-     * @param connectionInfo The information to use to initialize the 
-     *                       Hibernator.
-     */
-    private static void connectWithoutDialog(
-            DatabaseConnectionInfo connectionInfo) {
-
-        String predefinedUsername = connectionInfo
-                .getProperty(PersistenceUnitProperties.JDBC_USER);
-        String predefinedPassword = connectionInfo
-                .getProperty(PersistenceUnitProperties.JDBC_PASSWORD);
-        if (predefinedUsername != null && predefinedPassword != null) {
-            user = predefinedUsername;
-            pw = predefinedPassword;
-            dbConnectionInfo = connectionInfo;
-        } else {
-            ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                    ProgressEvent.LOGIN, null, null));
-        }
-
+        return connectionGained.get();
     }
 
     /**
@@ -298,6 +263,8 @@ public class Hibernator {
      *            The password.
      * @param url
      *            url connection string
+     * @param monitor
+     *            the progress monitor to use
      * @throws PersistenceException
      *             in case of configuration problems.
      * @throws JBException
@@ -306,8 +273,8 @@ public class Hibernator {
      *             in case of invalid db scheme
      */
     private void buildSessionFactoryWithLoginData(String userName, String pwd,
-            String url) throws PersistenceException, PMDatabaseConfException,
-            JBException, DatabaseVersionConflictException {
+        String url, IProgressMonitor monitor) throws PersistenceException, 
+        PMDatabaseConfException, JBException, DatabaseVersionConflictException {
 
         m_sf = createEntityManagerFactory(dbConnectionInfo, userName, pwd, url);
 
@@ -316,7 +283,9 @@ public class Hibernator {
             em = m_sf.createEntityManager();
             try {
                 validateDBVersion(em);
-
+                monitor.subTask(Messages.DatabaseConnectionEstablished);
+                DatabaseStateDispatcher.notifyListener(new DatabaseStateEvent(
+                        DatabaseState.DB_LOGIN_SUCCEEDED));
             } catch (AmbiguousDatabaseVersionException e) {
                 throw new PMDatabaseConfException(
                         Messages.DBVersionProblem + StringConstants.DOT, 
@@ -534,14 +503,6 @@ public class Hibernator {
     }
 
     /**
-     * import all unbound modules into the DB
-     */
-    private void importUnboundModules() {
-        ProgressEventDispatcher.notifyListener(new ProgressEvent(
-                ProgressEvent.DB_SCHEME_CREATE, null, null));
-    }
-
-    /**
      * 
      * @param em
      *            entity manager
@@ -618,16 +579,18 @@ public class Hibernator {
      *            The password.
      * @param url
      *            connection string / url
+     * @param monitor the progress monitor to use           
      * @return the only instance of the Hibernator, building the connection to
      *         the database
      * @throws JBFatalException .
      * @throws JBException .
      */
-    private static Hibernator instance(String userName, String pwd, String url)
+    private static Hibernator instance(String userName, String pwd, String url,
+        IProgressMonitor monitor)
         throws JBFatalException, JBException {
         if (instance == null) {
             try {
-                instance = new Hibernator(userName, pwd, url);
+                instance = new Hibernator(userName, pwd, url, monitor);
             } catch (DatabaseVersionConflictException e) {
                 if (IVersion.JB_DB_MAJOR_VERSION > e
                         .getDatabaseMajorVersion()
@@ -648,15 +611,6 @@ public class Hibernator {
                             Messages.DBVersionProblem + StringConstants.DOT, 
                                 MessageIDs.E_INVALID_DB_VERSION);
                 }
-            } finally {
-                if (!isSelectDbAction) {
-                    ProgressEventDispatcher
-                            .notifyListener(new ProgressEvent(
-                                    ProgressEvent.CLOSE_PROGRESS_BAR, null,
-                                    null));
-                }
-                setSelectDBAction(false);
-
             }
 
             LockManager.instance().startKeepAlive();
@@ -1152,18 +1106,15 @@ public class Hibernator {
     public static void migrateDatabaseStructure() throws JBFatalException,
             JBException {
 
-        boolean wasSelectingDatabase = getSelectDBAction();
-        setSelectDBAction(true);
         EntityManagerFactory migrationEntityManagerFactory = null;
 
         try {
             migrationEntityManagerFactory = 
                 createEntityManagerFactory(dbConnectionInfo, user, pw, dburl);
             installDbScheme(migrationEntityManagerFactory);
-            instance = instance(user, pw, dburl);
+            instance = instance(user, pw, dburl, new NullProgressMonitor());
             instance.m_newDbSchemeInstalled = true;
         } finally {
-            setSelectDBAction(wasSelectingDatabase);
             if (migrationEntityManagerFactory != null) {
                 migrationEntityManagerFactory.close();
             }
@@ -1221,23 +1172,6 @@ public class Hibernator {
         }
 
         instance = null;
-    }
-
-    /**
-     * true if new DB is selected
-     * 
-     * @param isSelDbAction
-     *            boolean
-     */
-    public static void setSelectDBAction(boolean isSelDbAction) {
-        Hibernator.isSelectDbAction = isSelDbAction;
-    }
-
-    /**
-     * @return true if new DB is selected
-     */
-    public static boolean getSelectDBAction() {
-        return isSelectDbAction;
     }
 
     /**

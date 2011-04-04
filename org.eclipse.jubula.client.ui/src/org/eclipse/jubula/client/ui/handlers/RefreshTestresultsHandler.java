@@ -10,48 +10,29 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.utils.JBThread;
+import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
 import org.eclipse.jubula.client.ui.views.TestresultSummaryView;
 import org.eclipse.ui.IWorkbenchPart;
 
-
 /**
- * handler for refreshing testresults in testresult summary view
- *
+ * Handler for refreshing testresults in testresult summary view
+ * 
  * @author BREDEX GmbH
  * @created Feb 4, 2010
  */
-public class RefreshTestresultsHandler extends AbstractHandler {
-
+public class RefreshTestresultsHandler extends AbstractProjectHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = Plugin.getActivePart();
         if (activePart instanceof TestresultSummaryView) {
             final TestresultSummaryView summary = 
                 (TestresultSummaryView)activePart;
-            JBThread t = new JBThread() {
-                public void run() {
-                    if (!Hibernator.init()) {
-                        Plugin.stopLongRunning();
-                        return;
-                    }
-                    summary.refreshView();
-                }
-
-                protected void errorOccured() {
-                    Plugin.stopLongRunning();
-                }
-            };
-            t.start();
+            summary.refreshView();
         }
-        
         return null;
     }
-
 }

@@ -38,15 +38,12 @@ import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.ChooseServerAction;
-import org.eclipse.jubula.client.ui.actions.ImportFileAction;
-import org.eclipse.jubula.client.ui.actions.NewProjectAction;
-import org.eclipse.jubula.client.ui.actions.OpenProjectAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
-import org.eclipse.jubula.client.ui.handlers.ProjectPropertiesHandler;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
+import org.eclipse.jubula.client.ui.handlers.project.ProjectPropertiesHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -623,9 +620,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                 }
 
                 public void run(IMarker marker) {
-                    // FIXME zeb not sure if this is the correct way
-                    //           to globally access an action
-                    new NewProjectAction().runWithEvent(null, new Event());
+                    CommandHelper.executeCommand(
+                            CommandIDs.NEW_PROJECT_COMMAND_ID);
                 }
                 
             },
@@ -636,9 +632,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                 }
 
                 public void run(IMarker marker) {
-                    // FIXME zeb not sure if this is the correct way to
-                    //          globally access an action
-                    new ImportFileAction().runWithEvent(null, new Event());
+                    CommandHelper.executeCommand(
+                            CommandIDs.IMPORT_PROJECT_COMMAND_ID);
                 }
                 
             },
@@ -649,13 +644,11 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                 }
 
                 public void run(IMarker marker) {
-                    OpenProjectAction.getAction().runWithEvent(new Event());
+                    CommandHelper.executeCommand(
+                            CommandIDs.OPEN_PROJECT_COMMAND_ID);
                 }
-                
             },
-                        
         };
-        
     }
     
     /**

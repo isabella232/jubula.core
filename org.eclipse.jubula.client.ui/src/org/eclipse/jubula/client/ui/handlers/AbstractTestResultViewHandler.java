@@ -10,19 +10,19 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author BREDEX GmbH
  * @created Mar 3, 2011
  */
-public abstract class AbstractTestResultViewHandler extends AbstractHandler {
-    
+public abstract class AbstractTestResultViewHandler 
+    extends AbstractProjectHandler {
     /**
      * @param event
      *            the execution event

@@ -21,11 +21,12 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.OMStopMappingModeBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.sourceprovider.AbstractJBSourceProvider;
+import org.eclipse.jubula.client.ui.sourceprovider.ObjectMappingModeSourceProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -229,10 +230,13 @@ public class DeleteTreeItemHandlerOMEditor
         }
         if (sel == null || sel.isEmpty()) {
             editor.getOmEditorBP().setCategoryToCreateIn(null);
+            ObjectMappingModeSourceProvider omsp = 
+                (ObjectMappingModeSourceProvider) 
+                    AbstractJBSourceProvider
+                        .getSourceProviderInstance(null,
+                                ObjectMappingModeSourceProvider.ID);
             if (editor.getAut().equals(TestExecution.getInstance().
-                getConnectedAut())
-                && OMStopMappingModeBP.getInstance().isEnabled()) {
-                
+                getConnectedAut()) && omsp != null && omsp.isRunning()) {
                 String message = NLS.bind(
                     Messages.TestExecutionContributorAUTStartedMapping,
                     new Object[] {Messages

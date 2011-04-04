@@ -51,7 +51,7 @@
 		<property name="startupProgressRect" value="0,445,800,15" />
 		<property name="preferenceCustomization" value="plugin_customization.ini" />
 		<property name="introTitle" value="%IntroTitle" />
-		<property name="introBrandingImage" value="product:icons/jubula_intro.png" />
+		<property name="introBrandingImage" value="product:icons/intro.png" />
 		<property name="introBrandingImageText" value="Jubula by BREDEX GmbH" />
      </product>
   </extension>
