@@ -43,6 +43,17 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 public class NewTestCaseActionTCBrowser extends Action {
 
     /**
+     * Constructor
+     */
+    public NewTestCaseActionTCBrowser() {
+        super(Messages.AbstractNewTestCaseActionNewTC);
+        setImageDescriptor(IconConstants.NEW_TC_IMAGE_DESCRIPTOR); 
+        setDisabledImageDescriptor(IconConstants.
+                NEW_TC_DISABLED_IMAGE_DESCRIPTOR); 
+        setEnabled(false);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public void run() {
