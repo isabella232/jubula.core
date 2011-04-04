@@ -118,6 +118,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         getTreeViewer().setLabelProvider(new DecoratingCellLabelProvider(
             new TestSuiteBrowserLabelProvider(), Plugin.getDefault()
                 .getWorkbench().getDecoratorManager().getLabelDecorator()));
+        getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION + 1);
         
         setViewerInput();
         Plugin.getHelpSystem().setHelp(getTreeViewer().getControl(),
@@ -140,7 +141,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         DataEventDispatcher.getInstance().addLanguageChangedListener(this, 
             true);
         DataEventDispatcher.getInstance().addCompletenessCheckListener(this);
-        getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION + 1);
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
         }
@@ -558,7 +558,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         IProjectPO activeProject = GeneralStorage.getInstance().getProject();
         if (activeProject != null) {
             getTreeViewer().setInput(new IProjectPO[] {activeProject});
-            getTreeViewer().expandToLevel(DEFAULT_EXPANSION + 1);
         } else {
             getTreeViewer().setInput(null);
         }

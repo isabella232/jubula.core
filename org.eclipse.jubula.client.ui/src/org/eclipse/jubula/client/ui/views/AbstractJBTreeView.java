@@ -211,12 +211,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 try {
-                    Object[] expandedElements = 
-                        getTreeViewer().getExpandedElements();
-                    final ISelection selection = getTreeViewer().getSelection();
                     rebuildTree();
-                    getTreeViewer().setExpandedElements(expandedElements);
-                    getTreeViewer().setSelection(selection);
                 } catch (OperationCanceledException oce) {
                     getTreeViewer().setInput(null);
                 }

@@ -102,8 +102,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         }
     }
 
-   
-
     /**
      * when objectmapping exists, then lock OM
      * @param monitor
