@@ -159,8 +159,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     public void createPartControlImpl(Composite parent) {
         createSashForm(parent);
         setParentComposite(parent);
-        getMainTreeViewer().setContentProvider(
-                new TestCaseEditorContentProvider());  
         m_eventHandlerTreeViewer.setContentProvider(
                 new EventHandlerContentProvider());
         m_eventHandlerTreeViewer.getControl().setMenu(
@@ -365,17 +363,14 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      * Sets the input of the tree viewer for specificaion.
      */
     public void setInitialInput() {
-        Object[] expandedElements = getMainTreeViewer().getExpandedElements();
-        ISelection selection = getMainTreeViewer().getSelection();
+        getMainTreeViewer().setContentProvider(
+                new TestCaseEditorContentProvider());  
+        
         INodePO workVersion = 
             (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
 
         initTopTreeViewer(workVersion);
         initExecTreeViewerInput(workVersion);
-        
-        getMainTreeViewer().expandToLevel(2);
-        getMainTreeViewer().setExpandedElements(expandedElements);
-        getMainTreeViewer().setSelection(selection);
     }
 
     /**
@@ -383,13 +378,13 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      */
     protected void initTopTreeViewer(INodePO root) {
         try {
-            getMainTreeViewer().getTree().getParent().setRedraw(false);
+            getMainTreeViewer().getTree().setRedraw(false);
             getMainTreeViewer().setInput(new INodePO[] {root});
-            getMainTreeViewer().expandAll();
             getMainTreeViewer().getTree().addFocusListener(
                     new TreeFocusListener());
         } finally {
-            getMainTreeViewer().getTree().getParent().setRedraw(true);
+            getMainTreeViewer().getTree().setRedraw(true);
+            getMainTreeViewer().expandAll();
         }
     }
 

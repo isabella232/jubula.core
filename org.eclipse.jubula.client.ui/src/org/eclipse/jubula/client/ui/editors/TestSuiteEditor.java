@@ -49,7 +49,6 @@ import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TSEditorDndSupport;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseEditorContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestSuiteEditorContentProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
@@ -79,8 +78,6 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      */
     public void createPartControlImpl(Composite parent) {
         super.createPartControlImpl(parent);
-        getMainTreeViewer().setContentProvider(
-                new TestSuiteEditorContentProvider());  
         ActionListener actionListener = new ActionListener();
         getTreeViewer().addSelectionChangedListener(actionListener);
         addTreeListener();
@@ -105,18 +102,17 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      * Sets the input of the tree viewer for specificaion.
      */
     public void setInitialInput() {
+        getMainTreeViewer().setContentProvider(
+                new TestSuiteEditorContentProvider());  
         ITestSuitePO rootPO = 
             (ITestSuitePO)getEditorHelper().getEditSupport().getWorkVersion();
         
-        getTreeViewer().setContentProvider(
-            new TestCaseEditorContentProvider());
-        initTopTreeViewer(rootPO);
         try {
-            getMainTreeViewer().getTree().getParent().setRedraw(false);
-            getMainTreeViewer().setInput(new ITestSuitePO[] {rootPO});
-            getMainTreeViewer().expandAll();
+            getTreeViewer().getTree().setRedraw(false);
+            getTreeViewer().setInput(new ITestSuitePO[] {rootPO});
         } finally {
-            getMainTreeViewer().getTree().getParent().setRedraw(true);
+            getTreeViewer().getTree().setRedraw(true);
+            getMainTreeViewer().expandAll();
         }
     }
     
