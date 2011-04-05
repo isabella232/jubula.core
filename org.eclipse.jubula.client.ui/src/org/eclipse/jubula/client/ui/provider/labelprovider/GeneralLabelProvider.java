@@ -328,7 +328,33 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      */
     private static String getText(IExecTestCasePO testCaseRef) {
         StringBuilder nameBuilder = new StringBuilder();
-        nameBuilder.append(testCaseRef.getName());
+        
+        if (!StringUtils.isBlank(testCaseRef.getRealName())) {
+            nameBuilder.append(testCaseRef.getRealName());
+            if (Plugin.getDefault().getPreferenceStore().getBoolean(
+                    Constants.SHOWORIGINALNAME_KEY)) {
+                ISpecTestCasePO testCase = testCaseRef.getSpecTestCase();
+                String testCaseName = testCase != null 
+                        ? testCase.getName() 
+                        : org.eclipse.jubula.client.core.i18n.Messages
+                            .ExecTestCasePOMissingReference;
+                nameBuilder.append(StringConstants.SPACE)
+                    .append(StringConstants.LEFT_PARENTHESES)
+                    .append(testCaseName)
+                    .append(StringConstants.RIGHT_PARENTHESES);
+            }
+            
+        } else {
+            ISpecTestCasePO testCase = testCaseRef.getSpecTestCase();
+            String testCaseName = testCase != null 
+                    ? testCase.getName() 
+                    : org.eclipse.jubula.client.core.i18n.Messages
+                        .ExecTestCasePOMissingReference;
+            nameBuilder.append(StringConstants.LEFT_INEQUALITY_SING)
+                .append(testCaseName)
+                .append(StringConstants.RIGHT_INEQUALITY_SING); 
+        }
+
         Iterator<IParamDescriptionPO> iter = 
             testCaseRef.getParameterList().iterator();
         boolean parameterExist = false;
