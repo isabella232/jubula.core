@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.views;
 
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -372,7 +370,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
          * en-/disable cut-action
          * @param selList actual selection list
          */
-        private void enableCutAction(List<INodePO> selList) {
+        private void enableCutAction(INodePO[] selList) {
             m_cutTreeItemAction.setEnabled(false);
             for (INodePO guiNode : selList) {
                 if (!(guiNode instanceof ICategoryPO 
@@ -390,7 +388,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
          * en-/disable cut-action
          * @param selList actual selection list
          */
-        private void enablePasteAction(List<INodePO> selList) {
+        private void enablePasteAction(INodePO[] selList) {
             m_pasteTreeItemAction.setEnabled(false);
             Object cbContents = getClipboard().getContents(
                     LocalSelectionClipboardTransfer.getInstance());
@@ -413,7 +411,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
          * en-/disable move-action
          * @param selList actual selection list
          */
-        private void enableMoveAction(List<INodePO> selList) {
+        private void enableMoveAction(INodePO[] selList) {
             m_moveTestCaseAction.setEnabled(false);
             for (INodePO guiNode : selList) {
                 if (!(guiNode instanceof ICategoryPO 
@@ -431,8 +429,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
          * en-/disable new-action
          * @param selList actual selection list
          */
-        private void enableNewAction(List<INodePO> selList) {
-            if ((selList.size() > 0) && NodeBP.isEditable(selList.get(0))) {
+        private void enableNewAction(INodePO[] selList) {
+            if ((selList.length > 0) && NodeBP.isEditable(selList[0])) {
                 m_newTestCaseAction.setEnabled(true);
             } else {
                 m_newTestCaseAction.setEnabled(false);
@@ -467,12 +465,24 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 m_moveTestCaseAction.setEnabled(false);
             } else {
                 IStructuredSelection sel = (IStructuredSelection)selection;
-                List<INodePO> selList = sel.toList();
-                enableCutAction(selList);
-                enablePasteAction(selList);
-                enableMoveAction(selList);
-                enableNewAction(selList);
-                Object firstElement = sel.getFirstElement();
+                Object[] selectedElements = sel.toArray();
+                INodePO[] selectedNodes = new INodePO[selectedElements.length];
+                for (int i = 0; i < selectedElements.length; i++) {
+                    if (selectedElements[i] instanceof INodePO) {
+                        selectedNodes[i] = (INodePO)selectedElements[i];
+                    } else {
+                        m_cutTreeItemAction.setEnabled(false);
+                        m_pasteTreeItemAction.setEnabled(false);
+                        m_moveTestCaseAction.setEnabled(false);
+                        m_newTestCaseAction.setEnabled(false);
+                        return;
+                    }
+                }
+                
+                enableCutAction(selectedNodes);
+                enablePasteAction(selectedNodes);
+                enableMoveAction(selectedNodes);
+                enableNewAction(selectedNodes);
             }
         }
     }
