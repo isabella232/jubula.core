@@ -341,8 +341,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 ISpecTestCasePO testCase = testCaseRef.getSpecTestCase();
                 String testCaseName = testCase != null 
                         ? testCase.getName() 
-                        : org.eclipse.jubula.client.core.i18n.Messages
-                            .ExecTestCasePOMissingReference;
+                        : StringUtils.EMPTY;
                 nameBuilder.append(StringConstants.SPACE)
                     .append(StringConstants.LEFT_PARENTHESES)
                     .append(testCaseName)
@@ -353,8 +352,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             ISpecTestCasePO testCase = testCaseRef.getSpecTestCase();
             String testCaseName = testCase != null 
                     ? testCase.getName() 
-                    : org.eclipse.jubula.client.core.i18n.Messages
-                        .ExecTestCasePOMissingReference;
+                    : StringUtils.EMPTY;
             nameBuilder.append(StringConstants.LEFT_INEQUALITY_SING)
                 .append(testCaseName)
                 .append(StringConstants.RIGHT_INEQUALITY_SING); 
