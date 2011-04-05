@@ -105,7 +105,6 @@ import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseEditorConte
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.client.ui.views.TestCaseBrowser;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
@@ -127,7 +126,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPartConstants;
 
@@ -1178,18 +1176,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         }
     }
-    
-    
-    /**
-     * @return instance of TestCaseBrowser, or null.
-     */
-    public TestCaseBrowser getTCBrowser() {
-        IViewPart viewPart = Plugin.getView(Constants.TC_BROWSER_ID);
-        if (viewPart != null) {
-            return (TestCaseBrowser)viewPart;
-        }
-        return null;
-    } 
     
     /**
      * Sets the selection to the (in the browser selected) correct node.

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.views;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
@@ -27,7 +25,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
-import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -40,12 +37,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
-import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
-import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.CutTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.actions.MoveTestCaseAction;
@@ -61,7 +53,6 @@ import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TCBrowserDndSupport;
 import org.eclipse.jubula.client.ui.controllers.dnd.TestSpecDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
-import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseBrowserContentProvider;
@@ -69,8 +60,6 @@ import org.eclipse.jubula.client.ui.provider.labelprovider.TestCaseBrowserLabelP
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
-import org.eclipse.jubula.tools.exception.JBFatalException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusEvent;
@@ -100,8 +89,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
     public static final String ADD_ID = PlatformUI.PLUGIN_ID + ".AddSubMenu"; //$NON-NLS-1$
     /** postfix for add-action id */
     private static final String ADD = "_ADD"; //$NON-NLS-1$
-    /** standard logging */
-    private static final Log LOG = LogFactory.getLog(TestCaseBrowser.class);
        
     /** The action to cut TreeItems */
     private CutTreeItemActionTCBrowser m_cutTreeItemAction;
@@ -604,77 +591,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
             handleProjectLoaded();
         }
     }
-    
-    /**
-     * Adds the given test case to the selected test case as a reference. This
-     * method is only allowed from an editor context since it relies on the
-     * Session provided by the editors EditSupport.
-     * @param origSpecTc the test case to reference.
-     * @param targetSpecNode the target TestCase or TestSuite.
-     * @param position the position to insert. If null, the position is 
-     * @throws PMReadException in case of db read error
-     * @throws PMDirtyVersionException in case of version conflict (dirty read)
-     * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
-     * @throws PMException in case of unspecified db error
-     */
-    public void addReferencedTestCase(ISpecTestCasePO origSpecTc, 
-        INodePO targetSpecNode, Integer position) 
-        throws PMReadException, PMAlreadyLockedException, 
-        PMDirtyVersionException, PMException {
-        
-        ISpecTestCasePO workSpecTc = null;
-        workSpecTc = createWorkVersionofSpecTc(origSpecTc);
-        if (workSpecTc != null) {
-            IExecTestCasePO execTc = 
-                TestCaseBP.addReferencedTestCase(getEditSupport(), 
-                    targetSpecNode, workSpecTc, position);
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                execTc, DataState.Added, UpdateState.onlyInEditor); 
-        }
-    } 
-    
-    /**
-     * get the WorkVerstion to specTc
-     * @param origSpecTc original specTc
-     * @return workSpecTc or null
-     * @throws PMReadException in case of db read error
-     * @throws PMDirtyVersionException in case of version conflict (dirty read)
-     * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
-     * @throws PMException in case of unspecified db error
-     */
-    private ISpecTestCasePO createWorkVersionofSpecTc(
-        ISpecTestCasePO origSpecTc) throws PMReadException, 
-            PMAlreadyLockedException, PMDirtyVersionException, PMException {
-        
-        ISpecTestCasePO workSpecTc = null;
-        EditSupport editSupport = getEditSupport();
-        workSpecTc = (ISpecTestCasePO)editSupport.createWorkVersion(origSpecTc);
-        return workSpecTc;
-    }
-    
-    /**
-     * @return the EditSupport for the current active editor. This methods
-     * throws a GDFatalExecption if called with no IGDEditor subclass active.
-     */
-    private EditSupport getEditSupport() {
-        AbstractTestCaseEditor edit = getTCEditor();            
-        EditSupport editSupport = edit.getEditorHelper().getEditSupport();
-        return editSupport;
-    }
 
-    /**
-     * @return the actual active TC editor
-     */
-    private AbstractTestCaseEditor getTCEditor() {
-        AbstractTestCaseEditor edit = Plugin.getDefault().getActiveTCEditor();
-        if (edit == null) {
-            String msg = Messages.NoActiveTCEditorPleaseFixTheMethod;
-            LOG.fatal(msg); 
-            throw new JBFatalException(msg, MessageIDs.E_NO_OPENED_EDITOR);
-        }
-        return edit;
-    }
-    
     /**
      * {@inheritDoc}
      */

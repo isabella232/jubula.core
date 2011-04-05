@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.businessprocess;
 
-import java.util.List;
-
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -21,7 +19,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
-import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 
 
 /**
@@ -62,10 +59,8 @@ public class GuiNodeBP {
      *            the TreeViewer
      */
     public static void setSelectionAndFocusToNode(INodePO node, TreeViewer tv) {
-        TreeIterator it = new TreeIterator((INodePO)tv.getInput());
-        List<INodePO> guiNodeList = it.getGuiNodeOfNodePO(node);
         tv.getTree().setFocus();
-        tv.setSelection(new StructuredSelection(guiNodeList), true);
+        tv.setSelection(new StructuredSelection(node), true);
     }
     
 

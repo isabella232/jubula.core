@@ -11,6 +11,9 @@
 package org.eclipse.jubula.client.core.businessprocess.db;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -72,6 +75,9 @@ public class TestCaseBP  extends NodeBP {
         } else {
             targetTC.addNode(newExecTC);
         }       
+
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                newExecTC, DataState.Added, UpdateState.onlyInEditor); 
 
         return newExecTC;
     }

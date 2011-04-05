@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamCheckBP.SpecTcParamRefCheck;
+import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -26,6 +27,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -93,54 +95,77 @@ public class TCEditorDndSupport {
                 }
             }
             if (node instanceof ISpecTestCasePO) {
-                INodePO target = dropTarget;
-                if (target != node) {
-                    try {
-                        if (target instanceof ICapPO 
-                            || target instanceof IExecTestCasePO) {
-                            dropOnCAPorExecTc(node, target, dropPosition);
-                        } else if (target instanceof ISpecTestCasePO) {
-                            dropOnSpecTc(node, target);
-                        } else if (node instanceof ISpecTestCasePO 
-                                && target instanceof ITestSuitePO) {
-                                
-                            dropOnTestsuite((ITestSuitePO)target, 
-                                    (ISpecTestCasePO)node);
-                        }
-                    } catch (PMException e) {
-                        NodeEditorInput inp = (NodeEditorInput)targetEditor.
-                            getAdapter(NodeEditorInput.class);
-                        INodePO inpNode = inp.getNode();
-                        PMExceptionHandler.handlePMExceptionForMasterSession(e);
-                        // If an object was already locked, *and* the locked 
-                        // object is not the editor Test Case, *and* the editor 
-                        // is dirty, then we do *not* want to revert all 
-                        // editor changes.
-                        // The additional test as to whether the the editor is 
-                        // marked as dirty is important because, due to the 
-                        // requestEditableState() call earlier in this method, 
-                        // the editor TC is locked (even though the editor 
-                        // isn't dirty). Reopening the editor removes this lock.
-                        if (!(e instanceof PMAlreadyLockedException
-                                && ((PMAlreadyLockedException)e)
-                                    .getLockedObject() != null
-                                && !((PMAlreadyLockedException)e)
-                                    .getLockedObject().equals(inpNode))
-                            || !targetEditor.isDirty()) {
-                            
-                            try {
-                                targetEditor.reOpenEditor(inpNode);
-                            } catch (PMException e1) {
-                                PMExceptionHandler.handlePMExceptionForEditor(e,
-                                        targetEditor);
-                            }
-                        }
-                        return false;
-                    }
+                if (!performDrop(targetEditor, dropTarget, 
+                        dropPosition, (ISpecTestCasePO)node)) {
+                    return false;
                 }
             }
             postDropAction(droppedNode, targetEditor);
         }
+        return true;
+    }
+
+    /**
+     * 
+     * @param targetEditor The editor to which the item is to be dropped/pasted.
+     * @param toDrop The item that was dragged/cut.
+     * @param dropTarget The drop/paste target.
+     * @param dropPosition One of the values defined in ViewerDropAdapter to 
+     *                     indicate the drop position relative to the drop
+     *                     target.
+     * @return <code>true</code> if the drop/paste was successful. 
+     *         Otherwise <code>false</code>.
+     */
+    private static boolean performDrop(AbstractTestCaseEditor targetEditor,
+            INodePO dropTarget, int dropPosition, ISpecTestCasePO toDrop) {
+        INodePO target = dropTarget;
+        if (target != toDrop) {
+            EditSupport editSupport = 
+                targetEditor.getEditorHelper().getEditSupport();
+            try {
+                if (target instanceof ICapPO 
+                    || target instanceof IExecTestCasePO) {
+                    dropOnCAPorExecTc(editSupport, toDrop, 
+                            target, dropPosition);
+                } else if (target instanceof ISpecTestCasePO) {
+                    dropOnSpecTc(editSupport, toDrop, target);
+                } else if (target instanceof ITestSuitePO) {
+                        
+                    dropOnTestsuite(editSupport, (ITestSuitePO)target, 
+                            (ISpecTestCasePO)toDrop);
+                }
+            } catch (PMException e) {
+                NodeEditorInput inp = (NodeEditorInput)targetEditor.
+                    getAdapter(NodeEditorInput.class);
+                INodePO inpNode = inp.getNode();
+                PMExceptionHandler.handlePMExceptionForMasterSession(e);
+                // If an object was already locked, *and* the locked 
+                // object is not the editor Test Case, *and* the editor 
+                // is dirty, then we do *not* want to revert all 
+                // editor changes.
+                // The additional test as to whether the the editor is 
+                // marked as dirty is important because, due to the 
+                // requestEditableState() call earlier in this method, 
+                // the editor TC is locked (even though the editor 
+                // isn't dirty). Reopening the editor removes this lock.
+                if (!(e instanceof PMAlreadyLockedException
+                        && ((PMAlreadyLockedException)e)
+                            .getLockedObject() != null
+                        && !((PMAlreadyLockedException)e)
+                            .getLockedObject().equals(inpNode))
+                    || !targetEditor.isDirty()) {
+                    
+                    try {
+                        targetEditor.reOpenEditor(inpNode);
+                    } catch (PMException e1) {
+                        PMExceptionHandler.handlePMExceptionForEditor(e,
+                                targetEditor);
+                    }
+                }
+                return false;
+            }
+        }
+        
         return true;
     }
 
@@ -226,6 +251,7 @@ public class TCEditorDndSupport {
     }
 
     /**
+     * @param editSupport The EditSupport in which to perform the action.
      * @param node the node to be dropped.
      * @param target the target node.
      * @throws PMReadException in case of db read error
@@ -233,33 +259,36 @@ public class TCEditorDndSupport {
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
      */
-    private static void dropOnSpecTc(INodePO node, INodePO target)
+    private static void dropOnSpecTc(EditSupport editSupport, 
+            INodePO node, INodePO target)
         throws PMReadException, PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
-        getTCBrowser().addReferencedTestCase((ISpecTestCasePO)node, target, 0);
+        TestCaseBP.addReferencedTestCase(editSupport, 
+                target, (ISpecTestCasePO)node, 0);
     }
     
     /**
      * Drops the given TestCase on the given TestSuite.
      * The TestCase will be inserted at the end.
+     * @param editSupport The EditSupport in which to perform the action.
      * @param testSuite the TestSuite to drop on
-     * @param testcaseGUI the TestCAse to drop
+     * @param testcase the TestCAse to drop
      * @throws PMReadException in case of persistence error
      * @throws PMAlreadyLockedException in case of persistence error
      * @throws PMDirtyVersionException in case of persistence error
      * @throws PMException in case of persistence error
      */
-    private static void dropOnTestsuite(ITestSuitePO testSuite, 
-            ISpecTestCasePO testcaseGUI) 
+    private static void dropOnTestsuite(EditSupport editSupport, 
+            ITestSuitePO testSuite, ISpecTestCasePO testcase) 
         throws PMReadException, PMAlreadyLockedException, 
         PMDirtyVersionException, PMException {
         
-        if (getTCBrowser() != null) {
-            getTCBrowser().addReferencedTestCase(testcaseGUI, testSuite, 0);
-        }
+        TestCaseBP.addReferencedTestCase(editSupport, testSuite, 
+                testcase, 0);
     }
 
     /**
+     * @param editSupport The EditSupport in which to perform the action.
      * @param node the node to be dropped
      * @param target the target node.
      * @param location One of the values defined in ViewerDropAdapter to 
@@ -270,7 +299,8 @@ public class TCEditorDndSupport {
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
      */
-    private static void dropOnCAPorExecTc(INodePO node, INodePO target,
+    private static void dropOnCAPorExecTc(EditSupport editSupport, 
+            INodePO node, INodePO target,
             int location) throws PMReadException, PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
         ISpecTestCasePO specTcGUItoDrop = (ISpecTestCasePO)node;
@@ -279,8 +309,8 @@ public class TCEditorDndSupport {
         if (location != ViewerDropAdapter.LOCATION_BEFORE) {
             position++;
         }
-        getTCBrowser().addReferencedTestCase(specTcGUItoDrop, parentGUI, 
-                position);
+        TestCaseBP.addReferencedTestCase(editSupport, parentGUI, 
+                specTcGUItoDrop, position);
     }
 
     /**

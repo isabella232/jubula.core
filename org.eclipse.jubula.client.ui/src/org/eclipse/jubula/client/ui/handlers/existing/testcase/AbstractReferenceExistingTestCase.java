@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.handlers.existing.testcase;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +19,9 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -70,13 +74,17 @@ public abstract class AbstractReferenceExistingTestCase
                         ((IStructuredSelection)selection).toList();
                     Collections.reverse(selectedElements);
                     Iterator iter = selectedElements.iterator();
+                    List<IExecTestCasePO> addedElements = 
+                        new ArrayList<IExecTestCasePO>();
                     try {
                         while (iter.hasNext()) {
                             ISpecTestCasePO specTcToInsert = 
                                 (ISpecTestCasePO)iter.next();
                             try {
-                                tce.getTCBrowser().addReferencedTestCase(
-                                        specTcToInsert, editorNode, index);
+                                addedElements.add(
+                                    TestCaseBP.addReferencedTestCase(
+                                        tce.getEditorHelper().getEditSupport(),
+                                        editorNode, specTcToInsert, index));
                             } catch (PMException e) {
                                 NodeEditorInput inp = (NodeEditorInput)tce
                                         .getAdapter(NodeEditorInput.class);
@@ -89,6 +97,8 @@ public abstract class AbstractReferenceExistingTestCase
                         tce.getEditorHelper().getEditSupport()
                                 .lockWorkVersion();
                         tce.getEditorHelper().setDirty(true);
+                        tce.setSelection(
+                                new StructuredSelection(addedElements));
                     } catch (PMException e1) {
                         PMExceptionHandler.handlePMExceptionForEditor(e1, tce);
                     }

@@ -112,22 +112,6 @@ public class TreeIterator {
     }
 
     /**
-     * @param node the nodePO
-     * @return the equivalent GuiNode(s) of the given nodePO
-     */
-    public List<INodePO> getGuiNodeOfNodePO(INodePO node) {
-        List<INodePO> guiNodeList = new ArrayList<INodePO>(0);
-        if (node != null) {
-            for (INodePO guiNode : m_elements) {
-                if (node.equals(guiNode)) {
-                    guiNodeList.add(guiNode);
-                }
-            }
-        }
-        return guiNodeList;
-    }
-
-    /**
      * @return Returns the elements.
      */
     protected List<INodePO> getElements() {
