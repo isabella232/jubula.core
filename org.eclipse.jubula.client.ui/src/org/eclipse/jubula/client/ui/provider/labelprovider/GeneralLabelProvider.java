@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
@@ -170,6 +171,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 return getText((IExecTestCasePO)node);
             }
 
+            if (node instanceof ISpecTestCasePO) {
+                return getText((ISpecTestCasePO)node);
+            }
+            
             return node.getName();
         }
 
@@ -323,7 +328,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
 
     /**
      * 
-     * @param testCaseRef The Test Reference to examine.
+     * @param testCaseRef The Test Case Reference to examine.
      * @return label text for the given Test Case Reference.
      */
     private static String getText(IExecTestCasePO testCaseRef) {
@@ -355,8 +360,29 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 .append(StringConstants.RIGHT_INEQUALITY_SING); 
         }
 
+        nameBuilder.append(getParameterString(testCaseRef));
+        
+        return nameBuilder.toString();
+    }
+
+    /**
+     * 
+     * @param testCase The Test Case to examine.
+     * @return label text for the given Test Case.
+     */
+    private static String getText(ISpecTestCasePO testCase) {
+        return testCase.getName() + getParameterString(testCase);
+    }
+    
+    /**
+     * 
+     * @param paramNode The Parameter Node to examine.
+     * @return a label representing all Parameters used by the given node.
+     */
+    private static String getParameterString(IParamNodePO paramNode) {
+        StringBuilder nameBuilder = new StringBuilder();
         Iterator<IParamDescriptionPO> iter = 
-            testCaseRef.getParameterList().iterator();
+            paramNode.getParameterList().iterator();
         boolean parameterExist = false;
         if (iter.hasNext()) {
             parameterExist = true;
@@ -375,6 +401,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         if (parameterExist) {
             nameBuilder.append(GeneralLabelProvider.CLOSE_BRACKED);
         }
+        
         return nameBuilder.toString();
     }
 }
