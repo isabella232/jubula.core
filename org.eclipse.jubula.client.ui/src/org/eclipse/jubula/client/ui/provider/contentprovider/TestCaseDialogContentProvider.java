@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -38,13 +38,13 @@ public class TestCaseDialogContentProvider
     }
     
     /**
+     * 
      * {@inheritDoc}
-     * @param parentElement Object
-     * @return object array
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof INodePO) {
-            return ((INodePO)parentElement).getUnmodifiableNodeList().toArray();
+        if (parentElement instanceof ICategoryPO) {
+            return ((ICategoryPO)parentElement)
+                .getUnmodifiableNodeList().toArray();
         }
         
         if (parentElement instanceof IReusedProjectPO) {
