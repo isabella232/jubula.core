@@ -268,7 +268,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      * {@inheritDoc}
      */
     protected void fillContextMenu(IMenuManager mgr) {
-        IStructuredSelection selection = getCurrentSelection();
+        IStructuredSelection selection = getStructuredSelection();
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         if (selection.getFirstElement() == null) {
             return;

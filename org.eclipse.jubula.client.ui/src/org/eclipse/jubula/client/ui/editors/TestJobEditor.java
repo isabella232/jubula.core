@@ -93,10 +93,7 @@ public class TestJobEditor extends AbstractJBEditor {
                 this, true);
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    @Override
     public void setInitialInput() {
         INodePO root = 
             (INodePO)getEditorHelper().getEditSupport().getWorkVersion();

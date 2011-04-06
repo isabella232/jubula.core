@@ -26,17 +26,13 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
-import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -49,7 +45,6 @@ import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IEventHandlerContainer;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
@@ -63,7 +58,6 @@ import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ITimestampPO;
-import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
@@ -88,46 +82,30 @@ import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
-import org.eclipse.jubula.client.ui.controllers.dnd.EventHandlerDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TCEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
-import org.eclipse.jubula.client.ui.dialogs.AddEventHandlerDialog;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.provider.ControlDecorator;
-import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
-import org.eclipse.jubula.client.ui.provider.contentprovider.EventHandlerContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseEditorContentProvider;
-import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.IWorkbenchPartConstants;
 
 
 /**
@@ -137,12 +115,6 @@ import org.eclipse.ui.IWorkbenchPartConstants;
 @SuppressWarnings("synthetic-access")
 public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
 
-    /** Constants for the editor segmentation */
-    private static final int[] SASH_WEIGHT = {75, 25};
-    /** TreeViewer for ErrorHandling */
-    private TreeViewer m_eventHandlerTreeViewer;
-    /** the current TreeViewer */
-    private TreeViewer m_currentTreeViewer;
     /** the retarget action to insert new tc */
     private InsertNewTestCaseAction m_insertNewTCAction = 
         new InsertNewTestCaseAction();
@@ -157,16 +129,13 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     public void createPartControlImpl(Composite parent) {
         createSashForm(parent);
         setParentComposite(parent);
-        m_eventHandlerTreeViewer.setContentProvider(
-                new EventHandlerContentProvider());
-        m_eventHandlerTreeViewer.getControl().setMenu(
-                createContextMenu());
         // sets the input of the trees.
         setInitialInput();
         final DataEventDispatcher dispatcher = 
             DataEventDispatcher.getInstance();
         dispatcher.addPropertyChangedListener(this, true);
-        addDragAndDropSupport();
+        addDragAndDropSupport(DND.DROP_MOVE, 
+                new Transfer[] {LocalSelectionTransfer.getInstance()});
         getEditorHelper().addListeners();
         setActionHandlers();
         addTreeDoubleClickListener(CommandIDs.REFERENCE_TC_COMMAND_ID);
@@ -191,23 +160,23 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
 
     /**
      * adds Drag and Drop support for the trees.
+     * 
+     * @param operations The DnD operation types to support.
+     * @param transfers The DnD transfer types to support.
      */
-    protected void addDragAndDropSupport() {
-        int ops = DND.DROP_MOVE;
-        Transfer[] transfers = new Transfer[] {LocalSelectionTransfer
-            .getInstance()};
-        getMainTreeViewer().addDragSupport(ops, transfers,
+    protected void addDragAndDropSupport(
+            int operations, Transfer[] transfers) {
+        getMainTreeViewer().addDragSupport(operations, transfers,
             new TreeViewerContainerDragSourceListener(getTreeViewer()));
-        getMainTreeViewer().addDropSupport(ops, transfers, 
+        getMainTreeViewer().addDropSupport(operations, transfers, 
             new TCEditorDropTargetListener(this)); 
-        m_eventHandlerTreeViewer.addDropSupport(ops, transfers, 
-            new EventHandlerDropTargetListener(this));
     }
 
     /**
      * @param parent the paent of the SashForm.
+     * @return the created SashForm.
      */
-    private void createSashForm(Composite parent) {
+    protected SashForm createSashForm(Composite parent) {
         SashForm sashForm = new SashForm(parent, SWT.MULTI | SWT.VERTICAL);
         GridLayout compLayout = new GridLayout(1, true);
         compLayout.marginWidth = 0;
@@ -217,85 +186,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         sashForm.setLayoutData(gridData);        
         setControl(sashForm);
         createMainPart(sashForm);
-        createEventHandlerPart(sashForm);
-        if (this instanceof TestCaseEditor) {
-            // ExecTCEditor don't need an EventHandler part
-            sashForm.setWeights(SASH_WEIGHT);   
-        } else { 
-            sashForm.setMaximizedControl(getMainTreeViewer().getControl());
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public ISelection getSelection() {
-        if (m_currentTreeViewer == null) {
-            return StructuredSelection.EMPTY;
-        }
-        return m_currentTreeViewer.getSelection();
-    }
-        
-    /**
-     * Creates the EventHandler part of the editor
-     * @param parent Composite
-     */
-    private void createEventHandlerPart(Composite parent) {
-        Composite headLineComposite = new Composite(parent, SWT.NONE);
-        GridLayout layout = new GridLayout(1, true);
-        layout.marginWidth = 0;
-        layout.marginHeight = 0;
-        layout.marginBottom = 0;
-        layout.marginTop = 0;
-        headLineComposite.setLayout(layout);
-        Label headLine = new Label(headLineComposite, SWT.NONE);
-        headLine.setText(Messages.TestCaseEditorEHAreaHeadline); 
-        ControlDecorator.decorateInfo(headLine,
-                "GDControlDecorator.EventHandler", false); //$NON-NLS-1$
-        GridData ehTvGridData = new GridData();
-        ehTvGridData.grabExcessHorizontalSpace = true;
-        ehTvGridData.grabExcessVerticalSpace = true;
-        ehTvGridData.horizontalAlignment = SWT.FILL;
-        ehTvGridData.verticalAlignment = SWT.FILL;
-        ehTvGridData.verticalSpan = 100;
-        GridLayout ehTvLayout = new GridLayout(1, true);
-        ehTvLayout.marginWidth = 0;
-        ehTvLayout.marginHeight = 0;
-        ehTvLayout.marginBottom = 0;
-        ehTvLayout.marginTop = 0;
-        m_eventHandlerTreeViewer = new TreeViewer(headLineComposite);
-        m_eventHandlerTreeViewer.getTree().setLayout(ehTvLayout);
-        m_eventHandlerTreeViewer.getTree().setLayoutData(ehTvGridData);
-        m_eventHandlerTreeViewer.setLabelProvider(
-                new DecoratingCellLabelProvider(new GeneralLabelProvider(), 
-                Plugin.getDefault().getWorkbench().getDecoratorManager()
-                .getLabelDecorator()));
-        m_eventHandlerTreeViewer.setUseHashlookup(true);
-        m_eventHandlerTreeViewer.getTree()
-            .addListener(SWT.MouseDown, new MouseDownListener());
-        JubulaStateController.getInstance().
-            addSelectionListenerToSelectionService();
-        firePropertyChange(IWorkbenchPartConstants.PROP_INPUT);
-    }
-    
-    /**
-     * @author BREDEX GmbH
-     * @created 04.06.2005
-     */
-    private class MouseDownListener implements Listener {
-        /**
-         * {@inheritDoc}
-         */
-        public void handleEvent(Event event) {
-            if (SWT.MouseDown == event.type) {
-                Tree tree = (Tree)event.widget;
-                if (getMainTreeViewer().getTree() == tree) {
-                    m_currentTreeViewer = getMainTreeViewer();
-                } else if (m_eventHandlerTreeViewer.getTree() == tree) {
-                    m_currentTreeViewer = m_eventHandlerTreeViewer;
-                }
-            }
-        }
+        return sashForm;
     }
     
     /**
@@ -357,9 +248,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         }
     }
 
-    /**
-     * Sets the input of the tree viewer for specificaion.
-     */
+    @Override
     public void setInitialInput() {
         getMainTreeViewer().setContentProvider(
                 new TestCaseEditorContentProvider());  
@@ -368,7 +257,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
 
         initTopTreeViewer(workVersion);
-        initExecTreeViewerInput(workVersion);
     }
 
     /**
@@ -378,23 +266,10 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         try {
             getMainTreeViewer().getTree().setRedraw(false);
             getMainTreeViewer().setInput(new INodePO[] {root});
-            getMainTreeViewer().getTree().addFocusListener(
-                    new TreeFocusListener());
         } finally {
             getMainTreeViewer().getTree().setRedraw(true);
             getMainTreeViewer().expandAll();
         }
-    }
-
-    /**
-     * Sets the input of the tree viewer for ErrorHandler.
-     * @param root the root gui node
-     */
-    private void initExecTreeViewerInput(INodePO root) {
-        m_eventHandlerTreeViewer.setInput(root);
-        m_eventHandlerTreeViewer.expandAll();
-        m_eventHandlerTreeViewer.getTree().addFocusListener(
-            new TreeFocusListener());
     }
 
     /**
@@ -578,10 +453,10 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             }
         }
         // if exec was added to an editor session
-        if (getCurrentSelection().getFirstElement() != null
+        if (getStructuredSelection().getFirstElement() != null
                 && (pair.getType() == null || StringConstants.EMPTY.equals(pair
                         .getType()))) {
-            searchCompType(pair, getCurrentSelection().getFirstElement());
+            searchCompType(pair, getStructuredSelection().getFirstElement());
         }
     }
 
@@ -791,7 +666,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      */
     protected void fillContextMenu(IMenuManager mgr) {
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        if (getCurrentSelection().getFirstElement() == null) {
+        if (getStructuredSelection().getFirstElement() == null) {
             return;
         }
         MenuManager submenuInsert = new MenuManager(
@@ -837,18 +712,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 CommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
     }
 
-    /**
-     * @return the current selection
-     */
-    protected IStructuredSelection getCurrentSelection() {
-        if (m_currentTreeViewer == null 
-                || !(m_currentTreeViewer.getSelection() 
-                        instanceof IStructuredSelection)) {
-            return StructuredSelection.EMPTY;
-        }
-        return (IStructuredSelection)m_currentTreeViewer.getSelection();
-    }
-    
     /**
      * Cleanup on closing.
      */
@@ -904,43 +767,12 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     }
     
     /**
-     * @return Returns the eventHandlerTreeViewer.
-     */
-    public TreeViewer getEventHandlerTreeViewer() {
-        return m_eventHandlerTreeViewer;
-    }
-    
-    /**
-     * @author BREDEX GmbH
-     * @created 02.06.2005
-     * Sets the actual tree selection of this editor depending of the selected tree. 
-     */
-    private class TreeFocusListener extends FocusAdapter {
-        /** {@inheritDoc} */
-        public void focusGained(FocusEvent e) {
-            Tree tree = (Tree)e.getSource();
-            if (getMainTreeViewer().getTree() == tree) {
-                m_currentTreeViewer = getMainTreeViewer();
-            } else if (m_eventHandlerTreeViewer.getTree() == tree) {
-                m_currentTreeViewer = m_eventHandlerTreeViewer;
-            }
-            m_currentTreeViewer.setSelection(
-                    m_currentTreeViewer.getSelection(), true);
-        }       
-    }
-
-    
-    /**
      * {@inheritDoc}
      */
     public void handleDataChanged(IPersistentObject po, DataState dataState, 
         UpdateState updateState) {
         
         if (po instanceof INodePO) {
-            TreeViewer tv  = getTreeViewer();
-            if (po instanceof IEventExecTestCasePO) {
-                tv = getEventHandlerTreeViewer();
-            }
             switch (dataState) {
                 case Added:
                     INodePO addedNode = (INodePO)po;
@@ -951,17 +783,13 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                             || (editorNode instanceof ISpecTestCasePO 
                                     && ((ISpecTestCasePO)editorNode)
                                     .getEventExecTcMap().containsValue(po))) {
-                        getTreeViewer().refresh();
-                        getTreeViewer().expandAll();
-                        GuiNodeBP.setSelectionAndFocusToNode(addedNode, tv);
+                        handleNodeAdded(addedNode);
                     }
                     break;
                 case Deleted:
                     if (!(po instanceof IProjectPO)) {
                         INodePO guiNode = 
                             ((INodePO[])getTreeViewer().getInput())[0];
-                        getTreeViewer().refresh();
-                        getEventHandlerTreeViewer().refresh();
                         GuiNodeBP.setSelectionAndFocusToNode(
                                 guiNode, getTreeViewer());
                     } 
@@ -984,14 +812,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected void renameGUINode(IPersistentObject po) {
-        super.renameGUINode(po);
-        m_eventHandlerTreeViewer.update(po, null);
-    }
-    
      /**
       * Handles a PO that has been modified.
       * 
@@ -1033,21 +853,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     }
     
     /**
-     * {@inheritDoc}
-     */
-    public void handlePropertyChanged(boolean isCompNameChanged) {
-        super.handlePropertyChanged(isCompNameChanged);
-        m_eventHandlerTreeViewer.refresh();
-    }
-    
-    /**
-     * @return the root guiNode of the tree of the actual treeViewer
-     */
-    private INodePO getEventHandlerRootGuiNode() {
-        return (INodePO)m_eventHandlerTreeViewer.getInput();
-    }
-
-    /**
      * @param root node, where starts the validation
      * @param specTc changed specTc
      * @return if editor contains an reusing testcase for given specTestCase
@@ -1078,36 +883,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     }
     
     /**
-     * opens the AddEventHandlerDlg.
-     * @param eventHandlerCont the SpecTestCasePO
-     * @param eventHandler the EventExecTestCasePO
-     * @return status the window return code.
-     */
-    private int openAddEventHandlerDlg(
-        IEventHandlerContainer eventHandlerCont, 
-        final IEventExecTestCasePO eventHandler) {
-        
-        AddEventHandlerDialog dialog = 
-            new AddEventHandlerDialog(Plugin.getShell(), eventHandler
-                    .getSpecTestCase().getName(), eventHandlerCont);
-        dialog.addListener(new AddEventHandlerDialog.Listener() {
-            public void notifySelected(String eventType, 
-                String reentryType, Integer maxRetries) {
-                
-                String evType = StringHelper.getInstance().getMap()
-                    .get(eventType);
-                
-                setEventHandlerProperties(eventHandler, evType, 
-                    reentryType, maxRetries);
-            }
-        });
-        int status = dialog.open();
-        dialog.close();
-        return status;
-    }
-    
-    
-    /**
      * Sets the EventHandler properties.
      * @param eventHandler the EventHandlerTc
      * @param eventType the event type
@@ -1135,49 +910,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     }
     
     /**
-     * Adds the given eventHandlerInput to the given eventHandlerOwner 
-     * as an eventHandler.
-     * @param eventHandlerInput the ISpecTestCasePO to be the EventHandler
-     * @param evHandlerOwner the ISpecTestCasePO to own the EventHandler
-     */
-    public void addEventHandler(ISpecTestCasePO eventHandlerInput, 
-        ISpecTestCasePO evHandlerOwner) {
-        
-        final EditSupport editSupport = getEditorHelper().getEditSupport();
-        ISpecTestCasePO workSpecTcPO = (ISpecTestCasePO)editSupport
-            .getWorkVersion();
-        ISpecTestCasePO eventHandlerInputPO = eventHandlerInput;
-        IEventExecTestCasePO eventHandlerPO = null;
-        try {           
-            ISpecTestCasePO eventHandlerWorkV = (ISpecTestCasePO)editSupport
-                .createWorkVersion(eventHandlerInputPO);
-            eventHandlerPO = NodeMaker.createEventExecTestCasePO(
-                eventHandlerWorkV, workSpecTcPO);
-            final int status = openAddEventHandlerDlg(evHandlerOwner, 
-                    eventHandlerPO);
-            if (Window.OK == status) {
-                editSupport.lockWorkVersion();
-                TestCaseBP.addEventHandler(editSupport, workSpecTcPO, 
-                    eventHandlerPO);
-                getEditorHelper().setDirty(true);
-                getEventHandlerTreeViewer().refresh();
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        eventHandlerPO, DataState.Added,
-                        UpdateState.onlyInEditor);
-            }
-        } catch (InvalidDataException e) {
-            // no log entry, because it is a use case!
-            Utils.createMessageDialog(MessageIDs.E_DOUBLE_EVENT, null, 
-                new String[]{NLS.bind(
-                        Messages.TestCaseEditorDoubleEventTypeErrorDetail,
-                        new Object[]{evHandlerOwner.getName(), 
-                            I18n.getString(eventHandlerPO.getEventType())})}); 
-        } catch (PMException e) {
-            PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        }
-    }
-    
-    /**
      * Sets the selection to the (in the browser selected) correct node.
      * @param selectedNode the selected node of the browser.
      */
@@ -1197,14 +929,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      */
     protected InsertNewTestCaseAction getInsertNewTCAction() {
         return m_insertNewTCAction;
-    }
-    
-    
-    /**
-     * @return the currentTreeViewer
-     */
-    protected TreeViewer getCurrentTreeViewer() {
-        return m_currentTreeViewer;
     }
     
     /**
@@ -1250,15 +974,38 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         }
     }
+
+    /**
+     * Refreshes the tree viewer.
+     */
+    protected void refresh() {
+        getTreeViewer().refresh();
+    }
+
+    /**
+     * 
+     * @return the receiver's current selection, if it is an 
+     *         {@link IStructuredSelection}. Otherwise, returns an empty 
+     *         selection.
+     */
+    protected IStructuredSelection getStructuredSelection() {
+        ISelection selection = getSelection();
+        if (selection instanceof IStructuredSelection) {
+            return (IStructuredSelection)selection;
+        }
+        
+        return StructuredSelection.EMPTY;
+    }
     
     /**
-     * {@inheritDoc}
+     * Refreshes the viewer and updates the expansion state and selection
+     * based on the added node.
+     * 
+     * @param addedNode The node that has been added.
      */
-    protected void addInternalSelectionListeners(
-            final ISelectionChangedListener editorSelectionChangedListener) {
-        
-        super.addInternalSelectionListeners(editorSelectionChangedListener);
-        m_eventHandlerTreeViewer.addSelectionChangedListener(
-                editorSelectionChangedListener);
+    protected void handleNodeAdded(INodePO addedNode) {
+        getTreeViewer().refresh();
+        getTreeViewer().expandAll();
+        getTreeViewer().setSelection(new StructuredSelection(addedNode));
     }
 }

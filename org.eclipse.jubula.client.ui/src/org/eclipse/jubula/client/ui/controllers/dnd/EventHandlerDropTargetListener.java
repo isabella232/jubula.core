@@ -18,8 +18,8 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
+import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
 import org.eclipse.swt.dnd.TransferData;
 
 
@@ -31,12 +31,12 @@ public class EventHandlerDropTargetListener extends ViewerDropAdapter {
     /**
      * <code>m_editor</code>
      */
-    private AbstractTestCaseEditor m_editor;
+    private TestCaseEditor m_editor;
 
     /**
      * @param editor the editor which contains the viewer.
      */
-    public EventHandlerDropTargetListener(AbstractTestCaseEditor editor) {
+    public EventHandlerDropTargetListener(TestCaseEditor editor) {
         super(editor.getEventHandlerTreeViewer());
         m_editor = editor;
         boolean scrollExpand = Plugin.getDefault().getPreferenceStore().

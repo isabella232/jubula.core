@@ -27,8 +27,8 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.dialogs.TestCaseTreeDialog;
-import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
+import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -75,10 +75,10 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
     /** {@inheritDoc} */
     public Object execute(ExecutionEvent event) {
         IEditorPart editor = Plugin.getActiveEditor();
-        Assert.verify(editor instanceof AbstractTestCaseEditor, 
+        Assert.verify(editor instanceof TestCaseEditor, 
             Messages.WrongEditorType + StringConstants.EXCLAMATION_MARK);
-        AbstractTestCaseEditor testCaseEditor = 
-            (AbstractTestCaseEditor) editor;
+        TestCaseEditor testCaseEditor = 
+            (TestCaseEditor) editor;
         if (JBEditorHelper.EditableState.OK == testCaseEditor.getEditorHelper()
                 .requestEditableState()) {
             openTestCasePopUp(testCaseEditor);
@@ -90,7 +90,7 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
      * Opens the PopUp with the TestCaseTree.
      * @param editor The test case editor.
      */
-    private void openTestCasePopUp(final AbstractTestCaseEditor editor) {  
+    private void openTestCasePopUp(final TestCaseEditor editor) {  
         final ISpecTestCasePO parentNode = (ISpecTestCasePO)editor
             .getTreeViewer().getTree().getItem(0).getData(); 
         if (hasTestCaseAllEventHandler(parentNode)) {
@@ -162,7 +162,7 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
      * @param editor the editor
      */
     void addEventHandler(ISelection selection, INodePO nodeGUI, 
-        AbstractTestCaseEditor editor) {
+            TestCaseEditor editor) {
         if (!(selection instanceof IStructuredSelection)) {
             return;
         }
