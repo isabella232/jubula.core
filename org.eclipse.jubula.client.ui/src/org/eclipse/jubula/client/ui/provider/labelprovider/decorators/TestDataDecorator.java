@@ -52,7 +52,7 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
     public void decorate(Object element, IDecoration decoration) {
         decoration.setForegroundColor(Layout.DEFAULT_OS_COLOR);
 
-        INodePO node = (INodePO)element;
+        final INodePO node = (INodePO)element;
         if (shouldNotDecorate(node, decoration)) {
             return;
         }
@@ -87,8 +87,8 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
                         && node.getSumSpecTcFlag();
                 } else if (node instanceof ICapPO) {
                     ICapPO cap = (ICapPO)node;
-                    IExecTestCasePO execTC = (IExecTestCasePO)((INodePO)element)
-                        .getParentNode().getParentNode();
+                    IExecTestCasePO execTC = 
+                        (IExecTestCasePO)node.getParentNode().getParentNode();
                     boolean overWrittenName = false;
                     for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
                         if (pair.getFirstName().equals(cap.getComponentName())

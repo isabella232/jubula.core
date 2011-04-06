@@ -364,7 +364,13 @@
 			id="org.eclipse.jubula.client.ui.decorators.incompleteTestDataDecorator" label="Incomplete Testdata Decorator"
 			lightweight="true" state="true">
 			<enablement>
-				<objectClass name="org.eclipse.jubula.client.core.model.INodePO" />
+				<or>
+					<objectClass name="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+					<objectClass name="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+					<objectClass name="org.eclipse.jubula.client.core.model.ICapPO" />
+					<objectClass name="org.eclipse.jubula.client.core.model.ITestJobPO" />
+					<objectClass name="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
+				</or>
 			</enablement>
 			<description>
 				This decorator decorates Test Suites, Test Cases or Test Steps with
