@@ -15,19 +15,18 @@ import java.util.List;
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.controllers.TreeIterator;
 import org.eclipse.jubula.client.ui.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
@@ -427,44 +426,26 @@ public class BasicSearchResult implements ISearchResult {
          * @return true if node was selected, false otherwise
          */
         private INodePO selectNodeInTree(Long id, TreeViewer tv) {
-            INodePO rootGUI = (INodePO)tv.getInput();
-            TreeIterator iter = new TreeIterator(rootGUI);
-            while (iter.hasNext()) {
-                INodePO current = iter.next();
-                if (current != null 
-                    && id.equals(current.getId())
-                    && isTopLevelSpecTestCase(current.getParentNode())) {
-                    InteractionEventDispatcher.getDefault().
-                        fireProgammableSelectionEvent(
-                            new StructuredSelection(current));
+            INodePO nodeToSelect = 
+                GeneralStorage.getInstance().getMasterSession().find(
+                        NodeMaker.getNodePOClass(), id);
+
+            if (nodeToSelect != null) {
+                ISelection oldSelection = tv.getSelection();
+                ISelection newSelection = new StructuredSelection(nodeToSelect);
+                tv.setSelection(newSelection);
+                if (newSelection.equals(tv.getSelection())) {
                     tv.refresh();
-                    tv.expandToLevel(current, 0);
-                    tv.setSelection(new StructuredSelection(current), true);
-                    tv.reveal(current);
-                    return current;
+                    tv.expandToLevel(nodeToSelect, 0);
+                    tv.reveal(nodeToSelect);
+                    return nodeToSelect;
+                } else {
+                    tv.setSelection(oldSelection);
                 }
-            }
+            } 
             
             return null;
         }
 
-        /**
-         * check whether the given spec test case gui is a top level spec test
-         * gui node
-         * 
-         * @param stc
-         *            the gui node to check
-         * @return true, if toplevel; false otherwise
-         */
-        private boolean isTopLevelSpecTestCase(INodePO stc) {
-            if (stc == null) {
-                return false;
-            }
-            INodePO parent = stc.getParentNode();
-            if (!(parent instanceof IExecTestCasePO)) {
-                return true;
-            }
-            return false;
-        }
     }
 }
