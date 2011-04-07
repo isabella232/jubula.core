@@ -10,11 +10,17 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -213,18 +219,10 @@ public class IconConstants {
     public static final String TJ_DIALOG_STRING = "testJobDialog.gif"; //$NON-NLS-1$
     /** name for new category dialog-image */
     public static final String NEW_CAT_DIALOG_STRING = "newCategoryDialog.gif"; //$NON-NLS-1$
-    /** testCase_disabled image */
-    public static final Image TC_DISABLED_IMAGE = Plugin.getImage("testCase_disabled.gif"); //$NON-NLS-1$
     /** CAP image */
     public static final Image CAP_IMAGE = Plugin.getImage("cap.gif"); //$NON-NLS-1$
-    /** CAP cut image */
-    public static final Image CAP_CUT_IMAGE = Plugin.getImage("cap_disabled.gif"); //$NON-NLS-1$
     /** category image */
     public static final Image CATEGORY_IMAGE = Plugin.getImage("category.gif"); //$NON-NLS-1$
-    /** cut category image */
-    public static final Image CATEGORY_CUT_IMAGE = Plugin.getImage("category_disabled.gif"); //$NON-NLS-1$
-    /** generated category image */
-    public static final Image CATEGORY_GENERATED_IMAGE = Plugin.getImage("category_generated.gif"); //$NON-NLS-1$
     /** event handler image */
     public static final Image EH_IMAGE = Plugin.getImage("execEventHandler.gif"); //$NON-NLS-1$
     /** event handler image */
@@ -233,18 +231,10 @@ public class IconConstants {
     public static final Image TC_REF_IMAGE = Plugin.getImage("testCaseRef.gif"); //$NON-NLS-1$
     /** referenced testSuite image */
     public static final Image TS_REF_IMAGE = Plugin.getImage("testSuiteRef.gif"); //$NON-NLS-1$
-    /** referenced testCase cut image */
-    public static final Image TC_REF_CUT_IMAGE = Plugin.getImage("testCaseRef_disabled.gif"); //$NON-NLS-1$
-    /** referenced testCase cut image */
-    public static final Image TC_REF_GENERATED_IMAGE = Plugin.getImage("testCaseRef_generated.gif"); //$NON-NLS-1$
     /** logical name image */
     public static final Image LOGICAL_NAME_IMAGE = Plugin.getImage("OMLogName.gif"); //$NON-NLS-1$
-    /** logical name cut image */
-    public static final Image LOGICAL_NAME_CUT_IMAGE = Plugin.getImage("OMLogName_disabled.gif"); //$NON-NLS-1$
     /** technical name image */
     public static final Image TECHNICAL_NAME_IMAGE = Plugin.getImage("OMTecName.gif"); //$NON-NLS-1$
-    /** technical name cut image */
-    public static final Image TECHNICAL_NAME_CUT_IMAGE = Plugin.getImage("OMTecName_disabled.gif"); //$NON-NLS-1$
     /** project image */
     public static final Image PROJECT_IMAGE = Plugin.getImage("project.gif"); //$NON-NLS-1$
     /** testSuite image */
@@ -260,10 +250,9 @@ public class IconConstants {
     public static final Image TS_DISABLED_IMAGE = Plugin.getImage("testSuiteNode_disabled.gif"); //$NON-NLS-1$
     /** test case image */
     public static final Image TC_IMAGE = Plugin.getImage("testCase.gif"); //$NON-NLS-1$
-    /** cut test case image */
-    public static final Image TC_CUT_IMAGE = Plugin.getImage("testCase_disabled.gif"); //$NON-NLS-1$
-    /** generated test case image */
-    public static final Image TC_GENERATED_IMAGE = Plugin.getImage("testCase_generated.gif"); //$NON-NLS-1$
+    /** testCase_disabled image */
+    public static final Image TC_DISABLED_IMAGE = 
+        new Image(TC_IMAGE.getDevice(), TC_IMAGE, SWT.IMAGE_GRAY);
     /** test case image */
     public static final Image ROOT_IMAGE = Plugin.getImage("root.gif"); //$NON-NLS-1$
     /** test case image */
@@ -292,9 +281,59 @@ public class IconConstants {
     /** new component dialog-image */
     public static final Image RENAME_COMPONENT_DIALOG_IMAGE = 
         Plugin.getImage(RENAME_COMPONENT_DIALOG_STRING);
-    
+
+    /** the logger */
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(IconConstants.class);
+
+    /** maps images to their "generated" (green-tinted) counterparts */
+    private static final Map<Image, Image> GEN_IMAGES = 
+        new HashMap<Image, Image>();
+    static {
+        GEN_IMAGES.put(TC_IMAGE, Plugin.getImage("testCase_generated.gif")); //$NON-NLS-1$
+        GEN_IMAGES.put(TC_REF_IMAGE, Plugin.getImage("testCaseRef_generated.gif")); //$NON-NLS-1$
+        GEN_IMAGES.put(CATEGORY_IMAGE, Plugin.getImage("category_generated.gif")); //$NON-NLS-1$
+    }
+
+    /** maps images to their "cut" (grayscale) counterparts */
+    private static final Map<Image, Image> CUT_IMAGES = 
+        new HashMap<Image, Image>();
+
     /** to prevent instantiation */
     private IconConstants() {
         // do nothing
+    }
+
+    /**
+     * 
+     * @param original The original, or base, image.
+     * @return the "generated" version of the image. Client should not 
+     *         dispose this image.
+     */
+    public static Image getGeneratedImage(Image original) {
+        Image genImage = GEN_IMAGES.get(original);
+        if (genImage == null) {
+            LOG.error("'Generated' image does not exist."); //$NON-NLS-1$
+            genImage = original;
+        }
+        
+        return genImage;
+    }
+
+    /**
+     * 
+     * @param original The original, or base, image.
+     * @return the "cut" version of the image. Client should not 
+     *         dispose this image.
+     */
+    public static Image getCutImage(Image original) {
+        Image cutImage = CUT_IMAGES.get(original);
+        if (cutImage == null) {
+            cutImage = 
+                new Image(original.getDevice(), original, SWT.IMAGE_GRAY);
+            CUT_IMAGES.put(original, cutImage);
+        }
+        
+        return cutImage;
     }
 }

@@ -19,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
@@ -43,6 +44,7 @@ import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
+import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
@@ -105,7 +107,25 @@ public class GeneralLabelProvider extends ColumnLabelProvider
 
     /** {@inheritDoc} */
     public Image getImage(Object element) {
-        return getGDImage(element);
+        Image image = getGDImage(element);
+        
+        // generated elements
+        if (element instanceof INodePO
+                && ((INodePO)element).isGenerated()) {
+            image = IconConstants.getGeneratedImage(image);
+        }
+        
+        // elements that have been "cut" to the clipboard should be grayscale
+        Object cbContents = clipboard.getContents(
+                LocalSelectionClipboardTransfer.getInstance());
+        if (cbContents instanceof IStructuredSelection) {
+            IStructuredSelection sel = (IStructuredSelection)cbContents;
+            if (sel.toList().contains(element)) {
+                image = IconConstants.getCutImage(image);
+            }
+        }
+        
+        return image;
     }
     
     /**
@@ -200,20 +220,17 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * @param element the element to get the image for 
      * @return an image for the given element
      */
-    // FIXME generated elements should be tinted green
-    // FIXME elements that have been "cut" to the clipboard should be grayscale
     public static Image getGDImage(Object element) {
         if (element instanceof ITestSuitePO) {
             ITestSuitePO testSuite = (ITestSuitePO)element;
-            if (testSuite != null) {
-                Locale workLang = WorkingLanguageBP.getInstance()
-                    .getWorkingLanguage();
-                if (testSuite.getAut() != null 
-                    && !WorkingLanguageBP.getInstance().isTestSuiteLanguage(
-                        workLang, testSuite)) {
-                    return IconConstants.TS_DISABLED_IMAGE;
-                }
+            Locale workLang = WorkingLanguageBP.getInstance()
+                .getWorkingLanguage();
+            if (testSuite.getAut() != null 
+                && !WorkingLanguageBP.getInstance().isTestSuiteLanguage(
+                    workLang, testSuite)) {
+                return IconConstants.TS_DISABLED_IMAGE;
             }
+            return IconConstants.TS_IMAGE;
         }
         
         if (element instanceof ICapPO) {
@@ -222,10 +239,6 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         
         if (element instanceof IProjectPO) {
             return IconConstants.PROJECT_IMAGE;
-        }
-
-        if (element instanceof ITestSuitePO) {
-            return IconConstants.TS_IMAGE;
         }
 
         if (element instanceof IEventExecTestCasePO) {
@@ -402,4 +415,5 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         
         return nameBuilder.toString();
     }
+    
 }

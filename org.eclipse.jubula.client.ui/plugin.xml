@@ -2584,7 +2584,7 @@
 			icon="icons/newTestJobIcon.gif">
 		</image>
 		<image commandId="org.eclipse.jubula.client.ui.commands.newCap"
-			disabledIcon="icons/cap_disabled.gif" icon="icons/newCapIcon.gif">
+			disabledIcon="icons/newCapIcon_disabled.gif" icon="icons/newCapIcon.gif">
 		</image>
 		<image commandId="org.eclipse.jubula.client.ui.commands.ExtractTestCase"
 			icon="icons/testCaseRef.gif">

@@ -90,52 +90,43 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
      * @return Image an Image
      */
     public Image getImage(Object element) {
-        boolean isCut = false;
-        Object cbContents = m_clipboard.getContents(
-                LocalSelectionClipboardTransfer.getInstance());
+        Image image = null;
 
-        if (cbContents instanceof IStructuredSelection) {
-            IStructuredSelection sel = (IStructuredSelection)cbContents;
-            for (Object selObject : sel.toArray()) {
-                if (element == selObject) {
-                    isCut = true;
-                    break;
-                }
-            }
-        }
         if (element instanceof IComponentNamePO) {
-            if (isCut) {
-                return IconConstants.LOGICAL_NAME_CUT_IMAGE;
-            }
-            return IconConstants.LOGICAL_NAME_IMAGE;
+            image = IconConstants.LOGICAL_NAME_IMAGE;
         } else if (element instanceof IObjectMappingAssoziationPO) {
-            if (isCut) {
-                return IconConstants.TECHNICAL_NAME_CUT_IMAGE;
-            }
-            return IconConstants.TECHNICAL_NAME_IMAGE;
+            image = IconConstants.TECHNICAL_NAME_IMAGE;
         } else if (element instanceof IObjectMappingCategoryPO) {
-            if (isCut) {
-                return IconConstants.CATEGORY_CUT_IMAGE;
-            }
-            return IconConstants.CATEGORY_IMAGE;
+            image = IconConstants.CATEGORY_IMAGE;
         } else if (element instanceof String) {
             // Missing Component Name
-            return IconConstants.LOGICAL_NAME_IMAGE;
+            image = IconConstants.LOGICAL_NAME_IMAGE;
+        } else {
+            String elementType = element != null 
+                ? element.getClass().getName() : "null"; //$NON-NLS-1$
+            StringBuilder msg = new StringBuilder();
+            msg.append(Messages.ElementType)
+                .append(StringConstants.SPACE)
+                .append(StringConstants.APOSTROPHE)
+                .append(elementType)
+                .append(StringConstants.APOSTROPHE)
+                .append(StringConstants.SPACE)
+                .append(Messages.NotSupported)
+                .append(StringConstants.DOT);
+            Assert.notReached(msg.toString());
+            return null;
+        }
+
+        Object cbContents = m_clipboard.getContents(
+                LocalSelectionClipboardTransfer.getInstance());
+        if (cbContents instanceof IStructuredSelection) {
+            IStructuredSelection sel = (IStructuredSelection)cbContents;
+            if (sel.toList().contains(element)) {
+                image = IconConstants.getCutImage(image);
+            }
         }
         
-        String elementType = element != null 
-            ? element.getClass().getName() : "null"; //$NON-NLS-1$
-        StringBuilder msg = new StringBuilder();
-        msg.append(Messages.ElementType)
-            .append(StringConstants.SPACE)
-            .append(StringConstants.APOSTROPHE)
-            .append(elementType)
-            .append(StringConstants.APOSTROPHE)
-            .append(StringConstants.SPACE)
-            .append(Messages.NotSupported)
-            .append(StringConstants.DOT);
-        Assert.notReached(msg.toString());
-        return null;
+        return image;
     }
     
     
