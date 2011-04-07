@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.provider.contentprovider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobContPO;
@@ -57,7 +58,8 @@ public abstract class AbstractTreeViewContentProvider
             return ((INodePO)element).getParentNode();
         }
         if (element instanceof ITestSuiteContPO
-                || element instanceof ITestJobContPO) {
+                || element instanceof ITestJobContPO
+                || element instanceof IReusedProjectPO) {
             return GeneralStorage.getInstance().getProject();
         }
         if (element instanceof ITestDataCubeContPO
