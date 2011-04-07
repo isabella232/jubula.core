@@ -284,8 +284,6 @@ public class Hibernator {
             try {
                 validateDBVersion(em);
                 monitor.subTask(Messages.DatabaseConnectionEstablished);
-                DatabaseStateDispatcher.notifyListener(new DatabaseStateEvent(
-                        DatabaseState.DB_LOGIN_SUCCEEDED));
             } catch (AmbiguousDatabaseVersionException e) {
                 throw new PMDatabaseConfException(
                         Messages.DBVersionProblem + StringConstants.DOT, 
@@ -591,6 +589,8 @@ public class Hibernator {
         if (instance == null) {
             try {
                 instance = new Hibernator(userName, pwd, url, monitor);
+                DatabaseStateDispatcher.notifyListener(new DatabaseStateEvent(
+                        DatabaseState.DB_LOGIN_SUCCEEDED));
             } catch (DatabaseVersionConflictException e) {
                 if (IVersion.JB_DB_MAJOR_VERSION > e
                         .getDatabaseMajorVersion()
