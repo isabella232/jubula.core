@@ -439,9 +439,8 @@ public class BasicSearchResult implements ISearchResult {
                     tv.expandToLevel(nodeToSelect, 0);
                     tv.reveal(nodeToSelect);
                     return nodeToSelect;
-                } else {
-                    tv.setSelection(oldSelection);
                 }
+                tv.setSelection(oldSelection);
             } 
             
             return null;

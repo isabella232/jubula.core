@@ -401,8 +401,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         }
         if (iter.hasNext()) {
             while (iter.hasNext()) {
-                IParamDescriptionPO descr = 
-                    (IParamDescriptionPO)iter.next();
+                IParamDescriptionPO descr = iter.next();
                 nameBuilder.append(descr.getName());
                 if (iter.hasNext()) {
                     nameBuilder.append(GeneralLabelProvider.SEPARATOR);

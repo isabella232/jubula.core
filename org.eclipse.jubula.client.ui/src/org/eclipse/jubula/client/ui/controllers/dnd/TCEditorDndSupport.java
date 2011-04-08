@@ -131,8 +131,7 @@ public class TCEditorDndSupport {
                     dropOnSpecTc(editSupport, toDrop, target);
                 } else if (target instanceof ITestSuitePO) {
                         
-                    dropOnTestsuite(editSupport, (ITestSuitePO)target, 
-                            (ISpecTestCasePO)toDrop);
+                    dropOnTestsuite(editSupport, (ITestSuitePO)target, toDrop);
                 }
             } catch (PMException e) {
                 NodeEditorInput inp = (NodeEditorInput)targetEditor.
