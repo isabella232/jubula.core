@@ -101,7 +101,6 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         getEditorHelper().addListeners();
         setActionHandlers();
         setInitialInput();
-        createContextMenu();
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addPropertyChangedListener(this, true);
         ded.addParamChangedListener(this, true);

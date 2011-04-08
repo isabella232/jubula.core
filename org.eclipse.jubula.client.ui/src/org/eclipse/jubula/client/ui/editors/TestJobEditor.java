@@ -86,7 +86,6 @@ public class TestJobEditor extends AbstractJBEditor {
         getEditorHelper().addListeners();
         setActionHandlers();
         setInitialInput();
-        createContextMenu();
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addPropertyChangedListener(this, true);
         GuiEventDispatcher.getInstance().addEditorDirtyStateListener(

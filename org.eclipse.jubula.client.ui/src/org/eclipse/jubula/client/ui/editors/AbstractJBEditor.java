@@ -362,7 +362,9 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         getEditorSite().getPage().addPartListener(m_partListener);
         setHelp(parent);
         createPartControlImpl(parent);
+        createContextMenu();
         addInternalSelectionListeners(new EditorSelectionChangedListener());
+        
     }
     
     /**
