@@ -381,7 +381,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
                     LocalSelectionClipboardTransfer.getInstance());
             for (INodePO guiNode : selList) {
                 if (!(guiNode instanceof ICategoryPO 
-                        || guiNode instanceof ISpecTestCasePO)
+                        || guiNode instanceof ISpecTestCasePO
+                        || guiNode instanceof IProjectPO)
                         || !NodeBP.isEditable(guiNode)
                         || !(cbContents instanceof IStructuredSelection)
                         || !TCBrowserDndSupport.canMove(

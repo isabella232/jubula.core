@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
@@ -69,7 +70,8 @@ public class TCBrowserDndSupport {
                 return false;
             }
             // check the object to drop on (target)
-            if (!(target instanceof ICategoryPO)
+            if (!(target instanceof ICategoryPO
+                    || target instanceof IProjectPO)
                     || (target instanceof INodePO
                             && !NodeBP.isEditable((INodePO)target))) {
                 
