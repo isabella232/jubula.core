@@ -78,7 +78,6 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.AddNewTestCaseAction;
 import org.eclipse.jubula.client.ui.actions.InsertNewTestCaseAction;
 import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
@@ -793,10 +792,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                     break;
                 case Deleted:
                     if (!(po instanceof IProjectPO)) {
-                        INodePO guiNode = 
-                            ((INodePO[])getTreeViewer().getInput())[0];
-                        GuiNodeBP.setSelectionAndFocusToNode(
-                                guiNode, getTreeViewer());
+                        refresh();
                     } 
                     break;
                 case Renamed:
@@ -1010,7 +1006,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      */
     protected void handleNodeAdded(INodePO addedNode) {
         getTreeViewer().refresh();
-        getTreeViewer().expandAll();
         getTreeViewer().setSelection(new StructuredSelection(addedNode));
     }
 }
