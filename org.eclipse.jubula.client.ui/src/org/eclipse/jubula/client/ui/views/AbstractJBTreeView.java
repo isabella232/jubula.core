@@ -34,7 +34,7 @@ import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.filter.JBBrowserPatternFilter;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.sorter.GuiNodeNameViewerSorter;
+import org.eclipse.jubula.client.ui.sorter.NodeNameViewerSorter;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -276,7 +276,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         setTreeFilterText(ft.getFilterControl());
         addTreeListener();
         getTreeViewer().setUseHashlookup(true);
-        getTreeViewer().setSorter(new GuiNodeNameViewerSorter());
+        getTreeViewer().setSorter(new NodeNameViewerSorter());
         
         GridData layoutData = new GridData();
         layoutData.grabExcessHorizontalSpace = true;
