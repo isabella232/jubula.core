@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.provider.contentprovider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
@@ -55,7 +56,24 @@ public abstract class AbstractTreeViewContentProvider
     /** {@inheritDoc} */
     public Object getParent(Object element) {
         if (element instanceof INodePO) {
-            return ((INodePO)element).getParentNode();
+            INodePO parent = ((INodePO)element).getParentNode();
+            IProjectPO activeProject = 
+                GeneralStorage.getInstance().getProject();
+            if (parent instanceof IProjectPO 
+                    && !parent.equals(activeProject)) {
+                // Parent is a project, but not the active project.
+                // So it must be a reused project.
+                String parentGuid = parent.getGuid();
+                if (activeProject != null && parentGuid != null) {
+                    for (IReusedProjectPO reusedProject 
+                            : activeProject.getUsedProjects()) {
+                        if (parentGuid.equals(reusedProject.getProjectGuid())) {
+                            return reusedProject;
+                        }
+                    }
+                }
+            }
+            return parent;
         }
         if (element instanceof ITestSuiteContPO
                 || element instanceof ITestJobContPO
