@@ -85,7 +85,6 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
-import org.eclipse.jubula.client.ui.controllers.dnd.TCEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -100,6 +99,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -169,8 +169,13 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         getMainTreeViewer().addDragSupport(operations, transfers,
             new TreeViewerContainerDragSourceListener(getTreeViewer()));
         getMainTreeViewer().addDropSupport(operations, transfers, 
-            new TCEditorDropTargetListener(this)); 
+            getViewerDropAdapter()); 
     }
+
+    /**
+     * @return the viewer drop adapter
+     */
+    protected abstract DropTargetListener getViewerDropAdapter();
 
     /**
      * @param parent the paent of the SashForm.

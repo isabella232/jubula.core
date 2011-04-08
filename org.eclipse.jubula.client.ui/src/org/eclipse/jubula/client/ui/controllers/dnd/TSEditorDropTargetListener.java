@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.controllers.dnd;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -19,47 +18,46 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.swt.dnd.TransferData;
 
-
 /**
- * {@inheritDoc}
- *
+ * Drop adapter for this TestSuiteEditor
+ * 
  * @author BREDEX GmbH
- * @created 12.05.2005
+ * @created 24.10.2005
  */
-public class TCEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
+public class TSEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
     /** <code>m_editor</code> */
     private AbstractTestCaseEditor m_editor;
-    
-    
+
     /**
-     * @param editor the TestCaseEditor.
+     * @param editor
+     *            the TestCaseEditor.
      */
-    public TCEditorDropTargetListener(AbstractTestCaseEditor editor) {
+    public TSEditorDropTargetListener(AbstractTestCaseEditor editor) {
         super(editor.getTreeViewer());
         m_editor = editor;
-        boolean scrollExpand = Plugin.getDefault().getPreferenceStore().
-            getBoolean(Constants.TREEAUTOSCROLL_KEY);
+        boolean scrollExpand = Plugin.getDefault().getPreferenceStore()
+                .getBoolean(Constants.TREEAUTOSCROLL_KEY);
         setScrollExpandEnabled(scrollExpand);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public boolean performDrop(Object data) {
         LocalSelectionTransfer transfer = LocalSelectionTransfer.getInstance();
-        IStructuredSelection selection = transfer.getSelection();
         Object target = getCurrentTarget();
-        if (selection instanceof StructuredSelection) {
-            int location = getCurrentLocation();
-            if (target == null) {
-                target = m_editor.getEditorHelper()
-                    .getEditSupport().getWorkVersion();
-                location = ViewerDropAdapter.LOCATION_ON;
-            }
-            if (target instanceof INodePO) {
-                return TCEditorDndSupport.performDrop(m_editor, selection,
-                        (INodePO)target, location);
-            }
+        int location = getCurrentLocation();
+        if (target == null) {
+            target = m_editor.getEditorHelper().getEditSupport()
+                    .getWorkVersion();
+            location = ViewerDropAdapter.LOCATION_AFTER;
+        }
+        if (target instanceof INodePO) {
+            INodePO targetGuiNode = (INodePO)target;
+            IStructuredSelection toDrop = transfer.getSelection();
+            return TSEditorDndSupport.performDrop(m_editor, toDrop,
+                    targetGuiNode, location);
+
         }
 
         return false;
@@ -69,21 +67,17 @@ public class TCEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
      * {@inheritDoc}
      */
     public boolean validateDrop(Object target, int operation,
-        TransferData transferType) {
-        
+            TransferData transferType) {
         LocalSelectionTransfer transfer = LocalSelectionTransfer.getInstance();
-        IStructuredSelection selection = transfer.getSelection();
-        if (selection instanceof StructuredSelection) {
-            Object targetObject = target;
-            if (targetObject == null) {
-                targetObject = m_editor.getEditorHelper()
-                    .getEditSupport().getWorkVersion();
-            }
-            if (targetObject instanceof INodePO) {
-                return TCEditorDndSupport.validateDrop(transfer.getSource(),
-                        getViewer(), selection, (INodePO)targetObject, true);
-            }
+        Object targetNode = target;
+        if (targetNode == null) {
+            targetNode = m_editor.getEditorHelper().getEditSupport()
+                    .getWorkVersion();
         }
-        return false;
+
+        return TSEditorDndSupport.validateDrop(transfer.getSource(),
+                m_editor.getTreeViewer(), transfer.getSelection(), targetNode,
+                true);
+
     }
 }
