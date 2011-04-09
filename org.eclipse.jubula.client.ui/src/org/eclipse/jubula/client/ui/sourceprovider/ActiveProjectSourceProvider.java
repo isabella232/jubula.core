@@ -139,7 +139,7 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
     /**
      * {@inheritDoc}
      */
-    public void reactOnProgressEvent(DatabaseStateEvent e) {
+    public void reactOnDatabaseEvent(DatabaseStateEvent e) {
         fireSourceChanged();
     }
 }

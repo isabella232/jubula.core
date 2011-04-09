@@ -295,9 +295,6 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
     private void fireReady() {
         DataEventDispatcher dispatcher = DataEventDispatcher.getInstance();
         dispatcher.fireProjectLoadedListener(new NullProgressMonitor());
-        IProjectPO project = GeneralStorage.getInstance().getProject();
-        Plugin.setProjectNameInTitlebar(project.getName(),
-            project.getMajorProjectVersion(), project.getMinorProjectVersion());
         dispatcher.fireProjectOpenedListener();
     }
 

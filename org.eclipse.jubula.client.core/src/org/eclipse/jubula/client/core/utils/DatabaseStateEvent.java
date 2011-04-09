@@ -20,7 +20,9 @@ public class DatabaseStateEvent {
         /** the database scheme has just been created */
         DB_SCHEME_CREATED,
         /** successfull login */
-        DB_LOGIN_SUCCEEDED
+        DB_LOGIN_SUCCEEDED,
+        /** successfull logout */
+        DB_LOGOUT_SUCCEEDED
     }
 
     /** The ID of the event */

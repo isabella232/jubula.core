@@ -13,7 +13,20 @@ package org.eclipse.jubula.app.core;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jubula.app.Activator;
 import org.eclipse.jubula.app.i18n.Messages;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
+import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
+import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -32,6 +45,70 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * @created 23.08.2005
  */
 public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
+    /**
+     * @author BREDEX GmbH
+     * @created 09.04.2011
+     */
+    private static class ApplicationWindowTitleUpdater implements
+        IProjectLoadedListener, IDatabaseStateListener, IDataChangedListener {
+        /** {@inheritDoc} */
+        public void reactOnDatabaseEvent(DatabaseStateEvent e) {
+            updateProjectNameInTitlebar();
+        }
+        
+        /** {@inheritDoc} */
+        public void handleProjectLoaded() {
+            updateProjectNameInTitlebar();
+        }
+        
+        /** {@inheritDoc} */
+        public void handleDataChanged(IPersistentObject po,
+                DataState dataState, UpdateState updateState) {
+            if (po instanceof IProjectPO
+                    && (dataState == DataState.Renamed 
+                            || dataState == DataState.Deleted)) {
+                updateProjectNameInTitlebar();
+            }
+        }
+        
+        /**
+         * updates the project name shown in the titlebar
+         */
+        public static void updateProjectNameInTitlebar() {
+            Plugin.getDisplay().asyncExec(new Runnable() {
+                public void run() {
+                    StringBuilder sb = new StringBuilder(Plugin.getDefault()
+                            .getRunningApplicationTitle());
+
+                    Hibernator hibernator = Hibernator.instance();
+                    if (hibernator != null) {
+                        String user = hibernator.getCurrentDBUser();
+                        if (user != null && user.length() != 0) {
+                            sb.append(StringConstants.SPACE)
+                                .append(StringConstants.MINUS)
+                                .append(StringConstants.SPACE).append(user);
+                        }
+                    }
+                    IProjectPO currentProject = GeneralStorage.getInstance()
+                            .getProject();
+                    if (currentProject != null
+                            && currentProject.getName() != null
+                            && currentProject.getName().length() > 0) {
+                        sb.append(StringConstants.SPACE)
+                            .append(StringConstants.MINUS)
+                            .append(StringConstants.SPACE)
+                            .append(currentProject.getName())
+                            .append(StringConstants.SPACE)
+                            .append(currentProject.getMajorProjectVersion())
+                            .append(StringConstants.DOT)
+                            .append(currentProject.getMinorProjectVersion());
+                    }
+                    Plugin.getActiveWorkbenchWindowShell().setText(
+                            sb.toString());
+                }
+            });
+        }
+    }
 
     /** 
      * all basic action sets that should be hidden when running Jubula as 
@@ -112,6 +189,14 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                 
         Plugin.createStatusLineItems();
         Plugin.showStatusLine((IWorkbenchPart)null);
+        // add permanent listener to update the main window title
+        ApplicationWindowTitleUpdater updater = 
+            new ApplicationWindowTitleUpdater();
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(updater, true);
+        ded.addDataChangedListener(updater, true);
+        DatabaseStateDispatcher
+            .addDatabaseStateListener(updater);
     }
 
     /**

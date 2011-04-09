@@ -149,16 +149,6 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                 try {
                     PlatformUI.getWorkbench().getProgressService()
                         .busyCursorWhile(openOp);
-
-                    Plugin.getDisplay().syncExec(new Runnable() {
-                        public void run() {
-                            Plugin.setProjectNameInTitlebar(
-                                    projectToOpen.getName(),
-                                    projectToOpen.getMajorProjectVersion(),
-                                    projectToOpen.getMinorProjectVersion());
-                        }
-                    });
-                    
                 } catch (InvocationTargetException ite) {
                     // Exception occurred during operation
                     log.error(org.eclipse.jubula.client.ui.i18n.Messages.
@@ -179,7 +169,6 @@ public class ImportFileBP implements IProjectNameConflictResolver,
         } finally {
             Plugin.stopLongRunning();
         }
-
     }
 
     /**
@@ -377,7 +366,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
     /**
      * {@inheritDoc}
      */
-    public void reactOnProgressEvent(DatabaseStateEvent e) {
+    public void reactOnDatabaseEvent(DatabaseStateEvent e) {
         switch (e.getState()) {
             case DB_SCHEME_CREATED:
                 Job importUnboundModules = new ImportUnboundModulesJob(

@@ -92,14 +92,6 @@ public class NewProjectHandler extends AbstractProjectHandler {
                     try {
                         PlatformUI.getWorkbench().getProgressService()
                             .busyCursorWhile(op);
-                        Plugin.getDisplay().syncExec(new Runnable() {
-                            public void run() {
-                                Plugin.setProjectNameInTitlebar(
-                                    project.getName(),
-                                    project.getMajorProjectVersion(),
-                                    project.getMinorProjectVersion());
-                            }
-                        });
                     } catch (InvocationTargetException e) {
                         // Exception already handled within operation.
                         // Do nothing.

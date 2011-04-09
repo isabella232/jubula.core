@@ -24,5 +24,5 @@ public interface IDatabaseStateListener {
      * @param e
      *            The ProgressEvent.
      */
-    public void reactOnProgressEvent(DatabaseStateEvent e);
+    public void reactOnDatabaseEvent(DatabaseStateEvent e);
 }

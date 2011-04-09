@@ -1166,6 +1166,8 @@ public class Hibernator {
                 }
                 m_sessions.clear();
                 m_sf.close();
+                DatabaseStateDispatcher.notifyListener(new DatabaseStateEvent(
+                        DatabaseState.DB_LOGOUT_SUCCEEDED));
             } catch (Throwable e) {
                 log.error(Messages.DisposeOfHibernatorFailed, e);
             }

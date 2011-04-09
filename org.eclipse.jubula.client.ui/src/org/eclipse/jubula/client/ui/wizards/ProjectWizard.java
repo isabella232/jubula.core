@@ -244,13 +244,6 @@ public class ProjectWizard extends Wizard implements INewWizard {
         IProgressMonitor monitor) throws InterruptedException {          
         
         Plugin.closeAllOpenedJubulaEditors();
-        Plugin.getDisplay().syncExec(new Runnable() {
-            public void run() {
-                Plugin.setProjectNameInTitlebar(newProjectName, 
-                        m_newProject.getMajorProjectVersion(), 
-                        m_newProject.getMinorProjectVersion());
-            }
-        });
         m_newProject.setIsReusable(
             m_projectSettingWizardPage.isProjectReusable());
         m_newProject.setIsProtected(
