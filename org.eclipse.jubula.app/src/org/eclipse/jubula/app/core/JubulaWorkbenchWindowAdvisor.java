@@ -189,7 +189,13 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                 
         Plugin.createStatusLineItems();
         Plugin.showStatusLine((IWorkbenchPart)null);
-        // add permanent listener to update the main window title
+        addMainWindowTitleUpdater();
+    }
+
+    /**
+     * add a permanent listener to update the main window title
+     */
+    protected void addMainWindowTitleUpdater() {
         ApplicationWindowTitleUpdater updater = 
             new ApplicationWindowTitleUpdater();
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
