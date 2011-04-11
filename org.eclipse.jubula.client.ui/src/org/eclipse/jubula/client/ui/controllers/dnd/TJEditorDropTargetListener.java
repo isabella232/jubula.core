@@ -24,7 +24,7 @@ import org.eclipse.swt.dnd.TransferData;
  * @author BREDEX GmbH
  * @created Mar 17, 2010
  */
-public class TJEditorDropTargetListener extends GuiNodeViewerDropAdapter {
+public class TJEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
     /** <code>m_editor</code> */
     private TestJobEditor m_editor;
     

@@ -39,7 +39,7 @@ import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseDialogContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
-import org.eclipse.jubula.client.ui.sorter.GuiNodeNameViewerSorter;
+import org.eclipse.jubula.client.ui.sorter.NodeNameViewerSorter;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -234,7 +234,7 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
         m_treeViewer.setLabelProvider(new LabelProvider());
         m_treeViewer.setContentProvider(new TestCaseDialogContentProvider());
         m_treeViewer.setInput(GeneralStorage.getInstance().getProject());
-        m_treeViewer.setSorter(new GuiNodeNameViewerSorter());
+        m_treeViewer.setSorter(new NodeNameViewerSorter());
         Plugin.createSeparator(parent);
         return area;
     }

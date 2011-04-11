@@ -65,7 +65,7 @@ public class DatabaseStateDispatcher {
             IDatabaseStateListener progressListener = 
                 (IDatabaseStateListener)iter.next();
             if (progressListener != null) {
-                progressListener.reactOnProgressEvent(e);
+                progressListener.reactOnDatabaseEvent(e);
             } else {
                 if (listener != null) {
                     listener.remove(progressListener);

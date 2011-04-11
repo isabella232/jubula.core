@@ -549,10 +549,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     GeneralStorage.getInstance().getProject(),
                     DataState.Renamed, UpdateState.notInEditor);
-            IProjectPO project = getProject();
-            Plugin.setProjectNameInTitlebar(project.getName(), 
-                    project.getMajorProjectVersion(), 
-                    project.getMinorProjectVersion());
         } catch (PMException e) {
             Utils.createMessageDialog(e, null, null);
         } catch (ProjectDeletedException e) {

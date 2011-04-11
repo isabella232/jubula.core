@@ -429,15 +429,6 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             try {
                 PlatformUI.getWorkbench().getProgressService()
                         .busyCursorWhile(openOperation);
-
-                Plugin.getDisplay().syncExec(new Runnable() {
-                    public void run() {
-                        Plugin.setProjectNameInTitlebar(
-                                selectedProject.getName(),
-                                selectedProject.getMajorProjectVersion(),
-                                selectedProject.getMinorProjectVersion());
-                    }
-                });
                 checkAndNagForMissingProjects();
             } catch (InvocationTargetException ite) {
                 openOperation.handleOperationException();

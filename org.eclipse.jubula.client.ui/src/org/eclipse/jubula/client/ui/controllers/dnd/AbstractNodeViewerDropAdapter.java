@@ -18,12 +18,11 @@ import org.eclipse.jface.viewers.ViewerDropAdapter;
  * @author BREDEX GmbH
  * @created Sep 16, 2010
  */
-public abstract class GuiNodeViewerDropAdapter extends ViewerDropAdapter {
+public abstract class AbstractNodeViewerDropAdapter extends ViewerDropAdapter {
     /**
      * @param viewer the viewer
      */
-    protected GuiNodeViewerDropAdapter(Viewer viewer) {
+    protected AbstractNodeViewerDropAdapter(Viewer viewer) {
         super(viewer);
     }
-    
 }

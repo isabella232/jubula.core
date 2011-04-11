@@ -262,7 +262,6 @@ public class Utils {
                         .resetToTesting();
                 ded.fireRecordModeStateChanged(RecordModeState.notRunning);
                 ded.fireOMStateChanged(OMState.notRunning);
-                Plugin.setProjectNameInTitlebar(null, null, null);
                 Plugin.closeAllOpenedJubulaEditors();
                 ded.fireTestresultChanged(TestresultState.Refresh);
                 setTreeViewerInputNull(Constants.TESTRE_ID);

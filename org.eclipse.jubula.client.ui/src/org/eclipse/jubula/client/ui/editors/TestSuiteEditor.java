@@ -25,7 +25,6 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
@@ -40,14 +39,11 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
-import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.controllers.dnd.GuiNodeViewerDropAdapter;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
-import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TSEditorDndSupport;
-import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
+import org.eclipse.jubula.client.ui.controllers.dnd.TSEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestSuiteEditorContentProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -56,9 +52,7 @@ import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.dnd.TransferData;
+import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -114,19 +108,6 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
             getTreeViewer().getTree().setRedraw(true);
             getMainTreeViewer().expandAll();
         }
-    }
-    
-    /**
-     * adds Drag and Drop support for the trees.
-     */
-    protected void addDragAndDropSupport() {
-        int ops = DND.DROP_MOVE;
-        Transfer[] transfers = new Transfer[] { 
-                LocalSelectionTransfer.getInstance()};
-        getTreeViewer().addDragSupport(ops, transfers,
-            new TreeViewerContainerDragSourceListener(getTreeViewer()));
-        getTreeViewer().addDropSupport(ops, transfers, 
-            new  TSEditorDropTargetListener(this)); 
     }
     
     /**
@@ -306,72 +287,6 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
     }
     
     /**
-     * Drop adapter for this TestSuiteEditor
-     * @author BREDEX GmbH
-     * @created 24.10.2005
-     */
-    public class TSEditorDropTargetListener extends GuiNodeViewerDropAdapter {
-
-        /** <code>m_editor</code> */
-        private AbstractTestCaseEditor m_editor;
-        
-        /**
-         * @param editor the TestCaseEditor.
-         */
-        public TSEditorDropTargetListener(AbstractTestCaseEditor editor) {
-            super(editor.getTreeViewer());
-            m_editor = editor;
-            boolean scrollExpand = Plugin.getDefault().getPreferenceStore().
-                getBoolean(Constants.TREEAUTOSCROLL_KEY);
-            setScrollExpandEnabled(scrollExpand);
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public boolean performDrop(Object data) {
-            LocalSelectionTransfer transfer = 
-                LocalSelectionTransfer.getInstance();
-            Object target = getCurrentTarget();
-            int location = getCurrentLocation();
-            if (target == null) {
-                target = m_editor.getEditorHelper()
-                    .getEditSupport().getWorkVersion();
-                location = ViewerDropAdapter.LOCATION_AFTER;
-            }
-            if (target instanceof INodePO) {
-                INodePO targetGuiNode = (INodePO)target;
-                IStructuredSelection toDrop = transfer.getSelection();
-                return TSEditorDndSupport.performDrop(m_editor, toDrop,
-                        targetGuiNode, location);
-                
-            }
-
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public boolean validateDrop(Object target, int operation,
-                TransferData transferType) {
-            LocalSelectionTransfer transfer = LocalSelectionTransfer
-                    .getInstance();
-            Object targetNode = target;
-            if (targetNode == null) {
-                targetNode = m_editor.getEditorHelper()
-                    .getEditSupport().getWorkVersion();
-            }
-
-            return TSEditorDndSupport.validateDrop(transfer.getSource(),
-                    m_editor.getTreeViewer(), transfer.getSelection(),
-                    targetNode, true);
-
-        }
-    }
-    
-    
-    /**
      * SelectionListener to en-/disable delete-action
      * 
      * @author BREDEX GmbH
@@ -502,5 +417,11 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         Plugin.getHelpSystem().setHelp(parent, 
             ContextHelpIds.TEST_SUITE_EDITOR);     
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected DropTargetListener getViewerDropAdapter() {
+        return new TSEditorDropTargetListener(this);
+    }
 }

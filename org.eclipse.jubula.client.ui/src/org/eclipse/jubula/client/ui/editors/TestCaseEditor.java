@@ -67,6 +67,7 @@ import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.controllers.dnd.EventHandlerDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.controllers.dnd.TCEditorDndSupport;
+import org.eclipse.jubula.client.ui.controllers.dnd.TCEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.dialogs.AddEventHandlerDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
@@ -84,6 +85,7 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
@@ -680,5 +682,12 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             GuiNodeBP.setSelectionAndFocusToNode(
                     addedNode, m_eventHandlerTreeViewer);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected DropTargetListener getViewerDropAdapter() {
+        return new TCEditorDropTargetListener(this);
     }
 }

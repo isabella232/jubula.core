@@ -286,13 +286,6 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
         DataEventDispatcher dispatcher = 
             DataEventDispatcher.getInstance();
         dispatcher.fireProjectLoadedListener(new NullProgressMonitor());
-        IProjectPO project = 
-            GeneralStorage.getInstance().getProject();
-        if (project != null) { // the load may have failed
-            Plugin.setProjectNameInTitlebar(project.getName(), 
-                    project.getMajorProjectVersion(),
-                    project.getMinorProjectVersion());
-        }
         dispatcher.fireProjectOpenedListener();
     }
 

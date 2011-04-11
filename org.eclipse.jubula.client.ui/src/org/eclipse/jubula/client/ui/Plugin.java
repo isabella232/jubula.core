@@ -38,7 +38,6 @@ import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentName
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.core.utils.PrefStoreHelper;
@@ -1366,55 +1365,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                 setWaitCursor();
             }
         });
-    }
-
-    /**
-     * Sets the project name shown in the titlebar to the given name and version
-     * number.
-     * This method must be called from within the GUI thread.
-     * 
-     * @param projectName  The new name to show in the titlebar. May be 
-     *                     <code>null</code>, which indicates that no project
-     *                     name should be displayed.
-     * @param majorVersion The major version number to show in the titlebar.
-     *                     This value is ignored if <code>projectName</code> is
-     *                     <code>null</code>. This value may only be 
-     *                     <code>null</code> if <code>projectName</code> is also
-     *                     <code>null</code>.
-     * @param minorVersion The minor version number to show in the titlebar.
-     *                     This value is ignored if <code>projectName</code> is
-     *                     <code>null</code>. This value may only be 
-     *                     <code>null</code> if <code>projectName</code> is also
-     *                     <code>null</code>.
-     */
-    public static void setProjectNameInTitlebar(String projectName,
-            Integer majorVersion, Integer minorVersion) {
-
-        StringBuilder sb = new StringBuilder(Plugin.getDefault()
-                .getRunningApplicationTitle());
-
-        Hibernator hibernator = Hibernator.instance();
-        if (hibernator != null) {
-            String user = hibernator.getCurrentDBUser();
-            if (user != null && user.length() != 0) {
-                sb.append(StringConstants.SPACE)
-                      .append(StringConstants.MINUS)
-                      .append(StringConstants.SPACE)
-                      .append(user);
-            }
-        }
-
-        if (projectName != null && projectName.length() != 0) {
-            sb.append(StringConstants.SPACE)
-                  .append(StringConstants.MINUS)
-                  .append(StringConstants.SPACE)
-                  .append(projectName)
-                  .append(StringConstants.SPACE)
-                  .append(majorVersion.intValue())
-                  .append(StringConstants.DOT)
-                  .append(minorVersion.intValue());
-        }
-        getActiveWorkbenchWindowShell().setText(sb.toString());
     }
 
     /**
