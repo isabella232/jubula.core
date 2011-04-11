@@ -123,15 +123,6 @@ public class TCBrowserDndSupport {
         // execute commands in mastersession
         MultipleNodePM.getInstance().executeCommands(cmds);
 
-        // do gui updates
-        for (INodePO node : nodes) {
-            INodePO oldParent = node.getParentNode();
-            oldParent.removeNode(node);
-            target.addNode(node);
-        }
-
-        getSpecView().getTreeViewer().refresh();
-        
     }
 
     /**

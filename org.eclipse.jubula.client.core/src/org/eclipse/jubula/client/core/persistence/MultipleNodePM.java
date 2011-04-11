@@ -623,10 +623,6 @@ public class MultipleNodePM  extends PersistenceManager {
                 ((INodePO)oldParent).removeNode(node);
             }
             
-            eventDispatcher.fireDataChangedListener(oldParent, 
-                    DataState.StructureModified, UpdateState.notInEditor);
-            
-            
             // add to new parent
             if (newParent instanceof ISpecObjContPO) {
                 ((ISpecObjContPO)newParent).addSpecObject(
@@ -639,6 +635,8 @@ public class MultipleNodePM  extends PersistenceManager {
             }
             
             eventDispatcher.fireDataChangedListener(newParent, 
+                    DataState.StructureModified, UpdateState.notInEditor);
+            eventDispatcher.fireDataChangedListener(oldParent, 
                     DataState.StructureModified, UpdateState.notInEditor);
             
             return null;
