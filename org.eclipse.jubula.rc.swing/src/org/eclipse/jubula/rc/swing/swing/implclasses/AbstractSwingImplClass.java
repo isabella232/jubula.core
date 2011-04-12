@@ -232,6 +232,7 @@ public abstract class AbstractSwingImplClass implements
             log.error(bsee);
         }
     }
+    
     /**
      * @param renderer
      *            The component which is used as the renderer
@@ -244,7 +245,23 @@ public abstract class AbstractSwingImplClass implements
      */
     public static String getRenderedText(Component renderer)
         throws StepExecutionException {
+        String renderedText = resolveRenderedText(renderer);
+        if (renderedText != null) {
+            return renderedText;
+        }
+        throw new StepExecutionException(
+            "Renderer not supported: " + renderer.getClass(), //$NON-NLS-1$
+            EventFactory.createActionError(
+                    TestErrorEvent.RENDERER_NOT_SUPPORTED));
+    }
 
+    /**
+     * @param renderer
+     *            The component which is used as the renderer
+     * @return The string that the renderer displays or <code>null</code> if it
+     *         could not be resolved.
+     */
+    public static String resolveRenderedText(Component renderer) {
         if (renderer instanceof JLabel) {
             return ((JLabel)renderer).getText();
         } else if (renderer instanceof JToggleButton) {
@@ -264,13 +281,10 @@ public abstract class AbstractSwingImplClass implements
                     return text;
                 }
             }
-        } 
-        throw new StepExecutionException(
-            "Renderer not supported: " + renderer.getClass(), //$NON-NLS-1$
-            EventFactory.createActionError(
-                    TestErrorEvent.RENDERER_NOT_SUPPORTED));
+        }
+        return null;
     }
-
+    
     /**
      * @param obj
      *            the object to invoke the method for
