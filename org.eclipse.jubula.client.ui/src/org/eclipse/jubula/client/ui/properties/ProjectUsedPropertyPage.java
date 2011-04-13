@@ -278,6 +278,7 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
         
         for (IReusedProjectPO reuse : toAdd) {
             getEditSupport().getWorkProject().addUsedProject(reuse);
+            reuse.setParentProjectId(getProject().getId());
         }
 
     }

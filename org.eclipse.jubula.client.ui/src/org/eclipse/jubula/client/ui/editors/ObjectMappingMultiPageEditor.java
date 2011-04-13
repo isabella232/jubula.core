@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -2255,5 +2257,13 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     public TreeViewer[] getTreeViewers() {
         return new TreeViewer[] {m_treeViewer, m_compNameTreeViewer, 
             m_uiElementTreeViewer, m_mappedComponentTreeViewer};
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public EntityManager getEntityManager() {
+        return getEditorHelper().getEditSupport().getSession();
     }
 }

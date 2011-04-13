@@ -66,6 +66,7 @@ import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourc
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
+import org.eclipse.jubula.client.ui.provider.SessionBasedLabelDecorator;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestSuiteBrowserContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestSuiteBrowserLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -106,6 +107,9 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     /** menu listener for <code>m_menuMgr</code> */
     private MenuListener m_menuListener = new MenuListener();
 
+    /** label decorator for main tree viewer */
+    private SessionBasedLabelDecorator m_labelDecorator;
+
     /**
      * Creates the SWT controls for this workbench part.
      * @param parent Composite
@@ -115,9 +119,12 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         ColumnViewerToolTipSupport.enableFor(getTreeViewer());
         getTreeViewer().setContentProvider(
                 new TestSuiteBrowserContentProvider());
+        m_labelDecorator = new SessionBasedLabelDecorator(
+                GeneralStorage.getInstance(), 
+                Plugin.getDefault().getWorkbench().getDecoratorManager()
+                    .getLabelDecorator());
         getTreeViewer().setLabelProvider(new DecoratingCellLabelProvider(
-            new TestSuiteBrowserLabelProvider(), Plugin.getDefault()
-                .getWorkbench().getDecoratorManager().getLabelDecorator()));
+            new TestSuiteBrowserLabelProvider(), m_labelDecorator));
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION + 1);
         
         setViewerInput();
@@ -286,6 +293,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                 .removeLanguageChangedListener(this);
             DataEventDispatcher.getInstance()
                 .removeCompletenessCheckListener(this);
+            m_labelDecorator.dispose();
             super.dispose();
         }
     }

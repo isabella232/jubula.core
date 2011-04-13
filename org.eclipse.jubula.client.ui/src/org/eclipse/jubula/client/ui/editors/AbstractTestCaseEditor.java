@@ -269,6 +269,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     protected void initTopTreeViewer(INodePO root) {
         try {
             getMainTreeViewer().getTree().setRedraw(false);
+            getMainTreeViewer().setInput(null);
             getMainTreeViewer().setInput(new INodePO[] {root});
         } finally {
             getMainTreeViewer().getTree().setRedraw(true);

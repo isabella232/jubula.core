@@ -547,7 +547,8 @@ class XmlImporter {
              * @param execTc an IExecTestCasePO
              */
             private void switchExecTcCompNameGuids(IExecTestCasePO execTc) {
-                for (ICompNamesPairPO pair : execTc.getCompNamesPairs()) {
+                for (ICompNamesPairPO pair : new ArrayList<ICompNamesPairPO>(
+                        execTc.getCompNamesPairs())) {
                     final String oldGuid = pair.getFirstName();
                     final String newGuid = oldToNewGUID.get(oldGuid);
                     if (newGuid != null) {
