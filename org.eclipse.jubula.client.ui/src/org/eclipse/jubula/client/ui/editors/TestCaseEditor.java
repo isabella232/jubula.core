@@ -72,6 +72,7 @@ import org.eclipse.jubula.client.ui.dialogs.AddEventHandlerDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
+import org.eclipse.jubula.client.ui.provider.SessionBasedLabelDecorator;
 import org.eclipse.jubula.client.ui.provider.contentprovider.EventHandlerContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -125,6 +126,12 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     /** the current TreeViewer */
     private TreeViewer m_currentTreeViewer;
 
+    /** label decorator for main tree viewer */
+    private SessionBasedLabelDecorator m_labelDecorator;
+    
+    /** label decorator for Event Handler tree viewer */
+    private SessionBasedLabelDecorator m_eventHandlerLabelDecorator;
+    
     /**
      * {@inheritDoc}
      * @param parent
@@ -137,10 +144,12 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                 createContextMenu());
         ActionListener actionListener = new ActionListener();
         getTreeViewer().addSelectionChangedListener(actionListener);
+        m_labelDecorator = new SessionBasedLabelDecorator(
+                this, 
+                Plugin.getDefault().getWorkbench().getDecoratorManager()
+                    .getLabelDecorator());
         DecoratingLabelProvider ld = new DecoratingLabelProvider(
-                new GeneralLabelProvider(), Plugin.getDefault()
-                        .getWorkbench().getDecoratorManager()
-                        .getLabelDecorator());
+                new GeneralLabelProvider(), m_labelDecorator);
         ld.setDecorationContext(new JBEditorDecorationContext());
         getTreeViewer().setLabelProvider(ld);
         getEventHandlerTreeViewer().addSelectionChangedListener(actionListener);
@@ -522,10 +531,14 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         m_eventHandlerTreeViewer = new TreeViewer(headLineComposite);
         m_eventHandlerTreeViewer.getTree().setLayout(ehTvLayout);
         m_eventHandlerTreeViewer.getTree().setLayoutData(ehTvGridData);
-        m_eventHandlerTreeViewer.setLabelProvider(
-                new DecoratingCellLabelProvider(new GeneralLabelProvider(), 
+        m_eventHandlerLabelDecorator = new SessionBasedLabelDecorator(
+                this, 
                 Plugin.getDefault().getWorkbench().getDecoratorManager()
-                .getLabelDecorator()));
+                    .getLabelDecorator());
+        m_eventHandlerTreeViewer.setLabelProvider(
+                new DecoratingCellLabelProvider(
+                        new GeneralLabelProvider(), 
+                        m_eventHandlerLabelDecorator));
         m_eventHandlerTreeViewer.setUseHashlookup(true);
         m_eventHandlerTreeViewer.getTree()
             .addListener(SWT.MouseDown, new MouseDownListener());
@@ -689,5 +702,12 @@ public class TestCaseEditor extends AbstractTestCaseEditor
      */
     protected DropTargetListener getViewerDropAdapter() {
         return new TCEditorDropTargetListener(this);
+    }
+    
+    @Override
+    public void dispose() {
+        m_labelDecorator.dispose();
+        m_eventHandlerLabelDecorator.dispose();
+        super.dispose();
     }
 }

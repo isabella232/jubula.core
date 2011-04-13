@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.action.IMenuListener;
@@ -44,6 +46,7 @@ import org.eclipse.jubula.client.ui.controllers.AbstractPartListener;
 import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
+import org.eclipse.jubula.client.ui.provider.SessionBasedLabelDecorator;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
@@ -123,6 +126,9 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     private RevertEditorChangesHandler m_revertEditorChangesAction = 
         new RevertEditorChangesHandler();
     
+    /** label decorator for main tree viewer */
+    private SessionBasedLabelDecorator m_labelDecorator;
+    
     /** PartListener of this WokbenchPart */
     private PartListener m_partListener = new PartListener();
     
@@ -169,9 +175,11 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      */
     protected void createMainPart(Composite parent) {
         setMainTreeViewer(new TreeViewer(parent));
+        m_labelDecorator = new SessionBasedLabelDecorator(this, 
+                Plugin.getDefault().getWorkbench().getDecoratorManager()
+                    .getLabelDecorator());
         DecoratingLabelProvider lp = new DecoratingLabelProvider(
-                new GeneralLabelProvider(), Plugin.getDefault()
-                    .getWorkbench().getDecoratorManager().getLabelDecorator());
+                new GeneralLabelProvider(), m_labelDecorator);
         lp.setDecorationContext(new JBEditorDecorationContext());
         getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setUseHashlookup(true);
@@ -523,6 +531,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      */
     public void dispose() {
         try {
+            m_labelDecorator.dispose();
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             ded.removePropertyChangedListener(this);
             if (getEditorSite() != null && getEditorSite().getPage() != null) {
@@ -676,5 +685,11 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         createPartName();
     }
     
-    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public EntityManager getEntityManager() {
+        return getEditorHelper().getEditSupport().getSession();
+    }
 }

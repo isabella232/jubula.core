@@ -37,7 +37,7 @@ import javax.persistence.PersistenceException;
  * @author BREDEX GmbH
  * @created 13.10.2004
  */
-public class GeneralStorage {
+public class GeneralStorage implements IEntityManagerProvider {
     
     /** standard logging */
     private static final Log LOG = LogFactory.getLog(GeneralStorage.class);
@@ -329,5 +329,13 @@ public class GeneralStorage {
                     MessageIDs.E_CURRENT_PROJ_DEL);
         }
 
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public EntityManager getEntityManager() {
+        return getMasterSession();
     }
 }

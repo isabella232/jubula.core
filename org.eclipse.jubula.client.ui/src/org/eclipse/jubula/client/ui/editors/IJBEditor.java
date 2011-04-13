@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.editors;
 
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.persistence.IEntityManagerProvider;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher.IEditorDirtyStateListener;
 import org.eclipse.swt.graphics.Image;
@@ -29,7 +30,7 @@ import org.eclipse.ui.IWorkbenchPart2;
  * @created Oct 21, 2008
  */
 public interface IJBEditor extends IEditorPart, IWorkbenchPart2, 
-    IEditorDirtyStateListener, IDataChangedListener {
+    IEditorDirtyStateListener, IDataChangedListener, IEntityManagerProvider {
 
     /**
      * 
