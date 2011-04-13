@@ -152,7 +152,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                                         false, tree.isExpanded(row),
                                         m_model.isLeaf(node), row, false);
                         return AbstractSwingImplClass
-                                .getRenderedText(cellRendererComponent);
+                                .resolveRenderedText(cellRendererComponent);
                     }
                 });
     }
