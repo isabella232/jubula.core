@@ -66,7 +66,7 @@ class TestDataPO implements ITestDataPO {
      */
     TestDataPO(Map<Locale, String> languageToValue) {
         for (Locale language : languageToValue.keySet()) {
-            m_map.put(language.toString(), languageToValue.get(language));
+            setValue(language, languageToValue.get(language));
         }
     }
     
