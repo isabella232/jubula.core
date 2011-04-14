@@ -66,7 +66,7 @@ class TestDataPO implements ITestDataPO {
      */
     TestDataPO(Map<Locale, String> languageToValue) {
         for (Locale language : languageToValue.keySet()) {
-            m_map.put(language.toString(), languageToValue.get(language));
+            setValue(language, languageToValue.get(language));
         }
     }
     
@@ -201,7 +201,7 @@ class TestDataPO implements ITestDataPO {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "LOCALE_TO_TD")
     @MapKeyColumn(name = "LOCALE")
-    @Column(name = "TD_VALUE", length = 4000)
+    @Column(name = "TD_VALUE", length = 4000, nullable = false)
     @JoinColumn(name = "I18N_STR")
     private Map<String, String> getMap() {
         return m_map;
