@@ -531,7 +531,9 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      */
     public void dispose() {
         try {
-            m_labelDecorator.dispose();
+            if (m_labelDecorator != null) {
+                m_labelDecorator.dispose();
+            }
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             ded.removePropertyChangedListener(this);
             if (getEditorSite() != null && getEditorSite().getPage() != null) {
