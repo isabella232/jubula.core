@@ -12,8 +12,10 @@ package org.eclipse.jubula.client.ui.provider.contentprovider;
 import java.util.Locale;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobContPO;
 import org.eclipse.jubula.client.core.model.ITestSuiteContPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -56,6 +58,16 @@ public class TestSuiteBrowserContentProvider
             };
         }
 
+        if (parentElement instanceof IExecTestCasePO) {
+            ISpecTestCasePO referencedTestCase = 
+                ((IExecTestCasePO)parentElement).getSpecTestCase();
+            if (referencedTestCase != null) {
+                return referencedTestCase.getUnmodifiableNodeList().toArray();
+            }
+            
+            return ArrayUtils.EMPTY_OBJECT_ARRAY;
+        }
+        
         if (parentElement instanceof ITestSuitePO) {
             ITestSuitePO testSuite = (ITestSuitePO)parentElement;
             Locale workLang = WorkingLanguageBP.getInstance()
