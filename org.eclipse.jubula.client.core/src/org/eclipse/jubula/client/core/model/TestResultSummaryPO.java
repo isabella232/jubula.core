@@ -924,7 +924,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      */
     @ElementCollection(fetch = FetchType.EAGER)    
     @CollectionTable(name = "MONITORING_VALUE")
-    @MapKeyColumn(name = "KEY")
+    @MapKeyColumn(name = "MON_KEY")
     private Map<String, MonitoringValuePO> getHbmMonitoringValues() {
         return m_monitoringValues;
     } 

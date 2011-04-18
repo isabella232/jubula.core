@@ -24,7 +24,7 @@ public interface IVersion {
     public final Integer JB_PROTOCOL_MAJOR_VERSION = new Integer(10);
     
     /** major version for DB */
-    public final Integer JB_DB_MAJOR_VERSION = new Integer(33);
+    public final Integer JB_DB_MAJOR_VERSION = new Integer(34);
     
     /** minor version for DB */
     public final Integer GD_DB_MINOR_VERSION = new Integer(0);
