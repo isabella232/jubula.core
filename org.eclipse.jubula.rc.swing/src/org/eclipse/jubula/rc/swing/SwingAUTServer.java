@@ -20,6 +20,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,6 +37,7 @@ import org.eclipse.jubula.rc.swing.listener.FocusTracker;
 import org.eclipse.jubula.rc.swing.listener.MappingListener;
 import org.eclipse.jubula.rc.swing.listener.RecordListener;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 
 
 
@@ -68,6 +71,13 @@ public class SwingAUTServer extends AUTServer {
     
     /** the logger */
     private static final Log LOG = LogFactory.getLog(SwingAUTServer.class);
+    
+    /**
+     * name of Environment Variable or Java Property that defines the
+     * regular expression to use when waiting for the Event Dispatch Thread
+     * to start 
+     */
+    private static final String EDT_NAME_REGEX_KEY = "TEST_EDT_NAME_REGEX";
     
     /** 
      * private constructor
@@ -161,9 +171,61 @@ public class SwingAUTServer extends AUTServer {
      */
     protected void startTasks() throws ExceptionInInitializerError, 
         InvocationTargetException, NoSuchMethodException {
+
+        String edtNameRegEx = 
+            EnvironmentUtils.getProcessEnvironment()
+                .getProperty(EDT_NAME_REGEX_KEY);
+        if (edtNameRegEx == null) {
+            edtNameRegEx = 
+                System.getProperty(EDT_NAME_REGEX_KEY);
+        }
+        if (edtNameRegEx != null) {
+            // fail fast if the regex is malformed
+            try {
+                Pattern.compile(edtNameRegEx);
+            } catch (PatternSyntaxException pse) {
+                throw new InvocationTargetException(pse, 
+                        "Invalid " + EDT_NAME_REGEX_KEY + " value."); //$NON-NLS-1$  //$NON-NLS-2$
+            }
+            final String accessibleEdtNameRegEx = edtNameRegEx;
+            Thread addListenersThread = new Thread("Register initial Jubula Swing / AWT listeners") { //$NON-NLS-1$
+                public void run() {
+
+                    boolean isThreadFound = false;
+                    ThreadGroup rootThreadGroup = 
+                        Thread.currentThread().getThreadGroup();
+                    while (rootThreadGroup.getParent() != null) {
+                        rootThreadGroup = rootThreadGroup.getParent();
+                    }
+                    while (!isThreadFound) {
+                        Thread[] activeThreads = getActiveThreads();
+                        for (int i = 0; i < activeThreads.length; i++) {
+                            if (activeThreads[i].getName().matches(
+                                    accessibleEdtNameRegEx)) {
+                                isThreadFound = true;
+                                break;
+                            }
+                        }
+                        
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            // do nothing. the next loop iteration will simply
+                            // occur earlier than expected, which is not a 
+                            // problem.
+                        }
+                    }
+
+                    addToolKitEventListenerToAUT();
+                }
+            };
+            addListenersThread.setDaemon(true);
+            addListenersThread.start();
+        } else {
+            startToolkitThread();
+            addToolKitEventListenerToAUT();
+        }
         
-        startToolkitThread();
-        addToolKitEventListenerToAUT();
         AUTServer.getInstance().invokeAUT();
     }
 
@@ -198,5 +260,31 @@ public class SwingAUTServer extends AUTServer {
         return robotFactory.getRobot();
     }
     
-    
+    /**
+     * Adapted from LGPLed code from an online Java article.
+     * Modified to work with Java 1.4 and pass Jubula's checkstyle.
+     * 
+     * @return all currently active threads.
+     * @see http://nadeausoftware.com/articles/2008/04/java_tip_how_list_and_find_threads_and_thread_groups
+     */
+    private static Thread[] getActiveThreads() {
+        ThreadGroup rootThreadGroup = 
+            Thread.currentThread().getThreadGroup();
+        while (rootThreadGroup.getParent() != null) {
+            rootThreadGroup = rootThreadGroup.getParent();
+        }
+        int nAlloc = rootThreadGroup.activeCount();
+        int n = 0;
+        Thread[] threads;
+        do {
+            nAlloc *= 2;
+            threads = new Thread[ nAlloc ];
+            n = rootThreadGroup.enumerate(threads);
+        } while (n == nAlloc);
+
+        Thread[] returnArray = new Thread[n];
+        System.arraycopy(threads, 0, returnArray, 0, n);
+        
+        return returnArray;
+    }
 }
