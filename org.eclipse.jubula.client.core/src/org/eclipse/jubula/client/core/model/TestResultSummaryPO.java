@@ -244,7 +244,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the testJobGuid
      */
     @Basic
-    @Column(name = "INTERNAL_TEST_JOB_GUID", length = 4000)
+    @Column(name = "INTERNAL_TEST_JOB_GUID", length = 32)
     public String getInternalTestJobGuid() {
         return m_testJobGuid;
     }
@@ -349,7 +349,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the projectGuid
      */
     @Basic
-    @Column(name = "INTERNAL_PROJECT_GUID", length = 4000)
+    @Column(name = "INTERNAL_PROJECT_GUID", length = 32)
     public String getInternalProjectGuid() {
         return m_projectGuid;
     }
@@ -381,7 +381,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the tsGuid
      */
     @Basic
-    @Column(name = "INTERNAL_TESTSUITE_GUID", length = 4000)
+    @Column(name = "INTERNAL_TESTSUITE_GUID", length = 32)
     public String getInternalTestsuiteGuid() {
         return m_testsuiteGuid;
     }
@@ -439,7 +439,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return Returns the autGuid.
      */
     @Basic
-    @Column(name = "INTERNAL_AUT_GUID", length = 4000)
+    @Column(name = "INTERNAL_AUT_GUID", length = 32)
     public String getInternalAutGuid() {
         return m_autGuid;
     }
@@ -479,7 +479,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the autConfGuid
      */
     @Basic
-    @Column(name = "INTERNAL_AUT_CONFIG_GUID", length = 4000)
+    @Column(name = "INTERNAL_AUT_CONFIG_GUID", length = 32)
     public String getInternalAutConfigGuid() {
         return m_autConfigGuid;
     }
@@ -924,7 +924,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      */
     @ElementCollection(fetch = FetchType.EAGER)    
     @CollectionTable(name = "MONITORING_VALUE")
-    @MapKeyColumn(name = "KEY")
+    @MapKeyColumn(name = "MON_KEY")
     private Map<String, MonitoringValuePO> getHbmMonitoringValues() {
         return m_monitoringValues;
     } 
