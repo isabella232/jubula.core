@@ -71,6 +71,7 @@ public class MonitoringValuePO extends MonitoringValue {
      * @return the value
      */
     @Basic
+    @Column(name = "MON_VALUE")    
     public String getValue() {
         return super.getValue();
     }
@@ -79,6 +80,7 @@ public class MonitoringValuePO extends MonitoringValue {
      * @return the type
      */
     @Basic
+    @Column(name = "MON_TYPE")
     public String getType() {
         return super.getType();
     }
@@ -87,6 +89,7 @@ public class MonitoringValuePO extends MonitoringValue {
      * {@inheritDoc}
      */
     @Basic
+    @Column(name = "MON_CATEGORY")
     public String getCategory() {
         return super.getCategory();
     }
@@ -101,7 +104,6 @@ public class MonitoringValuePO extends MonitoringValue {
     /**
      * @param value the value to set
      */
-
     public void setValue(String value) {
         super.setValue(value);
     }
@@ -116,7 +118,6 @@ public class MonitoringValuePO extends MonitoringValue {
     /**
      * {@inheritDoc}
      */
-
     public void setSignificant(Boolean significant) {
         super.setSignificant(significant);
 
@@ -126,7 +127,7 @@ public class MonitoringValuePO extends MonitoringValue {
      * {@inheritDoc}
      */
     @Basic
-    @Column(name = "isSignificant")
+    @Column(name = "IS_SIGNIFICANT")
     public Boolean isSignificant() {
         return super.isSignificant();
 
