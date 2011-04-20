@@ -13,17 +13,13 @@ package org.eclipse.jubula.tools.xml.businessmodell;
 /**
  * Null Object representing an Action that does not conform to the current 
  * CompSystem configuration. 
- *
  * @author BREDEX GmbH
  * @created Jan 29, 2007
  */
 public class InvalidAction extends Action {
 
-    /**
-     * 
-     */
+    /**  */
     public InvalidAction() {
         super();
     }
-    
 }

@@ -14,44 +14,38 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 
-
 /**
- * Message from Client to AUT Agent. The specified AUT should connect to the 
+ * Message from Client to AUT Agent. The specified AUT should connect to the
  * provided address.
- *
+ * 
  * @author BREDEX GmbH
  * @created Feb 12, 2010
- * 
  */
 public class ConnectToAutMessage extends Message {
-    /**
-     * Static version
-     */
-    private static final double VERSION = 1.0;
+    /** Static version */
+    public static final double VERSION = 1.0;
 
     /** host name where the client is waiting */
     private String m_clientHostName;
-    
+
     /** port number where the client is waiting */
     private int m_clientPort;
-    
-    /** Timeout for the AUTServer to wait for a confirmation for a sended event*/
+
+    /** Timeout for the AUTServer to wait for a confirmation for a sended event */
     private long m_eventConfirmTimeOut;
-    
+
     /** ID of the Running AUT that should receive the connection request */
     private AutIdentifier m_autId;
-    
+
     /**
-     * @deprecated
-     * Default constructor for transportation layer. Don't use for normal programming.
-     *
+     * @deprecated Default constructor for transportation layer. Don't use for
+     *             normal programming.
+     * 
      */
     public ConnectToAutMessage() {
         super();
     }
-    
-    
-    
+
     /**
      * Constructs a complete message. No null values are allowed as parameters.
      * 
@@ -60,16 +54,16 @@ public class ConnectToAutMessage extends Message {
      *            connect to.
      * @param clientPort
      *            Client port, i.e.the port the AUT Server should connect to.
-     * @param autId 
+     * @param autId
      *            The ID of the AUT to which to connect.
      */
-    public ConnectToAutMessage(String clientHostName, int clientPort, 
+    public ConnectToAutMessage(String clientHostName, int clientPort,
             AutIdentifier autId) {
         setClientHostName(clientHostName);
         setClientPort(clientPort);
         setAutId(autId);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -90,32 +84,36 @@ public class ConnectToAutMessage extends Message {
     public String getClientHostName() {
         return m_clientHostName;
     }
-    
+
     /**
-     * @param clientHostName The client host name to set.
+     * @param clientHostName
+     *            The client host name to set.
      */
     public void setClientHostName(String clientHostName) {
         Validate.notEmpty(clientHostName);
         m_clientHostName = clientHostName;
     }
-    
+
     /**
      * @return the client port.
      */
     public int getClientPort() {
         return m_clientPort;
     }
-    
+
     /**
-     * @param clientPort The client port to set.
+     * @param clientPort
+     *            The client port to set.
      */
     public void setClientPort(int clientPort) {
         Validate.isTrue(clientPort > 0);
         m_clientPort = clientPort;
     }
-    
+
     /**
-     * Gets the timeout for the AUTServer to wait for a confirmation for a sended event
+     * Gets the timeout for the AUTServer to wait for a confirmation for a
+     * sended event
+     * 
      * @return Returns the eventConfirmTimeOut.
      */
     public long getEventConfirmTimeOut() {
@@ -123,23 +121,23 @@ public class ConnectToAutMessage extends Message {
     }
 
     /**
-     * Sets the timeout for the AUTServer to wait for a confirmation for a sended event
-     * @param eventConfirmTimeOut The eventConfirmTimeOut to set.
+     * Sets the timeout for the AUTServer to wait for a confirmation for a
+     * sended event
+     * 
+     * @param eventConfirmTimeOut
+     *            The eventConfirmTimeOut to set.
      */
     public void setEventConfirmTimeOut(long eventConfirmTimeOut) {
         m_eventConfirmTimeOut = eventConfirmTimeOut;
     }
 
-
-
     /**
-     * @param autId the AUT ID to set.
+     * @param autId
+     *            the AUT ID to set.
      */
     public void setAutId(AutIdentifier autId) {
         m_autId = autId;
     }
-
-
 
     /**
      * @return the ID of the AUT to which to connect.
@@ -147,5 +145,4 @@ public class ConnectToAutMessage extends Message {
     public AutIdentifier getAutId() {
         return m_autId;
     }
-
 }

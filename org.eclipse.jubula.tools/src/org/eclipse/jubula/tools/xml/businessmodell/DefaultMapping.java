@@ -13,44 +13,29 @@ package org.eclipse.jubula.tools.xml.businessmodell;
 /**
  * This class represents a default object mapping for a
  * {@link org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent}.
- * 
  * @author BREDEX GmbH
  * @created 11.08.2005
  */
 public class DefaultMapping {
+    /** The logical name of the mapping. */
+    private String m_logicalName;
+    
+    /** The technical name of the mapping. */
+    private String m_technicalName;
+    
+    /** The type factory. */
+    private String m_typeFactory;
 
-    /* DOTNETDECLARE:BEGIN */
-
-    /**
-     * The logical name of the mapping.
-     */
-    public String m_logicalName;
-    /**
-     * The technical name of the mapping.
-     */
-    public String m_technicalName;
-    /**
-     * The type factory.
-     */
-    public String m_typeFactory;
-
-    /* DOTNETDECLARE:END */
-
-    /**
-     * Constructor. Used by deserialization only.
-     */
+    /** Constructor. Used by deserialization only. */
     public DefaultMapping() {
         // Nothing to be done
     }
+    
     /**
      * The constructor.
-     * 
-     * @param logicalName
-     *            The logical name of the mapping.
-     * @param technicalName
-     *            The technical name of the mapping.
-     * @param typeFactory
-     *            The type factory.
+     * @param logicalName The logical name of the mapping.
+     * @param technicalName The technical name of the mapping.
+     * @param typeFactory The type factory.
      */
     public DefaultMapping(String logicalName, String technicalName,
         String typeFactory) {
@@ -58,6 +43,7 @@ public class DefaultMapping {
         m_technicalName = technicalName;
         m_typeFactory = typeFactory;
     }
+    
     /**
      * @return The logical name of the mapping. It is expected that this name is
      *         an I18N key to get the real localized logical name.
@@ -65,6 +51,7 @@ public class DefaultMapping {
     public String getLogicalName() {
         return m_logicalName;
     }
+    
     /**
      * @return The technical name of the mapping. It will be used serverside to
      *         identify the graphics component and client-side for the object
@@ -73,6 +60,7 @@ public class DefaultMapping {
     public String getTechnicalName() {
         return m_technicalName;
     }
+    
     /**
      * @return The type factory. It will be used server-side to create a new
      *         type, that means a new graphics component that will be mapped to

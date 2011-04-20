@@ -12,8 +12,6 @@ package org.eclipse.jubula.tools.xml.businessmodell;
 
 import org.eclipse.jubula.tools.constants.StringConstants;
 
-
-
 /**
  * Null Object representing a Component that does not conform to the current 
  * CompSystem configuration. 
@@ -22,25 +20,18 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * @created Jan 29, 2007
  */
 public class InvalidComponent extends Component {
-
-    /**
-     * Constant for invalid version- or order-number.
-     */
+    /** Constant for invalid version- or order-number. */
     public static final int INVALID_NUMBER = 0;
     
     /** Constant for invalid component type */
     public static final String INVALID_COMPONENT_TYPE = 
         "INVALID_COMPONENT_TYPE"; //$NON-NLS-1$
     
-    /**
-     * The i18n key for component type "unknown"
-     */
+    /** The i18n key for component type "unknown" */
     private static final String UNKNOWN_TYPE_I18N_KEY = 
         "CompSystem.UnknownComponentType"; //$NON-NLS-1$
 
-    /**
-     *  Constructor 
-     */
+    /** Constructor */
     public InvalidComponent() {
         setType(INVALID_COMPONENT_TYPE);
         setToolkitDesriptor(new ToolkitPluginDescriptor(
@@ -50,9 +41,7 @@ public class InvalidComponent extends Component {
             INVALID_NUMBER));
     }
     
-    
     /**
-     * 
      * @see org.eclipse.jubula.tools.xml.businessmodell.Component#findAction(java.lang.String)
      * @param name name
      * @return invalid action
@@ -62,30 +51,22 @@ public class InvalidComponent extends Component {
         return new InvalidAction();
     }
 
-    /**
-     * @return <code>false</code>
-     */
+    /** @return <code>false</code> */
     public boolean isVisible() {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setVisible(boolean visible) {
         super.setVisible(false);
     }
     
-    /** 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public boolean isValid() {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getType() {
         return UNKNOWN_TYPE_I18N_KEY;
     }

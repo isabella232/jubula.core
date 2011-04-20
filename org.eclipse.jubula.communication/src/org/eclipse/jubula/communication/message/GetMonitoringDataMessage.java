@@ -18,54 +18,44 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  */
 public class GetMonitoringDataMessage extends Message {
 
-    /** The autId */
+    /** the audId */
     private String m_autId;
-    /** */
+
+    /** Constructor */
     public GetMonitoringDataMessage() {
-        //do nothing
+        // do nothing
     }
-    
-    /** 
+
+    /**
      * Constructor to generate a {@link GetExecutionDataMessage}
-     * @param autId The autId
+     * 
+     * @param autId
+     *            The autId
      */
     public GetMonitoringDataMessage(String autId) {
-        
         this.m_autId = autId;
-        
     }
-    
-    
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
-        
         return CommandConstants.GET_MONITORING_DATA_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-       
         return 1.0;
     }
 
-
-    /**
-     * @return the autId
-     */
+    /** @return the autId */
     public String getAutId() {
         return m_autId;
     }
 
-
     /**
-     * @param autId the autId to set
+     * @param autId
+     *            the autId to set
      */
     public void setAutId(String autId) {
         m_autId = autId;
     }
-
 }

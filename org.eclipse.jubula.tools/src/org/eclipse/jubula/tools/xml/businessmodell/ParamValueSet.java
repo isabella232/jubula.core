@@ -17,13 +17,10 @@ import java.util.List;
 
 /**
  * Container for permitted values.
- *
  * @author BREDEX GmbH
  * @created Sep 6, 2010
- * 
  */
 public class ParamValueSet {
-
     /** 
      * The values contained within this value set. This must be a list 
      * (specifically, an {@link ArrayList}): See the javadoc for 
@@ -44,23 +41,18 @@ public class ParamValueSet {
 
     /**
      * Constructor
-     * 
      * @param valuesAreCombinable Whether values in the set can be combined.
      */
     public ParamValueSet(boolean valuesAreCombinable) {
         setCombinable(valuesAreCombinable);
     }
 
-    /**
-     * 
-     * @return an iterator over the contained set of values.
-     */
+    /** @return an iterator over the contained set of values. */
     public Iterator iterator() {
         return getValueSet().iterator();
     }
 
     /**
-     * 
      * @return <code>true</code> if the contained set of values is empty. 
      *         Otherwise <code>false</code>.
      */
@@ -75,7 +67,6 @@ public class ParamValueSet {
      * modifiers can be used simultaneously. Boolean values, on the other hand, 
      * are an example of non-combinable values, as Jubula does not support 
      * boolean math.
-     * 
      * @return <code>true</code> if the contained values can be combined. 
      *         Otherwise <code>false</code>.
      */
@@ -84,9 +75,8 @@ public class ParamValueSet {
     }
     
     /**
-     * 
      * @param valuesAreCombinable Whether the receiver's contained values 
-     *                            should be combinable.
+     *          should be combinable.
      */
     public void setCombinable(boolean valuesAreCombinable) {
         m_isCombinable = valuesAreCombinable;
@@ -95,15 +85,12 @@ public class ParamValueSet {
     /**
      * The value set needs to be initialized lazily in order to avoid a 
      * {@link NullPointerException} during {@link #iterator()}.
-     * 
      * @return the contained set of values.
      */
     private Collection getValueSet() {
         if (m_valueSet == null) {
             m_valueSet = new ArrayList();
         }
-        
         return m_valueSet;
     }
-    
 }

@@ -20,49 +20,33 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.AssertException;
 
-
 /**
  * This class represents concrete graphic components which can be tested by
  * Jubula. The tester class which is associated to the component performs
  * the operations on the component.
- * 
  * @author BREDEX GmbH
  * @created 08.07.2004
  */
-
 public class ConcreteComponent extends Component {
-
-    /* DOTNETDECLARE:BEGIN */
-
-    /**
-     * the component class
-     */
-    public List m_compClass = new ArrayList();
+    /** the component class */
+    private List m_compClass = new ArrayList();
     
-    /**
-     * The testerClass of the component.
-     */
-    public String m_testerClass;
-    /**
-     * The default mapping.
-     */
-    public DefaultMapping m_defaultMapping;
+    /** The testerClass of the component. */
+    private String m_testerClass;
+    
+    /** The default mapping. */
+    private DefaultMapping m_defaultMapping;
 
-    /* DOTNETDECLARE:END */
-    
-    
-    /**
-     * @return Returns the testerClass.
-     */
+    /** @return Returns the testerClass. */
     public String getTesterClass() {
         return m_testerClass;
     }
-    /**
-     * @param testerClass The testerClass to set.
-     */
+    
+    /** @param testerClass The testerClass to set. */
     public void setTesterClass(String testerClass) {
         m_testerClass = testerClass;
     }
+    
     /**
      * Returns a string representation of the component object.
      * @return The string
@@ -71,11 +55,10 @@ public class ConcreteComponent extends Component {
         return new ToStringBuilder(this).appendSuper(super.toString()).append(
             "TesterClass", m_testerClass).toString(); //$NON-NLS-1$
     }
+    
     /**
      * Compares the <code>type</code> and <code>testerClass</code>.
-     * 
-     * @param object
-     *            The object to compare.
+     * @param object The object to compare.
      * @return <code>true</code> if the objects are equal.
      */
     public boolean equals(Object object) {
@@ -86,6 +69,7 @@ public class ConcreteComponent extends Component {
         return new EqualsBuilder().appendSuper(super.equals(object)).append(
             getTesterClass(), rhs.getTesterClass()).isEquals();
     }
+    
     /**
      * @return The hash code build from <code>type</code> and
      *         <code>testerClass</code>.
@@ -93,7 +77,8 @@ public class ConcreteComponent extends Component {
     public int hashCode() {
         return new HashCodeBuilder().appendSuper(super.hashCode()).append(
             getTesterClass()).toHashCode();
-    }    
+    }
+    
     /**
      * @return <code>true</code> if this Component is of type
      *         <code>ConcreteComponent</code>.
@@ -101,6 +86,7 @@ public class ConcreteComponent extends Component {
     public boolean isConcrete() {
         return true;
     }
+    
     /**
      * @return The default mapping or <code>null</code>, if the component has
      *         not default mapping.
@@ -108,21 +94,18 @@ public class ConcreteComponent extends Component {
     public DefaultMapping getDefaultMapping() {
         return m_defaultMapping;
     }
-    /**
-     * @return <code>true</code> if the component has a default mapping
-     */
+    
+    /** @return <code>true</code> if the component has a default mapping */
     public boolean hasDefaultMapping() {
         return m_defaultMapping != null;
     }
-    /**
-     * @return Returns the componentClass.
-     */
+    
+    /** @return Returns the componentClass. */
     public List getCompClass() {
         return m_compClass;
     }
-    /**
-     * @param componentClass The componentClass to set.
-     */
+    
+    /** @param componentClass The componentClass to set. */
     public void setCompClass(List componentClass) {
         m_compClass = componentClass;
     }
@@ -139,10 +122,7 @@ public class ConcreteComponent extends Component {
         return StringConstants.EMPTY;
     }
 
-    /**
-     * @param componentClass
-     *            The componentClass to set.
-     */
+    /** @param componentClass The componentClass to set. */
     public void setComponentClass(String componentClass) {
         if (StringUtils.isBlank(componentClass)) {
             throw new AssertException("component class must point to a valid identifier"); //$NON-NLS-1$

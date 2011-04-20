@@ -12,48 +12,32 @@ package org.eclipse.jubula.tools.xml.businessmodell;
 
 /**
  * the property class
- * 
  * @author BREDEX GmbH
  * @created Nov 12, 2009
- * 
  */
 public class Property {
-    /* DOTNETDECLARE:BEGIN */
-    
     /** the property name */
-    public String m_name;
+    private String m_name;
 
     /** the property value */
-    public String m_value;
-
-    /* DOTNETDECLARE:END */
+    private String m_value;
     
-    /**
-     * @param name
-     *            the name to set
-     */
+    /** @param name the name to set */
     public void setName(String name) {
         m_name = name;
     }
 
-    /**
-     * @return the name
-     */
+    /** @return the name */
     public String getName() {
         return m_name;
     }
 
-    /**
-     * @param value
-     *            the value to set
-     */
+    /** @param value the value to set  */
     public void setValue(String value) {
         m_value = value;
     }
 
-    /**
-     * @return the value
-     */
+    /** @return the value */
     public String getValue() {
         return m_value;
     }

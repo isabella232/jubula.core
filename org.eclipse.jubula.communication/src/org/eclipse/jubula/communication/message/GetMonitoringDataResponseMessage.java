@@ -21,47 +21,43 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 public class GetMonitoringDataResponseMessage extends Message {
     /** The profiling agent id */
     private String m_monitoringId;
+
     /** Additonal Monitoring Values */
     private Map m_monitoringValues;
-   
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
-        
         return CommandConstants.GET_MONITORING_DATA_RESPONSE_COMMAND;
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public double getVersion() {
-       
         return 1.0;
     }
-    /**
-     * @return the coverageId
-     */
+
+    /** @return the coverageId */
     public String getMonitoringId() {
         return m_monitoringId;
     }
+
     /**
-     * @param monitoringId the monitoringId to set
+     * @param monitoringId
+     *            the monitoringId to set
      */
     public void setMonitoringId(String monitoringId) {
         m_monitoringId = monitoringId;
     }
 
-    /**@return Map containing additonal Monitroing values */
+    /** @return Map containing additonal Monitroing values */
     public Map getMonitoringValues() {
         return m_monitoringValues;
     }
+
     /**
-     * 
-     * @param map The map to set 
+     * @param map
+     *            The map to set
      */
     public void setMonitoringValues(Map map) {
-        
         this.m_monitoringValues = map;
-        
     }
 }

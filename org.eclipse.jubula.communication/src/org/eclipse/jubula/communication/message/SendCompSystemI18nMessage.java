@@ -10,54 +10,39 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
-
 /**
  * @author BREDEX GmbH
  * @created Oct 31, 2007
- * 
  */
 public class SendCompSystemI18nMessage extends Message {
-
-/* DOTNETDECLARE:BEGIN */
-    
     /** The ResourceBundles */
-    public String m_resourceBundles;
-    
-/* DOTNETDECLARE:END */
-    
-    /**
-     * 
-     */
+    private String m_resourceBundles;
+
+    /**  */
     public SendCompSystemI18nMessage() {
         super();
     }
-    
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return "org.eclipse.jubula.communication.commands.SetCompSystemI18nCommand"; //$NON-NLS-1$
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return 1.0;
     }
 
-    /**
-     * @return the ResourceBundles
-     */
+    /** @return the ResourceBundles */
     public String getResourceBundles() {
         return m_resourceBundles;
     }
 
     /**
-     * @param resourceBundles a List of ResourceBundles
+     * @param resourceBundles
+     *            a List of ResourceBundles
      */
     public void setResourceBundles(String resourceBundles) {
         m_resourceBundles = resourceBundles;
     }
-
 }

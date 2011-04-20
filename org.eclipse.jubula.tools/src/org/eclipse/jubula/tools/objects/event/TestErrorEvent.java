@@ -295,22 +295,13 @@ public class TestErrorEvent {
         }
     }
 
-    /* DOTNETDECLARE:BEGIN */
-
-    /**
-     * The event ID.
-     */
-    public String m_id;
-    /**
-     * Additional event properties.
-     */
-    public Map m_properties = new HashMap();
+    /** The event ID. */
+    private String m_id;
     
-    /* DOTNETDECLARE:END */
-
-    /**
-     * Default constructor (required by Betwixt).
-     */
+    /** Additional event properties. */
+    private Map m_properties = new HashMap();
+    
+    /** Default constructor (required by Betwixt). */
     public TestErrorEvent() {
         // Nothing to be done.
     }

@@ -22,34 +22,19 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  *
  * @author BREDEX GmbH
  * @created 06.07.2004
- *
- *
- *
- *
  */
 public class Param {
-
-    /* DOTNETDECLARE:BEGIN */
+    /** I18NKey of the parameter */
+    private String m_name = null;
     
-    /**
-     * I18NKey of the parameter
-     */
-    public String m_name = null;
+    /** Type of the parameter */
+    private String m_type = null;
     
-    /**
-     * Type of the parameter
-     */
-    public String m_type = null;
-    /**
-     * The default value.
-     */
-    public String m_defaultValue;
-    /**
-     * A set of predefined values.
-     */
-    public ParamValueSet m_valueSet;
-
-    /* DOTNETDECLARE:END */
+    /** The default value. */
+    private String m_defaultValue;
+    
+    /** A set of predefined values. */
+    private ParamValueSet m_valueSet;
 
     /**
      * Default constructor of param. Do nothing.

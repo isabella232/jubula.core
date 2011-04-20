@@ -12,77 +12,43 @@ package org.eclipse.jubula.communication.message;
 
 import org.eclipse.jubula.tools.constants.CommandConstants;
 
-
 /**
  * The response of a <code>ChangeAUTModeMessage</code>. <br>
- * 
  * Contains the new mode of the AUTServer.
  * 
  * @author BREDEX GmbH
  * @created 23.08.2004
  */
-
-/**
- * The @-attribute comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the native Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- * 
- * @attribute System.Serializable()
- * */
 public class AUTHighlightComponentResponseMessage extends Message {
-    /**
-     * Static version
-     */
-    private static final double VERSION = 1.0;
+    /** Static version */
+    public static final double VERSION = 1.0;
 
-/* DOTNETDECLARE:BEGIN */
+    /** set when component is highlighted by server */
+    private boolean m_verified = false;
 
-    /**
-     * transmitted version of this message.
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__version") */
-    public double m_version = VERSION;
-
-    /**
-     * set when component is highlighted by server
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__verified") */
-    public boolean m_verified = false;
- 
-/* DOTNETDECLARE:END */
-   
-    /**
-     * default constructor
-     */
+    /** default constructor */
     public AUTHighlightComponentResponseMessage() {
         super();
     }
-    
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.HIGHLIGHT_COMPONENT_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-        return m_version;
+        return VERSION;
     }
 
-    /**
-     * @return Returns the verified.
-     */
+    /** @return Returns the verified. */
     public boolean isVerified() {
         return m_verified;
     }
 
     /**
-     * @param verified The verified to set.
+     * @param verified
+     *            The verified to set.
      */
     public void setVerified(boolean verified) {
         m_verified = verified;

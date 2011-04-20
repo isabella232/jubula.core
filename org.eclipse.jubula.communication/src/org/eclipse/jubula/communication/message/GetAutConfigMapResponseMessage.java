@@ -14,60 +14,51 @@ import java.util.Map;
 
 import org.eclipse.jubula.tools.constants.CommandConstants;
 
-
 /**
  * @author BREDEX GmbH
  * @created 05.08.2010
  */
 public class GetAutConfigMapResponseMessage extends Message {
-
-    /**The returned AutConfigMap from the agent */
+    /** The returned AutConfigMap from the agent */
     private Map m_autConfigMap;
 
     /**
-     * default constructor 
+     * default constructor
+     * 
      * @deprecated use constructor with parameters
      */
     public GetAutConfigMapResponseMessage() {
-         //do not use
+        // do not use
     }
+
     /**
-     * s 
-     * @param autConfigMap The autConfigMap
+     * @param autConfigMap
+     *            The autConfigMap
      */
     public GetAutConfigMapResponseMessage(Map autConfigMap) {
         m_autConfigMap = autConfigMap;
     }
-    
-    
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
-        
         return CommandConstants.GET_AUT_CONFIGMAP_COMMAND_RESPONSE_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-        
         return 1.0;
     }
-    /**
-     * 
-     * @return The autConfigMap form the Agent
-     */
+
+    /** @return The autConfigMap form the Agent */
     public Map getAutConfigMap() {
         return m_autConfigMap;
     }
+
     /**
-     * 
-     * @param autConfigMap the autConfigMap, set by the agent
+     * @param autConfigMap
+     *            the autConfigMap, set by the agent
      */
     public void setAutConfigMap(Map autConfigMap) {
         this.m_autConfigMap = autConfigMap;
     }
-
 }

@@ -15,9 +15,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-
-
 
 /**
  * The message to send all supported and currently instantiated components of
@@ -26,75 +25,53 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  * @author BREDEX GmbH
  * @created 05.10.2004
  */
-
-/**
- * The @-attribute comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the native Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- * 
- * @attribute System.Serializable()
- * */
 public class AUTStartStateMessage extends Message {
 
     /** static version */
-    private static final double VERSION = 1.0;
+    public static final double VERSION = 1.0;
 
-/* DOTNETDECLARE:BEGIN */
-
-    /**
-     * transmitted version of this message.
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__version") */
-    public double m_version = VERSION;
-    
-    
     // the data of this message BEGIN
     /**
      * the list of component identifiers of all supported and instantiated
      * components of the AUT.
      */
-    /** @attribute System.Xml.Serialization.XmlElement("m__compIds") */
-    public List m_compIds;
+    private List m_compIds;
 
-/* DOTNETDECLARE:END */
-    
     // the data of this message END
-    
-    /**
-     * empty constructor for serialisation
-     */
+
+    /** empty constructor for serialization */
     public AUTStartStateMessage() {
         m_compIds = new ArrayList();
     }
-    
+
     /**
      * public constructor
      * 
      * @param compIds
-     *            component identifier to set. if null, the list will be
+     *            component identifier to set. If null, the list will be
      *            cleared.
      */
     public AUTStartStateMessage(List compIds) {
         m_compIds = compIds;
     }
-    
+
     /**
-     * the compIds as array 
+     * the compIds as array
+     * 
      * @return an array of ComponentIdentifier, may be empty but never null
      */
     public IComponentIdentifier[] getCompIdsArray() {
-        return (IComponentIdentifier[])m_compIds.toArray(
-                new IComponentIdentifier[m_compIds.size()]);
+        return (IComponentIdentifier[]) m_compIds
+                .toArray(new IComponentIdentifier[m_compIds.size()]);
     }
+
     /**
      * @return The component identifiers {@link ComponentIdentifier} as a list
      */
     public List getCompIds() {
         return Collections.unmodifiableList(m_compIds);
     }
-    
+
     /**
      * add a componentIdentifier to the list. Used for serialising this message.
      * 
@@ -106,18 +83,14 @@ public class AUTStartStateMessage extends Message {
             m_compIds.add(compId);
         }
     }
-     
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.AUT_STARTED_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-        return m_version;
+        return VERSION;
     }
 }

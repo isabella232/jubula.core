@@ -13,7 +13,6 @@ package org.eclipse.jubula.tools.xml.businessmodell;
 /**
  * Null Object representing a Parameter that does not conform to the current 
  * CompSystem configuration. 
- *
  * @author BREDEX GmbH
  * @created Jan 29, 2007
  */
