@@ -10,60 +10,35 @@
  *******************************************************************************/
 package org.eclipse.jubula.tools.xml.businessmodell;
 
-
 /**
  * This class represents the params which belongs to an action.
  * A param has a name and a type.
- *
  * @author BREDEX GmbH
  * @created 25.06.2005
  */
 public class Profile {
+    /** Name of the parameter */
+    private String m_name = null;
 
-    /* DOTNETDECLARE:BEGIN */
-    
-    /**
-     * Name of the parameter
-     */
-    public String m_name = null;
+    /** Name of the parameter */
+    private double m_nameFactor = 0;
 
-    /**
-     * Name of the parameter
-     */
-    public double m_nameFactor = 0;
+    /** Name of the parameter */
+    private double m_pathFactor = 0;
 
-    /**
-     * Name of the parameter
-     */
-    public double m_pathFactor = 0;
+    /** Name of the parameter */
+    private double m_contextFactor = 0;
+
+    /** Name of the parameter */
+    private double m_threshold = 0;
 
     /**
-     * Name of the parameter
-     */
-    public double m_contextFactor = 0;
-
-    /**
-     * Name of the parameter
-     */
-    public double m_threshold = 0;
-
-    /* DOTNETDECLARE:END */
-
-
-    /**
-     * 
-     * @param name
-     *      double
-     * @param nameFactor
-     *      double
-     * @param pathFactor
-     *      double
-     * @param contextFactor
-     *      double
-     * @param nameMalus
-     *      double
-     * @param threshold
-     *      double
+     * @param name double
+     * @param nameFactor double
+     * @param pathFactor double
+     * @param contextFactor double
+     * @param nameMalus double
+     * @param threshold double
      */
     public Profile(String name, 
             double nameFactor, 
@@ -78,81 +53,64 @@ public class Profile {
         setThreshold(threshold);
     }
 
-    /**
-     * constructor
-     *
-     */
+    /** constructor */
     public Profile() {
         super();
     }
 
-    /**
-     * @return Returns the name. A <code>String</code> value.
-     */
+    /** @return Returns the name. A <code>String</code> value. */
     public String getName() {
         return m_name;
     }
     
-    /**
-     * @param name A <code>String</code> value. The name to set.
-     */
+    /** @param name A <code>String</code> value. The name to set. */
     public void setName(String name) {
         m_name = name;
     }
 
-    /**
-     * @return Returns the contextFactor.
-     */
+    /** @return Returns the contextFactor. */
     public double getContextFactor() {
         return m_contextFactor;
     }
-    /**
-     * @param contextFactor The contextFactor to set.
-     */
+    
+    /** @param contextFactor The contextFactor to set. */
     public void setContextFactor(double contextFactor) {
         m_contextFactor = contextFactor;
     }
-    /**
-     * @return Returns the nameFactor.
-     */
+    
+    /** @return Returns the nameFactor. */
     public double getNameFactor() {
         return m_nameFactor;
     }
-    /**
-     * @param nameFactor The nameFactor to set.
-     */
+    
+    /** @param nameFactor The nameFactor to set. */
     public void setNameFactor(double nameFactor) {
         m_nameFactor = nameFactor;
     }
-    /**
-     * @return Returns the pathFactor.
-     */
+    
+    /** @return Returns the pathFactor. */
     public double getPathFactor() {
         return m_pathFactor;
     }
-    /**
-     * @param pathFactor The pathFactor to set.
-     */
+    
+    /** @param pathFactor The pathFactor to set. */
     public void setPathFactor(double pathFactor) {
         m_pathFactor = pathFactor;
     }
-    /**
-     * @return Returns the threshold.
-     */
+    
+    /** @return Returns the threshold. */
     public double getThreshold() {
         return m_threshold;
     }
-    /**
-     * @param threshold The threshold to set.
-     */
+    
+    /** @param threshold The threshold to set. */
     public void setThreshold(double threshold) {
         m_threshold = threshold;
     }
     
     /**
      * checks if a profile set is valid
-     * @return
-     *      boolean
+     * @return boolean
      */
     public boolean isValid() {
         boolean valid = true;
@@ -176,9 +134,7 @@ public class Profile {
         return valid;
     }
     
-    /**
-     * @return String
-     */
+    /** @return String */
     public String toString() {
         String returnVal;
         returnVal = this.getClass().getName() + "("  //$NON-NLS-1$
@@ -189,5 +145,4 @@ public class Profile {
             + getThreshold() + ")"; //$NON-NLS-1$
         return returnVal;
     }
-
 }

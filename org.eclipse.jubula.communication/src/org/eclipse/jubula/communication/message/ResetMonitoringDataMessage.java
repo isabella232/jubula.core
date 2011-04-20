@@ -19,46 +19,40 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 public class ResetMonitoringDataMessage extends Message {
     /** The autId */
     private String m_autId;
+
     /** default constructor */
     public ResetMonitoringDataMessage() {
-        //do nothing
-    }    
+        // do nothing
+    }
+
     /**
-     * 
-     * @param autId the autId
+     * @param autId
+     *            the autId
      */
     public ResetMonitoringDataMessage(String autId) {
         this.m_autId = autId;
     }
-    
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
-      
         return CommandConstants.RESET_MONITORING_DATA_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-        
         return 1.0;
     }
 
-    /**
-     * @return the autId
-     */
+    /** @return the autId */
     public String getAutId() {
         return m_autId;
     }
 
     /**
-     * @param autId the autId to set
+     * @param autId
+     *            the autId to set
      */
     public void setAutId(String autId) {
         m_autId = autId;
     }
-
 }

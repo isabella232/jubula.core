@@ -16,20 +16,16 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
 /**
  * @author BREDEX GmbH
  * @created Mar 25, 2010
- * 
  */
 public class RestartAutMessage extends Message {
-
-    /**
-     * Static version
-     */
+    /** Static version */
     private static final double VERSION = 1.0;
 
     /** the ID of the Running AUT to restart */
     private AutIdentifier m_autId;
-    
+
     /**
-     * Constructor for use in framework methods. Do not use for normal 
+     * Constructor for use in framework methods. Do not use for normal
      * programming.
      * 
      * @deprecated
@@ -37,43 +33,37 @@ public class RestartAutMessage extends Message {
     public RestartAutMessage() {
         // Nothing to initialize
     }
-    
+
     /**
      * Constructor
      * 
-     * @param autId The ID of the Running AUT to restart.
+     * @param autId
+     *            The ID of the Running AUT to restart.
      */
     public RestartAutMessage(AutIdentifier autId) {
         m_autId = autId;
     }
-    
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.RESTART_AUT_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return VERSION;
     }
 
-    /**
-     * @return the ID of the Running AUT to restart.
-     */
+    /** @return the ID of the Running AUT to restart. */
     public AutIdentifier getAutId() {
         return m_autId;
     }
 
     /**
-     * @param autId The ID of the Running AUT to restart.
+     * @param autId
+     *            The ID of the Running AUT to restart.
      */
     public void setAutId(AutIdentifier autId) {
         m_autId = autId;
     }
-
-    
 }

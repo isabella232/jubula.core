@@ -12,34 +12,24 @@ package org.eclipse.jubula.communication.message;
 
 import org.eclipse.jubula.tools.constants.CommandConstants;
 
-
 /**
  * Message sent to AUT Server to prepare for shutdown.
- *
+ * 
  * @author BREDEX GmbH
  * @created Mar 23, 2010
- * 
  */
 public class PrepareForShutdownMessage extends Message {
 
-    /**
-     * Static version
-     */
+    /** Static version */
     private static final double VERSION = 1.0;
 
-    
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.PREPARE_FOR_SHUTDOWN_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return VERSION;
     }
-
 }

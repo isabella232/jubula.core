@@ -37,23 +37,17 @@ public class GetAutConfigMapMessage extends Message {
         this.m_autId = autId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.GET_AUT_CONFIGMAP_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return 1.0;
     }
 
-    /**
-     * @return The AutID
-     */
+    /** @return The AutID */
     public String getAutId() {
         return m_autId;
     }

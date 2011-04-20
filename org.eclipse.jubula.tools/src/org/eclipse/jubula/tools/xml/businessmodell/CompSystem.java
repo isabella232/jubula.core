@@ -34,43 +34,35 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.xml.businessprocess.ConfigVersion;
 
-
 /**
  * This class represents a container for all components which can be tested by
  * Jubula.
-
  * @author BREDEX GmbH
  * @created 18.07.2005
  */
 public class CompSystem {
-    
     /** Constant for an empty extension point entry */
     public static final String EMPTY_EXTPOINT_ENTRY = "null"; //$NON-NLS-1$
     
-    /**
-     * The logger
-     */
+    /** The logger */
     private static Log log = LogFactory.getLog(CompSystem.class); 
     
-    /**
-     * The list of all components.
-     */
+    /** The list of all components. */
     private List m_components;
+    
     /** fast lookup */
     private Map m_componentsByType;
+    
     /** fast lookup */
     private Map m_componentsByTypeLowerCase;
-    /**
-     * The list of abstract components.
-     */
+    
+    /** The list of abstract components. */
     private List m_abstractComponents;
-    /**
-     * The list of concrete components.
-     */
+    
+    /** The list of concrete components. */
     private List m_concreteComponents;
-    /**
-     * The List of Event Types.
-     */
+    
+    /** The List of Event Types. */
     private Map m_eventTypes;
     
     /** The most abstract component in the hierarchy */
@@ -82,14 +74,10 @@ public class CompSystem {
      */
     private Map m_toolkitDescriptors;
     
-    /**
-     * Stores wether the component is initialized.
-     */
+    /** Stores wether the component is initialized. */
     private boolean m_initialized = false;
     
-    /**
-     * <code>m_configVersion</code> version for clientConfig.xml
-     */
+    /** <code>m_configVersion</code> version for clientConfig.xml */
     private ConfigVersion m_configVersion = null;
 
     /** A List of all DataTypes */
@@ -98,16 +86,12 @@ public class CompSystem {
     /** All Component Names wich have a default mapping (Name => Type) */
     private Map m_defaultMappingNames = null;
 
-    /**
-     * Default constructor
-     *  
-     */
+    /** Default constructor */
     public CompSystem() {
         init();
     }
-    /**
-     * 
-     */
+    
+    /**  */
     private void init() {
         if (m_components == null) {
             m_components = new ArrayList();
@@ -149,7 +133,6 @@ public class CompSystem {
     }
 
     /**
-     * 
      * @param toolkitId the unique toolkit id <br>
      * This information is available at the Project!
      * @param addReferencedToolkits <code>true</code> if components from toolkits 

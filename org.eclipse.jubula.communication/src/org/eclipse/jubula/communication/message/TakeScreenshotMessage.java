@@ -15,26 +15,19 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 /**
  * @author BREDEX GmbH
  * @created Apr 19, 2010
- * 
  */
 public class TakeScreenshotMessage extends Message {
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public TakeScreenshotMessage() {
         // empty
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.TAKE_SCREENSHOT_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return 1.0;
     }

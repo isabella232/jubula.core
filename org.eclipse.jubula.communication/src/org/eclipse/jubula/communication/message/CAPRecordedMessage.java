@@ -12,79 +12,57 @@ package org.eclipse.jubula.communication.message;
 
 import org.eclipse.jubula.tools.constants.CommandConstants;
 
-
 /**
  * This class sends a CAP to the server.
- *
+ * 
  * @author BREDEX GmbH
  * @created 27.08.2004
  */
-
-/**
- * The @-attribute comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the native Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- * 
- * @attribute System.Serializable()
- * */
 public class CAPRecordedMessage extends Message {
-    
-    /**
-     * Static version
-     */
-    private static final double VERSION = 1.0;
-    
-/* DOTNETDECLARE:BEGIN */
+
+    /** Static version */
+    public static final double VERSION = 1.0;
+
+    /** The CAP message data. */
+    private MessageCap m_messageCap;
 
     /**
-     * Transmitted version of this message.
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__version") */
-    public double m_version = VERSION;
-    /**
-     * The CAP message data.
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__messageCap") */
-    public MessageCap m_messageCap;
-
-/* DOTNETDECLARE:END */
-    
-    /**
-     * Default constructor.
-     * Do nothing (required by Betwixt).
+     * Default constructor. Do nothing (required by Betwixt).
      */
     public CAPRecordedMessage() {
         // Nothing to be done
     }
-    
+
     /**
      * Creates a new instance with the passed CAP message data. The data are
      * sent to the AUT server to execute a test step.
-     * @param messageCap The message data
+     * 
+     * @param messageCap
+     *            The message data
      */
     public CAPRecordedMessage(MessageCap messageCap) {
         m_messageCap = messageCap;
     }
-    
+
     /**
      * Gets the CAP message data.
+     * 
      * @return The message data.
      */
     public MessageCap getMessageCap() {
         return m_messageCap;
     }
+
     /**
      * Sets the CAP message data (required by Betwixt).
-     * @param messageCap The message data
+     * 
+     * @param messageCap
+     *            The message data
      */
     public void setMessageCap(MessageCap messageCap) {
         m_messageCap = messageCap;
     }
-    
 
-    
     /**
      * {@inheritDoc}
      */
@@ -96,6 +74,6 @@ public class CAPRecordedMessage extends Message {
      * {@inheritDoc}
      */
     public double getVersion() {
-        return m_version;
+        return VERSION;
     }
 }

@@ -21,60 +21,39 @@ import java.util.List;
  * 
  */
 public class ComponentClass {
-    /* DOTNETDECLARE:BEGIN */
-
-    /**
-     * the component class name
-     */
-    public String m_name;
+    /** the component class name */
+    private String m_name;
 
     /** the optional properties for each component class */
-    public List m_properties = new ArrayList();
+    private List m_properties = new ArrayList();
 
-    /* DOTNETDECLARE:END */
-
-    /** default constructor used by xstream
-     */
+    /** default constructor used by xstream */
     public ComponentClass() {
         // default
     }
     
-    /**
-     * @param componentClass
-     *            the component class name
-     */
+    /** @param componentClass the component class name */
     public ComponentClass(String componentClass) {
         setName(componentClass);
     }
 
-    /**
-     * @param name
-     *            the name to set
-     */
+    /** @param name the name to set */
     public void setName(String name) {
         m_name = name;
     }
 
-    /**
-     * @return the name
-     */
+    /** @return the name */
     public String getName() {
         return m_name;
     }
 
-    /**
-     * @param properties
-     *            the properties to set
-     */
+    /** @param properties the properties to set */
     public void setProperties(List properties) {
         m_properties = properties;
     }
 
-    /**
-     * @return the properties
-     */
+    /** @return the properties */
     public List getProperties() {
         return m_properties;
     }
-
 }

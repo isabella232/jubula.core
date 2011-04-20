@@ -10,50 +10,39 @@
  *******************************************************************************/
 package org.eclipse.jubula.tools.xml.businessmodell;
 
-
 /**
  * @author BREDEX GmbH
  * @created 24.05.2007
- * 
  */
 public class ToolkitPluginDescriptor implements Comparable {
-
-    /* DOTNETDECLARE:BEGIN */
-
+    /** m_toolkitID */
+    private String m_toolkitID;
     
-    /***/
-    public String m_toolkitID;
+    /** the order */
+    private int m_order;
     
-    /***/
-    public int m_order;
+    /** the name */
+    private String m_name;
     
-    /***/
-    public String m_name;
+    /** m_includes */
+    private String m_includes;
     
-    /***/
-    public String m_includes;
+    /** m_depends */
+    private String m_depends;
     
-    /***/
-    public String m_depends;
+    /** the majorVersion */
+    private int m_majorVersion;
     
-    /***/
-    public int m_majorVersion;
+    /** the minorVersion */
+    private int m_minorVersion;
     
-    /***/
-    public int m_minorVersion;
+    /** m_isUserToolkit */
+    private boolean m_isUserToolkit;
     
-    /***/
-    public boolean m_isUserToolkit;
+    /** the level */
+    private String m_level;
     
-    /***/
-    public String m_level;
-
-    /* DOTNETDECLARE:END */
-
-    
-    /**
-     * Only for deserialisation!
-     */
+    /** Only for deserialisation! */
     public ToolkitPluginDescriptor() {
         super();
     }
@@ -88,7 +77,6 @@ public class ToolkitPluginDescriptor implements Comparable {
         m_depends = depends;
     }
 
-
     /**
      * @return id of the extended-toolkit or
      *         empty String if the toolkit is independent.
@@ -105,65 +93,42 @@ public class ToolkitPluginDescriptor implements Comparable {
         return m_depends;
     }
 
-    /**
-     * @return whether the toolkit is user defined or not
-     */
+    /** @return whether the toolkit is user defined or not */
     public boolean isUserToolkit() {
         return m_isUserToolkit;
     }
 
-
-    /**
-     * @return the level
-     */
+    /** @return the level */
     public String getLevel() {
         return m_level;
     }
 
-
-    /**
-     * @return the majorVerision
-     */
+    /** @return the majorVerision */
     public int getMajorVersion() {
         return m_majorVersion;
     }
 
-
-    /**
-     * @return the minorVersion
-     */
+    /** @return the minorVersion */
     public int getMinorVersion() {
         return m_minorVersion;
     }
 
-
-    /**
-     * @return the displayable name of the toolkit
-     */
+    /** @return the displayable name of the toolkit */
     public String getName() {
         return m_name;
     }
 
-
-    /**
-     * @return the order of read into the CompSystem
-     */
+    /** @return the order of read into the CompSystem */
     public int getOrder() {
         return m_order;
     }
 
-
-    /**
-     * @return the id of the toolkit 
-     *         (e.g. org.eclipse.jubula.toolkit.swing)
-     */
+    /** @return the id of the toolkit (e.g. org.eclipse.jubula.toolkit.swing) */
     public String getToolkitID() {
         return m_toolkitID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public int compareTo(Object o) {
         if (!(o instanceof ToolkitPluginDescriptor)) {
             return 0;            
@@ -172,9 +137,7 @@ public class ToolkitPluginDescriptor implements Comparable {
         return getToolkitID().compareTo(descr.getToolkitID());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String toString() {
         return getToolkitID();
     }

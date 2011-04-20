@@ -14,17 +14,14 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 
 /**
  * Response to an attempt to connect to an AUT.
- *
+ * 
  * @author BREDEX GmbH
  * @created Mar 18, 2010
- * 
  */
 public class ConnectToAutResponseMessage extends Message {
 
-    /**
-     * Static version
-     */
-    private static final double VERSION = 1.0;
+    /** Static version */
+    public static final double VERSION = 1.0;
 
     /** an error message, or <code>null</code> if no error occurred */
     private String m_errorMessage;
@@ -41,31 +38,24 @@ public class ConnectToAutResponseMessage extends Message {
     /**
      * Constructor
      * 
-     * @param errorMessage An error message, or <code>null</code> if no 
-     *                     error occurred.
+     * @param errorMessage
+     *            An error message, or <code>null</code> if no error occurred.
      */
     public ConnectToAutResponseMessage(String errorMessage) {
         m_errorMessage = errorMessage;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.CONNECT_TO_AUT_RESPONSE_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return VERSION;
     }
 
-    /**
-     * 
-     * @return an error message, or <code>null</code> if no error occurred
-     */
+    /** @return an error message, or <code>null</code> if no error occurred */
     public String getErrorMessage() {
         return m_errorMessage;
     }

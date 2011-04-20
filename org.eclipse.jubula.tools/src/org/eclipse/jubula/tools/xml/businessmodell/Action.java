@@ -37,50 +37,34 @@ public class Action {
     /** the logger */
     private static Log log = LogFactory.getLog(Action.class);
 
-    /* DOTNETDECLARE:BEGIN */
-
-    /**
-     * paramlist of action
-     */
-    public List m_params = new ArrayList();
+    /** paramlist of action */
+    private List m_params = new ArrayList();
     
-    /**
-     * Name of action
-     */
-    public String m_name;
+    /** Name of action */
+    private String m_name;
     
-    /**
-     * Methodname
-     */
-    public String m_method;
+    /** Method name */
+    private String m_method;
     
     /** 
      * full qualified name of the command class to execute after
      * test execution in TestExecution 
      */
-    public String m_postExecutionCommand;
+    private String m_postExecutionCommand;
     
-    /**
-     * Wheter this Action is deprecated or not
-     */
-    public boolean m_deprecated = false;
+    /** Whether this Action is deprecated or not */
+    private boolean m_deprecated = false;
     
     /**
      *  Whether this action is executed in the client or server 
      *  (default = server (false)).
      */
-    public boolean m_clientAction = false;
+    private boolean m_clientAction = false;
     
-    /**
-     * The version number of the last change of this action
-     */
-    public String m_changed;
+    /** The version number of the last change of this action */
+    private String m_changed;
 
-    /* DOTNETDECLARE:END */
-
-    /**
-     * Default constructor. Do nothing.
-     */
+    /** Default constructor. Do nothing. */
     public Action() {
         super();
     }

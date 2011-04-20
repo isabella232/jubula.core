@@ -11,51 +11,52 @@
 package org.eclipse.jubula.communication.message;
 
 import org.eclipse.jubula.tools.constants.CommandConstants;
+
 /**
  * @author BREDEX GmbH
  * @created 13.09.2010
  */
 public class BuildMonitoringReportMessage extends Message {
 
+    /** static version */
+    public static final double VERSION = 1.0;
+
     /** The autId */
     private String m_autId;
+
     /** default constructor */
     public BuildMonitoringReportMessage() {
-        //default constructor
+        // default constructor
     }
+
     /**
-     * 
-     * @param autId The autId
+     * @param autId
+     *            The autId
      */
     public BuildMonitoringReportMessage(String autId) {
         this.m_autId = autId;
     }
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
-       
         return CommandConstants.BUILD_MONITORING_REPORT_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-       
-        return 1.0;
+        return VERSION;
     }
-    /**
-     * @return the autId
-     */
+
+    /** @return the autId */
     public String getAutId() {
         return m_autId;
     }
+
     /**
-     * @param autId the autId to set
+     * @param autId
+     *            the autId to set
      */
     public void setAutId(String autId) {
         m_autId = autId;
     }
-
 }
