@@ -47,8 +47,8 @@
             <configuration>
               <target>
                 <ant antfile="pack-and-sign/build.xml">
-                  <property name="localRepository" value="xyz"/>
-                  <property name="projectDir" value="/home/data/users/mtiede/project_jubula/workspace/jubula/org.eclipse.jubula.site/target"/>
+                  <property name="localRepository" value="${settings.localRepository}"/>
+                  <property name="projectDir" value="${project.build.directory}"/>
                   <property name="repositoryName" value="jubula"/>
                   <property name="skipSign" value="true"/>
                   <property name="skipPromote" value="true"/>
