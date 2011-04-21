@@ -18,6 +18,8 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jubula.launch.AutLaunchConfigurationConstants;
 import org.eclipse.jubula.launch.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
@@ -84,6 +86,13 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
         m_autIdText = new Text(composite, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(m_autIdText);
 
+        m_autIdText.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                setDirty(true);
+                updateLaunchConfigurationDialog();
+            }
+        });
+        
         m_activateTestSupportCheckbox.addSelectionListener(
                 new SelectionAdapter() {
             
@@ -92,6 +101,8 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
                             m_activateTestSupportCheckbox.getSelection();
                         m_autIdText.setEnabled(enable);
                         m_autIdLabel.setEnabled(enable);
+                        setDirty(true);
+                        updateLaunchConfigurationDialog();
                     }
                     
                 });
