@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?><!--
+    Copyright (c) 2004, 2011 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+ <plugin>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabs">
+      <tab
+            class="org.eclipse.jubula.launch.ui.tab.AutLaunchConfigurationTab"
+            group="org.eclipse.jdt.debug.ui.launchConfigurationTabGroup.localJavaApplication"
+            id="org.eclipse.jubula.launch.java.ui.tab.aut"
+            name="org.eclipse.jubula.launch.ui.tab1">
+         <placement
+               after="org.eclipse.debug.ui.commonTab">
+         </placement>
+      </tab>
+   </extension>
+
+</plugin>
