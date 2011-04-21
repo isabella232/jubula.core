@@ -25,7 +25,7 @@
    </license>
 
    <requires>
-      <import feature="org.eclipse.pde" version="3.6.2.r362_v20110203-7b7mFL2FET3dhHalh1iNZtL" match="compatible"/>
+      <import feature="org.eclipse.pde" version="3.6.0" match="compatible"/>
    </requires>
 
    <plugin

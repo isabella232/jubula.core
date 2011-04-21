@@ -25,7 +25,7 @@
    </license>
 
    <requires>
-      <import feature="org.eclipse.jdt" version="3.6.2.r362_v20101117-0800-7z8XFW6FLFlmjJcvz03jyeFBLS_F" match="compatible"/>
+      <import feature="org.eclipse.jdt" version="3.6.0" match="compatible"/>
    </requires>
 
    <plugin
