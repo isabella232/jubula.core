@@ -15,26 +15,19 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 /**
  * @author BREDEX GmbH
  * @created Apr 19, 2010
- * 
  */
 public class DisconnectFromAutAgentMessage extends Message {
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public DisconnectFromAutAgentMessage() {
         // empty
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.DISCONNECT_FROM_AUT_AGENT_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return 1.0;
     }

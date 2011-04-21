@@ -41,75 +41,63 @@ public abstract class Component {
      */
     private static Log log = LogFactory.getLog(Component.class);
 
-    /* DOTNETDECLARE:BEGIN */
-
     /**
      * List of directly realized Components
      * ("direct superclasses").
      */
-    public List m_realized = new ArrayList();
+    private List m_realized = new ArrayList();
     
-    /**
-     * List of extended Components.
-     */
-    public List m_extendedTypes = new ArrayList();
+    /** List of extended Components. */
+    private List m_extendedTypes = new ArrayList();
     
     /**
      * List of type names of directly realized AbstractComponents
      * ("direct superclasses").
      */
-    public List m_realizedTypes = new ArrayList();
+    private List m_realizedTypes = new ArrayList();
     
     /**
      * Set of all ConcreteComponent classes realizing this
      * Component. For Concrete Components, this set contains exactly 
      * this ConcreteComponent itself.
-     * 
      */
-    public Set m_realizers = new HashSet();
+    private Set m_realizers = new HashSet();
     
     /**
      * Set of all Component classes realizing this
      * Component.
-     * 
      */
-    public transient Set m_allRealizers = new HashSet();
+    private transient Set m_allRealizers = new HashSet();
     
-    /**
-     * Action list of the component.
-     */
-    public List m_actions = new ArrayList();
+    /** Action list of the component. */
+    private List m_actions = new ArrayList();
     
-    /**
-     * The name of the component.
-     */
-    public String m_type;
+    /** The name of the component. */
+    private String m_type;
     
     /** The descriptor of the ToolkitPlugin of this Comnponent */
-    public ToolkitPluginDescriptor m_toolkitDesriptor;
+    private ToolkitPluginDescriptor m_toolkitDesriptor;
     
     /**
      * <code>m_completionStarted</code> flag indicating
      * completeActions has started. See also m_completionDone.
      */
-    public boolean m_completionStarted = false;
+    private boolean m_completionStarted = false;
     
-    /**
-     * Whether this Component is deprecated or not
-     */
-    public boolean m_deprecated = false;
+    /** Whether this Component is deprecated or not */
+    private boolean m_deprecated = false;
     
     /**
      * The version number of the last change of this component
      * could be null because optional
      */
-    public String m_changed;
+    private String m_changed;
 
     /**
      * <code>m_visible</code> property indicating whether this
      * Component shall be usable within the client gui
      */
-    public boolean m_visible = true;
+    private boolean m_visible = true;
     
     /**
      * <code>m_completionDone</code> falg indicating 
@@ -118,20 +106,15 @@ public abstract class Component {
      * m_completionDone during a completeActions call, we 
      * found a reference loop.
      */
-    public boolean m_completionDone = false;
+    private boolean m_completionDone = false;
     
     /**
      * <code>m_observable</code> property indicating whether this
      * Component is observable
      */
-    public boolean m_observable = true;
+    private boolean m_observable = true;
 
-    /* DOTNETDECLARE:END */
-
-    /**
-     * Default constructor. Do nothing.
-     *
-     */
+    /** Default constructor. Do nothing. */
     public Component() {
         super();
     }

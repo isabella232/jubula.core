@@ -13,8 +13,6 @@ package org.eclipse.jubula.communication.message.html;
 import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 
-
-
 /**
  * @author BREDEX GmbH
  * @created Nov 10, 2009
@@ -23,11 +21,8 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 public class SendHtmlAUTListOfSupportedComponentsMessage extends
     SendAUTListOfSupportedComponentsMessage {
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.HTML_SEND_COMPONENTS_COMMAND;
     }
-
 }

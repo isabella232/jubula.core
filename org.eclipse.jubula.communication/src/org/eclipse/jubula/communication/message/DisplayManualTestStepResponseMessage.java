@@ -15,31 +15,22 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 /**
  * @author BREDEX GmbH
  * @created Aug 19, 2010
- * 
  */
 public class DisplayManualTestStepResponseMessage extends Message {
-    /**
-     * Static version
-     */
-    private static final double VERSION = 1.0;
+    /** Static version */
+    public static final double VERSION = 1.0;
 
-    /**
-     * <code>m_comment</code>
-     */
+    /** <code>m_comment</code> */
     private String m_comment = null;
 
-    /**
-     * <code>m_status</code>
-     */
+    /** <code>m_status</code> */
     private boolean m_status = false;
 
-    /**
-     * Default
-     */
+    /** Default */
     public DisplayManualTestStepResponseMessage() {
         super();
     }
-    
+
     /**
      * Constructor
      * 
@@ -54,16 +45,12 @@ public class DisplayManualTestStepResponseMessage extends Message {
         setStatus(status);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.DISPLAY_MANUAL_TEST_STEP_RESPONSE_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return VERSION;
     }
@@ -76,9 +63,7 @@ public class DisplayManualTestStepResponseMessage extends Message {
         m_comment = comment;
     }
 
-    /**
-     * @return the comment
-     */
+    /** @return the comment */
     public String getComment() {
         return m_comment;
     }
@@ -91,9 +76,7 @@ public class DisplayManualTestStepResponseMessage extends Message {
         m_status = status;
     }
 
-    /**
-     * @return the status
-     */
+    /** @return the status */
     public boolean isStatus() {
         return m_status;
     }

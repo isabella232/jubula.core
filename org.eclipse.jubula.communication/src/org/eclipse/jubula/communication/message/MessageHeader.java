@@ -16,32 +16,20 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
-
 /**
  * The MessageHeader contains all header information for a message.
  * 
  * @author BREDEX GmbH
  * @created 13.07.2004
- * 
- * The "@-attribute" comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the "native" Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- * 
- * @attribute System.Serializable()
- * 
- * 
- *
  */
 public class MessageHeader {
     /** the first character of a message as an int */
-    public static final int HEADER_START = '#';  
+    public static final int HEADER_START = '#';
 
     /** constant for a plain message */
     public static final int MESSAGE = 2;
 
-    /** constant for a message which excects an answer */
+    /** constant for a message which excepts an answer */
     public static final int REQUEST = 3;
 
     /** constant for a message which is a response */
@@ -50,49 +38,37 @@ public class MessageHeader {
     /** header version */
     private static final int HEADER_VERSION = 1;
 
-/* DOTNETDECLARE:BEGIN */
-
     /**
      * the version of the header, used to compare with HEADER_VERSION to
      * determine version conflicts
      */
-    /** @attribute System.Xml.Serialization.XmlElement("m__version") */
-    public int m_version;
+    private int m_version;
 
-    /** the type of the message
-     * @attribute System.Xml.Serialization.XmlElement("m__messageType")
-     */
-    public int m_messageType;
+    /** the type of the message */
+    private int m_messageType;
 
-    /** the name of the class type of the message 
-     * @attribute System.Xml.Serialization.XmlElement("m__messageClassName")
-     */
-    public String m_messageClassName;
+    /** the name of the class type of the message */
+    private String m_messageClassName;
 
-    /** message length in lines, will not serialized in the header 
-     * @attribute System.Xml.Serialization.XmlElement("m__messageLength")
-     */
-    public int m_messageLength = -1;
-
-/* DOTNETDECLARE:END */
+    /** message length in lines, will not serialized in the header */
+    private int m_messageLength = -1;
 
     /**
-     * empty default constructor. Do not call this directly, it's used by
-     * XML serialization.
+     * empty default constructor. Do not call this directly, it's used by XML
+     * serialization.
      */
     public MessageHeader() {
         super();
     }
 
     /**
-     * conctructor with the type and the message as parameter. Use this
+     * Constructor with the type and the message as parameter. Use this
      * constructor for an outgoing message. The message is used to determine the
      * class name of the message.
-     * 
-     * @param messageType -
-     *            the type of this message, see constants
-     * @param message -
-     *            the message to create a header for, must not be
+     * @param messageType
+     *            - the type of this message, see constants
+     * @param message
+     *            - the message to create a header for, must not be
      *            <code>null</code>
      * @throws IllegalArgumentException
      *             if an unknown type is used or if the message is
@@ -103,7 +79,7 @@ public class MessageHeader {
 
         if (messageType < MESSAGE || messageType > RESPONSE) {
             throw new IllegalArgumentException(
-                "invalid message type: " + messageType); //$NON-NLS-1$
+                    "invalid message type: " + messageType); //$NON-NLS-1$
         }
         Validate.notNull(message);
 
@@ -111,10 +87,8 @@ public class MessageHeader {
         m_messageType = messageType;
         m_messageClassName = message.getClass().getName();
     }
-    
-    /**
-     * @return The message type.
-     */
+
+    /** @return The message type. */
     public int getMessageType() {
         return m_messageType;
     }
@@ -126,108 +100,86 @@ public class MessageHeader {
     public void setMessageType(int messageType) {
         m_messageType = messageType;
     }
-    /**
-     * @return The message length.
-     */
+
+    /** @return The message length. */
     public int getMessageLength() {
         return m_messageLength;
     }
 
     /**
-     * @param messageLength -
-     *            the message length
+     * @param messageLength
+     *            - the message length
      */
     public void setMessageLength(int messageLength) {
         m_messageLength = messageLength;
     }
 
-    /**
-     * @return Returns the version.
-     */
+    /** @return Returns the version. */
     public int getVersion() {
         return m_version;
     }
 
     /**
-     * @param version
-     *            The version to set.
+     * @param version The version to set.
      */
     public void setVersion(int version) {
         m_version = version;
     }
+
     /**
-     * Validates the header version.
-     * 
-     * {@inheritDoc}
+     * Validates the header version. {@inheritDoc}
      * @throws InvalidHeaderVersionException
      *             If the version member is not equal to
      *             <code>HEADER_VERSION</code>.
      */
-    public void validateVersion()
-        throws InvalidHeaderVersionException {
+    public void validateVersion() throws InvalidHeaderVersionException {
         if (m_version != HEADER_VERSION) {
             throw new InvalidHeaderVersionException("Invalid version " //$NON-NLS-1$
-                + m_version + ". Valid is: " + HEADER_VERSION, //$NON-NLS-1$
-                MessageIDs.E_INVALID_HEADER);
+                    + m_version + ". Valid is: " + HEADER_VERSION, //$NON-NLS-1$
+                    MessageIDs.E_INVALID_HEADER);
 
         }
     }
-    /**
-     * @return Returns the class name of the message.
-     */
+
+    /** @return Returns the class name of the message. */
     public String getMessageClassName() {
         return m_messageClassName;
     }
 
-    /**
-     * @param messageClass
-     *            The message classname to set.
-     */
+    /** @param messageClass The message classname to set. */
     public void setMessageClassName(String messageClass) {
         m_messageClassName = messageClass;
     }
 
     /**
      * overrides equals().
-     * 
-     * @param object -
-     *            the object
+     * @param object - the object
      * @return true if these porperties are equals: version and messageType
-     * 
      */
     public boolean equals(Object object) {
         if (object instanceof MessageHeader) {
-            MessageHeader theOther = (MessageHeader)object;
+            MessageHeader theOther = (MessageHeader) object;
             return new EqualsBuilder().append(m_version, theOther.m_version)
-                .append(m_messageType, theOther.m_messageType).isEquals();
+                    .append(m_messageType, theOther.m_messageType).isEquals();
         }
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public int hashCode() {
         return new HashCodeBuilder().append(m_version).append(m_messageType)
                 .toHashCode();
     }
 
-    /**
-     * Exception to throw if the header version is wrong.
-     * 
-     * {@inheritDoc}
-     */
+    /** Exception to throw if the header version is wrong. {@inheritDoc} */
     public static class InvalidHeaderVersionException extends
-        CommunicationException {
+            CommunicationException {
         /**
          * constructor
-         * 
          * @param message The detailed message.
-         * @param id An ErrorMessage.ID.
-         * {@inheritDoc}
+         * @param id An ErrorMessage.ID. {@inheritDoc}
          */
-        public InvalidHeaderVersionException(String message, 
-            Integer id) {
+        public InvalidHeaderVersionException(String message, Integer id) {
             super(message, id);
         }
     }

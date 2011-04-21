@@ -16,29 +16,22 @@ import org.eclipse.jubula.tools.serialisation.SerializedImage;
 /**
  * @author BREDEX GmbH
  * @created Apr 19, 2010
- * 
  */
 public class TakeScreenshotResponseMessage extends Message {
     /** the screenshot */
     private SerializedImage m_screenshot = null;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public TakeScreenshotResponseMessage() {
         // empty
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.TAKE_SCREENSHOT_RESPONSE_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return 1.0;
     }
@@ -51,11 +44,8 @@ public class TakeScreenshotResponseMessage extends Message {
         m_screenshot = screenshot;
     }
 
-    /**
-     * @return the screenshot
-     */
+    /** @return the screenshot */
     public SerializedImage getScreenshot() {
         return m_screenshot;
     }
-
 }

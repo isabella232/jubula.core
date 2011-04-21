@@ -16,68 +16,41 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @author BREDEX GmbH
  * @created May 18, 2009
  */
-/**
- * The @-attribute comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the native Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- * 
- * @attribute System.Serializable()
- * */
 public class SendDirectoryMessage extends Message {
-    
     /** static version */
     private static final double VERSION = 1.0;
 
-/* DOTNETDECLARE:BEGIN */
+    /** m_dirname */
+    private String m_dirname;
 
-    /**
-     * transmitted version of this message.
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__version") */
-    public double m_version = VERSION;
-
-    /** @attribute System.Xml.Serialization.XmlElement("m__dirname") */
-    public String m_dirname;
-    
-/* DOTNETDECLARE:END */
-    
-    /**
-     * base constructor
-     */
+    /** base constructor */
     public SendDirectoryMessage() {
         super();
     }
 
     /**
      * base constructor
-     * @param dirname Directory to browse
+     * 
+     * @param dirname
+     *            Directory to browse
      */
     public SendDirectoryMessage(String dirname) {
         super();
         m_dirname = dirname;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.SEND_DIRECTORY_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-        return m_version;
+        return VERSION;
     }
 
-    /**
-     * @return the dirname
-     */
+    /** @return the dirname */
     public String getDirname() {
         return m_dirname;
     }
-
 }

@@ -13,26 +13,12 @@ package org.eclipse.jubula.communication.message.swt;
 import org.eclipse.jubula.communication.message.ActivateApplicationMessage;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 
-
 /**
  * @author BREDEX GmbH
  * @created 10.02.2006
  */
-
-/**
- * The @-attribute comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the native Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- *
- * @attribute System.Serializable()
- */
 public class ActivateSwtApplicationMessage extends ActivateApplicationMessage {
-    
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.ACTIVATE_SWT_APPLICATION_COMMAND;
     }

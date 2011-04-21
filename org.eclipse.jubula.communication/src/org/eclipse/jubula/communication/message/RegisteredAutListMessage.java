@@ -17,37 +17,17 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
  * @author BREDEX GmbH
  * @created Jan 26, 2010
  */
-
-/**
- * The @-attribute comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the native Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- * 
- * @attribute System.Serializable()
- */
 public class RegisteredAutListMessage extends Message {
-
     /** version */
     private static final double VERSION = 1.0;
 
-/* DOTNETDECLARE:BEGIN */
-
     /**
-     * transmitted version of this message.
+     * the <code>autIds</code>
      */
-    /** @attribute System.Xml.Serialization.XmlElement("m__version") */
-    public double m_version = VERSION;
-
-    /** @attribute System.Xml.Serialization.XmlElement("m__autIds") */
-    public AutIdentifier [] m_autIds;
-    
-/* DOTNETDECLARE:END */
+    private AutIdentifier[] m_autIds;
 
     /**
-     * Default constructor.
-     * Do nothing (required by Betwixt).
+     * Default constructor. Do nothing (required by Betwixt).
      */
     public RegisteredAutListMessage() {
         // Nothing to initialize
@@ -56,38 +36,33 @@ public class RegisteredAutListMessage extends Message {
     /**
      * Constructor
      * 
-     * @param autIds All AUTs that should be reported as "running".
+     * @param autIds
+     *            All AUTs that should be reported as "running".
      */
-    public RegisteredAutListMessage(AutIdentifier [] autIds) {
+    public RegisteredAutListMessage(AutIdentifier[] autIds) {
         m_autIds = autIds;
     }
-    
-    /**
-     * @return the autIds
-     */
+
+    /** @return the autIds */
     public AutIdentifier[] getAutIds() {
         return m_autIds;
     }
 
     /**
-     * @param autIds the autIds to set
+     * @param autIds
+     *            the autIds to set
      */
     public void setAutIds(AutIdentifier[] autIds) {
         m_autIds = autIds;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.REGISTERED_AUTS_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-        return m_version;
+        return VERSION;
     }
-
 }

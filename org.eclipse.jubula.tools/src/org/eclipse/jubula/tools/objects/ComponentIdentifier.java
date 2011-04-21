@@ -48,40 +48,36 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
     /** the logger */
     private static Log log = LogFactory.getLog(ComponentIdentifier.class);
     
-    /* DOTNETDECLARE:BEGIN */
-
     /**
      * the name of the class as which class is being handled as
      * for example myTextField would be TextField
      */
-    public String m_supportedClassName = null;
+    private String m_supportedClassName = null;
     
     /**
      * a list of all neighbours of a component
      * this is some context information
      */
-    public List m_neighbours = new ArrayList();
+    private List m_neighbours = new ArrayList();
     
     /** the name of the class of the component, such as 'javax.swing.JButton' 
      *  this attribute decides how to test a class. So if class itself is not
      * testable, it will be superClass name.
      * */
-    public String m_componentClassName = null;
+    private String m_componentClassName = null;
     
     /**
      * the hierarchy for the component. The names of the container hierarchy
      * from top to (checkstyle :-) down, inclusive the component name itself
      */
-    public List m_hierarchyNames = new ArrayList();
+    private List m_hierarchyNames = new ArrayList();
 
     /**
      * the alternative name for display of the component or null if the normal 
      * name returned by method getComponentName() has to be used as display name
      */
-    public String m_alternativeDisplayName = null;
+    private String m_alternativeDisplayName = null;
     
-    /* DOTNETDECLARE:END */
-
     /**
      * public constructor <br>
      * 

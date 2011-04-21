@@ -15,36 +15,25 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 /**
  * @author BREDEX GmbH
  * @created Aug 19, 2010
- * 
  */
 public class DisplayManualTestStepMessage extends Message {
-    /**
-     * Static version
-     */
-    private static final double VERSION = 1.0;
-    
-    /**
-     * <code>m_actionToPerfom</code>
-     */
+    /** Static version s */
+    public static final double VERSION = 1.0;
+
+    /** <code>m_actionToPerfom</code> */
     private String m_actionToPerfom = null;
 
-    /**
-     * <code>m_expectedBehaviour</code>
-     */
+    /** <code>m_expectedBehaviour</code> */
     private String m_expectedBehavior = null;
-    
-    /**
-     * <code>m_timeout</code>
-     */
+
+    /** <code>m_timeout</code> */
     private int m_timeout;
-    
-    /**
-     * Default
-     */
+
+    /** Default */
     public DisplayManualTestStepMessage() {
         super();
     }
-    
+
     /**
      * Constructor
      * 
@@ -52,7 +41,8 @@ public class DisplayManualTestStepMessage extends Message {
      *            string description to display
      * @param expectedBehavior
      *            string description to display
-     * @param timeout the timeout
+     * @param timeout
+     *            the timeout
      */
     public DisplayManualTestStepMessage(String actionToPerfom,
             String expectedBehavior, int timeout) {
@@ -60,59 +50,52 @@ public class DisplayManualTestStepMessage extends Message {
         setExpectedBehavior(expectedBehavior);
         setTimeout(timeout);
     }
-    
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.DISPLAY_MANUAL_TEST_STEP_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
         return VERSION;
     }
 
     /**
-     * @param actionToPerfom the actionToPerfom to set
+     * @param actionToPerfom
+     *            the actionToPerfom to set
      */
     public void setActionToPerfom(String actionToPerfom) {
         m_actionToPerfom = actionToPerfom;
     }
 
-    /**
-     * @return the actionToPerfom
-     */
+    /** @return the actionToPerfom */
     public String getActionToPerfom() {
         return m_actionToPerfom;
     }
 
     /**
-     * @param expectedBehavior the expectedBehavior to set
+     * @param expectedBehavior
+     *            the expectedBehavior to set
      */
     public void setExpectedBehavior(String expectedBehavior) {
         m_expectedBehavior = expectedBehavior;
     }
 
-    /**
-     * @return the expectedBehaviour
-     */
+    /** @return the expectedBehaviour */
     public String getExpectedBehavior() {
         return m_expectedBehavior;
     }
 
     /**
-     * @param timeout the timeout to set
+     * @param timeout
+     *            the timeout to set
      */
     public void setTimeout(int timeout) {
         m_timeout = timeout;
     }
 
-    /**
-     * @return the timeout
-     */
+    /** @return the timeout */
     public int getTimeout() {
         return m_timeout;
     }

@@ -95,9 +95,9 @@ public class RemoteFileBrowserBP {
                 }
             }
         }
-
         m_isDataValid = !m_timeOut
-                && (m_responseMsg.m_error == SendDirectoryResponseMessage.OK);
+                && (m_responseMsg.getError() 
+                        == SendDirectoryResponseMessage.OK);
         return m_isDataValid;
     }
 
@@ -123,7 +123,7 @@ public class RemoteFileBrowserBP {
     @SuppressWarnings("unchecked")
     public List<String> getRemoteFilesystemRoots() {
         if (m_isDataValid && m_responseMsg != null) {
-            return m_responseMsg.m_roots;
+            return m_responseMsg.getRoots();
         }
         return Collections.EMPTY_LIST;
     }
@@ -134,7 +134,7 @@ public class RemoteFileBrowserBP {
      */
     public String getSepChar() {
         if (m_isDataValid && m_responseMsg != null) {
-            return String.valueOf(m_responseMsg.m_separator);
+            return String.valueOf(m_responseMsg.getSeparator());
         }
         return StringConstants.EMPTY;
     }

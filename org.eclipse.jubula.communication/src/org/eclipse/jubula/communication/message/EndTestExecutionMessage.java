@@ -15,32 +15,26 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 /**
  * @author BREDEX GmbH
  * @created Apr 19, 2010
- * 
  */
 public class EndTestExecutionMessage extends Message {
-    /**
-     * <code>TIMEOUT</code> the timeout for this message
-     */
+    /** <code>TIMEOUT</code> the timeout for this message */
     public static final int TIMEOUT = 10000;
 
-    /**
-     * Default constructor.
-     */
+    /** Static version */
+    public static final double VERSION = 1.0;
+
+    /** Default constructor. */
     public EndTestExecutionMessage() {
         // empty
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.END_TESTEXECUTION_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-        return 1.0;
+        return VERSION;
     }
 }

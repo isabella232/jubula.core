@@ -14,26 +14,12 @@ import org.eclipse.jubula.communication.message.CAPTestMessage;
 import org.eclipse.jubula.communication.message.MessageCap;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 
-
-
 /**
  * This class sends a component-action-param-triple to the AutSwingServer.
- *
  * @author BREDEX GmbH
  * @created 09.05.2006
  */
-
-/**
- * The @-attribute comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the native Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- *
- * @attribute System.Serializable()
- */
 public class CAPSwingTestMessage extends CAPTestMessage {
-
     /**
      * Default constructor.
      * Do nothing (required by Betwixt).

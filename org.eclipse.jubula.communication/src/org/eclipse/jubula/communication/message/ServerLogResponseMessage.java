@@ -16,107 +16,69 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @author BREDEX GmbH
  * @created Feb 8, 2007
  */
-
-/**
- * The @-attribute comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the native Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- * @attribute System.Serializable()
- * 
- * */
 public class ServerLogResponseMessage extends Message {
-
     /** status ok */
     public static final int OK = 0;
-    
+
     /** file logging not enabled */
     public static final int FILE_NOT_ENABLED = 1;
-    
+
     /** log file not found */
     public static final int FILE_NOT_FOUND = 2;
-    
+
     /** an IOException occurred */
     public static final int IO_EXCEPTION = 3;
 
     /** configuration problem */
     public static final int CONFIG_ERROR = 4;
-    
-    /**
-     * Static version
-     */
+
+    /** Static version */
     private static final double VERSION = 1.0;
 
-/* DOTNETDECLARE:BEGIN */
+    /** the server log contents */
+    private String m_serverLog;
 
-    /**
-     * transmitted version of this message.
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__version") */
-    public double m_version = VERSION;
-    
-    /**
-     * the server log contents
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__serverLog") */
-    public String m_serverLog;
-    
-    /**
-     * code for handling errors
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__status") */
-    public int m_status;
+    /** code for handling errors */
+    private int m_status;
 
-/* DOTNETDECLARE:END */
-
-    /**
-     * Default constructor. Sets the initial status to OK.
-     */
+    /** Default constructor. Sets the initial status to OK. */
     public ServerLogResponseMessage() {
         m_status = OK;
     }
-    
-    /**
-     * {@inheritDoc}
-     */
+
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.SERVER_LOG_RESPONSE_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-        return m_version;
+        return VERSION;
     }
 
-    /**
-     * @return the serverLog
-     */
+    /** @return the serverLog */
     public String getServerLog() {
         return m_serverLog;
     }
 
     /**
-     * @param serverLog the serverLog to set
+     * @param serverLog
+     *            the serverLog to set
      */
     public void setServerLog(String serverLog) {
         m_serverLog = serverLog;
     }
 
-    /**
-     * @return the status
-     */
+    /** @return the status */
     public int getStatus() {
         return m_status;
     }
 
     /**
-     * @param status the status to set
+     * @param status
+     *            the status to set
      */
     public void setStatus(int status) {
         m_status = status;
     }
-
 }

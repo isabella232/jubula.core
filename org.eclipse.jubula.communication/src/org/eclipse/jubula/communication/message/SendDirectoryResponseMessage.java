@@ -16,88 +16,66 @@ import java.util.List;
 
 import org.eclipse.jubula.tools.constants.CommandConstants;
 
-
 /**
  * @author BREDEX GmbH
  * @created May 18, 2009
  */
-/**
- * The @-attribute comments are configuration attributes for the .NET XML
- * serializer. They are not needed by the native Java classes. They are
- * defined here because the classes are shared on source code level.
- * Due to the way the attributes are set, the property variables need to be
- * public. Since these are pure data carrying properties this is acceptable.
- * 
- * @attribute System.Serializable()
- * */
 public class SendDirectoryResponseMessage extends Message {
     /** dir marker */
     public static final String DIR_MARKER = "D"; //$NON-NLS-1$
+
     /** file marker */
     public static final String FILE_MARKER = "F"; //$NON-NLS-1$
-    
+
     /** state */
     public static final int OK = 0;
+
     /** state */
     public static final int NOT_A_DIR = 1;
+
     /** state */
     public static final int IO_ERROR = 2;
-    
+
     /** static version */
     private static final double VERSION = 1.0;
-    
 
-/* DOTNETDECLARE:BEGIN */
+    /** m_base */
+    private String m_base;
 
-    /**
-     * transmitted version of this message.
-     */
-    /** @attribute System.Xml.Serialization.XmlElement("m__version") */
-    public double m_version = VERSION;    
-    
-    /** @attribute System.Xml.Serialization.XmlElement("m__base") */
-    public String m_base;
-    
-    /** @attribute System.Xml.Serialization.XmlElement("m__dirEntries") */
-    public List m_dirEntries;
-    
-    /** @attribute System.Xml.Serialization.XmlElement("m__error") */
-    public int m_error = OK;
-    
-    /** @attribute System.Xml.Serialization.XmlElement("m__separator") */
-    public char m_separator = File.separatorChar;
-    
-    /** @attribute System.Xml.Serialization.XmlElement("m__roots") */
-    public List m_roots;
-    
-/* DOTNETDECLARE:END */
+    /** m_dirEntries */
+    private List m_dirEntries;
 
-    /**
-     * basic constructor
-     */
+    /** m_error */
+    private int m_error = OK;
+
+    /** m_separator */
+    private char m_separator = File.separatorChar;
+
+    /** m_roots */
+    private List m_roots;
+
+    /** basic constructor */
     public SendDirectoryResponseMessage() {
         super();
         m_dirEntries = new ArrayList(101);
         m_roots = new ArrayList(26);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getCommandClass() {        
+    /** {@inheritDoc} */
+    public String getCommandClass() {
         return CommandConstants.PROCESS_DIR_COMMAND;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public double getVersion() {
-        return m_version;
+        return VERSION;
     }
 
     /**
      * add a file entry
-     * @param name of the entry
+     * 
+     * @param name
+     *            of the entry
      */
     public void addFile(String name) {
         m_dirEntries.add(FILE_MARKER + name);
@@ -105,54 +83,62 @@ public class SendDirectoryResponseMessage extends Message {
 
     /**
      * add a directory entry
-     * @param name of the entry;
+     * 
+     * @param name
+     *            of the entry;
      */
     public void addDir(String name) {
         m_dirEntries.add(DIR_MARKER + name);
     }
-    
+
     /**
-     * add an entry to the roots list
-     * this is set from File.listRoots()
-     * @param absName the absolute path name of a root filesystem entry
+     * add an entry to the roots list this is set from File.listRoots()
+     * 
+     * @param absName
+     *            the absolute path name of a root filesystem entry
      */
     public void addRoot(String absName) {
         m_roots.add(absName);
     }
 
-    /**
-     * @return the dirEntries
-     */
+    /** @return the dirEntries */
     public List getDirEntries() {
         return m_dirEntries;
     }
 
-    /**
-     * @return the error
-     */
+    /** @return the error */
     public int getError() {
         return m_error;
     }
 
     /**
-     * @param error the error to set
+     * @param error
+     *            the error to set
      */
     public void setError(int error) {
         m_error = error;
     }
 
-    /**
-     * @return the base
-     */
+    /** @return the base */
     public String getBase() {
         return m_base;
     }
 
     /**
-     * @param base the base to set
+     * @param base
+     *            the base to set
      */
     public void setBase(String base) {
         m_base = base;
     }
 
+    /** @return m_roots */
+    public List getRoots() {
+        return m_roots;
+    }
+
+    /** @return m_separator */
+    public char getSeparator() {
+        return m_separator;
+    }
 }
