@@ -39,7 +39,8 @@ public class DisplayManualTestStepResponseMessage extends Message {
      * @param status
      *            true if succeeded, false otherwise
      */
-    public DisplayManualTestStepResponseMessage(String comment, boolean status) {
+    public DisplayManualTestStepResponseMessage(String comment, 
+        boolean status) {
         setComment(comment);
         setStatus(status);
     }

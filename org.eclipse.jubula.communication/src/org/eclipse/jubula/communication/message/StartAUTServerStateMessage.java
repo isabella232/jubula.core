@@ -44,36 +44,37 @@ public class StartAUTServerStateMessage extends Message {
     public static final int AUT_MAIN_NOT_FOUND_IN_JAR = SECURITY + 1; // 6
 
     /** main class is not distinct */
-    public static final int AUT_MAIN_NOT_DISTINCT_IN_JAR = AUT_MAIN_NOT_FOUND_IN_JAR + 1; // 7
+    public static final int AUT_MAIN_NOT_DISTINCT_IN_JAR = 
+        AUT_MAIN_NOT_FOUND_IN_JAR + 1; // 7
 
     /** no main class transmitted and classpath does not consists of a jar */
     public static final int NO_JAR_AS_CLASSPATH = // 8
-    AUT_MAIN_NOT_DISTINCT_IN_JAR + 1;
+        AUT_MAIN_NOT_DISTINCT_IN_JAR + 1;
 
     /** scanning the jar for a main class failed (IOException) */
     public static final int SCANNING_JAR_FAILED = // 9
-    NO_JAR_AS_CLASSPATH + 1;
+        NO_JAR_AS_CLASSPATH + 1;
 
     /**
      * Communication error (AUTServer exit codes UKNOWN_GuiDancerCLIENT and
      * COMUNICATION_ERROR
      */
     public static final int COMMUNICATION = // 10
-    SCANNING_JAR_FAILED + 1;
+        SCANNING_JAR_FAILED + 1;
 
     /**
      * invalid or unsufficient arguments (AUTServer exit codes INVALID_ARG,
      * INVALID_NUMBER_OF_ARGS)
      */
     public static final int INVALID_ARGUMENTS = // 11
-    COMMUNICATION + 1;
+        COMMUNICATION + 1;
 
     /**
      * server class could not be instantiated for the given toolkit (AUTServer
      * exit code EXIT_AUT_SERVER_INSTANTIATION)
      */
     public static final int NO_SERVER_CLASS = // 12
-    INVALID_ARGUMENTS + 1;
+        INVALID_ARGUMENTS + 1;
 
     /** the dotNet Framework is not properly installed */
     public static final int DOTNET_INSTALL_INVALID = NO_SERVER_CLASS + 1; // 13

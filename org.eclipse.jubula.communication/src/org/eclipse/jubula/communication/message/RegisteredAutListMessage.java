@@ -21,6 +21,9 @@ public class RegisteredAutListMessage extends Message {
     /** version */
     private static final double VERSION = 1.0;
 
+    /**
+     * the <code>autIds</code>
+     */
     private AutIdentifier[] m_autIds;
 
     /**

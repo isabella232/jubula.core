@@ -95,9 +95,9 @@ public class RemoteFileBrowserBP {
                 }
             }
         }
-
         m_isDataValid = !m_timeOut
-                && (m_responseMsg.getError() == SendDirectoryResponseMessage.OK);
+                && (m_responseMsg.getError() 
+                        == SendDirectoryResponseMessage.OK);
         return m_isDataValid;
     }
 

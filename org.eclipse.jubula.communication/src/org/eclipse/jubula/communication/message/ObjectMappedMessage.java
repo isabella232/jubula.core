@@ -55,7 +55,8 @@ public class ObjectMappedMessage extends Message {
      * @param componentIdentifier
      *            The componentIdentifier to set.
      */
-    public void setComponentIdentifier(IComponentIdentifier componentIdentifier) {
+    public void setComponentIdentifier(IComponentIdentifier 
+        componentIdentifier) {
         m_componentIdentifier = componentIdentifier;
     }
 }

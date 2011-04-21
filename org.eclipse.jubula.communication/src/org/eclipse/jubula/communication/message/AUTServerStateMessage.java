@@ -33,7 +33,8 @@ public class AUTServerStateMessage extends Message {
     public static final int MAIN_METHOD_NOT_FOUND = AUT_NOT_FOUND + 1;
 
     /** getting main method per reflection failed */
-    public static final int EXIT_AUT_WRONG_CLASS_VERSION = MAIN_METHOD_NOT_FOUND + 1;
+    public static final int EXIT_AUT_WRONG_CLASS_VERSION = 
+        MAIN_METHOD_NOT_FOUND + 1;
 
     /** the highest constant in this class, change this if you add constants. */
     public static final int MAX_CONSTANT = 4;

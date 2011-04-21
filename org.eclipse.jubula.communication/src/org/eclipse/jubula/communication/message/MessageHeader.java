@@ -75,7 +75,7 @@ public class MessageHeader {
      *             <code>null</code>.
      */
     public MessageHeader(int messageType, Message message)
-            throws IllegalArgumentException {
+        throws IllegalArgumentException {
 
         if (messageType < MESSAGE || messageType > RESPONSE) {
             throw new IllegalArgumentException(
