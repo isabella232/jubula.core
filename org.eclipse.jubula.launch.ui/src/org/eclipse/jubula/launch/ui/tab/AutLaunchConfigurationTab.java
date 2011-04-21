@@ -14,6 +14,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jubula.launch.AutLaunchConfigurationConstants;
 import org.eclipse.jubula.launch.ui.i18n.Messages;
@@ -22,6 +24,8 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -69,22 +73,45 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      * {@inheritDoc}
      */
     public void createControl(Composite parent) {
-        createVerticalSpacer(parent, 1);
+        Image infoImage = 
+            FieldDecorationRegistry.getDefault().getFieldDecoration(
+                    FieldDecorationRegistry.DEC_INFORMATION).getImage();
         Composite composite = new Composite(parent, SWT.NONE);
         GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
         composite.setLayout(new GridLayout(2, false));
         m_activateTestSupportCheckbox = createCheckButton(
                 composite, 
                 Messages.AutLaunchConfigurationTab_ActiveCheckbox_label);
-        GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(
+        ControlDecoration testSupportCheckboxDecoration = 
+            new ControlDecoration(m_activateTestSupportCheckbox, SWT.RIGHT);
+        testSupportCheckboxDecoration.setDescriptionText(
+                Messages.AutLaunchConfigurationTab_ActiveCheckbox_info);
+        testSupportCheckboxDecoration.setImage(infoImage);
+        testSupportCheckboxDecoration.setMarginWidth(2);
+        testSupportCheckboxDecoration.setShowOnlyOnFocus(false);
+
+        new GridData();
+        GridDataFactory.swtDefaults().span(2, 1).applyTo(
                 m_activateTestSupportCheckbox);
         
         m_autIdLabel = new Label(composite, SWT.NONE);
         m_autIdLabel.setText(
                 Messages.AutLaunchConfigurationTab_AutIdTextField_label);
-        
+
         m_autIdText = new Text(composite, SWT.BORDER);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(m_autIdText);
+
+        ControlDecoration autIdLabelDecoration = 
+            new ControlDecoration(m_autIdText, SWT.LEFT | SWT.TOP);
+        autIdLabelDecoration.setDescriptionText(
+                Messages.AutLaunchConfigurationTab_AutIdTextField_info);
+        autIdLabelDecoration.setImage(infoImage);
+        autIdLabelDecoration.setMarginWidth(2);
+        autIdLabelDecoration.setShowOnlyOnFocus(false);
+
+        GridDataFactory.fillDefaults().grab(true, false)
+            .indent(autIdLabelDecoration.getImage().getBounds().x 
+                    + (autIdLabelDecoration.getMarginWidth() * 2), 0)
+            .applyTo(m_autIdText);
 
         m_autIdText.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {

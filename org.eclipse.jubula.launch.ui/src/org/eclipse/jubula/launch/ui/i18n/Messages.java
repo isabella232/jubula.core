@@ -18,7 +18,9 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.launch.ui.i18n.messages"; //$NON-NLS-1$
+    public static String AutLaunchConfigurationTab_ActiveCheckbox_info;
     public static String AutLaunchConfigurationTab_ActiveCheckbox_label;
+    public static String AutLaunchConfigurationTab_AutIdTextField_info;
     public static String AutLaunchConfigurationTab_AutIdTextField_label;
     public static String AutLaunchConfigurationTab_name;
     static {
