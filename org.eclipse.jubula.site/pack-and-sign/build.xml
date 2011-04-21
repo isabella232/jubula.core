@@ -12,64 +12,66 @@
 
 	<condition property="sign.skip" value="true"><equals arg1="${skipSign}" arg2="true"/></condition>
   	<condition property="promote.skip" value="true"><equals arg1="${skipPromote}" arg2="true"/></condition>
-
-  	<!-- sign -->
-
-	<antcall target="sign"/>
-
-	<!-- condition jars -->
-
-	<delete dir="${projectDir}/condition"/>
-	<copy todir="${projectDir}/condition">
-	  <fileset dir="${projectDir}/site">
-		<include name="**/*jubula*.jar"/>
-	  </fileset>
-	</copy>
-
-	<antcall target="pack">
-	  <param name="args" value="-processAll -repack"/>
-	  <param name="site" value="${projectDir}/condition"/>
-	</antcall>
-
-	<copy todir="${projectDir}/site">
-	  <fileset dir="${projectDir}/condition">
-		<include name="**/*jubula*.jar"/>
-	  </fileset>
-	</copy>
-
-	<!-- create site archive  -->
-
-	<antcall target="publish"/>
-
-	<zip file="${projectDir}/site-archive.zip">
-	  <fileset dir="${projectDir}/site">
-		<include name="**/*"/>
-	  </fileset>
-	</zip>
-
-	<!-- pack200  -->
-	
-	<antcall target="pack">
-	  <param name="args" value="-pack"/>
-	  <param name="site" value="${projectDir}/site"/>
-	</antcall>
-
-	<antcall target="publish"/>
-
-	<!-- create packed site archive  -->
-
-	<zip file="${projectDir}/site-packed.zip">
-	  <fileset dir="${projectDir}/site">
-		<include name="**/*"/>
-	  </fileset>
-	</zip>
-  	
-  	<!-- promote -->
-
-	<antcall target="promote"/>
-
+ 
+    <antcall target="do-pack-and-sign" />
   </target>
 
+    <target name="do-pack-and-sign" unless="sign.skip">
+    	<!-- sign -->
+    	    <antcall target="sign"/>
+
+    	    <!-- condition jars -->
+
+    	    <delete dir="${projectDir}/condition"/>
+    	    <copy todir="${projectDir}/condition">
+    	      <fileset dir="${projectDir}/site">
+    	        <include name="**/*jubula*.jar"/>
+    	      </fileset>
+    	    </copy>
+
+    	    <antcall target="pack">
+    	      <param name="args" value="-processAll -repack"/>
+    	      <param name="site" value="${projectDir}/condition"/>
+    	    </antcall>
+
+    	    <copy todir="${projectDir}/site">
+    	      <fileset dir="${projectDir}/condition">
+    	        <include name="**/*jubula*.jar"/>
+    	      </fileset>
+    	    </copy>
+
+    	    <!-- create site archive  -->
+
+    	    <antcall target="publish"/>
+
+    	    <zip file="${projectDir}/site-archive.zip">
+    	      <fileset dir="${projectDir}/site">
+    	        <include name="**/*"/>
+    	      </fileset>
+    	    </zip>
+
+    	    <!-- pack200  -->
+    	    
+    	    <antcall target="pack">
+    	      <param name="args" value="-pack"/>
+    	      <param name="site" value="${projectDir}/site"/>
+    	    </antcall>
+
+    	    <antcall target="publish"/>
+
+    	    <!-- create packed site archive  -->
+
+    	    <zip file="${projectDir}/site-packed.zip">
+    	      <fileset dir="${projectDir}/site">
+    	        <include name="**/*"/>
+    	      </fileset>
+    	    </zip>
+    	    
+    	    <!-- promote -->
+
+    	    <antcall target="promote"/>
+    </target>
+	
   <target name="sign" unless="sign.skip">	
 	<chmod perm="755" file="${scriptdir}/sign-and-wait.sh"/>
 	<exec executable="${scriptdir}/sign-and-wait.sh" failonerror="true">
