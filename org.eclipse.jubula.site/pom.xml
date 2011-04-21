@@ -13,6 +13,7 @@
 	<artifactId>org.eclipse.jubula.site</artifactId>
 	<version>0.9.0-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
+	<name>Jubula for Eclipse 3.6 and 3.7</name>
 
 	<build>
 		<plugins>
@@ -35,6 +36,57 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>pack-and-sign</id>
+            <phase>install</phase>
+            <configuration>
+              <target>
+                <ant antfile="pack-and-sign/build.xml">
+                  <property name="localRepository" value="${settings.localRepository}"/>
+                  <property name="projectDir" value="${project.build.directory}"/>
+                  <property name="repositoryName" value="jubula"/>
+                  <property name="skipSign" value="true"/>
+                  <property name="skipPromote" value="true"/>
+                 <!--   
+                  <property name="localRepository" value="${settings.localRepository}"/>
+                  <property name="projectDir" value="${project.build.directory}"/>
+                  <property name="repositoryName" value="${jubula-main-repository}"/>
+                  
+                  <property name="signDir" value="${sign-dir}"/>
+                  <property name="archiveDir" value="${jubula-archive}"/>
+                  <property name="siteDir" value="${jubula-site}"/>
+
+                  <property name="mirrorsUrl" value="${mirrors-url}"/>                
+
+                  <property name="dist" value="jubula"/>
+                  <property name="filter" value="jubula"/>
+                  <property name="pack200" value="${jubula-pack200}"/>
+                  
+                  <property name="skipPack" value="${jubula-skip-pack}"/>
+                  
+                  <property name="version" value="${unqualifiedVersion}"/>
+                  <property name="qualifier" value="${buildQualifier}"/>
+                  -->
+                </ant>
+                <echo file="${project.build.directory}/version.properties">
+                  <![CDATA[
+${unqualifiedVersion}
+${buildQualifier}
+]]>
+                </echo>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 		</plugins>
 	</build>
 

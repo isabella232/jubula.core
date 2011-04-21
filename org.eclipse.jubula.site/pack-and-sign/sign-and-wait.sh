@@ -20,7 +20,7 @@ fi
 set -v
 
 SRC=$1
-DST=/home/data/users/aloerke/signing
+DST=/home/data/httpd/download-staging.priv/technology/jubula/signing
 OUT=$DST/output
 LOG=$DST/signer.log
 
@@ -43,7 +43,7 @@ cd $SRC
 
 # wait up to 30 minutes for signing to complete
 
-tail -f $LOG | grep -E \(Extracting\|Finished\) &
+# tail -f $LOG | grep -E \(Extracting\|Finished\) &
 
 I=0
 while [ $I -lt 60 ] && [ ! -e $OUT/jubula.zip ]; do
@@ -52,8 +52,8 @@ while [ $I -lt 60 ] && [ ! -e $OUT/jubula.zip ]; do
   let I=I+1
 done
 
-PID=`jobs -l -p`
-kill $PID
+# PID=`jobs -l -p`
+# kill $PID
 
 if [ ! -e $OUT/jubula.zip ]
 then
