@@ -15,12 +15,12 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jubula.launch.AutLaunchConfigurationConstants;
 import org.eclipse.jubula.launch.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -47,7 +47,14 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      * @see AutLaunchConfigurationConstants#AUT_ID_KEY
      */
     private Text m_autIdText;
-    
+
+    /** 
+     * label for AUT ID
+     * 
+     * @see AutLaunchConfigurationConstants#AUT_ID_KEY
+     */
+    private Label m_autIdLabel;
+
     /** 
      * checkbox for IS_ACTIVE
      * 
@@ -60,24 +67,31 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      * {@inheritDoc}
      */
     public void createControl(Composite parent) {
+        createVerticalSpacer(parent, 1);
         Composite composite = new Composite(parent, SWT.NONE);
         GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
-        GridLayoutFactory.fillDefaults().applyTo(composite);
+        composite.setLayout(new GridLayout(2, false));
         m_activateTestSupportCheckbox = createCheckButton(
                 composite, 
                 Messages.AutLaunchConfigurationTab_ActiveCheckbox_label);
-        Label autIdLabel = new Label(composite, SWT.NONE);
-        autIdLabel.setText(
+        GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(
+                m_activateTestSupportCheckbox);
+        
+        m_autIdLabel = new Label(composite, SWT.NONE);
+        m_autIdLabel.setText(
                 Messages.AutLaunchConfigurationTab_AutIdTextField_label);
         
         m_autIdText = new Text(composite, SWT.BORDER);
-        
+        GridDataFactory.fillDefaults().grab(true, false).applyTo(m_autIdText);
+
         m_activateTestSupportCheckbox.addSelectionListener(
                 new SelectionAdapter() {
             
                     public void widgetSelected(SelectionEvent e) {
-                        m_autIdText.setEnabled(
-                                m_activateTestSupportCheckbox.getSelection());
+                        boolean enable = 
+                            m_activateTestSupportCheckbox.getSelection();
+                        m_autIdText.setEnabled(enable);
+                        m_autIdLabel.setEnabled(enable);
                     }
                     
                 });
@@ -104,10 +118,12 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      */
     public void initializeFrom(ILaunchConfiguration configuration) {
         try {
-            m_activateTestSupportCheckbox.setSelection(
-                configuration.getAttribute(
-                        AutLaunchConfigurationConstants.ACTIVE_KEY, 
-                        AutLaunchConfigurationConstants.ACTIVE_DEFAULT_VALUE));
+            boolean isActive = configuration.getAttribute(
+                    AutLaunchConfigurationConstants.ACTIVE_KEY, 
+                    AutLaunchConfigurationConstants.ACTIVE_DEFAULT_VALUE);
+            m_activateTestSupportCheckbox.setSelection(isActive);
+            m_autIdLabel.setEnabled(isActive);
+            m_autIdText.setEnabled(isActive);
         } catch (CoreException ce) {
             LOG.error("An error occurred while initializing 'active' checkbox.", ce); //$NON-NLS-1$
         }
