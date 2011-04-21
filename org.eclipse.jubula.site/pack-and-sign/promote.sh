@@ -3,8 +3,8 @@
 VERSION=$1
 QUALIFIER=$2
 SRC=$3
-DST=/home/data/httpd/download.eclipse.org/mylyn/archive/$VERSION/$QUALIFIER
-SITE=/home/data/httpd/download.eclipse.org/mylyn/snapshots
+DST=/home/data/httpd/download.eclipse.org/jubula/archive/$VERSION/$QUALIFIER
+SITE=/home/data/httpd/download.eclipse.org/jubula/snapshots
 
 if [ -e $DST ]; then
  echo $DST already exists
@@ -15,9 +15,8 @@ echo Promoting $VERSION.$QUALIFIER
 
 mkdir -p $DST/
 unzip -d $DST/ $SRC/site-packed.zip 
-cp $SRC/site-archive.zip $DST/mylyn-$VERSION.$QUALIFIER.zip
+cp $SRC/site-archive.zip $DST/jubula-$VERSION.$QUALIFIER.zip
 
-#chgrp -R mylynadmin $DST
 chmod g+w -R $DST
 
 echo Updating $SITE
