@@ -10,7 +10,7 @@
 <repository location="http://download.eclipse.org/releases/helios"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.eclipse.persistence.sdk.feature.group" version="2.2.0.v20110202-r8913"/>
+<unit id="org.eclipse.persistence.jpa.feature.group" version="2.2.0.v20110202-r8913"/>
 <repository location="http://download.eclipse.org/rt/eclipselink/milestone-updates"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
