@@ -50,8 +50,8 @@
                   <property name="localRepository" value="${settings.localRepository}"/>
                   <property name="projectDir" value="${project.build.directory}"/>
                   <property name="repositoryName" value="jubula"/>
-                  <property name="skipSign" value="true"/>
-                  <property name="skipPromote" value="true"/>
+                  <property name="performSign" value="${performSign}"/>
+                  <property name="performPromote" value="${performPromote}"/>
                   <property name="version" value="${unqualifiedVersion}"/>
                   <property name="qualifier" value="${buildQualifier}"/>
                  <!--   
@@ -70,7 +70,6 @@
                   <property name="pack200" value="${jubula-pack200}"/>
                   
                   <property name="skipPack" value="${jubula-skip-pack}"/>
-                  
                   -->
                 </ant>
                 <echo file="${project.build.directory}/version.properties">
