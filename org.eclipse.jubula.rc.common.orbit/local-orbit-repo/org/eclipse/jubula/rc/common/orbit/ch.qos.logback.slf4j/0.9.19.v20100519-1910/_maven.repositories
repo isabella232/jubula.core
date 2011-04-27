@@ -1,0 +1,4 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Wed Apr 27 14:55:24 CEST 2011
+ch.qos.logback.slf4j-0.9.19.v20100519-1910.jar>=
+ch.qos.logback.slf4j-0.9.19.v20100519-1910.pom>=
