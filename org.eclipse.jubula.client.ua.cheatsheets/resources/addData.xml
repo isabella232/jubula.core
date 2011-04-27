@@ -26,7 +26,7 @@
       <description>
          Click on the Data Sets View, and click the <b>Add</b> button.
       </description>
-      <subitem label="Enter &quot;1&quot; in the VALUE1 column, &quot;2&quot; in the VALUE2 column and &quot;3&quot; in the RESULT column (all values without the quotes).the VALUE2 column an">cks that the result of &quot;1&quot; and &quot;2&quot; is &quot;3&quot;.ULT column" skip="false">
+      <subitem label="Enter &quot;1&quot; in the VALUE1 column, &quot;2&quot; in the VALUE2 column and &quot;3&quot; in the RESULT column (all values without the quotes)" skip="false">
       </subitem>
    </item>
    <item title="Add more data" dialog="true" skip="false">
