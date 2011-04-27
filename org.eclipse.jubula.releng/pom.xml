@@ -16,7 +16,7 @@
 	<modules>
 		<module>../org.eclipse.jubula.site</module>
 		<module>../org.eclipse.jubula.app</module>
-		<module>../org.eclipse.jubula.standalone</module>
+		<!-- <module>../org.eclipse.jubula.standalone</module> -->
 		<module>../org.eclipse.jubula.feature</module>
 		<module>../org.eclipse.jubula.feature.client</module>
 		<module>../org.eclipse.jubula.feature.launch.java</module>
