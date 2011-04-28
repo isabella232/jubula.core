@@ -11,6 +11,7 @@
 
 	<modules>
 		<module>../org.eclipse.jubula.releng.client</module>
+		<module>../org.eclipse.jubula.releng.server</module>
 	</modules>
 
 	<url>http://www.eclipse.org/jubula</url>
