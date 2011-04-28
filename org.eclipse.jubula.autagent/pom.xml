@@ -14,6 +14,7 @@
   <artifactId>org.eclipse.jubula.autagent</artifactId>
   <packaging>pom</packaging>
   <modules>
+    <module>org.eclipse.jubula.autagent.resources</module>
     <module>org.eclipse.jubula.autagent</module>
     <module>org.eclipse.jubula.autstarter</module>
   </modules>

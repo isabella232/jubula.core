@@ -4,4 +4,5 @@
 /bin
 /org.eclipse.jubula.rc.common.orbit
 /org.eclipse.jubula.autagent/target
+/org.eclipse.jubula.autagent.resources/target
 /org.eclipse.jubula.autstarter/target
