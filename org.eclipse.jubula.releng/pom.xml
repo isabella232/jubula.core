@@ -10,7 +10,6 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>../org.eclipse.jubula.releng.server</module>
 		<module>../org.eclipse.jubula.releng.client</module>
 	</modules>
 
