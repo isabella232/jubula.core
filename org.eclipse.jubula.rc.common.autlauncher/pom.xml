@@ -8,10 +8,10 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>org.eclipse.jubula.rc.common.project</artifactId>
 		<groupId>org.eclipse.jubula</groupId>
+		<artifactId>org.eclipse.jubula.releng.server</artifactId>
 		<version>0.9.0-SNAPSHOT</version>
-		<relativePath>../..</relativePath>
+		<relativePath>../org.eclipse.jubula.releng.server</relativePath>
 	</parent>
 	<groupId>org.eclipse.jubula</groupId>
 	<artifactId>org.eclipse.jubula.rc.common.autlauncher</artifactId>
@@ -19,7 +19,7 @@
 	<packaging>jar</packaging>
 	<build>
 		<finalName>AUTLauncher</finalName>
-		<sourceDirectory>../../src</sourceDirectory>
+		<sourceDirectory>../org.eclipse.jubula.rc.common/src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
