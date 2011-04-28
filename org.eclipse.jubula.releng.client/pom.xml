@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>org.eclipse.jubula.releng</artifactId>
+    <groupId>org.eclipse.jubula</groupId>
+    <version>0.9.0-SNAPSHOT</version>
+    <relativePath>../org.eclipse.jubula.releng</relativePath>
+  </parent>
+  <groupId>org.eclipse.jubula</groupId>
+  <artifactId>org.eclipse.jubula.releng.client</artifactId>
+  <version>0.9.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <description>Release engineering for Jubula ITE.</description>
+
+	<properties>
+		<tycho-version>0.10.0</tycho-version>
+	</properties>
+
+	<modules>
+		<module>../org.eclipse.jubula.site</module>
+		<module>../org.eclipse.jubula.app</module>
+<!-- 		<module>../org.eclipse.jubula.standalone</module> -->
+		<module>../org.eclipse.jubula.feature</module>
+		<module>../org.eclipse.jubula.feature.client</module>
+		<module>../org.eclipse.jubula.feature.launch.java</module>
+		<module>../org.eclipse.jubula.feature.launch.rcp</module>
+		<module>../org.eclipse.jubula.tools</module>
+		<module>../org.eclipse.jubula.communication</module>
+		<module>../org.eclipse.jubula.client.core</module>
+		<module>../org.eclipse.jubula.client.ui</module>
+		<module>../org.eclipse.jubula.client.inspector.ui</module>
+		<module>../org.eclipse.jubula.client.archive</module>
+		<module>../org.eclipse.jubula.toolkit.provider.base</module>
+		<module>../org.eclipse.jubula.toolkit.provider.concrete</module>
+		<module>../org.eclipse.jubula.toolkit.provider.html</module>
+		<module>../org.eclipse.jubula.toolkit.provider.rcp</module>
+		<module>../org.eclipse.jubula.toolkit.provider.rcp.gef</module>
+		<module>../org.eclipse.jubula.toolkit.provider.swing</module>
+		<module>../org.eclipse.jubula.toolkit.provider.swt</module>
+		<module>../org.eclipse.jubula.toolkit.common</module>
+		<module>../org.eclipse.jubula.client.ua.cheatsheets</module>
+		<module>../org.eclipse.jubula.client.ua.welcome</module>
+		<module>../org.eclipse.jubula.client.ua.help</module>
+		<module>../org.eclipse.jubula.client.cmd</module>
+		<module>../org.eclipse.jubula.launch</module>
+		<module>../org.eclipse.jubula.launch.java.ui</module>
+		<module>../org.eclipse.jubula.launch.rcp.ui</module>
+		<module>../org.eclipse.jubula.launch.ui</module>
+	</modules>
+
+	<url>http://www.eclipse.org/jubula</url>
+
+	<distributionManagement>
+		<repository>
+
+		</repository>
+	</distributionManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<target>
+						<artifact>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
+							<classifier>../org.eclipse.jubula.project.configuration/target/definitions/helios</classifier>
+						</artifact>
+					</target>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

@@ -3,10 +3,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>jubula</artifactId>
+    <artifactId>org.eclipse.jubula.releng.client</artifactId>
     <groupId>org.eclipse.jubula</groupId>
     <version>0.9.0-SNAPSHOT</version>
-    <relativePath>../org.eclipse.jubula.releng</relativePath>
+    <relativePath>../org.eclipse.jubula.releng.client</relativePath>
   </parent>
   <groupId>org.eclipse.jubula</groupId>
   <artifactId>org.eclipse.jubula.client.ui</artifactId>
