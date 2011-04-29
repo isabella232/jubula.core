@@ -3,18 +3,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>org.eclipse.jubula.autagent</artifactId>
+    <artifactId>org.eclipse.jubula.releng.server</artifactId>
     <groupId>org.eclipse.jubula</groupId>
     <version>0.9.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <relativePath>../org.eclipse.jubula.releng.server</relativePath>
   </parent>
 
   <version>0.9.0-SNAPSHOT</version>
-  <groupId>org.eclipse.jubula.autagent</groupId>
+  <groupId>org.eclipse.jubula</groupId>
   <artifactId>org.eclipse.jubula.autstarter</artifactId>
 
   <build>
-    <sourceDirectory>../src</sourceDirectory>
+    <sourceDirectory>../org.eclipse.jubula.autagent/src</sourceDirectory>
     <finalName>AutStarter</finalName>
 
     <plugins>
@@ -23,16 +23,16 @@
         <version>2.0.2</version>
         <configuration>
           <includes>
-			<include>**/AutStarter.java</include>
-			<include>**/AUTServerExitConstants.java</include>
-			<include>**/commands/*.java</include>
-			<include>**/gui/*.java</include>
-			<include>**/remote/**/*.java</include>
-			<include>**/desktop/**/*.java</include>
-			<include>**/agent/*.java</include>
-			<include>**/MainClassLocator.java</include>
-			<include>**/JarResources.java</include>
-			<include>**/monitoring/*.java</include>
+            <include>**/AutStarter.java</include>
+            <include>**/AUTServerExitConstants.java</include>
+            <include>**/commands/*.java</include>
+            <include>**/gui/*.java</include>
+            <include>**/remote/**/*.java</include>
+            <include>**/desktop/**/*.java</include>
+            <include>**/agent/*.java</include>
+            <include>**/MainClassLocator.java</include>
+            <include>**/JarResources.java</include>
+            <include>**/monitoring/*.java</include>
           </includes>
           <source>1.6</source>
           <target>1.6</target>

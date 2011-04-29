@@ -126,6 +126,7 @@
 	</dependencies>
 
 	<modules>
+        <module>../org.eclipse.jubula.autstarter</module>
 		<module>../org.eclipse.jubula.autagent</module>
 		<module>../org.eclipse.jubula.rc.common</module>
 		<module>../org.eclipse.jubula.rc.common.autlauncher</module>
