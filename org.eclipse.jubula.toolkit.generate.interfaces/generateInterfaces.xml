@@ -7,10 +7,10 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 <project name="org.eclipse.jubula.toolkit.generate.interfaces" default="generate">
-	<property name="build.classes" value="build/classes" />
-	<property name="build.jar" value="app" />
-	<property name="build.resources" value="app/resources" />
-	<property name="build.lib" location="app/lib" />
+	<property name="build.dir" value="target" />
+	<property name="build.classes" value="${build.dir}/clazzes" />
+	<property name="build.resources" value="${build.dir}/resources" />
+	<property name="build.lib" location="${build.dir}/lib" />
 	<property name="java.dir" value="src" />
 	<property name="utils.dir" value="resources" />
 	<property name="apache.lib" value="../org.eclipse.jubula.rc.common.orbit" />
@@ -32,9 +32,13 @@
 		</fileset>
 	</path>
 
+	<target name="clean">
+		<delete dir="${build.classes}" />
+		<delete dir="${build.dir}" />
+	</target>
+
 	<target name="build" depends="clean" description="building application for generating interfaces">
 		<mkdir dir="${build.classes}" />
-		<mkdir dir="${build.jar}" />
 		<mkdir dir="${build.lib}" />
 		<mkdir dir="${build.resources}" />
 
@@ -79,7 +83,7 @@
 			</mapper>
 		</pathconvert>
 
-		<jar jarfile="${build.jar}/org.eclipse.jubula.toolkit.generate.interfaces.jar">
+		<jar jarfile="${build.dir}/org.eclipse.jubula.toolkit.generate.interfaces.jar">
 			<manifest>
 				<attribute name="Main-Class" value="org.eclipse.jubula.toolkit.generate.interfaces.GenerateInterfaces" />
 				<attribute name="Class-Path" value="
@@ -91,13 +95,8 @@
 	</target>
 
 	<target name="generate" description="generate the interface definitions" depends="build">
-		<java jar="${build.jar}/org.eclipse.jubula.toolkit.generate.interfaces.jar" dir="${build.jar}" fork="true" failonerror="true">
+		<java jar="${build.dir}/org.eclipse.jubula.toolkit.generate.interfaces.jar" dir="${build.dir}" fork="true" failonerror="true">
 			<arg value="-all" />
 		</java>
-	</target>
-
-	<target name="clean">
-		<delete dir="${build.classes}" />
-		<delete dir="${build.jar}" />
 	</target>
 </project>
