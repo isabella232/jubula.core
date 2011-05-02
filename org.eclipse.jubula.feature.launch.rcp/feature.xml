@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.feature.launch.rcp"
       label="Jubula Eclipse RCP Launch Support (Incubation)"
-      version="0.9.0.qualifier"
+      version="1.0.0.qualifier"
       provider-name="Eclipse Jubula">
 
    <description url="http://www.eclipse.org/jubula">

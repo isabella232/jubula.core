@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.jubula.feature_0.9.0.qualifier.jar" id="org.eclipse.jubula.feature" version="0.9.0.qualifier" os="linux,macosx,win32" ws="cocoa,gtk,win32" nl="en_US" arch="x86,x86_64">
-      <category name="org.eclipse.jubula"/>
+   <category-def name="org.eclipse.test" label="Testing"/>
+   <feature url="features/org.eclipse.jubula.feature_1.0.0.qualifier.jar" id="org.eclipse.jubula.feature" version="1.0.0.qualifier">
+      <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.client_0.9.0.qualifier.jar" id="org.eclipse.jubula.feature.client" version="0.9.0.qualifier" os="linux,macosx,win32" ws="cocoa,gtk,win32" nl="en_US" arch="x86,x86_64">
-      <category name="org.eclipse.jubula"/>
+   <feature url="features/org.eclipse.jubula.feature.launch.java_1.0.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="1.0.0.qualifier">
+      <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.launch.java_0.9.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="0.9.0.qualifier">
-      <category name="org.eclipse.jubula"/>
+   <feature url="features/org.eclipse.jubula.feature.launch.rcp_1.0.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="1.0.0.qualifier">
+      <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.launch.rcp_0.9.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="0.9.0.qualifier">
-      <category name="org.eclipse.jubula"/>
-   </feature>
-   <category-def name="org.eclipse.jubula" label="Jubula"/>
 </site>
