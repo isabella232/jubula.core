@@ -5,7 +5,6 @@
 <locations>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.eclipse.rcp.feature.group" version="3.6.1.r361_v20100827-9OArFLdFjY-ThSQXmKvKz0_T"/>
-<unit id="org.eclipse.rcp.sdk.id" version="3.6.0.M20100909-0800"/>
 <repository location="http://download.eclipse.org/releases/helios"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
