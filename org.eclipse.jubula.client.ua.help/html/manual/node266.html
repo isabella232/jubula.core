@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>4.2.2 Setting up an RCP AUT for testing</title>
+    <meta content="4.2.2 Setting up an RCP AUT for testing" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h2><a id="SECTION00522000000000000000" name="SECTION00522000000000000000"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Setting up an RCP AUT for testing</a></h2>
+    <p><a name="5271"></a> <a name="5272"></a> <a name="5273"></a> <a name="5274"></a><p>If you want to test a <i>Rich Client Platform</i> application, you must first unzip our &quot;<i>RCP Remote Control</i>&quot; plugin into your AUT . This can be done as follows:<ol>
+      <li>Locate the Jubula installation directory.<li>Extract the content of the <i>rcp-support.zip</i> folder into the <i>plugins</i> directory for your RCP AUT . <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>When you install a new version of Jubula , you must repeat these steps with the new RCP remote control plugin. We recommend starting your AUT once with <tt>&quot;-clean&quot;</tt> to ensure that the new remote control plugin is used.</b></td>
+          </tr>
+        </table>
+      <li>RCP applications generally have a configuration/config.ini file which contains the parameter <i>osgi.bundles</i>. This parameter may need to be modified to allow the RCP remote control plugin to load on AUT startup. The <i>org.eclipse.update.configurator</i> plugin automatically loads all plugins found in the plugins directory, which means that the RCP remote control plugin should start with the AUT if <i>org.eclipse.update.configurator@3:start</i> is already defined in the <i>osgi.bundles</i> parameter. Otherwise, you may need to add <i>org.eclipse.jubula.rc.rcp</i> to the end of the <i>osgi.bundles</i> parameter.</ol>
+    <p>If you do not follow the above steps, the AUT Agent will not be able to communicate with your AUT !<p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

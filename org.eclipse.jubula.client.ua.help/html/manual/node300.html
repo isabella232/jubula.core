@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>5.4.1 Structuring global Event Handlers for your test</title>
+    <meta content="5.4.1 Structuring global Event Handlers for your test" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h2><a id="SECTION00641000000000000000" name="SECTION00641000000000000000"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Structuring global Event Handlers for your test</a></h2>
+    <p>When automated tests are running, it is important to ensure that an error in the test will not result in the rest of the test not running. To do this, we recommend adding general Event Handlers to each use case, at the very top level of the use case.<p>The aim of adding Event Handlers here is:<ol>
+      <li>To catch and deal with errors that are not known or expected during the test. For known/expected errors, Event Handlers can be used locally on individual Test Cases <a href="node303.html#BPEHLocal">5.4.2</a>.<li>To ensure that the rest of the test can continue - either in this use case, or in the next one.</ol>
+    <p>A prerequisite for using Event Handlers in a global way is the structure of your tests. Each use case must be contained in a single Test Case , and the use cases must be independent from each other - starting in a well-defined state and leaving the AUT in a well-defined state <a href="node288.html#BPKeywordSuites">5.1.3</a>.<p>The following steps describe how to set up a global error handling concept in your tests. They assume that you have set up a category structure as described earlier <a href="node295.html#BPCategories">5.3.1</a>.<p>
+      <br />
+    <hr /><a id="CHILD_LINKS" name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+      <li><a href="node301.html" id="tex2html4800" name="tex2html4800"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Creating general Event Handlers</a><li><a href="node302.html" id="tex2html4801" name="tex2html4801"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Adding the Event Handlers to the use case</a></ul>
+    <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>12.1.1 Configuring Eclipse for remote debugging</title>
+    <meta content="12.1.1 Configuring Eclipse for remote debugging" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h2><a id="SECTION001311000000000000000" name="SECTION001311000000000000000"><span class="arabic">12</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Configuring Eclipse for remote debugging</a></h2> Create a new &quot;Remote Java Application&quot; in the &quot;Launch configuration&quot; dialog and enter the hostname for the computer on which the AUT Agent is running. The specified port has to be the same which you used in the AUT configuration (e.g. 4711). <div align="center"><a id="EclipseRemoteDebugging" name="EclipseRemoteDebugging"></a><a name="18572"></a><table>
+        <caption align="bottom"><strong>Figure 12.1:</strong> Launching eclipse remote debug application</caption>
+        <tr>
+          <td><img align="bottom" border="0" height="469" src="./eclipseRemoteDebug.png" width="547" /></td>
+        </tr>
+      </table>
+    </div>
+    <p>To get your AUT running using remote debugging options you have to take the following steps:<ol>
+      <li>Start the AUT Agent<li>Connect the ITE with the AUT Agent , load the Project in Jubula and invoke the startup of the AUT in the ITE .<li>If &#39;&#39;suspend=y&#39;&#39;, you now have to run your &quot;Remote Java Application&quot;-configuration in Eclipse, as the JVM is waiting for the debugger to connect before starting the application. As soon as you are connected you should see the default debug behaviour in your debug perspective of Eclipse.<li>Your AUT has now been launched with the ability to use remote debugging.</ol>
+    <p>If you wish to debug an RCP AUT which is launched with an executable file, you must pass these JRE arguments via the AUT arguments and &#39;&#39;-vmargs&#39;&#39;. When using this option, make sure you overwrite all JRE options that are defined in the &#39;&#39;config.ini&#39;&#39; of your RCP launcher.<p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

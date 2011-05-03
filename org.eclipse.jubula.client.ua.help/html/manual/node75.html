@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>3.5.3.3 Expert AUT configuration</title>
+    <meta content="3.5.3.3 Expert AUT configuration" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h3><a id="SECTION00453300000000000000" name="SECTION00453300000000000000"></a> <a id="ExpertAUTConfig" name="ExpertAUTConfig"></a><br /><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Expert AUT configuration</h3> You can use the expert dialog (<a href="#autconfigexpert">3.12</a>) to configure more detailed information about how the AUT should be started. <div align="center"><a id="autconfigexpert" name="autconfigexpert"></a><a name="1207"></a><table>
+        <caption align="bottom"><strong>Figure 3.12:</strong> AUT configuration window: expert</caption>
+        <tr>
+          <td>
+            <div align="center"><img align="bottom" border="0" height="807" src="./autconfigwindow_expert.png" width="500" /></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <ol>
+      <li>Add any additional desired <i>JRE Arguments</i>.<li>Enter any required <i>System Environment Variables</i>, in the format &quot;<i>&lt;VARNAME&gt;=&lt;value&gt;</i>&quot;, i.e. &quot;<i>PATH=C:<span class="MATH"><img align="middle" border="0" height="38" src="img3.gif" width="15" /></span></i>&quot;. Separate each variable with a new line by pressing <tt>&raquo;ENTER&laquo;</tt>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>Please be advised that &#39;&#39;embedding&#39;&#39; the contents of one variable into another is not supported at this time by Jubula . That is, if you have a variable named <tt>FOO</tt> whose value is &quot;<i>abc</i>&quot;, and set the value of a second variable <tt>BAR</tt> to &quot;<i>%FOO%def</i>&quot;, the second variable will <span class="textit">not</span> contain &quot;<i>abcdef</i>&quot;, but rather the exact text &quot;<i>%FOO%def</i>&quot;, without evaluating it.</b></td>
+          </tr>
+        </table>
+      <li>Select an activation method for your AUT . <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>For HTML AUT&#39;s , you can enter an <i>ID attribute name</i> for naming components in your AUT <a href="node280.html#DFTWeb">4.4.2</a>.</b></td>
+          </tr>
+        </table>
+        <p>Activation makes sure that the AUT is in focus at the beginning of test execution. This is acheived by clicking somewhere in the AUT window. You can specify the activation method (i.e. where to click) as part of a configuration for an AUT , or you can create a Test Step within a test to do the same thing --&gt;<i>Reference Manual</i> <a href="../reference/node13.html#activate"><img align="bottom" border="1" src="crossref.gif" /></a>.<p>The advantage of specifying an activation method here is that it is central and affects each test execution started on this AUT with this configuration.<p>Bear in mind that you may need to activate your AUT in order for tests to work, especially if the AUT runs on the same machine as Jubula .</ol>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

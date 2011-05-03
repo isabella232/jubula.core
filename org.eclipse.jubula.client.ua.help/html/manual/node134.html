@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>3.10.2.2 Changing component names</title>
+    <meta content="3.10.2.2 Changing component names" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h3><a id="SECTION004102200000000000000" name="SECTION004102200000000000000"><span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Changing component names</a></h3> If you newly reassign component names in your test hierarchy that were themselves later reassigned, you will be shown a message in the Component Names View . <ul>
+      <li>The message only appears at places where you have reused the Test Case containing that component, and where you have overwritten the component name.<li>For example: <ol>
+          <li>Your component was originally called <i>LoginDialog_nn_btn</i>.<li>You reused the Test Case containing this component, and renamed the component <i>LoginDialog_OK_btn</i>.<li>You then change the component name in the original Test Case to &quot;<i>LoginDialog_AnyButton_btn</i>&quot;.</ol>
+      <li>In the Component Names View for the reused Test Case , you will see a warning message that the component name has no type.<li>You will also see the new name for the component. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>The warning field is not editable.</b></td>
+          </tr>
+        </table>
+      <li>If you want to keep the same overwritten name, enter the name into the &quot;<i>new name</i>&quot; field in the row for the new component name.<li>You can also change the overwritten name, or not overwrite it at all. In this case you will need to adapt your object mapping, if this component has been used in a Test Suite .<li>Once you have saved the Component Names View , the warning message will disappear.</ul>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

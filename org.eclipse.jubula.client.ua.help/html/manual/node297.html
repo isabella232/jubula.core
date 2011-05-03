@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>5.3.1.2 Modules</title>
+    <meta content="5.3.1.2 Modules" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h3><a id="SECTION00631200000000000000" name="SECTION00631200000000000000"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Modules</a></h3> The <i>modules</i> category contains two subcategories: <i>AUT-bound modules</i> and <i>unbound modules</i>. <p><span class="textbf">AUT -bound modules</span><br /> This category contains keywords that you have created to perform specific actions in your AUT . The AUT -bound modules category is split up into further categories, representing the dialogs and windows of your AUT . A typical structure for the AUT -bound modules category might look like this:<ul>
+      <li>Dialogs <ul>
+          <li>Error Dialogs<li>Load Project Dialog<li>New Project Dialog <ul>
+              <li>Configure Language Page<li>Configure Project Page</ul>
+          <li>Save Dialog</ul>
+      <li>Main Window <ul>
+          <li>General Tab<li>Security Tab</ul>
+    </ul>
+    <p>In each category, the Test Cases that execute actions in this area are stored. In the <i>Main Window</i> category, keywords to open dialogs from the menu or the toolbar could be stored. In the <i>Main Window - General Tab</i> category, you would find the keyword to select the security tab, to save the changes in the security tab etc.<p>The AUT -bound modules are all linked to the AUT in some meaningful way. For example, they could contain one or more of the following:<ul>
+      <li>sequences of actions specific to this AUT<li>data and/or references specific to this AUT<li>component names specific to this AUT</ul>
+    <p>Structuring the AUT -bound modules in this way (<a href="#ModulesCategory">5.1</a>) makes it easy to navigate through the keywords you have created.<br />
+    <p><span class="textbf">Unbound modules</span><br /> The <i>unbound modules</i> category contains modules which do not fit into the AUT -bound modules category. Good candidates for the unbound modules are utility modules, as mentioned in the previous section <a href="node286.html#BPKeywordsUtility">5.1.1.3</a>. Other unbound modules could be sequences of actions that other AUT&#39;s could also use. Unbound modules generally contain no data or component names specific to one AUT . They may, however, contain default data you expect to use throughout your tests (like the operator, the pre-ascend in trees etc). At some point, the unbound modules could be moved into an external Project to serve as a library Project for more than one AUT <a href="node103.html#movetoexternal">3.8.8</a>.<p>The unbound module category (<a href="#ModulesCategory">5.1</a>) can be structured in categories according to actions or components.<table>
+      <tr>
+        <td><img align="bottom" border="0" src="img2.jpg" /></td>
+        <td><b>Think about how many &#39;&#39;layers&#39;&#39; you need in your hierarchy - sometimes it is well worth making an unbound module, sometimes an unbound module would add an unnecessary extra layer. If your unbound module is not significantly different from the <i>ub_Test Case</i> from the library Project , it is probably superfluous.</b></td>
+      </tr>
+    </table>
+    <div align="center"><a id="ModulesCategory" name="ModulesCategory"></a><a name="5777"></a><table>
+        <caption align="bottom"><strong>Figure 5.1:</strong> The Modules Category</caption>
+        <tr>
+          <td>
+            <div align="center"><img align="bottom" border="0" height="358" src="./ModulesCategory.png" width="283" /></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

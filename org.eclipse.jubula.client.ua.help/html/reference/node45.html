@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>11.1 Creating a keyboard layout file</title>
+    <meta content="11.1 Creating a keyboard layout file" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h1><a id="SECTION001210000000000000000" name="SECTION001210000000000000000"><span class="arabic">11</span>.<span class="arabic">1</span> Creating a keyboard layout file</a></h1>
+    <ol>
+      <li>The name of the file must be in the following format:<br /> keyboardmapping_&lt;language&gt;_&lt;COUNTRY&gt;.properties<br /> e.g. for US English: keyboardmapping_en_US.properties <p>See the section in this document <a href="node43.html#langcodes">10</a> for language codes.<li>In the file, enter the codes for all characters which require you to press a modifier key.<li>The format for these codes is:<br /> &lt;Character&gt;=&lt;Modifier&gt;+&lt;Character without modifier&gt;<br /> e.g. for the @ character: @=shift+2<li>The following symbols must be escaped with a backslash:<br /><code>! = : \ ,</code><br /> e.g. <code>\!=shift+1</code> for !<li>There are pictures of various keyboards on the following website:<br /><i>http://www.uni-regensburg.de/EDV/Misc/KeyBoards/</i><li>The mapping files have to be checked into the <i>Server</i> project in the <i>resources</i> folder.<li>You also have to put this mapping file into the RCP-Accessor plug-in of your AUT :<br />
+        <p>&lt;RCPAUT&gt;/plugins/com.bredexsw.guidancer.rcpaccessor_<br /> &lt;GUIdancerVersion&gt;/resources</ol>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

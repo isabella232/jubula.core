@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>3.24.7 My Test Suite failed</title>
+    <meta content="3.24.7 My Test Suite failed" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h2><a id="SECTION004247000000000000000" name="SECTION004247000000000000000"></a> <a id="troublefailed" name="troublefailed"></a><br /><span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">7</span> My Test Suite failed</h2>
+    <p><a name="4841"></a> If your test fails, you can find exact details about the problem by looking at the Test Result View <a href="node181.html#testresultview">3.23</a>. A screenshot of the AUT is automatically taken when an error occurs and can be seen in the Image View .<p>For other problems with test execution, check:<ul>
+      <li>That the AUT is in focus and is visible. You can automatically activate the AUT in the AUT properties <a href="node72.html#configuringaut">3.5.3</a> or you can use a Test Case to activate the AUT . You can also set your preferences to minimize Jubula when test execution begins <a href="node197.html#gdprefs">3.24</a>.<li>That the AUT is ready when the test begins. To ensure this, you can insert a Test Case at the beginning of each test which waits for the window or for the first component you want to test. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>Waiting for a window to appear is generally a good idea whenever a new window or dialog is opened during the test. Waiting for the window or the component you want to test will make sure that your tests run even under different timing conditions.</b></td>
+          </tr>
+        </table>
+      <li>Make sure that the Test Cases and Test Steps are in the right order.<li>Ensure that the data you have entered is correct.<li>Check your object mapping preferences <a href="node161.html#objectprefs">3.15.2.4</a>. We recommend that you set them to &quot;<i>standard</i>&quot;.<li>If the AUT is an RCP application, make sure that the keyboard layout is correct <a href="node72.html#configuringaut">3.5.3</a>. Otherwise, make sure you have the current version of the RCP Remote Control plugin (start your application with -clean to be sure).<li>Check that the Test Steps preceding the failed Test Step were successful by looking at the state of the application.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img2.jpg" /></td>
+        <td><b>To help you analyze the reasons for Test Suite failure, you can use the <i>pause on error</i> option <a href="node176.html#TasksPauseOnError">3.16.5</a>.</b></td>
+      </tr>
+    </table>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

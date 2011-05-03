@@ -1,0 +1,690 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>5.7.2 Toolbar Item</title>
+    <meta content="5.7.2 Toolbar Item" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h2><a id="SECTION00672000000000000000" name="SECTION00672000000000000000"><span class="arabic">5</span>.<span class="arabic">7</span>.<span class="arabic">2</span> Toolbar Item</a></h2><a name="16466"></a> <a name="16467"></a><p><b>Description</b>:<p><a id="SWT_ToolItem" name="SWT_ToolItem"></a><p>Toolbar items are buttons and their menus on a toolbar, such as the one in Jubula (<a href="#toolbar">5.33</a>). Each of the buttons on the toolbar is a toolbar item.<div align="center"><a id="toolbar" name="toolbar"></a><a name="16475"></a><table>
+        <caption align="bottom"><strong>Figure 5.33:</strong> Toolbar items</caption>
+        <tr>
+          <td>
+            <div align="center"><img align="bottom" border="0" height="22" src="./toolbar.png" width="390" /></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p>Often, toolbar items have drop-down menus (<a href="#toolbarmenu">5.34</a>).<div align="center"><a id="toolbarmenu" name="toolbarmenu"></a><a name="16483"></a><table>
+        <caption align="bottom"><strong>Figure 5.34:</strong> Toolbar item menu</caption>
+        <tr>
+          <td>
+            <div align="center"><img align="bottom" border="0" height="109" src="./toolbarmenu.png" width="178" /></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p><span class="textbf">Mapping toolbar items</span><p>In the Object Mapping Mode , a toolbar item to be mapped looks like this:<div align="center"><a id="maptoolbar" name="maptoolbar"></a><a name="16492"></a><table>
+        <caption align="bottom"><strong>Figure 5.35:</strong> Mapping toolbar items</caption>
+        <tr>
+          <td>
+            <div align="center"><img align="bottom" border="0" height="27" src="./maptoolbar.png" width="44" /></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p><b>Synopsis</b>:<br />
+    <ul>
+      <li>Toolbar Item (swt)<li style="list-style: none; display: inline">
+        <ul>
+          <li>Button/Check Box/Radio Button (concrete)<li style="list-style: none; display: inline">
+            <ul>
+              <li>Button Component (abstract)<li style="list-style: none; display: inline">
+                <ul>
+                  <li>Component with Text (abstract)<li style="list-style: none; display: inline">
+                    <ul>
+                      <li>Graphics Component (abstract)</ul>
+                </ul>
+            </ul>
+        </ul>
+    </ul> SWT_ToolItem_VerifyEnabledByIndexpath SWT_ToolItem_VerifyEnabledByTextpath SWT_ToolItem_VerifyExistsByIndexpath SWT_ToolItem_VerifyExistsByTextpath SWT_ToolItem_VerifySelectedByIndexpath SWT_ToolItem_VerifySelectedByTextpath SWT_ToolItem_SelectMenuItemByIndexpath SWT_ToolItem_SelectMenuItem <table border="1" cellpadding="3">
+      <tr>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3"><b>New Actions</b></td>
+      </tr>
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Type</small></td>
+        <td><small>Parameters</small></td>
+      </tr>
+      <tr>
+        <td><small>Check Enablement of Entry by Indexpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Boolean:Enabled<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Enablement of Entry by Textpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Menupath<br /> String:Operator<br /> Boolean:Enabled<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Existence of Entry by Indexpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Boolean:Exists<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Existence of Entry by Textpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Menupath<br /> String:Operator<br /> Boolean:Exists<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Selection of Entry by Indexpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Boolean:Selected<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Selection of Entry by Textpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Menupath<br /> String:Operator<br /> Boolean:Selected<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Select Menu Entry by Indexpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Indexpath<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Select Menu Entry by Textpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Menupath<br /> String:Operator<br /></small></td>
+      </tr>
+    </table>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4"><b>Inherited Actions</b></td>
+      </tr>
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Type</small></td>
+        <td><small>Parameters</small></td>
+        <td><small>Inherited from</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_VerifyEnabled">Check Enablement</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Boolean:Enabled<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByIndexpath">Check Enablement of Context Menu Entry by Indexpath</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Boolean:Enabled<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByIndexpathPosition">Check Enablement of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Indexpath<br /> Boolean:Enabled<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByTextpath">Check Enablement of Context Menu Entry by Textpath</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>String:Textpath<br /> String:Operator<br /> Boolean:Enabled<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByTextpathPosition">Check Enablement of Context Menu Entry by Textpath (Specify Position)</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Textpath<br /> String:Operator<br /> Boolean:Enabled<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_VerifyExists">Check Existence</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Boolean:Exists<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByIndexpath">Check Existence of Context Menu Entry by Indexpath</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Boolean:Exists<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByIndexpathPosition">Check Existence of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Indexpath<br /> Boolean:Exists<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByTextpath">Check Existence of Context Menu Entry by Textpath</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>String:Textpath<br /> String:Operator<br /> Boolean:Exists<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByTextpathPosition">Check Existence of Context Menu Entry by Textpath (Specify Position)</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Textpath<br /> String:Operator<br /> Boolean:Exists<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_VerifyFocus">Check Focus</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Boolean:Has Focus<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_VerifyProperty">Check Property</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>String:Property Name<br /> String:Property Value<br /> String:Operator<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node8.html#ABSTRACT_ButtonComp_VerifySelected">Check Selection</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Boolean:Selected<br /></small></td>
+        <td><small>Button Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByIndexpath">Check Selection of Context Menu Entry by Indexpath</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Boolean:Selected<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByIndexpathPosition">Check Selection of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Indexpath<br /> Boolean:Selected<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByTextpath">Check Selection of Context Menu Entry by Textpath</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>String:Textpath<br /> String:Operator<br /> Boolean:Selected<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByTextpathPosition">Check Selection of Context Menu Entry by Textpath (Specify Position)</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Textpath<br /> String:Operator<br /> Boolean:Selected<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node9.html#ABSTRACT_TextVerifiable_VerifyText">Check Text</a></small></td>
+        <td><small>c</small></td>
+        <td>
+          <p><small>String:Text<br /> String:Operator<br /></small></td>
+        <td><small>Component with Text (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_Click">Click</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:Number of Clicks<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_ClickDirect">Click in Component</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:Number of Clicks<br /> Integer:Mouse Button<br /> Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_Drag">Drag</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:Mouse Button<br /> String:Modifier Keys<br /> Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_Drop">Drop</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> Integer:Delay before drop (milliseconds)<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupSelectByIndexPathNew">Select Context Menu Entry by Indexpath</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupSelectByIndexPathPositionNew">Select Context Menu Entry by Indexpath (Specify Position)</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Indexpath<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupSelectByTextPathNew">Select Context Menu Entry by Textpath</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Textpath<br /> String:Operator<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_PopupSelectByTextPathPositionNew">Select Context Menu Entry by Textpath (Specify Position)</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Menupath<br /> String:Operator<br /> Integer:Mouse Button<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_ShowText">Show Text</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Text<br /> Integer:Text Size (in points)<br /> Integer:Time per Word (in milliseconds)<br /> Integer:Window Width (in pixels)<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node9.html#ABSTRACT_TextVerifiable_ReadValue">Store Value</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Variable:Variable Name<br /></small></td>
+        <td><small>Component with Text (abstract)</small></td>
+      </tr>
+      <tr>
+        <td><small><a href="node11.html#ABSTRACT_Widget_WaitForComponent">Wait for Component</a></small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:Timeout in ms<br /> Integer:Delay after Visibility<br /></small></td>
+        <td><small>Graphics Component (abstract)</small></td>
+      </tr>
+    </table>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="45495"></a><a name="45496"></a><p><a id="SWT_ToolItem_VerifyEnabledByIndexpath" name="SWT_ToolItem_VerifyEnabledByIndexpath"></a><ul>
+      <li>Use this action to check the enablement status of an item in the menu belonging to the toolbar item.<li>The item to check is given using the indexpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Indexpath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyEnabledByIndexpath_IndexPath" name="SWT_ToolItem_VerifyEnabledByIndexpath_IndexPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu).<ul>
+      <li>Enter the path to the item as an indexpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>The first node is &#39;1&#39;</b></td>
+          </tr>
+        </table>
+    </ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Enabled</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyEnabledByIndexpath_IsEnabled" name="SWT_ToolItem_VerifyEnabledByIndexpath_IsEnabled"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to be enabled.<li>Set the parameter to false if you expect the menu item to be disabled.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="45502"></a><a name="45503"></a><p><a id="SWT_ToolItem_VerifyEnabledByTextpath" name="SWT_ToolItem_VerifyEnabledByTextpath"></a><ul>
+      <li>Use this action to check whether an item in a menu belonging to a toolbar item is enabled.<li>The item to check is given using the textpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Menupath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyEnabledByTextpath_MenuPath" name="SWT_ToolItem_VerifyEnabledByTextpath_MenuPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path.<ul>
+      <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>When you use a regular expression for a textpath, bear in mind that each subpath is considered separately. The first path which corresponds to each subpath will be chosen. It is therefore advisable to make your regular expressions as unambiguous as possible.</b></td>
+      </tr>
+    </table>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyEnabledByTextpath_Operator" name="SWT_ToolItem_VerifyEnabledByTextpath_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Enabled</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyEnabledByTextpath_IsEnabled" name="SWT_ToolItem_VerifyEnabledByTextpath_IsEnabled"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to be enabled.<li>Set the parameter to false if you expect the menu item to be disabled.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="45509"></a><a name="45510"></a><p><a id="SWT_ToolItem_VerifyExistsByIndexpath" name="SWT_ToolItem_VerifyExistsByIndexpath"></a><ul>
+      <li>Use this action to check the existence of an item in a menu belonging to a toolbar item.<li>The item to check is given using the indexpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Indexpath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyExistsByIndexpath_IndexPath" name="SWT_ToolItem_VerifyExistsByIndexpath_IndexPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu).<ul>
+      <li>Enter the path to the item as an indexpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>The first node is &#39;1&#39;</b></td>
+          </tr>
+        </table>
+    </ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Exists</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyExistsByIndexpath_IsExisting" name="SWT_ToolItem_VerifyExistsByIndexpath_IsExisting"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to exist.<li>Set the parameter to false if you expect the menu item to <span class="textit">not</span> exist.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="45516"></a><a name="45517"></a><p><a id="SWT_ToolItem_VerifyExistsByTextpath" name="SWT_ToolItem_VerifyExistsByTextpath"></a><ul>
+      <li>Use this action to check the existence of an item in a menu belonging to a toolbar item.<li>The item to check is given using the textpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Menupath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyExistsByTextpath_MenuPath" name="SWT_ToolItem_VerifyExistsByTextpath_MenuPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path.<ul>
+      <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>When you use a regular expression for a textpath, bear in mind that each subpath is considered separately. The first path which corresponds to each subpath will be chosen. It is therefore advisable to make your regular expressions as unambiguous as possible.</b></td>
+      </tr>
+    </table>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyExistsByTextpath_Operator" name="SWT_ToolItem_VerifyExistsByTextpath_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Exists</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifyExistsByTextpath_IsExisting" name="SWT_ToolItem_VerifyExistsByTextpath_IsExisting"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to exist.<li>Set the parameter to false if you expect the menu item to <span class="textit">not</span> exist.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="45523"></a><a name="45524"></a><p><a id="SWT_ToolItem_VerifySelectedByIndexpath" name="SWT_ToolItem_VerifySelectedByIndexpath"></a><ul>
+      <li>Use this action to check whether an item in a menu for a toolbar item is selected.<li>You enter the menupath to the item, and whether you expect it to be selected or not.<li>The menupath is given as an indexpath.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Indexpath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifySelectedByIndexpath_IndexPath" name="SWT_ToolItem_VerifySelectedByIndexpath_IndexPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu).<ul>
+      <li>Enter the path to the item as an indexpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>The first node is &#39;1&#39;</b></td>
+          </tr>
+        </table>
+    </ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Selected</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifySelectedByIndexpath_IsSelected" name="SWT_ToolItem_VerifySelectedByIndexpath_IsSelected"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to be selected.<li>Set this parameter to false if you expect the menu item <span class="textit">not</span> to be selected.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="45530"></a><a name="45531"></a><p><a id="SWT_ToolItem_VerifySelectedByTextpath" name="SWT_ToolItem_VerifySelectedByTextpath"></a><ul>
+      <li>Use this action to check whether an item in a menu belonging to a toolbar item is selected.<li>You enter the menupath to the item, and whether you expect it to be selected or not.<li>The menupath is given as a textpath.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Menupath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifySelectedByTextpath_MenuPath" name="SWT_ToolItem_VerifySelectedByTextpath_MenuPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path.<ul>
+      <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>When you use a regular expression for a textpath, bear in mind that each subpath is considered separately. The first path which corresponds to each subpath will be chosen. It is therefore advisable to make your regular expressions as unambiguous as possible.</b></td>
+      </tr>
+    </table>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifySelectedByTextpath_Operator" name="SWT_ToolItem_VerifySelectedByTextpath_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Selected</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_VerifySelectedByTextpath_IsSelected" name="SWT_ToolItem_VerifySelectedByTextpath_IsSelected"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to be selected.<li>Set this parameter to false if you expect the menu item <span class="textit">not</span> to be selected.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="45537"></a><a name="45538"></a><p><a id="SWT_ToolItem_SelectMenuItemByIndexpath" name="SWT_ToolItem_SelectMenuItemByIndexpath"></a><ul>
+      <li>Use this action to select an item from a menu belonging to a toolbar item.<li>The item you want to select is given using the indexpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Indexpath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_SelectMenuItemByIndexpath_IndexPath" name="SWT_ToolItem_SelectMenuItemByIndexpath_IndexPath"></a><p>Use this parameter to specify the menupath to the item you want to select. Make sure you give the whole menupath (start from the very beginning of the menu).<ul>
+      <li>Enter the path to the item as an indexpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>The first node is &#39;1&#39;</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="45544"></a><a name="45545"></a><p><a id="SWT_ToolItem_SelectMenuItem" name="SWT_ToolItem_SelectMenuItem"></a><ul>
+      <li>Use this action to select an item from a menu belonging to a toolbar item.<li>The item you want to select is given using the textpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Menupath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_SelectMenuItem_MenuPath" name="SWT_ToolItem_SelectMenuItem_MenuPath"></a><p>Use this parameter to specify the menupath to the item you want to select. Make sure you enter the whole path.<ul>
+      <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>When you use a regular expression for a textpath, bear in mind that each subpath is considered separately. The first path which corresponds to each subpath will be chosen. It is therefore advisable to make your regular expressions as unambiguous as possible.</b></td>
+      </tr>
+    </table>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="SWT_ToolItem_SelectMenuItem_Operator" name="SWT_ToolItem_SelectMenuItem_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>3.5.4 Starting AUT&#39;s with the autrun command</title>
+    <meta content="3.5.4 Starting AUT&#39;s with the autrun command" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body><a id="autSettingWizardPagePageContextId" name="autSettingWizardPagePageContextId"></a><h2><a id="SECTION00454000000000000000" name="SECTION00454000000000000000"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">4</span> Starting AUT&#39;s with the <i>autrun</i> command</a></h2><a id="autrun" name="autrun"></a><p><a name="1246"></a> <a name="1247"></a><p>The <i>autrun</i> command can be used as an alternative to starting your AUT via Jubula (i.e. with an AUT configuration <a href="node72.html#configuringaut">3.5.3</a>). It can only be used if your AUT can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Java Standard Edition JRE.<table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>The <i>autrun</i> command cannot be used for HTML or pure SWT AUT&#39;s .</b></td>
+      </tr>
+    </table>
+    <p>The command allows you to start your AUT independently of Jubula , on a machine where the AUT Agent is running. The Jubula ITE , when connected to this AUT Agent will then recognize the running AUT as a testable application.<p>To use the <i>autrun</i> command:<ol>
+      <li>Ensure that the AUT Agent is installed on the machine where you will be starting the AUT .<li>Start your AUT via the command line by entering <tt>&quot;autrun.exe&quot;</tt> then the following parameters:<br />
+        <div align="center"><a name="1298"></a><table>
+            <caption><strong>Table 3.1:</strong> Parameters for autrun command</caption>
+            <tr>
+              <td><a id="autrunparams" name="autrunparams"></a><div align="center">
+                </div>
+                <table border="1" cellpadding="3">
+                  <tr valign="baseline">
+                    <th align="left"><span class="textbf">Detail</span></th>
+                    <th align="left"><span class="textbf">Parameter</span></th>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-h</td>
+                    <td align="left"><tt>&quot;-h&quot;</tt></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">Gives parameter help</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-w, <code>--</code>workingdir</td>
+                    <td align="left"><tt>&quot;-w &lt;directory&gt;&quot;</tt></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">Enter the working directory for the AUT</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-a, <code>--</code>autagenthost</td>
+                    <td align="left"><tt>&quot;-a &lt;hostname&gt;&quot;</tt></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">Enter the hostname for the AUT Agent</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-p, <code>--</code>autagentport</td>
+                    <td align="left"><tt>&quot;-p &lt;port number&gt;&quot;</tt></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">Enter the port number for the AUT Agent</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-swing</td>
+                    <td align="left">&nbsp;</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">If the AUT is a Swing AUT</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-rcp</td>
+                    <td align="left">&nbsp;</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">If the AUT is an RCP AUT</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-swt</td>
+                    <td align="left">&nbsp;</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">If the AUT is an SWT AUT</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-k, <code>--</code>kblayout</td>
+                    <td align="left"><tt>&quot;-k &lt;en_US&gt;&quot;</tt></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">Enter the keyboard layout for SWT/RCP AUT&#39;s</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-i, <code>--</code>autid</td>
+                    <td align="left"><tt>&quot;-i &lt;ID&gt;&quot;</tt></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">Enter the ID to give to this AUT</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-e, <code>--</code>exec</td>
+                    <td align="left"><tt>&quot;-e &lt;AUT.exe&gt;&quot;</tt></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">Enter the executable file for the AUT</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">-g, <code>--</code>generatenames (optional)</td>
+                    <td align="left"><tt>&quot;-g &lt;true/false&gt;&quot;</tt></td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">For RCP AUT&#39;s , enter whether</td>
+                  </tr>
+                  <tr valign="baseline">
+                    <td align="left">&nbsp;</td>
+                    <td align="left">to generate technical names. <a href="node71.html#Defineaut">3.5.2</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <br />
+    </ol>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img2.jpg" /></td>
+        <td><b>If your AUT is an RCP AUT , use <tt>&quot;-data&#39;&lt;WORKSPACE&gt;&#39;&quot;</tt> after the executable file to specify the workspace the AUT should use.</b></td>
+      </tr>
+    </table>
+    <br />
+    <hr /><a id="CHILD_LINKS" name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+      <li><a href="node77.html" id="tex2html1924" name="tex2html1924"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Creating an AUT definition from a running AUT</a></ul>
+    <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

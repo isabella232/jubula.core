@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>5.1.1.3 Utility modules for keywords</title>
+    <meta content="5.1.1.3 Utility modules for keywords" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h3><a id="SECTION00611300000000000000" name="SECTION00611300000000000000"></a> <a id="BPKeywordsUtility" name="BPKeywordsUtility"></a><br /><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Utility modules for keywords</h3> In designing your tests, it may sometimes occur to you that there is a level between the unbound modules and your finished keywords. A good example is a module to to a synchronized text entry on a component: <ul>
+      <li>ub_grc_waitForComponent<li>ub_grc_checkEnablement<li>ub_grc_checkEditability<li>ub_cti_replaceText</ul>
+    <p>It is very likely that a test will have to enter various texts. The only difference for each case will be the text to enter and the component to enter it into. All other things (amount of time to wait for the component, the fact that the component should be enabled and editable etc.) will remain the same. A utility module to perform a synchronized replace text can solve this problem. It can be reused in Test Cases to replace the text on any component <a href="node133.html#TasksCompNamesCheckbox">3.10.2.1</a> and only requires the text to enter as a parameter.<p>Generally, it is worth making a utility module when the unbound module contains one or more parameters whose values will remain constant in your test (typically things like file paths, operators, path types etc.). The utility module can parameterize the data that will change (e.g. boolean values, text entries, what to check etc.) and make your test specification and maintanence quicker.<p><a id="BPKeywordDesign" name="BPKeywordDesign"></a><p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>
