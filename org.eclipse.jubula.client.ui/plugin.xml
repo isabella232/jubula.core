@@ -1118,7 +1118,7 @@
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M1+D" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.EditParameters"
-			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.jubula.client.ui.defaultKeyScheme"
 			sequence="M1+M2+A" />
 		<key commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
@@ -1135,7 +1135,7 @@
 			sequence="M2+ENTER">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.RevertChanges"
-			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.jubula.client.ui.defaultKeyScheme"
 			sequence="F3">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.ToggleActiveStatus"
@@ -1207,7 +1207,7 @@
   <key
         commandId="org.eclipse.jubula.client.ui.commands.OpenTestCase"
         contextId="org.eclipse.ui.contexts.window"
-        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+        schemeId="org.eclipse.jubula.client.ui.defaultKeyScheme"
         sequence="M1+M2+T">
   </key>
   <key
@@ -1216,6 +1216,11 @@
         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
         sequence="M2+F9">
   </key>
+  <scheme
+        id="org.eclipse.jubula.client.ui.defaultKeyScheme"
+        name="%JubulaDefaultKeyBindingSchemeName"
+        parentId="org.eclipse.ui.defaultAcceleratorConfiguration">
+  </scheme>
 	</extension>
 	<extension id="gdMarkerResolution" name="%JubulaMarkerResolution"
 		point="org.eclipse.ui.ide.markerResolution">
