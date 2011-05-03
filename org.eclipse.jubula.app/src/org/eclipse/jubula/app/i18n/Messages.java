@@ -24,6 +24,7 @@ public class Messages extends NLS {
     public static String ActionBuilderEdit;
     public static String ActionBuilderExitItem;
     public static String ActionBuilderExportAll;
+    public static String ActionBuilderHelpCheatSheetsItem;
     public static String ActionBuilderHelpContentItem;
     public static String ActionBuilderHelpContentToolTip;
     public static String ActionBuilderMyFileEntry;

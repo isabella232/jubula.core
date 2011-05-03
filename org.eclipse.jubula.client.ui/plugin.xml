@@ -423,14 +423,6 @@
 		</decorator>
 	</extension>
 	<extension point="org.eclipse.ui.actionSets">
-		<actionSet label="%CHEAT_SHEETS" visible="true"
-			id="org.eclipse.ui.cheatsheets.actionSet">
-			<action label="%CHEAT_SHEETS_MENU"
-				class="org.eclipse.ui.cheatsheets.CheatSheetExtensionFactory:helpMenuAction"
-				menubarPath="help/group.tutorials"
-				id="org.eclipse.ui.cheatsheets.actions.CheatSheetHelpMenuAction">
-			</action>
-		</actionSet>
 		<actionSet
 			description="only these actions, that are visible in the main menu- or toolbar"
 			id="org.eclipse.jubula.client.ui.menu.actions" label="Jubula Menu Action Set"
@@ -829,10 +821,6 @@
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.ShowWhereUsed" name="%ShowWhereUsed" />
-		<command
-			categoryId="org.eclipse.jubula.client.ui.commands"
-			id="org.eclipse.ui.internal.cheatsheets.actions.CheatSheetHelpMenuCommand"
-			name="%CHEAT_SHEETS_MENU" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.CreateNewLogicalNameCommand"

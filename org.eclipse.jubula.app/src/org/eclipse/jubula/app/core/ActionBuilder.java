@@ -38,6 +38,7 @@ import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.menus.CommandContributionItem;
 
 
 /**
@@ -364,6 +365,12 @@ public class ActionBuilder {
 
         CommandHelper.createContributionPushItem(
                 helpMenu, IWorkbenchCommandConstants.HELP_ABOUT);
+
+        helpMenu.add(new Separator());
+        helpMenu.add(CommandHelper.createContributionItem(
+                "org.eclipse.ui.cheatsheets.openCheatSheet", null, //$NON-NLS-1$ 
+                Messages.ActionBuilderHelpCheatSheetsItem, 
+                CommandContributionItem.STYLE_PUSH));
         
         return helpMenu;
     }
