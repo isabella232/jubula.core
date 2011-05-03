@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>3.9.8.5 Reusing central test data sets in Test Cases</title>
+    <meta content="3.9.8.5 Reusing central test data sets in Test Cases" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body><a id="guidancerCentralTestDataEditorContextId" name="guidancerCentralTestDataEditorContextId"></a><a id="guidancerPropertiesViewContextId" name="guidancerPropertiesViewContextId"></a><h3><a id="SECTION00498500000000000000" name="SECTION00498500000000000000"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">5</span> Reusing central test data sets in Test Cases</a></h3><a id="TasksCentralDataReference" name="TasksCentralDataReference"></a><p>You can reuse a central test data set in a Test Case to provide the concrete data for the parameters required by the Test Case .<ol>
+      <li>In the Properties View for the Test Case , enter the name of the central test data set you want to use in the <i>Central Test Data Set</i> field. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to see a list of possible data sets for this Test Case . You will only be shown data sets that contain the correct parameters with the correct types.</b></td>
+          </tr>
+        </table>
+      <li>When you have entered a central test data set, then the Properties View shows <i>central test data set</i> as the data type. You will see the data from the central test data set in read-only form in the Data Sets View . <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>If data is missing from the central test data set, you will receive the error that test data is incomplete for any Test Suites this Test Case is used in.</b></td>
+          </tr>
+        </table>
+      <li>You can delete the central test data set used by removing it from the <i>central test data set</i> field. The data type reverts to <i>local data</i>. For more information on the data sources, see the earlier section <a href="node114.html#TasksDataSources">3.9.7</a>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>You can use central test data sets that contain more parameters than your Test Case . For example, if your Test Case requires the parameters <tt>&quot;NAME, ADDRESS&quot;</tt> and your central test data set contains <tt>&quot;NAME, ADDRESS, POSTCODE&quot;</tt>, you can still use the central test data set.</b></td>
+          </tr>
+        </table>
+    </ol>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

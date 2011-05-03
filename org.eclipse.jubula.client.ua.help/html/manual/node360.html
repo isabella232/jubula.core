@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>7.7.0.1 Abstract, concrete and toolkit specific components</title>
+    <meta content="7.7.0.1 Abstract, concrete and toolkit specific components" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h3><a id="SECTION00870100000000000000" name="SECTION00870100000000000000"></a> <a id="ConceptsAbstractComps" name="ConceptsAbstractComps"></a><br /><span class="arabic">7</span>.<span class="arabic">7</span>.<span class="arabic">0</span>.<span class="arabic">1</span> Abstract, concrete and toolkit specific components</h3>
+    <p>Jubula has three levels of components:<dl>
+      <dt><strong>Abstract components</strong><dd>are general, high-level components from which other components are derived. They are described in terms of what features a component has, e.g. graphics component, component with text. They group actions together which can all be executed on components of this type.<dt><strong>Concrete components</strong><dd>are components which are available to all graphical toolkits, but which are restricted to a certain component type, e.g. combo box, list.<dt><strong>Toolkit specific components</strong><dd>are the most specific components in Jubula . They are only available for certain toolkits. For example, a HTML link is a component which is only available in Web applications.</dl>
+    <p>We recommend that you specify your tests as abstractly as possible, and as concretely as necessary. If you want to create a Test Case to click a button, it is better to use the abstract component <i>graphics component</i>. The <i>graphics component</i> also contains the <i>click</i> action, and has the advantage that the Test Case can then be used on other components than buttons. If you want to select a cell from a table, however, you will have to use the concrete component <i>table</i>, because this is the highest level which offers this action.<p>The more abstract your specification, the more flexible your Test Cases are.<p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

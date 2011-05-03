@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>5.1.3 Structuring your use cases and Test Suites</title>
+    <meta content="5.1.3 Structuring your use cases and Test Suites" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h2><a id="SECTION00613000000000000000" name="SECTION00613000000000000000"></a> <a id="BPKeywordSuites" name="BPKeywordSuites"></a><br /><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Structuring your use cases and Test Suites</h2>
+    <p>When it comes to executing tests, there are two important things to bear in mind when working with Jubula :<ul>
+      <li>All the necessary keywords for a single <i>use case</i> should be grouped together in one Test Case , which is named after the use case it tests. The use case should be complete - it should not require any data or component names. This makes it much easier to add and remove whole use cases from Test Suites and gives you a good overview of which use cases you have tested.<li>Each use case should assume (and create) a well-defined state of the AUT and leave the AUT in a well-defined state. This is important for error handling later. It is a good idea to create a keyword called <i>app_startup</i> which creates the right state for the AUT , and to use this keyword at the beginning of each use case. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>The well-defined state of your AUT may be completely empty, or may contain test data. Deciding what data your test needs and what data it will create itself is an important part of an automation strategy.</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p>Use cases are then grouped together into Test Suites . The Jubula team uses the following Test Suites in their tests:<ul>
+      <li>FULLTEST<li>FULLTEST_BROKEN<li>WORK_(INITIALS)</ul>
+    <p>The FULLTEST Test Suite contains all of the executable <i>Use Cases</i> from the Project . There can also be Test Cases which reproduce errors from the bug-tracking system, called <i>ticket tests</i>. Each ticket Test Case can be linked to the bug-tracking system via its ID.<p>The FULLTEST_BROKEN Test Suite contains any use cases which are currently broken and which have been removed from the FULLTEST so as not to affect any test reports or statistics. Put tests in the broken Test Suite if they have been broken for some time. Tests that are critical, or which should be fixed in the next build, should be left in the FULLTEST Test Suite .<p>The WORK Test Suites can be used by testers as a sandbox to execute single use cases during specification, or to replay tests with the intention of watching the execution.<p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

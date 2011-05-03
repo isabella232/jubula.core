@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>3.9.2 Entering concrete values as data in Test Cases</title>
+    <meta content="3.9.2 Entering concrete values as data in Test Cases" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body><a id="guidancerPropertiesViewContextId" name="guidancerPropertiesViewContextId"></a><h2><a id="SECTION00492000000000000000" name="SECTION00492000000000000000"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Entering concrete values as data in Test Cases</a></h2><a id="TasksTestdataConcrete" name="TasksTestdataConcrete"></a><p><a name="2040"></a> <a name="2041"></a><ul>
+      <li>In the Properties View for a Test Case , you can enter a <i>concrete value</i> as a parameter e.g. <tt>&quot;Hello&quot;</tt>.<li>This means that this particular parameter cannot be changed when you reuse its parent Test Case .<li>Enter concrete values for things that you expect to stay the same, like your choice of <i>operator</i> (i.e. matches, equals) or the click count. Deciding which data not to parametrize is an important decision is test creation. See the Best Practices section for more information on this <a href="node287.html#BPKeywordData">5.1.2</a>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to get content assist in the Properties View for certain parameters.</b></td>
+          </tr>
+        </table>
+      <li>Depending on your test structure, you may want to use concrete values for all the parameters in a keyword. If, for example, you have a keyword to open the &quot;<i>New Category</i>&quot; dialog from a menu, you will probably want to write the menupath as a concrete value. After all, this Test Case is designed to open this specific dialog, so the menupath is fixed. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>Any concrete values you enter into a Test Case are valid whenever you reuse this Test Case . If you change the concrete values in the original Test Case , all of the places you have reused it will change as well.</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

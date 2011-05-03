@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>3.9.9 Using an Excel file as an external data source</title>
+    <meta content="3.9.9 Using an Excel file as an external data source" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body><a id="guidancerPropertiesViewContextId" name="guidancerPropertiesViewContextId"></a><h2><a id="SECTION00499000000000000000" name="SECTION00499000000000000000"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span> Using an Excel file as an external data source</a></h2><a id="TasksExcel" name="TasksExcel"></a><p><a name="2347"></a> <a name="2348"></a> In the Properties View , you can add Excel files as a data source to Test Cases which contain parameters referenced from the Test Cases or Test Steps they contain.<table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>The addition of data via Excel is discouraged. We recommend using the central data sets in Jubula to manage data within the Project <a href="node116.html#TasksCentralData">3.9.8</a>.</b></td>
+      </tr>
+    </table>
+    <ol>
+      <li>Navigate to the Properties View for the Test Case you want to add the Excel file to.<li>Enter the path to the Excel file in the <i>Excel data file</i> field. <p>The path to the Excel file can be absolute or relative (if you have specified a data files path <a href="node197.html#gdprefs">3.24</a>).<table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>The Excel file must be configured in a specific way in order for Jubula to read it <a href="node123.html#TasksConfigureExcel">3.9.9.1</a></b></td>
+          </tr>
+        </table> .<li>If you reuse this Test Case , the Excel file you enter will be reused along with the Test Case . When you reuse the Test Case , you can choose whether you leave this file or change it for another one. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img2.jpg" /></td>
+            <td><b>If you store your Excel files in your workspace, you will be able to open these directly in Jubula from the navigator view using the in-place editor.</b></td>
+          </tr>
+        </table>
+      <li>A Test Case with an Excel file as data is marked with a small Excel icon in the browsers to help you find it more easily later. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>Please note that the Excel file is read at the start of the test execution. Any changes to the file after this will not affect the test data. For information on using the date function in Excel, see the section later <a href="node124.html#exceltoday">3.9.9.2</a>.</b></td>
+          </tr>
+        </table>
+    </ol>
+    <p>
+      <br />
+    <hr /><a id="CHILD_LINKS" name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+      <li><a href="node123.html" id="tex2html2521" name="tex2html2521"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">1</span> Configuring the Excel file</a><li><a href="node124.html" id="tex2html2522" name="tex2html2522"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Using the =TODAY() function in Excel</a></ul>
+    <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

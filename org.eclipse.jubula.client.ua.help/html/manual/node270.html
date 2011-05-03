@@ -1,0 +1,20 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>4.2.6 Best practices for testing RCP AUT&#39;s</title>
+    <meta content="4.2.6 Best practices for testing RCP AUT&#39;s" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h2><a id="SECTION00526000000000000000" name="SECTION00526000000000000000"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Best practices for testing RCP AUT&#39;s</a></h2>
+    <p><a name="5336"></a> <a name="5337"></a><p><span class="textbf">Perspective layout reset</span><br /> One of the features of RCP AUT&#39;s is that they generally remember the state of the AUT (position of views, which perspective was open) when the AUT is closed. In order to make tests as robust as possible, we recommend starting each use case with a module to reset the perspective to its defaults, and testing with this default perspective.<p><span class="textbf">Workspace choice</span><br /> RCP AUT&#39;s use a workspace to save user-specific preferences. The choice of workspace is usually offered before the AUT starts. This dialog is not currently testable by Jubula , so we recommend adding the desired workspace as an AUT argument in the AUT configuration <a href="node72.html#configuringaut">3.5.3</a>. The parameter used to specify the workspace is <tt>&quot;-data &#39;&#39;WORKSPACE&#39;&#39;&quot;</tt>.<p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>5.2.6 Menu Bar</title>
+    <meta content="5.2.6 Menu Bar" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h2><a id="SECTION00626000000000000000" name="SECTION00626000000000000000"><span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Menu Bar</a></h2><a name="7422"></a> <a name="7423"></a><p><b>Description</b>:<p><a id="CONCRETE_MenuBar" name="CONCRETE_MenuBar"></a><ul>
+      <li>A <i>menu bar</i> is the component typically found at the top of an application window.<li>It typically contains menus such as &#39;&#39;File&#39;&#39;, &#39;&#39;Edit&#39;&#39;, &#39;&#39;Help&#39;&#39;, etc.</ul>
+    <div align="center"><a id="menu" name="menu"></a><a name="7432"></a><table>
+        <caption align="bottom"><strong>Figure 5.10:</strong> Menu Bar</caption>
+        <tr>
+          <td>
+            <div align="center"><img align="bottom" border="0" height="87" src="./Menu.png" width="91" /></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p>Because the forward slash (/) is a special symbol for menus, if you want to use a slash as part of your parameter value, you have to mask it. See the section later in this document <a href="node39.html#specialchar">9</a> for more details.<p><span class="textbf">Mapping menu bars</span><p>Menu bars do not need to be mapped in the Object Mapping Mode as they are automatically found during test execution.<table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>Actions on menus are not supported in the HTML toolkit.</b></td>
+      </tr>
+    </table>
+    <p><b>Synopsis</b>:<br />
+    <ul>
+      <li>Menu Bar (concrete)</ul> CONCRETE_MenuBar_VerifyEnabledByIndexpath CONCRETE_MenuBar_VerifyEnabledByTextpath CONCRETE_MenuBar_VerifyExistsByIndexpath CONCRETE_MenuBar_VerifyExistsByTextpath CONCRETE_MenuBar_VerifySelectedByIndexpath CONCRETE_MenuBar_VerifySelectedByTextpath CONCRETE_MenuBar_SelectMenuItemByIndexpath CONCRETE_MenuBar_SelectMenuItem CONCRETE_MenuBar_WaitForComponent <table border="1" cellpadding="3">
+      <tr>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3"><b>New Actions</b></td>
+      </tr>
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Type</small></td>
+        <td><small>Parameters</small></td>
+      </tr>
+      <tr>
+        <td><small>Check Enablement of Entry by Indexpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Boolean:Enabled<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Enablement of Entry by Textpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Menupath<br /> String:Operator<br /> Boolean:Enabled<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Existence of Entry by Indexpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Boolean:Exists<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Existence of Entry by Textpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Menupath<br /> String:Operator<br /> Boolean:Exists<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Selection of Entry by Indexpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Indexpath<br /> Boolean:Selected<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Selection of Entry by Textpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Menupath<br /> String:Operator<br /> Boolean:Selected<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Select Menu Entry by Indexpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Indexpath<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Select Menu Entry by Textpath</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Menupath<br /> String:Operator<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Wait for Component</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:Timeout in ms<br /> Integer:Delay after Visibility<br /></small></td>
+      </tr>
+    </table>
+    <p><b>Inherited Actions</b><p><i>none</i><p>
+      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="43533"></a><a name="43534"></a><p><a id="CONCRETE_MenuBar_VerifyEnabledByIndexpath" name="CONCRETE_MenuBar_VerifyEnabledByIndexpath"></a><ul>
+      <li>Use this action to check the enablement status of an item in a menu bar.<li>The item to check is given using the indexpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Indexpath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyEnabledByIndexpath_IndexPath" name="CONCRETE_MenuBar_VerifyEnabledByIndexpath_IndexPath"></a><p>Use this parameter to specify the menupath to the item you want to check.Make sure you give the whole menupath (start from the very beginning of the menu).<ul>
+      <li>Enter the path to the item as an indexpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>The first node is &#39;1&#39;</b></td>
+          </tr>
+        </table>
+    </ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Enabled</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyEnabledByIndexpath_IsEnabled" name="CONCRETE_MenuBar_VerifyEnabledByIndexpath_IsEnabled"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to be enabled.<li>Set the parameter to false if you expect the menu item to be disabled.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="43540"></a><a name="43541"></a><p><a id="CONCRETE_MenuBar_VerifyEnabledByTextpath" name="CONCRETE_MenuBar_VerifyEnabledByTextpath"></a><ul>
+      <li>Use this action to check whether an item in a menu is enabled.<li>The item to check is given using the textpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Menupath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyEnabledByTextpath_MenuPath" name="CONCRETE_MenuBar_VerifyEnabledByTextpath_MenuPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole menupath.<ul>
+      <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyEnabledByTextpath_Operator" name="CONCRETE_MenuBar_VerifyEnabledByTextpath_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Enabled</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyEnabledByTextpath_IsEnabled" name="CONCRETE_MenuBar_VerifyEnabledByTextpath_IsEnabled"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to be enabled.<li>Set the parameter to false if you expect the menu item to be disabled.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="43547"></a><a name="43548"></a><p><a id="CONCRETE_MenuBar_VerifyExistsByIndexpath" name="CONCRETE_MenuBar_VerifyExistsByIndexpath"></a><ul>
+      <li>Use this action to check the existence of an item in a menu bar.<li>The item to check is given using the indexpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Indexpath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyExistsByIndexpath_IndexPath" name="CONCRETE_MenuBar_VerifyExistsByIndexpath_IndexPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu).<ul>
+      <li>Enter the path to the item as an indexpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>The first node is &#39;1&#39;</b></td>
+          </tr>
+        </table>
+    </ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Exists</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyExistsByIndexpath_IsExisting" name="CONCRETE_MenuBar_VerifyExistsByIndexpath_IsExisting"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to exist.<li>Set the parameter to false if you expect the menu item to <span class="textit">not</span> exist.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="43554"></a><a name="43555"></a><p><a id="CONCRETE_MenuBar_VerifyExistsByTextpath" name="CONCRETE_MenuBar_VerifyExistsByTextpath"></a><ul>
+      <li>Use this action to check the existence of an item in a menu bar.<li>The item to check is given using the textpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Menupath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyExistsByTextpath_MenuPath" name="CONCRETE_MenuBar_VerifyExistsByTextpath_MenuPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path.<ul>
+      <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyExistsByTextpath_Operator" name="CONCRETE_MenuBar_VerifyExistsByTextpath_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Exists</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifyExistsByTextpath_IsExisting" name="CONCRETE_MenuBar_VerifyExistsByTextpath_IsExisting"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to exist.<li>Set the parameter to false if you expect the menu item to <span class="textit">not</span> exist.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="43561"></a><a name="43562"></a><p><a id="CONCRETE_MenuBar_VerifySelectedByIndexpath" name="CONCRETE_MenuBar_VerifySelectedByIndexpath"></a><ul>
+      <li>Use this action to check whether an item in a menu is selected.<li>You enter the menupath to the item, and whether you expect it to be selected or not.<li>The menupath is given as an indexpath.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Indexpath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifySelectedByIndexpath_IndexPath" name="CONCRETE_MenuBar_VerifySelectedByIndexpath_IndexPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu).<ul>
+      <li>Enter the path to the item as an indexpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>The first node is &#39;1&#39;</b></td>
+          </tr>
+        </table>
+    </ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Selected</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifySelectedByIndexpath_IsSelected" name="CONCRETE_MenuBar_VerifySelectedByIndexpath_IsSelected"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to be selected.<li>Set this parameter to false if you expect the menu item <span class="textit">not</span> to be selected.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="43568"></a><a name="43569"></a><p><a id="CONCRETE_MenuBar_VerifySelectedByTextpath" name="CONCRETE_MenuBar_VerifySelectedByTextpath"></a><ul>
+      <li>Use this action to check whether an item in a menu is selected.<li>You enter the menupath to the item, and whether you expect it to be selected or not.<li>The menupath is given as a textpath.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Menupath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifySelectedByTextpath_MenuPath" name="CONCRETE_MenuBar_VerifySelectedByTextpath_MenuPath"></a><p>Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path.<ul>
+      <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifySelectedByTextpath_Operator" name="CONCRETE_MenuBar_VerifySelectedByTextpath_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Selected</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_VerifySelectedByTextpath_IsSelected" name="CONCRETE_MenuBar_VerifySelectedByTextpath_IsSelected"></a><ul>
+      <li>Set this parameter to true if you expect the menu item to be selected.<li>Set this parameter to false if you expect the menu item <span class="textit">not</span> to be selected.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="43575"></a><a name="43576"></a><p><a id="CONCRETE_MenuBar_SelectMenuItemByIndexpath" name="CONCRETE_MenuBar_SelectMenuItemByIndexpath"></a><ul>
+      <li>Use this action to select an item from a menu bar.<li>The item you want to select is given using the indexpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Indexpath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_SelectMenuItemByIndexpath_IndexPath" name="CONCRETE_MenuBar_SelectMenuItemByIndexpath_IndexPath"></a><p>Use this parameter to specify the menupath to the item you want to select.Make sure you give the whole menupath (start from the very beginning of the menu).<ul>
+      <li>Enter the path to the item as an indexpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>The first node is &#39;1&#39;</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="43582"></a><a name="43583"></a><p><a id="CONCRETE_MenuBar_SelectMenuItem" name="CONCRETE_MenuBar_SelectMenuItem"></a><ul>
+      <li>Use this action to select an item from a menu bar.<li>The item you want to select is given using the textpath to the item.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Menupath</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_SelectMenuItem_MenuPath" name="CONCRETE_MenuBar_SelectMenuItem_MenuPath"></a><p>Use this parameter to specify the menupath to the item you want to select. Make sure you enter the whole path.<ul>
+      <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_SelectMenuItem_Operator" name="CONCRETE_MenuBar_SelectMenuItem_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Component</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="43589"></a><a name="43590"></a><p><a id="CONCRETE_MenuBar_WaitForComponent" name="CONCRETE_MenuBar_WaitForComponent"></a><ul>
+      <li>The wait for menu action lets you wait until the menu is present/loaded before continuing with the next Test Step .</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Timeout in ms</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>1000</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_WaitForComponent_Timeout" name="CONCRETE_MenuBar_WaitForComponent_Timeout"></a><ul>
+      <li>Enter the amount of time (in milliseconds) Jubula should wait before the Test Step fails.<li>If the menu does not appear in this time frame, the Test Step is unsuccessful.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Delay after Visibility</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>200</small></td>
+      </tr>
+    </table><a id="CONCRETE_MenuBar_WaitForComponent_DelayAfterVisibility" name="CONCRETE_MenuBar_WaitForComponent_DelayAfterVisibility"></a><ul>
+      <li>Sometimes a widget is not ready to receive events (mouse clicks, key presses) until a few moments after becoming visible.<li>Use this parameter to set the amount of time (in milliseconds) to wait once the widget has appeared before continuing.</ul>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

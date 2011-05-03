@@ -1,0 +1,1565 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>5.2.1 Application</title>
+    <meta content="5.2.1 Application" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h2><a id="SECTION00621000000000000000" name="SECTION00621000000000000000"><span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Application</a></h2><a name="3627"></a> <a name="3628"></a><p><b>Description</b>:<p><a id="CONCRETE_GraphicApplication" name="CONCRETE_GraphicApplication"></a><ul>
+      <li>The <i>Application</i> component is the container for all other components.<li>It represents the AUT as a whole.</ul>
+    <p><b>Synopsis</b>:<br />
+    <ul>
+      <li>Application (concrete)</ul> CONCRETE_GraphicApplication_Activate CONCRETE_GraphicApplication_CheckExistenceOfWindow CONCRETE_GraphicApplication_CheckValues CONCRETE_GraphicApplication_CheckStringValues CONCRETE_GraphicApplication_ClickInActiveWindow CONCRETE_GraphicApplication_CopyToClipboard CONCRETE_GraphicApplication_ExecuteCommand CONCRETE_GraphicApplication_NativeInputText CONCRETE_GraphicApplication_NativeKeyStroke CONCRETE_GraphicApplication_InputTextDirect CONCRETE_GraphicApplication_KeyStroke CONCRETE_GraphicApplication_ManualTestStep CONCRETE_GraphicApplication_Pause CONCRETE_GraphicApplication_ReadTimer CONCRETE_GraphicApplication_Restart CONCRETE_GraphicApplication_KeyToogle CONCRETE_GraphicApplication_StartTimer CONCRETE_GraphicApplication_ReadValue CONCRETE_GraphicApplication_TakeScreenshot CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow CONCRETE_GraphicApplication_Wait CONCRETE_GraphicApplication_WaitForWindow CONCRETE_GraphicApplication_WaitForWindowActivation CONCRETE_GraphicApplication_WaitForWindowToClose <table border="1" cellpadding="3">
+      <tr>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3"><b>New Actions</b></td>
+      </tr>
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Type</small></td>
+        <td><small>Parameters</small></td>
+      </tr>
+      <tr>
+        <td><small>Activate</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Activation Method<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Existence of Window</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Title<br /> String:Operator<br /> Boolean:Exists<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check Numeric Values</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Value 1<br /> String:Comparison Method<br /> String:Value 2<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Check String Values</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Value 1<br /> String:Value 2 Operator<br /> String:Value 2<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Click in Active Window</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:Number of Clicks<br /> Integer:Mouse Button<br /> Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Copy Text to Clipboard</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Text<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Execute External Command</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Command<br /> Integer:Expected Exit Code<br /> Boolean:Local<br /> Integer:Timeout in ms<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>External Input Text</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Text<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>External Key Combination</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Modifier Keys<br /> String:Base Key<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Input Text</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Text<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Key Combination</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Modifier Keys<br /> String:Base Key<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Manual Test Step</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Action to perform<br /> String:Expected Behavior<br /> Integer:Timeout in ms<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Pause Test Execution</small></td>
+        <td><small>e</small></td>
+      </tr>
+      <tr>
+        <td><small>Read Timer</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Timer Name<br /> Variable:Timer Value Variable Name<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Restart</small></td>
+        <td><small>e</small></td>
+      </tr>
+      <tr>
+        <td><small>Set Toggle Key</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:Key<br /> Boolean:Activate Key<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Start Timer</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Timer Name<br /> Variable:Start Time Variable Name<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Store Value</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Variable:Variable Name<br /> String:Value<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Take Screenshot</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Destination<br /> Integer:Delay<br /> String:File Access<br /> Integer:Scaling Factor<br /> Boolean:Create Directories<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Take Screenshot of Active Window</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Destination<br /> Integer:Delay<br /> String:File Access<br /> Integer:Scaling Factor<br /> Boolean:Create Directories<br /> Integer:Margin Top<br /> Integer:Margin Right<br /> Integer:Margin Bottom<br /> Integer:Margin Left<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Wait</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>Integer:Millisecs<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Wait for Window</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Title<br /> String:Operator<br /> Integer:Timeout in ms<br /> Integer:Delay after Visibility<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Wait for Window Activation</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Title<br /> String:Operator<br /> Integer:Timeout in ms<br /> Integer:Delay after Visibility<br /></small></td>
+      </tr>
+      <tr>
+        <td><small>Wait for Window to Close</small></td>
+        <td><small>e</small></td>
+        <td>
+          <p><small>String:Title<br /> String:Operator<br /> Integer:Timeout in ms<br /> Integer:Delay after Closure<br /></small></td>
+      </tr>
+    </table>
+    <p><b>Inherited Actions</b><p><i>none</i><p>
+      <br /><span class="textbf"><big class="LARGE">Activate</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42891"></a><a name="42892"></a><p><a id="CONCRETE_GraphicApplication_Activate" name="CONCRETE_GraphicApplication_Activate"></a><p><a id="activate" name="activate"></a><ul>
+      <li>When the ITE and AUT Agent are running on the same computer, you may need to bring the AUT into focus before a test can begin.<li>Exactly how to <i>activate</i> the application can vary from one system to another.<li>This action offers various different ways of activating the application.<li>Jubula realises this action by clicking in the location indicated in the <i>activation method</i> parameter.<li>In the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node72.html#configuringaut"><img align="bottom" border="1" src="crossref.gif" /></a>, the default is that no activation is carried out.<li>You can set an activation method for the whole AUT in its configuration, and use this in your Test Steps (e.g. set the activation method parameter to &quot;<i>AUT_DEFAULT</i>&quot;) or you can use a different activation method.<li>In this way, you can centrally define a default for a given operating system, which you can easily change when you test on another operating system.<li>Using the activate action, you can also specify activation methods which differ from the default. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>This action is used to ensure that an AUT has the current focus. It cannot be used to maximize a minimized AUT .</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Activation Method</small></td>
+        <td><small>String</small></td>
+        <td><small>AUT_DEFAULT<br /> NONE<br /> TITLEBAR<br /> NW<br /> NE<br /> SW<br /> SE<br /> CENTER<br /></small></td>
+        <td><small>AUT_DEFAULT</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_Activate_ActivationMethod" name="CONCRETE_GraphicApplication_Activate_ActivationMethod"></a><ul>
+      <li>Use this parameter to specify how you want the AUT to be activated.<li>You have a choice of possible values:</ul>
+    <table border="1" cellpadding="3">
+      <tr valign="baseline">
+        <td align="left" valign="top" width="85">Value</td>
+        <td align="left" valign="top" width="170">Description</td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left" valign="top" width="85"><tt>&quot;NONE&quot;</tt></td>
+        <td align="left" valign="top" width="170">does not activate the AUT : in effect, this parameter does nothing.</td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left" valign="top" width="85"><tt>&quot;AUT_DEFAULT&quot;</tt></td>
+        <td align="left" valign="top" width="170">uses the default from the AUT configuration</td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left" valign="top" width="85"><tt>&quot;NE&quot;</tt></td>
+        <td align="left" valign="top" width="170">click in the northeast corner of the AUT window</td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left" valign="top" width="85"><tt>&quot;NW&quot;</tt></td>
+        <td align="left" valign="top" width="170">click in the northwest corner of the AUT window</td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left" valign="top" width="85"><tt>&quot;SE&quot;</tt></td>
+        <td align="left" valign="top" width="170">click in the southeast corner</td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left" valign="top" width="85"><tt>&quot;SW&quot;</tt></td>
+        <td align="left" valign="top" width="170">click in the southwest corner</td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left" valign="top" width="85"><tt>&quot;TITLEBAR&quot;</tt></td>
+        <td align="left" valign="top" width="170">click in the window&#39;s titlebar. This does not work with small or non-existent titlebars.</td>
+      </tr>
+    </table>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42898"></a><a name="42899"></a><p><a id="CONCRETE_GraphicApplication_CheckExistenceOfWindow" name="CONCRETE_GraphicApplication_CheckExistenceOfWindow"></a><ul>
+      <li>Use this action to check the existence of a window based on its title.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Title</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CheckExistenceOfWindow_Title" name="CONCRETE_GraphicApplication_CheckExistenceOfWindow_Title"></a><ul>
+      <li>Enter the title of the window you are waiting for.<li>The title you provide will be compared to the title bar of each window as it opens, using the Operator provided.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CheckExistenceOfWindow_Operator" name="CONCRETE_GraphicApplication_CheckExistenceOfWindow_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Exists</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CheckExistenceOfWindow_IsExisting" name="CONCRETE_GraphicApplication_CheckExistenceOfWindow_IsExisting"></a><ul>
+      <li>Set this parameter to true if you expect the window to exist.<li>Set this parameter to false if you do <span class="textit">not</span> expect the window to exist.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Numeric Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42905"></a><a name="42906"></a><p><a id="CONCRETE_GraphicApplication_CheckValues" name="CONCRETE_GraphicApplication_CheckValues"></a><ul>
+      <li>Use this action to compare two numeric values during your test.<li>This action can be used with the <i>start timer</i> and <i>read timer</i> actions to compare the time difference to a value you specify (i.e. to measure the performance of your application).<li>You can also compare other variables you have read from your application with this action.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Value 1</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CheckValues_Value1" name="CONCRETE_GraphicApplication_CheckValues_Value1"></a><ul>
+      <li>Enter the first value or variable you want this action to check.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Comparison Method</small></td>
+        <td><small>String</small></td>
+        <td><small>less than<br /> less or equal than<br /> equal to<br /> greater or equal than<br /> greater than<br /></small></td>
+        <td><small>equal to</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CheckValues_ComparisonMethod" name="CONCRETE_GraphicApplication_CheckValues_ComparisonMethod"></a><ul>
+      <li>Select the comparison method you want to use to check the two values or variables.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Value 2</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CheckValues_Value2" name="CONCRETE_GraphicApplication_CheckValues_Value2"></a><ul>
+      <li>Enter the second value or variable you want this action to check.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check String Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42912"></a><a name="42913"></a><p><a id="CONCRETE_GraphicApplication_CheckStringValues" name="CONCRETE_GraphicApplication_CheckStringValues"></a><p>Use this action to compare the values of two strings in your test. This can be used if you want to check the value of a variable, for example.<p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Value 1</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CheckStringValues_Value1" name="CONCRETE_GraphicApplication_CheckStringValues_Value1"></a><ul>
+      <li>Enter the value or variable you want to perform the check against.<li>With the other parameters, you can enter how the value should be compared and what it should be compared to.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Value 2 Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CheckStringValues_OperatorValue2" name="CONCRETE_GraphicApplication_CheckStringValues_OperatorValue2"></a><p>Use this parameter to define the operator for the <i>value 2</i> parameter.<ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Value 2</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CheckStringValues_Value2" name="CONCRETE_GraphicApplication_CheckStringValues_Value2"></a><ul>
+      <li>Enter the value or variable you want to use to perform the check against the <i>value 1</i> parameter.<li>If you want to check that value one begins with <tt>&quot;A&quot;</tt> and ends with <tt>&quot;Z&quot;</tt> then you could use <i>matches</i> as the operator parameter, and enter <tt>&quot;A.*Z&quot;</tt> as the parameter for <i>value 2</i>.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Click in Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42919"></a><a name="42920"></a><p><a id="CONCRETE_GraphicApplication_ClickInActiveWindow" name="CONCRETE_GraphicApplication_ClickInActiveWindow"></a><ul>
+      <li>Use this action to send one or more clicks with any mouse button to the currently active window.<li>You can specify where to click, how many times, and with which mouse button.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Number of Clicks</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>1</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ClickInActiveWindow_ClickCount" name="CONCRETE_GraphicApplication_ClickInActiveWindow_ClickCount"></a><ul>
+      <li>Enter the amount of clicks that should be performed on the component or item.<li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item.<li>Entering <tt>&quot;1&quot;</tt> will single-click on the component or item.<li>Entering <tt>&quot;2&quot;</tt> will double-click on the component or item.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Mouse Button</small></td>
+        <td><small>Integer</small></td>
+        <td><small>1<br /> 2<br /> 3<br /></small></td>
+        <td><small>1</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ClickInActiveWindow_MouseButton" name="CONCRETE_GraphicApplication_ClickInActiveWindow_MouseButton"></a><ul>
+      <li>Use this parameter to select which mouse button you want to click with. <ul>
+          <li><tt>&quot;1&quot;</tt> = left mouse button<li><tt>&quot;2&quot;</tt> = middle mouse button<li><tt>&quot;3&quot;</tt> = right mouse button</ul>
+      <li>The mouse button you use to click with can also have an effect on what happens.<li>The button to click will depend on your AUT and what the click should achieve.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>x-position</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>50</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ClickInActiveWindow_XPos" name="CONCRETE_GraphicApplication_ClickInActiveWindow_XPos"></a><ul>
+      <li>With this parameter, you can specify where in the component you should click.<li>Use this parameter to enter a value for the x-axis (the horizontal position).<li>Using the x-units parameter, you can specify whether the value should be in pixels or in percent.<li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt>, then the click will be performed in the middle of the x-axis.<li>All positions are calculated from the upper left of the component, with the positive x-axis stretching toward the right side of the component. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>We recommend not using <tt>&quot;0&quot;</tt> (pixels and percent) or <tt>&quot;100&quot;</tt>(percent) as positions.</b></td>
+          </tr>
+        </table>
+    </ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>x-units</small></td>
+        <td><small>String</small></td>
+        <td><small>percent<br /> pixel<br /></small></td>
+        <td><small>percent</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ClickInActiveWindow_XUnits" name="CONCRETE_GraphicApplication_ClickInActiveWindow_XUnits"></a><ul>
+      <li>Use this parameter to tell Jubula whether you want your values for the x-coordinate to be in pixels or percent.<li>If you choose percent for this parameter, and <tt>&quot;50&quot;</tt> for the <i>x-position</i> parameter, the click will always be in the middle of the x-axis.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>y-position</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>50</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ClickInActiveWindow_YPos" name="CONCRETE_GraphicApplication_ClickInActiveWindow_YPos"></a><ul>
+      <li>With this parameter, you can specify where in the component you should click.<li>Use this parameter to enter a value for the y-axis (the vertical position).<li>Using the y-units parameter, you can specify whether the value should be in pixels or in percent.<li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt>, then the click will be performed in the middle of the y-axis.<li>All positions are calculated from the upper left of the component, with the positive y-axis stretching toward the bottom of the component. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>We recommend not using <tt>&quot;0&quot;</tt> (pixels and percent) or <tt>&quot;100&quot;</tt>(percent) as positions.</b></td>
+          </tr>
+        </table>
+    </ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img3.jpg" /></td>
+        <td><b>Do not use this action with the value 100% on Linux systems, as this causes a timeout.</b></td>
+      </tr>
+    </table>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>y-units</small></td>
+        <td><small>String</small></td>
+        <td><small>percent<br /> pixel<br /></small></td>
+        <td><small>percent</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ClickInActiveWindow_YUnits" name="CONCRETE_GraphicApplication_ClickInActiveWindow_YUnits"></a><ul>
+      <li>Use this parameter to tell Jubula whether you want your values for the y-coordinate to be in pixels or percent.<li>If you choose percent for this parameter, and <tt>&quot;50&quot;</tt> for the <i>y-position</i> parameter, the click will always be in the middle of the y-axis.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Copy Text to Clipboard</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42926"></a><a name="42927"></a><p><a id="CONCRETE_GraphicApplication_CopyToClipboard" name="CONCRETE_GraphicApplication_CopyToClipboard"></a><p>This action allows you to copy one string to the clipboard on your operating system. It can be used in combination with the key combination <tt>&raquo;CTRL+V&laquo;</tt> to paste text into your AUT , or into native dialogs (e.g. file choosers) opened by your AUT .<p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Text</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_CopyToClipboard_Text" name="CONCRETE_GraphicApplication_CopyToClipboard_Text"></a><ul>
+      <li>Enter the text you wish you copy to the clipboard.<li>If the text contains any special characters, use the symbol for verbatim text to mask any special functions of the characters <a href="node40.html#verbatimsymbol">9.1</a>.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Execute External Command</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42933"></a><a name="42934"></a><p><a id="CONCRETE_GraphicApplication_ExecuteCommand" name="CONCRETE_GraphicApplication_ExecuteCommand"></a><ul>
+      <li>Use this action to run an external script or command during your test.<li>You enter the command and the exit code that Jubula should wait for, as well as a timeout to tell Jubula how long to wait for the code.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Command</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ExecuteCommand_Command" name="CONCRETE_GraphicApplication_ExecuteCommand_Command"></a><ul>
+      <li>Use this parameter to tell Jubula which command to execute.<li>Give the path to the command, either on the local machine or on the remote machine, as defined in the <i>local</i> parameter.<li>Relative paths can be written simply with the white spaces included. You will need to use quotes (&quot;) around the path or command if you are using path fragments (e.g. <tt>&quot;./&quot;</tt> or <tt>&quot;../&quot;</tt>) for the relative path.<li>When using absolute paths, use quotes (&quot;) around the command or parameter containing the whitespaces.<li>You need to use quotes for path fragments as <p>For example, instead of:<br /><code>C:\Program Files\guidancer\guidancer.exe</code><br /><code>-data C:\Program Files\guidancer\ws</code><br /> enter:<br /><code>&quot;C:\Program Files\guidancer\guidancer.exe&quot;</code><br /><code>-data &quot;C:\Program Files\guidancer\ws&quot;</code><li>In Linux, quotes may be placed around the command and the parameter. Windows cmd.exe can only accept quotes in either the parameter or the command.<li>Please bear in mind that strings within the quotes are not checked for validity.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>Use .cmd commands instead of .bat commands.</b></td>
+      </tr>
+    </table>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Expected Exit Code</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>0</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ExecuteCommand_ExpectedExitCode" name="CONCRETE_GraphicApplication_ExecuteCommand_ExpectedExitCode"></a><ul>
+      <li>Scripts generally have an exit code (for example, 0 usually means that the script was successfull).<li>Use this paramter to define the exit code that Jubula should expect.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Local</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>false</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ExecuteCommand_RunLocal" name="CONCRETE_GraphicApplication_ExecuteCommand_RunLocal"></a><ul>
+      <li>Use this parameter to define whether the command should be run locally (on the same machine as the ITE , the same machine as Jubula is installed on) or remotely (on the machine where the AUT Agent is installed, and the AUT is running.).<li>Set this parameter to true to run the command locally.<li>Set this parameter to false to run the command remotely. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>If you are running your AUT on the same machine as the ITE , there is no difference between running the command locally or remotely.</b></td>
+          </tr>
+        </table>
+      <li>For information on using relative paths to the location of the commands on local and remote machines, see the section in this document <a href="node38.html#relativepath">8</a>.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Timeout in ms</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>5000</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ExecuteCommand_Timeout" name="CONCRETE_GraphicApplication_ExecuteCommand_Timeout"></a><ul>
+      <li>Enter the amount of time (in milliseconds) Jubula should wait for the exit code for the command.<li>If the exit code is not delivered in this timeframe, the Test Step is unsuccessful.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">External Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42940"></a><a name="42941"></a><p><a id="CONCRETE_GraphicApplication_NativeInputText" name="CONCRETE_GraphicApplication_NativeInputText"></a><ul>
+      <li>Use this action to input text into dialogs that are not supported by Jubula (e.g. file choosers).<li>Jubula can send keystrokes to these dialogs, but cannot check if they have arrived.<li>For this action to work, the dialog must be in focus, and the cursor must be in the text field to be filled in.<li>Combine this action with the &quot;<i>External Key Combination</i>&quot; action to send key combinations to native dialogs to be able to work with file choosers during your test.</ul>
+    <p><span class="textbf">Native dialogs in SWT and RCP AUT&#39;s</span><br />
+    <p>In SWT and RCP AUT&#39;s , this action can only enter ASCII characters (large and small letters, and numbers).<p>To enter characters such as spaces, periods and slashes, use the action <i>External Key Combination</i>.<p>We recommend using the action <i>Copy to Clipboard</i> to help fill out native dialogs in SWT and RCP AUT&#39;s . The string you copy to the clipboard can then simply be entered into the textfield in the dialog using <tt>&raquo;CTRL+V&laquo;</tt> as an <i>External Key Combination</i> action.<p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Text</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_NativeInputText_Text" name="CONCRETE_GraphicApplication_NativeInputText_Text"></a><ul>
+      <li>Use this parameter to specify the text you want to enter into the component.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">External Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42947"></a><a name="42948"></a><p><a id="CONCRETE_GraphicApplication_NativeKeyStroke" name="CONCRETE_GraphicApplication_NativeKeyStroke"></a><ul>
+      <li>Use this action to send a key combination to a dialog that is not supported by Jubula (e.g. file choosers).<li>Jubula can send a keystroke to these dialogs, but cannot check if it have arrived.<li>For this action to work, the dialog must be in focus.<li>Combine this action with the &quot;<i>External Input Text</i>&quot; action to be able to work with file choosers during your test.<li>Some of the keystrokes you may need include <i>ENTER</i>, <i>SPACE</i>, <i>PERIOD</i> and <i>/</i>.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img3.jpg" /></td>
+        <td><b>Under Swing, this action only supports the American character set. Under SWT, you can use any character set under Windows, but there are some problems with non-American characters under Linux.</b></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>We recommend using the action <i>Copy to Clipboard</i> to help fill out native dialogs in SWT and RCP AUT&#39;s . The string you copy to the clipboard can then simply be entered into the textfield in the dialog using <tt>&raquo;CTRL+V&laquo;</tt> as an <i>External Key Combination</i> action.</b></td>
+      </tr>
+    </table>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Modifier Keys</small></td>
+        <td><small>String</small></td>
+        <td><small>none<br /> shift<br /> control<br /> alt<br /> meta<br /> cmd<br /> mod<br /></small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_NativeKeyStroke_ModifierSpecification" name="CONCRETE_GraphicApplication_NativeKeyStroke_ModifierSpecification"></a><ul>
+      <li>Use this parameter to specify a key or keys to be pressed at the same time as the action is being executed.<li>You can use this parameter to specify the following keys, or combinations thereof: <dl>
+          <dt><strong><tt>&quot;shift&quot;</tt></strong><dt><strong><tt>&quot;control&quot;</tt></strong><dd>This is the first modifier for Windows and Linux<dt><strong><tt>&quot;cmd&quot;</tt></strong><dd>This is the first modifier for Mac<dt><strong><tt>&quot;mod&quot;</tt></strong><dd>This is the platform-independent first modifier. It corresponds to <tt>&raquo;CONTROL&laquo;</tt> for Windows and Linux, and <tt>&raquo;CMD&laquo;</tt> for Mac.<dt><strong><tt>&quot;meta&quot;</tt></strong><dt><strong><tt>&quot;alt&quot;</tt></strong></dl>
+      <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier.<li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Base Key</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_NativeKeyStroke_KeySpecification" name="CONCRETE_GraphicApplication_NativeKeyStroke_KeySpecification"></a><ul>
+      <li>Use the &quot;<i>base key</i>&quot; parameter to specify which key to &#39;&#39;press&#39;&#39;.<li>The various keys have different codes.<li>The most important keycodes are:</ul>
+    <table border="1" cellpadding="3">
+      <tr valign="baseline">
+        <th align="left"><small class="FOOTNOTESIZE"><span class="textbf">value(s)</span></small></th>
+        <th align="left"><small class="FOOTNOTESIZE"><span class="textbf">description</span></small></th>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">0 ... 9</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">top-row keys 0 through 9</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">A ... Z</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">letters A to Z. For capital letters,</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">use <tt>&quot;shift&quot;</tt> in the &quot;<i>Modifier</i>&quot; parameter.</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">ENTER</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">Enter or Return key</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">SPACE</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Spacebar</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">TAB</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Tab key</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">ESCAPE</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Escape key</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">BACK_SPACE</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Backspace key</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">F1 ... F12</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the function keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">HOME, END</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the home and end keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">INSERT, DELETE</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the insertion and deletion keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">PAGE_UP, PAGE_DOWN</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the page up and page down keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">DOWN, UP</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Up and Down arrow keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">LEFT, RIGHT</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Left and Right arrow keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">NUMPAD0 ... NUMPAD9</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">The number pad keys.</small></td>
+      </tr>
+    </table>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42954"></a><a name="42955"></a><p><a id="CONCRETE_GraphicApplication_InputTextDirect" name="CONCRETE_GraphicApplication_InputTextDirect"></a><ul>
+      <li>Use this action to enter text into the component which currently has focus.<li>The text you want to enter is given as a parameter.<li>The difference between this action and the &quot;<i>External Input Text</i>&quot; is that Jubula can check that the keystrokes have arrived at the component.<li>Use this action for components that Jubula supports, and the &quot;<i>External Input Text</i>&quot; action for components in external dialogs, such as file choosers.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>In HTML AUT&#39;s , this action can only be used with alphanumeric characters. Also, if the focus is not currently on the browser, then this action will not be successful.</b></td>
+      </tr>
+    </table>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Text</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_InputTextDirect_Text" name="CONCRETE_GraphicApplication_InputTextDirect_Text"></a><ul>
+      <li>Use this parameter to specify the text you want to enter into the component.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42961"></a><a name="42962"></a><p><a id="CONCRETE_GraphicApplication_KeyStroke" name="CONCRETE_GraphicApplication_KeyStroke"></a><ul>
+      <li>This action allows you to send a key command to the application.<li>This is useful for actions such as <tt>&raquo;DELETE&laquo;</tt>, <tt>&raquo;ENTER&laquo;</tt>, etc.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>Under Swing, this action only supports the American character set. Under SWT, you can use any character set under Windows, but there are some problems with non-American characters under Linux.</b></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img3.jpg" /></td>
+        <td><b>In HTML, on Firefox, the keys <tt>&raquo;F5&laquo;</tt> and <tt>&raquo;ESCAPE&laquo;</tt> cannot be used.</b></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>Users working on Linux systems should increase the <i>key repeat delay</i> on their test system or remove it completely. Some Linux systems can otherwise tend to repeat key presses which can lead to undesired actions being produced during test execution.</b></td>
+      </tr>
+    </table>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Modifier Keys</small></td>
+        <td><small>String</small></td>
+        <td><small>none<br /> shift<br /> control<br /> alt<br /> meta<br /> cmd<br /> mod<br /></small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_KeyStroke_ModifierSpecification" name="CONCRETE_GraphicApplication_KeyStroke_ModifierSpecification"></a><ul>
+      <li>Use this parameter to specify a key or keys to be pressed at the same time as the action is being executed.<li>You can use this parameter to specify the following keys, or combinations thereof: <dl>
+          <dt><strong><tt>&quot;shift&quot;</tt></strong><dt><strong><tt>&quot;control&quot;</tt></strong><dd>This is the first modifier for Windows and Linux<dt><strong><tt>&quot;cmd&quot;</tt></strong><dd>This is the first modifier for Mac<dt><strong><tt>&quot;mod&quot;</tt></strong><dd>This is the platform-independent first modifier. It corresponds to <tt>&raquo;CONTROL&laquo;</tt> for Windows and Linux, and <tt>&raquo;CMD&laquo;</tt> for Mac.<dt><strong><tt>&quot;meta&quot;</tt></strong><dt><strong><tt>&quot;alt&quot;</tt></strong></dl>
+      <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier.<li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Base Key</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_KeyStroke_KeySpecification" name="CONCRETE_GraphicApplication_KeyStroke_KeySpecification"></a><ul>
+      <li>Use the &quot;<i>base key</i>&quot; parameter to specify which key to &#39;&#39;press&#39;&#39;.<li>The various keys have different codes.<li>The most important keycodes are:</ul>
+    <table border="1" cellpadding="3">
+      <tr valign="baseline">
+        <th align="left"><small class="FOOTNOTESIZE"><span class="textbf">value(s)</span></small></th>
+        <th align="left"><small class="FOOTNOTESIZE"><span class="textbf">description</span></small></th>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">0 ... 9</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">top-row keys 0 through 9</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">A ... Z</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">letters A to Z. For capital letters,</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">use <tt>&quot;shift&quot;</tt> in the &quot;<i>Modifier</i>&quot; parameter.</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">ENTER</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">Enter or Return key</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">SPACE</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Spacebar</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">TAB</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Tab key</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">ESCAPE</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Escape key</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">BACK_SPACE</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Backspace key</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">F1 ... F12</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the function keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">HOME, END</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the home and end keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">INSERT, DELETE</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the insertion and deletion keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">PAGE_UP, PAGE_DOWN</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the page up and page down keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">DOWN, UP</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Up and Down arrow keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">LEFT, RIGHT</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">the Left and Right arrow keys</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left">
+        </td>
+        <td align="left"><small class="FOOTNOTESIZE">(not the number pad keys!)</small></td>
+      </tr>
+      <tr valign="baseline">
+        <td align="left"><small class="FOOTNOTESIZE">NUMPAD0 ... NUMPAD9</small></td>
+        <td align="left"><small class="FOOTNOTESIZE">The number pad keys.</small></td>
+      </tr>
+    </table>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Manual Test Step</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42968"></a><a name="42969"></a><p><a id="CONCRETE_GraphicApplication_ManualTestStep" name="CONCRETE_GraphicApplication_ManualTestStep"></a><ul>
+      <li>Use this action to specify a manual Test Step .<li>Manual Test Steps can be specified in Jubula and must be executed by a manual tester.<li>Jubula provides a special test execution mode for manual testing, in which the manual Test Steps are presented to the user to be executed.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Action to perform</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ManualTestStep_ActionToPerfom" name="CONCRETE_GraphicApplication_ManualTestStep_ActionToPerfom"></a><ul>
+      <li>Enter a description of the action you wish to be performed.<li>This description will be displayed during execution.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Expected Behavior</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ManualTestStep_ExpectedBehavior" name="CONCRETE_GraphicApplication_ManualTestStep_ExpectedBehavior"></a><ul>
+      <li>Enter a description of the expected behaviour of the action.<li>This description will be displayed during execution.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Timeout in ms</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>900000</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ManualTestStep_Timeout" name="CONCRETE_GraphicApplication_ManualTestStep_Timeout"></a><ul>
+      <li>Enter the amount of time to wait for the execution of the manual Test Step , in milliseconds.<li>If the manual Test Step is not manually passed or failed by the tester in this time, the action is marked as failed. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>We recommend entering a higher timeout for manual Test Steps than for automated ones, as a human tester may need more time to perform the action(s) and document any errors.</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Pause Test Execution</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42975"></a><a name="42976"></a><p><a id="CONCRETE_GraphicApplication_Pause" name="CONCRETE_GraphicApplication_Pause"></a><ul>
+      <li>This action pauses the test execution.<li>To continue a paused test, press the pause button in the ITE .</ul>
+    <p>This action has no parameters.<p>
+      <br /><span class="textbf"><big class="LARGE">Read Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42982"></a><a name="42983"></a><p><a id="CONCRETE_GraphicApplication_ReadTimer" name="CONCRETE_GraphicApplication_ReadTimer"></a><ul>
+      <li>Use this action to read a timer (stopwatch).<li>You enter the name of the timer you want to read and enter a variable which saves the difference (in milliseconds) between the current time and the time at which the timer was started.<li>You can start timers and compare values between starting and reading timers using other actions.<li>This action is useful for measuring how long your AUT takes to execute certain actions.</ul>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>You must have used the action<i>Start timer</i> at least once in your test to use this action.</b></td>
+      </tr>
+    </table>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Timer Name</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ReadTimer_TimerName" name="CONCRETE_GraphicApplication_ReadTimer_TimerName"></a><ul>
+      <li>Enter the name of the timer you want to read.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Timer Value Variable Name</small></td>
+        <td><small>Variable</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ReadTimer_VariableToStoreTimeDeltaSinceTimerStart" name="CONCRETE_GraphicApplication_ReadTimer_VariableToStoreTimeDeltaSinceTimerStart"></a><ul>
+      <li>Enter the variable name you will use to save the time difference between starting the timer and reading it.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Restart</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42989"></a><a name="42990"></a><p><a id="CONCRETE_GraphicApplication_Restart" name="CONCRETE_GraphicApplication_Restart"></a><ul>
+      <li>Use this action to restart the AUT during the test.<li>The action closes your AUT and all windows/dialogs associated with it.<li>It then starts the same AUT with the same configuration as it had when you originally started it and carries on with the test.<li>If your AUT takes a while to load/to be ready, it is a good idea to use the &quot;<i>wait for window</i>&quot; or &quot;<i>wait for component</i>&quot; action after the restart action. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img3.jpg" /></td>
+            <td><b>Do not use the restart action as the first Test Step in a test.</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p>This action has no parameters.<p>
+      <br /><span class="textbf"><big class="LARGE">Set Toggle Key</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42996"></a><a name="42997"></a><p><a id="CONCRETE_GraphicApplication_KeyToogle" name="CONCRETE_GraphicApplication_KeyToogle"></a><ul>
+      <li>Use this action to turn the following keys on or off: <ul>
+          <li>Caps-lock<li>Num-lock<li>Scroll-lock</ul>
+      <li>You specify which key to (de)activate and whether the function should be turned on or off. <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img3.jpg" /></td>
+            <td><b>Due to current Java limitations, Jubula does not support this action when testing under Linux. This means that any Test Step containing this action will fail when testing under Linux.</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Key</small></td>
+        <td><small>Integer</small></td>
+        <td><small>1<br /> 2<br /> 3<br /></small></td>
+        <td><small>1</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_KeyToogle_ToogleKey" name="CONCRETE_GraphicApplication_KeyToogle_ToogleKey"></a><ul>
+      <li>Use this parameter to tell Jubula which key you want to (de)activate.<li><tt>&quot;1&quot;</tt> = Num-lock<li><tt>&quot;2&quot;</tt> = Caps-lock<li><tt>&quot;3&quot;</tt> = Scroll-lock</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Activate Key</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_KeyToogle_SelectKey" name="CONCRETE_GraphicApplication_KeyToogle_SelectKey"></a><ul>
+      <li>Use this parameter to specify whether you want to turn the function on or off.<li>Select true to turn the function on.<li>Select false to turn the function off.<li>Turning the function on when it is already on will not have any effect. The function remains on.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Start Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43003"></a><a name="43004"></a><p><a id="CONCRETE_GraphicApplication_StartTimer" name="CONCRETE_GraphicApplication_StartTimer"></a><ul>
+      <li>Use this action to start a timer (stopwatch).<li>You name the timer and enter a variable which saves the current time (in milliseconds since the January 1st 1970).<li>You can read timers and compare values between starting and reading timers using other actions.<li>This action is useful for measuring how long your AUT takes to execute certain actions.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Timer Name</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_StartTimer_TimerName" name="CONCRETE_GraphicApplication_StartTimer_TimerName"></a><ul>
+      <li>Enter a name you will use to identify this timer in your tests.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Start Time Variable Name</small></td>
+        <td><small>Variable</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_StartTimer_VariableToStoreAbsoluteStartTime" name="CONCRETE_GraphicApplication_StartTimer_VariableToStoreAbsoluteStartTime"></a><ul>
+      <li>Enter the variable name you will use to save the current time.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Store Value</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43010"></a><a name="43011"></a><p><a id="CONCRETE_GraphicApplication_ReadValue" name="CONCRETE_GraphicApplication_ReadValue"></a><ul>
+      <li>Use this action to store a value you specify so that you can use it as data for other actions.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Variable Name</small></td>
+        <td><small>Variable</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ReadValue_Variable" name="CONCRETE_GraphicApplication_ReadValue_Variable"></a><ul>
+      <li>Enter the name you want to give to this variable.<li>Variable names may only contain letters, numbers and underscores.<li>You can then enter this variable name as data for other Test Steps .<li>When you enter the variable name as data, place a dollar sign before it.<li>The data associated with this variable name remains the same until the Project is closed, or until you overwrite the name by using it for another value.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Value</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_ReadValue_Value" name="CONCRETE_GraphicApplication_ReadValue_Value"></a><ul>
+      <li>Enter the value that you want to store.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Take Screenshot</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43017"></a><a name="43018"></a><p><a id="CONCRETE_GraphicApplication_TakeScreenshot" name="CONCRETE_GraphicApplication_TakeScreenshot"></a><ul>
+      <li>This action takes a screen capture and saves the resulting image to disk.<li>The action takes a screenshot of the whole screen. To take a screenshot of only the active window, use the action <i>Take Screenshot of Active Window</i>.<li>If you do not enter a file extension, the screenshot will be saved as a <span class="textit">.png</span> file. You can also save the file as an <span class="textit">.jpeg</span> or <span class="textit">.bmp</span> file.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Destination</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshot_Destination" name="CONCRETE_GraphicApplication_TakeScreenshot_Destination"></a><ul>
+      <li>Use this parameter to define the path and filename of the saved image.<li>Make sure that you have write access to the destination.<li>If the destination file does not have an extension, the <span class="textit">.png</span>extension will be automatically appended.<li>For information on using relative paths to the location where screenshots should be saved, see the section in this document <a href="node38.html#relativepath">8</a>.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Delay</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>0</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshot_Delay" name="CONCRETE_GraphicApplication_TakeScreenshot_Delay"></a><ul>
+      <li>Use this parameter to insert a delay before taking the screenshot.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>File Access</small></td>
+        <td><small>String</small></td>
+        <td><small>rename<br /> overwrite<br /></small></td>
+        <td><small>rename</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshot_FileAccess" name="CONCRETE_GraphicApplication_TakeScreenshot_FileAccess"></a><ul>
+      <li>Use this parameter to control how this image is saved if the destination file already exists.<li>Select &#39;&#39;overwrite&#39;&#39; to simply overwrite the Destination file.<li>Select &#39;&#39;rename&#39;&#39; to append a sequential integer to the file name. This automates the creation of sequentially labeled screenshots.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Scaling Factor</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>100</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshot_ScalingFactor" name="CONCRETE_GraphicApplication_TakeScreenshot_ScalingFactor"></a><ul>
+      <li>Use this parameter to scale the image created by the screenshot.<li>The value for this parameter must lie between 1 and 200 (inclusive).<li>The units for this parameter are &#39;&#39;percent&#39;&#39;. This means that a value of 50 scales the image to half its original size, and a value of 200 scales the image to double its original size.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Create Directories</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshot_CreateDirs" name="CONCRETE_GraphicApplication_TakeScreenshot_CreateDirs"></a><ul>
+      <li>Use this parameter to determine how the image is saved if the given path does not exist.<li>Select true to create the necessary directories automatically.<li>Selecting false will cause the test step to fail if the path does not already exist.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Take Screenshot of Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43024"></a><a name="43025"></a><p><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow"></a><ul>
+      <li>This action takes a screen capture of the active window and saves the resulting image to disk.<li>To take a screenshot of thw whole screen, use the action <i>Take Screenshot</i>.<li>If you do not enter a file extension, the screenshot will be saved as a <span class="textit">.png</span> file. You can also save the file as an <span class="textit">.jpeg</span> or <span class="textit">.bmp</span> file.<li>You can specify a margin around the active window to extend the range of the screenshot. This may be necessary on some systems where the title bar of some dialogs is not included in the screenshot.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Destination</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_Destination" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_Destination"></a><ul>
+      <li>Use this parameter to define the path and filename of the saved image.<li>Make sure that you have write access to the destination.<li>If the destination file does not have an extension, the <span class="textit">.png</span>extension will be automatically appended.<li>For information on using relative paths to the location where screenshots should be saved, see the section in this document <a href="node38.html#relativepath">8</a>.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Delay</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>0</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_Delay" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_Delay"></a><ul>
+      <li>Use this parameter to insert a delay before taking the screenshot.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>File Access</small></td>
+        <td><small>String</small></td>
+        <td><small>rename<br /> overwrite<br /></small></td>
+        <td><small>rename</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_FileAccess" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_FileAccess"></a><ul>
+      <li>Use this parameter to control how this image is saved if the destination file already exists.<li>Select &#39;&#39;overwrite&#39;&#39; to simply overwrite the Destination file.<li>Select &#39;&#39;rename&#39;&#39; to append a sequential integer to the file name. This automates the creation of sequentially labeled screenshots.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Scaling Factor</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>100</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_ScalingFactor" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_ScalingFactor"></a><ul>
+      <li>Use this parameter to scale the image created by the screenshot.<li>The value for this parameter must lie between 1 and 200 (inclusive).<li>The units for this parameter are &#39;&#39;percent&#39;&#39;. This means that a value of 50 scales the image to half its original size, and a value of 200 scales the image to double its original size.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Create Directories</small></td>
+        <td><small>Boolean</small></td>
+        <td><small>true<br /> false<br /></small></td>
+        <td><small>true</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_CreateDirs" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_CreateDirs"></a><ul>
+      <li>Use this parameter to determine how the image is saved if the given path does not exist.<li>Select true to create the necessary directories automatically.<li>Selecting false will cause the test step to fail if the path does not already exist.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Margin Top</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>0</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginTop" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginTop"></a><ul>
+      <li>Use this parameter to enter the amount of pixels you wish you include in the screenshot above the top of the dialog.<li>You can enter positive and negative values.<li>Enter 0 to neither extend nor reduce the margin at the top of the dialog.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Margin Right</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>0</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginRight" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginRight"></a><ul>
+      <li>Use this parameter to enter the amount of pixels you wish you include in the screenshot to the right of the dialog.<li>You can enter positive and negative values.<li>Enter 0 to neither extend nor reduce the margin.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Margin Bottom</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>0</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginBottom" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginBottom"></a><ul>
+      <li>Use this parameter to enter the amount of pixels you wish you include in the screenshot at the bottom of the dialog.<li>You can enter positive and negative values.<li>Enter 0 to neither extend nor reduce the margin.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Margin Left</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>0</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginLeft" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginLeft"></a><ul>
+      <li>Use this parameter to enter the amount of pixels you wish you include in the screenshot at left of the dialog.<li>You can enter positive and negative values.<li>Enter 0 to neither extend nor reduce the margin.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Wait</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43031"></a><a name="43032"></a><p><a id="CONCRETE_GraphicApplication_Wait" name="CONCRETE_GraphicApplication_Wait"></a><ul>
+      <li>Sometimes it is necessary to wait for a period of time before continuing.<li>Use this action to tell the AUT Agent to wait for a given amount of time before continuing with the next Test Step .<li>Jubula also offers actions to wait for a window and a component. If you are waiting for a component, or a window, use the actions specific to these events.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Millisecs</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_Wait_TimeMillSec" name="CONCRETE_GraphicApplication_Wait_TimeMillSec"></a><ul>
+      <li>Use this parameter to enter the amount of time to wait before carrying on.<li>Enter the amount of time in milliseconds.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43038"></a><a name="43039"></a><p><a id="CONCRETE_GraphicApplication_WaitForWindow" name="CONCRETE_GraphicApplication_WaitForWindow"></a><ul>
+      <li>This action waits for the window you name to open.<li>This action does <span class="textit">not</span> check whether the window is active<li>Once the window is open (or if the window is already open), the test continues.<li>If the window does not open, the action fails.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Title</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindow_Title" name="CONCRETE_GraphicApplication_WaitForWindow_Title"></a><ul>
+      <li>Enter the title of the window you are waiting for.<li>The title you provide will be compared to the title bar of each window as it opens, using the Operator provided.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindow_Operator" name="CONCRETE_GraphicApplication_WaitForWindow_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Timeout in ms</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>1000</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindow_Timeout" name="CONCRETE_GraphicApplication_WaitForWindow_Timeout"></a><ul>
+      <li>Enter the amount of time to wait for the window, in milliseconds.<li>If the window does not open in this time, the action fails.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Delay after Visibility</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>200</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindow_DelayAfterVisibility" name="CONCRETE_GraphicApplication_WaitForWindow_DelayAfterVisibility"></a><ul>
+      <li>Sometimes a window is not ready to receive events (mouse clicks, key presses) until a few moments after becoming visible.<li>Use this parameter to set the amount of time (in milliseconds) to wait once the window has appeared before continuing.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window Activation</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43045"></a><a name="43046"></a><p><a id="CONCRETE_GraphicApplication_WaitForWindowActivation" name="CONCRETE_GraphicApplication_WaitForWindowActivation"></a><ul>
+      <li>This action waits for the window you name to become active. A window is active only when it is the currently selected window.<li>Once the window is active (or if the window is already active when this test step begins), the test continues.<li>If the window does not become active, the action fails.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Title</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindowActivation_Title" name="CONCRETE_GraphicApplication_WaitForWindowActivation_Title"></a><ul>
+      <li>Enter the title of the window you are waiting for.<li>Enter the title exactly as it appears in the title bar of the window.<li>The title you provide will be compared to the title bar of each window as it becomes active, using the Operator provided.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindowActivation_Operator" name="CONCRETE_GraphicApplication_WaitForWindowActivation_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Timeout in ms</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>1000</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindowActivation_Timeout" name="CONCRETE_GraphicApplication_WaitForWindowActivation_Timeout"></a><ul>
+      <li>Enter the amount of time to wait for the window, in milliseconds.<li>If the window does not appear in this time, the action fails.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Delay after Visibility</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>200</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindowActivation_DelayAfterVisibility" name="CONCRETE_GraphicApplication_WaitForWindowActivation_DelayAfterVisibility"></a><ul>
+      <li>Sometimes a window is not ready to receive events (mouse clicks, key presses) until a few moments after activation.<li>Use this parameter to set the amount of time (in milliseconds) to wait once the window has appeared before continuing.</ul>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window to Close</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43052"></a><a name="43053"></a><p><a id="CONCRETE_GraphicApplication_WaitForWindowToClose" name="CONCRETE_GraphicApplication_WaitForWindowToClose"></a><ul>
+      <li>This action waits for the window you name to close.<li>Once the window is closed (or if no open window with a corresponding title can be found), the test continues.<li>If a window is found and does not close within the timeout period, the action fails.</ul>
+    <p><i>Parameters</i><br />
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Title</small></td>
+        <td><small>String</small></td>
+        <td><small>-</small></td>
+        <td><small>none</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindowToClose_Title" name="CONCRETE_GraphicApplication_WaitForWindowToClose_Title"></a><ul>
+      <li>Enter the title of the window you are waiting for.<li>Enter the title exactly as it appears in the title bar of the window.<li>The title you provide will be compared to the title bar of each window as it closes, using the Operator provided.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Operator</small></td>
+        <td><small>String</small></td>
+        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
+        <td><small>equals</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindowToClose_Operator" name="CONCRETE_GraphicApplication_WaitForWindowToClose_Operator"></a><ul>
+      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Timeout in ms</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>1000</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindowToClose_Timeout" name="CONCRETE_GraphicApplication_WaitForWindowToClose_Timeout"></a><ul>
+      <li>Enter the amount of time to wait for the window, in milliseconds.<li>If the window does not close in this time, the action fails.</ul>
+    <table border="1" cellpadding="3">
+      <tr>
+        <td><small>Name</small></td>
+        <td><small>Data Type</small></td>
+        <td><small>Values</small></td>
+        <td><small>Default</small></td>
+      </tr>
+      <tr>
+        <td><small>Delay after Closure</small></td>
+        <td><small>Integer</small></td>
+        <td><small>-</small></td>
+        <td><small>200</small></td>
+      </tr>
+    </table><a id="CONCRETE_GraphicApplication_WaitForWindowToClose_DelayAfterClose" name="CONCRETE_GraphicApplication_WaitForWindowToClose_DelayAfterClose"></a><ul>
+      <li>Sometimes other windows are not ready to receive events (mouse clicks, key presses) until a few moments after becoming the overlapping window is closed.<li>Use this parameter to set the amount of time (in milliseconds) to wait once the window has closed before continuing.</ul>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>

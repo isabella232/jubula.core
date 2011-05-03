@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
+    <title>3.5.3.1 Basic AUT configuration</title>
+    <meta content="3.5.3.1 Basic AUT configuration" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+  </head>
+  <body>
+    <h3><a id="SECTION00453100000000000000" name="SECTION00453100000000000000"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Basic AUT configuration</a></h3>
+    <p>You can use the basic setting (<a href="#autconfigbasic">3.10</a>) to configure your AUT if it can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Java Standard Edition JRE.<table>
+      <tr>
+        <td><img align="bottom" border="0" src="img1.jpg" /></td>
+        <td><b>If you are testing RCP or GEF AUT&#39;s , there are certain specific steps you need to take to configure them. See the sections on RCP testing <a href="node264.html#rcpaut">4.2</a>, GEF testing <a href="node271.html#geftest">4.3</a> for details.</b></td>
+      </tr>
+    </table>
+    <div align="center"><a id="autconfigbasic" name="autconfigbasic"></a><a name="1129"></a><table>
+        <caption align="bottom"><strong>Figure 3.10:</strong> AUT configuration window: basic</caption>
+        <tr>
+          <td>
+            <div align="center"><img align="bottom" border="0" height="395" src="./autconfigwindow_basic.png" width="509" /></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <ol>
+      <li>A suggested name for this AUT configuration is generated automatically based on your AUT name and the default AUT Agent host. You can change this name if you wish.<li>The default AUT Agent host is also automatically selected. You can select a new AUT Agent from the combo box or add a new one by clicking &quot;<i>New</i>&quot;. For more information on adding and editing an AUT Agent , see the section later <a href="node198.html#serverConfigPrefPage">3.19.2</a>.<li>Enter the executable file name in the <i>Executable File Name</i> field. This path can be relative if you define a base/working directory <a href="node74.html#AdvancedAUTConfig">3.5.3.2</a>).<li>Enter the AUT ID that will be given to this AUT when it is started.</ol> For information on the advanced properties for the AUT configuration, see the next section <a href="node74.html#AdvancedAUTConfig">3.5.3.2</a>. <p><span class="textbf">Configuring HTML applications</span><br />
+    <p>HTML applications have a considerably reduced configuration dialog. The information needed to start the AUT is:<ol>
+      <li>the AUT configuration name (automatically generated)<li>the AUT Agent host<li>the AUT Agent hostAUT ID<li>the base directory<li>the URL of your application <table>
+          <tr>
+            <td><img align="bottom" border="0" src="img1.jpg" /></td>
+            <td><b>Relative paths to the URL cannot be used!</b></td>
+          </tr>
+        </table>
+      <li>the browser you want to start the AUT in<li>optionally, the browser path, to use a specific version of the browser (not available for Internet Explorer).<li>you can also enter an <i>ID attribute name</i>. If you have used a specific tag to name components in your application, enter the tag in the Expert Configuration area <a href="node75.html#ExpertAUTConfig">3.5.3.3</a>. Jubula will then use this information instead of the <i>name</i> attribute in the object recognition.</ol>
+    <table>
+      <tr>
+        <td><img align="bottom" border="0" src="img2.jpg" /></td>
+        <td><b>HTML applications cannot currently be started using the <i>autrun</i> command.</b></td>
+      </tr>
+    </table>
+    <p>
+      <br />
+    <hr />
+    <address>Copyright BREDEX GmbH 2011</address>
+  </body>
+</html>
