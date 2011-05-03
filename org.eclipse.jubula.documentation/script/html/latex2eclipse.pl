@@ -86,7 +86,7 @@ sub getContentsFile {
     do {
 	$line = <INFILE>;
     if ( $line =~ /.*(href|HREF)=\"([^\"]*)\".*>\s*Contents\s*<\/[aA]>/ ) {
-	    $contentsFile = $1;
+	    $contentsFile = $2;
 	    $found = 1;
 	}
     } until ( $found || eof(INFILE));
