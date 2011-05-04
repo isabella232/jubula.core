@@ -21,6 +21,8 @@
 	<modules>
 		<module>../org.eclipse.jubula.site</module>
 		<module>../org.eclipse.jubula.app</module>
+		<module>../org.eclipse.jubula.app.cmd</module>
+		<module>../org.eclipse.jubula.app.dbtool</module>
 <!-- 		<module>../org.eclipse.jubula.standalone</module> -->
 		<module>../org.eclipse.jubula.feature</module>
 		<module>../org.eclipse.jubula.tools</module>
@@ -41,6 +43,7 @@
 		<module>../org.eclipse.jubula.client.ua.welcome</module>
 		<module>../org.eclipse.jubula.client.ua.help</module>
 		<module>../org.eclipse.jubula.client.cmd</module>
+		<module>../org.eclipse.jubula.client.cmd.controller</module>
 	</modules>
 
 	<url>http://www.eclipse.org/jubula</url>

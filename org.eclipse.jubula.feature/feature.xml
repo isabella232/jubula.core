@@ -353,8 +353,8 @@ re-export of encryption software, to see if this is permitted.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
-  <plugin
+
+   <plugin
          id="org.apache.commons.logging"
          download-size="0"
          install-size="0"
@@ -403,4 +403,26 @@ re-export of encryption software, to see if this is permitted.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.app.cmd"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.app.dbtool"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.cmd.controller"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
