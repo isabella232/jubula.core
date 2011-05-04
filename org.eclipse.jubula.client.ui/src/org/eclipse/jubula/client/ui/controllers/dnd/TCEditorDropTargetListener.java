@@ -52,9 +52,8 @@ public class TCEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
         if (selection instanceof StructuredSelection) {
             int location = getCurrentLocation();
             if (target == null) {
-                target = m_editor.getEditorHelper()
-                    .getEditSupport().getWorkVersion();
-                location = ViewerDropAdapter.LOCATION_ON;
+                target = getFallbackTarget(getViewer());
+                location = ViewerDropAdapter.LOCATION_AFTER;
             }
             if (target instanceof INodePO) {
                 return TCEditorDndSupport.performDrop(m_editor, selection,
