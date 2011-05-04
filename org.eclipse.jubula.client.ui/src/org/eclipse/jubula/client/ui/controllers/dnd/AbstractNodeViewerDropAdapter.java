@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/eplv10.html
  *
  * Contributors:
- *     BREDEX GmbH  initial API and implementation and/or initial documentation
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers.dnd;
 
