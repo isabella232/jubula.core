@@ -25,29 +25,18 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.bindings.keys.KeySequenceText;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jubula.app.i18n.Messages;
-import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.Plugin.ClientStatus;
-import org.eclipse.jubula.client.ui.businessprocess.ProblemsBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
-import org.eclipse.jubula.client.ui.search.query.AbstractSearchQuery;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.service.datalocation.Location;
-import org.eclipse.search.ui.IQueryListener;
-import org.eclipse.search.ui.ISearchQuery;
-import org.eclipse.search.ui.NewSearchUI;
-import org.eclipse.search2.internal.ui.SearchView;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -205,7 +194,6 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
      * (starts the spec perspective after the application-start)
      */
     public void postStartup() {
-        setupPermanentServices();
         try {
             if (PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage().getPerspective().getId()
@@ -227,87 +215,6 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
         }
         Plugin.getDefault().setClientStatus(ClientStatus.RUNNING);
     }
-
-    /**
-     * establish some servoces for the application
-     */
-    private void setupPermanentServices() {
-        // register problem view listeners
-        ProblemsBP.getInstance();
-
-        // register AutStarter, AutServer, and test listeners
-        TestExecutionContributor.getInstance();
-        
-        propagateDataDir();
-        Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(
-            new IPropertyChangeListener() {
-                public void propertyChange(PropertyChangeEvent event) {
-                    propagateDataDir();
-                }
-            });
-
-        // register search result updater
-        registerSearchResultListener();
-    }
-
-    /**
-     * register listener to display new AbstractSearchQuery results
-     */
-    private void registerSearchResultListener() {
-        NewSearchUI.addQueryListener(new IQueryListener() {
-            /** {@inheritDoc} */
-            public void queryAdded(ISearchQuery query) {
-            // handle if necessary
-            }
-
-            /** {@inheritDoc} */
-            public void queryFinished(final ISearchQuery query) {
-                if (query instanceof AbstractSearchQuery) {
-                    PlatformUI.getWorkbench().getDisplay().syncExec(
-                            new Runnable() {
-                                public void run() {
-                                    // see Bugzilla 72661 and 72771
-                                    SearchView sv = (SearchView)Plugin
-                                           .getView(NewSearchUI.SEARCH_VIEW_ID);
-                                    if (sv != null) {
-                                        sv.showSearchResult(query
-                                                .getSearchResult());
-                                    }
-                                }
-                            });
-                }
-            }
-
-            /** {@inheritDoc} */
-            public void queryRemoved(ISearchQuery query) {
-            // handle if necessary
-            }
-
-            /** {@inheritDoc} */
-            public void queryStarting(ISearchQuery query) {
-            // handle if necessary
-            }
-        });
-    }
-
-    /**
-     * gets the data directory info from the preferences and sets
-     * them in the BP.
-     */
-    private void propagateDataDir() {
-        IPreferenceStore preferenceStore = 
-            Plugin.getDefault().getPreferenceStore();
-        if (!preferenceStore.getBoolean(
-            Constants.DATADIR_WS_KEY)) {
-            ExternalTestDataBP.setDataDir(
-                new File(preferenceStore.getString(
-                    Constants.DATADIR_PATH_KEY)));
-        } else {
-            ExternalTestDataBP.setDataDir(
-                Platform.getLocation().toFile());
-        }
-    }
-    
 
     /**
      * catch every occuring RuntimeException

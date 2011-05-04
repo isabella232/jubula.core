@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,9 +31,12 @@ import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
@@ -44,10 +48,12 @@ import org.eclipse.jubula.client.core.utils.PrefStoreHelper;
 import org.eclipse.jubula.client.ui.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.businessprocess.ComponentNameReuseBP;
 import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP;
+import org.eclipse.jubula.client.ui.businessprocess.ProblemsBP;
 import org.eclipse.jubula.client.ui.businessprocess.ToolkitBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
@@ -55,6 +61,7 @@ import org.eclipse.jubula.client.ui.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.DirtyStarListContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DirtyStarListLabelProvider;
+import org.eclipse.jubula.client.ui.search.query.AbstractSearchQuery;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
@@ -73,6 +80,10 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.search.ui.IQueryListener;
+import org.eclipse.search.ui.ISearchQuery;
+import org.eclipse.search.ui.NewSearchUI;
+import org.eclipse.search2.internal.ui.SearchView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -1175,6 +1186,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      * {@inheritDoc}
      */
     public void start(BundleContext context) throws Exception {
+        super.start(context);
         plugin = this;
         Platform.addLogListener(new ILogListener() {
             public void logging(IStatus status, String pluginId) {
@@ -1202,7 +1214,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             }
         }).start();
         registerPermanentServices();
-        super.start(context);
     }
 
     /**
@@ -1212,6 +1223,23 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      * - ComponentNamesListBP
      */
     private void registerPermanentServices() {
+        // register problem view listeners
+        ProblemsBP.getInstance();
+
+        // register AutStarter, AutServer, and test listeners
+        TestExecutionContributor.getInstance();
+        
+        propagateDataDir();
+        Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(
+            new IPropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent event) {
+                    propagateDataDir();
+                }
+            });
+
+        // register search result updater
+        registerSearchResultListener();
+
         ImportFileBP.getInstance();
         
         // register service for checking completeness
@@ -1415,4 +1443,63 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         }
         return m_runningApplicationTitle;
     }
+
+    /**
+     * register listener to display new AbstractSearchQuery results
+     */
+    private void registerSearchResultListener() {
+        NewSearchUI.addQueryListener(new IQueryListener() {
+            /** {@inheritDoc} */
+            public void queryAdded(ISearchQuery query) {
+            // handle if necessary
+            }
+
+            /** {@inheritDoc} */
+            public void queryFinished(final ISearchQuery query) {
+                if (query instanceof AbstractSearchQuery) {
+                    PlatformUI.getWorkbench().getDisplay().syncExec(
+                            new Runnable() {
+                                public void run() {
+                                    // see Bugzilla 72661 and 72771
+                                    SearchView sv = (SearchView)Plugin
+                                           .getView(NewSearchUI.SEARCH_VIEW_ID);
+                                    if (sv != null) {
+                                        sv.showSearchResult(query
+                                                .getSearchResult());
+                                    }
+                                }
+                            });
+                }
+            }
+
+            /** {@inheritDoc} */
+            public void queryRemoved(ISearchQuery query) {
+            // handle if necessary
+            }
+
+            /** {@inheritDoc} */
+            public void queryStarting(ISearchQuery query) {
+            // handle if necessary
+            }
+        });
+    }
+
+    /**
+     * gets the data directory info from the preferences and sets
+     * them in the BP.
+     */
+    private void propagateDataDir() {
+        IPreferenceStore preferenceStore = 
+            Plugin.getDefault().getPreferenceStore();
+        if (!preferenceStore.getBoolean(
+            Constants.DATADIR_WS_KEY)) {
+            ExternalTestDataBP.setDataDir(
+                new File(preferenceStore.getString(
+                    Constants.DATADIR_PATH_KEY)));
+        } else {
+            ExternalTestDataBP.setDataDir(
+                Platform.getLocation().toFile());
+        }
+    }
+    
 }
