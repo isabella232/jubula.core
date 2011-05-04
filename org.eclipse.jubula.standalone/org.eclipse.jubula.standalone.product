@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="%productName" uid="org.eclipse.jubula.app.product.definition" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="0.9.0.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="%productName" uid="org.eclipse.jubula.app.product.definition" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="0.9.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="icons/about.gif"/>
+      <image path="icons/about.png"/>
       <text>
          %aboutText
       </text>
@@ -38,6 +38,7 @@
       </win>
    </launcher>
 
+
    <vm>
       <linux include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5</linux>
       <macos include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5</macos>
@@ -45,129 +46,13 @@
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5</windows>
    </vm>
 
-
    <plugins>
-      <plugin id="ch.qos.logback.classic"/>
-      <plugin id="ch.qos.logback.core"/>
-      <plugin id="com.ibm.icu"/>
-      <plugin id="javax.activation"/>
-      <plugin id="javax.mail"/>
-      <plugin id="javax.persistence"/>
-      <plugin id="javax.servlet"/>
-      <plugin id="javax.servlet.jsp"/>
-      <plugin id="javax.xml"/>
-      <plugin id="javax.xml.stream"/>
-      <plugin id="org.apache.ant"/>
-      <plugin id="org.apache.commons.beanutils"/>
-      <plugin id="org.apache.commons.cli"/>
-      <plugin id="org.apache.commons.codec"/>
-      <plugin id="org.apache.commons.collections"/>
-      <plugin id="org.apache.commons.el"/>
-      <plugin id="org.apache.commons.lang"/>
-      <plugin id="org.apache.commons.logging"/>
-      <plugin id="org.apache.jasper"/>
-      <plugin id="org.apache.lucene"/>
-      <plugin id="org.apache.lucene.analysis"/>
-      <plugin id="org.apache.oro"/>
-      <plugin id="org.eclipse.ant.core"/>
-      <plugin id="org.eclipse.compare"/>
-      <plugin id="org.eclipse.compare.core"/>
-      <plugin id="org.eclipse.core.commands"/>
-      <plugin id="org.eclipse.core.contenttype"/>
-      <plugin id="org.eclipse.core.databinding"/>
-      <plugin id="org.eclipse.core.databinding.beans"/>
-      <plugin id="org.eclipse.core.databinding.observable"/>
-      <plugin id="org.eclipse.core.databinding.property"/>
-      <plugin id="org.eclipse.core.expressions"/>
-      <plugin id="org.eclipse.core.filebuffers"/>
-      <plugin id="org.eclipse.core.filesystem"/>
-      <plugin id="org.eclipse.core.jobs"/>
-      <plugin id="org.eclipse.core.net"/>
-      <plugin id="org.eclipse.core.resources"/>
-      <plugin id="org.eclipse.core.runtime"/>
-      <plugin id="org.eclipse.core.runtime.compatibility.auth"/>
-      <plugin id="org.eclipse.core.variables"/>
-      <plugin id="org.eclipse.ecf"/>
-      <plugin id="org.eclipse.ecf.filetransfer"/>
-      <plugin id="org.eclipse.ecf.identity"/>
-      <plugin id="org.eclipse.ecf.provider.filetransfer"/>
-      <plugin id="org.eclipse.equinox.app"/>
-      <plugin id="org.eclipse.equinox.common"/>
-      <plugin id="org.eclipse.equinox.concurrent"/>
-      <plugin id="org.eclipse.equinox.http.jetty"/>
-      <plugin id="org.eclipse.equinox.http.registry"/>
-      <plugin id="org.eclipse.equinox.http.servlet"/>
-      <plugin id="org.eclipse.equinox.jsp.jasper"/>
-      <plugin id="org.eclipse.equinox.jsp.jasper.registry"/>
-      <plugin id="org.eclipse.equinox.p2.core"/>
-      <plugin id="org.eclipse.equinox.p2.engine"/>
-      <plugin id="org.eclipse.equinox.p2.metadata"/>
-      <plugin id="org.eclipse.equinox.p2.metadata.repository"/>
-      <plugin id="org.eclipse.equinox.p2.repository"/>
-      <plugin id="org.eclipse.equinox.preferences"/>
-      <plugin id="org.eclipse.equinox.registry"/>
-      <plugin id="org.eclipse.equinox.security"/>
-      <plugin id="org.eclipse.help"/>
-      <plugin id="org.eclipse.help.base"/>
-      <plugin id="org.eclipse.help.ui"/>
-      <plugin id="org.eclipse.help.webapp"/>
-      <plugin id="org.eclipse.jface"/>
-      <plugin id="org.eclipse.jface.databinding"/>
-      <plugin id="org.eclipse.jface.text"/>
-      <plugin id="org.eclipse.jubula.app"/>
-      <plugin id="org.eclipse.jubula.client.archive"/>
-      <plugin id="org.eclipse.jubula.client.core"/>
-      <plugin id="org.eclipse.jubula.client.inspector.ui"/>
-      <plugin id="org.eclipse.jubula.client.ua.cheatsheets"/>
-      <plugin id="org.eclipse.jubula.client.ua.welcome"/>
-      <plugin id="org.eclipse.jubula.client.ui"/>
-      <plugin id="org.eclipse.jubula.communication"/>
-      <plugin id="org.eclipse.jubula.toolkit.common"/>
-      <plugin id="org.eclipse.jubula.toolkit.provider.base"/>
-      <plugin id="org.eclipse.jubula.toolkit.provider.concrete"/>
-      <plugin id="org.eclipse.jubula.toolkit.provider.html"/>
-      <plugin id="org.eclipse.jubula.toolkit.provider.rcp"/>
-      <plugin id="org.eclipse.jubula.toolkit.provider.rcp.gef"/>
-      <plugin id="org.eclipse.jubula.toolkit.provider.swing"/>
-      <plugin id="org.eclipse.jubula.toolkit.provider.swt"/>
-      <plugin id="org.eclipse.jubula.tools"/>
-      <plugin id="org.eclipse.ltk.core.refactoring"/>
-      <plugin id="org.eclipse.ltk.ui.refactoring"/>
-      <plugin id="org.eclipse.net4j.jms.api"/>
-      <plugin id="org.eclipse.osgi"/>
-      <plugin id="org.eclipse.osgi.services"/>
-      <plugin id="org.eclipse.persistence.antlr"/>
-      <plugin id="org.eclipse.persistence.asm"/>
-      <plugin id="org.eclipse.persistence.core"/>
-      <plugin id="org.eclipse.persistence.jpa"/>
-      <plugin id="org.eclipse.persistence.jpa.equinox" fragment="true"/>
-      <plugin id="org.eclipse.persistence.jpa.equinox.weaving" fragment="true"/>
-      <plugin id="org.eclipse.persistence.jpa.osgi" fragment="true"/>
-      <plugin id="org.eclipse.persistence.oracle" fragment="true"/>
-      <plugin id="org.eclipse.search"/>
-      <plugin id="org.eclipse.swt"/>
-      <plugin id="org.eclipse.team.core"/>
-      <plugin id="org.eclipse.team.ui"/>
-      <plugin id="org.eclipse.text"/>
-      <plugin id="org.eclipse.ui"/>
-      <plugin id="org.eclipse.ui.cheatsheets"/>
-      <plugin id="org.eclipse.ui.console"/>
-      <plugin id="org.eclipse.ui.editors"/>
-      <plugin id="org.eclipse.ui.forms"/>
-      <plugin id="org.eclipse.ui.ide"/>
-      <plugin id="org.eclipse.ui.intro"/>
-      <plugin id="org.eclipse.ui.intro.universal"/>
-      <plugin id="org.eclipse.ui.navigator"/>
-      <plugin id="org.eclipse.ui.views"/>
-      <plugin id="org.eclipse.ui.workbench"/>
-      <plugin id="org.eclipse.ui.workbench.texteditor"/>
-      <plugin id="org.h2"/>
-      <plugin id="org.mortbay.jetty.server"/>
-      <plugin id="org.mortbay.jetty.util"/>
-      <plugin id="org.slf4j.api"/>
-      <plugin id="org.slf4j.jcl"/>
-      <plugin id="org.slf4j.log4j"/>
    </plugins>
+
+   <features>
+      <feature id="org.eclipse.jubula.feature" version="1.0.0.qualifier"/>
+      <feature id="org.eclipse.platform" version="3.6.1.r361_v20100909-9gF78GrkFqw7GrsZnvz0JWNTeb6fue6896L"/>
+   </features>
 
 
 </product>
