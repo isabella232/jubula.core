@@ -59,6 +59,9 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
+import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
+import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
+import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
@@ -108,8 +111,9 @@ import org.eclipse.ui.part.ViewPart;
  * @author BREDEX GmbH
  */
 @SuppressWarnings("unchecked")
-public class TestresultSummaryView extends ViewPart
-    implements ITestresultSummaryEventListener, ITestresultChangedListener {
+public class TestresultSummaryView extends ViewPart implements
+        ITestresultSummaryEventListener, ITestresultChangedListener,
+        IDatabaseStateListener {
     /**
      * <code>defaultDateTimeFormat</code> the Date Time Format used in to
      * display dates
@@ -463,6 +467,7 @@ public class TestresultSummaryView extends ViewPart
         m_tableViewer.refresh();
         DataEventDispatcher.getInstance().addTestresultListener(
                 this, true);
+        DatabaseStateDispatcher.addDatabaseStateListener(this);
         addDoubleClickListener(m_tableViewer);
             
     }
@@ -1827,6 +1832,7 @@ public class TestresultSummaryView extends ViewPart
         ClientTestFactory.getClientTest()
             .removeTestresultSummaryEventListener(this);
         DataEventDispatcher.getInstance().removeTestresultListener(this);
+        DatabaseStateDispatcher.removeDatabaseStateListener(this);
         super.dispose();
     }
     
@@ -2010,6 +2016,22 @@ public class TestresultSummaryView extends ViewPart
     private static Comparator getCommonsComparator() {
         return ComparatorUtils.nullHighComparator(
                 ComparatorUtils.naturalComparator());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void reactOnDatabaseEvent(DatabaseStateEvent e) {
+        switch (e.getState()) {
+            case DB_LOGIN_SUCCEEDED:
+                refreshView();
+                break;
+            case DB_LOGOUT_SUCCEEDED:
+                clear();
+                break;
+            default:
+                break;
+        }
     }
     
 }
