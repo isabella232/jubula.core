@@ -10,10 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.implclasses;
 
+import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
+import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotSwtImpl;
 import org.eclipse.jubula.rc.swt.interfaces.IMenuImplClass;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -21,7 +24,6 @@ import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -337,10 +339,14 @@ public class MenuImplClass extends AbstractWidgetImplClass
         if (shell == null) {
             setComponent(null);
         } else {
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
+            final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
+            
+            queuer.invokeAndWait("setMenuBarComponent", new IRunnable() { //$NON-NLS-1$
+                public Object run() {
                     Menu menu = shell.getMenuBar();
                     setComponent(menu);
+                    
+                    return null;
                 }
             });
         }

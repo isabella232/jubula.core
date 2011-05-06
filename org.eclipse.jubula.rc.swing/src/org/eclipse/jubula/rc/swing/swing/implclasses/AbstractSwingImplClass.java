@@ -32,18 +32,19 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
-import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
+import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
@@ -1125,7 +1126,7 @@ public abstract class AbstractSwingImplClass implements
      */
     private JPopupMenu showPopup(Runnable showPopupOperation) {
         PopupShownCondition cond = new PopupShownCondition();
-        EventListener.Lock lock = new EventListener.Lock();
+        EventLock lock = new EventLock();
         EventListener listener = new EventListener(lock, cond);
         Toolkit.getDefaultToolkit().addAWTEventListener(listener,
                 AWTEvent.CONTAINER_EVENT_MASK);

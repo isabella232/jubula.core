@@ -22,6 +22,7 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.MenuUtilBase;
+import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotFactorySwtImpl;
@@ -194,14 +195,18 @@ public abstract class MenuUtil extends MenuUtilBase {
     private static Menu openSubMenu(final MenuItem menuItem, 
             final IRobot robot) throws StepExecutionException {
         MenuShownCondition cond = new MenuShownCondition(menuItem);
-        EventListener.Lock lock = new EventListener.Lock();
+        EventLock lock = new EventLock();
         final EventListener listener = new EventListener(lock, cond);
         final Display d = menuItem.getDisplay();
-        d.syncExec(new Runnable() {
-            public void run() {
+        final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
+        
+        queuer.invokeAndWait("addMenuShownListeners", new IRunnable() { //$NON-NLS-1$
+            public Object run() {
                 d.addFilter(SWT.Show, listener);
-            }            
-        });        
+                
+                return null;
+            }
+        });
         try {
             // Menu bar items require a click in order to open the submenu.
             // Cascading menus are opened with a mouse-over and 
@@ -233,10 +238,12 @@ public abstract class MenuUtil extends MenuUtilBase {
         } catch (InterruptedException e) {
             // ignore
         } finally {
-            d.syncExec(new Runnable() {
-                public void run() {
+            queuer.invokeAndWait("removeMenuShownListeners", new IRunnable() { //$NON-NLS-1$
+                public Object run() {
                     d.removeFilter(SWT.Show, listener);
-                }                    
+                    
+                    return null;
+                }
             });
         }
         if (!lock.isReleased()) {

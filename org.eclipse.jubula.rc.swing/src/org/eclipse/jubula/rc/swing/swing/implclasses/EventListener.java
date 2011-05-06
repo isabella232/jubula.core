@@ -13,6 +13,8 @@ package org.eclipse.jubula.rc.swing.swing.implclasses;
 import java.awt.AWTEvent;
 import java.awt.event.AWTEventListener;
 
+import org.eclipse.jubula.rc.common.listener.EventLock;
+
 /**
  * This Listener waits for a condition in the AWT event queue. If this
  * happens it calls notifyAll on the lock object.
@@ -37,36 +39,9 @@ public class EventListener implements AWTEventListener {
     }
 
     /**
-     * Objects of this class are used hold locks for waiting for the event
-     * condition
-     */
-    public static class Lock {
-        /**
-         * This variable is true, the event condition occured otherwise
-         * there was a timeout
-         */
-        private boolean m_released = false;
-
-        /**
-         * This method is called if the event condition occured
-         */
-        public void release() {
-            m_released = true;
-        }
-
-        /**
-         * This method returns true if the event condition occured
-         * @return true if the event condition occured
-         */
-        public boolean isReleased() {
-            return m_released;
-        }
-    }
-
-    /**
      * a lock
      */
-    private final Lock m_lock;
+    private final EventLock m_lock;
     /**
      * This condition defines about which events the caller gets informed.
      */
@@ -79,7 +54,7 @@ public class EventListener implements AWTEventListener {
      * @param condition
      *          a condition
      */
-    public EventListener(Lock lock,
+    public EventListener(EventLock lock,
             Condition condition) {
         m_lock = lock;
         m_condition = condition;
@@ -89,8 +64,13 @@ public class EventListener implements AWTEventListener {
      */
     public void eventDispatched(AWTEvent event) {
         synchronized (m_lock) {
-            if (m_condition.isTrue(event)) {
-                m_lock.release();
+            try {
+                if (m_condition.isTrue(event)) {
+                    m_lock.release();
+                    m_lock.notifyAll();
+                }
+            } catch (RuntimeException rte) {
+                m_lock.release(rte);
                 m_lock.notifyAll();
             }
         }

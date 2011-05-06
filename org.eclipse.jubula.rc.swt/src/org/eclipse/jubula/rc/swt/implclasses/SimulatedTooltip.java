@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.implclasses;
 
+import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
+import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.tools.utils.StringParsing;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.swt.SWT;
@@ -119,23 +122,32 @@ public class SimulatedTooltip extends Thread {
     public void run() {
         log.debug(Thread.currentThread().toString()
                 + ": managing started"); //$NON-NLS-1$
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
+        final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
+        
+        queuer.invokeAndWait("openSimulatedTooltipShell", new IRunnable() { //$NON-NLS-1$
+            public Object run() {
                 log.debug(Thread.currentThread().toString()
                         + ": popup started"); //$NON-NLS-1$
                 openShell();
+                
+                return null;
             }
         });
+
         TimeUtil.delay(m_timeout);
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
+
+        queuer.invokeAndWait("disposeSimulatedTooltipShell", new IRunnable() { //$NON-NLS-1$
+            public Object run() {
                 if (m_dialog != null && !m_dialog.isDisposed()) {
                     m_dialog.dispose();
                     log.debug(Thread.currentThread().toString()
                             + ": popup stopped"); //$NON-NLS-1$
                 }
+                
+                return null;
             }
         });
+
         log.debug(Thread.currentThread().toString()
                 + ": managing stopped"); //$NON-NLS-1$
     }

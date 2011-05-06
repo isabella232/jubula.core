@@ -12,14 +12,12 @@ package org.eclipse.jubula.rc.swing.swing.implclasses;
 
 import java.awt.Component;
 import java.awt.Rectangle;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JTree;
-import javax.swing.SwingUtilities;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -32,6 +30,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.swing.swing.driver.EventThreadQueuerAwtImpl;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
@@ -300,10 +299,13 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
             final Rectangle nodeBounds = getNodeBounds(node);
             final boolean collapsed = tree.isCollapsed(row);
             boolean doAction = isExpanded(node);
+            final IEventThreadQueuer queuer = new EventThreadQueuerAwtImpl();
 
-            SwingUtilities.invokeAndWait(new Runnable() {
-                public void run() {
+            queuer.invokeAndWait("scrollRowToVisible", new IRunnable() { //$NON-NLS-1$
+                public Object run() {
                     tree.scrollRowToVisible(row);
+                    
+                    return null;
                 }
             });
 
@@ -316,17 +318,14 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     log.debug("Row           : " + row); //$NON-NLS-1$
                     log.debug("Node bounds   : " + visibleNodeBounds); //$NON-NLS-1$
                 }
-                SwingUtilities.invokeAndWait(new Runnable() {
-                    public void run() {
+                queuer.invokeAndWait("collapseRow", new IRunnable() { //$NON-NLS-1$
+                    public Object run() {
                         tree.collapseRow(row);
+
+                        return null;
                     }
                 });
             }
-        } catch (InterruptedException e) {
-            log.fatal("Error collapsing tree", e); //$NON-NLS-1$
-        } catch (InvocationTargetException e) {
-            log.fatal("Error collapsing tree: " //$NON-NLS-1$
-                + e.getTargetException().toString(), e);
         } finally {
             Thread.currentThread().setContextClassLoader(oldCl);
         }
@@ -347,10 +346,13 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
             final Rectangle nodeBounds = getNodeBounds(node);
             final boolean collapsed = tree.isCollapsed(row);
             boolean doAction = !isExpanded(node);
+            final IEventThreadQueuer queuer = new EventThreadQueuerAwtImpl();
 
-            SwingUtilities.invokeAndWait(new Runnable() {
-                public void run() {
+            queuer.invokeAndWait("scrollRowToVisible", new IRunnable() { //$NON-NLS-1$
+                public Object run() {
                     tree.scrollRowToVisible(row);
+                    
+                    return null;
                 }
             });
 
@@ -363,17 +365,14 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     log.debug("Row           : " + row); //$NON-NLS-1$
                     log.debug("Node bounds   : " + visibleNodeBounds); //$NON-NLS-1$
                 }
-                SwingUtilities.invokeAndWait(new Runnable() {
-                    public void run() {
+                queuer.invokeAndWait("expandRow", new IRunnable() { //$NON-NLS-1$
+                    public Object run() {
                         tree.expandRow(row);
+                        
+                        return null;
                     }
                 });
             }
-        } catch (InterruptedException e) {
-            log.fatal("Error collapsing tree", e); //$NON-NLS-1$
-        } catch (InvocationTargetException e) {
-            log.fatal("Error collapsing tree: " //$NON-NLS-1$
-                + e.getTargetException().toString(), e);
         } finally {
             Thread.currentThread().setContextClassLoader(oldCl);
         }
