@@ -35,9 +35,8 @@ public abstract class AbstractTreeOperationContext {
     private IEventThreadQueuer m_queuer;
     
     /**
-     * Creates a new instance. The JTree must have a tree model. If it is an 
-     * instance of {@link DefaultTreeModel}, it is used as is. Otherwise, a 
-     * new <code>DefaultTreeModel</code> is created.     
+     * Creates a new instance.
+     * 
      * @param queuer The queuer
      * @param robot The Robot
      * @param tree The tree

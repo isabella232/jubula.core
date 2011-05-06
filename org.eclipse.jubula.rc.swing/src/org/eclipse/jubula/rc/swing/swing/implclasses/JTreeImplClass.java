@@ -17,7 +17,6 @@ import java.util.Iterator;
 
 import javax.swing.JComponent;
 import javax.swing.JTree;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.apache.commons.lang.Validate;
@@ -165,13 +164,11 @@ public class JTreeImplClass extends AbstractSwingImplClass
         TreeOperationContext context = new TreeOperationContext(
                 getEventThreadQueuer(), getRobot(), m_tree);
 
-
-        TreeNode startNode = getStartNode(pathType, preAscend, context);
-
         AbstractTreeNodeTraverser traverser =
             new PathBasedTraverser(context, treePath);
 
-        traverser.traversePath(operation, startNode);
+        traverser.traversePath(operation, 
+                getStartNode(pathType, preAscend, context));
 
     }
     /**
@@ -186,14 +183,14 @@ public class JTreeImplClass extends AbstractSwingImplClass
      * @return The node at which to begin the traversal or <code>null</code>
      *         if the traversal should begin at the root of the node.
      */
-    private TreeNode getStartNode(String pathType, int preAscend,
+    private Object getStartNode(String pathType, int preAscend,
             TreeOperationContext context) {
-        TreeNode startNode;
+        Object startNode;
 
         if (pathType.equals(
                 CompSystemConstants.TREE_PATH_TYPE_RELATIVE)) {
             startNode = getSelectedNode(context);
-            TreeNode child = startNode;
+            Object child = startNode;
             for (int i = 0; i < preAscend; ++i) {
                 if ((startNode == null) || (!m_tree.isRootVisible()
                         && (m_tree.getModel().getRoot() == startNode))) {
@@ -204,7 +201,7 @@ public class JTreeImplClass extends AbstractSwingImplClass
                         + child.toString(), event);
                 }
                 child = startNode;
-                startNode = startNode.getParent();
+                startNode = context.getParent(startNode);
             }
             // Extra handling for tree without visible root node
             if ((!m_tree.isRootVisible()
@@ -251,13 +248,12 @@ public class JTreeImplClass extends AbstractSwingImplClass
         TreeOperationContext context = new TreeOperationContext(
                 getEventThreadQueuer(), getRobot(), m_tree);
 
-        TreeNode startNode = getStartNode(pathType, preAscend, context);
-
         AbstractTreeNodeTraverser traverser =
             new PathBasedTraverser(context, treePath,
                     new TreeNodeOperationConstraint());
 
-        traverser.traversePath(operation, startNode);
+        traverser.traversePath(operation, 
+                getStartNode(pathType, preAscend, context));
 
     }
 
@@ -417,7 +413,7 @@ public class JTreeImplClass extends AbstractSwingImplClass
             new TreeOperationContext(
                 getEventThreadQueuer(), getRobot(), m_tree);
 
-        TreeNode selectedNode = getSelectedNode(context);
+        Object selectedNode = getSelectedNode(context);
 
         TreeNodeOperation selectOp =
             new SelectTreeNodeOperation(
@@ -653,8 +649,8 @@ public class JTreeImplClass extends AbstractSwingImplClass
      * @param context context
      * @return node
      */
-    private TreeNode getSelectedNode(TreeOperationContext context) {
-        return (TreeNode)context.getSelectedNode();
+    private Object getSelectedNode(TreeOperationContext context) {
+        return context.getSelectedNode();
     }
 
     /**
@@ -770,8 +766,7 @@ public class JTreeImplClass extends AbstractSwingImplClass
     private Rectangle getSelectedNodeBounds() {
         TreeOperationContext context = new TreeOperationContext(
                 getEventThreadQueuer(), getRobot(), m_tree);
-        TreeNode node = getSelectedNode(context);
-        return context.getNodeBounds(node);
+        return context.getNodeBounds(getSelectedNode(context));
     }
     /**
      * Gets the bounds of a node specified at a path
@@ -1015,7 +1010,7 @@ public class JTreeImplClass extends AbstractSwingImplClass
     public String gdStoreSelectedNodeValue(String variable) {
         TreeOperationContext context = new TreeOperationContext(
                 getEventThreadQueuer(), getRobot(), m_tree);
-        TreeNode selectedNode = 
+        Object selectedNode = 
             getSelectedNode(context);
         if (selectedNode == null) {
             throw new StepExecutionException("No tree item selected", //$NON-NLS-1$ 

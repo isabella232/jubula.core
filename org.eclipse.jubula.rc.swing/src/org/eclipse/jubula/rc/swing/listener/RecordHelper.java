@@ -45,7 +45,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.TreeCellRenderer;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
@@ -643,11 +642,7 @@ public class RecordHelper {
         //boolean selected = !(tre.isSelectionEmpty());
         boolean expanded = tre.isExpanded(path);
         boolean hasFocus = tre.hasFocus();
-        boolean leaf = true;
-        if (value instanceof TreeNode) {
-            TreeNode node = (TreeNode)value;
-            leaf = node.isLeaf();
-        }
+        boolean leaf = tre.getModel().isLeaf(value);
         int row = tre.getRowForPath(path);
         TreeCellRenderer renderer = tre.getCellRenderer();
         Component c = renderer.getTreeCellRendererComponent(

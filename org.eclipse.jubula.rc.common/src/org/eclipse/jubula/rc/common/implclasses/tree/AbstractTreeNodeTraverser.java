@@ -35,9 +35,8 @@ public abstract class AbstractTreeNodeTraverser {
     }
 
     /**
-     * Creates a new instance to traverse the passed tree node path. The JTree
-     * must have a tree model. If it is an instance of {@link DefaultTreeModel},
-     * it is used as is. Otherwise, a new <code>DefaultTreeModel</code> is created.
+     * Creates a new instance to traverse the passed tree node path.
+     * 
      * @param context The context for this Traverser
      * @param constraint The constraint for this Traverser
      */
