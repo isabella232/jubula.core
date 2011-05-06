@@ -22,6 +22,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -458,7 +459,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      * @return a List containing the elements of the path in the proper order.
      */
     private List getPathToRootImpl(Object node, Object currentNode) {
-        if (currentNode == node) {
+        if (ObjectUtils.equals(currentNode, node)) {
             List retList = new ArrayList();
             retList.add(currentNode);
             return retList;
@@ -528,7 +529,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         
         Object [] rootNodes = getRootNodes();
         for (int i = 0; i < rootNodes.length; i++) {
-            if (rootNodes[i] == child) {
+            if (ObjectUtils.equals(rootNodes[i], child)) {
                 return i;
             }
         }
