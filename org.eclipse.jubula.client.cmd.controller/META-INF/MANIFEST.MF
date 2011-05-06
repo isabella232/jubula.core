@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Headless Client Core Controller (Incubation)
+Bundle-SymbolicName: org.eclipse.jubula.client.cmd.controller;singleton:=true
+Bundle-Version: 0.9.0.qualifier
+Bundle-Vendor: Eclipse Jubula
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.eclipse.jubula.client.cmd.controller,
+ org.eclipse.jubula.client.cmd.controller.intern;x-friends:="org.eclipse.jubula.app.cmd"
+Bundle-ClassPath: .

@@ -48,8 +48,7 @@ public class TJEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
         Object target = getCurrentTarget();
         int location = getCurrentLocation();
         if (target == null) {
-            target = m_editor.getEditorHelper()
-                .getEditSupport().getWorkVersion();
+            target = getFallbackTarget(getViewer());
             location = ViewerDropAdapter.LOCATION_AFTER;
         }
         if (selection instanceof StructuredSelection 

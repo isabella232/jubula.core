@@ -48,8 +48,7 @@ public class TSEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
         Object target = getCurrentTarget();
         int location = getCurrentLocation();
         if (target == null) {
-            target = m_editor.getEditorHelper().getEditSupport()
-                    .getWorkVersion();
+            target = getFallbackTarget(getViewer());
             location = ViewerDropAdapter.LOCATION_AFTER;
         }
         if (target instanceof INodePO) {

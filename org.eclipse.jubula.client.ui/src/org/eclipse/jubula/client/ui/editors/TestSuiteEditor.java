@@ -21,6 +21,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -380,23 +381,25 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      * @return the displayable Languages
      */
     private DisplayableLanguages getDisplayableLanguages() {
-        if (getTreeViewer().getSelection() instanceof IStructuredSelection) {
-            Object firstSelectedElement = 
-                ((IStructuredSelection)getTreeViewer().getSelection())
+        ISelection selection = getTreeViewer().getSelection();
+        if (selection instanceof IStructuredSelection) {
+            Object firstSelectedElement = ((IStructuredSelection)selection)
                     .getFirstElement();
             if (firstSelectedElement instanceof INodePO) {
                 ITestSuitePO testSuite = 
                     GuiNodeBP.getTestSuiteOfNode((INodePO)firstSelectedElement);
-                List<Locale> langList = 
-                    WorkingLanguageBP.getInstance()
-                        .getLanguages(testSuite.getAut());
-                if (langList.size() > 0) {
+                if (testSuite != null) {
+                    List<Locale> langList = 
+                        WorkingLanguageBP.getInstance()
+                            .getLanguages(testSuite.getAut());
+                    if (langList.size() > 0) {
+                        return new DisplayableLanguages(langList);
+                    }
+                    langList = new ArrayList<Locale>(1);  
+                    langList.add(GeneralStorage.getInstance().getProject()
+                            .getDefaultLanguage());
                     return new DisplayableLanguages(langList);
                 }
-                langList = new ArrayList<Locale>(1);  
-                langList.add(GeneralStorage.getInstance().getProject()
-                        .getDefaultLanguage());
-                return new DisplayableLanguages(langList);
             }
         }
         return new DisplayableLanguages(new ArrayList<Locale>());

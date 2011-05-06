@@ -10,9 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers.dnd;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
-
+import org.eclipse.jubula.client.core.model.INodePO;
 
 /**
  * @author BREDEX GmbH
@@ -20,9 +22,37 @@ import org.eclipse.jface.viewers.ViewerDropAdapter;
  */
 public abstract class AbstractNodeViewerDropAdapter extends ViewerDropAdapter {
     /**
-     * @param viewer the viewer
+     * @param viewer
+     *            the viewer
      */
     protected AbstractNodeViewerDropAdapter(Viewer viewer) {
         super(viewer);
+    }
+
+    /**
+     * @param viewer
+     *            the target viewer
+     * @return the fallback target for dropping
+     */
+    protected Object getFallbackTarget(Viewer viewer) {
+        if (viewer != null) {
+            Object fallbackTarget = null;
+            Object viewerInput = ((Object[])viewer.getInput())[0];
+            if (viewerInput instanceof INodePO) {
+                List<INodePO> viewerRootChildren = ((INodePO) viewerInput)
+                        .getUnmodifiableNodeList();
+                int childrenCount = 1;
+                if (viewerRootChildren != null) {
+                    childrenCount = viewerRootChildren.size();
+                }
+                if (childrenCount > 0) {
+                    fallbackTarget = viewerRootChildren.get(childrenCount - 1);
+                } else {
+                    fallbackTarget = viewerInput;
+                }
+            }
+            return fallbackTarget;
+        }
+        return null;
     }
 }
