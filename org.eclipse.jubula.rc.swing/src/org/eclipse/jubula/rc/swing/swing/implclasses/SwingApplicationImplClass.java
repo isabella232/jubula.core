@@ -34,6 +34,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.AbstractApplicationImplClass;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
+import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swing.components.SwingComponent;
@@ -298,7 +299,7 @@ public class SwingApplicationImplClass extends AbstractApplicationImplClass
         
         EventListener.Condition cond = 
             new WindowOpenedCondition(title, operator);
-        EventListener.Lock lock = new EventListener.Lock();
+        EventLock lock = new EventLock();
         AWTEventListener listener = new EventListener(lock, cond);
         Toolkit.getDefaultToolkit().addAWTEventListener(listener,
                 AWTEvent.WINDOW_EVENT_MASK | AWTEvent.COMPONENT_EVENT_MASK);
@@ -345,7 +346,7 @@ public class SwingApplicationImplClass extends AbstractApplicationImplClass
         
         EventListener.Condition cond = new WindowActivatedCondition(title, 
                 operator);
-        EventListener.Lock lock = new EventListener.Lock();
+        EventLock lock = new EventLock();
         AWTEventListener listener = new EventListener(lock, cond);
         Toolkit.getDefaultToolkit().addAWTEventListener(listener,
                 AWTEvent.WINDOW_EVENT_MASK);
@@ -395,7 +396,7 @@ public class SwingApplicationImplClass extends AbstractApplicationImplClass
         
         EventListener.Condition cond = 
             new WindowClosedCondition(title, operator);
-        EventListener.Lock lock = new EventListener.Lock();
+        EventLock lock = new EventLock();
         AWTEventListener listener = new EventListener(lock, cond);
 
         Toolkit.getDefaultToolkit().addAWTEventListener(listener,

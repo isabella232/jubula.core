@@ -26,6 +26,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.AbstractApplicationImplClass;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
+import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
@@ -203,18 +204,21 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
 
         final EventListener.Condition cond = 
             new WindowEventCondition(title, operator, false);
-        final EventListener.Lock lock = new EventListener.Lock();
+        final EventLock lock = new EventLock();
         final Listener listener = new EventListener(lock, cond);
         final Display display = 
             ((SwtAUTServer)AUTServer.getInstance()).getAutDisplay();
+        final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         
-        display.syncExec(new Runnable() {
-            public void run() {
+        queuer.invokeAndWait("addWindowOpenedListeners", new IRunnable() { //$NON-NLS-1$
+            public Object run() {
                 display.addFilter(SWT.Activate, listener);
                 display.addFilter(SWT.Show, listener);
                 if (isWindowOpen(title, operator)) {
                     lock.release();
                 }
+                
+                return null;
             }
         });
 
@@ -234,10 +238,12 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
                 }                    
             }
         } finally {
-            display.syncExec(new Runnable() {
-                public void run() {
+            queuer.invokeAndWait("removeWindowOpenedListeners", new IRunnable() { //$NON-NLS-1$
+                public Object run() {
                     display.removeFilter(SWT.Activate, listener);
                     display.removeFilter(SWT.Show, listener);
+                    
+                    return null;
                 }
             });
         }
@@ -263,20 +269,23 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
         
         final EventListener.Condition cond = 
             new WindowEventCondition(title, operator, false);
-        final EventListener.Lock lock = new EventListener.Lock();
+        final EventLock lock = new EventLock();
         final Listener listener = new EventListener(lock, cond);
         final Display display = 
             ((SwtAUTServer)AUTServer.getInstance()).getAutDisplay();
+        final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         
-        display.syncExec(new Runnable() {
-            public void run() {
+        queuer.invokeAndWait("addWindowActiveListeners", new IRunnable() { //$NON-NLS-1$
+            public Object run() {
                 display.addFilter(SWT.Activate, listener);
                 if (isWindowActive(title, operator)) {
                     lock.release();
                 }
+
+                return null;
             }
         });
-
+        
         try {
             synchronized (lock) {
                 long currentTimeout = timeout;
@@ -293,9 +302,11 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
                 }                    
             }
         } finally {
-            display.syncExec(new Runnable() {
-                public void run() {
+            queuer.invokeAndWait("removeWindowActiveListeners", new IRunnable() { //$NON-NLS-1$
+                public Object run() {
                     display.removeFilter(SWT.Activate, listener);
+                    
+                    return null;
                 }
             });
         }
@@ -322,19 +333,22 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
 
         final EventListener.Condition cond = 
             new WindowEventCondition(title, operator, true);
-        final EventListener.Lock lock = new EventListener.Lock();
+        final EventLock lock = new EventLock();
         final Listener listener = new EventListener(lock, cond);
         final Display display = 
             ((SwtAUTServer)AUTServer.getInstance()).getAutDisplay();
+        final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         
-        display.syncExec(new Runnable() {
-            public void run() {
+        queuer.invokeAndWait("addWindowClosedListeners", new IRunnable() { //$NON-NLS-1$
+            public Object run() {
                 display.addFilter(SWT.Close, listener);
                 display.addFilter(SWT.Hide, listener);
                 display.addFilter(SWT.Dispose, listener);
                 if (!isWindowOpen(title, operator)) {
                     lock.release();
                 }
+                
+                return null;
             }
         });
 
@@ -354,11 +368,13 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
                 }                    
             }
         } finally {
-            display.syncExec(new Runnable() {
-                public void run() {
+            queuer.invokeAndWait("removeWindowClosedListeners", new IRunnable() { //$NON-NLS-1$
+                public Object run() {
                     display.removeFilter(SWT.Close, listener);
                     display.removeFilter(SWT.Hide, listener);
                     display.removeFilter(SWT.Dispose, listener);
+                    
+                    return null;
                 }
             });
         }

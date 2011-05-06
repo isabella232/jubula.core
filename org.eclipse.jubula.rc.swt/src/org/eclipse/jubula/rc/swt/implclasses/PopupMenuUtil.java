@@ -11,9 +11,13 @@
 package org.eclipse.jubula.rc.swt.implclasses;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
+import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.listener.EventLock;
+import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -147,16 +151,17 @@ public class PopupMenuUtil {
         final Runnable showPopup) throws StepExecutionException {
 
         PopupShownCondition cond = new PopupShownCondition();
-        EventListener.Lock lock = new EventListener.Lock();
+        EventLock lock = new EventLock();
         final EventListener listener = new EventListener(lock, cond);
         final Display d = component.getDisplay();
-
-        d.syncExec(new Runnable() {
-
-            public void run() {
+        final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
+        
+        queuer.invokeAndWait("addPopupShownListeners", new IRunnable() { //$NON-NLS-1$
+            public Object run() {
                 d.addFilter(SWT.Show, listener);
+                
+                return null;
             }
-            
         });
         
         try {
@@ -177,12 +182,12 @@ public class PopupMenuUtil {
         } catch (InterruptedException e) {
             // ignore
         } finally {
-            d.syncExec(new Runnable() {
-
-                public void run() {
+            queuer.invokeAndWait("removePopupShownListeners", new IRunnable() { //$NON-NLS-1$
+                public Object run() {
                     d.removeFilter(SWT.Show, listener);
-                }
                     
+                    return null;
+                }
             });
         }
         if (!lock.isReleased()) {
