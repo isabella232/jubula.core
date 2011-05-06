@@ -75,6 +75,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.utils.FileUtils;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -208,28 +209,20 @@ public class ExecutionController implements IAUTServerEventListener,
         @Override
         public void run() {
             do {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // ignore, check ist done at end of loop
-                }    
+                TimeUtil.delay(1000);
                 if (m_abort) {
                     return;
                 }
             } while (new Date().getTime() < m_stoptime);
 
-            AbstractCmdlineClient.printConsoleLn(
-                    Messages.ExecutionControllerAbort, true);
+            AbstractCmdlineClient.printlnConsoleError(
+                    Messages.ExecutionControllerAbort);
 
             ClientTestFactory.getClientTest().stopTestExecution();
             stopProcessing();
             
             // wait 30 seconds, then exit the whole program
-            try {
-                Thread.sleep(30000);
-            } catch (InterruptedException e) {
-                // ignore, check ist done at end of loop
-            }   
+            TimeUtil.delay(30000);
             if (!m_abort) {
                 System.exit(1);
             }
