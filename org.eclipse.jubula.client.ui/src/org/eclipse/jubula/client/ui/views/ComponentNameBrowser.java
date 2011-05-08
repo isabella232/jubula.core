@@ -32,7 +32,7 @@ import org.eclipse.jubula.client.ui.controllers.ComponentNameTreeViewerUpdater;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
-import org.eclipse.jubula.client.ui.provider.SessionBasedLabelDecorator;
+import org.eclipse.jubula.client.ui.provider.SessionBasedLabelProviderDecoratorWrapper;
 import org.eclipse.jubula.client.ui.provider.contentprovider.ComponentNameBrowserContentProvider;
 import org.eclipse.jubula.client.ui.sorter.ComponentNameNameViewerSorter;
 import org.eclipse.swt.SWT;
@@ -70,7 +70,7 @@ public class ComponentNameBrowser extends ViewPart implements
     private ComponentNameTreeViewerUpdater m_treeViewerUpdater;
     
     /** label decorator for main tree viewer */
-    private SessionBasedLabelDecorator m_labelDecorator;
+    private SessionBasedLabelProviderDecoratorWrapper m_labelDecorator;
 
     /**
      * {@inheritDoc}
@@ -90,12 +90,15 @@ public class ComponentNameBrowser extends ViewPart implements
         ColumnViewerToolTipSupport.enableFor(getTreeViewer());
 
         getTreeViewer().setContentProvider(cp);
-        m_labelDecorator = new SessionBasedLabelDecorator(
-                GeneralStorage.getInstance(), 
+        
+        DecoratingCellLabelProvider lp = new DecoratingCellLabelProvider(cp,
                 Plugin.getDefault().getWorkbench().getDecoratorManager()
-                    .getLabelDecorator());
-        getTreeViewer().setLabelProvider(new DecoratingCellLabelProvider(
-                cp, m_labelDecorator));
+                        .getLabelDecorator());
+
+        m_labelDecorator = new SessionBasedLabelProviderDecoratorWrapper(
+                GeneralStorage.getInstance(), lp.getLabelDecorator(), lp);
+        getTreeViewer().setLabelProvider(m_labelDecorator);
+        
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
         getTreeViewer().setSorter(new ComponentNameNameViewerSorter());

@@ -54,9 +54,6 @@ import org.eclipse.persistence.jpa.JpaEntityManager;
  * @created 15.07.2005
  */
 public class EditSupport {
-    
-    
-    
     /** standard logging */
     private static Log log = LogFactory.getLog(EditSupport.class);
 
