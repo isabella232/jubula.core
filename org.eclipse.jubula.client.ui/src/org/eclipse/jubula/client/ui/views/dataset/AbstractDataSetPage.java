@@ -56,7 +56,6 @@ import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.widgets.CheckedParamTextContentAssisted;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
@@ -1053,14 +1052,8 @@ public abstract class AbstractDataSetPage extends Page
         if (getParamInterfaceObj() == null) {
             return;
         }
-        DisplayableLanguages langs = (DisplayableLanguages)m_currentPart
-                .getAdapter(DisplayableLanguages.class);
-        if (langs == null) {
-            setParamInterfaceObj(null);
-            updateView();
-            return;
-        }
-        List<Locale> locales = langs.getLocales();
+        List<Locale> locales = WorkingLanguageBP.getInstance()
+                .getDisplayableLanguages();
         String[] columnProperties = new String[locales.size() + 1];
         final Table table = getTable();
         if (dataSetNumbers) {
@@ -1151,14 +1144,8 @@ public abstract class AbstractDataSetPage extends Page
      * Fills the Language-Combo with its values displayed.
      */
     private void fillLanguageCombo() {
-        List<Locale> langList = new ArrayList<Locale>(0);
-        if (getParamInterfaceObj() != null && m_currentPart != null) {
-            DisplayableLanguages languages = (DisplayableLanguages)m_currentPart
-                    .getAdapter(DisplayableLanguages.class);
-            if (languages != null) {
-                langList = languages.getLocales();
-            }
-        }
+        List<Locale> langList = WorkingLanguageBP.getInstance()
+                .getDisplayableLanguages();
         List<String> dispList = new ArrayList<String>();
         for (Locale locale : langList) {
             dispList.add(locale.getDisplayName());

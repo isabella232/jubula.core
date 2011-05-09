@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.editors;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -19,7 +18,6 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -35,7 +33,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -46,7 +43,6 @@ import org.eclipse.jubula.client.ui.controllers.dnd.TSEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestSuiteEditorContentProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -352,44 +348,6 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getAdapter(Class adapter) {
-        if (adapter == DisplayableLanguages.class) {
-            return getDisplayableLanguages();
-        }
-        return super.getAdapter(adapter);
-    }
-
-    /**
-     * @return the displayable Languages
-     */
-    private DisplayableLanguages getDisplayableLanguages() {
-        ISelection selection = getTreeViewer().getSelection();
-        if (selection instanceof IStructuredSelection) {
-            Object firstSelectedElement = ((IStructuredSelection)selection)
-                    .getFirstElement();
-            if (firstSelectedElement instanceof INodePO) {
-                ITestSuitePO testSuite = 
-                    GuiNodeBP.getTestSuiteOfNode((INodePO)firstSelectedElement);
-                if (testSuite != null) {
-                    List<Locale> langList = 
-                        WorkingLanguageBP.getInstance()
-                            .getLanguages(testSuite.getAut());
-                    if (langList.size() > 0) {
-                        return new DisplayableLanguages(langList);
-                    }
-                    langList = new ArrayList<Locale>(1);  
-                    langList.add(GeneralStorage.getInstance().getProject()
-                            .getDefaultLanguage());
-                    return new DisplayableLanguages(langList);
-                }
-            }
-        }
-        return new DisplayableLanguages(new ArrayList<Locale>());
-    }
-    
     /**
      * {@inheritDoc}
      */

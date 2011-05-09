@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IPropertyChangedListener;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -49,7 +48,6 @@ import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.provider.SessionBasedLabelProviderDecoratorWrapper;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -222,10 +220,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * @return this TestCaseEditor instance if the adaper matches.
      */
     public Object getAdapter(Class adapter) {
-        if (adapter == DisplayableLanguages.class) {
-            return new DisplayableLanguages(GeneralStorage.getInstance()
-                    .getProject().getLangHelper().getLanguageList());
-        } else if (adapter == this.getClass()) {
+        if (adapter == this.getClass()) {
             return this;
         } else if (adapter == NodeEditorInput.class) {
             return getEditorInput();

@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.views;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.logging.Log;
@@ -55,8 +52,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
-import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -70,7 +65,6 @@ import org.eclipse.jubula.client.ui.provider.SessionBasedLabelProviderDecoratorW
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestSuiteBrowserContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestSuiteBrowserLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -430,47 +424,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         getTreeViewer().refresh();
         getTreeViewer().setSelection(new StructuredSelection(po), true);
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Object getAdapter(Class adapter) {
-        if (adapter == DisplayableLanguages.class) {
-            return getDisplayableLanguages();
-        }
-        return super.getAdapter(adapter);
-    }
 
-    /**
-     * @return the displayable Languages
-     */
-    private DisplayableLanguages getDisplayableLanguages() {
-        if (getTreeViewer().getSelection() instanceof IStructuredSelection) {
-            Object firstSelectedElement = 
-                ((IStructuredSelection)getTreeViewer().getSelection())
-                    .getFirstElement();
-            if (firstSelectedElement instanceof INodePO) {
-                ITestSuitePO ownerTestSuite = 
-                    GuiNodeBP.getTestSuiteOfNode((INodePO)firstSelectedElement);
-                if (ownerTestSuite != null) {
-                    List<Locale> langList = 
-                        WorkingLanguageBP.getInstance()
-                            .getLanguages(ownerTestSuite.getAut());
-                    if (langList.size() > 0) {
-                        return new DisplayableLanguages(langList);            
-                    }
-                    langList = new ArrayList<Locale>(1);  
-                    langList.add(GeneralStorage.getInstance().getProject()
-                            .getDefaultLanguage());
-                    return new DisplayableLanguages(langList);
-                }
-            }
-        }
-
-        List<Locale> emptyList = Collections.emptyList();
-        return new DisplayableLanguages(emptyList);
-    }
-    
     /**
      * {@inheritDoc}
      */

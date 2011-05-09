@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.businessprocess;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -176,5 +177,16 @@ public class WorkingLanguageBP extends AbstractActionBP
     private boolean isWorkingLanguageNull() {
         return (getWorkingLanguage() == null);
     }
-
+    
+    /**
+     * @return the displayable lanugages
+     */
+    public List<Locale> getDisplayableLanguages() {
+        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
+        if (currentProject != null) {
+            return currentProject.getLangHelper().getLanguageList();
+        }
+        List<Locale> emptyList = Collections.emptyList();
+        return emptyList;
+    }
 }

@@ -59,7 +59,6 @@ import org.eclipse.jubula.client.ui.provider.SessionBasedLabelProviderDecoratorW
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseBrowserContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestCaseBrowserLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.client.ui.utils.DisplayableLanguages;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
@@ -601,20 +600,4 @@ public class TestCaseBrowser extends AbstractJBTreeView
             handleProjectLoaded();
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Object getAdapter(Class adapter) {
-        if (adapter == DisplayableLanguages.class) {
-            IProjectPO currentProject = 
-                GeneralStorage.getInstance().getProject();
-            if (currentProject != null) {
-                return new DisplayableLanguages(
-                    currentProject.getLangHelper().getLanguageList());
-            }
-        }
-        return super.getAdapter(adapter);
-    }
-
 }
