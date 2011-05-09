@@ -19,8 +19,6 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -75,22 +73,9 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         super.createPartControlImpl(parent);
         ActionListener actionListener = new ActionListener();
         getTreeViewer().addSelectionChangedListener(actionListener);
-        addTreeListener();
         if (!Plugin.getDefault().anyDirtyStar())  {
             checkAndRemoveUnusedTestData();
         }
-    }
-
-    /**
-     * Adds DoubleClickListener to Treeview.
-     */
-    private void addTreeListener() {
-        getTreeViewer().addDoubleClickListener(new IDoubleClickListener() {
-            public void doubleClick(DoubleClickEvent event) {
-                CommandHelper.executeCommand(
-                        CommandIDs.REFERENCE_TC_COMMAND_ID, getSite());
-            }
-        });
     }
 
     /**
