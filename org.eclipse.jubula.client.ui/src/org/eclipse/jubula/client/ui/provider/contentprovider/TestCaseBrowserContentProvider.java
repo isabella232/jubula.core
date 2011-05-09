@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -49,7 +50,11 @@ public class TestCaseBrowserContentProvider
             ISpecTestCasePO referencedTestCase = 
                 ((IExecTestCasePO)parentElement).getSpecTestCase();
             if (referencedTestCase != null) {
-                return referencedTestCase.getUnmodifiableNodeList().toArray();
+                return ArrayUtils.addAll(
+                        Collections.unmodifiableCollection(
+                                referencedTestCase.getAllEventEventExecTC())
+                                .toArray(), referencedTestCase
+                                .getUnmodifiableNodeList().toArray());
             }
             
             return ArrayUtils.EMPTY_OBJECT_ARRAY;
@@ -64,7 +69,16 @@ public class TestCaseBrowserContentProvider
         }
 
         if (parentElement instanceof INodePO) {
-            return ((INodePO)parentElement).getUnmodifiableNodeList().toArray();
+            INodePO parentNode = ((INodePO) parentElement);
+            Object[] children = parentNode.getUnmodifiableNodeList().toArray();
+            if (parentElement instanceof ISpecTestCasePO) {
+                children = ArrayUtils.addAll(
+                        Collections.unmodifiableCollection(
+                                ((ISpecTestCasePO) parentElement)
+                                        .getAllEventEventExecTC()).toArray(),
+                        children);
+            }
+            return children;
         }
         
         if (parentElement instanceof IReusedProjectPO) {

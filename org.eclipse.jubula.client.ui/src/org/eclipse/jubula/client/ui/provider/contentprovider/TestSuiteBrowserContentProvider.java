@@ -9,6 +9,7 @@
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.contentprovider;
+import java.util.Collections;
 import java.util.Locale;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -62,7 +63,11 @@ public class TestSuiteBrowserContentProvider
             ISpecTestCasePO referencedTestCase = 
                 ((IExecTestCasePO)parentElement).getSpecTestCase();
             if (referencedTestCase != null) {
-                return referencedTestCase.getUnmodifiableNodeList().toArray();
+                return ArrayUtils.addAll(
+                        Collections.unmodifiableCollection(
+                                referencedTestCase.getAllEventEventExecTC())
+                                .toArray(), referencedTestCase
+                                .getUnmodifiableNodeList().toArray());
             }
             
             return ArrayUtils.EMPTY_OBJECT_ARRAY;
