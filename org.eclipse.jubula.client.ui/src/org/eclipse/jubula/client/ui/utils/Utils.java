@@ -244,6 +244,17 @@ public class Utils {
      * clears the content of client
      */
     public static void clearClient() {
+        clearClient(false);
+    }
+    
+    /**
+     * clears the content of client
+     * 
+     * @param alsoProjectIndependent
+     *            whether also project independent editors should be closed such
+     *            as the testresultviewer
+     */
+    public static void clearClient(final boolean alsoProjectIndependent) {
         final DataEventDispatcher ded = DataEventDispatcher.getInstance();
         TestExecution.getInstance().stopExecution();
         GeneralStorage gs = GeneralStorage.getInstance();
@@ -262,7 +273,7 @@ public class Utils {
                         .resetToTesting();
                 ded.fireRecordModeStateChanged(RecordModeState.notRunning);
                 ded.fireOMStateChanged(OMState.notRunning);
-                Plugin.closeAllOpenedJubulaEditors();
+                Plugin.closeAllOpenedJubulaEditors(alsoProjectIndependent);
                 ded.fireTestresultChanged(TestresultState.Refresh);
                 setTreeViewerInputNull(Constants.TESTRE_ID);
                 setTreeViewerInputNull(Constants.TC_BROWSER_ID);

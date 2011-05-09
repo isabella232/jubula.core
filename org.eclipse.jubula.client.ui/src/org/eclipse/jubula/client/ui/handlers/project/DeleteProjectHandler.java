@@ -117,7 +117,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                 if (m_deleteCurrentProject) {
                     Plugin.getDisplay().syncExec(new Runnable() {
                         public void run() {
-                            Plugin.closeAllOpenedJubulaEditors();
+                            Plugin.closeAllOpenedJubulaEditors(false);
                         }
                     });
                 }

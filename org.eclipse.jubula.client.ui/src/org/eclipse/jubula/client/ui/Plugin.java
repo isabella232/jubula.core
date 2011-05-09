@@ -58,6 +58,7 @@ import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.editors.TestJobEditor;
+import org.eclipse.jubula.client.ui.editors.TestResultViewer;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.DirtyStarListContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DirtyStarListLabelProvider;
@@ -935,13 +936,18 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         }
         return null;              
     }
-    
+
     /**
-     * Closes all opened Jubula editors (ex. TCE, TSE, OME). This method 
-     * must be called from the GUI thread. If it is called from a thread that 
-     * is *not* the GUI thread, it will do nothing.
+     * Closes all opened Jubula editors (ex. TCE, TSE, OME). This method must be
+     * called from the GUI thread. If it is called from a thread that is *not*
+     * the GUI thread, it will do nothing.
+     * 
+     * @param alsoProjectIndependent
+     *            whether also project independent editors should be closed such
+     *            as the testresultviewer
      */
-    public static void closeAllOpenedJubulaEditors() {
+    public static void closeAllOpenedJubulaEditors(
+        boolean alsoProjectIndependent) {
         IWorkbenchPage activePage = getActivePage();
         if (activePage != null) {
             Set<IEditorReference> editorRefSet = 
@@ -949,8 +955,15 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             for (IEditorReference editorRef 
                     : activePage.getEditorReferences()) {
 
-                if (editorRef.getEditor(true) instanceof IJBPart) {
-                    editorRefSet.add(editorRef);
+                IEditorPart editor = editorRef.getEditor(true);
+                if (editor instanceof IJBPart) {
+                    if (alsoProjectIndependent) {
+                        editorRefSet.add(editorRef);
+                    } else {
+                        if (!(editor instanceof TestResultViewer)) {
+                            editorRefSet.add(editorRef);
+                        }
+                    }
                 }
             }
             activePage.closeEditors(

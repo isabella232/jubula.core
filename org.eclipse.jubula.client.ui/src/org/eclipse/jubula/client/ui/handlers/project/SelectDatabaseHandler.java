@@ -115,7 +115,7 @@ public class SelectDatabaseHandler extends AbstractHandler {
                         public void run(IProgressMonitor monitor) {
                             monitor.beginTask(Messages.PluginConnectProgress,
                                     IProgressMonitor.UNKNOWN);
-                            Utils.clearClient();
+                            Utils.clearClient(true);
                             Hibernator.setUser(username);
                             Hibernator.setPw(pwd);
                             Hibernator.setDbConnectionName(info);

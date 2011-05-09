@@ -281,7 +281,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             try {
                 Plugin.getDisplay().syncExec(new Runnable() {
                     public void run() {
-                        Plugin.closeAllOpenedJubulaEditors();
+                        Plugin.closeAllOpenedJubulaEditors(false);
                     }
                 });
                 IProjectPO prevProj = GeneralStorage.getInstance().getProject();

@@ -243,7 +243,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
     private void createNewProject(final String newProjectName, 
         IProgressMonitor monitor) throws InterruptedException {          
         
-        Plugin.closeAllOpenedJubulaEditors();
+        Plugin.closeAllOpenedJubulaEditors(false);
         m_newProject.setIsReusable(
             m_projectSettingWizardPage.isProjectReusable());
         m_newProject.setIsProtected(
