@@ -1334,6 +1334,12 @@
                 <command
                     commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
                     style="push">
+	                <visibleWhen
+			               checkEnabled="false">
+			            <reference
+			                  definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+			            </reference>
+	         		</visibleWhen>
                 </command>
 			</toolbar>
 			<toolbar id="org.eclipse.jubula.client.ui.toolbar.AutToolbar">
@@ -1760,14 +1766,32 @@
      <command
            commandId="org.eclipse.jubula.client.ui.commands.DisconnectCommand"
            style="push">
+           <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
      </command>
      <command
            commandId="org.eclipse.jubula.client.ui.commands.OMStopMappingModeCommand"
            style="push">
+           <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
      </command>
      <command
            commandId="org.eclipse.jubula.client.ui.commands.StopObservationMode"
            style="push">
+           <visibleWhen
+              checkEnabled="false">
+           <reference
+                 definitionId="org.eclipse.jubula.client.ui.expression.isTestPerspectiveActive">
+           </reference>
+        </visibleWhen>
      </command>
   </menuContribution>
 	</extension>
