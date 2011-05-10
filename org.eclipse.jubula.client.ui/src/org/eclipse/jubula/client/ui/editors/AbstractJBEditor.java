@@ -45,7 +45,7 @@ import org.eclipse.jubula.client.ui.controllers.AbstractPartListener;
 import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
-import org.eclipse.jubula.client.ui.provider.SessionBasedLabelProviderDecoratorWrapper;
+import org.eclipse.jubula.client.ui.provider.SessionBasedLabelDecorator;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -71,8 +71,8 @@ import org.eclipse.ui.part.EditorPart;
  * @created Mar 17, 2010
  */
 public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
-    ISelectionProvider, ITreeViewerContainer, IJBPart, 
-    IPropertyChangedListener {
+        ISelectionProvider, ITreeViewerContainer, IJBPart,
+        IPropertyChangedListener {
     /** Add-Submenu ID */
     public static final String ADD_ID = PlatformUI.PLUGIN_ID + ".AddSubMenu"; //$NON-NLS-1$
 
@@ -125,7 +125,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         new RevertEditorChangesHandler();
     
     /** label decorator for main tree viewer */
-    private SessionBasedLabelProviderDecoratorWrapper m_labelDecorator;
+    private SessionBasedLabelDecorator m_labelDecorator;
     
     /** PartListener of this WokbenchPart */
     private PartListener m_partListener = new PartListener();
@@ -173,15 +173,13 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      */
     protected void createMainPart(Composite parent) {
         setMainTreeViewer(new TreeViewer(parent));
+        m_labelDecorator = new SessionBasedLabelDecorator(this, 
+                Plugin.getDefault().getWorkbench().getDecoratorManager()
+                    .getLabelDecorator());
         DecoratingLabelProvider lp = new DecoratingLabelProvider(
-                new GeneralLabelProvider(), Plugin.getDefault().getWorkbench()
-                        .getDecoratorManager().getLabelDecorator());
+                new GeneralLabelProvider(), m_labelDecorator);
         lp.setDecorationContext(new JBEditorDecorationContext());
-
-        m_labelDecorator = new SessionBasedLabelProviderDecoratorWrapper(this,
-                lp.getLabelDecorator(), lp);
-
-        getMainTreeViewer().setLabelProvider(m_labelDecorator);
+        getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setUseHashlookup(true);
         JubulaStateController.getInstance()
                 .addSelectionListenerToSelectionService();

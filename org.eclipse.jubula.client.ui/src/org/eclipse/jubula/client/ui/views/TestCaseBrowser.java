@@ -55,7 +55,7 @@ import org.eclipse.jubula.client.ui.controllers.dnd.TestSpecDropTargetListener;
 import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
-import org.eclipse.jubula.client.ui.provider.SessionBasedLabelProviderDecoratorWrapper;
+import org.eclipse.jubula.client.ui.provider.SessionBasedLabelDecorator;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseBrowserContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestCaseBrowserLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -109,7 +109,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
     private MenuListener m_menuListener = new MenuListener();
     
     /** label decorator for main tree viewer */
-    private SessionBasedLabelProviderDecoratorWrapper m_labelDecorator;
+    private SessionBasedLabelDecorator m_labelDecorator;
     
     /**
      * {@inheritDoc}
@@ -119,13 +119,12 @@ public class TestCaseBrowser extends AbstractJBTreeView
         ColumnViewerToolTipSupport.enableFor(getTreeViewer());
         getTreeViewer().setContentProvider(
                 new TestCaseBrowserContentProvider());
-        DecoratingCellLabelProvider lp = new DecoratingCellLabelProvider(
-                new TestCaseBrowserLabelProvider(), Plugin.getDefault()
-                        .getWorkbench().getDecoratorManager()
-                        .getLabelDecorator());
-        m_labelDecorator = new SessionBasedLabelProviderDecoratorWrapper(
-                GeneralStorage.getInstance(), lp.getLabelDecorator(), lp);
-        getTreeViewer().setLabelProvider(m_labelDecorator);
+        m_labelDecorator = new SessionBasedLabelDecorator(
+                GeneralStorage.getInstance(), 
+                Plugin.getDefault().getWorkbench().getDecoratorManager()
+                    .getLabelDecorator());
+        getTreeViewer().setLabelProvider(new DecoratingCellLabelProvider(
+            new TestCaseBrowserLabelProvider(), m_labelDecorator));
         m_cutTreeItemAction = new CutTreeItemActionTCBrowser();
         m_pasteTreeItemAction = new PasteTreeItemActionTCBrowser();
         m_moveTestCaseAction = new MoveTestCaseAction();
