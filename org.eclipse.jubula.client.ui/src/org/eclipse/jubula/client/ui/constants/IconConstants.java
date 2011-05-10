@@ -85,17 +85,35 @@ public class IconConstants {
     /** name for big project image */
     public static final String BIG_PROJECT_STRING = "bigProject.gif"; //$NON-NLS-1$
     /** The Step Testing image */
-    public static final Image STEP_TESTING_IMAGE = Plugin.getImage("StepTesting.gif"); //$NON-NLS-1$
+    public static final ImageDescriptor STEP_TESTING_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("StepTesting.gif"); //$NON-NLS-1$
+    /** The Step Testing image */
+    public static final Image STEP_TESTING_IMAGE = STEP_TESTING_IMAGE_DESCRIPTOR
+            .createImage();
     /** The StepNotOK  */
-    public static final Image STEP_NOT_OK_IMAGE = Plugin.getImage("StepNotOK.gif"); //$NON-NLS-1$
+    public static final ImageDescriptor STEP_NOT_OK_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("StepNotOK.gif"); //$NON-NLS-1$
+    /** The StepNotOK  */
+    public static final Image STEP_NOT_OK_IMAGE = STEP_NOT_OK_IMAGE_DESCRIPTOR
+            .createImage();
     /** The stepOK descriptor */
-    public static final Image STEP_OK_IMAGE = Plugin.getImage("StepOK.gif"); //$NON-NLS-1$
+    public static final ImageDescriptor STEP_OK_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("StepOK.gif"); //$NON-NLS-1$
+    /** The stepOK descriptor */
+    public static final Image STEP_OK_IMAGE = STEP_OK_IMAGE_DESCRIPTOR
+            .createImage();
     /** Step failed */
-    public static final Image STEP_FAILED_IMAGE = Plugin.getImage("StepFailed.gif"); //$NON-NLS-1$
+    public static final ImageDescriptor STEP_FAILED_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("StepFailed.gif"); //$NON-NLS-1$
+    /** Step failed */
+    public static final Image STEP_FAILED_IMAGE = STEP_FAILED_IMAGE_DESCRIPTOR
+            .createImage();
     /** The retryingStep descriptor */
-    public static final Image STEP_RETRY_IMAGE = Plugin.getImage("StepRetry.png"); //$NON-NLS-1$
+    public static final ImageDescriptor STEP_RETRY_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("StepRetry.png"); //$NON-NLS-1$
+    /** The retryingStep image */
+    public static final Image STEP_RETRY_IMAGE = STEP_RETRY_IMAGE_DESCRIPTOR
+            .createImage();
     /** The retryStepOK descriptor */
-    public static final Image STEP_RETRY_OK_IMAGE = Plugin.getImage("StepRetryOK.png"); //$NON-NLS-1$
+    public static final ImageDescriptor STEP_RETRY_OK_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("StepRetryOK.png"); //$NON-NLS-1$
+    /** The retryStepOK descriptor */
+    public static final Image STEP_RETRY_OK_IMAGE = 
+        STEP_RETRY_OK_IMAGE_DESCRIPTOR.createImage();
     /** reference value image */
     public static final Image REF_VALUE_IMAGE = Plugin.getImage("refValue.gif"); //$NON-NLS-1$
     /** deprecated action image */

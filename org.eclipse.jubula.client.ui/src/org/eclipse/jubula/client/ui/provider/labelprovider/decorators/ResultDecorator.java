@@ -10,81 +10,70 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
-import org.eclipse.jface.viewers.ILabelDecorator;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.DecorationContext;
+import org.eclipse.jface.viewers.IDecoration;
+import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.swt.graphics.Image;
 
 
 /**
  * @author BREDEX GmbH
  * @created 21.10.2004
  */
-public class ResultDecorator extends LabelProvider implements 
-        ILabelDecorator {
-
-    /**
-     * Constructor
-     */
-    public ResultDecorator() {
-        super();
-        
-    }
-
-    /**
-     * @param element Object
-     * @param imageToDecorate Image
-     * @return Image
-     */
-    private Image doDecorate(Object element, Image 
-        imageToDecorate) {
-        TestResultNode resultNode = 
-            ((TestResultNode)element);
-        int status = resultNode.getStatus();
-        switch (status) {
-            case TestResultNode.NOT_YET_TESTED:
-                break;
-            case TestResultNode.NO_VERIFY:
-                return IconConstants.STEP_OK_IMAGE;
-            case TestResultNode.TESTING:
-                return IconConstants.STEP_TESTING_IMAGE;
-            case TestResultNode.SUCCESS:
-                return IconConstants.STEP_OK_IMAGE;
-            case TestResultNode.ERROR:
-                return IconConstants.STEP_NOT_OK_IMAGE;
-            case TestResultNode.ERROR_IN_CHILD:
-                return IconConstants.STEP_NOT_OK_IMAGE;
-            case TestResultNode.NOT_TESTED:
-                return IconConstants.STEP_FAILED_IMAGE;
-            case TestResultNode.RETRYING:
-                return IconConstants.STEP_RETRY_IMAGE;
-            case TestResultNode.SUCCESS_RETRY:
-                return IconConstants.STEP_RETRY_OK_IMAGE;
-            case TestResultNode.ABORT:
-                return IconConstants.STEP_NOT_OK_IMAGE;
-            default:
-                return imageToDecorate;
-        }
-        return imageToDecorate;
-    }
-
+public class ResultDecorator extends AbstractLightweightLabelDecorator {
     /**
      * {@inheritDoc}
      */
-    public Image decorateImage(Image image, Object element) {
-        if (((TestResultNode)element).
-            getNode() instanceof IEventExecTestCasePO) {
-            return image;
+    public void decorate(Object element, IDecoration decoration) {
+        if (element instanceof TestResultNode) {
+            TestResultNode resultNode = 
+                ((TestResultNode)element);
+            int status = resultNode.getStatus();
+            ImageDescriptor image2use = null;
+            IDecorationContext context = 
+                decoration.getDecorationContext();
+            if (context instanceof DecorationContext) {
+                ((DecorationContext)context).putProperty(
+                        IDecoration.ENABLE_REPLACE, Boolean.TRUE);
+            }
+            switch (status) {
+                case TestResultNode.NOT_YET_TESTED:
+                    break;
+                case TestResultNode.NO_VERIFY:
+                    image2use = IconConstants.STEP_OK_IMAGE_DESCRIPTOR;
+                    break;
+                case TestResultNode.TESTING:
+                    image2use = IconConstants.STEP_TESTING_IMAGE_DESCRIPTOR;
+                    break;
+                case TestResultNode.SUCCESS:
+                    image2use = IconConstants.STEP_OK_IMAGE_DESCRIPTOR;
+                    break;
+                case TestResultNode.ERROR:
+                    image2use = IconConstants.STEP_NOT_OK_IMAGE_DESCRIPTOR;
+                    break;
+                case TestResultNode.ERROR_IN_CHILD:
+                    image2use = IconConstants.STEP_NOT_OK_IMAGE_DESCRIPTOR;
+                    break;
+                case TestResultNode.NOT_TESTED:
+                    image2use = IconConstants.STEP_FAILED_IMAGE_DESCRIPTOR;
+                    break;
+                case TestResultNode.RETRYING:
+                    image2use = IconConstants.STEP_RETRY_IMAGE_DESCRIPTOR;
+                    break;
+                case TestResultNode.SUCCESS_RETRY:
+                    image2use = IconConstants.STEP_RETRY_OK_IMAGE_DESCRIPTOR;
+                    break;
+                case TestResultNode.ABORT:
+                    image2use = IconConstants.STEP_NOT_OK_IMAGE_DESCRIPTOR;
+                    break;
+                default:
+                    break;
+            }
+            decoration.addOverlay(
+                    image2use,
+                    IDecoration.REPLACE);
         }
-        return doDecorate(element, image);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String decorateText(String text, Object element) {
-        return null;
-    }           
 }

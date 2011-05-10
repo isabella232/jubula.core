@@ -11,19 +11,14 @@
 package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.ILightweightLabelDecorator;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.constants.Layout;
-
 
 /**
  * @author BREDEX GmbH
  * @created May 17, 2010
  */
-public class ActiveElementDecorator extends LabelProvider implements
-        ILightweightLabelDecorator {
-    
+public class ActiveElementDecorator extends AbstractLightweightLabelDecorator {
     /**
      * <code>INACTIVE_PREFIX</code>
      */

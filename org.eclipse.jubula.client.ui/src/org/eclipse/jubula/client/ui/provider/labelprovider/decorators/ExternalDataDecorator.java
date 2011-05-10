@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.ILightweightLabelDecorator;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 
@@ -22,9 +20,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
  * @author BREDEX GmbH
  * @created 03.03.2009
  */
-public class ExternalDataDecorator extends LabelProvider implements
-        ILightweightLabelDecorator {
-
+public class ExternalDataDecorator extends AbstractLightweightLabelDecorator {
     /**
      * {@inheritDoc}
      */
@@ -39,6 +35,5 @@ public class ExternalDataDecorator extends LabelProvider implements
                         IconConstants.TDC_DECORATION_IMAGE_DESCRIPTOR);
             }
         }
-
     }
 }

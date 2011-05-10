@@ -11,21 +11,17 @@
 package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.ILightweightLabelDecorator;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 
-
 /**
  * @author BREDEX GmbH
  * @created Sep 19, 2007
  */
-public class MissingReferenceDecorator extends LabelProvider
-    implements ILightweightLabelDecorator {
-
+public class MissingReferenceDecorator extends
+    AbstractLightweightLabelDecorator {
     /**
      * {@inheritDoc}
      */
@@ -34,14 +30,15 @@ public class MissingReferenceDecorator extends LabelProvider
             Long projID;
             IReusedProjectPO rProj = (IReusedProjectPO)element;
             try {
-                projID = ProjectPM.findProjectId(rProj.getProjectGuid(), rProj
-                        .getMajorNumber(), rProj.getMinorNumber());
+                projID = ProjectPM.findProjectId(rProj.getProjectGuid(),
+                        rProj.getMajorNumber(), rProj.getMinorNumber());
             } catch (JBException e) {
                 projID = null;
             }
             if (projID == null) {
-                decoration.addOverlay(
-                        IconConstants.INCOMPLETE_DATA_IMAGE_DESCRIPTOR);
+                decoration
+                        .addOverlay(
+                                IconConstants.INCOMPLETE_DATA_IMAGE_DESCRIPTOR);
             }
         }
     }

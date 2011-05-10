@@ -15,7 +15,6 @@ import java.util.Locale;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -40,8 +39,7 @@ import org.eclipse.swt.graphics.Image;
  * @author BREDEX GmbH
  * @created 10.05.2005
  */
-public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
-    ILightweightLabelDecorator {
+public class TestDataDecorator extends AbstractLightweightLabelDecorator {
     
     /** indicator that there's no decoration */
     private static final int NO_DECORATION = -1;
@@ -57,7 +55,7 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
             return;
         }
         boolean flag = false;
-        if (isNodeActive(node)) {
+        if (TestSuiteBrowserLabelProvider.isNodeActive(node)) {
             ITestSuitePO testSuite = NodeBP.getOwningTestSuite(node);
             if (testSuite != null) {
                 final WorkingLanguageBP workLangBP = WorkingLanguageBP
@@ -107,9 +105,11 @@ public class TestDataDecorator extends TestSuiteBrowserLabelProvider implements
                 }
             } else {
                 if (element instanceof ITestJobPO) {
-                    flag = isTestJobGuiValid((ITestJobPO)element);
+                    flag = TestSuiteBrowserLabelProvider
+                            .isTestJobGuiValid((ITestJobPO)element);
                 } else if (element instanceof IRefTestSuitePO) {
-                    flag = isRefTestSuiteGuiValid((IRefTestSuitePO)element);
+                    flag = TestSuiteBrowserLabelProvider
+                            .isRefTestSuiteGuiValid((IRefTestSuitePO)element);
                 } else {
                     flag = true;
                 }

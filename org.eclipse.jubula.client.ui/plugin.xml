@@ -350,7 +350,7 @@
 		<decorator adaptable="false"
 			class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.ResultDecorator"
 			id="org.eclipse.jubula.client.core.model.TestResultNode" label="Result Decorator"
-			lightweight="false" location="UNDERLAY" state="true">
+			lightweight="true" location="REPLACE" state="true">
 			<description>
 				This decorator decorates the result of tests.
 			</description>

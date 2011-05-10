@@ -76,7 +76,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
      *            the node to check
      * @return whether the given node or one of it's parent is active or not
      */
-    protected boolean isNodeActive(INodePO node) {
+    public static boolean isNodeActive(INodePO node) {
         if (node == null || !node.isActive()) {
             return false;
         }
@@ -314,7 +314,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
      *            the test job gui to check
      * @return whether invalid decoration is necessary
      */
-    protected boolean isTestJobGuiValid(ITestJobPO tj) {
+    public static boolean isTestJobGuiValid(ITestJobPO tj) {
         // if aut does not contain children, do not decorate
         List<INodePO> refTsList = tj.getUnmodifiableNodeList();
         for (INodePO node : refTsList) {
@@ -332,7 +332,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
      *            the Test Suite Reference
      * @return whether invalid decoration is necessary
      */
-    protected boolean isRefTestSuiteGuiValid(IRefTestSuitePO refTs) {
+    public static boolean isRefTestSuiteGuiValid(IRefTestSuitePO refTs) {
         if (TestExecution.isAutNameSet(refTs.getTestSuiteAutID())) {
             return false;
         }
