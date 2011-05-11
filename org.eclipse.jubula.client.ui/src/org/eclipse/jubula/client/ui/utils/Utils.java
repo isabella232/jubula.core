@@ -66,6 +66,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
@@ -126,17 +128,19 @@ public class Utils {
      * @return True, if the user wants to change the perspective, false otherwise.
      */
     public static boolean openPerspective(String perspectiveID) {
+        IWorkbench worbench = PlatformUI.getWorkbench();
+        IWorkbenchWindow activeWindow = worbench.getActiveWorkbenchWindow();
         try {
-            if (PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage().getPerspective().getId()
-                    .equals(perspectiveID)) {
+            if (Plugin.getActivePerspective() != null
+                    && Plugin.getActivePerspective().getId()
+                            .equals(perspectiveID)) {
                 return true;
             }
-            int value = Plugin.getDefault().getPreferenceStore()
-                    .getInt(Constants.PERSP_CHANGE_KEY);
+            final IPreferenceStore preferenceStore = Plugin.getDefault()
+                    .getPreferenceStore();
+            int value = preferenceStore.getInt(Constants.PERSP_CHANGE_KEY);
             if (value == Constants.PERSPECTIVE_CHANGE_YES) {
-                PlatformUI.getWorkbench().showPerspective(perspectiveID,
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+                worbench.showPerspective(perspectiveID, activeWindow);
                 return true;
             } else if (value == Constants.PERSPECTIVE_CHANGE_NO) {
                 return true;
@@ -163,8 +167,8 @@ public class Utils {
                  */
                 protected void buttonPressed(int buttonId) {
                     super.buttonPressed(buttonId);
-                    Plugin.getDefault().getPreferenceStore()
-                            .setValue(Constants.REMEMBER_KEY, getToggleState());
+                    preferenceStore.setValue(Constants.REMEMBER_KEY,
+                            getToggleState());
                     int val = Constants.PERSPECTIVE_CHANGE_PROMPT;
                     if (getToggleState() && getReturnCode() == returnCodeNO) {
                         val = Constants.PERSPECTIVE_CHANGE_NO;
@@ -172,8 +176,7 @@ public class Utils {
                             && getReturnCode() == returnCodeYES) {
                         val = Constants.PERSPECTIVE_CHANGE_YES;
                     }
-                    Plugin.getDefault().getPreferenceStore()
-                            .setValue(Constants.PERSP_CHANGE_KEY, val);
+                    preferenceStore.setValue(Constants.PERSP_CHANGE_KEY, val);
                 }
             };
             dialog.create();
@@ -184,8 +187,7 @@ public class Utils {
             } else if (dialog.getReturnCode() == returnCodeCANCEL) {
                 return false;
             }
-            PlatformUI.getWorkbench().showPerspective(perspectiveID,
-                    PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+            worbench.showPerspective(perspectiveID, activeWindow);
         } catch (WorkbenchException e) {
             StringBuilder msg = new StringBuilder();
             msg.append(Messages.CannotOpenThePerspective)

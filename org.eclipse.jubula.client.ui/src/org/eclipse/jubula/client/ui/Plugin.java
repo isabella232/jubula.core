@@ -94,6 +94,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -632,6 +633,19 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         return null;
     }
 
+    /**
+     * Returns the active perspective descriptor or <code>null</code>.
+     * 
+     * @return an <code>IPerspectiveDescriptor</code> value. The active
+     *         perspective for the currently active page.
+     */
+    public static IPerspectiveDescriptor getActivePerspective() {
+        if (getActivePage() != null) {
+            return getActivePage().getPerspective();
+        }
+        return null;
+    }
+    
     /**
      * Returns the active page or null.
      * @return an <code>IWorkbenchPage</code> value. The active page.
