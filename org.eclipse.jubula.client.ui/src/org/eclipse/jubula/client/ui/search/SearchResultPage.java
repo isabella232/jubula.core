@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.search;
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -26,7 +27,6 @@ import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.AbstractTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
@@ -81,7 +81,7 @@ public class SearchResultPage extends AbstractSearchResultPage
         getTreeViewer().setContentProvider(
                 new SearchResultContentProvider());
         getTreeViewer().setLabelProvider(
-                new DecoratingCellLabelProvider(new LabelProvider(), Plugin
+                new DecoratingLabelProvider(new LabelProvider(), Plugin
                         .getDefault().getWorkbench().getDecoratorManager()
                         .getLabelDecorator()));
         getTreeViewer().setSorter(new ViewerSorter());

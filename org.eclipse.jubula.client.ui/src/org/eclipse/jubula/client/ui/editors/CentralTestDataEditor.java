@@ -50,7 +50,6 @@ import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.filter.JBBrowserPatternFilter;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.provider.SessionBasedLabelDecorator;
 import org.eclipse.jubula.client.ui.provider.contentprovider.CentralTestDataContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.CentralTestDataLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -81,9 +80,6 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
     private Set<ITestDataCubePO> m_elementsToRefresh = 
         new HashSet<ITestDataCubePO>();
 
-    /** label decorator for viewer */
-    private SessionBasedLabelDecorator m_labelDecorator;
-
     /** {@inheritDoc} */
     protected void createPartControlImpl(Composite parent) {
         createMainPart(parent);
@@ -92,12 +88,14 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         setControl(getMainTreeViewer().getControl());
         getMainTreeViewer().setContentProvider(
                 new CentralTestDataContentProvider());
-        m_labelDecorator = new SessionBasedLabelDecorator(this, 
-                Plugin.getDefault().getWorkbench().getDecoratorManager()
-                    .getLabelDecorator());
+
         DecoratingLabelProvider lp = new DecoratingLabelProvider(
-                new CentralTestDataLabelProvider(), m_labelDecorator);
+                new CentralTestDataLabelProvider(), Plugin.getDefault()
+                        .getWorkbench().getDecoratorManager()
+                        .getLabelDecorator());
         lp.setDecorationContext(new JBEditorDecorationContext());
+
+
         getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setSorter(new ViewerSorter());
         getMainTreeViewer().setComparer(new PersistentObjectComparer());
@@ -115,7 +113,6 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
 
     /** {@inheritDoc} */
     public void dispose() {
-        m_labelDecorator.dispose();
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.removeParamChangedListener(this);
         getElementsToRefresh().clear();

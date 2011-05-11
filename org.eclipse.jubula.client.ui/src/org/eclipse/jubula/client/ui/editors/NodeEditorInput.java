@@ -16,11 +16,8 @@ import org.eclipse.ui.IEditorInput;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 02.09.2005
- *
  */
 public class NodeEditorInput extends PersistableEditorInput 
     implements IEditorInput {

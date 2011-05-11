@@ -14,6 +14,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
@@ -31,10 +32,9 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.ComponentNameTreeViewerUpdater;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
-import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
-import org.eclipse.jubula.client.ui.provider.SessionBasedLabelDecorator;
 import org.eclipse.jubula.client.ui.provider.contentprovider.ComponentNameBrowserContentProvider;
 import org.eclipse.jubula.client.ui.sorter.ComponentNameNameViewerSorter;
+import org.eclipse.jubula.client.ui.utils.UIIdentitiyElementComparer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
@@ -69,9 +69,6 @@ public class ComponentNameBrowser extends ViewPart implements
     /** updater for tree viewer based on changes to Component Names */
     private ComponentNameTreeViewerUpdater m_treeViewerUpdater;
     
-    /** label decorator for main tree viewer */
-    private SessionBasedLabelDecorator m_labelDecorator;
-
     /**
      * {@inheritDoc}
      */
@@ -90,12 +87,14 @@ public class ComponentNameBrowser extends ViewPart implements
         ColumnViewerToolTipSupport.enableFor(getTreeViewer());
 
         getTreeViewer().setContentProvider(cp);
-        m_labelDecorator = new SessionBasedLabelDecorator(
-                GeneralStorage.getInstance(), 
-                Plugin.getDefault().getWorkbench().getDecoratorManager()
-                    .getLabelDecorator());
-        getTreeViewer().setLabelProvider(new DecoratingCellLabelProvider(
-                cp, m_labelDecorator));
+        getTreeViewer().setComparer(new UIIdentitiyElementComparer());
+
+        DecoratingLabelProvider lp = new DecoratingLabelProvider(cp, Plugin
+                .getDefault().getWorkbench().getDecoratorManager()
+                .getLabelDecorator());
+
+        getTreeViewer().setLabelProvider(lp);
+        
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
         getTreeViewer().setSorter(new ComponentNameNameViewerSorter());

@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.sorter.NodeNameViewerSorter;
 import org.eclipse.jubula.client.ui.utils.NodeSelection;
+import org.eclipse.jubula.client.ui.utils.UIIdentitiyElementComparer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.layout.GridData;
@@ -277,6 +278,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         addTreeListener();
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setSorter(new NodeNameViewerSorter());
+        getTreeViewer().setComparer(new UIIdentitiyElementComparer());
         
         GridData layoutData = new GridData();
         layoutData.grabExcessHorizontalSpace = true;
