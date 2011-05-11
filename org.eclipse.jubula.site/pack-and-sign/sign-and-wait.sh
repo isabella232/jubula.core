@@ -35,7 +35,7 @@ mkdir -p $OUT
 echo Creating archive for signing
 
 cd $SRC
-/usr/bin/find -name "org.eclipse*jubula*.jar" | zip $DST/jubula.zip -@
+/usr/bin/find -regex ".*org\.\(eclipse\.jubula\|apache\.poi\).*\.jar" | zip $DST/jubula.zip -@
 
 # sign
 
