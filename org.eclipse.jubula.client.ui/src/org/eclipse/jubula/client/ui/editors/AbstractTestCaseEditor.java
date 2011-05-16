@@ -274,6 +274,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         } finally {
             getMainTreeViewer().getTree().setRedraw(true);
             getMainTreeViewer().expandAll();
+            getMainTreeViewer().setSelection(new StructuredSelection(root));
         }
     }
 
@@ -911,14 +912,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         eventHandler.setMaxRetries(maxRetries);
     }
     
-    /**
-     * Sets the selection to the (in the browser selected) correct node.
-     * @param selectedNode the selected node of the browser.
-     */
-    public void setOpeningSelection(INodePO selectedNode) {
-        getTreeViewer().setSelection(new StructuredSelection(selectedNode));
-    }
-
     /**
      * @return the action
      */

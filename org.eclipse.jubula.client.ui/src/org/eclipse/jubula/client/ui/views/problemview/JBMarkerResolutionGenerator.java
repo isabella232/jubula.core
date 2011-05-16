@@ -41,7 +41,6 @@ import org.eclipse.jubula.client.ui.actions.ChooseServerAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
-import org.eclipse.jubula.client.ui.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.handlers.project.ProjectPropertiesHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -469,13 +468,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                                         if (editableNode == null) {
                                             return true;
                                         }
-                                        TestCaseEditor editor = 
-                                            (TestCaseEditor)AbstractOpenHandler
+                                        AbstractOpenHandler
                                                 .openEditor(editableNode);
-                                        if (editor != null) {
-                                            editor.setOpeningSelection(
-                                                    selectedNode);
-                                        }
                                     }
                                     return true;
                                 }

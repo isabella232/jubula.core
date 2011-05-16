@@ -89,6 +89,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         } finally {
             getTreeViewer().getTree().setRedraw(true);
             getMainTreeViewer().expandAll();
+            getMainTreeViewer().setSelection(new StructuredSelection(rootPO));
         }
     }
     
