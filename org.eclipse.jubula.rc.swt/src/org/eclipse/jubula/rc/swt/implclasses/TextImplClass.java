@@ -131,7 +131,13 @@ public class TextImplClass extends AbstractControlImplClass
      */
     protected void selectAll() {
         final String totalText = getText();
-        getRobot().keyStroke(getRobot().getSystemModifierSpec() + " A"); //$NON-NLS-1$
+        try {
+            getRobot().keyStroke(getRobot().getSystemModifierSpec() + " A"); //$NON-NLS-1$
+        } catch (StepExecutionException see) {
+            /*This might happen under certain circumstances e.g. on MacOS X see
+              bug 342691 */ 
+            log.warn(see);
+        }
         
         if (!totalText.equals(getSelectionText())) {
             // the selection failed for some reason
