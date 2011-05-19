@@ -26,6 +26,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 
@@ -287,7 +288,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                 new ArrayList<IParamDescriptionPO>(getParameterList());
 
             IParameterInterfacePO refDataCube = getReferencedDataCube();
-            for (IDataSetPO dataSet : testDataManager.getDataSets()) {
+            for (int i = 0; i < testDataManager.getDataSetCount(); i++) {
                 for (IParamDescriptionPO paramDesc : requiredParameters) {
                     int column = 
                         testDataManager.findColumnForParam(
@@ -307,7 +308,9 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                         return false;
                     }
                     
-                    ITestDataPO testData = dataSet.getColumn(column);
+                    
+                    ITestDataPO testData = TestDataBP.instance().getTestData(
+                            this, testDataManager, paramDesc, i);
                     if (testData == null || testData.getValue(locale) == null) {
                         return false;
                     }
