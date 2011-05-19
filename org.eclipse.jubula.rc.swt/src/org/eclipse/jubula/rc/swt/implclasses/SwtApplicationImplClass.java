@@ -152,20 +152,13 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
                 EventFactory.createActionError(
                         TestErrorEvent.INVALID_PARAM_VALUE));
         }
-        String key = StringConstants.EMPTY;
-        // "ß".toUpperCase is "SS" we do not want that!
-        if ("ß".equals(keySpec)) { //$NON-NLS-1$
-            key = keySpec;
-        } else {
-            key = keySpec.trim().toUpperCase();            
-        }
-        
-        String keyStrokeSpec = key;
+        String keyStrokeSpec = keySpec.trim();
         String mod = KeyStrokeUtil.getModifierString(modifierSpec);
         if (mod.length() > 0) {
             keyStrokeSpec = mod + " " + keyStrokeSpec; //$NON-NLS-1$
         }
-
+        // at this the key stroke specification is not fully fullfilled as the
+        // key stroke spec base key is not definitly upper case
         getRobot().keyStroke(keyStrokeSpec);
     }
  

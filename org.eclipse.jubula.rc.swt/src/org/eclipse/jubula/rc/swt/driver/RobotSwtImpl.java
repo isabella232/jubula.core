@@ -27,6 +27,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.IEventMatcher;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -37,7 +38,6 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.InterceptorOptions;
 import org.eclipse.jubula.rc.common.driver.MouseMovementStrategy;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
-import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.exception.OsNotSupportedException;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -940,7 +940,8 @@ public class RobotSwtImpl implements IRobot {
         
         if (code == -1) {
             return new KeyCharTyper(
-                    SwtKeyCodeConverter.getKeyChar(baseKey).charValue());
+                    getOSSspecificSpecBaseCharacter(SwtKeyCodeConverter
+                            .getKeyChar(baseKey).charValue()));
         }
         
         return new KeyCodeTyper(code);
@@ -1007,16 +1008,31 @@ public class RobotSwtImpl implements IRobot {
 
     /**
      * Creates a KeyStroke of the given keyStrokeSpec
-     * @param keyStrokeSpec see {@link KeyStroke#getKeyStroke(String)}
+     * 
+     * @param keyStrokeSpec
+     *            see {@link KeyStroke#getKeyStroke(String)} and
+     *            {@link KeyStroke#getKeyStroke(Char)}
      * @return a KeyStroke.
-     * @throws RobotException if no KeyStroke can be created.
+     * @throws RobotException
+     *             if no KeyStroke can be created.
      */
     private KeyStroke getKeyStroke(String keyStrokeSpec) throws RobotException {
         KeyStroke keyStroke;
         if (keyStrokeSpec.length() == 1) {
-            keyStroke = KeyStroke.getKeyStroke(keyStrokeSpec.charAt(0));
+            char singeKeyStrokeSpecChar = keyStrokeSpec.charAt(0);
+            singeKeyStrokeSpecChar = 
+                getOSSspecificSpecBaseCharacter(singeKeyStrokeSpecChar);
+            keyStroke = KeyStroke.getKeyStroke(singeKeyStrokeSpecChar);
         } else {
-            keyStroke = KeyStroke.getKeyStroke(keyStrokeSpec);            
+            int keyStrokeSpecSize = keyStrokeSpec.length();
+            char keySpec = keyStrokeSpec.charAt(keyStrokeSpecSize - 1);
+            // 'ß'.toUpperCase is "SS" we do not want that!
+            if ('ß' != keySpec) {
+                keySpec = Character.toUpperCase(keySpec);
+            }
+            String modifiedKeyStrokeSpec = keyStrokeSpec.substring(0,
+                    keyStrokeSpecSize - 1) + keySpec;
+            keyStroke = KeyStroke.getKeyStroke(modifiedKeyStrokeSpec);
         }
         if (keyStroke == null) {
             final String msg = "Failed to post keystroke '" + keyStrokeSpec  //$NON-NLS-1$
@@ -1028,6 +1044,19 @@ public class RobotSwtImpl implements IRobot {
                 TestErrorEvent.INVALID_PARAM_VALUE));
         }
         return keyStroke;
+    }
+
+    /**
+     * @param character
+     *            the character
+     * @return the "corrected" character, e.g. for Mac OS X it has to be in
+     *         lower case
+     */
+    private static char getOSSspecificSpecBaseCharacter(char character) {
+        if (EnvironmentUtils.isMacOS() && Character.isUpperCase(character)) {
+            return Character.toLowerCase(character);
+        }
+        return character;
     }
 
     /**
