@@ -144,18 +144,20 @@ public abstract class AbstractNewTestCaseAction extends Action {
     }
     
     /**
-     * @param selectedNode the currently selected guiNode
-     * @param workTC the workversion of the current specTC
+     * @param workNode
+     *            the workversion of the current specTC
+     * @param selectedNode
+     *            the currently selected node
      * @return the position to add
      */
-    private Integer getPositionToInsert(ISpecTestCasePO workTC, 
+    public static Integer getPositionToInsert(INodePO workNode,
             IExecTestCasePO selectedNode) {
-        
-        int positionToAdd = workTC.indexOf(selectedNode) + 1;
-        if (Plugin.getDefault().getPreferenceStore().getBoolean(
-                Constants.NODE_INSERT_KEY)) {
-            
-            positionToAdd = workTC.getUnmodifiableNodeList().size() + 1;      
+
+        int positionToAdd = workNode.indexOf(selectedNode) + 1;
+        if (Plugin.getDefault().getPreferenceStore()
+                .getBoolean(Constants.NODE_INSERT_KEY)) {
+
+            positionToAdd = workNode.getUnmodifiableNodeList().size() + 1;
         }
         return positionToAdd;
     }

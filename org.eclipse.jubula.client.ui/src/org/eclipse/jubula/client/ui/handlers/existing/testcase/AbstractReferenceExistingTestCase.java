@@ -26,6 +26,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.actions.AbstractNewTestCaseAction;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.dialogs.TestCaseTreeDialog;
@@ -58,52 +59,13 @@ public abstract class AbstractReferenceExistingTestCase
                     instanceof IStructuredSelection)) {
                 return null;
             }
-            INodePO guiNode = (INodePO)((IStructuredSelection)tce
+            final INodePO node = (INodePO)((IStructuredSelection)tce
                     .getTreeViewer().getSelection()).getFirstElement();
-            if (guiNode == null) { // check for existing selection
+            if (node == null) { // check for existing selection
                 return null;
             }
-            final Integer index = editorNode.indexOf(guiNode);
-            ISelectionListener listener = new ISelectionListener() {
-                public void selectionChanged(IWorkbenchPart part,
-                        ISelection selection) {
-                    if (!(selection instanceof IStructuredSelection)) {
-                        return;
-                    }
-                    List<Object> selectedElements = 
-                        ((IStructuredSelection)selection).toList();
-                    Collections.reverse(selectedElements);
-                    Iterator iter = selectedElements.iterator();
-                    List<IExecTestCasePO> addedElements = 
-                        new ArrayList<IExecTestCasePO>();
-                    try {
-                        while (iter.hasNext()) {
-                            ISpecTestCasePO specTcToInsert = 
-                                (ISpecTestCasePO)iter.next();
-                            try {
-                                addedElements.add(
-                                    TestCaseBP.addReferencedTestCase(
-                                        tce.getEditorHelper().getEditSupport(),
-                                        editorNode, specTcToInsert, index));
-                            } catch (PMException e) {
-                                NodeEditorInput inp = (NodeEditorInput)tce
-                                        .getAdapter(NodeEditorInput.class);
-                                INodePO inpNode = inp.getNode();
-                                PMExceptionHandler
-                                        .handlePMExceptionForMasterSession(e);
-                                tce.reOpenEditor(inpNode);
-                            }
-                        }
-                        tce.getEditorHelper().getEditSupport()
-                                .lockWorkVersion();
-                        tce.getEditorHelper().setDirty(true);
-                        tce.setSelection(
-                                new StructuredSelection(addedElements));
-                    } catch (PMException e1) {
-                        PMExceptionHandler.handlePMExceptionForEditor(e1, tce);
-                    }
-                }
-            };
+            ISelectionListener listener = getSelectionListener(tce, editorNode,
+                    node);
             ISpecTestCasePO specTC = null;
             if (editorNode instanceof ISpecTestCasePO) {
                 specTC = (ISpecTestCasePO)editorNode;
@@ -122,5 +84,62 @@ public abstract class AbstractReferenceExistingTestCase
         }
         return null;
     }
-    
+
+    /**
+     * @param tce
+     *            the test case editor
+     * @param editorNode
+     *            the editor node
+     * @param node
+     *            the currently selected node
+     * @return the selection listener
+     */
+    private ISelectionListener getSelectionListener(
+            final AbstractTestCaseEditor tce, final INodePO editorNode,
+            final INodePO node) {
+        return new ISelectionListener() {
+            public void selectionChanged(IWorkbenchPart part,
+                    ISelection selection) {
+                if (!(selection instanceof IStructuredSelection)) {
+                    return;
+                }
+                List<Object> selectedElements = 
+                    ((IStructuredSelection)selection)
+                        .toList();
+                Collections.reverse(selectedElements);
+                Iterator iter = selectedElements.iterator();
+                List<IExecTestCasePO> addedElements = 
+                    new ArrayList<IExecTestCasePO>();
+                try {
+                    while (iter.hasNext()) {
+                        ISpecTestCasePO specTcToInsert = (ISpecTestCasePO)iter
+                                .next();
+                        try {
+                            Integer index = null;
+                            if (node instanceof IExecTestCasePO) {
+                                index = AbstractNewTestCaseAction
+                                        .getPositionToInsert(editorNode,
+                                                (IExecTestCasePO)node);
+                            }
+                            addedElements.add(TestCaseBP.addReferencedTestCase(
+                                    tce.getEditorHelper().getEditSupport(),
+                                    editorNode, specTcToInsert, index));
+                        } catch (PMException e) {
+                            NodeEditorInput inp = (NodeEditorInput)tce
+                                    .getAdapter(NodeEditorInput.class);
+                            INodePO inpNode = inp.getNode();
+                            PMExceptionHandler
+                                    .handlePMExceptionForMasterSession(e);
+                            tce.reOpenEditor(inpNode);
+                        }
+                    }
+                    tce.getEditorHelper().getEditSupport().lockWorkVersion();
+                    tce.getEditorHelper().setDirty(true);
+                    tce.setSelection(new StructuredSelection(addedElements));
+                } catch (PMException e1) {
+                    PMExceptionHandler.handlePMExceptionForEditor(e1, tce);
+                }
+            }
+        };
+    }
 }
