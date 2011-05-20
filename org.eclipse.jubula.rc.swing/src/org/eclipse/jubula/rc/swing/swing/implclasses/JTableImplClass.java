@@ -449,8 +449,6 @@ public class JTableImplClass extends AbstractSwingImplClass
         }
         newRow = IndexConverter.toUserIndex(newRow);
         newCol = IndexConverter.toUserIndex(newCol);
-        //String rowStr = (new Integer(newRow)).toString();
-        //String colStr = (new Integer(newCol)).toString();
         gdSelectCell(newRow, newCol, clickCount,
                      xPos, xUnits, yPos, yUnits, extendSelection);
     }
@@ -656,7 +654,7 @@ public class JTableImplClass extends AbstractSwingImplClass
             final String value, final String operator, final String searchType,
             boolean exists) throws StepExecutionException {
         final int implRow = getRowFromString(row, rowOperator);
-        Boolean valueExists = new Boolean(true);
+        Boolean valueExists = Boolean.TRUE;
         //if row is header
         if (implRow == -1) {
             valueExists = (Boolean)getEventThreadQueuer().invokeAndWait(
@@ -668,10 +666,10 @@ public class JTableImplClass extends AbstractSwingImplClass
                                 String header = m_table.getColumnName(k);
                                 if (MatchUtil.getInstance().match(
                                         header, value, operator)) {
-                                    return new Boolean(true);
+                                    return Boolean.TRUE;
                                 }
                             }
-                            return new Boolean(false);
+                            return Boolean.FALSE;
                         }
                     });
         } else {
@@ -682,12 +680,12 @@ public class JTableImplClass extends AbstractSwingImplClass
                                     i < m_table.getColumnCount();
                                     ++i) {
                                 if (MatchUtil.getInstance().match(
-                                        m_table.getValueAt(implRow, i)
-                                        .toString(), value, operator)) {
-                                    return new Boolean(true);
+                                        getCellText(implRow, i), value,
+                                        operator)) {
+                                    return Boolean.TRUE;
                                 }
                             }
-                            return new Boolean(false);
+                            return Boolean.FALSE;
                         }
                     });
         }
@@ -721,15 +719,15 @@ public class JTableImplClass extends AbstractSwingImplClass
                             i < rowCount; ++i) {
                         if (MatchUtil.getInstance().match(getCellText(i,
                             implCol), value, operator)) {
-                            return new Boolean(true);
+                            return Boolean.TRUE;
                         }
                     }
                     String header = m_table.getColumnName(implCol);
                     if (MatchUtil.getInstance().match(header, value,
                             operator)) {
-                        return new Boolean(true);
+                        return Boolean.TRUE;
                     }
-                    return new Boolean(false);
+                    return Boolean.FALSE;
                 }
             });
         Verifier.equals(exists, valueExists.booleanValue());
@@ -1374,9 +1372,8 @@ public class JTableImplClass extends AbstractSwingImplClass
                                     i < m_table.getColumnCount();
                                     ++i) {
                                 if (MatchUtil.getInstance().match(
-                                        m_table.getValueAt(implRow, i)
-                                        .toString(), value, regex)) {
-
+                                        getCellText(implRow, i), 
+                                        value, regex)) {
                                     return new Integer(i);
                                 }
                             }
@@ -1424,9 +1421,8 @@ public class JTableImplClass extends AbstractSwingImplClass
                     for (int i = getStartingColIndex(searchType);
                             i < m_table.getColumnCount();
                             ++i) {
-                        if (MatchUtil.getInstance().match(m_table.getValueAt(
-                            implRow, i).toString(), value, regex)) {
-
+                        if (MatchUtil.getInstance().match(
+                                    getCellText(implRow, i), value, regex)) {
                             return new Integer(i);
                         }
                     }
@@ -1461,9 +1457,9 @@ public class JTableImplClass extends AbstractSwingImplClass
                 "selectCellByRowValue", new IRunnable() { //$NON-NLS-1$
                     public Object run() throws StepExecutionException {
                         for (int i = 0; i < m_table.getRowCount(); ++i) {
-                            if (MatchUtil.getInstance().match(m_table.getValueAt
-                                (i, implCol).toString(), value, MatchUtil.
-                                MATCHES_REGEXP)) {
+                            if (MatchUtil.getInstance().match(
+                                    getCellText(i, implCol), value,
+                                    MatchUtil.MATCHES_REGEXP)) {
                                 return new Integer(i);
                             }
                         }
@@ -1476,8 +1472,9 @@ public class JTableImplClass extends AbstractSwingImplClass
                 "selectCellByRowValue", new IRunnable() { //$NON-NLS-1$
                     public Object run() throws StepExecutionException {
                         for (int i = 0; i < m_table.getRowCount(); ++i) {
-                            if (m_table.getValueAt(i, implCol).toString()
-                                    .equals(value)) {
+                            if (MatchUtil.getInstance().match(
+                                    getCellText(i, implCol), value,
+                                    MatchUtil.MATCHES_REGEXP)) {
                                 return new Integer(i);
                             }
                         }
@@ -2047,8 +2044,7 @@ public class JTableImplClass extends AbstractSwingImplClass
             if (usrIdxCol == 0) {
                 usrIdxCol = usrIdxCol + 1;
             }
-            column = IndexConverter.toImplementationIndex(
-                    usrIdxCol);
+            column = IndexConverter.toImplementationIndex(usrIdxCol);
         } catch (NumberFormatException nfe) {
             try {
                 if (m_table.getTableHeader() == null
