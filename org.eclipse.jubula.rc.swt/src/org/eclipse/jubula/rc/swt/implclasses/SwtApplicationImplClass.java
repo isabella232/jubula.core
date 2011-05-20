@@ -29,6 +29,7 @@ import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
+import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.components.SwtComponent;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
@@ -41,6 +42,7 @@ import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -157,9 +159,15 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
         if (mod.length() > 0) {
             keyStrokeSpec = mod + " " + keyStrokeSpec; //$NON-NLS-1$
         }
-        // at this the key stroke specification is not fully fullfilled as the
-        // key stroke spec base key is not definitly upper case
-        getRobot().keyStroke(keyStrokeSpec);
+        String keySpecification = keySpec.trim().toLowerCase();
+        if (EnvironmentUtils.isMacOS() && keySpecification.length() == 1
+                && keySpecification.charAt(0) == WorkaroundUtil.CHAR_B) {
+            gdNativeKeyStroke(modifierSpec, keySpec);
+        } else {
+            // at this the key stroke specification is not fully fullfilled as the
+            // key stroke spec base key is not definitly upper case
+            getRobot().keyStroke(keyStrokeSpec);
+        }
     }
  
     /**

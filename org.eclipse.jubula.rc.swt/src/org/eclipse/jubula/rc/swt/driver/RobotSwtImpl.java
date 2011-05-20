@@ -42,7 +42,9 @@ import org.eclipse.jubula.rc.common.exception.OsNotSupportedException;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
+import org.eclipse.jubula.rc.swt.implclasses.SwtApplicationImplClass;
 import org.eclipse.jubula.rc.swt.utils.SwtKeyCodeConverter;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
@@ -768,6 +770,14 @@ public class RobotSwtImpl implements IRobot {
         
         Validate.notNull(graphicsComponent, "The graphic component must not be null");  //$NON-NLS-1$
 
+        // Workaround for issue 342718
+        if (EnvironmentUtils.isMacOS()
+                && Character.toLowerCase(character) == WorkaroundUtil.CHAR_B) {
+            SwtApplicationImplClass impClass = new SwtApplicationImplClass();
+            impClass.gdNativeInputText(String.valueOf(character));
+            return;
+        }
+        
         final KeyboardHelper.KeyStroke keyStroke = 
             m_keyboardHelper.getKeyStroke(character);
         final Integer[] modifiers = keyStroke.getModifiers();
@@ -824,7 +834,7 @@ public class RobotSwtImpl implements IRobot {
                     TestErrorEvent.INPUT_FAILED));
         }
         // Workaround for bug 342718
-        if (!(key == '9' && EnvironmentUtils.isMacOS())) {
+        if (!(key == WorkaroundUtil.CHAR_9 && EnvironmentUtils.isMacOS())) {
             confirmer.waitToConfirm(graphicsComponent, matcher);
         } else {
             TimeUtil.delay(50);

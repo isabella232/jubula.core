@@ -20,7 +20,15 @@ import org.eclipse.jubula.tools.utils.EnvironmentUtils;
  * @created Jun 23, 2009
  */
 public class WorkaroundUtil {
-
+    /**
+     * <code>CHAR_9</code>
+     */
+    public static final char CHAR_9 = '9';
+    /**
+     * the lower case char <code>'b'</code>
+     */
+    public static final char CHAR_B = 'b';
+    
     /** 
      * Name of the environment variable that defines whether the client should
      * ignore server-side timeouts that occur during test execution.
