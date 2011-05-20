@@ -767,6 +767,11 @@ public class RobotSwtImpl implements IRobot {
         throws RobotException {
         
         Validate.notNull(graphicsComponent, "The graphic component must not be null");  //$NON-NLS-1$
+
+        final KeyboardHelper.KeyStroke keyStroke = 
+            m_keyboardHelper.getKeyStroke(character);
+        final Integer[] modifiers = keyStroke.getModifiers();
+        final char key = keyStroke.getChar();
         
         final InterceptorOptions options = new InterceptorOptions(new long[]{
             SWT.KeyUp});
@@ -778,10 +783,6 @@ public class RobotSwtImpl implements IRobot {
             new IRunnable() {
                 public Object run() {
                     Boolean success = Boolean.TRUE;
-                    final KeyboardHelper.KeyStroke keyStroke = 
-                        m_keyboardHelper.getKeyStroke(character);
-                    final Integer[] modifiers = keyStroke.getModifiers();
-                    final char key = keyStroke.getChar();
                     try {
                         // press the modifier keys
                         for (int i = 0; i < modifiers.length; i++) {
@@ -821,8 +822,13 @@ public class RobotSwtImpl implements IRobot {
             }
             throw new RobotException(msg, EventFactory.createActionError(
                     TestErrorEvent.INPUT_FAILED));
-        } 
-        confirmer.waitToConfirm(graphicsComponent, matcher);
+        }
+        // Workaround for bug 342718
+        if (!(key == '9' && EnvironmentUtils.isMacOS())) {
+            confirmer.waitToConfirm(graphicsComponent, matcher);
+        } else {
+            TimeUtil.delay(50);
+        }
     }
 
     /**
