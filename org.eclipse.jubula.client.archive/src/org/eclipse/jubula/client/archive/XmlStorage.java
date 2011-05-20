@@ -12,12 +12,12 @@ package org.eclipse.jubula.client.archive;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -645,26 +645,25 @@ public class XmlStorage {
     
     /**
      * read data from a file using a specified character encoding
-     * @param inFile filename
+     * @param projectURL the project xml URL
      * @param encoding character encoding. Must be a supported encoding or an
      * UnsupportedEncodingException will be thrown. Null is allowed and means
      * system default encoding.
      * @return a Stringbuilder holding the characters from the file
      * @throws IOException  in  case of io problems
      */
-    public static StringBuilder readFileContent(File inFile, String encoding) 
-        throws IOException {
-        StringBuilder result = 
-            new StringBuilder((int)inFile.length());            
+    public static StringBuilder readFileContent(
+        URL projectURL, String encoding) throws IOException {
+        StringBuilder result = new StringBuilder();            
         
         BufferedReader in = null;
         try {
             if (encoding != null) {
                 in = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(inFile), encoding));
+                        projectURL.openStream(), encoding));
             } else {
                 in = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(inFile)));
+                        projectURL.openStream()));
             }
 
             char buff[] = new char[10240];
@@ -681,16 +680,15 @@ public class XmlStorage {
     }
     /**
      * Reads the content of the file and returns it as a string. 
-     * @param fileName The name of the file
+     * @param fileURL The URL of the project to import
      * @return The file content
      * @throws PMReadException If the file couldn't be read (wrong file name, IOException)
      */
-    private static String readProjectFile(String fileName)
+    private static String readProjectFile(URL fileURL)
         throws PMReadException {
         try {
-            File inFile = new File(fileName);
-            final String encoding = getCharacterEncoding(inFile);
-            StringBuilder result = readFileContent(inFile, encoding);
+            final String encoding = getCharacterEncoding(fileURL);
+            StringBuilder result = readFileContent(fileURL, encoding);
             String content = checkAndReduceXmlHeader(result);
             return content;            
         } catch (FileNotFoundException e) {
@@ -699,7 +697,7 @@ public class XmlStorage {
                 MessageIDs.E_FILE_NOT_FOUND);
         } catch (IOException e) {
             log.debug(Messages.FailedReadingFile + StringConstants.COLON 
-                    + StringConstants.SPACE + fileName);
+                    + StringConstants.SPACE + fileURL.getFile());
             throw new PMReadException(e.toString(), MessageIDs.E_FILE_IO);
         } catch (XmlException e) {
             log.debug(Messages.MalformedXMLData);
@@ -708,18 +706,20 @@ public class XmlStorage {
     }
 
     /**
-     * Gets the character encoding of the given XML-file.
-     * @param xmlFile a File-object which must contain a valid XML-Structure.
+     * Gets the character encoding of the given XML-URL.
+     * 
+     * @param xmlProjectURL
+     *            a URL-object which must point a valid XML-Structure.
      * @return The encoding (e.g. UTF-8, UTF-16, ...).
      * @see SUPPORTED_CHAR_ENCODINGS
-     * @throws IOException in case of reading error. 
+     * @throws IOException
+     *             in case of reading error.
      */
-    public static String getCharacterEncoding(File xmlFile) throws 
+    public static String getCharacterEncoding(URL xmlProjectURL) throws 
         IOException {
-        
         for (String encoding : SUPPORTED_CHAR_ENCODINGS) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(xmlFile), encoding));
+                    xmlProjectURL.openStream(), encoding));
             final String firstLine = reader.readLine();
             if (firstLine != null && firstLine.contains(encoding)) {
                 return encoding;
@@ -770,8 +770,8 @@ public class XmlStorage {
      * read a <code> GeneralStorage </code> object from filename <b> call
      * getProjectAutToolKit(String filename) at first </b>
      * 
-     * @param filename
-     *            name of file to read
+     * @param fileURL
+     *            URL of the project file to read
      * @param paramNameMapper
      *            mapper to resolve param names
      * @param compNameCache
@@ -793,14 +793,14 @@ public class XmlStorage {
      * @throws InterruptedException
      *             if the operation was canceled.
      */
-    public IProjectPO readProject(String filename, 
+    public IProjectPO readProject(URL fileURL, 
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, boolean assignNewGuids, 
         IProgressMonitor monitor, IProgressConsole io) throws PMReadException, 
         JBVersionException, 
         InterruptedException, ConverterException {
 
-        return load(readProjectFile(filename), assignNewGuids, paramNameMapper, 
+        return load(readProjectFile(fileURL), assignNewGuids, paramNameMapper, 
                 compNameCache, monitor, io);
     }
     
@@ -808,8 +808,8 @@ public class XmlStorage {
      * read a <code> GeneralStorage </code> object from filename <b> call
      * getProjectAutToolKit(String filename) at first </b>
      * 
-     * @param filename
-     *            name of file to read
+     * @param fileURL
+     *            the URL of project file to read
      * @param paramNameMapper
      *            mapper to resolve param names
      * @param compNameCache
@@ -829,14 +829,14 @@ public class XmlStorage {
      * @throws InterruptedException
      *             if the operation was canceled.
      */
-    public IProjectPO readProject(String filename, 
+    public IProjectPO readProject(URL fileURL, 
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, boolean assignNewGuids, 
         IProgressMonitor monitor) throws PMReadException, 
         JBVersionException, 
         InterruptedException, ConverterException {
 
-        return load(readProjectFile(filename), assignNewGuids, paramNameMapper, 
+        return load(readProjectFile(fileURL), assignNewGuids, paramNameMapper, 
                 compNameCache, monitor, new NullImportOutput());
     }
 

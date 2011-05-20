@@ -10,11 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.businessprocess;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -44,9 +43,9 @@ import org.eclipse.jubula.client.ui.handlers.project.OpenProjectHandler;
 import org.eclipse.jubula.client.ui.handlers.project.OpenProjectHandler.OpenProjectOperation;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.Bundle;
 
 
 /**
@@ -68,7 +67,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
         /**
          * @return the file names of the projects to import
          */
-        public String [] getFiles();
+        public List<URL> getFileURLs();
         
         /**
          * @return the selection state of the open project checkbox
@@ -106,16 +105,16 @@ public class ImportFileBP implements IProjectNameConflictResolver,
      * 
      * @param elements
      *            What to import ? 0 = all >0 = elements
-     * @param fileNames
-     *            The names of the files to import.
+     * @param fileURLs
+     *            The URLs of the files to import.
      * @param openProject
      *            Flag indicating whether the imported project should be 
      *            immediately opened after import.
      */
-    public void importProject(final int elements, final String [] fileNames, 
+    public void importProject(final int elements, final List<URL> fileURLs, 
             final boolean openProject) {
         try {
-            if (fileNames == null) {
+            if (fileURLs == null) {
                 return;
             }
             AbstractRunnableWithProgress<IProjectPO> importProjectRunnable =
@@ -127,7 +126,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                                 ImportFileBPWaitWhileImporting);
                         try {
                             setResult(FileStorageBP.importProject(
-                                elements, fileNames, 
+                                elements, fileURLs, 
                                 monitor, Plugin.getDefault(), openProject));
                         } catch (PMException pme) {
                             PMExceptionHandler
@@ -182,11 +181,11 @@ public class ImportFileBP implements IProjectNameConflictResolver,
      */
     public void importProjects(IProjectImportInfoProvider importInfo, 
             IProgressMonitor monitor) throws InterruptedException {
-        String [] fileNames = importInfo.getFiles();
+        List<URL> fileURLs = importInfo.getFileURLs();
         boolean openProject = importInfo.getIsOpenProject();
 
         try {
-            FileStorageBP.importProject(0, fileNames, monitor, 
+            FileStorageBP.importProject(0, fileURLs, monitor, 
                     Plugin.getDefault(), openProject);
         } catch (PMException pme) {
             PMExceptionHandler
@@ -219,89 +218,19 @@ public class ImportFileBP implements IProjectNameConflictResolver,
         protected IStatus run(IProgressMonitor monitor) {
             Plugin.getDisplay().syncExec(new Runnable() {
                 public void run() {
+                    Bundle b = Platform.getBundle(Plugin.PLUGIN_ID);
+                    Enumeration e = b.findEntries(
+                            "resources/library/", "*.xml", false); //$NON-NLS-1$//$NON-NLS-2$
+                    List<URL> unboundModuleURLs = new ArrayList<URL>();
+
+                    while (e.hasMoreElements()) {
+                        unboundModuleURLs.add((URL)e.nextElement());
+                    }
                     // load all elements;
-                    importProject(0, findUnboundModules(), false);
+                    importProject(0, unboundModuleURLs, false);
                 }
             });
             return Status.OK_STATUS;
-        }
-
-        /**
-         * look for library files
-         * @return an array of filenames or null
-         */
-        private String[] findUnboundModules() {
-            File ubmDir = findInstallationDir();
-            if (ubmDir != null) {
-                File[] files = ubmDir
-                        .listFiles(new FilenameFilter() {
-                            public boolean accept(File dir,
-                                    String name) {
-                                return name
-                                        .startsWith("unbound_modules_") //$NON-NLS-1$
-                                        && name.endsWith(".xml"); //$NON-NLS-1$
-                            }
-                        });
-                String[] filenames = new String[files.length];
-                int index = 0;
-                for (File file : files) {
-                    if (file.isFile() && file.canRead()) {
-                        filenames[index++] = file.getAbsolutePath();
-                    }
-                }
-                return filenames;
-            }
-            return null; // no directory
-        }
-
-        /**
-         * find the installation directory. if running in the IDE
-         * also check the "current" installation directory.
-         * @return a valid directory or null if none could be found
-         */
-        private File findInstallationDir() {
-            File ubmDir = null;
-            try {
-                Location instLoc = Platform.getInstallLocation();
-                if (instLoc != null) {
-                    File instDir = new File(instLoc.getURL()
-                            .toURI());
-                    ubmDir = new File(instDir,
-                            "../examples/testCaseLibrary"); //$NON-NLS-1$
-                    if (!ubmDir.isDirectory()) {
-                        ubmDir = null;
-                    }
-                }
-            } catch (URISyntaxException e) {
-                ubmDir =  null; // installation directory not
-                                // available
-            }
-            // fallback for current build
-            if (ubmDir == null) {
-                ubmDir = new File("../examples/testCaseLibrary"); //$NON-NLS-1$
-                if (!ubmDir.isDirectory()) {
-                    ubmDir = null;
-                }                            
-            }
-            // try to find something for the IDE
-            if (ubmDir == null) {
-                Location wsLoc = Platform.getInstanceLocation();
-                if (wsLoc != null) {
-                    try {
-                        File wsDir = 
-                            new File(wsLoc.getURL().toURI());
-                        ubmDir = new File(wsDir,
-                                "../jubula/org.eclipse.jubula.examples/" //$NON-NLS-1$ 
-                                + "resources/projects/library"); //$NON-NLS-1$
-                        if (!ubmDir.isDirectory()) {
-                            ubmDir = null;
-                        }
-                    } catch (URISyntaxException e) {
-                        ubmDir = null;
-                    }
-                }
-            }                        
-            return ubmDir;
         }
     }
 

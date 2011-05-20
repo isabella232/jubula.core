@@ -11,6 +11,8 @@
 package org.eclipse.jubula.app.dbtool.core;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,13 +205,16 @@ public class DBToolClient extends AbstractCmdlineClient {
             impFile = new File(new File(exportDir), fileName);
         }
         try {
-            FileStorageBP.importFiles(
-                    new String[] { impFile.getAbsolutePath() }, 
-                    new NullProgressMonitor(), this, false);
+            List<URL> fileURLs = new ArrayList<URL>(1);
+            fileURLs.add(impFile.toURI().toURL());
+            FileStorageBP.importFiles(fileURLs, new NullProgressMonitor(),
+                    this, false);
         } catch (PMException pme) {
             writeErrorLine(pme.getLocalizedMessage());
         } catch (ProjectDeletedException gdpde) {
             writeErrorLine(gdpde.getLocalizedMessage());
+        } catch (MalformedURLException e) {
+            writeErrorLine(e.getLocalizedMessage());
         }
     }
 

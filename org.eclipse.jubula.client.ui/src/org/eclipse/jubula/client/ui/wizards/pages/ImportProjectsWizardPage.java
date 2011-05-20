@@ -12,6 +12,9 @@ package org.eclipse.jubula.client.ui.wizards.pages;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.apache.commons.logging.Log;
@@ -82,7 +85,7 @@ public class ImportProjectsWizardPage extends WizardPage
     /** The status of m_openProjectCheckbox */
     private boolean m_isOpenProject;
     /** fileNames */
-    private String [] m_fileNames; 
+    private java.util.List<URL> m_fileURLs; 
     
     /**
      * Constructor
@@ -385,10 +388,20 @@ public class ImportProjectsWizardPage extends WizardPage
      */
     void checkCompletness() {
         // Update model values
-        m_fileNames = m_filesToImport.getItems();
+        String[] fileNames = m_filesToImport.getItems();
+        m_fileURLs = new ArrayList<URL>(fileNames.length);
+
+        for (String fileName : fileNames) {
+            try {
+                m_fileURLs.add(new File(fileName).toURI().toURL());
+            } catch (MalformedURLException e) {
+                log.error(e);
+            }
+        }
+        
         m_isOpenProject = m_openProjectCheckbox.getSelection();
 
-        if (m_fileNames.length < 1) {
+        if (m_fileURLs.size() < 1) {
             setErrorMessage(Messages.ImportProjectDialogNoFilesToImport);
             setPageComplete(false);
         } else {
@@ -500,8 +513,8 @@ public class ImportProjectsWizardPage extends WizardPage
      * 
      * {@inheritDoc}
      */
-    public String [] getFiles() {
-        return m_fileNames;
+    public java.util.List<URL> getFileURLs() {
+        return m_fileURLs;
     }
 
     /**

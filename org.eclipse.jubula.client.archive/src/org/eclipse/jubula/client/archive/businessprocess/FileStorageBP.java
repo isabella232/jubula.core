@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.archive.businessprocess;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -78,8 +79,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
@@ -118,7 +119,7 @@ public class FileStorageBP {
         m_projectToCompMapperMap;
     
         /** names of the files to read */
-        private String [] m_fileNames;
+        private List<URL> m_fileURLs;
         
         /** the console to use to display progress and error messages */
         private IProgressConsole m_console;
@@ -130,16 +131,16 @@ public class FileStorageBP {
          *              <code>true</code> if entire projects are being imported.
          *              <code>false</code> if only components (TCs, AUTs, etc.)
          *              are being imported.
-         * @param fileNames
-         *              Names of the files to read.
+         * @param fileURLs
+         *              URLs of the project files to read.
          * @param console
          *              The console to use to display pogress and 
          *              error messages.
          */
         public ReadFilesOperation(boolean isImportWholeProjects, 
-                String [] fileNames, IProgressConsole console) {
+                List<URL> fileURLs, IProgressConsole console) {
             m_isImportWholeProjects = isImportWholeProjects;
-            m_fileNames = fileNames;
+            m_fileURLs = fileURLs;
             m_projectToMapperMap = 
                 new LinkedHashMap<IProjectPO, List<INameMapper>>();
             m_projectToCompMapperMap = 
@@ -152,27 +153,28 @@ public class FileStorageBP {
          * {@inheritDoc}
          */
         public void run(IProgressMonitor monitor) throws InterruptedException {
-            if (m_fileNames == null) {
+            if (m_fileURLs == null) {
                 // Nothing to import. Just return.
                 return;
             }
             SubMonitor subMonitor = SubMonitor.convert(
                     monitor, Messages.ImportFileBPReading,
-                    m_fileNames.length);
+                    m_fileURLs.size());
             try {
                 showStartingImport(m_console);
                 showStartingReadingProjects(m_console);
-                for (String fileName : m_fileNames) {
+                for (URL fileURL : m_fileURLs) {
                     ParamNameBPDecorator paramNameMapper = 
                         new ParamNameBPDecorator(ParamNameBP.getInstance());
                     final IWritableComponentNameCache compNameCache =
                         new ComponentNamesDecorator(null);
+                    String fileName = fileURL.getFile();
                     m_console.writeLine(NLS.bind(Messages
                                     .ImportFileActionInfoStartingReadingProject,
                                     new String[]{fileName}));
                     try {
                         IProjectPO proj = new XmlStorage().readProject(
-                            fileName, paramNameMapper, compNameCache, 
+                            fileURL, paramNameMapper, compNameCache, 
                             !m_isImportWholeProjects, subMonitor.newChild(1),
                             m_console);
                         List<INameMapper> mapperList = 
@@ -204,7 +206,7 @@ public class FileStorageBP {
                 }
                 showFinishedReadingProjects(m_console);
             } catch (final PMReadException e) {
-                handlePMReadException(e, m_fileNames);
+                handlePMReadException(e, m_fileURLs);
             } catch (final GDConfigXmlException ce) {
                 handleCapDataNotFound(ce);
             } finally {
@@ -1498,7 +1500,7 @@ public class FileStorageBP {
 
     /** allow importing some files
      * 
-     * @param importFileNames array of filenames. Each file must exist.
+     * @param importProjectURLs list of file URLs. Each URL must be valid.
      * @param monitor The progress monitor for the operation.
      * @param console
      *              The console to use to display pogress and 
@@ -1507,12 +1509,12 @@ public class FileStorageBP {
      *            Flag indicating whether the imported project should be 
      *            immediately opened after import.
      */
-    public static void importFiles(String[] importFileNames, 
+    public static void importFiles(List<URL> importProjectURLs, 
             IProgressMonitor monitor, IProgressConsole console, 
             boolean openProject) throws PMException, ProjectDeletedException {
         // import all data from projects
         try {
-            doImport(IMPORT_ALL, importFileNames, 
+            doImport(IMPORT_ALL, importProjectURLs, 
                     SubMonitor.convert(monitor), console, openProject);
         } catch (InterruptedException e) {
             // Operation was canceled. Do nothing.
@@ -1524,8 +1526,8 @@ public class FileStorageBP {
      * 
      * @param elements
      *            What to import ? 0 = all >0 = elements
-     * @param fileNames
-     *            The names of the files to import.
+     * @param fileURLs
+     *            The URLs of the files to import.
      * @param monitor 
      *            The progress monitor for the operation.
      * @param console
@@ -1540,23 +1542,21 @@ public class FileStorageBP {
      * @throws InterruptedException if the operation was canceled or the thread
      *                              was interrupted.
      */
-    public static IProjectPO importProject(final int elements, 
-            final String[] fileNames, 
-            IProgressMonitor monitor, IProgressConsole console, 
-            boolean openProject) 
+    public static IProjectPO importProject(final int elements,
+            final List<URL> fileURLs, IProgressMonitor monitor,
+            IProgressConsole console, boolean openProject)
         throws InterruptedException, PMException, ProjectDeletedException {
-        
-        SubMonitor subMonitor = SubMonitor.convert(
-                monitor, Messages.ImportFileBPImporting, 
-                        TOTAL_IMPORT_WORK);
-        return doImport(elements, fileNames, subMonitor, console, openProject);
+
+        SubMonitor subMonitor = SubMonitor.convert(monitor,
+                Messages.ImportFileBPImporting, TOTAL_IMPORT_WORK);
+        return doImport(elements, fileURLs, subMonitor, console, openProject);
     }
 
     /**
      * actually do the import work. Separated to only batch calls
      * @param elements @see #importProject(int)
-     * @param fileNames
-     *            The names of the files to import.
+     * @param fileURLs
+     *            The URLs of the files to import.
      * @param subMonitor @see #importProject(int)
      * @param console
      *              The console to use to display pogress and 
@@ -1569,14 +1569,14 @@ public class FileStorageBP {
      *         <code>null</code> if no project should be opened.
      * @throws InterruptedException @see #importProject(int)
      */
-    private static IProjectPO doImport(final int elements, String [] fileNames, 
+    private static IProjectPO doImport(final int elements, List<URL> fileURLs, 
             SubMonitor subMonitor, IProgressConsole console, 
             boolean openProject) 
         throws InterruptedException, PMException, ProjectDeletedException {
         
         // Read project files
         ReadFilesOperation readFilesOp = 
-            new ReadFilesOperation(elements == 0, fileNames, console);
+            new ReadFilesOperation(elements == 0, fileURLs, console);
         readFilesOp.run(subMonitor.newChild(
                 PARSE_FILES_WORK));
 
@@ -1745,16 +1745,16 @@ public class FileStorageBP {
 
     /**
      * @param e PMReadException
-     * @param fileNames The names of the files that were being imported.
+     * @param fileURLs The URLs of the files that were being imported.
      */
     private static void handlePMReadException(final PMReadException e, 
-            final String [] fileNames) {
+            final List<URL> fileURLs) {
         
         ErrorMessagePresenter.getPresenter().showErrorMessage(
-                new JBException(
-                    e + Messages.Reading + fileNames + Messages.Failed, 
-                    MessageIDs.E_IMPORT_PROJECT_XML_FAILED), 
-                null, MessageIDs.getMessageObject(e.getErrorId()).getDetails());
+                new JBException(e + Messages.Reading + fileURLs.toArray()
+                        + Messages.Failed,
+                        MessageIDs.E_IMPORT_PROJECT_XML_FAILED), null,
+                MessageIDs.getMessageObject(e.getErrorId()).getDetails());
     }
 
     /**

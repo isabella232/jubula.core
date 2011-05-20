@@ -189,7 +189,7 @@
 
 	<target name="releaseLibrary">
 		<copy todir="${examples.library.dir}">
-			<fileset dir="resources/projects/library"/>
+			<fileset dir="../org.eclipse.jubula.client.ui/resources/library"/>
 		</copy>
 	</target>
 	

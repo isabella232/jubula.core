@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.handlers.project;
 
+import java.net.URL;
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
@@ -74,8 +77,8 @@ public class ImportProjectHandler extends AbstractProjectHandler {
      *            Provides information relevant to the import.
      */
     public void importProjects(IProjectImportInfoProvider importInfo) {
-        String[] fileNames = importInfo.getFiles();
+        List<URL> fileURLs = importInfo.getFileURLs();
         boolean openProject = importInfo.getIsOpenProject();
-        ImportFileBP.getInstance().importProject(0, fileNames, openProject);
+        ImportFileBP.getInstance().importProject(0, fileURLs, openProject);
     }
 }
