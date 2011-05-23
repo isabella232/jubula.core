@@ -18,6 +18,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -32,7 +33,6 @@ import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import javax.persistence.PersistenceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -189,9 +189,7 @@ public class TestResultSummaryPM {
                             guidDuplicateFrom.get(PROPNAME_GUID), 
                             summary.getInternalGuid()));
 
-            Number count = 
-                (Number)HibernateUtil
-                    .setReadOnlyHint(sess.createQuery(guidDuplicateQuery))
+            Number count = (Number)sess.createQuery(guidDuplicateQuery)
                     .getSingleResult();
             if (count.longValue() > 0) {
                 return true;
@@ -215,8 +213,7 @@ public class TestResultSummaryPM {
                             duplicateFrom.get(PROPNAME_AUT_AGENT_NAME), 
                             summary.getAutAgentName())));
 
-            count = (Number)HibernateUtil.setReadOnlyHint(
-                    sess.createQuery(duplicateQuery)).getSingleResult();
+            count = (Number)sess.createQuery(duplicateQuery).getSingleResult();
             if (count.longValue() > 0) {
                 log.error("Duplicate Test Result Summary (GUID=" 
                         + summary.getInternalGuid() 

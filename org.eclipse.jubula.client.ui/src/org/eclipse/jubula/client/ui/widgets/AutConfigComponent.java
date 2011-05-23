@@ -926,7 +926,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      */
     protected void openServerPrefPage() {
         PreferenceDialog dialog = PreferencesUtil.createPreferenceDialogOn(
-                null, Constants.JB_PREF_PAGE_AUTAGENT, null, null);
+                getShell(), Constants.JB_PREF_PAGE_AUTAGENT, null, null);
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();
         m_listOfServers = ServerManager.getInstance();

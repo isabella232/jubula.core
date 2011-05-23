@@ -17,7 +17,9 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.views.AbstractJBTreeView;
 import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -44,8 +46,9 @@ public class ShowSpecificationHandlerRefTS extends
                 IViewPart activatedView = 
                     Plugin.showView(Constants.TS_BROWSER_ID);
                 if (activatedView instanceof TestSuiteBrowser) {
-                    ((TestSuiteBrowser)activatedView).setSelection(
-                            testSuite);
+                    AbstractJBTreeView jbtv = (TestSuiteBrowser)activatedView;
+                    UINodeBP.selectNodeInTree(testSuite.getId(),
+                            jbtv.getTreeViewer(), jbtv.getEntityManager());
                 }
             }
         }

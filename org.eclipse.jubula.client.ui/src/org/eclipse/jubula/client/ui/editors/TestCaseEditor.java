@@ -58,7 +58,7 @@ import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
@@ -487,7 +487,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     @Override
     protected void renameGUINode(IPersistentObject po) {
         super.renameGUINode(po);
-        m_eventHandlerTreeViewer.update(po, null);
+        m_eventHandlerTreeViewer.refresh(true);
     }
     
     /**
@@ -679,7 +679,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     protected void handleNodeAdded(INodePO addedNode) {
         super.handleNodeAdded(addedNode);
         if (addedNode instanceof IEventExecTestCasePO) {
-            GuiNodeBP.setSelectionAndFocusToNode(
+            UINodeBP.setSelectionAndFocusToNode(
                     addedNode, m_eventHandlerTreeViewer);
         }
     }

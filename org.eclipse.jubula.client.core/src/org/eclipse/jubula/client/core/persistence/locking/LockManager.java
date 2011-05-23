@@ -107,7 +107,6 @@ public final class LockManager {
             EntityTransaction tx = sess.getTransaction();
             tx.begin();
             m_dbGuard = sess.find(DbGuardPO.class, DB_GUARD_ID);
-            HibernateUtil.initialize(m_dbGuard);
             m_application = new ApplicationPO(Long.MIN_VALUE);           
             sess.persist(m_application);           
             

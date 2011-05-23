@@ -34,7 +34,7 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
@@ -197,7 +197,7 @@ public class TestJobEditor extends AbstractJBEditor {
                     if (editorNode.indexOf(addedNode) > -1) {
                         getTreeViewer().refresh();
                         getTreeViewer().expandAll();
-                        GuiNodeBP.setSelectionAndFocusToNode(addedNode, tv);
+                        UINodeBP.setSelectionAndFocusToNode(addedNode, tv);
                     }
                     break;
                 case Deleted:

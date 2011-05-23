@@ -12,10 +12,11 @@ package org.eclipse.jubula.client.ui.search.result;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -23,9 +24,9 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
-import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.editors.ObjectMappingMultiPageEditor;
@@ -409,42 +410,15 @@ public class BasicSearchResult implements ISearchResult {
             AbstractJBTreeView gdtv = (AbstractJBTreeView)Plugin
                     .showView(Constants.TC_BROWSER_ID);
             TreeViewer tv = gdtv.getTreeViewer();
-            INodePO node = selectNodeInTree(id, tv);
+            EntityManager em = gdtv.getEntityManager();
+            INodePO node = UINodeBP.selectNodeInTree(id, tv, em);
             if (node == null) {
                 gdtv = (AbstractJBTreeView)Plugin
                         .showView(Constants.TS_BROWSER_ID);
                 tv = gdtv.getTreeViewer();
-                node = selectNodeInTree(id, tv);
+                node = UINodeBP.selectNodeInTree(id, tv, em);
             }
             CommandHelper.openEditorForNode(node, gdtv);
         }
-        
-        /**
-         * Tries to select a node with the given ID in the given TreeViewer.
-         * @param id The id of the node to select
-         * @param tv the TreeViewer
-         * @return true if node was selected, false otherwise
-         */
-        private INodePO selectNodeInTree(Long id, TreeViewer tv) {
-            INodePO nodeToSelect = 
-                GeneralStorage.getInstance().getMasterSession().find(
-                        NodeMaker.getNodePOClass(), id);
-
-            if (nodeToSelect != null) {
-                ISelection oldSelection = tv.getSelection();
-                ISelection newSelection = new StructuredSelection(nodeToSelect);
-                tv.setSelection(newSelection);
-                if (newSelection.equals(tv.getSelection())) {
-                    tv.refresh();
-                    tv.expandToLevel(nodeToSelect, 0);
-                    tv.reveal(nodeToSelect);
-                    return nodeToSelect;
-                }
-                tv.setSelection(oldSelection);
-            } 
-            
-            return null;
-        }
-
     }
 }

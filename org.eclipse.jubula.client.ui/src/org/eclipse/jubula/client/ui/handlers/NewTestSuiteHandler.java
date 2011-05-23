@@ -12,13 +12,11 @@ package org.eclipse.jubula.client.ui.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -71,9 +69,6 @@ public class NewTestSuiteHandler extends AbstractHandler {
             NodePM.addAndPersistChildNode(project, testSuite, null, cmd);
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     testSuite, DataState.Added, UpdateState.all);
-            InteractionEventDispatcher.getDefault().
-                fireProgammableSelectionEvent(
-                        new StructuredSelection(testSuite));
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (ProjectDeletedException e) {

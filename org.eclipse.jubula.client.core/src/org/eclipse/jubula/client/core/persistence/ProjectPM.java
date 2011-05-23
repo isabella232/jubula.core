@@ -329,9 +329,6 @@ public class ProjectPM extends PersistenceManager {
 
             ParamNameBP.getInstance().initParamNamesOfReusedProject(reused);
             UsedToolkitBP.getInstance().readUsedToolkitsFromDB(project);
-            if (project != null) {
-                HibernateUtil.initialize(project.getUnmodifiableNodeList());
-            }
             return project;
         } catch (PersistenceException e) {
             log.error(Messages.HibernateLoadFailed, e);

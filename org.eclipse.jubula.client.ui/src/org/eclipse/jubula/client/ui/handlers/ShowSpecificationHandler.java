@@ -14,7 +14,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -31,10 +31,10 @@ public class ShowSpecificationHandler extends AbstractShowSpecificationHandler {
     public Object execute(ExecutionEvent event) {
         ISelection sel = HandlerUtil.getCurrentSelection(event);
         if (sel instanceof IStructuredSelection) {
-            ISpecTestCasePO specTc = GuiNodeBP
+            ISpecTestCasePO specTc = UINodeBP
                     .getSpecTC((IStructuredSelection)sel);
             if (specTc != null) {
-                showSpecGUINode(specTc, Constants.TC_BROWSER_ID);
+                showSpecUINode(specTc, Constants.TC_BROWSER_ID);
             }
         }
         return null;

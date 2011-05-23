@@ -15,8 +15,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.PersistenceException;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.Path;
@@ -78,17 +76,6 @@ public class HibernateUtil {
     }
  
     /**
-     * Sets the (JPA vendor-specific) hint to make the results of the given 
-     * query read-only.
-     * 
-     * @param query The query to set as read-only.
-     * @return the same query instance.
-     */
-    public static Query setReadOnlyHint(Query query) {
-        return query.setHint("org.hibernate.readOnly", true); //$NON-NLS-1$
-    }
-
-    /**
      * Indirection layer for acquiring the underlying class for a proxied
      * object.
      * 
@@ -101,20 +88,6 @@ public class HibernateUtil {
         return persistenceProxy.getClass();
     }
 
-    /**
-     * Initializes the given proxy, if it is not already intialized.
-     * 
-     * @param persistenceProxy The proxy to initialize.
-     * @throws PersistenceException if an error occurs while initializing 
-     *                              the proxy.
-     * @see Hibernate#isInitialized(Object)
-     * @see Hibernate#initialize(Object)
-     */
-    public static void initialize(
-            Object persistenceProxy) throws PersistenceException {
-        // no-op
-    }
-    
     /**
      * 
      * @return a Globally Unique Identifier that is a 32-character 

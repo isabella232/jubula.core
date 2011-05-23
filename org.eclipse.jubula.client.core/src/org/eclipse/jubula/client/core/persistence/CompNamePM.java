@@ -663,7 +663,6 @@ public class CompNamePM extends AbstractNamePM {
                 lockObj = null;
             }
             
-            HibernateUtil.initialize(lockObj);
             tx.commit();
         } catch (PersistenceException e) {
             throw new JBFatalAbortException(

@@ -353,7 +353,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                         || po instanceof ITestJobPO 
                         || po instanceof ITestCasePO) {
                     
-                    getTreeViewer().update(po, null);
+                    getTreeViewer().refresh();
                 }
                 break;
             case StructureModified:
@@ -413,8 +413,8 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         if ((po instanceof ISpecTestCasePO) || (po instanceof ICategoryPO)) {
             return;
         }
-
         getTreeViewer().refresh();
+        getTreeViewer().expandToLevel(getTreeViewer().getAutoExpandLevel());
         getTreeViewer().setSelection(new StructuredSelection(po), true);
     }
 
