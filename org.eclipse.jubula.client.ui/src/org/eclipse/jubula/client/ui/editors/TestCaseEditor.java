@@ -487,7 +487,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     @Override
     protected void renameGUINode(IPersistentObject po) {
         super.renameGUINode(po);
-        m_eventHandlerTreeViewer.update(po, null);
+        m_eventHandlerTreeViewer.refresh(true);
     }
     
     /**

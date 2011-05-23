@@ -550,7 +550,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         if ((po instanceof ISpecTestCasePO || po instanceof ICategoryPO 
                 || po instanceof IExecTestCasePO)) {
   
-            getTreeViewer().update(po, null);
+            getTreeViewer().refresh(true);
         }
     }
 
