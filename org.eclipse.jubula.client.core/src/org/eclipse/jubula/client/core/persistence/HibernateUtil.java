@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.Path;
@@ -89,20 +88,6 @@ public class HibernateUtil {
         return persistenceProxy.getClass();
     }
 
-    /**
-     * Initializes the given proxy, if it is not already intialized.
-     * 
-     * @param persistenceProxy The proxy to initialize.
-     * @throws PersistenceException if an error occurs while initializing 
-     *                              the proxy.
-     * @see Hibernate#isInitialized(Object)
-     * @see Hibernate#initialize(Object)
-     */
-    public static void initialize(
-            Object persistenceProxy) throws PersistenceException {
-        // no-op
-    }
-    
     /**
      * 
      * @return a Globally Unique Identifier that is a 32-character 

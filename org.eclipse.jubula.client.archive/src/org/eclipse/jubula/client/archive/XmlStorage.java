@@ -44,7 +44,6 @@ import org.eclipse.jubula.client.archive.schema.Project;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
@@ -532,7 +531,6 @@ public class XmlStorage {
         Validate.notNull(proj);
         FileOutputStream fOut = null;
         try {
-            HibernateUtil.initialize(proj);
             String xml = buildXmlHeader() 
                 + XmlStorage.save(proj, includeTestResultSummaries, monitor);
 
