@@ -413,7 +413,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         if ((po instanceof ISpecTestCasePO) || (po instanceof ICategoryPO)) {
             return;
         }
-
         getTreeViewer().refresh();
         getTreeViewer().expandToLevel(getTreeViewer().getAutoExpandLevel());
         getTreeViewer().setSelection(new StructuredSelection(po), true);

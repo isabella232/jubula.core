@@ -12,20 +12,21 @@ package org.eclipse.jubula.client.ui.views;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.IEntityManagerProvider;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
@@ -54,7 +55,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
  * @created 21.10.2005
  */
 public abstract class AbstractJBTreeView extends ViewPart implements
-    IProjectLoadedListener, IDataChangedListener {
+    IProjectLoadedListener, IDataChangedListener, IEntityManagerProvider {
     /** Default expansion for the tree */
     public static final int DEFAULT_EXPANSION = 2;
     /** number of columns = 1 */
@@ -170,11 +171,8 @@ public abstract class AbstractJBTreeView extends ViewPart implements
                     tce.getEditorHelper().getEditSupport().getWorkVersion();
 
                 if (editorWorkVersion != null) {
-                    StructuredViewer v = getTreeViewer();
-                    if (v != null) {
-                        v.setSelection(
-                                new StructuredSelection(editorWorkVersion));
-                    }
+                    UINodeBP.selectNodeInTree(editorWorkVersion.getId(),
+                            getTreeViewer(), getEntityManager());
                 }
             }
         }
@@ -331,15 +329,6 @@ public abstract class AbstractJBTreeView extends ViewPart implements
     }
     
     /**
-     * Sets the selection in the tree to the given node.
-     * @param node the node to select.
-     */
-    public void setSelection(INodePO node) {
-        ISelection selection = new StructuredSelection(node);
-        m_treeViewer.setSelection(selection, true);
-    }
-    
-    /**
      * @return a reference to the clipboard.
      */
     public Clipboard getClipboard() {
@@ -365,5 +354,16 @@ public abstract class AbstractJBTreeView extends ViewPart implements
      */
     public Text getTreeFilterText() {
         return m_treeFilterText;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public EntityManager getEntityManager() {
+        GeneralStorage gs = GeneralStorage.getInstance();
+        if (gs != null) {
+            return gs.getEntityManager();
+        }
+        return null;
     }
 }

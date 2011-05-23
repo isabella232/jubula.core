@@ -16,7 +16,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.ui.businessprocess.GuiNodeBP;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 
@@ -43,7 +43,7 @@ public class OpenSpecificationHandler extends AbstractOpenHandler {
      *            the current selection
      */
     private void openSpecNode(IStructuredSelection structuredSel) {
-        ISpecTestCasePO specTc = GuiNodeBP.getSpecTC(structuredSel);
+        ISpecTestCasePO specTc = UINodeBP.getSpecTC(structuredSel);
         openEditorForSpecTC(specTc);
         InteractionEventDispatcher.getDefault().
             fireProgammableSelectionEvent(

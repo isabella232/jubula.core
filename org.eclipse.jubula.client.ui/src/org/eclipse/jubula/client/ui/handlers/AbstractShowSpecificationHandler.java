@@ -11,13 +11,12 @@
 package org.eclipse.jubula.client.ui.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
+import org.eclipse.jubula.client.ui.views.AbstractJBTreeView;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -37,29 +36,23 @@ public abstract class AbstractShowSpecificationHandler extends AbstractHandler {
      * @param viewId
      *            the viewId to show the specification in
      */
-    protected void showSpecGUINode(INodePO node, String viewId) {
+    protected void showSpecUINode(INodePO node, String viewId) {
         if (!Utils.openPerspective(Constants.SPEC_PERSPECTIVE)) {
             return;
         }
         if (!PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getPerspective().getId().equals(
-                        Constants.SPEC_PERSPECTIVE)) {
+                .getActivePage().getPerspective().getId()
+                .equals(Constants.SPEC_PERSPECTIVE)) {
             Utils.createMessageDialog(// show error must be in SpecPers
                     MessageIDs.I_NO_PERSPECTIVE_CHANGE);
             return;
         }
-        IViewPart view = 
-            Plugin.showView(viewId, null, IWorkbenchPage.VIEW_ACTIVATE);
-        ITreeViewerContainer specView = (ITreeViewerContainer)view;
-        InteractionEventDispatcher.getDefault().
-            fireProgammableSelectionEvent(
-                    new StructuredSelection(node));
-        specView.getTreeViewer().refresh();
-        specView.getTreeViewer().reveal(node);
-        specView.getTreeViewer().getTree().update();
-        view.setFocus();
-        specView.getTreeViewer().expandToLevel(node, 0);
-        specView.getTreeViewer().setSelection(
-                new StructuredSelection(node), true);
+        IViewPart view = Plugin.showView(viewId, null,
+                IWorkbenchPage.VIEW_ACTIVATE);
+        if (view instanceof AbstractJBTreeView) {
+            AbstractJBTreeView jbtv = (AbstractJBTreeView)view;
+            UINodeBP.selectNodeInTree(node.getId(), jbtv.getTreeViewer(),
+                    jbtv.getEntityManager());
+        }
     }
 }
