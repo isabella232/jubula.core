@@ -415,6 +415,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         }
 
         getTreeViewer().refresh();
+        getTreeViewer().expandToLevel(getTreeViewer().getAutoExpandLevel() + 1);
         getTreeViewer().setSelection(new StructuredSelection(po), true);
     }
 
