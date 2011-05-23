@@ -26,6 +26,8 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.core.utils.FindNodeParentOperation;
+import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 
@@ -183,6 +185,13 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
             try {
                 parent = ProjectPM.loadProjectById(getParentProjectId(), 
                     GeneralStorage.getInstance().getMasterSession());
+                FindNodeParentOperation op = new FindNodeParentOperation(this);
+                SpecTreeTraverser traverser = new SpecTreeTraverser(parent, op);
+                traverser.traverse(true);
+                if (op.getParent() != null) {
+                    parent = op.getParent();
+                    setParentNode(parent);
+                }
             } catch (JBException e) {
                 StringBuilder msg = new StringBuilder();
                 msg.append(Messages.CouldNotFindParentForTestCase);

@@ -62,17 +62,17 @@ public class SpecTreeTraverser extends TreeTraverser {
                 Iterator iter =  catPO.getNodeListIterator();
                 while (iter.hasNext()) {
                     INodePO next = (INodePO)iter.next();
-                    traverseImpl(context, parent, next);
+                    traverseImpl(context, catPO, next);
                 }
             } else if (node instanceof ISpecTestCasePO) {
                 ISpecTestCasePO specTC = (ISpecTestCasePO)node;
                 Iterator iter = specTC.getNodeListIterator();
                 while (iter.hasNext()) {
-                    traverseImpl(context, parent, (INodePO)iter.next());
+                    traverseImpl(context, specTC, (INodePO)iter.next());
                 }
                 iter = specTC.getAllEventEventExecTC().iterator();
                 while (iter.hasNext()) {
-                    traverseImpl(context, parent, (INodePO)iter.next());
+                    traverseImpl(context, specTC, (INodePO)iter.next());
                 }
             }
             for (ITreeNodeOperation<INodePO> operation : getOperations()) {
