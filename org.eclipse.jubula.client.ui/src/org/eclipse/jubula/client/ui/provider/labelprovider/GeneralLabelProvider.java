@@ -209,8 +209,11 @@ public class GeneralLabelProvider extends ColumnLabelProvider
 
         if (element instanceof IReusedProjectPO) {
             IReusedProjectPO reusedProject = (IReusedProjectPO)element;
-            return reusedProject.getProjectName() 
-                + reusedProject.getVersionString();
+            String projectName = reusedProject.getProjectName();
+            if (projectName == null) {
+                projectName = reusedProject.getProjectGuid();
+            }
+            return projectName + reusedProject.getVersionString();
         }
         
         return element == null ? StringConstants.EMPTY : element.toString();
