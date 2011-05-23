@@ -229,8 +229,8 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
         IParamDescriptionPO desc, Locale locale) {
         
         removeReferences(desc, locale, specTc.getNodeListIterator());        
-        final Collection<IEventExecTestCasePO> eventHandler = specTc
-            .getEventExecTcMap().values();
+        final Collection<IEventExecTestCasePO> eventHandler = 
+            specTc.getAllEventEventExecTC();
         removeReferences(desc, locale, eventHandler.iterator());
     }
 

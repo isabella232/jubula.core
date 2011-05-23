@@ -46,7 +46,7 @@ public class EventHandlerContentProvider implements ITreeContentProvider {
      */
     public Object[] getElements(Object inputElement) {
         ISpecTestCasePO testCase = (ISpecTestCasePO)inputElement;
-        return testCase.getEventExecTcMap().values().toArray();
+        return testCase.getAllEventEventExecTC().toArray();
     }
 
     /**

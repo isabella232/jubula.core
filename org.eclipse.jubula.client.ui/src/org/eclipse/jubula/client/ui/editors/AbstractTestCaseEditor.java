@@ -788,7 +788,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                     if (editorNode.indexOf(addedNode) > -1
                             || (editorNode instanceof ISpecTestCasePO 
                                     && ((ISpecTestCasePO)editorNode)
-                                    .getEventExecTcMap().containsValue(po))) {
+                                    .getAllEventEventExecTC().contains(po))) {
                         handleNodeAdded(addedNode);
                     }
                     break;
