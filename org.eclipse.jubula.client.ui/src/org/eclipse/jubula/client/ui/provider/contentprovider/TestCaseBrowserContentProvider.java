@@ -31,21 +31,24 @@ import org.eclipse.jubula.tools.exception.JBException;
 public class TestCaseBrowserContentProvider 
     extends AbstractTreeViewContentProvider {
 
-    @Override
-    public Object[] getElements(Object inputElement) {
-        if (inputElement instanceof IProjectPO[]) {
-            return (IProjectPO[])inputElement;
-        }
-
-        return getChildren(inputElement);
-    }
-    
     /**
      * {@inheritDoc}
      * @param parentElement Object
      * @return object array
      */
     public Object[] getChildren(Object parentElement) {
+        if (parentElement instanceof IProjectPO[]) {
+            return new Object[] { ((IProjectPO[])parentElement)[0] };
+        }
+
+        if (parentElement instanceof IProjectPO) {
+            IProjectPO project = (IProjectPO)parentElement;
+            List<Object> elements = new ArrayList<Object>();
+            elements.addAll(project.getSpecObjCont().getSpecObjList());
+            elements.addAll(project.getUsedProjects());
+            return elements.toArray();
+        }
+        
         if (parentElement instanceof IExecTestCasePO) {
             ISpecTestCasePO referencedTestCase = 
                 ((IExecTestCasePO)parentElement).getSpecTestCase();
@@ -58,14 +61,6 @@ public class TestCaseBrowserContentProvider
             }
             
             return ArrayUtils.EMPTY_OBJECT_ARRAY;
-        }
-        
-        if (parentElement instanceof IProjectPO) {
-            IProjectPO project = (IProjectPO)parentElement;
-            List<Object> elements = new ArrayList<Object>();
-            elements.addAll(project.getSpecObjCont().getSpecObjList());
-            elements.addAll(project.getUsedProjects());
-            return elements.toArray();
         }
 
         if (parentElement instanceof INodePO) {
