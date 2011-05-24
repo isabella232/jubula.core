@@ -16,6 +16,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -2122,4 +2123,18 @@ public class JTableImplClass extends AbstractSwingImplClass
                 cellAtMousePosition.getCol());
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected JPopupMenu showPopup(int button) {
+        JTableHeader tableHeader = m_table.getTableHeader();
+        if ((getRobot()).isMouseInComponent(tableHeader)) {
+            JTableHeaderImplClass headerTester = new JTableHeaderImplClass();
+            headerTester.setComponent(tableHeader);
+            return headerTester.showPopup(button);
+        }
+        return super.showPopup(button);
+    }
+    
 }
