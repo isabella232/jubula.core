@@ -1058,7 +1058,7 @@ public abstract class AbstractSwingImplClass implements
      * @param button MouseButton
      * @return the popup menu
      */
-    private JPopupMenu showPopup(final int button) {
+    protected JPopupMenu showPopup(final int button) {
 
         Runnable showPopup = new Runnable() {
             public void run() {
