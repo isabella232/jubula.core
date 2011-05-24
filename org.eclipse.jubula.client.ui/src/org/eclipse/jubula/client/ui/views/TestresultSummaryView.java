@@ -542,7 +542,7 @@ public class TestresultSummaryView extends ViewPart implements
                 ExportTestResultDetailsWizard.ID);
         mgr.add(CommandHelper.createContributionItem(
                 CommandIDs.ECLIPSE_RCP_FILE_EXPORT_COMMAND_ID, 
-                params, null,
+                params, Messages.Export,
                 CommandContributionItem.STYLE_PUSH));
     }
     

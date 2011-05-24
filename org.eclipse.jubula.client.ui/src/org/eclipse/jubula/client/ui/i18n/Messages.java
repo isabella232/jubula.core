@@ -340,6 +340,7 @@ public class Messages extends NLS {
     public static String Exception;
     public static String ExecTestCaseGUIPropertySourceSpecificationName;
     public static String ExecTestCaseGUIPropertySourceTestCaseReferenceName;
+    public static String Export;
     public static String ExportAborted;
     public static String ExportAllActionDirectoryNotEmpty;
     public static String ExportAllBPErrorExportFailed;
