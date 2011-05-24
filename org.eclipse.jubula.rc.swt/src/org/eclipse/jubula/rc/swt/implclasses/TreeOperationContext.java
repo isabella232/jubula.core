@@ -307,11 +307,18 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         getQueuer().invokeAndWait(
                 "selectNodeCheckbox", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        if (item.getChecked()) {
-                            item.setChecked(false);
-                        } else {
-                            item.setChecked(true);
-                        }
+                        Tree tree = ((Tree)getTree());
+                        boolean toggledValue = !item.getChecked();
+                        item.setChecked(toggledValue);
+                        Event toggleEvent = new Event();
+                        toggleEvent.type = SWT.Selection;
+                        toggleEvent.detail = SWT.CHECK;
+                        toggleEvent.widget = tree;
+                        toggleEvent.item = item;
+                        toggleEvent.button = SWT.BUTTON1;
+                        toggleEvent.count = 1;
+                        toggleEvent.display = item.getDisplay();
+                        tree.notifyListeners(SWT.Selection, toggleEvent);
                         return null;
                     }            
                 }); 
