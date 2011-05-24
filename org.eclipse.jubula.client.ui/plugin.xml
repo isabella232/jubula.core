@@ -1552,6 +1552,7 @@
 	</command>
    <command
          commandId="org.eclipse.ui.file.export"
+         label="Export"
          style="push">
       <parameter
             name="exportWizardId"
