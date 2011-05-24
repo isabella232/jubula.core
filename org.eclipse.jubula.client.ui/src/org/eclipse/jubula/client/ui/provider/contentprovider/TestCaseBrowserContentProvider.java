@@ -33,8 +33,6 @@ public class TestCaseBrowserContentProvider
 
     /**
      * {@inheritDoc}
-     * @param parentElement Object
-     * @return object array
      */
     public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof IProjectPO[]) {

@@ -26,8 +26,7 @@ public abstract class AbstractNodeTreeContentProvider implements
      */
     public Object[] getElements(Object inputElement) {
         Validate.isTrue(inputElement instanceof INodePO[]);
-
-        return new Object[] { ((INodePO[])inputElement)[0] };
+        return (INodePO[])inputElement;
     }
     
     /**
