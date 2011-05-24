@@ -99,7 +99,7 @@
 			class="org.eclipse.jubula.client.ui.propertytester.ObjectMappingCategoryPropertyTester"
 			id="org.eclipse.jubula.client.ui.propertytester.ObjectMappingCategoryPropertyTester"
 			namespace="org.eclipse.jubula.client.core.model.ObjectMappingCategory"
-			properties="isTopLevel"
+			properties="isTopLevel,isEmpty"
 			type="org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO">
 		</propertyTester>
 		<propertyTester
@@ -1955,6 +1955,10 @@
 							<test
 								property="org.eclipse.jubula.client.core.model.ObjectMappingCategory.isTopLevel"
 								value="false">
+							</test>
+							<test
+								property="org.eclipse.jubula.client.core.model.ObjectMappingCategory.isEmpty"
+								value="true">
 							</test>
 						</iterate>
 						<iterate ifEmpty="false" operator="and">

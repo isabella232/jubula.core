@@ -29,6 +29,9 @@ public class ObjectMappingCategoryPropertyTester extends PropertyTester {
     /** the id of the "isTopLevel" property */
     public static final String IS_TOP_LEVEL = "isTopLevel"; //$NON-NLS-1$
 
+    /** the id of the "isEmpty" property */
+    public static final String IS_EMPTY = "isEmpty"; //$NON-NLS-1$
+
     /** the logger */
     private static final Log LOG = 
         LogFactory.getLog(ObjectMappingCategoryPropertyTester.class);
@@ -48,6 +51,11 @@ public class ObjectMappingCategoryPropertyTester extends PropertyTester {
                 boolean expectedBoolean = expectedValue instanceof Boolean 
                     ? ((Boolean)expectedValue).booleanValue() : true;
                 return areSameType == expectedBoolean;
+            } else if (property.equals(IS_EMPTY)) {
+                boolean isEmpty = testEmpty(category);
+                boolean expectedBoolean = expectedValue instanceof Boolean 
+                    ? ((Boolean)expectedValue).booleanValue() : true;
+                return isEmpty == expectedBoolean;
             }
 
             LOG.warn(NLS.bind(Messages.PropertyTesterPropertyNotSupported,
@@ -74,4 +82,15 @@ public class ObjectMappingCategoryPropertyTester extends PropertyTester {
         return category.getParent() == null;
     }
 
+    /**
+     * 
+     * @param category The Object Mapping Category to test.
+     * @return <code>true</code> if the given category is empty. 
+     *         Otherwise <code>false</code>.
+     */
+    private boolean testEmpty(IObjectMappingCategoryPO category) {
+
+        return category.getUnmodifiableAssociationList().isEmpty() 
+            && category.getUnmodifiableCategoryList().isEmpty();
+    }
 }
