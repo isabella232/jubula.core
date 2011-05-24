@@ -47,26 +47,6 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
         if (element instanceof INodePO) {
             return createToolTipText((INodePO)element);
         }
-        
-        if (element instanceof ITestSuitePO) {
-            StringBuilder toolTip = new StringBuilder();
-            ITestSuitePO testSuite = (ITestSuitePO)element;
-            final WorkingLanguageBP workLangBP = 
-                WorkingLanguageBP.getInstance();
-            Locale locale = workLangBP.getWorkingLanguage();
-            IAUTMainPO aut = testSuite.getAut();
-            if (testSuite.getAut() != null 
-                    && !workLangBP
-                        .isTestSuiteLanguage(locale, testSuite)) {
-                toolTip.append(Constants.BULLET).append(
-                    Messages.TestDataDecoratorUnsupportedAUTLanguage);
-            } else {
-                checkNode(testSuite, aut, locale, toolTip);
-            }
-
-            return toolTip.toString();
-        }
-        
         return super.getToolTipText(element);
     }
     
@@ -108,7 +88,16 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
         if (node != null && isNodeActive(node)) {
             if (testSuite != null) {
                 IAUTMainPO aut = testSuite.getAut();
-                if (node instanceof IExecTestCasePO) {
+                if (node instanceof ITestSuitePO) {
+                    if (testSuite.getAut() != null 
+                            && !workLangBP
+                                .isTestSuiteLanguage(locale, testSuite)) {
+                        toolTip.append(Constants.BULLET).append(
+                            Messages.TestDataDecoratorUnsupportedAUTLanguage);
+                    } else {
+                        checkNode(testSuite, aut, locale, toolTip);
+                    }
+                } else if (node instanceof IExecTestCasePO) {
                     checkNode((IExecTestCasePO)node, aut, locale, toolTip);
                 } else if (node instanceof ICapPO) {
                     ICapPO cap = (ICapPO)node;
