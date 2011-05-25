@@ -77,7 +77,9 @@ public abstract class MonitoringUtils {
     /**
      * 
      * @param id The unique name of the extension
-     * @return returns the Element (the Monitoring Agent)
+     * @return the Element (the Monitoring Agent), or <code>null</code>
+     *         if no Monitoring Agent is defined for the given ID (i.e. 
+     *         corresponding Monitoring plug-in is missing).
      */    
     public static IConfigurationElement getElement(String id) {
         

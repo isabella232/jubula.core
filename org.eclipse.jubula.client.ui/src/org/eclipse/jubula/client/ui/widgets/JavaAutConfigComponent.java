@@ -22,6 +22,7 @@ import java.util.zip.ZipException;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.databinding.validation.IValidator;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
@@ -50,6 +51,8 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyAdapter;
@@ -191,12 +194,25 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 AutConfigConstants.MONITORING_AGENT_ID);
               
         if (!StringUtils.isEmpty(monitoringID)) {  
-            ArrayList<MonitoringAttribute> monitoringAttributelist = 
-                (ArrayList<MonitoringAttribute>)MonitoringUtils
-                    .getAttributes(MonitoringUtils.getElement(
-                            monitoringID));            
-            createMonitoringUIComponents(monitoringComposite, 
-                    monitoringAttributelist);
+            IConfigurationElement monitoringExtension = 
+                MonitoringUtils.getElement(monitoringID);
+            if (monitoringExtension != null) {
+                createMonitoringUIComponents(monitoringComposite, 
+                        MonitoringUtils.getAttributes(monitoringExtension));
+            } else {
+                StyledText missingExtensionLabel = 
+                    new StyledText(monitoringComposite, SWT.WRAP);
+                missingExtensionLabel.setText(
+                        Messages.MissingMonitoringExtension);
+                missingExtensionLabel.setEditable(false);
+                missingExtensionLabel.setEnabled(false);
+                missingExtensionLabel.setStyleRange(new StyleRange(
+                        0, missingExtensionLabel.getText().length(), 
+                        null, null, SWT.ITALIC));
+                ControlDecorator.decorateWarning(
+                        missingExtensionLabel, SWT.LEAD, 
+                        "MissingMonitoringExtension.fieldDecorationText"); //$NON-NLS-1$
+            }
         }
         resize();
         getShell().pack();
@@ -802,8 +818,23 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 AutConfigConstants.MONITORING_AGENT_ID);
         if (StringUtils.isEmpty(monitoringAgentId)) { 
             m_monitoringCombo.deselectAll();
-        } 
-        m_monitoringCombo.setSelectedObject(monitoringAgentId);
+        } else {
+            m_monitoringCombo.setSelectedObject(monitoringAgentId);
+            if (m_monitoringCombo.getSelectedObject() == null) {
+                // additional handling for missing Monitoring extension
+                ArrayList<String> values = 
+                    new ArrayList<String>(m_monitoringCombo.getValues());
+                ArrayList<String> displayValues = new ArrayList<String>(
+                        Arrays.asList(m_monitoringCombo.getItems()));
+                values.add(0, monitoringAgentId);
+                values.remove(null);
+                displayValues.add(0, monitoringAgentId);
+                displayValues.remove(StringUtils.EMPTY);
+                
+                m_monitoringCombo.setItems(values, displayValues);
+                m_monitoringCombo.setSelectedObject(monitoringAgentId);
+            }
+        }
         
         if (!isDataNew(data)) {
             m_autJreParamTextField.setText(StringUtils.defaultString(data

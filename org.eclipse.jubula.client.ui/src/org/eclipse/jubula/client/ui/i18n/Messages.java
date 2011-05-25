@@ -469,6 +469,7 @@ public class Messages extends NLS {
     public static String MergeComponentNamesShellTitle;
     public static String MergeComponentNamesTitle;
     public static String Missing_ID;
+    public static String MissingMonitoringExtension;   
     public static String MissingRunningAUTParameter;   
     public static String ModifiableListAdd;
     public static String ModifiableListBrowse;
