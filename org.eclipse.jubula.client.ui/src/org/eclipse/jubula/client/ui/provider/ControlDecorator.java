@@ -26,7 +26,15 @@ import org.eclipse.swt.widgets.Control;
 public class ControlDecorator {
     
     /**
+     * Private constructor for utility class.
+     */
+    private ControlDecorator() {
+        // nothing to initialize
+    }
+    
+    /**
      * @param control that should be decorated with an info-bobble
+     * @param position the position of the info-bobbles
      * @param descriptionkey the i18n-key of the info-bobbles text description
      * @param imageID the imageID for the image to show in this control decoration; 
      * see FieldDecorationRegistry constants for these ids
@@ -34,10 +42,10 @@ public class ControlDecorator {
      * avoid setting this parameter to true if the control can not gain any focus
      * e.g. SWT.NO_FOCUS
      */
-    protected static void decorate(Control control,  
+    protected static void decorate(Control control, int position,  
             String descriptionkey, String imageID, Boolean showOnFocus) {
         ControlDecoration infoBobbles = 
-            new ControlDecoration(control, SWT.RIGHT);
+            new ControlDecoration(control, position);
         infoBobbles.setDescriptionText(I18n.getString(descriptionkey));
         infoBobbles.setImage(FieldDecorationRegistry.getDefault()
                 .getFieldDecoration(imageID).getImage());
@@ -55,19 +63,19 @@ public class ControlDecorator {
      */
     public static void decorateInfo(Control control, 
             String descriptionkey, Boolean showfocus) { 
-        decorate(control, descriptionkey, 
+        decorate(control, SWT.TRAIL, descriptionkey, 
                 FieldDecorationRegistry.DEC_INFORMATION, showfocus);
     }
 
     /**
      * 
      * @param control contains the component which has an info-bobble
-     * @param position shows the position of the info-bobbles
+     * @param position the position of the info-bobbles
      * @param descriptionkey contains the text of the info-bobbles
      */
-    public void decorateWarning(Control control, int position, 
+    public static void decorateWarning(Control control, int position, 
             String descriptionkey) {
-        decorate(control, descriptionkey, 
+        decorate(control, position, descriptionkey, 
                 FieldDecorationRegistry.DEC_WARNING, false);
     }
 }
