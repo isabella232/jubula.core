@@ -11,22 +11,16 @@
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.Validate;
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-
 
 /**
  * @author BREDEX GmbH
  * @created 05.04.2005
  */
-public class TestCaseEditorContentProvider implements ITreeContentProvider {
-
+public class TestCaseEditorContentProvider 
+    extends AbstractNodeTreeContentProvider {
     /**
-     * 
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
@@ -39,32 +33,6 @@ public class TestCaseEditorContentProvider implements ITreeContentProvider {
     }
 
     /**
-     * 
-     * {@inheritDoc}
-     */
-    public void dispose() {
-        // no-op
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-        // no-op
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public Object[] getElements(Object inputElement) {
-        Validate.isTrue(inputElement instanceof INodePO[]);
-        return (INodePO[])inputElement;
-    }
-
-    /**
-     * 
      * {@inheritDoc}
      */
     public Object getParent(Object element) {
@@ -76,15 +44,12 @@ public class TestCaseEditorContentProvider implements ITreeContentProvider {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {
         if (element instanceof ISpecTestCasePO) {
             return ((ISpecTestCasePO)element).getNodeListSize() > 0;
         }
-        
         return false;
     }   
-    
 }

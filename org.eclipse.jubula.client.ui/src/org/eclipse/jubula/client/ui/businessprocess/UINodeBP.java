@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.businessprocess;
 
 import javax.persistence.EntityManager;
 
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -19,7 +20,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -123,22 +123,21 @@ public class UINodeBP {
     /**
      * Tries to select the given node in the given TreeViewer.
      * 
-     * @param po
-     *            The po to select
+     * @param o
+     *            The Object to select
      * @param tv
      *            the TreeViewer
      */
-    public static void selectNodeInTree(IPersistentObject po, TreeViewer tv) {
+    public static void selectNodeInTree(Object o, AbstractTreeViewer tv) {
         ISelection oldSelection = tv.getSelection();
-        if (po != null) {
+        if (o != null) {
             tv.refresh();
-            tv.expandToLevel(po, 0);
-            tv.reveal(po);
-            StructuredSelection newSelection = 
-                new StructuredSelection(po);
+            tv.expandToLevel(o, 0);
+            tv.reveal(o);
+            StructuredSelection newSelection = new StructuredSelection(o);
             tv.setSelection(newSelection);
             InteractionEventDispatcher.getDefault()
-                .fireProgammableSelectionEvent(newSelection);
+                    .fireProgammableSelectionEvent(newSelection);
         } else {
             tv.setSelection(oldSelection);
         }

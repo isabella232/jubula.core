@@ -27,21 +27,18 @@ import org.eclipse.jubula.tools.exception.JBException;
  */
 public class TestCaseDialogContentProvider 
     extends AbstractTreeViewContentProvider {
-
-    @Override
-    public Object[] getElements(Object inputElement) {
-        IProjectPO project = (IProjectPO)inputElement;
-        List<Object> elements = new ArrayList<Object>();
-        elements.addAll(project.getSpecObjCont().getSpecObjList());
-        elements.addAll(project.getUsedProjects());
-        return elements.toArray();
-    }
-    
     /**
-     * 
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
+        if (parentElement instanceof IProjectPO) {
+            IProjectPO project = (IProjectPO)parentElement;
+            List<Object> elements = new ArrayList<Object>();
+            elements.addAll(project.getSpecObjCont().getSpecObjList());
+            elements.addAll(project.getUsedProjects());
+            return elements.toArray();
+        }
+        
         if (parentElement instanceof ICategoryPO) {
             return ((ICategoryPO)parentElement)
                 .getUnmodifiableNodeList().toArray();

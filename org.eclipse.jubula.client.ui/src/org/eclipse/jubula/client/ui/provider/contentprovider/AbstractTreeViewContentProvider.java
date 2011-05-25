@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
@@ -29,8 +27,8 @@ import org.eclipse.jubula.tools.exception.Assert;
  * @author BREDEX GmbH
  * @created 13.09.2005
  */
-public abstract class AbstractTreeViewContentProvider 
-        implements ITreeContentProvider {
+public abstract class AbstractTreeViewContentProvider extends
+    AbstractNodeTreeContentProvider {
     
     /** {@inheritDoc} */
     public Object[] getElements(Object inputElement) {
@@ -42,16 +40,6 @@ public abstract class AbstractTreeViewContentProvider
         return getChildren(element).length > 0;
     }
     
-    /** {@inheritDoc} */
-    public void dispose() {
-        // do nothing
-    }
-
-    /** {@inheritDoc} */
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-        // do nothing yet
-    }
-
     /** {@inheritDoc} */
     public Object getParent(Object element) {
         if (element instanceof INodePO) {

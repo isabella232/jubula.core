@@ -11,11 +11,7 @@
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.Validate;
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 
 
@@ -23,10 +19,9 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
  * @author BREDEX GmbH
  * @created 04.04.2011
  */
-public class TestSuiteEditorContentProvider implements ITreeContentProvider {
-
+public class TestSuiteEditorContentProvider 
+    extends AbstractNodeTreeContentProvider {
     /**
-     * 
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
@@ -39,33 +34,6 @@ public class TestSuiteEditorContentProvider implements ITreeContentProvider {
     }
 
     /**
-     * 
-     * {@inheritDoc}
-     */
-    public void dispose() {
-        // no-op
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-        // no-op
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public Object[] getElements(Object inputElement) {
-        Validate.isTrue(inputElement instanceof INodePO[]);
-
-        return (INodePO[])inputElement;
-    }
-
-    /**
-     * 
      * {@inheritDoc}
      */
     public Object getParent(Object element) {
@@ -77,7 +45,6 @@ public class TestSuiteEditorContentProvider implements ITreeContentProvider {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {

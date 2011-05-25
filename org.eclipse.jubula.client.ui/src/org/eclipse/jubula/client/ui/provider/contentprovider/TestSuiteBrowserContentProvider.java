@@ -36,27 +36,19 @@ public class TestSuiteBrowserContentProvider
     private static final Logger LOG = 
         LoggerFactory.getLogger(TestSuiteBrowserContentProvider.class);
     
-    /** {@inheritDoc} */
-    public Object[] getElements(Object inputElement) {
-        if (inputElement instanceof IProjectPO[]) {
-            return (IProjectPO[])inputElement;
-        }
-
-        LOG.error("Wrong type for input element: " + inputElement); //$NON-NLS-1$
-        return ArrayUtils.EMPTY_OBJECT_ARRAY;
-    }
-
     /**
      * @param parentElement Object
      * @return object array
      */
     public Object[] getChildren(Object parentElement) {
+        if (parentElement instanceof IProjectPO[]) {
+            return new Object[] { ((IProjectPO[])parentElement)[0] };
+        }
+
         if (parentElement instanceof IProjectPO) {
             IProjectPO project = (IProjectPO)parentElement;
-            return new Object[] {
-                project.getTestJobCont(),
-                project.getTestSuiteCont(),
-            };
+            return new Object[] { project.getTestJobCont(),
+                    project.getTestSuiteCont(), };
         }
 
         if (parentElement instanceof IExecTestCasePO) {
@@ -80,9 +72,8 @@ public class TestSuiteBrowserContentProvider
             if (testSuite.getAut() != null
                     && !WorkingLanguageBP.getInstance()
                             .isTestSuiteLanguage(workLang, testSuite)) {
-                return new Object[0];
+                return ArrayUtils.EMPTY_OBJECT_ARRAY;
             }
-        
             // fall through
         }
         

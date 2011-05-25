@@ -11,10 +11,6 @@
 package org.eclipse.jubula.client.ui.provider.contentprovider;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.Validate;
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 
@@ -23,10 +19,9 @@ import org.eclipse.jubula.client.core.model.ITestJobPO;
  * @author BREDEX GmbH
  * @created Mar 17, 2010
  */
-public class TestJobEditorContentProvider implements ITreeContentProvider {
-
+public class TestJobEditorContentProvider extends
+    AbstractNodeTreeContentProvider {
     /**
-     * 
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
@@ -39,33 +34,6 @@ public class TestJobEditorContentProvider implements ITreeContentProvider {
     }
 
     /**
-     * 
-     * {@inheritDoc}
-     */
-    public void dispose() {
-        // no-op
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-        // no-op
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public Object[] getElements(Object inputElement) {
-        Validate.isTrue(inputElement instanceof INodePO[]);
-
-        return (INodePO[])inputElement;
-    }
-
-    /**
-     * 
      * {@inheritDoc}
      */
     public Object getParent(Object element) {
@@ -77,14 +45,12 @@ public class TestJobEditorContentProvider implements ITreeContentProvider {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {
         if (element instanceof ITestJobPO) {
             return ((ITestJobPO)element).getNodeListSize() > 0;
         }
-
         return false;
     }
 }

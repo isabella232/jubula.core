@@ -71,7 +71,11 @@ public class TreeViewerIterator {
         // "NOTE" in the javadoc for 
         // IStructuredContentProvider.getElements(Object), which should refer 
         // to Eclipse bug 9262.
-        setElements(viewer.getInput());
+        Object[] elements = ((ITreeContentProvider)m_viewer
+                .getContentProvider()).getElements(viewer.getInput());
+        for (Object element : elements) {
+            setElements(element);
+        }
         if (startNode != null && m_elements.contains(startNode)) {
             Collections.rotate(m_elements, 
                     m_elements.size() - m_elements.indexOf(startNode));

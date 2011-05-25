@@ -19,12 +19,8 @@ import org.eclipse.jface.viewers.TreeViewer;
  * @created 31.01.2005
  */
 public interface ITreeViewerContainer {
-
     /**
      * @return Returns the treeViewer.
      */
     public TreeViewer getTreeViewer();
-    
-
-    
 }

@@ -22,9 +22,9 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.query.AbstractSearchQuery;
@@ -421,11 +421,7 @@ public class FindDialog <NODE> implements DisposeListener {
             // time, but calling this method twice seems to fix the problem
             Plugin.getDisplay().syncExec(new Runnable() {
                 public void run() {
-                    TreeViewer tv = getActiveTreeViewer();
-                    tv.expandToLevel(node, 0);
-                    tv.expandToLevel(node, 0);
-                    StructuredSelection newSel = new StructuredSelection(node);
-                    tv.setSelection(newSel, true);
+                    UINodeBP.selectNodeInTree(node, getActiveTreeViewer());
                 }
             });
             return true;
