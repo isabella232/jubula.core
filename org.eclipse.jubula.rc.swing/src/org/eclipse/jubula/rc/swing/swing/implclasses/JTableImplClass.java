@@ -2128,10 +2128,9 @@ public class JTableImplClass extends AbstractSwingImplClass
      * {@inheritDoc}
      */
     protected JPopupMenu showPopup(int button) {
-        JTableHeader tableHeader = m_table.getTableHeader();
-        if ((getRobot()).isMouseInComponent(tableHeader)) {
+        if (isMouseOnHeader()) {
             JTableHeaderImplClass headerTester = new JTableHeaderImplClass();
-            headerTester.setComponent(tableHeader);
+            headerTester.setComponent(m_table.getTableHeader());
             return headerTester.showPopup(button);
         }
         return super.showPopup(button);
