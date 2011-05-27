@@ -15,11 +15,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.utils.ValueListIterator;
 
@@ -96,5 +100,42 @@ public class HibernateUtil {
     public static String generateGuid() {
         return UUID.randomUUID().toString().replaceAll(StringConstants.MINUS, 
                 StringConstants.EMPTY);
+    }
+    
+    /**
+     * Recursively dissociates and deletes all children of the given node.
+     * 
+     * Workaround for: 
+     * https://bugs.eclipse.org/bugs/show_bug.cgi?id=347010
+     * 
+     * Once the aforementioned bug is resolved, this method and all 
+     * references to it should be removed. Note that this will also require a 
+     * change to the required version of EclipseLink to the version in which 
+     * the bug was fixed (i.e. if the bug is fixed in 2.3.1, then the minimum 
+     * required version will be 2.3.1).
+     * 
+     * @param node The node for which to clear the child list.
+     * @param sess The session in which remove/delete operations should be 
+     *             performed. The session is otherwise not modified by this 
+     *             method (i.e. this method does not close or flush the 
+     *             session).
+     */
+    public static void removeChildNodes(INodePO node, EntityManager sess) {
+        
+        for (INodePO child : node.getUnmodifiableNodeList()) {
+            removeChildNodes(child, sess);
+            sess.remove(child);
+        }
+        node.removeAllNodes();
+
+        if (node instanceof ITestCasePO) {
+            ITestCasePO testCase = (ITestCasePO)node;
+            for (IEventExecTestCasePO eventHandler 
+                    : testCase.getAllEventEventExecTC()) {
+                sess.remove(eventHandler);
+            }
+            
+            testCase.getEventExecTcMap().clear();
+        }
     }
 }

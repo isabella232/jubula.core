@@ -1227,16 +1227,19 @@ public class ProjectPM extends PersistenceManager {
                 new ArrayList<ITestSuitePO>(
                         p.getTestSuiteCont().getTestSuiteList());
             for (ISpecPersistable po : specObjList) {
+                HibernateUtil.removeChildNodes(po, deleteSess);
                 p.getSpecObjCont().removeSpecObject(po);
                 Hibernator.instance().deletePO(deleteSess, po);
             }
             for (ITestSuitePO po : testSuiteList) {
+                HibernateUtil.removeChildNodes(po, deleteSess);
                 p.getTestSuiteCont().removeTestSuite(po);
                 Hibernator.instance().deletePO(deleteSess, po);
             }
             deleteSess.flush();
             // FIXME zeb end workaround
 
+            
             Hibernator.instance().deletePO(deleteSess, p);
             CompNamePM.deleteCompNames(deleteSess, projId);
             Hibernator.instance().commitTransaction(deleteSess, tx);
