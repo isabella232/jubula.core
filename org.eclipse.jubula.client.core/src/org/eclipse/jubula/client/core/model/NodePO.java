@@ -400,9 +400,8 @@ abstract class NodePO implements INodePO {
     }
     
     /**
-     * use this method instead of getNodeList()
-     * use add-/removeNode-method for modification of list 
-     * @return iterator for unmodifiable NodeList
+     * 
+     * {@inheritDoc}
      */
     @Transient
     public Iterator<INodePO> getNodeListIterator() {
