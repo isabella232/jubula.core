@@ -781,6 +781,9 @@ public class MultipleNodePM  extends PersistenceManager {
                 proj.getSpecObjCont().removeSpecObject(m_testCase);  
             }
             registerParamNamesForDeletion(m_testCase);
+            
+            HibernateUtil.removeChildNodes(m_testCase, sess);
+            
             sess.remove(m_testCase);
             
             return null;
@@ -884,6 +887,9 @@ public class MultipleNodePM  extends PersistenceManager {
                 IProjectPO proj = GeneralStorage.getInstance().getProject();
                 proj.getSpecObjCont().removeSpecObject(m_category);  
             }
+
+            HibernateUtil.removeChildNodes(m_category, sess);
+            
             sess.remove(m_category);
             
             return null;

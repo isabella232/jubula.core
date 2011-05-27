@@ -102,8 +102,7 @@ public interface INodePO extends ITimestampPO {
     public abstract int hashCode();
 
     /**
-     * use this method instead of getNodeList()
-     * use add-/removeNode-method for modification of list 
+     * 
      * @return iterator for unmodifiable NodeList
      */
     public abstract Iterator<INodePO> getNodeListIterator();
