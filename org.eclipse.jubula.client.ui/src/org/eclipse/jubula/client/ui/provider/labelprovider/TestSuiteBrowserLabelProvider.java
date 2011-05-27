@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -27,7 +28,6 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -84,7 +84,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
 
         final WorkingLanguageBP workLangBP = WorkingLanguageBP.getInstance();
         Locale locale = workLangBP.getWorkingLanguage();
-        ITestSuitePO testSuite = UINodeBP.getTestSuiteOfNode(node);
+        ITestSuitePO testSuite = NodeBP.getOwningTestSuite(node);
         if (node != null && isNodeActive(node)) {
             if (testSuite != null) {
                 IAUTMainPO aut = testSuite.getAut();

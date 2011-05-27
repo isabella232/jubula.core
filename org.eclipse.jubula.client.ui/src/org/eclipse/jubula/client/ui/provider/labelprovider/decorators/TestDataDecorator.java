@@ -26,7 +26,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
@@ -121,19 +120,19 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
     }
 
     /**
-     * @param gnode
-     *            the gui node
+     * @param node
+     *            the node
      * @param decoration
      *            the decoration
      * @return wheter decoration should continue for this element or not
      */
-    private boolean shouldNotDecorate(INodePO gnode, IDecoration decoration) {
-        return gnode == null
-                || gnode.getParentNode() == null
-                || UINodeBP.getTestSuiteOfNode(gnode) == null
+    private boolean shouldNotDecorate(INodePO node, IDecoration decoration) {
+        return node == null
+                || node.getParentNode() == null
+                || NodeBP.getOwningTestSuite(node) == null
                 || decoration.getDecorationContext() 
                     instanceof JBEditorDecorationContext
-                || gnode instanceof IProjectPO;
+                || node instanceof IProjectPO;
     }
 
     /** 
