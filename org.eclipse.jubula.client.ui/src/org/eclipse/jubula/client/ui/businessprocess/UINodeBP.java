@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.businessprocess;
 import javax.persistence.EntityManager;
 
 import org.eclipse.jface.viewers.AbstractTreeViewer;
+import org.eclipse.jface.viewers.IElementComparer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -110,14 +111,16 @@ public class UINodeBP {
      *            the TreeViewer
      * @param em
      *            the entity manager to use for retrieving the node with the
-     *            given id
-     * @return the node that has been selected or null if not found
+     *            given id; bear in mind that if e.g. the entitiy manager is the
+     *            master session it the object with the given id may be found
+     *            within this entity manager but not in the given viewer, as it
+     *            does not display this element
+     * @return true if select succeeded, false otherwise
      */
     public static INodePO selectNodeInTree(Long id, TreeViewer tv,
             EntityManager em) {
-        INodePO nodeToSelect = em.find(NodeMaker.getNodePOClass(), id);
-        selectNodeInTree(nodeToSelect, tv);
-        return nodeToSelect;
+        return (INodePO)selectNodeInTree(
+                em.find(NodeMaker.getNodePOClass(), id), tv);
     }
     
     /**
@@ -127,8 +130,10 @@ public class UINodeBP {
      *            The Object to select
      * @param tv
      *            the TreeViewer
+     * @return the object which should be selected if found in tree viewer, null
+     *         otherwise
      */
-    public static void selectNodeInTree(Object o, AbstractTreeViewer tv) {
+    public static Object selectNodeInTree(Object o, AbstractTreeViewer tv) {
         ISelection oldSelection = tv.getSelection();
         if (o != null) {
             tv.refresh();
@@ -138,8 +143,17 @@ public class UINodeBP {
             tv.setSelection(newSelection);
             InteractionEventDispatcher.getDefault()
                     .fireProgammableSelectionEvent(newSelection);
-        } else {
-            tv.setSelection(oldSelection);
+            ISelection currSelection = tv.getSelection();
+            if (currSelection instanceof StructuredSelection) {
+                IElementComparer comparer = tv.getComparer();
+                Object currObj = ((StructuredSelection)currSelection)
+                    .getFirstElement();
+                if (comparer.equals(o, currObj)) {
+                    return o;
+                }
+            }
         }
+        tv.setSelection(oldSelection);
+        return null;
     }
 }
