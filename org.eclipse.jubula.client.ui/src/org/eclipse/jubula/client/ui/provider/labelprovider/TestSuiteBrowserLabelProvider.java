@@ -101,17 +101,20 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
                     checkNode((IExecTestCasePO)node, aut, locale, toolTip);
                 } else if (node instanceof ICapPO) {
                     ICapPO cap = (ICapPO)node;
-                    IExecTestCasePO execTC = 
-                        (IExecTestCasePO)node.getParentNode()
-                            .getParentNode();
+                    INodePO grandParent = node.getParentNode().getParentNode();
                     boolean overWrittenName = false;
-                    for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
-                        if (pair.getFirstName().equals(cap.getComponentName())
-                                && pair.getSecondName() != null 
-                                && !pair.getSecondName().equals(
-                                        cap.getComponentName())) {
-                            overWrittenName = true;
-                            break;
+                    if (grandParent instanceof IExecTestCasePO) {
+                        IExecTestCasePO execTC = (IExecTestCasePO)grandParent;
+                        for (ICompNamesPairPO pair 
+                                : execTC.getCompNamesPairs()) {
+                            if (pair.getFirstName().equals(
+                                        cap.getComponentName())
+                                    && pair.getSecondName() != null 
+                                    && !pair.getSecondName().equals(
+                                            cap.getComponentName())) {
+                                overWrittenName = true;
+                                break;
+                            }
                         }
                     }
                     checkNode(aut, locale, cap, toolTip, overWrittenName);

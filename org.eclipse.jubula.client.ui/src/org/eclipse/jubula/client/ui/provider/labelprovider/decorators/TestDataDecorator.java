@@ -48,7 +48,6 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
      */
     public void decorate(Object element, IDecoration decoration) {
         decoration.setForegroundColor(Layout.DEFAULT_OS_COLOR);
-
         final INodePO node = (INodePO)element;
         if (shouldNotDecorate(node, decoration)) {
             return;
@@ -84,22 +83,26 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
                         && node.getSumSpecTcFlag();
                 } else if (node instanceof ICapPO) {
                     ICapPO cap = (ICapPO)node;
-                    IExecTestCasePO execTC = 
-                        (IExecTestCasePO)node.getParentNode().getParentNode();
+                    INodePO grandParent = node.getParentNode().getParentNode();
                     boolean overWrittenName = false;
-                    for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
-                        if (pair.getFirstName().equals(cap.getComponentName())
-                                && pair.getSecondName() != null
-                                    && !pair.getSecondName().equals(
-                                            cap.getComponentName())) {
-                            
-                            overWrittenName = true;
-                            break;
+                    if (grandParent instanceof IExecTestCasePO) {
+                        IExecTestCasePO execTC = (IExecTestCasePO)grandParent;
+                        for (ICompNamesPairPO pair 
+                                : execTC.getCompNamesPairs()) {
+                            if (pair.getFirstName().equals(
+                                        cap.getComponentName())
+                                    && pair.getSecondName() != null
+                                        && !pair.getSecondName().equals(
+                                                cap.getComponentName())) {
+                                
+                                overWrittenName = true;
+                                break;
+                            }
                         }
-                    }
-                    flag = cap.getCompleteTdFlag(locale);
-                    if (!overWrittenName) {
-                        flag = flag && cap.getCompleteOMFlag(aut);
+                        flag = cap.getCompleteTdFlag(locale);
+                        if (!overWrittenName) {
+                            flag = flag && cap.getCompleteOMFlag(aut);
+                        }
                     }
                 }
             } else {
