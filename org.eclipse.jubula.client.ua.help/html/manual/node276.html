@@ -13,7 +13,7 @@
   <body>
     <h3><a id="SECTION00533200000000000000" name="SECTION00533200000000000000"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Walkthrough</a></h3>
     <p>The first step to implementing your accessibility plug-in is to create Identifiers for each type of GEF component that you wish to make accessible for Jubula tests. An Identifier is a Java class that implements <i>org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier</i> and provides Jubula with additional and/or more precise information about a specific org.eclipse.gef.EditPart. The granularity of your Identifier classes will depend on the class hierarchy of the EditParts in the AUT . For example, if many of the EditParts share a common superclass, then you can write a single Identifier for that superclass that will be able to provide accessibility for all EditParts that inherit from that superclass. See <a href="node277.html#gefreference">4.3.3.3</a> for a sample implementation.<p>The next step is to create an Adapter Factory. This extension will provide Jubula with information regarding which Identifier to use for each Edit Part.<ol>
-      <li>Open the plugin.xml file for your accessibility plug-in and select the &#39;Extension&#39; tab (<a href="#extensionstab">4.1</a>). <div align="center"><a id="extensionstab" name="extensionstab"></a><a name="5427"></a><table>
+      <li>Open the plugin.xml file for your accessibility plug-in and select the &#39;Extension&#39; tab (<a href="#extensionstab">4.1</a>). <div align="center"><a id="extensionstab" name="extensionstab"></a><a name="5424"></a><table>
             <caption align="bottom"><strong>Figure 4.1:</strong> Plug-in Editor with Extensions tab selected</caption>
             <tr>
               <td>
@@ -22,7 +22,7 @@
             </tr>
           </table>
         </div>
-      <li>Add an instance of the <i>org.eclipse.core.runtime.adapters</i> extension.<li>Add a &#39;factory&#39; to the new extension for each type of GEF component for which you wish to provide accessibility. Each factory must provide adapters from the GEF component that implements <i>org.eclipse.gef.EditPart</i> to <i>org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier</i> (<a href="#factory">4.2</a>). <div align="center"><a id="factory" name="factory"></a><a name="5438"></a><table>
+      <li>Add an instance of the <i>org.eclipse.core.runtime.adapters</i> extension.<li>Add a &#39;factory&#39; to the new extension for each type of GEF component for which you wish to provide accessibility. Each factory must provide adapters from the GEF component that implements <i>org.eclipse.gef.EditPart</i> to <i>org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier</i> (<a href="#factory">4.2</a>). <div align="center"><a id="factory" name="factory"></a><a name="5435"></a><table>
             <caption align="bottom"><strong>Figure 4.2:</strong> Plug-in Editor with defined Adapter Factory</caption>
             <tr>
               <td>
@@ -37,7 +37,7 @@
             <td><b>When starting your AUT after adding or replacing your accessibility plug-in, it is recommended that the AUT be started with the -clean parameter.</b></td>
           </tr>
         </table>
-        <div align="center"><a id="exportplugin" name="exportplugin"></a><a name="5451"></a><table>
+        <div align="center"><a id="exportplugin" name="exportplugin"></a><a name="5448"></a><table>
             <caption align="bottom"><strong>Figure 4.3:</strong> Exporting the Project to a Plug-in</caption>
             <tr>
               <td>
@@ -50,6 +50,6 @@
     <p>
       <br />
     <hr />
-    <address>Copyright BREDEX GmbH 2011</address>
+    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

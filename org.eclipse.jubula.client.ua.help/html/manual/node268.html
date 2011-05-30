@@ -12,9 +12,9 @@
   </head>
   <body>
     <h2><a id="SECTION00524000000000000000" name="SECTION00524000000000000000"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Design for testability in RCP</a></h2>
-    <p><a name="5307"></a> <a name="5308"></a> <a name="5309"></a> <a name="5310"></a><p>Although Jubula can relocate components in the AUT even when they are not named by the developers, naming components is nevertheless a good idea. In SWT and RCP there is no method like the Swing <i>setName</i> method to name components in the program code. However, you can improve the testability of your application by using the following method in your SWT or RCP code for the current component class: <i>setData(String key, String ComponentName)</i>. For the key, use <i>TEST_COMP_NAME</i>.<p>Even if you do not name components, you can choose to have Jubula generate unique names for your components in the AUT in the AUT dialog <a href="node71.html#Defineaut">3.5.2</a>.<p>
+    <p><a name="5304"></a> <a name="5305"></a> <a name="5306"></a> <a name="5307"></a><p>Although Jubula can relocate components in the AUT even when they are not named by the developers, naming components is nevertheless a good idea. In SWT and RCP there is no method like the Swing <i>setName</i> method to name components in the program code. However, you can improve the testability of your application by using the following method in your SWT or RCP code for the current component class: <i>setData(String key, String ComponentName)</i>. For the key, use <i>TEST_COMP_NAME</i>.<p>Even if you do not name components, you can choose to have Jubula generate unique names for your components in the AUT in the AUT dialog <a href="node71.html#Defineaut">3.5.2</a>.<p>
       <br />
     <hr />
-    <address>Copyright BREDEX GmbH 2011</address>
+    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

@@ -11,7 +11,7 @@
     <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
   </head>
   <body>
-    <h2><a id="SECTION00621000000000000000" name="SECTION00621000000000000000"><span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Application</a></h2><a name="3627"></a> <a name="3628"></a><p><b>Description</b>:<p><a id="CONCRETE_GraphicApplication" name="CONCRETE_GraphicApplication"></a><ul>
+    <h2><a id="SECTION00621000000000000000" name="SECTION00621000000000000000"><span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Application</a></h2><a name="3626"></a> <a name="3627"></a><p><b>Description</b>:<p><a id="CONCRETE_GraphicApplication" name="CONCRETE_GraphicApplication"></a><ul>
       <li>The <i>Application</i> component is the container for all other components.<li>It represents the AUT as a whole.</ul>
     <p><b>Synopsis</b>:<br />
     <ul>
@@ -170,7 +170,7 @@
       </tr>
     </table>
     <p><b>Inherited Actions</b><p><i>none</i><p>
-      <br /><span class="textbf"><big class="LARGE">Activate</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42891"></a><a name="42892"></a><p><a id="CONCRETE_GraphicApplication_Activate" name="CONCRETE_GraphicApplication_Activate"></a><p><a id="activate" name="activate"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Activate</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42890"></a><a name="42891"></a><p><a id="CONCRETE_GraphicApplication_Activate" name="CONCRETE_GraphicApplication_Activate"></a><p><a id="activate" name="activate"></a><ul>
       <li>When the ITE and AUT Agent are running on the same computer, you may need to bring the AUT into focus before a test can begin.<li>Exactly how to <i>activate</i> the application can vary from one system to another.<li>This action offers various different ways of activating the application.<li>Jubula realises this action by clicking in the location indicated in the <i>activation method</i> parameter.<li>In the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node72.html#configuringaut"><img align="bottom" border="1" src="crossref.gif" /></a>, the default is that no activation is carried out.<li>You can set an activation method for the whole AUT in its configuration, and use this in your Test Steps (e.g. set the activation method parameter to &quot;<i>AUT_DEFAULT</i>&quot;) or you can use a different activation method.<li>In this way, you can centrally define a default for a given operating system, which you can easily change when you test on another operating system.<li>Using the activate action, you can also specify activation methods which differ from the default. <table>
           <tr>
             <td><img align="bottom" border="0" src="img1.jpg" /></td>
@@ -229,7 +229,7 @@
       </tr>
     </table>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42898"></a><a name="42899"></a><p><a id="CONCRETE_GraphicApplication_CheckExistenceOfWindow" name="CONCRETE_GraphicApplication_CheckExistenceOfWindow"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42897"></a><a name="42898"></a><p><a id="CONCRETE_GraphicApplication_CheckExistenceOfWindow" name="CONCRETE_GraphicApplication_CheckExistenceOfWindow"></a><ul>
       <li>Use this action to check the existence of a window based on its title.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -278,7 +278,7 @@
     </table><a id="CONCRETE_GraphicApplication_CheckExistenceOfWindow_IsExisting" name="CONCRETE_GraphicApplication_CheckExistenceOfWindow_IsExisting"></a><ul>
       <li>Set this parameter to true if you expect the window to exist.<li>Set this parameter to false if you do <span class="textit">not</span> expect the window to exist.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Numeric Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42905"></a><a name="42906"></a><p><a id="CONCRETE_GraphicApplication_CheckValues" name="CONCRETE_GraphicApplication_CheckValues"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Check Numeric Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42904"></a><a name="42905"></a><p><a id="CONCRETE_GraphicApplication_CheckValues" name="CONCRETE_GraphicApplication_CheckValues"></a><ul>
       <li>Use this action to compare two numeric values during your test.<li>This action can be used with the <i>start timer</i> and <i>read timer</i> actions to compare the time difference to a value you specify (i.e. to measure the performance of your application).<li>You can also compare other variables you have read from your application with this action.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -327,7 +327,7 @@
     </table><a id="CONCRETE_GraphicApplication_CheckValues_Value2" name="CONCRETE_GraphicApplication_CheckValues_Value2"></a><ul>
       <li>Enter the second value or variable you want this action to check.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check String Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42912"></a><a name="42913"></a><p><a id="CONCRETE_GraphicApplication_CheckStringValues" name="CONCRETE_GraphicApplication_CheckStringValues"></a><p>Use this action to compare the values of two strings in your test. This can be used if you want to check the value of a variable, for example.<p><i>Parameters</i><br />
+      <br /><span class="textbf"><big class="LARGE">Check String Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42911"></a><a name="42912"></a><p><a id="CONCRETE_GraphicApplication_CheckStringValues" name="CONCRETE_GraphicApplication_CheckStringValues"></a><p>Use this action to compare the values of two strings in your test. This can be used if you want to check the value of a variable, for example.<p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
       <tr>
         <td><small>Name</small></td>
@@ -374,7 +374,7 @@
     </table><a id="CONCRETE_GraphicApplication_CheckStringValues_Value2" name="CONCRETE_GraphicApplication_CheckStringValues_Value2"></a><ul>
       <li>Enter the value or variable you want to use to perform the check against the <i>value 1</i> parameter.<li>If you want to check that value one begins with <tt>&quot;A&quot;</tt> and ends with <tt>&quot;Z&quot;</tt> then you could use <i>matches</i> as the operator parameter, and enter <tt>&quot;A.*Z&quot;</tt> as the parameter for <i>value 2</i>.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Click in Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42919"></a><a name="42920"></a><p><a id="CONCRETE_GraphicApplication_ClickInActiveWindow" name="CONCRETE_GraphicApplication_ClickInActiveWindow"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Click in Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42918"></a><a name="42919"></a><p><a id="CONCRETE_GraphicApplication_ClickInActiveWindow" name="CONCRETE_GraphicApplication_ClickInActiveWindow"></a><ul>
       <li>Use this action to send one or more clicks with any mouse button to the currently active window.<li>You can specify where to click, how many times, and with which mouse button.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -488,7 +488,7 @@
     </table><a id="CONCRETE_GraphicApplication_ClickInActiveWindow_YUnits" name="CONCRETE_GraphicApplication_ClickInActiveWindow_YUnits"></a><ul>
       <li>Use this parameter to tell Jubula whether you want your values for the y-coordinate to be in pixels or percent.<li>If you choose percent for this parameter, and <tt>&quot;50&quot;</tt> for the <i>y-position</i> parameter, the click will always be in the middle of the y-axis.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Copy Text to Clipboard</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42926"></a><a name="42927"></a><p><a id="CONCRETE_GraphicApplication_CopyToClipboard" name="CONCRETE_GraphicApplication_CopyToClipboard"></a><p>This action allows you to copy one string to the clipboard on your operating system. It can be used in combination with the key combination <tt>&raquo;CTRL+V&laquo;</tt> to paste text into your AUT , or into native dialogs (e.g. file choosers) opened by your AUT .<p><i>Parameters</i><br />
+      <br /><span class="textbf"><big class="LARGE">Copy Text to Clipboard</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42925"></a><a name="42926"></a><p><a id="CONCRETE_GraphicApplication_CopyToClipboard" name="CONCRETE_GraphicApplication_CopyToClipboard"></a><p>This action allows you to copy one string to the clipboard on your operating system. It can be used in combination with the key combination <tt>&raquo;CTRL+V&laquo;</tt> to paste text into your AUT , or into native dialogs (e.g. file choosers) opened by your AUT .<p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
       <tr>
         <td><small>Name</small></td>
@@ -505,7 +505,7 @@
     </table><a id="CONCRETE_GraphicApplication_CopyToClipboard_Text" name="CONCRETE_GraphicApplication_CopyToClipboard_Text"></a><ul>
       <li>Enter the text you wish you copy to the clipboard.<li>If the text contains any special characters, use the symbol for verbatim text to mask any special functions of the characters <a href="node40.html#verbatimsymbol">9.1</a>.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Execute External Command</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42933"></a><a name="42934"></a><p><a id="CONCRETE_GraphicApplication_ExecuteCommand" name="CONCRETE_GraphicApplication_ExecuteCommand"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Execute External Command</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42932"></a><a name="42933"></a><p><a id="CONCRETE_GraphicApplication_ExecuteCommand" name="CONCRETE_GraphicApplication_ExecuteCommand"></a><ul>
       <li>Use this action to run an external script or command during your test.<li>You enter the command and the exit code that Jubula should wait for, as well as a timeout to tell Jubula how long to wait for the code.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -581,7 +581,7 @@
     </table><a id="CONCRETE_GraphicApplication_ExecuteCommand_Timeout" name="CONCRETE_GraphicApplication_ExecuteCommand_Timeout"></a><ul>
       <li>Enter the amount of time (in milliseconds) Jubula should wait for the exit code for the command.<li>If the exit code is not delivered in this timeframe, the Test Step is unsuccessful.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">External Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42940"></a><a name="42941"></a><p><a id="CONCRETE_GraphicApplication_NativeInputText" name="CONCRETE_GraphicApplication_NativeInputText"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">External Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42939"></a><a name="42940"></a><p><a id="CONCRETE_GraphicApplication_NativeInputText" name="CONCRETE_GraphicApplication_NativeInputText"></a><ul>
       <li>Use this action to input text into dialogs that are not supported by Jubula (e.g. file choosers).<li>Jubula can send keystrokes to these dialogs, but cannot check if they have arrived.<li>For this action to work, the dialog must be in focus, and the cursor must be in the text field to be filled in.<li>Combine this action with the &quot;<i>External Key Combination</i>&quot; action to send key combinations to native dialogs to be able to work with file choosers during your test.</ul>
     <p><span class="textbf">Native dialogs in SWT and RCP AUT&#39;s</span><br />
     <p>In SWT and RCP AUT&#39;s , this action can only enter ASCII characters (large and small letters, and numbers).<p>To enter characters such as spaces, periods and slashes, use the action <i>External Key Combination</i>.<p>We recommend using the action <i>Copy to Clipboard</i> to help fill out native dialogs in SWT and RCP AUT&#39;s . The string you copy to the clipboard can then simply be entered into the textfield in the dialog using <tt>&raquo;CTRL+V&laquo;</tt> as an <i>External Key Combination</i> action.<p><i>Parameters</i><br />
@@ -601,7 +601,7 @@
     </table><a id="CONCRETE_GraphicApplication_NativeInputText_Text" name="CONCRETE_GraphicApplication_NativeInputText_Text"></a><ul>
       <li>Use this parameter to specify the text you want to enter into the component.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">External Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42947"></a><a name="42948"></a><p><a id="CONCRETE_GraphicApplication_NativeKeyStroke" name="CONCRETE_GraphicApplication_NativeKeyStroke"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">External Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42946"></a><a name="42947"></a><p><a id="CONCRETE_GraphicApplication_NativeKeyStroke" name="CONCRETE_GraphicApplication_NativeKeyStroke"></a><ul>
       <li>Use this action to send a key combination to a dialog that is not supported by Jubula (e.g. file choosers).<li>Jubula can send a keystroke to these dialogs, but cannot check if it have arrived.<li>For this action to work, the dialog must be in focus.<li>Combine this action with the &quot;<i>External Input Text</i>&quot; action to be able to work with file choosers during your test.<li>Some of the keystrokes you may need include <i>ENTER</i>, <i>SPACE</i>, <i>PERIOD</i> and <i>/</i>.</ul>
     <table>
       <tr>
@@ -741,7 +741,7 @@
       </tr>
     </table>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42954"></a><a name="42955"></a><p><a id="CONCRETE_GraphicApplication_InputTextDirect" name="CONCRETE_GraphicApplication_InputTextDirect"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42953"></a><a name="42954"></a><p><a id="CONCRETE_GraphicApplication_InputTextDirect" name="CONCRETE_GraphicApplication_InputTextDirect"></a><ul>
       <li>Use this action to enter text into the component which currently has focus.<li>The text you want to enter is given as a parameter.<li>The difference between this action and the &quot;<i>External Input Text</i>&quot; is that Jubula can check that the keystrokes have arrived at the component.<li>Use this action for components that Jubula supports, and the &quot;<i>External Input Text</i>&quot; action for components in external dialogs, such as file choosers.</ul>
     <table>
       <tr>
@@ -766,7 +766,7 @@
     </table><a id="CONCRETE_GraphicApplication_InputTextDirect_Text" name="CONCRETE_GraphicApplication_InputTextDirect_Text"></a><ul>
       <li>Use this parameter to specify the text you want to enter into the component.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42961"></a><a name="42962"></a><p><a id="CONCRETE_GraphicApplication_KeyStroke" name="CONCRETE_GraphicApplication_KeyStroke"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42960"></a><a name="42961"></a><p><a id="CONCRETE_GraphicApplication_KeyStroke" name="CONCRETE_GraphicApplication_KeyStroke"></a><ul>
       <li>This action allows you to send a key command to the application.<li>This is useful for actions such as <tt>&raquo;DELETE&laquo;</tt>, <tt>&raquo;ENTER&laquo;</tt>, etc.</ul>
     <table>
       <tr>
@@ -912,7 +912,7 @@
       </tr>
     </table>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Manual Test Step</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42968"></a><a name="42969"></a><p><a id="CONCRETE_GraphicApplication_ManualTestStep" name="CONCRETE_GraphicApplication_ManualTestStep"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Manual Test Step</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42967"></a><a name="42968"></a><p><a id="CONCRETE_GraphicApplication_ManualTestStep" name="CONCRETE_GraphicApplication_ManualTestStep"></a><ul>
       <li>Use this action to specify a manual Test Step .<li>Manual Test Steps can be specified in Jubula and must be executed by a manual tester.<li>Jubula provides a special test execution mode for manual testing, in which the manual Test Steps are presented to the user to be executed.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -967,10 +967,10 @@
         </table>
     </ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Pause Test Execution</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42975"></a><a name="42976"></a><p><a id="CONCRETE_GraphicApplication_Pause" name="CONCRETE_GraphicApplication_Pause"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Pause Test Execution</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42974"></a><a name="42975"></a><p><a id="CONCRETE_GraphicApplication_Pause" name="CONCRETE_GraphicApplication_Pause"></a><ul>
       <li>This action pauses the test execution.<li>To continue a paused test, press the pause button in the ITE .</ul>
     <p>This action has no parameters.<p>
-      <br /><span class="textbf"><big class="LARGE">Read Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42982"></a><a name="42983"></a><p><a id="CONCRETE_GraphicApplication_ReadTimer" name="CONCRETE_GraphicApplication_ReadTimer"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Read Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42981"></a><a name="42982"></a><p><a id="CONCRETE_GraphicApplication_ReadTimer" name="CONCRETE_GraphicApplication_ReadTimer"></a><ul>
       <li>Use this action to read a timer (stopwatch).<li>You enter the name of the timer you want to read and enter a variable which saves the difference (in milliseconds) between the current time and the time at which the timer was started.<li>You can start timers and compare values between starting and reading timers using other actions.<li>This action is useful for measuring how long your AUT takes to execute certain actions.</ul>
     <table>
       <tr>
@@ -1010,7 +1010,7 @@
     </table><a id="CONCRETE_GraphicApplication_ReadTimer_VariableToStoreTimeDeltaSinceTimerStart" name="CONCRETE_GraphicApplication_ReadTimer_VariableToStoreTimeDeltaSinceTimerStart"></a><ul>
       <li>Enter the variable name you will use to save the time difference between starting the timer and reading it.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Restart</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42989"></a><a name="42990"></a><p><a id="CONCRETE_GraphicApplication_Restart" name="CONCRETE_GraphicApplication_Restart"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Restart</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42988"></a><a name="42989"></a><p><a id="CONCRETE_GraphicApplication_Restart" name="CONCRETE_GraphicApplication_Restart"></a><ul>
       <li>Use this action to restart the AUT during the test.<li>The action closes your AUT and all windows/dialogs associated with it.<li>It then starts the same AUT with the same configuration as it had when you originally started it and carries on with the test.<li>If your AUT takes a while to load/to be ready, it is a good idea to use the &quot;<i>wait for window</i>&quot; or &quot;<i>wait for component</i>&quot; action after the restart action. <table>
           <tr>
             <td><img align="bottom" border="0" src="img3.jpg" /></td>
@@ -1019,7 +1019,7 @@
         </table>
     </ul>
     <p>This action has no parameters.<p>
-      <br /><span class="textbf"><big class="LARGE">Set Toggle Key</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42996"></a><a name="42997"></a><p><a id="CONCRETE_GraphicApplication_KeyToogle" name="CONCRETE_GraphicApplication_KeyToogle"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Set Toggle Key</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="42995"></a><a name="42996"></a><p><a id="CONCRETE_GraphicApplication_KeyToogle" name="CONCRETE_GraphicApplication_KeyToogle"></a><ul>
       <li>Use this action to turn the following keys on or off: <ul>
           <li>Caps-lock<li>Num-lock<li>Scroll-lock</ul>
       <li>You specify which key to (de)activate and whether the function should be turned on or off. <table>
@@ -1061,7 +1061,7 @@
     </table><a id="CONCRETE_GraphicApplication_KeyToogle_SelectKey" name="CONCRETE_GraphicApplication_KeyToogle_SelectKey"></a><ul>
       <li>Use this parameter to specify whether you want to turn the function on or off.<li>Select true to turn the function on.<li>Select false to turn the function off.<li>Turning the function on when it is already on will not have any effect. The function remains on.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Start Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43003"></a><a name="43004"></a><p><a id="CONCRETE_GraphicApplication_StartTimer" name="CONCRETE_GraphicApplication_StartTimer"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Start Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43002"></a><a name="43003"></a><p><a id="CONCRETE_GraphicApplication_StartTimer" name="CONCRETE_GraphicApplication_StartTimer"></a><ul>
       <li>Use this action to start a timer (stopwatch).<li>You name the timer and enter a variable which saves the current time (in milliseconds since the January 1st 1970).<li>You can read timers and compare values between starting and reading timers using other actions.<li>This action is useful for measuring how long your AUT takes to execute certain actions.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1095,7 +1095,7 @@
     </table><a id="CONCRETE_GraphicApplication_StartTimer_VariableToStoreAbsoluteStartTime" name="CONCRETE_GraphicApplication_StartTimer_VariableToStoreAbsoluteStartTime"></a><ul>
       <li>Enter the variable name you will use to save the current time.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Store Value</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43010"></a><a name="43011"></a><p><a id="CONCRETE_GraphicApplication_ReadValue" name="CONCRETE_GraphicApplication_ReadValue"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Store Value</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43009"></a><a name="43010"></a><p><a id="CONCRETE_GraphicApplication_ReadValue" name="CONCRETE_GraphicApplication_ReadValue"></a><ul>
       <li>Use this action to store a value you specify so that you can use it as data for other actions.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1129,7 +1129,7 @@
     </table><a id="CONCRETE_GraphicApplication_ReadValue_Value" name="CONCRETE_GraphicApplication_ReadValue_Value"></a><ul>
       <li>Enter the value that you want to store.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Take Screenshot</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43017"></a><a name="43018"></a><p><a id="CONCRETE_GraphicApplication_TakeScreenshot" name="CONCRETE_GraphicApplication_TakeScreenshot"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Take Screenshot</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43016"></a><a name="43017"></a><p><a id="CONCRETE_GraphicApplication_TakeScreenshot" name="CONCRETE_GraphicApplication_TakeScreenshot"></a><ul>
       <li>This action takes a screen capture and saves the resulting image to disk.<li>The action takes a screenshot of the whole screen. To take a screenshot of only the active window, use the action <i>Take Screenshot of Active Window</i>.<li>If you do not enter a file extension, the screenshot will be saved as a <span class="textit">.png</span> file. You can also save the file as an <span class="textit">.jpeg</span> or <span class="textit">.bmp</span> file.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1208,7 +1208,7 @@
     </table><a id="CONCRETE_GraphicApplication_TakeScreenshot_CreateDirs" name="CONCRETE_GraphicApplication_TakeScreenshot_CreateDirs"></a><ul>
       <li>Use this parameter to determine how the image is saved if the given path does not exist.<li>Select true to create the necessary directories automatically.<li>Selecting false will cause the test step to fail if the path does not already exist.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Take Screenshot of Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43024"></a><a name="43025"></a><p><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Take Screenshot of Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43023"></a><a name="43024"></a><p><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow"></a><ul>
       <li>This action takes a screen capture of the active window and saves the resulting image to disk.<li>To take a screenshot of thw whole screen, use the action <i>Take Screenshot</i>.<li>If you do not enter a file extension, the screenshot will be saved as a <span class="textit">.png</span> file. You can also save the file as an <span class="textit">.jpeg</span> or <span class="textit">.bmp</span> file.<li>You can specify a margin around the active window to extend the range of the screenshot. This may be necessary on some systems where the title bar of some dialogs is not included in the screenshot.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1347,7 +1347,7 @@
     </table><a id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginLeft" name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginLeft"></a><ul>
       <li>Use this parameter to enter the amount of pixels you wish you include in the screenshot at left of the dialog.<li>You can enter positive and negative values.<li>Enter 0 to neither extend nor reduce the margin.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43031"></a><a name="43032"></a><p><a id="CONCRETE_GraphicApplication_Wait" name="CONCRETE_GraphicApplication_Wait"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Wait</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43030"></a><a name="43031"></a><p><a id="CONCRETE_GraphicApplication_Wait" name="CONCRETE_GraphicApplication_Wait"></a><ul>
       <li>Sometimes it is necessary to wait for a period of time before continuing.<li>Use this action to tell the AUT Agent to wait for a given amount of time before continuing with the next Test Step .<li>Jubula also offers actions to wait for a window and a component. If you are waiting for a component, or a window, use the actions specific to these events.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1366,7 +1366,7 @@
     </table><a id="CONCRETE_GraphicApplication_Wait_TimeMillSec" name="CONCRETE_GraphicApplication_Wait_TimeMillSec"></a><ul>
       <li>Use this parameter to enter the amount of time to wait before carrying on.<li>Enter the amount of time in milliseconds.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait for Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43038"></a><a name="43039"></a><p><a id="CONCRETE_GraphicApplication_WaitForWindow" name="CONCRETE_GraphicApplication_WaitForWindow"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43037"></a><a name="43038"></a><p><a id="CONCRETE_GraphicApplication_WaitForWindow" name="CONCRETE_GraphicApplication_WaitForWindow"></a><ul>
       <li>This action waits for the window you name to open.<li>This action does <span class="textit">not</span> check whether the window is active<li>Once the window is open (or if the window is already open), the test continues.<li>If the window does not open, the action fails.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1430,7 +1430,7 @@
     </table><a id="CONCRETE_GraphicApplication_WaitForWindow_DelayAfterVisibility" name="CONCRETE_GraphicApplication_WaitForWindow_DelayAfterVisibility"></a><ul>
       <li>Sometimes a window is not ready to receive events (mouse clicks, key presses) until a few moments after becoming visible.<li>Use this parameter to set the amount of time (in milliseconds) to wait once the window has appeared before continuing.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait for Window Activation</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43045"></a><a name="43046"></a><p><a id="CONCRETE_GraphicApplication_WaitForWindowActivation" name="CONCRETE_GraphicApplication_WaitForWindowActivation"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window Activation</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43044"></a><a name="43045"></a><p><a id="CONCRETE_GraphicApplication_WaitForWindowActivation" name="CONCRETE_GraphicApplication_WaitForWindowActivation"></a><ul>
       <li>This action waits for the window you name to become active. A window is active only when it is the currently selected window.<li>Once the window is active (or if the window is already active when this test step begins), the test continues.<li>If the window does not become active, the action fails.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1494,7 +1494,7 @@
     </table><a id="CONCRETE_GraphicApplication_WaitForWindowActivation_DelayAfterVisibility" name="CONCRETE_GraphicApplication_WaitForWindowActivation_DelayAfterVisibility"></a><ul>
       <li>Sometimes a window is not ready to receive events (mouse clicks, key presses) until a few moments after activation.<li>Use this parameter to set the amount of time (in milliseconds) to wait once the window has appeared before continuing.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait for Window to Close</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43052"></a><a name="43053"></a><p><a id="CONCRETE_GraphicApplication_WaitForWindowToClose" name="CONCRETE_GraphicApplication_WaitForWindowToClose"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window to Close</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="43051"></a><a name="43052"></a><p><a id="CONCRETE_GraphicApplication_WaitForWindowToClose" name="CONCRETE_GraphicApplication_WaitForWindowToClose"></a><ul>
       <li>This action waits for the window you name to close.<li>Once the window is closed (or if no open window with a corresponding title can be found), the test continues.<li>If a window is found and does not close within the timeout period, the action fails.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1560,6 +1560,6 @@
     <p>
       <br />
     <hr />
-    <address>Copyright BREDEX GmbH 2011</address>
+    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

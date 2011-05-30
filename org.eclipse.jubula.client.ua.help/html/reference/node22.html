@@ -11,7 +11,7 @@
     <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
   </head>
   <body>
-    <h2><a id="SECTION006210000000000000000" name="SECTION006210000000000000000"><span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">10</span> Tree</a></h2><a name="11895"></a> <a name="11896"></a><p><b>Description</b>:<p><a id="CONCRETE_Tree" name="CONCRETE_Tree"></a><p>A Tree is a component with linked elements (nodes) and a hierarchical structure. One common example is the display of directory structures used in most file managers (e.g. <i>Windows Explorer</i>).<div align="center"><a id="tree" name="tree"></a><a name="11903"></a><table>
+    <h2><a id="SECTION006210000000000000000" name="SECTION006210000000000000000"><span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">10</span> Tree</a></h2><a name="11894"></a> <a name="11895"></a><p><b>Description</b>:<p><a id="CONCRETE_Tree" name="CONCRETE_Tree"></a><p>A Tree is a component with linked elements (nodes) and a hierarchical structure. One common example is the display of directory structures used in most file managers (e.g. <i>Windows Explorer</i>).<div align="center"><a id="tree" name="tree"></a><a name="11902"></a><table>
         <caption align="bottom"><strong>Figure 5.17:</strong> Tree</caption>
         <tr>
           <td>
@@ -20,7 +20,7 @@
         </tr>
       </table>
     </div>
-    <p>Because the forward slash (/) is a special symbol for trees, if you want to use a slash as part of your parameter value, you have to mask it. See the section later in this document <a href="node39.html#specialchar">9</a> for more details.<p><span class="textbf">Mapping trees</span><p>In the Object Mapping Mode , a tree to be mapped looks like this:<div align="center"><a id="maptree" name="maptree"></a><a name="11913"></a><table>
+    <p>Because the forward slash (/) is a special symbol for trees, if you want to use a slash as part of your parameter value, you have to mask it. See the section later in this document <a href="node39.html#specialchar">9</a> for more details.<p><span class="textbf">Mapping trees</span><p>In the Object Mapping Mode , a tree to be mapped looks like this:<div align="center"><a id="maptree" name="maptree"></a><a name="11912"></a><table>
         <caption align="bottom"><strong>Figure 5.18:</strong> Tree</caption>
         <tr>
           <td>
@@ -354,7 +354,7 @@
       </tr>
     </table>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44702"></a><a name="44703"></a><p><a id="CONCRETE_Tree_VerifyPathByIndices" name="CONCRETE_Tree_VerifyPathByIndices"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44701"></a><a name="44702"></a><p><a id="CONCRETE_Tree_VerifyPathByIndices" name="CONCRETE_Tree_VerifyPathByIndices"></a><ul>
       <li>This action checks that a node in the tree exists.<li>You give the path to the node you want to check as an indexpath.<li>For example, checking a textpath of &#39;&#39;1/2/3&#39;&#39; would check that the first node in the tree has at least 2 child nodes, and that the 2nd child node has at least 3 child nodes.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -430,7 +430,7 @@
     </table><a id="CONCRETE_Tree_VerifyPathByIndices_Exists" name="CONCRETE_Tree_VerifyPathByIndices_Exists"></a><ul>
       <li>Set to true if you expect the indexpath to exist.<li>Set to false if you expect the indexpath <span class="textit">not</span> to exist.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44709"></a><a name="44710"></a><p><a id="CONCRETE_Tree_VerifyPath" name="CONCRETE_Tree_VerifyPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44708"></a><a name="44709"></a><p><a id="CONCRETE_Tree_VerifyPath" name="CONCRETE_Tree_VerifyPath"></a><ul>
       <li>This action checks that a node in the tree exists.<li>You give the path to the node you want to check as a textpath.<li>For example, checking a textpath of &#39;&#39;Dog/Bird/Cat&#39;&#39; would check whether an entry &#39;&#39;Cat&#39;&#39; exists beneath an entry for &#39;&#39;Bird&#39;&#39; in the tree, which furthermore lies beneath an entry &#39;&#39;Dog&#39;&#39;.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -521,7 +521,7 @@
     </table><a id="CONCRETE_Tree_VerifyPath_Exists" name="CONCRETE_Tree_VerifyPath_Exists"></a><ul>
       <li>Set to true if you expect the textpath to exist.<li>Set to false if you expect the textpath <span class="textit">not</span> to exist.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Text (Mouse Position)</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44716"></a><a name="44717"></a><p><a id="CONCRETE_Tree_VerifyTextAtMousePosition" name="CONCRETE_Tree_VerifyTextAtMousePosition"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Check Text (Mouse Position)</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44715"></a><a name="44716"></a><p><a id="CONCRETE_Tree_VerifyTextAtMousePosition" name="CONCRETE_Tree_VerifyTextAtMousePosition"></a><ul>
       <li>Use this action to check the text on a node in a tree based on the current position of the cursor.<li>This can be used in conjunction with the action &quot;<i>select node</i>&quot; with a click count of 0.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -555,7 +555,7 @@
     </table><a id="CONCRETE_Tree_VerifyTextAtMousePosition_Operator" name="CONCRETE_Tree_VerifyTextAtMousePosition_Operator"></a><ul>
       <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Text of Selected Node(s)</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44723"></a><a name="44724"></a><p><a id="CONCRETE_Tree_VerifyTextOfSelectedEntry" name="CONCRETE_Tree_VerifyTextOfSelectedEntry"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Check Text of Selected Node(s)</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44722"></a><a name="44723"></a><p><a id="CONCRETE_Tree_VerifyTextOfSelectedEntry" name="CONCRETE_Tree_VerifyTextOfSelectedEntry"></a><ul>
       <li>Use this action to check the text in a selected node or selected nodes in the tree.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -589,7 +589,7 @@
     </table><a id="CONCRETE_Tree_VerifyTextOfSelectedEntry_Operator" name="CONCRETE_Tree_VerifyTextOfSelectedEntry_Operator"></a><ul>
       <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Collapse Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44730"></a><a name="44731"></a><p><a id="CONCRETE_Tree_CollapseByIndexPath" name="CONCRETE_Tree_CollapseByIndexPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Collapse Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44729"></a><a name="44730"></a><p><a id="CONCRETE_Tree_CollapseByIndexPath" name="CONCRETE_Tree_CollapseByIndexPath"></a><ul>
       <li>Use this action to collapse a tree or part of a tree along an indicated path.<li>You enter the path as an indexpath.<li>Jubula realises this by activating the command in the tree to collapse it.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -650,7 +650,7 @@
         </table>
     </ul>
     <p><span class="textbf">Example:</span><ul>
-      <li>Your tree looks like this: <div align="center"><a id="treeexample" name="treeexample"></a><a name="12785"></a><table>
+      <li>Your tree looks like this: <div align="center"><a id="treeexample" name="treeexample"></a><a name="12784"></a><table>
             <caption align="bottom"><strong>Figure 5.19:</strong> Tree 1</caption>
             <tr>
               <td>
@@ -659,7 +659,7 @@
             </tr>
           </table>
         </div>
-      <li>You want to collapse node &quot;<i>C</i>&quot;.<li>Enter <tt>&quot;1/1/2&quot;</tt>: <div align="center"><a id="treeexample2" name="treeexample2"></a><a name="12794"></a><table>
+      <li>You want to collapse node &quot;<i>C</i>&quot;.<li>Enter <tt>&quot;1/1/2&quot;</tt>: <div align="center"><a id="treeexample2" name="treeexample2"></a><a name="12793"></a><table>
             <caption align="bottom"><strong>Figure 5.20:</strong> Tree 2</caption>
             <tr>
               <td>
@@ -668,7 +668,7 @@
             </tr>
           </table>
         </div>
-      <li>To collapse node &quot;<i>A</i>&quot;, enter <tt>&quot;1/1&quot;</tt>: <div align="center"><a id="treeexample3" name="treeexample3"></a><a name="12803"></a><table>
+      <li>To collapse node &quot;<i>A</i>&quot;, enter <tt>&quot;1/1&quot;</tt>: <div align="center"><a id="treeexample3" name="treeexample3"></a><a name="12802"></a><table>
             <caption align="bottom"><strong>Figure 5.21:</strong> Tree 3</caption>
             <tr>
               <td>
@@ -679,7 +679,7 @@
         </div>
       <li>To collapse a whole tree, enter <tt>&quot;1&quot;</tt>.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Collapse Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44737"></a><a name="44738"></a><p><a id="CONCRETE_Tree_CollapseByTextPath" name="CONCRETE_Tree_CollapseByTextPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Collapse Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44736"></a><a name="44737"></a><p><a id="CONCRETE_Tree_CollapseByTextPath" name="CONCRETE_Tree_CollapseByTextPath"></a><ul>
       <li>Use this action to collapse a tree or part of a tree along an indicated path.<li>You enter the path as a textpath.<li>Jubula realises this by activating the command in the tree to collapse it.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -734,7 +734,7 @@
     </table><a id="CONCRETE_Tree_CollapseByTextPath_TextPath" name="CONCRETE_Tree_CollapseByTextPath_TextPath"></a><p>Use this parameter to specify the textpath of the subtree you want to collapse. Make sure you give the whole path (either starting from the top of the tree, or at the position defined by the pre-ascend and path type parameters).<ul>
       <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
     <p><span class="textbf">Example:</span><ul>
-      <li>Your tree looks like this: <div align="center"><a id="treeexample" name="treeexample"></a><a name="12863"></a><table>
+      <li>Your tree looks like this: <div align="center"><a id="treeexample" name="treeexample"></a><a name="12862"></a><table>
             <caption align="bottom"><strong>Figure 5.22:</strong> Tree 1</caption>
             <tr>
               <td>
@@ -743,7 +743,7 @@
             </tr>
           </table>
         </div>
-      <li>You want to collapse node &quot;<i>C</i>&quot;.<li>Enter <tt>&quot;Category/A/C&quot;</tt>: <div align="center"><a id="treeexample2" name="treeexample2"></a><a name="12872"></a><table>
+      <li>You want to collapse node &quot;<i>C</i>&quot;.<li>Enter <tt>&quot;Category/A/C&quot;</tt>: <div align="center"><a id="treeexample2" name="treeexample2"></a><a name="12871"></a><table>
             <caption align="bottom"><strong>Figure 5.23:</strong> Tree 2</caption>
             <tr>
               <td>
@@ -752,7 +752,7 @@
             </tr>
           </table>
         </div>
-      <li>To collapse node &quot;<i>A</i>&quot;, enter <tt>&quot;Category/A&quot;</tt>: <div align="center"><a id="treeexample3" name="treeexample3"></a><a name="12881"></a><table>
+      <li>To collapse node &quot;<i>A</i>&quot;, enter <tt>&quot;Category/A&quot;</tt>: <div align="center"><a id="treeexample3" name="treeexample3"></a><a name="12880"></a><table>
             <caption align="bottom"><strong>Figure 5.24:</strong> Tree 3</caption>
             <tr>
               <td>
@@ -784,7 +784,7 @@
       </tr>
     </table>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drag Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44744"></a><a name="44745"></a><p><a id="CONCRETE_Tree_DragByIndexPath" name="CONCRETE_Tree_DragByIndexPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Drag Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44743"></a><a name="44744"></a><p><a id="CONCRETE_Tree_DragByIndexPath" name="CONCRETE_Tree_DragByIndexPath"></a><ul>
       <li>This action drags the node you specify.<li>You give the path to the node to be dragged using an indexpath.<li>Jubula realizes this by: <ul>
           <li>Moving the cursor over the component.<li>If the tree is not expanded, Jubula expands it.<li>Holding the mouse button you specify, and the item is dragged.</ul>
       <li>You <span class="textbf">must</span> follow this action with a <i>drop</i> action</ul>
@@ -881,7 +881,7 @@
         </table>
     </ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drag Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44751"></a><a name="44752"></a><p><a id="CONCRETE_Tree_DragByTextPath" name="CONCRETE_Tree_DragByTextPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Drag Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44750"></a><a name="44751"></a><p><a id="CONCRETE_Tree_DragByTextPath" name="CONCRETE_Tree_DragByTextPath"></a><ul>
       <li>This action drags the node you specify.<li>You give the path to the node to be dragged using a textpath.<li>Jubula realizes this by: <ul>
           <li>Moving the cursor over the component.<li>If the tree is not expanded, Jubula expands it.<li>Holding the mouse button you specify, and the item is dragged.</ul>
       <li>You <span class="textbf">must</span> follow this action with a <i>drop</i> action</ul>
@@ -987,7 +987,7 @@
     </table><a id="CONCRETE_Tree_DragByTextPath_Operator" name="CONCRETE_Tree_DragByTextPath_Operator"></a><ul>
       <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drop on Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44758"></a><a name="44759"></a><p><a id="CONCRETE_Tree_DropByIndexPath" name="CONCRETE_Tree_DropByIndexPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Drop on Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44757"></a><a name="44758"></a><p><a id="CONCRETE_Tree_DropByIndexPath" name="CONCRETE_Tree_DropByIndexPath"></a><ul>
       <li>This action drops a dragged item onto the node you specify.<li>You give the path to the node you want to drop the item onto using an indexpath.<li>Jubula realizes this by: <ul>
           <li>Moving the cursor over the node.<li>If the tree is not expanded, Jubula expands it.<li>Letting loose the mouse button you specify.</ul>
       <li>Precede this action with a <i>drag</i> action</ul>
@@ -1065,7 +1065,7 @@
     </table><a id="CONCRETE_Tree_DropByIndexPath_DelayBeforeDrop" name="CONCRETE_Tree_DropByIndexPath_DelayBeforeDrop"></a><ul>
       <li>Use this parameter to wait before dropping the item you have dragged.<li>This can be useful to give the user interface time to scroll etc.<li>Give the time to delay in milliseconds.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drop on Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44765"></a><a name="44766"></a><p><a id="CONCRETE_Tree_DropByTextPath" name="CONCRETE_Tree_DropByTextPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Drop on Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44764"></a><a name="44765"></a><p><a id="CONCRETE_Tree_DropByTextPath" name="CONCRETE_Tree_DropByTextPath"></a><ul>
       <li>This action drops a dragged item onto the node you specify.<li>You give the path to the node you want to drop the item onto using a textpath.<li>Jubula realizes this by: <ul>
           <li>Moving the cursor over the node.<li>If the tree is not expanded, Jubula expands it.<li>Letting loose the mouse button you specify.</ul>
       <li>Precede this action with a <i>drag</i> action</ul>
@@ -1152,7 +1152,7 @@
     </table><a id="CONCRETE_Tree_DropByTextPath_DelayBeforeDrop" name="CONCRETE_Tree_DropByTextPath_DelayBeforeDrop"></a><ul>
       <li>Use this parameter to wait before dropping the item you have dragged.<li>This can be useful to give the user interface time to scroll etc.<li>Give the time to delay in milliseconds.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Expand Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44772"></a><a name="44773"></a><p><a id="CONCRETE_Tree_ExpandByIndexPath" name="CONCRETE_Tree_ExpandByIndexPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Expand Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44771"></a><a name="44772"></a><p><a id="CONCRETE_Tree_ExpandByIndexPath" name="CONCRETE_Tree_ExpandByIndexPath"></a><ul>
       <li>Use this action to expand a tree or part of a tree along an indicated path.<li>You enter the path as an indexpath.<li>Jubula realises this by activating the command in the tree to expand it.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1213,7 +1213,7 @@
         </table>
     </ul>
     <p><span class="textbf">Example:</span><ul>
-      <li>Your tree looks like this: <div align="center"><a id="treeexample3" name="treeexample3"></a><a name="13300"></a><table>
+      <li>Your tree looks like this: <div align="center"><a id="treeexample3" name="treeexample3"></a><a name="13299"></a><table>
             <caption align="bottom"><strong>Figure 5.25:</strong> Tree 3</caption>
             <tr>
               <td>
@@ -1222,7 +1222,7 @@
             </tr>
           </table>
         </div>
-      <li>You want to expand the tree to node A<li>Enter <tt>&quot;1/1&quot;</tt>: <div align="center"><a id="treeexample4" name="treeexample4"></a><a name="13308"></a><table>
+      <li>You want to expand the tree to node A<li>Enter <tt>&quot;1/1&quot;</tt>: <div align="center"><a id="treeexample4" name="treeexample4"></a><a name="13307"></a><table>
             <caption align="bottom"><strong>Figure 5.26:</strong> Tree 4</caption>
             <tr>
               <td>
@@ -1233,7 +1233,7 @@
         </div>
     </ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Expand Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44779"></a><a name="44780"></a><p><a id="CONCRETE_Tree_ExpandByTextPath" name="CONCRETE_Tree_ExpandByTextPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Expand Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44778"></a><a name="44779"></a><p><a id="CONCRETE_Tree_ExpandByTextPath" name="CONCRETE_Tree_ExpandByTextPath"></a><ul>
       <li>Use this action to expand a tree or part of a tree along an indicated path.<li>You enter the path as a textpath.<li>Jubula realises this by activating the command in the tree to expand it.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1288,7 +1288,7 @@
     </table><a id="CONCRETE_Tree_ExpandByTextPath_TextPath" name="CONCRETE_Tree_ExpandByTextPath_TextPath"></a><p>Use this parameter to specify the textpath of the subtree you want to expand. Make sure you give the whole path (either starting from the top of the tree, or at the position defined by the pre-ascend and path type parameters).<ul>
       <li>Enter the path to the item as a textpath.<li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes).<li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>.<li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text.<li>Each segment of the path will be used to find a corresponding node, using the operator provided.</ul>
     <p><span class="textbf">Example:</span><ul>
-      <li>Your tree looks like this: <div align="center"><a id="treeexample3" name="treeexample3"></a><a name="13367"></a><table>
+      <li>Your tree looks like this: <div align="center"><a id="treeexample3" name="treeexample3"></a><a name="13366"></a><table>
             <caption align="bottom"><strong>Figure 5.27:</strong> Tree 3</caption>
             <tr>
               <td>
@@ -1297,7 +1297,7 @@
             </tr>
           </table>
         </div>
-      <li>You want to expand the tree to node A<li>Enter <tt>&quot;Category/A&quot;</tt>: <div align="center"><a id="treeexample4" name="treeexample4"></a><a name="13375"></a><table>
+      <li>You want to expand the tree to node A<li>Enter <tt>&quot;Category/A&quot;</tt>: <div align="center"><a id="treeexample4" name="treeexample4"></a><a name="13374"></a><table>
             <caption align="bottom"><strong>Figure 5.28:</strong> Tree 4</caption>
             <tr>
               <td>
@@ -1329,7 +1329,7 @@
       </tr>
     </table>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Move</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44786"></a><a name="44787"></a><p><a id="CONCRETE_Tree_Move" name="CONCRETE_Tree_Move"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Move</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44785"></a><a name="44786"></a><p><a id="CONCRETE_Tree_Move" name="CONCRETE_Tree_Move"></a><ul>
       <li>Use this action to move from a currently selected node to another node.<li>You specify in which direction you want to move, and how far (number of nodes).<li>You also specify how many clicks should be made on the new node, if any.<li>This action is useful for navigating in a tree.<li>Jubula realises this by: <ul>
           <li>searching for the node to move to<li>placing the cursor on this node<li>clicking the amount of times you specify</ul>
       <li>The movement is carried out relative to the currently selected node.<li>If no node is currently selected, the test will fail.</ul>
@@ -1382,7 +1382,7 @@
     </table><a id="CONCRETE_Tree_Move_ClickCount" name="CONCRETE_Tree_Move_ClickCount"></a><ul>
       <li>Enter the amount of clicks that should be performed on the component or item.<li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item.<li>Entering <tt>&quot;1&quot;</tt> will single-click on the component or item.<li>Entering <tt>&quot;2&quot;</tt> will double-click on the component or item.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44793"></a><a name="44794"></a><p><a id="CONCRETE_Tree_SelectByIndexPath" name="CONCRETE_Tree_SelectByIndexPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Select Node by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44792"></a><a name="44793"></a><p><a id="CONCRETE_Tree_SelectByIndexPath" name="CONCRETE_Tree_SelectByIndexPath"></a><ul>
       <li>Use this item to select a node from a tree.<li>You give the path to the node using an indexpath.<li>Jubula realises this by: <ul>
           <li>Searching for the node you specify.<li>If the tree is not expanded, Jubula expands it.<li>Clicking on the node, the amount of times you specify.</ul>
     </ul>
@@ -1492,7 +1492,7 @@
     </table><a id="CONCRETE_Tree_SelectByIndexPath_ExtendSelection" name="CONCRETE_Tree_SelectByIndexPath_ExtendSelection"></a><ul>
       <li>The <i>Extend Selection</i> parameter has two possible values.<li>&quot;<i>yes</i>&quot; indicates the chosen item will be added to the current selection.<li>Select &quot;<i>no</i>&quot; to begin a new selection with the chosen item.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44800"></a><a name="44801"></a><p><a id="CONCRETE_Tree_SelectByTextPath" name="CONCRETE_Tree_SelectByTextPath"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Select Node by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44799"></a><a name="44800"></a><p><a id="CONCRETE_Tree_SelectByTextPath" name="CONCRETE_Tree_SelectByTextPath"></a><ul>
       <li>Use this item to select a node from a tree.<li>You give the path to the node using a textpath.<li>Jubula realises this by: <ul>
           <li>Searching for the node you specify.<li>If the tree is not expanded, Jubula expands it.<li>Clicking on the node, the amount of times you specify.</ul>
     </ul>
@@ -1617,7 +1617,7 @@
     </table><a id="CONCRETE_Tree_SelectByTextPath_ExtendSelection" name="CONCRETE_Tree_SelectByTextPath_ExtendSelection"></a><ul>
       <li>The <i>Extend Selection</i> parameter has two possible values.<li>&quot;<i>yes</i>&quot; indicates the chosen item will be added to the current selection.<li>Select &quot;<i>no</i>&quot; to begin a new selection with the chosen item.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Store Text at Mouse Position</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44807"></a><a name="44808"></a><p><a id="CONCRETE_Tree_ReadTextAtMousePosition" name="CONCRETE_Tree_ReadTextAtMousePosition"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Store Text at Mouse Position</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44806"></a><a name="44807"></a><p><a id="CONCRETE_Tree_ReadTextAtMousePosition" name="CONCRETE_Tree_ReadTextAtMousePosition"></a><ul>
       <li>Use this action to read the value on the node where the mouse is currently placed so that you can use the value of the node as data for other Test Steps .<li>This can be used in conjunction with the action &quot;<i>select node</i>&quot; with a click count of 0.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1636,7 +1636,7 @@
     </table><a id="CONCRETE_Tree_ReadTextAtMousePosition_Variable" name="CONCRETE_Tree_ReadTextAtMousePosition_Variable"></a><ul>
       <li>Enter the name you want to give to this variable.<li>Variable names may only contain letters, numbers and underscores.<li>You can then enter this variable name as data for other Test Steps .<li>When you enter the variable name as data, place a dollar sign before it.<li>The data associated with this variable name remains the same until the Project is closed, or until you overwrite the name by using it for another value.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Store Text of Selected Node</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44814"></a><a name="44815"></a><p><a id="CONCRETE_Tree_ReadTextOfSelectedEntry" name="CONCRETE_Tree_ReadTextOfSelectedEntry"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Store Text of Selected Node</big></span> <tt><small class="FOOTNOTESIZE">(Tree)</small></tt> <a name="44813"></a><a name="44814"></a><p><a id="CONCRETE_Tree_ReadTextOfSelectedEntry" name="CONCRETE_Tree_ReadTextOfSelectedEntry"></a><ul>
       <li>Use this action to read the value from the currently selected node so that you can use the value as data for other Test Steps .</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -1657,6 +1657,6 @@
     <p>(SWT) Tree (swt)<br /> Tree Table (swt)<p>
       <br />
     <hr />
-    <address>Copyright BREDEX GmbH 2011</address>
+    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

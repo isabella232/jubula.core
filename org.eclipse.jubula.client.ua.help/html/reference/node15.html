@@ -11,8 +11,8 @@
     <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
   </head>
   <body>
-    <h2><a id="SECTION00623000000000000000" name="SECTION00623000000000000000"><span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Combo Box</a></h2><a name="5320"></a> <a name="5321"></a><p><b>Description</b>:<p><a id="CONCRETE_ComboBox" name="CONCRETE_ComboBox"></a><ul>
-      <li>A <i>combo box</i> is a component which consists of a field or button and a drop down list: <div align="center"><a id="Combobox" name="Combobox"></a><a name="5329"></a><table>
+    <h2><a id="SECTION00623000000000000000" name="SECTION00623000000000000000"><span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Combo Box</a></h2><a name="5319"></a> <a name="5320"></a><p><b>Description</b>:<p><a id="CONCRETE_ComboBox" name="CONCRETE_ComboBox"></a><ul>
+      <li>A <i>combo box</i> is a component which consists of a field or button and a drop down list: <div align="center"><a id="Combobox" name="Combobox"></a><a name="5328"></a><table>
             <caption align="bottom"><strong>Figure 5.4:</strong> Combo Box</caption>
             <tr>
               <td>
@@ -22,7 +22,7 @@
           </table>
         </div>
       <li>When the field or button is clicked, the list opens, allowing you to select one of a number of values.</ul>
-    <p>Because the comma (,) is a special symbol for combo boxes, if you want to use a comma as part of your parameter value, you have to mask it. See the section later in this document <a href="node39.html#specialchar">9</a> for more details.<p><span class="textbf">Mapping combo boxes</span><p>In the Object Mapping Mode , a combo box to be mapped looks like this:<div align="center"><a id="mapcombobox" name="mapcombobox"></a><a name="5340"></a><table>
+    <p>Because the comma (,) is a special symbol for combo boxes, if you want to use a comma as part of your parameter value, you have to mask it. See the section later in this document <a href="node39.html#specialchar">9</a> for more details.<p><span class="textbf">Mapping combo boxes</span><p>In the Object Mapping Mode , a combo box to be mapped looks like this:<div align="center"><a id="mapcombobox" name="mapcombobox"></a><a name="5339"></a><table>
         <caption align="bottom"><strong>Figure 5.5:</strong> Combo Box</caption>
         <tr>
           <td>
@@ -319,7 +319,7 @@
       </tr>
     </table>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="43216"></a><a name="43217"></a><p><a id="CONCRETE_ComboBox_VerifyContainsValue" name="CONCRETE_ComboBox_VerifyContainsValue"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="43215"></a><a name="43216"></a><p><a id="CONCRETE_ComboBox_VerifyContainsValue" name="CONCRETE_ComboBox_VerifyContainsValue"></a><ul>
       <li>Use this action to check whether a value you enter is contained in the combo box.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -368,7 +368,7 @@
     </table><a id="CONCRETE_ComboBox_VerifyContainsValue_Exists" name="CONCRETE_ComboBox_VerifyContainsValue_Exists"></a><ul>
       <li>Set this parameter to <i>true</i> if you expect the entry to exist.<li>Set this parameter to <i>false</i> if you expect the entry not to exist.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="43223"></a><a name="43224"></a><p><a id="CONCRETE_ComboBox_VerifySelectedIndex" name="CONCRETE_ComboBox_VerifySelectedIndex"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="43222"></a><a name="43223"></a><p><a id="CONCRETE_ComboBox_VerifySelectedIndex" name="CONCRETE_ComboBox_VerifySelectedIndex"></a><ul>
       <li>Use this action to test whether the item at the given index is currently selected in the combo box.</ul>
     <p><i>Parameters</i><br />
     <table border="1" cellpadding="3">
@@ -402,7 +402,7 @@
     </table><a id="CONCRETE_ComboBox_VerifySelectedIndex_IsSelected" name="CONCRETE_ComboBox_VerifySelectedIndex_IsSelected"></a><ul>
       <li>Set this parameter to <i>true</i> if you expect the entry to be selected.<li>Set this parameter to <i>false</i> if you expect the entry not to be selected.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="43230"></a><a name="43231"></a><p><a id="CONCRETE_ComboBox_SelectIndex" name="CONCRETE_ComboBox_SelectIndex"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Select Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="43229"></a><a name="43230"></a><p><a id="CONCRETE_ComboBox_SelectIndex" name="CONCRETE_ComboBox_SelectIndex"></a><ul>
       <li>Use this action to select an item from the combo box using its index as a parameter.<li>Jubula realises this by: <ul>
           <li>Clicking once on the combo box to open the list.<li>Selecting the item specified by clicking it once.</ul>
     </ul>
@@ -423,7 +423,7 @@
     </table><a id="CONCRETE_ComboBox_SelectIndex_OneIndex" name="CONCRETE_ComboBox_SelectIndex_OneIndex"></a><ul>
       <li>Use this parameter to specify which item you want to select from the combo box.<li>Refer to the item using its index.<li>The first item has an index of <tt>&quot;1&quot;</tt>, the second <tt>&quot;2&quot;</tt> and so on.</ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="43237"></a><a name="43238"></a><p><a id="CONCRETE_ComboBox_SelectValue" name="CONCRETE_ComboBox_SelectValue"></a><ul>
+      <br /><span class="textbf"><big class="LARGE">Select Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="43236"></a><a name="43237"></a><p><a id="CONCRETE_ComboBox_SelectValue" name="CONCRETE_ComboBox_SelectValue"></a><ul>
       <li>Use this action to select an item from the combo box using the name of the item as a parameter.<li>Jubula realises this by: <ul>
           <li>Clicking once on the combo box to open the list.<li>Selecting the item specified by clicking it once.</ul>
     </ul>
@@ -476,6 +476,6 @@
     <p>
       <br />
     <hr />
-    <address>Copyright BREDEX GmbH 2011</address>
+    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>
