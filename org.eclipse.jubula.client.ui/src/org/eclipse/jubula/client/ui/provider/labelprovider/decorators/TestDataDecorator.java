@@ -26,7 +26,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
@@ -85,22 +84,24 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
                         && node.getSumSpecTcFlag();
                 } else if (node instanceof ICapPO) {
                     ICapPO cap = (ICapPO)node;
-                    IExecTestCasePO execTC = 
-                        (IExecTestCasePO)node.getParentNode().getParentNode();
+                    INodePO grandParent = node.getParentNode().getParentNode();
                     boolean overWrittenName = false;
-                    for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
-                        if (pair.getFirstName().equals(cap.getComponentName())
-                                && pair.getSecondName() != null
-                                    && !pair.getSecondName().equals(
-                                            cap.getComponentName())) {
-                            
-                            overWrittenName = true;
-                            break;
+                    if (grandParent instanceof IExecTestCasePO) {
+                        IExecTestCasePO execTC = (IExecTestCasePO)grandParent;
+                        for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
+                            if (pair.getFirstName().equals(cap.getComponentName())
+                                    && pair.getSecondName() != null
+                                        && !pair.getSecondName().equals(
+                                                cap.getComponentName())) {
+                                
+                                overWrittenName = true;
+                                break;
+                            }
                         }
-                    }
-                    flag = cap.getCompleteTdFlag(locale);
-                    if (!overWrittenName) {
-                        flag = flag && cap.getCompleteOMFlag(aut);
+                        flag = cap.getCompleteTdFlag(locale);
+                        if (!overWrittenName) {
+                            flag = flag && cap.getCompleteOMFlag(aut);
+                        }
                     }
                 }
             } else {
@@ -130,7 +131,7 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
     private boolean shouldNotDecorate(INodePO gnode, IDecoration decoration) {
         return gnode == null
                 || gnode.getParentNode() == null
-                || UINodeBP.getTestSuiteOfNode(gnode) == null
+                || NodeBP.getOwningTestSuite(gnode) == null
                 || decoration.getDecorationContext() 
                     instanceof JBEditorDecorationContext
                 || gnode instanceof IProjectPO;

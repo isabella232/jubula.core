@@ -22,7 +22,6 @@ import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Hibernator;
@@ -41,19 +40,6 @@ public class UINodeBP {
      */
     private UINodeBP() {
         // do nothing
-    }
-    
-    /**
-     * Gets the TestSuite of the given node
-     * @param node the node
-     * @return the TestSuite of the given node or null if no TestSuite found
-     */
-    public static ITestSuitePO getTestSuiteOfNode(INodePO node) {
-        INodePO parent = node;
-        while (!(parent instanceof ITestSuitePO) && parent != null) {
-            parent = parent.getParentNode();
-        }
-        return (ITestSuitePO)parent;
     }
 
     /**

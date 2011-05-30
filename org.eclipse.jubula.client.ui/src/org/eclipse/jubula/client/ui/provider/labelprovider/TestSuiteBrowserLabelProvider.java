@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -27,7 +28,6 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -84,7 +84,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
 
         final WorkingLanguageBP workLangBP = WorkingLanguageBP.getInstance();
         Locale locale = workLangBP.getWorkingLanguage();
-        ITestSuitePO testSuite = UINodeBP.getTestSuiteOfNode(node);
+        ITestSuitePO testSuite = NodeBP.getOwningTestSuite(node);
         if (node != null && isNodeActive(node)) {
             if (testSuite != null) {
                 IAUTMainPO aut = testSuite.getAut();
@@ -101,17 +101,20 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
                     checkNode((IExecTestCasePO)node, aut, locale, toolTip);
                 } else if (node instanceof ICapPO) {
                     ICapPO cap = (ICapPO)node;
-                    IExecTestCasePO execTC = 
-                        (IExecTestCasePO)node.getParentNode()
-                            .getParentNode();
+                    INodePO grandParent = node.getParentNode().getParentNode();
                     boolean overWrittenName = false;
-                    for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
-                        if (pair.getFirstName().equals(cap.getComponentName())
-                                && pair.getSecondName() != null 
-                                && !pair.getSecondName().equals(
-                                        cap.getComponentName())) {
-                            overWrittenName = true;
-                            break;
+                    if (grandParent instanceof IExecTestCasePO) {
+                        IExecTestCasePO execTC = (IExecTestCasePO)grandParent;
+                        for (ICompNamesPairPO pair 
+                                : execTC.getCompNamesPairs()) {
+                            if (pair.getFirstName().equals(
+                                        cap.getComponentName())
+                                    && pair.getSecondName() != null 
+                                    && !pair.getSecondName().equals(
+                                            cap.getComponentName())) {
+                                overWrittenName = true;
+                                break;
+                            }
                         }
                     }
                     checkNode(aut, locale, cap, toolTip, overWrittenName);
