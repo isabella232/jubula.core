@@ -51,11 +51,12 @@ public class CompletenessBP implements
      * private constructor
      */
     private CompletenessBP() {
-        DataEventDispatcher.getInstance().addDataChangedListener(this, false);
-        DataEventDispatcher.getInstance().addLanguageChangedListener(this, 
-            false);
-        DataEventDispatcher.getInstance().addProjectLoadedListener(this, false);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addDataChangedListener(this, false);
+        ded.addLanguageChangedListener(this, false);
+        ded.addProjectLoadedListener(this, false);
     }
+
     /**
      * @return the ComponentNamesList
      */

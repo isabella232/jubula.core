@@ -48,7 +48,6 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
      */
     public void decorate(Object element, IDecoration decoration) {
         decoration.setForegroundColor(Layout.DEFAULT_OS_COLOR);
-
         final INodePO node = (INodePO)element;
         if (shouldNotDecorate(node, decoration)) {
             return;
@@ -88,8 +87,10 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
                     boolean overWrittenName = false;
                     if (grandParent instanceof IExecTestCasePO) {
                         IExecTestCasePO execTC = (IExecTestCasePO)grandParent;
-                        for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
-                            if (pair.getFirstName().equals(cap.getComponentName())
+                        for (ICompNamesPairPO pair 
+                                : execTC.getCompNamesPairs()) {
+                            if (pair.getFirstName().equals(
+                                        cap.getComponentName())
                                     && pair.getSecondName() != null
                                         && !pair.getSecondName().equals(
                                                 cap.getComponentName())) {
@@ -122,19 +123,19 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
     }
 
     /**
-     * @param gnode
-     *            the gui node
+     * @param node
+     *            the node
      * @param decoration
      *            the decoration
      * @return wheter decoration should continue for this element or not
      */
-    private boolean shouldNotDecorate(INodePO gnode, IDecoration decoration) {
-        return gnode == null
-                || gnode.getParentNode() == null
-                || NodeBP.getOwningTestSuite(gnode) == null
+    private boolean shouldNotDecorate(INodePO node, IDecoration decoration) {
+        return node == null
+                || node.getParentNode() == null
+                || NodeBP.getOwningTestSuite(node) == null
                 || decoration.getDecorationContext() 
                     instanceof JBEditorDecorationContext
-                || gnode instanceof IProjectPO;
+                || node instanceof IProjectPO;
     }
 
     /** 

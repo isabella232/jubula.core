@@ -41,7 +41,7 @@ public class UINodeBP {
     private UINodeBP() {
         // do nothing
     }
-
+    
     /**
      * sets the selection in the given TreeViewer to the given node and also
      * gives the given tree viewer focus
