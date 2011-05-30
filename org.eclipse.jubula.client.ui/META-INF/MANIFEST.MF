@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Jubula UI (Incubation)
+Bundle-Name: Jubula UI
 Bundle-SymbolicName: org.eclipse.jubula.client.ui; singleton:=true
-Bundle-Version: 0.9.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
  icons/
 Bundle-Activator: org.eclipse.jubula.client.ui.Plugin
@@ -38,8 +38,8 @@ Export-Package: org.eclipse.jubula.client.ui,
  org.eclipse.jubula.client.ui.widgets,
  org.eclipse.jubula.client.ui.wizards,
  org.eclipse.jubula.client.ui.wizards.pages
-Require-Bundle: org.eclipse.jubula.client.core;bundle-version="[0.9.0,1.0.0)";visibility:=reexport,
- org.eclipse.jubula.client.archive;bundle-version="[0.9.0,1.0.0)";visibility:=reexport,
+Require-Bundle: org.eclipse.jubula.client.core;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
+ org.eclipse.jubula.client.archive;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)";visibility:=reexport,
  org.eclipse.ui.views;bundle-version="[3.5.0,4.0.0)";visibility:=reexport,
  org.eclipse.ui.ide;bundle-version="[3.6.1,4.0.0)";visibility:=reexport,

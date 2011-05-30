@@ -10,12 +10,12 @@
 	<parent>
 		<artifactId>org.eclipse.jubula.releng.server</artifactId>
 		<groupId>org.eclipse.jubula</groupId>
-		<version>0.9.0-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../org.eclipse.jubula.releng.server</relativePath>
 	</parent>
 	<groupId>org.eclipse.jubula</groupId>
 	<artifactId>org.eclipse.jubula.rc.common.agent</artifactId>
-	<version>0.9.0-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<build>
 		<finalName>org.eclipse.jubula.rc.common.agent</finalName>
@@ -47,12 +47,12 @@
 		<dependency>
 			<groupId>org.eclipse.jubula</groupId>
 			<artifactId>org.eclipse.jubula.tools</artifactId>
-			<version>0.9.0-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jubula</groupId>
 			<artifactId>org.eclipse.jubula.rc.common</artifactId>
-			<version>0.9.0-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
