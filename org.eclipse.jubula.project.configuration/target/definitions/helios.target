@@ -27,8 +27,8 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-<unit id="org.apache.commons.cli.source" version="1.2.0.v201011021000"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20110124210048/repository/"/>
+<unit id="org.apache.commons.cli" version="1.2.0.v201105210650"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/repository/"/>
 </location>
 </locations>
 </target>
