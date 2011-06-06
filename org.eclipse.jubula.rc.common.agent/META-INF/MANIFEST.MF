@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Created-By: Eclipse Jubula (Incubation)
+Created-By: Eclipse Jubula
 Premain-Class: org.eclipse.jubula.rc.common.agent.GDAgent
 Class-Path: ./AUTLauncher.jar

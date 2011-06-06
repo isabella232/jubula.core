@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Jubula Core (Incubation)
+Bundle-Name: Jubula Core
 Bundle-SymbolicName: org.eclipse.jubula.client.core;singleton:=true
-Bundle-Version: 0.9.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Eclipse-BuddyPolicy: registered
 Bundle-ClassPath: .,
  resources/,
@@ -46,8 +46,8 @@ Export-Package: org.dom4j,
  org.eclipse.jubula.client.core.serialization,
  org.eclipse.jubula.client.core.test,
  org.eclipse.jubula.client.core.utils
-Require-Bundle: org.eclipse.jubula.communication;bundle-version="[0.9.0,1.0.0)";visibility:=reexport,
- org.eclipse.jubula.toolkit.common;bundle-version="[0.9.0,1.0.0)";visibility:=reexport,
+Require-Bundle: org.eclipse.jubula.communication;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
+ org.eclipse.jubula.toolkit.common;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)";visibility:=reexport,
  org.junit4;bundle-version="[4.8.1,5.0.0)",
  javax.persistence;bundle-version="[2.0.3,3.0.0)";visibility:=reexport,
