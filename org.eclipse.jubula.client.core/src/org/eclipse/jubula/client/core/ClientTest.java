@@ -448,7 +448,6 @@ public class ClientTest implements IClientTest {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public void resetToTesting() {
@@ -456,27 +455,30 @@ public class ClientTest implements IClientTest {
         // stops the object mapping modew by sending a
         // ChangeAUTModeMessage(TESTING) to the AUTServer and then closing the
         // connection to the AUT.
+        CAPRecordedCommand.setRecordListener(null);
         try {
-            ChangeAUTModeMessage message = new ChangeAUTModeMessage();
-            message.setMode(ChangeAUTModeMessage.TESTING);
-            CAPRecordedCommand.setRecordListener(null);
-            AUTConnection.getInstance().send(message);
-        } catch (UnknownMessageException ume) {
-            fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
-        } catch (NotConnectedException nce) {
-            log.error(nce);
-            // HERE: notify the listeners about unsuccessfull mode change
-        } catch (CommunicationException ce) {
-            log.error(ce);
-            // HERE: notify the listeners about unsuccessfull mode change
-        }
-
-        try {
-            AUTConnection.getInstance().close();
+            if (AUTConnection.getInstance().isConnected()) {
+                try {
+                    ChangeAUTModeMessage message = new ChangeAUTModeMessage();
+                    message.setMode(ChangeAUTModeMessage.TESTING);
+                    AUTConnection.getInstance().send(message);
+                } catch (UnknownMessageException ume) {
+                    fireAUTServerStateChanged(new AUTServerEvent(
+                            ume.getErrorId()));
+                } catch (NotConnectedException nce) {
+                    log.error(nce);
+                    // HERE: notify the listeners about unsuccessfull mode
+                    // change
+                } catch (CommunicationException ce) {
+                    log.error(ce);
+                    // HERE: notify the listeners about unsuccessfull mode
+                    // change
+                }
+                AUTConnection.getInstance().close();
+            }
         } catch (ConnectionException e) {
             log.error("Error occurred while closing connection to AUT.", e); //$NON-NLS-1$
         }
-
     }
 
     /**
