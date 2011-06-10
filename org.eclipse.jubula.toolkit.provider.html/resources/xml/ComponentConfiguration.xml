@@ -312,7 +312,7 @@
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" />
 	</toolkitComponent>
 	<toolkitComponent type="html.Div" visible="false">
-		<realizes>guidancer.abstract.Widget</realizes>
+		<realizes>guidancer.concrete.Label</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.DivImplClass</testerClass>
 		<componentClass name="html.Div">
             <property name="tagName" value="div" />
@@ -332,4 +332,11 @@
             <property name="tagName" value="ul" />
         </componentClass>
     </toolkitComponent>
+   	<toolkitComponent type="html.Span" visible="false">
+		<realizes>guidancer.concrete.Label</realizes>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.SpanImplClass</testerClass>
+		<componentClass name="html.Span">
+            <property name="tagName" value="span" />
+        </componentClass>
+	</toolkitComponent>
 </compSystem>
