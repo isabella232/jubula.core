@@ -99,7 +99,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setSorter(new ViewerSorter());
         getMainTreeViewer().setComparer(new PersistentObjectComparer());
-        addTreeDoubleClickListener(CommandIDs.NEW_TESTDATACUBE_COMMAND_ID);
+        addTreeDoubleClickListener(CommandIDs.EDIT_PARAMETERS_COMMAND_ID);
         addFocusListener(getMainTreeViewer());
         getEditorHelper().addListeners();
         setActionHandlers();
