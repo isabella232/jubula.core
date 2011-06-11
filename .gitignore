@@ -1,0 +1,7 @@
+/org.eclipse.jubula.client.archive/lib/archiveModel.jar
+/org.eclipse.jubula.client.core/lib/param-parser.jar
+.DS_Store
+/org.eclipse.jubula.rc.common.agent/bin/
+/org.eclipse.jubula.rc.common/bin/
+/org.eclipse.jubula.rc.swing/bin/
+/org.eclipse.jubula.rc.swt/bin/
