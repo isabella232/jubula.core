@@ -10,11 +10,17 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.agent;
 
+import java.io.File;
 import java.lang.instrument.Instrumentation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
-import org.eclipse.jubula.rc.common.AutServerLauncher;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.CommandConstants;
 
 
 /**
@@ -37,9 +43,25 @@ public class GDAgent {
      * reactivates the saved ClassLoader.
      * @param agentArguments String agentArguments
      * @param instrumentation a java.lang.instrument.Instrumentation instance
+     * @throws ClassNotFoundException 
+     * @throws NoSuchMethodException 
+     * @throws SecurityException 
+     * @throws InvocationTargetException 
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
+     *              If reflection calls fail.
+     * @throws MalformedURLException 
+     *              If any entry of the AUT Server classpath cannot be 
+     *              parsed to a URL.
      */
-    public static void premain(String agentArguments,
-            Instrumentation instrumentation) {  
+    public static void premain(String agentArguments, 
+            Instrumentation instrumentation) throws ClassNotFoundException, 
+            SecurityException, NoSuchMethodException, IllegalArgumentException, 
+            IllegalAccessException, InvocationTargetException, 
+            MalformedURLException {  
+        
+        String autServerClassPath =
+            System.getenv("AUT_SERVER_CLASSPATH"); //$NON-NLS-1$
         
         // create AutServer arguments
         String[] args = 
@@ -48,8 +70,7 @@ public class GDAgent {
         args[Constants.ARG_SERVERPORT] = System.getenv("AUT_SERVER_PORT"); //$NON-NLS-1$
         // placeholder
         args[Constants.ARG_AUTMAIN] = "AutMain"; //$NON-NLS-1$
-        args[Constants.ARG_AUTSERVER_CLASSPATH] = 
-            System.getenv("AUT_SERVER_CLASSPATH"); //$NON-NLS-1$
+        args[Constants.ARG_AUTSERVER_CLASSPATH] = autServerClassPath;
         args[Constants.ARG_AUTSERVER_NAME] = System.getenv("AUT_SERVER_NAME"); //$NON-NLS-1$
 
         // Aut Agent arguments
@@ -62,11 +83,24 @@ public class GDAgent {
         // true for agent is activated
         args[Constants.ARG_AGENT_SET] = "true"; //$NON-NLS-1$
 
+        String [] fileNames = autServerClassPath.split(
+                System.getProperty("path.separator")); //$NON-NLS-1$
+        URL [] urls = new URL[fileNames.length];
+        for (int i = 0; i < fileNames.length; i++) {
+            urls[i] = new File(fileNames[i]).toURL();
+        }
+        
         final ClassLoader oldContextClassLoader = Thread.currentThread()
             .getContextClassLoader();
         
         try {
-            AutServerLauncher.main(args);
+            ClassLoader autServerLauncherLoader = new URLClassLoader(urls);
+            Class<?> autServerLauncherClass = 
+                autServerLauncherLoader.loadClass(
+                        CommandConstants.AUT_SERVER_LAUNCHER);
+            Method mainMethod = 
+                autServerLauncherClass.getMethod("main", String[].class); //$NON-NLS-1$
+            mainMethod.invoke(null, new Object[] {args});
         } finally {
             Thread.currentThread().setContextClassLoader(oldContextClassLoader);
         }

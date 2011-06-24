@@ -16,10 +16,16 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+
+import org.apache.commons.lang.StringUtils;
 /**
  * This Util class contains methods to zip and unzip directories 
  *
@@ -27,6 +33,30 @@ import java.util.zip.ZipOutputStream;
  * @created 13.08.2010
  */
 public class ZipUtil {
+    
+    /** file extension for JAR files, in lower case */
+    private static final String JAR_FILE_EXT = ".jar"; //$NON-NLS-1$
+    
+    /** mapping from a ZIP file to its extracted temporary JAR files */
+    private static Map zipToTempJars = new HashMap();
+    
+    /**
+     * 
+     * @author BREDEX GmbH
+     * @created 23.06.2011
+     */
+    public static interface IZipEntryFilter {
+
+        /**
+         * 
+         * @param entry The zip entry to filter.
+         * @return <code>true</code> if the zip entry should be accepted.
+         *         Otherwise, <code>false</code>.
+         */
+        public boolean accept(ZipEntry entry);
+        
+    }
+    
     /** to prevent instantiation */
     private ZipUtil() {
         //do nothing
@@ -80,30 +110,128 @@ public class ZipUtil {
      */
     public static final void unzip(File zip, File extractTo) 
         throws IOException {
-        ZipFile archive = new ZipFile(zip);
+
+        unzipFiles(zip, extractTo, new IZipEntryFilter() {
+            public boolean accept(ZipEntry entry) {
+                return true;
+            }
+        });
+    }
+    
+    /**
+     * Extracts all JAR files from the given ZIP file into temporary JAR files. 
+     * The directory structure of the extracted contents is not maintained.
+     * A mapping from ZIP file to extracted JARs is maintained by this class,
+     * so multiple calls to this method for a single ZIP file will extract JAR 
+     * files once and return references to those files for each subsequent call.
+     * The extracted JAR files are deleted on VM exit.
+     * 
+     * 
+     * @param srcZip The ZIP file to extract.
+     * @return all extracted files.
+     * @throws IOException
+     */
+    public static File[] unzipTempJars(File srcZip) 
+        throws IOException {
+
+        if (zipToTempJars.containsKey(srcZip)) {
+            return (File[])zipToTempJars.get(srcZip);
+        }
+        
+        IZipEntryFilter filter = new IZipEntryFilter() {
+            public boolean accept(ZipEntry entry) {
+                return entry.getName().toLowerCase().endsWith(JAR_FILE_EXT);
+            }
+        };
+        ZipFile archive = new ZipFile(srcZip);
         Enumeration e = archive.entries();
+        List extractedFiles = new ArrayList();
         while (e.hasMoreElements()) {
             ZipEntry entry = (ZipEntry)e.nextElement();
-            File file = new File(extractTo, entry.getName());
-            if (entry.isDirectory() && !file.exists()) {
-                file.mkdirs();
-            } else {
-                if (!file.getParentFile().exists()) {
-                    file.getParentFile().mkdirs();
+            if (filter.accept(entry)) {
+                if (!entry.isDirectory()) {
+                    String prefix = entry.getName().substring(
+                            entry.getName().lastIndexOf("/") + 1,  //$NON-NLS-1$
+                            entry.getName().toLowerCase().lastIndexOf(
+                                JAR_FILE_EXT));
+                    File file = File.createTempFile(
+                            StringUtils.rightPad(prefix, 3), 
+                            JAR_FILE_EXT);
+                    extractedFiles.add(file);
+                    file.deleteOnExit();
+                    unzipFile(archive, file, entry);
                 }
+            }
+        }
 
-                InputStream in = archive.getInputStream(entry);
-                BufferedOutputStream out = new BufferedOutputStream(
-                        new FileOutputStream(file));
-
-                byte[] buffer = new byte[8192];
-                int read;
-
-                while (-1 != (read = in.read(buffer))) {
-                    out.write(buffer, 0, read);
+        File [] files = (File[])extractedFiles.toArray(
+                new File[extractedFiles.size()]);
+        zipToTempJars.put(srcZip, files);
+        return files;
+    }
+    
+    /**
+     * Unzips the contents of the given zip file into the given directory.
+     * 
+     * @param srcZip The zip file to extract.
+     * @param targetDir The base directory for extracted files.
+     * @param filter Only files accepted by this filter will be extracted.
+     * @return all extracted files.
+     * @throws IOException
+     */
+    public static File[] unzipFiles(File srcZip, File targetDir, 
+            IZipEntryFilter filter) throws IOException {
+        
+        ZipFile archive = new ZipFile(srcZip);
+        Enumeration e = archive.entries();
+        List extractedFiles = new ArrayList();
+        while (e.hasMoreElements()) {
+            ZipEntry entry = (ZipEntry)e.nextElement();
+            if (filter.accept(entry)) {
+                File file = new File(targetDir, entry.getName());
+                if (entry.isDirectory() && !file.exists()) {
+                    file.mkdirs();
+                } else {
+                    if (!file.getParentFile().exists()) {
+                        file.getParentFile().mkdirs();
+                    }
+                    
+                    extractedFiles.add(file);
+                    unzipFile(archive, file, entry);
                 }
-
+            }
+        }
+        
+        return (File[])extractedFiles.toArray();
+    }
+    
+    /**
+     * 
+     * @param archive The zip file from which to extract.
+     * @param targetFile The file to which the entry contents will be extracted.
+     * @param entry The entry to extract.
+     * @throws IOException
+     */
+    private static void unzipFile(ZipFile archive, File targetFile, 
+            ZipEntry entry) throws IOException {
+        InputStream in = null;
+        BufferedOutputStream out = null;
+        try {
+            in = archive.getInputStream(entry);
+            out = new BufferedOutputStream(
+                    new FileOutputStream(targetFile));
+            
+            byte[] buffer = new byte[8192];
+            int read;
+            
+            while (-1 != (read = in.read(buffer))) {
+                out.write(buffer, 0, read);
+            }
+        } finally {
+            if (in != null) {
                 in.close();
+            }
+            if (out != null) {
                 out.close();
             }
         }

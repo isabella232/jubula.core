@@ -35,14 +35,40 @@ public abstract class CommandConstants {
     public static final String WEB_TOOLKIT = "com.bredexsw.guidancer.WebToolkitPlugin"; //$NON-NLS-1$
     /** constant: "Html" */
     public static final String HTML_TOOLKIT = "com.bredexsw.guidancer.HtmlToolkitPlugin"; //$NON-NLS-1$
-    /** constant: "../AutServer/bin" */
-    public static final String AUT_SERVER_BIN = "../org.eclipse.jubula.rc.swing/bin"; //$NON-NLS-1$
-    /** constant: "../AutSWTServer/bin" */
-    public static final String AUT_SWT_SERVER_BIN = "../org.eclipse.jubula.rc.swt/bin"; //$NON-NLS-1$
-    /** constant: "./lib/AUTServer.jar" */
-    public static final String AUT_SERVER_JAR = "./lib/org.eclipse.jubula.rc.swing.jar"; //$NON-NLS-1$
-    /** constant: "./lib/AUTSwtServer.jar" */
-    public static final String AUT_SWT_SERVER_JAR = "./lib/org.eclipse.jubula.rc.swt.jar"; //$NON-NLS-1$
+    /** ID of the SLF4J API bundle */
+    public static final String SLF4J_API_BUNDLE_ID = "org.slf4j.api"; //$NON-NLS-1$
+    /** ID of the SLF4J JCL bundle */
+    public static final String SLF4J_JCL_BUNDLE_ID = "org.slf4j.jcl"; //$NON-NLS-1$
+    /** ID of the SLF4J LOG4J bundle */
+    public static final String SLF4J_LOG4J_BUNDLE_ID = "org.slf4j.log4j"; //$NON-NLS-1$
+    /** ID of the logback classic bundle */
+    public static final String LOGBACK_CLASSIC_BUNDLE_ID = "ch.qos.logback.classic"; //$NON-NLS-1$
+    /** ID of the logback core bundle */
+    public static final String LOGBACK_CORE_BUNDLE_ID = "ch.qos.logback.core"; //$NON-NLS-1$
+    /** ID of the logback slf4j bundle */
+    public static final String LOGBACK_SLF4J_BUNDLE_ID = "ch.qos.logback.slf4j"; //$NON-NLS-1$
+    /** ID of the Apache Commons Lang bundle */
+    public static final String COMMONS_LANG_BUNDLE_ID = "org.apache.commons.lang"; //$NON-NLS-1$
+    /** ID of the Apache ORO bundle */
+    public static final String APACHE_ORO_BUNDLE_ID = "org.apache.oro"; //$NON-NLS-1$
+    /** ID of the Apache Commons Bean Utils bundle */
+    public static final String COMMONS_BEAN_UTILS_BUNDLE_ID = "org.apache.commons.beanutils"; //$NON-NLS-1$
+    /** ID of the Apache Commons Collections bundle */
+    public static final String COMMONS_COLLECTIONS_BUNDLE_ID = "org.apache.commons.collections"; //$NON-NLS-1$
+    /** ID of the Tools bundle */
+    public static final String TOOLS_BUNDLE_ID = "org.eclipse.jubula.tools"; //$NON-NLS-1$
+    /** ID of the Communication bundle */
+    public static final String COMMUNICATION_BUNDLE_ID = "org.eclipse.jubula.communication"; //$NON-NLS-1$
+    /** ID of the common RC bundle */
+    public static final String RC_COMMON_BUNDLE_ID = "org.eclipse.jubula.rc.common"; //$NON-NLS-1$
+    /** ID of the RC Common Agent bundle */
+    public static final String RC_COMMON_AGENT_BUNDLE_ID = "org.eclipse.jubula.rc.common.agent"; //$NON-NLS-1$
+    /** ID of the Swing RC bundle */
+    public static final String RC_SWING_BUNDLE_ID = "org.eclipse.jubula.rc.swing"; //$NON-NLS-1$
+    /** ID of the SWT RC bundle */
+    public static final String RC_SWT_BUNDLE_ID = "org.eclipse.jubula.rc.swt"; //$NON-NLS-1$
+    /** ID of the HTML RC bundle */
+    public static final String RC_HTML_BUNDLE_ID = "com.bredexsw.jubula.rc.html"; //$NON-NLS-1$
     /** /** constant: "./lib/extImplClasses" - path name to external ImplClasses */
     public static final String EXT_IMPLCLASSES_PATH = "./lib/extImplClasses"; //$NON-NLS-1$
     /** constant: "./lib/ext" - path name for extension jars like monitoring */
@@ -51,10 +77,8 @@ public abstract class CommandConstants {
     public static final String AUT_SERVER_BASE_BIN = "../org.eclipse.jubula.rc.common/bin"; //$NON-NLS-1$
     /** constant: "./lib/AUTServerBase.jar" */
     public static final String AUT_SERVER_BASE_JAR = "./lib/org.eclipse.jubula.rc.common.jar"; //$NON-NLS-1$
-    /** constant: "./AUTLauncher.jar" */
-    public static final String AUT_LAUNCHER_JAR = "./AUTLauncher.jar"; //$NON-NLS-1$
-    /** constant: "./GDAgent.jar" */
-    public static final String GDAGENT_JAR = "./org.eclipse.jubula.rc.common.agent.jar"; //$NON-NLS-1$
+    /** constant: "./lib/AUTServerBase.jar" */
+    public static final String AUT_LAUNCHER_JAR = "./lib/org.eclipse.jubula.rc.common.jar"; //$NON-NLS-1$
     /** constant: "./resources" */
     public static final String AUT_SERVER_RESOURCES = "./resources"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swing.commands.ActivateApplicationCommand" */

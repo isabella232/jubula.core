@@ -285,18 +285,22 @@ public class Communicator {
      * the listeners are notified with connectingFailed() and acceptingFailed
      * respectively.
      * 
+     * @return the Thread responsible for accepting connections, or 
+     *         <code>null</code> if the the receiver is acting as a client.
      * @throws SecurityException
      *             if the security manager does not allow connections.
      * @throws JBVersionException
      *             in case of version error between Client and AutStarter
      */
-    public synchronized void run() throws SecurityException, 
+    public synchronized Thread run() throws SecurityException, 
         JBVersionException {
         
+        Thread acceptingThread = null;
         if (m_serverSocket != null && !isAccepting()) {
             // it's a server that hasn't yet started accepting connections
             setAccepting(true);
-            new AcceptingThread().start();
+            acceptingThread = new AcceptingThread();
+            acceptingThread.start();
         } else if (m_inetAddress != null) {
             // it's a client
             try {
@@ -321,6 +325,8 @@ public class Communicator {
                 throw se;
             } 
         }
+        
+        return acceptingThread;
     }
 
     /**
@@ -1007,7 +1013,7 @@ public class Communicator {
          * {@inheritDoc}
          */
         public void run() {
-            while (isAccepting()) {
+            while (isAccepting() && !Thread.currentThread().isInterrupted()) {
                 try {
                     Socket socket = m_serverSocket.accept();
                     BufferedReader reader = new BufferedReader(

@@ -102,12 +102,8 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         List cmds = new Vector();
         cmds.add(baseCmd);
         
-        String classpath = System.getProperty("java.class.path"); //$NON-NLS-1$
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("classPath:" + classpath); //$NON-NLS-1$
-        }
         StringBuffer autServerClasspath = new StringBuffer();
-        createServerClasspath(classpath, autServerClasspath);
+        createServerClasspath(autServerClasspath);
         
         List autAgentArgs = new ArrayList();
         autAgentArgs.add(String.valueOf(
@@ -125,9 +121,10 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
             // information for aut server that agent is not used
             cmds.add("false"); //$NON-NLS-1$
         } else { 
-            String serverBasePath = createServerBasePath(parameters); 
-            autServerClasspath.append(PATH_SEPARATOR).append(serverBasePath);
-            createServerDirs(autServerClasspath);
+            String serverBasePath = createServerBasePath(); 
+            autServerClasspath.append(PATH_SEPARATOR)
+                .append(serverBasePath).append(PATH_SEPARATOR)
+                .append(getRcBundleClassPath());
             m_autServerClasspath = autServerClasspath.toString();
                        
         }
@@ -163,26 +160,35 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
     }
     /**
      * Creates the Server classpath.
-     * @param classpath the classpath
      * @param serverClasspath the server classpath
      */
-    private void createServerClasspath(String classpath, 
-        StringBuffer serverClasspath) {
+    private void createServerClasspath(StringBuffer serverClasspath) {
+
+        String [] bundlesToAddToClasspath = {
+            CommandConstants.TOOLS_BUNDLE_ID, 
+            CommandConstants.COMMUNICATION_BUNDLE_ID, 
+            CommandConstants.RC_COMMON_BUNDLE_ID,
+            CommandConstants.SLF4J_JCL_BUNDLE_ID,
+            CommandConstants.SLF4J_API_BUNDLE_ID,
+            CommandConstants.SLF4J_LOG4J_BUNDLE_ID,
+            CommandConstants.LOGBACK_CLASSIC_BUNDLE_ID,
+            CommandConstants.LOGBACK_CORE_BUNDLE_ID,
+            CommandConstants.LOGBACK_SLF4J_BUNDLE_ID,
+            CommandConstants.COMMONS_LANG_BUNDLE_ID,
+            CommandConstants.APACHE_ORO_BUNDLE_ID,
+            CommandConstants.COMMONS_BEAN_UTILS_BUNDLE_ID,
+            CommandConstants.COMMONS_COLLECTIONS_BUNDLE_ID
+        };
         
-        StringTokenizer classpathElems = new StringTokenizer(classpath,
-                PATH_SEPARATOR);
-        while (classpathElems.hasMoreTokens()) {
-            String pathElem = classpathElems.nextToken();
-            File filePathElem = new File(pathElem);
-            serverClasspath.append(filePathElem.getAbsolutePath());
-            if (classpathElems.hasMoreTokens()) {
-                serverClasspath.append(PATH_SEPARATOR);                
-            }
+        for (String bundleId : bundlesToAddToClasspath) {
+            serverClasspath.append(
+                    AbstractStartToolkitAut.getClasspathForBundleId(bundleId));
+            serverClasspath.append(PATH_SEPARATOR);
         }
-        serverClasspath.append(PATH_SEPARATOR);
+        
+        
         serverClasspath.append(getAbsExtImplClassesPath());       
         if (LOG.isDebugEnabled()) {
-            LOG.debug("classPath:" + classpath); //$NON-NLS-1$
             LOG.debug("serverClasspath" + serverClasspath); //$NON-NLS-1$
         }
     }
@@ -198,8 +204,10 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         addBaseSettings(cmds, parameters);
         cmds.add("-classpath"); //$NON-NLS-1$
         StringBuffer autClassPath = createAutClasspath(parameters);
-        String serverBasePath = createServerBasePath(parameters); 
-        cmds.add(autClassPath.append(serverBasePath).toString());
+        String serverBasePath = createServerBasePath(); 
+        cmds.add(
+                autClassPath.append(PATH_SEPARATOR)
+                    .append(serverBasePath).toString());
         // add classname of autLauncher
         cmds.add(CommandConstants.AUT_SERVER_LAUNCHER);
         // add autServerBase dirs to autServerClassPath
@@ -239,20 +247,12 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
     }
     
     /**
-     * @param parameters The parameters for starting the AUT.
+     * 
      * @return the server base path including resources path
      */
-    private String createServerBasePath(Map parameters) {
-        // path for IDE version
-        File filePathElem = new File(CommandConstants.AUT_SERVER_BASE_BIN);
-        // path for the BuildVersion
-        String serverBasePath = filePathElem.getAbsolutePath();
-        if (!isRunningFromExecutable(parameters)) {
-            filePathElem = new File(CommandConstants.AUT_LAUNCHER_JAR);
-            final String autLauncherJarDir = filePathElem.getAbsolutePath();
-            serverBasePath += PATH_SEPARATOR + autLauncherJarDir; 
-        }
-        return serverBasePath;
+    private String createServerBasePath() {
+        return AbstractStartToolkitAut.getClasspathForBundleId(
+                CommandConstants.RC_COMMON_BUNDLE_ID);
     }
     
     /**
@@ -277,28 +277,26 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
             return;
         }
         cmds.add(autMain);
-        createServerDirs(autServerClasspath);
+        autServerClasspath.append(PATH_SEPARATOR)
+            .append(getRcBundleClassPath());
         cmds.add(autServerClasspath.toString());
         cmds.add(getServerClassName());
     }
-    
-    /**
-     * Adds AUT server bin dir and jar dir to autServerClasspath.
-     * @param autServerClasspath the server classpath
-     */ 
-    private void createServerDirs(StringBuffer autServerClasspath) {
-        String autServerClasses = getServerClasses();
-        String autServerJar = getServerJar();
 
-        // path to /bin
-        File filePathElem = new File(autServerClasses);
-        String autServerBinDir = filePathElem.getAbsolutePath();
-        // for the BuildVersion
-        filePathElem = new File(autServerJar); 
-        String autServerJarDir = filePathElem.getAbsolutePath();
-        
-        autServerClasspath.append(PATH_SEPARATOR).append(autServerBinDir)
-            .append(PATH_SEPARATOR).append(autServerJarDir);
+    /**
+     * 
+     * @return the class path corresponding to the receiver's RC bundle. 
+     */ 
+    protected String getRcBundleClassPath() {
+        return AbstractStartToolkitAut.getClasspathForBundleId(getRcBundleId());
+    }
+
+    /**
+     * 
+     * @return the ID of the receiver's RC bundle.
+     */
+    protected String getRcBundleId() {
+        return CommandConstants.RC_SWING_BUNDLE_ID;
     }
     
     /**
@@ -399,11 +397,8 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
      * @return the absolute path
      */
     protected String getAbsoluteAgentJarPath() {
-        final File agentJarDir = new File(CommandConstants.GDAGENT_JAR);
-        final StringBuffer paths = 
-            new StringBuffer(agentJarDir.getAbsolutePath());
-        String absPath = paths.toString();
-        return absPath.replace('\\', '/');
+        return AbstractStartToolkitAut.getClasspathForBundleId(
+                CommandConstants.RC_COMMON_AGENT_BUNDLE_ID);
     }
     
     /**
@@ -411,20 +406,6 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
      */
     protected String getServerClassName() {
         return CommandConstants.AUT_SWING_SERVER;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected String getServerClasses() {
-        return CommandConstants.AUT_SERVER_BIN;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected String getServerJar() {
-        return CommandConstants.AUT_SERVER_JAR;
     }
     
 }

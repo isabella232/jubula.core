@@ -72,10 +72,10 @@ public class DesktopIntegration implements PropertyChangeListener {
             SystemTray tray = SystemTray.getSystemTray();
             URL imageURL;
             if (EnvironmentUtils.isMacOS()) {
-                imageURL = ClassLoader.getSystemResource("gdagent_osx.png"); //$NON-NLS-1$
+                imageURL = this.getClass().getClassLoader().getResource("resources/gdagent_osx.png"); //$NON-NLS-1$
                 
             } else {
-                imageURL = ClassLoader.getSystemResource("gdagent.png"); //$NON-NLS-1$
+                imageURL = this.getClass().getClassLoader().getResource("resources/gdagent.png"); //$NON-NLS-1$
             }
             Image image = Toolkit.getDefaultToolkit().getImage(imageURL);
 

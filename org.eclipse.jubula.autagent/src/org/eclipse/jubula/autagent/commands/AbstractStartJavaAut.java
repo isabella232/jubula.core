@@ -248,19 +248,6 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @return the name of the main class for the AUT server.
      */
     protected abstract String getServerClassName();
-
-    /**
-     * @return the lib Jar containing all classes necessary to execute the
-     *         AUT server.
-     */
-    protected abstract String getServerJar();
-
-    /**
-     * @return the directory containing all classes necessary to execute the 
-     *         AUT server.
-     */
-    protected abstract String getServerClasses();
-
     
     /**
      * @param cmds The command List. May <b>not</b> be <ocde>null</code>.
@@ -392,11 +379,8 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @return the absolute path
      */
     protected String getAbsoluteAgentJarPath() {
-        final File agentJarDir = new File(CommandConstants.GDAGENT_JAR);
-        final StringBuffer paths = 
-            new StringBuffer(agentJarDir.getAbsolutePath());
-        String absPath = paths.toString();
-        return absPath.replace('\\', '/');
+        return AbstractStartToolkitAut.getClasspathForBundleId(
+                CommandConstants.RC_COMMON_AGENT_BUNDLE_ID);
     }
     
     /**

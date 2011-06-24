@@ -21,6 +21,7 @@ import java.io.PrintStream;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,14 +30,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.OptionGroup;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.PosixParser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.autagent.agent.AutAgent;
@@ -88,21 +81,6 @@ public class AutStarter {
 
     /** the logger */
     private static Log log = LogFactory.getLog(AutStarter.class);
-
-    /** exit code in case of invalid options */
-    private static final int EXIT_INVALID_OPTIONS = -1;
-
-    /** exit code in case of option -h(elp) */
-    private static final int EXIT_HELP_OPTION = 0;
-
-    /** exit code in case of a security exception */
-    private static final int EXIT_SECURITY_VIOLATION = 1;
-
-    /** exit code in case of an io exception */
-    private static final int EXIT_IO_EXCEPTION = 2;
-
-    /** exit code in case of a version error between Client and AutStarter */
-    private static final int EXIT_CLIENT_SERVER_VERSION_ERROR = 4;
 
     /** the instance */
     private static AutStarter instance = null;
@@ -170,68 +148,6 @@ public class AutStarter {
 
         m_agent = agent;
 
-    }
-
-    /**
-     * method to create an options object, filled with all options
-     *
-     * @return the options
-     */
-    @SuppressWarnings("nls")
-    private static Options createOptions() {
-        Options options = new Options();
-
-        Option portOption = new Option("p", true, "the port to listen to");
-        portOption.setArgName("port");
-        options.addOption(portOption);
-        
-        options.addOption("l", false, "lenient mode; does not shutdown AUTs " 
-                + "that try to register themselves using an already " 
-                + "registered AUT ID");
-        options.addOption("h", false, "prints this help text and exits");
-
-        OptionGroup verbosityOptions = new OptionGroup();
-        verbosityOptions.addOption(new Option("q", false, "quiet mode"));
-        verbosityOptions.addOption(new Option("v", false, "verbose mode"));
-        options.addOptionGroup(verbosityOptions);
-
-        OptionGroup startStopOptions = new OptionGroup();
-        startStopOptions.addOption(new Option("start", false,
-                "startup mode"));
-        
-        OptionBuilder.hasOptionalArg();
-        Option stopOption = OptionBuilder.create(COMMANDLINE_OPTION_STOP);
-        stopOption.setDescription("stops a running AUT Agent instance "
-                        + "for the given port "
-                        + "on the given hostname (default \"localhost\")");
-        stopOption.setArgName("hostname");
-        startStopOptions.addOption(stopOption);
-        options.addOptionGroup(startStopOptions);
-        
-        return options;
-    }
-
-    /**
-     * main method
-     *
-     * @param args -
-     *            the args, parsed with a PosixParser
-     */
-    public static void main(String[] args) {
-        // create the single instance here
-        final AutStarter server = AutStarter.getInstance();
-
-        CommandLineParser parser = new PosixParser();
-        try {
-            server.setCmd(parser.parse(createOptions(), args));
-        } catch (ParseException pe) {
-            String message = "invalid option: "; //$NON-NLS-1$
-            log.error(message, pe);
-            server.printHelp();
-            System.exit(EXIT_INVALID_OPTIONS);
-        }
-
-        server.start();
     }
 
     /**
@@ -320,23 +236,27 @@ public class AutStarter {
     }
 
     /**
-     * start accepting connections
+     * Start accepting connections. This method blocks until the AUT Agent is 
+     * shutdown.
+     * 
+     * @throws IOException 
+     * @throws UnknownHostException 
+     * @throws JBVersionException 
      */
-    public void start() {
-        int exitCode = 0;
+    public void start() throws UnknownHostException, 
+                               IOException, JBVersionException {
         String infoMessage = I18n.getString("AUTAgent.StartErrorText"); //$NON-NLS-1$
+
+        Thread clientSocketThread = null;
+
         try {
-            if (m_cmd.hasOption("h")) { //$NON-NLS-1$
-                printHelp();
-                System.exit(EXIT_HELP_OPTION);
-            }
             boolean killDuplicateAuts = !m_cmd.hasOption("l");
             getAgent().setKillDuplicateAuts(killDuplicateAuts);
             int port = getPortNumber();
             infoMessage = I18n.getString("AUTAgent.StartCommErrorText",  //$NON-NLS-1$
                     new Object[] {StringConstants.EMPTY + port});
             if (!m_cmd.hasOption(COMMANDLINE_OPTION_STOP)) {
-                initClientConnectionSocket(port);
+                clientSocketThread = initClientConnectionSocket(port);
                 initAutConnectionSocket();
                 DesktopIntegration di = new DesktopIntegration(getAgent());
                 di.setPort(port);
@@ -367,31 +287,16 @@ public class AutStarter {
                     System.out.println("AUT Agent not found at " + hostname + ":" + port); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             }
-        } catch (SecurityException se) {
-            log.error("security violation", se); //$NON-NLS-1$
-            exitCode = EXIT_SECURITY_VIOLATION;
-        } catch (IOException ioe) {
-            String message = "could not open socket: "; //$NON-NLS-1$
-            log.error(message, ioe);
-            exitCode = EXIT_IO_EXCEPTION;
-        } catch (NumberFormatException nfe) {
-            String message = "invalid value for option port"; //$NON-NLS-1$
-            log.error(message, nfe);
-            exitCode = EXIT_INVALID_OPTIONS;
-        } catch (NullPointerException npe) {
-            log.error("no command line", npe); //$NON-NLS-1$
-            printHelp();
-            exitCode = EXIT_INVALID_OPTIONS;
-        } catch (JBVersionException ve) {
-            log.error(ve.getMessage(), ve);
-            exitCode = EXIT_CLIENT_SERVER_VERSION_ERROR;
         } finally {
-         // print information box to user
+            // print information box to user
             if (infoMessage.length() > 0) {
                 showUserInfo(infoMessage);
             }
-            if (exitCode != 0) {
-                System.exit(exitCode);
+            
+            try {
+                clientSocketThread.join();
+            } catch (InterruptedException e) {
+                log.warn("Primary Thread was interrupted unexpectedly while waiting for client socket Thread to finish. Resuming execution of Primary Thread.", e); //$NON-NLS-1$
             }
         }
     }
@@ -446,13 +351,16 @@ public class AutStarter {
      * 
      * @param port
      *            int
+     *            
+     * @return the Thread responsible for accepting connections.
+     *         
      * @throws IOException
      *             error
      * @throws JBVersionException
      *             in case of version error between Client and AutStarter
      */
-    private void initClientConnectionSocket(int port) throws IOException,
-    JBVersionException {
+    private Thread initClientConnectionSocket(int port) 
+        throws IOException, JBVersionException {
 
         Map<String, IConnectionInitializer> clientTypeToInitializer =
             new HashMap<String, IConnectionInitializer>();
@@ -465,7 +373,7 @@ public class AutStarter {
                     public void initConnection(Socket socket, 
                             BufferedReader reader) {
                         System.out.println("Shutdown requested. Shutting down..."); //$NON-NLS-1$
-                        System.exit(0);
+                        Thread.currentThread().interrupt();
                     }
                 });
         // create a communicator
@@ -478,7 +386,7 @@ public class AutStarter {
         logRunning();
         // start listening
         logStartListening();
-        getCommunicator().run();
+        return getCommunicator().run();
     }
 
     /**
@@ -540,15 +448,6 @@ public class AutStarter {
                 I18n.getString("AUTAgent.failedStartDialogTitle"), //$NON-NLS-1$
                 JOptionPane.INFORMATION_MESSAGE);
         }
-    }
-
-    /**
-     * prints a formatted help text
-     */
-    private void printHelp() {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("autagent", //$NON-NLS-1$
-            createOptions(), true);
     }
 
     /**

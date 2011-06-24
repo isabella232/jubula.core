@@ -12,19 +12,28 @@ package org.eclipse.jubula.autagent.commands;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
 import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
+import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.utils.ZipUtil;
+import org.osgi.framework.Bundle;
 
 
 /**
@@ -263,5 +272,75 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
         String absPath = paths.toString();
         return absPath.replace('\\', '/');
     }
- 
+
+    /**
+     * 
+     * @param bundleId The ID of the bundle to search for classpath entries.
+     * @return classpath entries contained within the bundle with the given ID.
+     *         If
+     *         <ul> 
+     *           <li>the bundle cannot be resolved to a file, or</li> 
+     *           <li>the bundle is not a JAR file and the bundle's directory contains no JAR files</li>
+     *         </ul>
+     *         an empty array will be returned.
+     */
+    @SuppressWarnings("unchecked")
+    public static String[] getClasspathEntriesForBundleId(String bundleId) {
+        Bundle bundle = Platform.getBundle(bundleId);
+        List<String> classpathEntries = new ArrayList<String>();
+        try {
+            File bundleFile = FileLocator.getBundleFile(bundle);
+            if (bundleFile.isFile()) {
+                // bundle file is not a directory, so we assume it's a JAR file
+                classpathEntries.add(bundleFile.getAbsolutePath());
+
+                // since the classloader cannot handle nested JARs, we need to extract
+                // all known nested JARs and add them to the classpath
+                try {
+                    // assuming that it's a JAR/ZIP file
+                    File[] createdFiles = ZipUtil.unzipTempJars(bundleFile);
+                    for (int i = 0; i < createdFiles.length; i++) {
+                        classpathEntries.add(createdFiles[i].getAbsolutePath());
+                    }
+                } catch (IOException e) {
+                    log.error("An error occurred while trying to extract nested JARs from " + CommandConstants.TOOLS_BUNDLE_ID, e); //$NON-NLS-1$
+                }
+            } else {
+                Enumeration<URL> e = bundle.findEntries(
+                        "/", "*.jar", true); //$NON-NLS-1$//$NON-NLS-2$
+                while (e.hasMoreElements()) {
+                    URL jarUrl = e.nextElement();
+                    classpathEntries.add(
+                            new File(bundleFile + jarUrl.getFile())
+                            .getAbsolutePath());
+                }
+            }
+        } catch (IOException ioe) {
+            log.error("Bundle with ID '" + bundleId + "' could not be resolved to a file.", ioe); //$NON-NLS-1$//$NON-NLS-2$
+        }
+
+        return classpathEntries.toArray(new String[classpathEntries.size()]);
+    }
+    
+    /**
+     * 
+     * @param bundleId The ID of the bundle to search for a classpath.
+     * @return the classpath contained within the bundle with the given ID.
+     *         If
+     *         <ul> 
+     *           <li>the bundle cannot be resolved to a file, or</li> 
+     *           <li>the bundle is not a JAR file and the bundle's directory contains no JAR files</li>
+     *         </ul>
+     *         an empty String will be returned.
+     */
+    public static String getClasspathForBundleId(String bundleId) {
+        StringBuilder pathBuilder = new StringBuilder();
+        for (String entry : getClasspathEntriesForBundleId(bundleId)) {
+            pathBuilder.append(entry).append(PATH_SEPARATOR);
+        }
+        
+        return pathBuilder.substring(
+                0, pathBuilder.lastIndexOf(PATH_SEPARATOR));
+    }
+    
 }

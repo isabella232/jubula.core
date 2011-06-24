@@ -6,12 +6,13 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Jubula
 Export-Package: org.eclipse.jubula.communication,
+ org.eclipse.jubula.communication.commands,
  org.eclipse.jubula.communication.connection,
  org.eclipse.jubula.communication.listener,
  org.eclipse.jubula.communication.message,
+ org.eclipse.jubula.communication.message.html,
  org.eclipse.jubula.communication.message.swing,
  org.eclipse.jubula.communication.message.swt,
- org.eclipse.jubula.communication.message.html,
  org.eclipse.jubula.communication.parser,
  org.eclipse.jubula.communication.writer
 Require-Bundle: org.eclipse.jubula.tools;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,

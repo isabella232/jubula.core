@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 
 
@@ -33,17 +34,6 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
      * <code>DEFAULT_AUT_ID_ATTRIBUTE_NAME</code>
      */
     private static final String DEFAULT_AUT_ID_ATTRIBUTE_NAME = "id"; //$NON-NLS-1$
-
-    /**
-     * <code>LIB_DIR</code>
-     */
-    private static final String LIB_DIR = FILE_SEPARATOR
-            + "lib" + FILE_SEPARATOR; //$NON-NLS-1$
-
-    /**
-     * <code>MAIN_JAR</code>
-     */
-    private static final String MAIN_JAR = "com.bredexsw.jubula.rc.html.jar"; //$NON-NLS-1$
 
     /** 
      * mapping from browser type (String) to corresponding 
@@ -99,12 +89,34 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
         commands.add(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY
                 + getAbsoluteLoggingConfPath());
 
-        File serverDir = new File("."); //$NON-NLS-1$
-        commands.add("-jar"); //$NON-NLS-1$
-        StringBuffer cmd = new StringBuffer(LIB_DIR + MAIN_JAR);
-        cmd.insert(0, serverDir.getAbsolutePath());
-        commands.add(cmd.toString());
+        StringBuilder serverClasspath = new StringBuilder();
+        String [] bundlesToAddToClasspath = {
+            CommandConstants.TOOLS_BUNDLE_ID, 
+            CommandConstants.COMMUNICATION_BUNDLE_ID, 
+            CommandConstants.RC_COMMON_BUNDLE_ID,
+            CommandConstants.RC_HTML_BUNDLE_ID,
+            CommandConstants.SLF4J_JCL_BUNDLE_ID,
+            CommandConstants.SLF4J_API_BUNDLE_ID,
+            CommandConstants.SLF4J_LOG4J_BUNDLE_ID,
+            CommandConstants.LOGBACK_CLASSIC_BUNDLE_ID,
+            CommandConstants.LOGBACK_CORE_BUNDLE_ID,
+            CommandConstants.LOGBACK_SLF4J_BUNDLE_ID,
+            CommandConstants.COMMONS_LANG_BUNDLE_ID,
+            CommandConstants.APACHE_ORO_BUNDLE_ID,
+            CommandConstants.COMMONS_COLLECTIONS_BUNDLE_ID
+        };
+            
+        for (String bundleId : bundlesToAddToClasspath) {
+            serverClasspath.append(
+                    AbstractStartToolkitAut.getClasspathForBundleId(bundleId));
+            serverClasspath.append(PATH_SEPARATOR);
+        }
+        
+        commands.add("-classpath"); //$NON-NLS-1$
+        commands.add(serverClasspath.toString());
 
+        commands.add("com.bredexsw.jubula.rc.html.WebAUTServer"); //$NON-NLS-1$
+        
         // connection parameters
         commands.add(String.valueOf(
                 AutStarter.getInstance().getAutCommunicator().getLocalPort()));

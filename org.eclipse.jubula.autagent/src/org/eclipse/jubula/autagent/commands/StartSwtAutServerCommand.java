@@ -50,36 +50,6 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    protected String getServerClasses() {
-        return CommandConstants.AUT_SWT_SERVER_BIN;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected String getServerJar() {
-        return CommandConstants.AUT_SWT_SERVER_JAR;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] createCmdArray(String baseCmd, Map parameters) {
-        final String[] superCmdArray = super.createCmdArray(baseCmd, 
-            parameters);
-        if (isRunningFromExecutable(parameters)) {
-            return superCmdArray;
-        }
-        final List tmpList = Arrays.asList(superCmdArray);
-        final List cmdList = new ArrayList(tmpList);
-        final String[] cmdArray = (String[])cmdList.toArray(
-            new String[cmdList.size()]);
-        return cmdArray;
-    }
-
-    /**
      * 
      * {@inheritDoc}
      */
@@ -118,6 +88,14 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
         props.add(sb.toString());
         
         return props;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    protected String getRcBundleId() {
+        return CommandConstants.RC_SWT_BUNDLE_ID;
     }
 
 }

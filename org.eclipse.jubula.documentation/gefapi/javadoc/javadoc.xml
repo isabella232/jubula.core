@@ -8,8 +8,6 @@
 
 <project default="javadoc">
 	<target name="javadoc">
-		<property name="cp" refid="rc.gef.extension.classpath"/>
-		<echo message="Classpath is ${cp}"/>
 		<property name="sp" refid="rc.gef.extension.sourcepath"/>
 		<echo message="Sourcepath is ${sp}"/>
 
@@ -23,7 +21,6 @@
 			nonavbar="false" 
 			notree="false" 
 			packagenames="org.eclipse.jubula.rc.rcp.gef.identifier" 
-			classpathref="rc.gef.extension.classpath"
 			sourcepathref="rc.gef.extension.sourcepath"
 			splitindex="true" 
 			use="true" 

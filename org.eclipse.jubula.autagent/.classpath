@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="/org.eclipse.jubula.communication"/>
+	<classpathentry kind="src" output="target/classes" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.tools"/>
-	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.common.orbit/org.apache.commons.cli_1.2.0.v201011021000.jar"/>
-	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.common.orbit/org.slf4j.api_1.5.11.v20100519-1910.jar"/>
-	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.common.orbit/org.slf4j.jcl_1.5.11.v20100419-1106.jar"/>
-	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.common.orbit/org.slf4j.log4j_1.5.11.v20100419-1106.jar"/>
-	<classpathentry kind="lib" path="/org.eclipse.jubula.rc.common.orbit/slf4j-jdk14-1.5.11.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

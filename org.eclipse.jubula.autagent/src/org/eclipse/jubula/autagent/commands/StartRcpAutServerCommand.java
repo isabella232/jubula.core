@@ -155,20 +155,6 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
     /**
      * {@inheritDoc}
      */
-    protected String getServerClasses() {
-        return CommandConstants.AUT_SWT_SERVER_BIN;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected String getServerJar() {
-        return CommandConstants.AUT_SWT_SERVER_JAR;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     protected String[] createCmdArray(String baseCmd, Map parameters) {
         
         List cmds;
