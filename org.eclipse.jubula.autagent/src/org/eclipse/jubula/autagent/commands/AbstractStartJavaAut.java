@@ -430,7 +430,8 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         String agentString = null;       
         if (isRunningWithMonitoring(parameters)) {
             try {  
-                ClassLoader loader = new URLClassLoader(getExtensions());
+                ClassLoader loader = new URLClassLoader(
+                        getExtensions(), getClass().getClassLoader());
                 Class<?> monitoringClass = 
                     loader.loadClass(monitoringAgentClass);     
                 Constructor<?> constructor = monitoringClass.getConstructor();
