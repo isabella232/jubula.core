@@ -10,6 +10,9 @@
 	<packaging>pom</packaging>
 
 	<modules>
+        <module>../org.eclipse.jubula.tools</module>
+        <module>../org.eclipse.jubula.communication</module>
+		<module>../org.eclipse.jubula.toolkit.generate.interfaces</module>
 		<module>../org.eclipse.jubula.releng.client</module>
 		<module>../org.eclipse.jubula.releng.server</module>
 	</modules>

@@ -14,14 +14,14 @@
 	<property name="java.dir" value="src" />
 	<property name="utils.dir" value="resources" />
 	<property name="apache.lib" value="../org.eclipse.jubula.rc.common.orbit" />
-	<property name="JubulaSite" value="../org.eclipse.jubula.site" />
+	<property name="JubulaTools" value="../org.eclipse.jubula.tools/target/" />
 
 	<patternset id="patternset-tools">
 		<include name="*tools*.jar" />
 	</patternset>
 
 	<path id="classpathInterfaces">
-		<fileset dir="${JubulaSite}/target/site/plugins/">
+		<fileset dir="${JubulaTools}">
 			<patternset refid="patternset-tools" />
 		</fileset>
 		<fileset dir="${apache.lib}">
@@ -54,7 +54,7 @@
 			<fileset dir="${apache.lib}">
 				<include name="*.jar" />
 			</fileset>
-			<fileset dir="${JubulaSite}/target/site/plugins/">
+			<fileset dir="${JubulaTools}">
 				<patternset refid="patternset-tools" />
 			</fileset>
 			<fileset dir="../org.eclipse.jubula.tools/lib">

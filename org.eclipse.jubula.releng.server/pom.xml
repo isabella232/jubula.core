@@ -25,7 +25,6 @@
         <module>../org.eclipse.jubula.autagent</module>
         <module>../org.eclipse.jubula.rc.common</module>
         <module>../org.eclipse.jubula.rc.common.agent</module>
-        <module>../org.eclipse.jubula.toolkit.generate.interfaces</module>
         <module>../org.eclipse.jubula.rc.swing</module>
         <module>../org.eclipse.jubula.rc.swt</module>
         <module>../org.eclipse.jubula.rc.rcp</module>
