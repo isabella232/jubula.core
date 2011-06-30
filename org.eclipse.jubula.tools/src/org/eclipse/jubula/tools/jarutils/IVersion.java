@@ -21,7 +21,7 @@ public interface IVersion {
      * control components please increase this version in case of modification
      * of status messages from server or creation of new messages
      */
-    public final Integer JB_PROTOCOL_MAJOR_VERSION = new Integer(10);
+    public final Integer JB_PROTOCOL_MAJOR_VERSION = new Integer(11);
     
     /** major version for DB */
     public final Integer JB_DB_MAJOR_VERSION = new Integer(34);
