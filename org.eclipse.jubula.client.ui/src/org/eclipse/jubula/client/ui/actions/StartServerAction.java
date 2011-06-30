@@ -40,6 +40,7 @@ public class StartServerAction extends Action {
         // setText(String text) in Action.class. Everything behind the last
         // "@" is used as accelerator
         super(server.getName() + " : " + server.getPort().toString() + "@", style); //$NON-NLS-1$ //$NON-NLS-2$
+        m_server = server;
     }
 
     /**
@@ -51,13 +52,5 @@ public class StartServerAction extends Action {
         TestExecutionGUIController.connectToServer(m_server);
         ConnectServerBP.getInstance().setCurrentServer(m_server);
     }
-
-
-    /**
-     * @param server The server to set.
-     */
-    public void setServer(Server server) {
-        m_server = server;
-    }   
 
 }

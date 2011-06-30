@@ -27,6 +27,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.menus.IMenuService;
 
 
 /**
@@ -36,6 +38,10 @@ import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
 public class ChooseServerAction extends AbstractAction implements
     IWorkbenchWindowPulldownDelegate {
 
+    /** the ID of the actions pulldown menu for adding menu contributions */
+    public static final String PULLDOWN_MENU_ID = 
+        "menu:org.eclipse.jubula.client.ui.actions.ChooseServerAction.dropdown"; //$NON-NLS-1$
+    
     /**
      * {@inheritDoc}
      */
@@ -62,6 +68,9 @@ public class ChooseServerAction extends AbstractAction implements
         Server workingServer = 
             ConnectServerBP.getInstance().getWorkingServer();
         MenuManager menuManager = new MenuManager();
+        IMenuService menuService = (IMenuService) PlatformUI.getWorkbench()
+            .getService(IMenuService.class);
+        menuService.populateContributionManager(menuManager, PULLDOWN_MENU_ID);
         Menu fMenu = menuManager.createContextMenu(parent);
         ServerManager serverMgr = ServerManager.getInstance();
         Set<Server> servers = serverMgr.getServers();
@@ -69,7 +78,6 @@ public class ChooseServerAction extends AbstractAction implements
         for (Server server : servers) {
             StartServerAction action = new StartServerAction(
                 server, IAction.AS_CHECK_BOX);
-            action.setServer(server);
             if (workingServer != null 
                 && workingServer.equals(server)) {
                 action.setChecked(true);
@@ -85,6 +93,7 @@ public class ChooseServerAction extends AbstractAction implements
             serverName = server.getName();
             
         }
+ 
         return fMenu;
     }
     

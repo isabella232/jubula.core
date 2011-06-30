@@ -10,7 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.autagent;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.ConnectException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -24,7 +31,12 @@ import org.apache.commons.cli.PosixParser;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jubula.autagent.AutStarter;
+import org.eclipse.jubula.autagent.AutStarter.Verbosity;
+import org.eclipse.jubula.communication.connection.ConnectionState;
+import org.eclipse.jubula.tools.constants.ConfigurationConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBVersionException;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,11 +50,39 @@ public class AutAgentApplication implements IApplication {
     /** the logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(AutAgentApplication.class);
-    
+
+    /** constant for timeout when sending command to shutdown AUT Agent */
+    private static final int TIMEOUT_SEND_STOP_CMD = 10000;
+
     /**
      * <code>COMMANDLINE_OPTION_STOP</code>
      */
     private static final String COMMANDLINE_OPTION_STOP = "stop"; //$NON-NLS-1$
+
+    /**
+     * command line argument: port number
+     */
+    private static final String COMMANDLINE_OPTION_PORT = "p"; //$NON-NLS-1$
+
+    /**
+     * command line argument: show help
+     */
+    private static final String COMMANDLINE_OPTION_HELP = "h"; //$NON-NLS-1$
+
+    /**
+     * command line argument: enable "lenient" mode
+     */
+    private static final String COMMANDLINE_OPTION_LENIENT = "l"; //$NON-NLS-1$
+
+    /**
+     * command line argument: verbose output
+     */
+    private static final String COMMANDLINE_OPTION_VERBOSE = "v"; //$NON-NLS-1$
+
+    /**
+     * command line argument: quiet output
+     */
+    private static final String COMMANDLINE_OPTION_QUIET = "q"; //$NON-NLS-1$
 
     /** exit code in case of invalid options */
     private static final int EXIT_INVALID_OPTIONS = -1;
@@ -77,20 +117,36 @@ public class AutAgentApplication implements IApplication {
         CommandLineParser parser = new PosixParser();
         try {
             CommandLine cmd = parser.parse(createOptions(), args);
-            if (cmd.hasOption("h")) { //$NON-NLS-1$
+            if (cmd.hasOption(COMMANDLINE_OPTION_HELP)) {
                 printHelp();
                 return EXIT_HELP_OPTION;
             }
-            server.setCmd(cmd);
+
+            int port = getPortNumber(cmd);
+            
+            if (cmd.hasOption(COMMANDLINE_OPTION_STOP)) {
+                String hostname = "localhost"; //$NON-NLS-1$
+                if (cmd.getOptionValue(COMMANDLINE_OPTION_STOP) != null) {
+                    hostname = cmd.getOptionValue(COMMANDLINE_OPTION_STOP);
+                }
+                stopAutAgent(hostname, port);
+            } else {
+                boolean killDuplicateAuts = 
+                    !cmd.hasOption(COMMANDLINE_OPTION_LENIENT);
+                Verbosity verbosity = Verbosity.NORMAL;
+                if (cmd.hasOption(COMMANDLINE_OPTION_VERBOSE)) {
+                    verbosity = Verbosity.VERBOSE;
+                } else if (cmd.hasOption(COMMANDLINE_OPTION_QUIET)) {
+                    verbosity = Verbosity.QUIET;
+                }
+
+                server.start(port, killDuplicateAuts, verbosity, true);
+            }
         } catch (ParseException pe) {
             String message = "invalid option: "; //$NON-NLS-1$
             LOG.error(message, pe);
             printHelp();
-            System.exit(EXIT_INVALID_OPTIONS);
-        }
-
-        try {
-            server.start();
+            return EXIT_INVALID_OPTIONS;
         } catch (SecurityException se) {
             LOG.error("security violation", se); //$NON-NLS-1$
             return EXIT_SECURITY_VIOLATION;
@@ -131,18 +187,23 @@ public class AutAgentApplication implements IApplication {
     private static Options createOptions() {
         Options options = new Options();
 
-        Option portOption = new Option("p", true, "the port to listen to");
+        Option portOption = 
+            new Option(COMMANDLINE_OPTION_PORT, true, "the port to listen to");
         portOption.setArgName("port");
         options.addOption(portOption);
         
-        options.addOption("l", false, "lenient mode; does not shutdown AUTs " 
-                + "that try to register themselves using an already " 
-                + "registered AUT ID");
-        options.addOption("h", false, "prints this help text and exits");
+        options.addOption(COMMANDLINE_OPTION_LENIENT, 
+                false, "lenient mode; does not shutdown AUTs " 
+                    + "that try to register themselves using an already " 
+                    + "registered AUT ID");
+        options.addOption(COMMANDLINE_OPTION_HELP, false, 
+                "prints this help text and exits");
 
         OptionGroup verbosityOptions = new OptionGroup();
-        verbosityOptions.addOption(new Option("q", false, "quiet mode"));
-        verbosityOptions.addOption(new Option("v", false, "verbose mode"));
+        verbosityOptions.addOption(
+                new Option(COMMANDLINE_OPTION_QUIET, false, "quiet mode"));
+        verbosityOptions.addOption(
+                new Option(COMMANDLINE_OPTION_VERBOSE, false, "verbose mode"));
         options.addOptionGroup(verbosityOptions);
 
         OptionGroup startStopOptions = new OptionGroup();
@@ -170,4 +231,85 @@ public class AutAgentApplication implements IApplication {
             createOptions(), true);
     }
 
+    /**
+     * @param br
+     *            the buffered reader which is used to determine whether the
+     *            agent has shutdown itself
+     */
+    private void waitForAgentToTerminate(BufferedReader br) {
+        // keep process and socket alive till agent has read the shutdown command
+        boolean socketAlive = true;
+        while (socketAlive) {
+            try {
+                if (br.readLine() == null) {
+                    socketAlive = false;
+                }
+            } catch (IOException e) {
+                // ok here --> autagent has shut down itself
+                socketAlive = false;
+            }
+        }
+    }
+
+    /**
+     * Retrieves and returns the value of the "port number" argument from the
+     * given command line. If the argument is incorrectly formatted, an 
+     * exception will be thrown. If the argument is not present, An attempt 
+     * will be made to read the port from an environment variable. If the
+     * environment variable is not present or incorrectly formatted, then a
+     * default value is returned.
+     * 
+     * @param cmd The command line from which to retrieve the port number.
+     * @return the port number
+     */
+    private int getPortNumber(CommandLine cmd) {
+        int port = ConfigurationConstants.AUT_AGENT_DEFAULT_PORT;
+        if (cmd.hasOption(COMMANDLINE_OPTION_PORT)) {
+            port = Integer.valueOf(cmd.getOptionValue(COMMANDLINE_OPTION_PORT))
+                .intValue();
+        } else {
+            String portStr = EnvironmentUtils.getProcessEnvironment()
+                .getProperty(ConfigurationConstants.AUTSTARTER_PORT);
+            if ((portStr != null) && (!portStr.trim()
+                    .equals(StringConstants.EMPTY))) {
+                try {
+                    port = Integer.valueOf(portStr).intValue();
+                } catch (NumberFormatException nfe) {
+                    LOG.error("Format of portnumber in Environment-Variable '" //$NON-NLS-1$
+                            + ConfigurationConstants.AUTSTARTER_PORT
+                            + "' is not an integer", nfe); //$NON-NLS-1$
+                }
+            }
+            LOG.info("using default port " + String.valueOf(port)); //$NON-NLS-1$
+        }
+        return port;
+    }
+
+    /**
+     * Issues a "stop" command to the AUT Agent running on the given host
+     * and port.
+     * 
+     * @param hostname The hostname to which to send the command. 
+     * @param port The port on which to send the command.
+     * @throws UnknownHostException
+     * @throws IOException
+     * @throws JBVersionException
+     */
+    private void stopAutAgent(String hostname, int port) 
+        throws UnknownHostException, IOException, JBVersionException {
+        
+        try {
+            Socket commandSocket = new Socket(hostname, port);
+            InputStream inputStream = commandSocket.getInputStream();
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(inputStream));
+            ConnectionState.respondToTypeRequest(TIMEOUT_SEND_STOP_CMD,
+                    br, inputStream, new PrintStream(commandSocket
+                            .getOutputStream()),
+                    ConnectionState.CLIENT_TYPE_COMMAND_SHUTDOWN);
+            waitForAgentToTerminate(br);
+        } catch (ConnectException ce) {
+            System.out.println("AUT Agent not found at " + hostname + ":" + port); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+    }
 }

@@ -15,10 +15,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -29,7 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.autagent.agent.AutAgent;
@@ -44,14 +39,12 @@ import org.eclipse.jubula.communication.message.AutRegisteredMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
-import org.eclipse.jubula.tools.constants.ConfigurationConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.DevNull;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 
 
 /**
@@ -71,22 +64,26 @@ import org.eclipse.jubula.tools.utils.EnvironmentUtils;
  *
  */
 public class AutStarter {
-    /** constant for timeout when sending command to shutdown AUT Agent */
-    private static final int TIMEOUT_SEND_STOP_CMD = 10000;
 
     /**
-     * <code>COMMANDLINE_OPTION_STOP</code>
+     * Possible values for determining how much output should be produced.
      */
-    private static final String COMMANDLINE_OPTION_STOP = "stop"; //$NON-NLS-1$
-
+    public static enum Verbosity {
+        /** error messages will be printed to the console */
+        QUIET, 
+        
+        /** normal output */
+        NORMAL, 
+        
+        /** messages will be shown in dialogs */
+        VERBOSE
+    };
+    
     /** the logger */
     private static Log log = LogFactory.getLog(AutStarter.class);
 
     /** the instance */
     private static AutStarter instance = null;
-
-    /** the command line */
-    private CommandLine m_cmd = null;
 
     /** the communicator to use */
     private Communicator m_communicator;
@@ -105,6 +102,9 @@ public class AutStarter {
     
     /** sends messages using the Agent's communicator(s) */
     private CommunicationHelper m_messenger;
+    
+    /** controls the amount and form of output produced */
+    private Verbosity m_verbosity;
     
     /**
      * private constructor
@@ -236,56 +236,43 @@ public class AutStarter {
     }
 
     /**
-     * Start accepting connections. This method blocks until the AUT Agent is 
-     * shutdown.
+     * Start accepting connections. Depending on the value of 
+     * <code>isBlocking</code>, this method will block execution until the 
+     * AUT Agent is shutdown. 
      * 
+     * @param port The port on which the AUT Agent should listen for incoming
+     *             connections.
+     * @param killDuplicateAuts Whether AUTs attempting to register with an
+     *                          already registered AUT ID should be terminated.
+     * @param verbosity Controls the amount and form of output produced.
+     * @param isBlocking Whether the method should block execution until the 
+     *                   AUT Agent is shutdown.
      * @throws IOException 
      * @throws UnknownHostException 
      * @throws JBVersionException 
      */
-    public void start() throws UnknownHostException, 
-                               IOException, JBVersionException {
-        String infoMessage = I18n.getString("AUTAgent.StartErrorText"); //$NON-NLS-1$
+    public void start(int port, boolean killDuplicateAuts, 
+            Verbosity verbosity, boolean isBlocking) 
+        throws UnknownHostException, IOException, JBVersionException {
 
+        m_verbosity = verbosity;
+        String infoMessage = I18n.getString("AUTAgent.StartErrorText"); //$NON-NLS-1$
         Thread clientSocketThread = null;
 
         try {
-            boolean killDuplicateAuts = !m_cmd.hasOption("l");
             getAgent().setKillDuplicateAuts(killDuplicateAuts);
-            int port = getPortNumber();
             infoMessage = I18n.getString("AUTAgent.StartCommErrorText",  //$NON-NLS-1$
                     new Object[] {StringConstants.EMPTY + port});
-            if (!m_cmd.hasOption(COMMANDLINE_OPTION_STOP)) {
-                clientSocketThread = initClientConnectionSocket(port);
-                initAutConnectionSocket();
-                DesktopIntegration di = new DesktopIntegration(getAgent());
-                di.setPort(port);
-                m_agent.addPropertyChangeListener(AutAgent.PROP_NAME_AUTS, di);
-                if (m_cmd.hasOption("v") && !m_cmd.hasOption("q")) { //$NON-NLS-1$ //$NON-NLS-2$
-                    infoMessage = I18n.getString("AUTAgent.StartSuccessText") + //$NON-NLS-1$
-                        getCommunicator().getLocalPort() + "."; //$NON-NLS-1$
-                } else {
-                    infoMessage = StringConstants.EMPTY;
-                }
+            clientSocketThread = initClientConnectionSocket(port);
+            initAutConnectionSocket();
+            DesktopIntegration di = new DesktopIntegration(getAgent());
+            di.setPort(port);
+            m_agent.addPropertyChangeListener(AutAgent.PROP_NAME_AUTS, di);
+            if (m_verbosity.compareTo(Verbosity.VERBOSE) >= 0) {
+                infoMessage = I18n.getString("AUTAgent.StartSuccessText") + //$NON-NLS-1$
+                    getCommunicator().getLocalPort() + "."; //$NON-NLS-1$
             } else {
-                String hostname = "localhost"; //$NON-NLS-1$
-                if (m_cmd.getOptionValue(COMMANDLINE_OPTION_STOP) != null) {
-                    hostname = m_cmd.getOptionValue(COMMANDLINE_OPTION_STOP);
-                }
                 infoMessage = StringConstants.EMPTY;
-                try {
-                    Socket commandSocket = new Socket(hostname, port);
-                    InputStream inputStream = commandSocket.getInputStream();
-                    BufferedReader br = new BufferedReader(
-                            new InputStreamReader(inputStream));
-                    ConnectionState.respondToTypeRequest(TIMEOUT_SEND_STOP_CMD,
-                            br, inputStream, new PrintStream(commandSocket
-                                    .getOutputStream()),
-                            ConnectionState.CLIENT_TYPE_COMMAND_SHUTDOWN);
-                    waitForAgentToTerminate(br);
-                } catch (ConnectException ce) {
-                    System.out.println("AUT Agent not found at " + hostname + ":" + port); //$NON-NLS-1$ //$NON-NLS-2$
-                }
             }
         } finally {
             // print information box to user
@@ -293,57 +280,14 @@ public class AutStarter {
                 showUserInfo(infoMessage);
             }
             
-            try {
-                clientSocketThread.join();
-            } catch (InterruptedException e) {
-                log.warn("Primary Thread was interrupted unexpectedly while waiting for client socket Thread to finish. Resuming execution of Primary Thread.", e); //$NON-NLS-1$
-            }
-        }
-    }
-
-    /**
-     * @param br
-     *            the buffered reader which is used to determine whether the
-     *            agent has shutdown itself
-     */
-    private void waitForAgentToTerminate(BufferedReader br) {
-        // keep process and socket alive till agent has read the shutdown command
-        boolean socketAlive = true;
-        while (socketAlive) {
-            try {
-                if (br.readLine() == null) {
-                    socketAlive = false;
-                }
-            } catch (IOException e) {
-                // ok here --> autagent has shut down itself
-                socketAlive = false;
-            }
-        }
-    }
-
-    /**
-     * @return the port number
-     */
-    private int getPortNumber() {
-        int port = ConfigurationConstants.AUT_AGENT_DEFAULT_PORT;
-        if (m_cmd.hasOption("p")) { //$NON-NLS-1$
-            port = Integer.valueOf(m_cmd.getOptionValue("p")).intValue(); //$NON-NLS-1$
-        } else {
-            String portStr = EnvironmentUtils.getProcessEnvironment()
-                .getProperty(ConfigurationConstants.AUTSTARTER_PORT);
-            if ((portStr != null) && (!portStr.trim()
-                    .equals(StringConstants.EMPTY))) {
+            if (isBlocking) {
                 try {
-                    port = Integer.valueOf(portStr).intValue();
-                } catch (NumberFormatException nfe) {
-                    log.error("Format of portnumber in Environment-Variable '" //$NON-NLS-1$
-                            + ConfigurationConstants.AUTSTARTER_PORT
-                            + "' is not an integer", nfe); //$NON-NLS-1$
+                    clientSocketThread.join();
+                } catch (InterruptedException e) {
+                    log.warn("Primary Thread was interrupted unexpectedly while waiting for client socket Thread to finish. Resuming execution of Primary Thread.", e); //$NON-NLS-1$
                 }
             }
-            log.info("using default port " + String.valueOf(port)); //$NON-NLS-1$
         }
-        return port;
     }
 
     /**
@@ -412,7 +356,7 @@ public class AutStarter {
      * @param infoMessage message to show
      */
     private void showUserInfo(final String infoMessage) {
-        if (m_cmd.hasOption("q")) { //$NON-NLS-1$
+        if (m_verbosity.compareTo(Verbosity.QUIET) <= 0) {
             System.out.println(infoMessage);
         } else {
             try {
@@ -472,21 +416,6 @@ public class AutStarter {
                     + getCommunicator().getLocalPort();
             log.info(message);
         }
-    }
-
-    /**
-     * @return Returns the cmd.
-     */
-    public CommandLine getCmd() {
-        return m_cmd;
-    }
-
-    /**
-     * @param cmd
-     *            The cmd to set.
-     */
-    public void setCmd(CommandLine cmd) {
-        m_cmd = cmd;
     }
 
     /**
