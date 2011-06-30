@@ -16,18 +16,11 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 20.12.2005
- *
- *
- *
- *
  */
 public interface ICompIdentifierPO extends IPersistentObject,
     IComponentIdentifier {
-
     /**
      * @return Returns the neighbours.
      */

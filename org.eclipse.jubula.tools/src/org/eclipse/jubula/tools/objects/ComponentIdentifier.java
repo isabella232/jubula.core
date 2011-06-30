@@ -37,7 +37,6 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
  * @created 27.08.2004
  */
 public class ComponentIdentifier implements Serializable, IComponentIdentifier {
-    
     /**
      * Define the serialization ID to prevent
      * deserialization errors after changing
@@ -77,6 +76,24 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      * name returned by method getComponentName() has to be used as display name
      */
     private String m_alternativeDisplayName = null;
+    
+    /**
+     * the <code>m_matchPercentage</code> when this component identifier has
+     * been collected
+     */
+    private double m_matchPercentage = -1.0d;
+
+    /**
+     * the <code>m_numberOfOtherMatchingComponents</code> which may also be
+     * likely to be found in future
+     */
+    private int m_numberOfOtherMatchingComponents = -1;
+
+    /**
+     * <code>m_equalOriginalFound</code> whether this component identifier could
+     * be used to retrieve the original component on collection
+     */
+    private boolean m_equalOriginalFound = false;
     
     /**
      * public constructor <br>
@@ -320,5 +337,36 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
             .append(getHierarchyNames())
             .append(getNeighbours())
             .toHashCode();
+    }
+
+    /** {@inheritDoc} */
+    public void setMatchPercentage(double matchPercentage) {
+        m_matchPercentage = matchPercentage;
+    }
+
+    /** {@inheritDoc} */
+    public double getMatchPercentage() {
+        return m_matchPercentage;
+    }
+
+    /** {@inheritDoc} */
+    public void setNumberOfOtherMatchingComponents(
+            int numberOfOtherMatchingComponents) {
+        m_numberOfOtherMatchingComponents = numberOfOtherMatchingComponents;
+    }
+
+    /** {@inheritDoc} */
+    public int getNumberOfOtherMatchingComponents() {
+        return m_numberOfOtherMatchingComponents;
+    }
+
+    /** {@inheritDoc} */
+    public void setEqualOriginalFound(boolean equalOriginalFound) {
+        m_equalOriginalFound = equalOriginalFound;
+    }
+
+    /** {@inheritDoc} */
+    public boolean isEqualOriginalFound() {
+        return m_equalOriginalFound;
     }
 }

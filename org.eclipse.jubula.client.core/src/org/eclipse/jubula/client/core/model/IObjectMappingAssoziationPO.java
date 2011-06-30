@@ -12,13 +12,11 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.List;
 
+import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+
 /**
  * @author BREDEX GmbH
  * @created 20.12.2005
- *
- *
- *
- *
  */
 public interface IObjectMappingAssoziationPO 
         extends IPersistentObject, IComponentNameReuser {
@@ -91,4 +89,19 @@ public interface IObjectMappingAssoziationPO
      *         a category.
      */
     public abstract IObjectMappingCategoryPO getSection();
+
+    /**
+     * @return the compIdentifier of this technical component - only avaiable
+     *         shortly (until the next editor save) after this technical component has been collected during
+     *         object mapping / collecting mode.
+     */
+    public IComponentIdentifier getCompIdentifier();
+    
+    /**
+     * @param compId
+     *            set the compIdentifier of this technical component - only used
+     *            shortly after this technical component has been collected
+     *            during object mapping / collecting mode.
+     */
+    public void setCompIdentifier(IComponentIdentifier compId);
 }

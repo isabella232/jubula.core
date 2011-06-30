@@ -74,6 +74,11 @@ public class ObjectMappingAssoziationPO
      * Logical names of compontent
      */
     private List<String> m_logicalNames = new LinkedList<String>();
+    
+    /**
+     * The component identifier which has been used to create this po
+     */
+    private transient IComponentIdentifier m_compIdentifier = null;
 
     /**
      * Constructor
@@ -89,6 +94,7 @@ public class ObjectMappingAssoziationPO
      * @param tech    ComponentIdentifier
      */
     ObjectMappingAssoziationPO(IComponentIdentifier tech) {
+        setCompIdentifier(tech);
         if (tech != null) {
             ICompIdentifierPO techNamePO = createCompIdPoObject(tech);
             setTechnicalName(techNamePO);
@@ -370,5 +376,19 @@ public class ObjectMappingAssoziationPO
         
         return section;
     }
-    
+
+    /**
+     * @param compIdentifier the compIdentifier to set
+     */
+    public void setCompIdentifier(IComponentIdentifier compIdentifier) {
+        m_compIdentifier = compIdentifier;
+    }
+
+    /**
+     * @return the compIdentifier
+     */
+    @Transient
+    public IComponentIdentifier getCompIdentifier() {
+        return m_compIdentifier;
+    }
 }

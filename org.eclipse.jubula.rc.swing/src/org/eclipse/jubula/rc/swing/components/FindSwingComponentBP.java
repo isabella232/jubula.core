@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.swing.components;
 import java.awt.Component;
 
 import org.eclipse.jubula.rc.common.components.FindComponentBP;
+import org.eclipse.jubula.rc.common.components.FindComponentResult;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
 import com.bredexsw.guidancer.autserver.swing.implclasses.GraphicApplication;
@@ -32,14 +33,12 @@ public class FindSwingComponentBP extends FindComponentBP {
      * @param autHierarchy the current aut hierarchy
      * @throws IllegalArgumentException if the given identifer is null or <br>
      *             the hierarchy is not valid: empty or containing null elements
-     * @return the instance of the component of the AUT 
+     * @return a find component instance which contains the instance of the component of the AUT 
      */
-    protected Component findComponent(IComponentIdentifier componentIdentifier, 
-            AUTSwingHierarchy autHierarchy) 
-        throws IllegalArgumentException {
-        
-        return (Component)super.findComponent(componentIdentifier, 
-                autHierarchy);
+    protected FindComponentResult findComponent(
+        IComponentIdentifier componentIdentifier,
+        AUTSwingHierarchy autHierarchy) throws IllegalArgumentException {
+        return super.findComponent(componentIdentifier, autHierarchy);
     }
 
     /**
