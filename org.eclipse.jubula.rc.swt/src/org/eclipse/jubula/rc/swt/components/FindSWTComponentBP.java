@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.swt.components;
 
 import org.eclipse.jubula.rc.common.components.FindComponentBP;
+import org.eclipse.jubula.rc.common.components.FindComponentResult;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
@@ -28,42 +29,44 @@ import com.bredexsw.guidancer.autswtserver.implclasses.GraphicApplication;
  */
 public class FindSWTComponentBP extends FindComponentBP {
 
-
     /**
      * Searchs for the component in the AUT with the given
      * <code>componentIdentifier</code>.
      * 
-     * @param componentIdentifier the identifier created in object mapping mode
-     * @param autHierarchy the current aut hierarchy
-     * @throws IllegalArgumentException if the given identifer is null or <br>
+     * @param componentIdentifier
+     *            the identifier created in object mapping mode
+     * @param autHierarchy
+     *            the current aut hierarchy
+     * @throws IllegalArgumentException
+     *             if the given identifer is null or <br>
      *             the hierarchy is not valid: empty or containing null elements
-     * @return the instance of the component of the AUT 
+     * @return a FindComponentResult which contains the technical component and
+     *         other component retrieval information
      */
-    protected Widget findComponent(final IComponentIdentifier 
+    protected FindComponentResult findComponent(final IComponentIdentifier 
         componentIdentifier, final SwtAUTHierarchy autHierarchy) 
         throws IllegalArgumentException {
         
         EventThreadQueuerSwtImpl etQueuer = new EventThreadQueuerSwtImpl();
-        return (Widget)etQueuer.invokeAndWait(this.getClass().getName() 
-            + ".findComponent", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
-                    return findComponentImpl(componentIdentifier, 
-                        autHierarchy);
-                }
-            });
+        return (FindComponentResult)etQueuer.invokeAndWait(
+                this.getClass().getName() + ".findComponent", new IRunnable() { //$NON-NLS-1$
+                    public Object run() throws StepExecutionException {
+                        return findComponentImpl(componentIdentifier, 
+                            autHierarchy);
+                    }
+                });
     }
     
     /**
      * 
      * @param componentIdentifier the identifier created in object mapping mode
      * @param autHierarchy the current aut hierarchy
-     * @return a widget 
+     * @return a FindComponentResult which contains the technical component
      * @see FindComponentBP#findComponent
      */
-    private Widget findComponentImpl (final IComponentIdentifier 
+    private FindComponentResult findComponentImpl (final IComponentIdentifier 
         componentIdentifier, final SwtAUTHierarchy autHierarchy) {
-        
-        return (Widget)super.findComponent(componentIdentifier, autHierarchy);
+        return super.findComponent(componentIdentifier, autHierarchy);
     }
 
     /**

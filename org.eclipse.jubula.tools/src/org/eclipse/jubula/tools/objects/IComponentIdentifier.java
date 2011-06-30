@@ -13,11 +13,8 @@ package org.eclipse.jubula.tools.objects;
 import java.util.List;
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 20.12.2005
- *
  */
 public interface IComponentIdentifier {
 
@@ -118,5 +115,36 @@ public interface IComponentIdentifier {
      * @return the name for display of the component
      */
     public String getComponentNameToDisplay();
+    
+    /**
+     * @param matchPercentage the matchPercentage to set
+     */
+    public void setMatchPercentage(double matchPercentage);
 
+    /**
+     * @return the matchPercentage
+     */
+    public double getMatchPercentage();
+
+    /**
+     * @param numberOfOtherMatchingComponents the numberOfOtherMatchingComponents to set
+     */
+    public void setNumberOfOtherMatchingComponents(
+            int numberOfOtherMatchingComponents);
+
+    /**
+     * @return the numberOfOtherMatchingComponents
+     */
+    public int getNumberOfOtherMatchingComponents();
+
+    /**
+     * @return whether this component identifier could be used to retrieve the
+     *         original component on collection
+     */
+    public boolean isEqualOriginalFound();
+    
+    /**
+     * @param equalOriginalFound the equalOriginalFound to set
+     */
+    public void setEqualOriginalFound(boolean equalOriginalFound);
 }

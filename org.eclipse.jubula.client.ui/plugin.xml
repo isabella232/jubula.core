@@ -409,6 +409,18 @@
      		</description>
 		</decorator>
 		<decorator
+			class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.OMQualityDecorator"
+			id="org.eclipse.jubula.client.ui.decorators.OMQuality" label="Technical Component Quality"
+			lightweight="true" location="BOTTOM_RIGHT" state="true">
+			<enablement>
+				<objectClass name="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO">
+				</objectClass>
+			</enablement>
+			<description>
+				Decorates the quality of technical component names in the Object Mapping Editor.
+     		</description>
+		</decorator>
+		<decorator
 			class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.ActiveElementDecorator"
 			id="org.eclipse.jubula.client.ui.decorators.activeElementDecorator" label="Active Element Decorator"
 			lightweight="true" location="BOTTOM_RIGHT" state="true">

@@ -53,7 +53,7 @@ public abstract class FindComponentBP {
      *             the hierarchy is not valid: empty or containing null elements
      * @return the instance of the component of the AUT 
      */
-    protected Object findComponent(
+    protected FindComponentResult findComponent(
             final IComponentIdentifier componentIdentifier, 
             final AUTHierarchy hierarchy)
         throws IllegalArgumentException {
@@ -75,6 +75,7 @@ public abstract class FindComponentBP {
         String suppClassName = componentIdentifier.getSupportedClassName();
         final AUTServerConfiguration autServerConf = AUTServerConfiguration
             .getInstance();
+        int numberOfOtherMatchingComponents = 0;
         while (allComponents.hasNext()) {
             HierarchyContainer current = (HierarchyContainer) 
                 allComponents.next();
@@ -87,6 +88,9 @@ public abstract class FindComponentBP {
                         currComp)))
             ) {
                 equivalence = computeEquivalence(componentIdentifier, current);
+                if (meetsThreshold(equivalence)) {
+                    numberOfOtherMatchingComponents++;
+                }
                 if (equivalence > bestMatchPercentage) {
                     bestMatch = current;
                     bestMatchPercentage = equivalence;
@@ -98,7 +102,8 @@ public abstract class FindComponentBP {
                 && meetsThreshold(bestMatchPercentage)) {
             technicalComponent = bestMatch.getCompID().getComp();
         }
-        return technicalComponent;
+        return new FindComponentResult(technicalComponent, bestMatchPercentage,
+                numberOfOtherMatchingComponents);
     }
     
     

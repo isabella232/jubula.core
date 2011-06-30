@@ -23,6 +23,7 @@ import javax.persistence.EntityManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -117,10 +118,12 @@ import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.ObjectMappingEditorPatternFilter;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTableContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.ObjectMappingRow;
 import org.eclipse.jubula.client.ui.provider.labelprovider.OMEditorTreeLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.OMQualityDecorator;
 import org.eclipse.jubula.client.ui.provider.selectionprovider.SelectionProviderIntermediate;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -144,6 +147,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -1583,13 +1587,28 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 Messages.ObjectMappingEditorTechnicalName);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new ColumnLabelProvider() {
-
             public String getText(Object element) {
                 IObjectMappingAssoziationPO assoc =
                     ((ObjectMappingRow)element).getAssociation();
                 IComponentIdentifier compId = assoc.getTechnicalName();
-                
                 return compId != null ? compId.getComponentName() : null;
+            }
+            /**{@inheritDoc} */
+            public Color getBackground(Object element) {
+                IObjectMappingAssoziationPO assoc =
+                    ((ObjectMappingRow)element).getAssociation();
+                IComponentIdentifier compId = assoc.getCompIdentifier();
+                switch (OMQualityDecorator.getQualitySeverity(compId)) {
+                    case IStatus.OK:
+                        return Layout.GREEN_COLOR;
+                    case IStatus.WARNING:
+                        return Layout.YELLOW_COLOR;
+                    case IStatus.ERROR:
+                        return Layout.RED_COLOR;
+                    default:
+                        break;
+                }
+                return null;
             }
         });
 
@@ -1867,7 +1886,11 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         viewer.setContentProvider(
                 new OMEditorTreeContentProvider(compNameMapper));
-        viewer.setLabelProvider(new OMEditorTreeLabelProvider(compNameMapper));
+        DecoratingCellLabelProvider lp = new DecoratingCellLabelProvider(
+                new OMEditorTreeLabelProvider(compNameMapper), Plugin
+                        .getDefault().getWorkbench().getDecoratorManager()
+                        .getLabelDecorator());
+        viewer.setLabelProvider(lp);
     }
     
     /**
@@ -2002,6 +2025,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 IComponentIdentifier techName = assoc.getTechnicalName();
                 if (techName != null && techName.equals(component)) {
                     techNameAssoc = assoc;
+                    techNameAssoc.setCompIdentifier(component);
                     break;
                 }
             }
@@ -2013,7 +2037,18 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             m_treeViewer.setSelection(techNameSelection);
             m_uiElementTreeViewer.setSelection(techNameSelection);
             m_mappedComponentTreeViewer.setSelection(techNameSelection);
+            refreshAllViewer();
         }
+    }
+    
+    /**
+     * call refresh() for all the different viewers in this editor
+     */
+    private void refreshAllViewer() {
+        m_treeViewer.refresh();
+        m_uiElementTreeViewer.refresh();
+        m_mappedComponentTreeViewer.refresh();
+        m_tableViewer.refresh();
     }
     
     /**

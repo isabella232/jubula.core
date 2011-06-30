@@ -107,9 +107,17 @@ public class Layout {
     /** color gray for disabled gui elements (background) */
     public static final Color LIGHT_GRAY_COLOR = Display.getDefault()
         .getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
-    /** error color red for gui elements */
-    public static final Color ERROR_COLOR = Display.getDefault()
+    /** green color */
+    public static final Color GREEN_COLOR = Display.getDefault()
+        .getSystemColor(SWT.COLOR_GREEN);
+    /** red color */
+    public static final Color RED_COLOR = Display.getDefault()
         .getSystemColor(SWT.COLOR_RED);
+    /** yellow color */
+    public static final Color YELLOW_COLOR = Display.getDefault()
+        .getSystemColor(SWT.COLOR_YELLOW);
+    /** error color red for gui elements */
+    public static final Color ERROR_COLOR = RED_COLOR;
     /** color for inactive gui elements */
     public static final Color INACTIVE_COLOR = Display.getDefault()
         .getSystemColor(SWT.COLOR_DARK_GREEN);
@@ -122,7 +130,7 @@ public class Layout {
     public static final RGB CLIENT_LIGHT_RED = new RGB(255, 204, 230);
     /** Color constant for error tool tips */
     public static final Color TOOLTIP_COLOR = new Color(
-            Plugin.getDisplay(), CLIENT_LIGHT_RED);   
+            Plugin.getDisplay(), CLIENT_LIGHT_RED);
     // -------------------------------------------------------------
     // Font
     // -------------------------------------------------------------
