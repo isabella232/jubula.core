@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?><!--
+    Copyright (c) 2004, 2011 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+ 
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.jubula.client.ui.actions.ChooseServerAction.dropdown">
+         <command
+               commandId="org.eclipse.jubula.client.autagent.commands.ConnectToEmbeddedAutAgent"
+               style="toggle">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.jubula.client.autagent.handlers.ConnectToEmbeddedAutAgentHandler"
+            id="org.eclipse.jubula.client.autagent.commands.ConnectToEmbeddedAutAgent"
+            name="%ConnectToEmbeddedAgent">
+         <state
+               class="org.eclipse.jface.commands.ToggleState"
+               id="isAutAgentRunning">
+         </state>
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.jubula.client.ui.preferences.AutAgentPrefPage"
+            class="org.eclipse.jubula.client.autagent.preferences.ui.EmbeddedAutAgentPreferencePage"
+            id="org.eclipse.jubula.client.autagent.page1"
+            name="%EmbeddedAgentPreferencePageName">
+      </page>
+   </extension>
+
+</plugin>

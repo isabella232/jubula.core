@@ -43,6 +43,7 @@
 		<module>../org.eclipse.jubula.client.ua.help</module>
 		<module>../org.eclipse.jubula.client.cmd</module>
 		<module>../org.eclipse.jubula.client.cmd.controller</module>
+        <module>../org.eclipse.jubula.client.autagent</module>
 	</modules>
 
 	<url>http://www.eclipse.org/jubula</url>
