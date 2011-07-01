@@ -57,14 +57,13 @@ public class OMQualityDecorator extends AbstractLightweightLabelDecorator {
         if (identifier != null) {
             int noOfMatchedComps = identifier
                     .getNumberOfOtherMatchingComponents();
-            if (identifier.getMatchPercentage() > 0.999d
-                    && noOfMatchedComps == 1) {
-                return IStatus.OK;
-            } else if (noOfMatchedComps > 1) {
+            if (identifier.isEqualOriginalFound()) {
+                if (noOfMatchedComps == 1) {
+                    return IStatus.OK;
+                }
                 return IStatus.WARNING;
-            } else {
-                return IStatus.ERROR;
             }
+            return IStatus.ERROR;
         }
         return IStatus.CANCEL;
     }
