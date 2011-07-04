@@ -26,7 +26,6 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
-import org.eclipse.jubula.rc.common.components.FindComponentResult;
 import org.eclipse.jubula.rc.common.components.HierarchyContainer;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
@@ -227,12 +226,8 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             result.setNeighbours(getComponentContext(component));
             HierarchyContainer container = getHierarchyContainer(component);
             setAlternativeDisplayName(container, component, result);
-            FindComponentResult findresult = findBP.findComponent(result,
-                    ComponentHandler.getAutHierarchy());
-            result.setMatchPercentage(findresult.getMatchPercentage());
-            result.setNumberOfOtherMatchingComponents(findresult
-                    .getNumberOfOtherMatchingComponents());
-            if (component.equals(findresult.getTechnicalComponent())) {
+            if (component.equals(findBP.findComponent(result,
+                    ComponentHandler.getAutHierarchy()))) {
                 result.setEqualOriginalFound(true);
             }
             return result;
@@ -322,7 +317,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
         InvalidDataException {
     
         final Widget comp = (Widget)findBP.findComponent(componentIdentifier,
-                ComponentHandler.getAutHierarchy()).getTechnicalComponent(); 
+                ComponentHandler.getAutHierarchy()); 
         if (comp != null) {
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {

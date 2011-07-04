@@ -300,5 +300,24 @@ public interface ITestResultPO {
      * @return the screenshot.
      */
     public byte[] getImage();
-    
+
+    /**
+     * @param omHeuristicEquivalence the omHeuristicEquivalence to set
+     */
+    public void setOmHeuristicEquivalence(double omHeuristicEquivalence);
+
+    /**
+     * @return the omHeuristicEquivalence
+     */
+    public double getOmHeuristicEquivalence();
+
+    /**
+     * @param noOfSimilarComponents the noOfSimilarComponents to set
+     */
+    public void setNoOfSimilarComponents(int noOfSimilarComponents);
+
+    /**
+     * @return the noOfSimilarComponents
+     */
+    public int getNoOfSimilarComponents();
 }

@@ -923,10 +923,16 @@ public class TestExecution {
                 ICapPO nextCap = null;
                 processPostExecution(msg);
                 TestResultNode resultNode = m_resultTreeTracker.getEndNode();
+                MessageCap mc = msg.getMessageCap();
                 resultNode.setComponentName(
                     ComponentNamesBP.getInstance().getName(
-                        msg.getMessageCap().getResolvedLogicalName(), 
+                            mc.getResolvedLogicalName(), 
                         GeneralStorage.getInstance().getProject().getId()));
+                IComponentIdentifier ci = mc.getCi();
+                resultNode.setOmHeuristicEquivalence(
+                        ci.getMatchPercentage());
+                resultNode.setNoOfSimilarComponents(
+                        ci.getNumberOfOtherMatchingComponents());
                 final boolean testOk = !msg.hasTestErrorEvent();
                 if (msg.getState() == CAPTestResponseMessage.PAUSE_EXECUTION) {
                     pauseExecution(PauseMode.PAUSE);

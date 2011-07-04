@@ -123,6 +123,16 @@ class TestResultPO implements ITestResultPO {
     private byte[] m_imageData;
     
     /**
+     * <code>m_omHeuristicEquivalence</code>
+     */
+    private double m_omHeuristicEquivalence = -1.0d;
+    
+    /**
+     * <code>m_noOfSimiliarComponents</code>
+     */
+    private int m_noOfSimilarComponents = -1;
+    
+    /**
      * only for hibernate
      */
     TestResultPO() {
@@ -623,5 +633,40 @@ class TestResultPO implements ITestResultPO {
     public byte[] getImage() {
         return m_imageData;
     }
-    
+
+
+    /**
+     * @param omHeuristicEquivalence the omHeuristicEquivalence to set
+     */
+    public void setOmHeuristicEquivalence(double omHeuristicEquivalence) {
+        m_omHeuristicEquivalence = omHeuristicEquivalence;
+    }
+
+    /**
+     * @return the omHeuristicEquivalence
+     */
+    @Basic
+    @Column(name = "OM_HEURISTIC_EQUIVALENCE", 
+            nullable = false, 
+            precision = 10, 
+            scale = 5)
+    public double getOmHeuristicEquivalence() {
+        return m_omHeuristicEquivalence;
+    }
+
+    /**
+     * @param noOfSimilarComponents the noOfSimilarComponents to set
+     */
+    public void setNoOfSimilarComponents(int noOfSimilarComponents) {
+        m_noOfSimilarComponents = noOfSimilarComponents;
+    }
+
+    /**
+     * @return the noOfSimilarComponents
+     */
+    @Basic
+    @Column(name = "OM_NO_SIMILAR_COMPONENTS", nullable = false)
+    public int getNoOfSimilarComponents() {
+        return m_noOfSimilarComponents;
+    }
 }

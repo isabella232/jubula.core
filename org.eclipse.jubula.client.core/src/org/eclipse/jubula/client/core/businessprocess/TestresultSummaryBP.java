@@ -233,6 +233,8 @@ public class TestresultSummaryBP {
             addParameterListToResult(keyword, node, cap);
             //add error details
             addErrorDetails(keyword, node, sess);
+            keyword.setNoOfSimilarComponents(node.getNoOfSimilarComponents());
+            keyword.setOmHeuristicEquivalence(node.getOmHeuristicEquivalence());
         } else if (inode instanceof ITestCasePO) {
             keyword.setInternalKeywordType(TYPE_TEST_CASE);
             keyword.setKeywordType("Test Case"); //$NON-NLS-1$

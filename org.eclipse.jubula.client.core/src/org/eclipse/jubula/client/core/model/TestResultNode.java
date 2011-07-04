@@ -135,6 +135,16 @@ public class TestResultNode {
     private boolean m_hasBackingNode;
 
     /**
+     * <code>m_omHeuristicEquivalence</code>
+     */
+    private double m_omHeuristicEquivalence = -1.0d;
+    
+    /**
+     * <code>m_noOfSimilarComponents</code>
+     */
+    private int m_noOfSimilarComponents = -1;
+    
+    /**
      * Constructor
      * 
      * @param node The Test Execution node (i.e. Test Suite, Test Case, 
@@ -457,5 +467,33 @@ public class TestResultNode {
      */
     public boolean hasBackingNode() {
         return m_hasBackingNode;
+    }
+
+    /**
+     * @param omHeuristicEquivalence the omHeuristicEquivalence to set
+     */
+    public void setOmHeuristicEquivalence(double omHeuristicEquivalence) {
+        m_omHeuristicEquivalence = omHeuristicEquivalence;
+    }
+
+    /**
+     * @return the omHeuristicEquivalence
+     */
+    public double getOmHeuristicEquivalence() {
+        return m_omHeuristicEquivalence;
+    }
+
+    /**
+     * @param noOfSimilarComponents the noOfSimilarComponents to set
+     */
+    public void setNoOfSimilarComponents(int noOfSimilarComponents) {
+        m_noOfSimilarComponents = noOfSimilarComponents;
+    }
+
+    /**
+     * @return the noOfSimilarComponents
+     */
+    public int getNoOfSimilarComponents() {
+        return m_noOfSimilarComponents;
     }
 }
