@@ -28,7 +28,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.autagent.agent.AutAgent;
-import org.eclipse.jubula.autagent.desktop.DesktopIntegration;
 import org.eclipse.jubula.autagent.remote.dialogs.ChooseCheckModeDialogBP;
 import org.eclipse.jubula.autagent.remote.dialogs.ObservationConsoleBP;
 import org.eclipse.jubula.communication.Communicator;
@@ -265,9 +264,6 @@ public class AutStarter {
                     new Object[] {StringConstants.EMPTY + port});
             clientSocketThread = initClientConnectionSocket(port);
             initAutConnectionSocket();
-            DesktopIntegration di = new DesktopIntegration(getAgent());
-            di.setPort(port);
-            m_agent.addPropertyChangeListener(AutAgent.PROP_NAME_AUTS, di);
             if (m_verbosity.compareTo(Verbosity.VERBOSE) >= 0) {
                 infoMessage = I18n.getString("AUTAgent.StartSuccessText") + //$NON-NLS-1$
                     getCommunicator().getLocalPort() + "."; //$NON-NLS-1$

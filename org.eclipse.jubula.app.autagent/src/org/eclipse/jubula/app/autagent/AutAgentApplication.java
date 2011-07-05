@@ -32,6 +32,8 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.AutStarter.Verbosity;
+import org.eclipse.jubula.autagent.agent.AutAgent;
+import org.eclipse.jubula.autagent.desktop.DesktopIntegration;
 import org.eclipse.jubula.communication.connection.ConnectionState;
 import org.eclipse.jubula.tools.constants.ConfigurationConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -139,6 +141,12 @@ public class AutAgentApplication implements IApplication {
                 } else if (cmd.hasOption(COMMANDLINE_OPTION_QUIET)) {
                     verbosity = Verbosity.QUIET;
                 }
+
+                DesktopIntegration di = 
+                    new DesktopIntegration(server.getAgent());
+                di.setPort(port);
+                server.getAgent().addPropertyChangeListener(
+                        AutAgent.PROP_NAME_AUTS, di);
 
                 server.start(port, killDuplicateAuts, verbosity, true);
             }
