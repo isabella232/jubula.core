@@ -16,45 +16,20 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.2</version>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.6</version>
         <executions>
           <execution>
-            <id>copy-dependencies</id>
+            <id>gen-lib</id>
             <phase>generate-resources</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
             <configuration>
-              <outputDirectory>${basedir}/lib</outputDirectory>
-              <overWriteReleases>false</overWriteReleases>
-              <overWriteSnapshots>false</overWriteSnapshots>
-              <overWriteIfNewer>true</overWriteIfNewer>
-              <stripVersion>true</stripVersion>
+              <target>
+                <ant antfile="genLib.xml" />
+              </target>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.5</version>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>generate-resources</phase>
             <goals>
-              <goal>copy-resources</goal>
+              <goal>run</goal>
             </goals>
-            <configuration>
-              <outputDirectory>${basedir}/lib</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${basedir}/../org.eclipse.jubula.tools/lib</directory>
-                  <filtering>false</filtering>
-                </resource>
-              </resources>              
-            </configuration>            
           </execution>
         </executions>
       </plugin>
