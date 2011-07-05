@@ -73,14 +73,6 @@ public abstract class CommandConstants {
     public static final String EXT_IMPLCLASSES_PATH = "./lib/extImplClasses"; //$NON-NLS-1$
     /** constant: "./lib/ext" - path name for extension jars like monitoring */
     public static final String EXT_JARS_PATH = "./lib/ext/"; ////$NON-NLS-1$    
-    /** constant: "../AUTServerBase/bin" */
-    public static final String AUT_SERVER_BASE_BIN = "../org.eclipse.jubula.rc.common/bin"; //$NON-NLS-1$
-    /** constant: "./lib/AUTServerBase.jar" */
-    public static final String AUT_SERVER_BASE_JAR = "./lib/org.eclipse.jubula.rc.common.jar"; //$NON-NLS-1$
-    /** constant: "./lib/AUTServerBase.jar" */
-    public static final String AUT_LAUNCHER_JAR = "./lib/org.eclipse.jubula.rc.common.jar"; //$NON-NLS-1$
-    /** constant: "./resources" */
-    public static final String AUT_SERVER_RESOURCES = "./resources"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swing.commands.ActivateApplicationCommand" */
     public static final String ACTIVATE_SWING_APPLICATION_COMMAND = "org.eclipse.jubula.rc.swing.commands.ActivateApplicationCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand" */
