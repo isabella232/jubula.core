@@ -23,6 +23,7 @@ import java.util.StringTokenizer;
 
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
 
 
@@ -40,7 +41,7 @@ public class KeyboardHelper {
      * The keyboard mapping file prefix (keyboardmapping_)
      */
     private static final String KEYBOARD_MAPPING_FILE_PREFIX = 
-            "keyboardmapping_"; //$NON-NLS-1$
+            "resources/keyboardmapping_"; //$NON-NLS-1$
     
     /**
      * The keyboard mapping file postfix (.properties)
@@ -86,8 +87,6 @@ public class KeyboardHelper {
         m_locale = locale;
         initKeyboardMapping(locale);
     }
-    
-    
     
     /**
      * Inits keyboard mapping
@@ -195,9 +194,9 @@ public class KeyboardHelper {
      * @return the file name of the keyboard mapping file.
      */
     private String createFileName(Locale locale) {
-        final String fileName = KEYBOARD_MAPPING_FILE_PREFIX 
-            + locale.getLanguage() + "_" + locale.getCountry()  //$NON-NLS-1$
-            + KEYBOARD_MAPPING_FILE_POSTFIX;
+        final String fileName = KEYBOARD_MAPPING_FILE_PREFIX
+                + locale.getLanguage() + StringConstants.UNDERLINE
+                + locale.getCountry() + KEYBOARD_MAPPING_FILE_POSTFIX;
         return fileName;
     }
     
