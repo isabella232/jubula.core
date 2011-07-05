@@ -35,17 +35,8 @@ public interface TestDataConstants {
     /** default character for a variable */
     public static final char VARIABLE_CHAR_DEFAULT = '$'; 
     
-    /** Variable prefix for tagging that a value is a variable */
-    public static final String VARIABLE_DB_PREFIX = "GUIdancerVariablePrefix_"; //$NON-NLS-1$
-    
     /** Constant for an empty symbol (\) */
     public static final String EMPTY_SYMBOL = "''"; //$NON-NLS-1$
-    
-    /** Constant to label an empty string in DB
-     *  reason: there is no difference between a null string and an empty string
-     *  for hibernate<br>
-     */
-    public static final String DB_EMPTY_STRING = "GUIdancerEmptyString"; //$NON-NLS-1$
     
     /** Constant for the I18N-Key of Menu name */
     public static final String MENU_DEFAULT_MAPPING_I18N_KEY = "CompSystem.LogicalMenuName"; //$NON-NLS-1$
