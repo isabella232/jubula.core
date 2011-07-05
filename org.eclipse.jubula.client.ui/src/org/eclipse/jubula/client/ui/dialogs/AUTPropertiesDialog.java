@@ -942,7 +942,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                 boolean valid = false;
                 int i = 1;
                 while (!valid) {
-                    newAutId = autId + StringConstants.UNDERLINE + i++;
+                    newAutId = autId + StringConstants.UNDERSCORE + i++;
                     if (val.validate(newAutId).isOK()) {
                         valid = true;
                     }

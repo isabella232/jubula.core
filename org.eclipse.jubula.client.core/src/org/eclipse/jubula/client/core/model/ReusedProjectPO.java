@@ -274,7 +274,7 @@ class ReusedProjectPO implements IReusedProjectPO {
      */
     @Transient
     public String getVersionString() {
-        StringBuilder sb = new StringBuilder(StringConstants.UNDERLINE);
+        StringBuilder sb = new StringBuilder(StringConstants.UNDERSCORE);
         sb.append(StringConstants.LEFT_BRACKET);
         sb.append(getMajorNumber());
         sb.append(StringConstants.DOT);

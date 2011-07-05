@@ -1156,8 +1156,8 @@ class XmlExporter {
      * @return The String representation of l prefixed by "ID_"
      */
     private String i2id(char table, Long l) {
-        return "ID" + StringConstants.UNDERLINE + table  //$NON-NLS-1$
-            + StringConstants.UNDERLINE + i2str(l);
+        return "ID" + StringConstants.UNDERSCORE + table  //$NON-NLS-1$
+            + StringConstants.UNDERSCORE + i2str(l);
     }
 
     /**

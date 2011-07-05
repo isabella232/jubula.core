@@ -108,9 +108,9 @@ public interface StringConstants {
     public static final String RIGHT_BRACKET = "]"; //$NON-NLS-1$
     
     /**
-     * <code>UNDERLINE "_"</code>
+     * <code>UNDERSCORE "_"</code>
      */
-    public static final String UNDERLINE = "_"; //$NON-NLS-1$
+    public static final String UNDERSCORE = "_"; //$NON-NLS-1$
     
     /**
      * <code>EQUALS_SIGN "="</code>

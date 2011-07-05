@@ -23,7 +23,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 public interface IProjectPO extends IParamNodePO {
 
     /** Used between project name and version number in display strings */
-    public static final String NAME_SEPARATOR = StringConstants.UNDERLINE;
+    public static final String NAME_SEPARATOR = StringConstants.UNDERSCORE;
     
     /** Used between major and minor version numbers in display strings */
     public static final String VERSION_SEPARATOR = StringConstants.DOT;

@@ -195,7 +195,7 @@ public class KeyboardHelper {
      */
     private String createFileName(Locale locale) {
         final String fileName = KEYBOARD_MAPPING_FILE_PREFIX
-                + locale.getLanguage() + StringConstants.UNDERLINE
+                + locale.getLanguage() + StringConstants.UNDERSCORE
                 + locale.getCountry() + KEYBOARD_MAPPING_FILE_POSTFIX;
         return fileName;
     }

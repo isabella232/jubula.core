@@ -606,7 +606,7 @@ public class XmlStorage {
             fileNameSuffix = StringConstants.EMPTY;
         } else {
             fileNamePrefix = fileName.substring(0, dotIndex) 
-                + StringConstants.UNDERLINE;
+                + StringConstants.UNDERSCORE;
             fileNameSuffix = fileName.substring(dotIndex);
         }
         File fileInTempDir = 
