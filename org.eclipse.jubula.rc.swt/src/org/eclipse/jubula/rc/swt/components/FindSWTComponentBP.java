@@ -11,7 +11,6 @@
 package org.eclipse.jubula.rc.swt.components;
 
 import org.eclipse.jubula.rc.common.components.FindComponentBP;
-import org.eclipse.jubula.rc.common.components.FindComponentResult;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
@@ -40,15 +39,14 @@ public class FindSWTComponentBP extends FindComponentBP {
      * @throws IllegalArgumentException
      *             if the given identifer is null or <br>
      *             the hierarchy is not valid: empty or containing null elements
-     * @return a FindComponentResult which contains the technical component and
-     *         other component retrieval information
+     * @return the technical component
      */
-    protected FindComponentResult findComponent(final IComponentIdentifier 
+    protected Object findComponent(final IComponentIdentifier 
         componentIdentifier, final SwtAUTHierarchy autHierarchy) 
         throws IllegalArgumentException {
         
         EventThreadQueuerSwtImpl etQueuer = new EventThreadQueuerSwtImpl();
-        return (FindComponentResult)etQueuer.invokeAndWait(
+        return etQueuer.invokeAndWait(
                 this.getClass().getName() + ".findComponent", new IRunnable() { //$NON-NLS-1$
                     public Object run() throws StepExecutionException {
                         return findComponentImpl(componentIdentifier, 
@@ -64,7 +62,7 @@ public class FindSWTComponentBP extends FindComponentBP {
      * @return a FindComponentResult which contains the technical component
      * @see FindComponentBP#findComponent
      */
-    private FindComponentResult findComponentImpl (final IComponentIdentifier 
+    private Object findComponentImpl (final IComponentIdentifier 
         componentIdentifier, final SwtAUTHierarchy autHierarchy) {
         return super.findComponent(componentIdentifier, autHierarchy);
     }

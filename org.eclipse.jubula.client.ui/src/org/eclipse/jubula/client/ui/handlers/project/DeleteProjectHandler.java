@@ -32,7 +32,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -58,7 +58,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class DeleteProjectHandler extends AbstractProjectHandler {
 
-    /** number of hibernate event types with progress listeners */
+    /** number of Persistence (JPA / EclipseLink) event types with progress listeners */
     // Event types:
     // postRemove
     private static final int NUM_HBM_PROGRESS_EVENT_TYPES = 1;
@@ -122,7 +122,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                     });
                 }
                 
-                // Register Hibernate progress listeners
+                // Register Persistence (JPA / EclipseLink) progress listeners
                 ProgressMonitorTracker.getInstance().setProgressMonitor(
                         monitor);
                 ProjectPM.deleteProject(m_project, m_deleteCurrentProject);
@@ -184,10 +184,10 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
             // (project_node=1)
             totalWork++;
             EntityManager getNumNodesSession = 
-                Hibernator.instance().openSession();
+                Persistor.instance().openSession();
             totalWork += 
                 NodePM.getNumNodes(m_project.getId(), getNumNodesSession);
-            Hibernator.instance().dropSessionWithoutLockRelease(
+            Persistor.instance().dropSessionWithoutLockRelease(
                 getNumNodesSession);
             
             totalWork *= NUM_HBM_PROGRESS_EVENT_TYPES;

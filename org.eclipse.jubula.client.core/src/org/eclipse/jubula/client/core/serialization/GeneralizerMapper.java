@@ -50,7 +50,7 @@ public class GeneralizerMapper extends MapperWrapper {
         
         if (pos > 0) { 
             return type.getName().substring(0, pos);
-        } else if (type.getName().indexOf("hibernate") >= 0) { //$NON-NLS-1$
+        } else if (type.getName().indexOf("Persistence (JPA / EclipseLink)") >= 0) { //$NON-NLS-1$
             if (Map.class.isAssignableFrom(type)) {
                 return HashMap.class.getName();
             } else if (List.class.isAssignableFrom(type)) {

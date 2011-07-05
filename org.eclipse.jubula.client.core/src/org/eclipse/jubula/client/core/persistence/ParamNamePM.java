@@ -66,7 +66,7 @@ public class ParamNamePM extends AbstractNamePM {
         IParamNamePO paramName = null;
         EntityManager s = null;
         try {
-            s = Hibernator.instance().openSession();
+            s = Persistor.instance().openSession();
             Query q = s.createQuery(
                 "select p from ParamNamePO as p where p.hbmGuid = :guid AND p.parentProjectId = :projId"); //$NON-NLS-1$
             q.setParameter("guid", guid); //$NON-NLS-1$
@@ -78,7 +78,7 @@ public class ParamNamePM extends AbstractNamePM {
             PersistenceManager.handleDBExceptionForAnySession(
                 paramName, e, s);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(s);
+            Persistor.instance().dropSessionWithoutLockRelease(s);
         }
         return paramName;
     }
@@ -97,7 +97,7 @@ public class ParamNamePM extends AbstractNamePM {
         EntityManager s = null;
         List <IParamNamePO> paramNames = null;
         try {
-            s = Hibernator.instance().openSession();
+            s = Persistor.instance().openSession();
             Query q = s.createQuery("select paramName from ParamNamePO as paramName where paramName.parentProjectId = :parentProjId"); //$NON-NLS-1$
             q.setParameter("parentProjId", parentProjectId); //$NON-NLS-1$
             paramNames = q.getResultList();            
@@ -106,7 +106,7 @@ public class ParamNamePM extends AbstractNamePM {
             log.fatal(Messages.CouldNotReadParameterNamesFromDB, e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(s);
+            Persistor.instance().dropSessionWithoutLockRelease(s);
         }
         return paramNames != null ? paramNames : new ArrayList<IParamNamePO>(0);
     }
@@ -123,9 +123,10 @@ public class ParamNamePM extends AbstractNamePM {
         boolean commit) throws PMException, ProjectDeletedException {
         try {
             if (commit) {
-                EntityTransaction tx = Hibernator.instance().getTransaction(s);
+                EntityTransaction tx = 
+                    Persistor.instance().getTransaction(s);
                 executeDeleteStatement(s, parentProjectId);
-                Hibernator.instance().commitTransaction(s, tx);
+                Persistor.instance().commitTransaction(s, tx);
             } else {
                 executeDeleteStatement(s, parentProjectId);
             }

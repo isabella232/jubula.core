@@ -13,11 +13,11 @@ package org.eclipse.jubula.client.ui.wizards;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.core.errorhandling.IDatabaseVersionErrorHandler;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -76,9 +76,10 @@ public class DatabaseMigrationAssistant extends Wizard
         Plugin.getDisplay().syncExec(new Runnable() {
             
             public void run() {
-                MessageDialog.openInformation(Plugin.getShell(), 
-                        Messages.DatabaseMigrationAssistantIntroPageTitle, 
-                        Messages.DatabaseMigrationAssistantIntroPageText);
+                WizardDialog dialog = new WizardDialog(Plugin.getShell(),
+                        DatabaseMigrationAssistant.this);
+                dialog.setHelpAvailable(true);
+                dialog.open();
             }
         });
         
@@ -91,6 +92,9 @@ public class DatabaseMigrationAssistant extends Wizard
     public void addPages() {
         super.addPages();
         addPage(new DatabaseMigrationAssistantIntroPage(INTRO_PAGE_ID));
+        m_importProjectsPage = 
+            new ImportProjectsWizardPage(IMPORT_PROJECTS_PAGE_ID);
+        addPage(m_importProjectsPage);
     }
 
     /**
@@ -112,7 +116,7 @@ public class DatabaseMigrationAssistant extends Wizard
 
                     monitor.beginTask("Migrating...", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                     try {
-                        Hibernator.migrateDatabaseStructure();
+                        Persistor.migrateDatabaseStructure();
                         m_wasMigrationSuccessful = true;
                         ImportFileBP.getInstance().importProjects(
                                 m_importProjectsPage, monitor);

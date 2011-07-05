@@ -29,7 +29,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TDCell;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
@@ -414,16 +414,16 @@ public class TestCaseParamCheckBP {
             Locale locale, CheckErrors errors) {
             IExecTestCasePO execNode = (IExecTestCasePO)node;
             INodePO parent = execNode.getParentNode();
-            Class parentPoClass = Hibernator.getClass(parent);
+            Class parentPoClass = Persistor.getClass(parent);
             if (m_insertParamRef) {
-                if (Hibernator.isPoClassSubclass(
+                if (Persistor.isPoClassSubclass(
                         parentPoClass, ITestSuitePO.class)) {
                     errors.add(
                         Messages.TestCaseParamCheckBPTestExecHasTestSuiteParent,
                         new String[] { execNode.getName() });
                 }
             } else {
-                if (Hibernator.isPoClassSubclass(
+                if (Persistor.isPoClassSubclass(
                         parentPoClass, IParamNodePO.class)) {
                     for (String refName : ref) {
                         checkTDHasNoRefAsValue(refName, errors, 

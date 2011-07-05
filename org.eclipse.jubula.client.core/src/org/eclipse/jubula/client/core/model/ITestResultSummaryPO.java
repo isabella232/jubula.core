@@ -36,7 +36,7 @@ public interface ITestResultSummaryPO extends ITestResultSummary {
     public static final String STATE_STOPPED = "STOPPED"; //$NON-NLS-1$
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @return Returns the id.
      */
     public abstract Long getId();

@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.FindNodeParentOperation;
@@ -62,7 +62,7 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
 
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     SpecTestCasePO() {
         super();
@@ -284,7 +284,7 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
             + this.getName());
         
         IParamDescriptionPO desc = PoMaker.createTcParamDescriptionPO(type,
-            name, HibernateUtil.generateGuid(), mapper);
+            name, PersistenceUtil.generateGuid(), mapper);
         super.addParameter(desc);
         return desc;
     }

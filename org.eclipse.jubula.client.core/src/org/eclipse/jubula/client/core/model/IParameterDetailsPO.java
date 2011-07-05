@@ -17,7 +17,7 @@ package org.eclipse.jubula.client.core.model;
 public interface IParameterDetailsPO {
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @return Returns the id.
      */
     public abstract Long getId();

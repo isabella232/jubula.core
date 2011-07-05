@@ -14,7 +14,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 
@@ -28,7 +28,7 @@ public abstract class AbstractProjectHandler extends AbstractHandler {
      */
     public final Object execute(ExecutionEvent event) 
         throws ExecutionException {
-        if (Hibernator.instance() == null) {
+        if (Persistor.instance() == null) {
             Object result = CommandHelper
                     .executeCommand(CommandIDs.SELECT_DATABASE_COMMAND_ID);
             if (Status.OK_STATUS.equals(result)) {

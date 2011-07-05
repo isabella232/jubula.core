@@ -100,10 +100,10 @@ class ExecTestCasePO extends TestCasePO implements
     private transient boolean m_completeSpecTcFlag = false;
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     ExecTestCasePO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
         m_compNamesMap = new HashMap<String, ICompNamesPairPO>();
     }   
     
@@ -475,7 +475,7 @@ class ExecTestCasePO extends TestCasePO implements
     }
         
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the m_hasReferencedTD.
      */
@@ -486,7 +486,7 @@ class ExecTestCasePO extends TestCasePO implements
         return m_hasReferencedTD;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param hasReferencedTD The m_hasReferencedTD to set.
      */
     public void setHasReferencedTD(boolean hasReferencedTD) {
@@ -513,7 +513,7 @@ class ExecTestCasePO extends TestCasePO implements
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @return Returns the refEventTcMap.
      */
     @Transient
@@ -522,7 +522,7 @@ class ExecTestCasePO extends TestCasePO implements
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param refEventTcMap The refEventTcMap to set.
      */
     @SuppressWarnings("unused")
@@ -549,7 +549,7 @@ class ExecTestCasePO extends TestCasePO implements
         return (value == null) ? true : value.booleanValue();
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the compNameMap.
      */
@@ -561,7 +561,7 @@ class ExecTestCasePO extends TestCasePO implements
         return m_compNamesMap;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @param compNameMap The compNameMap to set.
      */
@@ -646,7 +646,7 @@ class ExecTestCasePO extends TestCasePO implements
     }
 
     /**
-     * For Hibernate.
+     * For Persistence (JPA / EclipseLink).
      * @param projectGuid The GUID of the parent project of the referenced test case.
      */
     private void setProjectGuid(String projectGuid) {
@@ -654,7 +654,7 @@ class ExecTestCasePO extends TestCasePO implements
     }
     
     /**
-     * For Hibernate.
+     * For Persistence (JPA / EclipseLink).
      * @param testCaseGuid The GUID of the referenced test case.
      */
     private void setSpecTestCaseGuid(String testCaseGuid) {

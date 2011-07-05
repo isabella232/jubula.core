@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -248,7 +248,7 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
     void updateProjects(String [] usedProjects) throws PMException {
 
         // Just clearing the list and re-adding all elements leads to 
-        // Hibernate errors, so we must actually only add/remove the 
+        // Persistence (JPA / EclipseLink) errors, so we must actually only add/remove the 
         // elements that have changed.
         Set<IReusedProjectPO> toAdd = new HashSet<IReusedProjectPO>();
         Set<IReusedProjectPO> toRemove = new HashSet<IReusedProjectPO>();
@@ -269,8 +269,8 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
         boolean isDirty = 
             getEditSupport().getSession().unwrap(JpaEntityManager.class)
                 .getUnitOfWork().hasChanges();
-        // Prevents constraint violation from Hibernate
-        Hibernator.instance().flushSession(getEditSupport().getSession());
+        // Prevents constraint violation from Persistence (JPA / EclipseLink)
+        Persistor.instance().flushSession(getEditSupport().getSession());
         if (isDirty) {
             // the session will not be commited if there are no pending changes
             TimestampBP.refreshTimestamp(getEditSupport().getWorkProject());

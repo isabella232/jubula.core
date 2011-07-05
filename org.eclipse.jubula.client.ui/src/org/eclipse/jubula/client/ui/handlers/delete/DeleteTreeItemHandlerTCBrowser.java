@@ -31,7 +31,7 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteCatHandle;
@@ -244,7 +244,7 @@ public class DeleteTreeItemHandlerTCBrowser
         Set < String > locations = new TreeSet < String > ();
         for (IExecTestCasePO node : reusesSet) {
             INodePO parent = null;
-            if (Hibernator.isPoSubclass(node, IEventExecTestCasePO.class)) {
+            if (Persistor.isPoSubclass(node, IEventExecTestCasePO.class)) {
                 parent = ((IEventExecTestCasePO) node).getParentNode();
             } else {
                 parent = node.getParentNode();

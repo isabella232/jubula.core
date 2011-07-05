@@ -47,7 +47,7 @@ import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
 import org.eclipse.jubula.client.core.businessprocess.progress.InsertProgressListener;
 import org.eclipse.jubula.client.core.businessprocess.progress.RemoveProgressListener;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.utils.DependencyCheckerOp;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -73,13 +73,13 @@ import org.eclipse.persistence.annotations.Index;
         InsertProgressListener.class, RemoveProgressListener.class })
 abstract class NodePO implements INodePO {
     
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
     /** Globally Unique Identifier for recognizing nodes across databases */
     private transient String m_guid = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /** Flag if the parent at the children is set.
@@ -155,14 +155,14 @@ abstract class NodePO implements INodePO {
      * @param isGenerated indicates whether this node has been generated
      */
     protected NodePO(String name, boolean isGenerated) {
-        this(name, HibernateUtil.generateGuid(), isGenerated);
+        this(name, PersistenceUtil.generateGuid(), isGenerated);
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     NodePO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }
 
     
@@ -195,7 +195,7 @@ abstract class NodePO implements INodePO {
         return m_name;
     }
     /**
-     * For Hibernate only
+     * For Persistence (JPA / EclipseLink) only
      * Sets the value of the m_name property.
      * 
      * @param name
@@ -231,7 +231,7 @@ abstract class NodePO implements INodePO {
     /**
      * 
      * Access method for the m_nodeList property.
-     * only to use for hibernate
+     * only to use for Persistence (JPA / EclipseLink)
      * 
      * @return the current value of the m_nodeList property
      */
@@ -290,7 +290,7 @@ abstract class NodePO implements INodePO {
     }
     
     /**
-     * For Hibernate only
+     * For Persistence (JPA / EclipseLink) only
      * @param comment The m_comment to set.
      */
     private void setHbmComment(String comment) {

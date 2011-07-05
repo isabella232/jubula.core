@@ -138,7 +138,7 @@ public class NodeBP {
             throw e;
         } catch (PMException e) {
             // Continue since we are just refreshing the cache
-            LOG.fatal(Messages.StrayHibernateException + StringConstants.DOT
+            LOG.fatal(Messages.StrayPersistenceException + StringConstants.DOT
                     + StringConstants.DOT, e);
         }
         if (!LockManager.instance().lockPO(lockSession, node, false)) {

@@ -32,7 +32,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 @Table(name = "DB_VERSION")
 public class DBVersionPO implements IPersistentObject {
 
-    /** Hibernate id */
+    /** Persistence (JPA / EclipseLink) id */
     private transient Long m_id;
     
     /** version of this in db*/
@@ -50,7 +50,7 @@ public class DBVersionPO implements IPersistentObject {
     private transient Integer m_majorVersion = null;
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     public DBVersionPO() {
         // nothing
@@ -108,7 +108,7 @@ public class DBVersionPO implements IPersistentObject {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param majorVersion The majorVersion to set.
      */
     public void setMajorVersion(Integer majorVersion) {
@@ -125,7 +125,7 @@ public class DBVersionPO implements IPersistentObject {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param minorVersion The minorVersion to set.
      */
     public void setMinorVersion(Integer minorVersion) {

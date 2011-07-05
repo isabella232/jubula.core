@@ -35,7 +35,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
 /**
- * PM to handle all test result related hibernate queries
+ * PM to handle all test result related Persistence (JPA / EclipseLink) queries
  * 
  * @author BREDEX GmbH
  * @created Mar 3, 2010
@@ -56,8 +56,8 @@ public class TestResultPM {
     public static final void storeTestResult(EntityManager session) {
         try {            
             final EntityTransaction tx = 
-                Hibernator.instance().getTransaction(session);
-            Hibernator.instance().commitTransaction(session, tx);
+                Persistor.instance().getTransaction(session);
+            Persistor.instance().commitTransaction(session, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.StoringOfTestResultsFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
@@ -65,7 +65,7 @@ public class TestResultPM {
             throw new JBFatalException(Messages.StoringOfTestResultsFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Hibernator.instance().dropSession(session);
+            Persistor.instance().dropSession(session);
         }
     }
     
@@ -76,19 +76,19 @@ public class TestResultPM {
     private static final void deleteTestresultOfSummary(
             Long resultId) {
         
-        Hibernator hibernator = Hibernator.instance();
-        if (hibernator == null) {
+        Persistor persistor = Persistor.instance();
+        if (persistor == null) {
             return;
         }
-        final EntityManager session = hibernator.openSession();
+        final EntityManager session = persistor.openSession();
         try {
             final EntityTransaction tx = 
-                hibernator.getTransaction(session);
-            hibernator.lockDB();
+                persistor.getTransaction(session);
+            persistor.lockDB();
             executeDeleteTestresultOfSummary(session, resultId);
             deleteMonitoringReports(session, resultId);
             
-            hibernator.commitTransaction(session, tx);
+            persistor.commitTransaction(session, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.DeleteTestresultElementFailed, 
                     e, MessageIDs.E_DATABASE_GENERAL);
@@ -96,8 +96,8 @@ public class TestResultPM {
             throw new JBFatalException(Messages.DeleteTestresultElementFailed, 
                     e, MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            hibernator.dropSession(session);
-            hibernator.unlockDB();
+            persistor.dropSession(session);
+            persistor.unlockDB();
         }
     }
     
@@ -201,7 +201,7 @@ public class TestResultPM {
     }
     
     /**
-     * @param session The session in which to execute the Hibernate query.
+     * @param session The session in which to execute the Persistence (JPA / EclipseLink) query.
      * @param summaryId The database ID of the summary for which to compute the
      *                  corresponding Test Result nodes.
      * @return the Test Result nodes associated with the given Test Result 
@@ -222,7 +222,7 @@ public class TestResultPM {
     }
     
     /**
-     * @param session The session in which to execute the Hibernate query.
+     * @param session The session in which to execute the Persistence (JPA / EclipseLink) query.
      * @param summaryId The database ID of the summary for which to compute the
      *                  corresponding Test Result nodes.
      * @return the Test Result nodes associated with the given Test Result 
@@ -248,7 +248,7 @@ public class TestResultPM {
     
     /**
      * @param session
-     *            The session in which to execute the Hibernate query.
+     *            The session in which to execute the Persistence (JPA / EclipseLink) query.
      * @return a list of test result ids that have test result details
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })

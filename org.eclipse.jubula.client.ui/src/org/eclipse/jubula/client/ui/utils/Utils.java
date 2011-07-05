@@ -46,7 +46,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
@@ -260,7 +260,7 @@ public class Utils {
         final DataEventDispatcher ded = DataEventDispatcher.getInstance();
         TestExecution.getInstance().stopExecution();
         GeneralStorage gs = GeneralStorage.getInstance();
-        if (gs != null && Hibernator.instance() != null) {
+        if (gs != null && Persistor.instance() != null) {
             IProjectPO currProj = gs.getProject();
             if (currProj != null) {
                 gs.setProject(null);

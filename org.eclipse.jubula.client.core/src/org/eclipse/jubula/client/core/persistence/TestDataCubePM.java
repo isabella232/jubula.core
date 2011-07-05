@@ -29,7 +29,7 @@ import org.eclipse.jubula.client.core.model.PoMaker;
 
 
 /**
- * PM to handle all test data cube related hibernate queries
+ * PM to handle all test data cube related Persistence (JPA / EclipseLink) queries
  * 
  * @author BREDEX GmbH
  * @created Jul 21, 2010

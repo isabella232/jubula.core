@@ -69,7 +69,7 @@ public interface IObjectMappingAssoziationPO
     public abstract IObjectMappingCategoryPO getCategory();
 
     /**
-     * Note: Due to the way this class is mapped with Hibernate, this method
+     * Note: Due to the way this class is mapped with Persistence (JPA / EclipseLink), this method
      * should only be called by <code>ObjectMappingCategoryPO</code>. Other 
      * callers should use <code>IObjectMappingCategory.addAssociation()</code> 
      * instead.

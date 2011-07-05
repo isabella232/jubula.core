@@ -42,7 +42,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
@@ -374,7 +374,7 @@ public class ComponentNamesBP
         
         String nameGuid = guid;
         if (guid == null) {
-            nameGuid = HibernateUtil.generateGuid();
+            nameGuid = PersistenceUtil.generateGuid();
         }
         final IComponentNamePO newComponentNamePO = PoMaker
             .createComponentNamePO(nameGuid, name, type, ctx, 
@@ -1035,7 +1035,7 @@ public class ComponentNamesBP
                             name.getClass(), name.getId());
                 } catch (PersistenceException he) {
                     // Continue since we are just refreshing the cache
-                    log.error(Messages.StrayHibernateException 
+                    log.error(Messages.StrayPersistenceException 
                             + StringConstants.DOT + StringConstants.DOT,
                         he);                
                 }

@@ -72,16 +72,15 @@ import org.eclipse.persistence.tools.schemaframework.SchemaManager;
  * @author BREDEX GmbH
  * @created 19.04.2005
  */
-
-public class Hibernator {
+public class Persistor {
     /** the name of the default persistence unit for Jubula */
     private static final String DEFAULT_PU_NAME = "org.eclipse.jubula"; //$NON-NLS-1$
     
-    /** shutdown hook to dispose the current Hibernator */
+    /** shutdown hook to dispose the current Persistor */
     private static final Thread SHUTDOWN_HOOK = new Thread(
             "Close Session Factory") { //$NON-NLS-1$
         public void run() {
-            Hibernator hib = Hibernator.instance();
+            Persistor hib = Persistor.instance();
             if (hib != null) {
                 try {
                     if (LockManager.isRunning()) {
@@ -106,10 +105,10 @@ public class Hibernator {
     }
 
     /** standard logging */
-    private static Log log = LogFactory.getLog(Hibernator.class);
+    private static Log log = LogFactory.getLog(Persistor.class);
 
     /** singleton */
-    private static Hibernator instance = null;
+    private static Persistor instance = null;
 
     /** username */
     private static String user = null;
@@ -126,7 +125,7 @@ public class Hibernator {
     /** is headless */
     private static boolean headless = false;
 
-    /** Hibernate configuration */
+    /** Persistence (JPA / EclipseLink) configuration */
     private EntityManagerFactory m_sf;
 
     /** list of known open sessions */
@@ -152,15 +151,16 @@ public class Hibernator {
      * @throws JBException
      *             in case of configuration problems.
      */
-    private Hibernator(String userName, String pwd, String url, 
+    private Persistor(String userName, String pwd, String url, 
         IProgressMonitor monitor)
         throws JBException, DatabaseVersionConflictException {
         try {
             buildSessionFactoryWithLoginData(userName, pwd, url, monitor);
         } catch (PersistenceException e) {
-            String msg = Messages.CantSetupHibernate;
+            String msg = Messages.CantSetupPersistence;
             log.fatal(msg, e);
-            throw new JBFatalException(msg, MessageIDs.E_HIBERNATE_CANT_SETUP);
+            throw new JBFatalException(msg, 
+                    MessageIDs.E_PERSISTENCE_CANT_SETUP);
         } catch (DatabaseVersionConflictException dbvce) {
             dispose();
             throw dbvce;
@@ -168,9 +168,9 @@ public class Hibernator {
     }
 
     /**
-     * Inits the hibernator.
+     * Inits the persistor.
      * 
-     * @return boolean True, if Hibernator could initialized. False, otherwise.
+     * @return boolean True, if Persistor could initialized. False, otherwise.
      * @throws JBFatalException
      *             in case of setup problems.
      */
@@ -564,9 +564,9 @@ public class Hibernator {
     }
 
     /**
-     * @return the only instance of the Hibernator
+     * @return the only instance of the Persistor
      */
-    public static Hibernator instance() {
+    public static Persistor instance() {
         return instance;
     }
 
@@ -578,17 +578,17 @@ public class Hibernator {
      * @param url
      *            connection string / url
      * @param monitor the progress monitor to use           
-     * @return the only instance of the Hibernator, building the connection to
+     * @return the only instance of the Persistor, building the connection to
      *         the database
      * @throws JBFatalException .
      * @throws JBException .
      */
-    private static Hibernator instance(String userName, String pwd, String url,
-        IProgressMonitor monitor)
+    private static Persistor instance(String userName, String pwd, 
+            String url, IProgressMonitor monitor)
         throws JBFatalException, JBException {
         if (instance == null) {
             try {
-                instance = new Hibernator(userName, pwd, url, monitor);
+                instance = new Persistor(userName, pwd, url, monitor);
                 DatabaseStateDispatcher.notifyListener(new DatabaseStateEvent(
                         DatabaseState.DB_LOGIN_SUCCEEDED));
             } catch (DatabaseVersionConflictException e) {
@@ -957,7 +957,7 @@ public class Hibernator {
      *            The pw to set.
      */
     public static void setPw(String pwd) {
-        Hibernator.pw = pwd;
+        Persistor.pw = pwd;
     }
 
     /**
@@ -965,7 +965,7 @@ public class Hibernator {
      *            connection strnig
      */
     public static void setUrl(String url) {
-        Hibernator.dburl = url;
+        Persistor.dburl = url;
     }
 
     /**
@@ -973,7 +973,7 @@ public class Hibernator {
      *            The user to set.
      */
     public static void setUser(String usr) {
-        Hibernator.user = usr;
+        Persistor.user = usr;
     }
 
     /**
@@ -982,7 +982,7 @@ public class Hibernator {
      */
     public static void setDbConnectionName(
             DatabaseConnectionInfo connectionName) {
-        Hibernator.dbConnectionInfo = connectionName;
+        Persistor.dbConnectionInfo = connectionName;
     }
 
     /**
@@ -992,11 +992,11 @@ public class Hibernator {
      *            boolean
      */
     public static void setHeadless(boolean isHeadless) {
-        Hibernator.headless = isHeadless;
+        Persistor.headless = isHeadless;
     }
 
     /**
-     * Instanceof variant for hibernate proxies
+     * Instanceof variant for Persistence (JPA / EclipseLink) proxies
      * 
      * @param po
      *            PO to be checked
@@ -1012,7 +1012,7 @@ public class Hibernator {
     }
 
     /**
-     * Instanceof variant for hibernate proxies
+     * Instanceof variant for Persistence (JPA / EclipseLink) proxies
      * 
      * @param poClass
      *            POclass to be checked
@@ -1029,14 +1029,14 @@ public class Hibernator {
     }
 
     /**
-     * Hibernate.getClass(obj) but null safe
+     * Persistence (JPA / EclipseLink).getClass(obj) but null safe
      * 
      * @param obj
      *            the object to get the class for
-     * @return the Hibernate.getClass(obj) or null if obj == null
+     * @return the Persistence (JPA / EclipseLink).getClass(obj) or null if obj == null
      */
     public static Class getClass(Object obj) {
-        return obj == null ? null : HibernateUtil.getClass(obj);
+        return obj == null ? null : PersistenceUtil.getClass(obj);
     }
 
     /**
@@ -1140,7 +1140,7 @@ public class Hibernator {
         // the EntityManagerFactory
         Map<String, Object> properties = new HashMap<String, Object>();
         properties.put(PersistenceUnitProperties.CLASSLOADER, 
-                Hibernator.class.getClassLoader());
+                Persistor.class.getClassLoader());
         properties.put(PersistenceUnitProperties.JDBC_DRIVER, 
                 connectionInfo.getDriverClassName());
         properties.put(PersistenceUnitProperties.JDBC_USER, username);
@@ -1169,7 +1169,7 @@ public class Hibernator {
                 DatabaseStateDispatcher.notifyListener(new DatabaseStateEvent(
                         DatabaseState.DB_LOGOUT_SUCCEEDED));
             } catch (Throwable e) {
-                log.error(Messages.DisposeOfHibernatorFailed, e);
+                log.error(Messages.DisposeOfPersistorFailed, e);
             }
         }
 

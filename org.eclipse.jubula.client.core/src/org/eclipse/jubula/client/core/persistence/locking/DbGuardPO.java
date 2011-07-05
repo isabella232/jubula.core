@@ -30,7 +30,7 @@ import javax.persistence.Table;
 @Table(name = "DB_GUARD")
 public class DbGuardPO {
     
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private Long m_id = null;
 
     /**
@@ -39,7 +39,7 @@ public class DbGuardPO {
      * with an ID of 1.
      */
     DbGuardPO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }
     
     /**

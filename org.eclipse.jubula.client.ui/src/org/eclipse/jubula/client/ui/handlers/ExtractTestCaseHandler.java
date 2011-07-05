@@ -42,8 +42,8 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport;
@@ -290,7 +290,7 @@ public class ExtractTestCaseHandler extends AbstractHandler {
                 ProjectDeletedException {               
                 IPersistentObject obj = null;
                 try {
-                    Hibernator.instance().refreshPO(s, ownerNode, 
+                    Persistor.instance().refreshPO(s, ownerNode, 
                         LockModeType.PESSIMISTIC_WRITE);
                     List<IParamNodePO> nodesToRef = 
                         new ArrayList<IParamNodePO>();
@@ -323,7 +323,7 @@ public class ExtractTestCaseHandler extends AbstractHandler {
                 List<IParamNodePO> nodesToRef) {
                 for (IParamNodePO node : modNodes) {
                     IParamNodePO object = (IParamNodePO)s.
-                        find(HibernateUtil.getClass(node), node.getId());
+                        find(PersistenceUtil.getClass(node), node.getId());
                     if (object != null) {
                         nodesToRef.add(object);
                     }

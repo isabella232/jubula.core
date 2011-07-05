@@ -21,7 +21,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
@@ -88,7 +88,7 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
         }
         currentState.put(IS_PROJECT_PROTECTED, isProjectProtected);
         currentState.put(IS_DB_CONNECTION_ESTABLISHED,
-                Hibernator.instance() != null ? true : false);
+                Persistor.instance() != null ? true : false);
         return currentState;
     }
 
@@ -133,7 +133,7 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
         gdFireSourceChanged(ISources.WORKBENCH, IS_PROJECT_PROTECTED,
                 isProjectProtected);
         gdFireSourceChanged(ISources.WORKBENCH, IS_DB_CONNECTION_ESTABLISHED,
-                Hibernator.instance() != null ? true : false);
+                Persistor.instance() != null ? true : false);
     }
 
     /**

@@ -15,21 +15,21 @@ package org.eclipse.jubula.client.core.model;
  * @created Mar 16, 2010
  */
 public interface IRefTestSuitePO extends INodePO {
-    /** access to hibernate property 
+    /** access to Persistence (JPA / EclipseLink) property 
      * @return the property
      * */
     public String getTestSuiteGuid();
 
-    /** access to hibernate property 
+    /** access to Persistence (JPA / EclipseLink) property 
      * @param testSuiteGuid GUID if the referenced TS */
     public void setTestSuiteGuid(String testSuiteGuid);
 
-    /** access to hibernate property
+    /** access to Persistence (JPA / EclipseLink) property
     * @return the property
     */
     public String getTestSuiteAutID();
 
-    /** access to hibernate property 
+    /** access to Persistence (JPA / EclipseLink) property 
      * @param testSuiteAutID ID of the used AUT */
     public void setTestSuiteAutID(String testSuiteAutID);
 }

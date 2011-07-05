@@ -37,7 +37,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 @Table(name = "APPLICATION")
 public class ApplicationPO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private Long m_id = null;
     
     /** Who started this instance of the application */
@@ -46,13 +46,13 @@ public class ApplicationPO {
     /** When was this application still running? */
     private Date m_timestamp = null;
 
-    /** hibernate constructor, don't do anything fancy */
+    /** Persistence (JPA / EclipseLink) constructor, don't do anything fancy */
     ApplicationPO() {
-        // internal for hibernate
+        // internal for Persistence (JPA / EclipseLink)
     }
     
     /** external constructor, dthe dummy parameter is used to distinguish it
-     * from the hibernate contructor.
+     * from the Persistence (JPA / EclipseLink) contructor.
      * @param dummy not used
      */
     public ApplicationPO(long dummy) {

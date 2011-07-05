@@ -63,10 +63,10 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
         new HashMap<String, Integer>();
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     TestSuitePO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }   
     
     /**

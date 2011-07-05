@@ -29,7 +29,7 @@ public class ProgressMonitorTracker {
     private IProgressMonitor m_monitor;
 
     /** 
-     * set of hibernate IDs for elements that have already been reported
+     * set of Persistence (JPA / EclipseLink) IDs for elements that have already been reported
      * as flushed
      */
     private Set<Serializable> m_collectionOwnerIds;

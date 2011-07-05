@@ -75,7 +75,7 @@ public class LanguageHelper {
     }
     
     /**
-     * clears the language list in memory and the language list for hibernate
+     * clears the language list in memory and the language list for Persistence (JPA / EclipseLink)
      */
     public void clearLangList() {
         getInternalLangList().clear();

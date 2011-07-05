@@ -65,7 +65,7 @@ import org.eclipse.jubula.client.core.model.ResultTreeTracker;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.ExecObject;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
@@ -430,7 +430,7 @@ public class TestExecution {
         
         // TEST_dbusername
         varStore.store(TDVariableStore.VAR_DBUSERNAME, 
-                Hibernator.instance().getCurrentDBUser());
+                Persistor.instance().getCurrentDBUser());
         
         try {
             ServerConnection serverConn = ServerConnection.getInstance();
@@ -923,10 +923,16 @@ public class TestExecution {
                 ICapPO nextCap = null;
                 processPostExecution(msg);
                 TestResultNode resultNode = m_resultTreeTracker.getEndNode();
+                MessageCap mc = msg.getMessageCap();
                 resultNode.setComponentName(
                     ComponentNamesBP.getInstance().getName(
-                        msg.getMessageCap().getResolvedLogicalName(), 
+                            mc.getResolvedLogicalName(), 
                         GeneralStorage.getInstance().getProject().getId()));
+                IComponentIdentifier ci = mc.getCi();
+                resultNode.setOmHeuristicEquivalence(
+                        ci.getMatchPercentage());
+                resultNode.setNoOfSimilarComponents(
+                        ci.getNumberOfOtherMatchingComponents());
                 final boolean testOk = !msg.hasTestErrorEvent();
                 if (msg.getState() == CAPTestResponseMessage.PAUSE_EXECUTION) {
                     pauseExecution(PauseMode.PAUSE);

@@ -120,8 +120,8 @@ import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
@@ -495,7 +495,7 @@ class XmlImporter {
         for (ComponentName compName : componentNamesList) {
             String guid = compName.getGUID();
             if (assignNewGuid) {
-                final String newGuid = HibernateUtil.generateGuid();
+                final String newGuid = PersistenceUtil.generateGuid();
                 oldToNewGUID.put(guid, newGuid);
                 guid = newGuid;
             }
@@ -682,11 +682,11 @@ class XmlImporter {
         IParamNameMapper mapper, IWritableComponentNameCache cNC) 
         throws InvalidDataException, InterruptedException {
         IProjectPO proj = initProject(xml, assignNewGuid);
-        EntityManager attrDescSession = Hibernator.instance().openSession();
+        EntityManager attrDescSession = Persistor.instance().openSession();
         try {
             fillProject(proj, xml, attrDescSession, assignNewGuid, mapper, cNC);
         } finally {         
-            Hibernator.instance().dropSession(attrDescSession);
+            Persistor.instance().dropSession(attrDescSession);
         }
         return proj;
     }

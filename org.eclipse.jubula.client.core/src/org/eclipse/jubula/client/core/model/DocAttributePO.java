@@ -39,10 +39,10 @@ import javax.persistence.Version;
 @Table(name = "DOC_ATTR")
 class DocAttributePO implements IDocAttributePO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /** sub-attributes */
@@ -58,7 +58,7 @@ class DocAttributePO implements IDocAttributePO {
      */
     @SuppressWarnings("unused")
     private DocAttributePO() {
-        // For hibernate
+        // For Persistence (JPA / EclipseLink)
     }
 
     /**
@@ -85,7 +85,7 @@ class DocAttributePO implements IDocAttributePO {
     }
 
     /**
-     * Hibernate getter.
+     * Persistence (JPA / EclipseLink) getter.
      * 
      * @return the value for this attribute.
      */
@@ -95,7 +95,7 @@ class DocAttributePO implements IDocAttributePO {
         return m_value;
     }
     /**
-     * Hibernate setter.
+     * Persistence (JPA / EclipseLink) setter.
      * 
      * @param newValue The new value for the attribute.
      */

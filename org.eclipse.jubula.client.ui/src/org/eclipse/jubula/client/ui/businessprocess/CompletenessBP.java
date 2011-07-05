@@ -128,7 +128,7 @@ public class CompletenessBP implements
      */
     public void handleProjectLoaded() {
         /* At this time he data is not completely loaded from the database.
-         * Since hibernate is not threadsafe the checks (which will load
+         * Since Persistence (JPA / EclipseLink) is not threadsafe the checks (which will load
          * all data) can't be run in a job, so checkProject must be called
          * with runInJob==false.
          */

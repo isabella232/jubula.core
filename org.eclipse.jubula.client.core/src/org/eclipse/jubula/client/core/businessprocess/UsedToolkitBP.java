@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
@@ -164,21 +164,21 @@ public class UsedToolkitBP {
         if (usedToolkits.isEmpty()) {
             return;
         }
-        final EntityManager session = Hibernator.instance().openSession();
+        final EntityManager session = Persistor.instance().openSession();
         IUsedToolkitPO currToolkit = null;
         try {
             final EntityTransaction tx = 
-                Hibernator.instance().getTransaction(session);
+                Persistor.instance().getTransaction(session);
             for (IUsedToolkitPO toolkit : usedToolkits) {
                 currToolkit = toolkit;
                 session.persist(toolkit);
             }
-            Hibernator.instance().commitTransaction(session, tx);
+            Persistor.instance().commitTransaction(session, tx);
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForAnySession(currToolkit, 
                 e, session);
         } finally {
-            Hibernator.instance().dropSession(session);
+            Persistor.instance().dropSession(session);
         }
 
     }
@@ -197,7 +197,7 @@ public class UsedToolkitBP {
             m_usedToolkits = new HashSet<IUsedToolkitPO>(0);
             return new HashSet<IUsedToolkitPO>(m_usedToolkits);
         }
-        final EntityManager session = Hibernator.instance().openSession();
+        final EntityManager session = Persistor.instance().openSession();
         try {
             final Query q = session.createQuery(
                 "select USEDTOOLKITS from UsedToolkitPO as USEDTOOLKITS where USEDTOOLKITS.hbmParentProjectId = :projectID"); //$NON-NLS-1$
@@ -207,7 +207,7 @@ public class UsedToolkitBP {
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForAnySession(null, e, session);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return new HashSet<IUsedToolkitPO>(m_usedToolkits);
     }
@@ -236,11 +236,11 @@ public class UsedToolkitBP {
         final IProgressMonitor monitor) 
         throws PMException, ProjectDeletedException {
         
-        EntityManager s = Hibernator.instance().openSession();
+        EntityManager s = Persistor.instance().openSession();
         try {
             deleteToolkitsFromDB(s, project.getId(), true);
         } finally {
-            Hibernator.instance().dropSession(s);           
+            Persistor.instance().dropSession(s);           
         }
         m_usedToolkits.clear();
 
@@ -287,9 +287,10 @@ public class UsedToolkitBP {
         boolean commit) throws PMException, ProjectDeletedException {
         try {
             if (commit) {
-                EntityTransaction tx = Hibernator.instance().getTransaction(s);
+                EntityTransaction tx = Persistor
+                    .instance().getTransaction(s);
                 executeDeleteStatement(s, parentProjectId);
-                Hibernator.instance().commitTransaction(s, tx);
+                Persistor.instance().commitTransaction(s, tx);
             } else {
                 executeDeleteStatement(s, parentProjectId);
             }

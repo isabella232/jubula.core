@@ -36,7 +36,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 class UsedToolkitPO implements IUsedToolkitPO {
     
     
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
     /** The I18N-Key of the used toolkit */
@@ -48,14 +48,14 @@ class UsedToolkitPO implements IUsedToolkitPO {
     /** The minor version number of the used toolkit */
     private Integer m_minorVersion = null;
     
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version;
     
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
     
     /**
-     * Constructor for Hibernate.
+     * Constructor for Persistence (JPA / EclipseLink).
      */
     UsedToolkitPO() {
         // nothing yet
@@ -79,7 +79,7 @@ class UsedToolkitPO implements IUsedToolkitPO {
     
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the id.
      */
@@ -91,7 +91,7 @@ class UsedToolkitPO implements IUsedToolkitPO {
     
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param id The id to set.
      */
     void setId(Long id) {

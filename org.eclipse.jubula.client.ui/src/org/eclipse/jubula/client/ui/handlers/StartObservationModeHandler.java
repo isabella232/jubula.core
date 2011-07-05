@@ -37,7 +37,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -272,7 +272,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         // generate a unique name
         for (Object node : GeneralStorage.getInstance().getProject()
                 .getSpecObjCont().getSpecObjList()) {
-            if (Hibernator.isPoSubclass((INodePO)node, ITestCasePO.class)
+            if (Persistor.isPoSubclass((INodePO)node, ITestCasePO.class)
                     && ((INodePO)node).getName().startsWith(standardName)) {
                 usedNames.add(((INodePO)node).getName());
             }

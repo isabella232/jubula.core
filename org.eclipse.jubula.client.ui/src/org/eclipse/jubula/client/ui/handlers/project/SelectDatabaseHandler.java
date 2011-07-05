@@ -26,7 +26,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
@@ -89,8 +89,8 @@ public class SelectDatabaseHandler extends AbstractHandler {
             }
         }
         
-        Hibernator.setUser(null);
-        Hibernator.setPw(null);
+        Persistor.setUser(null);
+        Persistor.setPw(null);
         return returnStatus;
     }
 
@@ -116,19 +116,19 @@ public class SelectDatabaseHandler extends AbstractHandler {
                             monitor.beginTask(Messages.PluginConnectProgress,
                                     IProgressMonitor.UNKNOWN);
                             Utils.clearClient(true);
-                            Hibernator.setUser(username);
-                            Hibernator.setPw(pwd);
-                            Hibernator.setDbConnectionName(info);
+                            Persistor.setUser(username);
+                            Persistor.setPw(pwd);
+                            Persistor.setDbConnectionName(info);
 
-                            if (Hibernator.instance() != null) {
+                            if (Persistor.instance() != null) {
                                 CompNamePM.dispose();
                                 GeneralStorage.getInstance().dispose();
                                 if (LockManager.isRunning()) {
                                     LockManager.instance().dispose();
                                 }
-                                Hibernator.instance().dispose();
+                                Persistor.instance().dispose();
                             }
-                            if (Hibernator.init()) {
+                            if (Persistor.init()) {
                                 LockManager.instance();
                                 Plugin.getDefault().writeLineToConsole(
                                         Messages.

@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.jubula.client.core.model.ITimestampPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 
 
 /**
@@ -52,7 +52,7 @@ public class TimestampBP {
         final EntityManager masterSession = GeneralStorage.getInstance()
             .getMasterSession();
         return (ITimestampPO)masterSession.find(
-            HibernateUtil.getClass(timeStampPO), timeStampPO.getId());
+            PersistenceUtil.getClass(timeStampPO), timeStampPO.getId());
     }
     
     /**

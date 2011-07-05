@@ -332,35 +332,36 @@ public class NodePM extends PersistenceManager {
      */
     public static AbstractCmdHandleChild getCmdHandleChild(INodePO parent,
             INodePO child) {
-        Class parentNodePoClass = Hibernator.getClass(parent);
-        Class childNodePoClass = Hibernator.getClass(child);
-        if (Hibernator.isPoClassSubclass(parentNodePoClass, IProjectPO.class)) {
+        Class parentNodePoClass = Persistor.getClass(parent);
+        Class childNodePoClass = Persistor.getClass(child);
+        if (Persistor.isPoClassSubclass(
+                parentNodePoClass, IProjectPO.class)) {
             // testsuite in TestExecTree
-            if (Hibernator.isPoClassSubclass(childNodePoClass,
+            if (Persistor.isPoClassSubclass(childNodePoClass,
                     ITestSuitePO.class)) {
                 return new CmdHandleChildIntoTestSuiteList();
                 // category/specTc in SpecTree (toplevel)
-            } else if (Hibernator.isPoClassSubclass(childNodePoClass,
+            } else if (Persistor.isPoClassSubclass(childNodePoClass,
                     ITestJobPO.class)) {
                 // test jobs
                 return new CmdHandleChildIntoTestJobList();
-            } else if (Hibernator.isPoClassSubclass(childNodePoClass,
+            } else if (Persistor.isPoClassSubclass(childNodePoClass,
                     ICategoryPO.class)
-                    || Hibernator.isPoClassSubclass(childNodePoClass,
+                    || Persistor.isPoClassSubclass(childNodePoClass,
                             ISpecTestCasePO.class)) {
                 return new CmdHandleChildIntoSpecList();
             }
-        } else if (Hibernator.isPoClassSubclass(parentNodePoClass,
+        } else if (Persistor.isPoClassSubclass(parentNodePoClass,
                 ICategoryPO.class)) {
             // category/specTc in category
             return new CmdHandleChildIntoNodeList();
-        } else if (Hibernator.isPoClassSubclass(parentNodePoClass,
+        } else if (Persistor.isPoClassSubclass(parentNodePoClass,
                 ITestSuitePO.class)) {
             // execTc in testsuite
             return new CmdHandleChildIntoNodeList();
-        } else if (Hibernator.isPoClassSubclass(parentNodePoClass,
+        } else if (Persistor.isPoClassSubclass(parentNodePoClass,
                 ISpecTestCasePO.class)) {
-            if (Hibernator.isPoClassSubclass(childNodePoClass,
+            if (Persistor.isPoClassSubclass(childNodePoClass,
                     IEventExecTestCasePO.class)) {
                 // eventhandler in using specTc
                 return new CmdHandleEventHandlerIntoMap();
@@ -423,16 +424,16 @@ public class NodePM extends PersistenceManager {
         IPersistentObject lockedObj = null;
         final EntityManager sess = 
             GeneralStorage.getInstance().getMasterSession();
-        final Hibernator hibernator = Hibernator.instance();
-        if (Hibernator.isPoSubclass(parent, IProjectPO.class)) {
-            if (Hibernator.isPoSubclass(child, ITestSuitePO.class)) {
+        final Persistor persistor = Persistor.instance();
+        if (Persistor.isPoSubclass(parent, IProjectPO.class)) {
+            if (Persistor.isPoSubclass(child, ITestSuitePO.class)) {
                 lockedObj = GeneralStorage.getInstance().getProject()
                     .getTestSuiteCont();
-            } else if (Hibernator.isPoSubclass(child, ITestJobPO.class)) {
+            } else if (Persistor.isPoSubclass(child, ITestJobPO.class)) {
                 lockedObj = GeneralStorage.getInstance().getProject()
                     .getTestJobCont();
-            } else if (Hibernator.isPoSubclass(child, ISpecTestCasePO.class)
-                || Hibernator.isPoSubclass(child, ICategoryPO.class)) {
+            } else if (Persistor.isPoSubclass(child, ISpecTestCasePO.class)
+                || Persistor.isPoSubclass(child, ICategoryPO.class)) {
                 lockedObj = GeneralStorage.getInstance().getProject()
                     .getSpecObjCont();
             } else {
@@ -443,11 +444,11 @@ public class NodePM extends PersistenceManager {
             lockedObj = parent;
         }
         try {
-            tx = hibernator.getTransaction(sess);
-            hibernator.lockPO(sess, lockedObj);
+            tx = persistor.getTransaction(sess);
+            persistor.lockPO(sess, lockedObj);
             if (!doAdd) { // don't lock newly created POs 
                 lockedObj = child;
-                hibernator.lockPO(sess, lockedObj);
+                persistor.lockPO(sess, lockedObj);
             }
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForMasterSession(lockedObj, e);
@@ -462,7 +463,7 @@ public class NodePM extends PersistenceManager {
             if (!doAdd) {
                 sess.remove(child);
             }
-            hibernator.commitTransaction(sess, tx);
+            persistor.commitTransaction(sess, tx);
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForMasterSession(null, e);
         }
@@ -491,11 +492,11 @@ public class NodePM extends PersistenceManager {
         EntityManager sess = GeneralStorage.getInstance().getMasterSession();
         EntityTransaction tx = null;
         try {
-            final Hibernator hibernator = Hibernator.instance();
-            tx = hibernator.getTransaction(sess);
-            hibernator.lockPO(sess, node);
+            final Persistor persistor = Persistor.instance();
+            tx = persistor.getTransaction(sess);
+            persistor.lockPO(sess, node);
             node.setName(newName);
-            hibernator.commitTransaction(sess, tx);
+            persistor.commitTransaction(sess, tx);
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForMasterSession(node, e);
         }
@@ -719,11 +720,11 @@ public class NodePM extends PersistenceManager {
             return new ArrayList<IExecTestCasePO>(0);
         }
         
-        EntityManager s = Hibernator.instance().openSession();
+        EntityManager s = Persistor.instance().openSession();
         
         try {
             EntityTransaction tx = 
-                Hibernator.instance().getTransaction(s);
+                Persistor.instance().getTransaction(s);
 
             IProjectPO parentProject = 
                 (IProjectPO)s.find(
@@ -746,13 +747,13 @@ public class NodePM extends PersistenceManager {
             List<IExecTestCasePO> tcList = 
                 getExecTestCasesFor(specTcGuid, projectsThatReuse, s);
 
-            Hibernator.instance().commitTransaction(
+            Persistor.instance().commitTransaction(
                 s, tx);
 
             return tcList;
 
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(s);
+            Persistor.instance().dropSessionWithoutLockRelease(s);
         }        
     }
 
@@ -809,11 +810,11 @@ public class NodePM extends PersistenceManager {
             return new ArrayList<IExecTestCasePO>(0);
         }
         
-        EntityManager s = Hibernator.instance().openSession();
+        EntityManager s = Persistor.instance().openSession();
 
         try {
             EntityTransaction tx = 
-                Hibernator.instance().getTransaction(s);
+                Persistor.instance().getTransaction(s);
 
             IProjectPO parentProject = 
                 (IProjectPO)s.find(
@@ -838,12 +839,12 @@ public class NodePM extends PersistenceManager {
             List<IExecTestCasePO> tcList = 
                 getExecTestCasesFor(specTcGuid, projectsThatReuse, s);
 
-            Hibernator.instance().commitTransaction(
+            Persistor.instance().commitTransaction(
                 s, tx);
 
             return tcList;
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(s);
+            Persistor.instance().dropSessionWithoutLockRelease(s);
         }        
     }
 
@@ -1197,7 +1198,7 @@ public class NodePM extends PersistenceManager {
         Root from = query.from(NodeMaker.getNodePOClass());
         Predicate parentProjectPred = session.getCriteriaBuilder().equal(
                 from.get("hbmParentProjectId"), projectId); //$NON-NLS-1$
-        Predicate guidDisjunction = HibernateUtil.getExpressionDisjunction(
+        Predicate guidDisjunction = PersistenceUtil.getExpressionDisjunction(
                 guids, from.get("guid"), session.getCriteriaBuilder()); //$NON-NLS-1$
         query.select(from).where(parentProjectPred, guidDisjunction);
         

@@ -42,7 +42,7 @@ public final class DocAttributeDescriptionBP {
      * 
      * @param labelKey The label key for which to find the attribute 
      *                 description.
-     * @param session The Hibernate session in which the query should be 
+     * @param session The Persistence (JPA / EclipseLink) session in which the query should be 
      *                performed.
      * @return the attribute description with the given label key, or 
      *         <code>null</code> if no such attribute description is found.

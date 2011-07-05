@@ -26,8 +26,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
@@ -103,7 +103,7 @@ public final class LockManager {
         EntityManager sess = null;
         
         try {
-            sess = Hibernator.instance().openSession();
+            sess = Persistor.instance().openSession();
             EntityTransaction tx = sess.getTransaction();
             tx.begin();
             m_dbGuard = sess.find(DbGuardPO.class, DB_GUARD_ID);
@@ -115,7 +115,7 @@ public final class LockManager {
             throw new JBFatalAbortException(Messages.LockingWontStart, e,
                 MessageIDs.E_DATABASE_GENERAL);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(sess);
+            Persistor.instance().dropSessionWithoutLockRelease(sess);
         }
         updateTimestamp();
     }
@@ -130,7 +130,7 @@ public final class LockManager {
         EntityTransaction tx = null;
         Result result = Result.FAILED;
         try {
-            sess = Hibernator.instance().openSession();
+            sess = Persistor.instance().openSession();
             tx = sess.getTransaction();
             tx.begin();
             lockDB(sess);
@@ -145,7 +145,7 @@ public final class LockManager {
             if (tx != null) {
                 tx.rollback();
             }
-            Hibernator.instance().dropSessionWithoutLockRelease(sess);
+            Persistor.instance().dropSessionWithoutLockRelease(sess);
         }
         return result;
     }
@@ -307,7 +307,7 @@ public final class LockManager {
                 try {
                     if (checkVersion) {
                         Query versionQuery = sess.createQuery("select obj.version from " //$NON-NLS-1$
-                                + HibernateUtil.getClass(po).getSimpleName() 
+                                + PersistenceUtil.getClass(po).getSimpleName() 
                                 + " as obj where obj.id = :poID"); //$NON-NLS-1$
                         versionQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
                         Integer version = 
@@ -317,7 +317,7 @@ public final class LockManager {
                         }
                     } else {
                         Query countQuery = sess.createQuery("select count(obj.id) from " //$NON-NLS-1$
-                                + HibernateUtil.getClass(po).getSimpleName() 
+                                + PersistenceUtil.getClass(po).getSimpleName() 
                                 + " as obj where obj.id = :poID"); //$NON-NLS-1$
                         countQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
                         Long count = (Long)countQuery.getSingleResult();

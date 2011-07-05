@@ -51,7 +51,7 @@ import org.eclipse.persistence.annotations.Index;
 @Table(name = "TD_MANAGER")
 @EntityListeners(value = { ElementLoadedProgressListener.class })
 class TDManagerPO implements ITDManager {
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
     /**
@@ -74,7 +74,7 @@ class TDManagerPO implements ITDManager {
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
 
     /**
@@ -96,7 +96,7 @@ class TDManagerPO implements ITDManager {
     }
     
     /**
-     * private constructor only for hibernate
+     * private constructor only for Persistence (JPA / EclipseLink)
      */
     TDManagerPO() {
         // nothing so far

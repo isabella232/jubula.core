@@ -81,7 +81,7 @@ import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -530,7 +530,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         @SuppressWarnings("synthetic-access")
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
-            if (Hibernator.isPoSubclass(node, ICapPO.class)) {
+            if (Persistor.isPoSubclass(node, ICapPO.class)) {
                 final ICapPO cap = (ICapPO)node;
                 CompNameResult result = 
                     m_compNamesBP.findCompName(ctx.getCurrentTreePath(), 

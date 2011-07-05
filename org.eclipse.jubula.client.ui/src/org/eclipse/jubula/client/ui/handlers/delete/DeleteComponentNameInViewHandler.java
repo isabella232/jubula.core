@@ -28,7 +28,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -69,13 +69,13 @@ public class DeleteComponentNameInViewHandler extends AbstractHandler {
                         .getMasterSession();
                 
                 try {
-                    EntityTransaction tx = Hibernator.instance()
+                    EntityTransaction tx = Persistor.instance()
                             .getTransaction(s); 
-                    Hibernator.instance().lockPOSet(s, toDelete);
+                    Persistor.instance().lockPOSet(s, toDelete);
                     for (IComponentNamePO compName : toDelete) {
                         s.remove(s.merge(compName));
                     }
-                    Hibernator.instance().commitTransaction(s, tx);
+                    Persistor.instance().commitTransaction(s, tx);
                     for (IComponentNamePO compName : toDelete) {
                         DataEventDispatcher.getInstance()
                                 .fireDataChangedListener(compName,

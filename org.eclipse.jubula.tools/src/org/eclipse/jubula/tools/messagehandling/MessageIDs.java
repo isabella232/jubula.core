@@ -38,17 +38,18 @@ public class MessageIDs {
     // -- DATABASE ERROR IDs -----------------------------------------------
     /** if no or wrong username and password */
     public static final Integer E_NO_DB_CONNECTION = new Integer(2000);
-    /** if hibernate load failed */
-    public static final Integer E_HIBERNATE_LOAD_FAILED = new Integer(2001);
-    /** if hibernate configuration problem */
-    public static final Integer E_HIBERNATE_CONFIG_PROBLEM = new Integer(2002);
-    /** if hibernate can't close session */
-    public static final Integer E_HIBERNATE_CANT_CLOSE = new Integer(2003);
-    /** if hibernate can't setup */
-    public static final Integer E_HIBERNATE_CANT_SETUP = new Integer(2004);
-    /** if hibernate can't open session */
-    public static final Integer E_HIBERNATE_CANT_OPEN = new Integer(2005);
-    /** if hibernate can't read the project from database */
+    /** if persistence load failed */
+    public static final Integer E_PERSISTENCE_LOAD_FAILED = new Integer(2001);
+    /** if persistence configuration problem */
+    public static final Integer E_PERSISTENCE_CONFIG_PROBLEM = 
+        new Integer(2002);
+    /** if persistence can't close session */
+    public static final Integer E_PERSISTENCE_CANT_CLOSE = new Integer(2003);
+    /** if persistence can't setup */
+    public static final Integer E_PERSISTENCE_CANT_SETUP = new Integer(2004);
+    /** if persistence can't open session */
+    public static final Integer E_PERSISTENCE_CANT_OPEN = new Integer(2005);
+    /** if persistence can't read the project from database */
     public static final Integer E_CANT_READ_PROJECT = new Integer(2006);
     /** if getting database session failed */
     public static final Integer E_NO_DB_SESSION = new Integer(2007);
@@ -159,7 +160,7 @@ public class MessageIDs {
     public static final Integer E_UNEXPECTED_EXCEPTION = new Integer(3004);
     /** if the GUI is in an unexpected state, for example a missing editor */
     public static final Integer E_INVALID_GUI_STATE = new Integer(3005);
-    /** if an unhandled hibernate exception occurs */ 
+    /** if an unhandled Persistence (JPA / EclipseLink) exception occurs */ 
     public static final Integer E_UNKNOWN_DB_ERROR = new Integer(3006);
     /** if an unknown object was clicked */ 
     public static final Integer E_UNKNOWN_OBJECT = new Integer(3007);
@@ -756,11 +757,11 @@ public class MessageIDs {
     private static void createDatabaseErrorMessages() {
         int e = Message.ERROR;
         messageMap.put(E_NO_DB_CONNECTION, e, "ErrorMessage.NO_DB_CONNECTION", null); //$NON-NLS-1$
-        messageMap.put(E_HIBERNATE_LOAD_FAILED, e, "ErrorMessage.HIBERNATE_LOAD_FAILED", null); //$NON-NLS-1$
-        messageMap.put(E_HIBERNATE_CONFIG_PROBLEM, e, "ErrorMessage.HIBERNATE_CONFIG_PROBLEM", null); //$NON-NLS-1$
-        messageMap.put(E_HIBERNATE_CANT_CLOSE, e, "ErrorMessage.HIBERNATE_CANT_CLOSE", null); //$NON-NLS-1$
-        messageMap.put(E_HIBERNATE_CANT_SETUP, e, "ErrorMessage.HIBERNATE_CANT_SETUP", null); //$NON-NLS-1$
-        messageMap.put(E_HIBERNATE_CANT_OPEN, e, "ErrorMessage.HIBERNATE_CANT_OPEN", null); //$NON-NLS-1$
+        messageMap.put(E_PERSISTENCE_LOAD_FAILED, e, "ErrorMessage.PERSISTENCE_LOAD_FAILED", null); //$NON-NLS-1$
+        messageMap.put(E_PERSISTENCE_CONFIG_PROBLEM, e, "ErrorMessage.PERSISTENCE_CONFIG_PROBLEM", null); //$NON-NLS-1$
+        messageMap.put(E_PERSISTENCE_CANT_CLOSE, e, "ErrorMessage.PERSISTENCE_CANT_CLOSE", null); //$NON-NLS-1$
+        messageMap.put(E_PERSISTENCE_CANT_SETUP, e, "ErrorMessage.PERSISTENCE_CANT_SETUP", null); //$NON-NLS-1$
+        messageMap.put(E_PERSISTENCE_CANT_OPEN, e, "ErrorMessage.PERSISTENCE_CANT_OPEN", null); //$NON-NLS-1$
         messageMap.put(E_CANT_READ_PROJECT, e, "ErrorMessage.CANT_READ_PROJECT", null); //$NON-NLS-1$
         messageMap.put(E_NO_DB_SESSION, e, "ErrorMessage.NO_DB_SESSION", null); //$NON-NLS-1$
         messageMap.put(E_START_TRANSACTION, e, "ErrorMessage.START_TRANSACTION", null); //$NON-NLS-1$

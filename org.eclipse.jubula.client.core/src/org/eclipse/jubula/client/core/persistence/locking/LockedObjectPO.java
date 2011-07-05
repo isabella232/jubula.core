@@ -35,7 +35,7 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 public class LockedObjectPO implements IPersistentObject {
 
     
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
     /** the name of the object table to lock. */
@@ -43,10 +43,10 @@ public class LockedObjectPO implements IPersistentObject {
    
    
     /**
-     * Only for Hibernate!
+     * Only for Persistence (JPA / EclipseLink)!
      */
     LockedObjectPO() {
-        // for Hibernate
+        // for Persistence (JPA / EclipseLink)
     }
     
     /**

@@ -30,7 +30,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
@@ -138,7 +138,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         Iterator iter = tsWorkVersion.getNodeListIterator();
         while (iter.hasNext()) {
             INodePO child = (INodePO)iter.next();
-            if (Hibernator.isPoSubclass(child, IExecTestCasePO.class)) {
+            if (Persistor.isPoSubclass(child, IExecTestCasePO.class)) {
                 IExecTestCasePO execTC = (IExecTestCasePO)child;
                 if (!checkExecTCCompleteness(execTC)) {
                     

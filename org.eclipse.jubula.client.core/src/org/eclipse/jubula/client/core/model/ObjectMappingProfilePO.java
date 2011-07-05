@@ -39,10 +39,10 @@ import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 @Table(name = "OM_PROFILE")
 class ObjectMappingProfilePO implements IObjectMappingProfilePO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
 
     /**
@@ -76,7 +76,7 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      *          
      * @return the context factor weight in object recognition comparisons.          
      */
@@ -87,7 +87,7 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      *          
      * @return the name factor weight in object recognition comparisons.
      */
@@ -98,7 +98,7 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @return the path factor weight in object recognition comparisons.
      */
@@ -119,7 +119,7 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @param contextFactor the new percentage weight for the context factor.
      */
@@ -129,7 +129,7 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @param nameFactor the new percentage weight for the name factor.
      */
@@ -139,7 +139,7 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @param pathFactor the new percentage weight for the path factor.
      */
@@ -215,7 +215,7 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @param id id The id to set.
      */
@@ -225,7 +225,7 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
     }
     
     /**
-     * For hibernate
+     * For Persistence (JPA / EclipseLink)
      * 
      * @param version The version to set.
      */

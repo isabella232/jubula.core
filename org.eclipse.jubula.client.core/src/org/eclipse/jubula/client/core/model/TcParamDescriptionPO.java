@@ -33,7 +33,7 @@ class TcParamDescriptionPO extends ParamDescriptionPO implements
     private IParamNameMapper m_mapper = null;
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     TcParamDescriptionPO() {
         // nothing

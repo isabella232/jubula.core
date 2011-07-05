@@ -49,7 +49,7 @@ public interface IEventExecTestCasePO extends IExecTestCasePO {
     public abstract String getEventType();
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param eventType The eventType to set.
      */
     public abstract void setEventType(String eventType);

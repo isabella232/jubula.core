@@ -76,7 +76,7 @@ public class MultipleNodePM  extends PersistenceManager {
      * Abstract command, offering support for a Set of objects to lock. All
      * commands are executed in the same transaction
      * 
-     * REMEMBER : some nodes do not return their hibernate parent, 
+     * REMEMBER : some nodes do not return their Persistence (JPA / EclipseLink) parent, 
      *  but the project when in top level, for example ICategoryPO 
      *  or ISpecTestCasePO
      */
@@ -506,10 +506,10 @@ public class MultipleNodePM  extends PersistenceManager {
                 Set<INodePO> userSet = new HashSet<INodePO>();
                 for (INodePO node : toLoad.get(compName)) {
                     userSet.add((INodePO)sess.find(
-                            HibernateUtil.getClass(node), node.getId()));
+                            PersistenceUtil.getClass(node), node.getId()));
                 }
                 sessionMap.put((IComponentNamePO)sess.find(
-                        HibernateUtil.getClass(compName), compName.getId()), 
+                        PersistenceUtil.getClass(compName), compName.getId()), 
                         userSet);
             }
             
@@ -604,11 +604,11 @@ public class MultipleNodePM  extends PersistenceManager {
             if (masterSession != sess) {
                 masterSession.detach(node);
                 oldParent = (IPersistentObject)sess.find(
-                        HibernateUtil.getClass(oldParent), oldParent.getId());
+                        PersistenceUtil.getClass(oldParent), oldParent.getId());
                 newParent = (IPersistentObject)sess.find(
-                        HibernateUtil.getClass(newParent), newParent.getId());
+                        PersistenceUtil.getClass(newParent), newParent.getId());
                 node = (INodePO)sess.find(
-                        HibernateUtil.getClass(node), node.getId());
+                        PersistenceUtil.getClass(node), node.getId());
             }
 
             
@@ -671,7 +671,7 @@ public class MultipleNodePM  extends PersistenceManager {
         }
 
         /** {@inheritDoc}
-         * @see org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle#execute(org.hibernate.Session)
+         * @see org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle#execute(org.Persistence (JPA / EclipseLink).Session)
          */
         public MessageInfo execute(EntityManager sess) {
             
@@ -731,9 +731,9 @@ public class MultipleNodePM  extends PersistenceManager {
          */
         public MessageInfo execute(EntityManager sess) {
             ISpecTestCasePO specTc = (ISpecTestCasePO)sess.find(
-                    HibernateUtil.getClass(m_specTc), m_specTc.getId());
+                    PersistenceUtil.getClass(m_specTc), m_specTc.getId());
             IExecTestCasePO execTc = (IExecTestCasePO)sess.find(
-                    HibernateUtil.getClass(m_execTc), m_execTc.getId());
+                    PersistenceUtil.getClass(m_execTc), m_execTc.getId());
             execTc.setSpecTestCase(specTc);
             return null;
         }            
@@ -782,7 +782,7 @@ public class MultipleNodePM  extends PersistenceManager {
             }
             registerParamNamesForDeletion(m_testCase);
             
-            HibernateUtil.removeChildNodes(m_testCase, sess);
+            PersistenceUtil.removeChildNodes(m_testCase, sess);
             
             sess.remove(m_testCase);
             
@@ -888,7 +888,7 @@ public class MultipleNodePM  extends PersistenceManager {
                 proj.getSpecObjCont().removeSpecObject(m_category);  
             }
 
-            HibernateUtil.removeChildNodes(m_category, sess);
+            PersistenceUtil.removeChildNodes(m_category, sess);
             
             sess.remove(m_category);
             
@@ -976,7 +976,7 @@ public class MultipleNodePM  extends PersistenceManager {
             ParamNameBPDecorator dec, EntityManager sess) 
         throws PMException, ProjectDeletedException {
         
-        final Hibernator hibernator = Hibernator.instance();
+        final Persistor persistor = Persistor.instance();
         EntityTransaction tx = null;
         
         // get List of objects to lock
@@ -990,16 +990,16 @@ public class MultipleNodePM  extends PersistenceManager {
         try {
             
             // get new Transaction
-            tx = hibernator.getTransaction(sess);
+            tx = persistor.getTransaction(sess);
             
             // lock objects
-            hibernator.lockPOSet(sess, objectsToLock);
+            persistor.lockPOSet(sess, objectsToLock);
             
             // execute command code in transaction
             for (AbstractCmdHandle cmd : cmds) {
                 MessageInfo errorMessage = cmd.execute(sess);
                 if (errorMessage != null) {
-                    hibernator.rollbackTransaction(sess, tx);
+                    persistor.rollbackTransaction(sess, tx);
                     return errorMessage;
                 }
             }
@@ -1008,7 +1008,7 @@ public class MultipleNodePM  extends PersistenceManager {
             }
             
             // commit transaction and remove all locks
-            hibernator.commitTransaction(sess, tx);
+            persistor.commitTransaction(sess, tx);
             
             if (dec != null) {
                 // sync with master sessions mapper

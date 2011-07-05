@@ -39,7 +39,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 @Table(name = "TEST_DATA_LIST")
 class DataSetPO implements IDataSetPO {
     
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
     /**
@@ -47,7 +47,7 @@ class DataSetPO implements IDataSetPO {
      */
     private List<ITestDataPO> m_list = new ArrayList<ITestDataPO>();
     
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version;
     
     /** The ID of the parent project */
@@ -73,7 +73,7 @@ class DataSetPO implements IDataSetPO {
      *
      */
     DataSetPO() {
-        // only for hibernate    
+        // only for Persistence (JPA / EclipseLink)    
     }
 
     /**

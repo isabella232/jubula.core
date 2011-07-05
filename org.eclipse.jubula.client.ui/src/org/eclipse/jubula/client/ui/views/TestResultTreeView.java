@@ -40,7 +40,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
@@ -304,7 +304,7 @@ public class TestResultTreeView extends ViewPart
                     if (resultNode != null
                         && (Plugin.getDefault().getPreferenceStore().getBoolean(
                             Constants.TRACKRESULTS_KEY)
-                            || Hibernator.isPoSubclass(resultNode.getNode(),
+                            || Persistor.isPoSubclass(resultNode.getNode(),
                                 ITestSuitePO.class))) {
 
                         getTreeViewer().reveal(resultNode);

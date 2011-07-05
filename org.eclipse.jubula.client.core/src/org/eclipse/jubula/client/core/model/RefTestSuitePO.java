@@ -30,13 +30,13 @@ import javax.persistence.Transient;
 @DiscriminatorValue(value = "R")
 class RefTestSuitePO extends NodePO implements IRefTestSuitePO {
     
-    /** hibernate property */
+    /** Persistence (JPA / EclipseLink) property */
     private String m_testSuiteGuid;
-    /** hibernate property */
+    /** Persistence (JPA / EclipseLink) property */
     private String m_testSuiteAutID;
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     RefTestSuitePO() {
         super();

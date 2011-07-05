@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
@@ -187,12 +187,12 @@ public class TestCaseBP  extends NodeBP {
      */
     public static INodePO getSpecTestCaseContainer(INodePO currentNode) {
         INodePO parent = currentNode;
-        Class parentClass = Hibernator.getClass(parent);
-        while (!(Hibernator.isPoClassSubclass(
-                    parentClass, IProjectPO.class) || Hibernator
+        Class parentClass = Persistor.getClass(parent);
+        while (!(Persistor.isPoClassSubclass(
+                    parentClass, IProjectPO.class) || Persistor
                         .isPoClassSubclass(parentClass, ICategoryPO.class))) {
             parent = parent.getParentNode();
-            parentClass = Hibernator.getClass(parent);
+            parentClass = Persistor.getClass(parent);
         }
         return parent;
     }

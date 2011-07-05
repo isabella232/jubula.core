@@ -40,10 +40,10 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "TESTRESULT")
 class TestResultPO implements ITestResultPO {
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /** testresult summary id*/
@@ -123,7 +123,17 @@ class TestResultPO implements ITestResultPO {
     private byte[] m_imageData;
     
     /**
-     * only for hibernate
+     * <code>m_omHeuristicEquivalence</code>
+     */
+    private double m_omHeuristicEquivalence = -1.0d;
+    
+    /**
+     * <code>m_noOfSimiliarComponents</code>
+     */
+    private int m_noOfSimilarComponents = -1;
+    
+    /**
+     * only for Persistence (JPA / EclipseLink)
      */
     TestResultPO() {
         //default
@@ -131,7 +141,7 @@ class TestResultPO implements ITestResultPO {
     
     /**
      * @param parameterList List of IParameterDetailsPO
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     TestResultPO(List<IParameterDetailsPO> parameterList) {
         m_parameterList = parameterList;
@@ -139,7 +149,7 @@ class TestResultPO implements ITestResultPO {
 
     /**
      * 
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @return Returns the id.
      */
     @Id
@@ -149,7 +159,7 @@ class TestResultPO implements ITestResultPO {
         return m_id;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param id The id to set.
      */
     void setId(Long id) {
@@ -476,7 +486,7 @@ class TestResultPO implements ITestResultPO {
     /**
      * 
      * Access method for the m_nodeList property.
-     * only to use for hibernate
+     * only to use for Persistence (JPA / EclipseLink)
      * 
      * @return the current value of the m_parameterList property
      */
@@ -623,5 +633,40 @@ class TestResultPO implements ITestResultPO {
     public byte[] getImage() {
         return m_imageData;
     }
-    
+
+
+    /**
+     * @param omHeuristicEquivalence the omHeuristicEquivalence to set
+     */
+    public void setOmHeuristicEquivalence(double omHeuristicEquivalence) {
+        m_omHeuristicEquivalence = omHeuristicEquivalence;
+    }
+
+    /**
+     * @return the omHeuristicEquivalence
+     */
+    @Basic
+    @Column(name = "OM_HEURISTIC_EQUIVALENCE", 
+            nullable = false, 
+            precision = 10, 
+            scale = 5)
+    public double getOmHeuristicEquivalence() {
+        return m_omHeuristicEquivalence;
+    }
+
+    /**
+     * @param noOfSimilarComponents the noOfSimilarComponents to set
+     */
+    public void setNoOfSimilarComponents(int noOfSimilarComponents) {
+        m_noOfSimilarComponents = noOfSimilarComponents;
+    }
+
+    /**
+     * @return the noOfSimilarComponents
+     */
+    @Basic
+    @Column(name = "OM_NO_SIMILAR_COMPONENTS", nullable = false)
+    public int getNoOfSimilarComponents() {
+        return m_noOfSimilarComponents;
+    }
 }

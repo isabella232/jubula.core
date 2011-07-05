@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -140,7 +140,7 @@ public class AddNewCategoryHandler extends AbstractHandler {
      */
     boolean existCategory(INodePO node, String name) {
         Iterator iter = null;
-        if (Hibernator.isPoSubclass(node, ICategoryPO.class)) {
+        if (Persistor.isPoSubclass(node, ICategoryPO.class)) {
             iter = node.getNodeListIterator();
         } else {
             IProjectPO proj = GeneralStorage.getInstance().getProject();
@@ -148,7 +148,7 @@ public class AddNewCategoryHandler extends AbstractHandler {
         }
         while (iter.hasNext()) {
             INodePO iterNode = (INodePO)iter.next();
-            if (Hibernator.isPoSubclass(iterNode, ICategoryPO.class)
+            if (Persistor.isPoSubclass(iterNode, ICategoryPO.class)
                 && iterNode.getName().equals(name)) {
                 return true;
             }

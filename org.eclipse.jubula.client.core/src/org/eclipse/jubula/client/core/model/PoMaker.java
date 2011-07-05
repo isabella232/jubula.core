@@ -18,7 +18,7 @@ import java.util.Set;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
@@ -46,7 +46,7 @@ public abstract class PoMaker {
      * @return AUTConfigPO
      */
     public static IAUTConfigPO createAUTConfigPO() {
-        return createAUTConfigPO(HibernateUtil.generateGuid());
+        return createAUTConfigPO(PersistenceUtil.generateGuid());
     }
     
     /**
@@ -283,7 +283,7 @@ public abstract class PoMaker {
      * @return TestResultSummaryPO
      */
     public static ITestResultSummaryPO createTestResultSummaryPO() {
-        return createTestResultSummaryPO(HibernateUtil.generateGuid());
+        return createTestResultSummaryPO(PersistenceUtil.generateGuid());
     }
 
     /**
@@ -487,7 +487,7 @@ public abstract class PoMaker {
     }
     
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getAUTConfigClass() {
@@ -495,7 +495,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getAUTMainClass() {
@@ -503,7 +503,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getCompIdentifierClass() {
@@ -512,7 +512,7 @@ public abstract class PoMaker {
 
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getCompNamesPairClass() {
@@ -520,7 +520,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getListWrapperClass() {
@@ -528,7 +528,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getObjectMappingAssoziationClass() {
@@ -536,7 +536,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getObjectMappingCategoryClass() {
@@ -544,7 +544,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getObjectMappingClass() {
@@ -552,7 +552,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getParamDescriptionClass() {
@@ -560,7 +560,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getCapParamDescriptionClass() {
@@ -568,7 +568,7 @@ public abstract class PoMaker {
     }
     
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getTcParamDescriptionClass() {
@@ -576,7 +576,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getReusedProjectClass() {
@@ -584,7 +584,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getProjectPropertiesClass() {
@@ -592,7 +592,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getProjectNameClass() {
@@ -600,7 +600,7 @@ public abstract class PoMaker {
     }
     
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getParamNameClass() {
@@ -608,7 +608,7 @@ public abstract class PoMaker {
     }
     
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getParameterDetailsClass() {
@@ -616,7 +616,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getAUTContClass() {
@@ -624,7 +624,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getTDManagerClass() {
@@ -632,7 +632,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getTestDataCubeClass() {
@@ -648,7 +648,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getTestDataClass() {
@@ -656,7 +656,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getWrapperClass() {
@@ -664,7 +664,7 @@ public abstract class PoMaker {
     }
     
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getTestSuiteClass() {
@@ -672,7 +672,7 @@ public abstract class PoMaker {
     }
     
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getTestResultSummaryClass() {
@@ -680,7 +680,7 @@ public abstract class PoMaker {
     }
     
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getTestResultClass() {
@@ -688,7 +688,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getUsedToolkitClass() {
@@ -696,7 +696,7 @@ public abstract class PoMaker {
     }
 
     /**
-     * get the class instance of the PO (needed by Hibernator)
+     * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
     public static Class getObjectMappingProfileClass() {

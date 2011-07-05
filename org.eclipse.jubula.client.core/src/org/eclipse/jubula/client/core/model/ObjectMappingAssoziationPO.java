@@ -46,7 +46,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.Component;
 public class ObjectMappingAssoziationPO 
     implements IObjectMappingAssoziationPO {
     
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
    
     /** The ID of the parent project */
@@ -57,7 +57,7 @@ public class ObjectMappingAssoziationPO
      */
     private String m_type = null;
     
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version;
     
     /**
@@ -85,7 +85,7 @@ public class ObjectMappingAssoziationPO
      *  
      */
     ObjectMappingAssoziationPO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }
 
     /**

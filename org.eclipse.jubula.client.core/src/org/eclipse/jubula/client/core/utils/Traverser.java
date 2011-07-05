@@ -45,7 +45,7 @@ import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.IncompleteDataException;
@@ -208,7 +208,7 @@ public class Traverser {
             INodePO node = stackObj.getExecNode();
             // next index
             ITDManager tdManager = null;
-            if (Hibernator.isPoSubclass(node, IParamNodePO.class)) {
+            if (Persistor.isPoSubclass(node, IParamNodePO.class)) {
                 tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(
                             (IParamNodePO)node);
@@ -221,7 +221,7 @@ public class Traverser {
                 if (!childNode.isActive()) {
                     return next();
                 }
-                if (Hibernator.isPoSubclass(childNode, ICapPO.class)) {
+                if (Persistor.isPoSubclass(childNode, ICapPO.class)) {
                     if (LOG.isDebugEnabled()) {
                         LOG.debug(Messages.ActualExecutedCap 
                             + StringConstants.COLON + StringConstants.SPACE 
@@ -230,7 +230,8 @@ public class Traverser {
                     fireNextCap((ICapPO)childNode);
                     return (ICapPO)childNode;
                 }
-                if (Hibernator.isPoSubclass(childNode, IExecTestCasePO.class)) {
+                if (Persistor.isPoSubclass(
+                        childNode, IExecTestCasePO.class)) {
                     if (((IExecTestCasePO)childNode).getSpecTestCase() 
                             == null) {
                         throw new IncompleteDataException(
@@ -243,7 +244,7 @@ public class Traverser {
                 Assert.notReached(Messages.ErrorInTestExecutionTree);
                 return null;
                 // next dataset
-            } else if (!(Hibernator.isPoSubclass(stackObj.getExecNode(),
+            } else if (!(Persistor.isPoSubclass(stackObj.getExecNode(),
                 ITestSuitePO.class)) && tdManager != null) {
                 int maxDsNumber = tdManager.getDataSetCount();
                 if (stackObj.getNumberDs() < maxDsNumber - 1) {
@@ -354,7 +355,7 @@ public class Traverser {
         throws JBException {
         int firstDs = NO_DATASET;
 
-        if (Hibernator.isPoSubclass(node, IParamNodePO.class) 
+        if (Persistor.isPoSubclass(node, IParamNodePO.class) 
                 && ((IParamNodePO)node).getDataManager() != null) {
             IParamNodePO paramNode = (IParamNodePO)node;
             ITDManager tdManager = 
@@ -702,7 +703,7 @@ public class Traverser {
      * @return result of validation
      */
     private boolean isEventHandler(INodePO node) {
-        return (Hibernator.isPoSubclass(node, IEventExecTestCasePO.class));
+        return (Persistor.isPoSubclass(node, IEventExecTestCasePO.class));
     }
 
     /**

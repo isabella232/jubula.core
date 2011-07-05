@@ -58,7 +58,7 @@ public class ExportAllBP {
      *       exportCurrentDirName has no effect.
      * @param projectList The list of projects to export
      * @param exportDirName The export directory of the projects
-     * @param exportSession The session to be used for hibernate
+     * @param exportSession The session to be used for Persistence (JPA / EclipseLink)
      * @param monitor The progress monitor
      * @param writeToSystemTempDir Indicates whether the projects have to be 
      *                             written to the system temp directory

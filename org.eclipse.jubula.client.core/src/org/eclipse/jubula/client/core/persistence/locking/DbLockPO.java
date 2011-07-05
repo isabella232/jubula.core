@@ -39,7 +39,7 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 @Table(name = "DB_LOCKS")
 public class DbLockPO {
     
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private Long m_id = null;
     
     /** Which application does this lock belongs to? */
@@ -51,9 +51,9 @@ public class DbLockPO {
     /** Id of the PO which is to be locked */
     private Long m_poId = null;
 
-    /** internal construcotr for hibernate */
+    /** internal construcotr for Persistence (JPA / EclipseLink) */
     DbLockPO() {
-        // hibernate use
+        // Persistence (JPA / EclipseLink) use
     }
     
     /**

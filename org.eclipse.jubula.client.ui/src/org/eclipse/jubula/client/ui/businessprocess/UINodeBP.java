@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 
 
 /**
@@ -73,7 +73,8 @@ public class UINodeBP {
             TestResultNode trNode = (TestResultNode)structuredSel
                     .getFirstElement();
             INodePO nodePO = trNode.getNode();
-            while (!(Hibernator.isPoSubclass(nodePO, IExecTestCasePO.class))) {
+            while (!(Persistor.isPoSubclass(nodePO, 
+                    IExecTestCasePO.class))) {
                 trNode = trNode.getParent();
                 if (trNode == null) {
                     return null;

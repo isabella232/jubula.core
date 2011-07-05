@@ -35,7 +35,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 
 
 /**
@@ -97,10 +97,10 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     private TestDataCubeContPO m_testdatacubecont;
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     ProjectPO() {
-//      only for hibernate
+//      only for Persistence (JPA / EclipseLink)
     }
     
     /**
@@ -110,7 +110,8 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * @param isGenerated indicates whether this node has been generated
      */
     ProjectPO(String name, Integer metadataVersion, boolean isGenerated) {
-        this(metadataVersion, 1, 0, HibernateUtil.generateGuid(), isGenerated);
+        this(metadataVersion, 1, 0, 
+                PersistenceUtil.generateGuid(), isGenerated);
         ProjectNameBP.getInstance().setName(this.getGuid(), name, false);
     }
 
@@ -641,7 +642,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
         return m_projectAttributeDescriptions;
     }
     /**
-     * For hibernate
+     * For Persistence (JPA / EclipseLink)
      * 
      * @param projectAttributeDescriptions The descriptions to set.
      */
@@ -666,7 +667,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
         return m_testCaseAttributeDescriptions;
     }
     /**
-     * For hibernate
+     * For Persistence (JPA / EclipseLink)
      * 
      * @param testCaseAttributeDescriptions The descriptions to set.
      */
@@ -692,7 +693,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
         return m_testSuiteAttributeDescriptions;
     }
     /**
-     * For hibernate
+     * For Persistence (JPA / EclipseLink)
      * 
      * @param testSuiteAttributeDescriptions The descriptions to set.
      */

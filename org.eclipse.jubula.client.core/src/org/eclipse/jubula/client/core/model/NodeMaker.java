@@ -359,7 +359,7 @@ public abstract class NodeMaker {
     }
 
     /**
-     * get the class instance of NodePO (needed by Hibernator)
+     * get the class instance of NodePO (needed by Persistor)
      * @return the class instance of NodePO
      */
     public static Class getNodePOClass() {
@@ -392,7 +392,7 @@ public abstract class NodeMaker {
     }
 
     /**
-     * get the class instance of ParamNodePO (needed by Hibernator)
+     * get the class instance of ParamNodePO (needed by Persistor)
      * @return the class instance of ParamNodePO
      */
     public static Class getParamNodePOClass() {
@@ -400,7 +400,7 @@ public abstract class NodeMaker {
     }
 
     /**
-     * get the class instance of CategoryPO (needed by Hibernator)
+     * get the class instance of CategoryPO (needed by Persistor)
      * @return the class instance of CategoryPO
      */
     public static Class getCategoryPOClass() {
@@ -408,7 +408,7 @@ public abstract class NodeMaker {
     }
 
     /**
-     * get the class instance of RefTestSuitePO (needed by Hibernator)
+     * get the class instance of RefTestSuitePO (needed by Persistor)
      * @return the class instance of RefTestSuitePO
      */
     public static Class getRefTestSuitePOClass() {
@@ -416,7 +416,7 @@ public abstract class NodeMaker {
     }
 
     /**
-     * get the class instance of CapPO (needed by Hibernator)
+     * get the class instance of CapPO (needed by Persistor)
      * @return the class instance of CapPO
      */
     public static Class getCapPOClass() {
@@ -424,7 +424,7 @@ public abstract class NodeMaker {
     }
 
     /**
-     * get the class instance of TestCasePO (needed by Hibernator)
+     * get the class instance of TestCasePO (needed by Persistor)
      * @return the class instance of TestCasePO
      */
     public static Class getTestCasePOClass() {
@@ -432,7 +432,7 @@ public abstract class NodeMaker {
     }
 
     /**
-     * get the class instance of ExecTestCasePO (needed by Hibernator)
+     * get the class instance of ExecTestCasePO (needed by Persistor)
      * @return the class instance of ExecTestCasePO
      */
     public static Class getExecTestCasePOClass() {
@@ -440,7 +440,7 @@ public abstract class NodeMaker {
     }
 
     /**
-     * get the class instance of SpecTestCasePO (needed by Hibernator)
+     * get the class instance of SpecTestCasePO (needed by Persistor)
      * @return the class instance of SpecTestCasePO
      */
     public static Class getSpecTestCasePOClass() {
@@ -448,7 +448,7 @@ public abstract class NodeMaker {
     }
 
     /**
-     * get the class instance of EventExecTestCasePO (needed by Hibernator)
+     * get the class instance of EventExecTestCasePO (needed by Persistor)
      * @return the class instance of EventExecTestCasePO
      */
     public static Class getEventExecTestCasePOClass() {

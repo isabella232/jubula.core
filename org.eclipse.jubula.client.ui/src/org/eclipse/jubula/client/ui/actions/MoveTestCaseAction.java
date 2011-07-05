@@ -34,7 +34,7 @@ import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -278,7 +278,7 @@ public class MoveTestCaseAction extends Action {
         try {
             IProjectPO extProject = ProjectPM.loadReusedProject(
                 selectedProject);
-            sess = Hibernator.instance().openSession();
+            sess = Persistor.instance().openSession();
             extProject = (IProjectPO)sess.find(
                     NodeMaker.getProjectPOClass(), extProject.getId());
             List<ICapPO> moveProblem = getMoveProblem(extProject, 
@@ -316,7 +316,7 @@ public class MoveTestCaseAction extends Action {
         } catch (ToolkitPluginException tpie) {
             Utils.createMessageDialog(MessageIDs.E_GENERAL_TOOLKIT_ERROR);
         } finally {
-            Hibernator.instance().dropSession(sess);
+            Persistor.instance().dropSession(sess);
         }
     }
 

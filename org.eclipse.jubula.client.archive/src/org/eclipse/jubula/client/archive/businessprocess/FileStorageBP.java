@@ -62,7 +62,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
@@ -353,7 +353,7 @@ public class FileStorageBP {
             }
             
             EntityManager circularDependencyCheckSess = 
-                Hibernator.instance().openSession();
+                Persistor.instance().openSession();
     
             // if a name/guid conflict occurs
             // then show error message(s) and cancel
@@ -374,7 +374,7 @@ public class FileStorageBP {
                     null, null);
                 return true;
             } finally {
-                Hibernator.instance().dropSessionWithoutLockRelease(
+                Persistor.instance().dropSessionWithoutLockRelease(
                     circularDependencyCheckSess);
             }
             
@@ -534,7 +534,7 @@ public class FileStorageBP {
                         || m_isRefreshRequired;
                 }
     
-                // Register hibernate progress listeners
+                // Register Persistence (JPA / EclipseLink) progress listeners
                 ProgressMonitorTracker.getInstance().setProgressMonitor(
                         monitor);
                 monitor.beginTask(StringConstants.EMPTY, getTotalWork(proj));
@@ -1116,7 +1116,7 @@ public class FileStorageBP {
          * @param currentLevel
          *            The current level.
          * @throws PMException
-         *             if a Hibernate exception occurs.
+         *             if a Persistence (JPA / EclipseLink) exception occurs.
          * @throws ProjectDeletedException
          *             if the the project was already deleted.
          * @throws InterruptedException
@@ -1255,10 +1255,10 @@ public class FileStorageBP {
                 ProgressMonitorTracker.getInstance().setProgressMonitor(
                         null);
             }
-            
-            EntityManager compNameSession = Hibernator.instance().openSession();
+            EntityManager compNameSession = 
+                Persistor.instance().openSession();
             EntityTransaction tx = 
-                Hibernator.instance().getTransaction(compNameSession);
+                Persistor.instance().getTransaction(compNameSession);
             for (INameMapper mapper : mapperList) {
                 mapper.persist(compNameSession,  
                         project.getId());
@@ -1268,7 +1268,7 @@ public class FileStorageBP {
                         compNameSession, project.getId(), compMapper);
             }
     
-            Hibernator.instance().commitTransaction(compNameSession, tx);
+            Persistor.instance().commitTransaction(compNameSession, tx);
     
             for (IComponentNameMapper compMapper : compMapperList) {
                 compMapper.getCompNameCache()
@@ -1389,7 +1389,7 @@ public class FileStorageBP {
     /** the total amount of work for an import operation */
     private static final int TOTAL_IMPORT_WORK = 100;
 
-    /** number of hibernate event types with progress listeners */
+    /** number of Persistence (JPA / EclipseLink) event types with progress listeners */
     // Event types:
     // save, recreateCollection, postInsert, postUpdate
     private static final int NUM_HBM_PROGRESS_EVENT_TYPES = 4;
@@ -1418,7 +1418,7 @@ public class FileStorageBP {
     /**
      * @param projectList The list of projects to export
      * @param exportDirName The export directory of the projects
-     * @param exportSession The session to be used for hibernate
+     * @param exportSession The session to be used for Persistence (JPA / EclipseLink)
      * @param monitor The progress monitor
      * @param writeToSystemTempDir Indicates whether the projects have to be 
      *                             written to the system temp directory

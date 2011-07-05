@@ -51,10 +51,10 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     /** the logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(TestResultSummaryPO.class); 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /** Test job name */
@@ -173,7 +173,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     /** monitoring value typ */
     private String m_monitoringValueType;
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     @SuppressWarnings("unused")
     private TestResultSummaryPO() {
@@ -190,7 +190,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     }
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @return Returns the id.
      */
     @Id
@@ -200,7 +200,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return m_id;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param id The id to set.
      */
     void setId(Long id) {
@@ -568,7 +568,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     }
 
     /**
-     * only for hibernate !!!
+     * only for Persistence (JPA / EclipseLink) !!!
      * @return the toolkit
      */
     @Basic
