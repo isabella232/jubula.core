@@ -11,6 +11,8 @@
   <property name="SiteStorage" value="../org.eclipse.jubula.site/target/site/plugins" />
 
   <target name="gen-lib">
+  
+    <mkdir dir="lib" />
     <delete>
       <fileset dir="lib" includes="**/*"/>
     </delete>
