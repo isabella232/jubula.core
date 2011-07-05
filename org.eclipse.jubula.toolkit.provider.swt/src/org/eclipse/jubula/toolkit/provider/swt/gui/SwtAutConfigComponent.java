@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.JavaAutConfigComponent;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
+import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -36,9 +37,6 @@ import org.eclipse.swt.widgets.Composite;
  * 
  */
 public class SwtAutConfigComponent extends JavaAutConfigComponent {
-    /** The keyboard layout of the AUT */
-    public static final String KEYBOARD_LAYOUT = "KEYBOARD_LAYOUT"; //$NON-NLS-1$
-       
     /**
      * The Combo to choose the keyboard layout.
      */
@@ -83,7 +81,8 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
             COMPOSITE_WIDTH;
         
         // if new aut config, use defaults.
-        String keyboardLayout = getConfigValue(KEYBOARD_LAYOUT);
+        String keyboardLayout = getConfigValue(
+                AutConfigConstants.KEYBOARD_LAYOUT);
         if (keyboardLayout == null || keyboardLayout.length() == 0) {
             m_keyboardLayoutCombo.setSelectedObject(Locale.getDefault());
         } else {
@@ -112,7 +111,8 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
     DialogStatusParameter modifyKeyboardLayout() {
         final Locale locale = m_keyboardLayoutCombo.getSelectedObject();
         if (locale != null) {
-            putConfigValue(KEYBOARD_LAYOUT, locale.toString());
+            putConfigValue(AutConfigConstants.KEYBOARD_LAYOUT, 
+                    locale.toString());
         }
         
         return null;

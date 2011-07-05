@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -84,7 +85,7 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
         sb = new StringBuffer();
         sb.append(propPrefix).append(RcpAccessorConstants.KEYBOARD_LAYOUT)
             .append(valueSeparator)
-            .append((String)parameters.get("KEYBOARD_LAYOUT")); //$NON-NLS-1$
+            .append((String)parameters.get(AutConfigConstants.KEYBOARD_LAYOUT));
         props.add(sb.toString());
         
         return props;

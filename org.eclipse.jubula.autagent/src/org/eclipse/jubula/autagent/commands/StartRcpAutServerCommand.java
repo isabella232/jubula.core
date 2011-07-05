@@ -255,7 +255,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
         sb = new StringBuffer();
         sb.append(propPrefix).append(RcpAccessorConstants.KEYBOARD_LAYOUT)
             .append(valueSeparator)
-            .append((String)parameters.get("KEYBOARD_LAYOUT")); //$NON-NLS-1$
+            .append((String)parameters.get(AutConfigConstants.KEYBOARD_LAYOUT));
         props.add(sb.toString());
         
         sb = new StringBuffer();
