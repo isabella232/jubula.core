@@ -1,0 +1,102 @@
+<!--
+    Copyright (c) 2004, 2011 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<project name="org.eclipse.jubula.rc.rcp" default="gen-lib" basedir=".">
+  
+  <property name="OrbitStorage" value="../org.eclipse.jubula.rc.common.orbit" />
+  <property name="SiteStorage" value="../org.eclipse.jubula.site/target/site/plugins" />
+
+  <target name="gen-lib">
+    <delete>
+      <fileset dir="lib" includes="**/*"/>
+    </delete>
+
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="ch.qos.logback.classic*.jar" />
+      </fileset>
+      <mergemapper to="ch.qos.logback.classic.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="ch.qos.logback.core*.jar" />
+      </fileset>
+      <mergemapper to="ch.qos.logback.core.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="ch.qos.logback.slf4j*.jar" />
+      </fileset>
+      <mergemapper to="ch.qos.logback.slf4j.jar"/>
+    </copy>
+
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.apache.commons.beanutils*.jar" />
+      </fileset>
+      <mergemapper to="org.apache.commons.beanutils.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.apache.commons.lang*.jar" />
+      </fileset>
+      <mergemapper to="org.apache.commons.lang.jar"/>
+    </copy>
+
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.slf4j.api*.jar" />
+      </fileset>
+      <mergemapper to="org.slf4j.api.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.slf4j.jcl*.jar" />
+      </fileset>
+      <mergemapper to="org.slf4j.jcl.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.slf4j.log4j*.jar" />
+      </fileset>
+      <mergemapper to="org.slf4j.log4j.jar"/>
+    </copy>
+
+    <copy todir="lib">
+      <fileset dir="../org.eclipse.jubula.rc.common/target">
+        <include name="org.eclipse.jubula.rc.common*.jar" />
+      </fileset>
+      <mergemapper to="org.eclipse.jubula.rc.common.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="../org.eclipse.jubula.rc.swt/target">
+        <include name="org.eclipse.jubula.rc.swt*.jar" />
+      </fileset>
+      <mergemapper to="org.eclipse.jubula.rc.swt.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="../org.eclipse.jubula.tools/target">
+        <include name="org.eclipse.jubula.tools*.jar" />
+      </fileset>
+      <mergemapper to="org.eclipse.jubula.tools.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="../org.eclipse.jubula.communication/target">
+        <include name="org.eclipse.jubula.communication*.jar" />
+      </fileset>
+      <mergemapper to="org.eclipse.jubula.communication.jar"/>
+    </copy>
+
+	<copy todir="lib">
+          <fileset dir="../org.eclipse.jubula.tools/lib">
+            <include name="xpp3*.jar" />
+            <include name="xstream*.jar" />
+          </fileset>
+	</copy>
+  </target>
+  
+</project>
