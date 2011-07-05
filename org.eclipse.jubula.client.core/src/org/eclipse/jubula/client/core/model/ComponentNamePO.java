@@ -58,10 +58,10 @@ class ComponentNamePO extends AbstractGuidNamePO
     private transient Integer m_version;
 
     /**
-     * Default Constructor. Only for Hibernate!
+     * Default Constructor. Only for Persistence (JPA / EclipseLink)!
      */
     ComponentNamePO() {
-     // only for hibernate
+     // only for Persistence (JPA / EclipseLink)
     }
     
     /**

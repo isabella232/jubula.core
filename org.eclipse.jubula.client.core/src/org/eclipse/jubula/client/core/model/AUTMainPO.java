@@ -33,7 +33,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
 
 /**
@@ -43,7 +43,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 @Entity
 @Table(name = "AUT")
 class AUTMainPO implements IAUTMainPO {
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
     /** Globally Unique Identifier for recognizing nodes across databases */
@@ -61,7 +61,7 @@ class AUTMainPO implements IAUTMainPO {
     /** the AUT IDs associated with this AUT */
     private List<String> m_autIDs = new ArrayList<String>();
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /**
@@ -87,12 +87,12 @@ class AUTMainPO implements IAUTMainPO {
 
     /**
      * <code>m_isModified</code> flag to signal modification of language list
-     * by Hibernate
+     * by Persistence (JPA / EclipseLink)
      */
     private transient boolean m_isModified = true;
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     AUTMainPO() {
         m_langHelper = new LanguageHelper(this);
@@ -103,7 +103,7 @@ class AUTMainPO implements IAUTMainPO {
      * @param autName The name of this AUT.
      */
     AUTMainPO(String autName) {
-        this(autName, HibernateUtil.generateGuid());
+        this(autName, PersistenceUtil.generateGuid());
     }
 
     /**
@@ -121,7 +121,7 @@ class AUTMainPO implements IAUTMainPO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the id.
      */
@@ -131,7 +131,7 @@ class AUTMainPO implements IAUTMainPO {
         return m_id;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @param id The id to set.
      */
@@ -167,7 +167,7 @@ class AUTMainPO implements IAUTMainPO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param autConfigSet The autConfigSet to set.
      */
     void setAutConfigSet(Set<IAUTConfigPO> autConfigSet) {
@@ -191,7 +191,7 @@ class AUTMainPO implements IAUTMainPO {
         m_autConfigSet.remove(autConfig);
     }
     /**
-     * only for hibernate !!!
+     * only for Persistence (JPA / EclipseLink) !!!
      * 
      * @return Returns the languageList.
      */
@@ -215,7 +215,7 @@ class AUTMainPO implements IAUTMainPO {
     }
     
     /**
-     * only for hibernate !!!
+     * only for Persistence (JPA / EclipseLink) !!!
      * set the languagelist
      * @param langList languageSet from database
      */
@@ -391,7 +391,7 @@ class AUTMainPO implements IAUTMainPO {
         return m_guid;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param guid The guid to set.
      */
     void setGuid(String guid) {
@@ -449,7 +449,7 @@ class AUTMainPO implements IAUTMainPO {
     }
     
     /**
-     * only for hibernate !!!
+     * only for Persistence (JPA / EclipseLink) !!!
      *    
      * @return the toolkit
      */
@@ -504,7 +504,7 @@ class AUTMainPO implements IAUTMainPO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @param autIds The AUT IDs to set.
      */

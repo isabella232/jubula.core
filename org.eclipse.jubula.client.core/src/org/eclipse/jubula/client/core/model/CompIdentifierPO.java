@@ -40,17 +40,17 @@ class CompIdentifierPO extends ComponentIdentifier implements
     ICompIdentifierPO {
     
     
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version;
     
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     CompIdentifierPO() {
         super();

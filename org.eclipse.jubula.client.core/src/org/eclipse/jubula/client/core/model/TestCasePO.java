@@ -64,10 +64,10 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     TestCasePO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }
 
    
@@ -88,7 +88,7 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param eventExecTestCaseList
      *            The eventExecTestCaseList to set.
      */
@@ -96,7 +96,7 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
     private void setEventExecTcMap(
             Map<String, IEventExecTestCasePO> eventExecTestCaseList) {
         m_eventExecTcMap = eventExecTestCaseList;
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }
 
     /**

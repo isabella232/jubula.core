@@ -45,10 +45,10 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 @Table(name = "DOC_ATTR_DESC")
 class DocAttributeDescriptionPO implements IDocAttributeDescriptionPO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /**
@@ -84,10 +84,10 @@ class DocAttributeDescriptionPO implements IDocAttributeDescriptionPO {
     private String m_initializerClassName;
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     DocAttributeDescriptionPO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }
 
     /**
@@ -315,7 +315,7 @@ class DocAttributeDescriptionPO implements IDocAttributeDescriptionPO {
         return m_subDescriptions;
     }
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @param subDescriptions The subDescriptions to use.
      */

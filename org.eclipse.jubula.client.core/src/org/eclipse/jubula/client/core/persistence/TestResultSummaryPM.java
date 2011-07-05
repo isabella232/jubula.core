@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * PM to handle all test result summaries related hibernate queries
+ * PM to handle all test result summaries related Persistence (JPA / EclipseLink) queries
  * 
  * @author BREDEX GmbH
  * @created Mar 3, 2010
@@ -84,7 +84,7 @@ public class TestResultSummaryPM {
      * @param proj
      *            the project to search in
      * @param se
-     *            the hibernate session to use for query (optional)
+     *            the Persistence (JPA / EclipseLink) session to use for query (optional)
      * @return a list of all test result summaries for the given project for all
      *         available project version
      * @throws PMException
@@ -96,7 +96,7 @@ public class TestResultSummaryPM {
         List<ITestResultSummaryPO> ltrs = null;
         EntityManager s = null;
         try {
-            s = se != null ? se : Hibernator.instance().openSession();
+            s = se != null ? se : Persistor.instance().openSession();
             
             CriteriaBuilder builder = s.getCriteriaBuilder();
             CriteriaQuery query = builder.createQuery();
@@ -111,7 +111,7 @@ public class TestResultSummaryPM {
             OperationCanceledUtil.checkForOperationCanceled(e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
-            Hibernator.instance().dropSession(s);
+            Persistor.instance().dropSession(s);
         }
         return ltrs;
     }
@@ -122,12 +122,12 @@ public class TestResultSummaryPM {
      */
     public static final void storeTestResultSummaryInDB(
         ITestResultSummaryPO summary) {
-        final EntityManager sess = Hibernator.instance().openSession();
+        final EntityManager sess = Persistor.instance().openSession();
         try {            
             final EntityTransaction tx = 
-                Hibernator.instance().getTransaction(sess);
+                Persistor.instance().getTransaction(sess);
             sess.persist(summary);
-            Hibernator.instance().commitTransaction(sess, tx);
+            Persistor.instance().commitTransaction(sess, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
@@ -135,7 +135,7 @@ public class TestResultSummaryPM {
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Hibernator.instance().dropSession(sess);
+            Persistor.instance().dropSession(sess);
         }
     }
     
@@ -146,12 +146,12 @@ public class TestResultSummaryPM {
      */
     public static final void mergeTestResultSummaryInDB(
         ITestResultSummaryPO summary) {
-        final EntityManager sess = Hibernator.instance().openSession();
+        final EntityManager sess = Persistor.instance().openSession();
         try {            
             final EntityTransaction tx = 
-                Hibernator.instance().getTransaction(sess);
+                Persistor.instance().getTransaction(sess);
             sess.merge(summary);
-            Hibernator.instance().commitTransaction(sess, tx);
+            Persistor.instance().commitTransaction(sess, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
@@ -159,7 +159,7 @@ public class TestResultSummaryPM {
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Hibernator.instance().dropSession(sess);
+            Persistor.instance().dropSession(sess);
         }
     }
     
@@ -177,7 +177,7 @@ public class TestResultSummaryPM {
     public static final boolean doesTestResultSummaryExist(
             ITestResultSummaryPO summary) {
 
-        final EntityManager sess = Hibernator.instance().openSession();
+        final EntityManager sess = Persistor.instance().openSession();
         try {            
             
             CriteriaBuilder builder = sess.getCriteriaBuilder();
@@ -223,7 +223,7 @@ public class TestResultSummaryPM {
 
             return false;
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(sess);
+            Persistor.instance().dropSessionWithoutLockRelease(sess);
         }
     }
 
@@ -239,11 +239,11 @@ public class TestResultSummaryPM {
         Date startTime)
         throws JBException {
         EntityManager session = null;
-        if (Hibernator.instance() == null) {
+        if (Persistor.instance() == null) {
             return null;
         }
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query query = session
                     .createQuery("select s from TestResultSummaryPO as s " + //$NON-NLS-1$
                             "where s.testsuiteDate > :startTime"); //$NON-NLS-1$
@@ -251,11 +251,11 @@ public class TestResultSummaryPM {
             List<ITestResultSummaryPO> metaList = query.getResultList();
             return metaList;
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                    MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                    MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
     
@@ -272,11 +272,11 @@ public class TestResultSummaryPM {
             String projGUID, int majorVersion, int minorVersion)
         throws JBException {
         EntityManager session = null;
-        if (Hibernator.instance() == null) {
+        if (Persistor.instance() == null) {
             return null;
         }
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query query = session.createQuery("select r.internalTestResultSummaryID from TestResultPO as r " + //$NON-NLS-1$
                             "where r.internalTestResultSummaryID in " + //$NON-NLS-1$
                             "(select s.id from TestResultSummaryPO as s " + //$NON-NLS-1$
@@ -292,11 +292,11 @@ public class TestResultSummaryPM {
             Set<Long> idSet = new HashSet<Long>(metaList);
             return idSet;
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                    MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                    MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
     
@@ -305,7 +305,7 @@ public class TestResultSummaryPM {
      * @param resultIDs array of test result ids 
      */
     public static final void deleteTestruns(Long[] resultIDs) {
-        if (Hibernator.instance() == null || resultIDs.length == 0) {
+        if (Persistor.instance() == null || resultIDs.length == 0) {
             return;
         }
         
@@ -320,12 +320,12 @@ public class TestResultSummaryPM {
      * @param resultID id of test result
      */
     public static final void deleteTestrun(Long resultID) {
-        if (Hibernator.instance() == null) {
+        if (Persistor.instance() == null) {
             return;
         }
-        final EntityManager session = Hibernator.instance().openSession();
+        final EntityManager session = Persistor.instance().openSession();
         try {
-            final EntityTransaction tx = Hibernator.instance()
+            final EntityTransaction tx = Persistor.instance()
                     .getTransaction(session);
             
             TestResultPM.executeDeleteTestresultOfSummary(session,
@@ -342,7 +342,7 @@ public class TestResultSummaryPM {
             } catch (NoResultException nre) {
                 // No result found. Nothing to delete.
             }
-            Hibernator.instance().commitTransaction(session, tx);
+            Persistor.instance().commitTransaction(session, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.DeleteTestrunMetadataFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
@@ -350,7 +350,7 @@ public class TestResultSummaryPM {
             throw new JBFatalException(Messages.DeleteTestrunMetadataFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Hibernator.instance().dropSession(session);
+            Persistor.instance().dropSession(session);
         }
     }
     
@@ -365,12 +365,12 @@ public class TestResultSummaryPM {
     @SuppressWarnings("unchecked")
     public static final void deleteTestrunsByProject(String guid,
             int major, int minor, boolean deleteOnlyDetails) {
-        if (Hibernator.instance() == null) {
+        if (Persistor.instance() == null) {
             return;
         }
-        final EntityManager session = Hibernator.instance().openSession();
+        final EntityManager session = Persistor.instance().openSession();
         try {
-            final EntityTransaction tx = Hibernator.instance()
+            final EntityTransaction tx = Persistor.instance()
                     .getTransaction(session);
             
             StringBuilder queryBuilder = new StringBuilder();
@@ -393,7 +393,7 @@ public class TestResultSummaryPM {
                     session.remove(summary);
                 }
             }
-            Hibernator.instance().commitTransaction(session, tx);
+            Persistor.instance().commitTransaction(session, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.DeleteTestrunFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
@@ -401,7 +401,7 @@ public class TestResultSummaryPM {
             throw new JBFatalException(Messages.DeleteTestrunFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Hibernator.instance().dropSession(session);
+            Persistor.instance().dropSession(session);
         }
     }
     
@@ -409,16 +409,16 @@ public class TestResultSummaryPM {
      * delete all testresult summaries
      */
     public static final void deleteAllTestresultSummaries() {
-        if (Hibernator.instance() == null) {
+        if (Persistor.instance() == null) {
             return;
         }
-        final EntityManager session = Hibernator.instance().openSession();
+        final EntityManager session = Persistor.instance().openSession();
         try {
-            final EntityTransaction tx = Hibernator.instance()
+            final EntityTransaction tx = Persistor.instance()
                     .getTransaction(session);
             Query query = session.createQuery("delete from TestResultSummaryPO as s"); //$NON-NLS-1$
             query.executeUpdate();
-            Hibernator.instance().commitTransaction(session, tx);
+            Persistor.instance().commitTransaction(session, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.DeleteAllTestrunSummariesFailed,
                     e, MessageIDs.E_DATABASE_GENERAL);
@@ -426,7 +426,7 @@ public class TestResultSummaryPM {
             throw new JBFatalException(Messages.DeleteAllTestrunSummariesFailed,
                     e, MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Hibernator.instance().dropSession(session);
+            Persistor.instance().dropSession(session);
         }
     }
 }

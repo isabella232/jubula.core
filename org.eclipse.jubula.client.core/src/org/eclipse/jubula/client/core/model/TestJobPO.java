@@ -29,10 +29,10 @@ class TestJobPO extends NodePO implements ITestJobPO {
     private transient boolean m_isEditable = true;       
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     TestJobPO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }   
     
     /**

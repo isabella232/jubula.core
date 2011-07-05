@@ -39,7 +39,7 @@ import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
@@ -116,8 +116,8 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 }
                 checkToolkitAvailable(m_selectedProject.getToolkit());
                 try {
-                    EntityManager s = Hibernator.instance().openSession();
-                    EntityTransaction tx = Hibernator.instance()
+                    EntityManager s = Persistor.instance().openSession();
+                    EntityTransaction tx = Persistor.instance()
                             .getTransaction(s);
                     IProjectPO proj = (IProjectPO)s.find(
                             NodeMaker.getProjectPOClass(),
@@ -126,8 +126,8 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                     ProjectPM.initAttributeDescriptions(s, proj);
                     ProjectPM.initAttributes(proj);
 
-                    Hibernator.instance().commitTransaction(s, tx);
-                    Hibernator.instance().dropSessionWithoutLockRelease(s);
+                    Persistor.instance().commitTransaction(s, tx);
+                    Persistor.instance().dropSessionWithoutLockRelease(s);
 
                     NodePM.getInstance().setUseCache(true);
                     load(m_selectedProject, monitor);

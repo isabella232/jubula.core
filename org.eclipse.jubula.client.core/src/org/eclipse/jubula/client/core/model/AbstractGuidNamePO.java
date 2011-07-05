@@ -29,7 +29,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 @MappedSuperclass
 abstract class AbstractGuidNamePO implements IAbstractGUIDNamePO {
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
     /** The GUID associated with this name */
@@ -38,10 +38,10 @@ abstract class AbstractGuidNamePO implements IAbstractGUIDNamePO {
     private String m_name = null;
     
     /**
-     * For Hibernate
+     * For Persistence (JPA / EclipseLink)
      */
     AbstractGuidNamePO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }
     
     /**
@@ -55,7 +55,7 @@ abstract class AbstractGuidNamePO implements IAbstractGUIDNamePO {
     }
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the id.
      */
@@ -66,7 +66,7 @@ abstract class AbstractGuidNamePO implements IAbstractGUIDNamePO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param id The id to set.
      */
     void setId(Long id) {
@@ -116,7 +116,7 @@ abstract class AbstractGuidNamePO implements IAbstractGUIDNamePO {
     }
 
     /**
-     * For Hibernate
+     * For Persistence (JPA / EclipseLink)
      * Sets the value of the m_name property.
      * 
      * @param name
@@ -137,7 +137,7 @@ abstract class AbstractGuidNamePO implements IAbstractGUIDNamePO {
     }
     
     /**
-     * For Hibernate
+     * For Persistence (JPA / EclipseLink)
      * 
      * @param guid The new Guid
      */

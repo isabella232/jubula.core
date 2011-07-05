@@ -20,7 +20,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 
 
@@ -72,7 +72,7 @@ public final class DefaultEventHandler {
      */
     private static void createMap(INodePO rootNode) {
         handlerMap = new HashMap < String, IEventExecTestCasePO > ();
-        if (Hibernator.isPoSubclass(rootNode, ITestSuitePO.class)) {
+        if (Persistor.isPoSubclass(rootNode, ITestSuitePO.class)) {
             ITestSuitePO testSuite = (ITestSuitePO)rootNode;
             Map < String, Integer > map = testSuite.getDefaultEventHandler();
             Set < String > mapKeySet = map.keySet();

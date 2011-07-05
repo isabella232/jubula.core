@@ -37,7 +37,7 @@ import javax.persistence.Version;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 
 
 /**
@@ -49,10 +49,10 @@ import org.eclipse.jubula.client.core.persistence.HibernateUtil;
 @Table(name = "PARAM_INTERFACE")
 class TestDataCubePO implements ITestDataCubePO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
 
     /** the name by which the cube can be referenced */
@@ -87,11 +87,11 @@ class TestDataCubePO implements ITestDataCubePO {
     private IParameterInterfacePO m_referencedDataCube;
 
     /**
-     * 0-arg constructor for Hibernate.
+     * 0-arg constructor for Persistence (JPA / EclipseLink).
      */
     @SuppressWarnings("unused")
     private TestDataCubePO() {
-        // For Hibernate
+        // For Persistence (JPA / EclipseLink)
         // Nothing to initialize
     }
 
@@ -270,7 +270,7 @@ class TestDataCubePO implements ITestDataCubePO {
     }
     
     /**
-     * Setter for internal data used by hibernate
+     * Setter for internal data used by Persistence (JPA / EclipseLink)
      * @param dataManager data
      */
     protected void setHbmDataManager(ITDManager dataManager) {
@@ -477,7 +477,7 @@ class TestDataCubePO implements ITestDataCubePO {
     /** {@inheritDoc} */
     public IParamDescriptionPO addParameter(String type, String name,
             IParamNameMapper mapper) {
-        return addParameter(type, name, HibernateUtil.generateGuid(), mapper);
+        return addParameter(type, name, PersistenceUtil.generateGuid(), mapper);
     }
 
     /** {@inheritDoc} */

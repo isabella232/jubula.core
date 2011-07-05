@@ -57,7 +57,7 @@ public class EditSupport {
     /** standard logging */
     private static Log log = LogFactory.getLog(EditSupport.class);
 
-    /** hibernate session for editing */
+    /** Persistence (JPA / EclipseLink) session for editing */
     private EntityManager m_session;
 
     /** working version of persistent object */
@@ -121,8 +121,8 @@ public class EditSupport {
     private void init() {
         m_workVersion = null;
         m_isValid = true;
-        m_session = Hibernator.instance().openSession();
-        m_transaction = Hibernator.instance().getTransaction(m_session);
+        m_session = Persistor.instance().openSession();
+        m_transaction = Persistor.instance().getTransaction(m_session);
     }
     
     
@@ -146,11 +146,11 @@ public class EditSupport {
             + StringConstants.DOT);
         try {
             IPersistentObject result = (IPersistentObject)m_session.find(
-                HibernateUtil.getClass(po), po.getId());
+                PersistenceUtil.getClass(po), po.getId());
             if (result == null) {
                 throw new EntityNotFoundException(
                         Messages.UnableToFind + StringConstants.SPACE
-                        + HibernateUtil.getClass(po).getName() 
+                        + PersistenceUtil.getClass(po).getName() 
                         + StringConstants.SPACE + Messages.WithID 
                         + StringConstants.SPACE + po.getId());
             }
@@ -163,11 +163,11 @@ public class EditSupport {
                     > result.getVersion().intValue())) {
                 m_session.detach(result);
                 result = (IPersistentObject)m_session.find(
-                        HibernateUtil.getClass(po), po.getId());
+                        PersistenceUtil.getClass(po), po.getId());
                 if (result == null) {
                     throw new EntityNotFoundException(
                             Messages.UnableToFind + StringConstants.SPACE
-                            + HibernateUtil.getClass(po).getName() 
+                            + PersistenceUtil.getClass(po).getName() 
                             + StringConstants.SPACE + Messages.WithID
                             + StringConstants.SPACE + po.getId());
                 }
@@ -217,7 +217,7 @@ public class EditSupport {
                     }
                 }
             }
-            Hibernator.instance().lockPO(m_session, m_workVersion);
+            Persistor.instance().lockPO(m_session, m_workVersion);
             m_lockedObjects.add(m_workVersion);
             m_isLocked = true;
         } catch (PersistenceException e) {
@@ -231,8 +231,8 @@ public class EditSupport {
      * closes the actual session
      */
     private void closeSession() {
-        if (Hibernator.instance() != null) {
-            Hibernator.instance().dropSession(m_session);
+        if (Persistor.instance() != null) {
+            Persistor.instance().dropSession(m_session);
         }
         
         invalidate();
@@ -278,7 +278,7 @@ public class EditSupport {
                             || m_session.unwrap(JpaEntityManager.class)
                                 .getUnitOfWork().hasChanges()) {
                         saveComponentNames();
-                        Hibernator.instance().commitTransaction(m_session,
+                        Persistor.instance().commitTransaction(m_session,
                                 m_transaction);
                         Long projId = GeneralStorage.getInstance().getProject()
                                 .getId();
@@ -292,7 +292,7 @@ public class EditSupport {
                         }
                         refreshOriginalVersions();
                     } else {
-                        Hibernator.instance().rollbackTransaction(m_session,
+                        Persistor.instance().rollbackTransaction(m_session,
                                 m_transaction);
                     }
                     m_lockedObjects.clear();
@@ -391,7 +391,7 @@ public class EditSupport {
     }
     
     /**
-     * because of Hibernate-Bug HHH-1280 we can't use refresh<br>
+     * because of Persistence (JPA / EclipseLink)-Bug HHH-1280 we can't use refresh<br>
      * therefore we use evict to remove the old object from master session and
      * reload the object<br>
      * please attend, that in this case the Java-IDs of the old and the reloaded
@@ -446,7 +446,7 @@ public class EditSupport {
     public IPersistentObject getOriginal() {
         return (IPersistentObject)GeneralStorage.getInstance()
             .getMasterSession().find(
-                HibernateUtil.getClass(m_workVersion),
+                PersistenceUtil.getClass(m_workVersion),
                 m_workVersion.getId());
     }
 
@@ -474,7 +474,7 @@ public class EditSupport {
     
     /**
      * attachs the detached workVersion to a new session
-     * to use for postprocessing of hibernate exceptions without refresh of objects 
+     * to use for postprocessing of Persistence (JPA / EclipseLink) exceptions without refresh of objects 
      * @throws PMException in case of any db error
      */
     public void reinitializeEditSupport()
@@ -535,11 +535,11 @@ public class EditSupport {
 
         try {
             workProj = (IProjectPO)m_session.find(
-                HibernateUtil.getClass(masterProj), masterProj.getId());
+                PersistenceUtil.getClass(masterProj), masterProj.getId());
             if (workProj == null) {
                 throw new EntityNotFoundException(
                         Messages.UnableToFind + StringConstants.SPACE
-                        + HibernateUtil.getClass(masterProj).getName() 
+                        + PersistenceUtil.getClass(masterProj).getName() 
                         + StringConstants.SPACE + Messages.WithID
                         + StringConstants.SPACE + masterProj.getId());
             }

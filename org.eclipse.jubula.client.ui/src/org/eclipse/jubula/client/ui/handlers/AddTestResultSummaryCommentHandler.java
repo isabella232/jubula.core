@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -90,10 +90,10 @@ public class AddTestResultSummaryCommentHandler
     private void performOperation(ITestResultSummaryPO selectedSummary,
             String newTitle, String newDetails) {
         
-        final EntityManager sess = Hibernator.instance().openSession();
+        final EntityManager sess = Persistor.instance().openSession();
         try {            
             final EntityTransaction tx = 
-                Hibernator.instance().getTransaction(sess);
+                Persistor.instance().getTransaction(sess);
 
             ITestResultSummaryPO transactionSummary = 
                 sess.merge(selectedSummary);
@@ -101,7 +101,7 @@ public class AddTestResultSummaryCommentHandler
             transactionSummary.setCommentTitle(newTitle);
             transactionSummary.setCommentDetail(newDetails);
             
-            Hibernator.instance().commitTransaction(sess, tx);
+            Persistor.instance().commitTransaction(sess, tx);
             ClientTestFactory.getClientTest().fireTestresultSummaryChanged();
         } catch (PMException e) {
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
@@ -110,7 +110,7 @@ public class AddTestResultSummaryCommentHandler
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Hibernator.instance().dropSession(sess);
+            Persistor.instance().dropSession(sess);
         }
     }
 }

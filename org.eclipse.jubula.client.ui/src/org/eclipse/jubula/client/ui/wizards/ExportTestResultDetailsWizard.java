@@ -32,7 +32,7 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.SummarizedTestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer.GenerateTestResultTreeOperation;
@@ -295,7 +295,7 @@ public class ExportTestResultDetailsWizard extends Wizard
         // Only try to compute the details if there is an active
         // DB connection. Otherwise we will receive an NPE
         // while trying to initialize the Master Session.
-        if (Hibernator.instance() != null) {
+        if (Persistor.instance() != null) {
             List<Number> idsWithDetails = 
                 TestResultPM.computeTestresultIdsWithDetails(
                         GeneralStorage.getInstance().getMasterSession());

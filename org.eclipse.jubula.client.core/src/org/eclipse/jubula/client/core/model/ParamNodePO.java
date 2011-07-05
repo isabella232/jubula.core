@@ -68,10 +68,10 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     ParamNodePO() {
-       // only for hibernate
+       // only for Persistence (JPA / EclipseLink)
     }
     
     /**

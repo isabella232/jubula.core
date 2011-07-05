@@ -25,7 +25,7 @@ public interface IPersistentObject extends Serializable {
     public Integer getVersion();
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @return returns the id.
      */
     public Long getId();

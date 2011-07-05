@@ -58,7 +58,7 @@ class CategoryPO extends NodePO implements ICategoryPO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     CategoryPO() {
         // nothing

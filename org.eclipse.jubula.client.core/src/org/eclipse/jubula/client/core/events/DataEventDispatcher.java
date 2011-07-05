@@ -706,7 +706,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                     ErrorMessagePresenter
                             .getPresenter()
                             .showErrorMessage(
-                                    MessageIDs.E_HIBERNATE_LOAD_FAILED,
+                                    MessageIDs.E_PERSISTENCE_LOAD_FAILED,
                                     null,
                                     new String[] { msg });
                 }

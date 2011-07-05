@@ -49,7 +49,7 @@ class EventExecTestCasePO extends ExecTestCasePO implements
     private Integer m_maxRetries;
 
     /**
-     * hibernate constructor
+     * Persistence (JPA / EclipseLink) constructor
      */
     EventExecTestCasePO() {
         super();
@@ -164,7 +164,7 @@ class EventExecTestCasePO extends ExecTestCasePO implements
         return m_eventType;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param eventType The eventType to set.
      */
     public void setEventType(String eventType) {

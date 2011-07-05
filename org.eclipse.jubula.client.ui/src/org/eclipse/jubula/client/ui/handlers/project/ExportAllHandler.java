@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -80,7 +80,7 @@ public class ExportAllHandler extends AbstractProjectHandler {
             if (m_dirName != null) {
                 // Export all projects, logging to console as we do so
                 ExportAllBP.getInstance().showStartingExport();
-                Hibernator hib = Hibernator.instance();
+                Persistor hib = Persistor.instance();
                 EntityManager exportSession = null;
                 boolean nodeCacheIsUsed = NodePM.getInstance().isUseCache();
                 if (!nodeCacheIsUsed) {

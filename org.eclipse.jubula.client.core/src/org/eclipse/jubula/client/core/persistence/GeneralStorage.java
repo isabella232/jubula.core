@@ -102,7 +102,7 @@ public class GeneralStorage implements IEntityManagerProvider {
      */
     public EntityManager getMasterSession() {
         if (m_masterSession == null) {
-            m_masterSession = Hibernator.instance().openSession();           
+            m_masterSession = Persistor.instance().openSession();           
         }
         return m_masterSession;
     }
@@ -116,7 +116,7 @@ public class GeneralStorage implements IEntityManagerProvider {
         } catch (PMException e) {
             LOG.error(Messages.ClearingOfMasterSessionFailed, e);
         }
-        Hibernator.instance().dropSession(m_masterSession);
+        Persistor.instance().dropSession(m_masterSession);
         m_masterSession = null;
         m_project = null;
     }
@@ -129,8 +129,8 @@ public class GeneralStorage implements IEntityManagerProvider {
             .getMasterSession();
         try { 
             clearMasterSession(); 
-            Hibernator.instance().dropSession(masterSession); 
-            m_masterSession = Hibernator.instance().openSession(); 
+            Persistor.instance().dropSession(masterSession); 
+            m_masterSession = Persistor.instance().openSession(); 
         } catch (PMException e) { 
             LOG.warn(Messages.ResetFailed, e); 
         }
@@ -158,9 +158,9 @@ public class GeneralStorage implements IEntityManagerProvider {
     public void recoverSession() {
         try {
             if (getMasterSession() != null && getMasterSession().isOpen()) {
-                Hibernator.instance().dropSession(getMasterSession());
+                Persistor.instance().dropSession(getMasterSession());
             }
-            m_masterSession = Hibernator.instance().openSession();
+            m_masterSession = Persistor.instance().openSession();
             if (m_project != null) {
                 getMasterSession().lock(m_project, LockModeType.NONE);
             }

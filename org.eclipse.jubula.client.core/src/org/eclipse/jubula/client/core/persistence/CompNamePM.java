@@ -248,10 +248,10 @@ public class CompNamePM extends AbstractNamePM {
 
         EntityManager s = null;
         try {
-            s = Hibernator.instance().openSession();
+            s = Persistor.instance().openSession();
             return readAllCompNames(parentProjectId, s);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(s);
+            Persistor.instance().dropSessionWithoutLockRelease(s);
         }
     }
 
@@ -296,7 +296,7 @@ public class CompNamePM extends AbstractNamePM {
         final List <IComponentNamePO> compNames = 
             new ArrayList<IComponentNamePO>();
         try {
-            s = Hibernator.instance().openSession();
+            s = Persistor.instance().openSession();
             final Query q = s.createQuery(
                     "select compName from ComponentNamePO compName where compName.hbmParentProjectId = :parentProjId and compName.hbmReferenceGuid is not null"); //$NON-NLS-1$
             q.setParameter("parentProjId", parentProjectId); //$NON-NLS-1$
@@ -309,7 +309,7 @@ public class CompNamePM extends AbstractNamePM {
                     e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(s);
+            Persistor.instance().dropSessionWithoutLockRelease(s);
         }
         return compNames;
     }
@@ -328,7 +328,7 @@ public class CompNamePM extends AbstractNamePM {
         EntityManager s = null;
         IComponentNamePO compNamePO = null;
         try {
-            s = Hibernator.instance().openSession();
+            s = Persistor.instance().openSession();
             final Query q = s.createQuery(
                     "select compName from ComponentNamePO compName where compName.hbmParentProjectId = :parentProjId and compName.hbmGuid = :compNameGuid"); //$NON-NLS-1$
             q.setParameter("parentProjId", parentProjId); //$NON-NLS-1$
@@ -358,7 +358,7 @@ public class CompNamePM extends AbstractNamePM {
             log.error(msg.toString(), e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(s);
+            Persistor.instance().dropSessionWithoutLockRelease(s);
         }
         return compNamePO;
     }
@@ -571,7 +571,7 @@ public class CompNamePM extends AbstractNamePM {
         EntityManager s = null;
         IComponentNamePO compNamePO = null;
         try {
-            s = Hibernator.instance().openSession();
+            s = Persistor.instance().openSession();
             final Query q = s.createQuery(
                     "select compName from ComponentNamePO compName where compName.hbmParentProjectId = :parentProjId and not compName.hbmGuid = :guid and compName.hbmName = :name"); //$NON-NLS-1$
             q.setParameter("parentProjId", parentProjId); //$NON-NLS-1$
@@ -597,7 +597,7 @@ public class CompNamePM extends AbstractNamePM {
             log.error(msg.toString(), e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
-            Hibernator.instance().dropSession(s);
+            Persistor.instance().dropSession(s);
         }
         return compNamePO;
     }
@@ -649,7 +649,7 @@ public class CompNamePM extends AbstractNamePM {
     private static void loadLockedObj() {
         EntityManager sess = null;
         try {
-            sess = Hibernator.instance().openSession();
+            sess = Persistor.instance().openSession();
             EntityTransaction tx = sess.getTransaction();
             tx.begin();
             
@@ -670,7 +670,7 @@ public class CompNamePM extends AbstractNamePM {
                 + StringConstants.EXCLAMATION_MARK
                 , e, MessageIDs.E_DATABASE_GENERAL);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(sess);
+            Persistor.instance().dropSessionWithoutLockRelease(sess);
         }
     }
     
@@ -692,7 +692,7 @@ public class CompNamePM extends AbstractNamePM {
         EntityManager s = null;
         EntityTransaction tx = null;
         try {
-            s = Hibernator.instance().openSession();
+            s = Persistor.instance().openSession();
             tx = s.getTransaction();
             tx.begin();
             final Query q = s.createQuery(
@@ -711,7 +711,7 @@ public class CompNamePM extends AbstractNamePM {
             }
             throw e;
         } finally {
-            Hibernator.instance().dropSession(s);
+            Persistor.instance().dropSession(s);
         }
     }
 

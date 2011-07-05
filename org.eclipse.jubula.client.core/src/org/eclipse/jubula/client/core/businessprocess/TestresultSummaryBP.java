@@ -31,7 +31,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -150,8 +150,8 @@ public class TestresultSummaryBP {
      */
     public EntityManager createTestResultDetailsSession(TestResult result,
             Long summaryId) {
-        final EntityManager sess = Hibernator.instance().openSession();
-        Hibernator.instance().getTransaction(sess);
+        final EntityManager sess = Persistor.instance().openSession();
+        Persistor.instance().getTransaction(sess);
         buildTestResultDetailsSession(
                 result.getRootResultNode(), sess, summaryId, 1, 1);
         return sess;

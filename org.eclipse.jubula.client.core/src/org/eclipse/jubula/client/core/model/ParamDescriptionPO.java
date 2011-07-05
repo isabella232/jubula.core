@@ -41,7 +41,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 @DiscriminatorValue(value = "P")
 @Table(name = "PARAM_DESC")
 abstract class ParamDescriptionPO {
-    /** Hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
     /** global unique id or I18N-Key, managed by Jubula client */
@@ -52,17 +52,17 @@ abstract class ParamDescriptionPO {
      */
     private String m_type = null;
     
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
 
-    /** Hibernate constructor
+    /** Persistence (JPA / EclipseLink) constructor
      * 
      */
     ParamDescriptionPO() {
-        // Hibernate
+        // Persistence (JPA / EclipseLink)
     }
      
     

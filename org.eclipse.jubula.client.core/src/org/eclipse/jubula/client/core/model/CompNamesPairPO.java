@@ -55,13 +55,13 @@ class CompNamesPairPO implements ICompNamesPairPO {
     private boolean m_propagated = false;
     /** the current comp type - not to persist */
     private String m_type = StringConstants.EMPTY;
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
     
     /**
-     * For Hibernate
+     * For Persistence (JPA / EclipseLink)
      */
     private CompNamesPairPO() {
         // OK

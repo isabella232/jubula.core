@@ -21,8 +21,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -58,7 +58,7 @@ public class MergeComponentNameInViewHandler
             EntityManager masterSession = 
                 GeneralStorage.getInstance().getMasterSession();
             EntityTransaction tx = 
-                Hibernator.instance().getTransaction(masterSession);
+                Persistor.instance().getTransaction(masterSession);
             
             // Make sure that we're using Component Names from the Master Session
             Set<IComponentNamePO> inSessionCompNames = 
@@ -66,13 +66,13 @@ public class MergeComponentNameInViewHandler
             for (IComponentNamePO cn : compNames) {
                 inSessionCompNames.add(
                         (IComponentNamePO)masterSession.find(
-                                HibernateUtil.getClass(cn), cn.getId()));
+                                PersistenceUtil.getClass(cn), cn.getId()));
             }
             
             performOperation(inSessionCompNames, selectedCompNamePo);
 
             try {
-                Hibernator.instance().commitTransaction(masterSession, tx);
+                Persistor.instance().commitTransaction(masterSession, tx);
                 fireChangeEvents(inSessionCompNames);
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);

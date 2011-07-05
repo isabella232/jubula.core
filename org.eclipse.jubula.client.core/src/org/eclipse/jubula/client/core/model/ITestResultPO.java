@@ -21,7 +21,7 @@ import java.util.List;
 public interface ITestResultPO {
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @return Returns the id.
      */
     public abstract Long getId();

@@ -27,7 +27,7 @@ import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.core.businessprocess.JobConfiguration;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
@@ -233,7 +233,7 @@ public class DBToolClient extends AbstractCmdlineClient {
                 return;
             }
             String dirName = export.getAbsolutePath() + File.separator;
-            final EntityManager session = Hibernator.instance().openSession();
+            final EntityManager session = Persistor.instance().openSession();
             try {
                 List<IProjectPO> projects = ProjectPM.findAllProjects(session);
                 List<IProjectPO> exportProjects = new ArrayList<IProjectPO>(1);
@@ -260,7 +260,7 @@ public class DBToolClient extends AbstractCmdlineClient {
             } catch (InterruptedException e) {
                 // the monitor doesn't allow cancelation
             } finally {                
-                Hibernator.instance().dropSession(session);
+                Persistor.instance().dropSession(session);
             }
             
         }
@@ -284,7 +284,7 @@ public class DBToolClient extends AbstractCmdlineClient {
             return;            
         }
         String dirName = export.getAbsolutePath() + File.separator;
-        final EntityManager session = Hibernator.instance().openSession();
+        final EntityManager session = Persistor.instance().openSession();
         try {
             List<IProjectPO> projects = ProjectPM.findAllProjects(session);
             List<File> listOfProjectFiles = 
@@ -297,7 +297,7 @@ public class DBToolClient extends AbstractCmdlineClient {
         } catch (InterruptedException e) {
             // the monitor doesn't allow cancelation
         } finally {            
-            Hibernator.instance().dropSession(session);
+            Persistor.instance().dropSession(session);
         }
     }
 
@@ -489,12 +489,12 @@ public class DBToolClient extends AbstractCmdlineClient {
      * 
      */
     private void setupDB() {
-        Hibernator.setDbConnectionName(getJob().getDbscheme());
-        Hibernator.setUser(getJob().getDbuser());
-        Hibernator.setPw(getJob().getDbpw());
-        Hibernator.setUrl(getJob().getDb());
-        Hibernator.setHeadless(true);
-        if (!Hibernator.init()) {
+        Persistor.setDbConnectionName(getJob().getDbscheme());
+        Persistor.setUser(getJob().getDbuser());
+        Persistor.setPw(getJob().getDbpw());
+        Persistor.setUrl(getJob().getDb());
+        Persistor.setHeadless(true);
+        if (!Persistor.init()) {
             throw new IllegalArgumentException(Messages
                     .ExecutionControllerInvalidDBDataError, null);
         }

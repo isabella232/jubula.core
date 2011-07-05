@@ -37,7 +37,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
            { "PARENT_PROJ", "REUSED_PROJ_GUID" }))
 class ReusedProjectPO implements IReusedProjectPO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
     /** Major version number of the reused project */
@@ -46,7 +46,7 @@ class ReusedProjectPO implements IReusedProjectPO {
     /** Minor version number of the reused project */
     private Integer m_minorNumber = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private Integer m_version = null;
 
     /** the GUID of the reused project */
@@ -56,11 +56,11 @@ class ReusedProjectPO implements IReusedProjectPO {
     private Long m_parentProjectId = null;
 
     /**
-     * empty constructor for Hibernate
+     * empty constructor for Persistence (JPA / EclipseLink)
      */
     @SuppressWarnings("unused")
     private ReusedProjectPO() {
-        // Only for Hibernate
+        // Only for Persistence (JPA / EclipseLink)
     }
 
 
@@ -126,7 +126,7 @@ class ReusedProjectPO implements IReusedProjectPO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the id.
      */
@@ -136,7 +136,7 @@ class ReusedProjectPO implements IReusedProjectPO {
         return m_id;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param id The id to set.
      */
     void setId(Long id) {

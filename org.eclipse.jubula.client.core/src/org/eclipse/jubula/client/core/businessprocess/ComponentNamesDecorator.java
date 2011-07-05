@@ -30,7 +30,7 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
@@ -211,7 +211,7 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
         
         String nameGuid = guid;
         if (guid == null) {
-            nameGuid = HibernateUtil.generateGuid();
+            nameGuid = PersistenceUtil.generateGuid();
         }
 
         final IComponentNamePO newComponentNamePO = 
@@ -322,7 +322,7 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
         if (cnPoFromOtherSession != null && m_session != null 
                 && m_session.isOpen()) {
             retVal = (IComponentNamePO)m_session.find(
-                    HibernateUtil.getClass(cnPoFromOtherSession), 
+                    PersistenceUtil.getClass(cnPoFromOtherSession), 
                     cnPoFromOtherSession.getId());
             if (retVal != null) {
                 m_cached.put(retVal.getGuid(), retVal);

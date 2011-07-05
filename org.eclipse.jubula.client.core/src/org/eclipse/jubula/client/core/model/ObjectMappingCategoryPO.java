@@ -41,10 +41,10 @@ import org.eclipse.jubula.tools.exception.Assert;
 @Table(name = "OM_CATEGORY")
 class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
 
     /** name of the category */
@@ -62,11 +62,11 @@ class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
     private IObjectMappingCategoryPO m_parent = null;
 
     /**
-     * Default constructor (for Hibernate).
+     * Default constructor (for Persistence (JPA / EclipseLink)).
      */
     @SuppressWarnings("unused")
     private ObjectMappingCategoryPO() {
-        // For hibernate. Nothing to initialize.
+        // For Persistence (JPA / EclipseLink). Nothing to initialize.
     }
 
     /**
@@ -262,7 +262,7 @@ class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
     }
 
     /**
-     * Hibernate setter.
+     * Persistence (JPA / EclipseLink) setter.
      * 
      * @param assocList The new list of associations belonging to this
      *                  category.
@@ -289,7 +289,7 @@ class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
     }
 
     /**
-     * Hibernate setter.
+     * Persistence (JPA / EclipseLink) setter.
      * 
      * @param categoryList The new subcategories of this category.
      */

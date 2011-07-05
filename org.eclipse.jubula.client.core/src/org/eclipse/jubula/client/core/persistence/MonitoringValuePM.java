@@ -41,18 +41,18 @@ public class MonitoringValuePM {
      */
     public static final Map<String, IMonitoringValue> loadMonitoringValues(
             Object summaryID) {
-        if (Hibernator.instance() == null) {
+        if (Persistor.instance() == null) {
             return MapUtils.EMPTY_MAP;
         }
-        EntityManager session = Hibernator.instance().openSession();
+        EntityManager session = Persistor.instance().openSession();
         ITestResultSummaryPO summary;
         try {
-            EntityTransaction tx = Hibernator.instance()
+            EntityTransaction tx = Persistor.instance()
                     .getTransaction(session);
             summary = (ITestResultSummaryPO)session.find(
                     PoMaker.getTestResultSummaryClass(), summaryID);
         } finally {
-            Hibernator.instance().dropSession(session);
+            Persistor.instance().dropSession(session);
         }
         return summary.getMonitoringValues();
     }

@@ -17,7 +17,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.core.errorhandling.IDatabaseVersionErrorHandler;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -116,7 +116,7 @@ public class DatabaseMigrationAssistant extends Wizard
 
                     monitor.beginTask("Migrating...", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                     try {
-                        Hibernator.migrateDatabaseStructure();
+                        Persistor.migrateDatabaseStructure();
                         m_wasMigrationSuccessful = true;
                         ImportFileBP.getInstance().importProjects(
                                 m_importProjectsPage, monitor);

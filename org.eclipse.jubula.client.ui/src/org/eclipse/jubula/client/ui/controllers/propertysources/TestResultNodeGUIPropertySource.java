@@ -22,7 +22,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -132,14 +132,16 @@ public class TestResultNodeGUIPropertySource
         addPropertyDescriptor(propDes);
         propDes = new JBPropertyDescriptor(new ComponentController() {
             public Object getProperty() {
-                if (Hibernator.isPoSubclass(node, IEventExecTestCasePO.class)) {
+                if (Persistor.isPoSubclass(
+                        node, IEventExecTestCasePO.class)) {
                     return
                         Messages.TestResultNodeGUIPropertySourceEventTestCase; 
-                } else if (Hibernator.isPoSubclass(node, ITestCasePO.class)) {
+                } else if (Persistor.isPoSubclass(node, ITestCasePO.class)) {
                     return Messages.TestResultNodeGUIPropertySourceTestCase;
-                } else if (Hibernator.isPoSubclass(node, ICapPO.class)) {
+                } else if (Persistor.isPoSubclass(node, ICapPO.class)) {
                     return Messages.TestResultNodeGUIPropertySourceTestStep; 
-                } else if (Hibernator.isPoSubclass(node, ITestSuitePO.class)) {
+                } else if (Persistor.isPoSubclass(
+                        node, ITestSuitePO.class)) {
                     return Messages.TestResultNodeGUIPropertySourceTestSuite; 
                 }
                 return Messages.TestResultNodeGUIPropertySourceUnknownElement; 
@@ -164,7 +166,7 @@ public class TestResultNodeGUIPropertySource
 
         initResultDetailsPropDesc();
         
-        if (Hibernator.isPoSubclass(node, IEventExecTestCasePO.class)) {
+        if (Persistor.isPoSubclass(node, IEventExecTestCasePO.class)) {
             initEventTestCasePropDescriptor(node);
 
         }
@@ -172,7 +174,7 @@ public class TestResultNodeGUIPropertySource
         if (getGuiNode().getEvent() != null) { 
             initErrorEventPropDescriptor();
         }
-        if (Hibernator.isPoSubclass(node, ICapPO.class)) {
+        if (Persistor.isPoSubclass(node, ICapPO.class)) {
             initCapDetailsPropDescriptor();
         }
     }
@@ -186,20 +188,20 @@ public class TestResultNodeGUIPropertySource
      */
     private Image getImageForNode(final INodePO node) {
         Image image = null;
-        if (Hibernator.isPoSubclass(node, ITestSuitePO.class)) {
+        if (Persistor.isPoSubclass(node, ITestSuitePO.class)) {
             image = IconConstants.TS_IMAGE; 
         }
-        if (Hibernator.isPoSubclass(node, IExecTestCasePO.class)) {
-            if (Hibernator.isPoSubclass(node, 
+        if (Persistor.isPoSubclass(node, IExecTestCasePO.class)) {
+            if (Persistor.isPoSubclass(node, 
                 IEventExecTestCasePO.class)) {
                 image = IconConstants.RESULT_EH_IMAGE; 
             } else {
                 image = IconConstants.TC_IMAGE; 
             }
         } 
-        if (Hibernator.isPoSubclass(node, ICapPO.class)) {
+        if (Persistor.isPoSubclass(node, ICapPO.class)) {
             TestResultNode parent = getGuiNode().getParent();
-            if (Hibernator.isPoSubclass(parent.getNode(),
+            if (Persistor.isPoSubclass(parent.getNode(),
                 IEventExecTestCasePO.class)) {
                 image = IconConstants.EH_CAP_IMAGE;
             } else {

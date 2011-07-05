@@ -10,18 +10,19 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.persistence;
 
+import org.eclipse.jubula.tools.exception.JBException;
 
 /**
  * @author BREDEX GmbH
  * @created 19.04.2005
  */
-public class HibernatorCfgException extends HibernatorException {
+public class PersistorException extends JBException {
 
     /**
      * @param message message
      * @param id id
      */
-    public HibernatorCfgException(String message, Integer id) {
+    public PersistorException(String message, Integer id) {
         super(message, id);
     }
 
@@ -30,7 +31,7 @@ public class HibernatorCfgException extends HibernatorException {
      * @param cause cause
      * @param id id
      */
-    public HibernatorCfgException(String message, Throwable cause, Integer id) {
+    public PersistorException(String message, Throwable cause, Integer id) {
         super(message, cause, id);
     }
 }

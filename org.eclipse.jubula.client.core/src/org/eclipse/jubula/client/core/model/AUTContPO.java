@@ -33,10 +33,10 @@ class AUTContPO extends WrapperPO implements IAUTContPO {
     private Set<IAUTMainPO> m_autMainList = new HashSet<IAUTMainPO>();
 
     /**
-     * Hibernate constructor
+     * Persistence (JPA / EclipseLink) constructor
      */
     AUTContPO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }
     
     /**
@@ -51,7 +51,7 @@ class AUTContPO extends WrapperPO implements IAUTContPO {
         return m_autMainList;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param autMainSet The autMainList to set.
      */
     void setAutMainList(Set<IAUTMainPO> autMainSet) {

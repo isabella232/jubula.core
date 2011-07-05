@@ -53,7 +53,7 @@ public class CheckIfComponentNameIsReusedOp
             ITreeTraverserContext<INodePO> ctx, INodePO parent, INodePO node, 
             boolean alreadyVisited) {
         
-//        if (Hibernator.isPoSubclass(node, ICapPO.class)) {
+//        if (Persistor.isPoSubclass(node, ICapPO.class)) {
         if (node instanceof ICapPO) {
             ICapPO cap = (ICapPO)node;
             if (cap.getComponentName().equals(m_compNameGuid)) {
@@ -61,7 +61,7 @@ public class CheckIfComponentNameIsReusedOp
                 ctx.setContinued(false);
                 return false;
             }
-//        } else if (Hibernator.isPoSubclass(node, IExecTestCasePO.class)) {
+//        } else if (Persistor.isPoSubclass(node, IExecTestCasePO.class)) {
         } else if (node instanceof IExecTestCasePO) {
             IExecTestCasePO execTc = (IExecTestCasePO)node;
             for (ICompNamesPairPO pair : execTc.getCompNamesPairs()) {

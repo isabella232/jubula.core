@@ -29,17 +29,17 @@ import org.eclipse.jubula.tools.utils.ValueListIterator;
 
 
 /**
- * Contains utility methods for interaction with Hibernate.
+ * Contains utility methods for interaction with Persistence (JPA / EclipseLink).
  *
  * @author BREDEX GmbH
  * @created May 19, 2010
  */
-public class HibernateUtil {
+public class PersistenceUtil {
 
     /**
      * Private constructor to prevent instantiation of a utility class.
      */
-    private HibernateUtil() {
+    private PersistenceUtil() {
         // Nothing to initialize
     }
 
@@ -85,7 +85,7 @@ public class HibernateUtil {
      * 
      * @param persistenceProxy The object for which to get the class.
      * @return the true underlying class for the given object.
-     * @see Hibernate#getClass()
+     * @see Persistence (JPA / EclipseLink)#getClass()
      */
     @SuppressWarnings("rawtypes")
     public static Class getClass(Object persistenceProxy) {

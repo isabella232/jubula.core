@@ -24,7 +24,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -332,8 +332,8 @@ public class DBLoginDialog extends TitleAreaDialog {
             connInfo.getProperty(PersistenceUnitProperties.JDBC_PASSWORD);
         if (username != null && password != null) {
             m_isEmbeddedOrNoSelection = true;
-            Hibernator.setUser(username);
-            Hibernator.setPw(password);
+            Persistor.setUser(username);
+            Persistor.setPw(password);
             m_userText.setText(username);
             m_pwdText.setText(password);
             enableOKButton(true);            

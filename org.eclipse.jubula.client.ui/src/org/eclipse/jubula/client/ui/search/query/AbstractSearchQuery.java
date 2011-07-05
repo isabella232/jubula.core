@@ -33,7 +33,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.search.data.AbstractSearchData;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult;
@@ -159,21 +159,21 @@ public abstract class AbstractSearchQuery implements ISearchQuery {
      * @return an Image or null if po not supported
      */
     public Image getImageForNode(IPersistentObject po) {
-        if (Hibernator.isPoSubclass(po, IEventExecTestCasePO.class)) {
+        if (Persistor.isPoSubclass(po, IEventExecTestCasePO.class)) {
             return IconConstants.EH_IMAGE;
-        } else if (Hibernator.isPoSubclass(po, ICapPO.class)) {
+        } else if (Persistor.isPoSubclass(po, ICapPO.class)) {
             return IconConstants.CAP_IMAGE;
-        } else if (Hibernator.isPoSubclass(po, ISpecTestCasePO.class)) {
+        } else if (Persistor.isPoSubclass(po, ISpecTestCasePO.class)) {
             return IconConstants.TC_IMAGE;
-        } else if (Hibernator.isPoSubclass(po, ICategoryPO.class)) {
+        } else if (Persistor.isPoSubclass(po, ICategoryPO.class)) {
             return IconConstants.CATEGORY_IMAGE;
-        } else if (Hibernator.isPoSubclass(po, ITestSuitePO.class)) {
+        } else if (Persistor.isPoSubclass(po, ITestSuitePO.class)) {
             return IconConstants.TS_IMAGE;
-        } else if (Hibernator.isPoSubclass(po, IExecTestCasePO.class)) {
+        } else if (Persistor.isPoSubclass(po, IExecTestCasePO.class)) {
             return IconConstants.TC_REF_IMAGE;
-        } else if (Hibernator.isPoSubclass(po, ITestJobPO.class)) {
+        } else if (Persistor.isPoSubclass(po, ITestJobPO.class)) {
             return IconConstants.TJ_IMAGE;
-        } else if (Hibernator.isPoSubclass(po, ITestDataCubePO.class)) {
+        } else if (Persistor.isPoSubclass(po, ITestDataCubePO.class)) {
             return IconConstants.TDC_IMAGE;
         }    
         return null;

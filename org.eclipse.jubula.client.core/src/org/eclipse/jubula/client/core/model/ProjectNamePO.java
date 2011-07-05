@@ -31,7 +31,7 @@ import javax.persistence.Version;
 class ProjectNamePO extends AbstractGuidNamePO 
     implements IProjectNamePO {
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version;
 
     /**

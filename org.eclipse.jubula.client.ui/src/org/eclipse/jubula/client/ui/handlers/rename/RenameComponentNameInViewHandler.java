@@ -22,7 +22,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -43,7 +43,7 @@ public class RenameComponentNameInViewHandler extends
     public Object execute(ExecutionEvent event) {
         IComponentNamePO compName = getSelectedComponentName(event);
         if (compName != null) {
-            EntityManager renameSession = Hibernator.instance().openSession();
+            EntityManager renameSession = Persistor.instance().openSession();
             try {
                 ProjectComponentNameMapper compNameMapper =
                     new ProjectComponentNameMapper(
@@ -53,9 +53,10 @@ public class RenameComponentNameInViewHandler extends
                 String newName = getNewName(event, compNameMapper, compName);
                 if (newName != null) {
                     EntityTransaction tx = 
-                        Hibernator.instance().getTransaction(renameSession);
+                        Persistor.instance().getTransaction(renameSession);
                     rename(compNameMapper, compName.getGuid(), newName);
-                    Hibernator.instance().commitTransaction(renameSession, tx);
+                    Persistor.instance()
+                        .commitTransaction(renameSession, tx);
                     compNameMapper.getCompNameCache()
                         .updateStandardMapperAndCleanup(
                                 GeneralStorage.getInstance().getProject()
@@ -71,7 +72,7 @@ public class RenameComponentNameInViewHandler extends
             } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleGDProjectDeletedException();
             } finally {
-                Hibernator.instance().dropSession(renameSession);
+                Persistor.instance().dropSession(renameSession);
             }
         }
         

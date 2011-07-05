@@ -63,7 +63,7 @@ import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
@@ -530,7 +530,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         Iterator iter = testCase.getNodeListIterator();
         while (iter.hasNext()) {
             Object node = iter.next();
-            if (Hibernator.isPoSubclass((IPersistentObject)node, 
+            if (Persistor.isPoSubclass((IPersistentObject)node, 
                 ICapPO.class)) {
                 ICapPO cap = (ICapPO)node;
                 if (cap.getName() == null

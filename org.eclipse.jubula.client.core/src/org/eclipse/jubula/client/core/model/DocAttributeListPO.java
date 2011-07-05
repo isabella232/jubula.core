@@ -32,10 +32,10 @@ import javax.persistence.Version;
 @Table(name = "DOC_ATTR_LIST_PO")
 class DocAttributeListPO implements IDocAttributeListPO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /** all attributes in this list */

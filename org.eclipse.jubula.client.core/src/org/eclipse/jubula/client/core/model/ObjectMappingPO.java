@@ -48,9 +48,9 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 @Entity
 @Table(name = "OBJ_MAP")
 class ObjectMappingPO implements IObjectMappingPO {
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
@@ -69,7 +69,7 @@ class ObjectMappingPO implements IObjectMappingPO {
     /** faster assoc lookup */
     private Map<String, IObjectMappingAssoziationPO> m_logicalNameToAssoc;
     
-    /** default constructor (for hibernate) */
+    /** default constructor (for Persistence (JPA / EclipseLink)) */
     @SuppressWarnings("unused")
     private ObjectMappingPO() {
         m_logicalNameToAssoc = new HashMap<String, IObjectMappingAssoziationPO>(
@@ -384,7 +384,7 @@ class ObjectMappingPO implements IObjectMappingPO {
     }
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the id.
      */
@@ -394,7 +394,7 @@ class ObjectMappingPO implements IObjectMappingPO {
         return m_id;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param id The id to set.
      */
     @SuppressWarnings("unused")
@@ -533,7 +533,7 @@ class ObjectMappingPO implements IObjectMappingPO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @param mappedCategory The new top-level category for mapped components.
      */
@@ -556,7 +556,7 @@ class ObjectMappingPO implements IObjectMappingPO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @param unmappedLogicalCategory The new top-level category for 
      *                                unmapped component names.
@@ -581,7 +581,7 @@ class ObjectMappingPO implements IObjectMappingPO {
     }
 
     /**
-     * For hibernate.
+     * For Persistence (JPA / EclipseLink).
      * 
      * @param unmappedTechnicalCategory The new top-level category for 
      *                                  unmapped technical names.

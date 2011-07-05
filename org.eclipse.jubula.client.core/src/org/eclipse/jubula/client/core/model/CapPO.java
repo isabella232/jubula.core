@@ -85,7 +85,7 @@ class CapPO extends ParamNodePO implements ICapPO {
     private transient Action m_metaAction = null;
 
     /**
-     * Used only by hibernate
+     * Used only by Persistence (JPA / EclipseLink)
      * 
      * @deprecated
      */
@@ -314,7 +314,7 @@ class CapPO extends ParamNodePO implements ICapPO {
     }
 
     /**
-     * @param hbmActionName hibernate
+     * @param hbmActionName Persistence (JPA / EclipseLink)
      */
     private void setHbmActionName(String hbmActionName) {
         m_hbmActionName = hbmActionName;

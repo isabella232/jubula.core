@@ -44,13 +44,13 @@ import org.apache.commons.lang.Validate;
 @Table(name = "PROJECT_PROPERTIES")
 class ProjectPropertiesPO implements IProjectPropertiesPO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
 
     /** the default project language */
@@ -73,7 +73,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
 
     /**
      * <code>m_isModified</code> flag to signal modification of language list
-     * by Hibernate
+     * by Persistence (JPA / EclipseLink)
      */
     private transient boolean m_isModified = true;
     
@@ -99,7 +99,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     private Integer m_testResultCleanupInterval = IProjectPO.CLEANUP_DEFAULT;
     
     /**
-     * For hibernate
+     * For Persistence (JPA / EclipseLink)
      */
     ProjectPropertiesPO() {
         this(1, 0);
@@ -197,7 +197,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     }
 
     /**
-     * only for hibernate !!!
+     * only for Persistence (JPA / EclipseLink) !!!
      * please use the languageHelper to manage languagelist
      * 
      * @return Returns the languageList.
@@ -222,7 +222,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * set the languagelist
      * @param langList languageList from database
      */
@@ -308,7 +308,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the usedProjects set.
      */
@@ -322,7 +322,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     }
 
     /**
-     * For Hibernate
+     * For Persistence (JPA / EclipseLink)
      * @param reusedProjects The reusedProjects to set.
      */
     @SuppressWarnings("unused")
@@ -397,7 +397,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     }
 
     /**
-     * only for hibernate !!!
+     * only for Persistence (JPA / EclipseLink) !!!
      *    
      * @return the toolkit
      */

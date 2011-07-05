@@ -46,7 +46,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 @Entity
 @Table(name = "TEST_DATA")
 class TestDataPO implements ITestDataPO {
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
     /** maps languages (locales) to string values
@@ -54,7 +54,7 @@ class TestDataPO implements ITestDataPO {
      */
     private Map<String, String> m_map = new HashMap<String, String>();
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /** The ID of the parent project */
@@ -71,10 +71,10 @@ class TestDataPO implements ITestDataPO {
     }
     
     /**
-     *  constructor only for hibernate
+     *  constructor only for Persistence (JPA / EclipseLink)
      */
     TestDataPO() {
-        // only for hibernate
+        // only for Persistence (JPA / EclipseLink)
     }
     
     /**
@@ -194,7 +194,7 @@ class TestDataPO implements ITestDataPO {
     }
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the map.
      */
@@ -207,7 +207,7 @@ class TestDataPO implements ITestDataPO {
         return m_map;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param map The map to set.
      */
     void setMap(Map<String, String> map) {

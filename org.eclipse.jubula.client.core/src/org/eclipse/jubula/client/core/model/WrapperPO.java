@@ -25,10 +25,10 @@ import javax.persistence.Version;
 @MappedSuperclass
 abstract class WrapperPO implements IPersistentObject {
     
-    /** hibernate version */
+    /** Persistence (JPA / EclipseLink) version */
     private transient Integer m_version;
     
-    /** hibernate id*/
+    /** Persistence (JPA / EclipseLink) id*/
     private transient Long m_id;
     
     /** The ID of the parent project */

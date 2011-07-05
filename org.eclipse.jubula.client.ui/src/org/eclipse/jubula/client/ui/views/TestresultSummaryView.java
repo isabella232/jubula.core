@@ -56,7 +56,7 @@ import org.eclipse.jubula.client.core.model.ITestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
@@ -872,7 +872,7 @@ public class TestresultSummaryView extends ViewPart implements
                             maxNoOfDays * -1);
                     metaList = TestResultSummaryPM
                             .findAllTestResultSummaries(startTime);
-                    if (Hibernator.instance() != null) {
+                    if (Persistor.instance() != null) {
                         m_detailedSummaryIds = TestResultPM
                             .computeTestresultIdsWithDetails(
                                 GeneralStorage.getInstance()
@@ -1788,7 +1788,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void showErrorDialog(String message) {
         Utils.createMessageDialog(new JBException(message,
-                MessageIDs.E_HIBERNATE_LOAD_FAILED), null,
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED), null,
                 new String[] { message });
     }
 

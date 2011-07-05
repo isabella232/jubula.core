@@ -16,7 +16,7 @@ import javax.persistence.EntityTransaction;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.exception.JBFatalException;
@@ -35,9 +35,9 @@ public class ToggleRelevanceHandler extends AbstractTestResultViewHandler {
         ITestResultSummaryPO selectedSummary = getSelectedSummary(event);
 
         if (selectedSummary != null) {
-            final EntityManager sess = Hibernator.instance().openSession();
+            final EntityManager sess = Persistor.instance().openSession();
             try {
-                final EntityTransaction tx = Hibernator.instance()
+                final EntityTransaction tx = Persistor.instance()
                         .getTransaction(sess);
 
                 ITestResultSummaryPO transactionSummary = sess
@@ -46,7 +46,7 @@ public class ToggleRelevanceHandler extends AbstractTestResultViewHandler {
                 transactionSummary.setTestsuiteRelevant(!transactionSummary
                         .isTestsuiteRelevant());
 
-                Hibernator.instance().commitTransaction(sess, tx);
+                Persistor.instance().commitTransaction(sess, tx);
                 ClientTestFactory.getClientTest()
                         .fireTestresultSummaryChanged();
             } catch (PMException e) {
@@ -56,7 +56,7 @@ public class ToggleRelevanceHandler extends AbstractTestResultViewHandler {
                 throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                         MessageIDs.E_PROJECT_NOT_FOUND);
             } finally {
-                Hibernator.instance().dropSession(sess);
+                Persistor.instance().dropSession(sess);
             }
         }
 

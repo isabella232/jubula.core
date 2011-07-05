@@ -72,8 +72,8 @@ public class TransactionSupport {
     public void transact(ITransactAction action) throws PMException, 
         ProjectDeletedException {
         EntityTransaction tx = null;       
-        tx = Hibernator.instance().getTransaction(m_session);
+        tx = Persistor.instance().getTransaction(m_session);
         action.run(m_session);
-        Hibernator.instance().commitTransaction(m_session, tx);
+        Persistor.instance().commitTransaction(m_session, tx);
     }
 }

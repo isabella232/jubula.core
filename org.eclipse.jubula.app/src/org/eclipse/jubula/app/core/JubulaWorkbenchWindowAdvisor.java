@@ -21,7 +21,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
 import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
@@ -80,9 +80,9 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                     StringBuilder sb = new StringBuilder(Plugin.getDefault()
                             .getRunningApplicationTitle());
 
-                    Hibernator hibernator = Hibernator.instance();
-                    if (hibernator != null) {
-                        String user = hibernator.getCurrentDBUser();
+                    Persistor persistor = Persistor.instance();
+                    if (persistor != null) {
+                        String user = persistor.getCurrentDBUser();
                         if (user != null && user.length() != 0) {
                             sb.append(StringConstants.SPACE)
                                 .append(StringConstants.MINUS)

@@ -25,7 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IProjectNamePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.core.utils.NameValidationUtil;
@@ -114,7 +114,7 @@ public class ProjectNameBP {
         if (projectGuid == null) {
             return null;
         }
-        final EntityManager session = Hibernator.instance().openSession();
+        final EntityManager session = Persistor.instance().openSession();
         try {
             final Query q = session.createQuery(
                 "select projectName from ProjectNamePO as projectName where projectName.hbmGuid = :projectGuid"); //$NON-NLS-1$
@@ -129,7 +129,7 @@ public class ProjectNameBP {
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForAnySession(null, e, session);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return null;
     }
@@ -142,7 +142,7 @@ public class ProjectNameBP {
     public synchronized Map<String, String> readAllProjectNamesFromDB() 
         throws PMException {
 
-        final EntityManager session = Hibernator.instance().openSession();
+        final EntityManager session = Persistor.instance().openSession();
         try {
             final Query q = session.createQuery("select name from ProjectNamePO name"); //$NON-NLS-1$
             List<IProjectNamePO> projectNameList = q.getResultList();
@@ -154,7 +154,7 @@ public class ProjectNameBP {
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForAnySession(null, e, session);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return null;
     }
@@ -169,14 +169,14 @@ public class ProjectNameBP {
         
         EntityManager session = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             final EntityTransaction tx = 
-                Hibernator.instance().getTransaction(session);
+                Persistor.instance().getTransaction(session);
 
             if (!isGuidBeingUsed(session, guid)) {
                 deleteName(session, guid);
             }
-            Hibernator.instance().commitTransaction(session, tx);
+            Persistor.instance().commitTransaction(session, tx);
             m_names.remove(guid);
             m_transientNames.remove(guid);
         } catch (PersistenceException he) {
@@ -190,13 +190,13 @@ public class ProjectNameBP {
             msgbuid.append(StringConstants.DOT);
             log.error(msgbuid.toString(), he);
         } finally {
-            Hibernator.instance().dropSession(session);
+            Persistor.instance().dropSession(session);
         }
     }
 
     /**
      * Checks whether any projects exist that use the current name.
-     * @param session Hibernate session context
+     * @param session Persistence (JPA / EclipseLink) session context
      * @param guid id of the project name
      * @return <code>true</code> if at least one project exists with the
      *         current name. Otherwise <code>false</code>.
@@ -214,7 +214,7 @@ public class ProjectNameBP {
     
     /**
      * Deletes the project name from the DB.
-     * @param session Hibernate session context
+     * @param session Persistence (JPA / EclipseLink) session context
      * @param guid id of the project name
      */
     private synchronized void deleteName(EntityManager session, String guid) {
@@ -236,12 +236,12 @@ public class ProjectNameBP {
             return;
         }
         if (doPersist) {
-            final EntityManager session = Hibernator.instance().openSession();
+            final EntityManager session = Persistor.instance().openSession();
             try {
                 final EntityTransaction tx = 
-                    Hibernator.instance().getTransaction(session);
+                    Persistor.instance().getTransaction(session);
                 setName(session, guid, newProjectName);
-                Hibernator.instance().commitTransaction(session, tx);
+                Persistor.instance().commitTransaction(session, tx);
             } catch (PMException e) {
                 throw new JBFatalException(Messages.SavingProjectFailed 
                         + StringConstants.DOT, e,
@@ -251,7 +251,7 @@ public class ProjectNameBP {
                         + StringConstants.DOT, e,
                         MessageIDs.E_PROJECT_NOT_FOUND);
             } finally {
-                Hibernator.instance().dropSession(session);
+                Persistor.instance().dropSession(session);
             }
         } else {
             setTransientName(guid, newProjectName);
@@ -276,7 +276,7 @@ public class ProjectNameBP {
     /**
      * persist all entries in the transient name map
      *
-     * @param s hibernate Session to join
+     * @param s Persistence (JPA / EclipseLink) Session to join
      */
     public synchronized void storeTransientNames(EntityManager s) {
         Map<String, String> workMap = new HashMap<String, String>(
@@ -290,7 +290,7 @@ public class ProjectNameBP {
     /**
      * Commits a changed Name <=> GUID mapping.
      * 
-     * @param session use this specific hibernate session
+     * @param session use this specific Persistence (JPA / EclipseLink) session
      * @param guid the guid for which to change the mapped name 
      * @param newProjectName the new name for all projects with this <code>guid</code>
      */

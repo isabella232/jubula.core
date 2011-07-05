@@ -63,7 +63,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Hibernator;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
@@ -524,14 +524,14 @@ public class ExecutionController implements IAUTServerEventListener,
         setLogDir();
         // set data dir for external data
         ExternalTestDataBP.setDataDir(new File(m_job.getDataDir()));
-        // init Hibernator
-        // Hibernate.properties and mapping files
+        // init Persistor
+        // Persistence (JPA / EclipseLink).properties and mapping files
         // have to be in classpath
-        Hibernator.setDbConnectionName(m_job.getDbscheme());
-        Hibernator.setUser(m_job.getDbuser());
-        Hibernator.setPw(m_job.getDbpw());
-        Hibernator.setUrl(m_job.getDb());
-        if (!Hibernator.init()) {
+        Persistor.setDbConnectionName(m_job.getDbscheme());
+        Persistor.setUser(m_job.getDbuser());
+        Persistor.setPw(m_job.getDbpw());
+        Persistor.setUrl(m_job.getDb());
+        if (!Persistor.init()) {
             throw new IllegalArgumentException(Messages.
                     ExecutionControllerInvalidDBDataError, null);
         }
@@ -750,7 +750,7 @@ public class ExecutionController implements IAUTServerEventListener,
             }
         } catch (JBException e1) { // NOPMD by zeb on 10.04.07 14:47
             /* An exception was thrown while loading data or closing a session
-             * using Hibernate. The project is never set. This is detected
+             * using Persistence (JPA / EclipseLink). The project is never set. This is detected
              * during job validation (initAndValidate). */
         }
         m_job.initAndValidate();

@@ -107,7 +107,7 @@ public abstract class PersistenceManager {
     
     /**
      * check if the exception is caused by a failed lock attempt
-     * @param e hibernate exception
+     * @param e Persistence (JPA / EclipseLink) exception
      * @return true if e is caused by a failed lock attempt
      */
     private static boolean isLockException(PersistenceException e) {
@@ -129,7 +129,7 @@ public abstract class PersistenceManager {
 
     /**
      * @param obj obj caused exception
-     * @param e hibernate exception
+     * @param e Persistence (JPA / EclipseLink) exception
      * @param editSupp associated editSupport for editor
      * @throws PMException in case of any db error
      */
@@ -177,13 +177,13 @@ public abstract class PersistenceManager {
     /**
      * handles DBExceptions for any session
      * @param obj obj caused exception
-     * @param e hibernate exception
+     * @param e Persistence (JPA / EclipseLink) exception
      * @param s associated session
      * @throws PMException in case of any db error
      */
     public static void handleDBExceptionForAnySession(IPersistentObject obj, 
         PersistenceException e, EntityManager s) throws PMException {
-        Hibernator.instance().dropSession(s);
+        Persistor.instance().dropSession(s);
         handleDetailedPersistenceException(obj, e);
     }
 }

@@ -48,10 +48,10 @@ public class Messages extends NLS {
     public static String CantAttachProject;
     public static String CantContinueTSIsStopped;
     public static String CantLoad;
-    public static String CantLoadHibernateProperties;
+    public static String CantLoadPersistenceProperties;
     public static String CantReadProjectFromDatabase;
     public static String CantSaveProject;
-    public static String CantSetupHibernate;
+    public static String CantSetupPersistence;
     public static String CentralTestDataEditorName;
     public static String ClearingOfMasterSessionFailed;
     public static String ClientBuildingReport;
@@ -129,7 +129,7 @@ public class Messages extends NLS {
     public static String DeletingTestresultsFailed;
     public static String DeletionOfParamNamePOsFailed;
     public static String DeletionOfToolkitsFailed;
-    public static String DisposeOfHibernatorFailed;
+    public static String DisposeOfPersistorFailed;
     public static String DoesNotHaveAParentProject;
     public static String DoesNotTrackItsParentProject;
     public static String DoubleEventTestCaseForTheSameEvent;
@@ -194,7 +194,7 @@ public class Messages extends NLS {
     public static String GeneralDatabaseErrorFor;
     public static String GeneralFailure;
     public static String GettingAllComponentsFromAUT;
-    public static String HibernateLoadFailed;
+    public static String PersistenceLoadFailed;
     public static String ImplementingMethodHasThrownAnException;
     public static String IncompatibleType;
     public static String IncompleteTestdata;
@@ -346,7 +346,7 @@ public class Messages extends NLS {
     public static String StoppingTest;
     public static String StoringOfMetadataFailed;
     public static String StoringOfTestResultsFailed;
-    public static String StrayHibernateException;
+    public static String StrayPersistenceException;
     public static String Success;
     public static String SyntaxErrorInReference;
     public static String TechnicalName;

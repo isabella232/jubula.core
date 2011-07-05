@@ -29,7 +29,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.apache.commons.collections.MapUtils;
-import org.eclipse.jubula.client.core.persistence.HibernateUtil;
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 
@@ -43,10 +43,10 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 @Entity
 @Table(name = "AUT_CONF")
 class AUTConfigPO implements IAUTConfigPO {
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
         
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /** The values of the AutConfig */
@@ -61,14 +61,14 @@ class AUTConfigPO implements IAUTConfigPO {
 
     /** default constructor */
     AUTConfigPO() {
-        // hibernate
+        // Persistence (JPA / EclipseLink)
     }
     
     /** copy constructor
      * @param orig the original value 
      */
     AUTConfigPO(IAUTConfigPO orig) {
-        this(HibernateUtil.generateGuid());
+        this(PersistenceUtil.generateGuid());
         
         duplicateFrom(orig);
     }
@@ -128,7 +128,7 @@ class AUTConfigPO implements IAUTConfigPO {
     }
    
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the id.
      */
@@ -139,7 +139,7 @@ class AUTConfigPO implements IAUTConfigPO {
     }
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @param id The id to set.
      */
@@ -234,7 +234,7 @@ class AUTConfigPO implements IAUTConfigPO {
 
 
     /**
-     * only for Hibernate!
+     * only for Persistence (JPA / EclipseLink)!
      * 
      * @return the config
      */
@@ -271,7 +271,7 @@ class AUTConfigPO implements IAUTConfigPO {
     }
 
     /**
-     * only for Hibernate!
+     * only for Persistence (JPA / EclipseLink)!
      * 
      * @param config the config to set
      */

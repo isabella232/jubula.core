@@ -26,7 +26,7 @@ class CapParamDescriptionPO extends ParamDescriptionPO implements
     ICapParamDescriptionPO {
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     CapParamDescriptionPO() {
         // nothing

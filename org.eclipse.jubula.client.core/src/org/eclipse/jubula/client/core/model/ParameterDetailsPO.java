@@ -30,10 +30,10 @@ import org.eclipse.persistence.annotations.Index;
 @Index(name = "PI_PARAM_LIST_CHILD", columnNames = { "FK_TESTRESULT" })
 public class ParameterDetailsPO implements IParameterDetailsPO {
 
-    /** hibernate OID */
+    /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
     /** parameter Name */
@@ -50,7 +50,7 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
     
     
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      */
     ParameterDetailsPO() {
         //default
@@ -60,7 +60,7 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
     
 
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * 
      * @return Returns the id.
      */
@@ -71,7 +71,7 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
         return m_id;
     }
     /**
-     * only for hibernate
+     * only for Persistence (JPA / EclipseLink)
      * @param id The id to set.
      */
     void setId(Long id) {

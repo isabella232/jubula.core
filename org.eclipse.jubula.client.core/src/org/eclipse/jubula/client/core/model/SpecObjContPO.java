@@ -55,11 +55,11 @@ public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
     /**
      * @return Returns the specObjList.
      */
-    // FIXME zeb hibernate: although this property is semantically a OneToMany, 
+    // FIXME zeb Persistence (JPA / EclipseLink): although this property is semantically a OneToMany, 
     //                      it must be specified as ManyToMany in order to avoid
     //                      the problem described on the following pages:
-    //                      http://opensource.atlassian.com/projects/hibernate/browse/HHH-1268
-    //                      http://stackoverflow.com/questions/4022509/constraint-violation-in-hibernate-unidirectional-onetomany-mapping-with-jointable
+    //                      http://opensource.atlassian.com/projects/Persistence (JPA / EclipseLink)/browse/HHH-1268
+    //                      http://stackoverflow.com/questions/4022509/constraint-violation-in-Persistence (JPA / EclipseLink)-unidirectional-onetomany-mapping-with-jointable
     //                      It's worth looking at this again after changing JPA providers,
     //                      as we may be able to change it back to a OneToMany.
     @ManyToMany(cascade = CascadeType.ALL, 

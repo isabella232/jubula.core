@@ -43,7 +43,7 @@ class ParamNamePO extends AbstractGuidNamePO implements IParamNamePO {
      */
     private Long m_parentProjectId = null;
 
-    /** hibernate version id */
+    /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version;
 
     /**

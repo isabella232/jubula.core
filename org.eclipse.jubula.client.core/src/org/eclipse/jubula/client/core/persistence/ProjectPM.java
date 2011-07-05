@@ -69,7 +69,7 @@ import org.eclipse.osgi.util.NLS;
 public class ProjectPM extends PersistenceManager {
 
     /** 
-     * number of add/insert-related hibernate event types with 
+     * number of add/insert-related Persistence event types with 
      * progress listeners 
      */
     // Event types:
@@ -98,14 +98,14 @@ public class ProjectPM extends PersistenceManager {
         ProjectNameBP.getInstance().clearCache();
         EntityManager session = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             return findAllProjects(session);
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
 
@@ -114,7 +114,7 @@ public class ProjectPM extends PersistenceManager {
      * @param sess The session in which to execute the query.
      * @return list with all available projects from database the project
      *         instances are detached from their session
-     * @throws PersistenceException if a Hibernate error occurs.
+     * @throws PersistenceException if a Persistence error occurs.
      *             
      */
     @SuppressWarnings("unchecked")
@@ -146,7 +146,7 @@ public class ProjectPM extends PersistenceManager {
 
         EntityManager session = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query query = session.createQuery("select project from ProjectPO as project" //$NON-NLS-1$
                     + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
                     + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
@@ -167,11 +167,11 @@ public class ProjectPM extends PersistenceManager {
             if (oce != null) {
                 throw oce;
             }
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
 
@@ -194,7 +194,7 @@ public class ProjectPM extends PersistenceManager {
         EntityManager session = null;
         String guid = StringConstants.EMPTY;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query query = session.createQuery("select name.hbmGuid " //$NON-NLS-1$
                 + "from ProjectNamePO as name" //$NON-NLS-1$
                 + " where name.hbmName = :name"); //$NON-NLS-1$           
@@ -206,11 +206,11 @@ public class ProjectPM extends PersistenceManager {
                 return null;
             }
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return loadProjectByGuidAndVersion(guid, majorVersion, minorVersion);
     }
@@ -232,7 +232,7 @@ public class ProjectPM extends PersistenceManager {
         int majorVersion = 0;
         int minorVersion = 0;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query query = session.createQuery("select project.hbmGuid " //$NON-NLS-1$
                 + "from ProjectNamePO as project" //$NON-NLS-1$
                 + " where project.hbmName = :name"); //$NON-NLS-1$           
@@ -253,11 +253,11 @@ public class ProjectPM extends PersistenceManager {
             throw new JBException(nfe.getMessage(),
                 MessageIDs.E_INVALID_PROJECT_VERSION);
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return loadProjectByGuidAndVersion(guid, majorVersion, minorVersion);
     }
@@ -275,7 +275,7 @@ public class ProjectPM extends PersistenceManager {
 
         EntityManager session = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query query = session.createQuery("select project from ProjectPO as project" //$NON-NLS-1$
                     + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
                     + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
@@ -290,11 +290,11 @@ public class ProjectPM extends PersistenceManager {
             }
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
 
@@ -331,9 +331,9 @@ public class ProjectPM extends PersistenceManager {
             UsedToolkitBP.getInstance().readUsedToolkitsFromDB(project);
             return project;
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         }
     }
 
@@ -352,14 +352,14 @@ public class ProjectPM extends PersistenceManager {
 
         EntityManager session = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             return loadReusedProject(reusedProjectInfo, session);
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
 
@@ -393,9 +393,9 @@ public class ProjectPM extends PersistenceManager {
                 return null;
             }
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         }
     }
 
@@ -413,7 +413,7 @@ public class ProjectPM extends PersistenceManager {
 
         EntityManager session = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
 
             Query query = session.createQuery("select project.id from ProjectPO project" //$NON-NLS-1$
                     + " inner join fetch project.properties where project.guid = :guid and project.properties.majorNumber = :major " //$NON-NLS-1$
@@ -428,11 +428,11 @@ public class ProjectPM extends PersistenceManager {
                 return null;
             }
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
     
@@ -466,7 +466,7 @@ public class ProjectPM extends PersistenceManager {
         final List<IReusedProjectPO> list = new ArrayList<IReusedProjectPO>();
         try {
             if (projectId != null) {
-                session = Hibernator.instance().openSession();
+                session = Persistor.instance().openSession();
                 final Query query = 
                     session.createQuery(
                         "select reusedProj from ReusedProjectPO reusedProj" //$NON-NLS-1$
@@ -475,11 +475,11 @@ public class ProjectPM extends PersistenceManager {
                 list.addAll(query.getResultList());
             }
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                    MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                    MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return list;
         
@@ -675,13 +675,13 @@ public class ProjectPM extends PersistenceManager {
         monitor.beginTask(NLS.bind(Messages.ProjectWizardCreatingProject,
                 new Object[] { newProjectName }),
                 getTotalWorkForSave(proj));
-        // Register hibernate progress listeners
+        // Register Persistence progress listeners
         setHbmProgressMonitor(monitor);
         GeneralStorage.getInstance().reset();
         EntityManager s = GeneralStorage.getInstance().getMasterSession();
         EntityTransaction tx = null;
         try {
-            tx = Hibernator.instance().getTransaction(s);
+            tx = Persistor.instance().getTransaction(s);
             initAttributeDescriptions(s, proj);
             initAttributes(proj);
             
@@ -700,7 +700,7 @@ public class ProjectPM extends PersistenceManager {
                 CompNamePM.flushCompNames(s, proj.getId(), compNameBinding);
             }
             if (!monitor.isCanceled()) {
-                Hibernator.instance().commitTransaction(s, tx);
+                Persistor.instance().commitTransaction(s, tx);
                 GeneralStorage.getInstance().setProject(proj);
                 for (INameMapper mapper : mapperList) {
                     mapper.updateStandardMapperAndCleanup(proj.getId());
@@ -711,7 +711,7 @@ public class ProjectPM extends PersistenceManager {
                         .updateStandardMapperAndCleanup(proj.getId());
                 }
             } else {
-                Hibernator.instance().rollbackTransaction(s, tx);
+                Persistor.instance().rollbackTransaction(s, tx);
                 GeneralStorage.getInstance().reset();
                 for (INameMapper mapper : mapperList) {
                     mapper.clearAllNames();                    
@@ -731,7 +731,7 @@ public class ProjectPM extends PersistenceManager {
         } catch (IncompatibleTypeException ite) {
             handleIncompatibleTypeException(mapperList, s, tx, ite);
         } finally {
-            // Remove hibernate progress listeners
+            // Remove Persistence progress listeners
             setHbmProgressMonitor(null);
         }
         initBPs(proj); 
@@ -752,7 +752,7 @@ public class ProjectPM extends PersistenceManager {
             List<INameMapper> mapperList, EntityManager s, 
             EntityTransaction tx) throws PMException {
         if (tx != null) {
-            Hibernator.instance().rollbackTransaction(s, tx);
+            Persistor.instance().rollbackTransaction(s, tx);
         }
 
         GeneralStorage.getInstance().reset();
@@ -779,7 +779,7 @@ public class ProjectPM extends PersistenceManager {
             EntityTransaction tx,
             IncompatibleTypeException ite) throws PMException, PMSaveException {
         if (tx != null) {
-            Hibernator.instance().rollbackTransaction(s, tx);
+            Persistor.instance().rollbackTransaction(s, tx);
         }
 
         GeneralStorage.getInstance().reset();
@@ -802,14 +802,14 @@ public class ProjectPM extends PersistenceManager {
      * @throws PMException if the rollback of the transaction fails.
      * @throws InterruptedException if the cause of the given exception was 
      *                              that the operation was canceled.
-     * @throws PMSaveException wrapper for the Hibernate exception.
+     * @throws PMSaveException wrapper for the Persistence exception.
      */
     private static void handlePersistenceException(List<INameMapper> mapperList,
             EntityManager s, EntityTransaction tx, PersistenceException e)
         throws PMException, InterruptedException, PMSaveException {
         
         if (tx != null) {
-            Hibernator.instance().rollbackTransaction(s, tx);               
+            Persistor.instance().rollbackTransaction(s, tx);               
         }
         if (e.getCause() instanceof InterruptedException) {
 
@@ -840,7 +840,7 @@ public class ProjectPM extends PersistenceManager {
         throws PMException, InterruptedException {
         
         if (tx != null) {
-            Hibernator.instance().rollbackTransaction(s, tx);               
+            Persistor.instance().rollbackTransaction(s, tx);               
         }
         GeneralStorage.getInstance().reset();
         for (INameMapper mapper : mapperList) {
@@ -913,7 +913,7 @@ public class ProjectPM extends PersistenceManager {
     }
 
     /**
-     * Sets the progress monitor for Hibernate progress listeners/interceptors.
+     * Sets the progress monitor for Persistence progress listeners/interceptors.
      * 
      * @param monitor The progress monitor to use, or <code>null</code> to clear
      *                the monitor.
@@ -942,10 +942,10 @@ public class ProjectPM extends PersistenceManager {
         throws PMException, ProjectDeletedException, 
             InterruptedException {
         
-        final EntityManager saveSession = Hibernator.instance().openSession();
+        final EntityManager saveSession = Persistor.instance().openSession();
         EntityTransaction tx = null;
         try {
-            tx = Hibernator.instance().getTransaction(saveSession);
+            tx = Persistor.instance().getTransaction(saveSession);
 
             refreshDocAttributes(proj, saveSession);
             
@@ -966,7 +966,7 @@ public class ProjectPM extends PersistenceManager {
                 CompNamePM.flushCompNames(saveSession, 
                         proj.getId(), compNameBinding);
             }
-            Hibernator.instance().commitTransaction(saveSession, tx);
+            Persistor.instance().commitTransaction(saveSession, tx);
             for (INameMapper mapper : mapperList) {
                 mapper.updateStandardMapperAndCleanup(proj.getId());
             }
@@ -976,7 +976,7 @@ public class ProjectPM extends PersistenceManager {
             }
         } catch (PersistenceException e) {
             if (tx != null) {
-                Hibernator.instance().rollbackTransaction(saveSession, tx);
+                Persistor.instance().rollbackTransaction(saveSession, tx);
             }
             if (e.getCause() instanceof InterruptedException) {
                 // Operation was canceled.
@@ -987,20 +987,20 @@ public class ProjectPM extends PersistenceManager {
                     MessageIDs.E_ATTACH_PROJECT);
         } catch (IncompatibleTypeException ite) {
             if (tx != null) {
-                Hibernator.instance().rollbackTransaction(saveSession, tx);
+                Persistor.instance().rollbackTransaction(saveSession, tx);
             }
             String msg = Messages.CantSaveProject + StringConstants.DOT;
             throw new PMSaveException(msg + ite.getMessage(),
                     MessageIDs.E_ATTACH_PROJECT);
         } finally {
-            Hibernator.instance().dropSession(saveSession);
+            Persistor.instance().dropSession(saveSession);
         }
     } 
 
     /**
      * Refreshes all Documentation Attribute Descriptions associated with the
      * given project from the database. This prevents 
-     * StaleObjectStateExceptions from Hibernate. This is ok because the 
+     * StaleObjectStateExceptions from Persistence. This is ok because the 
      * Descriptions are intended to be read-only on import anyway.
      * 
      * @param proj The project for which to refresh the Descriptions.
@@ -1038,7 +1038,7 @@ public class ProjectPM extends PersistenceManager {
         EntityManager session = null;
         Long hits = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query q = session.createQuery("select name from ProjectNamePO as name " //$NON-NLS-1$
                             + "where name.hbmName = :name"); //$NON-NLS-1$
             q.setParameter("name", name); //$NON-NLS-1$
@@ -1053,9 +1053,9 @@ public class ProjectPM extends PersistenceManager {
         } catch (NoResultException nre) {
             return false;
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return (hits != null && hits.intValue() > 0);
     }
@@ -1078,7 +1078,7 @@ public class ProjectPM extends PersistenceManager {
         EntityManager session = null;
         Long hits = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query q = session.createQuery("select count(project) from ProjectPO as project" //$NON-NLS-1$
                     + " inner join project.properties properties where project.guid = :guid" //$NON-NLS-1$
                     + " and properties.majorNumber = :majorNumber and properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
@@ -1088,9 +1088,9 @@ public class ProjectPM extends PersistenceManager {
             q.setParameter("minorNumber", minorNumber); //$NON-NLS-1$
             hits = (Long)q.getSingleResult();
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
         } finally {
-            Hibernator.instance().
+            Persistor.instance().
                 dropSessionWithoutLockRelease(session);            
         }
         return (hits != null && hits.intValue() > 0);
@@ -1111,15 +1111,15 @@ public class ProjectPM extends PersistenceManager {
         EntityManager session = null;
         List hits = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query q = session.createQuery("select node from TestSuitePO as node where node.hbmName = ?1 and node.hbmParentProjectId = ?2"); //$NON-NLS-1$
             q.setParameter(1, name);
             q.setParameter(2, projectId);
             hits = q.getResultList();
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return ((hits != null) && (hits.size() > 0));
     }
@@ -1139,15 +1139,15 @@ public class ProjectPM extends PersistenceManager {
         EntityManager session = null;
         List hits = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query q = session.createQuery("select node from TestJobPO as node where node.hbmName = ?1 and node.hbmParentProjectId = ?2"); //$NON-NLS-1$
             q.setParameter(1, name);
             q.setParameter(2, projectId);
             hits = q.getResultList();
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return ((hits != null) && (hits.size() > 0));
     }
@@ -1198,9 +1198,9 @@ public class ProjectPM extends PersistenceManager {
             handleDBExceptionForMasterSession(proj, e);
         }
         try {
-            deleteSess = Hibernator.instance().openSession();
+            deleteSess = Persistor.instance().openSession();
             EntityTransaction tx = 
-                Hibernator.instance().getTransaction(deleteSess);
+                Persistor.instance().getTransaction(deleteSess);
             p = (IProjectPO)deleteSess.find(
                     NodeMaker.getProjectPOClass(), projId);
             if (p == null) {
@@ -1213,7 +1213,7 @@ public class ProjectPM extends PersistenceManager {
                     + StringConstants.DOT,
                     MessageIDs.E_DELETED_OBJECT);
             }
-            Hibernator.instance().lockPO(deleteSess, p);
+            Persistor.instance().lockPO(deleteSess, p);
             deleteProjectIndependentDBObjects(deleteSess, p);
 
             // FIXME zeb Workaround for EclipseLink deleting the objects in the
@@ -1227,27 +1227,27 @@ public class ProjectPM extends PersistenceManager {
                 new ArrayList<ITestSuitePO>(
                         p.getTestSuiteCont().getTestSuiteList());
             for (ISpecPersistable po : specObjList) {
-                HibernateUtil.removeChildNodes(po, deleteSess);
+                PersistenceUtil.removeChildNodes(po, deleteSess);
                 p.getSpecObjCont().removeSpecObject(po);
-                Hibernator.instance().deletePO(deleteSess, po);
+                Persistor.instance().deletePO(deleteSess, po);
             }
             for (ITestSuitePO po : testSuiteList) {
-                HibernateUtil.removeChildNodes(po, deleteSess);
+                PersistenceUtil.removeChildNodes(po, deleteSess);
                 p.getTestSuiteCont().removeTestSuite(po);
-                Hibernator.instance().deletePO(deleteSess, po);
+                Persistor.instance().deletePO(deleteSess, po);
             }
             deleteSess.flush();
             // FIXME zeb end workaround
 
             
-            Hibernator.instance().deletePO(deleteSess, p);
+            Persistor.instance().deletePO(deleteSess, p);
             CompNamePM.deleteCompNames(deleteSess, projId);
-            Hibernator.instance().commitTransaction(deleteSess, tx);
+            Persistor.instance().commitTransaction(deleteSess, tx);
             tx = null;
         } catch (PersistenceException e) {
             handleDBExceptionForAnySession(p, e, deleteSess);
         } finally {
-            Hibernator.instance().dropSession(deleteSess);
+            Persistor.instance().dropSession(deleteSess);
         }
         ProjectNameBP.getInstance().checkAndDeleteName(proj.getGuid());
     }
@@ -1338,7 +1338,7 @@ public class ProjectPM extends PersistenceManager {
     private static void rollbackTransaction(EntityManager s, String msg,
         EntityTransaction tx) throws PMException {
         try {
-            Hibernator.instance().rollbackTransaction(s, tx);
+            Persistor.instance().rollbackTransaction(s, tx);
         } catch (PersistenceException e) {
             log.error(msg, e);
             GeneralStorage.getInstance().recoverSession();
@@ -1356,7 +1356,7 @@ public class ProjectPM extends PersistenceManager {
 
         EntityManager session = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query query = session.createQuery("select project from ProjectPO project" //$NON-NLS-1$
                     + " inner join fetch project.properties where project.guid = :guid " //$NON-NLS-1$
                     + "order by project.properties.majorNumber desc, project.properties.minorNumber desc"); //$NON-NLS-1$
@@ -1370,11 +1370,11 @@ public class ProjectPM extends PersistenceManager {
             return project.getMajorProjectVersion() + StringConstants.DOT
                 + project.getMinorProjectVersion(); 
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
 
@@ -1402,7 +1402,7 @@ public class ProjectPM extends PersistenceManager {
         throws JBException {
         EntityManager session = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query query = session.createQuery("select project from ProjectPO project" //$NON-NLS-1$
                     + " inner join fetch project.properties where project.properties.isReusable = :isReusable" //$NON-NLS-1$
                     + " and project.guid != :guid"); //$NON-NLS-1$
@@ -1466,11 +1466,11 @@ public class ProjectPM extends PersistenceManager {
             
             return projects;
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
 
@@ -1598,9 +1598,9 @@ public class ProjectPM extends PersistenceManager {
             if (oce != null) {
                 throw oce;
             }
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         }
     }
 
@@ -1617,10 +1617,10 @@ public class ProjectPM extends PersistenceManager {
 
         EntityManager session = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             return loadProjectById(projectId, session);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
 
@@ -1641,7 +1641,7 @@ public class ProjectPM extends PersistenceManager {
         EntityManager session = null;
         List<Long> hits;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query query = session.createQuery("select reusedProject.hbmParentProjectId from ReusedProjectPO" //$NON-NLS-1$
                     + " as reusedProject where reusedProject.projectGuid = :projectGuid and reusedProject.majorNumber = :majorNumber" //$NON-NLS-1$
                     + " and reusedProject.minorNumber = :minorNumber"); //$NON-NLS-1$
@@ -1653,11 +1653,11 @@ public class ProjectPM extends PersistenceManager {
                 "minorNumber", minorVersion); //$NON-NLS-1$
             hits = query.getResultList();
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return hits;
 
@@ -1676,7 +1676,7 @@ public class ProjectPM extends PersistenceManager {
         EntityManager session = null;
         String projGuid = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             final Query query = 
                 session.createQuery("select project.guid from ProjectPO project where project.id = :projectID"); //$NON-NLS-1$
             query.setParameter("projectID", projId); //$NON-NLS-1$
@@ -1685,9 +1685,9 @@ public class ProjectPM extends PersistenceManager {
             // No result found. Fall through to return null.
         } catch (PersistenceException e) {
             throw new JBException(e.getMessage(),
-                MessageIDs.E_HIBERNATE_LOAD_FAILED);
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return projGuid;
     }
@@ -1701,14 +1701,14 @@ public class ProjectPM extends PersistenceManager {
         EntityManager session = null;
         List hits = null;
         try {
-            session = Hibernator.instance().openSession();
+            session = Persistor.instance().openSession();
             Query q = session.createQuery("select node from ProjectPO as node where node.id = ?1"); //$NON-NLS-1$
             q.setParameter(1, projectId);
             hits = q.getResultList();
         } catch (PersistenceException e) {
-            log.error(Messages.HibernateLoadFailed, e);
+            log.error(Messages.PersistenceLoadFailed, e);
         } finally {
-            Hibernator.instance().dropSessionWithoutLockRelease(session);
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return ((hits != null) && (hits.size() > 0));
 
