@@ -31,6 +31,10 @@ import org.eclipse.swt.widgets.Label;
  * @created 14.02.2006
  */
 public abstract class UIComponentHelper {
+
+    /** text to append to each label that corresponds to a text input */
+    private static final String LABEL_TERMINATOR = ":"; //$NON-NLS-1$
+    
     /**
      * hide construcotr for utility class
      */
@@ -194,4 +198,19 @@ public abstract class UIComponentHelper {
 
     }
 
+    /**
+     * Creates a label with appropriate text in the given composite.
+     * 
+     * @param parent The parent composite for the label.
+     * @param fieldName The internationalized name of the text input field for 
+     *                  which to create a label.
+     * @param style the SWT style for the label.
+     */
+    public static void createLabel(
+            Composite parent, String fieldName, int style) {
+        Label label = new Label(parent, style);
+        label.setText(fieldName + LABEL_TERMINATOR);
+    }
+    
+    
 }
