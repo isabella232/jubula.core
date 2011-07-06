@@ -656,6 +656,11 @@ public class ClientTest implements IClientTest {
             List components = compSystem.getComponents(
                 TestExecution.getInstance().getConnectedAut().getToolkit(),
                 true);
+
+            // optimization: only concrete components need to be registered,
+            // as abstract components do not have a corresponding impl class
+            components.retainAll(compSystem.getConcreteComponents());
+            
             message.setComponents(components);
             message.setProfile(ProfileBuilder.getActiveProfile());
 

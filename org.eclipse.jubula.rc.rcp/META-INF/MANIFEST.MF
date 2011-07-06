@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
  lib/org.eclipse.jubula.tools.jar,
  lib/org.apache.commons.lang.jar,
+ lib/org.apache.oro.jar,
  lib/org.apache.commons.beanutils.jar,
  lib/org.eclipse.jubula.rc.common.jar,
  lib/org.eclipse.jubula.rc.swt.jar,

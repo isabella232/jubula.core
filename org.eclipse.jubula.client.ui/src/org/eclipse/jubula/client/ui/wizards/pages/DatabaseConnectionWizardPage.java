@@ -43,13 +43,13 @@ import org.eclipse.jubula.client.ui.databinding.SimpleStringToIntegerConverter;
 import org.eclipse.jubula.client.ui.databinding.validators.StringToPortValidator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.widgets.JBText;
+import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
@@ -68,9 +68,6 @@ import org.eclipse.ui.PlatformUI;
  */
 public class DatabaseConnectionWizardPage extends WizardPage {
 
-    /** text to append to each label that corresponds to a text input */
-    private static final String LABEL_TERMINATOR = ":"; //$NON-NLS-1$
-    
     /**
      * Responsible for creating the detail area.
      * 
@@ -138,7 +135,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         public void createDetailArea(Composite parent, 
                 DataBindingContext dbc) {
 
-            createLabel(parent, I18n.getString("DatabaseConnection.H2.Location")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(
+                    parent, I18n.getString("DatabaseConnection.H2.Location"), SWT.NONE); //$NON-NLS-1$
             final Text locationText = createDetailText(parent);
             DialogUtils.setWidgetName(locationText, "H2.Location"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(locationText, SWT.Modify), 
@@ -182,16 +180,16 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         public void createDetailArea(Composite parent, 
                 DataBindingContext dbc) {
 
-            createLabel(parent, 
-                    I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Hostname"), SWT.NONE); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
             DialogUtils.setWidgetName(hostnameText, "Oracle.Hostname"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connInfo, 
                         AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
 
-            createLabel(parent, 
-                    I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Port"), SWT.NONE); //$NON-NLS-1$
             final Text portText = createDetailText(parent);
             DialogUtils.setWidgetName(portText, "Oracle.Port"); //$NON-NLS-1$
             UpdateValueStrategy portTargetToModelUpdateStrategy =
@@ -207,8 +205,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
             
-            createLabel(parent, 
-                    I18n.getString("DatabaseConnection.Oracle.SID")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.Oracle.SID"), SWT.NONE); //$NON-NLS-1$
             final Text schemaText = createDetailText(parent);
             DialogUtils.setWidgetName(schemaText, "Oracle.SID"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
@@ -263,16 +261,16 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         public void createDetailArea(Composite parent, 
                 DataBindingContext dbc) {
 
-            createLabel(parent, 
-                    I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Hostname"), SWT.NONE); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
             DialogUtils.setWidgetName(hostnameText, "PostGreSQL.Hostname"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connInfo, 
                         AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
 
-            createLabel(parent, 
-                    I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Port"), SWT.NONE); //$NON-NLS-1$
             final Text portText = createDetailText(parent);
             DialogUtils.setWidgetName(portText, "PostGreSQL.Port"); //$NON-NLS-1$
             UpdateValueStrategy portTargetToModelUpdateStrategy =
@@ -288,8 +286,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
             
-            createLabel(parent, 
-                    I18n.getString("DatabaseConnection.PostGreSQL.Database")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.PostGreSQL.Database"), SWT.NONE); //$NON-NLS-1$
             final Text schemaText = createDetailText(parent);
             DialogUtils.setWidgetName(schemaText, "PostGreSQL.Database"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
@@ -344,16 +342,16 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         public void createDetailArea(Composite parent, 
                 DataBindingContext dbc) {
 
-            createLabel(parent, 
-                    I18n.getString("DatabaseConnection.HostBased.Hostname")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Hostname"), SWT.NONE); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
             DialogUtils.setWidgetName(hostnameText, "MySQL.Hostname"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
                 BeansObservables.observeValue(m_connInfo, 
                         AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME));
 
-            createLabel(parent, 
-                    I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.HostBased.Port"), SWT.NONE); //$NON-NLS-1$
             final Text portText = createDetailText(parent);
             DialogUtils.setWidgetName(portText, "MySQL.Port"); //$NON-NLS-1$
             UpdateValueStrategy portTargetToModelUpdateStrategy =
@@ -369,8 +367,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
             
-            createLabel(parent, 
-                    I18n.getString("DatabaseConnection.MySQL.Database")); //$NON-NLS-1$
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.MySQL.Database"), SWT.NONE); //$NON-NLS-1$
             final Text schemaText = createDetailText(parent);
             DialogUtils.setWidgetName(schemaText, "MySQL.Database"); //$NON-NLS-1$
             dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
@@ -462,7 +460,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 GridLayoutFactory.fillDefaults().numColumns(2).create());
         setControl(composite);
         
-        createLabel(composite, I18n.getString("DatabaseConnection.Name")); //$NON-NLS-1$
+        UIComponentHelper.createLabel(composite, I18n.getString("DatabaseConnection.Name"), SWT.NONE); //$NON-NLS-1$
         JBText nameText = new JBText(composite, SWT.BORDER);
         DialogUtils.setWidgetName(nameText, "DatabaseConnection.Name"); //$NON-NLS-1$
         nameText.setLayoutData(textGridDataFactory.create());
@@ -483,7 +481,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         nameText.setFocus();
         nameText.selectAll();
         
-        createLabel(composite, I18n.getString("DatabaseConnection.Type")); //$NON-NLS-1$
+        UIComponentHelper.createLabel(composite, I18n.getString("DatabaseConnection.Type"), SWT.NONE); //$NON-NLS-1$
         ComboViewer typeComboViewer = new ComboViewer(composite);
         DialogUtils.setWidgetName(typeComboViewer.getControl(), "DatabaseConnection.Type"); //$NON-NLS-1$
         typeComboViewer.setContentProvider(new ArrayContentProvider());
@@ -597,18 +595,6 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 }));
     }
 
-    /**
-     * Creates a label with appropriate text in the given composite.
-     * 
-     * @param parent The parent composite for the label.
-     * @param fieldName The internationalized name of the text input field for 
-     *                  which to create a label.
-     */
-    private static void createLabel(Composite parent, String fieldName) {
-        Label label = new Label(parent, SWT.NONE);
-        label.setText(fieldName + LABEL_TERMINATOR);
-    }
-    
     /**
      * Creates and returns a text field with 
      * {@link org.eclipse.swt.layout.GridData} suitable for

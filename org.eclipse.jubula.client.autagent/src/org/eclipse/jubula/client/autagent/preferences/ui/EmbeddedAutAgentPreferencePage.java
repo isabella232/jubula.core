@@ -24,11 +24,11 @@ import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
 import org.eclipse.jubula.client.ui.databinding.SimpleIntegerToStringConverter;
 import org.eclipse.jubula.client.ui.databinding.SimpleStringToIntegerConverter;
 import org.eclipse.jubula.client.ui.databinding.validators.StringToPortValidator;
+import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -59,11 +59,14 @@ public class EmbeddedAutAgentPreferencePage extends PreferencePage
         Composite composite = new Composite(parent, SWT.NONE);
         GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
         GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
-
+        
+        
         DataBindingContext dbc = new DataBindingContext();
-        new Label(composite, SWT.NONE).setText(
-                I18n.getString("DatabaseConnection.HostBased.Port")); //$NON-NLS-1$
+        
+        UIComponentHelper.createLabel(composite, 
+                I18n.getString("DatabaseConnection.HostBased.Port"), SWT.NONE); //$NON-NLS-1$
         Text portText = new Text(composite, SWT.NONE);
+        GridDataFactory.fillDefaults().grab(true, false).applyTo(portText);
         m_portNumber = new WritableValue(
                 getPreferenceStore().getInt(
                         PreferenceInitializer.PREF_EMBEDDED_AGENT_PORT), 
