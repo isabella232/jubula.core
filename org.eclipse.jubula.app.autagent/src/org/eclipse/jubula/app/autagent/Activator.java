@@ -10,8 +10,15 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.autagent;
 
+import java.io.InputStream;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.joran.JoranConfigurator;
+import ch.qos.logback.core.joran.spi.JoranException;
 
 /**
  * 
@@ -37,6 +44,22 @@ public class Activator implements BundleActivator {
      */
     public void start(BundleContext bundleContext) throws Exception {
         Activator.context = bundleContext;
+        // initialize the logging facility
+        LoggerContext lc = (LoggerContext)LoggerFactory.getILoggerFactory();
+        try {
+            JoranConfigurator configurator = new JoranConfigurator();
+            configurator.setContext(lc);
+            // the context was probably already configured by default
+            // configuration
+            // rules
+            lc.reset();
+            InputStream is = context.getBundle().getResource("logback.xml") //$NON-NLS-1$
+                    .openStream();
+            configurator.doConfigure(is);
+        } catch (JoranException je) {
+            // no logging if logger fails :-(
+        }
+
     }
 
     /**
