@@ -122,9 +122,6 @@ public class Persistor {
     /** contains information regarding how to connect to the database */
     private static DatabaseConnectionInfo dbConnectionInfo = null;
 
-    /** is headless */
-    private static boolean headless = false;
-
     /** Persistence (JPA / EclipseLink) configuration */
     private EntityManagerFactory m_sf;
 
@@ -305,10 +302,13 @@ public class Persistor {
      * Queries registered error handlers in an effort to resolve a database
      * version conflict.
      * 
+     * @param dvce
+     *            the database version conflict exception
      * @return <code>true</code> if the conflict has been resolved as a result
      *         of this method call. Otherwise, <code>false</code>.
      */
-    private static boolean handleDatabaseVersionConflict() {
+    private static boolean handleDatabaseVersionConflict(
+        DatabaseVersionConflictException dvce) {
         List<IDatabaseVersionErrorHandler> errorHandlers = 
             new ArrayList<IDatabaseVersionErrorHandler>();
         IConfigurationElement[] config = Platform.getExtensionRegistry()
@@ -333,21 +333,25 @@ public class Persistor {
             return false;
         }
         for (final IDatabaseVersionErrorHandler handler : errorHandlers) {
-            final AtomicBoolean isHandled = new AtomicBoolean(false);
-            ISafeRunnable runnable = new ISafeRunnable() {
-                public void handleException(Throwable t) {
-                    log.warn(
-                        Messages.ErrorOccurredResolvingDatabaseVersionConflict
-                        + StringConstants.DOT, t);
+            if (handler.getMinimumDatabaseMajorVersionNumber() <= dvce
+                    .getDatabaseMajorVersion()) {
+                final AtomicBoolean isHandled = new AtomicBoolean(false);
+                ISafeRunnable runnable = new ISafeRunnable() {
+                    public void handleException(Throwable t) {
+                        log.warn(
+                                Messages.
+                                ErrorOccurredResolvingDatabaseVersionConflict
+                                        + StringConstants.DOT, t);
+                    }
+                    
+                    public void run() throws Exception {
+                        isHandled.set(handler.handleDatabaseError());
+                    }
+                };
+                SafeRunner.run(runnable);
+                if (isHandled.get()) {
+                    return true;
                 }
-
-                public void run() throws Exception {
-                    isHandled.set(handler.handleDatabaseError());
-                }
-            };
-            SafeRunner.run(runnable);
-            if (isHandled.get()) {
-                return true;
             }
         }
 
@@ -600,7 +604,7 @@ public class Persistor {
                                 IVersion.GD_DB_MINOR_VERSION > e
                                 .getDatabaseMinorVersion())) {
                     // Client is newer than database schema
-                    if (!handleDatabaseVersionConflict()) {
+                    if (!handleDatabaseVersionConflict(e)) {
                         throw new PMDatabaseConfException(
                                 Messages.DBVersionProblem + StringConstants.DOT,
                                     MessageIDs.E_INVALID_DB_VERSION);
@@ -986,16 +990,6 @@ public class Persistor {
     }
 
     /**
-     * set true if client application is running headless (e.g. CmdDbTool)
-     * 
-     * @param isHeadless
-     *            boolean
-     */
-    public static void setHeadless(boolean isHeadless) {
-        Persistor.headless = isHeadless;
-    }
-
-    /**
      * Instanceof variant for Persistence (JPA / EclipseLink) proxies
      * 
      * @param po
@@ -1102,16 +1096,17 @@ public class Persistor {
      *             if a fatal exception occurs during migration.
      * @throws JBException
      *             if a general exception occurs during migration.
+     * @return true if migration succeeded; false otherwise
      */
-    public static void migrateDatabaseStructure() throws JBFatalException,
+    public static boolean migrateDatabaseStructure() throws JBFatalException,
             JBException {
-
+        boolean migrationSuccess = false;
         EntityManagerFactory migrationEntityManagerFactory = null;
 
         try {
             migrationEntityManagerFactory = 
                 createEntityManagerFactory(dbConnectionInfo, user, pw, dburl);
-            installDbScheme(migrationEntityManagerFactory);
+            migrationSuccess = installDbScheme(migrationEntityManagerFactory);
             instance = instance(user, pw, dburl, new NullProgressMonitor());
             instance.m_newDbSchemeInstalled = true;
         } finally {
@@ -1119,6 +1114,7 @@ public class Persistor {
                 migrationEntityManagerFactory.close();
             }
         }
+        return migrationSuccess;
     }
 
     /**

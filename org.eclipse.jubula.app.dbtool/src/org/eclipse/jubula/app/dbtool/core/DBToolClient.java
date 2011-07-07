@@ -493,7 +493,6 @@ public class DBToolClient extends AbstractCmdlineClient {
         Persistor.setUser(getJob().getDbuser());
         Persistor.setPw(getJob().getDbpw());
         Persistor.setUrl(getJob().getDb());
-        Persistor.setHeadless(true);
         if (!Persistor.init()) {
             throw new IllegalArgumentException(Messages
                     .ExecutionControllerInvalidDBDataError, null);
