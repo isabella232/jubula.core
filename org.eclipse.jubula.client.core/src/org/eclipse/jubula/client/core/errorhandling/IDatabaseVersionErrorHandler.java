@@ -27,5 +27,10 @@ public interface IDatabaseVersionErrorHandler {
      *         of this method call. Otherwise, <code>false</code>.
      */
     public boolean handleDatabaseError();
-
+    
+    /**
+     * @return the minimum database major version number this version error handler
+     *         requires
+     */
+    public int getMinimumDatabaseMajorVersionNumber();
 }

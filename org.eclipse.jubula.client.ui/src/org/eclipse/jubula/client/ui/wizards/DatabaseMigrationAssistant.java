@@ -116,8 +116,8 @@ public class DatabaseMigrationAssistant extends Wizard
 
                     monitor.beginTask("Migrating...", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                     try {
-                        Persistor.migrateDatabaseStructure();
-                        m_wasMigrationSuccessful = true;
+                        m_wasMigrationSuccessful = 
+                            Persistor.migrateDatabaseStructure();
                         ImportFileBP.getInstance().importProjects(
                                 m_importProjectsPage, monitor);
                         Plugin.getDisplay().asyncExec(new Runnable() {
@@ -151,4 +151,10 @@ public class DatabaseMigrationAssistant extends Wizard
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public int getMinimumDatabaseMajorVersionNumber() {
+        return 34;
+    }
 }
