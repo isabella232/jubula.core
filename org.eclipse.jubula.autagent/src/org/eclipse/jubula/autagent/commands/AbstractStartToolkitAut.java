@@ -29,7 +29,6 @@ import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
-import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.utils.ZipUtil;
@@ -303,7 +302,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
                         classpathEntries.add(createdFiles[i].getAbsolutePath());
                     }
                 } catch (IOException e) {
-                    log.error("An error occurred while trying to extract nested JARs from " + CommandConstants.TOOLS_BUNDLE_ID, e); //$NON-NLS-1$
+                    log.error("An error occurred while trying to extract nested JARs from " + bundleId, e); //$NON-NLS-1$
                 }
             } else {
                 Enumeration<URL> e = bundle.findEntries(
