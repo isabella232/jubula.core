@@ -122,9 +122,6 @@ public class Persistor {
     /** contains information regarding how to connect to the database */
     private static DatabaseConnectionInfo dbConnectionInfo = null;
 
-    /** is headless */
-    private static boolean headless = false;
-
     /** Persistence (JPA / EclipseLink) configuration */
     private EntityManagerFactory m_sf;
 
@@ -983,16 +980,6 @@ public class Persistor {
     public static void setDbConnectionName(
             DatabaseConnectionInfo connectionName) {
         Persistor.dbConnectionInfo = connectionName;
-    }
-
-    /**
-     * set true if client application is running headless (e.g. CmdDbTool)
-     * 
-     * @param isHeadless
-     *            boolean
-     */
-    public static void setHeadless(boolean isHeadless) {
-        Persistor.headless = isHeadless;
     }
 
     /**
