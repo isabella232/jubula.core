@@ -44,7 +44,6 @@ import org.eclipse.jubula.tools.utils.ExternalCommandExecutor.MonitorTask;
  */
 public abstract class AbstractApplicationImplClass implements
         IBaseImplementationClass {
-    
     /**
      * String for sequential numbering for screenshots
      */

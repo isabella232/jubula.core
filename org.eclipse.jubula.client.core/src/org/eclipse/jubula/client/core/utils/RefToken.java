@@ -42,8 +42,6 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * class to convert and validate a reference token
  * the conversion is carried out between gui and model representation and vice versa
  * the validation refers to semantical correctness of the gui representation of reference string
- * 
- * 
  * @author BREDEX GmbH
  * @created 14.08.2007
  */

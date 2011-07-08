@@ -27,8 +27,6 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 /**
  * @author BREDEX GmbH
  * @created Apr 21, 2008
- * 
- * 
  */
 @Entity
 @Table(name = "LOCKED_OBJECTS")

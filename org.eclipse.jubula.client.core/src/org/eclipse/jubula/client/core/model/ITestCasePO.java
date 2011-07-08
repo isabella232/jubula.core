@@ -19,10 +19,6 @@ import org.eclipse.jubula.tools.exception.InvalidDataException;
 /**
  * @author BREDEX GmbH
  * @created 19.12.2005
- *
- *
- *
- *
  */
 public interface ITestCasePO extends IParamNodePO {
 

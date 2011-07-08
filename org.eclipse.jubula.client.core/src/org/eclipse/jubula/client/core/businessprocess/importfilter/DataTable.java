@@ -11,8 +11,6 @@
 package org.eclipse.jubula.client.core.businessprocess.importfilter;
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created Nov 8, 2005
  *

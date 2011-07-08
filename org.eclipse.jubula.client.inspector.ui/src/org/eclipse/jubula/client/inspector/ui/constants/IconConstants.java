@@ -34,8 +34,6 @@ public class IconConstants {
     }
 
     /**
-     * 
-     * 
      * @param imageName The filename of the image for which to get the 
      *                  descriptor.
      * @return an image descriptor for the given filename, or the "mising" 

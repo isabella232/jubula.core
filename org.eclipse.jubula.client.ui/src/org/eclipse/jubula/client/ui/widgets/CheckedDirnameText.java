@@ -23,8 +23,6 @@ import org.eclipse.swt.widgets.Text;
 public class CheckedDirnameText extends CheckedText {
 
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 26.09.2007
      */

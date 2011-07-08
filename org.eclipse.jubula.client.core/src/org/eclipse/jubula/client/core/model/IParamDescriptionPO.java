@@ -11,14 +11,8 @@
 package org.eclipse.jubula.client.core.model;
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 20.12.2005
- *
- *
- *
- *
  */
 public interface IParamDescriptionPO extends IPersistentObject {
 

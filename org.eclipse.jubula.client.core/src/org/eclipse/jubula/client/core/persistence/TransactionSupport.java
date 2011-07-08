@@ -28,8 +28,6 @@ public class TransactionSupport {
 
     /**
      * Interface for an transaction action
-     * 
-     *
      * @author BREDEX GmbH
      * @created 12.09.2005
      *

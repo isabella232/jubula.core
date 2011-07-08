@@ -26,8 +26,6 @@ import org.apache.commons.logging.LogFactory;
  * For example an action is a click on a button or a check for a value.
  * An action has got one name, one method, one changed version number
  * one deprecated status, no or one returnValue and no or many params.
- * 
- *
  * {@inheritDoc}
  * @author BREDEX GmbH
  * @created 08.07.2004

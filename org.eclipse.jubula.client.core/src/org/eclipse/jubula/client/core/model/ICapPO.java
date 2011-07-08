@@ -14,14 +14,8 @@ import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 19.12.2005
- *
- *
- *
- *
  */
 public interface ICapPO extends IParamNodePO, IComponentNameReuser {
 

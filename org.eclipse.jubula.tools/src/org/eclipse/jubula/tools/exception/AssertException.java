@@ -13,14 +13,15 @@ package org.eclipse.jubula.tools.exception;
 /**
  * @author BREDEX GmbH
  * @created 08.10.2004
-*/
+ */
 public class AssertException extends RuntimeException {
     /**
      * AssertException constructor comment.
-     * @param s java.lang.String
+     * 
+     * @param s
+     *            java.lang.String
      */
     public AssertException(String s) {
-    super(s);
+        super(s);
     }
 }
-

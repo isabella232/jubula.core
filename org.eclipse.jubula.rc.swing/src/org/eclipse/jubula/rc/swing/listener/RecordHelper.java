@@ -50,11 +50,11 @@ import javax.swing.tree.TreePath;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.NameValidator;
 import org.eclipse.jubula.rc.swing.swing.implclasses.AbstractSwingImplClass;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.MappingConstants;
-import org.eclipse.jubula.tools.utils.NameValidator;
 import org.eclipse.jubula.tools.utils.StringParsing;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 

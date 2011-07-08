@@ -21,8 +21,6 @@ import org.eclipse.jubula.client.core.utils.LocaleUtil;
 
 
 /**
- * 
- *
  * class to manage language lists and the conversion between Locale and String
  * representation of languages
  * 

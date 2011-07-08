@@ -33,8 +33,6 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 27.04.2005
  *

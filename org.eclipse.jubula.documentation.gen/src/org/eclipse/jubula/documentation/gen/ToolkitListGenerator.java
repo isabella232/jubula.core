@@ -18,8 +18,6 @@ import org.eclipse.jubula.tools.utils.generator.ToolkitInfo;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created Aug 2, 2007
  * @version $Revision: 12986 $

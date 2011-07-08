@@ -15,8 +15,6 @@ import org.eclipse.jubula.communication.message.Message;
 /**
  * An interface for notifying listeners that something happens to the
  * connection.
- * 
- * 
  * @author BREDEX GmbH
  * @created 22.07.2004
  */

@@ -14,8 +14,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 
 /**
  * checks for nodes if they have dependencies with a certain parent
- * 
- *
  * @author BREDEX GmbH
  * @created 26.09.2005
  */

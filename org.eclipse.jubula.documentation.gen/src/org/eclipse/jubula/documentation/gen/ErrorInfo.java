@@ -13,8 +13,6 @@ package org.eclipse.jubula.documentation.gen;
 import org.eclipse.jubula.tools.utils.generator.Info;
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created Nov 19, 2005
  * @version $Revision: 12986 $

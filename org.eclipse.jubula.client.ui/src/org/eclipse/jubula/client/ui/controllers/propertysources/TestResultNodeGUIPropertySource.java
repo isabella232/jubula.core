@@ -212,8 +212,6 @@ public class TestResultNodeGUIPropertySource
     }
 
     /**
-     * 
-     *
      */
     private void initResultDetailsPropDesc() {
         JBPropertyDescriptor propDes = new JBPropertyDescriptor(

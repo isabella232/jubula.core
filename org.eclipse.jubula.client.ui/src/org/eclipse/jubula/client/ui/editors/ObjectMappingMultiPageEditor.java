@@ -76,7 +76,6 @@ import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ITimestampPO;
-import org.eclipse.jubula.client.core.model.LogicComponent;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -226,9 +225,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     
     /** current selection within the tree view of this editor */
     private IStructuredSelection m_treeSelection = StructuredSelection.EMPTY;
-
-    /** Set of component names for Name cleanup */
-    private Set < LogicComponent > m_componentNames;
 
     /** action to cut TreeItems */
     private CutTreeItemActionOMEditor m_cutTreeItemAction;
@@ -540,10 +536,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                     getCompMapper().getCompNameCache().getCompNamePo(
                             result.getCompName());
                 if (compNamePo != null) {
-                    final LogicComponent logic = new LogicComponent(
-                            compNamePo.getName(), 
-                            compNamePo.getComponentType());
-                    
                     if (!(cap.getMetaComponentType() 
                                 instanceof ConcreteComponent
                             && ((ConcreteComponent)cap.getMetaComponentType())
@@ -576,7 +568,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                                     + StringConstants.DOT, pme);
                         }
                     }
-                    m_componentNames.add(logic);
                 }
             }
             return true;
@@ -2116,7 +2107,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * @return int the number of added items
      */
     public int cleanupNames() {
-        m_componentNames = new HashSet<LogicComponent>();
         int addedItems = 0;
         Set<IObjectMappingAssoziationPO> addedNodes = 
             new HashSet<IObjectMappingAssoziationPO>();

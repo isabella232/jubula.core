@@ -212,8 +212,6 @@ public class Communicator {
     /**
      * Use this constructor if the instance should act as a server. run() will start a thread accepting connections.
      * 
-     * 
-     * 
      * @param port the port to use, must not be negative, if port is zero, any
      *             free port will be used, query the opened port with getLocalPort()
      * @param cl class loader to get the command object

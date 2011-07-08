@@ -28,10 +28,6 @@ import org.eclipse.jubula.tools.exception.JBException;
  * 
  * @author BREDEX GmbH
  * @created 08.06.2005
- *
- *
- *
- *
  */
 @Entity
 @DiscriminatorValue(value = "Y")

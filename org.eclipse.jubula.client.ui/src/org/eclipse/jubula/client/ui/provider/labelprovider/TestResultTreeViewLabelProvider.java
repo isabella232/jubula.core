@@ -30,8 +30,6 @@ import org.eclipse.swt.graphics.Image;
 
 
 /**
- * 
- * 
  * @author BREDEX GmbH
  * @created 18.10.2004
  *

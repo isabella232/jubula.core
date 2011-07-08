@@ -43,7 +43,6 @@ Export-Package: org.dom4j,
  org.eclipse.jubula.client.core.persistence.locking,
  org.eclipse.jubula.client.core.preferences.database,
  org.eclipse.jubula.client.core.progress,
- org.eclipse.jubula.client.core.serialization,
  org.eclipse.jubula.client.core.test,
  org.eclipse.jubula.client.core.utils
 Require-Bundle: org.eclipse.jubula.communication;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,

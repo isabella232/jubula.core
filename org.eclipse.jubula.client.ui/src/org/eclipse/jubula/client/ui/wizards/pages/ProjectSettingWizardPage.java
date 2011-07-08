@@ -410,8 +410,8 @@ public class ProjectSettingWizardPage extends WizardPage {
                 GridData.END, true);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
                 Messages.ProjectSettingWizardPageLanguageLabel), 
-                "GDControlDecorator.NewProjectDefaultLanguage", 
-                false); //$NON-NLS-1$
+                "GDControlDecorator.NewProjectDefaultLanguage", //$NON-NLS-1$ 
+                false);
         m_defaultLangComboBox = new DirectCombo<Locale>(middleComposite, 
                 SWT.READ_ONLY, new ArrayList<Locale>(), 
                 new ArrayList<String>(), false, true);
@@ -469,7 +469,6 @@ public class ProjectSettingWizardPage extends WizardPage {
      * @return The union of all languages of the actual project
      */
     private String[] getLanguageList() {
-        Languages languages = Languages.getInstance();
         Set<Locale> allLangs = new HashSet<Locale>(); 
         for (int i = 0; i < m_project.getLangHelper().getLanguageList().size(); 
             i++) {
@@ -480,7 +479,6 @@ public class ProjectSettingWizardPage extends WizardPage {
                 allLangs.add(langList.get(j));
             }            
         }   
-        languages.setProjectLanguages(allLangs);
         String[] unionLanguages = new String[allLangs.size()];  
         Iterator<Locale> iter = allLangs.iterator();
         int i = 0;

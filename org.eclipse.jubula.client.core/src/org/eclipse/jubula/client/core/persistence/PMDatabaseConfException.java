@@ -11,8 +11,6 @@
 package org.eclipse.jubula.client.core.persistence;
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 03.11.2005
  *

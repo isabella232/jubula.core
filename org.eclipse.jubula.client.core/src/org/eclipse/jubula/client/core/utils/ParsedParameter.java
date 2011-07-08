@@ -31,8 +31,6 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * is designed to be instantiated, used in a call to 
  * {@link Start#apply(org.eclipse.jubula.client.core.parser.parameter.node.Switch)},
  * and then queried for tokens via {@link #getTokens()}.
- * 
- * 
  * @author BREDEX GmbH
  * @created 12.01.2011
  */

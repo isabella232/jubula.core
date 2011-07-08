@@ -440,8 +440,6 @@ public class AutAgent {
 
     /**
      * Removes the given AUT from the collection of registered AUTs.
-     * 
-     * 
      * @param autId The ID of the AUT to deregister.
      */
     private void removeAut(AutIdentifier autId) {

@@ -143,8 +143,6 @@ public class ProjectDialog extends TitleAreaDialog {
 
     /**
      * Value class to hold name and version info for a project.
-     * 
-     *
      * @author BREDEX GmbH
      * @created Jun 21, 2007
      */

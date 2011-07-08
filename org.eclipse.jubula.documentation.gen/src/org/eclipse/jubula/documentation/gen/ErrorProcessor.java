@@ -21,8 +21,6 @@ import org.eclipse.jubula.tools.utils.generator.IProcessor;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created Nov 21, 2005
  * @version $Revision: 12986 $

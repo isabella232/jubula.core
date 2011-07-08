@@ -242,8 +242,6 @@ public abstract class AbstractToolTipListener implements Listener {
     
     
     /**
-     * 
-     * 
      *
      * @author BREDEX GmbH
      * @created 13.02.2006

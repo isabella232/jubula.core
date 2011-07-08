@@ -793,8 +793,6 @@ public class NodePM extends PersistenceManager {
      * external to the current project.
      * Warning: the fetched ExecTestCases have no parent, because the database
      * doesn't know the parent.
-     * 
-     * 
      * @param specTcGuid GUID of the test case being reused.
      * @param parentProjectId ID of the parent project of the test case being
      *                        reused.

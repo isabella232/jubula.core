@@ -60,10 +60,9 @@ public class DatabaseStateDispatcher {
      *            the progressEvent
      */
     public static void notifyListener(DatabaseStateEvent e) {
-        Iterator iter = getListeners().iterator();
+        Iterator<IDatabaseStateListener> iter = getListeners().iterator();
         while (iter.hasNext()) {
-            IDatabaseStateListener progressListener = 
-                (IDatabaseStateListener)iter.next();
+            IDatabaseStateListener progressListener = iter.next();
             if (progressListener != null) {
                 progressListener.reactOnDatabaseEvent(e);
             } else {

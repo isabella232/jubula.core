@@ -65,8 +65,6 @@ import org.eclipse.swt.widgets.Widget;
  * The key events are tapped for selecting the <code>m_currentComponent</code>
  * to be used for the observation.
  * <br>
- * 
- * 
  * @author BREDEX GmbH
  * @created 23.08.2004
  */

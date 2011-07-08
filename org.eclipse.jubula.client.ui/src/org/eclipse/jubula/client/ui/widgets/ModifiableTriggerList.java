@@ -345,8 +345,6 @@ public class ModifiableTriggerList extends Composite implements
         }
         
         /**
-         * 
-         * 
          *
          * @author BREDEX GmbH
          * @created 13.02.2006
@@ -374,8 +372,6 @@ public class ModifiableTriggerList extends Composite implements
     }
 
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 12.06.2006
      */
@@ -398,8 +394,6 @@ public class ModifiableTriggerList extends Composite implements
     }
 
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 12.06.2006
      */
@@ -436,8 +430,6 @@ public class ModifiableTriggerList extends Composite implements
     }
 
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 12.06.2006
      */
@@ -482,8 +474,6 @@ public class ModifiableTriggerList extends Composite implements
     }
 
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 12.06.2006
      */
@@ -520,8 +510,6 @@ public class ModifiableTriggerList extends Composite implements
     }
     
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 12.06.2006
      */
@@ -569,8 +557,6 @@ public class ModifiableTriggerList extends Composite implements
     }
     
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 19.06.2006
      */

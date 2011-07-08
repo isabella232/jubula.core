@@ -28,10 +28,6 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  *
  * @author BREDEX GmbH
  * @created 30.11.2005
- *
- *
- *
- *
  */
 @Entity
 @Table(name = "APPLICATION")

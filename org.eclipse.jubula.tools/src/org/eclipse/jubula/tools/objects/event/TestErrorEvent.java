@@ -21,10 +21,6 @@ import java.util.Map;
  * 
  * @author BREDEX GmbH
  * @created 04.04.2005
- *
- *
- *
- *
  */
 public class TestErrorEvent {
     /**

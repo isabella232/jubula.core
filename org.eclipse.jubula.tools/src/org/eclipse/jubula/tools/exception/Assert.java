@@ -21,10 +21,6 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author BREDEX GmbH
  * @created 08.10.2004
- *
- *
- *
- *
  */
 public class Assert {
     

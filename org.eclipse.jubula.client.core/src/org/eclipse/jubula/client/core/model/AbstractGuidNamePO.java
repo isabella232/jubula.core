@@ -24,8 +24,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 /**
  * @author BREDEX GmbH
  * @created 25.06.2007
- * 
- * 
  */
 @MappedSuperclass
 abstract class AbstractGuidNamePO implements IAbstractGUIDNamePO {

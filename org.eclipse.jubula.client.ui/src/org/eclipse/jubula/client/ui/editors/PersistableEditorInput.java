@@ -23,8 +23,6 @@ import org.eclipse.ui.PlatformUI;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 02.09.2005
  *

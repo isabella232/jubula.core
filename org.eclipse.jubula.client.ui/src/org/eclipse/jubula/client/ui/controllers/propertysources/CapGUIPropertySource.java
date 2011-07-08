@@ -71,8 +71,6 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 /**
  * This class is the PropertySource of a CAP.
  * Its used to display and edit the properties in the Properties View.
- * 
- *
  * @author BREDEX GmbH
  * @created 01.12.2004
  * {@inheritDoc}
