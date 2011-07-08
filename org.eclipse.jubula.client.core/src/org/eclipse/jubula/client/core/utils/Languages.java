@@ -12,11 +12,9 @@ package org.eclipse.jubula.client.core.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.jubula.tools.constants.StringConstants;
 
@@ -25,13 +23,9 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * @created 14.02.2005
  */
 public class Languages {
-    
     /** single instance from Languages */
     private static Languages instance = null;
     
-    /** Comment for <code>m_projectLanguages</code> */
-    private Set m_projectLanguages = new HashSet();
-
     /** Mapping from Locale to display string */
     private Map<Locale, String> m_localeToDisplayMap;
 
@@ -90,14 +84,6 @@ public class Languages {
     }
     
     /**
-     * Initializes m_projectLanguages with the project languages.
-     * @param union The set to set.
-     */
-    public void setProjectLanguages(Set union) {
-        m_projectLanguages = union;
-    }
-
-    /**
      * @param displayString The display string for which to find the locale.
      * @return Returns the display string for the given locale.
      */
@@ -128,13 +114,6 @@ public class Languages {
         return m_localeToDisplayMap.get(locale);
     }
 
-    /**
-     * @return Returns the m_projectLanguages.
-     */
-    public Set getProjectLanguages() {
-        return m_projectLanguages;
-    }
-    
     /**
      * @return Returns the suppLang.
      */

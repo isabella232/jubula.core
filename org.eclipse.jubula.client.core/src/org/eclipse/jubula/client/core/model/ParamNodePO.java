@@ -34,8 +34,6 @@ import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 
 /**
  * base class for all nodes with parameters
- * 
- *
  * @created 06.06.2005
  */
 @Entity

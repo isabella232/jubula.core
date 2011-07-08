@@ -21,10 +21,6 @@ import javax.persistence.Table;
  *
  * @author BREDEX GmbH
  * @created 30.11.2005
- *
- *
- *
- *
  */
 @Entity
 @Table(name = "DB_GUARD")

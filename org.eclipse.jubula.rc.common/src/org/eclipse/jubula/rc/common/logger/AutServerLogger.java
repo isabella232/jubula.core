@@ -20,8 +20,6 @@ import org.apache.commons.logging.LogFactory;
  * The methods in this class delegate to the org.apache.commons.logging.Log.
  * This is neccessary because in the ImplClassClassLoader context u can only 
  * use plain java code!
- * 
- *
  * @author BREDEX GmbH
  * @created 10.05.2006
  */

@@ -26,8 +26,6 @@ import javax.persistence.Version;
  *
  * @author BREDEX GmbH
  * @created 25.06.2007
- * 
- * 
  */
 @Entity
 @Table(name = "PARAM_NAMES", 

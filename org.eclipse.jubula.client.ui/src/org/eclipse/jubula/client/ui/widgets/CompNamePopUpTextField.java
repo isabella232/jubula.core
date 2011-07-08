@@ -39,8 +39,6 @@ import org.eclipse.swt.widgets.Event;
 public final class CompNamePopUpTextField extends CheckedCompNameText {
     
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created Dec 8, 2008
      */

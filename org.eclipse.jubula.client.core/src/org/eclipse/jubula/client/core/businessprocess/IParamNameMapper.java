@@ -15,8 +15,6 @@ import org.eclipse.jubula.client.core.model.IParamNamePO;
 
 /**
  * interface for management of param names between memory and database
- * 
- *
  * @author BREDEX GmbH
  * @created 12.07.2007
  */

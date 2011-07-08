@@ -25,10 +25,6 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * @author BREDEX GmbH
  * @created 06.08.2004
  *
- * 
- *
- *
- *
  */
 public class StartAUTServerStateCommand implements ICommand {
     /** the logger */

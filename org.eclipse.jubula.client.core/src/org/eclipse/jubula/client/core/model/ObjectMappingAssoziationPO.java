@@ -128,17 +128,6 @@ public class ObjectMappingAssoziationPO
     }
 
     /**
-     * Constructor
-     *  
-     * @param logic    logical name
-     */
-    public ObjectMappingAssoziationPO(LogicComponent logic) {
-        Assert.verify(logic.getName() != null);
-        getLogicalNames().add(logic.getName());
-        setType(logic.getType());
-    }
-
-    /**
      * 
      * @return Returns the type.
      */

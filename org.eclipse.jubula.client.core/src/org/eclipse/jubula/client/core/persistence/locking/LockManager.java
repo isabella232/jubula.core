@@ -47,8 +47,6 @@ public final class LockManager {
     private static final Long DB_GUARD_ID = Long.valueOf(1);
     
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 01.12.2005
      */

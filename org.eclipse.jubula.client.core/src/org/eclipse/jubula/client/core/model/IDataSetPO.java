@@ -18,10 +18,6 @@ import java.util.List;
  * 
  * @author BREDEX GmbH
  * @created 20.12.2005
- *
- *
- *
- *
  */
 public interface IDataSetPO extends IPersistentObject {
     /**

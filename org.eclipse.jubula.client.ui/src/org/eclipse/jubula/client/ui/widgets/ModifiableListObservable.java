@@ -220,8 +220,6 @@ public class ModifiableListObservable implements IModifiableListObservable {
     // required listener interfaces
     
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 13.06.2006
      */
@@ -267,8 +265,6 @@ public class ModifiableListObservable implements IModifiableListObservable {
     }
     
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created 19.06.2006
      */

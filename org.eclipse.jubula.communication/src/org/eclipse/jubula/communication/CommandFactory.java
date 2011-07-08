@@ -38,8 +38,6 @@ public class CommandFactory {
         this(null);
     }
     /** 
-     * 
-     *
      * creates the appropriate command object for this message per reflection.
      * The message is set to the comand.
      * @param commandClassName name for command class

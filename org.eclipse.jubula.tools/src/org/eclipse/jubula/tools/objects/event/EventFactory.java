@@ -16,10 +16,6 @@ package org.eclipse.jubula.tools.objects.event;
  *
  * @author BREDEX GmbH
  * @created 06.04.2005
- *
- *
- *
- *
  */
 public class EventFactory {
     /**

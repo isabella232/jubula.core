@@ -78,19 +78,15 @@ public class Message {
      * @return Returns the details.
      */
     public String[] getDetails() {
-        if (m_details == null || m_details.length == 0
-                || m_details[0] == null 
+        if (m_details == null || m_details.length == 0 || m_details[0] == null
                 || m_details[0].equals(StringConstants.EMPTY)) {
-            return new String[]{NO_DETAILS};
+            return new String[] { NO_DETAILS };
         }
         String[] details = new String[m_details.length];
-        if (details != null) {
-            for (int i = 0; i < details.length; i++) {
-                details[i] = I18n.getString(m_details[i]);
-            }
-            return details;
+        for (int i = 0; i < details.length; i++) {
+            details[i] = I18n.getString(m_details[i]);
         }
-        return new String[]{NO_DETAILS};
+        return details;
     }
     
     /**

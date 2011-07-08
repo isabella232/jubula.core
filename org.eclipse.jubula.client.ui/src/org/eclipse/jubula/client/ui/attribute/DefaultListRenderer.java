@@ -297,8 +297,6 @@ public class DefaultListRenderer extends AbstractAttributeRenderer {
 
     /**
      * A dialog that displays an attribute.
-     * 
-     *
      * @author BREDEX GmbH
      * @created 22.05.2008
      */

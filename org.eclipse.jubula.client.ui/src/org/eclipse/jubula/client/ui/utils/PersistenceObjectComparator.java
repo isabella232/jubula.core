@@ -18,8 +18,6 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 
 /**
  * Comparator for IPersistensObject
- * 
- *
  * @author BREDEX GmbH
  * @created Nov 17, 2005
  *

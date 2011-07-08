@@ -15,14 +15,8 @@ import java.util.Locale;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 19.12.2005
- *
- *
- *
- *
  */
 public interface IParamNodePO extends INodePO, IParameterInterfacePO {
 

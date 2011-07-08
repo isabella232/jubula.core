@@ -53,8 +53,6 @@ import org.eclipse.swt.widgets.TreeItem;
 public class TreeElementChooserComposite extends Composite {
     
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created Aug 17, 2007
      */

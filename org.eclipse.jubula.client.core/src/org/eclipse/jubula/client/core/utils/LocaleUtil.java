@@ -20,22 +20,15 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 public final class LocaleUtil {
     /**
-     * <code>UNDERBAR</code> underbar
-     */
-    private static final String UNDERBAR = "_"; //$NON-NLS-1$
-    
-
-    /**
      * private constructor
      */
     private LocaleUtil() {
         // nothing
     }
-    
-    
 
     /**
-     * @param str string to convert to a Locale
+     * @param str
+     *            string to convert to a Locale
      * @return the associated locale
      */
     public static Locale convertStrToLocale(String str) {
@@ -53,7 +46,7 @@ public final class LocaleUtil {
             variant = s[1];
             loc = new Locale(lang, StringConstants.EMPTY, variant);
         } else {
-            String[] s = str.split(UNDERBAR);
+            String[] s = str.split(StringConstants.UNDERSCORE);
             switch (s.length) {
                 case 1:
                     lang = s[0];
@@ -72,7 +65,7 @@ public final class LocaleUtil {
                     break;
                 default:
                     // nothing
-            }            
+            }
         }
         return loc;
     }

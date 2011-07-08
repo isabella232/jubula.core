@@ -25,14 +25,8 @@ import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 20.12.2005
- *
- *
- *
- *
  */
 public abstract class PoMaker {
 

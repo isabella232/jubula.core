@@ -253,8 +253,6 @@ public class ComponentHandler extends BaseAWTEventListener
     }
 
     /**
-     * 
-     * 
      * @param component the component to check for a listener.
      * @param listenerClass The class of listener for which to check.
      * @return <code>true</code> if an <code>AUTSwingHierarchy</code> is 

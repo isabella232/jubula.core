@@ -13,8 +13,6 @@ package org.eclipse.jubula.client.core.persistence;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 27.01.2006
  *

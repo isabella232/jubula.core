@@ -174,7 +174,6 @@ public class ComponentBuilder extends AbstractComponentBuilder {
     }
     
     /**
-     * 
      * @return the instance
      */
     public static ComponentBuilder getInstance() {
@@ -183,9 +182,6 @@ public class ComponentBuilder extends AbstractComponentBuilder {
         } 
         return instance;
     }
-
-    
-
 
     /**
      * Returns a <code>CompSystem</code> with all components which can be

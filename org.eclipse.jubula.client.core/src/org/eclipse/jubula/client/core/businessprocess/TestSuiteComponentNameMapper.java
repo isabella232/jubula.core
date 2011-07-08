@@ -123,8 +123,6 @@ public class TestSuiteComponentNameMapper extends AbstractComponentNameMapper {
 
     /**
      * Finds the component type for the Component Name with the given GUID.
-     * 
-     * 
      * @param guid The GUID of the Component Name for which to identify the 
      *             type.
      * @return the component type for the Component Name with the given GUID,

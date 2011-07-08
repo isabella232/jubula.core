@@ -36,8 +36,6 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * 
- *
  * @author BREDEX GmbH
  * @created 11.06.2010
  *

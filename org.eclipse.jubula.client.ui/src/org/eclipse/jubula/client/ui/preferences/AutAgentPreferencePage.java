@@ -73,8 +73,6 @@ public class AutAgentPreferencePage extends PreferencePage
     private static final String DEFAULT_HOSTNAME = "localhost"; //$NON-NLS-1$
     
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created Jan 18, 2010
      */
@@ -161,8 +159,6 @@ public class AutAgentPreferencePage extends PreferencePage
     }
 
     /**
-     * 
-     * 
      *
      * @author BREDEX GmbH
      * @created Jan 18, 2010
@@ -212,8 +208,6 @@ public class AutAgentPreferencePage extends PreferencePage
 
 
     /**
-     * 
-     *
      * @author BREDEX GmbH
      * @created Jan 15, 2010
      */

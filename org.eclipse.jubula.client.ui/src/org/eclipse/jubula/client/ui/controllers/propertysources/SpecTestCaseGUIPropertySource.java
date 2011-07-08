@@ -325,8 +325,6 @@ public class SpecTestCaseGUIPropertySource
     
     /**
      * Class to control the test data source for a spec test case
-     * 
-     * 
      * @author BREDEX GmbH
      * @created Aug 30, 2010
      */

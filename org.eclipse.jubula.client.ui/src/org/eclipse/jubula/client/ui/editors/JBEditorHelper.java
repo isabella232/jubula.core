@@ -419,8 +419,6 @@ public class JBEditorHelper implements ILockedObjects,
     }
     
     /**
-     * 
-     * 
      *
      * @author BREDEX GmbH
      * @created Feb 20, 2008

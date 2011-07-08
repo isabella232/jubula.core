@@ -30,8 +30,6 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  * 
  * The <code>execute()</code> method just logs the information from the
  * message (info level). No message is returned.
- * 
- * 
  * @author BREDEX GmbH
  * @created 25.08.2004
  * 

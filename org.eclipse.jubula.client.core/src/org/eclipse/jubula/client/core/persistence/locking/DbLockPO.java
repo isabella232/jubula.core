@@ -30,10 +30,6 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 /**
  * @author BREDEX GmbH
  * @created 30.11.2005
- *
- *
- *
- *
  */
 @Entity
 @Table(name = "DB_LOCKS")

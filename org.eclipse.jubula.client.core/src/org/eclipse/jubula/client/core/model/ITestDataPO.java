@@ -16,10 +16,6 @@ import java.util.Set;
 /**
  * @author BREDEX GmbH
  * @created 20.12.2005
- *
- *
- *
- *
  */
 public interface ITestDataPO extends IPersistentObject {
   

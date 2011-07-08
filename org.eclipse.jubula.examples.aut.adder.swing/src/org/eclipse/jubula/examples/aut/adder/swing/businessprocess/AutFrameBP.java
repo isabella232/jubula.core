@@ -57,8 +57,6 @@ public class AutFrameBP {
 
     /**
      * WindowEvent class handling the event 'window closing'.
-     * 
-     * 
      * @author BREDEX GmbH
      * @created 20.07.2004
      */

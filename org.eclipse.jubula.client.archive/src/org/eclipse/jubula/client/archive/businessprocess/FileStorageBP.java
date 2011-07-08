@@ -382,8 +382,6 @@ public class FileStorageBP {
         }
     
         /**
-         * 
-         * 
          * @param circularDependencyCheckSess The session to use for getting
          *                                    projects from the database.
          * @return <code>true</code> if any circular dependencies are found.

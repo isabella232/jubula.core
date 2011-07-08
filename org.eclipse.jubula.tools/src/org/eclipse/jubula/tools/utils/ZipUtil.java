@@ -125,8 +125,6 @@ public class ZipUtil {
      * so multiple calls to this method for a single ZIP file will extract JAR 
      * files once and return references to those files for each subsequent call.
      * The extracted JAR files are deleted on VM exit.
-     * 
-     * 
      * @param srcZip The ZIP file to extract.
      * @return all extracted files.
      * @throws IOException
