@@ -354,20 +354,10 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                     .append(JAVA_LANGUAGE_PROPERTY)
                     .append(locale.getLanguage());
             }
-            sb.append(StringConstants.SPACE)
-                .append(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY)
-                .append(StringConstants.QUOTE)
-                .append(getAbsoluteLoggingConfPath())
-                .append(StringConstants.QUOTE);  
         } else {
             if (isRunningWithMonitoring(parameters)) {
                 sb.append(JAVA_OPTIONS_INTRO)
-                    .append(getMonitoringAgent(parameters))
-                    .append(StringConstants.SPACE)
-                    .append(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY)
-                    .append(StringConstants.QUOTE)
-                    .append(getAbsoluteLoggingConfPath())
-                    .append(StringConstants.QUOTE);
+                    .append(getMonitoringAgent(parameters));
             }
         }
 

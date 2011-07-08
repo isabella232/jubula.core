@@ -41,10 +41,6 @@ import org.osgi.framework.Bundle;
  *
  */
 public abstract class AbstractStartToolkitAut implements IStartAut {
-    /**
-     * <code>JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY</code>
-     */
-    protected static final String JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY = "-Djava.util.logging.config.file="; //$NON-NLS-1$
     
     /** the logger */
     private static Log log = LogFactory.getLog(AbstractStartToolkitAut.class);
@@ -257,19 +253,6 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
     protected StartAUTServerStateMessage createBusyMessage() {
         return new StartAUTServerStateMessage(StartAUTServerStateMessage.ERROR,
             "AUTServer is already running"); //$NON-NLS-1$
-    }
-
-    
-    /**
-     * Gets the absolute path of the logging config file.
-     * @return the absolute path
-     */
-    protected String getAbsoluteLoggingConfPath() {
-        final File confFile = new File("./resources/logging.properties"); //$NON-NLS-1$
-        final StringBuffer paths = 
-            new StringBuffer(confFile.getAbsolutePath());
-        String absPath = paths.toString();
-        return absPath.replace('\\', '/');
     }
 
     /**

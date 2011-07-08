@@ -140,9 +140,6 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         // add locale
         addLocale(cmds, (Locale)parameters.get(IStartAut.LOCALE)); 
         
-        cmds.add(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY
-                + getAbsoluteLoggingConfPath());      
-            
         // add jre params
         final String jreParams = (String)parameters.get(
                 AutConfigConstants.JRE_PARAMETER);

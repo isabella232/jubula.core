@@ -86,15 +86,13 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
             commands.add("-agentlib:jdwp=transport=dt_socket,address="  //$NON-NLS-1$
                     + BXDEBUG + ",server=y,suspend=y"); //$NON-NLS-1$
         }
-        commands.add(JAVA_UTIL_LOGGING_CONFIG_FILE_PROPERTY
-                + getAbsoluteLoggingConfPath());
 
         StringBuilder serverClasspath = new StringBuilder();
         String [] bundlesToAddToClasspath = {
+            CommandConstants.RC_HTML_BUNDLE_ID,
             CommandConstants.TOOLS_BUNDLE_ID, 
             CommandConstants.COMMUNICATION_BUNDLE_ID, 
             CommandConstants.RC_COMMON_BUNDLE_ID,
-            CommandConstants.RC_HTML_BUNDLE_ID,
             CommandConstants.SLF4J_JCL_BUNDLE_ID,
             CommandConstants.SLF4J_API_BUNDLE_ID,
             CommandConstants.SLF4J_LOG4J_BUNDLE_ID,
