@@ -68,12 +68,6 @@ public class Messages extends NLS {
     public static String ExecutionControllerDatabase;
     public static String ExecutionControllerDataBaseEnd;
     public static String ExecutionControllerDatabaseStart;
-    public static String I18nUtilsEventHandler;
-    public static String I18nUtilsRetryStep;
-    public static String I18nUtilsSeparator;
-    public static String I18nUtilsStep;
-    public static String I18nUtilsTestCase;
-    public static String I18nUtilsTestSuite;
     public static String NoArgumentFor;
     public static String NoCorrespondingMessage;
     public static String NoSuchDatabaseConnection;

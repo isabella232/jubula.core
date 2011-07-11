@@ -67,16 +67,6 @@ public class ClientTestStrings {
     /** object attribute */
     public static final String LANGUAGE = "language"; //$NON-NLS-1$
     /** object attribute */
-    public static final String PROFILE = "profile"; //$NON-NLS-1$
-    /** object attribute */
-    public static final String N_FACTOR = "namefactor"; //$NON-NLS-1$
-    /** object attribute */
-    public static final String P_FACTOR = "pathfactor"; //$NON-NLS-1$
-    /** object attribute */
-    public static final String C_FACTOR = "contextfactor"; //$NON-NLS-1$
-    /** object attribute */
-    public static final String THRESHOLD = "threshold"; //$NON-NLS-1$
-    /** object attribute */
     public static final String DATA_DIR = "datadir"; //$NON-NLS-1$
     /** object attribute */
     public static final String DATA_DIR_EX = "datadir_path"; //$NON-NLS-1$

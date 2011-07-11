@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.app.dbtool.i18n.Messages;
 import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
-import org.eclipse.jubula.client.core.businessprocess.JobConfiguration;
+import org.eclipse.jubula.client.cmd.JobConfiguration;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
@@ -143,13 +143,7 @@ public class DBToolClient extends AbstractCmdlineClient {
             appendError(errorMsgs, OPTION_EXPORT, PAR_PROJECT);
         }
     }
-    /**
-     * {@inheritDoc}
-     */
-    protected void preRun() {
-        // nothing here        
-    }
-    
+
     /**
      * {@inheritDoc}
      */

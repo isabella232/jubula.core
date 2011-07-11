@@ -28,6 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.app.cmd.i18n.Messages;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
+import org.eclipse.jubula.client.cmd.JobConfiguration;
 import org.eclipse.jubula.client.cmd.controller.IClcServer;
 import org.eclipse.jubula.client.cmd.controller.intern.RmiBase;
 import org.eclipse.jubula.client.core.AUTEvent;
@@ -46,7 +47,6 @@ import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.businessprocess.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
-import org.eclipse.jubula.client.core.businessprocess.JobConfiguration;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
@@ -119,8 +119,8 @@ public class ExecutionController implements IAUTServerEventListener,
             m_result = 0;
             IProjectPO project = m_job.getProject();
             ITestSuitePO workUnit = null;
-            for (ITestSuitePO ts
-                : project.getTestSuiteCont().getTestSuiteList()) {
+            for (ITestSuitePO ts : project.getTestSuiteCont()
+                    .getTestSuiteList()) {
                 if (ts.getName().equals(tsName)) {
                     workUnit = ts;
                     break;

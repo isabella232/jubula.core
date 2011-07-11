@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.businessprocess;
+package org.eclipse.jubula.client.cmd;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,6 +24,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -36,8 +37,6 @@ import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionCon
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.StringParsing;
-import org.eclipse.jubula.tools.xml.businessmodell.Profile;
-import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
 import org.eclipse.osgi.util.NLS;
 
 import com.thoughtworks.xstream.XStream;
@@ -90,8 +89,6 @@ public class JobConfiguration {
     private List<String> m_testSuiteNames = new ArrayList<String>();
     /** the name of the Test Job to execute */
     private String m_testJobName;
-    /** configuration detail */
-    private Profile m_profile;
     /** configuration detail */
     private Locale m_language;
     /** list for Test Suites */
@@ -302,12 +299,6 @@ public class JobConfiguration {
             }
         }
         
-        // setting profile
-        ProfileBuilder.init();
-        if (m_profile != null) {
-            ProfileBuilder.setActiveProfile(m_profile);
-        }
-        
         if (!m_testSuites.isEmpty()) {
             // checking that all Test Suites are assigned to an AUT
             for (ITestSuitePO ts : m_testSuites) {
@@ -373,19 +364,6 @@ public class JobConfiguration {
             job = new JobConfiguration();
         }
         return job;
-    }
-
-    /**
-     * writes a job configuration to xml file using XStream
-     * @param job JobConfiguration
-     * @return  String
-     */
-    public static String writeToXML(JobConfiguration job) {
-        XStream xstream = new XStream(); 
-        xstream.alias(CONFIGURATION, JobConfiguration.class);  
-        xstream.registerConverter(new XMLConverter());
-        String xml = xstream.toXML(job);
-        return xml;
     }
     
     /**
@@ -641,21 +619,6 @@ public class JobConfiguration {
         m_testJobName = testJobName;
     }
 
-
-    /**
-     * @return Profile
-     */
-    public Profile getProfile() {
-        return m_profile;
-    }
-
-    /**
-     * @param profile Profile
-     */
-    private void setProfile(Profile profile) {
-        m_profile = profile;
-    }
-
     /**
      * @return String
      */
@@ -791,21 +754,6 @@ public class JobConfiguration {
             arg1.setValue(job.getResultDir());
             arg1.endNode();
 
-            arg1.startNode(ClientTestStrings.PROFILE);
-            arg1.startNode(ClientTestStrings.N_FACTOR);
-            arg1.setValue(String.valueOf(job.getProfile().getNameFactor()));
-            arg1.endNode();
-            arg1.startNode(ClientTestStrings.P_FACTOR);
-            arg1.setValue(String.valueOf(job.getProfile().getPathFactor()));
-            arg1.endNode();
-            arg1.startNode(ClientTestStrings.C_FACTOR);
-            arg1.setValue(String.valueOf(job.getProfile().getContextFactor()));
-            arg1.endNode();
-            arg1.startNode(ClientTestStrings.THRESHOLD);
-            arg1.setValue(String.valueOf(job.getProfile().getThreshold()));
-            arg1.endNode();
-            arg1.endNode();
-
             arg1.startNode(ClientTestStrings.TESTSUITE);
             for (String ts : job.getTestSuiteNames()) {
                 arg1.startNode(ClientTestStrings.ENTRY);
@@ -884,53 +832,12 @@ public class JobConfiguration {
                     }
                     job.setTestSuiteNames(testSuiteNames);
                 } else if (arg0.getNodeName().
-                        equals(ClientTestStrings.PROFILE)) {
-                    parseProfile(arg0, job);
-                } else if (arg0.getNodeName().
                         equals(ClientTestStrings.TESTJOB)) {
                     job.setTestJobName(arg0.getValue());
                 }
                 arg0.moveUp();
             }
             return job;
-        }
-    }
-    /**
-     * 
-     * @param arg0 {@link HierarchicalStreamReader}
-     * @param job {@link JobConfiguration}
-     */
-    private static void parseProfile(HierarchicalStreamReader arg0, 
-            JobConfiguration job) {
-        Profile prof = new Profile();
-        prof.setName(ClientTestStrings.PROFILE);
-        while (arg0.hasMoreChildren()) {
-            arg0.moveDown();
-            try {
-                if (arg0.getNodeName().
-                        equals(ClientTestStrings.N_FACTOR)) {
-                    prof.setNameFactor(Double.
-                        valueOf(arg0.getValue()));
-                } else if (arg0.getNodeName().
-                        equals(ClientTestStrings.P_FACTOR)) {
-                    prof.setPathFactor(Double.
-                        valueOf(arg0.getValue()));
-                } else if (arg0.getNodeName().
-                        equals(ClientTestStrings.C_FACTOR)) {
-                    prof.setContextFactor(Double.
-                        valueOf(arg0.getValue()));
-                } else if (arg0.getNodeName().
-                        equals(ClientTestStrings.THRESHOLD)) {
-                    prof.setThreshold(Double.
-                        valueOf(arg0.getValue()));
-                }
-            } catch (NumberFormatException e) { // NOPMD by al on 3/19/07 1:22 PM
-                // do nothing
-            }
-            arg0.moveUp();
-        }
-        if (prof.isValid()) {
-            job.setProfile(prof);
         }
     }
 

@@ -28,11 +28,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jubula.client.cmd.constants.ClientStrings;
+import org.eclipse.jubula.client.cmd.exceptions.PreValidateException;
 import org.eclipse.jubula.client.cmd.i18n.Messages;
 import org.eclipse.jubula.client.cmd.progess.HeadlessProgressProvider;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
-import org.eclipse.jubula.client.core.businessprocess.JobConfiguration;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
@@ -68,8 +69,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     protected static final String OPT_UNKNOWN = 
         Messages.UnrecognizedOption + StringConstants.COLON 
         + StringConstants.SPACE;
-    /** separator character */
-    protected static final char COLON = ':';
     /** log facility */
     private static Log log = LogFactory.getLog(AbstractCmdlineClient.class);
     /** be quiet during processing */
@@ -279,7 +278,9 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     /**
      * Do any final work required before actually running the client
      */
-    protected abstract void preRun();
+    protected void preRun() {
+        // nothing in here - subclasses may override
+    }
 
     /**
      * writes an output to console
@@ -482,10 +483,10 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
             printlnConsoleError(message);
         }
         if (message.startsWith(OPT_NO_VAL)) {
-            idx = message.indexOf(COLON);
+            idx = message.indexOf(StringConstants.COLON);
             message = message.substring(idx + 1);
         } else if (message.startsWith(OPT_UNKNOWN)) {
-            idx = message.indexOf(COLON);
+            idx = message.indexOf(StringConstants.COLON);
             message = message.substring(idx + 2);
         }
         for (int i = 0; i < args.length; i++) {
@@ -543,14 +544,12 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         return m_noRun;
     }
 
-
     /**
      * @return the quiet
      */
     public boolean isQuiet() {
         return quiet;
     }
-
 
     /**
      * @return the errorOccured
@@ -561,7 +560,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
 
 
     /**
-     * 
      * @return CommandLine
      *      the command Line the client was started with
      */

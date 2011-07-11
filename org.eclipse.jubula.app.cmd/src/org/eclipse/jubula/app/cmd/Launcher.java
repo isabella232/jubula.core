@@ -10,36 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.cmd;
 
-import org.eclipse.equinox.app.IApplication;
-import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
+import org.eclipse.jubula.client.cmd.AbstractLauncher;
 
 /**
  * @author BREDEX GmbH
  * @created Dec 3, 2010
  */
-public class Launcher implements IApplication {
+public class Launcher extends AbstractLauncher {
     /**
      * {@inheritDoc}
      */
-    public Object start(IApplicationContext context) throws Exception {
-        String[] args = (String[])context.getArguments().get(
-                IApplicationContext.APPLICATION_ARGS);
-        if (args == null) {
-            args = new String[0];
-        }
-        // Run Test Suites
-        AbstractCmdlineClient client = Client.getInstance();
-        int exitCode = client.run(args);
-
-        // Return a value that indicates test results
-        return exitCode;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void stop() {
-        // nothing yet
+    protected AbstractCmdlineClient getAbstractCmdLineClient() {
+        return Client.getInstance();
     }
 }

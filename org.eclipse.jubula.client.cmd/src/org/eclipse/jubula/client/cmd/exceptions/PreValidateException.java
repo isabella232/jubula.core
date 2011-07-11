@@ -9,30 +9,26 @@
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
 
-/**
- */
-package org.eclipse.jubula.client.cmd;
+package org.eclipse.jubula.client.cmd.exceptions;
 
 /**
  * This exception is thown, if there were arguments missing
  * 
  * @author BREDEX GmbH
  * @created Feb 10, 2007
- *
  */
-public class PreValidateException 
-    extends Exception {
+public class PreValidateException extends Exception {
 
     /**
-     * 
+     * serialVersionUID
      */
     private static final long serialVersionUID = 3262222086674644138L;
 
     /**
      * public constructor
      * 
-     * @param message The detailed message.
-     * {@inheritDoc}
+     * @param message
+     *            The detailed message. {@inheritDoc}
      */
     public PreValidateException(String message) {
         super(message);

@@ -16,8 +16,6 @@ import java.util.List;
 
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 
-
-
 /**
  * This class contains methods for reading the configuration file and for 
  * mapping the configuration file to java objects.

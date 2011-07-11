@@ -9,8 +9,8 @@ Require-Bundle: org.eclipse.jubula.client.core;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.jubula.tools;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
- org.apache.commons.cli;bundle-version="[1.2.0,2.0.0)"
+ org.apache.commons.cli;bundle-version="[1.2.0,2.0.0)",
+ org.apache.commons.collections;bundle-version="[3.2.0,4.0.0)"
 Export-Package: org.eclipse.jubula.client.cmd,
- org.eclipse.jubula.client.cmd.i18n,
- org.eclipse.jubula.client.cmd.utils
+ org.eclipse.jubula.client.cmd.i18n
 Bundle-ClassPath: .
