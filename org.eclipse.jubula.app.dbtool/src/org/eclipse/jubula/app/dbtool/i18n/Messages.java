@@ -20,9 +20,17 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.app.dbtool.i18n.messages"; //$NON-NLS-1$
     
     public static String DBToolDelete;
+    public static String DBToolPerforming;
     public static String DBToolDeleteAll;
     public static String DBToolDeleteFailed;
+    public static String DBToolDeleteFinished;
     public static String DBToolDeleteKeepSummary;
+    public static String DBToolDeletingProject;
+    public static String DBToolDeletingTestResultDetails;
+    public static String DBToolDeletingTestResultDetailsFinished;
+    public static String DBToolDeletingTestResultSummaries;
+    public static String DBToolDeletingTestResultSummariesFinished;
+    public static String DBToolDeletingAllProjects;
     public static String DBToolDir;
     public static String DBToolExport;
     public static String DBToolExportAll;

@@ -21,20 +21,26 @@ import javax.persistence.EntityManager;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.app.dbtool.i18n.Messages;
 import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.core.businessprocess.JobConfiguration;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -148,58 +154,72 @@ public class DBToolClient extends AbstractCmdlineClient {
      * {@inheritDoc}
      */
     public int doRun() {
-        boolean keepSummariesOnDelete = false;
+        Job dbToolOperation = new Job(Messages.DBToolPerforming) {
+            protected IStatus run(IProgressMonitor monitor) {
+                monitor.beginTask(Messages.DBToolPerforming, 
+                        IProgressMonitor.UNKNOWN);
+                setupDB();
+                final CommandLine cmdLine = getCmdLine();
+                boolean keepTRSummaries = cmdLine
+                    .hasOption(OPTION_KEEPSUMMARY_ON_DELETE) ? true : false;
+                
+                if (cmdLine.hasOption(OPTION_DELETE)) {
+                    final String[] projValues = cmdLine.getOptionValues(
+                            OPTION_DELETE);
+                    if ((projValues != null) && (projValues.length == 2)) {
+                        deleteProject(projValues[0], projValues[1],
+                                keepTRSummaries, monitor);
+                    }
+                }
+                
+                if (cmdLine.hasOption(OPTION_DELETE_ALL)) {
+                    deleteAllProjects(keepTRSummaries, monitor);
+                }
+                
+                String projectDir = cmdLine.getOptionValue(OPTION_DIR,
+                        StringConstants.DOT);
 
-        setupDB();
-        
-        final CommandLine cmdLine = getCmdLine();
-        
-        if (cmdLine.hasOption(OPTION_KEEPSUMMARY_ON_DELETE)) {
-            keepSummariesOnDelete = true;
-        }
-        
-        if (cmdLine.hasOption(OPTION_DELETE)) {
-            final String[] projValues = cmdLine.getOptionValues(
-                    OPTION_DELETE);
-            if ((projValues != null) && (projValues.length == 2)) {
-                deleteProject(projValues[0], projValues[1],
-                        keepSummariesOnDelete);
-            }
-        }
-        
-        if (cmdLine.hasOption(OPTION_DELETE_ALL)) {
-            deleteAllProjects(keepSummariesOnDelete);
-        }
-        
-        String exportDir = cmdLine.getOptionValue(OPTION_DIR, 
-                StringConstants.DOT);
+                if (cmdLine.hasOption(OPTION_EXPORT)) {
+                    final String[] projValues = cmdLine.getOptionValues(
+                            OPTION_EXPORT);
+                    if ((projValues != null) && (projValues.length == 2)) {
+                        exportProject(projValues[0], projValues[1], projectDir,
+                                monitor);
+                    }
+                    
+                }
+                
+                if (cmdLine.hasOption(OPTION_EXPORT_ALL)) {
+                    exportAll(projectDir, monitor);
+                }
 
-        if (cmdLine.hasOption(OPTION_EXPORT)) {
-            final String[] projValues = cmdLine.getOptionValues(
-                    OPTION_EXPORT);
-            if ((projValues != null) && (projValues.length == 2)) {
-                exportProject(projValues[0], projValues[1], exportDir);
+                if (cmdLine.hasOption(OPTION_IMPORT)) {
+                    importProject(cmdLine.getOptionValue(OPTION_IMPORT),
+                            projectDir, monitor);
+                }
+                return Status.OK_STATUS;
             }
             
+        };
+        dbToolOperation.schedule();
+        while (dbToolOperation.getState() != Job.NONE) {
+            TimeUtil.delay(500);
         }
-        
-        if (cmdLine.hasOption(OPTION_EXPORT_ALL)) {
-            exportAll(exportDir);
+        IStatus result = dbToolOperation.getResult();
+        if (result.getSeverity() == IStatus.OK) {
+            return EXIT_CODE_OK;
         }
-
-        if (cmdLine.hasOption(OPTION_IMPORT)) {
-            importProject(cmdLine.getOptionValue(OPTION_IMPORT), exportDir);
-        }
-
-        return EXIT_CODE_OK;
+        return EXIT_CODE_ERROR;
     }
 
     /**
      * Import a project from an export file
      * @param fileName export file name
      * @param exportDir directory to use
+     * @param monitor the progress monitor to use
      */
-    private void importProject(String fileName, String exportDir) {
+    private void importProject(String fileName, String exportDir, 
+            IProgressMonitor monitor) {
         File impFile = new File(fileName);
         if (!impFile.isAbsolute()) {
             impFile = new File(new File(exportDir), fileName);
@@ -207,8 +227,7 @@ public class DBToolClient extends AbstractCmdlineClient {
         try {
             List<URL> fileURLs = new ArrayList<URL>(1);
             fileURLs.add(impFile.toURI().toURL());
-            FileStorageBP.importFiles(fileURLs, new NullProgressMonitor(),
-                    this, false);
+            FileStorageBP.importFiles(fileURLs, monitor, this, false);
         } catch (PMException pme) {
             writeErrorLine(pme.getLocalizedMessage());
         } catch (ProjectDeletedException gdpde) {
@@ -223,8 +242,10 @@ public class DBToolClient extends AbstractCmdlineClient {
      * @param name project name
      * @param version version number in <major>.<minor> format
      * @param exportDir Directory for export. The directory must exist
+     * @param monitor the progress monitor to use
      */
-    private void exportProject(String name, String version, String exportDir) {
+    private void exportProject(String name, String version, String exportDir,
+            IProgressMonitor monitor) {
         int versionNrs[] = buildVersionNrs(name, version);
         if (versionNrs != null) {
             File export = new File(exportDir);
@@ -252,9 +273,8 @@ public class DBToolClient extends AbstractCmdlineClient {
                 }
                 List<File> listOfProjectFiles = 
                     new ArrayList<File>(exportProjects.size());
-                FileStorageBP.exportProjectList(exportProjects,
-                        dirName, session, new NullProgressMonitor(), false,
-                        listOfProjectFiles, this);
+                FileStorageBP.exportProjectList(exportProjects, dirName,
+                        session, monitor, false, listOfProjectFiles, this);
             } catch (JBException e) {
                 reportExportAllFailed(exportDir, e);
             } catch (InterruptedException e) {
@@ -272,8 +292,9 @@ public class DBToolClient extends AbstractCmdlineClient {
      * exportDir
      * @param exportDir Directory for export. The directory must exist
      * and must not contain any entries.
+     * @param monitor the progress monitor to use
      */
-    private void exportAll(String exportDir) {
+    private void exportAll(String exportDir, IProgressMonitor monitor) {
         File export = new File(exportDir);
         if (!export.isDirectory() || !export.canWrite()) {
             reportBadDirectory(exportDir);
@@ -289,9 +310,8 @@ public class DBToolClient extends AbstractCmdlineClient {
             List<IProjectPO> projects = ProjectPM.findAllProjects(session);
             List<File> listOfProjectFiles = 
                 new ArrayList<File>(projects.size());
-            FileStorageBP.exportProjectList(projects, dirName,
-                    session, new NullProgressMonitor(), false,
-                    listOfProjectFiles, this);
+            FileStorageBP.exportProjectList(projects, dirName, session,
+                    monitor, false, listOfProjectFiles, this);
         } catch (JBException e) {
             reportExportAllFailed(exportDir, e);
         } catch (InterruptedException e) {
@@ -306,9 +326,10 @@ public class DBToolClient extends AbstractCmdlineClient {
      * @param name project name
      * @param version version number in <major>.<minor> format
      * @param keepSummaryOnDelete test result summary will not be deleted when true
+     * @param monitor the progress monitor to use
      */
     private void deleteProject(String name, String version,
-            boolean keepSummaryOnDelete) {
+            boolean keepSummaryOnDelete, IProgressMonitor monitor) {
         int[] versionNr = buildVersionNrs(name, version);
         if (versionNr != null) {
             IProjectPO project;
@@ -319,22 +340,28 @@ public class DBToolClient extends AbstractCmdlineClient {
                 reportMissingProject(name, version);
                 return;
             }
-            if (project == null) { // 
+            if (project == null) { 
                 reportMissingProject(name, version);
             } else {
                 try {
+                    String pName = project.getName();
+                    int pMajVer = project.getMajorProjectVersion();
+                    int pMinVer = project.getMinorProjectVersion();
+                    monitor.subTask(NLS.bind(Messages.DBToolDeletingProject,
+                            new Object[] { pName, pMajVer, pMinVer }));
                     ProjectPM.deleteProject(project, false);
+                    monitor.subTask((NLS.bind(Messages.DBToolDeleteFinished,
+                            new Object[] { pName })));
+                    monitor.subTask(Messages.DBToolDeletingTestResultDetails);
                     if (keepSummaryOnDelete) {
                         TestResultSummaryPM.deleteTestrunsByProject(
-                                project.getGuid(),
-                                project.getMajorProjectVersion(),
-                                project.getMinorProjectVersion(), true);
+                                project.getGuid(), pMajVer, pMinVer, true);
                     } else {
                         TestResultSummaryPM.deleteTestrunsByProject(
-                                project.getGuid(),
-                                project.getMajorProjectVersion(),
-                                project.getMinorProjectVersion(), false);
+                                project.getGuid(), pMajVer, pMinVer, false);
                     }
+                    monitor.subTask(
+                            Messages.DBToolDeletingTestResultDetailsFinished);
                 } catch (JBException e) {
                     reportDeleteFailed(name, version, e);
                 } catch (InterruptedException e) {
@@ -348,21 +375,37 @@ public class DBToolClient extends AbstractCmdlineClient {
     /**
      * Delete All projects from the database including testresults
      * @param keepSummaryOnDelete summary will not be deleted, when true
+     * @param monitor the progress monitor to use
      */
-    private void deleteAllProjects(boolean keepSummaryOnDelete) {
+    private void deleteAllProjects(boolean keepSummaryOnDelete, 
+            IProgressMonitor monitor) {
         
         List<IProjectPO> projects;
         try {
             projects = ProjectPM.findAllProjects();
+            monitor.subTask(NLS.bind(Messages.DBToolDeletingAllProjects,
+                    new Object[] { projects.size() }));
             for (IProjectPO proj : projects) {
+                String pName = proj.getName();
+                monitor.subTask(NLS.bind(
+                        Messages.DBToolDeletingProject,
+                        new Object[] { pName,
+                                proj.getMajorProjectVersion(),
+                                proj.getMinorProjectVersion() }));
                 ProjectPM.deleteProject(proj, false);
+                monitor.subTask((NLS.bind(
+                        Messages.DBToolDeleteFinished,
+                        new Object[] { pName})));
             }
-            if (keepSummaryOnDelete) {
-                TestResultPM.deleteAllTestresultDetails();
-            } else {
+            if (!keepSummaryOnDelete) {
+                monitor.subTask(Messages.DBToolDeletingTestResultSummaries);
                 TestResultSummaryPM.deleteAllTestresultSummaries();
-                TestResultPM.deleteAllTestresultDetails();
+                monitor.subTask(
+                        Messages.DBToolDeletingTestResultSummariesFinished);
             }
+            monitor.subTask(Messages.DBToolDeletingTestResultDetails);
+            TestResultPM.deleteAllTestresultDetails();
+            monitor.subTask(Messages.DBToolDeletingTestResultDetailsFinished);
         } catch (JBException e) {
             printlnConsoleError(e.getMessage());
         } catch (InterruptedException e) {
@@ -493,9 +536,14 @@ public class DBToolClient extends AbstractCmdlineClient {
         Persistor.setUser(getJob().getDbuser());
         Persistor.setPw(getJob().getDbpw());
         Persistor.setUrl(getJob().getDb());
-        if (!Persistor.init()) {
-            throw new IllegalArgumentException(Messages
-                    .ExecutionControllerInvalidDBDataError, null);
+        try {
+            if (!Persistor.init()) {
+                throw new IllegalArgumentException(
+                        Messages.ExecutionControllerInvalidDBDataError, null);
+            }
+        } catch (JBFatalException e) {
+            throw new IllegalArgumentException(
+                    Messages.ExecutionControllerInvalidDBDataError, e);
         }
     }
 
