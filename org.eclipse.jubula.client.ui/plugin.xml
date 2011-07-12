@@ -818,6 +818,10 @@
 				id="org.eclipse.jubula.client.ui.commands.ProjectProperties.parameter.sectionToOpen"
 				name="Section" optional="true">
 			</commandParameter>
+			<commandParameter
+				id="org.eclipse.jubula.client.ui.commands.ProjectProperties.parameter.innerSectionToOpen"
+				name="InnerSection" optional="true">
+			</commandParameter>
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"

@@ -12,8 +12,10 @@ package org.eclipse.jubula.client.ui.handlers.project;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.preference.IPreferenceNode;
+import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
+import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -46,13 +48,18 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @created Apr 30, 2009
  */
 public class ProjectPropertiesHandler extends AbstractProjectHandler {
-
     /** 
      * ID of command parameter for the section of the Project Properties
      * dialog to activate.
      */
     public static final String SECTION_TO_OPEN = 
         "org.eclipse.jubula.client.ui.commands.ProjectProperties.parameter.sectionToOpen"; //$NON-NLS-1$
+    
+    /** 
+     * ID of command parameter for the Project Properties dialog after opening the specified section
+     */
+    public static final String INNER_SECTION_TO_OPEN = 
+        "org.eclipse.jubula.client.ui.commands.ProjectProperties.parameter.innerSectionToOpen"; //$NON-NLS-1$
     
     /**
      * {@inheritDoc}
@@ -61,11 +68,9 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
         IWorkbenchWindow activeWindow = 
             HandlerUtil.getActiveWorkbenchWindow(event);
         Shell shell = activeWindow != null ? activeWindow.getShell() : null;
-
         PreferenceManager mgr = new PreferenceManager();
         ISelection sel = new StructuredSelection(GeneralStorage.getInstance()
             .getProject());
-
         // add the 1st property page
         try {
             final EditSupport es = AbstractProjectPropertyPage
@@ -108,11 +113,15 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
             JBPropertyDialog dialog = new JBPropertyDialog(shell, mgr, sel);
             String sectionToOpen = 
                 event.getParameter(SECTION_TO_OPEN);
-            
-            if (sectionToOpen != null) {
-                dialog.setSelectedNode(sectionToOpen);
-            }
             dialog.create();
+            if (sectionToOpen != null) {
+                dialog.setCurrentPageId(sectionToOpen);
+                IPreferencePage page = dialog.getCurrentPage();
+                if (page instanceof PreferencePage) {
+                    ((PreferencePage)page).applyData(event
+                            .getParameter(INNER_SECTION_TO_OPEN));
+                }
+            }
             DialogUtils.setWidgetNameForModalDialog(dialog);
             //sets the title
             Shell s = dialog.getShell();
@@ -128,7 +137,6 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
         } catch (PMException e) {
             Utils.createMessageDialog(e, null, null);
         }
-
         return null;
     }
 }

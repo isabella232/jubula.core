@@ -18,7 +18,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
-import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.PreferenceDialog;
@@ -51,10 +50,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.dialogs.PreferencesUtil;
-import org.eclipse.ui.handlers.IHandlerService;
 
 
 /**
@@ -330,41 +326,23 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
      * @return resolutions for a missing project.
      */
     private IMarkerResolution[] getMissingProjectResolutions() {
-        return new IMarkerResolution[] {
-            new IMarkerResolution() {
+        return new IMarkerResolution[] { new IMarkerResolution() {
 
-                public String getLabel() {
-                    return Messages.GDProblemViewOpenReusedProjectSettings;
-                }
-
-                public void run(IMarker marker) {
-                    ICommandService commandService =
-                        (ICommandService)PlatformUI.getWorkbench().getService(
-                                ICommandService.class);
-                    IHandlerService handlerService = 
-                        (IHandlerService)PlatformUI.getWorkbench().getService(
-                                IHandlerService.class);
-                    Command projectPropertiesCommand = 
-                        commandService.getCommand(
-                                CommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
-                    Map<String, String> parameters = 
-                        new HashMap<String, String>();
-                    parameters.put(ProjectPropertiesHandler.SECTION_TO_OPEN, 
-                            Constants.REUSED_PROJECT_PROPERTY_ID);
-                    try {
-                        handlerService.executeCommand(
-                                ParameterizedCommand.generateCommand(
-                                        projectPropertiesCommand, parameters), 
-                                null);
-                    } catch (CommandException ce) {
-                        log.error(
-                            Messages.ErrorOccurredWhileOpeningProjectSettings,
-                            ce);
-                    }
-                }
-                
+            public String getLabel() {
+                return Messages.GDProblemViewOpenReusedProjectSettings;
             }
-        };
+
+            public void run(IMarker marker) {
+                Command projectPropertiesCommand = CommandHelper
+                        .getCommandService().getCommand(
+                                CommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put(ProjectPropertiesHandler.SECTION_TO_OPEN,
+                        Constants.REUSED_PROJECT_PROPERTY_ID);
+                CommandHelper.executeParameterizedCommand(ParameterizedCommand
+                        .generateCommand(projectPropertiesCommand, parameters));
+            }
+        } };
     }
 
     /**
@@ -528,41 +506,23 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
      * @return resolutions for no AUT defined.
      */
     private IMarkerResolution[] getNoAUTResolutions() {
-        return new IMarkerResolution [] {
-            new IMarkerResolution() {
+        return new IMarkerResolution[] { new IMarkerResolution() {
 
-                public String getLabel() {
-                    return Messages.GDProblemViewOpenAutSettings;
-                }
-
-                public void run(IMarker marker) {
-                    ICommandService commandService =
-                        (ICommandService)PlatformUI.getWorkbench().getService(
-                                ICommandService.class);
-                    IHandlerService handlerService = 
-                        (IHandlerService)PlatformUI.getWorkbench().getService(
-                                IHandlerService.class);
-                    Command projectPropertiesCommand = 
-                        commandService.getCommand(
-                                CommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
-                    Map<String, String> parameters = 
-                        new HashMap<String, String>();
-                    parameters.put(ProjectPropertiesHandler.SECTION_TO_OPEN, 
-                            Constants.AUT_PROPERTY_ID);
-                    try {
-                        handlerService.executeCommand(
-                                ParameterizedCommand.generateCommand(
-                                        projectPropertiesCommand, parameters), 
-                                null);
-                    } catch (CommandException ce) {
-                        log.error(
-                            Messages.ErrorOccurredWhileOpeningProjectSettings,
-                            ce);
-                    }
-                }
-                
+            public String getLabel() {
+                return Messages.GDProblemViewOpenAutSettings;
             }
-        };
+
+            public void run(IMarker marker) {
+                Command projectPropertiesCommand = CommandHelper
+                        .getCommandService().getCommand(
+                                CommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put(ProjectPropertiesHandler.SECTION_TO_OPEN,
+                        Constants.AUT_PROPERTY_ID);
+                CommandHelper.executeParameterizedCommand(ParameterizedCommand
+                        .generateCommand(projectPropertiesCommand, parameters));
+            }
+        } };
     }
     
     /**
