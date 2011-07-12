@@ -485,11 +485,7 @@ public class Startup implements IStartup {
                     // hierarchy to notice the change.
                     Shell shell = PlatformUI.getWorkbench()
                         .getActiveWorkbenchWindow().getShell();
-                    Event activateEvent = new Event();
-                    activateEvent.time = (int)System.currentTimeMillis();
-                    activateEvent.type = SWT.Activate;
-                    activateEvent.widget = shell;
-                    shell.notifyListeners(SWT.Activate, activateEvent);
+                    repaintToolbars(shell);
                 }
             }
 
@@ -609,7 +605,7 @@ public class Startup implements IStartup {
      * 
      * @param mainShell The shell to search for Coolbars and Toolbars.
      */
-    private void repaintToolbars(Shell mainShell) {
+    public static void repaintToolbars(Shell mainShell) {
         List toolbarList = new ArrayList();
         getToolbars(mainShell, toolbarList);
         Iterator iter = toolbarList.iterator();
@@ -630,7 +626,7 @@ public class Startup implements IStartup {
      * @param toolbarList The list to which found Toolbars and Coolbars will 
      * be added.
      */
-    private void getToolbars(Composite composite, 
+    public static void getToolbars(Composite composite, 
         List toolbarList) {
         
         if (composite != null && !composite.isDisposed()) {
