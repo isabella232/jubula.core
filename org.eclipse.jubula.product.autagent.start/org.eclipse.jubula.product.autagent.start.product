@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Start AUT Agent" uid="org.eclipse.jubula.product.autagent.start.product" application="org.eclipse.jubula.app.autagent" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="false">
+<product name="Start AUT Agent" uid="org.eclipse.jubula.product.autagent.start.product" id="org.eclipse.jubula.app.autagent.product" application="org.eclipse.jubula.app.autagent" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -13,6 +13,18 @@
    <windowImages/>
 
    <launcher name="autagent">
+      <linux icon="/org.eclipse.jubula.product.autagent.start/icons/start_aut_agent.xpm"/>
+      <macosx icon="/org.eclipse.jubula.product.autagent.start/icons/start_aut_agent.icns"/>
+      <solaris/>
+      <win useIco="false">
+         <bmp
+            winSmallHigh="/org.eclipse.jubula.product.autagent.start/icons/start_aut_agent16x16.bmp"
+            winSmallLow="/org.eclipse.jubula.product.autagent.start/icons/start_aut_agent16x16_8bit.bmp"
+            winMediumHigh="/org.eclipse.jubula.product.autagent.start/icons/start_aut_agent32x32.bmp"
+            winMediumLow="/org.eclipse.jubula.product.autagent.start/icons/start_aut_agent32x32_8bit.bmp"
+            winLargeHigh="/org.eclipse.jubula.product.autagent.start/icons/start_aut_agent48x48.bmp"
+            winLargeLow="/org.eclipse.jubula.product.autagent.start/icons/start_aut_agent48x48_8bit.bmp"/>
+      </win>
    </launcher>
 
    <vm>
