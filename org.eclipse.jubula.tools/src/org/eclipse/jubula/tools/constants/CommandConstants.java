@@ -16,8 +16,16 @@ package org.eclipse.jubula.tools.constants;
  */
 public abstract class CommandConstants {
     
+    /** 
+     * use as command line argument to indicate that the RC Common Agent 
+     * is in use 
+     */
     public static final String RC_COMMON_AGENT_ACTIVE = "true"; //$NON-NLS-1$
     
+    /** 
+     * use as command line argument to indicate that the RC Common Agent 
+     * is <b>not</b> in use 
+     */
     public static final String RC_COMMON_AGENT_INACTIVE = "false"; //$NON-NLS-1$
     
     /** constant: "org.eclipse.jubula.rc.swt.SwtAUTServer" */
