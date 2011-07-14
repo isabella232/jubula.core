@@ -167,6 +167,19 @@ public abstract class CommandHelper {
         menuManager.add(createContributionItem(commandId, null, null,
                 CommandContributionItem.STYLE_PUSH));
     }
+    
+    /**
+     * @param menuManager
+     *            the menu to add the command contribution item for
+     * @param commandId
+     *            the id to create the item for
+     * @param style
+     *            the style
+     */
+    public static void createContributionItem(IMenuManager menuManager,
+            String commandId, int style) {
+        menuManager.add(createContributionItem(commandId, null, null, style));
+    }
 
     /**
      * Creates and returns a contribution item representing the command with the

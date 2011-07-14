@@ -18,7 +18,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.i18n.messages"; //$NON-NLS-1$
-    
+
     public static String AbstractGuiNodePropertySourceComment;
     public static String AbstractNewTestCaseActionNewTC;
     public static String Action;
@@ -362,6 +362,8 @@ public class Messages extends NLS {
     public static String ExtractTestCaseOperateISpecTestCasePO;
     public static String FailedToFindFile;
     public static String FileNotFoundFormatXsl;
+    public static String Filtering;
+    public static String FilteringUsedComponentNames;
     public static String FindDialogBackward;
     public static String FindDialogCaseSen;
     public static String FindDialogClose;
@@ -549,6 +551,7 @@ public class Messages extends NLS {
     public static String ObjectMappingEditorConfigView;
     public static String ObjectMappingEditorEditor;
     public static String ObjectMappingEditorLogicalName;
+    public static String ObjectMappingEditorShowMenu;
     public static String ObjectMappingEditorSplitPaneView;
     public static String ObjectMappingEditorTableView;
     public static String ObjectMappingEditorTechnicalName;
@@ -815,6 +818,7 @@ public class Messages extends NLS {
     public static String ServerPreferencePageWrongServerName;
     public static String SetItemsNotValidForThisSubclass;
     public static String ShouldNotOccur;
+    public static String ShowResponsibleNodeOperation;
     public static String SimpleSearchPageBackward;
     public static String SimpleSearchPageCaseSen;
     public static String SimpleSearchPageOptionGroupHeader;

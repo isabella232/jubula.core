@@ -111,6 +111,9 @@ public interface CommandIDs {
     /** the ID of the "show responsible node" command */
     public static final String SHOW_RESPONSIBLE_NODE_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.ShowResponsibleNodes"; //$NON-NLS-1$
     
+    /** the ID of the "show unused logical component names in OME" command */
+    public static final String OME_SHOW_UNUSED_COMPONENT_NAME_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.OMEShowUnusedComponentNames"; //$NON-NLS-1$
+    
     /** the ID of the "show where used" command */
     public static final String SHOW_WHERE_USED_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.ShowWhereUsed"; //$NON-NLS-1$
     
