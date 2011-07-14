@@ -178,14 +178,12 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      */
     private void problemMissingReusedProject(IReusedProjectPO node, 
             String label) {
-        createProblem(NLS.bind(Messages.ProblemCheckerProjectDoesNotExist,
-                new String[] {label}),
-            IMarker.SEVERITY_ERROR, 
-            StringConstants.EMPTY,
-            node, 
-            ProblemType.REASON_PROJECT_DOES_NOT_EXIST);
-        
+        createProblem(
+                NLS.bind(Messages.ProblemCheckerProjectDoesNotExist, label),
+                IMarker.SEVERITY_ERROR, StringConstants.EMPTY, node,
+                ProblemType.REASON_PROJECT_DOES_NOT_EXIST);
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -383,14 +381,12 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                                 return;
                             }
                         case EXTERNAL:
-                            createProblem(NLS.bind(
-                                    problem.getMarkerMessage(),
-                                    new String[] { testSuite.getName() }),
-                                getMarkerSeverity(problem),
-                                Messages.ProblemCheckerTestSuite 
-                                + testSuite.getName(),
-                                testSuite, 
-                                problem.getProblemType());
+                            createProblem(NLS.bind(problem.getMarkerMessage(),
+                                    testSuite.getName()),
+                                    getMarkerSeverity(problem),
+                                    Messages.ProblemCheckerTestSuite
+                                            + testSuite.getName(), testSuite,
+                                    problem.getProblemType());
                             break;
                         default:
                             break;
@@ -727,7 +723,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      */
     private void problemNoAutForTestSuiteSelected(ITestSuitePO testSuite) {
         createProblem(NLS.bind(Messages.ProblemCheckerNoAutSelected,
-                new String[] { testSuite.getName() }), 
+                testSuite.getName()), 
             IMarker.SEVERITY_ERROR,
             Messages.ProblemCheckerTestSuite + testSuite.getName(),
             testSuite, 
@@ -773,7 +769,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     private void problemNoAutConfigForServerExists(IAUTMainPO aut) {
         createProblem(
                 NLS.bind(Messages.ProblemCheckerAutNoConfigurationForServer,
-                new String[] { aut.getName()}),
+                aut.getName()),
             IMarker.SEVERITY_WARNING,
             Messages.ProblemCheckerAUT + aut.getName(),
             aut, 
@@ -789,7 +785,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
             return;
         }
         createProblem(NLS.bind(Messages.ProblemCheckerEmptyTestSuite,
-                new String[] { testSuite.getName() }), 
+                testSuite.getName()), 
             IMarker.SEVERITY_WARNING,
             Messages.ProblemCheckerTestSuite + testSuite.getName(),
             testSuite, 
@@ -1114,8 +1110,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
             if (execTC.getParentNode() instanceof ITestSuitePO) {
                 location = Messages.ProblemCheckerTestSuite;
             }
-            createProblem(NLS.bind(Messages.ProblemCheckerNoCompType,
-                new String[] { name }),
+            createProblem(NLS.bind(Messages.ProblemCheckerNoCompType, name),
                 IMarker.SEVERITY_WARNING, location + name, 
                 execTC.getParentNode(), 
                 ProblemType.REASON_NO_COMPTYPE);

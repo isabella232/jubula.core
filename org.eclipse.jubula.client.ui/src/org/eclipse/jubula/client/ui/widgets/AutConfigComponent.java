@@ -1265,12 +1265,11 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                     try {
                         error = createWarningStatus(NLS.bind(
                                 Messages.AUTConfigComponentNoDir,
-                            new String [] {dir.getCanonicalPath()}));
+                            dir.getCanonicalPath()));
                     } catch (IOException e) {
                         error = createWarningStatus(NLS.bind(
                                 Messages.AUTConfigComponentFileNotFound,
-                            new String [] {
-                                m_autWorkingDirectoryTextField.getText()}));
+                                m_autWorkingDirectoryTextField.getText()));
                     }
                 }
             }

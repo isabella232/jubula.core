@@ -673,7 +673,7 @@ public class ProjectPM extends PersistenceManager {
         throws PMException, ProjectDeletedException, InterruptedException {
         
         monitor.beginTask(NLS.bind(Messages.ProjectWizardCreatingProject,
-                new Object[] { newProjectName }),
+                newProjectName),
                 getTotalWorkForSave(proj));
         // Register Persistence progress listeners
         setHbmProgressMonitor(monitor);

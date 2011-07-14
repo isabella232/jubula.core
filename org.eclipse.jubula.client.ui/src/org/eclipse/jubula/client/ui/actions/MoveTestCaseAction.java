@@ -383,7 +383,7 @@ public class MoveTestCaseAction extends Action {
         Utils.createMessageDialog(MessageIDs.I_CANNOT_MOVE_TC, 
             null, new String [] {
                 NLS.bind(Messages.InfoDetailCannotMoveTc,
-                    new String [] {sb.toString()})
+                    sb.toString())
             });
     }
 

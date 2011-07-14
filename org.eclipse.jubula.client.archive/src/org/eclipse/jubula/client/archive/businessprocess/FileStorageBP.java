@@ -171,7 +171,7 @@ public class FileStorageBP {
                     String fileName = fileURL.getFile();
                     m_console.writeLine(NLS.bind(Messages
                                     .ImportFileActionInfoStartingReadingProject,
-                                    new String[]{fileName}));
+                                    fileName));
                     try {
                         IProjectPO proj = new XmlStorage().readProject(
                             fileURL, paramNameMapper, compNameCache, 
@@ -190,15 +190,13 @@ public class FileStorageBP {
                         for (Object msg : e.getErrorMsgs()) {
                             m_console.writeErrorLine((String)msg);
                         }
-                        m_console.writeErrorLine(
-                                NLS.bind(Messages
-                                        .ImportFileActionErrorImportFailed, 
-                                        new String[] { fileName }));
+                        m_console.writeErrorLine(NLS.bind(
+                                Messages.ImportFileActionErrorImportFailed,
+                                fileName));
                     } catch (ConverterException e) {
-                        m_console.writeErrorLine(
-                                NLS.bind(Messages
-                                        .ImportFileActionErrorImportFailed, 
-                                        new String[] { fileName }));
+                        m_console.writeErrorLine(NLS.bind(
+                                Messages.ImportFileActionErrorImportFailed,
+                                fileName));
                         ErrorMessagePresenter.getPresenter().showErrorMessage(
                                 e, null, new String[] {Messages
                                         .ImportFileActionErrorMissingDepProj});
@@ -705,8 +703,7 @@ public class FileStorageBP {
                 IProgressConsole console, String name) {
             
             console.writeErrorLine(
-                    NLS.bind(Messages.ErrorMessagePROJ_CIRC_DEPEND, 
-                            new String [] {name}));
+                    NLS.bind(Messages.ErrorMessagePROJ_CIRC_DEPEND, name));
     
             ErrorMessagePresenter.getPresenter().showErrorMessage(
                     MessageIDs.E_PROJ_CIRC_DEPEND, new String [] {name}, null);

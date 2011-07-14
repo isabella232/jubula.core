@@ -80,10 +80,10 @@ import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -115,6 +115,7 @@ import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher.IEditorDirtyStateListener;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.ObjectMappingEditorPatternFilter;
+import org.eclipse.jubula.client.ui.handlers.OMEShowUnusedComponentNamesHandler;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
@@ -163,8 +164,10 @@ import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.swt.IFocusService;
 
@@ -180,6 +183,9 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 IObjectMappingObserver, IEditorDirtyStateListener,
                 IMultiTreeViewerContainer, IPropertyListener {
 
+    /** Show-menu */
+    public static final String SHOW_ID = PlatformUI.PLUGIN_ID + ".ShowSubMenu"; //$NON-NLS-1$
+    
     /** the logger */
     private static final Log LOG = 
         LogFactory.getLog(ObjectMappingMultiPageEditor.class);
@@ -1319,6 +1325,13 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 CommandIDs.SHOW_WHERE_USED_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.SHOW_RESPONSIBLE_NODE_COMMAND_ID);
+        mgr.add(new Separator());
+        MenuManager submenuNew = new MenuManager(
+                Messages.ObjectMappingEditorShowMenu, SHOW_ID);
+        CommandHelper.createContributionItem(submenuNew,
+                CommandIDs.OME_SHOW_UNUSED_COMPONENT_NAME_COMMAND_ID,
+                CommandContributionItem.STYLE_CHECK);
+        mgr.add(submenuNew);
     }
 
     /**
@@ -2223,6 +2236,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             m_editorHelper = new JBEditorHelper(this);
         }
         m_editorHelper.init(site, input);
+        OMEShowUnusedComponentNamesHandler.updateCommandState(false);
     }
 
     /**

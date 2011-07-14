@@ -183,7 +183,7 @@ class ExecTestCasePO extends TestCasePO implements
             if (reusedProjectName != null && reusedProjectName.length() != 0) {
                 return NLS.bind(
                         Messages.ExecTestCasePOMissingReferenceWithProjectName, 
-                        new String [] {reusedProjectName});
+                        reusedProjectName);
             }
 
             return Messages.ExecTestCasePOMissingReference;

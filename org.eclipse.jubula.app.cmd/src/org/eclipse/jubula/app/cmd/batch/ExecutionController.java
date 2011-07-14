@@ -424,8 +424,8 @@ public class ExecutionController implements IAUTServerEventListener,
                 AbstractCmdlineClient.printConsoleLn(StringConstants.TAB
                         + NLS.bind(Messages
                                 .ExecutionControllerTestSuiteBegin, 
-                                new Object[] {m_job.getActualTestSuite()
-                                    .getName()}) 
+                                m_job.getActualTestSuite()
+                                    .getName()) 
                         + StringConstants.LEFT_PARENTHESES 
                         + (m_job.getActualTestSuiteIndex() + 1) 
                         + StringConstants.SLASH 
@@ -448,7 +448,7 @@ public class ExecutionController implements IAUTServerEventListener,
         AbstractCmdlineClient.printConsoleLn(
                 StringConstants.TAB 
                 + NLS.bind(Messages.ExecutionControllerTestJobBegin,
-                        new Object[] {m_job.getTestJob().getName()}), 
+                        m_job.getTestJob().getName()), 
                 true);
         ClientTestFactory.getClientTest().startTestJob(
                 m_job.getTestJob(), m_job.getLanguage(),
@@ -561,7 +561,7 @@ public class ExecutionController implements IAUTServerEventListener,
             final IAUTMainPO aut = ts.getAut();
             AbstractCmdlineClient.printConsoleLn(Messages.ExecutionControllerAUT
                     + NLS.bind(Messages.ExecutionControllerAUTStart, 
-                            new Object[] {aut.getName()}), true); 
+                            aut.getName()), true); 
             
             if (ts != null) {
                 AutIdentifier autToStart = new AutIdentifier(
@@ -733,7 +733,7 @@ public class ExecutionController implements IAUTServerEventListener,
         AbstractCmdlineClient.printConsoleLn(Messages
                 .ExecutionControllerDatabase
             + NLS.bind(Messages.ExecutionControllerLoadingProject, 
-                    new Object[] {m_job.getProjectName()}), true);
+                    m_job.getProjectName()), true);
         try {
             IProjectPO actualProject = 
                 ProjectPM.loadProjectByNameAndVersion(m_job.getProjectName(), 
@@ -746,7 +746,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 AbstractCmdlineClient.printConsoleLn(
                         Messages.ExecutionControllerDatabase
                     + NLS.bind(Messages.ExecutionControllerProjectLoaded, 
-                            new Object[] {m_job.getProjectName()}), true);
+                            m_job.getProjectName()), true);
             }
         } catch (JBException e1) { // NOPMD by zeb on 10.04.07 14:47
             /* An exception was thrown while loading data or closing a session
@@ -761,29 +761,26 @@ public class ExecutionController implements IAUTServerEventListener,
         List<String> suitesWithIncompleteTD = new LinkedList<String>();
         List<String> suitesWithMissingSpecTc = new LinkedList<String>();
         for (ITestSuitePO ts : m_job.getTestSuites()) {
+            final String tsName = ts.getName();
             if (!ts.getSumSpecTcFlag()) {
-                suitesWithMissingSpecTc.add(
-                    NLS.bind(Messages.ExecutionControllerCheckSpecTc, 
-                            new Object[] {ts.getName()}));
+                suitesWithMissingSpecTc.add(NLS.bind(
+                        Messages.ExecutionControllerCheckSpecTc, tsName));
                 AbstractCmdlineClient.printConsoleLn(NLS.bind(
-                        Messages.ExecutionControllerCheckSpecTc, 
-                        new Object[] {ts.getName()}), true);
+                        Messages.ExecutionControllerCheckSpecTc, tsName), true);
             }
             if (!ts.getSumOMFlag(ts.getAut())) {
-                suitesWithIncompleteOM.add(
-                    NLS.bind(Messages.ExecutionControllerCheckOM, 
-                            new Object[] {ts.getName()}));
+                suitesWithIncompleteOM.add(NLS.bind(
+                        Messages.ExecutionControllerCheckOM, tsName));
                 AbstractCmdlineClient.printConsoleLn(
-                    NLS.bind(Messages.ExecutionControllerCheckOM, 
-                            new Object[] {ts.getName()}), true); 
+                        NLS.bind(Messages.ExecutionControllerCheckOM, tsName),
+                        true);
             }
             if (!ts.getSumTdFlag(m_job.getLanguage())) {
-                suitesWithIncompleteTD.add(
-                    NLS.bind(Messages.ExecutionControllerCheckTD, 
-                            new Object[] {ts.getName()}));
+                suitesWithIncompleteTD.add(NLS.bind(
+                        Messages.ExecutionControllerCheckTD, tsName));
                 AbstractCmdlineClient.printConsoleLn(
-                    NLS.bind(Messages.ExecutionControllerCheckTD, 
-                            new Object[] {ts.getName()}), true); 
+                        NLS.bind(Messages.ExecutionControllerCheckTD, tsName),
+                        true);
             }
         }
         StringBuilder sb = new StringBuilder(
@@ -860,16 +857,14 @@ public class ExecutionController implements IAUTServerEventListener,
      * {@inheritDoc}
      */
     public void stateChanged(AutStarterEvent event) {
-        AbstractCmdlineClient.printConsoleLn(NLS.bind(
-                Messages.ExecutionControllerServer, 
-                new Object[] {event}), true);
+        AbstractCmdlineClient.printConsoleLn(
+                NLS.bind(Messages.ExecutionControllerServer, event), true);
         switch (event.getState()) {
             case ServerEvent.CONNECTION_CLOSED:
                 break;
             default:
                 break;
-        }            
-
+        }
     }
 
     /**

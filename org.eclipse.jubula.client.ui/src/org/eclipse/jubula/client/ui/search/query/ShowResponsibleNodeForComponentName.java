@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -89,22 +90,11 @@ public class ShowResponsibleNodeForComponentName
      */
     protected void calculateUseOfLogicalName(String logicalName, 
         IProgressMonitor monitor) {
-        Set<INodePO> compnameUsingNodes = new HashSet<INodePO>();
-
-        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
-        for (ITestSuitePO ts : currentProject.getTestSuiteCont()
-                .getTestSuiteList()) {
-            IAUTMainPO aut = ts.getAut();
-            if (aut != null
-                    && ObjectUtils.equals(aut.getGuid(), m_aut.getGuid())) {
-                FindResponsibleNodesForComponentNameOp op = 
-                    new FindResponsibleNodesForComponentNameOp(logicalName);
-                TreeTraverser traverser = new TreeTraverser(ts, op);
-                traverser.traverse(true);
-                compnameUsingNodes.addAll(op.getNodes());
-            }
-        }
-        
+        monitor.beginTask(NLS.bind(Messages.ShowResponsibleNodeOperation,
+                getCompName().getName()),
+                IProgressMonitor.UNKNOWN);
+        Set<INodePO> compnameUsingNodes = 
+            calculateListOfCompNameUsingNodes(logicalName, m_aut);
         final List<SearchResultElement> reuseLoc = 
             new ArrayList<SearchResultElement>(
                     compnameUsingNodes.size());
@@ -112,5 +102,32 @@ public class ShowResponsibleNodeForComponentName
                 Constants.COMPNAMESVIEW_ID));
         setSearchResult(reuseLoc);
         monitor.done();
+    }
+    
+    /**
+     * @param logicalNameGUID
+     *            the guid of the comp name to search for
+     * @param searchAUT
+     *            the aut to search for
+     * @return a set of nodes which make use of this logical name
+     */
+    public static Set<INodePO> calculateListOfCompNameUsingNodes(
+            String logicalNameGUID, IAUTMainPO searchAUT) {
+        Set<INodePO> compnameUsingNodes = new HashSet<INodePO>();
+
+        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
+        for (ITestSuitePO ts : currentProject.getTestSuiteCont()
+                .getTestSuiteList()) {
+            IAUTMainPO aut = ts.getAut();
+            if (aut != null
+                    && ObjectUtils.equals(aut.getGuid(), searchAUT.getGuid())) {
+                FindResponsibleNodesForComponentNameOp op = 
+                    new FindResponsibleNodesForComponentNameOp(logicalNameGUID);
+                TreeTraverser traverser = new TreeTraverser(ts, op);
+                traverser.traverse(true);
+                compnameUsingNodes.addAll(op.getNodes());
+            }
+        }
+        return compnameUsingNodes;
     }
 }

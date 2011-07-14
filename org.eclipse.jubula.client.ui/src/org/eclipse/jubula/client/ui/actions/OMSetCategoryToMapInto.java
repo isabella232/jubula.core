@@ -109,7 +109,7 @@ public class OMSetCategoryToMapInto extends AbstractAction {
                 }
                 String message = NLS.bind(
                         Messages.TestExecutionContributorAUTStartedMapping,
-                    new Object[] {strCat}); 
+                    strCat); 
                 Plugin.showStatusLine(Constants.MAPPING, message);
             }
         }

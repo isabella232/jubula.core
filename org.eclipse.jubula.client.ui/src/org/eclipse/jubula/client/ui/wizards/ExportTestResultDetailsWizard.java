@@ -171,7 +171,7 @@ public class ExportTestResultDetailsWizard extends Wizard
                                 .ExportTestResultDetailsConfirmOverwriteTitle,
                             null, NLS.bind(Messages
                                 .ExportTestResultDetailsWizardPageDescription,
-                                new String [] {fileToWrite.getCanonicalPath()}),
+                                fileToWrite.getCanonicalPath()),
                             MessageDialog.QUESTION,
                             OVERWRITE_DIALOG_BUTTON_LABELS, 0);
 
@@ -315,7 +315,7 @@ public class ExportTestResultDetailsWizard extends Wizard
 
         setWindowTitle(NLS.bind(
                 Messages.ExportTestResultDetailsWizardWindowTitle, 
-                new String [] {String.valueOf(m_selectedSummaries.length)}));
+                m_selectedSummaries.length));
     }
 
 }

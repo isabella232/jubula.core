@@ -818,6 +818,10 @@
 				id="org.eclipse.jubula.client.ui.commands.ProjectProperties.parameter.sectionToOpen"
 				name="Section" optional="true">
 			</commandParameter>
+			<commandParameter
+				id="org.eclipse.jubula.client.ui.commands.ProjectProperties.parameter.innerSectionToOpen"
+				name="InnerSection" optional="true">
+			</commandParameter>
 		</command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
@@ -1012,6 +1016,12 @@
         categoryId="org.eclipse.jubula.client.ui.commands"
         id="org.eclipse.jubula.client.ui.commands.ShowResponsibleNodes"
         name="%ShowResponsibleNode">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.OMEShowUnusedComponentNames"
+        name="%OMEShowUnusedComponentNames">
+        <state class="org.eclipse.jface.commands.ToggleState:false" id="org.eclipse.ui.commands.toggleState" />
   </command>
   <command
         categoryId="org.eclipse.jubula.client.ui.commands"
@@ -2821,6 +2831,10 @@
 		<handler
 			class="org.eclipse.jubula.client.ui.handlers.sorter.SortByTypeHandler"
 			commandId="org.eclipse.jubula.client.ui.commands.sort.type">
+		</handler>
+		<handler
+			class="org.eclipse.jubula.client.ui.handlers.OMEShowUnusedComponentNamesHandler"
+			commandId="org.eclipse.jubula.client.ui.commands.OMEShowUnusedComponentNames">
 		</handler>
 		<handler
 			class="org.eclipse.jubula.client.ui.handlers.filter.ReusedData"

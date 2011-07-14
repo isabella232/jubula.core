@@ -237,8 +237,7 @@ public class DeleteTreeItemHandlerOMEditor
                 getConnectedAut()) && omsp != null && omsp.isRunning()) {
                 String message = NLS.bind(
                     Messages.TestExecutionContributorAUTStartedMapping,
-                    new Object[] {Messages
-                            .TestExecutionContributorCatUnassigned}); 
+                    Messages.TestExecutionContributorCatUnassigned); 
                 int icon = Constants.MAPPING;
                 Plugin.showStatusLine(icon, message);
             }

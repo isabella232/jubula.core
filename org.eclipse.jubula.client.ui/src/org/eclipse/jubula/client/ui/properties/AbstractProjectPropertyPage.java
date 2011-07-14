@@ -26,7 +26,6 @@ import org.eclipse.ui.dialogs.PropertyPage;
 /**
  * @author BREDEX GmbH
  * @created 09.11.2005
- *
  */
 public abstract class AbstractProjectPropertyPage extends PropertyPage 
         implements IWorkbenchPropertyPage {

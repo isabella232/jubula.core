@@ -389,7 +389,7 @@ public class TestExecution {
         if (isAutNameSet(autName)) {
             // no AUTid for test suite has been set
             autName = NLS.bind(Messages.ErrorDetailNO_AUT_ID_FOR_REF_TS_FOUND,
-                    new String[] { testSuite.getName() });
+                    testSuite.getName());
         }
         ClientTestFactory.getClientTest().fireTestExecutionChanged(
                 new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_FAILED,

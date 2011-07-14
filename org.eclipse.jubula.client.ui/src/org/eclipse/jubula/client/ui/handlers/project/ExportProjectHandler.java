@@ -129,7 +129,7 @@ public class ExportProjectHandler extends AbstractProjectHandler {
                     SWT.ICON_WARNING | SWT.YES | SWT.NO);
             mb.setText(Messages.ExportFileActionConfirmOverwriteTitle);
             mb.setMessage(NLS.bind(Messages.ExportFileActionConfirmOverwrite,
-                    new Object[] {fileNameTemp }));
+                    fileNameTemp));
             if (mb.open() == SWT.NO) {
                 return;
             }

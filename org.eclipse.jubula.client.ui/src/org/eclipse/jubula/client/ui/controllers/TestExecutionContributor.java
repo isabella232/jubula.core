@@ -425,8 +425,7 @@ public class TestExecutionContributor
                 }
                 
                 message = NLS.bind(Messages.
-                        TestExecutionContributorAUTStartedMapping,
-                    new Object[] {strCat});  
+                        TestExecutionContributorAUTStartedMapping, strCat);  
                 icon = Constants.MAPPING;
                 break;
             case AUTServerEvent.RECORD_MODE:

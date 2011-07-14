@@ -709,9 +709,8 @@ public class ComponentNamesBP
         
         if (UNKNOWN_COMPONENT_TYPE.equals(computedType)) {
             // Computed component type is "unknown"
-            return NLS.bind(Messages.CompNameUnknownTypeDetail, 
-                    new Object[]{
-                        namePO != null ? namePO.getName() : checkableName});
+            return NLS.bind(Messages.CompNameUnknownTypeDetail,
+                    namePO != null ? namePO.getName() : checkableName);
         }
         
         return NLS.bind(Messages.CompNameIncompatibleTypeDetail,

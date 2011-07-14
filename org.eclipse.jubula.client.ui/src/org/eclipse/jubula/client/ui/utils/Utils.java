@@ -157,8 +157,7 @@ public class Utils {
             final int returnCodeCANCEL = -1;
             MessageDialogWithToggle dialog = new MessageDialogWithToggle(
                     Plugin.getShell(), Messages.UtilsTitle, null, NLS.bind(
-                            Messages.UtilsQuestion,
-                            new Object[] { perspectiveName }),
+                            Messages.UtilsQuestion, perspectiveName),
                     MessageDialog.QUESTION, new String[] { Messages.UtilsYes,
                         Messages.UtilsNo }, 0, Messages.UtilsRemember,
                     false) {

@@ -43,7 +43,7 @@ public class FilterUsedTestCases extends ViewerFilter {
                 execTestCases = NodePM.getInternalExecTestCases(
                         tc.getGuid(), tc.getParentProjectId());
                 if (execTestCases.isEmpty()) {
-                    m_alreadyVisited.put(tc, new Boolean(true));
+                    m_alreadyVisited.put(tc, Boolean.TRUE);
                     return true;
                 }
             } else {
@@ -55,7 +55,7 @@ public class FilterUsedTestCases extends ViewerFilter {
             for (INodePO child : cat.getUnmodifiableNodeList()) {
                 if (!m_alreadyVisited.containsKey(child)) {
                     if (select(viewer, parentElement, child)) {
-                        m_alreadyVisited.put(child, new Boolean(true));
+                        m_alreadyVisited.put(child, Boolean.TRUE);
                         return true;
                     }
                 } else {

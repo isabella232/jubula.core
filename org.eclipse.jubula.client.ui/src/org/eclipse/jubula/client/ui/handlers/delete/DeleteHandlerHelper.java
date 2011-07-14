@@ -50,12 +50,12 @@ public class DeleteHandlerHelper {
         String label = StringConstants.EMPTY;
         if (itemNames.size() == 1) {
             label = NLS.bind(Messages.DeleteTreeItemActionDeleteOneItem,
-                new Object[] {itemNames.iterator().next()});
+                itemNames.iterator().next());
         } else if (itemNames.size() == 0) {
             return false;  
         } else {
             label = NLS.bind(Messages.DeleteTreeItemActionDeleteMultipleItems,
-                new Object[] {itemNames.size()});
+                itemNames.size());
         }
         MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
                 Messages.DeleteTreeItemActionShellTitle,

@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
@@ -34,6 +35,7 @@ import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
@@ -106,12 +108,11 @@ public abstract class CommandHelper {
     public static Object executeCommand(String commandID, 
         IWorkbenchPartSite site) {
         IHandlerService handlerService;
-        Class<IHandlerService> hsc = IHandlerService.class;
         if (site != null) {
-            handlerService = (IHandlerService)site.getService(hsc);
+            handlerService = (IHandlerService)site
+                    .getService(IHandlerService.class);
         } else {
-            handlerService = (IHandlerService)PlatformUI.getWorkbench()
-                    .getService(hsc);
+            handlerService = getHandlerService();
         }
         try {
             return handlerService.executeCommand(commandID, null);
@@ -121,7 +122,40 @@ public abstract class CommandHelper {
         }
         return null;
     }
+    
+    /**
+     * @param pc the parameterized command
+     * @return The return value from the execution; may be null.
+     */
+    public static Object executeParameterizedCommand(ParameterizedCommand pc) {
+        IHandlerService handlerService;
+        handlerService = getHandlerService();
+        try {
+            return handlerService.executeCommand(pc, null);
+        } catch (CommandException e) {
+            log.warn(Messages.ErrorOccurredWhileExecutingCommand
+                    + StringConstants.COLON + StringConstants.SPACE
+                    + pc.getId());
+        }
+        return null;
+    }
 
+    /**
+     * @return the handler service
+     */
+    public static IHandlerService getHandlerService() {
+        return (IHandlerService)PlatformUI.getWorkbench().getService(
+                IHandlerService.class);
+    }
+    
+    /**
+     * @return the command service
+     */
+    public static ICommandService getCommandService() {
+        return (ICommandService)PlatformUI.getWorkbench().getService(
+                ICommandService.class);
+    }
+    
     /**
      * @param menuManager
      *            the menu to add the command contribution item for
@@ -132,6 +166,19 @@ public abstract class CommandHelper {
             String commandId) {
         menuManager.add(createContributionItem(commandId, null, null,
                 CommandContributionItem.STYLE_PUSH));
+    }
+    
+    /**
+     * @param menuManager
+     *            the menu to add the command contribution item for
+     * @param commandId
+     *            the id to create the item for
+     * @param style
+     *            the style
+     */
+    public static void createContributionItem(IMenuManager menuManager,
+            String commandId, int style) {
+        menuManager.add(createContributionItem(commandId, null, null, style));
     }
 
     /**
