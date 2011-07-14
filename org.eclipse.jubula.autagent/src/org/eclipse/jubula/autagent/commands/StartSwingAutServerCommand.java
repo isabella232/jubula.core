@@ -132,6 +132,10 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         return (String[])cmds.toArray(new String[cmds.size()]);
     }
     
+    /**
+     * 
+     * @return an array of Strings representing the launch classpath.
+     */
     public String[] getLaunchClasspath() {
         StringBuffer autServerClasspath = new StringBuffer();
         createServerClasspath(autServerClasspath);
