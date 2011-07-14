@@ -171,7 +171,7 @@ public class ExternalTestDataBP {
                     + StringConstants.SPACE + Messages.NotSupported);
             throw new JBException(
                     NLS.bind(Messages.ErrorMessageNOT_SUPP_DATASOURCE,
-                    new Object[] { dataFileName }),
+                    dataFileName),
                 MessageIDs.E_NOT_SUPP_DATASOURCE);
         } catch (IOException e) {
             if (LOG.isDebugEnabled()) {
@@ -180,7 +180,7 @@ public class ExternalTestDataBP {
             }
             throw new JBException(NLS.bind(
                 Messages.ErrorMessageNOT_SUPP_DATASOURCE,
-                new Object[] {dataFileName}), 
+                dataFileName), 
                 MessageIDs.E_DATASOURCE_FILE_IO);
         } catch (DataReadException e) {
             if (LOG.isDebugEnabled()) {
@@ -189,7 +189,7 @@ public class ExternalTestDataBP {
             }
             throw new JBException(NLS.bind(
                 Messages.ErrorMessageDATASOURCE_READ_ERROR,
-                new Object[] {dataFileName}), 
+                dataFileName), 
                 MessageIDs.E_DATASOURCE_READ_ERROR);
         } catch (NoSupportForLocaleException e) {
             if (LOG.isDebugEnabled()) {

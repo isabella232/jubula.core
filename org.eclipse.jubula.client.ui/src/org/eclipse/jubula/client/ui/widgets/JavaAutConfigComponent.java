@@ -376,8 +376,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         LinkedList<AutIdentifier> l = 
             (LinkedList<AutIdentifier>)
             AutAgentRegistration.getInstance().getRegisteredAuts();
-        String message = NLS.bind(Messages.ClientMonitoringInfoDialog,
-                new Object[]{autId});        
+        String message = NLS.bind(Messages.ClientMonitoringInfoDialog, autId);
         for (AutIdentifier a : l) {
             if (a.getExecutableName().equals(autId)) {                
                 NagDialog.runNagDialog(null, message, 
@@ -764,7 +763,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                     if (!file.exists()) {
                         error = createWarningStatus(
                             NLS.bind(Messages.AUTConfigComponentFileNotFound,
-                                    new String [] {file.getCanonicalPath()}));
+                                    file.getCanonicalPath()));
                     } else {
                         JarFile jarFile = new JarFile(file);
                         Manifest jarManifest = jarFile.getManifest();
@@ -785,12 +784,12 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                     // given file is not a jar file
                     error = createErrorStatus(
                         NLS.bind(Messages.AUTConfigComponentFileNotJar,
-                                new String [] {filename}));
+                                filename));
                 } catch (IOException e) {
                     // could not find jar file
                     error = createWarningStatus(NLS.bind(
                             Messages.AUTConfigComponentFileNotFound,
-                                new String [] {filename}));
+                                filename));
                 }
             }
         } else if (!isEmpty) {
@@ -1185,14 +1184,14 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                     if (!file.isFile()) {
                         error = createWarningStatus(NLS.bind(
                             Messages.AUTConfigComponentFileNotFound,
-                                new String [] {file.getCanonicalPath()}));
+                                file.getCanonicalPath()));
                     } else {
                         // Make sure that the user has not entered an executable
                         // JAR file in the wrong field.
                         new JarFile(file);
                         error = createErrorStatus(NLS.bind(
                             Messages.AUTConfigComponentFileJar,
-                                new String [] {file.getCanonicalPath()}));
+                                file.getCanonicalPath()));
                     }
                 } catch (ZipException ze) {
                     // Expected. This occurs if the given file exists but is not 
@@ -1201,7 +1200,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                     // could not find file
                     error = createWarningStatus(NLS.bind(
                         Messages.AUTConfigComponentFileNotFound,
-                            new String [] {filename}));
+                            filename));
                 }
             }
         } else if (!isExecFieldEmpty) {

@@ -53,9 +53,7 @@ public class StartAutJob extends Job {
      */
     public StartAutJob(final IAUTMainPO aut, final IAUTConfigPO autConfig) {
         super(NLS.bind(Messages.StartAutJobJobName,
-                new String [] {
-                    autConfig.getConfigMap().get(AutConfigConstants.AUT_ID)
-                }));
+                    autConfig.getConfigMap().get(AutConfigConstants.AUT_ID)));
         m_aut = aut;
         m_autConfig = autConfig;
     }

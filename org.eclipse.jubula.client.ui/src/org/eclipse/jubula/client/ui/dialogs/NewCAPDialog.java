@@ -478,7 +478,7 @@ public class NewCAPDialog extends TitleAreaDialog {
             setErrorMessage(Messages.NewCAPDialogEmptyCompName);
         } else if (defaultName) {
             setErrorMessage(NLS.bind(Messages.NewCAPDialogReservedCompName, 
-                    new Object[] { m_componentNameField.getText() }));
+                    m_componentNameField.getText()));
         } else {
             setErrorMessage(Messages.NewCAPDialogNotValidCompName);  
         }

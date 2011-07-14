@@ -91,7 +91,7 @@ public class ShowResponsibleNodeForComponentName
     protected void calculateUseOfLogicalName(String logicalName, 
         IProgressMonitor monitor) {
         monitor.beginTask(NLS.bind(Messages.ShowResponsibleNodeOperation,
-                new Object[] { getCompName().getName() }),
+                getCompName().getName()),
                 IProgressMonitor.UNKNOWN);
         Set<INodePO> compnameUsingNodes = 
             calculateListOfCompNameUsingNodes(logicalName, m_aut);

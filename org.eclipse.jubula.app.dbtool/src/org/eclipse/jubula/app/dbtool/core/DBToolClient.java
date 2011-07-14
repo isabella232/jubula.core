@@ -345,7 +345,7 @@ public class DBToolClient extends AbstractCmdlineClient {
                             new Object[] { pName, pMajVer, pMinVer }));
                     ProjectPM.deleteProject(project, false);
                     monitor.subTask((NLS.bind(Messages.DBToolDeleteFinished,
-                            new Object[] { pName })));
+                            pName)));
                     monitor.subTask(Messages.DBToolDeletingTestResultDetails);
                     if (keepSummaryOnDelete) {
                         TestResultSummaryPM.deleteTestrunsByProject(
@@ -378,7 +378,7 @@ public class DBToolClient extends AbstractCmdlineClient {
         try {
             projects = ProjectPM.findAllProjects();
             monitor.subTask(NLS.bind(Messages.DBToolDeletingAllProjects,
-                    new Object[] { projects.size() }));
+                    projects.size()));
             for (IProjectPO proj : projects) {
                 String pName = proj.getName();
                 monitor.subTask(NLS.bind(
@@ -388,8 +388,7 @@ public class DBToolClient extends AbstractCmdlineClient {
                                 proj.getMinorProjectVersion() }));
                 ProjectPM.deleteProject(proj, false);
                 monitor.subTask((NLS.bind(
-                        Messages.DBToolDeleteFinished,
-                        new Object[] { pName})));
+                        Messages.DBToolDeleteFinished, pName)));
             }
             if (!keepSummaryOnDelete) {
                 monitor.subTask(Messages.DBToolDeletingTestResultSummaries);

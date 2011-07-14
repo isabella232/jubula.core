@@ -197,7 +197,7 @@ public class Launcher implements IApplication,
         // Use NLS.bind in Eclipse3.1
         String message = NLS.bind(
             Messages.LauncherDifferentVersionMessage, 
-            new Object[] { url.getFile() });
+            url.getFile());
         MessageBox mbox = new MessageBox(shell, SWT.OK | SWT.CANCEL
             | SWT.ICON_WARNING | SWT.APPLICATION_MODAL);
         mbox.setText(title);

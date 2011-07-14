@@ -515,56 +515,50 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     protected boolean checkCompleteness() {
         ISpecTestCasePO testCase = (ISpecTestCasePO)getEditorHelper()
                 .getEditSupport().getWorkVersion();
-        if (testCase.getName() == null 
+        final Integer mId = MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP;
+        if (testCase.getName() == null
                 || StringConstants.EMPTY.equals(testCase.getName())) {
-            Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, 
-                    null, new String[]{Messages.TestCaseEditorNoTcName});
+            Utils.createMessageDialog(mId, null,
+                    new String[] { Messages.TestCaseEditorNoTcName });
             return false;
         }
-        if (testCase.getName().startsWith(BLANK) 
-            || testCase.getName().endsWith(BLANK)) { 
-            Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, 
-                    null, new String[]{Messages.TestCaseEditorWrongTcName});
+        if (testCase.getName().startsWith(BLANK)
+                || testCase.getName().endsWith(BLANK)) {
+            Utils.createMessageDialog(mId, null,
+                    new String[] { Messages.TestCaseEditorWrongTcName });
             return false;
         }
         Iterator iter = testCase.getNodeListIterator();
         while (iter.hasNext()) {
             Object node = iter.next();
-            if (Persistor.isPoSubclass((IPersistentObject)node, 
-                ICapPO.class)) {
+            if (Persistor.isPoSubclass((IPersistentObject)node, ICapPO.class)) {
                 ICapPO cap = (ICapPO)node;
                 if (cap.getName() == null
                         || StringConstants.EMPTY.equals(cap.getName())) {
-                    Utils.createMessageDialog(
-                        MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                        new String[]{Messages.TestCaseEditorNoCapName});
+                    Utils.createMessageDialog(mId, null,
+                            new String[] { Messages.TestCaseEditorNoCapName });
                     return false;
                 }
-                if (cap.getName().startsWith(BLANK) 
-                    || cap.getName().endsWith(BLANK)) { 
-                    Utils.createMessageDialog(
-                        MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                        new String[]{NLS.bind(
-                            Messages.TestCaseEditorWrongTsName,
-                            new Object[]{cap.getName()})}); 
+                if (cap.getName().startsWith(BLANK)
+                        || cap.getName().endsWith(BLANK)) {
+                    Utils.createMessageDialog(mId, null, new String[] { NLS
+                            .bind(Messages.TestCaseEditorWrongTsName,
+                                    cap.getName()) });
                     return false;
                 }
                 if (cap.getComponentName() == null
                         || StringConstants.EMPTY.equals(
                                 cap.getComponentName())) {
-                    Utils.createMessageDialog(
-                        MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                        new String[]{NLS.bind(Messages.TestCaseEditorNoCompName,
-                            new Object[]{cap.getName()})});
+                    Utils.createMessageDialog(mId, null, new String[] { NLS
+                            .bind(Messages.TestCaseEditorNoCompName,
+                                    cap.getName()) });
                     return false;
-                }  
-                if (cap.getComponentName().startsWith(BLANK) 
-                    || cap.getComponentName().endsWith(BLANK)) { 
-                    Utils.createMessageDialog(
-                        MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
-                        new String[]{NLS.bind(
-                                Messages.TestCaseEditorWrongCompName2,  
-                            new Object[]{cap.getName()})}); 
+                }
+                if (cap.getComponentName().startsWith(BLANK)
+                        || cap.getComponentName().endsWith(BLANK)) {
+                    Utils.createMessageDialog(mId, null, new String[] { NLS
+                            .bind(Messages.TestCaseEditorWrongCompName2,
+                                    cap.getName()) });
                     return false;
                 }
             }
@@ -572,16 +566,16 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         for (Object object : testCase.getAllEventEventExecTC()) {
             IEventExecTestCasePO eventTC = (IEventExecTestCasePO)object;
             if (StringConstants.EMPTY.equals(eventTC.getName())) {
-                Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP,
-                    null, new String[]{Messages.TestCaseEditorNoEventTcName});
+                Utils.createMessageDialog(mId, null,
+                        new String[] { Messages.TestCaseEditorNoEventTcName });
                 return false;
             }
-            if (eventTC.getName().startsWith(BLANK) 
-                || eventTC.getName().endsWith(BLANK)) { 
-                Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP,
-                    null, new String[]{NLS.bind(
-                            Messages.TestCaseEditorWrongEhName, 
-                        new Object[]{eventTC.getName()})}); 
+            if (eventTC.getName().startsWith(BLANK)
+                    || eventTC.getName().endsWith(BLANK)) {
+                Utils.createMessageDialog(mId, null,
+                        new String[] { NLS.bind(
+                                Messages.TestCaseEditorWrongEhName,
+                                eventTC.getName()) });
                 return false;
             }
         }
@@ -622,7 +616,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                         MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 
                         new String[]{NLS.bind(
                                 Messages.TestCaseEditorContReference,
-                            new Object[]{refName})});  
+                            refName)});  
                     return false;
                 }
                 

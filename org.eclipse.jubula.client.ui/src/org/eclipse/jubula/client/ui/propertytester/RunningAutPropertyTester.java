@@ -53,14 +53,14 @@ public class RunningAutPropertyTester extends PropertyTester {
             }
 
             LOG.warn(NLS.bind(Messages.PropertyTesterPropertyNotSupported,
-                    new String[] { property }));
+                    property));
             return false;
         }
 
         String receiverClass = receiver != null ? receiver.getClass().getName()
                 : "null"; //$NON-NLS-1$
         LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
-                new String[] { receiverClass }));
+                receiverClass));
         return false;
     }
 

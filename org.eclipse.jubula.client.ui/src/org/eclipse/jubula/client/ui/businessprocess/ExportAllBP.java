@@ -86,7 +86,7 @@ public class ExportAllBP {
     public void showAbortExport(JBException gde) {
         Plugin.getDefault().writeErrorLineToConsole(
             NLS.bind(Messages.ExportAllBPErrorExportFailed,
-                    new Object [] {gde.getMessage()}),
+                    gde.getMessage()),
             true);
     }
 
@@ -97,7 +97,8 @@ public class ExportAllBP {
     public void showCancelExport() {
         Plugin.getDefault().writeErrorLineToConsole(
                 NLS.bind(Messages.ExportAllBPErrorExportFailed,
-                new Object [] {"Export operation cancelled by user"}),
+                        org.eclipse.jubula.client.ui.i18n.Messages.
+                        ImportOperationCancelledByUser),
             true);
     }
 

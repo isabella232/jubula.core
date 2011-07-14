@@ -44,7 +44,7 @@ public class KeywordSearchPage extends AbstractSearchPage {
 
         StructureSearchData searchData = new StructureSearchData(
                 NLS.bind(Messages.SimpleSearchPageSearchName,
-                        new Object[] { searchString }), searchString,
+                        searchString), searchString,
                 caseSensitive, regEx, typesToSearchIn);
 
         return new StructureSearchQuery(searchData);

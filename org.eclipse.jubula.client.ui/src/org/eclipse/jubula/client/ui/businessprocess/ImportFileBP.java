@@ -285,11 +285,11 @@ public class ImportFileBP implements IProjectNameConflictResolver,
      *              error messages.
      */
     private void showCancelImport(IProgressConsole console) {
-        console.writeErrorLine(
-            NLS.bind(org.eclipse.jubula.client.ui.i18n.Messages.
-                    ImportFileActionErrorImportFailed,
-                new Object [] {org.eclipse.jubula.client.ui.i18n.Messages.
-                        ImportOperationCancelledByUser}));
+        console.writeErrorLine(NLS
+                .bind(org.eclipse.jubula.client.ui.i18n.Messages.
+                        ImportFileActionErrorImportFailed,
+                        org.eclipse.jubula.client.ui.i18n.Messages.
+                        ImportOperationCancelledByUser));
     }
 
     /**

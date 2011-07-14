@@ -44,7 +44,7 @@ public class TestDataSearchPage extends AbstractSearchPage {
         
         TestDataSearchData searchData = new TestDataSearchData(
                 NLS.bind(Messages.TestDataSearchPageSearchName,
-                    new Object[] { searchString }), searchString, caseSensitive,
+                    searchString), searchString, caseSensitive,
                     regEx, typesToSearchIn);
 
         return new TestDataSearchQuery(searchData);

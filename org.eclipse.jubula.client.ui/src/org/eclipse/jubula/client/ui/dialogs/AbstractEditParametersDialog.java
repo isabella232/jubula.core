@@ -1191,7 +1191,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
                 setErrorMessage(
                         NLS.bind(
                                 Messages.EditParametersDialogDuplicateParamName,
-                                new String [] {param.getName()}));
+                                param.getName()));
                 return false;
             }
         }

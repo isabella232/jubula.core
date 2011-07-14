@@ -177,7 +177,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             if (cleanupInterval > 0) {
                 Job job = new Job(NLS.bind(
                         Messages.UIJobCleaningTestResultFromDB,
-                        new String[] { project.getName() })) {
+                        project.getName())) {
                     public IStatus run(IProgressMonitor monitor) {
                         TestResultPM.cleanTestresultDetails(cleanupInterval,
                                 projGUID, projMajVer, projMinVer);

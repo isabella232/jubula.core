@@ -160,7 +160,7 @@ public class CompletenessBP implements
         final Locale wl) {
         if (runInJob) {
             final String jobName = NLS.bind(Messages.UIJobRunCompletenessCheck,
-                    new String[] { root.getName() });
+                    root.getName());
             Job job = new Job(jobName) {
                 @SuppressWarnings("synthetic-access")
                 public IStatus run(IProgressMonitor monitor) {

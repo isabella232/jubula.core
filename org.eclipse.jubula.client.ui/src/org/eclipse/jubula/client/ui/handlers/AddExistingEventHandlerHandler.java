@@ -149,7 +149,7 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
             Utils.createMessageDialog(MessageIDs.E_ENOUGH_EVENT_HANDLER, null, 
                     new String[]{NLS.bind(
                             Messages.AddEventHandlerDialogEnoughEventHandler,
-                            new Object[]{parentNode.getName()})});
+                            parentNode.getName())});
             return true;
         }
         return false;

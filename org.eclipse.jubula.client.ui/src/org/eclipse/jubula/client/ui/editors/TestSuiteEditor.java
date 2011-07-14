@@ -204,7 +204,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_EX,
                         tcName, new String[]{
                             NLS.bind(Messages.TestCaseEditorCompNameError,
-                                new Object[]{compNamesPair.getFirstName()}) 
+                                compNamesPair.getFirstName()) 
                             + Messages.TestCaseEditorEmptyCompName});
                 return false;
             }
@@ -213,7 +213,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 Utils.createMessageDialog(MessageIDs.E_CANNOT_SAVE_EDITOR_TC_EX,
                         tcName, new String[]{NLS.bind(
                                 Messages.TestCaseEditorCompNameError,
-                                new Object[]{compNamesPair.getFirstName()}) 
+                                compNamesPair.getFirstName()) 
                             + Messages.TestCaseEditorWrongCompName});
                 return false;
             }

@@ -155,7 +155,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
                         throws InterruptedException {
                         monitor.beginTask(
                             NLS.bind(Messages.ProjectWizardCreatingProject,
-                                    new Object[] { name }),
+                                    name),
                             IProgressMonitor.UNKNOWN);
                         try {
                             createNewProject(name, monitor);

@@ -139,7 +139,7 @@ public class ExportAllHandler extends AbstractProjectHandler {
                         SWT.ICON_WARNING | SWT.OK);
                     mb.setMessage(NLS.bind(
                         Messages.ExportAllActionDirectoryNotEmpty, 
-                        new Object[] { tempDirName}));
+                        tempDirName));
                     mb.open();
                 } else {
                     done = true;

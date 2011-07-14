@@ -147,8 +147,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
          * {@inheritDoc}
          */
         public String getLabel() {
-            return NLS.bind(Messages.GDProblemViewOpenTestSuiteEditor, 
-                    new String[] {m_nodeName});
+            return NLS.bind(Messages.GDProblemViewOpenTestSuiteEditor,
+                    m_nodeName);
         }
 
         /**
@@ -203,7 +203,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
          */
         public String getLabel() {
             return NLS.bind(Messages.GDProblemViewOpenObjectMappingEditor, 
-                    new String[] {m_nodeName});
+                    m_nodeName);
         }
 
         /**
