@@ -44,6 +44,11 @@
 		<module>../org.eclipse.jubula.client.cmd</module>
 		<module>../org.eclipse.jubula.client.cmd.controller</module>
         <module>../org.eclipse.jubula.client.autagent</module>
+        <module>../org.eclipse.jubula.launch</module>
+        <module>../org.eclipse.jubula.launch.ui</module>
+        <module>../org.eclipse.jubula.feature.launch.java</module>
+        <module>../org.eclipse.jubula.launch.java</module>
+        <module>../org.eclipse.jubula.launch.java.ui</module>
 	</modules>
 
 	<url>http://www.eclipse.org/jubula</url>

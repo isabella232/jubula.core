@@ -22,12 +22,8 @@ import org.eclipse.jubula.launch.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -61,13 +57,6 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      */
     private Label m_autIdLabel;
 
-    /** 
-     * checkbox for IS_ACTIVE
-     * 
-     * @see AutLaunchConfigurationConstants#ACTIVE_KEY
-     */
-    private Button m_activateTestSupportCheckbox;
-
     /**
      * 
      * {@inheritDoc}
@@ -79,21 +68,7 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
         Composite composite = new Composite(parent, SWT.NONE);
         GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
         composite.setLayout(new GridLayout(2, false));
-        m_activateTestSupportCheckbox = createCheckButton(
-                composite, 
-                Messages.AutLaunchConfigurationTab_ActiveCheckbox_label);
-        ControlDecoration testSupportCheckboxDecoration = 
-            new ControlDecoration(m_activateTestSupportCheckbox, SWT.RIGHT);
-        testSupportCheckboxDecoration.setDescriptionText(
-                Messages.AutLaunchConfigurationTab_ActiveCheckbox_info);
-        testSupportCheckboxDecoration.setImage(infoImage);
-        testSupportCheckboxDecoration.setMarginWidth(2);
-        testSupportCheckboxDecoration.setShowOnlyOnFocus(false);
 
-        new GridData();
-        GridDataFactory.swtDefaults().span(2, 1).applyTo(
-                m_activateTestSupportCheckbox);
-        
         m_autIdLabel = new Label(composite, SWT.NONE);
         m_autIdLabel.setText(
                 Messages.AutLaunchConfigurationTab_AutIdTextField_label);
@@ -120,20 +95,6 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
             }
         });
         
-        m_activateTestSupportCheckbox.addSelectionListener(
-                new SelectionAdapter() {
-            
-                    public void widgetSelected(SelectionEvent e) {
-                        boolean enable = 
-                            m_activateTestSupportCheckbox.getSelection();
-                        m_autIdText.setEnabled(enable);
-                        m_autIdLabel.setEnabled(enable);
-                        setDirty(true);
-                        updateLaunchConfigurationDialog();
-                    }
-                    
-                });
-        
         setControl(composite);
     }
 
@@ -142,9 +103,6 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      * {@inheritDoc}
      */
     public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-        configuration.setAttribute(
-                AutLaunchConfigurationConstants.ACTIVE_KEY, 
-                AutLaunchConfigurationConstants.ACTIVE_DEFAULT_VALUE);
         configuration.setAttribute(
                 AutLaunchConfigurationConstants.AUT_ID_KEY, 
                 AutLaunchConfigurationConstants.AUT_ID_DEFAULT_VALUE);
@@ -155,17 +113,6 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      * {@inheritDoc}
      */
     public void initializeFrom(ILaunchConfiguration configuration) {
-        try {
-            boolean isActive = configuration.getAttribute(
-                    AutLaunchConfigurationConstants.ACTIVE_KEY, 
-                    AutLaunchConfigurationConstants.ACTIVE_DEFAULT_VALUE);
-            m_activateTestSupportCheckbox.setSelection(isActive);
-            m_autIdLabel.setEnabled(isActive);
-            m_autIdText.setEnabled(isActive);
-        } catch (CoreException ce) {
-            LOG.error("An error occurred while initializing 'active' checkbox.", ce); //$NON-NLS-1$
-        }
-
         try {
             m_autIdText.setText(
                     configuration.getAttribute(
@@ -181,9 +128,6 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      * {@inheritDoc}
      */
     public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        configuration.setAttribute(
-                AutLaunchConfigurationConstants.ACTIVE_KEY, 
-                m_activateTestSupportCheckbox.getSelection());
         configuration.setAttribute(
                 AutLaunchConfigurationConstants.AUT_ID_KEY, 
                 m_autIdText.getText());

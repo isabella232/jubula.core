@@ -81,7 +81,7 @@ public class GDAgent {
         args[Constants.ARG_AUT_NAME] = 
             System.getenv(AutConfigConstants.AUT_NAME);
         // true for agent is activated
-        args[Constants.ARG_AGENT_SET] = "true"; //$NON-NLS-1$
+        args[Constants.ARG_AGENT_SET] = CommandConstants.RC_COMMON_AGENT_ACTIVE;
 
         String [] fileNames = autServerClassPath.split(
                 System.getProperty("path.separator")); //$NON-NLS-1$
