@@ -23,6 +23,7 @@ import java.util.Set;
 import javax.swing.KeyStroke;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
@@ -55,7 +56,6 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
-import org.eclipse.jubula.tools.utils.StringParsing;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
@@ -380,7 +380,7 @@ public class RobotSwtImpl implements IRobot {
             EnvironmentUtils.getProcessEnvironment().getProperty(
                     RcpAccessorConstants.KEYBOARD_LAYOUT);
         try {
-            Locale locale = StringParsing.toLocale(keyboardLayout);
+            Locale locale = LocaleUtils.toLocale(keyboardLayout);
             m_keyboardHelper = new KeyboardHelper(locale);
         } catch (RuntimeException e) {
             final String msg = "Error creating KeyboardHelper with Locale: "  //$NON-NLS-1$
