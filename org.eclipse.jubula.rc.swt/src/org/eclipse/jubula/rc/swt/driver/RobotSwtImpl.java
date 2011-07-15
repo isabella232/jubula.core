@@ -60,7 +60,6 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.SWTException;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -325,25 +324,6 @@ public class RobotSwtImpl implements IRobot {
             return scrollTarget;
         }
 
-        /**
-         * Thread-safe call of  parent.setOrigin(x, y).
-         * @param parent a ScrolledComposite
-         * @param x the x coordinate of the content to appear in the top left corner 
-         * @param y the y coordinate of the content to appear in the top left corner
-         * @see  ScrolledComposite#setOrigin(int, int)
-         */
-        private void setOrigin(final ScrolledComposite parent, 
-                final int x, final int y) {
-            
-            m_queuer.invokeAndWait("RobotSwtImpl.Scroller.setOrigin", //$NON-NLS-1$
-                    new IRunnable() { 
-
-                    public Object run() throws StepExecutionException {
-                        parent.setOrigin(x, y);
-                        return null;
-                    }
-                });
-        }
     }
 
     /**
@@ -701,27 +681,6 @@ public class RobotSwtImpl implements IRobot {
                 }
             }
         }
-    }
-
-    /**
-     * Returns an adjacent point of <code>a</code> mostly inside <code>bounds</code>
-     * @param bounds bounding box in which to find the adjacent point
-     * @param point a point
-     * @return an adjacent point
-     */
-    private Point getAdjacentPoint(Rectangle bounds, Point point) {
-        Point result = new Point(point.x, point.y);
-        if (point.x > bounds.x) {
-            result.x -= 2;
-        } else {
-            result.x += 2;
-        }
-        if (point.y > bounds.y) {
-            result.y -= 2;
-        } else {
-            result.y += 2;
-        }
-        return result;
     }
 
     /**
@@ -1474,22 +1433,6 @@ public class RobotSwtImpl implements IRobot {
         });
     }
     
-    /**
-     * Gets the parent of the given Widget.
-     * This method runs in the GUI-Thread.
-     * @param component a Widget
-     * @return the parent
-     * @see SwtUtils#getWidgetParent(Widget)
-     */
-    private Widget getParent(final Widget component) {
-        return (Widget)m_queuer.invokeAndWait("getParent", new IRunnable() { //$NON-NLS-1$
-            public Object run() throws StepExecutionException {
-                return SwtUtils.getWidgetParent(component);
-            }
-        });
-    }
-    
-   
     /**
      * Posts a Key-Press-event with the given modifier and the given character.
      * @param graphicsComponent a graphicsComponent.
