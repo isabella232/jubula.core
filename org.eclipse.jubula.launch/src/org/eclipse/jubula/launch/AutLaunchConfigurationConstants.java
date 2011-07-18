@@ -18,20 +18,14 @@ package org.eclipse.jubula.launch;
  */
 public final class AutLaunchConfigurationConstants {
 
+    /** ID for launch mode for starting an AUT */
+    public static final String LAUNCH_MODE_AUT = "ui_test"; //$NON-NLS-1$
+    
     /** key for AUT ID property */
     public static final String AUT_ID_KEY = "org.eclipse.jubula.launch.AUT_ID"; //$NON-NLS-1$
     
     /** default value for AUT ID property */
     public static final String AUT_ID_DEFAULT_VALUE = ""; //$NON-NLS-1$
-    
-    /** 
-     * key for IS_ACTIVE property (whether automated test support is enabled 
-     * for the launch). this is a boolean property. 
-     */
-    public static final String ACTIVE_KEY = "org.eclipse.jubula.launch.IS_ACTIVE"; //$NON-NLS-1$
-
-    /** default value for IS_ACTIVE property */
-    public static final boolean ACTIVE_DEFAULT_VALUE = false;
     
     /**
      * Private constructor to prevent instantiation of "constants" class.

@@ -14,5 +14,17 @@
          </run>
       </application>
    </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.jubula.app.autagent"
+            name="Stop AUT Agent">
+         <property
+               name="appName"
+               value="Stop AUT Agent">
+         </property>
+      </product>
+   </extension>
 
 </plugin>

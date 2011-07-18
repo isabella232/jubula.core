@@ -39,6 +39,7 @@ import org.eclipse.jubula.rc.common.listener.IAutListenerAppender;
 import org.eclipse.jubula.rc.common.registration.AgentRegisterAut;
 import org.eclipse.jubula.rc.common.registration.IRegisterAut;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.CommunicationException;
@@ -193,7 +194,8 @@ public abstract class AUTServer {
         }
         // check if agent is used
         if (args.length == Constants.MIN_ARGS_REQUIRED 
-                && args[Constants.ARG_AGENT_SET].equals("true")) { //$NON-NLS-1$
+                && args[Constants.ARG_AGENT_SET].equals(
+                        CommandConstants.RC_COMMON_AGENT_ACTIVE)) {
             m_isAgentSet = true;
         }
     }

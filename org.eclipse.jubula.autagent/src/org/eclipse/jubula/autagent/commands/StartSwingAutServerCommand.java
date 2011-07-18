@@ -119,7 +119,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
             createAutServerClasspath(autServerClasspath, cmds, parameters);
             cmds.addAll(autAgentArgs);
             // information for aut server that agent is not used
-            cmds.add("false"); //$NON-NLS-1$
+            cmds.add(CommandConstants.RC_COMMON_AGENT_INACTIVE);
         } else { 
             String serverBasePath = createServerBasePath(); 
             autServerClasspath.append(PATH_SEPARATOR)
@@ -130,6 +130,18 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         }
         cmds.addAll(createAutArguments(parameters));
         return (String[])cmds.toArray(new String[cmds.size()]);
+    }
+    
+    /**
+     * 
+     * @return an array of Strings representing the launch classpath.
+     */
+    public String[] getLaunchClasspath() {
+        StringBuffer autServerClasspath = new StringBuffer();
+        createServerClasspath(autServerClasspath);
+        autServerClasspath.append(PATH_SEPARATOR)
+            .append(getRcBundleClassPath());
+        return autServerClasspath.toString().split(PATH_SEPARATOR);
     }
     
     /**     * Creates the AUT settings.

@@ -6,6 +6,7 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
+ 
  <plugin>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabs">
@@ -17,7 +18,21 @@
          <placement
                after="org.eclipse.debug.ui.commonTab">
          </placement>
+         <associatedDelegate
+               delegate="org.eclipse.jubula.launch.java.swingDelegate">
+         </associatedDelegate>
       </tab>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="org.eclipse.jubula.launch.java.ui.SwingAutLaunchConfigurationTabGroup"
+            id="org.eclipse.jubula.launch.java.ui.AutTabGroup"
+            type="org.eclipse.jdt.launching.localJavaApplication">
+         <launchMode
+               mode="ui_test">
+         </launchMode>
+      </launchConfigurationTabGroup>
    </extension>
 
 </plugin>

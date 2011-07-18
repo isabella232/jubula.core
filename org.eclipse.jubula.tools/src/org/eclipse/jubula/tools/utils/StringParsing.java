@@ -14,7 +14,6 @@ package org.eclipse.jubula.tools.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -49,26 +48,6 @@ public class StringParsing {
      */
     private StringParsing() {
         // this is an utility class
-    }
-    
-    /**
-     * Converts a Locale.toString() value into a Locale.
-     * @param localeToString a Locale.toString() value. Must have the Format:
-     * language_country!
-     * @return a Locale
-     */
-    public static Locale toLocale(String localeToString) {
-        if (localeToString == null) {
-            return null;
-        }
-        String[] locales = localeToString.split("_"); //$NON-NLS-1$
-        
-        Validate.isTrue(locales.length == 2, 
-                "Could not create locale for '" + localeToString  //$NON-NLS-1$
-                + "' because it is not in the format '<language>_<country>'"); //$NON-NLS-1$
-        final Locale locale = new Locale(locales[0], locales[1]);
-        
-        return locale;
     }
     
     /**

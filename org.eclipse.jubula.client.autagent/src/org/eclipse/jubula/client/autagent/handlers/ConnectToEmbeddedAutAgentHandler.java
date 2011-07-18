@@ -32,6 +32,10 @@ import org.eclipse.jubula.client.ui.utils.ServerManager.Server;
 public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler 
         implements IHandler {
 
+    /** ID of "Connect to Embedded AUT Agent" command */
+    public static final String CONNECT_TO_EMBEDDED_AGENT_CMD_ID = 
+        "org.eclipse.jubula.client.autagent.commands.ConnectToEmbeddedAutAgent"; //$NON-NLS-1$
+    
     /** 
      * hostname to use for starting and accessing the embedded AUT Agent 
      */
