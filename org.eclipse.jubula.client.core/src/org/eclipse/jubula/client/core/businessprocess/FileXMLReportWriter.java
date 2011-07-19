@@ -10,17 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.net.URL;
-import java.util.Enumeration;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -35,8 +30,6 @@ import org.dom4j.io.DocumentResult;
 import org.dom4j.io.DocumentSource;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 
@@ -113,61 +106,12 @@ public class FileXMLReportWriter implements IXMLReportWriter {
             XMLWriter fileWriter = new XMLWriter(writer, htmlFormat);
             fileWriter.write(transformedDoc);
             fileWriter.close();
-            copyAdditionalFiles(htmlFile.getParentFile());
         } catch (TransformerConfigurationException e1) {
             LOG.error(Messages.ErrorFileWriting + StringConstants.DOT, e1);
         } catch (TransformerException e) {
             LOG.error(Messages.ErrorFileWriting + StringConstants.DOT, e);
         } catch (IOException e) {
             LOG.error(Messages.ErrorFileWriting + StringConstants.DOT, e);
-        }
-    }
-
-    /**
-     * @param additionalFilesDir
-     *            the path to the directory where to place the additional files
-     */
-    private void copyAdditionalFiles(File additionalFilesDir) {
-        File destDir = new File(additionalFilesDir, "html"); //$NON-NLS-1$
-        if (!destDir.exists()) {
-            destDir.mkdirs();
-        }
-        Enumeration entries = Activator.getDefault().getBundle()
-                .findEntries("resources/html", "*.*", false); //$NON-NLS-1$ //$NON-NLS-2$
-        while (entries.hasMoreElements()) {
-            Object o = entries.nextElement();
-            try {
-                if (o instanceof URL) {
-                    BufferedInputStream bis = null;
-                    BufferedOutputStream bos = null;
-                    try {
-                        URL u = (URL)o;
-                        URL fu = FileLocator.toFileURL(u);
-                        InputStream is = fu.openStream();
-                        bis = new BufferedInputStream(is);
-                        String filePath = fu.getFile();
-                        String fileName = filePath.substring(filePath
-                                .lastIndexOf("/")); //$NON-NLS-1$
-                        FileOutputStream os = new FileOutputStream(new File(
-                                destDir, fileName));
-                        bos = new BufferedOutputStream(os);
-
-                        int c;
-                        while ((c = bis.read()) != -1) {
-                            bos.write(c);
-                        }
-                    } finally {
-                        if (bis != null) {
-                            bis.close();
-                        }
-                        if (bos != null) {
-                            bos.close();
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                LOG.error(e);
-            }
         }
     }
 }

@@ -6,8 +6,63 @@
 		<html>
 			<HEAD>
 				<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>	
-				<link rel="stylesheet" href="html/reportStyle.css"/>
-				<style> body {font-family:Arial; }
+				<style> 
+				body {
+					font-family:Arial;
+				}
+				
+				/* Turn off list bullets */
+				ul.htmlReport li {
+					list-style: none;
+				}
+
+				ul.htmlReport,ul.htmlReport ul,ul.htmlReport li {
+					margin: 0;
+					padding: 0;
+				}
+
+				/* This controls the indent for each sublist */
+				ul.htmlReport ul {
+					padding-left: 14px;
+				}
+
+				@media screen { /* Provide space for our own "bullet" inside the link */
+					ul.htmlReport li a {
+						padding-left: 14px;
+						text-decoration: none;
+					}
+					/* Show "bullets" in the links, depending on the class of the
+				     LI that the link's in */
+					ul.htmlReport li.htmlReportOpen a {
+						background: url(data:image/gif;base64,R0lGODlhCwALAPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAALAAsAAAgpAP8BGEiQ4D+BBxMeBLBQYUKGCB1GZFiQYkOJECE6zChxYkWDHUN2DAgAOw==) center left no-repeat;
+					}
+					ul.htmlReport li.htmlReportClosed a {
+						background: url(data:image/gif;base64,R0lGODlhCwALAPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAALAAsAAAgqAP8BGEiQ4D+BBxMeBLAwIcOGCCFGZFiQosSHEx1qjKhwYkWDHUOKVBgQADs=) center left no-repeat;
+					}
+				}
+
+				@media print { /* Disable link decoration */
+					ul.htmlReport li a {
+						text-decoration: none;
+					}
+					/* Show "content-bullets" in the links, depending on the class of the
+				    LI that the link's in */
+					ul.htmlReport  li.htmlReportOpen a[href ^="#"] big :before {
+						content: "[\2013] ";
+					}
+					ul.htmlReport li.htmlReportClosed a[href ^="#"] big :before {
+						content: "[+] ";
+					}
+				}
+
+				/* Actually show and hide sublists */
+				ul.htmlReport li.htmlReportOpen ul {
+					display: block;
+				}
+
+				ul.htmlReport li.htmlReportClosed ul {
+					display: none;
+				}
 				</style>
 				<script type="text/javascript">
 				    function toggle(element) {
@@ -31,7 +86,7 @@
 					</xsl:if>
 				</title>
 			</HEAD>
-			<body bgcolor="#DDDDDD">
+			<body>
 				<table border="0" width="95%" align="center"><tr><td>
 					<h2>
 						Test Result Report
@@ -40,60 +95,60 @@
 						</xsl:if>
 					
 					</h2>
-					<table border="0" width="50%">
+					<table border="0" width="100%">
 						<tr bgcolor="#DDDDDD">
-							<th colspan="2" align="left"> Project Information
+							<th colspan="2" align="left"> Execution Information
 							</th>
 						</tr>
 						<tr>
-							<td align="left" width="175">Name</td>
+							<td align="left" width="200">Project Name</td>
 							<td><xsl:value-of select="report/project/name"/>
 							</td>
 						</tr>
 						<tr>
-							<td align="left" width="175">Start Time</td>
+							<td align="left" width="200">Start Time</td>
 							<td><xsl:value-of
 									select="report/project/test-start"/>
 							</td>
 						</tr>
 						<tr>
-							<td align="left" width="175">End Time</td>
+							<td align="left" width="200">End Time</td>
 							<td><xsl:value-of select="report/project/test-end"/>
 								
 							</td>
 						</tr>
 						<tr>
-							<td align="left" width="175">Duration</td>
+							<td align="left" width="200">Duration</td>
 							<td><xsl:value-of select="report/project/test-length"/>
 								
 							</td>
 						</tr>
 						<tr>
-							<td align="left" width="175">Expected Test Steps</td>
+							<td align="left" width="200">Expected Test Steps</td>
 							<td><xsl:value-of select="report/project/expectedNumSteps"/>
 								
 							</td>
 						</tr>
 						<tr>
-							<td align="left" width="175">Executed Test Steps</td>
+							<td align="left" width="200">Executed Test Steps</td>
 							<td><xsl:value-of select="report/project/numStepsTested"/>
 								
 							</td>
 						</tr>
 						<tr>
-							<td align="left" width="175">Event Handler Test Steps</td>
+							<td align="left" width="200">Event Handler Test Steps</td>
 							<td><xsl:value-of select="report/project/numEventHandlerSteps"/>
 								
 							</td>
 						</tr>
 						<tr>
-							<td align="left" width="175">Failed Test Steps</td>
+							<td align="left" width="200">Failed Test Steps</td>
 							<td><xsl:value-of select="report/project/numFailedSteps"/>
 								
 							</td>
 						</tr>
 						<tr>
-							<td align="left" width="175">Language</td>
+							<td align="left" width="200">Language</td>
 							<td><xsl:value-of select="report/project/language"/>
 								
 							</td>
@@ -101,7 +156,7 @@
 						<xsl:if test="report/project/error-message != 0">
 						
 							<tr>
-								<td align="left" width="175">Error Message</td>
+								<td align="left" width="200">Error Message</td>
 								<td>
 									<font color="red">
 										<xsl:value-of select="report/project/error-message"/>
@@ -120,25 +175,38 @@
 	
 	<xsl:template match="testsuite">
 		<br></br>
-		<table border="0" width="50%">
-			<tr bgcolor="#DDDDDD">
-				<th colspan="2" align="left"> Test Suite Information
-				</th>
-			</tr>
+		<table border="0" width="100%">
+			<xsl:choose>
+				<xsl:when test="status = 1">
+					<tr bgcolor="lightgreen">
+						<th colspan="2" align="left">Test Suite Information</th>
+					</tr>
+				</xsl:when>
+				<xsl:when test="status = 6">
+					<tr bgcolor="lightgray">
+						<th colspan="2" align="left">Test Suite Information</th>
+					</tr>
+				</xsl:when>
+				<xsl:otherwise>
+					<tr bgcolor="#DD0000">
+						<th colspan="2" align="left">Test Suite Information</th>
+					</tr>
+				</xsl:otherwise>
+			</xsl:choose>
 			<tr>
-				<td align="left" width="175">Name</td>
+				<td align="left" width="200">Name</td>
 				<td><xsl:value-of select="name"/>
 				</td>
 			</tr>
 			<tr>
-				<td align="left" width="175">Status</td>
+				<td align="left" width="200">Status</td>
 				<td>
 					<xsl:choose>
 						<xsl:when test="status = 1">
 							<font color="green">SUCCESSFUL</font>
 						</xsl:when>
 						<xsl:when test="status = 6">
-							<font color="#000000">STOPPED</font>
+							<font color="lightgray">STOPPED</font>
 						</xsl:when>
 						<xsl:otherwise><font color="#DD0000">FAILED</font>
 						</xsl:otherwise>
@@ -164,7 +232,7 @@
 									<xsl:call-template name="writeColored">
 										<!-- quoted String -->
 										<xsl:with-param name="text"
-											select="'Test Case'"/>
+											select="'TC'"/>
 									</xsl:call-template>
 									</A>
 									<ul>
@@ -178,7 +246,7 @@
 									<xsl:call-template name="writeColored">
 										<!-- quoted String -->
 										<xsl:with-param name="text"
-											select="'Test Case'"/>
+											select="'TC'"/>
 									</xsl:call-template>
 									</A>
 									<ul>
@@ -208,12 +276,12 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Server</td>
+			<td>Hostname</td>
 			<td><xsl:value-of select="server"/>
 			</td>
 		</tr>
 		<tr>
-			<td>CmdLine Param</td>
+			<td>AUT Arguments</td>
 			<td><xsl:value-of select="cmdline-parameter"/>
 			</td>
 		</tr>
@@ -242,7 +310,7 @@
 				<A HREF="#testcase" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
-						<xsl:with-param name="text" select="'Test Case'"/>
+						<xsl:with-param name="text" select="'TC'"/>
 					</xsl:call-template>
 					</A>
 					<xsl:variable name="child_nodes" 
@@ -260,7 +328,7 @@
 				<A HREF="#testcase" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
-						<xsl:with-param name="text" select="'Test Case'"/>
+						<xsl:with-param name="text" select="'TC'"/>
 					</xsl:call-template>
 					</A>
 					<xsl:variable name="child_nodes" 
@@ -284,7 +352,7 @@
 				<A HREF="#step" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
-						<xsl:with-param name="text" select="''"/>
+						<xsl:with-param name="text" select="'CAP'"/>
 					</xsl:call-template>
 					</A>
 					<UL>
@@ -304,13 +372,12 @@
 								<td>:</td>
 								<td><xsl:value-of select="component-type"/></td>
 							</tr>
-							<tr><td colspan="3"><hr></hr></td></tr>
+							<tr><td colspan="3"><hr/></td></tr>
 							<tr>
-								<td>Action Type</td>
+								<td>Action</td>
 								<td>:</td>
 								<td><xsl:value-of select="action-type"/></td>
 							</tr>
-							<tr><td colspan="3"><hr></hr></td></tr>
 							<xsl:apply-templates select="parameter"/>
 							<xsl:apply-templates select="error"/>
 						</table>
@@ -322,7 +389,7 @@
 				<A HREF="#step" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
-						<xsl:with-param name="text" select="''"/>
+						<xsl:with-param name="text" select="'CAP'"/>
 					</xsl:call-template>
 					</A>
 					<UL>
@@ -332,7 +399,7 @@
                                 <td>:</td>
                                 <td><xsl:value-of select="timestamp"/></td>
                             </tr>
-                            <tr><td colspan="3"><hr></hr></td></tr>
+                            <tr><td colspan="3"><hr/></td></tr>
                             <tr>
 								<td nowrap="true">Component Name</td>
 								<td>:</td>
@@ -343,13 +410,12 @@
 								<td>:</td>
 								<td><xsl:value-of select="component-type"/></td>
 							</tr>
-							<tr><td colspan="3"><hr></hr></td></tr>
+							<tr><td colspan="3"><hr/></td></tr>
 							<tr>
-								<td>Action Type</td>
+								<td>Action</td>
 								<td>:</td>
 								<td><xsl:value-of select="action-type"/></td>
 							</tr>
-							<tr><td colspan="3"><hr></hr></td></tr>
 							<xsl:apply-templates select="parameter"/>
 							<xsl:apply-templates select="error"/>
 						</table>
@@ -361,6 +427,7 @@
 	</xsl:template>
 
 	<xsl:template match="parameter">
+		<tr><td colspan="3"><hr/></td></tr>
 		<tr>
 			<td>Parameter Name</td>
 			<td>:</td>
@@ -376,12 +443,11 @@
 			<td>:</td>
 			<td><xsl:value-of select="parameter-value"/></td>
 		</tr>
-		<tr><td colspan="3"><hr></hr></td></tr>
 	</xsl:template>
 				
 		
 	<xsl:template match="error">
-		
+		<tr><td colspan="3"><hr/></td></tr>
 		<tr><th colspan="3">Error Details</th></tr>
 		<tr>
 			<td>Error Type</td>
@@ -488,7 +554,7 @@
 				</xsl:when>
 				<xsl:when test="status = 2">
 					<font color="#DD0000"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (error occurred)</font>
+						<xsl:value-of select="$text"/> (failed)</font>
 				</xsl:when>
 				<xsl:when test="status = 3">
 					<font color="#DD0000"><xsl:value-of select="name"/> -
@@ -500,8 +566,7 @@
 				</xsl:when>
 				<xsl:when test="status = 5">
 					<font color="#DD0000"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (error occurred in
-						child)</font>
+						<xsl:value-of select="$text"/> (nested error)</font>
 				</xsl:when>
 				<xsl:when test="status = 7">
 					<font color="#DD0000"><xsl:value-of select="name"/> -
@@ -516,7 +581,7 @@
 						<xsl:value-of select="$text"/> (test aborted due to internal error)</font>
 				</xsl:when>
 				<xsl:otherwise>
-					<font color="#000000"><xsl:value-of select="name"/> -
+					<font color="lightgray"><xsl:value-of select="name"/> -
 						<xsl:value-of select="$text"/> (testing)</font>
 				</xsl:otherwise>
 			</xsl:choose>
