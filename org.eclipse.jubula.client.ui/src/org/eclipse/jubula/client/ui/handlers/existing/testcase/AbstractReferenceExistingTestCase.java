@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
+import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -132,6 +133,9 @@ public abstract class AbstractReferenceExistingTestCase
                                     .handlePMExceptionForMasterSession(e);
                             tce.reOpenEditor(inpNode);
                         }
+                        InteractionEventDispatcher.getDefault()
+                            .fireProgammableSelectionEvent(
+                                new StructuredSelection(specTcToInsert));
                     }
                     tce.getEditorHelper().getEditSupport().lockWorkVersion();
                     tce.getEditorHelper().setDirty(true);
