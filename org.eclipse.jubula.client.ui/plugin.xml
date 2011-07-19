@@ -1019,9 +1019,8 @@
   </command>
   <command
         categoryId="org.eclipse.jubula.client.ui.commands"
-        id="org.eclipse.jubula.client.ui.commands.OMEShowUnusedComponentNames"
-        name="%OMEShowUnusedComponentNames">
-        <state class="org.eclipse.jface.commands.ToggleState:false" id="org.eclipse.ui.commands.toggleState" />
+        id="org.eclipse.jubula.client.ui.commands.OMEDeleteUnusedComponentNames"
+        name="%OMEDeleteUnusedComponentNames">
   </command>
   <command
         categoryId="org.eclipse.jubula.client.ui.commands"
@@ -2833,8 +2832,8 @@
 			commandId="org.eclipse.jubula.client.ui.commands.sort.type">
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.handlers.OMEShowUnusedComponentNamesHandler"
-			commandId="org.eclipse.jubula.client.ui.commands.OMEShowUnusedComponentNames">
+			class="org.eclipse.jubula.client.ui.handlers.OMEDeleteUnusedComponentNamesHandler"
+			commandId="org.eclipse.jubula.client.ui.commands.OMEDeleteUnusedComponentNames">
 		</handler>
 		<handler
 			class="org.eclipse.jubula.client.ui.handlers.filter.ReusedData"

@@ -115,7 +115,6 @@ import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher.IEditorDirtyStateListener;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.ObjectMappingEditorPatternFilter;
-import org.eclipse.jubula.client.ui.handlers.OMEShowUnusedComponentNamesHandler;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
@@ -167,7 +166,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.FilteredTree;
-import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.swt.IFocusService;
 
@@ -184,7 +182,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 IMultiTreeViewerContainer, IPropertyListener {
 
     /** Show-menu */
-    public static final String SHOW_ID = PlatformUI.PLUGIN_ID + ".ShowSubMenu"; //$NON-NLS-1$
+    public static final String CLEANUP_ID = PlatformUI.PLUGIN_ID + ".CleanupSubMenu"; //$NON-NLS-1$
     
     /** the logger */
     private static final Log LOG = 
@@ -1327,10 +1325,9 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 CommandIDs.SHOW_RESPONSIBLE_NODE_COMMAND_ID);
         mgr.add(new Separator());
         MenuManager submenuNew = new MenuManager(
-                Messages.ObjectMappingEditorShowMenu, SHOW_ID);
-        CommandHelper.createContributionItem(submenuNew,
-                CommandIDs.OME_SHOW_UNUSED_COMPONENT_NAME_COMMAND_ID,
-                CommandContributionItem.STYLE_CHECK);
+                Messages.ObjectMappingEditorCleanupMenu, CLEANUP_ID);
+        CommandHelper.createContributionPushItem(submenuNew,
+                CommandIDs.OME_DELETE_UNUSED_COMPONENT_NAME_COMMAND_ID);
         mgr.add(submenuNew);
     }
 
@@ -2236,7 +2233,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             m_editorHelper = new JBEditorHelper(this);
         }
         m_editorHelper.init(site, input);
-        OMEShowUnusedComponentNamesHandler.updateCommandState(false);
     }
 
     /**

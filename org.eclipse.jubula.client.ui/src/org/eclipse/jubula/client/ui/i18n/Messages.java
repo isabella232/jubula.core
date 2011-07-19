@@ -186,6 +186,10 @@ public class Messages extends NLS {
     public static String ClassPathDialogDir;
     public static String ClassPathDialogFile;
     public static String ClassPathDialogFileDialogMessage;
+    public static String CleanupComponentNamesDialogTitle;
+    public static String CleanupComponentNamesDialogMessage;
+    public static String CleanCompNamesNoResultDialogTitle;
+    public static String CleanCompNamesNoResultDialogMsg;
     public static String ClientCollectingInformation;
     public static String ClientDisconnectFromAutAgentMessage;
     public static String ClientDisconnectFromAutAgentTitle;
@@ -268,6 +272,7 @@ public class Messages extends NLS {
     public static String DeleteTreeItemActionOMEditorOMText4;
     public static String DeleteTreeItemActionOMEditorOMTitle;
     public static String DeleteTreeItemActionShellTitle;
+    public static String DeselectAll;
     public static String DirtyStarListLabelProviderAlreadySaved;
     public static String DoesNotExist;
     public static String DoNotChangeTheSpecTestCase;
@@ -362,8 +367,8 @@ public class Messages extends NLS {
     public static String ExtractTestCaseOperateISpecTestCasePO;
     public static String FailedToFindFile;
     public static String FileNotFoundFormatXsl;
-    public static String Filtering;
-    public static String FilteringUsedComponentNames;
+    public static String Searching;
+    public static String SearchingUnusedComponentNames;
     public static String FindDialogBackward;
     public static String FindDialogCaseSen;
     public static String FindDialogClose;
@@ -551,7 +556,7 @@ public class Messages extends NLS {
     public static String ObjectMappingEditorConfigView;
     public static String ObjectMappingEditorEditor;
     public static String ObjectMappingEditorLogicalName;
-    public static String ObjectMappingEditorShowMenu;
+    public static String ObjectMappingEditorCleanupMenu;
     public static String ObjectMappingEditorSplitPaneView;
     public static String ObjectMappingEditorTableView;
     public static String ObjectMappingEditorTechnicalName;
@@ -802,6 +807,7 @@ public class Messages extends NLS {
     public static String SaveProjectAsOperationSavingProject;
     public static String SearchingIn;
     public static String SearchResultPageResultPageLabel;
+    public static String SelectAll;
     public static String SelectDatabaseConnectFailed;
     public static String SelectDatabaseConnectSuccessful;
     public static String SelectedElementIsNotTestResultSummary;

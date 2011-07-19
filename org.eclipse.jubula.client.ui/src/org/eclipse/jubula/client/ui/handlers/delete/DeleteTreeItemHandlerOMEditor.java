@@ -73,7 +73,14 @@ public class DeleteTreeItemHandlerOMEditor
             lastParent = deleteSingleElement(
                     selection.getFirstElement(), editor);
         } else if (selection.size() > 1) {
-            lastParent = deleteMultipleElements(selection.toArray(), editor);
+            boolean delete = false;
+            delete = MessageDialog.openConfirm(Plugin.getShell(),
+                Messages.DeleteTreeItemActionOMEditorOMTitle,
+                Messages.DeleteTreeItemActionOMEditorOMText3);
+            if (delete) {
+                lastParent = deleteMultipleElements(
+                        selection.toArray(), editor);
+            }
         }
         
         if (lastParent != null) {
@@ -84,39 +91,29 @@ public class DeleteTreeItemHandlerOMEditor
     }
 
     /**
-     * Prompts the user if they really want to delete the given items. 
-     * If the user consents, the items are deleted. Otherwise, no action is
-     * taken.
-     * 
      * @param toDelete The items to delete.
      * @param editor The editor in which the delete is taking place.
      * @return the parent of one of the given elements before its deletion, 
      *         or <code>null</code> if no elements are deleted.
      */
-    private Object deleteMultipleElements(Object [] toDelete,
+    public static Object deleteMultipleElements(Object [] toDelete,
             ObjectMappingMultiPageEditor editor) {
-        boolean delete = false;
         IObjectMappingCategoryPO lastParent = null;
-        delete = MessageDialog.openConfirm(Plugin.getShell(),
-            Messages.DeleteTreeItemActionOMEditorOMTitle,
-            Messages.DeleteTreeItemActionOMEditorOMText3);
-        if (delete) {
-            for (Object node : toDelete) {
-                if (node instanceof IComponentNamePO) {
-                    lastParent = editor.getOmEditorBP().deleteCompName(
-                            (IComponentNamePO)node);
-                } else if (node instanceof IObjectMappingAssoziationPO) {
-                    lastParent = editor.getOmEditorBP().deleteAssociation(
-                            (IObjectMappingAssoziationPO)node);
-                } else if (node instanceof IObjectMappingCategoryPO) {
-                    if (!willAncestorBeDeleted(
-                            (IObjectMappingCategoryPO)node, toDelete)) {
-                        lastParent = editor.getOmEditorBP().deleteCategory(
-                                (IObjectMappingCategoryPO)node);
-                    }
+        for (Object node : toDelete) {
+            if (node instanceof IComponentNamePO) {
+                lastParent = editor.getOmEditorBP().deleteCompName(
+                        (IComponentNamePO)node);
+            } else if (node instanceof IObjectMappingAssoziationPO) {
+                lastParent = editor.getOmEditorBP().deleteAssociation(
+                        (IObjectMappingAssoziationPO)node);
+            } else if (node instanceof IObjectMappingCategoryPO) {
+                if (!willAncestorBeDeleted(
+                        (IObjectMappingCategoryPO)node, toDelete)) {
+                    lastParent = editor.getOmEditorBP().deleteCategory(
+                            (IObjectMappingCategoryPO)node);
                 }
-                editor.getEditorHelper().setDirty(true);
             }
+            editor.getEditorHelper().setDirty(true);
         }
         return lastParent;
     }
@@ -134,7 +131,7 @@ public class DeleteTreeItemHandlerOMEditor
      * @return <code>true</code> if <code>toDelete</code> contains an ancestor 
      *         of <code>category</code>. Otherwise <code>false</code>.
      */
-    private boolean willAncestorBeDeleted(
+    public static boolean willAncestorBeDeleted(
             IObjectMappingCategoryPO category, Object[] toDelete) {
         IObjectMappingCategoryPO ancestor = category;
         while (ancestor != null) {
