@@ -276,7 +276,7 @@ public class AutStarter {
                 showUserInfo(infoMessage);
             }
             
-            if (isBlocking) {
+            if (isBlocking && clientSocketThread != null) {
                 try {
                     clientSocketThread.join();
                 } catch (InterruptedException e) {
