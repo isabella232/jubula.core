@@ -9,6 +9,21 @@
 				<link rel="stylesheet" href="html/reportStyle.css"/>
 				<style> body {font-family:Arial; }
 				</style>
+				<script type="text/javascript">
+				    function toggle(element) {
+				    var sibling = element.nextSibling;
+				    if (sibling) {
+					    var parent = element.parentNode;
+					    if (parent.className =='htmlReportOpen') {
+							parent.className = 'htmlReportClosed';
+							sibling.style.display = 'none';
+					    } else {
+							parent.className = 'htmlReportOpen';
+							sibling.style.display = 'block';
+					    }
+				    }
+				   }
+				</script>
 				<title>
 					Test Result Report
 					<xsl:if test="report/@style">
@@ -144,8 +159,8 @@
 					<ul class="htmlReport">
 						<xsl:choose>
 							<xsl:when test="status != 2 and status != 3 and status != 5">
-								<LI class="htmlReportClosed" nowrap="true"><A
-										HREF="#testsuite">
+								<LI class="htmlReportClosed" nowrap="true">
+								<A HREF="#testsuite" onclick="toggle(this)">
 									<xsl:call-template name="writeColored">
 										<!-- quoted String -->
 										<xsl:with-param name="text"
@@ -158,8 +173,8 @@
 								</LI>
 							</xsl:when>
 							<xsl:otherwise>
-								<LI class="htmlReportOpen" nowrap="true"><A
-										HREF="#testsuite">
+								<LI class="htmlReportOpen" nowrap="true">
+								<A HREF="#testsuite" onclick="toggle(this)">
 									<xsl:call-template name="writeColored">
 										<!-- quoted String -->
 										<xsl:with-param name="text"
@@ -223,7 +238,8 @@
 		<xsl:choose>
 			<xsl:when test="status != 2 and status != 3 and status != 5">
 				
-				<LI class="htmlReportClosed" nowrap="true"><A HREF="#testcase">
+				<LI class="htmlReportClosed" nowrap="true">
+				<A HREF="#testcase" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
 						<xsl:with-param name="text" select="'Test Case'"/>
@@ -240,7 +256,8 @@
 				</LI>
 			</xsl:when>
 			<xsl:otherwise>
-				<LI class="htmlReportOpen" nowrap="true"><A HREF="#testcase">
+				<LI class="htmlReportOpen" nowrap="true">
+				<A HREF="#testcase" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
 						<xsl:with-param name="text" select="'Test Case'"/>
@@ -263,7 +280,8 @@
 	<xsl:template match="step">
 		<xsl:choose>
 			<xsl:when test="status != 2 and status != 3 and status != 5 and status != 9">
-				<li class="htmlReportClosed" nowrap="true"><A HREF="#step">
+				<li class="htmlReportClosed" nowrap="true">
+				<A HREF="#step" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
 						<xsl:with-param name="text" select="''"/>
@@ -300,7 +318,8 @@
 				</li>
 			</xsl:when>
 			<xsl:otherwise>
-				<li class="htmlReportOpen" nowrap="true"><A HREF="#step">
+				<li class="htmlReportOpen" nowrap="true">
+				<A HREF="#step" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
 						<xsl:with-param name="text" select="''"/>
@@ -397,7 +416,8 @@
 	<xsl:template match="eventhandler">
 		<xsl:choose>
 			<xsl:when test="status != 2 and status != 3 and status != 5">
-				<li class="htmlReportClosed" nowrap="true"><A HREF="#eventhandler">
+				<li class="htmlReportClosed" nowrap="true">
+				<A HREF="#eventhandler" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
 						<xsl:with-param name="text" select="'Event Handler'"/>
@@ -423,7 +443,8 @@
 				</li>
 			</xsl:when>
 			<xsl:otherwise>
-				<li class="htmlReportOpen" nowrap="true"><A HREF="#eventhandler">
+				<li class="htmlReportOpen" nowrap="true">
+				<A HREF="#eventhandler" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
 						<xsl:with-param name="text" select="'Event Handler'"/>
