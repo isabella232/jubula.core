@@ -12,14 +12,12 @@ package org.eclipse.jubula.client.ui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -93,9 +91,6 @@ public class NewTestCaseActionTCBrowser extends Action {
                     .createNewSpecTestCase(tcName, parent, null);
                 DataEventDispatcher.getInstance().fireDataChangedListener(
                     newSpecTC, DataState.Added, UpdateState.all);
-                InteractionEventDispatcher.getDefault().
-                    fireProgammableSelectionEvent(
-                            new StructuredSelection(newSpecTC));
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {

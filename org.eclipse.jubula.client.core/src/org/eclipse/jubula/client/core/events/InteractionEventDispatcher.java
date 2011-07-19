@@ -14,76 +14,98 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
+
 /**
  * @author BREDEX GmbH
- *
+ * @created Nov 10, 2010
  */
-public class InteractionEventDispatcher {
+public class InteractionEventDispatcher implements IDataChangedListener {
     /**
-     * 
+     * singleton instance 
      */
-    
     private static InteractionEventDispatcher instance;
+
     /**
-    *
+    * a set of programmable selection listener
     */
-    private Set<IProgrammableSelectionListener>
+    private Set<IProgrammableSelectionListener> 
     m_progammableSelectionListeners = 
-           new HashSet<IProgrammableSelectionListener>();
-    
+            new HashSet<IProgrammableSelectionListener>();
+
     /**
-     * 
+     * Constructor
      */
-    
-    public InteractionEventDispatcher() {
+    private InteractionEventDispatcher() {
         instance = this;
     }
-    
-    /** to notify clients about ...     */
+
+    /** to notify clients about ... */
     public interface IProgrammableSelectionListener {
         /**
-         * @param s - The selections to process
+         * @param s
+         *            - The selections to process
          */
         public void processSelection(IStructuredSelection s);
     }
+
     /**
      * 
-     * @param l - listener for programmable selection events
+     * @param l
+     *            - listener for programmable selection events
      */
     public void addIProgrammableSelectionListener(
             IProgrammableSelectionListener l) {
         m_progammableSelectionListeners.add(l);
     }
-    
+
     /**
-     * @param l - listener for programmable selection events
+     * @param l
+     *            - listener for programmable selection events
      */
-    
+
     public void removeIProgrammableSelectionListener(
             IProgrammableSelectionListener l) {
         m_progammableSelectionListeners.remove(l);
     }
-    
+
     /**
-     * @param s - The selections to process
+     * @param s
+     *            - The selections to process
      */
-    
+
     public void fireProgammableSelectionEvent(IStructuredSelection s) {
-        final Set<IProgrammableSelectionListener> stableListeners =
+        final Set<IProgrammableSelectionListener> stableListeners = 
             new HashSet<IProgrammableSelectionListener>(
-                    m_progammableSelectionListeners);
+                m_progammableSelectionListeners);
         for (IProgrammableSelectionListener l : stableListeners) {
             l.processSelection(s);
         }
     }
+
     /**
-     * 
-     * @return the actual instance
+     * @return the singleton instance
      */
     public static InteractionEventDispatcher getDefault() {
         if (instance == null) {
             instance = new InteractionEventDispatcher();
+            DataEventDispatcher.getInstance()
+                .addDataChangedListener(instance, true);
         }
         return instance;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void handleDataChanged(IPersistentObject po, DataState dataState,
+            UpdateState updateState) {
+        if (dataState == DataState.Added) {
+            fireProgammableSelectionEvent(new StructuredSelection(po));
+        }
     }
 }
