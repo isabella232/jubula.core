@@ -10,53 +10,36 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.propertytester;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.eclipse.core.expressions.PropertyTester;
-import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorPart;
-
 
 /**
  * @author BREDEX GmbH
  * @created 30.07.2009
  */
-public class EditorPartPropertyTester extends PropertyTester {
-
+public class EditorPartPropertyTester extends AbstractBooleanPropertyTester {
     /** the id of the "isInCurrentProject" property */
     public static final String IS_DIRTY = "isDirty"; //$NON-NLS-1$
-
-    /** the logger */
-    private static final Log LOG = LogFactory
-            .getLog(EditorPartPropertyTester.class);
-
     /**
-     * {@inheritDoc}
+     * <code>PROPERTIES</code>
      */
-    public boolean test(Object receiver, String property, Object[] args,
-            Object expectedValue) {
+    private static final String[] PROPERTIES = new String[] { IS_DIRTY };
 
-        if (receiver instanceof IEditorPart) {
-            IEditorPart ep = (IEditorPart)receiver;
-            if (property.equals(IS_DIRTY)) {
-                boolean hasAUT = ep.isDirty() ? true : false;
-                boolean expectedBoolean = expectedValue 
-                    instanceof Boolean ? ((Boolean)expectedValue)
-                        .booleanValue()
-                        : true;
-                return hasAUT == expectedBoolean;
-            }
-
-            LOG.warn(NLS.bind(Messages.PropertyTesterPropertyNotSupported,
-                    property));
-            return false;
+    /** {@inheritDoc} */
+    public boolean testImpl(Object receiver, String property, Object[] args) {
+        IEditorPart ep = (IEditorPart)receiver;
+        if (property.equals(IS_DIRTY)) {
+            return ep.isDirty() ? true : false;
         }
-
-        String receiverClass = receiver != null ? receiver.getClass().getName()
-                : "null"; //$NON-NLS-1$
-        LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
-                receiverClass));
         return false;
+    }
+
+    /** {@inheritDoc} */
+    public Class<? extends Object> getType() {
+        return IEditorPart.class;
+    }
+
+    /** {@inheritDoc} */
+    public String[] getProperties() {
+        return PROPERTIES;
     }
 }

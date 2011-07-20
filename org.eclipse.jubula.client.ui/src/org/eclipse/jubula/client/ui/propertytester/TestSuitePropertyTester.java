@@ -10,39 +10,35 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.propertytester;
 
-import org.eclipse.jubula.client.core.businessprocess.RunningAutBP;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
+
 
 /**
- * Property Tester for AUT Identifiers (Running AUTs).
- * 
+ * Property tester for Test Suite GUI Nodes.
+ *
  * @author BREDEX GmbH
- * @created May 10, 2010
+ * @created 28.04.2009
  */
-public class RunningAutPropertyTester extends AbstractBooleanPropertyTester {
-    /**
-     * ID of the "isDefined" property, which describes whether an AUT Definition
-     * for the given AUT Identifier exists in the current project.
-     */
-    public static final String IS_DEFINED = "isDefined"; //$NON-NLS-1$
-    
+public class TestSuitePropertyTester extends AbstractBooleanPropertyTester {
+    /** the id of the "isInCurrentProject" property */
+    public static final String HAS_AUT = "hasAUT"; //$NON-NLS-1$
     /**
      * <code>PROPERTIES</code>
      */
-    private static final String[] PROPERTIES = new String[] { IS_DEFINED };
+    private static final String[] PROPERTIES = new String[] { HAS_AUT };
 
     /** {@inheritDoc} */
     public boolean testImpl(Object receiver, String property, Object[] args) {
-        AutIdentifier autId = (AutIdentifier)receiver;
-        if (property.equals(IS_DEFINED)) {
-            return  RunningAutBP.isAutDefined(autId);
+        ITestSuitePO testSuite = (ITestSuitePO)receiver;
+        if (property.equals(HAS_AUT)) {
+            return testSuite.getAut() != null ? true : false;
         }
         return false;
     }
 
     /** {@inheritDoc} */
     public Class<? extends Object> getType() {
-        return AutIdentifier.class;
+        return ITestSuitePO.class;
     }
 
     /** {@inheritDoc} */
