@@ -710,6 +710,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 CommandIDs.ADD_EVENT_HANDLER_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuRefactor,
                 CommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuRefactor,
+                CommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
     }
 
     /**

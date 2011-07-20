@@ -47,6 +47,9 @@ public interface CommandIDs {
     
     /** the ID of the "extract test case" command */
     public static final String EXTRACT_TESTCASE_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.ExtractTestCase"; //$NON-NLS-1$
+
+    /** the ID of the "replace with test case" command */
+    public static final String REPLACE_WITH_TESTCASE_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.ReplaceWithTestCase"; //$NON-NLS-1$
     
     /** the ID of the "new cap" command */
     public static final String NEW_CAP_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.newCap"; //$NON-NLS-1$
