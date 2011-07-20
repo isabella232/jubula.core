@@ -67,15 +67,13 @@
 				<script type="text/javascript">
 				    function toggle(element) {
 				    var sibling = element.nextSibling;
-				    if (sibling) {
-					    var parent = element.parentNode;
-					    if (parent.className =='htmlReportOpen') {
-							parent.className = 'htmlReportClosed';
-							sibling.style.display = 'none';
-					    } else {
-							parent.className = 'htmlReportOpen';
-							sibling.style.display = 'block';
-					    }
+				    var parent = element.parentNode;
+				    if (parent.className =='htmlReportOpen') {
+						parent.className = 'htmlReportClosed';
+						if (sibling) sibling.style.display = 'none';
+				    } else {
+						parent.className = 'htmlReportOpen';
+						if (sibling) sibling.style.display = 'block';
 				    }
 				   }
 				</script>
