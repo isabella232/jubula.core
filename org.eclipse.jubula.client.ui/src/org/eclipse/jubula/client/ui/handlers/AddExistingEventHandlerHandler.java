@@ -101,7 +101,7 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
         TestCaseTreeDialog dialog = new TestCaseTreeDialog(Plugin
             .getShell(), title, StringConstants.EMPTY, 
             parentNode, title, SWT.SINGLE, 
-            IconConstants.ADD_EH_IMAGE, TestCaseTreeDialog.EVENTHANDLER); 
+            IconConstants.ADD_EH_IMAGE); 
         final SelectionTransfer selTransferObj = new SelectionTransfer();
         ISelectionListener selListener = new ISelectionListener() {
             public void selectionChanged(IWorkbenchPart part,

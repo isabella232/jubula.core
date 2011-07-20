@@ -72,8 +72,7 @@ public abstract class AbstractReferenceExistingTestCase
                 specTC = (ISpecTestCasePO)editorNode;
             }
             TestCaseTreeDialog dialog = new TestCaseTreeDialog(Plugin
-                    .getShell(), specTC, SWT.MULTI, 
-                    TestCaseTreeDialog.TESTCASE);
+                    .getShell(), specTC, SWT.MULTI);
             dialog.addSelectionListener(listener);
             dialog.setHelpAvailable(true);
             dialog.create();
