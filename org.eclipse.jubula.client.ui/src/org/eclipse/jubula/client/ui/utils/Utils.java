@@ -21,8 +21,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -83,7 +83,7 @@ import org.eclipse.ui.WorkbenchException;
 public class Utils {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(Utils.class);
+    private static Logger log = LoggerFactory.getLogger(Utils.class);
     
     /** The error dialog */
     private static Dialog dlg = null;

@@ -46,8 +46,6 @@ public class ToolkitProvider implements IToolKitProvider {
             autConfig, autName);
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -62,5 +60,4 @@ public class ToolkitProvider implements IToolKitProvider {
     public ResourceBundle getI18nResourceBundle() {
         return ResourceBundle.getBundle(I18N_PROPERTIES);
     }
-
 }

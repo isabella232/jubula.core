@@ -21,8 +21,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -67,7 +67,7 @@ import javax.persistence.PersistenceException;
 public class UsedToolkitBP {
     
     /** standard logging */
-    private static Log log = LogFactory.getLog(UsedToolkitBP.class);
+    private static Logger log = LoggerFactory.getLogger(UsedToolkitBP.class);
     
     /**
      * The singleton instance.

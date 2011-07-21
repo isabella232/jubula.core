@@ -10,13 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.swt.SWT;
@@ -49,7 +50,8 @@ import org.eclipse.swt.widgets.Widget;
 public class MappingListener extends AbstractAutSwtEventListener {
     
     /** the logger */
-    private static final Log LOG = LogFactory.getLog(MappingListener.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(MappingListener.class);
 
     /**
      * {@inheritDoc}
@@ -123,7 +125,7 @@ public class MappingListener extends AbstractAutSwtEventListener {
                 // no identifier for the component, LOG this as an error
                 LOG.error("no identifier for '" + currComp); //$NON-NLS-1$
             } catch (CommunicationException ce) {
-                LOG.error(ce);
+                LOG.error(DebugConstants.ERROR, ce);
                 // do nothing here: a closed connection 
                 // is handled by the AUTServer
             }

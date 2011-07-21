@@ -12,14 +12,15 @@ package org.eclipse.jubula.autagent.commands;
 
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 
 /**
  * The class <code>StartAutServerCommand</code> and the associated
@@ -39,7 +40,8 @@ import org.eclipse.jubula.tools.constants.AutConfigConstants;
 public class StartAUTServerCommand implements ICommand {
     
     /** the logger */
-    private static Log log = LogFactory.getLog(StartAUTServerCommand.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(StartAUTServerCommand.class);
 
     /** the data */
     private StartAUTServerMessage m_message;
@@ -114,12 +116,12 @@ public class StartAUTServerCommand implements ICommand {
             return autStarter.startAut(m_message.getAutConfiguration());
             
         } catch (IllegalArgumentException iae) {
-            log.error(iae);
+            log.error(DebugConstants.ERROR, iae);
             return new StartAUTServerStateMessage(
                 StartAUTServerStateMessage.EXECUTION,
                 iae.getMessage());
         } catch (NullPointerException npe) {
-            log.error(npe);
+            log.error(DebugConstants.ERROR, npe);
             return new StartAUTServerStateMessage(
                 StartAUTServerStateMessage.DATA,
                 npe.getMessage());

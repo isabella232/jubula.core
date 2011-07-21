@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.core.communication;
 
 import java.net.InetAddress;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.ICommand;
@@ -34,7 +34,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  */
 public abstract class BaseConnection {
     /** the logger */
-    private static Log log = LogFactory.getLog(BaseConnection.class);
+    private static Logger log = LoggerFactory.getLogger(BaseConnection.class);
     
     /** the communicator to use */
     private Communicator m_communicator;

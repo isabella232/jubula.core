@@ -24,8 +24,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.IExceptionHandler;
 import org.eclipse.jubula.communication.listener.IErrorHandler;
 import org.eclipse.jubula.communication.listener.IMessageHandler;
@@ -33,6 +33,7 @@ import org.eclipse.jubula.communication.message.MessageHeader;
 import org.eclipse.jubula.communication.message.MessageHeader.InvalidHeaderVersionException;
 import org.eclipse.jubula.communication.parser.MessageHeaderSerializer;
 import org.eclipse.jubula.communication.writer.MessageWriter;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.SerialisationException;
 
@@ -84,7 +85,7 @@ public class Connection {
     private static final long SEQUENCE_START = 1;
 
     /** the logger */
-    private static Log log = LogFactory.getLog(Connection.class);
+    private static Logger log = LoggerFactory.getLogger(Connection.class);
 
     /**
      * the sequence number used by this connection to identify messages will be
@@ -469,7 +470,7 @@ public class Connection {
                     log.error("invalid header length token: " //$NON-NLS-1$
                         + headerLengthToken, e); 
                 } catch (InvalidHeaderVersionException ihve) {
-                    log.error(ihve);
+                    log.error(DebugConstants.ERROR, ihve);
                 } catch (Throwable t) {
                     log.error("exception raised", t); //$NON-NLS-1$
                     final IExceptionHandler exceptionHandler = 

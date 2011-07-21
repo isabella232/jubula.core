@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
@@ -20,6 +18,8 @@ import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.EndTestExecutionResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -29,8 +29,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 public class EndTestExecutionResponseCommand implements ICommand {
     /** the logger */
-    private static Log log = LogFactory
-            .getLog(EndTestExecutionResponseCommand.class);
+    private static Logger log = LoggerFactory
+            .getLogger(EndTestExecutionResponseCommand.class);
 
     /**
      * <code>m_message</code>

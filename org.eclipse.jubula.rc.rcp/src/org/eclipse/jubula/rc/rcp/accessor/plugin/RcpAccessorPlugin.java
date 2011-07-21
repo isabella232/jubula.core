@@ -12,8 +12,8 @@ package org.eclipse.jubula.rc.rcp.accessor.plugin;
 
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.rcp.accessor.Startup;
@@ -21,6 +21,7 @@ import org.eclipse.jubula.rc.rcp.gef.inspector.GefInspectorListenerAppender;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.widgets.Display;
@@ -36,7 +37,8 @@ import org.osgi.framework.BundleContext;
 public class RcpAccessorPlugin extends AbstractUIPlugin implements IStartup {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(RcpAccessorPlugin.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(RcpAccessorPlugin.class);
 
     
     /**
@@ -96,7 +98,7 @@ public class RcpAccessorPlugin extends AbstractUIPlugin implements IStartup {
                     }
 
                 } catch (InterruptedException e) {
-                    log.error(e);
+                    log.error(DebugConstants.ERROR, e);
                 }
             }
 

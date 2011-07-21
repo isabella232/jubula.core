@@ -20,8 +20,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.DataTable;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.ExcelImportFilter;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.IDataImportFilter;
@@ -51,7 +51,8 @@ import org.eclipse.osgi.util.NLS;
 public class ExternalTestDataBP {
 
     /** the logger */
-    private static final Log LOG = LogFactory.getLog(ExternalTestDataBP.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(ExternalTestDataBP.class);
 
     /** this is where the datafile are stored */
     private static File globalDataDir = new File(StringConstants.DOT);

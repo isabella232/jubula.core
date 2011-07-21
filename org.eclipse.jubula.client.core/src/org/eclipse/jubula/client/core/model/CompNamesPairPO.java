@@ -22,8 +22,8 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -45,7 +45,8 @@ import org.eclipse.jubula.tools.xml.businessmodell.Component;
 class CompNamesPairPO implements ICompNamesPairPO {
     
     /** The logger */
-    private static transient Log log = LogFactory.getLog(CompNamesPairPO.class);
+    private static transient Logger log = 
+        LoggerFactory.getLogger(CompNamesPairPO.class);
     
     /** The first name. */
     private String m_firstName;

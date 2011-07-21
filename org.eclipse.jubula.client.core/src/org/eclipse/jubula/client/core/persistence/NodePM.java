@@ -27,8 +27,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -295,7 +295,7 @@ public class NodePM extends PersistenceManager {
     private static NodePM nodePersManager = null;
 
     /** the logger */
-    private static Log log = LogFactory.getLog(NodePM.class);
+    private static Logger log = LoggerFactory.getLogger(NodePM.class);
 
     /** cache for project IDs */
     private Map<String, Long> m_projectIDCache = null;
@@ -370,7 +370,7 @@ public class NodePM extends PersistenceManager {
             return new CmdHandleChildIntoNodeList();
         }
         final String msg = Messages.UnsupportedINodePOSubclass;
-        log.fatal(msg);
+        log.error(msg);
         throw new JBFatalException(msg, MessageIDs.E_UNSUPPORTED_NODE);
     }
 

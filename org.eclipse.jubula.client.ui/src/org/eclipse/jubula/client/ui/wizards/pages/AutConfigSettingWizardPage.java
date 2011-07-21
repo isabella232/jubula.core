@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.ui.wizards.pages;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -47,7 +47,7 @@ public class AutConfigSettingWizardPage extends WizardPage
     implements IDialogStatusListener {
     
     /** The logger */
-    private static Log log = LogFactory.getLog(
+    private static Logger log = LoggerFactory.getLogger(
         AutConfigSettingWizardPage.class);
     /** the name of the selected aut configuration */
     private IAUTConfigPO m_autConfig;

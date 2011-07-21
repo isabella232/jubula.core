@@ -25,8 +25,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.archive.i18n.Messages;
@@ -114,6 +114,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -143,7 +144,7 @@ class XmlExporter {
     private static final char TABLE_AUT_CONFIG = 'C';
 
     /** standard logging */
-    private static Log log = LogFactory.getLog(XmlExporter.class);
+    private static Logger log = LoggerFactory.getLogger(XmlExporter.class);
 
     /** The progress monitor for the operation. */
     private IProgressMonitor m_monitor;
@@ -546,11 +547,11 @@ class XmlExporter {
                     }
                     xmlSummaryAttribute.setType(pType.getName());
                 } catch (NoSuchMethodException e) {
-                    log.warn(e);
+                    log.warn(DebugConstants.ERROR, e);
                 } catch (IllegalAccessException e) {
-                    log.warn(e);
+                    log.warn(DebugConstants.ERROR, e);
                 } catch (InvocationTargetException e) {
-                    log.warn(e);
+                    log.warn(DebugConstants.ERROR, e);
                 }
             }           
             Map<String, IMonitoringValue> 

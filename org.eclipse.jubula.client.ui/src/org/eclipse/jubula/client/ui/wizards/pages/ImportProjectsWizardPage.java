@@ -17,8 +17,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.widgets.JBText;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -61,7 +62,8 @@ public class ImportProjectsWizardPage extends WizardPage
         implements IProjectImportInfoProvider {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(ImportProjectsWizardPage.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(ImportProjectsWizardPage.class);
 
     /** number of colums in GridLayout */
     private static final int NUM_COLUMS = 6; 
@@ -395,7 +397,7 @@ public class ImportProjectsWizardPage extends WizardPage
             try {
                 m_fileURLs.add(new File(fileName).toURI().toURL());
             } catch (MalformedURLException e) {
-                log.error(e);
+                log.error(DebugConstants.ERROR, e);
             }
         }
         

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
@@ -19,6 +17,8 @@ import org.eclipse.jubula.communication.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.MessageCap;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -33,12 +33,11 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * 
  */
 public class CAPTestResponseCommand implements ICommand {
-    
     /**
      * The logger
      */
-    private static final Log LOG =
-        LogFactory.getLog(CAPTestResponseCommand.class);
+    private static final Logger LOG =
+        LoggerFactory.getLogger(CAPTestResponseCommand.class);
     /**
      * The message
      */

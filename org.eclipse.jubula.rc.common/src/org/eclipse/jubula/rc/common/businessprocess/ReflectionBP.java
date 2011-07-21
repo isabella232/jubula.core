@@ -46,17 +46,17 @@ public class ReflectionBP {
             Method m = object.getClass().getMethod(name, paramTypes);
             m.invoke(object, args);
         } catch (SecurityException e) {
-            LOG.fatal("Security manager indicated a security violation!", e); //$NON-NLS-1$
+            LOG.error("Security manager indicated a security violation!", e); //$NON-NLS-1$
         } catch (IllegalArgumentException e) {
-            LOG.fatal(e);
+            LOG.error(e);
         } catch (NoSuchMethodException e) {
-            LOG.fatal("Class: " + object.getClass().getName()  //$NON-NLS-1$
+            LOG.error("Class: " + object.getClass().getName()  //$NON-NLS-1$
                 + " does not contain method: " + name + "!"); //$NON-NLS-1$ //$NON-NLS-2$
         } catch (IllegalAccessException e) {
-            LOG.fatal(e);
+            LOG.error(e);
         } catch (InvocationTargetException e) {
-            LOG.fatal("InvocationTargetException: ", e); //$NON-NLS-1$
-            LOG.fatal("TargetException: ", e.getTargetException()); //$NON-NLS-1$
+            LOG.error("InvocationTargetException: ", e); //$NON-NLS-1$
+            LOG.error("TargetException: ", e.getTargetException()); //$NON-NLS-1$
         }
     }
     

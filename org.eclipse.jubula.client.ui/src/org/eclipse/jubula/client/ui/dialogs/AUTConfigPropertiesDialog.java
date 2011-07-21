@@ -14,8 +14,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -41,6 +39,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -49,9 +49,9 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class AUTConfigPropertiesDialog extends TitleAreaDialog 
     implements IDialogStatusListener {
-    
     /** The logger */
-    private static Log log = LogFactory.getLog(AUTConfigPropertiesDialog.class);
+    private static Logger log = LoggerFactory.getLogger(
+            AUTConfigPropertiesDialog.class);
     
     /** the name of the selected aut configuration */
     private IAUTConfigPO m_autConfig;

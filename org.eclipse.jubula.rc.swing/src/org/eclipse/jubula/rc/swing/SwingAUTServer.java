@@ -23,8 +23,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
@@ -37,6 +37,7 @@ import org.eclipse.jubula.rc.swing.listener.FocusTracker;
 import org.eclipse.jubula.rc.swing.listener.MappingListener;
 import org.eclipse.jubula.rc.swing.listener.RecordListener;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 
 
@@ -70,7 +71,8 @@ import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 public class SwingAUTServer extends AUTServer {
     
     /** the logger */
-    private static final Log LOG = LogFactory.getLog(SwingAUTServer.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(SwingAUTServer.class);
     
     /**
      * name of Environment Variable or Java Property that defines the
@@ -129,10 +131,10 @@ public class SwingAUTServer extends AUTServer {
                     (AWTEventListener)listener, mask);
         } catch (AWTError awte) {
             // no default toolkit
-            LOG.error(awte);
+            LOG.error(DebugConstants.ERROR, awte);
         } catch (SecurityException se) {
             // no permission to add an AWTEventListener
-            LOG.fatal(se);
+            LOG.error(DebugConstants.ERROR, se);
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER);
         }
@@ -152,12 +154,12 @@ public class SwingAUTServer extends AUTServer {
                     (AWTEventListener)listener);
         } catch (AWTError awte) {
             // no default toolkit
-            LOG.error(awte);
+            LOG.error(DebugConstants.ERROR, awte);
         } catch (SecurityException se) {
             // no permission to remove an AWTEventListener,
             // should not occur, because addAWTEventListener() should be called 
             // first. But just in case, close the vm
-            LOG.fatal(se);
+            LOG.error(DebugConstants.ERROR, se);
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER);
         }

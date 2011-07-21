@@ -16,8 +16,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -51,6 +49,7 @@ import org.eclipse.jubula.client.ui.utils.UIIdentitiyElementComparer;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -64,6 +63,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.EditorPart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -93,8 +94,8 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     protected static final String INSERT = "_INSERT"; //$NON-NLS-1$
 
     /** the logger */
-    protected static final Log LOG = LogFactory
-            .getLog(AbstractJBEditor.class);
+    protected static final Logger LOG = LoggerFactory
+            .getLogger(AbstractJBEditor.class);
 
     /** List of ISelectionChangedListener */
     private List<ISelectionChangedListener> m_selectionChangedListenerList = 
@@ -512,7 +513,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         try {
             ComponentNamesBP.getInstance().init();
         } catch (PMException e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
             Utils.createMessageDialog(e, null, null);
         }
     }

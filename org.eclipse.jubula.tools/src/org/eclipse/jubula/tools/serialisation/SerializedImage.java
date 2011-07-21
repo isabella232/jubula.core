@@ -17,8 +17,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.tools.constants.DebugConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
@@ -26,7 +27,8 @@ import org.apache.commons.logging.LogFactory;
  */
 public class SerializedImage {
     /** Logger */
-    private static final Log LOG = LogFactory.getLog(SerializedImage.class);
+    private static final Logger LOG = LoggerFactory.getLogger(
+            SerializedImage.class);
 
     /**
      * <code>IMAGE_FORMAT</code>
@@ -60,7 +62,7 @@ public class SerializedImage {
             si.setData(imageByteOutputStream.toByteArray());
             imageByteOutputStream.close();
         } catch (IOException e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
         }
         return si;
     }
@@ -78,7 +80,7 @@ public class SerializedImage {
                     si.getData());
             bi = ImageIO.read(imageByteInputStream);
         } catch (IOException e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
         }
         return bi;
     }

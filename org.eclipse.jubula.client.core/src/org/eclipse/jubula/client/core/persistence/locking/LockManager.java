@@ -22,8 +22,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
@@ -67,7 +67,7 @@ public final class LockManager {
     private static final int TIMEOUT_APPLICATION = 3 * UPDATE_TIMESTAMP_SECS;
 
     /** standard logging */
-    private static Log log = LogFactory.getLog(LockManager.class);
+    private static Logger log = LoggerFactory.getLogger(LockManager.class);
 
     /** singleton instance */
     private static LockManager instance = null;

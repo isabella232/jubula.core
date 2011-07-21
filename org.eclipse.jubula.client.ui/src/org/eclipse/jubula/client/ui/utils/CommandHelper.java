@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.ui.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.jface.action.IContributionItem;
@@ -49,7 +49,7 @@ import org.eclipse.ui.menus.CommandContributionItemParameter;
  */
 public abstract class CommandHelper {
     /** standard logging */
-    private static Log log = LogFactory.getLog(CommandHelper.class);
+    private static Logger log = LoggerFactory.getLogger(CommandHelper.class);
     
     /**
      * Constructor

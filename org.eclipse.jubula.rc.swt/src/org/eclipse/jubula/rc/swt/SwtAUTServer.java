@@ -12,8 +12,8 @@ package org.eclipse.jubula.rc.swt;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
@@ -27,6 +27,7 @@ import org.eclipse.jubula.rc.swt.listener.MappingListener;
 import org.eclipse.jubula.rc.swt.listener.RecordListener;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 
@@ -58,7 +59,8 @@ import org.eclipse.swt.widgets.Listener;
 public class SwtAUTServer extends AUTServer {
     
     /** the logger */
-    private static final Log LOG = LogFactory.getLog(SwtAUTServer.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(SwtAUTServer.class);
     /** the aut display */
     private Display m_display = null;
     
@@ -169,7 +171,7 @@ public class SwtAUTServer extends AUTServer {
             // no permission to remove an SWTEventListener,
             // should not occur, because addSWTEventListener() should be called 
             // first. But just in case, close the vm
-            LOG.fatal(se);
+            LOG.error(DebugConstants.ERROR, se);
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER);
         }
@@ -202,7 +204,7 @@ public class SwtAUTServer extends AUTServer {
             // no permission to remove an SWTEventListener,
             // should not occur, because addSWTEventListener() should be called 
             // first. But just in case, close the vm
-            LOG.fatal(se);
+            LOG.error(DebugConstants.ERROR, se);
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER);
         }

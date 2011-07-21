@@ -16,8 +16,8 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 
@@ -34,7 +34,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
 public class AutStarterSocket extends ServerSocket {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(AutStarterSocket.class);
+    private static Logger log = LoggerFactory.getLogger(AutStarterSocket.class);
     
     /**
      * @param port

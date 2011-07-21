@@ -11,8 +11,8 @@
 package org.eclipse.jubula.client.core.businessprocess;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -32,7 +32,8 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 public final class CompNameMapperFactory {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(CompNameMapperFactory.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(CompNameMapperFactory.class);
 
     
     /**

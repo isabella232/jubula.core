@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTStartStateMessage;
 import org.eclipse.jubula.communication.message.Message;
@@ -46,7 +46,7 @@ public abstract class AbstractSendAUTListOfSupportedComponentsCommand
     implements ICommand {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(
+    private static Logger log = LoggerFactory.getLogger(
         AbstractSendAUTListOfSupportedComponentsCommand.class);
     /** the (empty) message */
     private SendAUTListOfSupportedComponentsMessage m_message;

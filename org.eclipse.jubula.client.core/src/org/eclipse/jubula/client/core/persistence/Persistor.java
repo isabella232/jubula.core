@@ -31,8 +31,8 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -55,6 +55,7 @@ import org.eclipse.jubula.client.core.progress.JobChangeListener;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent.DatabaseState;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalAbortException;
@@ -105,7 +106,7 @@ public class Persistor {
     }
 
     /** standard logging */
-    private static Log log = LogFactory.getLog(Persistor.class);
+    private static Logger log = LoggerFactory.getLogger(Persistor.class);
 
     /** singleton */
     private static Persistor instance = null;
@@ -155,7 +156,7 @@ public class Persistor {
             buildSessionFactoryWithLoginData(userName, pwd, url, monitor);
         } catch (PersistenceException e) {
             String msg = Messages.CantSetupPersistence;
-            log.fatal(msg, e);
+            log.error(msg, e);
             throw new JBFatalException(msg, 
                     MessageIDs.E_PERSISTENCE_CANT_SETUP);
         } catch (DatabaseVersionConflictException dbvce) {
@@ -240,7 +241,7 @@ public class Persistor {
         try {
             connectToDBJob.join();
         } catch (InterruptedException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
             connectionGained.set(false);
         }
 
@@ -392,7 +393,7 @@ public class Persistor {
                 if (se.getErrorCode() == 17002) {
                     final String msg = Messages.ProblemWithDatabaseSchemeConf
                         + StringConstants.DOT;
-                    log.fatal(msg);
+                    log.error(msg);
                     throw new PMDatabaseConfException(msg,
                             MessageIDs.E_ERROR_IN_SCHEMA_CONFIG);
                 }
@@ -404,7 +405,7 @@ public class Persistor {
             } catch (PersistenceException pe) {
                 final String msg = Messages.ProblemWithInstallingDBScheme 
                     + StringConstants.DOT;
-                log.fatal(msg);
+                log.error(msg);
                 throw new PMDatabaseConfException(msg,
                         MessageIDs.E_NO_DB_SCHEME);
             } catch (DatabaseException dbe) {
@@ -418,7 +419,7 @@ public class Persistor {
                 //           for a brief discussion on the topic.
                 final String msg = Messages.ProblemWithInstallingDBScheme 
                     + StringConstants.DOT;
-                log.fatal(msg);
+                log.error(msg);
                 throw new PMDatabaseConfException(msg,
                         MessageIDs.E_NO_DB_SCHEME);
             }
@@ -438,7 +439,7 @@ public class Persistor {
                     throw new DatabaseVersionConflictException(dbMaj, dbMin);
                 }
             } else {
-                log.fatal(Messages.DBVersion + StringConstants.COLON
+                log.error(Messages.DBVersion + StringConstants.COLON
                         + StringConstants.SPACE + Messages.MajorVersionInvalid);
                 throw new DatabaseVersionConflictException(dbMaj, dbMin);
             }
@@ -491,7 +492,7 @@ public class Persistor {
             }
             final String msg = Messages.ProblemInstallingDBScheme
                 + StringConstants.DOT;
-            log.fatal(msg);
+            log.error(msg);
             throw new PMDatabaseConfException(msg, MessageIDs.E_NO_DB_SCHEME);
         } finally {
             if (em != null) {

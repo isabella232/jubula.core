@@ -23,8 +23,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.dom4j.Document;
 import org.dom4j.io.DocumentResult;
 import org.dom4j.io.DocumentSource;
@@ -54,7 +54,8 @@ public class FileXMLReportWriter implements IXMLReportWriter {
     private static final String ENCODING = "UTF-8"; //$NON-NLS-1$
 
     /** The logger */
-    private static final Log LOG = LogFactory.getLog(FileXMLReportWriter.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(FileXMLReportWriter.class);
 
     /** The target file to write to */
     private String m_file;

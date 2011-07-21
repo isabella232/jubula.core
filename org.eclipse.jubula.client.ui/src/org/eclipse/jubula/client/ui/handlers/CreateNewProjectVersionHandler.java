@@ -14,8 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -60,6 +58,8 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -69,8 +69,8 @@ import org.eclipse.ui.progress.IProgressService;
 @SuppressWarnings("synthetic-access")
 public class CreateNewProjectVersionHandler extends AbstractHandler {
     /** standard logging */
-    private static Log log = LogFactory
-            .getLog(CreateNewProjectVersionHandler.class);
+    private static Logger log = LoggerFactory
+            .getLogger(CreateNewProjectVersionHandler.class);
 
     /**
      * Operation for Create New Version action.

@@ -19,8 +19,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.Platform;
@@ -59,7 +59,7 @@ public class Launcher implements IApplication,
     private static final String WORKSPACE_VERSION_VALUE = "1"; //$NON-NLS-1$
     
     /** for log messages */
-    private static Log log = LogFactory.getLog(Launcher.class);
+    private static Logger log = LoggerFactory.getLogger(Launcher.class);
 
     /**
      * Creates a new Application.

@@ -24,8 +24,8 @@ import java.util.TimerTask;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.app.cmd.i18n.Messages;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
@@ -249,7 +249,8 @@ public class ExecutionController implements IAUTServerEventListener,
     private static final int AUT_STARTUP_DELAY_DEFAULT = 5000;
     
     /** the logger */
-    private static final Log LOG = LogFactory.getLog(ExecutionController.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(ExecutionController.class);
     
     /** instance of controller */
     private static ExecutionController instance;

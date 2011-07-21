@@ -19,8 +19,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.TimeUtil;
@@ -39,7 +40,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  */
 public class GDSocket extends Socket {
     /** the logger */
-    private static Log log = LogFactory.getLog(GDSocket.class);
+    private static Logger log = LoggerFactory.getLogger(GDSocket.class);
     
     /** flag wheter a connection could established or not */
     private boolean m_connectionEstablished = false;
@@ -110,7 +111,7 @@ public class GDSocket extends Socket {
             handleState(false);
             throw gdve;
         } catch (IOException ioe) {
-            log.error(ioe);
+            log.error(DebugConstants.ERROR, ioe);
             handleState(false);
         }
     }
@@ -188,7 +189,7 @@ public class GDSocket extends Socket {
                 setConnectionEstablished(false);
             }
         } catch (IOException ioe) {
-            log.error(ioe);
+            log.error(DebugConstants.ERROR, ioe);
             handleState(false);
         }
     }

@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendCompSystemI18nMessage;
@@ -26,7 +26,8 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 public class SetCompSystemI18nCommand implements ICommand {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(SetCompSystemI18nCommand.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(SetCompSystemI18nCommand.class);
 
     
     

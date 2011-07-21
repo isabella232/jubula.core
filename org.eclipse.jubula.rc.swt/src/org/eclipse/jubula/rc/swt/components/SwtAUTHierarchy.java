@@ -291,11 +291,11 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
                 }
             } catch (IllegalArgumentException iae) {
                 // from isSupported -> log
-                log.fatal("hierarchy map contains null values", iae); //$NON-NLS-1$   
+                log.error("hierarchy map contains null values", iae); //$NON-NLS-1$   
                 // and continue
             } catch (ComponentNotManagedException e) {
                 // from isSupported -> log
-                log.fatal("component '" + component.getClass().getName() + "' not found!", e); //$NON-NLS-1$ //$NON-NLS-2$                    
+                log.error("component '" + component.getClass().getName() + "' not found!", e); //$NON-NLS-1$ //$NON-NLS-2$                    
                 // and continue
             }
         }

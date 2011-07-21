@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.core.commands;
 
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.TestResult;
@@ -23,6 +21,8 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.MonitoringValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -31,8 +31,8 @@ import org.eclipse.jubula.tools.objects.MonitoringValue;
  */
 public class GetMonitoringDataResponseCommand implements ICommand {
     /** the logger */
-    private static Log log = LogFactory
-            .getLog(GetMonitoringDataResponseCommand.class);
+    private static Logger log = LoggerFactory
+            .getLogger(GetMonitoringDataResponseCommand.class);
 
     /** the message */
     private GetMonitoringDataResponseMessage m_message;

@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.AUTServerEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -28,8 +28,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 public class StartAUTServerStateCommand implements ICommand {
     /** the logger */
-    private static Log log = LogFactory
-        .getLog(StartAUTServerStateCommand.class);
+    private static Logger log = LoggerFactory
+        .getLogger(StartAUTServerStateCommand.class);
 
     /** the message */
     private StartAUTServerStateMessage m_message;
@@ -59,7 +59,7 @@ public class StartAUTServerStateCommand implements ICommand {
                 break;
             case StartAUTServerStateMessage.IO:
                 // HERE notify error listener -> closing system
-                log.fatal(Messages.NoJavaFound + StringConstants.COLON
+                log.error(Messages.NoJavaFound + StringConstants.COLON
                     + StringConstants.SPACE
                     + m_message.getDescription());
                 ClientTestFactory.getClientTest().fireAUTServerStateChanged(

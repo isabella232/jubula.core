@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.DisconnectFromAutAgentMessage;
 import org.eclipse.jubula.communication.message.DisconnectFromAutAgentResponseMessage;
@@ -26,7 +26,7 @@ import org.eclipse.jubula.communication.message.Message;
 public class DisconnectFromAutAgentCommand implements ICommand {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(
+    private static Logger log = LoggerFactory.getLogger(
             DisconnectFromAutAgentCommand.class);
 
     /** the data */

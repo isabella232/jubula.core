@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
@@ -66,13 +66,13 @@ import org.eclipse.swt.widgets.Widget;
  *
  */
 public class RecordListener extends AbstractAutSwtEventListener {
-    
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
         RecordListener.class);
     
     /** the logger */
-    private static final Log LOG = LogFactory.getLog(RecordListener.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(RecordListener.class);
     
     /** widget the popup is occured on */
     private Widget m_popupSource = null;

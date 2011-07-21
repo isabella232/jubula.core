@@ -15,8 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 
 
@@ -28,7 +28,7 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 public class ModifiableListObservable implements IModifiableListObservable {
     
     /** standard logging */
-    private static final Log LOG = LogFactory.getLog(
+    private static final Logger LOG = LoggerFactory.getLogger(
         ModifiableListObservable.class);
     
     /**

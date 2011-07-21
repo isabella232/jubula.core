@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -37,6 +37,7 @@ import org.eclipse.jubula.client.ui.handlers.delete.DeleteTreeItemHandlerOMEdito
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
 import org.eclipse.jubula.client.ui.search.query.ShowResponsibleNodeForComponentName;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -47,8 +48,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class OMEDeleteUnusedComponentNamesHandler extends AbstractHandler {
     /** standard logging */
-    static final Log LOG = LogFactory
-            .getLog(OMEDeleteUnusedComponentNamesHandler.class);
+    static final Logger LOG = LoggerFactory
+            .getLogger(OMEDeleteUnusedComponentNamesHandler.class);
 
     /**
      * @author Markus Tiede
@@ -182,9 +183,9 @@ public class OMEDeleteUnusedComponentNamesHandler extends AbstractHandler {
                 }
             });
         } catch (InvocationTargetException e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
         } catch (InterruptedException e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
         }
         return null;
     }

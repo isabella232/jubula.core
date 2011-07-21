@@ -18,8 +18,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
@@ -66,6 +64,8 @@ import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -125,8 +125,8 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                 Messages.CapGUIPropertySourceParameter;
 
     /** for LOG messages */
-    static final Log LOG = 
-        LogFactory.getLog(CapGUIPropertySource.class);
+    static final Logger LOG = 
+        LoggerFactory.getLogger(CapGUIPropertySource.class);
     
     /** List of component types (short names)*/
     private static String[] componentTypes;

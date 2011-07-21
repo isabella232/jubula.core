@@ -13,8 +13,8 @@ package org.eclipse.jubula.toolkit.common.businessprocess;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.toolkit.common.IToolKitProvider;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 public class ToolkitSupportBP {
 
     /** The logger */
-    private static Log log = LogFactory.getLog(ToolkitSupportBP.class);
+    private static Logger log = LoggerFactory.getLogger(ToolkitSupportBP.class);
     
     /** Map of {@link IToolKitProvider} */
     private static Map<ToolkitPluginDescriptor, IToolKitProvider> 

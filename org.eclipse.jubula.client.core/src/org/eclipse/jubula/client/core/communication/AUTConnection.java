@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
@@ -43,6 +41,8 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -57,7 +57,7 @@ import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
  */
 public class AUTConnection extends BaseConnection {
     /** the logger */
-    private static Log log = LogFactory.getLog(AUTConnection.class);
+    private static Logger log = LoggerFactory.getLogger(AUTConnection.class);
 
     /** the singleton instance */
     private static AUTConnection instance = null;
@@ -115,7 +115,7 @@ public class AUTConnection extends BaseConnection {
         throws ConnectionException {
         String message = Messages.InitialisationOfAUTConnectionFailed
             + StringConstants.COLON + StringConstants.SPACE;
-        log.fatal(message, throwable);
+        log.error(message, throwable);
         throw new ConnectionException(message + throwable.getMessage(), 
             MessageIDs.E_AUT_CONNECTION_INIT);
     }
@@ -259,7 +259,7 @@ public class AUTConnection extends BaseConnection {
         try {
             send(i18nMessage);
         } catch (CommunicationException ce) {
-            log.fatal(Messages.CommunicationErrorWhileSettingResourceBundle, 
+            log.error(Messages.CommunicationErrorWhileSettingResourceBundle, 
                 ce); 
         }
     }

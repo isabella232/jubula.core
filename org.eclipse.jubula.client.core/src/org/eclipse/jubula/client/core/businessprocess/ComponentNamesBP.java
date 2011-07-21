@@ -24,8 +24,8 @@ import javax.persistence.PersistenceException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.CheckIfComponentNameIsReusedOp;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.FindNodesForComponentNameOp;
@@ -81,7 +81,7 @@ public class ComponentNamesBP
     /**
      * <code>log</code> logger for class
      */
-    private static Log log = LogFactory.getLog(ComponentNamesBP.class);
+    private static Logger log = LoggerFactory.getLogger(ComponentNamesBP.class);
     
     /**
      * @author BREDEX GmbH

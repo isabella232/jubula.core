@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -34,7 +34,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 public class AUTServerStateCommand implements ICommand {
     /** the logger */
-    private static Log log = LogFactory.getLog(AUTServerStateCommand.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(AUTServerStateCommand.class);
     
     /** the message */
     private AUTServerStateMessage m_message;
@@ -102,7 +103,7 @@ public class AUTServerStateCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        log.fatal(this.getClass().getName() + "timeout() called"); //$NON-NLS-1$
+        log.error(this.getClass().getName() + "timeout() called"); //$NON-NLS-1$
     }
 
 }

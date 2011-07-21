@@ -20,25 +20,23 @@ import java.util.Enumeration;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendServerLogMessage;
 import org.eclipse.jubula.communication.message.ServerLogResponseMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * @author BREDEX GmbH
  * @created Feb 8, 2007
- * 
  */
 public class SendServerLogCommand implements ICommand {
-
     /** the logger */
-    private static Log log = LogFactory.getLog(SendServerLogCommand.class);
+    private static Logger log = LoggerFactory.getLogger(
+            SendServerLogCommand.class);
 
     /** the message */
     private SendServerLogMessage m_message;
@@ -56,8 +54,8 @@ public class SendServerLogCommand implements ICommand {
         FileHandler fileHandler = null;
         Enumeration loggersNames = LogManager.getLogManager().getLoggerNames();
         while (loggersNames.hasMoreElements() && fileHandler == null) {
-            Logger logger = LogManager.getLogManager().getLogger(
-                    (String)loggersNames.nextElement());
+            java.util.logging.Logger logger = LogManager.getLogManager()
+                    .getLogger((String)loggersNames.nextElement());
             Handler[] handlers = logger.getHandlers();
             for (int i = 0; i < handlers.length; ++i) {
                 if (handlers[i] instanceof FileHandler) {
@@ -131,5 +129,4 @@ public class SendServerLogCommand implements ICommand {
     public void timeout() {
         log.error(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
     }
-
 }

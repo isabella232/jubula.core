@@ -19,8 +19,8 @@ import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * This class represents an action which belongs to a component.
  * For example an action is a click on a button or a check for a value.
@@ -31,9 +31,8 @@ import org.apache.commons.logging.LogFactory;
  * @created 08.07.2004
  */
 public class Action {
-    
     /** the logger */
-    private static Log log = LogFactory.getLog(Action.class);
+    private static Logger log = LoggerFactory.getLogger(Action.class);
 
     /** paramlist of action */
     private List m_params = new ArrayList();
@@ -156,7 +155,7 @@ public class Action {
         }
         String message = "Param " + name //$NON-NLS-1$
                 + " does not exist"; //$NON-NLS-1$
-        log.fatal(message);
+        log.error(message);
         return new InvalidParam();
     }
     /**

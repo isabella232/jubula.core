@@ -21,14 +21,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.utils.ClassPathHacker;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -39,7 +40,8 @@ import com.thoughtworks.xstream.XStream;
 public class AbstractComponentBuilder {
     
     /** The logger. */
-    private static Log log = LogFactory.getLog(AbstractComponentBuilder.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(AbstractComponentBuilder.class);
     
     /** The component system loaded from the configuration files. */
     private CompSystem m_compSystem;
@@ -125,7 +127,7 @@ public class AbstractComponentBuilder {
                 setToolkitDescriptorToComponents(compSystem, descr);
                 addToolkitToCompSystem(compSystem);
             } catch (IOException e) {
-                log.error(e);
+                log.error(DebugConstants.ERROR, e);
             }
             String resourceBundlePath = 
                 config.getResourceBundlePath(configName);
@@ -134,7 +136,7 @@ public class AbstractComponentBuilder {
                         new File(resourceBundlePath)
                             .getCanonicalFile());
             } catch (IOException e) {
-                log.error(e);
+                log.error(DebugConstants.ERROR, e);
                 e.printStackTrace();
             }
             String resourceBundleFQN = config

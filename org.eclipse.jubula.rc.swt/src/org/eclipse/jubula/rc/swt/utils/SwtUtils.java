@@ -17,8 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -75,7 +75,7 @@ public class SwtUtils {
     private static final String GTK = "gtk"; //$NON-NLS-1$
     
     /** the logger */
-    private static Log log = LogFactory.getLog(SwtUtils.class);
+    private static Logger log = LoggerFactory.getLogger(SwtUtils.class);
     
     /** 
      * Utility constructor

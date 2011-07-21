@@ -18,8 +18,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamNamePO;
@@ -39,7 +39,7 @@ public class ParamNamePM extends AbstractNamePM {
     /**
      * <code>log</code>logger
      */
-    private static Log log = LogFactory.getLog(ParamNamePM.class);
+    private static Logger log = LoggerFactory.getLogger(ParamNamePM.class);
     
     
     
@@ -103,7 +103,7 @@ public class ParamNamePM extends AbstractNamePM {
             paramNames = q.getResultList();            
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.fatal(Messages.CouldNotReadParameterNamesFromDB, e);
+            log.error(Messages.CouldNotReadParameterNamesFromDB, e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);
         } finally {
             Persistor.instance().dropSessionWithoutLockRelease(s);

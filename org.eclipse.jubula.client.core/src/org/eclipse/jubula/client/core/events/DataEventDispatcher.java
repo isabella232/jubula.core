@@ -17,8 +17,8 @@ import java.util.Set;
 import javax.persistence.EntityNotFoundException;
 
 import org.apache.commons.lang.exception.NestableRuntimeException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -120,7 +120,8 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     }
 
     /** standard logging */
-    private static final Log LOG = LogFactory.getLog(DataEventDispatcher.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(DataEventDispatcher.class);
     
     /**
      * clients interested in partial changes to the data in the master session

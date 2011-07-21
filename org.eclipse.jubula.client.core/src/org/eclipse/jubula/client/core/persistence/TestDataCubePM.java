@@ -19,8 +19,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.core.model.PoMaker;
  */
 public class TestDataCubePM {
     /** standard logging */
-    private static Log log = LogFactory.getLog(TestDataCubePM.class);
+    private static Logger log = LoggerFactory.getLogger(TestDataCubePM.class);
 
     /** hide */
     private TestDataCubePM() {

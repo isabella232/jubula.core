@@ -16,8 +16,8 @@ import java.net.URL;
 
 import javax.persistence.PersistenceException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -62,7 +62,8 @@ import org.osgi.framework.Bundle;
  */
 public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
     /** the logger */
-    private static Log log = LogFactory.getLog(JubulaWorkbenchAdvisor.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(JubulaWorkbenchAdvisor.class);
 
     /**
      * Constructs a new <code>JubulaWorkbenchAdvisor</code>.

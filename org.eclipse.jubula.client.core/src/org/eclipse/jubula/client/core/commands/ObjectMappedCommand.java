@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.core.commands;
 
 import java.util.Iterator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -37,7 +37,8 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 public class ObjectMappedCommand implements ICommand {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(ObjectMappedCommand.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(ObjectMappedCommand.class);
     
     /** the message */
     private ObjectMappedMessage m_message;

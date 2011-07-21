@@ -21,8 +21,6 @@ import java.util.Set;
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -114,6 +112,8 @@ import org.eclipse.ui.part.IContributedContentsView;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -133,7 +133,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     /** name of the Jubula console */
     private static final String JB_CONSOLE_NAME = "Console"; //$NON-NLS-1$
     /** for log messages */
-    private static Log log = LogFactory.getLog(Plugin.class);
+    private static Logger log = LoggerFactory.getLogger(Plugin.class);
     /** single instance of plugin */
     private static Plugin plugin;
     /** StatusLineText */

@@ -22,8 +22,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -86,6 +86,7 @@ import org.eclipse.jubula.communication.message.RestartAutMessage;
 import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
@@ -145,7 +146,8 @@ public class TestExecution {
         CONTINUE_WITHOUT_EH
     }
     /** The logger */
-    private static final Log LOG = LogFactory.getLog(TestExecution.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(TestExecution.class);
 
     /** 
      * Constant for the m_varStore of the last return value of the last
@@ -998,11 +1000,11 @@ public class TestExecution {
                     TimeoutConstants.CLIENT_SERVER_TIMEOUT_TAKE_SCREENSHOT);
         } catch (NotConnectedException nce) {
             if (LOG.isErrorEnabled()) {
-                LOG.error(nce);
+                LOG.error(DebugConstants.ERROR, nce);
             }
         } catch (CommunicationException ce) {
             if (LOG.isErrorEnabled()) {
-                LOG.error(ce);
+                LOG.error(DebugConstants.ERROR, ce);
             }
         }
     }
@@ -1201,9 +1203,9 @@ public class TestExecution {
                                         .getExecutableName());
                         ServerConnection.getInstance().send(message);
                     } catch (NotConnectedException nce) {
-                        LOG.error(nce);
+                        LOG.error(DebugConstants.ERROR, nce);
                     } catch (CommunicationException ce) {
-                        LOG.error(ce);
+                        LOG.error(DebugConstants.ERROR, ce);
                     }
                 }
             }
@@ -1222,12 +1224,12 @@ public class TestExecution {
                     EndTestExecutionMessage.TIMEOUT);
         } catch (NotConnectedException nce) {
             if (LOG.isWarnEnabled()) {
-                LOG.warn(nce);
+                LOG.warn(DebugConstants.ERROR, nce);
             }
             stopExecution();
         } catch (CommunicationException ce) {
             if (LOG.isWarnEnabled()) {
-                LOG.warn(ce);
+                LOG.warn(DebugConstants.ERROR, ce);
             }
             stopExecution();
         }

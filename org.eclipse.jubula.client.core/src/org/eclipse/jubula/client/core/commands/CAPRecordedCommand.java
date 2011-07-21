@@ -19,8 +19,8 @@ import java.util.Set;
 
 import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.IRecordListener;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.businessprocess.CompletenessGuard;
@@ -78,7 +78,8 @@ public class CAPRecordedCommand implements ICommand {
     /**
      * The logger
      */
-    private static final Log LOG = LogFactory.getLog(CAPRecordedCommand.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(CAPRecordedCommand.class);
 
     /** The TestCase to record in */
     private static ISpecTestCasePO recSpecTestCase;

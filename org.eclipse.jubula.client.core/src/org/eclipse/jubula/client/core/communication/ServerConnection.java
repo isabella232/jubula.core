@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.core.communication;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.AutStarterEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.ServerEvent;
@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -37,7 +38,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 public class ServerConnection extends BaseConnection {
     
     /** the logger */
-    private static Log log = LogFactory.getLog(ServerConnection.class);
+    private static Logger log = LoggerFactory.getLogger(ServerConnection.class);
     
     /** the singleton instance */
     private static ServerConnection instance = null;
@@ -82,7 +83,7 @@ public class ServerConnection extends BaseConnection {
                 new Integer(port).intValue());
         } catch (UnknownHostException uhe) {
             // log on info level, the configuration may be bad typed
-            log.info(uhe);
+            log.info(DebugConstants.ERROR, uhe);
             throw new ConnectionException(uhe.getMessage(),
                 MessageIDs.E_UNKNOWN_HOST);
         }
@@ -149,7 +150,7 @@ public class ServerConnection extends BaseConnection {
             } catch (ConnectionException ce) {
                 // the connection to the AUTServer is not established
                 // -> just log this
-                log.debug(ce);
+                log.debug(DebugConstants.ERROR, ce);
             }
         }
 

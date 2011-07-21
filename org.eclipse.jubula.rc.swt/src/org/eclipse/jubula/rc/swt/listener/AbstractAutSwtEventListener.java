@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
@@ -21,6 +21,7 @@ import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.swt.SWT;
@@ -50,7 +51,7 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
     implements AUTEventListener {
     
     /** the logger */
-    private static final Log LOG = LogFactory.getLog(
+    private static final Logger LOG = LoggerFactory.getLogger(
             AbstractAutSwtEventListener.class);
     /** the lock object for m_currentComponent */
     private Object m_componentLock = new Object();
@@ -168,7 +169,7 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
                     componentClass);
             }
         } catch (IllegalArgumentException e) {
-            LOG.warn(e);
+            LOG.warn(DebugConstants.ERROR, e);
         } catch (UnsupportedComponentException uce) {
             closeBorderShell();
             return;
@@ -305,7 +306,7 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
                 + String.valueOf(comp) + "' not found!", e); //$NON-NLS-1$
             return false;
         } catch (IllegalArgumentException e) {
-            LOG.debug(e);
+            LOG.debug(DebugConstants.ERROR, e);
             return false;
         }
         return component != null;

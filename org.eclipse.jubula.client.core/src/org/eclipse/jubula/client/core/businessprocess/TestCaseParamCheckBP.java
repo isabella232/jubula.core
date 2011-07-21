@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -33,6 +33,7 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.TestCaseParamCheckException;
@@ -53,8 +54,8 @@ import org.eclipse.osgi.util.NLS;
 public class TestCaseParamCheckBP {
     
     /** The logger */
-    private static final Log LOG = 
-        LogFactory.getLog(TestCaseParamCheckBP.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(TestCaseParamCheckBP.class);
     
     
     /**
@@ -252,7 +253,7 @@ public class TestCaseParamCheckBP {
                 execTestCases = NodePM.getAllExecTestCases(
                     parent.getGuid(), parent.getParentProjectId());
             } catch (JBException e) {
-                LOG.error(e);
+                LOG.error(DebugConstants.ERROR, e);
             }
             List <String> paramNames = parent.getParamNames();
             for (String refName : ref) {

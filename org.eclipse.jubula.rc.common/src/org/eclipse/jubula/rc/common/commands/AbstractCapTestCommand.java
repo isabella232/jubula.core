@@ -13,8 +13,8 @@ package org.eclipse.jubula.rc.common.commands;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.CAPTestMessage;
 import org.eclipse.jubula.communication.message.CAPTestResponseMessage;
@@ -32,6 +32,7 @@ import org.eclipse.jubula.rc.common.exception.MethodParamException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -53,7 +54,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
 public abstract class AbstractCapTestCommand implements ICommand {
 
     /** The logger */
-    private static final Log LOG = LogFactory.getLog(
+    private static final Logger LOG = LoggerFactory.getLogger(
         AbstractCapTestCommand.class);
     
     /** The message. */
@@ -81,7 +82,7 @@ public abstract class AbstractCapTestCommand implements ICommand {
     private void handleComponentNotFound(CAPTestResponseMessage response,
         Throwable e) {
         if (LOG.isWarnEnabled()) {
-            LOG.warn(e);
+            LOG.warn(DebugConstants.ERROR, e);
         }
         response.setTestErrorEvent(EventFactory
                 .createComponentNotFoundErrorEvent());
@@ -155,11 +156,11 @@ public abstract class AbstractCapTestCommand implements ICommand {
                 handleComponentNotFound(response, e);
             }
         } catch (UnsupportedComponentException buce) {
-            LOG.error(buce);
+            LOG.error(DebugConstants.ERROR, buce);
             response.setTestErrorEvent(EventFactory.createConfigErrorEvent());
         } catch (Throwable e) {
             if (LOG.isErrorEnabled()) {
-                LOG.error(e);
+                LOG.error(DebugConstants.ERROR, e);
             }
             response.setTestErrorEvent(
                     EventFactory.createImplClassErrorEvent());
@@ -241,13 +242,13 @@ public abstract class AbstractCapTestCommand implements ICommand {
                     ite.getTargetException();
                 event = e.getEvent();
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug(e);
+                    LOG.debug(DebugConstants.ERROR, e);
                 }
             } else if (ite.getTargetException() instanceof ExecutionEvent) {
                 ExecutionEvent e = (ExecutionEvent)ite.getTargetException();
                 response.setState(e.getEvent());
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug(e);
+                    LOG.debug(DebugConstants.ERROR, e);
                 }
             } else {
                 event = EventFactory.createConfigErrorEvent();
@@ -257,9 +258,9 @@ public abstract class AbstractCapTestCommand implements ICommand {
                 }
             }
         } catch (IllegalArgumentException e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
         } catch (MethodParamException e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
         } finally {
             if (AUTServer.getInstance().getMode() != oldMode) {
                 AUTServer.getInstance().setMode(oldMode);

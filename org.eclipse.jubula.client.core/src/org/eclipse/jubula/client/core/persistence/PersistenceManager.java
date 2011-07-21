@@ -20,8 +20,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.PessimisticLockException;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
@@ -39,7 +39,8 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 public abstract class PersistenceManager {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(PersistenceManager.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(PersistenceManager.class);
 
     /**
      * 

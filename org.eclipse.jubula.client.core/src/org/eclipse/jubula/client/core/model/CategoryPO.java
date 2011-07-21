@@ -14,8 +14,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -34,7 +34,7 @@ import org.eclipse.jubula.tools.exception.JBException;
 class CategoryPO extends NodePO implements ICategoryPO {
     
     /** The logger */
-    private static final Log LOG = LogFactory.getLog(CategoryPO.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CategoryPO.class);
 
     /**
      * @param name name
@@ -71,7 +71,7 @@ class CategoryPO extends NodePO implements ICategoryPO {
                 parent = ProjectPM.loadProjectById(getParentProjectId(), 
                     GeneralStorage.getInstance().getMasterSession());
             } catch (JBException e) {
-                LOG.fatal(Messages.CouldNotFindParentForCategory 
+                LOG.error(Messages.CouldNotFindParentForCategory 
                     + StringConstants.COLON + StringConstants.SPACE + this
                     + StringConstants.SEMICOLON + StringConstants.SPACE
                     + Messages.ReturningNull + StringConstants.DOT 

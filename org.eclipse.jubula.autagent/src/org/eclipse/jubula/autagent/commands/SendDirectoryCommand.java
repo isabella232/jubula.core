@@ -12,8 +12,8 @@ package org.eclipse.jubula.autagent.commands;
 
 import java.io.File;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendDirectoryMessage;
@@ -27,7 +27,8 @@ import org.eclipse.jubula.communication.message.SendDirectoryResponseMessage;
 public class SendDirectoryCommand implements ICommand {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(SendDirectoryCommand.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(SendDirectoryCommand.class);
 
     /** the message */
     private SendDirectoryMessage m_message;

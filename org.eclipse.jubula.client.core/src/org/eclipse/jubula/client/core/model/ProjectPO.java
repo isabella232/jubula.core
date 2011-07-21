@@ -31,8 +31,8 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
@@ -47,7 +47,7 @@ import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 class ProjectPO extends ParamNodePO implements IProjectPO {
 
     /** standard logging */
-    private static Log log = LogFactory.getLog(ProjectPO.class);
+    private static Logger log = LoggerFactory.getLogger(ProjectPO.class);
     
     /** the properties for this project */
     private ProjectPropertiesPO m_projectProperties = null;

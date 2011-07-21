@@ -14,8 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -48,6 +48,7 @@ import org.eclipse.jubula.client.ui.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ConverterException;
@@ -66,7 +67,8 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("synthetic-access")
 public class SaveProjectAsHandler extends AbstractProjectHandler {
     /** standard logging */
-    private static Log log = LogFactory.getLog(SaveProjectAsHandler.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(SaveProjectAsHandler.class);
     
     /**
      * Worker operation for SaveProjectAs action.
@@ -347,7 +349,7 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 fireReady();
             } catch (InvocationTargetException ite) {
                 // Exception occurred during operation
-                log.error(ite.getCause());
+                log.error(DebugConstants.ERROR, ite.getCause());
             } catch (InterruptedException e) {
                 // Operation was canceled.
                 // We have to clear the GUI because all of

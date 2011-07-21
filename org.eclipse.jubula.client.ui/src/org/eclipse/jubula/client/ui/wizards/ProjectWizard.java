@@ -14,8 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -48,6 +48,7 @@ import org.eclipse.jubula.client.ui.wizards.pages.AutConfigSettingWizardPage;
 import org.eclipse.jubula.client.ui.wizards.pages.ProjectInfoWizardPage;
 import org.eclipse.jubula.client.ui.wizards.pages.ProjectSettingWizardPage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -88,7 +89,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
     private static final String UNBOUND_MODULES_PREFIX = "unbound_modules_"; //$NON-NLS-1$
     
     /** the logger */
-    private static Log log = LogFactory.getLog(ProjectWizard.class);
+    private static Logger log = LoggerFactory.getLogger(ProjectWizard.class);
     
     /** the new project to create */
     private IProjectPO m_newProject;
@@ -167,7 +168,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
                 });
         } catch (InvocationTargetException ite) {
             // Exception occurred during operation
-            log.error(ite.getCause());
+            log.error(DebugConstants.ERROR, ite.getCause());
         } catch (InterruptedException ie) {
             // Operation was canceled.
             // Do nothing.

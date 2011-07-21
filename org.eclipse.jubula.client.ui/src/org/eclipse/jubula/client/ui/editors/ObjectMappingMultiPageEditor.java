@@ -20,8 +20,8 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -185,8 +185,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     public static final String CLEANUP_ID = PlatformUI.PLUGIN_ID + ".CleanupSubMenu"; //$NON-NLS-1$
     
     /** the logger */
-    private static final Log LOG = 
-        LogFactory.getLog(ObjectMappingMultiPageEditor.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(ObjectMappingMultiPageEditor.class);
     
     /** separator for categories shown in the table view of this editor */
     private static final String CAT_SEPARATOR = "/"; //$NON-NLS-1$

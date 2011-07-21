@@ -26,8 +26,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
@@ -77,7 +77,7 @@ public class ProjectPM extends PersistenceManager {
     private static final int NUM_HBM_ADD_PROGRESS_EVENT_TYPES = 4;
 
     /** standard logging */
-    private static Log log = LogFactory.getLog(ProjectPM.class);
+    private static Logger log = LoggerFactory.getLogger(ProjectPM.class);
 
     /**
      * constructor must be hidden for class utilities (per CheckStyle)

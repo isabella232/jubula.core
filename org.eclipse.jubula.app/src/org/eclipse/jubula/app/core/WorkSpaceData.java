@@ -18,8 +18,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jubula.app.i18n.Messages;
@@ -60,7 +60,7 @@ public class WorkSpaceData {
     private static final int PERS_ENCODING_VERSION = 1;
     
     /** for log messages */
-    private static Log log = LogFactory.getLog(WorkSpaceData.class);
+    private static Logger log = LoggerFactory.getLogger(WorkSpaceData.class);
     /** the initial default */
     private String m_initialDefault;
     /** the selected workspace*/

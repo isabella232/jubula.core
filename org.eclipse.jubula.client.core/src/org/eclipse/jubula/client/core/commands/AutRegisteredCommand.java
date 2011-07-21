@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
@@ -30,7 +30,8 @@ import org.eclipse.jubula.communication.message.Message;
 public class AutRegisteredCommand implements ICommand {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(AutRegisteredCommand.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(AutRegisteredCommand.class);
 
     /** the message */
     private AutRegisteredMessage m_message;

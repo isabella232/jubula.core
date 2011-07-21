@@ -21,8 +21,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-//import org.apache.commons.logging.Log;
-//import org.apache.commons.logging.LogFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * JarResources: JarResources maps all resources included in a Zip or Jar file.
@@ -34,7 +34,7 @@ public final class JarResources {
 
 // don't use logging because this may not work due to class loading
 // problems and therefor may crash the application.
-// private static final Log LOG = LogFactory.getLog(JarResources.class);
+// private static final Logger LOG = LoggerFactory.getLogger(JarResources.class);
     
     /**
      * jar resource mapping tables

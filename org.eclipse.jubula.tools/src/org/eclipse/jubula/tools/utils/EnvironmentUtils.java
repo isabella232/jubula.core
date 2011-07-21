@@ -20,9 +20,9 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for handling environment variables.
@@ -74,7 +74,7 @@ public class EnvironmentUtils {
     private static final String ENV_CMD_LINUX = "env"; //$NON-NLS-1$
 
     /** the logger */
-    private static Log log = LogFactory.getLog(EnvironmentUtils.class);
+    private static Logger log = LoggerFactory.getLogger(EnvironmentUtils.class);
 
     /**
      * Private constructor

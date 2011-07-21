@@ -17,8 +17,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.WindowConstants;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
@@ -26,10 +26,9 @@ import org.apache.commons.logging.LogFactory;
  * 
  */
 public class ObservationConsoleBP {
-
     /** the logger */
-    private static final Log LOG = LogFactory
-        .getLog(ObservationConsoleBP.class);    
+    private static final Logger LOG = LoggerFactory
+        .getLogger(ObservationConsoleBP.class);    
     
     /**
      * singleton

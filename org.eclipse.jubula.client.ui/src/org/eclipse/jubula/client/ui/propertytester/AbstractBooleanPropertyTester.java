@@ -11,11 +11,11 @@
 package org.eclipse.jubula.client.ui.propertytester;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.osgi.util.NLS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Markus Tiede
@@ -23,8 +23,8 @@ import org.eclipse.osgi.util.NLS;
  */
 public abstract class AbstractBooleanPropertyTester extends PropertyTester {
     /** the logger */
-    private static final Log LOG = LogFactory
-            .getLog(AbstractBooleanPropertyTester.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(AbstractBooleanPropertyTester.class);
 
     /** {@inheritDoc} */
     public final boolean test(Object receiver, String property, Object[] args,

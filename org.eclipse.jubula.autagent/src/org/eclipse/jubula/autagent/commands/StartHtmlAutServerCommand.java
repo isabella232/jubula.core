@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -48,8 +48,8 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
     }
     
     /** the logger */
-    private static final Log LOG = LogFactory
-            .getLog(StartHtmlAutServerCommand.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(StartHtmlAutServerCommand.class);
 
     /**
      * {@inheritDoc}

@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.core.commands;
 import java.util.Iterator;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
@@ -47,7 +47,8 @@ import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 public class AUTStartedCommand implements ICommand {
     
     /** the logger */
-    private static Log log = LogFactory.getLog(AUTStartedCommand.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(AUTStartedCommand.class);
 
     /** the listener to notfy */
     private IAUTInfoListener m_listener;

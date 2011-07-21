@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.resources.IMarker;
@@ -51,6 +49,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator;
 import org.eclipse.ui.dialogs.PreferencesUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -60,10 +60,9 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
  * @created 02.06.2008
  */
 public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
-
     /** the logger */
-    private static Log log = 
-        LogFactory.getLog(JBMarkerResolutionGenerator.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(JBMarkerResolutionGenerator.class);
 
     /**
      * @author BREDEX GmbH

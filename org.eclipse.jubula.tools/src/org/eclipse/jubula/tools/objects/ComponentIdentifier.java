@@ -18,11 +18,11 @@ import java.util.List;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -45,7 +45,8 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
     static final long serialVersionUID = 1031;
 
     /** the logger */
-    private static Log log = LogFactory.getLog(ComponentIdentifier.class);
+    private static Logger log = LoggerFactory.getLogger(
+            ComponentIdentifier.class);
     
     /**
      * the name of the class as which class is being handled as
@@ -129,7 +130,7 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
                         m_hierarchyNames.size() - 1);
             }
         } catch (ClassCastException cce) {
-            log.fatal("unexpected element type", cce); //$NON-NLS-1$
+            log.error("unexpected element type", cce); //$NON-NLS-1$
         }
         return StringConstants.EMPTY;
     }

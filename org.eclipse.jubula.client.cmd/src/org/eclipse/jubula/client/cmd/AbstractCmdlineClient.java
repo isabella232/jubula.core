@@ -25,8 +25,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.cmd.exceptions.PreValidateException;
@@ -44,6 +44,7 @@ import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.Message;
@@ -70,7 +71,8 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         Messages.UnrecognizedOption + StringConstants.COLON 
         + StringConstants.SPACE;
     /** log facility */
-    private static Log log = LogFactory.getLog(AbstractCmdlineClient.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(AbstractCmdlineClient.class);
     /** be quiet during processing */
     private static boolean quiet = false;
     /** did an error occur during processing */
@@ -381,10 +383,10 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                 return EXIT_CODE_ERROR;
             }
         } catch (ParseException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
             return EXIT_CODE_ERROR;
         } catch (IOException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
             return EXIT_CODE_ERROR;
         }
         preRun();
@@ -402,7 +404,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
             // Assume that, if an exception has bubbled up this far, then it is 
             // a big enough problem to warrant telling the user and returning a
             // generic error exit code.
-            log.error(t);
+            log.error(DebugConstants.ERROR, t);
             printlnConsoleError(t.getLocalizedMessage());
             return EXIT_CODE_ERROR;
         }

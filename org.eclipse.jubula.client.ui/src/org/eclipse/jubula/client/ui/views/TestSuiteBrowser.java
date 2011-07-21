@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.views;
 
 import java.util.Locale;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -92,7 +92,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     /** Add-Submenu ID */
     public static final String ADD_ID = PlatformUI.PLUGIN_ID + ".AddSubMenu"; //$NON-NLS-1$
     /** standard logging */
-    static final Log LOG = LogFactory.getLog(TestSuiteBrowser.class);
+    static final Logger LOG = LoggerFactory.getLogger(TestSuiteBrowser.class);
     /** flag for initialization state of context menu */
     private boolean m_isContextMenuInitialized = false;
     /** menu manager for context menu */
@@ -484,7 +484,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         TestJobEditor edit = Plugin.getDefault().getActiveTJEditor();
         if (edit == null) {
             String msg = Messages.NoActiveTCEditorPleaseFixTheMethod;
-            LOG.fatal(msg); 
+            LOG.error(msg); 
             throw new JBFatalException(msg, MessageIDs.E_NO_OPENED_EDITOR);
         }
         return edit;

@@ -10,15 +10,16 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.DisconnectFromAutAgentResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -28,8 +29,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 public class DisconnectFromAutAgentResponseCommand implements ICommand {
     /** the logger */
-    private static Log log = LogFactory
-            .getLog(DisconnectFromAutAgentResponseCommand.class);
+    private static Logger log = LoggerFactory
+            .getLogger(DisconnectFromAutAgentResponseCommand.class);
 
     /**
      * <code>m_message</code>
@@ -52,7 +53,7 @@ public class DisconnectFromAutAgentResponseCommand implements ICommand {
             ServerConnection.getInstance().close();
         } catch (ConnectionException e) {
             if (log.isInfoEnabled()) {
-                log.info(e);
+                log.info(DebugConstants.ERROR, e);
             }
         }
         return null;
@@ -79,5 +80,4 @@ public class DisconnectFromAutAgentResponseCommand implements ICommand {
         log.error(this.getClass().getName() + StringConstants.DOT 
             + Messages.TimeoutCalled);
     }
-
 }

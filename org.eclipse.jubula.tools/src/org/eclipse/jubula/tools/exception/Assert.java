@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.tools.exception;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class provides an assert mechanism. A condition can be passed
@@ -23,9 +23,8 @@ import org.apache.commons.logging.LogFactory;
  * @created 08.10.2004
  */
 public class Assert {
-    
     /** standard logging */
-    private static Log log = LogFactory.getLog(Assert.class);
+    private static Logger log = LoggerFactory.getLogger(Assert.class);
     
     /**
      *  not to use

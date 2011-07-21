@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class reads buffered from an inputstream in a seperated thread. 
@@ -26,9 +26,8 @@ import org.apache.commons.logging.LogFactory;
  * @created 10.08.2004
  */
 public class DevNull extends Thread {
-    
     /** the logger */
-    private static Log log = LogFactory.getLog(DevNull.class);
+    private static Logger log = LoggerFactory.getLogger(DevNull.class);
     
     /** the error stream if a SUN VM does not know -javaagent */
     private static final String UNRECOGNIZED_SUN_JO = 

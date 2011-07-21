@@ -14,8 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.ui.dialogs.DBLoginDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.ui.PlatformUI;
@@ -46,7 +47,8 @@ import org.eclipse.ui.PlatformUI;
  */
 public class SelectDatabaseHandler extends AbstractHandler {
     /** the logger */
-    private static Log log = LogFactory.getLog(SelectDatabaseHandler.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(SelectDatabaseHandler.class);
     
     /**
      * {@inheritDoc}
@@ -85,7 +87,7 @@ public class SelectDatabaseHandler extends AbstractHandler {
             try {
                 returnStatus = connectToDatabase(userName, pwd, dbInfo);
             } catch (InterruptedException e) {
-                log.error(e);
+                log.error(DebugConstants.ERROR, e);
             }
         }
         
@@ -144,7 +146,7 @@ public class SelectDatabaseHandler extends AbstractHandler {
                     });
         } catch (InvocationTargetException ite) {
             // Exception occurred during operation
-            log.error(ite.getCause(), ite.getCause());
+            log.error(DebugConstants.ERROR, ite.getCause());
         } catch (InterruptedException ie) {
             throw ie;
         }

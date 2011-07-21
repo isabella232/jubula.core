@@ -17,8 +17,8 @@ import javax.persistence.PersistenceException;
 
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -45,7 +45,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  */
 public class NodeBP {
     /** the logger */
-    private static final Log LOG = LogFactory.getLog(NodeBP.class);
+    private static final Logger LOG = LoggerFactory.getLogger(NodeBP.class);
 
     /**
      * 
@@ -138,7 +138,7 @@ public class NodeBP {
             throw e;
         } catch (PMException e) {
             // Continue since we are just refreshing the cache
-            LOG.fatal(Messages.StrayPersistenceException + StringConstants.DOT
+            LOG.error(Messages.StrayPersistenceException + StringConstants.DOT
                     + StringConstants.DOT, e);
         }
         if (!LockManager.instance().lockPO(lockSession, node, false)) {

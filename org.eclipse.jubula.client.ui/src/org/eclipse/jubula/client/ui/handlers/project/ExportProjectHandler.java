@@ -14,8 +14,8 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -102,7 +103,8 @@ public class ExportProjectHandler extends AbstractProjectHandler {
     }
 
     /** the logger */
-    private static Log log = LogFactory.getLog(ExportProjectHandler.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(ExportProjectHandler.class);
 
     /**
      * 
@@ -146,7 +148,7 @@ public class ExportProjectHandler extends AbstractProjectHandler {
             PlatformUI.getWorkbench().getProgressService().busyCursorWhile(op);
         } catch (InvocationTargetException ite) {
             // Exception occurred during operation
-            log.error(ite.getCause());
+            log.error(DebugConstants.ERROR, ite.getCause());
         } catch (InterruptedException ie) {
             // Operation canceled. 
             // Do nothing.

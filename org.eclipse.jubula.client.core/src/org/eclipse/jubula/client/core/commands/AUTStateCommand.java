@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.core.commands;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
@@ -44,7 +44,7 @@ import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
  */
 public class AUTStateCommand implements ICommand {
     /** the logger */
-    private static Log log = LogFactory.getLog(AUTStateCommand.class);
+    private static Logger log = LoggerFactory.getLogger(AUTStateCommand.class);
     
     // HERE after exhibition: remove TIMEOUT, it's not used any more
     // 500000 is useful for RCP AUTs
@@ -71,7 +71,7 @@ public class AUTStateCommand implements ICommand {
                     log.error(Messages.CouldNotRequestComsFromAUT);
                     break;
                 default: 
-                    log.fatal(Messages.UnknownErrorGettingAllCompsAUT 
+                    log.error(Messages.UnknownErrorGettingAllCompsAUT 
                         + StringConstants.COLON + String.valueOf(reason));
             }
             
@@ -128,10 +128,10 @@ public class AUTStateCommand implements ICommand {
             try {
                 AUTConnection.getInstance().send(i18nMessage);
             } catch (CommunicationException ce) {
-                log.fatal(Messages.CommunicationErrorSetResourceBundle, ce); 
+                log.error(Messages.CommunicationErrorSetResourceBundle, ce); 
             }
         } catch (CommunicationException bce) {
-            log.fatal(Messages.CommunicationErrorGetResourceBundle, bce);
+            log.error(Messages.CommunicationErrorGetResourceBundle, bce);
         }
         return null;
     }

@@ -16,10 +16,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -33,7 +34,8 @@ import org.osgi.framework.Bundle;
  */
 public class BundleUtils {
     /** standard logging */
-    private static final Log LOG = LogFactory.getLog(BundleUtils.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(BundleUtils.class);
 
     /**
      * Constructor
@@ -59,9 +61,9 @@ public class BundleUtils {
                 + StringConstants.SPACE + resouceName + StringConstants.SPACE
                 + Messages.NotFound + StringConstants.DOT);
         } catch (MalformedURLException e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
         } catch (IOException e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
         }
         return null;
     }
@@ -82,7 +84,7 @@ public class BundleUtils {
         } catch (IOException e) {
             String msg = Messages.CantLoad + StringConstants.COLON
                 + StringConstants.SPACE + propertyFileName;
-            LOG.fatal(msg, e);
+            LOG.error(msg, e);
             throw new JBFatalException(msg,
                     MessageIDs.E_PROPERTIES_FILE_NOT_FOUND);
         } finally {

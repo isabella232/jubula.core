@@ -24,8 +24,6 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
@@ -33,6 +31,8 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.xml.businessprocess.ConfigVersion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class represents a container for all components which can be tested by
@@ -45,7 +45,7 @@ public class CompSystem {
     public static final String EMPTY_EXTPOINT_ENTRY = "null"; //$NON-NLS-1$
     
     /** The logger */
-    private static Log log = LogFactory.getLog(CompSystem.class); 
+    private static Logger log = LoggerFactory.getLogger(CompSystem.class); 
     
     /** The list of all components. */
     private List m_components;
@@ -283,7 +283,7 @@ public class CompSystem {
             if (current.getType().equals(component.getType())) {
                 final String msg = "multiple definition of component type " //$NON-NLS-1$
                         + component.getType();
-                log.fatal(msg);
+                log.error(msg);
                 throw new GDConfigXmlException(msg, 
                     MessageIDs.E_MULTIPLE_COMPONENT);
             }
@@ -595,7 +595,7 @@ public class CompSystem {
                 String message = "AbstractComponent " + ac.getType() //$NON-NLS-1$
                     + " has no realizing concreteComponents";  //$NON-NLS-1$
                 if (ac.isVisible()) {
-                    log.fatal("visible " + message); //$NON-NLS-1$
+                    log.error("visible " + message); //$NON-NLS-1$
                     throw new GDConfigXmlException("visible " + message, //$NON-NLS-1$
                         MessageIDs.E_NO_ABSTRACT_COMPONENT); 
                 }

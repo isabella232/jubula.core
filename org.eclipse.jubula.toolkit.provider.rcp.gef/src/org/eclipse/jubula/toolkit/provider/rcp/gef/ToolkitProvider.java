@@ -25,7 +25,6 @@ import org.eclipse.swt.widgets.Composite;
  * @created 26.04.2007
  */
 public class ToolkitProvider implements IToolKitProvider {
-
     /**
      * <code>I18N_PROPERTIES</code>
      */

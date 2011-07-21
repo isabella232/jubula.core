@@ -18,8 +18,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -50,7 +50,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class ProjectDialog extends TitleAreaDialog {
     /** standard logging */
-    private static Log log = LogFactory.getLog(TitleAreaDialog.class);
+    private static Logger log = LoggerFactory.getLogger(TitleAreaDialog.class);
 
     /** number of columns = 1 */
     private static final int NUM_COLUMNS_1 = 1;

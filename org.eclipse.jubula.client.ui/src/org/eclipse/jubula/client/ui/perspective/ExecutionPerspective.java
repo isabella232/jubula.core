@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.perspective;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
@@ -26,7 +26,8 @@ import org.eclipse.ui.IPerspectiveFactory;
 public class ExecutionPerspective implements IPerspectiveFactory {
 
     /** The logger */
-    static final Log LOG = LogFactory.getLog(ExecutionPerspective.class);
+    static final Logger LOG = 
+        LoggerFactory.getLogger(ExecutionPerspective.class);
     /** Ration 0.27f */
     private static final float RATIO_0_27 = 0.27f;
     /** Ration 0.5f */

@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.NullMessage;
@@ -27,7 +27,7 @@ import org.eclipse.jubula.communication.message.NullMessage;
 public class NullCommand implements ICommand {
     
     /** the logger */
-    private static Log log = LogFactory.getLog(NullCommand.class);
+    private static Logger log = LoggerFactory.getLogger(NullCommand.class);
     /** the message */
     private NullMessage m_message;
 

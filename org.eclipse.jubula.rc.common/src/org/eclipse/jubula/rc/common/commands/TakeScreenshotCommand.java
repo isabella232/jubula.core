@@ -17,12 +17,13 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
 import org.eclipse.jubula.communication.message.TakeScreenshotResponseMessage;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.serialisation.SerializedImage;
 
 
@@ -33,8 +34,8 @@ import org.eclipse.jubula.tools.serialisation.SerializedImage;
  */
 public class TakeScreenshotCommand implements ICommand {
     /** Logger */
-    private static final Log LOG = LogFactory
-            .getLog(TakeScreenshotCommand.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(TakeScreenshotCommand.class);
 
     /** message */
     private TakeScreenshotMessage m_message;
@@ -55,7 +56,7 @@ public class TakeScreenshotCommand implements ICommand {
             response.setScreenshot(SerializedImage.computeSerializeImage(bi));
         } catch (AWTException e) {
             if (LOG.isErrorEnabled()) {
-                LOG.error(e);
+                LOG.error(DebugConstants.ERROR, e);
             }
         }
         return response;

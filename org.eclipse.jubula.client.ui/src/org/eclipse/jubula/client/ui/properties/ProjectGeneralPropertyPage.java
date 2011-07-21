@@ -16,8 +16,8 @@ import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
@@ -95,8 +95,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     /**
      * the logger
      */
-    private static Log log = 
-        LogFactory.getLog(ProjectGeneralPropertyPage.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(ProjectGeneralPropertyPage.class);
     
     /** the m_text field for the project name */
     private CheckedText m_projectNameTextField;

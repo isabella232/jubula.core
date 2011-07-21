@@ -16,8 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
@@ -29,6 +27,8 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchPart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -55,8 +55,8 @@ public class ComponentNameCollectionPropertyTester
         ARE_IN_CURRENT_PROJECT, ARE_SAME_TECH_PROP, ARE_SAME_TYPE_PROP };
 
     /** <code>LOG</code> */
-    private static final Log LOG = 
-        LogFactory.getLog(ComponentNameCollectionPropertyTester.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(ComponentNameCollectionPropertyTester.class);
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")

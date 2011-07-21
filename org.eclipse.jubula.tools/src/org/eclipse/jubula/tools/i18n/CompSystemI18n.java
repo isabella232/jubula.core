@@ -23,9 +23,10 @@ import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to internationalize all compSystem strings
@@ -34,7 +35,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 public class CompSystemI18n {  
     /** the logger */
-    private static Log log = LogFactory.getLog(CompSystemI18n.class);
+    private static Logger log = LoggerFactory.getLogger(CompSystemI18n.class);
     
     /** List of ResourceBundles */
     private static final List PLUGIN_BUNDLES = new LinkedList();
@@ -221,7 +222,7 @@ public class CompSystemI18n {
             PLUGIN_BUNDLES.clear();
             addResourceBundle(bundle);
         } catch (IOException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
         }
     }
 

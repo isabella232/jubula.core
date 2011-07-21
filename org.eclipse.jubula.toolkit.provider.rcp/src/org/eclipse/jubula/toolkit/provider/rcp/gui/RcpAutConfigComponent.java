@@ -19,7 +19,6 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * @author BREDEX GmbH
  * @created Nov 23, 2007
- * 
  */
 public class RcpAutConfigComponent extends SwtAutConfigComponent {
 

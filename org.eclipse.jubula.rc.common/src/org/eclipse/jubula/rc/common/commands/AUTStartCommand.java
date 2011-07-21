@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTStartMessage;
 import org.eclipse.jubula.communication.message.AUTStateMessage;
@@ -30,7 +30,7 @@ import org.eclipse.jubula.rc.common.AUTServer;
  */
 public class AUTStartCommand implements ICommand {
     /** the logger */
-    private static Log log = LogFactory.getLog(AUTStartCommand.class);
+    private static Logger log = LoggerFactory.getLogger(AUTStartCommand.class);
     
     /** the message */
     private AUTStartMessage m_message;

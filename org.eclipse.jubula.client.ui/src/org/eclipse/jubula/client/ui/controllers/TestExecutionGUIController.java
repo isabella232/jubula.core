@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -64,7 +64,8 @@ import org.eclipse.osgi.util.NLS;
 public class TestExecutionGUIController {
 
     /** The logger */
-    static final Log LOG = LogFactory.getLog(TestExecutionGUIController.class);
+    static final Logger LOG = 
+        LoggerFactory.getLogger(TestExecutionGUIController.class);
     
     /** the timeout for the info nagger dialog if RCP AUT startup takes too long */
     private static final int NAGGER_TIMEOUT = 120 * 1000;

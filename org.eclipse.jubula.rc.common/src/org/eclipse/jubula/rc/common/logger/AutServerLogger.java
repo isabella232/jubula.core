@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.logger;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Wrapper class for org.apache.commons.logging
@@ -24,28 +24,24 @@ import org.apache.commons.logging.LogFactory;
  * @created 10.05.2006
  */
 public class AutServerLogger {
-
-    
     /** The Logger */
-    private  Log m_log;
-    
+    private  Logger m_log;
     
     /**
      * Constructor
      * @param clazz the caller class
      */
     public AutServerLogger(Class clazz) {
-        m_log = LogFactory.getLog(clazz); 
+        m_log = LoggerFactory.getLogger(clazz); 
     }
     
- 
     /**
      * {@inheritDoc}
      * @param message
      * @param t
      */
     public void debug(Object message, Throwable t) {
-        m_log.debug(message, t);
+        m_log.debug(String.valueOf(message), t);
     }
 
     /**
@@ -53,7 +49,7 @@ public class AutServerLogger {
      * @param message
      */
     public void debug(Object message) {
-        m_log.debug(message);
+        m_log.debug(String.valueOf(message));
     }
 
     /**
@@ -62,7 +58,7 @@ public class AutServerLogger {
      * @param t
      */
     public void error(Object message, Throwable t) {
-        m_log.error(message, t);
+        m_log.error(String.valueOf(message), t);
     }
 
     /**
@@ -70,24 +66,7 @@ public class AutServerLogger {
      * @param message
      */
     public void error(Object message) {
-        m_log.error(message);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param message
-     * @param t
-     */
-    public void fatal(Object message, Throwable t) {
-        m_log.fatal(message, t);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param message
-     */
-    public void fatal(Object message) {
-        m_log.fatal(message);
+        m_log.error(String.valueOf(message));
     }
 
     /**
@@ -96,7 +75,7 @@ public class AutServerLogger {
      * @param t
      */
     public void info(Object message, Throwable t) {
-        m_log.info(message, t);
+        m_log.info(String.valueOf(message), t);
     }
 
     /**
@@ -104,7 +83,7 @@ public class AutServerLogger {
      * @param message
      */
     public void info(Object message) {
-        m_log.info(message);
+        m_log.info(String.valueOf(message));
     }
 
     /**
@@ -113,7 +92,7 @@ public class AutServerLogger {
      * @param t
      */
     public void trace(Object message, Throwable t) {
-        m_log.trace(message, t);
+        m_log.trace(String.valueOf(message), t);
     }
 
     /**
@@ -121,7 +100,7 @@ public class AutServerLogger {
      * @param message
      */
     public void trace(Object message) {
-        m_log.trace(message);
+        m_log.trace(String.valueOf(message));
     }
 
     /**
@@ -130,7 +109,7 @@ public class AutServerLogger {
      * @param t
      */
     public void warn(Object message, Throwable t) {
-        m_log.warn(message, t);
+        m_log.warn(String.valueOf(message), t);
     }
 
     /**
@@ -138,7 +117,7 @@ public class AutServerLogger {
      * @param message
      */
     public void warn(Object message) {
-        m_log.warn(message);
+        m_log.warn(String.valueOf(message));
     }
 
     /**
@@ -155,14 +134,6 @@ public class AutServerLogger {
      */
     public boolean isErrorEnabled() {
         return m_log.isErrorEnabled();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return
-     */
-    public boolean isFatalEnabled() {
-        return m_log.isFatalEnabled();
     }
 
     /**

@@ -14,9 +14,9 @@ import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
@@ -24,7 +24,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 public class I18n {
     /** the logger */
-    private static Log log = LogFactory.getLog(I18n.class);
+    private static Logger log = LoggerFactory.getLogger(I18n.class);
 
     /**
      * Name of the Bundle.

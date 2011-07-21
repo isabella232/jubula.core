@@ -27,8 +27,8 @@ import java.util.Map;
 
 import javax.swing.JTextField;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.message.CAPRecordedMessage;
@@ -48,13 +48,11 @@ import org.eclipse.jubula.tools.xml.businessmodell.Param;
 /**
  * @author BREDEX GmbH
  * @created 20.06.2005
- * 
  */
 public class ChooseCheckModeDialogBP {
-
     /** the logger */
-    private static final Log LOG = LogFactory
-        .getLog(ChooseCheckModeDialogBP.class);    
+    private static final Logger LOG = LoggerFactory
+        .getLogger(ChooseCheckModeDialogBP.class);    
     
     /**
      * singleton

@@ -15,8 +15,8 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
@@ -55,6 +55,7 @@ import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -79,8 +80,8 @@ public class TestExecutionContributor
     private static TestExecutionContributor instance;
     
     /** the logger */
-    private static Log log = LogFactory
-        .getLog(TestExecutionContributor.class);
+    private static Logger log = LoggerFactory
+        .getLogger(TestExecutionContributor.class);
     
     /** ClientTest */
     private IClientTest m_clientTest;
@@ -804,7 +805,7 @@ public class TestExecutionContributor
             AUTConnection.getInstance().getCommunicator()
                 .interruptAllTimeouts();
         } catch (ConnectionException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
         }
         setClientMinimized(false);
     }

@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.autagent.AutStarter;
@@ -43,7 +43,8 @@ import org.osgi.framework.Bundle;
 public abstract class AbstractStartToolkitAut implements IStartAut {
     
     /** the logger */
-    private static Log log = LogFactory.getLog(AbstractStartToolkitAut.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(AbstractStartToolkitAut.class);
 
     /**
      * the message to send back if the command for starting the AUTServer could

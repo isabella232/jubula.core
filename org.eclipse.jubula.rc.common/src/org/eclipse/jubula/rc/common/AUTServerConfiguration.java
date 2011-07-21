@@ -387,7 +387,7 @@ public class AUTServerConfiguration {
         }
         String message = "Component " + typeName //$NON-NLS-1$
                 + " does not exist"; //$NON-NLS-1$
-        log.fatal(message);
+        log.error(message);
         throw new GDConfigXmlException(message, MessageIDs.E_NO_COMPONENT);
     }
     
@@ -416,7 +416,7 @@ public class AUTServerConfiguration {
         }
         String message = "Component " + typeName //$NON-NLS-1$
                 + " does not exist"; //$NON-NLS-1$
-        log.fatal(message);
+        log.error(message);
         throw new GDConfigXmlException(message, MessageIDs.E_NO_COMPONENT);
     }
     

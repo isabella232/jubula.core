@@ -25,8 +25,8 @@ import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
@@ -140,7 +140,7 @@ public class Traverser {
     public static final int NO_INDEX = -1;
 
     /** The logger */
-    private static final Log LOG = LogFactory.getLog(Traverser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Traverser.class);
     
     /**
      * <code>m_root</code> root node

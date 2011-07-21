@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.LogManager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.AUTServerStateMessage;
@@ -40,6 +40,7 @@ import org.eclipse.jubula.rc.common.registration.AgentRegisterAut;
 import org.eclipse.jubula.rc.common.registration.IRegisterAut;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.CommunicationException;
@@ -77,7 +78,7 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
  */
 public abstract class AUTServer {
     /** the logger */
-    private static Log log = LogFactory.getLog(AUTServer.class);
+    private static Logger log = LoggerFactory.getLogger(AUTServer.class);
     
     /** the instance */
     private static AUTServer instance = null;
@@ -300,7 +301,7 @@ public abstract class AUTServer {
         }
 
         if (args.length < Constants.MIN_ARGS_REQUIRED) {
-            log.fatal("wrong number of arguments: " //$NON-NLS-1$
+            log.error("wrong number of arguments: " //$NON-NLS-1$
                     + "must be at least " //$NON-NLS-1$
                     + String.valueOf(Constants.MIN_ARGS_REQUIRED)
                     + ", but were " + Arrays.asList(args).toString());  //$NON-NLS-1$
@@ -433,18 +434,18 @@ public abstract class AUTServer {
                 try {
                     autReg.register();
                 } catch (IOException ioe) {
-                    log.fatal("Exception during AUT registration", ioe); //$NON-NLS-1$
+                    log.error("Exception during AUT registration", ioe); //$NON-NLS-1$
                     System.exit(AUTServerExitConstants.AUT_START_ERROR);
                 }
             }
         } catch (IllegalArgumentException iae) {
-            log.fatal("Exception in start()", iae); //$NON-NLS-1$
+            log.error("Exception in start()", iae); //$NON-NLS-1$
             System.exit(AUTServerExitConstants.EXIT_INVALID_ARGS);
         } catch (CommunicationException ce) {
-            log.fatal("Exception in start()", ce); //$NON-NLS-1$
+            log.error("Exception in start()", ce); //$NON-NLS-1$
             System.exit(AUTServerExitConstants.EXIT_COMMUNICATION_ERROR);
         } catch (SecurityException se) {
-            log.fatal("Exception in start()", se); //$NON-NLS-1$
+            log.error("Exception in start()", se); //$NON-NLS-1$
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_REFLECTION);
         } catch (ClassNotFoundException cnfe) {
@@ -462,7 +463,7 @@ public abstract class AUTServer {
                     AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION,
                     ucve.getMessage()));
             } catch (CommunicationException ce) {
-                log.fatal("Exception in start()", ce); //$NON-NLS-1$
+                log.error("Exception in start()", ce); //$NON-NLS-1$
             }
             System.exit(AUTServerExitConstants.EXIT_AUT_WRONG_CLASS_VERSION);
         }
@@ -526,7 +527,7 @@ public abstract class AUTServer {
         try { 
             m_communicator.run();
         } catch (SecurityException se) {
-            log.fatal("Exception in start()", se); //$NON-NLS-1$
+            log.error("Exception in start()", se); //$NON-NLS-1$
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_COMMUNICATION);
         } catch (JBVersionException e) {
@@ -553,7 +554,7 @@ public abstract class AUTServer {
             m_communicator.send(new AUTServerStateMessage(
                     exitCode, errorMessage));
         } catch (CommunicationException ce) {
-            log.fatal("Exception in start()", ce); //$NON-NLS-1$
+            log.error("Exception in start()", ce); //$NON-NLS-1$
         }
     }
 
@@ -671,7 +672,7 @@ public abstract class AUTServer {
     public void invokeAUT() throws ExceptionInInitializerError,
         InvocationTargetException, NoSuchMethodException {
         if (m_autMainMethod == null) {
-            log.fatal("the main method of the AUT could not be found!"); //$NON-NLS-1$
+            log.error("the main method of the AUT could not be found!"); //$NON-NLS-1$
             throw new NoSuchMethodException("no public static main in AUT"); //$NON-NLS-1$
         }
         try {
@@ -683,16 +684,16 @@ public abstract class AUTServer {
             m_autMainMethod.invoke(null, new Object[] {m_autArgs});
         } catch (IllegalArgumentException iae) {
             m_isAutRunning = false;
-            log.fatal(iae);
+            log.error(DebugConstants.ERROR, iae);
         } catch (IllegalAccessException iae) {
             m_isAutRunning = false;
-            log.fatal(iae);
+            log.error(DebugConstants.ERROR, iae);
         } catch (NullPointerException npe) {
             m_isAutRunning = false;
-            log.fatal(npe);
+            log.error(DebugConstants.ERROR, npe);
         } catch (RuntimeException re) {
             m_isAutRunning = false;
-            log.fatal("unexpected exception thrown by AUT: ", re); //$NON-NLS-1$
+            log.error("unexpected exception thrown by AUT: ", re); //$NON-NLS-1$
             throw re;
         }
     }
@@ -839,7 +840,7 @@ public abstract class AUTServer {
                     + ":" + String.valueOf(port) //$NON-NLS-1$
                     + " failed()"; //$NON-NLS-1$
                
-                log.fatal(message); 
+                log.error(message); 
             } catch (SecurityException se) {
                 log.error("security violation during getting the " //$NON-NLS-1$
                        + " host name from ip address " //$NON-NLS-1$

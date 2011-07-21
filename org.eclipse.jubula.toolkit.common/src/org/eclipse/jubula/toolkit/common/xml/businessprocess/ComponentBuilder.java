@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -28,6 +26,7 @@ import org.eclipse.jubula.toolkit.common.PluginStarter;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
@@ -37,8 +36,8 @@ import org.eclipse.jubula.tools.utils.generator.AbstractComponentBuilder;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
 import org.eclipse.jubula.tools.xml.businessprocess.ConfigVersion;
-
-import com.thoughtworks.xstream.core.BaseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class contains methods for reading the configuration file and for 
@@ -54,7 +53,7 @@ public class ComponentBuilder extends AbstractComponentBuilder {
     private static ComponentBuilder instance;
     
     /** The logger. */
-    private static Log log = LogFactory.getLog(ComponentBuilder.class);
+    private static Logger log = LoggerFactory.getLogger(ComponentBuilder.class);
     
     
     /**
@@ -103,12 +102,12 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                 } catch (IOException fileNotFoundEx) {
                     final String msg = Messages.ComponenConfigurationNotFound
                         + StringConstants.EXCLAMATION_MARK;
-                    log.fatal(msg, fileNotFoundEx);
+                    log.error(msg, fileNotFoundEx);
                     throw new ToolkitPluginException(msg, fileNotFoundEx);
                 } catch (CoreException coreEx) {
                     final String msg = Messages.CouldNotCreateToolkitProvider
                         + StringConstants.EXCLAMATION_MARK;
-                    log.fatal(msg, coreEx);
+                    log.error(msg, coreEx);
                     throw new ToolkitPluginException(msg, coreEx);
                 }
             }
@@ -158,13 +157,13 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                 return descr;
             }
         } catch (NumberFormatException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
             throw new ToolkitPluginException(
                 Messages.ErrorWhileReadingAttributes + StringConstants.COLON
                 + StringConstants.SPACE
                 + String.valueOf(toolkitId), e);
         } catch (InvalidRegistryObjectException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
             throw new ToolkitPluginException(
                 Messages.ErrorWhileReadingAttributes + StringConstants.COLON
                 + StringConstants.SPACE
@@ -193,8 +192,8 @@ public class ComponentBuilder extends AbstractComponentBuilder {
         if (super.getCompSystem() == null) {
             try {
                 initCompSystem();
-            } catch (BaseException e) {
-                log.fatal(e.getMessage());
+            } catch (RuntimeException e) {
+                log.error(e.getMessage());
                 throw new GDConfigXmlException(e.getMessage(), 
                     MessageIDs.E_GENERAL_COMPONENT_ERROR);
             } catch (ToolkitPluginException tke) {

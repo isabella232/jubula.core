@@ -29,8 +29,8 @@ import java.util.TimerTask;
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -48,6 +48,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
@@ -161,7 +162,7 @@ public class XmlStorage {
             ".//s:" + EXEC_TC_XML_ELEMENT_NAME; //$NON-NLS-1$
 
     /** standard logging */
-    private static Log log = LogFactory.getLog(XmlStorage.class);
+    private static Logger log = LoggerFactory.getLogger(XmlStorage.class);
 
     /**
      * the old xml schema namespace (< 5.0)
@@ -226,8 +227,8 @@ public class XmlStorage {
             }
             if (log.isDebugEnabled()) {
                 log.debug(Messages.ValidateFailed + StringConstants.COLON);
-                log.debug(msgs);
-                log.debug(contentDoc);
+                log.debug(DebugConstants.ERROR, msgs);
+                log.debug(DebugConstants.ERROR, contentDoc);
             }
             throw new PMSaveException(
                 "XML" + Messages.ValidateFailed + msgs.toString(), //$NON-NLS-1$
@@ -448,8 +449,8 @@ public class XmlStorage {
             }
             if (log.isDebugEnabled()) {
                 log.debug(Messages.ValidateFailed + StringConstants.COLON);
-                log.debug(msgs);
-                log.debug(contentDoc);
+                log.debug(DebugConstants.ERROR, msgs);
+                log.debug(DebugConstants.ERROR, contentDoc);
             }
             throw new PMReadException(Messages.InvalidImportFile
                     + msgs.toString(), MessageIDs.E_LOAD_PROJECT);

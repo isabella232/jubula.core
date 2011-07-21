@@ -17,8 +17,8 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNamePO;
@@ -43,7 +43,8 @@ public class ParamNameBPDecorator extends GuidNameCache<IParamNamePO>
     /**
      * <code>log</code> logger for class
      */
-    private static Log log = LogFactory.getLog(ParamNameBPDecorator.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(ParamNameBPDecorator.class);
     
     /**
      * <code>m_paramNameBP</code>wrapped paramNameBP instance

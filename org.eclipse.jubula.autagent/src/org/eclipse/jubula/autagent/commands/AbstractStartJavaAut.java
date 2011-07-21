@@ -26,8 +26,8 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.monitoring.IMonitoring;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
 import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
@@ -60,8 +60,8 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     private static final String JAVA_COUNTRY_PROPERTY = "-Duser.country="; //$NON-NLS-1$
 
     /** the logger */
-    private static final Log LOG = 
-        LogFactory.getLog(AbstractStartJavaAut.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(AbstractStartJavaAut.class);
      
     
     /**

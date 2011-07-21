@@ -18,10 +18,10 @@ import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class represents Components which can be tested by Jubula.
@@ -39,7 +39,7 @@ public abstract class Component {
     /**
      * The logger
      */
-    private static Log log = LogFactory.getLog(Component.class);
+    private static Logger log = LoggerFactory.getLogger(Component.class);
 
     /**
      * List of directly realized Components
@@ -229,7 +229,7 @@ public abstract class Component {
                     + " at component " + getType() //$NON-NLS-1$
                     + ": method " + present.getMethod()  //$NON-NLS-1$
                     + " vs. method " + action.getMethod(); //$NON-NLS-1$
-                log.fatal(msg);
+                log.error(msg);
                 throw new GDConfigXmlException(msg, 
                     MessageIDs.E_DUPLICATE_ACTION); 
             }
@@ -287,7 +287,7 @@ public abstract class Component {
         }
         sb.append(") does not exist."); //$NON-NLS-1$
         String message = sb.toString();
-        log.fatal(message);
+        log.error(message);
         throw new GDConfigXmlException(message, MessageIDs.E_NO_ACTION);
     }
     

@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -36,8 +36,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 public class StartSwingAutServerCommand extends AbstractStartJavaAut {
 
     /** the logger */
-    private static final  Log LOG = 
-        LogFactory.getLog(StartSwingAutServerCommand.class);
+    private static final  Logger LOG = 
+        LoggerFactory.getLogger(StartSwingAutServerCommand.class);
     
     /** separates the environment variables */
     private static final String ENV_SEPARATOR = "\n"; //$NON-NLS-1$

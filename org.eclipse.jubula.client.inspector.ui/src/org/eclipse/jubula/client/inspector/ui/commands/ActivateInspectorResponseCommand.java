@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.inspector.ui.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.inspector.ui.i18n.Messages;
 import org.eclipse.jubula.client.inspector.ui.provider.sourceprovider.InspectorStateProvider;
 import org.eclipse.jubula.communication.ICommand;
@@ -31,8 +31,8 @@ import org.eclipse.ui.services.ISourceProviderService;
 public class ActivateInspectorResponseCommand implements ICommand {
 
     /** the logger */
-    private static Log log = 
-        LogFactory.getLog(ActivateInspectorResponseCommand.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(ActivateInspectorResponseCommand.class);
 
     /** the message */
     private ActivateInspectorResponseMessage m_message;

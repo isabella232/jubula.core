@@ -29,8 +29,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.event.EventListenerList;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.dom4j.Document;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -93,6 +93,7 @@ import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.InputConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -123,7 +124,7 @@ public class ClientTest implements IClientTest {
     public static final int TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT = 1000;
 
     /** the logger */
-    private static Log log = LogFactory.getLog(ClientTest.class);
+    private static Logger log = LoggerFactory.getLogger(ClientTest.class);
 
     /** file extension for XML */
     private static final String XML_FILE_EXT = ".xml"; //$NON-NLS-1$
@@ -269,20 +270,20 @@ public class ClientTest implements IClientTest {
             // initialising the server, so there must be a shutdown(). The 
             // listeners are already notified from the ConnectionListener of
             // the ServerConnection, -> just log.
-            log.info(nce);
+            log.info(DebugConstants.ERROR, nce);
         } catch (ConnectionException ce) {
             // This exception is thrown from ServerConnection.getInstance(). See comment above.
-            log.info(ce);
+            log.info(DebugConstants.ERROR, ce);
         } catch (CommunicationException cce) {
-            log.fatal(cce);
+            log.error(DebugConstants.ERROR, cce);
             // message could not send for any reason, close the connections
             try {
                 closeConnections();
             } catch (ConnectionException ce) {
-                log.fatal(Messages.ClosingTheConnectionsFailed, ce);
+                log.error(Messages.ClosingTheConnectionsFailed, ce);
             }
         } catch (UnknownHostException uhe) {
-            log.fatal(uhe);
+            log.error(DebugConstants.ERROR, uhe);
             try {
                 // from InetAdress.getLocalHost().getName(), should not occur 
                 // -> no communication possible -> close the connections as a 
@@ -290,7 +291,7 @@ public class ClientTest implements IClientTest {
                 AUTConnection.getInstance().close();
                 ServerConnection.getInstance().close();
             } catch (ConnectionException ce) {
-                log.fatal(Messages.ClosingTheConnectionsFailed, ce);
+                log.error(Messages.ClosingTheConnectionsFailed, ce);
             }
         }
     }
@@ -439,10 +440,10 @@ public class ClientTest implements IClientTest {
         } catch (UnknownMessageException ume) {
             fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
         } catch (NotConnectedException nce) {
-            log.error(nce);
+            log.error(DebugConstants.ERROR, nce);
             // HERE: notify the listeners about unsuccessfull mode change
         } catch (CommunicationException ce) {
-            log.error(ce);
+            log.error(DebugConstants.ERROR, ce);
             // HERE: notify the listeners about unsuccessfull mode change
         }
     }
@@ -466,11 +467,11 @@ public class ClientTest implements IClientTest {
                     fireAUTServerStateChanged(new AUTServerEvent(
                             ume.getErrorId()));
                 } catch (NotConnectedException nce) {
-                    log.error(nce);
+                    log.error(DebugConstants.ERROR, nce);
                     // HERE: notify the listeners about unsuccessfull mode
                     // change
                 } catch (CommunicationException ce) {
-                    log.error(ce);
+                    log.error(DebugConstants.ERROR, ce);
                     // HERE: notify the listeners about unsuccessfull mode
                     // change
                 }
@@ -882,9 +883,9 @@ public class ClientTest implements IClientTest {
         try {
             ServerConnection.getInstance().send(message);
         } catch (NotConnectedException nce) {
-            log.error(nce);
+            log.error(DebugConstants.ERROR, nce);
         } catch (CommunicationException ce) {
-            log.error(ce);
+            log.error(DebugConstants.ERROR, ce);
         }
          
     }
@@ -901,9 +902,9 @@ public class ClientTest implements IClientTest {
         try {
             ServerConnection.getInstance().send(message);
         } catch (NotConnectedException nce) {
-            log.error(nce);
+            log.error(DebugConstants.ERROR, nce);
         } catch (CommunicationException ce) {
-            log.error(ce);
+            log.error(DebugConstants.ERROR, ce);
         }
          
     } 
@@ -933,9 +934,9 @@ public class ClientTest implements IClientTest {
             }
             autConfigMap = response.getAutConfigMap();
         } catch (NotConnectedException nce) {
-            log.error(nce);
+            log.error(DebugConstants.ERROR, nce);
         } catch (CommunicationException ce) {
-            log.error(ce);
+            log.error(DebugConstants.ERROR, ce);
         }
         return autConfigMap;
     }
@@ -1226,7 +1227,7 @@ public class ClientTest implements IClientTest {
         } catch (BaseConnection.AlreadyConnectedException ae) {
             // The connection is already established.
             if (log.isDebugEnabled()) {
-                log.debug(ae);
+                log.debug(DebugConstants.ERROR, ae);
             }
             return false;
         }
@@ -1246,16 +1247,16 @@ public class ClientTest implements IClientTest {
             }
             AUTConnection.getInstance().run();
         } catch (ConnectionException ce) {
-            log.fatal(ce);
+            log.error(DebugConstants.ERROR, ce);
             fireAUTServerStateChanged(new AUTServerEvent(
                     AUTServerEvent.COULD_NOT_ACCEPTING));
             return false;
         } catch (BaseConnection.AlreadyConnectedException ae) {
             // The connection is already established.
-            log.error(ae);
+            log.error(DebugConstants.ERROR, ae);
             return false;
         } catch (JBVersionException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
             fireAUTServerStateChanged(new AUTServerEvent(
                 AUTServerEvent.COULD_NOT_ACCEPTING));
             return false;

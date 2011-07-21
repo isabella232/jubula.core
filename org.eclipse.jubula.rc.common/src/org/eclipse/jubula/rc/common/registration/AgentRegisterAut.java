@@ -19,8 +19,8 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.connection.ConnectionState;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
@@ -38,7 +38,8 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
 public class AgentRegisterAut implements IRegisterAut {
 
     /** the logger */
-    private static final Log LOG = LogFactory.getLog(AgentRegisterAut.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(AgentRegisterAut.class);
 
     /** the address of the Aut Agent with which to register */
     private InetSocketAddress m_agentAddr;

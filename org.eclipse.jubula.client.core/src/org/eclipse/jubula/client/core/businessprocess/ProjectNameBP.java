@@ -20,8 +20,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IProjectNamePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.core.utils.NameValidationUtil;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -45,7 +46,7 @@ import javax.persistence.PersistenceException;
 public class ProjectNameBP {
 
     /** standard logging */
-    private static Log log = LogFactory.getLog(ProjectNameBP.class);
+    private static Logger log = LoggerFactory.getLogger(ProjectNameBP.class);
 
     /**
      * The singleton instance.
@@ -95,7 +96,7 @@ public class ProjectNameBP {
             try {
                 res = readProjectNameFromDB(guid);
             } catch (PMException e) {
-                log.warn(e);
+                log.warn(DebugConstants.ERROR, e);
             }
         }
         

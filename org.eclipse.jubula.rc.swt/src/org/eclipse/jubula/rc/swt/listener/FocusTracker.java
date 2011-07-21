@@ -10,10 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
@@ -29,7 +30,7 @@ import org.eclipse.swt.widgets.Widget;
 public class FocusTracker extends BaseSwtEventListener 
     implements BaseAUTListener {
     /** the logger */
-    private static Log log = LogFactory.getLog(FocusTracker.class);
+    private static Logger log = LoggerFactory.getLogger(FocusTracker.class);
         
     /** <code>focusOwner</code> the current tracked focus owning Widget */
     private static Widget focusOwner = null;
@@ -71,7 +72,7 @@ public class FocusTracker extends BaseSwtEventListener
             this.getClass().getClassLoader());
         try {
             if (log.isDebugEnabled()) {
-                log.debug(event);
+                log.debug(DebugConstants.ERROR, event);
             }
             switch (event.type) {
                 case SWT.FocusIn:

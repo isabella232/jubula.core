@@ -13,14 +13,15 @@ package org.eclipse.jubula.app.cmd;
 
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.app.cmd.batch.ExecutionController;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
 import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.cmd.i18n.Messages;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
@@ -31,7 +32,7 @@ import org.eclipse.jubula.tools.exception.JBFatalException;
 public class Client extends AbstractCmdlineClient {
     
     /** log facility */
-    private static Log log = LogFactory.getLog(Client.class);
+    private static Logger log = LoggerFactory.getLogger(Client.class);
 
     /** the instance */
     private static AbstractCmdlineClient instance = null;
@@ -85,10 +86,10 @@ public class Client extends AbstractCmdlineClient {
             log.error(e.getLocalizedMessage(), e);
             printlnConsoleError(e.getMessage());
         } catch (IllegalArgumentException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
             printlnConsoleError(e.getMessage());
         } catch (JBFatalException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
             printlnConsoleError(e.getMessage());
         } catch (Throwable t) {
             log.error(ClientStrings.ERR_UNEXPECTED, t);

@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An exception handler which always returns false.
@@ -22,7 +22,8 @@ import org.apache.commons.logging.LogFactory;
 public class AbortingExceptionHandler implements IExceptionHandler {
 
     /** the logger */
-    private static Log log = LogFactory.getLog(AbortingExceptionHandler.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(AbortingExceptionHandler.class);
 
     /**
      * {@inheritDoc}

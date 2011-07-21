@@ -18,8 +18,8 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -47,7 +47,8 @@ import org.eclipse.jubula.tools.exception.JBException;
 class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
     
     /** The logger */
-    private static final Log LOG = LogFactory.getLog(SpecTestCasePO.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(SpecTestCasePO.class);
 
     /**
      * <code>m_isInterfaceLocked</code> flag for lock of parameter(s)modification
@@ -202,7 +203,7 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
                 msg.append(StringConstants.SPACE);
                 msg.append(Messages.ReturningNull);
                 msg.append(StringConstants.DOT);
-                LOG.fatal(msg.toString(), e);
+                LOG.error(msg.toString(), e);
             }
         }
         return parent;

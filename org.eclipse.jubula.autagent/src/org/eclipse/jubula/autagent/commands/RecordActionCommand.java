@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.CAPRecordedMessage;
@@ -30,7 +30,8 @@ import org.eclipse.jubula.tools.exception.CommunicationException;
  */
 public class RecordActionCommand implements ICommand {
     /** the logger */
-    private static Log log = LogFactory.getLog(RecordActionCommand.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(RecordActionCommand.class);
     
     /** the message */
     private RecordActionMessage m_message;

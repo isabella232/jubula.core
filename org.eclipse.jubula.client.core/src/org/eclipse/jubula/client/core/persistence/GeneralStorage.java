@@ -16,8 +16,8 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
@@ -40,7 +40,8 @@ import javax.persistence.PersistenceException;
 public class GeneralStorage implements IEntityManagerProvider {
     
     /** standard logging */
-    private static final Log LOG = LogFactory.getLog(GeneralStorage.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(GeneralStorage.class);
     
     /**
      * Comment for <code>instance</code>
@@ -176,7 +177,7 @@ public class GeneralStorage implements IEntityManagerProvider {
      */
     public static void handleFatalError(Throwable t) {
         final String msg = Messages.NonRecoverableError + StringConstants.DOT;
-        LOG.fatal(msg, t);
+        LOG.error(msg, t);
         throw new JBFatalAbortException(msg, t, MessageIDs.E_NON_RECOVERABLE);
     }
 

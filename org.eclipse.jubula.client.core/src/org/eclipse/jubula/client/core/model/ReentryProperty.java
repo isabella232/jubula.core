@@ -11,8 +11,8 @@
 package org.eclipse.jubula.client.core.model;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -85,7 +85,8 @@ public final class ReentryProperty {
     {CONTINUE, EXIT, STOP};
     
     /** The logger */
-    private static final Log LOG = LogFactory.getLog(TestExecution.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(TestExecution.class);
 
     /**
      * <code>m_value</code> reentry property

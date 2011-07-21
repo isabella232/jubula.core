@@ -17,8 +17,8 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jface.bindings.keys.KeySequenceText;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jubula.client.ui.constants.Layout;
@@ -60,7 +60,8 @@ public class ModifiableTriggerList extends Composite implements
     IModifiableListObservable {
     
     /** for log messages */
-    private static Log log = LogFactory.getLog(ModifiableTriggerList.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(ModifiableTriggerList.class);
     
     /** GUI component */
     private Text m_editor;
@@ -109,7 +110,7 @@ public class ModifiableTriggerList extends Composite implements
         if (!emptyListAllowed && values != null && values.isEmpty()) {
             String msg = Messages.ValuesForListMustNotBeEmpty 
                 + StringConstants.DOT;
-            log.fatal(msg);
+            log.error(msg);
             throw new IllegalArgumentException(msg); 
         }
         m_observable = new ModifiableListObservable();

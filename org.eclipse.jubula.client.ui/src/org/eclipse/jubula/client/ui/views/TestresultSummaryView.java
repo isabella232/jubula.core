@@ -25,8 +25,8 @@ import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -319,7 +319,8 @@ public class TestresultSummaryView extends ViewPart implements
     private static final String MONITORING_DETAILS = 
         Messages.TestresultSummaryMonitoringDetails;
     /** standard logging */
-    private static Log log = LogFactory.getLog(TestresultSummaryView.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(TestresultSummaryView.class);
     
     /** column tag for memento*/
     private static final String TAG_COLUMN = "column"; //$NON-NLS-1$

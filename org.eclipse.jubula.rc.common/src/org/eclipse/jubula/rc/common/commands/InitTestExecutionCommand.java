@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.InitTestExecutionMessage;
 import org.eclipse.jubula.communication.message.Message;
@@ -28,8 +28,8 @@ import org.eclipse.jubula.rc.common.driver.RobotConfiguration;
 public class InitTestExecutionCommand implements ICommand {
     
     /** Logger */
-    private static final Log LOG =
-        LogFactory.getLog(InitTestExecutionCommand.class);
+    private static final Logger LOG =
+        LoggerFactory.getLogger(InitTestExecutionCommand.class);
     
     /** message */
     private InitTestExecutionMessage m_message;

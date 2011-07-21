@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -42,7 +42,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 public abstract class AbstractXMLReportGenerator {
     
     /** The logger */
-    private static final Log LOG = LogFactory.getLog(
+    private static final Logger LOG = LoggerFactory.getLogger(
         AbstractXMLReportGenerator.class);
 
     /** the generated report */

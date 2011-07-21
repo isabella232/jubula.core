@@ -15,8 +15,9 @@ package org.eclipse.jubula.client.ui.views.imageview;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
@@ -27,7 +28,7 @@ import org.eclipse.swt.graphics.Rectangle;
  */
 public class SWT2DUtil {
     /** The logger */
-    private static final Log LOG = LogFactory.getLog(SWT2DUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SWT2DUtil.class);
     
     /**
      * hide
@@ -112,7 +113,7 @@ public class SWT2DUtil {
             return new Point((int)Math.floor(dest.getX()), (int)Math.floor(dest
                     .getY()));
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error(DebugConstants.ERROR, e);
             return new Point(0, 0);
         }
     }

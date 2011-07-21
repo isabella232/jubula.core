@@ -25,8 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.agent.AutAgent;
 import org.eclipse.jubula.autagent.remote.dialogs.ChooseCheckModeDialogBP;
 import org.eclipse.jubula.autagent.remote.dialogs.ObservationConsoleBP;
@@ -79,7 +79,7 @@ public class AutStarter {
     };
     
     /** the logger */
-    private static Log log = LogFactory.getLog(AutStarter.class);
+    private static Logger log = LoggerFactory.getLogger(AutStarter.class);
 
     /** the instance */
     private static AutStarter instance = null;

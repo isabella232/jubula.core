@@ -27,8 +27,8 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
@@ -233,7 +233,7 @@ public class CompNamePM extends AbstractNamePM {
     /**
      * <code>log</code>logger
      */
-    private static Log log = LogFactory.getLog(ParamNamePM.class);
+    private static Logger log = LoggerFactory.getLogger(ParamNamePM.class);
     
     /** The ILockedObjectPO for locks on ComponentNames tabe in database */
     private static LockedObjectPO lockObj = null;
@@ -274,7 +274,7 @@ public class CompNamePM extends AbstractNamePM {
             compNames.addAll(q.getResultList());
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.fatal(Messages.CouldNotReadComponentNamesFromDBOfProjectWithID
+            log.error(Messages.CouldNotReadComponentNamesFromDBOfProjectWithID
                 + StringConstants.SPACE + StringConstants.APOSTROPHE
                 + String.valueOf(parentProjectId) + StringConstants.APOSTROPHE, 
                      e);
@@ -303,7 +303,7 @@ public class CompNamePM extends AbstractNamePM {
             compNames.addAll(q.getResultList());            
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.fatal(Messages.CouldNotReadComponentNamesFromDBOfProjectWithID
+            log.error(Messages.CouldNotReadComponentNamesFromDBOfProjectWithID
                 + StringConstants.SPACE + StringConstants.APOSTROPHE
                 + String.valueOf(parentProjectId) + StringConstants.APOSTROPHE, 
                     e);
@@ -396,7 +396,7 @@ public class CompNamePM extends AbstractNamePM {
             q.executeUpdate();
         } catch (PersistenceException e) {
             OperationCanceledUtil.checkForOperationCanceled(e);
-            log.fatal(Messages.CouldNotReadComponentNamesFromDBOfProjectWithID
+            log.error(Messages.CouldNotReadComponentNamesFromDBOfProjectWithID
                 + StringConstants.SPACE + StringConstants.APOSTROPHE
                 + String.valueOf(rootProjId) + StringConstants.APOSTROPHE, e);
             PersistenceManager.handleDBExceptionForAnySession(null, e, s);

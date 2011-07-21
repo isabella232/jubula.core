@@ -29,8 +29,8 @@ import javax.persistence.EntityManager;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.archive.converter.AbstractXmlConverter;
 import org.eclipse.jubula.client.archive.converter.AutIdGenerationConverter;
@@ -133,6 +133,7 @@ import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
@@ -154,8 +155,6 @@ import com.thoughtworks.xstream.converters.ConversionException;
  * @created 13.01.2006
  */
 class XmlImporter {
-    
- 
     /**
      * Pattern for date serialization format.
      * Due to the fact that this constant is used for serialization and 
@@ -224,7 +223,7 @@ class XmlImporter {
     private static final int GUID_LENGTH = 32; 
     
     /** standard logging */
-    private static Log log = LogFactory.getLog(XmlImporter.class);
+    private static Logger log = LoggerFactory.getLogger(XmlImporter.class);
     
     /** Remember which instance belongs to the id used in the XML element */
     private Map<String, IAUTConfigPO> m_autConfRef = 
@@ -869,9 +868,9 @@ class XmlImporter {
                             BEAN_UTILS.setProperty(summary, 
                                     propertyNameToSet, sa.getValue());
                         } catch (IllegalAccessException e) {
-                            log.warn(e);
+                            log.warn(DebugConstants.ERROR, e);
                         } catch (InvocationTargetException e) {
-                            log.warn(e);
+                            log.warn(DebugConstants.ERROR, e);
                         }
                     }
                 } else {

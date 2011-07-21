@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.apache.poi;singleton:=true
 Bundle-Version: 3.2.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.slf4j.jcl;bundle-version="[1.5.11,2.0.0)"
+Require-Bundle: org.slf4j.api;bundle-version="[1.5.11,2.0.0)"
 Export-Package: org.apache.poi,
  org.apache.poi.ddf,
  org.apache.poi.dev,

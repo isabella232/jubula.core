@@ -22,15 +22,11 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.FileAppender;
 
-
-
-
 /**
  * @author BREDEX GmbH
  * @created 09.04.2008
  */
 public final class ShowClientLogBP extends AbstractActionBP {
-
     /** single instance */
     private static ShowClientLogBP instance = null;
 

@@ -19,8 +19,9 @@
 
 package org.apache.poi.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A logger class that strives to make it as easy as possible for
@@ -36,13 +37,14 @@ import org.apache.commons.logging.LogFactory;
 public class CommonsLogger extends POILogger
 {
 
-    private static LogFactory   _creator = LogFactory.getFactory();
-    private Log             log   = null;
+    private static ILoggerFactory   
+        _creator = LoggerFactory.getILoggerFactory();
+    private Logger             log   = null;
 
    
     public void initialize(final String cat)
     {
-        this.log = _creator.getInstance(cat);
+        this.log = _creator.getLogger(cat);
     }   
      
     /**
@@ -51,13 +53,14 @@ public class CommonsLogger extends POILogger
      * @param level One of DEBUG, INFO, WARN, ERROR, FATAL
      * @param obj1 The object to log.
      */
-    public void log(final int level, final Object obj1)
+    public void log(final int level, final Object obj)
     {
+        String obj1 = String.valueOf(obj);
         if(level==FATAL)
         {
-          if(log.isFatalEnabled())
+          if(log.isErrorEnabled())
           {
-            log.fatal(obj1);
+            log.error(obj1);
           }
         }
         else if(level==ERROR)
@@ -104,67 +107,50 @@ public class CommonsLogger extends POILogger
      * @param obj1 The object to log.  This is converted to a string.
      * @param exception An exception to be logged
      */
-    public void log(final int level, final Object obj1,
+    public void log(final int level, final Object obj,
                     final Throwable exception) 
     {
+        String obj1 = String.valueOf(obj);
         if(level==FATAL)
         {
-          if(log.isFatalEnabled())
+          if(log.isErrorEnabled())
           {
-            if(obj1 != null)
-               log.fatal(obj1, exception);
-            else
-               log.fatal(exception);
+           log.error(obj1, exception);
           }
         }
         else if(level==ERROR)
         {
           if(log.isErrorEnabled())
           {
-            if(obj1 != null)
-               log.error(obj1, exception);
-            else
-               log.error(exception);
+           log.error(obj1, exception);
           }
         }
         else if(level==WARN)
         {
           if(log.isWarnEnabled())
           {
-            if(obj1 != null)
-               log.warn(obj1, exception);
-            else
-               log.warn(exception);
+           log.warn(obj1, exception);
           }
         }
         else if(level==INFO)
         {
           if(log.isInfoEnabled())
           {
-        	if(obj1 != null)
-               log.info(obj1, exception);
-        	else
-        	   log.info(exception);
+           log.info(obj1, exception);
           }
         }
         else if(level==DEBUG)
         {
           if(log.isDebugEnabled())
           {
-        	if(obj1 != null)
-               log.debug(obj1, exception);
-        	else
-        	   log.debug(exception);
+           log.debug(obj1, exception);
           }
         }
         else
         {
           if(log.isTraceEnabled())
           {
-        	if(obj1 != null)
-               log.trace(obj1, exception);
-        	else
-        	   log.trace(exception);
+           log.trace(obj1, exception);
           }
         }
 
@@ -180,7 +166,7 @@ public class CommonsLogger extends POILogger
     {
         if(level==FATAL)
         {
-          if(log.isFatalEnabled())
+          if(log.isErrorEnabled())
           {
             return true;
           }

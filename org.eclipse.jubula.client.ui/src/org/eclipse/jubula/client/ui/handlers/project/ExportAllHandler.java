@@ -16,8 +16,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -30,6 +30,7 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.businessprocess.ExportAllBP;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -45,7 +46,7 @@ import org.eclipse.ui.PlatformUI;
 public class ExportAllHandler extends AbstractProjectHandler {
     
     /** the logger */
-    private static Log log = LogFactory.getLog(ExportAllHandler.class);
+    private static Logger log = LoggerFactory.getLogger(ExportAllHandler.class);
 
     /**
      * @author BREDEX GmbH
@@ -162,7 +163,7 @@ public class ExportAllHandler extends AbstractProjectHandler {
                     .busyCursorWhile(op);
             } catch (InvocationTargetException ite) {
                 // Exception occurred during operation
-                log.error(ite.getCause());
+                log.error(DebugConstants.ERROR, ite.getCause());
             } catch (InterruptedException ie) {
                 // Operation was canceled. This is already handled by the 
                 // operation. Do nothing.

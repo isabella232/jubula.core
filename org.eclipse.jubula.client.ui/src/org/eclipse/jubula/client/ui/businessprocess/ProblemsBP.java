@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -64,6 +64,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -87,7 +88,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     private static ProblemsBP instance; 
     
     /** the logger */
-    private static Log log = LogFactory.getLog(ProblemsBP.class);
+    private static Logger log = LoggerFactory.getLogger(ProblemsBP.class);
 
     /** all comp names-related problem types */
     private final Set<Integer> m_compNameProblemTypes = 
@@ -591,7 +592,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
             m_markerList.add(marker);
             m_markerToShowList.add(marker);
         } catch (CoreException e) {
-            log.error(e);
+            log.error(DebugConstants.ERROR, e);
         }
 
     }

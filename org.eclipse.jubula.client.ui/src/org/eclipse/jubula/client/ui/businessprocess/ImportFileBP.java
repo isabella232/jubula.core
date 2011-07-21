@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -77,7 +77,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
     }
     
     /** the logger */
-    private static Log log = LogFactory.getLog(ImportFileBP.class);
+    private static Logger log = LoggerFactory.getLogger(ImportFileBP.class);
     
     /** single instance of ImExportCvsBP */
     private static ImportFileBP instance = null;

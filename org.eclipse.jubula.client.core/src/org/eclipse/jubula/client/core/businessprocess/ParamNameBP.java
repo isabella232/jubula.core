@@ -14,8 +14,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNamePO;
@@ -41,7 +41,7 @@ public class ParamNameBP extends AbstractNameBP<IParamNamePO>
     /**
      * <code>log</code> logger for class
      */
-    private static Log log = LogFactory.getLog(ParamNameBP.class);
+    private static Logger log = LoggerFactory.getLogger(ParamNameBP.class);
     
     
     

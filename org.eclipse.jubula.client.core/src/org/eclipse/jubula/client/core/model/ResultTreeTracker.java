@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -40,7 +40,8 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 public class ResultTreeTracker implements IExecStackModificationListener {
     
     /** the logger */
-    private static Log log = LogFactory.getLog(ResultTreeTracker.class);
+    private static Logger log = 
+        LoggerFactory.getLogger(ResultTreeTracker.class);
 
     
     /**

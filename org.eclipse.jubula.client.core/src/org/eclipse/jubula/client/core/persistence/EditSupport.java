@@ -22,8 +22,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.CompNameMapperFactory;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
@@ -55,7 +55,7 @@ import org.eclipse.persistence.jpa.JpaEntityManager;
  */
 public class EditSupport {
     /** standard logging */
-    private static Log log = LogFactory.getLog(EditSupport.class);
+    private static Logger log = LoggerFactory.getLogger(EditSupport.class);
 
     /** Persistence (JPA / EclipseLink) session for editing */
     private EntityManager m_session;
