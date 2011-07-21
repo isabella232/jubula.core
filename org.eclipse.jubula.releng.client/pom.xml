@@ -49,6 +49,8 @@
         <module>../org.eclipse.jubula.feature.launch.java</module>
         <module>../org.eclipse.jubula.launch.java</module>
         <module>../org.eclipse.jubula.launch.java.ui</module>
+        <module>../org.eclipse.jubula.feature.launch.rcp</module>
+        <module>../org.eclipse.jubula.launch.rcp.ui</module>
 	</modules>
 
 	<url>http://www.eclipse.org/jubula</url>
