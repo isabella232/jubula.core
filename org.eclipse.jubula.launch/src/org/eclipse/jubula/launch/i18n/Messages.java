@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.launch.java.i18n;
+package org.eclipse.jubula.launch.i18n;
 
 import org.eclipse.osgi.util.NLS;
 
@@ -18,9 +18,10 @@ import org.eclipse.osgi.util.NLS;
  * @created 13.07.2011
  */
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.eclipse.jubula.launch.java.i18n.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.eclipse.jubula.launch.i18n.messages"; //$NON-NLS-1$
     
     public static String LaunchAutError_NoAgentConnection;
+    public static String GetAutIdFromLaunchConfigError;
     
     static {
         // initialize resource bundle

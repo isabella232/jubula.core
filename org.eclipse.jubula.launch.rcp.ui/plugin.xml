@@ -14,11 +14,35 @@
             class="org.eclipse.jubula.launch.ui.tab.AutLaunchConfigurationTab"
             group="org.eclipse.pde.ui.launcher.WorkbenchLauncherTabGroup"
             id="org.eclipse.jubula.launch.rcp.ui.tab.aut"
-            name="org.eclipse.jubula.launch.ui.tab1">
+            name="org.eclipse.jubula.launch.rcp.ui.AutTab">
          <placement
                after="org.eclipse.debug.ui.commonTab">
          </placement>
+         <associatedDelegate
+               delegate="org.eclipse.jubula.launch.rcp.launchDelegate">
+         </associatedDelegate>
       </tab>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="org.eclipse.jubula.launch.rcp.ui.RcpAutLaunchConfigurationTabGroup"
+            id="org.eclipse.jubula.launch.rcp.ui.AutTabGroup"
+            type="org.eclipse.pde.ui.RuntimeWorkbench">
+         <launchMode
+               mode="ui_test">
+         </launchMode>
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.launchDelegates">
+      <launchDelegate
+            delegate="org.eclipse.jubula.launch.rcp.RcpAutLaunchConfigurationDelegate"
+            id="org.eclipse.jubula.launch.rcp.launchDelegate"
+            modes="ui_test"
+            name="Jubula UI Test AUT Launcher"
+            type="org.eclipse.pde.ui.RuntimeWorkbench">
+      </launchDelegate>
    </extension>
 
 </plugin>

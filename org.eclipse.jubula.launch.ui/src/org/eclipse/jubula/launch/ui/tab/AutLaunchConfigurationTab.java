@@ -66,7 +66,7 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
             FieldDecorationRegistry.getDefault().getFieldDecoration(
                     FieldDecorationRegistry.DEC_INFORMATION).getImage();
         Composite composite = new Composite(parent, SWT.NONE);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+        GridDataFactory.fillDefaults().grab(true, false).applyTo(composite);
         composite.setLayout(new GridLayout(2, false));
 
         m_autIdLabel = new Label(composite, SWT.NONE);
