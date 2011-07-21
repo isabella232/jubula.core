@@ -40,7 +40,6 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseDialogContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.sorter.NodeNameViewerSorter;
-import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -61,15 +60,8 @@ import org.eclipse.ui.dialogs.FilteredTree;
  * @since 12.10.2004
  */
 public class TestCaseTreeDialog extends TitleAreaDialog {
-        
     /** Add constant. */
     public static final int ADD = 9999;
-    /** add a test case */
-    public static final int TESTCASE = 10;
-    /** add an event handler */
-    public static final int EVENTHANDLER = 20;
-    /** open an spec test case*/
-    public static final int OPEN_TESTCASE = 30;
     /** number of columns = 1 */
     private static final int NUM_COLUMNS_1 = 1;    
     /** vertical spacing = 2 */
@@ -100,9 +92,6 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
     /** the add button text */
     private String m_addButtonText = Messages.TestCaseTableDialogAdd;
     
-    /** the type to add property */
-    private int m_typeToAdd = TESTCASE;
-    
     /** the TestCase which should be parent of the shown TestCases */
     private ISpecTestCasePO m_parentTestCase;
     
@@ -123,19 +112,13 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
      * @param parentTestCase the TestCase which should be parent of the shown TestCases.
      * <b>Can be null if parent is a Testsuite!</b>
      * @param treeStyle SWT.SINGLE or SWT.MULTI
-     * @param typeToAdd TestCaseTreeDialog.TESTACSE or TestCaseTreeDialog.EVENTHANDLER, 
-     * 
      */  
     public TestCaseTreeDialog(Shell shell, ISpecTestCasePO parentTestCase,
-            int treeStyle, int typeToAdd) {
+            int treeStyle) {
         super(shell);
-        Assert.verify((typeToAdd == TESTCASE || typeToAdd == EVENTHANDLER
-                || typeToAdd == OPEN_TESTCASE),
-            "Parameter 'typeToAdd' must be 'TESTCASE', 'OPEN_TESTCASE' or 'EVENTHANDLER'!"); //$NON-NLS-1$
         setShellStyle(getShellStyle() | SWT.RESIZE);
         m_parentTestCase = parentTestCase;
         m_treeStyle = treeStyle;
-        m_typeToAdd = typeToAdd;
     }
     
     /**
@@ -148,13 +131,12 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
      * @param treeStyle SWT.SINGLE or SWT.MULTI
      * @param shellTitle the shell title
      * @param image The title image.
-     * @param typeToAdd TestCaseTreeDialog.TESTACSE or TestCaseTreeDialog.EVENTHANDLER
      */
     public TestCaseTreeDialog(Shell shell,
         String title, String message, ISpecTestCasePO parentTestCase, 
-        String shellTitle, int treeStyle, Image image, int typeToAdd) {
+        String shellTitle, int treeStyle, Image image) {
         
-        this(shell, parentTestCase, treeStyle, typeToAdd);
+        this(shell, parentTestCase, treeStyle);
         m_title = title;
         m_message = message;
         m_shellTitle = shellTitle;
@@ -171,20 +153,18 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
      * @param treeStyle SWT.SINGLE or SWT.MULTI
      * @param shellTitle the shell title
      * @param image The title image.
-     * @param typeToAdd TestCaseTreeDialog.TESTACSE or TestCaseTreeDialog.EVENTHANDLER
      * @param addButtonText the text for the add / ok button
      */
     public TestCaseTreeDialog(Shell shell, String title, String message,
             ISpecTestCasePO parentTestCase, String shellTitle, int treeStyle,
-            Image image, int typeToAdd, String addButtonText) {
+            Image image, String addButtonText) {
         this(shell, title, message, parentTestCase, shellTitle, treeStyle,
-                image, typeToAdd);
+                image);
         m_addButtonText = addButtonText;
     }
     
     
     /**
-     * 
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
@@ -406,7 +386,6 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
         }
 
         /**
-         * 
          * {@inheritDoc}
          */
         public Color getForeground(Object element) {
@@ -419,15 +398,12 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
             
             if (element instanceof ICategoryPO
                     || element instanceof IReusedProjectPO) {
-
                 return Layout.GRAY_COLOR;
             }
-
             return null;
         }
 
         /**
-         * 
          * {@inheritDoc}
          */
         public Color getBackground(Object element) {

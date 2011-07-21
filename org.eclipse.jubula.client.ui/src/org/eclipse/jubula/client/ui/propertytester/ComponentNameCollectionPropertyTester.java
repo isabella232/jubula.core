@@ -18,7 +18,6 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
@@ -38,8 +37,8 @@ import org.eclipse.ui.IWorkbenchPart;
  * @author BREDEX GmbH
  * @created Mar 2, 2009
  */
-public class ComponentNameCollectionPropertyTester extends PropertyTester {
-
+public class ComponentNameCollectionPropertyTester 
+    extends AbstractBooleanPropertyTester {
     /** the id of the "areSameType" property */
     public static final String ARE_SAME_TYPE_PROP = "areSameType"; //$NON-NLS-1$
 
@@ -49,59 +48,37 @@ public class ComponentNameCollectionPropertyTester extends PropertyTester {
     /** the id of the "areInCurrentProject" property */
     public static final String ARE_IN_CURRENT_PROJECT = "areInCurrentProject"; //$NON-NLS-1$
 
-    /** the logger */
+    /**
+     * <code>PROPERTIES</code>
+     */
+    private static final String[] PROPERTIES = new String[] { 
+        ARE_IN_CURRENT_PROJECT, ARE_SAME_TECH_PROP, ARE_SAME_TYPE_PROP };
+
+    /** <code>LOG</code> */
     private static final Log LOG = 
         LogFactory.getLog(ComponentNameCollectionPropertyTester.class);
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
-    public boolean test(Object receiver, String property, Object[] args,
-            Object expectedValue) {
-
-        if (receiver instanceof Collection) {
-            Collection collection = (Collection)receiver;
-            List<IComponentNamePO> compNames = 
-                new ArrayList<IComponentNamePO>();
-            for (Object element : collection) {
-                if (element instanceof IComponentNamePO) {
-                    compNames.add((IComponentNamePO)element);
-                } else {
-                    LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
-                            element.getClass().getName()));
-                    return false;
-                }
+    public boolean testImpl(Object receiver, String property, Object[] args) {
+        Collection collection = (Collection)receiver;
+        List<IComponentNamePO> compNames = new ArrayList<IComponentNamePO>();
+        for (Object element : collection) {
+            if (element instanceof IComponentNamePO) {
+                compNames.add((IComponentNamePO)element);
+            } else {
+                LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
+                        element.getClass().getName()));
+                return false;
             }
-            if (property.equals(ARE_SAME_TYPE_PROP)) {
-                boolean areSameType = testAreSameType(compNames);
-                boolean expectedBoolean = expectedValue instanceof Boolean 
-                    ? ((Boolean)expectedValue).booleanValue() : true;
-                return areSameType == expectedBoolean;
-            } else if (property.equals(ARE_SAME_TECH_PROP)) {
-                boolean areSameTech = 
-                    testAreMappedToSameTechnicalNames(compNames);
-                boolean expectedBoolean = expectedValue instanceof Boolean 
-                    ? ((Boolean)expectedValue).booleanValue() : true;
-                return areSameTech == expectedBoolean;
-            } else if (property.equals(ARE_IN_CURRENT_PROJECT)) {
-                boolean areInCurrentProject = 
-                    testAreInCurrentProject(compNames);
-                boolean expectedBoolean = expectedValue instanceof Boolean 
-                    ? ((Boolean)expectedValue).booleanValue() : true;
-                return areInCurrentProject == expectedBoolean;
-            }
-
-            LOG.warn(NLS.bind(Messages.PropertyTesterPropertyNotSupported,
-                    property));
-            return false;
         }
-
-        String receiverClass = 
-            receiver != null ? receiver.getClass().getName() : "null"; //$NON-NLS-1$
-        LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
-                receiverClass));
+        if (property.equals(ARE_SAME_TYPE_PROP)) {
+            return testAreSameType(compNames);
+        } else if (property.equals(ARE_SAME_TECH_PROP)) {
+            return testAreMappedToSameTechnicalNames(compNames);
+        } else if (property.equals(ARE_IN_CURRENT_PROJECT)) {
+            return testAreInCurrentProject(compNames);
+        }
         return false;
     }
 
@@ -205,5 +182,15 @@ public class ComponentNameCollectionPropertyTester extends PropertyTester {
             returnSet.addAll(currentProject.getAutMainList());
         }
         return returnSet;
+    }
+
+    /** {@inheritDoc} */
+    public Class<? extends Object> getType() {
+        return Collection.class;
+    }
+
+    /** {@inheritDoc} */
+    public String[] getProperties() {
+        return PROPERTIES;
     }
 }

@@ -250,6 +250,8 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         mgr.add(submenuRefactor);
         CommandHelper.createContributionPushItem(submenuRefactor,
                 CommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuRefactor,
+                CommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.REVERT_CHANGES_COMMAND_ID);
         mgr.add(new Separator());

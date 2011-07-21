@@ -84,7 +84,7 @@
 	</extension>
 	<extension point="org.eclipse.core.expressions.propertyTesters">
 		<propertyTester
-			class="org.eclipse.jubula.client.ui.propertytester.GuiNodePropertyTester"
+			class="org.eclipse.jubula.client.ui.propertytester.NodePropertyTester"
 			id="org.eclipse.jubula.client.ui.propertytester.GuiNodePropertyTester"
 			namespace="org.eclipse.jubula.client.ui.model" properties="isEditable"
 			type="org.eclipse.jubula.client.core.model.INodePO">
@@ -117,7 +117,7 @@
 			type="org.eclipse.jubula.client.core.model.IComponentNamePO">
 		</propertyTester>
 		<propertyTester
-			class="org.eclipse.jubula.client.ui.propertytester.TestSuiteGUIPropertyTester"
+			class="org.eclipse.jubula.client.ui.propertytester.TestSuitePropertyTester"
 			id="org.eclipse.jubula.client.ui.propertytester.TestSuite"
 			namespace="org.eclipse.jubula.client.core.model.ITestSuitePO"
 			properties="hasAUT" type="org.eclipse.jubula.client.core.model.ITestSuitePO">
@@ -142,6 +142,13 @@
 	        properties="hasMonitoringData"
 	        type="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
   		</propertyTester>
+  		<propertyTester
+			class="org.eclipse.jubula.client.ui.propertytester.ParameterInterfacePropertyTester"
+			id="org.eclipse.jubula.client.ui.propertytester.ParameterInterfacePropertyTester"
+			namespace="org.eclipse.jubula.client.core.model.IParameterInterfacePO"
+			properties="usesExcel,usesCTDS,hasMultipleDataSets" 
+			type="org.eclipse.jubula.client.core.model.IParameterInterfacePO">
+		</propertyTester>
 	</extension>
 	<extension id="gdMarker" name="%JubulaMarker"
 		point="org.eclipse.core.resources.markers" />
@@ -1096,6 +1103,11 @@
         categoryId="org.eclipse.jubula.client.ui.commands"
         id="org.eclipse.jubula.client.ui.commands.OpenProject"
         name="%OpenProject">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.commands"
+        id="org.eclipse.jubula.client.ui.commands.ReplaceWithTestCase"
+        name="%ReplaceWithTestCase">
   </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
@@ -2791,6 +2803,10 @@
         disabledIcon="icons/stopOM_disabled.gif"
         icon="icons/stopOM.gif">
   </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.ReplaceWithTestCase"
+        icon="icons/replaceWithTestCase.gif">
+  </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"
 		point="org.eclipse.ui.handlers">
@@ -3421,6 +3437,23 @@
                 <equals value="true" />
             </with>
         </enabledWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.ReplaceWithTestCaseHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.ReplaceWithTestCase">
+     <activeWhen>
+        <and>
+           <count
+                 value="+">
+           </count>
+           <iterate ifEmpty="false" operator="and">
+              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+              <test property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.usesExcel"           value="false" />
+              <test property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.usesCTDS"            value="false" />
+              <test property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.hasMultipleDataSets" value="false" />
+           </iterate>
+        </and>
+     </activeWhen>
   </handler>
 	</extension>
 	<extension point="org.eclipse.ui.services">

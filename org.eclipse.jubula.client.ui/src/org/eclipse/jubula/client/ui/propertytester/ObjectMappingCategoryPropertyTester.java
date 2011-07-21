@@ -10,12 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.propertytester;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
-import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -24,49 +19,28 @@ import org.eclipse.osgi.util.NLS;
  * @author BREDEX GmbH
  * @created Mar 4, 2009
  */
-public class ObjectMappingCategoryPropertyTester extends PropertyTester {
-
+public class ObjectMappingCategoryPropertyTester 
+    extends AbstractBooleanPropertyTester {
     /** the id of the "isTopLevel" property */
     public static final String IS_TOP_LEVEL = "isTopLevel"; //$NON-NLS-1$
 
     /** the id of the "isEmpty" property */
     public static final String IS_EMPTY = "isEmpty"; //$NON-NLS-1$
 
-    /** the logger */
-    private static final Log LOG = 
-        LogFactory.getLog(ObjectMappingCategoryPropertyTester.class);
-
     /**
-     * 
-     * {@inheritDoc}
+     * <code>PROPERTIES</code>
      */
-    public boolean test(Object receiver, String property, Object[] args,
-            Object expectedValue) {
+    private static final String[] PROPERTIES = new String[] { IS_EMPTY,
+        IS_TOP_LEVEL };
 
-        if (receiver instanceof IObjectMappingCategoryPO) {
-            IObjectMappingCategoryPO category = 
-                (IObjectMappingCategoryPO)receiver;
-            if (property.equals(IS_TOP_LEVEL)) {
-                boolean areSameType = testIsTopLevel(category);
-                boolean expectedBoolean = expectedValue instanceof Boolean 
-                    ? ((Boolean)expectedValue).booleanValue() : true;
-                return areSameType == expectedBoolean;
-            } else if (property.equals(IS_EMPTY)) {
-                boolean isEmpty = testEmpty(category);
-                boolean expectedBoolean = expectedValue instanceof Boolean 
-                    ? ((Boolean)expectedValue).booleanValue() : true;
-                return isEmpty == expectedBoolean;
-            }
-
-            LOG.warn(NLS.bind(Messages.PropertyTesterPropertyNotSupported,
-                    property));
-            return false;
+    /** {@inheritDoc} */
+    public boolean testImpl(Object receiver, String property, Object[] args) {
+        IObjectMappingCategoryPO category = (IObjectMappingCategoryPO)receiver;
+        if (property.equals(IS_TOP_LEVEL)) {
+            return testIsTopLevel(category);
+        } else if (property.equals(IS_EMPTY)) {
+            return testEmpty(category);
         }
-
-        String receiverClass = 
-            receiver != null ? receiver.getClass().getName() : "null"; //$NON-NLS-1$
-        LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
-                receiverClass));
         return false;
     }
 
@@ -92,5 +66,15 @@ public class ObjectMappingCategoryPropertyTester extends PropertyTester {
 
         return category.getUnmodifiableAssociationList().isEmpty() 
             && category.getUnmodifiableCategoryList().isEmpty();
+    }
+
+    /** {@inheritDoc} */
+    public Class<? extends Object> getType() {
+        return IObjectMappingCategoryPO.class;
+    }
+
+    /** {@inheritDoc} */
+    public String[] getProperties() {
+        return PROPERTIES;
     }
 }

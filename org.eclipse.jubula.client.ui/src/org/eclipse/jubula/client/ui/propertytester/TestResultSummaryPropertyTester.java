@@ -10,12 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.propertytester;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.osgi.util.NLS;
 
 /**
  * PropertyTester for TestResultSummary.
@@ -23,50 +18,33 @@ import org.eclipse.osgi.util.NLS;
  * @author BREDEX GmbH
  * @created Mar 5, 2009
  */
-public class TestResultSummaryPropertyTester extends PropertyTester {
-
+public class TestResultSummaryPropertyTester 
+    extends AbstractBooleanPropertyTester {
     /** the id of the "hasMonitoringData" property */
     public static final String HAS_MONITORING_DATA_PROP = "hasMonitoringData"; //$NON-NLS-1$
 
-    /** the logger */
-    private static final Log LOG = LogFactory
-            .getLog(TestResultSummaryPropertyTester.class);
-
     /**
-     * {@inheritDoc}
+     * <code>PROPERTIES</code>
      */
-    public boolean test(Object receiver, String property, Object[] args,
-            Object expectedValue) {
+    private static final String[] PROPERTIES = new String[] { 
+        HAS_MONITORING_DATA_PROP };
 
-        if (receiver instanceof ITestResultSummaryPO) {
-            ITestResultSummaryPO summary = (ITestResultSummaryPO)receiver;
-            if (property.equals(HAS_MONITORING_DATA_PROP)) {
-                boolean isBeingUsed = testHasMonitoringData(summary);
-                boolean expectedBoolean = 
-                    expectedValue instanceof Boolean ? ((Boolean)expectedValue)
-                        .booleanValue() : true;
-                return isBeingUsed == expectedBoolean;
-            }
-            LOG.warn(NLS.bind(Messages.PropertyTesterPropertyNotSupported,
-                    property));
-            return false;
+    /** {@inheritDoc} */
+    public boolean testImpl(Object receiver, String property, Object[] args) {
+        ITestResultSummaryPO summary = (ITestResultSummaryPO)receiver;
+        if (property.equals(HAS_MONITORING_DATA_PROP)) {
+            return  summary.isReportWritten();
         }
-        String receiverClass = receiver != null ? receiver.getClass().getName()
-                : "null"; //$NON-NLS-1$
-        LOG.warn(NLS.bind(Messages.PropertyTesterTypeNotSupported,
-                receiverClass));
         return false;
     }
 
-    /**
-     * 
-     * @param summary
-     *            the summary to check
-     * @return <code>true</code> if the summary has monitoring data. Otherwise
-     *         <code>false</code>.
-     */
-    private boolean testHasMonitoringData(ITestResultSummaryPO summary) {
-        return summary.isReportWritten();
+    /** {@inheritDoc} */
+    public Class<? extends Object> getType() {
+        return ITestResultSummaryPO.class;
     }
 
+    /** {@inheritDoc} */
+    public String[] getProperties() {
+        return PROPERTIES;
+    }
 }
