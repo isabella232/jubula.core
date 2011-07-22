@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.preferences;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.jface.bindings.keys.KeySequenceText;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -87,15 +86,7 @@ public class ObservationPreferencePage extends PreferencePage implements
     /** container for management of multiLine trigger keys */
     private ModifiableTriggerList m_multiLineTrigger;
         
-    
-    /**
-     * The manager for the text widget that traps incoming key events. This
-     * manager should be used to access the widget, rather than accessing the
-     * widget directly.
-     */
-    private KeySequenceText m_textTriggerSequenceManager;
 
-   
     /**
      * 
      */
@@ -209,7 +200,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         data3.horizontalSpan = 4;
         triggerLabel.setLayoutData(data3);
         ControlDecorator.decorateInfo(triggerLabel, 
-                "GDControlDecorator.ObservationTriggerReplaceText", false);
+                "GDControlDecorator.ObservationTriggerReplaceText", false); //$NON-NLS-1$
         
         Set<String> values = new HashSet<String>();
         m_singleLineTrigger = new ModifiableTriggerList(composite, SWT.NONE, 
