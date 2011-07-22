@@ -21,6 +21,8 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jubula.client.autagent.Activator;
 import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
+import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.databinding.SimpleIntegerToStringConverter;
 import org.eclipse.jubula.client.ui.databinding.SimpleStringToIntegerConverter;
 import org.eclipse.jubula.client.ui.databinding.validators.StringToPortValidator;
@@ -87,6 +89,11 @@ public class EmbeddedAutAgentPreferencePage extends PreferencePage
                         new SimpleIntegerToStringConverter()));
 
         PreferencePageSupport.create(this, m_dbc);
+        
+        // context sensitive help
+        Plugin.getHelpSystem().setHelp(parent,
+                ContextHelpIds.PREFPAGE_EMBEDDED_AGENT);
+
         return composite;
     }
 
