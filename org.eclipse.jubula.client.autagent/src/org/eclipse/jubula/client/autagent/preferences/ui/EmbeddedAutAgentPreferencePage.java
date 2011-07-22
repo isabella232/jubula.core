@@ -21,6 +21,8 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jubula.client.autagent.Activator;
 import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
+import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.databinding.SimpleIntegerToStringConverter;
 import org.eclipse.jubula.client.ui.databinding.SimpleStringToIntegerConverter;
 import org.eclipse.jubula.client.ui.databinding.validators.StringToPortValidator;
@@ -45,6 +47,9 @@ public class EmbeddedAutAgentPreferencePage extends PreferencePage
     /** the port number for the embedded AUT Agent */
     private WritableValue m_portNumber;
     
+    /** the databinding context for this page */
+    private DataBindingContext m_dbc;
+    
     /**
      * 
      * {@inheritDoc}
@@ -61,11 +66,11 @@ public class EmbeddedAutAgentPreferencePage extends PreferencePage
         GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
         
         
-        DataBindingContext dbc = new DataBindingContext();
+        m_dbc = new DataBindingContext();
         
         UIComponentHelper.createLabel(composite, 
                 I18n.getString("DatabaseConnection.HostBased.Port"), SWT.NONE); //$NON-NLS-1$
-        Text portText = new Text(composite, SWT.NONE);
+        Text portText = new Text(composite, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(portText);
         m_portNumber = new WritableValue(
                 getPreferenceStore().getInt(
@@ -78,12 +83,17 @@ public class EmbeddedAutAgentPreferencePage extends PreferencePage
             .setConverter(new SimpleStringToIntegerConverter())
             .setAfterGetValidator(new StringToPortValidator(
                     I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
-        dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
+        m_dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
                 m_portNumber, portTargetToModelUpdateStrategy,
                 new UpdateValueStrategy().setConverter(
                         new SimpleIntegerToStringConverter()));
 
-        PreferencePageSupport.create(this, dbc);
+        PreferencePageSupport.create(this, m_dbc);
+        
+        // context sensitive help
+        Plugin.getHelpSystem().setHelp(parent,
+                ContextHelpIds.PREFPAGE_EMBEDDED_AGENT);
+
         return composite;
     }
 
@@ -97,10 +107,15 @@ public class EmbeddedAutAgentPreferencePage extends PreferencePage
 
     @Override
     protected void performDefaults() {
+        // set model objects to default values
         getPreferenceStore().setToDefault(
                 PreferenceInitializer.PREF_EMBEDDED_AGENT_PORT);
         m_portNumber.setValue(getPreferenceStore().getInt(
                 PreferenceInitializer.PREF_EMBEDDED_AGENT_PORT));
+
+        // update targets based on new model values
+        m_dbc.updateTargets();
+
         super.performDefaults();
     }
     

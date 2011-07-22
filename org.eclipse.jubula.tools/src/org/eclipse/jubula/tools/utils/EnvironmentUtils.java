@@ -40,10 +40,10 @@ public class EnvironmentUtils {
     private static final String OS_NAME_KEY = "os.name"; //$NON-NLS-1$
 
     /** OS Name property. */
-    private static final String OS_NAME = System.getProperty(OS_NAME_KEY); //$NON-NLS-1$
+    private static final String OS_NAME = System.getProperty(OS_NAME_KEY);
 
     /** OS Name property in lower case */
-    private static final String OS_NAME_LOWER_CASE = OS_NAME.toLowerCase(); //$NON-NLS-1$
+    private static final String OS_NAME_LOWER_CASE = OS_NAME.toLowerCase();
 
     /** Constant for Dos os name */
     private static final String OS_NAME_DOS = "dos"; //$NON-NLS-1$
