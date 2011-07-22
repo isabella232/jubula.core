@@ -141,6 +141,7 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
             d.syncExec(new Runnable() {
                 public void run() {
                     if (m_borderShell != null) {
+                        m_borderShell.getRegion().dispose();
                         m_borderShell.close();
                         m_borderShell.dispose();
                         m_borderShell = null;
@@ -186,27 +187,25 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
         closeBorderShell();
 
         // define a rectangular region around the widget
-        final int borderThickness = 2;
-        final Rectangle rect = new Rectangle(widgetBounds.x - borderThickness, 
-            widgetBounds.y - borderThickness, 
-            widgetBounds.x + widgetBounds.width + borderThickness, 
-            widgetBounds.y + widgetBounds.height + borderThickness);
+        final int b = 2;
+        final int wX = widgetBounds.x;
+        final int wY = widgetBounds.y;
+        final int wW = widgetBounds.width;
+        final int wH = widgetBounds.height;
         final Region region = new Region();
-        region.add(rect);
+        region.add(new Rectangle(0, 0, wW + b * 2, wH + b * 2));
         // define transparent rectangular region
-        final Rectangle subRect = new Rectangle(widgetBounds.x, widgetBounds.y, 
-            widgetBounds.width, widgetBounds.height);
-        region.subtract(subRect);
+        region.subtract(new Rectangle(b, b, wW, wH));
         final Display display = ((SwtAUTServer)AUTServer.getInstance())
-            .getAutDisplay();
-        m_borderShell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP 
+                .getAutDisplay();
+        m_borderShell = new Shell(display, SWT.NO_TRIM | SWT.ON_TOP
                 | SWT.NO_FOCUS);
         m_borderShell.setBackground(getBorderColor());
         // define the shape of the shell using setRegion
         m_borderShell.setRegion(region);
         final Rectangle size = region.getBounds();
-        m_borderShell.setLocation(0, 0);
         m_borderShell.setSize(size.width, size.height);
+        m_borderShell.setLocation(wX - b, wY - b);
         m_borderShell.setVisible(true);
         m_oldWidget = widget;
     }
@@ -216,6 +215,7 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
      */
     private void closeBorderShell() {
         if (m_borderShell != null) {
+            m_borderShell.getRegion().dispose();
             m_borderShell.close();
             m_borderShell.dispose();
             m_borderShell = null;
