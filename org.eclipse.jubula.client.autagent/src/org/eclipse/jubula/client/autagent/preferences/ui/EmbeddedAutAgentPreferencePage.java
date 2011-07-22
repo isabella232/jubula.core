@@ -65,7 +65,7 @@ public class EmbeddedAutAgentPreferencePage extends PreferencePage
         
         UIComponentHelper.createLabel(composite, 
                 I18n.getString("DatabaseConnection.HostBased.Port"), SWT.NONE); //$NON-NLS-1$
-        Text portText = new Text(composite, SWT.NONE);
+        Text portText = new Text(composite, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(portText);
         m_portNumber = new WritableValue(
                 getPreferenceStore().getInt(

@@ -64,7 +64,7 @@ public class RcpAutLaunchConfigurationTab extends AutLaunchConfigurationTab {
         additionalComposite.setLayout(new GridLayout(2, false));
         UIComponentHelper.createLabel(additionalComposite, 
                 Messages.LaunchTab_KeyboardLayoutLabel, SWT.NONE);
-        m_keyboardLayoutText = new Text(additionalComposite, SWT.NONE);
+        m_keyboardLayoutText = new Text(additionalComposite, SWT.BORDER);
 
         GridDataFactory.fillDefaults().grab(true, false).applyTo(
                 m_keyboardLayoutText);
