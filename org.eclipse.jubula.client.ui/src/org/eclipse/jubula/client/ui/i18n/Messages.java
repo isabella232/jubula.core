@@ -791,6 +791,11 @@ public class Messages extends NLS {
     public static String RenameLogicalNameDialogUnavailableNamesLabel;
     public static String RenameTestDataCubeDialogMessage;
     public static String RenameTestDataCubeDialogTitle;
+    public static String ReplaceTCRWizardTitle;
+    public static String ReplaceTCRWizard_additionalInformation_title;
+    public static String ReplaceTCRWizard_choosePage_title;
+    public static String ReplaceTCRWizard_matchParameter_title;
+    public static String ReplaceTCRWizard_matchComponentNames_title;
     public static String RevertEditorChangesActionQuestionText;
     public static String RevertEditorChangesActionShellTitle;
     public static String RunningAUTParameter;

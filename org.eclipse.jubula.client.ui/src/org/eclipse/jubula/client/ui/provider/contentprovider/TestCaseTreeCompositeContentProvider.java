@@ -25,7 +25,7 @@ import org.eclipse.jubula.tools.exception.JBException;
  * @author BREDEX GmbH
  * @created 08.10.2004
  */
-public class TestCaseDialogContentProvider 
+public class TestCaseTreeCompositeContentProvider 
     extends AbstractTreeViewContentProvider {
     /**
      * {@inheritDoc}
