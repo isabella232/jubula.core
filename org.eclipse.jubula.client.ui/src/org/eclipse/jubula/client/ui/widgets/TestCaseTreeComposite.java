@@ -135,7 +135,8 @@ public class TestCaseTreeComposite extends Composite {
             (IStructuredSelection)getTreeViewer().getSelection();
         for (Object selectedObj : selection.toArray()) {
             if (m_circDependList.contains(selectedObj)
-                    || selectedObj instanceof ICategoryPO) {
+                    || selectedObj instanceof ICategoryPO
+                    || selectedObj instanceof IReusedProjectPO) {
                 return false;
             }
         }
