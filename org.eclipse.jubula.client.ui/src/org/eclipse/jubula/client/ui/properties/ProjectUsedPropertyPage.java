@@ -23,9 +23,9 @@ import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -64,10 +64,6 @@ import org.eclipse.swt.widgets.Tree;
 public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage 
     implements IOkListener {
 
-    /** number of columns = 1 */
-    private static final int NUM_COLUMNS_1 = 1; 
-    /** number of columns = 2 */
-    private static final int NUM_COLUMNS_2 = 2;
     /** the list field for the available projects */ 
     private Tree m_availableProjectsList;
     /** the list field for the used projects */ 
@@ -92,8 +88,8 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
      * {@inheritDoc}
      */
     protected Control createContents(Composite parent) {
-        Composite composite = createComposite(parent, NUM_COLUMNS_1,
-            GridData.FILL, false);
+        Composite composite = 
+            createComposite(parent, GridData.FILL, false);
         noDefaultAndApplyButton();
 
         createLabel(composite, 
@@ -113,8 +109,8 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
             resizeLists();
         } catch (ToolkitPluginException tpe) {
             composite.dispose();
-            composite = createComposite(parent, NUM_COLUMNS_1,
-                GridData.FILL, false); 
+            composite = 
+                createComposite(parent, GridData.FILL, false); 
             
             new Label(composite, SWT.NONE).setText(
                 Messages.CouldNotLoadReusableProjects + StringConstants.COLON
@@ -196,17 +192,15 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
     /**
      * Creates a new composite.
      * @param parent The parent composite.
-     * @param numColumns the number of columns for this composite.
      * @param alignment The horizontalAlignment (grabExcess).
      * @param horizontalSpace The horizontalSpace.
      * @return The new composite.
      */
-    private Composite createComposite(Composite parent, int numColumns, 
+    private Composite createComposite(Composite parent, 
             int alignment, boolean horizontalSpace) {
         
         Composite composite = new Composite(parent, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
-        compositeLayout.numColumns = numColumns;
         compositeLayout.marginHeight = 0;
         compositeLayout.marginWidth = 0;
         composite.setLayout(compositeLayout);
