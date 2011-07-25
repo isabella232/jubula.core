@@ -11,9 +11,11 @@
 package org.eclipse.jubula.client.ui.wizards.refactor.pages;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.widgets.TestCaseTreeComposite;
@@ -30,6 +32,12 @@ public class ChooseTestCasePage extends WizardPage {
      * <code>m_parentTestCase</code>
      */
     private INodePO m_parentTestCase;
+    
+    /**
+     * <code>m_choosenTestCase</code>
+     */
+    private ISpecTestCasePO m_choosenTestCase = null;
+    
     /**
      * @param pageId
      *            the page id
@@ -51,7 +59,17 @@ public class ChooseTestCasePage extends WizardPage {
         tctc.getTreeViewer().addSelectionChangedListener(
                 new ISelectionChangedListener() {
                     public void selectionChanged(SelectionChangedEvent event) {
-                        setPageComplete(tctc.hasValidSelection());
+                        boolean pageComplete = false;
+                        ISpecTestCasePO specTC = null;
+                        if (tctc.hasValidSelection()) {
+                            IStructuredSelection selection = 
+                                (IStructuredSelection)event.getSelection();
+                            pageComplete = true;
+                            specTC = (ISpecTestCasePO)selection
+                                    .getFirstElement();
+                        }
+                        setChoosenTestCase(specTC);
+                        setPageComplete(pageComplete);
                     }
                 });
         setControl(tctc);
@@ -63,5 +81,19 @@ public class ChooseTestCasePage extends WizardPage {
     public void performHelp() {
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(
             ContextHelpIds.REFACTOR_REPLACE_CHOOSE_TEST_CASE_WIZARD_PAGE);
+    }
+
+    /**
+     * @param choosenTestCase the choosenTestCase to set
+     */
+    private void setChoosenTestCase(ISpecTestCasePO choosenTestCase) {
+        m_choosenTestCase = choosenTestCase;
+    }
+
+    /**
+     * @return the choosenTestCase
+     */
+    public ISpecTestCasePO getChoosenTestCase() {
+        return m_choosenTestCase;
     }
 }
