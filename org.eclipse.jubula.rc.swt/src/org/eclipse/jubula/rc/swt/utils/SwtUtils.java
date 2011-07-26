@@ -17,8 +17,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -60,6 +58,8 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -73,6 +73,9 @@ public class SwtUtils {
     
     /** Constant for identification of GTK graphics toolkit */
     private static final String GTK = "gtk"; //$NON-NLS-1$
+    
+    /** name of method to use for retrieving the bounds of a component */
+    private static final String METHOD_NAME_GET_BOUNDS = "getBounds"; //$NON-NLS-1$
     
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(SwtUtils.class);
@@ -929,6 +932,25 @@ public class SwtUtils {
      * 
      */
     public static Rectangle getBounds(TabItem tabItem) {
+        // first try to use getBounds() directly. this should work in most cases, as it is implemented in SWT since 3.4.
+        Method getBoundsMethod;
+        try {
+            getBoundsMethod = tabItem.getClass().getMethod(
+                    METHOD_NAME_GET_BOUNDS, null);
+            Object result = getBoundsMethod.invoke(tabItem, null);
+            if (result instanceof Rectangle) {
+                return tabItem.getDisplay().map(
+                        tabItem.getParent(), null, (Rectangle)result);
+            }
+            String className = result != null 
+                ? result.getClass().getName() : "null"; //$NON-NLS-1$
+            log.error("Expected getBounds() to return an object of type 'Rectangle', but received object of type '"  //$NON-NLS-1$
+                    + className + "'."); //$NON-NLS-1$
+            // fall through
+        } catch (Exception e) {
+            log.warn("Could not invoke getBounds() on TabItem. This is expected when using an SWT version lower than 3.4", e); //$NON-NLS-1$
+        }
+        
         if (SWT.getPlatform().equals(WIN32)) {
             return win32getBounds(tabItem);
         }
