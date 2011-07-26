@@ -22,8 +22,8 @@ import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
@@ -206,29 +206,14 @@ public class PopupMenuUtil {
      * @param path path to the menu item
      */
     public static void selectMenuItem(final IRobot robot, Menu popup, 
-            int[] path) {
-        
+        int[] path) {
         if (path.length == 0) {
-            throw new StepExecutionException("empty path to menuitem not allowed", //$NON-NLS-1$
-                EventFactory.createActionError());
+            throw new StepExecutionException(
+                    "empty path to menuitem not allowed", //$NON-NLS-1$
+                    EventFactory.createActionError());
         }
-        MenuItem item = MenuUtil.navigateToMenuItem(robot, popup,
-                path);
-        if (item == null) {
-            throw new StepExecutionException("no such menu item found", //$NON-NLS-1$
-                EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
-        }
-        
-        Rectangle bounds = MenuUtil.getMenuItemBounds(item);
-        Rectangle nullBounds = new Rectangle(0, 0, 0, 0);
-        
-        if (bounds.equals(nullBounds)) {
-            MenuUtil.selectProgramatically(item);
-        } else {
-            MenuUtil.clickMenuItem(robot, item, 1);
-        }
-        
-        //MenuUtil.clickMenuItem(robot, item, 1);
+        MenuItem item = MenuUtil.navigateToMenuItem(robot, popup, path);
+        selectItem(item, robot);
     }
 
     /**
@@ -239,27 +224,38 @@ public class PopupMenuUtil {
      * @param path path to the menu item
      * @param operator operator used for matching
      */
-    public static void selectMenuItem(final IRobot robot, Menu popup, 
+    public static void selectMenuItem(final IRobot robot, Menu popup,
             String[] path, String operator) {
-        
         if (path.length == 0) {
-            throw new StepExecutionException("empty path to menuitem not allowed", //$NON-NLS-1$
-                EventFactory.createActionError());
+            throw new StepExecutionException(
+                    "empty path to menuitem not allowed", //$NON-NLS-1$
+                    EventFactory.createActionError());
         }
-        MenuItem item = MenuUtil.navigateToMenuItem(robot, popup,
-                path, operator);
+        MenuItem item = MenuUtil.navigateToMenuItem(robot, popup, path,
+                operator);
+        selectItem(item, robot);
+    }
+
+    /**
+     * @param item
+     *            the item to select; may be <code>null</code>
+     * @param robot
+     *            The robot to use for the click operations.
+     */
+    private static void selectItem(MenuItem item, IRobot robot) {
         if (item == null) {
             throw new StepExecutionException("no such menu item found", //$NON-NLS-1$
-                EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
-        
-        if (SWT.MOD1 == SWT.COMMAND) { //OS=MacOS or getBounds = 0000
+
+        if (EnvironmentUtils.isMacOS()) {
             MenuUtil.selectProgramatically(item);
+            // Press 'ESC' to close menu - for some reason the popup menu itself
+            // is already disposed at this point
+            robot.keyType(null, SWT.ESC);
         } else {
             MenuUtil.clickMenuItem(robot, item, 1);
         }
-        
-        //MenuUtil.clickMenuItem(robot, item, 1);
     }
 
     /**
@@ -270,12 +266,10 @@ public class PopupMenuUtil {
      *                   menus that need to be closed.
      */
     public static void closePopup(IRobot robot, Menu popup, int pathLength) {
-        
-        for (int i = 0; 
-            i < pathLength && popup != null && MenuUtil.isMenuVisible(popup); 
-            i++) {
-            
-            // Press 'ESC' to close menu 
+        for (int i = 0; i < pathLength && popup != null
+                && MenuUtil.isMenuVisible(popup); i++) {
+
+            // Press 'ESC' to close menu
             robot.keyType(popup, SWT.ESC);
 
             RobotTiming.sleepPostMouseUpDelay();
