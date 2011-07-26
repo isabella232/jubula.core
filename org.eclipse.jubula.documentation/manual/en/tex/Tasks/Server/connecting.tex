@@ -1,0 +1,21 @@
+\index{Connect!AUT Agent}
+\index{AUT Agent!Connect}
+\index{AUT Agent!Embedded}
+\index{Embedded AUT Agent}
+
+You can connect to an \gdagent{} you have started \bxpref{TasksAgentExternal} on a local or remote machine, or you can connect an embedded \gdagent{} on your local machine. 
+
+
+\begin{enumerate}
+\item On the toolbar, click on the arrow next to the \bxcaption{Connect to \gdagent} button. 
+\gdmarpar{../../../share/PS/startServer}{ connect to \gdagent}
+\item In the drop down list, you can choose an \gdagent{} to connect to:
+\begin{itemize}
+\item Select the embedded \gdagent{} option to connect to an \gdagent{} that is automatically started for you on your machine.  
+\bxtipp{The embedded \gdagent{} uses port 60000 by default. You can change the port that should be used for the embedded \gdagent{} in the preferences \bxpref{TasksPrefsEmbeddedAgent}.}
+\item Select an \gdagent{} host and port number to connect to from the list. The list of hosts and ports available in this list can be configured in the preferences \bxpref{TasksPrefsAgent}.
+\bxwarn{If you are not working with the embedded \gdagent{}, you must have started an \gdagent{} on a machine in the network \bxpref{TasksAgentExternal} to be able to connect to it.}
+\end{itemize}
+\end{enumerate}
+
+\bxtipp{To work with the embedded \gdagent{}, you do not need to start an \gdagent{} on your machine. However, you can only work with the embedded \gdagent{} for local testing (i.e. on the same machine as the \ite{}. The embedded \gdagent{} cannot be used with the Test Executor for batch testing.}

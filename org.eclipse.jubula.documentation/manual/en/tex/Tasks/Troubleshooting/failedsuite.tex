@@ -28,7 +28,7 @@ For other problems with test execution, check:
 \bxtipp{Waiting for a window to appear is generally a good idea whenever a new window or dialog is opened during the test. Waiting for the window or the component you want to test will make sure that your tests run even under different timing conditions.  }
 \item Make sure that the \gdcases{} and \gdsteps{} are in the right order.
 \item Ensure that the data you have entered is correct.
-\item Check your object mapping preferences \bxpref{objectprefs}. We recommend that you set them to \bxcaption{standard}.
+\item Check your object mapping configuration \bxpref{TasksOMConfiguration}. We recommend that you set the recognition to \bxcaption{standard}.
 \item If the \gdaut{} is an RCP application, make sure that the keyboard layout is correct \bxpref{configuringaut}. Otherwise, make sure you have the current version of the RCP Remote Control plugin (start your application with -clean to be sure).  
 \item Check that the \gdsteps{} preceding the failed \gdstep{} were successful by looking at the state of the application.  
 \end{itemize}

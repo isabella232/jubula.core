@@ -1,0 +1,54 @@
+\index{AUT Agent!Starting}
+\index{Start!AUT Agent}
+
+
+You can start the \gdagent{} on your local machine (the same machine as the \ite{}) or on a remote machine in the network. 
+
+\subsubsection{Windows users}
+\begin{enumerate}
+\item Start the \gdagent{} via the start menu:\\
+\bxmenu{Start}{\app{}}{Start \gdagent{}}. 
+\item The  \gdagent{} is started on port number 60000 unless you enter a different port number as a parameter \bxpref{tasksagentcmd}. 
+
+You can see and stop the \gdagent{} in the system tray.  Once the \gdagent{} is started, you can connect to it from the \ite{} \bxpref{TasksAgentConnect}. 
+
+\end{enumerate}
+
+\subsubsection{Linux users}
+
+Use the script:\\
+ \bxshell{./autagent (-p <port number>)}. 
+
+You can see and stop the \gdagent{} in the system tray. Once the \gdagent{} is started, you can connect to it from the \ite{} \bxpref{TasksAgentConnect}.
+
+
+\subsubsection{Starting the \gdagent{} from the command line: options and parameters}
+\index{AUT Agent!Quiet Mode}
+\index{AUT Agent!Parameters}
+\index{AUT Agent!Quiet Mode}
+\index{AUT Agent!Parameters}
+\label{tasksagentcmd}
+\label{TasksAgentLenient}
+
+\begin{enumerate}
+\item Start the \gdagent{} from the Windows command line with this command:\\
+\bxshell{autagent.exe (-p <port number>)}
+
+\item If no port number argument is given, the \gdagent{}  will start on the default port 60000. 
+
+\item You can use the following parameters when starting the \gdagent{}:
+
+\begin{description}
+\item [\bxshell{-p}:]{Port number. Enter the port number you wish to start the \gdagent{} on. }
+\bxtipp{You can also use the environment variable \bxcaption{TEST\_AUT\_AGENT\_PORT} to set the port number that should be used as a default when you start the \gdagent{}.}
+\item[\bxshell{-l}:]{Lenient mode. The lenient mode for the \gdagent{} allows \gdauts{} launched  by other \gdauts{} to be tested \bxpref{TasksLenientTest}. You can also change the mode of the currently running \gdagent{} via the system tray. Right-click the \gdagent{} icon and (de)select \bxname{Strict \gdaut{} Management} from the menu.}
+\bxtipp{The default mode for the \gdagent{} is \bxname{strict}.}
+\item [\bxshell{-v}:]{Verbose mode. You will see a dialog to tell you whether the \gdagent{} has started successfully or not.}
+\item [\bxshell{-q}:]{Quiet mode. You will see no dialog if the \gdagent{} starts successfully. If the \gdagent{} does not start successfully, the error is written to the console.}
+\item [\bxshell{-h}:]{Help. Enter this parameter to see a list of options for the \gdagent{}.}
+\end{description}
+
+\item The \gdagent{} can be started multiple times -- either on the same machine (using a different port number for each instance) or on multiple machines for distributed testing. 
+
+\end{enumerate}
+
