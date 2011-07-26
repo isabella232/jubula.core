@@ -34,6 +34,8 @@
 \index{View!Inspector}
 \index{View!Image}
 \index{Image!View}
+\index{View!Progress}
+\index{Progress!View}
 
 \app{} has the following views:
 
@@ -50,11 +52,13 @@
 \item \gdtestsummaryview{}
 \item \gdrunautview{}
 \item \gdimgview{}
+\item Progress View
 \end{itemize}
 
 The first three views are \emph{support views}. Their content changes depending on the current selection -- they show details corresponding to the currently selected item.
 
 Use \bxmenu{Window}{Show View}{Other} to see a full list of views that can be opened in the \ite{}.
+
 \subsection{The \gdpropview{}}
 \gdhelpid{guidancerPropertiesViewContextId}{Properties View}
 
@@ -188,3 +192,6 @@ The \gdrunautview{} is above the \gdtestsuitebrowser{} in the \specpersp{}. It s
 
 \subsection{The \gdimgview{}}
 The \gdimgview{} is used to see automatically generated screenshots of errors that have occurred in tests.
+
+\subsection{The Progress View}
+The progress view shows which longer-running actions are currently being executed. These can include starting \gdauts{}, connecting to the \gdagent{}, and executing tests.
