@@ -56,11 +56,11 @@ public abstract class AbstractDeleteTreeItemHandler extends AbstractHandler {
      * 
      * @param obj
      *            the object to get the name for
-     * @return may return null if no name available; otherwise the name to
+     * @return may return "null" if no name available; otherwise the name to
      *         display for delete operation
      */
     protected String getName(Object obj) {
-        return null;
+        return String.valueOf(obj);
     }
 
     /**
@@ -70,6 +70,4 @@ public abstract class AbstractDeleteTreeItemHandler extends AbstractHandler {
     protected static void closeOpenEditor(IPersistentObject node) {
         DeleteHandlerHelper.closeOpenEditor(node);
     }
-    
-    
 }

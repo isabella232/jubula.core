@@ -10,11 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.handlers;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
@@ -34,14 +37,14 @@ public class ReplaceWithTestCaseHandler extends AbstractHandler {
             (AbstractTestCaseEditor)HandlerUtil.getActiveEditor(event);
         if (tce.getEditorHelper().requestEditableState() 
                 == JBEditorHelper.EditableState.OK) {
-            final INodePO editorNode = (INodePO)tce.getEditorHelper()
-                    .getEditSupport().getWorkVersion();
-            if (!(tce.getTreeViewer().getSelection() 
-                    instanceof IStructuredSelection)) {
+            ISelection selection = tce.getTreeViewer().getSelection();
+            if (!(selection instanceof IStructuredSelection)) {
                 return null;
             }
+            IStructuredSelection sSelection = (IStructuredSelection) selection;
+            List<IExecTestCasePO> listOfExecsToReplace = sSelection.toList();
             WizardDialog dialog = new WizardDialog(Plugin.getShell(),
-                    new ReplaceTCRWizard(editorNode));
+                    new ReplaceTCRWizard(tce, listOfExecsToReplace));
             dialog.setHelpAvailable(true);
             dialog.open();
         }

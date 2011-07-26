@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.handlers.delete;
 
-import java.util.Iterator;
+import java.util.List;
 
 import javax.persistence.PersistenceException;
 
@@ -56,38 +56,39 @@ public class DeleteTreeItemHandlerTCEditor
                         != JBEditorHelper.EditableState.OK) {
                     return null;
                 }
-                for (Iterator<INodePO> it = structuredSelection.iterator(); 
-                        it.hasNext();) {
-                    
-                    INodePO node = it.next();
-                    try {
-                        node.getParentNode().removeNode(node);
-                        if (node.getId() != null) {
-                            tce.getEditorHelper().getEditSupport()
-                                .getSession().remove(node);
-                        }
-                        tce.getEditorHelper().setDirty(true);
-                        DataEventDispatcher.getInstance()
-                            .fireDataChangedListener(node, DataState.Deleted, 
-                                UpdateState.onlyInEditor);
-                    } catch (PersistenceException e) {
-                        try {
-                            PersistenceManager.handleDBExceptionForEditor(
-                                node, e, 
-                                tce.getEditorHelper().getEditSupport());
-                        } catch (PMException pme) {
-                            PMExceptionHandler
-                                .handlePMExceptionForMasterSession(pme);
-                            break;
-                        }
-                        break;
-                    }
-                }
+                deleteNodesFromEditor(structuredSelection.toList(), tce);
             }
 
         }
-
         return null;
     }
-   
+    
+    /**
+     * @param nodes
+     *            the nodes to delete
+     * @param editor
+     *            the editor to perfrom the deletion for
+     */
+    public static void deleteNodesFromEditor(List<? extends INodePO> nodes,
+            AbstractJBEditor editor) {
+        for (INodePO node : nodes) {
+            try {
+                node.getParentNode().removeNode(node);
+                if (node.getId() != null) {
+                    editor.getEditorHelper().getEditSupport().getSession()
+                            .remove(node);
+                }
+                editor.getEditorHelper().setDirty(true);
+                DataEventDispatcher.getInstance().fireDataChangedListener(node,
+                        DataState.Deleted, UpdateState.onlyInEditor);
+            } catch (PersistenceException e) {
+                try {
+                    PersistenceManager.handleDBExceptionForEditor(node, e,
+                            editor.getEditorHelper().getEditSupport());
+                } catch (PMException pme) {
+                    PMExceptionHandler.handlePMExceptionForMasterSession(pme);
+                }
+            }
+        }
+    }
 }
