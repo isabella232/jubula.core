@@ -70,6 +70,21 @@ public class TestCaseBP  extends NodeBP {
         handleFirstReference(editSupport, referencedTC, false);
         IExecTestCasePO newExecTC = NodeMaker.createExecTestCasePO(
             referencedTC);
+        return addReferencedTestCase(targetTC, newExecTC, position);
+    }
+    
+    /**
+     * Add an existing SpecTC to another SpecTC by reference. Lock the TC if
+     * this is the first usage to prevent accidental deletion before the
+     * editor is saved.
+     * @param targetTC TC where the reference shall be added.
+     * @param newExecTC the exec test case to add.
+     * @param position Index position for the ExecTC, null means append.
+     * referenced before and is edited by another user.
+     * @return The ExecTC used to reference the SpecTC
+     */
+    public static IExecTestCasePO addReferencedTestCase(INodePO targetTC,
+            IExecTestCasePO newExecTC, Integer position) {
         if (position != null) {
             targetTC.addNode(position.intValue(), newExecTC);
         } else {
@@ -102,7 +117,7 @@ public class TestCaseBP  extends NodeBP {
      * @throws PMObjectDeletedException
      *             if the po as deleted by another concurrently working user
      */
-    private static void handleFirstReference(EditSupport editSupport,
+    public static void handleFirstReference(EditSupport editSupport,
         ISpecTestCasePO referencedTC, boolean isReferencedByThisAction)
         throws PMAlreadyLockedException, PMDirtyVersionException,
         PMObjectDeletedException {

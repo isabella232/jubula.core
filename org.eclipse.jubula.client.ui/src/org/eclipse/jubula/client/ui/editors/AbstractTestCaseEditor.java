@@ -775,17 +775,17 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         UpdateState updateState) {
         
         if (po instanceof INodePO) {
+            INodePO changedNode = (INodePO)po;
+            INodePO editorNode = (INodePO)getEditorHelper().getEditSupport()
+                    .getWorkVersion();
+            boolean isVisibleInEditor = editorNode.indexOf(changedNode) > -1;
             switch (dataState) {
                 case Added:
-                    INodePO addedNode = (INodePO)po;
-                    INodePO editorNode = 
-                        (INodePO)getEditorHelper().getEditSupport()
-                            .getWorkVersion();
-                    if (editorNode.indexOf(addedNode) > -1
+                    if (isVisibleInEditor
                             || (editorNode instanceof ISpecTestCasePO 
                                     && ((ISpecTestCasePO)editorNode)
                                     .getAllEventEventExecTC().contains(po))) {
-                        handleNodeAdded(addedNode);
+                        handleNodeAdded(changedNode);
                     }
                     break;
                 case Deleted:
@@ -797,6 +797,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                     renameGUINode(po);
                     break;
                 case StructureModified:
+                    if (isVisibleInEditor) {
+                        getEditorHelper().setDirty(true);
+                    }
                     if (!handleStructureModified(po)) {
                         return;
                     }
