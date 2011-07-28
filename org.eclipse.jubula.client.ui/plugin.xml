@@ -3443,11 +3443,10 @@
         commandId="org.eclipse.jubula.client.ui.commands.ReplaceWithTestCase">
      <activeWhen>
         <and>
-           <count
-                 value="+">
-           </count>
+           <count value="+" />
            <iterate ifEmpty="false" operator="and">
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+              <not><instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" /></not>
               <test property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.usesExcel"           value="false" />
               <test property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.usesCTDS"            value="false" />
               <test property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.hasMultipleDataSets" value="false" />
