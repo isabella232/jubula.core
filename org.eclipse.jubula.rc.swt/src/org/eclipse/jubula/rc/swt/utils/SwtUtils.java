@@ -932,15 +932,23 @@ public class SwtUtils {
      * 
      */
     public static Rectangle getBounds(TabItem tabItem) {
+
         // first try to use getBounds() directly. this should work in most cases, as it is implemented in SWT since 3.4.
-        Method getBoundsMethod;
         try {
-            getBoundsMethod = tabItem.getClass().getMethod(
+            Method getBoundsMethod = tabItem.getClass().getMethod(
                     METHOD_NAME_GET_BOUNDS, null);
             Object result = getBoundsMethod.invoke(tabItem, null);
             if (result instanceof Rectangle) {
+                Rectangle bounds = (Rectangle)result;
+                TabFolder parent = tabItem.getParent();
+                
+                // The Cocoa implementation of SWT seems to deliver bounds with
+                // a blatantly incorrect y-value. The fix is to adjust the 
+                // y-value based on the style of the parent TabFolder.
+                bounds.y = (parent.getStyle() & SWT.BOTTOM) == SWT.BOTTOM 
+                    ? parent.getBounds().y - bounds.height : 0;
                 return tabItem.getDisplay().map(
-                        tabItem.getParent(), null, (Rectangle)result);
+                        tabItem.getParent(), null, (Rectangle)bounds);
             }
             String className = result != null 
                 ? result.getClass().getName() : "null"; //$NON-NLS-1$
