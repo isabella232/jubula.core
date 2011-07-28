@@ -13,12 +13,14 @@ package org.eclipse.jubula.client.ui.wizards.refactor;
 import java.util.List;
 
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.actions.AbstractNewTestCaseAction;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
@@ -70,6 +72,26 @@ public class ReplaceTCRWizard extends Wizard {
     private ChooseTestCasePage m_choosePage;
 
     /**
+     * <code>m_matchCompNamePage</code>
+     */
+    private MatchComponentNamesPage m_matchCompNamePage;
+
+    /**
+     * <code>m_matchParamPage</code>
+     */
+    private MatchParameterPage m_matchParamPage;
+
+    /**
+     * <code>m_addInfoPage</code>
+     */
+    private AdditionalInformationPage m_addInfoPage;
+
+    /**
+     * <code>m_newExec</code>
+     */
+    private IExecTestCasePO m_newExec;
+
+    /**
      * Constructor
      * 
      * @param editor
@@ -92,11 +114,36 @@ public class ReplaceTCRWizard extends Wizard {
      */
     public void addPages() {
         super.addPages();
-        m_choosePage = new ChooseTestCasePage(m_parentTC, CHOOSE_PAGE_ID);
+        
+        m_choosePage = 
+            new ChooseTestCasePage(m_parentTC, CHOOSE_PAGE_ID);
+        m_matchCompNamePage = 
+            new MatchComponentNamesPage(MATCH_COMP_NAMES_PAGE_ID, m_editor); 
+        m_matchParamPage = 
+            new MatchParameterPage(MATCH_PARAMETER_PAGE_ID);
+        m_addInfoPage = 
+            new AdditionalInformationPage(ADD_INFORMATION_PAGE_ID);
+        
+        
         addPage(m_choosePage);
-        addPage(new MatchComponentNamesPage(MATCH_COMP_NAMES_PAGE_ID));
-        addPage(new MatchParameterPage(MATCH_PARAMETER_PAGE_ID));
-        addPage(new AdditionalInformationPage(ADD_INFORMATION_PAGE_ID));
+        addPage(m_matchCompNamePage);
+        addPage(m_matchParamPage);
+        addPage(m_addInfoPage);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public IWizardPage getNextPage(IWizardPage page) {
+        if (page instanceof ChooseTestCasePage) {
+//            TestCaseBP.handleFirstReference(m_editor.getEditorHelper()
+//                    .getEditSupport(),
+//                    m_choosePage.getChoosenTestCase(), false);
+            m_newExec = NodeMaker.createExecTestCasePO(
+                        m_choosePage.getChoosenTestCase());
+            m_matchCompNamePage.setSelectedExecNode(m_newExec);
+        }
+        return super.getNextPage(page);
     }
 
     /**
@@ -110,8 +157,7 @@ public class ReplaceTCRWizard extends Wizard {
                     m_parentTC, placeToInsert);
             JBEditorHelper eh = m_editor.getEditorHelper();
             IExecTestCasePO replacementTCReference = TestCaseBP
-                    .addReferencedTestCase(eh.getEditSupport(), m_parentTC,
-                            specTcToInsert, index);
+                    .addReferencedTestCase(m_parentTC, m_newExec, index);
             InteractionEventDispatcher.getDefault()
                     .fireProgammableSelectionEvent(
                             new StructuredSelection(specTcToInsert));
@@ -133,5 +179,13 @@ public class ReplaceTCRWizard extends Wizard {
         DeleteTreeItemHandlerTCEditor.deleteNodesFromEditor(
                 m_listOfExecsToReplace, m_editor);
         return true;
+    }
+
+    /**
+     * @return the replacement
+     */
+    public IExecTestCasePO getReplacement() {
+        return NodeMaker.createExecTestCasePO(
+                m_choosePage.getChoosenTestCase());
     }
 }
