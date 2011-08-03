@@ -948,7 +948,7 @@ public class SwtUtils {
                 bounds.y = (parent.getStyle() & SWT.BOTTOM) == SWT.BOTTOM 
                     ? parent.getBounds().y - bounds.height : 0;
                 return tabItem.getDisplay().map(
-                        tabItem.getParent(), null, (Rectangle)bounds);
+                        tabItem.getParent(), null, bounds);
             }
             String className = result != null 
                 ? result.getClass().getName() : "null"; //$NON-NLS-1$
