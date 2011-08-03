@@ -139,7 +139,7 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
      * {@inheritDoc}
      */
     protected IRobot getRobot() {
-        return getRobotFactory().getRobot();
+        return AUTServer.getInstance().getRobot();
     }
     
     /**

@@ -12,13 +12,12 @@ package org.eclipse.jubula.rc.swt;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
-import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
+import org.eclipse.jubula.rc.swt.driver.RobotFactorySwtImpl;
+import org.eclipse.jubula.rc.swt.driver.RobotSwtImpl;
 import org.eclipse.jubula.rc.swt.listener.AbstractAutSwtEventListener;
 import org.eclipse.jubula.rc.swt.listener.CheckListener;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
@@ -30,6 +29,8 @@ import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The AutServer controling the AUT. <br>
@@ -63,6 +64,9 @@ public class SwtAUTServer extends AUTServer {
         LoggerFactory.getLogger(SwtAUTServer.class);
     /** the aut display */
     private Display m_display = null;
+    
+    /** the robot */
+    private RobotSwtImpl m_robot = null;
     
     /** 
      * private constructor
@@ -233,9 +237,14 @@ public class SwtAUTServer extends AUTServer {
     /**
      * {@inheritDoc}
      */
-    public IRobot getRobot() {
-        IRobotFactory robotFactory = new RobotFactoryConfig().getRobotFactory();
-        return robotFactory.getRobot();
+    public synchronized IRobot getRobot() {
+        if (m_robot == null) {
+            RobotFactorySwtImpl robotFactory = 
+                new RobotFactoryConfig().getRobotFactory();
+            m_robot = (RobotSwtImpl) robotFactory.getRobot();
+        }
+        
+        return m_robot;
     }
 
     /**

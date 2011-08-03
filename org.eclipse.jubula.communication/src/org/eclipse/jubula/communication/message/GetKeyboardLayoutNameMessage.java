@@ -1,0 +1,43 @@
+/*******************************************************************************
+ * Copyright (c) 2004, 2011 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package org.eclipse.jubula.communication.message;
+
+import org.eclipse.jubula.tools.constants.CommandConstants;
+
+/**
+ * Message sent to AUT Server to retrieve the name of its assigned 
+ * keyboard layout.
+ * 
+ * @author BREDEX GmbH
+ * @created Aug 2, 2011
+ */
+public class GetKeyboardLayoutNameMessage extends Message {
+
+    /** Static version */
+    public static final double VERSION = 1.0;
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public String getCommandClass() {
+        return CommandConstants.GET_KEYBOARD_LAYOUT_NAME_COMMAND;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public double getVersion() {
+        return VERSION;
+    }
+
+}

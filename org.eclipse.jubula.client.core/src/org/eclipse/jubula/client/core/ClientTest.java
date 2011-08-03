@@ -11,6 +11,8 @@
 package org.eclipse.jubula.client.core;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -19,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.Timer;
@@ -29,8 +32,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.event.EventListenerList;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.dom4j.Document;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -57,6 +58,7 @@ import org.eclipse.jubula.client.core.commands.AUTStartedCommand;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.commands.DisconnectFromAutAgentResponseCommand;
 import org.eclipse.jubula.client.core.commands.GetAutConfigMapResponseCommand;
+import org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
@@ -84,9 +86,11 @@ import org.eclipse.jubula.communication.message.BuildMonitoringReportMessage;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.communication.message.DisconnectFromAutAgentMessage;
 import org.eclipse.jubula.communication.message.GetAutConfigMapMessage;
+import org.eclipse.jubula.communication.message.GetKeyboardLayoutNameMessage;
 import org.eclipse.jubula.communication.message.GetMonitoringDataMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
+import org.eclipse.jubula.communication.message.SetKeyboardLayoutMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StopAUTServerMessage;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
@@ -108,6 +112,8 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -139,6 +145,18 @@ public class ClientTest implements IClientTest {
     private static final int BUILD_REPORT_TIMEOUT = 1200000;
     /** timeout for requesting AutConfigMap from Agent */
     private static final int REQUEST_CONFIG_MAP_TIMEOUT = 10000;
+
+    /**
+     * The keyboard mapping file prefix (keyboardmapping_)
+     */
+    private static final String KEYBOARD_MAPPING_FILE_PREFIX = 
+            "resources/keyboard_mapping/"; //$NON-NLS-1$
+    
+    /**
+     * The keyboard mapping file postfix (.properties)
+     */
+    private static final String KEYBOARD_MAPPING_FILE_POSTFIX = ".properties"; //$NON-NLS-1$
+
     /**
      * Timeout for connect to servicecomponent
      */
@@ -693,6 +711,68 @@ public class ClientTest implements IClientTest {
             log.error(Messages.CouldNotRequestComponentsFromAUT, bce); 
             listener.error(IAUTInfoListener.ERROR_COMMUNICATION);
         } 
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws CommunicationException 
+     * @throws ConnectionException 
+     * @throws NotConnectedException 
+     */
+    public void setAutKeyboardLayout(int timeout) 
+        throws NotConnectedException, ConnectionException, 
+               CommunicationException {
+
+        long timeoutToUse = timeout > 0 ? timeout : 0; 
+        
+        GetKeyboardLayoutNameMessage request = 
+            new GetKeyboardLayoutNameMessage();
+        GetKeyboardLayoutNameResponseCommand response =
+            new GetKeyboardLayoutNameResponseCommand();
+        AUTConnection.getInstance().request(request, response, timeout);
+
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() <= startTime + timeoutToUse
+                && !response.wasExecuted() 
+                && AUTConnection.getInstance().isConnected()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // Do nothing. The exit conditions will be checked
+                // again on the next loop iteration.
+            }
+        }
+        
+        String layoutName = response.getKeyboardLayoutName();
+        if (StringUtils.isNotEmpty(layoutName)) {
+            String filename = 
+                KEYBOARD_MAPPING_FILE_PREFIX + layoutName 
+                + KEYBOARD_MAPPING_FILE_POSTFIX;
+            final InputStream stream = getClass().getClassLoader()
+                .getResourceAsStream(filename);
+            try {
+                if (stream != null) {
+                    Properties prop = new Properties();
+                    prop.load(stream);
+                    AUTConnection.getInstance().send(
+                            new SetKeyboardLayoutMessage(prop));
+                } else {
+                    log.error("Mapping for '" + layoutName + "' could not be found.");  //$NON-NLS-1$//$NON-NLS-2$
+                }
+            } catch (IOException ioe) {
+                log.error("Error occurred while loading Keyboard Mapping.", ioe); //$NON-NLS-1$
+            } catch (IllegalArgumentException iae) {
+                log.error("Error occurred while loading Keybaord Mapping.", iae); //$NON-NLS-1$
+            } finally {
+                if (stream != null) {
+                    try {
+                        stream.close();
+                    } catch (IOException e) {
+                        log.warn("Error occurred while closing stream.", e); //$NON-NLS-1$
+                    }
+                }
+            }
+        }
     }
 
     /**

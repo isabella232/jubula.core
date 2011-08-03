@@ -220,6 +220,8 @@ public class AUTConnection extends BaseConnection {
                     if (aut != null) {
                         getComponentsFromAut(aut);
                         sendResourceBundlesToAut();
+                        ClientTestFactory.getClientTest()
+                            .setAutKeyboardLayout(10000);
                     } else {
                         log.warn(Messages.ErrorOccurredActivatingObjectMapping);
                     }
@@ -242,8 +244,7 @@ public class AUTConnection extends BaseConnection {
         } else {
             log.warn(Messages.CannotEstablishNewConnectionToAUT);
         } 
-        DataEventDispatcher.getInstance()
-            .fireAutServerConnectionChanged(
+        DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
                 ServerState.Disconnected);
         return false;
     }

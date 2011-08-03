@@ -206,6 +206,21 @@ public interface IClientTest {
         int timeout);
 
     /**
+     * Sets the keyboard layout for the currently connected AUT.
+     * 
+     * @param timeout The maximum amount of time (in milliseconds) to wait
+     *                before canceling the operation.
+     * @throws NotConnectedException if there is no connection to an AUT.
+     * @throws ConnectionException if no connection to an AUT could be 
+     *                             initialized.
+     * @throws CommunicationException if an error occurs while communicating
+     *                                with the AUT.
+     */
+    public abstract void setAutKeyboardLayout(int timeout) 
+        throws NotConnectedException, ConnectionException, 
+               CommunicationException;
+    
+    /**
      * adds an IAUTServerEventListener
      * 
      * @param listener -

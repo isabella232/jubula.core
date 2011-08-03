@@ -27,7 +27,7 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
 public class RobotFactorySwtImpl implements IRobotFactory {
     
     /** The SWT Robot. */
-    private IRobot m_robot;
+    private RobotSwtImpl m_robot;
     
     /** The SWT interceptor. */
     private IRobotEventInterceptor m_interceptor;
@@ -46,6 +46,8 @@ public class RobotFactorySwtImpl implements IRobotFactory {
     }
     
     /**
+     * Returns a {@link org.eclipse.jubula.rc.swt.driver.RobotSwtImpl}.
+     * 
      * {@inheritDoc}
      */
     public IRobot getRobot() throws RobotException {

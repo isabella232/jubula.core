@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.driver;
 
-import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 /**
  * <p>This class is the entry point when using the Robot API. It creates a
  * Robot factory instance. At this point of implementation, the
@@ -30,7 +29,7 @@ public class RobotFactoryConfig {
     /**
      * @return A new AWT/Swing factory implementation.
      */
-    public IRobotFactory getRobotFactory() {
+    public RobotFactorySwtImpl getRobotFactory() {
         return new RobotFactorySwtImpl();
     }
 }

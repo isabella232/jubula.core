@@ -17,13 +17,12 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.swing.KeyStroke;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
@@ -50,7 +49,6 @@ import org.eclipse.jubula.rc.swt.utils.SwtKeyCodeConverter;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.InputConstants;
-import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -348,30 +346,16 @@ public class RobotSwtImpl implements IRobot {
         }
         m_interceptor = factory.getRobotEventInterceptor();
         m_queuer = factory.getEventThreadQueuer();
-        createKeyboardHelper();
     }
-
 
     /**
-     * creates the Keyboard-Helper
+     * 
+     * {@inheritDoc}
      */
-    private void createKeyboardHelper() {
-        final String keyboardLayout = 
-            EnvironmentUtils.getProcessEnvironment().getProperty(
-                    RcpAccessorConstants.KEYBOARD_LAYOUT);
-        try {
-            Locale locale = LocaleUtils.toLocale(keyboardLayout);
-            m_keyboardHelper = new KeyboardHelper(locale);
-        } catch (RuntimeException e) {
-            final String msg = "Error creating KeyboardHelper with Locale: "  //$NON-NLS-1$
-                    + String.valueOf(keyboardLayout);
-            log.error(msg, e);
-            throw new StepExecutionException(msg, EventFactory
-                .createActionError(TestErrorEvent.UNSUPPORTED_KEYBOARD_LAYOUT));
-        }
+    public void setKeyboardLayout(Properties layout) {
+        m_keyboardHelper = new KeyboardHelper(layout);
     }
-
-
+    
     /**
      * Implementation of the mouse click. The mouse is moved into the graphics
      * component by calling <code>moveImpl()</code> before performing the click.
@@ -726,7 +710,6 @@ public class RobotSwtImpl implements IRobot {
      */
     public void type(final Object graphicsComponent, final char character)
         throws RobotException {
-        
         Validate.notNull(graphicsComponent, "The graphic component must not be null");  //$NON-NLS-1$
 
         // Workaround for issue 342718
@@ -736,12 +719,15 @@ public class RobotSwtImpl implements IRobot {
             impClass.gdNativeInputText(String.valueOf(character));
             return;
         }
-        
+        if (m_keyboardHelper == null) {
+            throw new StepExecutionException("No keyboard layout available.", //$NON-NLS-1$ 
+                    EventFactory.createActionError(
+                            TestErrorEvent.UNSUPPORTED_KEYBOARD_LAYOUT));
+        }
         final KeyboardHelper.KeyStroke keyStroke = 
             m_keyboardHelper.getKeyStroke(character);
         final Integer[] modifiers = keyStroke.getModifiers();
         final char key = keyStroke.getChar();
-        
         final InterceptorOptions options = new InterceptorOptions(new long[]{
             SWT.KeyUp});
         // add confirmer
@@ -784,8 +770,7 @@ public class RobotSwtImpl implements IRobot {
         if (!succeeded.booleanValue()) {
             final String msg = "Failed to type character '"  //$NON-NLS-1$
                 + String.valueOf(character) + "' into component '" //$NON-NLS-1$
-                + SwtUtils.toString((Widget)graphicsComponent) 
-                + "' with Locale '" + m_keyboardHelper.getLocale() + "'"; //$NON-NLS-1$ //$NON-NLS-2$
+                + SwtUtils.toString((Widget)graphicsComponent) + "'"; //$NON-NLS-1$
             if (log.isWarnEnabled()) {
                 log.warn(msg);                
             }

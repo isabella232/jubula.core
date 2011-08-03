@@ -11,19 +11,16 @@
 package org.eclipse.jubula.rc.swt.driver;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
 
 
@@ -37,18 +34,6 @@ public class KeyboardHelper {
     private static AutServerLogger log = new AutServerLogger(
         KeyboardHelper.class);
 
-    /**
-     * The keyboard mapping file prefix (keyboardmapping_)
-     */
-    private static final String KEYBOARD_MAPPING_FILE_PREFIX = 
-            "resources/keyboardmapping_"; //$NON-NLS-1$
-    
-    /**
-     * The keyboard mapping file postfix (.properties)
-     */
-    private static final String KEYBOARD_MAPPING_FILE_POSTFIX = ".properties"; //$NON-NLS-1$
-    
-        
     /**
      * The delimiter (+).
      */
@@ -76,43 +61,30 @@ public class KeyboardHelper {
      */
     private Map m_mapping = new HashMap();
 
-    /** The Locale of this KeyboardHelper */
-    private Locale m_locale; 
-    
     /**
      * Constructor
-     * @param locale the locale
+     * 
+     * @param layout The keyboard layout.
      */
-    public KeyboardHelper(Locale locale) {
-        m_locale = locale;
-        initKeyboardMapping(locale);
+    public KeyboardHelper(Properties layout) {
+        initKeyboardMapping(layout);
     }
     
     /**
      * Inits keyboard mapping
-     * @param locale the Locale
+     * @param layout The keyboard layout.
      */
-    private void initKeyboardMapping(Locale locale) {
-        final String filename = createFileName(locale);
-        final InputStream stream = this.getClass().getClassLoader()
-            .getResourceAsStream(filename);
-        final Properties prop = new Properties();
-        try {
-            prop.load(stream);
-        } catch (IOException e) {
-            log.error("Could not read file: " + filename, e); //$NON-NLS-1$
-            throw new RobotException(e);
-        }
-        final Iterator charsIter = prop.keySet().iterator();
+    private void initKeyboardMapping(Properties layout) {
+        final Iterator charsIter = layout.keySet().iterator();
         while (charsIter.hasNext()) {
             final String origCharStr = (String)charsIter.next();
             if (origCharStr.length() < 1) {
-                final String msg = "Could not parse file: " + filename; //$NON-NLS-1$
+                final String msg = "Could not parse keyboard layout."; //$NON-NLS-1$
                 log.error(msg, new RobotException(new IOException(msg)));
             }
             final char origChar = origCharStr.charAt(0);
-            final String mapping = ((String)prop.get(origCharStr))
-                .toLowerCase();
+            final String mapping = 
+                ((String)layout.get(origCharStr)).toLowerCase();
             final StringTokenizer tok = new StringTokenizer(mapping, DELIMITER);
             final char nativeChar = mapping.charAt(mapping.length() - 1);
             final KeyStroke keyStroke = new KeyStroke(nativeChar);
@@ -188,18 +160,6 @@ public class KeyboardHelper {
             || (Character.isDigit(character));
     }
     
-    
-    /**
-     * @param locale the Locale.
-     * @return the file name of the keyboard mapping file.
-     */
-    private String createFileName(Locale locale) {
-        final String fileName = KEYBOARD_MAPPING_FILE_PREFIX
-                + locale.getLanguage() + StringConstants.UNDERSCORE
-                + locale.getCountry() + KEYBOARD_MAPPING_FILE_POSTFIX;
-        return fileName;
-    }
-    
     /**
      * KeyStroke
      * @author BREDEX GmbH
@@ -249,12 +209,4 @@ public class KeyboardHelper {
         
     }
 
-    /**
-     * @return The Locale of tihs KeyboardHelper
-     */
-    public Locale getLocale() {
-        return m_locale;
-    }
-    
-    
 }

@@ -227,6 +227,12 @@ public abstract class CommandConstants {
     public static final String GET_AUT_CONFIGMAP_COMMAND = "org.eclipse.jubula.autagent.commands.GetAutConfigMapCommand"; //$NON-NLS-1$
     /** Client - handling of the returned autConfigMap */
     public static final String GET_AUT_CONFIGMAP_COMMAND_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.GetAutConfigMapResponseCommand"; //$NON-NLS-1$
+    /** AUT Agent - returns the keyboard layout name */
+    public static final String GET_KEYBOARD_LAYOUT_NAME_COMMAND = "org.eclipse.jubula.rc.common.commands.GetKeyboardLayoutNameCommand"; //$NON-NLS-1$
+    /** Client - handling of the returned keyboard layout name */
+    public static final String GET_KEYBOARD_LAYOUT_NAME_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand"; //$NON-NLS-1$
+    /** AUT Server (SWT) - sets the keyboard layout */
+    public static final String SET_KEYBOARD_LAYOUT_COMMAND = "org.eclipse.jubula.rc.swt.commands.SetKeyboardLayoutCommand"; //$NON-NLS-1$
        /** to prevent instantiation */
     private CommandConstants() {
         // do nothing

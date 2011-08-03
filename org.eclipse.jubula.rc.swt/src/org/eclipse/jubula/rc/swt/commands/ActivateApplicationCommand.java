@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.commands;
 
+import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.commands.AbstractActivateApplicationCommand;
 import org.eclipse.jubula.rc.common.driver.IRobot;
-import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 
 
 /**
@@ -27,6 +27,6 @@ public class ActivateApplicationCommand
      * {@inheritDoc}
      */
     protected IRobot getRobot() {
-        return new RobotFactoryConfig().getRobotFactory().getRobot();
+        return AUTServer.getInstance().getRobot();
     }
 }

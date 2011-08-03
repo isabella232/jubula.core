@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.swt.implclasses;
 
 import java.util.StringTokenizer;
 
+import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
@@ -76,7 +77,7 @@ public abstract class AbstractSwtImplClass implements IBaseImplementationClass {
      * @throws RobotException If the Robot cannot be created.
      */
     protected IRobot getRobot() throws RobotException {
-        return getRobotFactory().getRobot();
+        return AUTServer.getInstance().getRobot();
     }
     
     /**
