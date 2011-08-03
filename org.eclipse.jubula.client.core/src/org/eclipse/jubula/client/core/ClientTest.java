@@ -80,6 +80,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
+import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTStateMessage;
 import org.eclipse.jubula.communication.message.BuildMonitoringReportMessage;
@@ -145,17 +146,6 @@ public class ClientTest implements IClientTest {
     private static final int BUILD_REPORT_TIMEOUT = 1200000;
     /** timeout for requesting AutConfigMap from Agent */
     private static final int REQUEST_CONFIG_MAP_TIMEOUT = 10000;
-
-    /**
-     * The keyboard mapping file prefix (keyboardmapping_)
-     */
-    private static final String KEYBOARD_MAPPING_FILE_PREFIX = 
-            "resources/keyboard_mapping/"; //$NON-NLS-1$
-    
-    /**
-     * The keyboard mapping file postfix (.properties)
-     */
-    private static final String KEYBOARD_MAPPING_FILE_POSTFIX = ".properties"; //$NON-NLS-1$
 
     /**
      * Timeout for connect to servicecomponent
@@ -746,8 +736,8 @@ public class ClientTest implements IClientTest {
         String layoutName = response.getKeyboardLayoutName();
         if (StringUtils.isNotEmpty(layoutName)) {
             String filename = 
-                KEYBOARD_MAPPING_FILE_PREFIX + layoutName 
-                + KEYBOARD_MAPPING_FILE_POSTFIX;
+                Languages.KEYBOARD_MAPPING_FILE_PREFIX + layoutName 
+                + Languages.KEYBOARD_MAPPING_FILE_POSTFIX;
             final InputStream stream = getClass().getClassLoader()
                 .getResourceAsStream(filename);
             try {

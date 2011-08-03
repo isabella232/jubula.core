@@ -10,24 +10,29 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.provider.swt.gui;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang.LocaleUtils;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jubula.client.core.utils.Languages;
-import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
-import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.JavaAutConfigComponent;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
 
@@ -40,7 +45,7 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
     /**
      * The Combo to choose the keyboard layout.
      */
-    private DirectCombo<Locale> m_keyboardLayoutCombo;
+    private ComboViewer m_keyboardLayoutCombo;
     
     /**
      * @param parent {@inheritDoc}
@@ -61,37 +66,40 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
     protected void createAdvancedArea(Composite advancedAreaComposite) {
         super.createAdvancedArea(advancedAreaComposite);
 
-        final List<Locale> langList = Languages.getInstance().getSuppLangList();
-        final List<String> strLangList = new ArrayList<String>(langList.size());
-        for (Locale locale : langList) {
-            strLangList.add(locale.getDisplayName(Locale.getDefault()));
-        }
 
         UIComponentHelper.createLabel(advancedAreaComposite, I18n
                 .getString("SwtAutConfigComponent.KEYBOARD_LAYOUT")); //$NON-NLS-1$
 
-        m_keyboardLayoutCombo = new DirectCombo<Locale>(
-            advancedAreaComposite, SWT.READ_ONLY, langList, 
-            strLangList, false, true);
+        m_keyboardLayoutCombo = 
+            new ComboViewer(advancedAreaComposite, SWT.READ_ONLY);
+        m_keyboardLayoutCombo.setContentProvider(new ArrayContentProvider());
+        m_keyboardLayoutCombo.setLabelProvider(
+                new KeyboardLayoutLabelProvider());
+        m_keyboardLayoutCombo.setSorter(new ViewerSorter());
+        m_keyboardLayoutCombo.setInput(
+                Languages.getInstance().getKeyboardLayouts());
+        
+        Combo keyboardLayoutCombo = m_keyboardLayoutCombo.getCombo();
         GridData comboGrid = new GridData(GridData.FILL, GridData.CENTER, 
             true , false, 2, 1);
-        Layout.addToolTipAndMaxWidth(comboGrid, m_keyboardLayoutCombo);
-        m_keyboardLayoutCombo.setLayoutData(comboGrid);
-        ((GridData)m_keyboardLayoutCombo.getLayoutData()).widthHint = 
+        Layout.addToolTipAndMaxWidth(comboGrid, keyboardLayoutCombo);
+        keyboardLayoutCombo.setLayoutData(comboGrid);
+        ((GridData)keyboardLayoutCombo.getLayoutData()).widthHint = 
             COMPOSITE_WIDTH;
         
         // if new aut config, use defaults.
         String keyboardLayout = getConfigValue(
                 AutConfigConstants.KEYBOARD_LAYOUT);
-        if (keyboardLayout == null || keyboardLayout.length() == 0) {
-            m_keyboardLayoutCombo.setSelectedObject(Locale.getDefault());
+        if (StringUtils.isEmpty(keyboardLayout)) {
+            m_keyboardLayoutCombo.setSelection(new StructuredSelection(
+                    ObjectUtils.toString(Locale.getDefault())));
         } else {
-            m_keyboardLayoutCombo.setSelectedObject(
-                LocaleUtil.convertStrToLocale(keyboardLayout));
+            m_keyboardLayoutCombo.setSelection(
+                    new StructuredSelection(keyboardLayout));
         }
 
-        m_keyboardLayoutCombo
-                .addModifyListener(new KeyboardLayoutComboListener());
+        m_keyboardLayoutCombo.addSelectionChangedListener(
+                new KeyboardLayoutComboListener());
     }
 
     /**
@@ -109,10 +117,13 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
      *         a status parameter indicating the cause of the problem.
      */
     DialogStatusParameter modifyKeyboardLayout() {
-        final Locale locale = m_keyboardLayoutCombo.getSelectedObject();
-        if (locale != null) {
+        
+        final String layout = ObjectUtils.toString(
+            ((StructuredSelection)m_keyboardLayoutCombo.getSelection())
+                .getFirstElement());
+        if (StringUtils.isNotEmpty(layout)) {
             putConfigValue(AutConfigConstants.KEYBOARD_LAYOUT, 
-                    locale.toString());
+                    layout.toString());
         }
         
         return null;
@@ -122,16 +133,44 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
      * @author BREDEX GmbH
      * @created 25.07.2007
      */
-    protected class KeyboardLayoutComboListener implements ModifyListener {
+    protected class KeyboardLayoutComboListener 
+            implements ISelectionChangedListener {
 
         /**
+         * 
          * {@inheritDoc}
          */
-        public void modifyText(ModifyEvent e) {
-            // FIXME : Take the Combo of the event!
-            // Do not call m_keyboardLayoutCombo, it is null!
-            // Maybe we have ClassLoader conflicts here?
+        public void selectionChanged(SelectionChangedEvent event) {
             checkAll();
+        }
+    }
+    
+    /**
+     * Represents elements as the display name of a Locale, if possible.
+     * Otherwise, delegates to the default label provider.
+     * 
+     * @author BREDEX GmbH
+     * @created 03.08.2011
+     */
+    private static class KeyboardLayoutLabelProvider extends LabelProvider {
+        @Override
+        public String getText(Object element) {
+            if (element instanceof Locale) {
+                return ((Locale)element).getDisplayName();
+            }
+
+            try {
+                Locale locale = 
+                    LocaleUtils.toLocale(ObjectUtils.toString(element));
+                if (locale != null) {
+                    return getText(locale);
+                }
+            } catch (IllegalArgumentException iae) {
+                // element does not represent a Locale
+                // fall through to return a normal label
+            }
+            
+            return super.getText(element);
         }
     }
 }

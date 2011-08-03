@@ -10,19 +10,41 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.eclipse.core.runtime.URIUtil;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
  * @created 14.02.2005
  */
 public class Languages {
+
+    /**
+     * The keyboard mapping file prefix (keyboardmapping_)
+     */
+    public static final String KEYBOARD_MAPPING_FILE_PREFIX = 
+            "resources/keyboard_mapping/"; //$NON-NLS-1$
+    
+    /**
+     * The keyboard mapping file postfix (.properties)
+     */
+    public static final String KEYBOARD_MAPPING_FILE_POSTFIX = ".properties"; //$NON-NLS-1$
+
+    /** the logger */
+    private static final Logger LOG = LoggerFactory.getLogger(Languages.class);
+    
     /** single instance from Languages */
     private static Languages instance = null;
     
@@ -119,5 +141,30 @@ public class Languages {
      */
     public List<Locale> getSuppLangList() {
         return m_suppLangList;
+    }
+    
+    /**
+     * 
+     * @return the names of all available Keyboard Layouts. Keyboard Layouts
+     *         are contributed by this bundle and its fragments.
+     */
+    @SuppressWarnings("unchecked")
+    public String[] getKeyboardLayouts() {
+        List<String> keyboardLayouts = new ArrayList<String>();
+        Enumeration<URL> layoutUrls =
+            Activator.getDefault().getBundle().findEntries(
+                    KEYBOARD_MAPPING_FILE_PREFIX, 
+                    "*" + KEYBOARD_MAPPING_FILE_POSTFIX, false); //$NON-NLS-1$
+        while (layoutUrls.hasMoreElements()) {
+            URL layoutUrl = layoutUrls.nextElement();
+            try {
+                keyboardLayouts.add(URIUtil.lastSegment(
+                    URIUtil.removeFileExtension(URIUtil.toURI(layoutUrl))));
+            } catch (URISyntaxException e) {
+                LOG.error("Error occurred while reading Keyboard Mappings.", e); //$NON-NLS-1$
+            }
+        }
+        
+        return keyboardLayouts.toArray(new String[keyboardLayouts.size()]);
     }
 }
