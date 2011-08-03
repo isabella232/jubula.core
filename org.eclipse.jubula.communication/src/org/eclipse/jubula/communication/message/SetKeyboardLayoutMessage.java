@@ -29,11 +29,10 @@ public class SetKeyboardLayoutMessage extends Message {
     private Properties m_keyboardLayout;
 
     /**
-     * 
+     * No-args constructor for XStream.
      * @deprecated
      */
     public SetKeyboardLayoutMessage() {
-        // nothing to initialize
     }
     
     /**

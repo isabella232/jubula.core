@@ -28,11 +28,11 @@ public class GetKeyboardLayoutNameResponseMessage extends Message {
     private String m_keyboardLayoutName = null;
 
     /**
+     * No-args constructor for XStream.
      * 
      * @deprecated
      */
     public GetKeyboardLayoutNameResponseMessage() {
-        
     }
     
     /**
