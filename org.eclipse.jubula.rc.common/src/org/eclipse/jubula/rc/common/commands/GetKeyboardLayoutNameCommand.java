@@ -47,7 +47,7 @@ public class GetKeyboardLayoutNameCommand implements ICommand {
      * {@inheritDoc}
      */
     public void setMessage(Message message) {
-        m_message = (GetKeyboardLayoutNameMessage)m_message;
+        m_message = (GetKeyboardLayoutNameMessage)message;
     }
 
     /**

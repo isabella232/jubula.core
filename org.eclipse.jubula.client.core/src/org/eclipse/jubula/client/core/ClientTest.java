@@ -17,7 +17,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -108,7 +107,6 @@ import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
-import org.eclipse.jubula.tools.objects.MonitoringValue;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
@@ -1055,8 +1053,7 @@ public class ClientTest implements IClientTest {
                     while (result.getMonitoringValues() == null 
                             || result.getMonitoringValues().isEmpty()) {
                         TimeUtil.delay(500);
-                        Map monitoringValue = result.getMonitoringValues();
-                        if (monitoringValue != null) {
+                        if (result.getMonitoringValues() != null) {
                             break;
                         }                        
                         if (monitor.isCanceled()) {
@@ -1109,7 +1106,7 @@ public class ClientTest implements IClientTest {
         ITestResultSummaryPO currentSummary = getTestresultSummary();        
         currentSummary.setMonitoringValues(result.getMonitoringValues()); 
         
-        MonitoringValue significantValue = 
+        IMonitoringValue significantValue = 
             findSignificantValue(result.getMonitoringValues());
         if (significantValue == null) {
             currentSummary.setMonitoringValue(null);            
@@ -1130,20 +1127,17 @@ public class ClientTest implements IClientTest {
     }
     /**
      * find the significant monitoring value
-     * @param map The map contaning monitoring values
+     * @param map The map containing monitoring values
      * @return The MonitoringValue or null if no significant value was set
      */
-    public MonitoringValue findSignificantValue(
+    public IMonitoringValue findSignificantValue(
             Map<String, IMonitoringValue> map) {
         
-        Iterator<?> it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry)it.next();           
-            MonitoringValue tmp = (MonitoringValue)pairs.getValue();         
-            if (tmp.isSignificant()) {
-                return tmp; 
+        for (IMonitoringValue value : map.values()) {
+            if (value.isSignificant()) {
+                return value;
             }
-        }        
+        }
         
         return null;
     }
@@ -1304,36 +1298,6 @@ public class ClientTest implements IClientTest {
         return true;
     }
 
-    /**
-     * Initiliazes the ServerConnection and the AUTConnection, in case of an
-     * error, the listeners are notified with appopriate ServerEvent.
-
-     * @return false if an error occurs, true otherwise
-     */
-    private boolean initAutServerConnection() {
-        try {
-            if (log.isDebugEnabled()) {
-                log.debug(Messages.AUTConnectionStarting);
-            }
-            AUTConnection.getInstance().run();
-        } catch (ConnectionException ce) {
-            log.error(DebugConstants.ERROR, ce);
-            fireAUTServerStateChanged(new AUTServerEvent(
-                    AUTServerEvent.COULD_NOT_ACCEPTING));
-            return false;
-        } catch (BaseConnection.AlreadyConnectedException ae) {
-            // The connection is already established.
-            log.error(DebugConstants.ERROR, ae);
-            return false;
-        } catch (JBVersionException e) {
-            log.error(DebugConstants.ERROR, e);
-            fireAUTServerStateChanged(new AUTServerEvent(
-                AUTServerEvent.COULD_NOT_ACCEPTING));
-            return false;
-        }
-        return true;
-    }
-   
     /**
      * 
      * {@inheritDoc}
