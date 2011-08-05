@@ -555,17 +555,8 @@ public class RobotSwtImpl implements IRobot {
         
         if (constraints != null) {
             if (graphicsComponent instanceof Control) {
-                // Use SWT's mapping function, if possible, as it is more
-                // multi-platform than simply adding the x and y values.
-                Point convertedLocation = (Point)m_queuer.invokeAndWait(
-                        "toDisplay", new IRunnable() { //$NON-NLS-1$
-
-                            public Object run() throws StepExecutionException {
-                                return ((Control)graphicsComponent).toDisplay(
-                                        constraints.x, constraints.y);
-                            }
-                    
-                        });
+                Point convertedLocation = convertLocation(constraints,
+                        (Control)graphicsComponent);
                 bounds.x = convertedLocation.x;
                 bounds.y = convertedLocation.y;
             } else {
@@ -615,6 +606,39 @@ public class RobotSwtImpl implements IRobot {
             logAndCorrectMousePosition(pointToGo);
         }
 
+    }
+
+    /**
+     * Use SWT's mapping function, if possible, as it is more
+     * multi-platform than simply adding the x and y values.
+     * @param constraints the constraints
+     * @param graphicsComponent the graphics component
+     * @return the converted location
+     */
+    private Point convertLocation(final Rectangle constraints,
+        final Control graphicsComponent) {
+        Point convertedLocation = (Point)m_queuer.invokeAndWait(
+                "toDisplay", new IRunnable() { //$NON-NLS-1$
+                    public Object run() throws StepExecutionException {
+                        return graphicsComponent.toDisplay(constraints.x,
+                                constraints.y);
+                    }
+
+                });
+        // adjust Y-location due to issue / bug 353907
+        if (EnvironmentUtils.isMacOS() 
+                && graphicsComponent instanceof org.eclipse.swt.widgets.List) {
+            final org.eclipse.swt.widgets.List list = 
+                (org.eclipse.swt.widgets.List)graphicsComponent;
+            Integer correctedYPos = (Integer)m_queuer.invokeAndWait(
+                    "correctedYPos", new IRunnable() { //$NON-NLS-1$
+                        public Object run() throws StepExecutionException {
+                            return new Integer(list.getClientArea().y);
+                        }
+                    });
+            convertedLocation.y += correctedYPos.intValue();
+        }
+        return convertedLocation;
     }
 
     /**

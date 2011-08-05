@@ -70,8 +70,13 @@ public class ListHelper {
                         constraints.height = list.getItemHeight();
                         constraints.width = list.getBounds().width;
                         constraints.y += (numberBelowTop * constraints.height);
-
-                        return constraints.intersection(list.getClientArea());
+                        // explicitly use list relative bounds here - as e.g. on
+                        // Mac OS systems list.getClientArea() is not relative
+                        // see bug 353905
+                        Rectangle actualListBounds =
+                            new Rectangle(0, 0, list.getClientArea().width, 
+                                    list.getClientArea().height);
+                        return constraints.intersection(actualListBounds);
                     }
                 });
         
@@ -79,7 +84,6 @@ public class ListHelper {
         // the scrolling.
         m_implClass.getRobot().click(list, clickConstraints, 
                 co.setScrollToVisible(false));
-
     }
 
     /**
