@@ -99,6 +99,7 @@ The backslashes before the ordinary slashes are an escape symbol to tell \app{} 
 \item You can check that a string corresponds to a minimum and maximum length using: \\
 \verb#'^.{'={MIN_COUNT}','={MAX_COUNT}'}$'#
 \item To check for a text which begins with a \bxshell{*}, you must use the escape character: \verb+\\*.*+
+\item To check that a specific string is \textit{not} in a text, use: \verb+^.*[^(STRING)].*\$+
 \end{itemize}
 
 
