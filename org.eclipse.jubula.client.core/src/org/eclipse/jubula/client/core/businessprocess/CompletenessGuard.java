@@ -209,7 +209,13 @@ public final class CompletenessGuard {
                     if (parent != null && !m_sumOMFlag) {
                         parent.setSumOMFlag(m_aut, m_sumOMFlag);
                     }
-                } else {
+                // Only set the OM flag if it's possible that the node could 
+                // actually *have* incomplete mappings (i.e. if a node is not a 
+                // Test Step and has no children, then it can't have mappings 
+                // and therefore can't have incomplete mappings). Without this 
+                // check, an empty Test Case could be marked as OM Incomplete if
+                // a "nearby" Test Case is OM Incomplete.
+                } else if (node.getNodeListSize() > 0) {  
                     m_sumOMFlag = node.getSumOMFlag(m_aut) && m_sumOMFlag;
                     node.setSumOMFlag(m_aut, m_sumOMFlag);
                     if (parent != null && !m_sumOMFlag) {
