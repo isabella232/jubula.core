@@ -543,6 +543,7 @@ public class Messages extends NLS {
     public static String NewTestSuiteActionTSTitle;
     public static String NoActiveTCEditorPleaseFixTheMethod;
     public static String NoAUTConfigPageForToolkit;
+    public static String NoComponentNames;
     public static String NoEditorInputCouldBeCreated;
     public static String NoNullConnectionAllowed;
     public static String NoServer;
@@ -796,6 +797,8 @@ public class Messages extends NLS {
     public static String ReplaceTCRWizard_choosePage_title;
     public static String ReplaceTCRWizard_matchParameter_title;
     public static String ReplaceTCRWizard_matchComponentNames_title;
+    public static String ReplaceTCRWizard_matchComponentNames_oldInterface;
+    public static String ReplaceTCRWizard_matchComponentNames_newInterface;
     public static String RevertEditorChangesActionQuestionText;
     public static String RevertEditorChangesActionShellTitle;
     public static String RunningAUTParameter;

@@ -10,15 +10,37 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.wizards.refactor.pages;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
+import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.editors.AbstractJBEditor;
+import org.eclipse.jubula.client.ui.editors.TestSuiteEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.widgets.ComponentNamesTableComposite;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -27,36 +49,155 @@ import org.eclipse.ui.PlatformUI;
  */
 public class MatchComponentNamesPage extends WizardPage {
     /**
-     * <code>m_editor</code>
+     * <code>m_editor</code> the currently active editor
      */
     private final AbstractJBEditor m_editor;
     /**
-     * <code>cntc</code>
+     * <code>cntc</code> the new execs component names table composite
      */
     private ComponentNamesTableComposite m_cntc;
+    /**
+     * <code>m_execTCList</code>
+     */
+    private final List<IExecTestCasePO> m_execTCList;
+    
+    /**
+     * <code>m_parents</code> mapping
+     */
+    private Map<ICompNamesPairPO, IExecTestCasePO> m_parents = 
+        new HashMap<ICompNamesPairPO, IExecTestCasePO>();
+    
+    /**
+     * @author Markus Tiede
+     * @created Aug 5, 2011
+     */
+    public class MatchCompNamesPageTreeContentProvider implements
+            ITreeContentProvider {
+        /** {@inheritDoc} */
+        public void dispose() {
+            m_parents.clear();
+        }
+
+        /** {@inheritDoc} */
+        public void inputChanged(Viewer viewer, Object oldInput, 
+            Object newInput) {
+            m_parents.clear();
+        }
+
+        /** {@inheritDoc} */
+        public Object[] getElements(Object inputElement) {
+            return ((List)inputElement).toArray();
+        }
+
+        /** {@inheritDoc} */
+        public Object[] getChildren(Object parentElement) {
+            if (parentElement instanceof IExecTestCasePO) {
+                IExecTestCasePO execTC = (IExecTestCasePO)parentElement;
+                Collection<ICompNamesPairPO> compPairs = execTC
+                        .getCompNamesPairs();
+                if (compPairs.size() > 0) {
+                    for (ICompNamesPairPO pair : compPairs) {
+                        m_parents.put(pair, execTC);
+                    }
+                    return compPairs.toArray();
+                }
+                return new String[] { Messages.NoComponentNames };
+            }
+            return ArrayUtils.EMPTY_OBJECT_ARRAY;
+        }
+
+        /** {@inheritDoc} */
+        public Object getParent(Object element) {
+            return null;
+        }
+
+        /** {@inheritDoc} */
+        public boolean hasChildren(Object element) {
+            return getChildren(element).length > 0;
+        }
+    }
+    
+    /**
+     * @author Markus Tiede
+     * @created Aug 5, 2011
+     */
+    public class MatchCompNamesPageTreeLabelProvider 
+        extends GeneralLabelProvider {
+        /** {@inheritDoc} */
+        public String getText(Object element) {
+            if (element instanceof ICompNamesPairPO) {
+                ICompNamesPairPO pair = (ICompNamesPairPO)element;
+                StringBuilder sb = new StringBuilder(m_editor.getEditorHelper()
+                        .getEditSupport().getCompMapper().getCompNameCache()
+                        .getName(pair.getSecondName()));
+                if (StringUtils.isEmpty(pair.getType())) {
+                    CompNamesBP.searchCompType(pair, m_parents.get(pair));
+                }
+                sb.append(StringConstants.SPACE)
+                        .append(StringConstants.LEFT_BRACKET)
+                        .append(CompSystemI18n.getString(pair.getType()))
+                        .append(StringConstants.RIGHT_BRACKET);
+                return sb.toString();
+            }
+            return super.getText(element);
+        }
+        
+        /** {@inheritDoc} */
+        public Image getImage(Object element) {
+            if (element instanceof ICompNamesPairPO) {
+                if (((ICompNamesPairPO)element).isPropagated()) {
+                    return IconConstants.PROPAGATED_LOGICAL_NAME_IMAGE;
+                }
+                return IconConstants.LOGICAL_NAME_IMAGE;
+            }
+            return super.getImage(element);
+        }
+    }
 
     /**
      * @param pageName
      *            the page name
      * @param editor
      *            the current editor
+     * @param execTCList
+     *            the exec test case list to extract the component interface for
      */
-    public MatchComponentNamesPage(String pageName, AbstractJBEditor editor) {
+    public MatchComponentNamesPage(String pageName, AbstractJBEditor editor, 
+        List<IExecTestCasePO> execTCList) {
         super(pageName, Messages.ReplaceTCRWizard_matchComponentNames_title,
                 null);
         m_editor = editor;
+        m_execTCList = execTCList;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void createControl(Composite parent) {
-        m_cntc = new ComponentNamesTableComposite(parent, SWT.NONE);
-        setControl(new ComponentNamesTableComposite(parent, SWT.NONE));
+        SashForm sash = new SashForm(parent, SWT.HORIZONTAL);
+        sash.setLayout(new FillLayout(SWT.VERTICAL | SWT.HORIZONTAL));
+        
+        Composite leftSashContent = new Composite(sash, SWT.NONE);
+        leftSashContent.setLayout(GridLayoutFactory.fillDefaults().create());
+        new Label(leftSashContent, SWT.NONE)
+           .setText(Messages.ReplaceTCRWizard_matchComponentNames_oldInterface);
+        TreeViewer tv = new TreeViewer(leftSashContent);
+        tv.setContentProvider(new MatchCompNamesPageTreeContentProvider());
+        tv.setLabelProvider(new MatchCompNamesPageTreeLabelProvider());
+        tv.setInput(m_execTCList);
+        tv.getTree().setLayoutData(
+                GridDataFactory.fillDefaults().grab(true, true).create());
+        tv.expandAll();
+
+        Composite rightSashContent = new Composite(sash, SWT.NONE);
+        rightSashContent.setLayout(GridLayoutFactory.fillDefaults().create());
+        new Label(rightSashContent, SWT.NONE)
+           .setText(Messages.ReplaceTCRWizard_matchComponentNames_newInterface);
+        m_cntc = new ComponentNamesTableComposite(rightSashContent, SWT.NONE);
         m_cntc.setSelectedExecNodeOwner(m_editor);
-        if (m_editor.getEditorInput() instanceof ITestSuitePO) {
-            m_cntc.disablePropagation();
+        if (m_editor instanceof TestSuiteEditor) {
+            m_cntc.controlPropagation(false);
         }
+        sash.setWeights(new int[] { 1, 2 });
+        setControl(sash);
     }
 
     /**
@@ -66,9 +207,7 @@ public class MatchComponentNamesPage extends WizardPage {
         m_cntc.setSelectedExecNode(replacement);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void performHelp() {
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(
             ContextHelpIds.REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE);

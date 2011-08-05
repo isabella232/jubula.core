@@ -440,8 +440,7 @@ public class CompNamesBP {
                             && cnp.isPropagated()) {
 
                             pair.setType(cnp.getType());
-                            if (pair.getType() != null && !StringConstants.EMPTY
-                                    .equals(pair.getType())) {
+                            if (!StringUtils.isEmpty(pair.getType())) {
                                 return true;
                             } 
                             boolean retVal = searchCompType(cnp, exec);

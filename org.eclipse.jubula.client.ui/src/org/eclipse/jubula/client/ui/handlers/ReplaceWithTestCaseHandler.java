@@ -21,7 +21,9 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.editors.JBEditorHelper;
+import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.wizards.refactor.ReplaceTCRWizard;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -44,7 +46,14 @@ public class ReplaceWithTestCaseHandler extends AbstractHandler {
             IStructuredSelection sSelection = (IStructuredSelection) selection;
             List<IExecTestCasePO> listOfExecsToReplace = sSelection.toList();
             WizardDialog dialog = new WizardDialog(Plugin.getShell(),
-                    new ReplaceTCRWizard(tce, listOfExecsToReplace));
+                    new ReplaceTCRWizard(tce, listOfExecsToReplace)) {
+                /** {@inheritDoc} */
+                protected void configureShell(Shell newShell) {
+                    super.configureShell(newShell);
+                    DialogUtils.adjustShellSizeRelativeToClientSize(newShell,
+                            .6f, .6f);
+                }
+            };
             dialog.setHelpAvailable(true);
             dialog.open();
         }

@@ -108,7 +108,7 @@ public class CompNamesPage extends Page implements ISelectionListener {
             if (part instanceof AbstractTestCaseEditor) {
                 AbstractTestCaseEditor editor = (AbstractTestCaseEditor)part;
                 if (editor.getEditorInput() instanceof ITestSuitePO) {
-                    m_control.disablePropagation();
+                    m_control.controlPropagation(false);
                 }
             }
         }

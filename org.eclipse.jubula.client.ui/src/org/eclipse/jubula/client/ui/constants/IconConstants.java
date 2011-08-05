@@ -257,6 +257,8 @@ public class IconConstants {
     public static final Image TS_REF_IMAGE = Plugin.getImage("testSuiteRef.gif"); //$NON-NLS-1$
     /** logical name image */
     public static final Image LOGICAL_NAME_IMAGE = Plugin.getImage("OMLogName.gif"); //$NON-NLS-1$
+    /** logical name image */
+    public static final Image PROPAGATED_LOGICAL_NAME_IMAGE = Plugin.getImage("PropagatedOMLogName.gif"); //$NON-NLS-1$
     /** technical name image */
     public static final Image TECHNICAL_NAME_IMAGE = Plugin.getImage("OMTecName.gif"); //$NON-NLS-1$
     /** project image */

@@ -118,7 +118,8 @@ public class ReplaceTCRWizard extends Wizard {
         m_choosePage = 
             new ChooseTestCasePage(m_parentTC, CHOOSE_PAGE_ID);
         m_matchCompNamePage = 
-            new MatchComponentNamesPage(MATCH_COMP_NAMES_PAGE_ID, m_editor); 
+            new MatchComponentNamesPage(MATCH_COMP_NAMES_PAGE_ID, m_editor, 
+                    m_listOfExecsToReplace); 
         m_matchParamPage = 
             new MatchParameterPage(MATCH_PARAMETER_PAGE_ID);
         m_addInfoPage = 

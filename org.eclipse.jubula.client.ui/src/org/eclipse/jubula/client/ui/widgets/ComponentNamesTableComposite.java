@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.widgets;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -152,7 +153,7 @@ public class ComponentNamesTableComposite extends Composite implements
      */
     public ComponentNamesTableComposite(Composite parent, int style) {
         super(parent, style);
-        setParentLayout(this);
+        setLayout(this);
         Table table = new Table(this, SWT.BORDER | SWT.CHECK
                 | SWT.FULL_SELECTION);
         table.setHeaderVisible(true);
@@ -526,8 +527,7 @@ public class ComponentNamesTableComposite extends Composite implements
      * @param pair the current compNamesPairPO
      */
     private void searchAndSetComponentType(final ICompNamesPairPO pair) {
-        if (pair.getType() != null 
-                && !StringConstants.EMPTY.equals(pair.getType())) {
+        if (!StringUtils.isEmpty(pair.getType())) {
             return;
         }
         if ((getSelectedExecNodeOwner() instanceof IJBEditor)) {
@@ -546,26 +546,27 @@ public class ComponentNamesTableComposite extends Composite implements
             }
         }
         // if exec was added to an editor session
-        if (pair.getType() == null 
-                || StringConstants.EMPTY.equals(pair.getType())) {
+        if (StringUtils.isEmpty(pair.getType())) {
             CompNamesBP.searchCompType(pair, getSelectedExecNode());
         }
     }
     
     /**
-     * Sets the layout of the parent composite.
-     * @param parent the parent composite 
+     * Sets the layout of the composite.
+     * 
+     * @param c
+     *            the composite
      */
-    private void setParentLayout(Composite parent) {
+    private void setLayout(Composite c) {
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
-        layout.verticalSpacing = 2;
-        layout.marginWidth = Layout.MARGIN_WIDTH;
-        layout.marginHeight = Layout.MARGIN_HEIGHT;
-        parent.setLayout(layout);
+        layout.verticalSpacing = 0;
+        layout.marginWidth = 0;
+        layout.marginHeight = 0;
+        c.setLayout(layout);
         GridData layoutData = new GridData(GridData.FILL_BOTH);
         layoutData.grabExcessHorizontalSpace = true;
-        parent.setLayoutData(layoutData);
+        c.setLayoutData(layoutData);
     }
     
     /**
@@ -603,7 +604,6 @@ public class ComponentNamesTableComposite extends Composite implements
         // here because this crays out the table, and this doesn't fit
         // the look and feel of other views.
 
-        getCellModifier().setModifiable(editable);
         m_editable = editable;
         for (TableItem item : m_tableViewer.getTable().getItems()) {
             if (editable) {
@@ -628,9 +628,10 @@ public class ComponentNamesTableComposite extends Composite implements
             for (ICompNamesPairPO pair : input) {
                 m_tableViewer.setChecked(pair, pair.isPropagated());
             }
-            table.getColumn(0).setWidth(38);
             table.getColumn(0).setResizable(false);
+            table.getColumn(0).setWidth(38);
         }
+        controlPropagation(editable);
     }
     
     /**
@@ -783,10 +784,13 @@ public class ComponentNamesTableComposite extends Composite implements
     }
     
     /**
-     * disable the editability of the propagation column
+     * control the editability of the propagation column
+     * 
+     * @param allow
+     *            to allow propagation
      */
-    public void disablePropagation() {
-        getCellModifier().setModifiable(false);
+    public void controlPropagation(boolean allow) {
+        getCellModifier().setModifiable(allow);
     }
 
     /**
