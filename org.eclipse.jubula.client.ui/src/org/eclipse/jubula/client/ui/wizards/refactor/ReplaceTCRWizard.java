@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.wizards.refactor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -140,11 +141,35 @@ public class ReplaceTCRWizard extends Wizard {
 //            TestCaseBP.handleFirstReference(m_editor.getEditorHelper()
 //                    .getEditSupport(),
 //                    m_choosePage.getChoosenTestCase(), false);
-            m_newExec = NodeMaker.createExecTestCasePO(
-                        m_choosePage.getChoosenTestCase());
+            ISpecTestCasePO specTC = m_choosePage.getChoosenTestCase();
+            m_newExec = NodeMaker.createExecTestCasePO(specTC);
+            if (!anyCompNamesToMatch(m_listOfExecsToReplace, m_newExec)) {
+                return m_matchParamPage;
+            }
             m_matchCompNamePage.setSelectedExecNode(m_newExec);
         }
         return super.getNextPage(page);
+    }
+
+    /**
+     * @param listOfExecsToReplace
+     *            the list of execs to replace
+     * @param newExec
+     *            the new exec
+     * @return true if comp name match page has to be shown
+     */
+    private boolean anyCompNamesToMatch(
+        List<IExecTestCasePO> listOfExecsToReplace, IExecTestCasePO newExec) {
+        List<IExecTestCasePO> execsToCheck = new ArrayList<IExecTestCasePO>();
+        execsToCheck.addAll(listOfExecsToReplace);
+        execsToCheck.add(newExec);
+        for (IExecTestCasePO exec : execsToCheck) {
+            if (exec.getCompNamesPairs().size() > 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
