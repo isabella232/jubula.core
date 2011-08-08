@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -143,6 +144,7 @@ public class ReplaceTCRWizard extends Wizard {
 //                    m_choosePage.getChoosenTestCase(), false);
             ISpecTestCasePO specTC = m_choosePage.getChoosenTestCase();
             m_newExec = NodeMaker.createExecTestCasePO(specTC);
+            m_addInfoPage.bindNewExec(m_newExec);
             if (!anyCompNamesToMatch(m_listOfExecsToReplace, m_newExec)) {
                 return m_matchParamPage;
             }
@@ -163,8 +165,10 @@ public class ReplaceTCRWizard extends Wizard {
         List<IExecTestCasePO> execsToCheck = new ArrayList<IExecTestCasePO>();
         execsToCheck.addAll(listOfExecsToReplace);
         execsToCheck.add(newExec);
+        
+        CompNamesBP cnBP = new CompNamesBP();
         for (IExecTestCasePO exec : execsToCheck) {
-            if (exec.getCompNamesPairs().size() > 0) {
+            if (cnBP.getAllCompNamesPairs(exec).size() > 0) {
                 return true;
             }
         }

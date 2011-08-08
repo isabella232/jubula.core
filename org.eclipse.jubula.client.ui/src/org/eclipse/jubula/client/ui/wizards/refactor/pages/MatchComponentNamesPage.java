@@ -73,6 +73,11 @@ public class MatchComponentNamesPage extends WizardPage {
      */
     public class MatchCompNamesPageTreeContentProvider implements
             ITreeContentProvider {
+        /**
+         * <code>m_cnBP</code>
+         */
+        private CompNamesBP m_cnBP = new CompNamesBP();
+        
         /** {@inheritDoc} */
         public void dispose() {
             m_parents.clear();
@@ -93,8 +98,8 @@ public class MatchComponentNamesPage extends WizardPage {
         public Object[] getChildren(Object parentElement) {
             if (parentElement instanceof IExecTestCasePO) {
                 IExecTestCasePO execTC = (IExecTestCasePO)parentElement;
-                Collection<ICompNamesPairPO> compPairs = execTC
-                        .getCompNamesPairs();
+                Collection<ICompNamesPairPO> compPairs = 
+                    m_cnBP.getAllCompNamesPairs(execTC);
                 if (compPairs.size() > 0) {
                     for (ICompNamesPairPO pair : compPairs) {
                         m_parents.put(pair, execTC);
