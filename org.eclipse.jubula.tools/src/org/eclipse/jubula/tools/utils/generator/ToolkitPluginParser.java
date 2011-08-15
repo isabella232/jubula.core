@@ -102,7 +102,7 @@ public class ToolkitPluginParser {
         final ToolkitPluginDescriptor descr = new ToolkitPluginDescriptor(
                 toolkitID, toolkitName, includes, depends, level, order, 
                 isUserToolkit, majorVersion , minorVersion);
-//        compSystem.addToolkitPluginDescriptor(toolkitName, descr);
+
         return descr;
     }
 
