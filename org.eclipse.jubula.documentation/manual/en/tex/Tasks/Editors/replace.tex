@@ -13,16 +13,28 @@
 \item The first page of a wizard appears in which you can replace selected the \gdcases{} in a series of steps. 
 \end{enumerate}
 
+
+
+
 \textbf{Page 1: Replacing the \gdcases{}}
 \begin{enumerate}
-\item On the first page of the wizard, you can select a  new  \gdcase{} to replace the selected \gdcases{}. 
+\item On the first page of the wizard \bxfigref{ReplaceTC-ChooseTC}, you can select a  new  \gdcase{} to replace the selected \gdcases{}. 
 \item Browse to and select the \gdcase{} you want to add to the editor.
 \item Click \bxcaption{Next} to match the component names for the old and new \gdcases{}, or click \bxcaption{Finish} to replace the selected \gdcases{} with the bare new \gdcase{}, without any component names or parameters transferred. 
 \end{enumerate}
 
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=12.5cm]{Tasks/Editors/PS/ReplaceTC_ChooseTC}
+\caption{Select \gdcase{}}
+\label{ReplaceTC-ChooseTC}
+\end{center}
+\end{figure} 
+
+
 \textbf{Page 2: Matching component names}
 \begin{enumerate}
-\item On the second page of the wizard, you can see an overview of component names for the replacement. 
+\item On the second page of the wizard \bxpref{ReplaceTC-CompNames}, you can see an overview of component names for the replacement. 
 \begin{itemize}
 \item On the left-hand side you can see any component names that were entered for the \gdcases{} to be replaced. If the component names were propagated \bxpref{TasksCompNamesCheckbox}, you will see a small yellow arrow on the component name icon. 
 \bxtipp{If the old \gdcases{} contained no component names, then you will see the text \bxname{no component names}.}
@@ -34,6 +46,14 @@
 to add further information
 or you can click \bxcaption{Finish} to replace the selected \gdcases{} with the new \gdcase{} and the selected component names. 
 \end{enumerate}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=12.5cm]{Tasks/Editors/PS/ReplaceTC_CompNames}
+\caption{Match component names}
+\label{ReplaceTC-CompNames}
+\end{center}
+\end{figure} 
 
 %% \textbf{Page 3: Matching parameters}
 %% \begin{enumerate}
