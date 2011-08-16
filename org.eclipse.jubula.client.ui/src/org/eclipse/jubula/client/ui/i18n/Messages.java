@@ -212,6 +212,13 @@ public class Messages extends NLS {
     public static String CompNamesViewTypeColumn;
     public static String Component;
     public static String ComponentCouldNotBeFoundInRunningAut;
+    public static String ComponentExtensionDialog_Message;
+    public static String ComponentExtensionDialog_Title;
+    public static String ComponentExtensionEditDialog_Message;
+    public static String ComponentExtensionEditDialog_Title;
+    public static String ComponentExtensions_AddButton_Text;
+    public static String ComponentExtensions_EditButton_Text;
+    public static String ComponentExtensions_RemoveButton_Text;
     public static String ConfigurationMustNotNull;
     public static String Connection;
     public static String CoreException;
@@ -737,6 +744,7 @@ public class Messages extends NLS {
     public static String PropertiesActionPage2;
     public static String PropertiesActionPage3;
     public static String PropertiesActionPage4;
+    public static String PropertiesPageSimpleExtensions_Title;
     public static String PropertyIDInexistent;
     public static String PropertyTesterPropertyNotSupported;
     public static String PropertyTesterTypeNotSupported;

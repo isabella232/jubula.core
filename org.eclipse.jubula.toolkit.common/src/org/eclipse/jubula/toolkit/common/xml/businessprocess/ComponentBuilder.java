@@ -152,7 +152,8 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                 final ToolkitPluginDescriptor descr = 
                     new ToolkitPluginDescriptor(toolkitId, name, 
                         includes, depends, level, order, isUserToolkit, 
-                        majorVersion, minorVersion);
+                        majorVersion, minorVersion, 
+                        compSystem.getBasicTesterClass());
                 compSystem.addToolkitPluginDescriptor(toolkitId, descr);
                 return descr;
             }

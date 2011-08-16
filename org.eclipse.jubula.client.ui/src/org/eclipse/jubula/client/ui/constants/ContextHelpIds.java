@@ -200,7 +200,11 @@ public interface ContextHelpIds {
     /** help context id for the search result view */
     public static final String JB_SEARCH_RESULT_VIEW = PRAEFIX
         + "searchResultViewContextId"; //$NON-NLS-1$
-    
+
+    /** ContextHelpId for Composite Extensions project properties page */
+    public static final String COMPOSITE_EXTENSIONS_PROPERTY_PAGE = PRAEFIX
+        + "compositeExtensionsPageContextId"; //$NON-NLS-1$
+
     /** ContextHelpId for AUT settings page: aut list in settings*/
     public static final String AUT_PROPERTY_PAGE = PRAEFIX
         + "autSettingsPageContextId"; //$NON-NLS-1$

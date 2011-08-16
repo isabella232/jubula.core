@@ -9,15 +9,14 @@
 <!-- CAUTION: don't format any entries, especially don't use line breaks!
 	The value of the formated item may contain formating characters like tabs or
 	newlines, making them unusable for class or data lookup!-->
-<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ComponentConfiguration.xsd">
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ComponentConfiguration.xsd" basicTesterClass="org.eclipse.jubula.rc.swt.implclasses.SimpleExtendedComponentImplClass">
 	<configVersion>
 		<majorVersion>4</majorVersion>
 		<minorVersion>1</minorVersion>
 		<majorCustomVersion>0</majorCustomVersion>
 		<minorCustomVersion>0</minorCustomVersion>
 	</configVersion>
-	
-	<!-- Concrete components -->
+    	<!-- Concrete components -->
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.ToolItem">
 		<realizes>guidancer.abstract.SwtItem</realizes>

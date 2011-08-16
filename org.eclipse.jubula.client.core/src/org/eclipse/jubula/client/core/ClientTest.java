@@ -17,6 +17,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -31,6 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.event.EventListenerList;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.dom4j.Document;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -67,6 +69,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -110,6 +113,8 @@ import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
+import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -659,14 +664,17 @@ public class ClientTest implements IClientTest {
             // to the AUT server to get registered.
             CompSystem compSystem = ComponentBuilder.getInstance()
                 .getCompSystem();
-            
-            List components = compSystem.getComponents(
-                TestExecution.getInstance().getConnectedAut().getToolkit(),
-                true);
+            String autToolkitId = 
+                TestExecution.getInstance().getConnectedAut().getToolkit();
+            List<Component> components = 
+                compSystem.getComponents(autToolkitId, true);
 
             // optimization: only concrete components need to be registered,
             // as abstract components do not have a corresponding impl class
             components.retainAll(compSystem.getConcreteComponents());
+
+            addSimpleExtensions(GeneralStorage.getInstance().getProject(), 
+                    compSystem, autToolkitId, components);
             
             message.setComponents(components);
             message.setProfile(ProfileBuilder.getActiveProfile());
@@ -699,6 +707,52 @@ public class ClientTest implements IClientTest {
             log.error(Messages.CouldNotRequestComponentsFromAUT, bce); 
             listener.error(IAUTInfoListener.ERROR_COMMUNICATION);
         } 
+    }
+
+    /**
+     * Adds the Simple Component Extensions defined in the given project to 
+     * the given list of components.
+     * 
+     * @param srcProject The Project that defines the Simple Component 
+     *                   Extensions to add.
+     * @param compSystem The context for the created / added components.
+     * @param autToolkitId The ID of the toolkit for which the components will 
+     *                     be created.
+     * @param components The list to which the Simple Component Extensions will 
+     *                   be added.
+     */
+    private void addSimpleExtensions(
+            IProjectPO srcProject, CompSystem compSystem, String autToolkitId,
+            List<Component> components) {
+        
+        Validate.notNull(srcProject);
+
+        String basicTesterClassName = 
+            compSystem.getToolkitPluginDescriptor(autToolkitId)
+                .getSimpleExtensionTesterClassName();
+        
+        if (StringUtils.isBlank(basicTesterClassName)) {
+            log.warn("No Basic Tester Class is defined for the Toolkit with ID '" + autToolkitId + "'. No Simple Component Extensions will be added."); //$NON-NLS-1$ //$NON-NLS-2$
+        } else {
+            Set<String> componentClassNames = new HashSet<String>();
+            for (Component component : components) {
+                if (component instanceof ConcreteComponent) {
+                    componentClassNames.add(
+                        ((ConcreteComponent)component).getComponentClass());
+                }
+            }
+            for (String className 
+                    : srcProject.getProjectProperties()
+                        .getSimpleExtensionClassNames()) {
+
+                if (componentClassNames.add(className)) {
+                    components.add(compSystem.createSimpleExtension(
+                            className, basicTesterClassName));
+                } else {
+                    log.error("Could not add Simple Component Extension for '" + className + "'. A Component is already defined for this Component Class."); //$NON-NLS-1$ //$NON-NLS-2$
+                }
+            }
+        }
     }
 
     /**

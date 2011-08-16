@@ -42,6 +42,9 @@ public class ToolkitPluginDescriptor implements Comparable {
     /** the level */
     private String m_level;
     
+    /** the FQN of the Tester Class to use for all Simple Extension components */
+    private String m_simpleExtensionTesterClassName;
+    
     /** Only for deserialisation! */
     public ToolkitPluginDescriptor() {
         super();
@@ -77,6 +80,35 @@ public class ToolkitPluginDescriptor implements Comparable {
         m_depends = depends;
     }
 
+    /**
+     * Constructor
+     * @param toolkitID the unique id of the toolkit 
+     *                  (e.g. com.bredexsw.guidancer.SwingToolkitPlugin)
+     * @param name the displayable name of the toolkit
+     *                 (e.g. Swing)
+     * @param includes id of the extended-toolkit or
+     *                 empty String if the toolkit is independent.
+     * @param depends id of the toolkit on which this toolkit depends.
+     * @param level the level of abstraction (abstract, concrete or toolkit)
+     * @param order the order of read into the CompSystem
+     * @param isUserToolkit whether the toolkit is user defined or not
+     * @param majorVersion the major version
+     * @param minorVersion the minor version
+     * @param simpleExtensionTesterClassName FQN of the Tester Class to use for
+     *                                       all Simple Component Extension 
+     *                                       Components.
+     *              
+     */
+    public ToolkitPluginDescriptor(String toolkitID, String name, 
+            String includes, String depends, String level, int order, 
+            boolean isUserToolkit, int majorVersion, int minorVersion, 
+            String simpleExtensionTesterClassName) {
+
+        this(toolkitID, name, includes, depends, level, order, isUserToolkit, 
+                majorVersion, minorVersion);
+        m_simpleExtensionTesterClassName = simpleExtensionTesterClassName;
+    }
+    
     /**
      * @return id of the extended-toolkit or
      *         empty String if the toolkit is independent.
@@ -128,6 +160,16 @@ public class ToolkitPluginDescriptor implements Comparable {
         return m_toolkitID;
     }
 
+    /**
+     * 
+     * @return the FQN of the ImplClass to use for all Simple Extension 
+     *         components, or <code>null</code> if no such class is defined 
+     *         for the receiver.
+     */
+    public String getSimpleExtensionTesterClassName() {
+        return m_simpleExtensionTesterClassName;
+    }
+    
     /** {@inheritDoc} */
     public int compareTo(Object o) {
         if (!(o instanceof ToolkitPluginDescriptor)) {

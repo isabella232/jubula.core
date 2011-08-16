@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.ui.extensions.ProjectPropertyExtensionHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.properties.AUTPropertyPage;
 import org.eclipse.jubula.client.ui.properties.AbstractProjectPropertyPage;
+import org.eclipse.jubula.client.ui.properties.ComponentExtensionPropertyPage;
 import org.eclipse.jubula.client.ui.properties.ProjectGeneralPropertyPage;
 import org.eclipse.jubula.client.ui.properties.ProjectGeneralPropertyPage.IOkListener;
 import org.eclipse.jubula.client.ui.properties.ProjectLanguagePropertyPage;
@@ -75,33 +76,8 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
         try {
             final EditSupport es = AbstractProjectPropertyPage
                 .createEditSupport();
+            ProjectGeneralPropertyPage generalPage = createPages(es, mgr);
 
-            ProjectGeneralPropertyPage generalPage = 
-                new ProjectGeneralPropertyPage(es);
-            generalPage.setTitle(Messages.PropertiesActionPage1);
-            IPreferenceNode generalNode = new PreferenceNode(
-                Constants.PROJECT_PROPERTY_ID, generalPage);
-            mgr.addToRoot(generalNode);
-
-            PropertyPage langPage = new ProjectLanguagePropertyPage(es);
-            langPage.setTitle(Messages.PropertiesActionPage2);
-            IPreferenceNode langNode = new PreferenceNode(
-                Constants.PROJECT_PROPERTY_ID, langPage);
-            mgr.addToRoot(langNode);
-
-            PropertyPage autPage = new AUTPropertyPage(es);
-            autPage.setTitle(Messages.PropertiesActionPage3);
-            IPreferenceNode autNode = new PreferenceNode(
-                Constants.AUT_PROPERTY_ID, autPage);
-            mgr.addToRoot(autNode);
-
-            ProjectUsedPropertyPage usedPage = new ProjectUsedPropertyPage(es);
-            usedPage.setTitle(Messages.PropertiesActionPage4);
-            IPreferenceNode usedNode = new PreferenceNode(
-                Constants.REUSED_PROJECT_PROPERTY_ID, usedPage);
-            mgr.addToRoot(usedNode);
-            generalPage.addOkListener(usedPage);
-            
             // Adds project property pages from extensions
             for (AbstractProjectPropertyPage pg 
                     : ProjectPropertyExtensionHandler.createPages(es, mgr)) {
@@ -138,5 +114,52 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
             Utils.createMessageDialog(e, null, null);
         }
         return null;
+    }
+
+    /**
+     * Creates the project property pages.
+     * 
+     * @param es The edit support.
+     * @param mgr The preference manager.
+     * @return the created general property page.
+     */
+    private ProjectGeneralPropertyPage createPages(
+            EditSupport es, PreferenceManager mgr) {
+
+        ProjectGeneralPropertyPage generalPage = 
+            new ProjectGeneralPropertyPage(es);
+        generalPage.setTitle(Messages.PropertiesActionPage1);
+        IPreferenceNode generalNode = new PreferenceNode(
+            Constants.PROJECT_PROPERTY_ID, generalPage);
+        mgr.addToRoot(generalNode);
+
+        PropertyPage langPage = new ProjectLanguagePropertyPage(es);
+        langPage.setTitle(Messages.PropertiesActionPage2);
+        IPreferenceNode langNode = new PreferenceNode(
+            Constants.PROJECT_PROPERTY_ID, langPage);
+        mgr.addToRoot(langNode);
+
+        PropertyPage autPage = new AUTPropertyPage(es);
+        autPage.setTitle(Messages.PropertiesActionPage3);
+        IPreferenceNode autNode = new PreferenceNode(
+            Constants.AUT_PROPERTY_ID, autPage);
+        mgr.addToRoot(autNode);
+
+        ProjectUsedPropertyPage usedPage = new ProjectUsedPropertyPage(es);
+        usedPage.setTitle(Messages.PropertiesActionPage4);
+        IPreferenceNode usedNode = new PreferenceNode(
+            Constants.REUSED_PROJECT_PROPERTY_ID, usedPage);
+        mgr.addToRoot(usedNode);
+        generalPage.addOkListener(usedPage);
+
+        PropertyPage simpleExtensionPage = 
+            new ComponentExtensionPropertyPage(es);
+        simpleExtensionPage.setTitle(
+                Messages.PropertiesPageSimpleExtensions_Title);
+        IPreferenceNode simpleExtensionNode = new PreferenceNode(
+            Constants.SIMPLE_EXTENSION_PROPERTY_ID, simpleExtensionPage);
+        mgr.addToRoot(simpleExtensionNode);
+    
+        return generalPage;
     }
 }
