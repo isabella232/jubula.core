@@ -6,14 +6,3 @@
 \input{Tasks/Extensions/simple}
 
 
-If your \gdaut{} has components in it that cannot be mapped when in the \gdomm{} \bxpref{TasksOMCollect}, then you can add basic support for them in the \gdproject{} properties in the \bxname{Extension} page. 
-
-\bxtipp{In Swing \gdauts{}, the component to be added must be of the type \bxname{JComponent}. In SWT and RCP \gdauts{}, the component must be of the type \bxname{Control}. This mechanism is not currently supported for HTML \gdauts{}. }
-
-\begin{enumerate}
-  \item In the \bxname{Extension} page in the \gdproject{} properties, click \bxcaption{Add} to add a new extension.
-  \item In the dialog that appears, enter the class name for the component you wish to support and click \bxcaption{OK}. 
-  \item You will now be able to map the component from your \gdaut{}.
-\end{enumerate}
-
-\bxtipp{You will be able to perform actions on this component that are performable on components of the type \bxname{Graphics Component}. Actions include clicking the component, waiting for it, checking its existence, focus and properties. If you require other actions, then you will have to write a full extension for the component.}
