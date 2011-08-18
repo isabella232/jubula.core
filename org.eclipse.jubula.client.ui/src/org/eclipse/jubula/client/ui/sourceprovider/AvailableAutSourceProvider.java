@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
@@ -154,6 +155,14 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
         fireSourceChanged();
     }
 
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */

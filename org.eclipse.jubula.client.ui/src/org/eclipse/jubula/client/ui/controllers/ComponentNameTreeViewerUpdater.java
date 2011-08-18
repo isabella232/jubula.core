@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.controllers;
 
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 
 
@@ -31,12 +30,8 @@ public class ComponentNameTreeViewerUpdater
      * Constructor
      * 
      * @param treeViewer The viewer to be maintained by this updater.
-     * @param compNameCache The cache for retrieving the correct instance 
-     *                      of a given Component Name.
      */
-    public ComponentNameTreeViewerUpdater(
-            TreeViewer treeViewer, IComponentNameCache compNameCache) {
-        super(compNameCache);
+    public ComponentNameTreeViewerUpdater(TreeViewer treeViewer) {
         m_treeViewer = treeViewer;
     }
 
@@ -60,5 +55,4 @@ public class ComponentNameTreeViewerUpdater
     protected void update(IComponentNamePO compName, String[] properties) {
         m_treeViewer.update(compName, properties);
     }
-    
 }

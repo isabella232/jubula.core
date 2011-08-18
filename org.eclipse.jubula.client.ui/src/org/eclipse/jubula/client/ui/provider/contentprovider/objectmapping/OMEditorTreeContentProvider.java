@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
@@ -197,6 +198,13 @@ public class OMEditorTreeContentProvider extends
 
         if (newInput != null) {
             m_modelListener = new IDataChangedListener() {
+                /** {@inheritDoc} */
+                public void handleDataChanged(DataChangedEvent... events) {
+                    for (DataChangedEvent e : events) {
+                        handleDataChanged(e.getPo(), e.getDataState(),
+                                e.getUpdateState());
+                    }
+                }
                 
                 public void handleDataChanged(IPersistentObject po, 
                         DataState dataState, UpdateState updateState) {

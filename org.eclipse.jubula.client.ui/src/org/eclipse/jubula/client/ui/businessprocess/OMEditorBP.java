@@ -140,11 +140,6 @@ public class OMEditorBP {
                     }
                     
                     newCategory.addAssociation(parent);
-                    DataEventDispatcher.getInstance().fireDataChangedListener(
-                            getEditor().getAut().getObjMap()
-                                .getUnmappedTechnicalCategory(), 
-                            DataState.StructureModified, 
-                            UpdateState.onlyInEditor);
                 } else {
                     // Delete empty association from session
                     getEditor().getEditorHelper().getEditSupport().getSession()
@@ -153,7 +148,7 @@ public class OMEditorBP {
             }
 
             DataEventDispatcher.getInstance().fireDataChangedListener(
-                    originalCategory, 
+                    getEditor().getAut().getObjMap(), 
                     DataState.StructureModified, 
                     UpdateState.onlyInEditor);
 
@@ -330,7 +325,7 @@ public class OMEditorBP {
     public void collectNewLogicalComponentNames() {
         getEditor().cleanupNames();
         DataEventDispatcher.getInstance().fireDataChangedListener(
-                getEditor().getAut().getObjMap().getUnmappedLogicalCategory(), 
+                getEditor().getAut().getObjMap(), 
                 DataState.StructureModified, UpdateState.onlyInEditor);
     }
 

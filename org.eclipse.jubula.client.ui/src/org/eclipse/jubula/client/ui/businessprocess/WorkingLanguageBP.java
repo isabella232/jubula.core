@@ -15,14 +15,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -69,13 +67,8 @@ public class WorkingLanguageBP extends AbstractActionBP
      */
     private IDataChangedListener m_dataChangedListener = 
         new IDataChangedListener() {
-            /**
-             * {@inheritDoc}
-             */
-            @SuppressWarnings("synthetic-access") 
-            public void handleDataChanged(IPersistentObject po, 
-                               DataState dataState, 
-                               UpdateState updateState) {
+            /** {@inheritDoc} */
+            public void handleDataChanged(DataChangedEvent... events) {
                 Plugin.showLangInfo();
                 setEnabledStatus();
             }

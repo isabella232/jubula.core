@@ -17,14 +17,11 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -107,7 +104,7 @@ public class ComponentNameBrowser extends ViewPart implements
                 ContextHelpIds.COMPONENT_NAMES_BROWSER);
 
         m_treeViewerUpdater = new ComponentNameTreeViewerUpdater(
-                    getTreeViewer(), ComponentNamesBP.getInstance());
+                getTreeViewer());
 
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addProjectLoadedListener(this, true);
@@ -197,12 +194,16 @@ public class ComponentNameBrowser extends ViewPart implements
         m_treeViewer = treeViewer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
-        if (po instanceof IComponentNamePO) {
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        boolean refreshView = false;
+        for (DataChangedEvent e : events) {
+            if (e.getPo() instanceof IComponentNamePO) {
+                refreshView = true;
+                break;
+            }
+        }
+        if (refreshView) {
             getTreeViewer().refresh();
             ISelection selection = getTreeViewer().getSelection();
             getTreeViewer().setSelection(null);

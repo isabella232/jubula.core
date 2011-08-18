@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -122,7 +123,14 @@ public class StartAutBP extends AbstractActionBP {
      */
     private IDataChangedListener m_currentProjDeletedListener =
         new IDataChangedListener() {
-        
+            /** {@inheritDoc} */
+            public void handleDataChanged(DataChangedEvent... events) {
+                for (DataChangedEvent e : events) {
+                    handleDataChanged(e.getPo(), e.getDataState(),
+                            e.getUpdateState());
+                }
+            }
+            
             @SuppressWarnings("synthetic-access")     
             public void handleDataChanged(IPersistentObject po, 
                 DataState dataState, 

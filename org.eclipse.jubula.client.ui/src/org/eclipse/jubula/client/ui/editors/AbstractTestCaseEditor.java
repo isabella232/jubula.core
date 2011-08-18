@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
@@ -204,7 +205,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             implements IDataChangedListener {
 
         /**
-         * 
          * {@inheritDoc}
          */
         public void handleDataChanged(IPersistentObject po,
@@ -248,6 +248,14 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                             refreshRefDataCubeOp, true, 2);
                 refDataCubeRefresher.traverse(true);
                 
+            }
+        }
+
+        /** {@inheritDoc} */
+        public void handleDataChanged(DataChangedEvent... events) {
+            for (DataChangedEvent e : events) {
+                handleDataChanged(e.getPo(), e.getDataState(),
+                        e.getUpdateState());
             }
         }
     }
@@ -765,6 +773,14 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         IActionBars actionBars = getEditorSite().getActionBars();
         if (actionBars.getGlobalActionHandler(actionId) == handler) {
             actionBars.setGlobalActionHandler(actionId, null);        
+        }
+    }
+    
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
         }
     }
     

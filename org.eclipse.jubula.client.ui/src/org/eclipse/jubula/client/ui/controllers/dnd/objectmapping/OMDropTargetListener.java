@@ -55,10 +55,7 @@ public class OMDropTargetListener extends ViewerDropAdapter {
         setScrollExpandEnabled(scrollExpand);
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /**{@inheritDoc} */
     public void dropAccept(DropTargetEvent event) {
         if (!(LocalSelectionTransfer.getTransfer().getSelection() 
                 instanceof IStructuredSelection)) {

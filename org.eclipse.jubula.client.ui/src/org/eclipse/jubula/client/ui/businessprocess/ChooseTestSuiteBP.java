@@ -17,6 +17,7 @@ import java.util.TreeSet;
 
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -195,7 +196,14 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
      */
     private IDataChangedListener m_currentProjDeletedListener =
         new IDataChangedListener() {
-        
+            /** {@inheritDoc} */
+            public void handleDataChanged(DataChangedEvent... events) {
+                for (DataChangedEvent e : events) {
+                    handleDataChanged(e.getPo(), e.getDataState(),
+                            e.getUpdateState());
+                }
+            }
+            
             @SuppressWarnings("synthetic-access") 
             public void handleDataChanged(IPersistentObject po, 
                 DataState dataState, 
@@ -263,7 +271,14 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
     /** listener for save of editor */    
     private IDataChangedListener m_dataChangedListener = 
         new IDataChangedListener() {
-        
+            /** {@inheritDoc} */
+            public void handleDataChanged(DataChangedEvent... events) {
+                for (DataChangedEvent e : events) {
+                    handleDataChanged(e.getPo(), e.getDataState(),
+                            e.getUpdateState());
+                }
+            }
+            
             @SuppressWarnings("synthetic-access") 
             public void handleDataChanged(IPersistentObject po, 
                 DataState dataState, UpdateState updateState) {

@@ -40,8 +40,6 @@ import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
  */
 @SuppressWarnings("synthetic-access")
 public final class CompletenessGuard {
-    
-    
     /**
      * Operation to set the CompleteSpecTc flag for a .
      */

@@ -99,9 +99,15 @@ public class InteractionEventDispatcher implements IDataChangedListener {
         return instance;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
+        }
+    }
+    
+    /** {@inheritDoc} */
     public void handleDataChanged(IPersistentObject po, DataState dataState,
             UpdateState updateState) {
         if (dataState == DataState.Added) {
