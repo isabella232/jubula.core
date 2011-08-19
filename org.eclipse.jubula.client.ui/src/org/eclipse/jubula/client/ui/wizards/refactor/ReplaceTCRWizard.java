@@ -10,13 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.wizards.refactor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -145,35 +143,9 @@ public class ReplaceTCRWizard extends Wizard {
             ISpecTestCasePO specTC = m_choosePage.getChoosenTestCase();
             m_newExec = NodeMaker.createExecTestCasePO(specTC);
             m_addInfoPage.bindNewExec(m_newExec);
-            if (!anyCompNamesToMatch(m_listOfExecsToReplace, m_newExec)) {
-                return m_matchParamPage;
-            }
             m_matchCompNamePage.setSelectedExecNode(m_newExec);
         }
         return super.getNextPage(page);
-    }
-
-    /**
-     * @param listOfExecsToReplace
-     *            the list of execs to replace
-     * @param newExec
-     *            the new exec
-     * @return true if comp name match page has to be shown
-     */
-    private boolean anyCompNamesToMatch(
-        List<IExecTestCasePO> listOfExecsToReplace, IExecTestCasePO newExec) {
-        List<IExecTestCasePO> execsToCheck = new ArrayList<IExecTestCasePO>();
-        execsToCheck.addAll(listOfExecsToReplace);
-        execsToCheck.add(newExec);
-        
-        CompNamesBP cnBP = new CompNamesBP();
-        for (IExecTestCasePO exec : execsToCheck) {
-            if (cnBP.getAllCompNamesPairs(exec).size() > 0) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
