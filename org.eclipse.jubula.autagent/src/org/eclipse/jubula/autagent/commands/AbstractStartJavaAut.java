@@ -26,8 +26,7 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.autagent.monitoring.IMonitoring;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
 import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
@@ -37,6 +36,9 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.jarutils.MainClassLocator;
+import org.eclipse.osgi.service.datalocation.Location;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -379,22 +381,28 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      */
     private URL[] getExtensions() {
         
-        final File extDir = new File(CommandConstants.EXT_JARS_PATH);
+        Location installLoc = Platform.getInstallLocation();
+        String installDir = installLoc.getURL().getFile();
+        final File extDir = new File(new File(installDir), 
+                CommandConstants.EXT_JARS_PATH);
         final File[] extJars = extDir.listFiles(new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 return name.endsWith(".jar"); //$NON-NLS-1$
             }
         });
-        URL[] urls = new URL[extJars.length];
+        URL[] urls;
         if (extJars != null) {           
+            urls = new URL[extJars.length];
             for (int i = 0; i < extJars.length; i++) {
                 try {                          
                     urls[i] = extJars[i].toURI().toURL();
                 } catch (MalformedURLException e) {                   
-                    LOG.error("URL is not Malformed", e);
+                    LOG.error("URL is malformed", e);
                 }                  
             }
-        } 
+        } else {
+            urls = new URL[0];
+        }
         return urls;
     }
     
