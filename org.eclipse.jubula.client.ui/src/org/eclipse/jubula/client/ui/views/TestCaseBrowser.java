@@ -26,6 +26,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -473,6 +474,14 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 enableMoveAction(selectedNodes);
                 enableNewAction(selectedNodes);
             }
+        }
+    }
+    
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
         }
     }
     

@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
@@ -249,6 +250,14 @@ public class JBEditorHelper implements ILockedObjects,
             throw new PartInitException(msg);
         }
     } 
+    
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
+        }
+    }
     
     /**
      * {@inheritDoc}

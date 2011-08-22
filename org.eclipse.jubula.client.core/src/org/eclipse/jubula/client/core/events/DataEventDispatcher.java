@@ -128,15 +128,10 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      *
      */
     public interface IDataChangedListener {
-        
         /**
-         * @param po changed persistent object
-         * @param dataState kind of modification
-         * @param updateState determines the parts to update
+         * @param events an array of data changed events
          */
-        public void handleDataChanged(IPersistentObject po, 
-            DataState dataState, 
-            UpdateState updateState);
+        public void handleDataChanged(DataChangedEvent... events);
     }
     
     /**
@@ -686,21 +681,30 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         m_langChangedListenersPost.remove(l);
     }
     
+    /**
+     * @param po
+     *            changed persistent object
+     * @param dataState
+     *            kind of modification
+     * @param updateState
+     *            determines the parts to update
+     */
+    public void fireDataChangedListener(IPersistentObject po,
+            DataState dataState, UpdateState updateState) {
+        fireDataChangedListener(
+                new DataChangedEvent(po, dataState, updateState));
+    }
     
     /**
-     * @param changedObj notify listener about data modification of this object
-     * @param dataState kind of object modification
-     * @param updateState notification only relevant for editors
+     * @param events data changed events
      */
-    public void fireDataChangedListener(final IPersistentObject changedObj, 
-        final DataState dataState, final UpdateState updateState) {
-        
+    public void fireDataChangedListener(final DataChangedEvent... events) {
         // model updates
         final Set<IDataChangedListener> stableListeners = 
             new HashSet<IDataChangedListener>(m_dataChangedListeners);
         for (final IDataChangedListener l : stableListeners) {
             try {
-                l.handleDataChanged(changedObj, dataState, updateState);
+                l.handleDataChanged(events);
             } catch (Throwable t) {
                 if (t instanceof EntityNotFoundException) {
                     String msg = Messages.DataEventDispatcherReopenProject;
@@ -720,7 +724,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             new HashSet<IDataChangedListener>(m_dataChangedListenersPost);
         for (IDataChangedListener l : stableListenersPost) {
             try {
-                l.handleDataChanged(changedObj, dataState, updateState);
+                l.handleDataChanged(events);
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
@@ -1693,8 +1697,8 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * {@inheritDoc}
      */
     public void dataModified(IPersistentObject po) {
-        fireDataChangedListener(po, DataState.StructureModified, 
-            UpdateState.all);
+        fireDataChangedListener(new DataChangedEvent(po,
+                DataState.StructureModified, UpdateState.all));
     }
 
     /**

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -83,30 +82,10 @@ public class OMEditorDndSupport {
                         IObjectMappingCategoryPO newCategory = 
                             editor.getOmEditorBP().createCategory(
                                     mapped, target.getCategory());
-                        IObjectMappingCategoryPO targetFromCategory = 
-                            target.getCategory();
                         target.getCategory().removeAssociation(target);
-                        DataEventDispatcher.getInstance()
-                            .fireDataChangedListener(
-                                targetFromCategory, 
-                                DataState.StructureModified, 
-                                UpdateState.onlyInEditor);
                         newCategory.addAssociation(target);
                     }
                     cleanupAssociation(editor, oldAssoc);
-                    DataEventDispatcher.getInstance().fireDataChangedListener(
-                            editor.getAut().getObjMap().getMappedCategory(), 
-                            DataState.StructureModified, 
-                            UpdateState.onlyInEditor);
-                    DataEventDispatcher.getInstance().fireDataChangedListener(
-                            editor.getAut().getObjMap()
-                                .getUnmappedLogicalCategory(),
-                            DataState.StructureModified, 
-                            UpdateState.onlyInEditor);
-                    
-                    editor.getTreeViewer().setExpandedState(target, true);
-                    editor.getTreeViewer().setSelection(
-                            new StructuredSelection(target));
                 } catch (IncompatibleTypeException e) {
                     Utils.createMessageDialog(
                             e, e.getErrorMessageParams(), null);
@@ -115,6 +94,12 @@ public class OMEditorDndSupport {
                 }
             }
         }
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                editor.getAut().getObjMap(),
+                DataState.StructureModified, 
+                UpdateState.onlyInEditor);
+        
+        editor.getTreeViewer().setExpandedState(target, true);
     }
 
     /**
@@ -143,19 +128,11 @@ public class OMEditorDndSupport {
                             unmappedTech, fromCategory);
                 fromCategory.removeAssociation(assoc);
                 newCategory.addAssociation(assoc);
-                DataEventDispatcher.getInstance()
-                    .fireDataChangedListener(
-                            newCategory, DataState.StructureModified, 
-                            UpdateState.onlyInEditor);
             } else {
                 // Association has no logical names and no technical
                 // name. It should be deleted.
                 fromCategory.removeAssociation(assoc);
             }
-            DataEventDispatcher.getInstance()
-                .fireDataChangedListener(
-                    fromCategory, DataState.StructureModified, 
-                    UpdateState.onlyInEditor);
         }
     }
     
@@ -281,9 +258,6 @@ public class OMEditorDndSupport {
                     compMapper.changeReuse(oldAssoc, compNameGuid, null);
                     target.addAssociation(newAssoc);
                     if (oldAssoc != null) {
-                        IObjectMappingCategoryPO fromCategory = 
-                            oldAssoc.getCategory();
-                        
                         if (oldAssoc.getLogicalNames().isEmpty()) {
                             // Change section to unmapped tech, creating new 
                             // categories if necessary.
@@ -295,29 +269,8 @@ public class OMEditorDndSupport {
                                         unmappedTech, oldAssoc.getCategory());
                             oldAssoc.getCategory().removeAssociation(oldAssoc);
                             newCategory.addAssociation(oldAssoc);
-                            DataEventDispatcher.getInstance()
-                                .fireDataChangedListener(
-                                        newCategory.getParent() != null 
-                                            ? newCategory.getParent() 
-                                            : newCategory, 
-                                        DataState.StructureModified, 
-                                        UpdateState.onlyInEditor);
                         }
-                        
-                        DataEventDispatcher.getInstance()
-                            .fireDataChangedListener(
-                                fromCategory, 
-                                DataState.StructureModified, 
-                                UpdateState.onlyInEditor);
                     }
-
-                    DataEventDispatcher.getInstance().fireDataChangedListener(
-                            newAssoc.getCategory(), 
-                            DataState.StructureModified, 
-                            UpdateState.onlyInEditor);
-
-                    editor.getTreeViewer().refresh(target);
-                    editor.getTreeViewer().setExpandedState(target, true);
                 } catch (IncompatibleTypeException e) {
                     Utils.createMessageDialog(
                             e, e.getErrorMessageParams(), null);
@@ -325,6 +278,13 @@ public class OMEditorDndSupport {
                     PMExceptionHandler.handlePMExceptionForEditor(pme, editor);
                 }
             }
+            DataEventDispatcher.getInstance().fireDataChangedListener(
+                    editor.getAut().getObjMap(), 
+                    DataState.StructureModified, 
+                    UpdateState.onlyInEditor);
+            
+            editor.getTreeViewer().refresh(target);
+            editor.getTreeViewer().setExpandedState(target, true);
         }
     }
 
@@ -351,10 +311,8 @@ public class OMEditorDndSupport {
                 fromCategory.removeAssociation(assoc);
                 target.addAssociation(assoc);
                 DataEventDispatcher.getInstance().fireDataChangedListener(
-                        fromCategory, DataState.StructureModified, 
-                        UpdateState.onlyInEditor);
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        target, DataState.StructureModified, 
+                        editor.getAut().getObjMap(), 
+                        DataState.StructureModified, 
                         UpdateState.onlyInEditor);
                 editor.getTreeViewer().setExpandedState(target, true);
             } else if (unmappedTechNames.equals(newSection)) {
@@ -387,13 +345,8 @@ public class OMEditorDndSupport {
                 target.addAssociation(assoc);
                 
                 DataEventDispatcher.getInstance().fireDataChangedListener(
-                        fromCategory, DataState.StructureModified, 
-                        UpdateState.onlyInEditor);
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        target, DataState.StructureModified, 
-                        UpdateState.onlyInEditor);
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        unmappedCompNames, DataState.StructureModified, 
+                        editor.getAut().getObjMap(), 
+                        DataState.StructureModified, 
                         UpdateState.onlyInEditor);
                 editor.getTreeViewer().setExpandedState(target, true);
             }

@@ -10,12 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers;
 
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
+import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 
 /**
@@ -26,26 +26,22 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
  */
 public abstract class AbstractComponentNameViewerUpdater 
         implements IDataChangedListener {
-
-    /** 
-     * the cache for retrieving the correct instance of a given Component Name 
-     */
-    private IComponentNameCache m_compNameCache;
-
     /**
      * Constructor
-     * 
-     * @param compNameCache The cache for retrieving the correct instance 
-     *                      of a given Component Name.
      */
-    public AbstractComponentNameViewerUpdater(
-            IComponentNameCache compNameCache) {
-        m_compNameCache = compNameCache;
+    public AbstractComponentNameViewerUpdater() {
+        // empty
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
+        }
+    }
+    
+    /** {@inheritDoc} */
     public final void handleDataChanged(IPersistentObject po, 
             DataState dataState, UpdateState updateState) {
 
@@ -64,7 +60,7 @@ public abstract class AbstractComponentNameViewerUpdater
                 default:
                     break;
             }
-        } else if (po instanceof IObjectMappingCategoryPO) {
+        } else if (po instanceof IObjectMappingPO) {
             switch (dataState) {
                 case StructureModified:
                     refresh();
@@ -94,5 +90,4 @@ public abstract class AbstractComponentNameViewerUpdater
      * @param compName The Component Name to remove from the viewer.
      */
     protected abstract void remove(IComponentNamePO compName);
-
 }

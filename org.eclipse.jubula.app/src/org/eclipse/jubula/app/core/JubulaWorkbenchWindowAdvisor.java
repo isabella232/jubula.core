@@ -13,6 +13,7 @@ package org.eclipse.jubula.app.core;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jubula.app.Activator;
 import org.eclipse.jubula.app.i18n.Messages;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
@@ -59,6 +60,14 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         /** {@inheritDoc} */
         public void handleProjectLoaded() {
             updateProjectNameInTitlebar();
+        }
+        
+        /** {@inheritDoc} */
+        public void handleDataChanged(DataChangedEvent... events) {
+            for (DataChangedEvent e : events) {
+                handleDataChanged(e.getPo(), e.getDataState(),
+                        e.getUpdateState());
+            }
         }
         
         /** {@inheritDoc} */

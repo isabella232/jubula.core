@@ -13,18 +13,16 @@ package org.eclipse.jubula.client.ui.sourceprovider;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
-import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
-import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
+import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
+import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
 import org.eclipse.ui.ISources;
 
 
@@ -109,14 +107,11 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
         fireSourceChanged();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
         fireSourceChanged();
     }
-
+    
     /**
      * Fires a source changed event for <code>IS_PROJECT_ACTIVE</code>,
      * <code>IS_PROJECT_PROTECTED</code> and

@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.businessprocess.CompletenessGuard;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
@@ -46,7 +47,7 @@ public class CompletenessBP implements
     
     /** this instance */
     private static CompletenessBP instance; 
-    
+
     /**
      * private constructor
      */
@@ -67,6 +68,14 @@ public class CompletenessBP implements
         return instance;
     }
 
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -74,7 +83,6 @@ public class CompletenessBP implements
         IPersistentObject po, 
         DataState dataState, 
         UpdateState updateState) {
-        
         // update only when global changes
         switch (updateState) {
             case onlyInEditor :
@@ -202,5 +210,4 @@ public class CompletenessBP implements
     private void fireCompletenessCheckFinished() {
         DataEventDispatcher.getInstance().fireCompletenessCheckFinished();
     }
-    
 }

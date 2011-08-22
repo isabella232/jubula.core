@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedListener;
@@ -263,6 +264,14 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         getMainTreeViewer().refresh();
     }
 
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
+        }
+    }
+    
     /** {@inheritDoc} */
     public void handleDataChanged(IPersistentObject po, DataState dataState,
             UpdateState updateState) {

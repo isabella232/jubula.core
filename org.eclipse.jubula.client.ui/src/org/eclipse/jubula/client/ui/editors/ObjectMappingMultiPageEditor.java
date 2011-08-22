@@ -20,8 +20,6 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -61,6 +59,7 @@ import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatch
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
@@ -168,6 +167,8 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.swt.IFocusService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -898,9 +899,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         ObjectMappingEventDispatcher.addObserver(this);
 
         m_treeViewerUpdater = 
-            new ComponentNameTreeViewerUpdater(m_treeViewer, 
-                    getEditorHelper().getEditSupport().getCompMapper()
-                        .getCompNameCache());
+            new ComponentNameTreeViewerUpdater(m_treeViewer);
 
         checkAndFixInconsistentData();
         m_treeViewer.expandToLevel(2);
@@ -1628,7 +1627,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         try {
             if (getEditorHelper().isDirty()) {
                 EditSupport editSupport = getEditorHelper().getEditSupport();
-                
                 IObjectMappingProfilePO origProfile = 
                     ((IAUTMainPO)editSupport.getOriginal()).getObjMap()
                         .getProfile();
@@ -1711,10 +1709,13 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     private void fireReuseChangedEvents(
             Set<IComponentNamePO> reuseChangedCompNames) {
+        ArrayList<DataChangedEvent> events = new ArrayList<DataChangedEvent>();
         for (IComponentNamePO compName : reuseChangedCompNames) {
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    compName, DataState.ReuseChanged, UpdateState.all);
+            events.add(new DataChangedEvent(compName, DataState.ReuseChanged,
+                    UpdateState.all));
         }
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                events.toArray(new DataChangedEvent[0]));
     }
 
     /**
@@ -1723,10 +1724,13 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * @param renamedCompNames The Component Names for which to fire the events.
      */
     private void fireRenamedEvents(Set<IComponentNamePO> renamedCompNames) {
+        ArrayList<DataChangedEvent> events = new ArrayList<DataChangedEvent>();
         for (IComponentNamePO compName : renamedCompNames) {
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    compName, DataState.Renamed, UpdateState.all);
+            events.add(new DataChangedEvent(compName, DataState.Renamed,
+                    UpdateState.all));
         }
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                events.toArray(new DataChangedEvent[0]));
     }
 
     /**
@@ -1837,10 +1841,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             m_selectionProvider.setSelectionProviderDelegate(
                     m_pageToSelectionProvider.get(getActivePage()));
             getSite().setSelectionProvider(m_selectionProvider);
-            m_treeViewerUpdater = 
-                new ComponentNameTreeViewerUpdater(m_treeViewer, 
-                        getEditorHelper().getEditSupport().getCompMapper()
-                            .getCompNameCache());
+            m_treeViewerUpdater =  new ComponentNameTreeViewerUpdater(
+                    m_treeViewer);
             setProviders(m_treeViewer, getCompMapper());
             m_treeViewer.setInput(getAut().getObjMap());
             // Clearing the selection seems to help prevent the behavior 
@@ -2210,9 +2212,15 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
+        }
+    }
+    
+    /** {@inheritDoc} */
     public void handleDataChanged(IPersistentObject po, DataState dataState,
             UpdateState updateState) {
 

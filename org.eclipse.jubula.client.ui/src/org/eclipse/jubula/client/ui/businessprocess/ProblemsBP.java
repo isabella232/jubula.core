@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
@@ -183,6 +184,14 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                 NLS.bind(Messages.ProblemCheckerProjectDoesNotExist, label),
                 IMarker.SEVERITY_ERROR, StringConstants.EMPTY, node,
                 ProblemType.REASON_PROJECT_DOES_NOT_EXIST);
+    }
+    
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        for (DataChangedEvent e : events) {
+            handleDataChanged(e.getPo(), e.getDataState(),
+                    e.getUpdateState());
+        }
     }
     
     /**
