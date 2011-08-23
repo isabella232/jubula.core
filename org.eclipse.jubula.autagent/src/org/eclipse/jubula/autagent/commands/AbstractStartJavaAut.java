@@ -381,10 +381,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      */
     private URL[] getExtensions() {
         
-        Location installLoc = Platform.getInstallLocation();
-        String installDir = installLoc.getURL().getFile();
-        final File extDir = new File(new File(installDir), 
-                CommandConstants.EXT_JARS_PATH);
+        final File extDir = getExtDir();
         final File[] extJars = extDir.listFiles(new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 return name.endsWith(".jar"); //$NON-NLS-1$
@@ -392,6 +389,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         });
         URL[] urls;
         if (extJars != null) {           
+            LOG.error("jars are " + extJars);
             urls = new URL[extJars.length];
             for (int i = 0; i < extJars.length; i++) {
                 try {                          
@@ -401,9 +399,30 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                 }                  
             }
         } else {
+            LOG.error("no ext jars");
             urls = new URL[0];
         }
         return urls;
+    }
+
+    /**
+     * @return A File with the directory where the monitoring extensions
+     * may be found. Note that the directory may not exist!
+     */
+    public static File getExtDir() {
+        File installDir = getInstallDir();
+        final File extDir = new File(installDir, 
+                CommandConstants.EXT_JARS_PATH);
+        return extDir;
+    }
+
+    /**
+     * @return the AUTAgent installation directory
+     */
+    public static File getInstallDir() {
+        Location installLoc = Platform.getInstallLocation();
+        String installDir = installLoc.getURL().getFile();
+        return new File(installDir);
     }
     
     /**
