@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.monitoring;
 
+import java.io.File;
 import java.util.Map;
 
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
@@ -64,6 +65,14 @@ public interface IMonitoring {
     /** sets the autId
      * @param autId the autId to set */
     public void setAutId(String autId);
+    
+    /**
+     * Store a File referring to the directory where support files
+     * are stored.
+     * @param installDir File referring the installation directory. The
+     * directory need not to exist.
+     */
+    public void setInstallDir(File installDir);
    
     
 }

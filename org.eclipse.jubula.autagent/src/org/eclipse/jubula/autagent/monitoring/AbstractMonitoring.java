@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.monitoring;
 
+import java.io.File;
 import java.util.Map;
 
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
@@ -24,6 +25,12 @@ public abstract class AbstractMonitoring implements IMonitoring {
 
     /** the autId */
     private String m_autId;  
+    /** 
+     * File referring the installtion directory. Used to find support
+     * files.
+     */
+    private File m_installationDir;
+    
     /** MonitoringDataStore which contains the configuration maps */
     private MonitoringDataStore m_mds = MonitoringDataStore.getInstance();
     /**
@@ -91,6 +98,19 @@ public abstract class AbstractMonitoring implements IMonitoring {
         return m_mds.getConfigValue(getAutId(), key);
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setInstallDir(File installDir) {
+        m_installationDir = installDir;
+    }
     
-    
+    /**
+     * 
+     * @return the installation directory
+     */
+    protected File getInstallDir() {
+        return m_installationDir;
+    }
 }

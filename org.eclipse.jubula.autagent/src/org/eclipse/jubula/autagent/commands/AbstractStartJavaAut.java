@@ -455,6 +455,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                 IMonitoring agentInstance = 
                     (IMonitoring)constructor.newInstance();
                 agentInstance.setAutId(autId);
+                agentInstance.setInstallDir(getInstallDir());
                 agentString = agentInstance.createAgent();
                 if (!duplicate) {
                     mds.putMonitoringAgent(autId, agentInstance);  
