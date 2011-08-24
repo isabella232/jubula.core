@@ -32,7 +32,6 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.wizards.refactor.pages.AdditionalInformationPage;
 import org.eclipse.jubula.client.ui.wizards.refactor.pages.ChooseTestCasePage;
 import org.eclipse.jubula.client.ui.wizards.refactor.pages.MatchComponentNamesPage;
-import org.eclipse.jubula.client.ui.wizards.refactor.pages.MatchParameterPage;
 
 /**
  * @author Markus Tiede
@@ -44,9 +43,6 @@ public class ReplaceTCRWizard extends Wizard {
 
     /** ID for the "MATCH_COMP_NAMES" page */
     private static final String MATCH_COMP_NAMES_PAGE_ID = "ReplaceTCRWizard.MatchCompNamesPageId"; //$NON-NLS-1$
-
-    /** ID for the "MATCH_PARAMETER" page */
-    private static final String MATCH_PARAMETER_PAGE_ID = "ReplaceTCRWizard.MatchParameterPageId"; //$NON-NLS-1$
 
     /** ID for the "ADD_INFORMATION" page */
     private static final String ADD_INFORMATION_PAGE_ID = "ReplaceTCRWizard.AdditionalInformationPageId"; //$NON-NLS-1$
@@ -75,11 +71,6 @@ public class ReplaceTCRWizard extends Wizard {
      * <code>m_matchCompNamePage</code>
      */
     private MatchComponentNamesPage m_matchCompNamePage;
-
-    /**
-     * <code>m_matchParamPage</code>
-     */
-    private MatchParameterPage m_matchParamPage;
 
     /**
      * <code>m_addInfoPage</code>
@@ -120,15 +111,12 @@ public class ReplaceTCRWizard extends Wizard {
         m_matchCompNamePage = 
             new MatchComponentNamesPage(MATCH_COMP_NAMES_PAGE_ID, m_editor, 
                     m_listOfExecsToReplace); 
-        m_matchParamPage = 
-            new MatchParameterPage(MATCH_PARAMETER_PAGE_ID);
         m_addInfoPage = 
             new AdditionalInformationPage(ADD_INFORMATION_PAGE_ID);
         
         
         addPage(m_choosePage);
         addPage(m_matchCompNamePage);
-        addPage(m_matchParamPage);
         addPage(m_addInfoPage);
     }
     
