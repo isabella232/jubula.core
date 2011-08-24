@@ -143,9 +143,8 @@ public abstract class AbstractComponentNameMapper implements
                         compNamePo, msg, 
                         MessageIDs.E_COMP_TYPE_INCOMPATIBLE, new String[]{
                                 compNamePo.getName(), 
-                                CompSystemI18n.getString(currType), 
-                                CompSystemI18n.getString(
-                                        userType)});
+                                CompSystemI18n.getString(currType, true), 
+                                CompSystemI18n.getString(userType, true)});
             }
 
             getCompNameCache().addReuse(newGuid);
