@@ -29,7 +29,6 @@ import org.eclipse.jubula.client.ui.extensions.ProjectPropertyExtensionHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.properties.AUTPropertyPage;
 import org.eclipse.jubula.client.ui.properties.AbstractProjectPropertyPage;
-import org.eclipse.jubula.client.ui.properties.ComponentExtensionPropertyPage;
 import org.eclipse.jubula.client.ui.properties.ProjectGeneralPropertyPage;
 import org.eclipse.jubula.client.ui.properties.ProjectGeneralPropertyPage.IOkListener;
 import org.eclipse.jubula.client.ui.properties.ProjectLanguagePropertyPage;
@@ -151,14 +150,15 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
             Constants.REUSED_PROJECT_PROPERTY_ID, usedPage);
         mgr.addToRoot(usedNode);
         generalPage.addOkListener(usedPage);
-
-        PropertyPage simpleExtensionPage = 
-            new ComponentExtensionPropertyPage(es);
-        simpleExtensionPage.setTitle(
-                Messages.PropertiesPageSimpleExtensions_Title);
-        IPreferenceNode simpleExtensionNode = new PreferenceNode(
-            Constants.SIMPLE_EXTENSION_PROPERTY_ID, simpleExtensionPage);
-        mgr.addToRoot(simpleExtensionNode);
+        
+        // Disable due to http://bugzilla.bredex.de/73
+//        PropertyPage simpleExtensionPage = 
+//            new ComponentExtensionPropertyPage(es);
+//        simpleExtensionPage.setTitle(
+//                Messages.PropertiesPageSimpleExtensions_Title);
+//        IPreferenceNode simpleExtensionNode = new PreferenceNode(
+//            Constants.SIMPLE_EXTENSION_PROPERTY_ID, simpleExtensionPage);
+//        mgr.addToRoot(simpleExtensionNode);
     
         return generalPage;
     }
