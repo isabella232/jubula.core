@@ -15,18 +15,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Enumeration;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.LogManager;
+import java.util.Iterator;
 
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendServerLogMessage;
 import org.eclipse.jubula.communication.message.ServerLogResponseMessage;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.Appender;
+import ch.qos.logback.core.FileAppender;
 
 
 /**
@@ -35,45 +35,36 @@ import org.slf4j.LoggerFactory;
  */
 public class SendServerLogCommand implements ICommand {
     /** the logger */
-    private static Logger log = LoggerFactory.getLogger(
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(
             SendServerLogCommand.class);
 
     /** the message */
     private SendServerLogMessage m_message;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @SuppressWarnings("rawtypes")
     public Message execute() {
         log.info("sending server log"); //$NON-NLS-1$
 
         ServerLogResponseMessage response = new ServerLogResponseMessage();
         // Get location of log file
-
-        FileHandler fileHandler = null;
-        Enumeration loggersNames = LogManager.getLogManager().getLoggerNames();
-        while (loggersNames.hasMoreElements() && fileHandler == null) {
-            java.util.logging.Logger logger = LogManager.getLogManager()
-                    .getLogger((String)loggersNames.nextElement());
-            Handler[] handlers = logger.getHandlers();
-            for (int i = 0; i < handlers.length; ++i) {
-                if (handlers[i] instanceof FileHandler) {
-                    fileHandler = (FileHandler)handlers[i];
-                }
+        Logger logger = (Logger)LoggerFactory.getLogger("ROOT"); //$NON-NLS-1$
+        Iterator<Appender<ILoggingEvent>> appenders = logger
+                .iteratorForAppenders();
+        FileAppender fileAppender = null;
+        while (appenders.hasNext() && fileAppender == null) {
+            Object enumElement = appenders.next();
+            if (enumElement instanceof FileAppender) {
+                fileAppender = (FileAppender)enumElement;
             }
         }
 
-        if (fileHandler != null) {
+        if (fileAppender != null) {
+            final File clientLogFile = new File(fileAppender.getFile());
             // Send log
             try {
-                Field filesField = 
-                    fileHandler.getClass().getDeclaredField("files"); //$NON-NLS-1$
-                filesField.setAccessible(true);
-                File[] filesValue = (File[])filesField.get(fileHandler);
-                File logFile = filesValue[0];
                 BufferedReader reader = new BufferedReader(new FileReader(
-                        logFile));
+                        clientLogFile));
                 StringBuffer sb = new StringBuffer();
                 String line = null;
                 while ((line = reader.readLine()) != null) {
@@ -89,13 +80,7 @@ public class SendServerLogCommand implements ICommand {
             } catch (SecurityException e) {
                 // Set error status
                 response.setStatus(ServerLogResponseMessage.CONFIG_ERROR);
-            } catch (NoSuchFieldException e) {
-                // Set error status
-                response.setStatus(ServerLogResponseMessage.CONFIG_ERROR);
             } catch (IllegalArgumentException e) {
-                // Set error status
-                response.setStatus(ServerLogResponseMessage.CONFIG_ERROR);
-            } catch (IllegalAccessException e) {
                 // Set error status
                 response.setStatus(ServerLogResponseMessage.CONFIG_ERROR);
             }
@@ -108,24 +93,18 @@ public class SendServerLogCommand implements ICommand {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Message getMessage() {
         return m_message;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setMessage(Message message) {
         m_message = (SendServerLogMessage) message;
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void timeout() {
         log.error(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
     }
