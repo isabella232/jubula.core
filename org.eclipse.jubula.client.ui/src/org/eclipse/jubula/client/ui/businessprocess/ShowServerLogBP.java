@@ -22,6 +22,7 @@ import org.eclipse.jubula.communication.message.SendServerLogMessage;
 import org.eclipse.jubula.communication.message.ServerLogResponseMessage;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 
 
 /**
@@ -104,12 +105,8 @@ public final class ShowServerLogBP extends AbstractActionBP
         
         int waited = 0;        
         while ((m_response == null) && (waited <= TIMEOUT)) {
-            try {
-                Thread.sleep(200);
-                waited += 200;
-            } catch (InterruptedException e) {
-                // Do nothing
-            }
+            TimeUtil.delay(200);
+            waited += 200;  
         }
         
         // reset m_response for next request of aut starter log

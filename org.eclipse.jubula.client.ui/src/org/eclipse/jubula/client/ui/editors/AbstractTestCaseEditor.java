@@ -325,16 +325,19 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             TimestampBP.refreshTimestamp((ITimestampPO)perObj);
             editSupport.saveWorkVersion();
             updateObjectMapping();
-
+            List<DataChangedEvent> eventList = 
+                new ArrayList<DataChangedEvent>();
             for (IComponentNamePO compName : renamedCompNames) {
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        compName, DataState.Renamed, UpdateState.all);
+                eventList.add(new DataChangedEvent(compName, DataState.Renamed,
+                        UpdateState.all));
             }
 
             for (IComponentNamePO compName : reuseChangedCompNames) {
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        compName, DataState.ReuseChanged, UpdateState.all);
+                eventList.add(new DataChangedEvent(compName,
+                        DataState.ReuseChanged, UpdateState.all));
             }
+            DataEventDispatcher.getInstance().fireDataChangedListener(
+                    eventList.toArray(new DataChangedEvent[0]));
             
             getEditorHelper().resetEditableState();
             getEditorHelper().setDirty(false);

@@ -305,7 +305,14 @@ public class ComponentNamesTableComposite extends Composite implements
          * {@inheritDoc}
          */
         public boolean canModify(Object element, String property) {
-            if (element instanceof ICompNamesPairPO) {
+            boolean editable = false;
+            if (getSelectedExecNodeOwner() instanceof AbstractTestCaseEditor
+                    && ((AbstractTestCaseEditor)getSelectedExecNodeOwner())
+                            .getEditorHelper().requestEditableState() 
+                            == EditableState.OK) {
+                editable = true;
+            }
+            if (editable && element instanceof ICompNamesPairPO) {
                 final ICompNamesPairPO compNamesPair = (ICompNamesPairPO)
                     element;
                 return COLUMN_NEW_NAME.equals(property) && isModifiable()
