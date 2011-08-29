@@ -129,6 +129,9 @@ public class SwtAUTServer extends AUTServer {
             }
             return m_display;
         } finally {
+            if (m_display == null) {
+                LOG.error("SWT Display not found");
+            }
             Thread.currentThread().setContextClassLoader(oldCL);
         }
     }
