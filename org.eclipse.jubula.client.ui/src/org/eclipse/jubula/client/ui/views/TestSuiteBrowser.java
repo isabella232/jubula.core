@@ -219,6 +219,9 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                     CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
             mgr.add(new Separator());
             CommandHelper.createContributionPushItem(mgr,
+                    CommandIDs.COPY_ID_COMMAND_ID);
+            mgr.add(new Separator());
+            CommandHelper.createContributionPushItem(mgr,
                     CommandIDs.REFRESH_COMMAND_ID);
             mgr.add(new Separator());
             mgr.add(submenuOpenWith);

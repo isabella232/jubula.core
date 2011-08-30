@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.tools.constants.StringConstants;
 
@@ -34,6 +35,10 @@ public abstract class AbstractClipboardHandler extends AbstractOpenHandler
      * <code>OBJECT_TYPE_TESTCASE</code>
      */
     protected static final String OBJECT_TYPE_TESTCASE = "tc"; //$NON-NLS-1$
+    /**
+     * <code>OBJECT_TYPE_TESTSUITE</code>
+     */
+    protected static final String OBJECT_TYPE_TESTSUITE = "ts"; //$NON-NLS-1$
     /**
      * <code>SPLIT_TOKEN</code>
      */
@@ -54,6 +59,8 @@ public abstract class AbstractClipboardHandler extends AbstractOpenHandler
         StringBuilder sb = new StringBuilder();
         if (node instanceof ISpecTestCasePO) {
             sb.append(OBJECT_TYPE_TESTCASE);
+        } else if (node instanceof ITestSuitePO) {
+            sb.append(OBJECT_TYPE_TESTSUITE);
         }
         sb.append(SPLIT_TOKEN);
         sb.append(node.getGuid());
