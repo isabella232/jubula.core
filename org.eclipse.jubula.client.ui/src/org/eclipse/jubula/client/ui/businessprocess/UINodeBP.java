@@ -132,11 +132,17 @@ public class UINodeBP {
                     .fireProgammableSelectionEvent(newSelection);
             ISelection currSelection = tv.getSelection();
             if (currSelection instanceof StructuredSelection) {
-                IElementComparer comparer = tv.getComparer();
                 Object currObj = ((StructuredSelection)currSelection)
-                    .getFirstElement();
-                if (comparer.equals(o, currObj)) {
-                    return o;
+                        .getFirstElement();
+                IElementComparer comparer = tv.getComparer();
+                if (comparer != null) {
+                    if (comparer.equals(o, currObj)) {
+                        return o;
+                    }
+                } else {
+                    if (o.equals(currObj)) {
+                        return o;
+                    }
                 }
             }
         }

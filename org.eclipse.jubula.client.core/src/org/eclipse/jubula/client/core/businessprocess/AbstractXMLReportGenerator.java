@@ -268,26 +268,28 @@ public abstract class AbstractXMLReportGenerator {
             
             Element error = insertInto.addElement("error"); //$NON-NLS-1$
             Element errorType = error.addElement("type"); //$NON-NLS-1$
-            errorType.addText(I18n.getString(resultNode.getEvent().getId(), 
-                true));
-            Set keys = resultNode.getEvent().getProps().keySet();
-            if (resultNode.getEvent().getId().equals(
-                TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR)) {
-                String key = (String)resultNode.getEvent().getProps().get(
-                    TestErrorEvent.Property.DESCRIPTION_KEY);
-                Object[] args = (Object[])resultNode.getEvent().getProps().get(
-                        TestErrorEvent.Property.PARAMETER_KEY);
-                args = args != null ? args : new Object[0];
-                Element mapEntry = error.addElement("description"); //$NON-NLS-1$
-                if (mapEntry != null && key != null) {
-                    mapEntry.addText(resultNode.hasBackingNode() 
-                            ? String.valueOf(I18n.getString(key, args)) : key);
-                }
-            } else {
-                for (Object key : keys) {
-                    Element mapEntry = error.addElement((String)key);
-                    mapEntry.addText(String.valueOf(resultNode.getEvent()
-                        .getProps().get(key)));
+            TestErrorEvent event = resultNode.getEvent();
+            if (event != null) {
+                errorType.addText(I18n.getString(event.getId(), true));
+                Set keys = event.getProps().keySet();
+                if (event.getId().equals(
+                        TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR)) {
+                    String key = (String) event.getProps().get(
+                            TestErrorEvent.Property.DESCRIPTION_KEY);
+                    Object[] args = (Object[]) event.getProps().get(
+                            TestErrorEvent.Property.PARAMETER_KEY);
+                    args = args != null ? args : new Object[0];
+                    Element mapEntry = error.addElement("description"); //$NON-NLS-1$
+                    if (mapEntry != null && key != null) {
+                        mapEntry.addText(resultNode.hasBackingNode() ? String
+                                .valueOf(I18n.getString(key, args)) : key);
+                    }
+                } else {
+                    for (Object key : keys) {
+                        Element mapEntry = error.addElement((String) key);
+                        mapEntry.addText(String.valueOf(event.getProps().get(
+                                key)));
+                    }
                 }
             }
         }
