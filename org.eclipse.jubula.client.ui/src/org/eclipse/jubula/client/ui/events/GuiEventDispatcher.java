@@ -15,7 +15,6 @@ import java.util.Set;
 
 import org.eclipse.jubula.client.ui.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,8 +108,6 @@ public class GuiEventDispatcher {
      */
     public void fireEditorDirtyStateListener(IJBEditor editor, 
             boolean isDirty) {
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<IEditorDirtyStateListener> stableListeners = 
             new HashSet<IEditorDirtyStateListener>(m_editorDirtyStateListeners);
@@ -133,12 +130,5 @@ public class GuiEventDispatcher {
                 LOG.error(Messages.UnhandledExceptionCallingListeners, t);
             }
         }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireEditorDirtyStateListener():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
-        }
     }
-    
 }

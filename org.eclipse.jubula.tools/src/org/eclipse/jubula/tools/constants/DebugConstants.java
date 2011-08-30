@@ -15,9 +15,6 @@ package org.eclipse.jubula.tools.constants;
  * @created 26.03.2007
  */
 public class DebugConstants {
-    /** constant for vm parameter debugging */
-    public static final String VM_DEBUG = "DEBUG"; //$NON-NLS-1$
-
     /** <code>ERROR</code> */
     public static final String ERROR = "An error occured: "; //$NON-NLS-1$
     

@@ -17,8 +17,6 @@ import java.util.Set;
 import javax.persistence.EntityNotFoundException;
 
 import org.apache.commons.lang.exception.NestableRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -31,9 +29,10 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage.IDataModifiedLi
 import org.eclipse.jubula.client.core.persistence.GeneralStorage.IReloadedSessionListener;
 import org.eclipse.jubula.client.core.utils.IGenericListener;
 import org.eclipse.jubula.client.core.utils.ListenerManager;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IWorkbenchPart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -757,8 +756,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * notify listener about param modification
      */
     public void fireParamChangedListener() {        
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<IParamChangedListener> stableListeners = 
             new HashSet<IParamChangedListener>(m_paramChangedListeners);
@@ -780,13 +777,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
         }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireParamChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
-        }
-
     }
     
     /**
@@ -856,8 +846,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param part the part that was closed
      */
     public void firePartClosed(IWorkbenchPart part) {        
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<IPartClosedListener> stableListeners = 
             new HashSet<IPartClosedListener>(m_partClosedListeners);
@@ -879,12 +867,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
         }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("firePartClosed():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
-        }
     }
     
     /**
@@ -892,8 +874,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param isCompNameChanged flag to set true, if compName changed
      */
     public void firePropertyChanged(boolean isCompNameChanged) {        
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<IPropertyChangedListener> stableListeners = 
             new HashSet<IPropertyChangedListener>(m_propertyChangedListeners);
@@ -916,12 +896,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("firePropertyChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
-        }
     }
     
     /**
@@ -929,8 +903,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param locale the new Locale.
      */
     public void fireLanguageChanged(Locale locale) {
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<ILanguageChangedListener> langChangedListeners = 
             new HashSet<ILanguageChangedListener>(m_langChangedListeners);
@@ -951,12 +923,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireLanguageChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
         }
     }
     
@@ -990,16 +956,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param monitor The progress monitor for this poperation.
      */
     public void fireProjectLoadedListener(IProgressMonitor monitor) {
-        final long start = System.currentTimeMillis();
-        
         new LoadProjectDataOperation().run(monitor);
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(
-                DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireProjectLoaded():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
-        }
     }
     
     /**
@@ -1028,8 +985,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * notify listener about loading of a project
      */
     public void fireProjectCreatedListener() {
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<IProjectCreatedListener> stableListeners = 
             new HashSet<IProjectCreatedListener>(m_projectCreatedListeners);
@@ -1050,12 +1005,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireProjectCreated():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
         }
     }
     
@@ -1085,8 +1034,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * notify listener about new / corrected problem
      */
     public void fireProblemChangedListener() {
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<IProblemChangedListener> stableListeners = 
             new HashSet<IProblemChangedListener>(m_problemChangedListeners);
@@ -1107,12 +1054,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireProblemChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
         }
     }
     
@@ -1144,7 +1085,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param state of server connection
      */
     public void fireServerConnectionChanged(ServerState state) {
-        long start = System.currentTimeMillis();
         final Set<IServerConnectionListener> stableListeners = 
             new HashSet<IServerConnectionListener>(m_serverConnectionListeners);
         for (IServerConnectionListener l : stableListeners) {
@@ -1165,12 +1105,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireServerConnectionChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
         }
     }
 
@@ -1202,7 +1136,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param state of AUT Server connection
      */
     public void fireAutServerConnectionChanged(ServerState state) {
-        long start = System.currentTimeMillis();
         final Set<IServerConnectionListener> stableListeners = 
             new HashSet<IServerConnectionListener>(
                     m_autServerConnectionListeners);
@@ -1225,20 +1158,12 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireAutServerConnectionChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
-        }
     }
 
     /**
      * 
      */
     public void fireProjectPropertiesModified() {
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<IProjectPropertiesModifyListener> stableListeners = 
             new HashSet<IProjectPropertiesModifyListener>(
@@ -1261,12 +1186,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireProjectPropertiesModified():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
         }
     }
     
@@ -1340,8 +1259,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param state of Record Mode
      */
     public void fireRecordModeStateChanged(RecordModeState state) {
-        long start = System.currentTimeMillis();
-
         // model updates
         final Set<IRecordModeStateListener> stableListeners = 
             new HashSet<IRecordModeStateListener>(m_recordModeStateListeners);
@@ -1363,12 +1280,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireRecordModeStateChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
         }
     }
     
@@ -1399,8 +1310,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param state of OM Mode
      */
     public void fireOMStateChanged(OMState state) {
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<IOMStateListener> stableListeners = 
             new HashSet<IOMStateListener>(m_omStateListeners);
@@ -1421,12 +1330,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireOMStateChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
         }
     }
     
@@ -1457,8 +1360,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param state of server connection
      */
     public void fireAutStateChanged(AutState state) {
-        long start = System.currentTimeMillis();
-
         // model updates
         final Set<IAutStateListener> stableListeners = 
             new HashSet<IAutStateListener>(m_autStateListeners);
@@ -1480,13 +1381,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
-
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireAutStateChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
-        }
-
     }
     
     /**
@@ -1517,8 +1411,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param state TestresultState (clear or refresh)
      */
     public void fireTestresultChanged(TestresultState state) {
-        long start = System.currentTimeMillis();
-
         // model updates
         final Set<ITestresultChangedListener> stableListeners = 
             new HashSet<ITestresultChangedListener>(
@@ -1542,13 +1434,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
         }
-
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireTestresultChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
-        }
-
     }
     
     /**
@@ -1577,8 +1462,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param event occured event
      */
     public void fireTestSuiteStateChanged(TestExecutionEvent event) {
-        long start = System.currentTimeMillis();
-        
         // model updates
         final Set<ITestSuiteStateListener> stableListeners = 
             new HashSet<ITestSuiteStateListener>(m_testSuiteStateListeners);
@@ -1600,12 +1483,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireTestSuiteStateChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
         }
     }     
     
@@ -1661,8 +1538,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * notify listener about modification of server preferences
      */
     public void fireServerPreferencesChanged() {
-        long start = System.currentTimeMillis();
-
         // model updates
         final Set<IServerPrefListener> stableListeners = 
             new HashSet<IServerPrefListener>(m_serverPrefListeners);
@@ -1684,12 +1559,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }
-        }
-        
-        if (System.getProperty(DebugConstants.VM_DEBUG) != null
-            && System.getProperty(DebugConstants.VM_DEBUG).equals("true")) { //$NON-NLS-1$
-            System.out.println("fireServerPreferencesChanged():"  //$NON-NLS-1$
-                + (System.currentTimeMillis() - start));
         }
     }
     
