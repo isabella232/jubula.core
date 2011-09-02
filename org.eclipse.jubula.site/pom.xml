@@ -43,7 +43,7 @@
         <executions>
           <execution>
             <id>pack-and-sign</id>
-            <phase>install</phase>
+            <phase>verify</phase>
             <configuration>
               <target>
                 <ant antfile="pack-and-sign/build.xml">
