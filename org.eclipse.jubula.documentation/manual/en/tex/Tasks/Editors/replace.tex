@@ -13,14 +13,14 @@
 \item The first page of a wizard appears in which you can replace selected the \gdcases{} in a series of steps. 
 \end{enumerate}
 
-
+\bxwarn{You may only replace single \gdcases{} which neither have multiple data sets nor central test data / Excel files as data.}
 
 
 \textbf{Page 1: Replacing the \gdcases{}}
 \begin{enumerate}
 \item On the first page of the wizard \bxfigref{ReplaceTC-ChooseTC}, you can select a  new  \gdcase{} to replace the selected \gdcases{}. 
 \item Browse to and select the \gdcase{} you want to add to the editor.
-\item Click \bxcaption{Next} to match the component names for the old and new \gdcases{}, or click \bxcaption{Finish} to replace the selected \gdcases{} with the bare new \gdcase{}, without any component names or parameters transferred. 
+\item Click \bxcaption{Next} to match the component names for the old and new \gdcases{}, or click \bxcaption{Finish} to replace the selected \gdcases{} with the bare new \gdcase{}, without any component names transferred. 
 \end{enumerate}
 
 \begin{figure}[h]
@@ -40,7 +40,7 @@
 \bxtipp{If the old \gdcases{} contained no component names, then you will see the text \bxname{no component names}.}
 \item On the right-hand side, you can see the \gdcompnamesview{}, which shows any component names that are required by the new \gdcase{}. 
 \end{itemize}
-\item Use this dialog to transfer any component names from the old \gdcases{} to the new \gdcases{}. You can drag and drop old component names onto to new ones, you can enter new component names, or you can leave the new component names as they are. You can also set the checkbox in the \gdcompnamesview{} to propagate the name to the next \gdcase{} in the hierarchy.  
+\item Use this dialog to transfer any component names from the old \gdcases{} to the new \gdcases{}. You can enter component names, or you can leave the new component names as they are. You can also set the checkbox in the \gdcompnamesview{} to propagate the name to the next \gdcase{} in the hierarchy.  
 \item Once you have transferred the component names, you can click \bxcaption{Next} 
 %to match parameters, 
 to add further information
@@ -73,3 +73,6 @@ or you can click \bxcaption{Finish} to replace the selected \gdcases{} with the 
 \item On the final page of the wizard, you can enter a \gdcase{} reference name and a comment for the new \gdcase{}. 
 \item Once you have entered a name and/or a comment, you can click \bxcaption{Finish} to complete the replacement.
 \end{enumerate}
+
+
+Once you have replaced the \gdcase{}, you must manually adapt the parameters for the new \gdcase{}.
