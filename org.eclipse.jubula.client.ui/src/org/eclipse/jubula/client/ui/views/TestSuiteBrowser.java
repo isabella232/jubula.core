@@ -136,9 +136,9 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         getViewSite().registerContextMenu(m_mgr, getTreeViewer());
         m_mgr.addMenuListener(m_menuListener);
         // Register menu for extension.
-        DataEventDispatcher.getInstance().addLanguageChangedListener(this, 
-            true);
-        DataEventDispatcher.getInstance().addCompletenessCheckListener(this);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addLanguageChangedListener(this, true);
+        ded.addCompletenessCheckListener(this);
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
         }

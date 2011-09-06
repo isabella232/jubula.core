@@ -23,6 +23,11 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  */
 public class OMQualityDecorator extends AbstractLightweightLabelDecorator {
     /**
+     * <code>ID</code>
+     */
+    public static final String ID = "org.eclipse.jubula.client.ui.decorators.OMQuality"; //$NON-NLS-1$
+    
+    /**
      * {@inheritDoc}
      */
     public void decorate(Object element, IDecoration decoration) {

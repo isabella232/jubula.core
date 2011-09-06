@@ -35,6 +35,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -116,7 +117,6 @@ import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.filter.ObjectMappingEditorPatternFilter;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTableContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.ObjectMappingRow;
@@ -155,6 +155,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -1670,7 +1671,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         } finally {
             monitor.done();
             if (!isProjDeleted) {
-                getEditorHelper().setDirty(false);
                 try {
                     reOpenEditor(((PersistableEditorInput)getEditorInput())
                         .getNode());
@@ -1834,7 +1834,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         PersistableEditorInput input = new PersistableEditorInput(obj);
         try {
             init(getEditorSite(), input);
-            
             // MultiPageEditorPart sets the selection provider to a 
             // MultiPageSelectionProvider during init. We want to continue
             // using our own selection provider, so we re-set it here.
@@ -1844,24 +1843,26 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             m_treeViewerUpdater =  new ComponentNameTreeViewerUpdater(
                     m_treeViewer);
             setProviders(m_treeViewer, getCompMapper());
-            m_treeViewer.setInput(getAut().getObjMap());
+            final IObjectMappingPO om = getAut().getObjMap();
+            m_treeViewer.setInput(om);
             // Clearing the selection seems to help prevent the behavior 
             // noted in 334269
             m_treeViewer.setSelection(StructuredSelection.EMPTY);
-            m_tableViewer.setInput(getAut().getObjMap());
+            m_tableViewer.setInput(om);
             m_treeViewer.setExpandedElements(expandedElements);
             m_treeViewer.expandToLevel(2);
 
-            Map<AbstractTreeViewer, IObjectMappingCategoryPO> viewerToInput = 
-                new HashMap<AbstractTreeViewer, IObjectMappingCategoryPO>();
+            m_mappingConfigComponent.setInput(om);
+            Map<TreeViewer, IObjectMappingCategoryPO> viewerToInput = 
+                new HashMap<TreeViewer, IObjectMappingCategoryPO>();
             viewerToInput.put(m_compNameTreeViewer, 
-                    getAut().getObjMap().getUnmappedLogicalCategory());
+                    om.getUnmappedLogicalCategory());
             viewerToInput.put(m_uiElementTreeViewer, 
-                    getAut().getObjMap().getUnmappedTechnicalCategory());
+                    om.getUnmappedTechnicalCategory());
             viewerToInput.put(m_mappedComponentTreeViewer, 
-                    getAut().getObjMap().getMappedCategory());
+                    om.getMappedCategory());
 
-            for (AbstractTreeViewer splitViewer : viewerToInput.keySet()) {
+            for (TreeViewer splitViewer : viewerToInput.keySet()) {
                 Object [] expandedSplitViewerElements = 
                     splitViewer.getExpandedElements();
                 setProviders(splitViewer, getCompMapper());
@@ -1874,7 +1875,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         } catch (PartInitException e) {
             getSite().getPage().closeEditor(this, false);
         }
-        m_mappingConfigComponent.setInput(getAut().getObjMap());
     }
 
     /**
@@ -1884,16 +1884,16 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * @param viewer The viewer to receive new providers.
      * @param compNameMapper The mapper to use to initialize the providers.
      */
-    private static void setProviders(AbstractTreeViewer viewer, 
+    private static void setProviders(AbstractTreeViewer viewer,
             IWritableComponentNameMapper compNameMapper) {
-
-        viewer.setContentProvider(
-                new OMEditorTreeContentProvider(compNameMapper));
-        DecoratingCellLabelProvider lp = new DecoratingCellLabelProvider(
-                new OMEditorTreeLabelProvider(compNameMapper), Plugin
-                        .getDefault().getWorkbench().getDecoratorManager()
-                        .getLabelDecorator());
+        IDecoratorManager dm = Plugin.getDefault().getWorkbench()
+                .getDecoratorManager();
+        DecoratingLabelProvider lp = new DecoratingLabelProvider(
+                new OMEditorTreeLabelProvider(compNameMapper),
+                dm.getLabelDecorator());
         viewer.setLabelProvider(lp);
+        viewer.setContentProvider(new OMEditorTreeContentProvider(
+                compNameMapper));
     }
     
     /**
