@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.provider.labelprovider;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
@@ -38,7 +39,6 @@ import org.eclipse.ui.PlatformUI;
  * @created 15.10.2004
  */
 public class OMEditorTreeLabelProvider extends LabelProvider {
-    
     /** 
      * mapping from top-level category name to i18n key for top-level
      * category name 
@@ -76,7 +76,6 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
     }
     
     /**
-     * 
      * {@inheritDoc}
      */
     public void dispose() {
@@ -91,11 +90,26 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
      */
     public Image getImage(Object element) {
         Image image = null;
-
         if (element instanceof IComponentNamePO) {
             image = IconConstants.LOGICAL_NAME_IMAGE;
         } else if (element instanceof IObjectMappingAssoziationPO) {
-            image = IconConstants.TECHNICAL_NAME_IMAGE;
+            int status = getQualitySeverity(
+                    ((IObjectMappingAssoziationPO)element)
+                        .getCompIdentifier());
+            switch (status) {
+                case IStatus.OK:
+                    image = IconConstants.TECH_NAME_OK_IMAGE;
+                    break;
+                case IStatus.WARNING:
+                    image = IconConstants.TECH_NAME_WARNING_IMAGE;
+                    break;
+                case IStatus.ERROR:
+                    image = IconConstants.TECH_NAME_ERROR_IMAGE;
+                    break;
+                default:
+                    image = IconConstants.TECHNICAL_NAME_IMAGE;
+                    break;
+            }
         } else if (element instanceof IObjectMappingCategoryPO) {
             image = IconConstants.CATEGORY_IMAGE;
         } else if (element instanceof String) {
@@ -129,6 +143,25 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
         return image;
     }
     
+    /**
+     * @param identifier
+     *            the identifier to check for its quality
+     * @return an IStatus severity indicating the quality
+     */
+    public static int getQualitySeverity(IComponentIdentifier identifier) {
+        if (identifier != null) {
+            int noOfMatchedComps = identifier
+                    .getNumberOfOtherMatchingComponents();
+            if (identifier.isEqualOriginalFound()) {
+                if (noOfMatchedComps == 1) {
+                    return IStatus.OK;
+                }
+                return IStatus.WARNING;
+            }
+            return IStatus.ERROR;
+        }
+        return IStatus.CANCEL;
+    }
     
     /**
      * @param element

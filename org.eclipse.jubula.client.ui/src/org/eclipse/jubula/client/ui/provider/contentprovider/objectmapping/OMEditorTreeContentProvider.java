@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -103,7 +104,7 @@ public class OMEditorTreeContentProvider extends
         }
 
         if (parentElement instanceof IComponentNamePO) {
-            return new Object[0];
+            return ArrayUtils.EMPTY_OBJECT_ARRAY;
         }
         
         if (parentElement instanceof IObjectMappingCategoryPO) {
@@ -135,11 +136,11 @@ public class OMEditorTreeContentProvider extends
             Validate.noNullElements(childList);
             return childList.toArray();
         } else if (parentElement instanceof String) {
-            return new Object[0];
+            return ArrayUtils.EMPTY_OBJECT_ARRAY;
         }
         Assert.notReached(Messages.WrongTypeOfElement 
                 + StringConstants.EXCLAMATION_MARK);
-        return new Object[0];
+        return ArrayUtils.EMPTY_OBJECT_ARRAY;
     }
 
     /**
@@ -190,9 +191,9 @@ public class OMEditorTreeContentProvider extends
             final Object newInput) {
         Validate.isTrue(viewer instanceof TreeViewer);
         m_childToParentMap.clear();
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
         if (m_modelListener != null) {
-            DataEventDispatcher.getInstance()
-                .removeDataChangedListener(m_modelListener);
+            ded.removeDataChangedListener(m_modelListener);
             m_modelListener = null;
         }
 
@@ -230,8 +231,7 @@ public class OMEditorTreeContentProvider extends
                     }
                 }
             };
-            DataEventDispatcher.getInstance().addDataChangedListener(
-                    m_modelListener, true);
+            ded.addDataChangedListener(m_modelListener, true);
         }
     }
 }

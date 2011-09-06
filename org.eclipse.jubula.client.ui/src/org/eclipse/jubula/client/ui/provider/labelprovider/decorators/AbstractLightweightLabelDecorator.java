@@ -37,7 +37,7 @@ public abstract class AbstractLightweightLabelDecorator implements
      * {@inheritDoc}
      */
     public boolean isLabelProperty(Object element, String property) {
-        return false;
+        return true;
     }
 
     /**

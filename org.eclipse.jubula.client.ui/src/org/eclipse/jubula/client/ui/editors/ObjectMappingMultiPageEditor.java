@@ -35,7 +35,6 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -121,7 +120,6 @@ import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEdi
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.objectmapping.ObjectMappingRow;
 import org.eclipse.jubula.client.ui.provider.labelprovider.OMEditorTreeLabelProvider;
-import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.OMQualityDecorator;
 import org.eclipse.jubula.client.ui.provider.selectionprovider.SelectionProviderIntermediate;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -155,7 +153,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -1599,7 +1596,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 IObjectMappingAssoziationPO assoc =
                     ((ObjectMappingRow)element).getAssociation();
                 IComponentIdentifier compId = assoc.getCompIdentifier();
-                switch (OMQualityDecorator.getQualitySeverity(compId)) {
+                switch (OMEditorTreeLabelProvider.getQualitySeverity(compId)) {
                     case IStatus.OK:
                         return Layout.GREEN_COLOR;
                     case IStatus.WARNING:
@@ -1622,7 +1619,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     public void doSave(IProgressMonitor monitor) {
         monitor.beginTask(Messages.EditorsSaveEditors,
                 IProgressMonitor.UNKNOWN);
-        boolean isProjDeleted = false;
+        boolean errorOccured = false;
         IObjectMappingPO objMap = getAut().getObjMap();
         TimestampBP.refreshTimestamp(objMap);
         try {
@@ -1663,14 +1660,15 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             ComponentNamesBP.getInstance().init();
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForEditor(e, this);
+            errorOccured = true;
         } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleGDProjectDeletedException();
-            isProjDeleted = true;
+            errorOccured = true;
         } catch (IncompatibleTypeException ite) {
             Utils.createMessageDialog(ite, ite.getErrorMessageParams(), null);
         } finally {
             monitor.done();
-            if (!isProjDeleted) {
+            if (!errorOccured) {
                 try {
                     reOpenEditor(((PersistableEditorInput)getEditorInput())
                         .getNode());
@@ -1846,7 +1844,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             final IObjectMappingPO om = getAut().getObjMap();
             m_treeViewer.setInput(om);
             // Clearing the selection seems to help prevent the behavior 
-            // noted in 334269
+            // noted in bug 334269
             m_treeViewer.setSelection(StructuredSelection.EMPTY);
             m_tableViewer.setInput(om);
             m_treeViewer.setExpandedElements(expandedElements);
@@ -1869,7 +1867,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 splitViewer.setInput(viewerToInput.get(splitViewer));
                 splitViewer.setExpandedElements(expandedSplitViewerElements);
                 // Clearing the selection seems to help prevent the behavior 
-                // noted in 334269
+                // noted in bug 334269
                 splitViewer.setSelection(StructuredSelection.EMPTY);
             }
         } catch (PartInitException e) {
@@ -1886,14 +1884,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     private static void setProviders(AbstractTreeViewer viewer,
             IWritableComponentNameMapper compNameMapper) {
-        IDecoratorManager dm = Plugin.getDefault().getWorkbench()
-                .getDecoratorManager();
-        DecoratingLabelProvider lp = new DecoratingLabelProvider(
-                new OMEditorTreeLabelProvider(compNameMapper),
-                dm.getLabelDecorator());
-        viewer.setLabelProvider(lp);
-        viewer.setContentProvider(new OMEditorTreeContentProvider(
-                compNameMapper));
+        viewer.setLabelProvider(
+                new OMEditorTreeLabelProvider(compNameMapper));
+        viewer.setContentProvider(
+                new OMEditorTreeContentProvider(compNameMapper));
     }
     
     /**

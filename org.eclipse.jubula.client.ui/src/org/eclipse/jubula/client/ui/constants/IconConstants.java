@@ -136,6 +136,12 @@ public class IconConstants {
     public static final ImageDescriptor RED_DOT_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("redDot.gif"); //$NON-NLS-1$
     /** yellowDot imageDescriptor */
     public static final ImageDescriptor YELLOW_DOT_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("yellowDot.gif"); //$NON-NLS-1$
+    /** greenDot imageDescriptor */
+    public static final Image TECH_NAME_OK_IMAGE = Plugin.getImageDescriptor("techNameOK.gif").createImage(); //$NON-NLS-1$
+    /** redDot imageDescriptor */
+    public static final Image TECH_NAME_ERROR_IMAGE = Plugin.getImageDescriptor("techNameERR.gif").createImage(); //$NON-NLS-1$
+    /** yellowDot imageDescriptor */
+    public static final Image TECH_NAME_WARNING_IMAGE = Plugin.getImageDescriptor("techNameWARN.gif").createImage(); //$NON-NLS-1$
     /** excel data image */
     public static final Image EXCEL_DATA_IMAGE = 
         EXCEL_DATA_IMAGE_DESCRIPTOR.createImage();
