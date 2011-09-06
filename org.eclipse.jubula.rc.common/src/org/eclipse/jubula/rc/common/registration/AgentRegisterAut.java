@@ -65,8 +65,9 @@ public class AgentRegisterAut implements IRegisterAut {
 
     /**
      * {@inheritDoc}
+     * @throws JBVersionException 
      */
-    public void register() throws IOException {
+    public void register() throws IOException, JBVersionException {
         if (LOG.isInfoEnabled()) {
             LOG.info("Registering AUT '"  //$NON-NLS-1$
                     + m_autIdentifier.getExecutableName() 
@@ -130,8 +131,6 @@ public class AgentRegisterAut implements IRegisterAut {
             LOG.error("Error occurred while connecting to AUT Agent.", nfe); //$NON-NLS-1$
         } catch (SecurityException se) {
             LOG.error("Error occurred while connecting to AUT Agent.", se); //$NON-NLS-1$
-        } catch (JBVersionException gdve) {
-            LOG.error("Error occurred while connecting to AUT Agent.", gdve); //$NON-NLS-1$
         }
 
     }

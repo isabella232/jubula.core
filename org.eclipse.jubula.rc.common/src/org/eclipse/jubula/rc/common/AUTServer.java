@@ -466,6 +466,10 @@ public abstract class AUTServer {
                 log.error("Exception in start()", ce); //$NON-NLS-1$
             }
             System.exit(AUTServerExitConstants.EXIT_AUT_WRONG_CLASS_VERSION);
+        } catch (JBVersionException ve) {
+            log.error("Exception in start()", ve); //$NON-NLS-1$
+            sendExitReason(ve, AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION);
+            System.exit(AUTServerExitConstants.EXIT_UNKNOWN_GUIDANCERCLIENT);
         }
     }
 

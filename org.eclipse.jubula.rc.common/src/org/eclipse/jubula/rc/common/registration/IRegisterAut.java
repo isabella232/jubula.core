@@ -12,6 +12,8 @@ package org.eclipse.jubula.rc.common.registration;
 
 import java.io.IOException;
 
+import org.eclipse.jubula.tools.exception.JBVersionException;
+
 /**
  * Interface for objects capable of registering an AUT.
  *
@@ -25,7 +27,8 @@ public interface IRegisterAut {
      * 
      * @throws IOException if an I/O error prevents the registration. This 
      *                     indicates that the registration was unsuccessful.
+     * @throws JBVersionException if there is a version mismatch between Communicators
      */
-    public void register() throws IOException;
+    public void register() throws IOException, JBVersionException;
 
 }
