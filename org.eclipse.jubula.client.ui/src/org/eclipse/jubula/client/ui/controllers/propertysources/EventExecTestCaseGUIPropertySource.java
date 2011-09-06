@@ -18,8 +18,10 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.utils.StringHelper;
+import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.IntegerTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.controllers.propertysources.ExecTestCaseGUIPropertySource.SpecNameController;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -27,6 +29,7 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -153,9 +156,8 @@ public class EventExecTestCaseGUIPropertySource extends
         
         // Event Types
         if (m_eventTypePropDesc == null) {
-            PropertyDescriptor cbpd = new ComboBoxPropertyDescriptor(
-                    new EventTypeController(), P_ELEMENT_DISPLAY_EVENTTYPE,
-                    EVENT_TYPES);
+            PropertyDescriptor cbpd = new JBPropertyDescriptor(
+                    new EventTypeController(), P_ELEMENT_DISPLAY_EVENTTYPE);
             cbpd.setLabelProvider(new LabelProvider() {
                 public String getText(Object element) {
                     if (element instanceof Integer) {
