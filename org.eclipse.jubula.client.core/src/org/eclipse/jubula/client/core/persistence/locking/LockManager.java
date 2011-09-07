@@ -22,18 +22,17 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -305,7 +304,7 @@ public final class LockManager {
                 try {
                     if (checkVersion) {
                         Query versionQuery = sess.createQuery("select obj.version from " //$NON-NLS-1$
-                                + PersistenceUtil.getClass(po).getSimpleName() 
+                                + po.getClass().getSimpleName() 
                                 + " as obj where obj.id = :poID"); //$NON-NLS-1$
                         versionQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
                         Integer version = 
@@ -315,7 +314,7 @@ public final class LockManager {
                         }
                     } else {
                         Query countQuery = sess.createQuery("select count(obj.id) from " //$NON-NLS-1$
-                                + PersistenceUtil.getClass(po).getSimpleName() 
+                                + po.getClass().getSimpleName() 
                                 + " as obj where obj.id = :poID"); //$NON-NLS-1$
                         countQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
                         Long count = (Long)countQuery.getSingleResult();

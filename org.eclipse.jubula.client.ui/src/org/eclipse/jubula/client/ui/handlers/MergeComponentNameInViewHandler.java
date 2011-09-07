@@ -21,9 +21,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -64,9 +63,8 @@ public class MergeComponentNameInViewHandler
             Set<IComponentNamePO> inSessionCompNames = 
                 new HashSet<IComponentNamePO>();
             for (IComponentNamePO cn : compNames) {
-                inSessionCompNames.add(
-                        (IComponentNamePO)masterSession.find(
-                                PersistenceUtil.getClass(cn), cn.getId()));
+                inSessionCompNames.add(masterSession.find(
+                                cn.getClass(), cn.getId()));
             }
             
             performOperation(inSessionCompNames, selectedCompNamePo);

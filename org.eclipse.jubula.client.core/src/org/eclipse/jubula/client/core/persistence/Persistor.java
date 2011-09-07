@@ -1031,7 +1031,7 @@ public class Persistor {
      * @return the Persistence (JPA / EclipseLink).getClass(obj) or null if obj == null
      */
     public static Class getClass(Object obj) {
-        return obj == null ? null : PersistenceUtil.getClass(obj);
+        return obj == null ? null : obj.getClass();
     }
 
     /**

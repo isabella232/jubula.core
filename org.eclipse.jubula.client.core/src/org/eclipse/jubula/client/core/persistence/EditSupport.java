@@ -22,8 +22,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.CompNameMapperFactory;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
@@ -47,6 +45,8 @@ import org.eclipse.jubula.tools.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.persistence.jpa.JpaEntityManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -145,12 +145,12 @@ public class EditSupport {
             Messages.OriginalObjectForCreatingOfWorkversionIsNull
             + StringConstants.DOT);
         try {
-            IPersistentObject result = (IPersistentObject)m_session.find(
-                PersistenceUtil.getClass(po), po.getId());
+            IPersistentObject result = m_session
+                    .find(po.getClass(), po.getId());
             if (result == null) {
                 throw new EntityNotFoundException(
                         Messages.UnableToFind + StringConstants.SPACE
-                        + PersistenceUtil.getClass(po).getName() 
+                        + po.getClass().getName() 
                         + StringConstants.SPACE + Messages.WithID 
                         + StringConstants.SPACE + po.getId());
             }
@@ -162,12 +162,11 @@ public class EditSupport {
                 || (po.getVersion().intValue() 
                     > result.getVersion().intValue())) {
                 m_session.detach(result);
-                result = (IPersistentObject)m_session.find(
-                        PersistenceUtil.getClass(po), po.getId());
+                result = m_session.find(po.getClass(), po.getId());
                 if (result == null) {
                     throw new EntityNotFoundException(
                             Messages.UnableToFind + StringConstants.SPACE
-                            + PersistenceUtil.getClass(po).getName() 
+                            + po.getClass().getName() 
                             + StringConstants.SPACE + Messages.WithID
                             + StringConstants.SPACE + po.getId());
                 }
@@ -444,10 +443,8 @@ public class EditSupport {
      * @return Returns the original.
      */
     public IPersistentObject getOriginal() {
-        return (IPersistentObject)GeneralStorage.getInstance()
-            .getMasterSession().find(
-                PersistenceUtil.getClass(m_workVersion),
-                m_workVersion.getId());
+        return GeneralStorage.getInstance().getMasterSession()
+                .find(m_workVersion.getClass(), m_workVersion.getId());
     }
 
     /**
@@ -534,12 +531,12 @@ public class EditSupport {
         IProjectPO workProj = null;
 
         try {
-            workProj = (IProjectPO)m_session.find(
-                PersistenceUtil.getClass(masterProj), masterProj.getId());
+            workProj = m_session.find(
+                    masterProj.getClass(), masterProj.getId());
             if (workProj == null) {
                 throw new EntityNotFoundException(
                         Messages.UnableToFind + StringConstants.SPACE
-                        + PersistenceUtil.getClass(masterProj).getName() 
+                        + masterProj.getClass().getName() 
                         + StringConstants.SPACE + Messages.WithID
                         + StringConstants.SPACE + masterProj.getId());
             }

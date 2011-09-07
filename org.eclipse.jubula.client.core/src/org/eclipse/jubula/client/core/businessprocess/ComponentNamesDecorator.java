@@ -321,8 +321,8 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
             ComponentNamesBP.getInstance().getCompNamePo(guid, resolveRefs);
         if (cnPoFromOtherSession != null && m_session != null 
                 && m_session.isOpen()) {
-            retVal = (IComponentNamePO)m_session.find(
-                    PersistenceUtil.getClass(cnPoFromOtherSession), 
+            retVal = m_session.find(
+                    cnPoFromOtherSession.getClass(),
                     cnPoFromOtherSession.getId());
             if (retVal != null) {
                 m_cached.put(retVal.getGuid(), retVal);

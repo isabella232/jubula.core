@@ -505,12 +505,10 @@ public class MultipleNodePM  extends PersistenceManager {
             for (IComponentNamePO compName : toLoad.keySet()) {
                 Set<INodePO> userSet = new HashSet<INodePO>();
                 for (INodePO node : toLoad.get(compName)) {
-                    userSet.add((INodePO)sess.find(
-                            PersistenceUtil.getClass(node), node.getId()));
+                    userSet.add(sess.find(node.getClass(), node.getId()));
                 }
-                sessionMap.put((IComponentNamePO)sess.find(
-                        PersistenceUtil.getClass(compName), compName.getId()), 
-                        userSet);
+                sessionMap.put(sess.find(compName.getClass(), 
+                                compName.getId()), userSet);
             }
             
             return sessionMap;
@@ -603,12 +601,9 @@ public class MultipleNodePM  extends PersistenceManager {
             
             if (masterSession != sess) {
                 masterSession.detach(node);
-                oldParent = (IPersistentObject)sess.find(
-                        PersistenceUtil.getClass(oldParent), oldParent.getId());
-                newParent = (IPersistentObject)sess.find(
-                        PersistenceUtil.getClass(newParent), newParent.getId());
-                node = (INodePO)sess.find(
-                        PersistenceUtil.getClass(node), node.getId());
+                oldParent = sess.find(oldParent.getClass(), oldParent.getId());
+                newParent = sess.find(newParent.getClass(), newParent.getId());
+                node = sess.find(node.getClass(), node.getId());
             }
 
             
@@ -730,13 +725,13 @@ public class MultipleNodePM  extends PersistenceManager {
          * {@inheritDoc}
          */
         public MessageInfo execute(EntityManager sess) {
-            ISpecTestCasePO specTc = (ISpecTestCasePO)sess.find(
-                    PersistenceUtil.getClass(m_specTc), m_specTc.getId());
-            IExecTestCasePO execTc = (IExecTestCasePO)sess.find(
-                    PersistenceUtil.getClass(m_execTc), m_execTc.getId());
+            ISpecTestCasePO specTc = sess.find(m_specTc.getClass(),
+                    m_specTc.getId());
+            IExecTestCasePO execTc = sess.find(m_execTc.getClass(),
+                    m_execTc.getId());
             execTc.setSpecTestCase(specTc);
             return null;
-        }            
+        }
     }
 
     /**

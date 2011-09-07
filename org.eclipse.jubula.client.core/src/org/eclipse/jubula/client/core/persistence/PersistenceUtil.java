@@ -80,19 +80,6 @@ public class PersistenceUtil {
     }
  
     /**
-     * Indirection layer for acquiring the underlying class for a proxied
-     * object.
-     * 
-     * @param persistenceProxy The object for which to get the class.
-     * @return the true underlying class for the given object.
-     * @see Persistence (JPA / EclipseLink)#getClass()
-     */
-    @SuppressWarnings("rawtypes")
-    public static Class getClass(Object persistenceProxy) {
-        return persistenceProxy.getClass();
-    }
-
-    /**
      * 
      * @return a Globally Unique Identifier that is a 32-character 
      *         hexadecimal string.

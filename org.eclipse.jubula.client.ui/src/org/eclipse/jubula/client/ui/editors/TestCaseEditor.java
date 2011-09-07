@@ -48,7 +48,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ObjectMappingManager;
@@ -206,10 +205,8 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         for (IExecTestCasePO execTc : execTcRefs) {
             try {
                 INodePO parentNode = execTc.getParentNode();
-                INodePO editorSessionParentNode = 
-                    (INodePO)editorSession.find(
-                            PersistenceUtil.getClass(parentNode), 
-                            parentNode.getId());
+                INodePO editorSessionParentNode = editorSession.find(
+                        parentNode.getClass(), parentNode.getId());
                 
                 if (LockManager.instance().lockPO(editorSession, 
                         editorSessionParentNode, true)) {

@@ -44,7 +44,6 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
-import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransactAction;
@@ -322,8 +321,7 @@ public class ExtractTestCaseHandler extends AbstractHandler {
             private void getModNodesFromCurrentSession(EntityManager s, 
                 List<IParamNodePO> nodesToRef) {
                 for (IParamNodePO node : modNodes) {
-                    IParamNodePO object = (IParamNodePO)s.
-                        find(PersistenceUtil.getClass(node), node.getId());
+                    IParamNodePO object = s.find(node.getClass(), node.getId());
                     if (object != null) {
                         nodesToRef.add(object);
                     }
