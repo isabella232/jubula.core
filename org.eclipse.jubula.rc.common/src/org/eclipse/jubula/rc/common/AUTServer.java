@@ -449,30 +449,23 @@ public abstract class AUTServer {
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_REFLECTION);
         } catch (ClassNotFoundException cnfe) {
-            log.error("Exception in start()", cnfe); //$NON-NLS-1$
             sendExitReason(cnfe, AUTServerStateMessage.AUT_NOT_FOUND);
             System.exit(AUTServerExitConstants.EXIT_AUT_NOT_FOUND);
         } catch (NoSuchMethodException nsme) {
-            log.error("Exception in start()", nsme); //$NON-NLS-1$
             sendExitReason(nsme, AUTServerStateMessage.MAIN_METHOD_NOT_FOUND);
             System.exit(AUTServerExitConstants.EXIT_AUT_NOT_FOUND);
         } catch (UnsupportedClassVersionError ucve) {
-            log.error("Exception in start()", ucve); //$NON-NLS-1$
-            try {
-                m_communicator.send(new AUTServerStateMessage(
-                    AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION,
-                    ucve.getMessage()));
-            } catch (CommunicationException ce) {
-                log.error("Exception in start()", ce); //$NON-NLS-1$
-            }
+            sendExitReason(ucve,
+                    AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION);
             System.exit(AUTServerExitConstants.EXIT_AUT_WRONG_CLASS_VERSION);
         } catch (JBVersionException ve) {
-            log.error("Exception in start()", ve); //$NON-NLS-1$
-            sendExitReason(ve, AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION);
+            sendExitReason(ve, 
+                    AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION);
             System.exit(AUTServerExitConstants.EXIT_UNKNOWN_GUIDANCERCLIENT);
         }
     }
-
+    
+    
     /**
      * 
      * @return an object capable of registering the AUT managed by this server,
@@ -544,7 +537,8 @@ public abstract class AUTServer {
      * @param e catched exception
      * @param exitCode the exit code for the catched exception
      */
-    protected void sendExitReason(Exception e, int exitCode) { 
+    protected void sendExitReason(Throwable e, int exitCode) {
+        log.error("Exception in start()", e); //$NON-NLS-1$
         sendExitReason(e.getMessage(), exitCode);
     }
 
