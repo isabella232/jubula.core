@@ -2,16 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Database Tool
 Bundle-SymbolicName: org.eclipse.jubula.app.dbtool;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.eclipse.jubula.app.dbtool.bundle.Activator
 Bundle-Vendor: Eclipse Jubula
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.apache.commons.cli;bundle-version="[1.2.0,2.0.0)",
  javax.persistence;bundle-version="[2.0.3,3.0.0)",
- org.eclipse.jubula.tools;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.jubula.client.core;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.jubula.client.cmd;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.jubula.client.archive;bundle-version="[1.0.0,2.0.0)"
+ org.eclipse.jubula.tools;bundle-version="[1.1.0,1.2.0)",
+ org.eclipse.jubula.client.core;bundle-version="[1.1.0,1.2.0)",
+ org.eclipse.jubula.client.cmd;bundle-version="[1.1.0,1.2.0)",
+ org.eclipse.jubula.client.archive;bundle-version="[1.1.0,1.2.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
