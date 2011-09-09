@@ -20,7 +20,6 @@ Bundle-ClassPath: .,
  lib/xpp3_min-1.1.3.4.O.jar,
  lib/xstream-1.3.1.jar,
  resources/
-Bundle-Activator: org.eclipse.jubula.rc.rcp.accessor.plugin.RcpAccessorPlugin
 Bundle-Vendor: Eclipse Jubula
 Require-Bundle: org.eclipse.ui;bundle-version="[3.2.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.2.0,4.0.0)",
