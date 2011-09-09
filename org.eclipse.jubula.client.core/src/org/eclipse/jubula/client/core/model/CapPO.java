@@ -44,11 +44,8 @@ import org.eclipse.jubula.tools.xml.businessmodell.Param;
 @Entity
 @DiscriminatorValue(value = "C")
 class CapPO extends ParamNodePO implements ICapPO {
-
-
     /**
      * guid of component name
-     *  
      */
     private String m_componentNameGuid;
 
@@ -73,11 +70,12 @@ class CapPO extends ParamNodePO implements ICapPO {
     private transient Component m_metaComponentType = null;
     
     /**
-     * <code>m_completeOmMap</code> manages the completeness Flag for OM relating
-     * to the associated AUT
-     * key: AUTMainPO, value: completeness flag for OM
+     * <code>m_completeOmMap</code> manages the completeness Flag for OM
+     * relating to the associated AUT key: AUTMainPO, value: completeness flag
+     * for OM
      */
-    private transient Map m_completeOmMap = new HashMap();
+    private transient Map<IAUTMainPO, Boolean> m_completeOmMap = 
+        new HashMap<IAUTMainPO, Boolean>();
 
     /**
      * corresponding action of xml file
@@ -407,7 +405,7 @@ class CapPO extends ParamNodePO implements ICapPO {
      */
     public boolean getCompleteOMFlag(IAUTMainPO aut) {
         if (aut != null) {
-            Boolean value = (Boolean)getCompleteOmMap().get(aut);
+            Boolean value = getCompleteOmMap().get(aut);
             return value != null ? value.booleanValue() : false;
         }
         return true;
@@ -426,10 +424,10 @@ class CapPO extends ParamNodePO implements ICapPO {
      * @return Returns the completeOmMap.
      */
     @Transient
-    private Map getCompleteOmMap() {
+    private Map<IAUTMainPO, Boolean> getCompleteOmMap() {
         // lazy because of xml-serialization
         if (m_completeOmMap == null) {
-            m_completeOmMap = new HashMap();
+            m_completeOmMap = new HashMap<IAUTMainPO, Boolean>();
         }
         return m_completeOmMap;
     }

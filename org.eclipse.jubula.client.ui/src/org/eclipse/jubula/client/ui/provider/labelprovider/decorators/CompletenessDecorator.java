@@ -98,6 +98,8 @@ public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
                         if (!overWrittenName) {
                             flag = flag && cap.getCompleteOMFlag(aut);
                         }
+                    } else {
+                        flag = true;
                     }
                 }
             } else {
