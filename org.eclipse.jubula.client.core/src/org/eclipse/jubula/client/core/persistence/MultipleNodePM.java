@@ -310,9 +310,8 @@ public class MultipleNodePM  extends PersistenceManager {
                 String originalGuid, IComponentNamePO compName) 
             throws PMException, IncompatibleTypeException {
             
-            IProjectPO currentProject = 
-                (IProjectPO)sess.find(NodeMaker.getProjectPOClass(), 
-                        m_currentProjectId);
+            IProjectPO currentProject = sess.find(
+                    NodeMaker.getProjectPOClass(), m_currentProjectId);
             for (IAUTMainPO aut : currentProject.getAutMainList()) {
                 if (LockManager.instance().lockPO(sess, aut, true)) {
                     IObjectMappingAssoziationPO assoc = 

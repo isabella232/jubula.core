@@ -484,7 +484,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getAUTConfigClass() {
+    public static Class<AUTConfigPO> getAUTConfigClass() {
         return AUTConfigPO.class;
     }
 
@@ -492,7 +492,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getAUTMainClass() {
+    public static Class<AUTMainPO> getAUTMainClass() {
         return AUTMainPO.class;
     }
 
@@ -500,7 +500,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getCompIdentifierClass() {
+    public static Class<CompIdentifierPO> getCompIdentifierClass() {
         return CompIdentifierPO.class;
     }
 
@@ -509,7 +509,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getCompNamesPairClass() {
+    public static Class<CompNamesPairPO> getCompNamesPairClass() {
         return CompNamesPairPO.class;
     }
 
@@ -517,15 +517,17 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getListWrapperClass() {
+    public static Class<DataSetPO> getListWrapperClass() {
         return DataSetPO.class;
     }
 
     /**
      * get the class instance of the PO (needed by Persistor)
+     * 
      * @return the class instance of the PO
      */
-    public static Class getObjectMappingAssoziationClass() {
+    public static Class<ObjectMappingAssoziationPO> 
+    getObjectMappingAssoziationClass() {
         return ObjectMappingAssoziationPO.class;
     }
 
@@ -533,7 +535,8 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getObjectMappingCategoryClass() {
+    public static Class<ObjectMappingCategoryPO> 
+    getObjectMappingCategoryClass() {
         return ObjectMappingCategoryPO.class;
     }
 
@@ -541,7 +544,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getObjectMappingClass() {
+    public static Class<ObjectMappingPO> getObjectMappingClass() {
         return ObjectMappingPO.class;
     }
 
@@ -549,7 +552,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getParamDescriptionClass() {
+    public static Class<ParamDescriptionPO> getParamDescriptionClass() {
         return ParamDescriptionPO.class;
     }
 
@@ -557,7 +560,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getCapParamDescriptionClass() {
+    public static Class<CapParamDescriptionPO> getCapParamDescriptionClass() {
         return CapParamDescriptionPO.class;
     }
     
@@ -565,7 +568,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getTcParamDescriptionClass() {
+    public static Class<TcParamDescriptionPO> getTcParamDescriptionClass() {
         return TcParamDescriptionPO.class;
     }
 
@@ -573,7 +576,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getReusedProjectClass() {
+    public static Class<ReusedProjectPO> getReusedProjectClass() {
         return ReusedProjectPO.class;
     }
 
@@ -581,7 +584,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getProjectPropertiesClass() {
+    public static Class<ProjectPropertiesPO> getProjectPropertiesClass() {
         return ProjectPropertiesPO.class;
     }
 
@@ -589,7 +592,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getProjectNameClass() {
+    public static Class<ProjectNamePO> getProjectNameClass() {
         return ProjectNamePO.class;
     }
     
@@ -597,7 +600,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getParamNameClass() {
+    public static Class<ParamNamePO> getParamNameClass() {
         return ParamNamePO.class;
     }
     
@@ -605,7 +608,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getParameterDetailsClass() {
+    public static Class<ParameterDetailsPO> getParameterDetailsClass() {
         return ParameterDetailsPO.class;
     }
 
@@ -613,7 +616,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getAUTContClass() {
+    public static Class<AUTContPO> getAUTContClass() {
         return AUTContPO.class;
     }
 
@@ -621,7 +624,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getTDManagerClass() {
+    public static Class<TDManagerPO> getTDManagerClass() {
         return TDManagerPO.class;
     }
 
@@ -629,7 +632,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getTestDataCubeClass() {
+    public static Class<TestDataCubePO> getTestDataCubeClass() {
         return TestDataCubePO.class;
     }
     
@@ -637,7 +640,7 @@ public abstract class PoMaker {
      * get the class instance of the PO 
      * @return the class instance of the PO
      */
-    public static Class getTestCasePOClass() {
+    public static Class<TestCasePO> getTestCasePOClass() {
         return TestCasePO.class;
     }
 
@@ -645,7 +648,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getTestDataClass() {
+    public static Class<TestDataPO> getTestDataClass() {
         return TestDataPO.class;
     }
 
@@ -653,7 +656,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getWrapperClass() {
+    public static Class<WrapperPO> getWrapperClass() {
         return WrapperPO.class;
     }
     
@@ -661,7 +664,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getTestSuiteClass() {
+    public static Class<TestSuitePO> getTestSuiteClass() {
         return TestSuitePO.class;
     }
     
@@ -669,7 +672,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getTestResultSummaryClass() {
+    public static Class<TestResultSummaryPO> getTestResultSummaryClass() {
         return TestResultSummaryPO.class;
     }
     
@@ -677,7 +680,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getTestResultClass() {
+    public static Class<TestResultPO> getTestResultClass() {
         return TestResultPO.class;
     }
 
@@ -685,7 +688,7 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getUsedToolkitClass() {
+    public static Class<UsedToolkitPO> getUsedToolkitClass() {
         return UsedToolkitPO.class;
     }
 
@@ -693,21 +696,22 @@ public abstract class PoMaker {
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */
-    public static Class getObjectMappingProfileClass() {
+    public static Class<ObjectMappingProfilePO> 
+    getObjectMappingProfileClass() {
         return ObjectMappingProfilePO.class;
     }
 
     /**
      * @return the class instance of the PO
      */
-    public static Class getAbstractGuidNameClass() {
+    public static Class<AbstractGuidNamePO> getAbstractGuidNameClass() {
         return AbstractGuidNamePO.class;
     }
     
     /**
      * @return the class instance of the PO
      */
-    public static Class getComponentNameClass() {
+    public static Class<ComponentNamePO> getComponentNameClass() {
         return ComponentNamePO.class;
     }
     
@@ -715,21 +719,22 @@ public abstract class PoMaker {
     /**
      * @return the class instance of the PO
      */
-    public static Class getDocAttributeListClass() {
+    public static Class<DocAttributeListPO> getDocAttributeListClass() {
         return DocAttributeListPO.class;
     }
 
     /**
      * @return the class instance of the PO
      */
-    public static Class getDocAttributeClass() {
+    public static Class<DocAttributePO> getDocAttributeClass() {
         return DocAttributePO.class;
     }
 
     /**
      * @return the class instance of the PO
      */
-    public static Class getDocAttributeDescriptionClass() {
+    public static Class<DocAttributeDescriptionPO> 
+    getDocAttributeDescriptionClass() {
         return DocAttributeDescriptionPO.class;
     }
 

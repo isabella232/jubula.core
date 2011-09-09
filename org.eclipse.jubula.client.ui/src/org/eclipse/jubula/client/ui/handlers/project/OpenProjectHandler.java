@@ -119,8 +119,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                     EntityManager s = Persistor.instance().openSession();
                     EntityTransaction tx = Persistor.instance()
                             .getTransaction(s);
-                    IProjectPO proj = (IProjectPO)s.find(
-                            NodeMaker.getProjectPOClass(),
+                    IProjectPO proj = s.find(NodeMaker.getProjectPOClass(),
                             m_selectedProject.getId());
 
                     ProjectPM.initAttributeDescriptions(s, proj);

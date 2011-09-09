@@ -362,7 +362,7 @@ public abstract class NodeMaker {
      * get the class instance of NodePO (needed by Persistor)
      * @return the class instance of NodePO
      */
-    public static Class getNodePOClass() {
+    public static Class<NodePO> getNodePOClass() {
         return NodePO.class;
     }
     
@@ -371,7 +371,7 @@ public abstract class NodeMaker {
      * get the class instance of ProjectPO (needed by XML deserialization)
      * @return the class instance of ProjectPO
      */
-    public static Class getProjectPOClass() {
+    public static Class<ProjectPO> getProjectPOClass() {
         return ProjectPO.class;
     }
     
@@ -379,7 +379,7 @@ public abstract class NodeMaker {
      * get the class instance of TestSuitePO (needed by XML deserialization)
      * @return the class instance of TestSuitePO
      */
-    public static Class getTestSuitePOClass() {
+    public static Class<TestSuitePO> getTestSuitePOClass() {
         return TestSuitePO.class;
     }
 
@@ -387,7 +387,7 @@ public abstract class NodeMaker {
      * get the class instance of TestJobPO (needed by XML deserialization)
      * @return the class instance of TestJobPO
      */
-    public static Class getTestJobPOClass() {
+    public static Class<TestJobPO> getTestJobPOClass() {
         return TestJobPO.class;
     }
 
@@ -395,7 +395,7 @@ public abstract class NodeMaker {
      * get the class instance of ParamNodePO (needed by Persistor)
      * @return the class instance of ParamNodePO
      */
-    public static Class getParamNodePOClass() {
+    public static Class<ParamNodePO> getParamNodePOClass() {
         return ParamNodePO.class;
     }
 
@@ -403,7 +403,7 @@ public abstract class NodeMaker {
      * get the class instance of CategoryPO (needed by Persistor)
      * @return the class instance of CategoryPO
      */
-    public static Class getCategoryPOClass() {
+    public static Class<CategoryPO> getCategoryPOClass() {
         return CategoryPO.class;
     }
 
@@ -411,7 +411,7 @@ public abstract class NodeMaker {
      * get the class instance of RefTestSuitePO (needed by Persistor)
      * @return the class instance of RefTestSuitePO
      */
-    public static Class getRefTestSuitePOClass() {
+    public static Class<RefTestSuitePO> getRefTestSuitePOClass() {
         return RefTestSuitePO.class;
     }
 
@@ -419,7 +419,7 @@ public abstract class NodeMaker {
      * get the class instance of CapPO (needed by Persistor)
      * @return the class instance of CapPO
      */
-    public static Class getCapPOClass() {
+    public static Class<CapPO> getCapPOClass() {
         return CapPO.class;
     }
 
@@ -427,7 +427,7 @@ public abstract class NodeMaker {
      * get the class instance of TestCasePO (needed by Persistor)
      * @return the class instance of TestCasePO
      */
-    public static Class getTestCasePOClass() {
+    public static Class<TestCasePO> getTestCasePOClass() {
         return TestCasePO.class;
     }
 
@@ -435,7 +435,7 @@ public abstract class NodeMaker {
      * get the class instance of ExecTestCasePO (needed by Persistor)
      * @return the class instance of ExecTestCasePO
      */
-    public static Class getExecTestCasePOClass() {
+    public static Class<ExecTestCasePO> getExecTestCasePOClass() {
         return ExecTestCasePO.class;
     }
 
@@ -443,7 +443,7 @@ public abstract class NodeMaker {
      * get the class instance of SpecTestCasePO (needed by Persistor)
      * @return the class instance of SpecTestCasePO
      */
-    public static Class getSpecTestCasePOClass() {
+    public static Class<SpecTestCasePO> getSpecTestCasePOClass() {
         return SpecTestCasePO.class;
     }
 
@@ -451,7 +451,7 @@ public abstract class NodeMaker {
      * get the class instance of EventExecTestCasePO (needed by Persistor)
      * @return the class instance of EventExecTestCasePO
      */
-    public static Class getEventExecTestCasePOClass() {
+    public static Class<EventExecTestCasePO> getEventExecTestCasePOClass() {
         return EventExecTestCasePO.class;
     }
 }

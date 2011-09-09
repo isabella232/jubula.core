@@ -58,6 +58,7 @@ import org.eclipse.jubula.client.ui.controllers.dnd.TreeViewerContainerDragSourc
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestCaseBrowserContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestCaseBrowserLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator.NonDecorationContext;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.swt.dnd.DND;
@@ -120,6 +121,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 new TestCaseBrowserLabelProvider(), Plugin.getDefault()
                         .getWorkbench().getDecoratorManager()
                         .getLabelDecorator());
+        lp.setDecorationContext(new NonDecorationContext());
         getTreeViewer().setLabelProvider(lp);
         m_cutTreeItemAction = new CutTreeItemActionTCBrowser();
         m_pasteTreeItemAction = new PasteTreeItemActionTCBrowser();

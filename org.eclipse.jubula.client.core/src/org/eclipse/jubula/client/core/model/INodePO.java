@@ -34,9 +34,14 @@ public interface INodePO extends ITimestampPO {
     public abstract void setName(String name);
     
     /**
-     * @return the current value of the m_parentNode property
+     * @return the model parent node of this node
      */
     public INodePO getParentNode();
+    
+    /**
+     * @return the ui parent node of this node
+     */
+    public INodePO getUIParentNode();
 
     /**
      * @return the unmodifiable node list.
@@ -177,11 +182,17 @@ public interface INodePO extends ITimestampPO {
      */
     public abstract boolean equals(Object obj);
     
-    
     /**
-     * @param parent to set
+     * @param parent
+     *            the model parent to set
      */
     public abstract void setParentNode(INodePO parent);
+
+    /**
+     * @param parent
+     *            the ui parent to set
+     */
+    public abstract void setUIParentNode(INodePO parent);
     
     /**
      * @return the current toolkit level of this node.

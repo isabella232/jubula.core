@@ -265,7 +265,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                             .createTestSuitePO(result.getKeywordName(),
                                     result.getInternalKeywordGuid());
                     ITestResultSummaryPO summary = 
-                        (ITestResultSummaryPO)GeneralStorage
+                        GeneralStorage
                             .getInstance()
                             .getMasterSession()
                             .find(PoMaker.getTestResultSummaryClass(),

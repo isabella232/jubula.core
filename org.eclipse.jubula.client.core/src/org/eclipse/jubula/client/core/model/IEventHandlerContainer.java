@@ -26,6 +26,12 @@ import org.eclipse.jubula.tools.exception.InvalidDataException;
  */
 public interface IEventHandlerContainer {
     /**
+     * <code>MAX_NUMBER_OF_EVENT_HANDLER</code> the currently maximum no of eh;
+     * there are currently only 4 valid event types
+     */
+    public static final int MAX_NUMBER_OF_EVENT_HANDLER = 4;
+    
+    /**
      * @param eventTC eventExecTestCase to add
      * @throws InvalidDataException if an eventTestCase is already 
      * existent for the associated event
