@@ -235,9 +235,11 @@ public class TestExecutionGUIController {
                                     }
 
                                     public void setMessage(Message message) {
+                                        // empty
                                     }
 
                                     public void timeout() {
+                                        // empty
                                     }
                                 }, 2000);
                     }

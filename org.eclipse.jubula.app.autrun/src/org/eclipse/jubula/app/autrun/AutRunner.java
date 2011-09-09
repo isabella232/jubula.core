@@ -99,7 +99,7 @@ public class AutRunner {
         final BufferedReader reader = new BufferedReader(
                 new InputStreamReader(agentSocket.getInputStream()));
         
-        String clientTypeRequest = reader.readLine();
+        reader.readLine();
         writer.println(ConnectionState.CLIENT_TYPE_AUTRUN);
         
         writer.println(
@@ -135,7 +135,7 @@ public class AutRunner {
                                             // Error while closing socket. Ignore.
                                         }
                                     }
-                                };
+                                }
                             };
 
                             restartThread.setDaemon(false);
@@ -145,7 +145,7 @@ public class AutRunner {
                 } catch (IOException e) {
                     LOG.error("Error occured while restarting AUT.", e); //$NON-NLS-1$
                 }
-            };
+            }
         };
 
         agentConnectionThread.setDaemon(true);

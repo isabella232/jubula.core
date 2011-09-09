@@ -128,8 +128,8 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                 ProjectPM.deleteProject(m_project, m_deleteCurrentProject);
                 final String jobName = Messages.UIJobDeletingTestResultDetails;
                 Job job = new Job(jobName) {
-                    public IStatus run(IProgressMonitor monitor) {
-                        monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
+                    public IStatus run(IProgressMonitor mon) {
+                        mon.beginTask(jobName, IProgressMonitor.UNKNOWN);
                         if (m_keepTestresultSummary) {
                             TestResultSummaryPM.deleteTestrunsByProject(
                                     m_project.getGuid(),
@@ -141,7 +141,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                                     m_project.getMajorProjectVersion(),
                                     m_project.getMinorProjectVersion(), false);
                         }
-                        monitor.done();
+                        mon.done();
                         DataEventDispatcher.getInstance()
                             .fireTestresultChanged(TestresultState.Refresh);
                         return Status.OK_STATUS;

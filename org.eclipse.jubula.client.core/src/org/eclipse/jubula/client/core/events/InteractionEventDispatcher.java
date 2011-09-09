@@ -17,7 +17,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 
 /**
@@ -102,14 +101,12 @@ public class InteractionEventDispatcher implements IDataChangedListener {
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
     /** {@inheritDoc} */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
+    public void handleDataChanged(IPersistentObject po, DataState dataState) {
         if (dataState == DataState.Added) {
             fireProgammableSelectionEvent(new StructuredSelection(po));
         }

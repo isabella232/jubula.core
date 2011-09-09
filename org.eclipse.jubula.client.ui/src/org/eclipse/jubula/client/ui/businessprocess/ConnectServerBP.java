@@ -183,9 +183,10 @@ public final class ConnectServerBP extends AbstractActionBP {
             // get all AUTConfigs of available AUTs
             for (IAUTMainPO aut : auts) {
                 if (!aut.getAutConfigSet().isEmpty()) {
-                    Iterator it = aut.getAutConfigSet().iterator();
+                    Iterator<IAUTConfigPO> it = aut.getAutConfigSet()
+                            .iterator();
                     while (it.hasNext()) {
-                        confs.add((IAUTConfigPO)it.next());
+                        confs.add(it.next());
                     }
                 }
             }

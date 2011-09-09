@@ -18,7 +18,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
-import org.eclipse.jubula.client.core.businessprocess.TestCaseParamCheckBP.SpecTcParamRefCheck;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -247,9 +246,7 @@ public class TJEditorDndSupport {
                     new StructuredSelection(node));            
         }
         targetEditor.getTreeViewer().refresh();
-        targetEditor.getEditorHelper().setDirty(
-                SpecTcParamRefCheck.editorShouldBeDirty());
-        SpecTcParamRefCheck.setEditorShouldBeDirty(true);
+        targetEditor.getEditorHelper().setDirty(true);
         LocalSelectionTransfer.getInstance().setSelection(null);
     }
 }

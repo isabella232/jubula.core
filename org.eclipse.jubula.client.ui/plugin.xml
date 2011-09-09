@@ -2147,7 +2147,7 @@
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.handlers.existing.testcase.AddExistingTestCase"
+			class="org.eclipse.jubula.client.ui.handlers.existing.testcase.ReferenceExistingTestCase"
 			commandId="org.eclipse.jubula.client.ui.commands.newTestCaseReference">
 			<activeWhen>
 				<or>
@@ -2179,7 +2179,7 @@
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.handlers.existing.testcase.AddExistingTestCase"
+			class="org.eclipse.jubula.client.ui.handlers.existing.testcase.ReferenceExistingTestCase"
 			commandId="org.eclipse.jubula.client.ui.commands.newTestCaseReference">
 			<activeWhen>
 				<and>
@@ -2209,7 +2209,7 @@
 				</and>
 			</activeWhen>
 		</handler>
-		<handler class="org.eclipse.jubula.client.ui.handlers.newcap.AddNewCAP"
+		<handler class="org.eclipse.jubula.client.ui.handlers.newcap.NewCAP"
 			commandId="org.eclipse.jubula.client.ui.commands.newCap">
 			<activeWhen>
 				<and>
@@ -2225,7 +2225,7 @@
 				</and>
 			</activeWhen>
 		</handler>
-		<handler class="org.eclipse.jubula.client.ui.handlers.newcap.AddNewCAP"
+		<handler class="org.eclipse.jubula.client.ui.handlers.newcap.NewCAP"
 			commandId="org.eclipse.jubula.client.ui.commands.newCap">
 			<activeWhen>
 				<and>

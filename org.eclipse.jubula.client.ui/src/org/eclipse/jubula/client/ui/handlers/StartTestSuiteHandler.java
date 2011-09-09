@@ -117,7 +117,6 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public void updateElement(UIElement element, Map parameters) {
         boolean check = false;
         Object testSuiteToStart = parameters.get(TEST_SUITE_TO_START);

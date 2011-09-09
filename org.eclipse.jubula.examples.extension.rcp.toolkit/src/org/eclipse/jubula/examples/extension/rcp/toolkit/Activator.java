@@ -30,6 +30,7 @@ public class Activator extends Plugin {
      * The constructor
      */
     public Activator() {
+        // empty
     }
 
     /**

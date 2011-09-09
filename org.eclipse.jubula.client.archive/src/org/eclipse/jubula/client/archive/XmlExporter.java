@@ -1167,7 +1167,7 @@ class XmlExporter {
      *            The project for which the work is predicted.
      * @return The predicted amount of work required to save a project.
      */
-    public int getPredictedWork(IProjectPO project) throws PMException {
+    public int getPredictedWork(IProjectPO project) {
         int work = 0;
 
         // (Project=1)

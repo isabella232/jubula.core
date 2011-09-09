@@ -2218,7 +2218,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     public void handleDataChanged(IPersistentObject po, DataState dataState,
             UpdateState updateState) {
 
-        getEditorHelper().handleDataChanged(po, dataState, updateState);
+        getEditorHelper().handleDataChanged(po, dataState);
         if (m_treeViewerUpdater != null) {
             m_treeViewerUpdater.handleDataChanged(po, dataState, updateState);
         }

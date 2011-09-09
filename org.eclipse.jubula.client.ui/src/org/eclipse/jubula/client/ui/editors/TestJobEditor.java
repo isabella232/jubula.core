@@ -22,7 +22,6 @@ import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -186,16 +185,14 @@ public class TestJobEditor extends AbstractJBEditor {
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
     /**
      * {@inheritDoc}
      */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
+    public void handleDataChanged(IPersistentObject po, DataState dataState) {
         if (po instanceof INodePO) {
             TreeViewer tv = getTreeViewer();
             switch (dataState) {
@@ -229,7 +226,7 @@ public class TestJobEditor extends AbstractJBEditor {
                 default:
                     Assert.notReached();
             }
-            getEditorHelper().handleDataChanged(po, dataState, updateState);
+            getEditorHelper().handleDataChanged(po, dataState);
         }
     }
 

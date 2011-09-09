@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -174,7 +173,6 @@ public class JBEditorHelper implements ILockedObjects,
      * Should always be called as a fallback from the assisted editor's 
      * <code>getAdapter</code> method.
      */
-    @SuppressWarnings("unchecked")
     public Object getAdapter(Class adapter) {
         if (adapter == ILockedObjects.class 
             || adapter == IJBEditor.class) {
@@ -254,8 +252,7 @@ public class JBEditorHelper implements ILockedObjects,
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
@@ -266,8 +263,7 @@ public class JBEditorHelper implements ILockedObjects,
      * <code>handleDataChanged</code> method.
      */
     public void handleDataChanged(final IPersistentObject po, 
-        final DataState dataState, 
-        UpdateState updateState) {
+        final DataState dataState) {
         IPersistentObject workVersion = getEditSupport().getWorkVersion();
         switch (dataState) {
             case Added:
@@ -351,16 +347,15 @@ public class JBEditorHelper implements ILockedObjects,
      * @param po object to compare
      * @return if the given po object is contained in editor tree
      */
-    @SuppressWarnings("unchecked")
     protected boolean editorContainsPo(IPersistentObject po) {
         if (!(po instanceof INodePO)
                 || !(getEditSupport().getWorkVersion() instanceof INodePO)) {
             return false;
         }
         INodePO compObj = (INodePO)getEditSupport().getWorkVersion();
-        List<IPersistentObject> nodeList = new ArrayList<IPersistentObject>();
-        nodeList.add(po);
-        List editorNodes = collectNodes(nodeList, 
+        List<INodePO> nodeList = new ArrayList<INodePO>();
+        nodeList.add((INodePO)po);
+        List<INodePO> editorNodes = collectNodes(nodeList, 
             compObj.getNodeListIterator());
         for (Object object : editorNodes) {
             if (((INodePO)object).equals(po)) {
@@ -389,10 +384,10 @@ public class JBEditorHelper implements ILockedObjects,
      * @param it iterator for current node
      * @return list with all nodes contained in editor
      */
-    @SuppressWarnings("unchecked")
-    private List collectNodes(List<IPersistentObject> nodeList, Iterator it) {
+    private List<INodePO> collectNodes(List<INodePO> nodeList,
+            Iterator<INodePO> it) {
         while (it.hasNext()) {
-            INodePO node = (INodePO)it.next();
+            INodePO node = it.next();
             nodeList.add(node);
             if (node.getNodeListSize() > 0) {
                 return collectNodes(nodeList, node.getNodeListIterator());

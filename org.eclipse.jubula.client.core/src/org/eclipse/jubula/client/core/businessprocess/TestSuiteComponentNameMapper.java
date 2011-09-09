@@ -19,6 +19,7 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -48,9 +49,8 @@ public class TestSuiteComponentNameMapper extends AbstractComponentNameMapper {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public void handleExistingNames(Map<String, String> guidToCompNameMap) {
-        Iterator iter = getContext().getNodeListIterator();
+        Iterator<INodePO> iter = getContext().getNodeListIterator();
         while (iter.hasNext()) {
             Object o = iter.next();
             if (o instanceof IExecTestCasePO) {
@@ -77,7 +77,6 @@ public class TestSuiteComponentNameMapper extends AbstractComponentNameMapper {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public Set<String> getUsedTypes(String compNameGuid) {
         Long currentProjectId = 
             GeneralStorage.getInstance().getProject().getId();
@@ -86,7 +85,7 @@ public class TestSuiteComponentNameMapper extends AbstractComponentNameMapper {
         Set<Long> capIds = new HashSet<Long>();
         
         // Get reuse instance types from given test case
-        Iterator iter = getContext().getNodeListIterator();
+        Iterator<INodePO> iter = getContext().getNodeListIterator();
         while (iter.hasNext()) {
             Object o = iter.next();
             if (o instanceof IExecTestCasePO) {

@@ -139,7 +139,7 @@ public class AddNewCategoryHandler extends AbstractHandler {
      * @return boolean
      */
     boolean existCategory(INodePO node, String name) {
-        Iterator iter = null;
+        Iterator<? extends INodePO> iter = null;
         if (Persistor.isPoSubclass(node, ICategoryPO.class)) {
             iter = node.getNodeListIterator();
         } else {
@@ -147,7 +147,7 @@ public class AddNewCategoryHandler extends AbstractHandler {
             iter = proj.getSpecObjCont().getSpecObjList().iterator();
         }
         while (iter.hasNext()) {
-            INodePO iterNode = (INodePO)iter.next();
+            INodePO iterNode = iter.next();
             if (Persistor.isPoSubclass(iterNode, ICategoryPO.class)
                 && iterNode.getName().equals(name)) {
                 return true;

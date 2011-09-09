@@ -57,7 +57,8 @@ import org.slf4j.LoggerFactory;
  */
 public class AUTConnection extends BaseConnection {
     /** the logger */
-    private static Logger log = LoggerFactory.getLogger(AUTConnection.class);
+    static final Logger LOG = LoggerFactory
+            .getLogger(AUTConnection.class);
 
     /** the singleton instance */
     private static AUTConnection instance = null;
@@ -115,7 +116,7 @@ public class AUTConnection extends BaseConnection {
         throws ConnectionException {
         String message = Messages.InitialisationOfAUTConnectionFailed
             + StringConstants.COLON + StringConstants.SPACE;
-        log.error(message, throwable);
+        LOG.error(message, throwable);
         throw new ConnectionException(message + throwable.getMessage(), 
             MessageIDs.E_AUT_CONNECTION_INIT);
     }
@@ -179,7 +180,7 @@ public class AUTConnection extends BaseConnection {
                     ServerState.Connecting);
             try {
                 monitor.subTask(Messages.ConnectingToAUT);
-                log.info(Messages.EstablishingConnectionToAUT);
+                LOG.info(Messages.EstablishingConnectionToAUT);
                 run();
                 getCommunicator().addCommunicationErrorListener(
                         m_autConnectionListener);
@@ -213,7 +214,7 @@ public class AUTConnection extends BaseConnection {
                 }
                 if (isConnected()) {
                     m_connectedAutId = autId;
-                    log.info(Messages.ConnectionToAUTEstablished 
+                    LOG.info(Messages.ConnectionToAUTEstablished 
                             + StringConstants.DOT);
                     IAUTMainPO aut = AutAgentRegistration.getAutForId(autId, 
                             GeneralStorage.getInstance().getProject());
@@ -223,26 +224,26 @@ public class AUTConnection extends BaseConnection {
                         ClientTestFactory.getClientTest()
                             .setAutKeyboardLayout(10000);
                     } else {
-                        log.warn(Messages.ErrorOccurredActivatingObjectMapping);
+                        LOG.warn(Messages.ErrorOccurredActivatingObjectMapping);
                     }
                     return true;
                 }
-                log.error(Messages.ConnectionToAUTCouldNotBeEstablished
+                LOG.error(Messages.ConnectionToAUTCouldNotBeEstablished
                         + StringConstants.DOT);
             } catch (CommunicationException e) {
-                log.error(Messages.ErrorOccurredEstablishingConnectionToAUT
+                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT
                         + StringConstants.DOT, e);
             } catch (UnknownHostException e) {
-                log.error(Messages.ErrorOccurredEstablishingConnectionToAUT
+                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT
                         + StringConstants.DOT, e);
             } catch (JBVersionException e) {
-                log.error(Messages.ErrorOccurredEstablishingConnectionToAUT
+                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT
                         + StringConstants.DOT, e);
             } finally {
                 monitor.done();
             }
         } else {
-            log.warn(Messages.CannotEstablishNewConnectionToAUT);
+            LOG.warn(Messages.CannotEstablishNewConnectionToAUT);
         } 
         DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
                 ServerState.Disconnected);
@@ -260,7 +261,7 @@ public class AUTConnection extends BaseConnection {
         try {
             send(i18nMessage);
         } catch (CommunicationException ce) {
-            log.error(Messages.CommunicationErrorWhileSettingResourceBundle, 
+            LOG.error(Messages.CommunicationErrorWhileSettingResourceBundle, 
                 ce); 
         }
     }
@@ -283,7 +284,7 @@ public class AUTConnection extends BaseConnection {
         
         IAUTInfoListener listener = new IAUTInfoListener() {
             public void error(int reason) {
-                log.error(Messages.ErrorOccurredWhileGettingComponentsFromAUT
+                LOG.error(Messages.ErrorOccurredWhileGettingComponentsFromAUT
                        + StringConstants.COLON + StringConstants.SPACE 
                        + reason);
             }
@@ -303,17 +304,16 @@ public class AUTConnection extends BaseConnection {
 
         /**
          * {@inheritDoc}
-         *      int)
          */
         public void connectionGained(InetAddress inetAddress, int port) {
-            if (log.isInfoEnabled()) {
+            if (LOG.isInfoEnabled()) {
                 try {
                     String logMessage = Messages.ConnectedTo 
                             + inetAddress.getHostName()
                             + StringConstants.COLON + String.valueOf(port);
-                    log.info(logMessage);
+                    LOG.info(logMessage);
                 } catch (SecurityException se) {
-                    log.debug(Messages.SecurityViolationGettingHostNameFromIP);
+                    LOG.debug(Messages.SecurityViolationGettingHostNameFromIP);
                 }
             }
             ClientTestFactory.getClientTest().
@@ -325,9 +325,9 @@ public class AUTConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void shutDown() {
-            if (log.isInfoEnabled()) {
-                log.info(Messages.ConnectionToAUTServerClosed);
-                log.info(Messages.ClosingConnectionToTheAutStarter);
+            if (LOG.isInfoEnabled()) {
+                LOG.info(Messages.ConnectionToAUTServerClosed);
+                LOG.info(Messages.ClosingConnectionToTheAutStarter);
             }
             disconnectFromAut();
             DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
@@ -346,9 +346,9 @@ public class AUTConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void sendFailed(Message message) {
-            log.error(Messages.SendingMessageFailed + StringConstants.COLON 
+            LOG.error(Messages.SendingMessageFailed + StringConstants.COLON 
                     + message.toString());
-            log.error(Messages.ClosingConnectionToTheAUTServer);
+            LOG.error(Messages.ClosingConnectionToTheAUTServer);
             close();
         }
 
@@ -356,7 +356,7 @@ public class AUTConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void acceptingFailed(int port) {
-            log.warn(Messages.AcceptingFailed + StringConstants.COLON 
+            LOG.warn(Messages.AcceptingFailed + StringConstants.COLON 
                     + String.valueOf(port));
         }
 
@@ -371,9 +371,7 @@ public class AUTConnection extends BaseConnection {
             msg.append(StringConstants.RIGHT_PARENTHESES);
             msg.append(StringConstants.SPACE);
             msg.append(Messages.CalledAlthoughThisIsServer);
-            log.error(msg.toString());
+            LOG.error(msg.toString());
         }
     }
-
-
 }

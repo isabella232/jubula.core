@@ -14,7 +14,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.ui.search.query.ShowWhereUsedComponentNameQuery;
 import org.eclipse.search.ui.NewSearchUI;
-import org.eclipse.ui.IWorkbenchPart;
 
 
 /**
@@ -30,7 +29,6 @@ public class ComponentNameShowWhereUsedHandler extends
     public Object execute(ExecutionEvent event) {
         init(event);
         final Object fe = getCurrentSelection().getFirstElement();
-        final IWorkbenchPart part = getActivePart();
         
         if (fe instanceof IComponentNamePO) {
             NewSearchUI.runQueryInBackground(

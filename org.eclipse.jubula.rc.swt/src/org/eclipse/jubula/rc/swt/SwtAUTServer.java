@@ -130,7 +130,7 @@ public class SwtAUTServer extends AUTServer {
             return m_display;
         } finally {
             if (m_display == null) {
-                LOG.error("SWT Display not found");
+                LOG.error("SWT Display not found"); //$NON-NLS-1$
             }
             Thread.currentThread().setContextClassLoader(oldCL);
         }

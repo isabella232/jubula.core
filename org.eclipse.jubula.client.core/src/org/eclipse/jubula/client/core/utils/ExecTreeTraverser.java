@@ -65,16 +65,16 @@ public class ExecTreeTraverser extends TreeTraverser {
                 }
             } else if (node instanceof ITestSuitePO) {
                 ITestSuitePO suite = (ITestSuitePO)node;
-                Iterator iter =  suite.getNodeListIterator();
+                Iterator<INodePO> iter =  suite.getNodeListIterator();
                 while (iter.hasNext()) {
-                    INodePO next = (INodePO)iter.next();
+                    INodePO next = iter.next();
                     traverseImpl(context, parent, next);
                 }
             } else if (node instanceof IExecTestCasePO) {
                 IExecTestCasePO execTC = (IExecTestCasePO)node;
-                Iterator iter = execTC.getNodeListIterator();
+                Iterator<INodePO> iter = execTC.getNodeListIterator();
                 while (iter.hasNext()) {
-                    traverseImpl(context, parent, (INodePO)iter.next());
+                    traverseImpl(context, parent, iter.next());
                 }
             }
             for (ITreeNodeOperation<INodePO> operation : getOperations()) {

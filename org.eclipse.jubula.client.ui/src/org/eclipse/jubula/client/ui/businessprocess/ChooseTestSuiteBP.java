@@ -273,18 +273,7 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
         new IDataChangedListener() {
             /** {@inheritDoc} */
             public void handleDataChanged(DataChangedEvent... events) {
-                for (DataChangedEvent e : events) {
-                    handleDataChanged(e.getPo(), e.getDataState(),
-                            e.getUpdateState());
-                }
-            }
-            
-            @SuppressWarnings("synthetic-access") 
-            public void handleDataChanged(IPersistentObject po, 
-                DataState dataState, UpdateState updateState) {
-                if (dataState == DataState.StructureModified) {
-                    updateTestSuiteButtonState(true);
-                }
+                updateTestSuiteButtonState(true);
             }
         };
 
@@ -305,8 +294,6 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
         return instance;
     }
     
-   
-
     /**
      * @return all startable testsuites
      */

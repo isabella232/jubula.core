@@ -350,12 +350,6 @@ public class Messages extends NLS {
     public static String Success;
     public static String SyntaxErrorInReference;
     public static String TechnicalName;
-    public static String TestCaseParamCheckBPInvalidRefInTestData;
-    public static String TestCaseParamCheckBPTestCaseDefinesRefs;
-    public static String TestCaseParamCheckBPTestCaseIsUsed1;
-    public static String TestCaseParamCheckBPTestCaseIsUsed2;
-    public static String TestCaseParamCheckBPTestExecHasOwnTestData;
-    public static String TestCaseParamCheckBPTestExecHasTestSuiteParent;
     public static String TestDataNotAvailable;
     public static String TestErrorEventAction;
     public static String TestErrorEventCompNotFound;

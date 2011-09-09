@@ -18,7 +18,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
-import org.eclipse.jubula.client.core.businessprocess.TestCaseParamCheckBP.SpecTcParamRefCheck;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -31,7 +30,6 @@ import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.controllers.PMExceptionHandler;
@@ -253,14 +251,13 @@ public class TCEditorDndSupport {
      * @param editSupport The EditSupport in which to perform the action.
      * @param node the node to be dropped.
      * @param target the target node.
-     * @throws PMReadException in case of db read error
      * @throws PMDirtyVersionException in case of version conflict (dirty read)
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
      */
     private static void dropOnSpecTc(EditSupport editSupport, 
             INodePO node, INodePO target)
-        throws PMReadException, PMAlreadyLockedException,
+        throws PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
         TestCaseBP.addReferencedTestCase(editSupport, 
                 target, (ISpecTestCasePO)node, 0);
@@ -272,14 +269,13 @@ public class TCEditorDndSupport {
      * @param editSupport The EditSupport in which to perform the action.
      * @param testSuite the TestSuite to drop on
      * @param testcase the TestCAse to drop
-     * @throws PMReadException in case of persistence error
      * @throws PMAlreadyLockedException in case of persistence error
      * @throws PMDirtyVersionException in case of persistence error
      * @throws PMException in case of persistence error
      */
     private static void dropOnTestsuite(EditSupport editSupport, 
             ITestSuitePO testSuite, ISpecTestCasePO testcase) 
-        throws PMReadException, PMAlreadyLockedException, 
+        throws PMAlreadyLockedException, 
         PMDirtyVersionException, PMException {
         
         TestCaseBP.addReferencedTestCase(editSupport, testSuite, 
@@ -293,14 +289,13 @@ public class TCEditorDndSupport {
      * @param location One of the values defined in ViewerDropAdapter to 
      *                     indicate the drop position relative to the drop
      *                     target.
-     * @throws PMReadException in case of db read error
      * @throws PMDirtyVersionException in case of version conflict (dirty read)
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
      */
     private static void dropOnCAPorExecTc(EditSupport editSupport, 
             INodePO node, INodePO target,
-            int location) throws PMReadException, PMAlreadyLockedException,
+            int location) throws PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
         ISpecTestCasePO specTcGUItoDrop = (ISpecTestCasePO)node;
         INodePO parentGUI = target.getParentNode();
@@ -337,9 +332,7 @@ public class TCEditorDndSupport {
                     new StructuredSelection(node));            
         }
         targetEditor.getTreeViewer().refresh();
-        targetEditor.getEditorHelper().setDirty(
-                SpecTcParamRefCheck.editorShouldBeDirty());
-        SpecTcParamRefCheck.setEditorShouldBeDirty(true);
+        targetEditor.getEditorHelper().setDirty(true);
         LocalSelectionTransfer.getInstance().setSelection(null);
     }
 }

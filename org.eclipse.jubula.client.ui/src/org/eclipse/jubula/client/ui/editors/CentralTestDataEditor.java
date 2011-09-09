@@ -281,10 +281,10 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 getEditorHelper().setDirty(true);
             }
             ITestDataCubePO tdc = (ITestDataCubePO)po;
-            handleDataChanged(dataState, tdc, updateState);
+            handleDataChanged(dataState, tdc);
         }
         getMainTreeViewer().refresh();
-        getEditorHelper().handleDataChanged(po, dataState, updateState);
+        getEditorHelper().handleDataChanged(po, dataState);
     }
 
     /**
@@ -292,11 +292,8 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
      *            the data state
      * @param tdc
      *            the data cube
-     * @param updateState
-     *            the update state
      */
-    private void handleDataChanged(DataState dataState, ITestDataCubePO tdc,
-            UpdateState updateState) {
+    private void handleDataChanged(DataState dataState, ITestDataCubePO tdc) {
         switch (dataState) {
             case Added:
                 getTreeViewer().setSelection(new StructuredSelection(tdc));

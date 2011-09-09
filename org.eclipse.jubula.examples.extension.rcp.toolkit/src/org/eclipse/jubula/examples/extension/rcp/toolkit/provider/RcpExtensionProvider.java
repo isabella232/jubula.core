@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 
 import org.eclipse.jubula.examples.extension.rcp.toolkit.Activator;
 import org.eclipse.jubula.toolkit.common.IToolKitProvider;
-import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.swt.widgets.Composite;
 
@@ -42,7 +41,7 @@ public class RcpExtensionProvider implements IToolKitProvider {
      * {@inheritDoc}
      */
     public Composite getAutConfigDialog(Composite arg0, int arg1, Map arg2,
-            String arg3) throws ToolkitPluginException {
+            String arg3) {
         return null;
     }
 

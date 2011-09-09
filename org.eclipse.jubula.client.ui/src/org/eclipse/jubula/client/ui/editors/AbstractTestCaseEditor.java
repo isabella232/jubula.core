@@ -367,9 +367,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
         IComponentNameCache compNameCache = getEditorHelper().getEditSupport()
             .getCompMapper().getCompNameCache();
-        Iterator iter = rootNode.getNodeListIterator();
+        Iterator<INodePO> iter = rootNode.getNodeListIterator();
         while (iter.hasNext()) {
-            INodePO nodePO = (INodePO)iter.next();
+            INodePO nodePO = iter.next();
             if (nodePO instanceof IExecTestCasePO) {
                 IExecTestCasePO exec = (IExecTestCasePO)nodePO;
                 List<String> toRemove = 
@@ -522,7 +522,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      * Checks, if all fields were filled in correctly.
      * @return True, if all fields were filled in correctly. 
      */
-    @SuppressWarnings("unchecked")
     protected boolean checkCompleteness() {
         ISpecTestCasePO testCase = (ISpecTestCasePO)getEditorHelper()
                 .getEditSupport().getWorkVersion();
@@ -539,7 +538,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                     new String[] { Messages.TestCaseEditorWrongTcName });
             return false;
         }
-        Iterator iter = testCase.getNodeListIterator();
+        Iterator<INodePO> iter = testCase.getNodeListIterator();
         while (iter.hasNext()) {
             Object node = iter.next();
             if (Persistor.isPoSubclass((IPersistentObject)node, ICapPO.class)) {
@@ -609,7 +608,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      * @param testCase the currec testCase
      * @return true, if data was not mixed.
      */
-    @SuppressWarnings("unchecked")
     private boolean checkRefsAndCompNames(ISpecTestCasePO testCase) {
         ITDManager mgr = testCase.getDataManager();
         Locale locale = WorkingLanguageBP.getInstance().getWorkingLanguage();
@@ -633,9 +631,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 
             }
         }
-        Iterator iter = testCase.getNodeListIterator();
+        Iterator<INodePO> iter = testCase.getNodeListIterator();
         while (iter.hasNext()) {
-            INodePO nodePO = (INodePO)iter.next();
+            INodePO nodePO = iter.next();
             if (nodePO instanceof IExecTestCasePO) {
                 IExecTestCasePO exec = (IExecTestCasePO)nodePO;
                 for (ICompNamesPairPO pair : exec.getCompNamesPairs()) {
@@ -782,16 +780,14 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
     /**
      * {@inheritDoc}
      */
-    public void handleDataChanged(IPersistentObject po, DataState dataState, 
-        UpdateState updateState) {
+    public void handleDataChanged(IPersistentObject po, DataState dataState) {
         
         if (po instanceof INodePO) {
             INodePO changedNode = (INodePO)po;
@@ -829,7 +825,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 default:
                     Assert.notReached();
             }
-            getEditorHelper().handleDataChanged(po, dataState, updateState);
+            getEditorHelper().handleDataChanged(po, dataState);
         }
     }
 
@@ -878,11 +874,10 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      * @param specTc changed specTc
      * @return if editor contains an reusing testcase for given specTestCase
      */
-    @SuppressWarnings("unchecked")
     private static boolean containsWorkVersionReuses(INodePO root, 
         ISpecTestCasePO specTc) {
         
-        final Iterator it = root.getNodeListIterator();
+        final Iterator<INodePO> it = root.getNodeListIterator();
         final List <INodePO> childList = IteratorUtils.toList(it);
         // Add EventHandler to children List!
         if (root instanceof ISpecTestCasePO) { 
@@ -949,9 +944,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      * and the associated parameter list
      * @param root root node of editor
      */
-    @SuppressWarnings("unchecked")
     private void updateTDManagerOfExecTestCases(INodePO root) {
-        Iterator it = root.getNodeListIterator();
+        Iterator<INodePO> it = root.getNodeListIterator();
         while (it.hasNext()) {
             IParamNodePO child = (IParamNodePO)it.next();
             if (child instanceof IExecTestCasePO) {

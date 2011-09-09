@@ -289,12 +289,12 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
                 // delete or backspace was pressed
                 return false;
             } else if ((exception instanceof IllegalArgumentException)
-                    && stackTraceArray[i].toString().contains("mylyn")) {
+                    && stackTraceArray[i].toString().contains("mylyn")) { //$NON-NLS-1$
                 // ignore all mylyn IllegalArgumentExceptions
                 // needed for exporting a local tasks id or URL
                 return false;
             } else if ((exception instanceof ClassCastException)
-                    && stackTraceArray[i].toString().contains("mylyn")) {
+                    && stackTraceArray[i].toString().contains("mylyn")) { //$NON-NLS-1$
                 // ignore all mylyn ClassCastExceptions
                 // needed for exporting uncategorised task categorys
                 return false;

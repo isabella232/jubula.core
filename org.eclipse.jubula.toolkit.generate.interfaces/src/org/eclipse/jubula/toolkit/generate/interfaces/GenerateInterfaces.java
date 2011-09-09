@@ -286,8 +286,7 @@ public class GenerateInterfaces {
      * @throws IOException
      */
     @SuppressWarnings("nls")
-    private static File createFile(String componentType, String place)
-        throws IOException {
+    private static File createFile(String componentType, String place) {
         File locationdir = new File(place);
         if (!locationdir.exists()) {
             locationdir.mkdir();
