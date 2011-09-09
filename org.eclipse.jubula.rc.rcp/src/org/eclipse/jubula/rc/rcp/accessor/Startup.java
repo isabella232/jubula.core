@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IContributionItem;
@@ -27,8 +28,14 @@ import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
+import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.rcp.gef.inspector.GefInspectorListenerAppender;
 import org.eclipse.jubula.rc.rcp.gef.listener.GefPartListener;
+import org.eclipse.jubula.rc.swt.SwtAUTServer;
+import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
+import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
@@ -506,70 +513,96 @@ public class Startup implements IStartup {
      * {@inheritDoc}
      */
     public void earlyStartup() {
+        final Properties envVars = 
+            EnvironmentUtils.getProcessEnvironment();
+        
+        if (getValue(AutConfigConstants.AUT_AGENT_HOST, envVars) != null) {
+            final IWorkbench workbench = PlatformUI.getWorkbench();
+            final Display display = workbench.getDisplay();
+            initAutServer(display, envVars);
 
-        final IWorkbench workbench = PlatformUI.getWorkbench();
-        final Display display = workbench.getDisplay();
-        display.syncExec(new Runnable() {
-            public void run() {
-                initGefListener();
-                
-                // add naming listener
-                ComponentNamer namer = new ComponentNamer();
-                display.addFilter(SWT.Paint, namer);
-                display.addFilter(SWT.Activate, namer);
-
-                // Add window listener
-                addWindowListener(workbench);
-                
-                IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-                if (window != null) {
-                    // Add part listeners
-                    addPartListeners(window);
-                    
-                    // Handle existing parts
-                    IWorkbenchPage [] pages = window.getPages();
-                    for (int i = 0; i < pages.length; i++) {
-                        IEditorReference[] editorRefs = 
-                            pages[i].getEditorReferences();
-                        IViewReference[] viewRefs = 
-                            pages[i].getViewReferences();
-                        for (int j = 0; j < editorRefs.length; j++) {
-                            partNamingListener.partOpened(editorRefs[j]);
-                            if (m_gefListener != null) {
-                                m_gefListener.partOpened(editorRefs[j]);
-                            }
-                        }
-                        for (int k = 0; k < viewRefs.length; k++) {
-                            partNamingListener.partOpened(viewRefs[k]);
-                            if (m_gefListener != null) {
-                                m_gefListener.partOpened(viewRefs[k]);
-                            }
-                        }
+            display.syncExec(new Runnable() {
+                public void run() {
+                    // add GEF listeners (and listener appenders) for GEF, if available
+                    if (Platform.getBundle(Startup.GEF_BUNDLE_ID) != null) {
+                        m_gefListener = new GefPartListener();
+                        AUTServer.getInstance().addInspectorListenerAppender(
+                                new GefInspectorListenerAppender());
                     }
+                    
+                    // add naming listener
+                    ComponentNamer namer = new ComponentNamer();
+                    display.addFilter(SWT.Paint, namer);
+                    display.addFilter(SWT.Activate, namer);
 
-                    // If a shell already exists, make sure that we get another
-                    // chance to immediately add/use our naming listeners.
-                    Shell mainShell = window.getShell();
-                    if (mainShell != null && !mainShell.isDisposed()) {
-                        repaintToolbars(mainShell);
+                    // Add window listener
+                    addWindowListener(workbench);
+                    
+                    IWorkbenchWindow window = 
+                        workbench.getActiveWorkbenchWindow();
+                    if (window != null) {
+                        // Add part listeners
+                        addPartListeners(window);
+                        
+                        // Handle existing parts
+                        IWorkbenchPage [] pages = window.getPages();
+                        for (int i = 0; i < pages.length; i++) {
+                            IEditorReference[] editorRefs = 
+                                pages[i].getEditorReferences();
+                            IViewReference[] viewRefs = 
+                                pages[i].getViewReferences();
+                            for (int j = 0; j < editorRefs.length; j++) {
+                                partNamingListener.partOpened(editorRefs[j]);
+                                if (m_gefListener != null) {
+                                    m_gefListener.partOpened(editorRefs[j]);
+                                }
+                            }
+                            for (int k = 0; k < viewRefs.length; k++) {
+                                partNamingListener.partOpened(viewRefs[k]);
+                                if (m_gefListener != null) {
+                                    m_gefListener.partOpened(viewRefs[k]);
+                                }
+                            }
+                        }
+
+                        // If a shell already exists, make sure that we get another
+                        // chance to immediately add/use our naming listeners.
+                        Shell mainShell = window.getShell();
+                        if (mainShell != null && !mainShell.isDisposed()) {
+                            repaintToolbars(mainShell);
+                        }
                     }
                 }
-            }
 
-        });
+            });
+
+            // add listener to AUT
+            AUTServer.getInstance().addToolKitEventListenerToAUT();
+
+        }
+
     }
 
     /**
-     * Initializes the listener for GEF FigureCanvas, if GEF is available.
-     * Otherwise does nothing.
+     * Initializes the AUT Server for the host application.
+     * 
+     * @param display The Display to use for the AUT Server.
+     * @param envVars Environment variables to consult in configuring the 
+     *                AUT Server.
      */
-    private void initGefListener() {
-        if (Platform.getBundle(GEF_BUNDLE_ID) == null) {
-            // No GEF plugin available. No problem: m_gefListener stays null.
-            return;
-        }
-        
-        m_gefListener = new GefPartListener();
+    private void initAutServer(Display display, Properties envVars) {
+        ((SwtAUTServer)AUTServer.getInstance(CommandConstants
+                .AUT_SWT_SERVER)).setDisplay(display);
+        AUTServer.getInstance().setAutStarterPort(getValue(
+                RcpAccessorConstants.SERVER_PORT, envVars));
+        AUTServer.getInstance().setAutAgentHost(getValue(
+                AutConfigConstants.AUT_AGENT_HOST, envVars));
+        AUTServer.getInstance().setAutAgentPort(getValue(
+                AutConfigConstants.AUT_AGENT_PORT, envVars));
+        AUTServer.getInstance().setAutName(getValue(
+                AutConfigConstants.AUT_NAME, envVars));
+
+        AUTServer.getInstance().start(true);
     }
 
     /**
@@ -659,5 +692,26 @@ public class Startup implements IStartup {
         if (m_gefListener != null) {
             window.getPartService().addPartListener(m_gefListener);
         }
+    }
+
+    /**
+     * Returns the value for a given property. First, <code>envVars</code> 
+     * is checked for the given property. If this
+     * property cannot be found there, the 
+     * Java System Properties will be checked. If the property is not 
+     * found there, <code>null</code> will be returned.
+     * 
+     * @param envVars The first source to check for the given property.
+     * @param propName The name of the property for which to find the value.
+     * @return The value for the given property name, or <code>null</code> if
+     *         given property name cannot be found.
+     */
+    private String getValue(String propName, Properties envVars) {
+        String value = 
+            envVars.getProperty(propName);
+        if (value == null) {
+            value = System.getProperty(propName);
+        }
+        return value;
     }
 }
