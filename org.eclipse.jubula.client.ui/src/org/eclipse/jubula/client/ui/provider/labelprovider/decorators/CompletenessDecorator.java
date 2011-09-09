@@ -63,9 +63,8 @@ public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
                         decoration.setForegroundColor(Layout.GRAY_COLOR);
                     } else {
                         decoration.setForegroundColor(Layout.DEFAULT_OS_COLOR);
-                        flag = node.getSumTdFlag(locale) 
-                            && node.getSumOMFlag(aut) 
-                            && node.getSumSpecTcFlag();
+                        flag = node.getSumTdFlag(locale) && node
+                             .getSumOMFlag(aut) && node.getSumSpecTcFlag();
                     }
                     if (execTs.getNodeListSize() == 0) {
                         flag = true;
