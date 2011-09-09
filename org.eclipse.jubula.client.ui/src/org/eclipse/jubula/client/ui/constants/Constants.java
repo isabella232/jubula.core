@@ -143,9 +143,9 @@ public interface Constants {
     //  -------------------------------------------------------------
     //  decorator ids
     //  -------------------------------------------------------------
-    /** ID of the test data decorator */
-    public static final String TESTDATA_DECORATOR_ID = 
-        "org.eclipse.jubula.client.ui.decorators.incompleteTestDataDecorator"; //$NON-NLS-1$
+    /** ID of the completeness check decorator */
+    public static final String CC_DECORATOR_ID = 
+        "org.eclipse.jubula.client.ui.decorators.completenessCheckDecorator"; //$NON-NLS-1$
     
     /** ID of the active element decorator */
     public static final String ACTIVE_ELEMENT_DECORATOR_ID = 

@@ -111,9 +111,13 @@ abstract class NodePO implements INodePO {
     /**
      * describes, if the node is derived from another node
      */
-    
     private INodePO m_parentNode = null;
 
+    /**
+     * the transient ui parent node
+     */
+    private transient INodePO m_uiParentNode = null;
+    
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
     
@@ -758,5 +762,16 @@ abstract class NodePO implements INodePO {
     /** {@inheritDoc} */
     public Set<IProblem> getProblems() {
         return Collections.unmodifiableSet(m_problems);
+    }
+    
+    /** {@inheritDoc} */
+    @Transient
+    public INodePO getUIParentNode() {
+        return m_uiParentNode;
+    }
+    
+    /** {@inheritDoc} */
+    public void setUIParentNode(INodePO parent) {
+        m_uiParentNode = parent;
     }
 }

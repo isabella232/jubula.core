@@ -367,8 +367,8 @@
 			</enablement>
 		</decorator>
 		<decorator
-			class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.TestDataDecorator"
-			id="org.eclipse.jubula.client.ui.decorators.incompleteTestDataDecorator" label="Incomplete Testdata Decorator"
+			class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.CompletenessDecorator"
+			id="org.eclipse.jubula.client.ui.decorators.completenessCheckDecorator" label="Completeness Check Decorator"
 			lightweight="true" state="true">
 			<enablement>
 				<or>
