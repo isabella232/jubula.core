@@ -443,7 +443,7 @@ public class CompNamePM extends AbstractNamePM {
                 } else {
                     String currType = StringConstants.EMPTY;
                     IComponentNamePO masterCompName = 
-                        (IComponentNamePO)GeneralStorage.getInstance()
+                        GeneralStorage.getInstance()
                             .getMasterSession().find(
                                 PoMaker.getComponentNameClass(), 
                                 compName.getId());

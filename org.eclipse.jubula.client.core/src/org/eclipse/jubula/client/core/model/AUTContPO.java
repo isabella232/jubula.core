@@ -28,9 +28,14 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "AUT_CONT")
 class AUTContPO extends WrapperPO implements IAUTContPO {
-
+    /**
+     * <code>DEFAULT_NUMBER_OF_AUTS</code> the default number of AUTs to hold
+     */
+    public static final int DEFAULT_NUMBER_OF_AUTS = 2;
+    
     /** the list of AUTs, that belong to a project */ 
-    private Set<IAUTMainPO> m_autMainList = new HashSet<IAUTMainPO>();
+    private Set<IAUTMainPO> m_autMainList = 
+        new HashSet<IAUTMainPO>(DEFAULT_NUMBER_OF_AUTS);
 
     /**
      * Persistence (JPA / EclipseLink) constructor

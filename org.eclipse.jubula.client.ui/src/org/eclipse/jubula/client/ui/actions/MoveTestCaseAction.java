@@ -279,8 +279,8 @@ public class MoveTestCaseAction extends Action {
             IProjectPO extProject = ProjectPM.loadReusedProject(
                 selectedProject);
             sess = Persistor.instance().openSession();
-            extProject = (IProjectPO)sess.find(
-                    NodeMaker.getProjectPOClass(), extProject.getId());
+            extProject = sess.find(NodeMaker.getProjectPOClass(),
+                    extProject.getId());
             List<ICapPO> moveProblem = getMoveProblem(extProject, 
                 selectionList);
             if (!moveProblem.isEmpty()) {

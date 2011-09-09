@@ -75,7 +75,7 @@ class CapPO extends ParamNodePO implements ICapPO {
      * for OM
      */
     private transient Map<IAUTMainPO, Boolean> m_completeOmMap = 
-        new HashMap<IAUTMainPO, Boolean>();
+        new HashMap<IAUTMainPO, Boolean>(AUTContPO.DEFAULT_NUMBER_OF_AUTS);
 
     /**
      * corresponding action of xml file
@@ -425,10 +425,6 @@ class CapPO extends ParamNodePO implements ICapPO {
      */
     @Transient
     private Map<IAUTMainPO, Boolean> getCompleteOmMap() {
-        // lazy because of xml-serialization
-        if (m_completeOmMap == null) {
-            m_completeOmMap = new HashMap<IAUTMainPO, Boolean>();
-        }
         return m_completeOmMap;
     }
 

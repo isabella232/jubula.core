@@ -504,8 +504,8 @@ public class ProjectPM extends PersistenceManager {
         try {
             preloadData(s, project);
             
-            IProjectPO p = (IProjectPO)s.find(
-                NodeMaker.getProjectPOClass(), project.getId());
+            IProjectPO p = s.find(NodeMaker.getProjectPOClass(),
+                    project.getId());
             GeneralStorage.getInstance().setProject(p);
             ParamNameBP.getInstance().initMap();
             ComponentNamesBP.getInstance().init();
@@ -1186,8 +1186,8 @@ public class ProjectPM extends PersistenceManager {
             if (isActProject) {
                 EntityManager s = 
                     GeneralStorage.getInstance().getMasterSession();
-                IProjectPO currProj = (IProjectPO)s.find(
-                    NodeMaker.getProjectPOClass(), projId, LockModeType.READ);
+                IProjectPO currProj = s.find(NodeMaker.getProjectPOClass(),
+                        projId, LockModeType.READ);
                 if (currProj == null) {
                     throw new ProjectDeletedException(
                         Messages.ProjectWasDeleted,
@@ -1201,8 +1201,7 @@ public class ProjectPM extends PersistenceManager {
             deleteSess = Persistor.instance().openSession();
             EntityTransaction tx = 
                 Persistor.instance().getTransaction(deleteSess);
-            p = (IProjectPO)deleteSess.find(
-                    NodeMaker.getProjectPOClass(), projId);
+            p = deleteSess.find(NodeMaker.getProjectPOClass(), projId);
             if (p == null) {
                 if (isActProject) {
                     throw new ProjectDeletedException(

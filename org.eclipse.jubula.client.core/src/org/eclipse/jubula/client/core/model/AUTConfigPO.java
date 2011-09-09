@@ -50,8 +50,7 @@ class AUTConfigPO implements IAUTConfigPO {
     private transient Integer m_version = null;
     
     /** The values of the AutConfig */
-    @SuppressWarnings("unchecked") // because of XDoclet
-    private Map<String, String> m_config = new HashMap();
+    private Map<String, String> m_config = new HashMap<String, String>();
 
     /** Globally Unique Identifier for recognizing nodes across databases */
     private String m_guid = null;

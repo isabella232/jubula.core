@@ -78,8 +78,9 @@ class ExecTestCasePO extends TestCasePO implements
      * handler for a given eventType is overwritten or not
      * key: eventType, value: flag
      */
-    @SuppressWarnings("unchecked") // because of XDoclet
-    private Map<String, Boolean> m_refEventTcMap = new HashMap();
+    private Map<String, Boolean> m_refEventTcMap = 
+        new HashMap<String, Boolean>(
+                IEventHandlerContainer.MAX_NUMBER_OF_EVENT_HANDLER);
     
     /**
      * <code>m_compNameMap</code> manages the mapping between old component name

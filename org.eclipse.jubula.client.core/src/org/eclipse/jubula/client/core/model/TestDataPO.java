@@ -46,13 +46,20 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 @Entity
 @Table(name = "TEST_DATA")
 class TestDataPO implements ITestDataPO {
+    /**
+     * <code>DEFAULT_NUMBER_OF_LANGUAGES</code> the default number of Languages
+     * to hold
+     */
+    public static final int DEFAULT_NUMBER_OF_LANGUAGES = 2;
+    
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
     /** maps languages (locales) to string values
      * key: Locale (string representation), value: value as string
      */
-    private Map<String, String> m_map = new HashMap<String, String>();
+    private Map<String, String> m_map = 
+        new HashMap<String, String>(DEFAULT_NUMBER_OF_LANGUAGES);
 
     /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;

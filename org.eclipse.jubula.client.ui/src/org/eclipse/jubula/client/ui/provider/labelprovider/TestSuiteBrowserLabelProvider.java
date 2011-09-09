@@ -216,15 +216,15 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
                         Messages.TestDataDecoratorTDChildrenIncompl);
             } else if (!execTC.getSumTdFlag(locale) 
                 && !execTC.getCompleteTdFlag(locale)) {
-                Iterator<IParamNodePO> it = execTC.getNodeListIterator();
+                Iterator<INodePO> it = execTC.getNodeListIterator();
                 boolean tmpFlag = true;
                 while (it.hasNext() && tmpFlag) {
-                    IParamNodePO child = it.next();
+                    INodePO child = it.next();
                     if (child instanceof IExecTestCasePO) {
                         tmpFlag = tmpFlag && child.getSumTdFlag(locale);
                     } else {
                         tmpFlag = tmpFlag 
-                            && child.getCompleteTdFlag(locale);
+                            && ((IParamNodePO)child).getCompleteTdFlag(locale);
                     }
                 }
                 if (!tmpFlag) {

@@ -45,10 +45,10 @@ class DocAttributePO implements IDocAttributePO {
     /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
     
-    /** sub-attributes */
+    /** sub-attributes; currently disabled feature - initial size = 0! */
     private Map<IDocAttributeDescriptionPO, IDocAttributeListPO> 
     m_subAttributes = 
-        new HashMap<IDocAttributeDescriptionPO, IDocAttributeListPO>();
+        new HashMap<IDocAttributeDescriptionPO, IDocAttributeListPO>(0);
 
     /** The value for the attribute */
     private String m_value;

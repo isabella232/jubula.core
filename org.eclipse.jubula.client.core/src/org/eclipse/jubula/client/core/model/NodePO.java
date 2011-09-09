@@ -61,7 +61,6 @@ import org.eclipse.persistence.annotations.Index;
  * @author BREDEX GmbH
  * @created 17.08.2004
  */
-@SuppressWarnings("unchecked")
 @Entity
 @Table(name = "NODE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -133,7 +132,7 @@ abstract class NodePO implements INodePO {
     
     /** mapping from attribute descriptions to attributes */
     private Map<IDocAttributeDescriptionPO, IDocAttributePO> m_docAttributes = 
-        new HashMap/*<IDocAttributeDescriptionPO, IDocAttributePO>*/();
+        new HashMap<IDocAttributeDescriptionPO, IDocAttributePO>(0);
     
     /** The timestamp */
     private long m_timestamp = 0;
@@ -367,9 +366,9 @@ abstract class NodePO implements INodePO {
      * to <code>null</code>
      */
     public void removeAllNodes() {
-        Iterator iter = getNodeList().iterator();
+        Iterator<INodePO> iter = getNodeList().iterator();
         while (iter.hasNext()) {
-            INodePO childNode = (INodePO)iter.next();
+            INodePO childNode = iter.next();
             childNode.setParentNode(null);
             iter.remove();
         }
@@ -409,7 +408,7 @@ abstract class NodePO implements INodePO {
      */
     @Transient
     public Iterator<INodePO> getNodeListIterator() {
-        List nodeList = Collections.unmodifiableList(getNodeList());
+        List<INodePO> nodeList = Collections.unmodifiableList(getNodeList());
         return nodeList.iterator();
     }
        
