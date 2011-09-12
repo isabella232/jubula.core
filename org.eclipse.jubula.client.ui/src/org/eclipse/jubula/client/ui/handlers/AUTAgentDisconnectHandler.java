@@ -54,8 +54,8 @@ public class AUTAgentDisconnectHandler extends AbstractHandler {
                 null,
                 Messages.ClientDisconnectFromAutAgentMessage,
                 MessageDialog.QUESTION, new String[] {
-                    Messages.NewProjectDialogMessageButton0,
-                    Messages.NewProjectDialogMessageButton1
+                    Messages.DialogMessageButton_YES,
+                    Messages.DialogMessageButton_NO
                 }, 0);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);

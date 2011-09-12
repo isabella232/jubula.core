@@ -55,8 +55,8 @@ public class DeleteTestresultsHandler extends AbstractHandler {
                 null,
                 Messages.TestresultSummaryDeleteTestrunDialogMessage,
                 MessageDialog.QUESTION, new String[] {
-                    Messages.NewProjectDialogMessageButton0,
-                    Messages.NewProjectDialogMessageButton1 }, 0);
+                    Messages.DialogMessageButton_YES,
+                    Messages.DialogMessageButton_NO }, 0);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();

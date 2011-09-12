@@ -517,8 +517,8 @@ public class Messages extends NLS {
     public static String NewLogicalNameDialogMessage;
     public static String NewLogicalNameDialogShellTitle;
     public static String NewLogicalNameDialogTitle;
-    public static String NewProjectDialogMessageButton0;
-    public static String NewProjectDialogMessageButton1;
+    public static String DialogMessageButton_YES;
+    public static String DialogMessageButton_NO;
     public static String NewServerPortDialogJreList;
     public static String NewServerPortDialogJREPath;
     public static String NewServerPortDialogManageJRE;

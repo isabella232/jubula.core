@@ -466,8 +466,8 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             Messages.SaveInObservationModeDialogTitle,
                 null, Messages.SaveInObservationModeDialogQuestion,
                 MessageDialog.QUESTION, new String[] {
-                    Messages.NewProjectDialogMessageButton0,
-                    Messages.NewProjectDialogMessageButton0 }, 0);
+                    Messages.DialogMessageButton_YES,
+                    Messages.DialogMessageButton_NO }, 0);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();
