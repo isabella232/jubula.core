@@ -13,7 +13,9 @@ package org.eclipse.jubula.client.ui.handlers.open;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
+import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -78,6 +80,9 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
         boolean isNodeEditable = TestCaseBP.belongsToCurrentProject(specTc);
         if (isNodeEditable) {
             openEditor(specTc);
+            InteractionEventDispatcher.getDefault().
+                fireProgammableSelectionEvent(
+                        new StructuredSelection(specTc));
         } else {
             Utils.createMessageDialog(MessageIDs.I_NON_EDITABLE_NODE);
         }
