@@ -53,6 +53,7 @@ import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.CentralTestDataContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.CentralTestDataLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator.NonDecorationContext;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.wizards.ImportTestDataSetsWizard;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -94,7 +95,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 new CentralTestDataLabelProvider(), Plugin.getDefault()
                         .getWorkbench().getDecoratorManager()
                         .getLabelDecorator());
-        lp.setDecorationContext(new JBEditorDecorationContext());
+        lp.setDecorationContext(new NonDecorationContext());
 
 
         getMainTreeViewer().setLabelProvider(lp);
@@ -280,10 +281,10 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 getEditorHelper().setDirty(true);
             }
             ITestDataCubePO tdc = (ITestDataCubePO)po;
-            handleDataChanged(dataState, tdc, updateState);
+            handleDataChanged(dataState, tdc);
         }
         getMainTreeViewer().refresh();
-        getEditorHelper().handleDataChanged(po, dataState, updateState);
+        getEditorHelper().handleDataChanged(po, dataState);
     }
 
     /**
@@ -291,11 +292,8 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
      *            the data state
      * @param tdc
      *            the data cube
-     * @param updateState
-     *            the update state
      */
-    private void handleDataChanged(DataState dataState, ITestDataCubePO tdc,
-            UpdateState updateState) {
+    private void handleDataChanged(DataState dataState, ITestDataCubePO tdc) {
         switch (dataState) {
             case Added:
                 getTreeViewer().setSelection(new StructuredSelection(tdc));

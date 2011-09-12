@@ -48,7 +48,6 @@ import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 @Entity
 @Table(name = "PARAM_INTERFACE")
 class TestDataCubePO implements ITestDataCubePO {
-
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
@@ -79,9 +78,8 @@ class TestDataCubePO implements ITestDataCubePO {
      * key: supported languages, Type: string (string presentation of Locale)
      * value: flag to label the completeness of testdata
      */
-    @SuppressWarnings("unchecked") // because of XDoclet
     private transient Map<String, Boolean> m_completeTdMap = 
-        new HashMap();
+        new HashMap<String, Boolean>(TestDataPO.DEFAULT_NUMBER_OF_LANGUAGES);
     
     /** the data cube referenced by this node */
     private IParameterInterfacePO m_referencedDataCube;

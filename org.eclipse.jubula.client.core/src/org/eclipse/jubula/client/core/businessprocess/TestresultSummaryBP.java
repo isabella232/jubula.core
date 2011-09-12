@@ -232,7 +232,7 @@ public class TestresultSummaryBP {
             //set parameters
             addParameterListToResult(keyword, node, cap);
             //add error details
-            addErrorDetails(keyword, node, sess);
+            addErrorDetails(keyword, node);
             keyword.setNoOfSimilarComponents(node.getNoOfSimilarComponents());
             keyword.setOmHeuristicEquivalence(node.getOmHeuristicEquivalence());
         } else if (inode instanceof ITestCasePO) {
@@ -287,10 +287,8 @@ public class TestresultSummaryBP {
      * add error details to test result element
      * @param keyword ITestResultPO
      * @param node TestResultNode
-     * @param sess the session to use (required e.g. BLOBs)
      */
-    private void addErrorDetails(ITestResultPO keyword, TestResultNode node, 
-        EntityManager sess) {
+    private void addErrorDetails(ITestResultPO keyword, TestResultNode node) {
         if (node.getStatus() == TestResultNode.ERROR 
                 || node.getStatus() == TestResultNode.RETRYING) {
             keyword.setStatusType(I18n.getString(node.getEvent().getId(),

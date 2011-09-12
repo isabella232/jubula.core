@@ -21,7 +21,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -44,6 +43,7 @@ import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator.NonDecorationContext;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.UIIdentitiyElementComparer;
 import org.eclipse.jubula.client.ui.utils.Utils;
@@ -146,24 +146,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     }
 
     /**
-     * Decoration context to *disable* decoration for editors;
-     * see e.g. TestDataDecorator
-     * @author BREDEX GmbH
-     * @created May 17, 2010
-     */
-    public class JBEditorDecorationContext implements IDecorationContext {
-        /** {@inheritDoc} */
-        public String[] getProperties() {
-            return null;
-        }
-
-        /** {@inheritDoc} */
-        public Object getProperty(String property) {
-            return null;
-        }
-    }
-    
-    /**
      * Creates the specification part of the editor
      * 
      * @param parent
@@ -174,7 +156,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         DecoratingLabelProvider lp = new DecoratingLabelProvider(
                 new GeneralLabelProvider(), Plugin.getDefault().getWorkbench()
                         .getDecoratorManager().getLabelDecorator());
-        lp.setDecorationContext(new JBEditorDecorationContext());
+        lp.setDecorationContext(new NonDecorationContext());
         getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setUseHashlookup(true);
         getMainTreeViewer().setComparer(new UIIdentitiyElementComparer());

@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
-import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -28,6 +27,7 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -84,7 +84,7 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
 
         final WorkingLanguageBP workLangBP = WorkingLanguageBP.getInstance();
         Locale locale = workLangBP.getWorkingLanguage();
-        ITestSuitePO testSuite = NodeBP.getOwningTestSuite(node);
+        ITestSuitePO testSuite = UINodeBP.getOwningTestSuite(node);
         if (node != null && isNodeActive(node)) {
             if (testSuite != null) {
                 IAUTMainPO aut = testSuite.getAut();
@@ -216,15 +216,15 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
                         Messages.TestDataDecoratorTDChildrenIncompl);
             } else if (!execTC.getSumTdFlag(locale) 
                 && !execTC.getCompleteTdFlag(locale)) {
-                Iterator<IParamNodePO> it = execTC.getNodeListIterator();
+                Iterator<INodePO> it = execTC.getNodeListIterator();
                 boolean tmpFlag = true;
                 while (it.hasNext() && tmpFlag) {
-                    IParamNodePO child = it.next();
+                    INodePO child = it.next();
                     if (child instanceof IExecTestCasePO) {
                         tmpFlag = tmpFlag && child.getSumTdFlag(locale);
                     } else {
                         tmpFlag = tmpFlag 
-                            && child.getCompleteTdFlag(locale);
+                            && ((IParamNodePO)child).getCompleteTdFlag(locale);
                     }
                 }
                 if (!tmpFlag) {

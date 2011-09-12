@@ -72,6 +72,7 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.provider.contentprovider.EventHandlerContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.GeneralLabelProvider;
+import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator.NonDecorationContext;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.UIIdentitiyElementComparer;
@@ -137,7 +138,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         DecoratingLabelProvider ld = new DecoratingLabelProvider(
                 new GeneralLabelProvider(), Plugin.getDefault().getWorkbench()
                         .getDecoratorManager().getLabelDecorator());
-        ld.setDecorationContext(new JBEditorDecorationContext());
+        ld.setDecorationContext(new NonDecorationContext());
 
         getTreeViewer().setLabelProvider(ld);
         getEventHandlerTreeViewer().addSelectionChangedListener(actionListener);
@@ -465,8 +466,8 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             Messages.SaveInObservationModeDialogTitle,
                 null, Messages.SaveInObservationModeDialogQuestion,
                 MessageDialog.QUESTION, new String[] {
-                    Messages.NewProjectDialogMessageButton0,
-                    Messages.NewProjectDialogMessageButton0 }, 0);
+                    Messages.DialogMessageButton_YES,
+                    Messages.DialogMessageButton_NO }, 0);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();

@@ -446,7 +446,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                 getTreeViewer().refresh();
                 IDecoratorManager dm = 
                     Plugin.getDefault().getWorkbench().getDecoratorManager();
-                dm.update(Constants.TESTDATA_DECORATOR_ID);
+                dm.update(Constants.CC_DECORATOR_ID);
             }
         });
     }

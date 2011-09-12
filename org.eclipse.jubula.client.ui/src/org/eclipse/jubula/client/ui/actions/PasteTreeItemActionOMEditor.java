@@ -51,8 +51,6 @@ public class PasteTreeItemActionOMEditor extends AbstractPasteTreeItemAction {
             (IStructuredSelection)ome.getEditorHelper().getClipboard()
                 .getContents(transfer);
         if (pasteSelection != null) {
-            List<Object> nodesToBeMoved = pasteSelection.toList();
-            
             // Paste will always occur at the most recently selected node.
             ISelection sel = 
                 ome.getSite().getSelectionProvider().getSelection();

@@ -1067,7 +1067,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                     String message = Messages.CouldNotFindAction
                         + StringConstants.SPACE
                         + CompSystemI18n.getString(cap.getActionName(), true)
-                        + StringConstants.NEWLINE + "in" + StringConstants.SPACE
+                        + StringConstants.NEWLINE + "in" + StringConstants.SPACE //$NON-NLS-1$
                         + Messages.Component + StringConstants.COLON
                         + StringConstants.SPACE + cap.getComponentType();
                     log.error(message);

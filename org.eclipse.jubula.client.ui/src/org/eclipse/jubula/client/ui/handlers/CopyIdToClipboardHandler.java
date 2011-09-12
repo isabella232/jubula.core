@@ -30,9 +30,9 @@ public class CopyIdToClipboardHandler extends AbstractClipboardHandler {
         ISelection sel = HandlerUtil.getCurrentSelection(event);
         if (sel instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection)sel;
-            Iterator iter = selection.iterator();
+            Iterator<INodePO> iter = selection.iterator();
             while (iter.hasNext()) {
-                INodePO selectedNode = (INodePO)iter.next();
+                INodePO selectedNode = iter.next();
                 INodePO editableNode = findEditableNode(selectedNode);
                 if (editableNode != null) {
                     copyIDToClipboard(editableNode);

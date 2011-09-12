@@ -95,13 +95,13 @@ public interface IExecTestCasePO extends ITestCasePO {
     /** 
      * {@inheritDoc}
      */
-    public abstract Iterator getNodeListIterator();
+    public abstract Iterator<INodePO> getNodeListIterator();
 
     /**
      * public getter for unmodifiable map of eventExecTestCases
      * @return map ov eventExecTestCases
      */
-    public abstract Map getEventMap();
+    public abstract Map<String, IEventExecTestCasePO> getEventMap();
 
     /**
      * @param eventType eventType, for which to set the flag

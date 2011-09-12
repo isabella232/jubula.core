@@ -66,11 +66,11 @@ public final class ShowClientLogBP extends AbstractActionBP {
         Logger logger = (Logger)LoggerFactory.getLogger("ROOT"); //$NON-NLS-1$
         Iterator<Appender<ILoggingEvent>> appenders = logger
                 .iteratorForAppenders();
-        FileAppender fileAppender = null;
+        FileAppender<?> fileAppender = null;
         while (appenders.hasNext() && fileAppender == null) {
             Object enumElement = appenders.next();
             if (enumElement instanceof FileAppender) {
-                fileAppender = (FileAppender)enumElement;
+                fileAppender = (FileAppender<?>)enumElement;
             }
         }
 

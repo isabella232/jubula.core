@@ -52,18 +52,11 @@ import org.eclipse.jubula.tools.xml.businessmodell.Param;
  * @created 22.08.2005
  */
 public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
-    
-    /**
-     * The business process that performs the checks before a
-     * reference will be removed or added.
-     */
-    private TestCaseParamCheckBP m_checkBP;
-    
     /**
      * The constructor.
      */
     public TestCaseParamBP() {
-        m_checkBP = new TestCaseParamCheckBP();
+        // empty
     }
 
     /** {@inheritDoc} */

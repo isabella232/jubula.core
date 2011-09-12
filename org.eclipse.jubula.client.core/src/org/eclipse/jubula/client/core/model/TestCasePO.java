@@ -44,7 +44,8 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
      * eventhandler for each eventType (key)
      */
     private Map<String, IEventExecTestCasePO> m_eventExecTcMap = 
-        new HashMap<String, IEventExecTestCasePO>();
+        new HashMap<String, IEventExecTestCasePO>(
+            IEventHandlerContainer.MAX_NUMBER_OF_EVENT_HANDLER);
 
     /**
      * @param name name of testcase

@@ -279,8 +279,8 @@ public class MoveTestCaseAction extends Action {
             IProjectPO extProject = ProjectPM.loadReusedProject(
                 selectedProject);
             sess = Persistor.instance().openSession();
-            extProject = (IProjectPO)sess.find(
-                    NodeMaker.getProjectPOClass(), extProject.getId());
+            extProject = sess.find(NodeMaker.getProjectPOClass(),
+                    extProject.getId());
             List<ICapPO> moveProblem = getMoveProblem(extProject, 
                 selectionList);
             if (!moveProblem.isEmpty()) {
@@ -513,25 +513,4 @@ public class MoveTestCaseAction extends Action {
             nodeList.add(parentNode);
         }
     }
-
-    /**
-     * recursivly find the SpecTestCase to an ExecTestCase and shows it in Specification View
-     * @param spec the SpecTestCase you are looking for
-     * @param current the current GuiNode
-     * @return INodePO  
-     */
-    private INodePO recursivlyfindNode(ISpecTestCasePO spec, 
-        INodePO current) {
-        if (current.equals(spec)) {
-            return current;
-        }
-        for (INodePO nextNode : current.getUnmodifiableNodeList()) {
-            INodePO result = recursivlyfindNode(spec, nextNode);
-            if (result != null) {
-                return result;
-            }
-        }
-        return null;
-    }
-
 }

@@ -25,19 +25,16 @@ public abstract class Generator {
     /**
      * the processor for this group
      */
-    @SuppressWarnings("unused")
     private final IProcessor m_processor;
 
     /**
      * the Info class for this group
      */
-    @SuppressWarnings("unused")
     private final Info m_info;
 
     /**
      * the group to be generated
      */
-    @SuppressWarnings("unused")
     private final ConfigGroup m_group;
 
     /**

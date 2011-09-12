@@ -32,7 +32,7 @@ public class SearchTreeAction extends AbstractAction {
     private static IAction handleAction;
     
     /** the dialog to rename an selected item */
-    private FindDialog m_dialog;
+    private FindDialog<?> m_dialog;
 
     /**
      * {@inheritDoc}

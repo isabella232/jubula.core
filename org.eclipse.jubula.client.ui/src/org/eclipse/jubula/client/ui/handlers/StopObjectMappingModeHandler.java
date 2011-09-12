@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.ui.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
@@ -30,7 +29,7 @@ public class StopObjectMappingModeHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(ExecutionEvent event) {
         if (TestExecution.getInstance().getConnectedAut() == null) {
             String message = Messages.OMStopMappingModeActionError1;
             Utils.createMessageDialog(new JBException(message,

@@ -9,10 +9,13 @@
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.contentprovider;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -55,11 +58,19 @@ public class TestSuiteBrowserContentProvider
             ISpecTestCasePO referencedTestCase = 
                 ((IExecTestCasePO)parentElement).getSpecTestCase();
             if (referencedTestCase != null) {
-                return ArrayUtils.addAll(
-                        Collections.unmodifiableCollection(
-                                referencedTestCase.getAllEventEventExecTC())
-                                .toArray(), referencedTestCase
-                                .getUnmodifiableNodeList().toArray());
+                Collection<IEventExecTestCasePO> eventTCs = Collections
+                        .unmodifiableCollection(referencedTestCase
+                                .getAllEventEventExecTC());
+                for (IEventExecTestCasePO exec : eventTCs) {
+                    exec.setUIParentNode((INodePO) parentElement);
+                }
+                List<INodePO> nodes = referencedTestCase
+                        .getUnmodifiableNodeList();
+                for (INodePO node : nodes) {
+                    node.setUIParentNode((INodePO) parentElement);
+                }
+
+                return ArrayUtils.addAll(eventTCs.toArray(), nodes.toArray());
             }
             
             return ArrayUtils.EMPTY_OBJECT_ARRAY;
@@ -78,7 +89,12 @@ public class TestSuiteBrowserContentProvider
         }
         
         if (parentElement instanceof INodePO) {
-            return ((INodePO)parentElement).getUnmodifiableNodeList().toArray();
+            List<INodePO> nodes = ((INodePO)parentElement)
+                .getUnmodifiableNodeList();
+            for (INodePO node : nodes) {
+                node.setUIParentNode((INodePO) parentElement);
+            }
+            return nodes.toArray();
         }
         
         if (parentElement instanceof ITestSuiteContPO) {

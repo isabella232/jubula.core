@@ -60,7 +60,8 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     
     /** map with the default eventHandlers for this test suite */
     private Map<String, Integer> m_defaultEventHandler = 
-        new HashMap<String, Integer>();
+        new HashMap<String, Integer>(
+                IEventHandlerContainer.MAX_NUMBER_OF_EVENT_HANDLER);
     
     /**
      * only for Persistence (JPA / EclipseLink)

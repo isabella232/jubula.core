@@ -72,7 +72,6 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
      * @param node the node to rename
      * @return the dialog for renaming
      */
-    @SuppressWarnings("nls")
     private InputDialog createRenameTestJobDialog(final INodePO node) {
         final IProjectPO project = GeneralStorage.getInstance().getProject();
         return new InputDialog(Plugin.getShell(), 
@@ -99,7 +98,6 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
      * @param node the node to rename
      * @return the dialog for renaming
      */
-    @SuppressWarnings("nls")
     private InputDialog createRenameCategoryDialog(final INodePO node) {
         return new InputDialog(Plugin.getShell(),
             Messages.RenameActionCatTitle, 
@@ -116,7 +114,6 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
      * @param node the node to rename
      * @return the dialog for renaming
      */
-    @SuppressWarnings("nls")
     private InputDialog createRenameTestCaseDialog(final INodePO node) {
         String name = node.getName();
         if (node instanceof IExecTestCasePO) {
@@ -137,7 +134,6 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
      * @param node the node to rename
      * @return the dialog for renaming
      */
-    @SuppressWarnings("nls")
     private InputDialog createRenameTestSuiteDialog(final INodePO node) {
         final IProjectPO project = GeneralStorage.getInstance().
             getProject();

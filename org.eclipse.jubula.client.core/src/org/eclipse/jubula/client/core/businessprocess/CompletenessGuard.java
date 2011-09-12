@@ -182,11 +182,9 @@ public final class CompletenessGuard {
                 m_aut = ts.getAut();
             }
             if (m_aut != null) {
-                if (!(node instanceof ICapPO)) { 
-                    node.setSumOMFlag(m_aut, true);
-                    if (!node.isActive()) {
-                        return false;
-                    }
+                node.setSumOMFlag(m_aut, true);
+                if (!node.isActive()) {
+                    return false;
                 }
             }
             return true;

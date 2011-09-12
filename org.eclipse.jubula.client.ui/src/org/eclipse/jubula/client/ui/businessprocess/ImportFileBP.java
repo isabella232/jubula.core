@@ -52,7 +52,6 @@ import org.osgi.framework.Bundle;
  * @author BREDEX GmbH
  * @created 08.11.2004
  */
-@SuppressWarnings("synthetic-access")
 public class ImportFileBP implements IProjectNameConflictResolver,
         IDatabaseStateListener {
     /**

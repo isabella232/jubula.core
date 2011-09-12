@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2004, 2011 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,15 +8,10 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.autrun;
+package org.eclipse.jubula.app.autrun;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,9 +26,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.Parser;
 import org.apache.commons.lang.ArrayUtils;
-import org.eclipse.jubula.autagent.commands.IStartAut;
-import org.eclipse.jubula.communication.connection.ConnectionState;
-import org.eclipse.jubula.communication.connection.RestartAutProtocol;
+import org.eclipse.equinox.app.IApplication;
+import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -43,12 +37,25 @@ import org.slf4j.LoggerFactory;
 
 
 /**
+ * Starts an AUT and registers the AUT with an AUT Agent. In order to terminate 
+ * at the right time (not too early, not too late) this application assumes 
+ * that the following JVM parameters (or equivalent) are used:<ul>
+ * <li>osgi.noShutdown=true</li> 
+ * <li>eclipse.jobs.daemon=true</li> 
+ * <li>eclipse.enableStateSaver=false</li> 
+ * </ul>
+ * These parameters are required because the original application was designed 
+ * to run outside of an OSGi context, i.e. the application should end only 
+ * when no non-daemon threads are active.
+ * 
  * @author BREDEX GmbH
  * @created Dec 9, 2009
  */
-public class AutRun {
+public class AutRunApplication implements IApplication {
+    
     /** the logger */
-    private static final Logger LOG = LoggerFactory.getLogger(AutRun.class);
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(AutRunApplication.class);
     
     /**
      * <code>LAUNCHER_NAME</code>
@@ -123,109 +130,6 @@ public class AutRun {
     private static final String OPT_EXECUTABLE_LONG = "exec"; //$NON-NLS-1$
     // - Command line options - End //
 
-    /** settings used to start the AUT */
-    private Map<String, Object> m_autConfiguration;
-    
-    /** the object responsible for actually starting the AUT */
-    private IStartAut m_startAut;
-
-    /** the address for the AUT Agent */
-    private InetSocketAddress m_agentAddr;
-    
-    /**
-     * Constructor
-     * 
-     * @param autToolkit Toolkit for the AUT managed by this instance.
-     * @param autIdentifier Identifier for the AUT managed by this instance.
-     * @param agentAddr Address of the Aut Agent with which the AUT should be
-     *                  registered.
-     * @param autConfiguration Properties required for starting the AUT.
-     * 
-     * @throws ClassNotFoundException If no class can be found for starting an
-     *                                AUT for the given toolkit.
-     * @throws InstantiationException 
-     * @throws IllegalAccessException
-     */
-    public AutRun(String autToolkit, AutIdentifier autIdentifier, 
-            InetSocketAddress agentAddr, Map<String, Object> autConfiguration) 
-        throws ClassNotFoundException, InstantiationException, 
-               IllegalAccessException {
-        String className = "org.eclipse.jubula.autagent.commands.Start" //$NON-NLS-1$
-            + autToolkit + "AutServerCommand"; //$NON-NLS-1$
-        Class< ? > autServerClass = Class.forName(className);
-        m_agentAddr = agentAddr;
-        m_autConfiguration = new HashMap<String, Object>(autConfiguration);
-        m_autConfiguration.put(AutConfigConstants.AUT_AGENT_HOST, 
-                agentAddr.getHostName());
-        m_autConfiguration.put(AutConfigConstants.AUT_AGENT_PORT, 
-                String.valueOf(agentAddr.getPort()));
-        m_autConfiguration.put(AutConfigConstants.AUT_NAME, 
-                autIdentifier.getExecutableName());
-        m_startAut = (IStartAut)autServerClass.newInstance();
-    }
-    
-    /**
-     * Main method.
-     * 
-     * @param args
-     *            Command line arguments.
-     */
-    public static void main(String[] args) throws ClassNotFoundException, 
-            InstantiationException, IllegalAccessException, 
-            IOException {
-        Options options = createCmdLineOptions();
-        Parser parser = new BasicParser();
-        CommandLine cmdLine = null;
-        try {
-            cmdLine = parser.parse(options, args, false);
-        } catch (ParseException pe) {
-            printHelp(pe);
-        }
-        
-        if (cmdLine != null && !cmdLine.hasOption(OPT_HELP)) {
-            String toolkit = StringConstants.EMPTY;
-            if (cmdLine.hasOption(TK_SWING)) {
-                toolkit = "Swing"; //$NON-NLS-1$
-            } else if (cmdLine.hasOption(TK_SWT)) {
-                toolkit = "Swt"; //$NON-NLS-1$
-            } else if (cmdLine.hasOption(TK_RCP)) {
-                toolkit = "Rcp"; //$NON-NLS-1$
-            }
-            
-            int autAgentPort = DEFAULT_AUT_AGENT_PORT;
-            if (cmdLine.hasOption(OPT_AUT_AGENT_PORT)) {
-                try {
-                    autAgentPort = Integer.parseInt(cmdLine
-                            .getOptionValue(OPT_AUT_AGENT_PORT));
-                } catch (NumberFormatException nfe) {
-                    // use default
-                }
-            }
-            String autAgentHost = DEFAULT_AUT_AGENT_HOST;
-            if (cmdLine.hasOption(OPT_AUT_AGENT_HOST)) {
-                autAgentHost = cmdLine.getOptionValue(OPT_AUT_AGENT_HOST);
-            }
-            
-            InetSocketAddress agentAddr = 
-                new InetSocketAddress(autAgentHost, autAgentPort);
-            AutIdentifier autId = new AutIdentifier(cmdLine
-                    .getOptionValue(OPT_AUT_ID));
-            
-            Map<String, Object> autConfiguration = createAutConfig(cmdLine);
-            
-            AutRun runner = new AutRun(toolkit, autId, agentAddr,
-                    autConfiguration);
-            try {
-                runner.run();
-            } catch (ConnectException ce) {
-                LOG.info("Could not connect to AUT Agent.", ce); //$NON-NLS-1$
-                System.err.println(I18n.getString("InfoDetail.connGuiDancerServerFailed")); //$NON-NLS-1$
-            }
-        } else {
-            printHelp(null);
-        }
-    }
-
     /**
      * prints help options
      * @param pe a parse Execption - may also be null
@@ -286,78 +190,6 @@ public class AutRun {
         }
         
         return autConfig;
-    }
-
-    /**
-     * Starts the AUT managed by the receiver.
-     * 
-     * @throws ConnectException If unable to connect to the AUT Agent (if, 
-     *         for example, there is no AUT Agent running on the given 
-     *         hostname / port)
-     * @throws IOException if an I/O error occurs during AUT startup.
-     */
-    public void run() throws IOException, ConnectException {
-        // Establish connection to AUT Agent
-        final Socket agentSocket = 
-            new Socket(m_agentAddr.getAddress(), m_agentAddr.getPort());
-
-        final PrintWriter writer = new PrintWriter(
-                agentSocket.getOutputStream(), true);
-        final BufferedReader reader = new BufferedReader(
-                new InputStreamReader(agentSocket.getInputStream()));
-        
-        String clientTypeRequest = reader.readLine();
-        writer.println(ConnectionState.CLIENT_TYPE_AUTRUN);
-        
-        writer.println(
-                m_autConfiguration.get(AutConfigConstants.AUT_NAME));
-        
-        Thread agentConnectionThread = new Thread("AUT Agent Connection") { //$NON-NLS-1$
-            public void run() {
-                try {
-                    String line = reader.readLine();
-                    if (line != null) {
-                        if (line.equals(
-                                RestartAutProtocol.REQ_PREPARE_FOR_RESTART)) {
-                            
-                            // make sure that we have a system thread running so
-                            // the JVM won't shut down during AUT restart
-                            Thread restartThread = new Thread() {
-                                public void run() {
-                                    writer.println("Response.OK"); //$NON-NLS-1$
-                                    
-                                    try {
-                                        String restartReq = reader.readLine();
-                                        if (RestartAutProtocol.REQ_RESTART
-                                            .equals(restartReq)) {
-                                            
-                                            AutRun.this.run();
-                                        }
-                                    } catch (IOException e) {
-                                        LOG.error("Error occured while restarting AUT.", e); //$NON-NLS-1$
-                                    } finally {
-                                        try {
-                                            agentSocket.close();
-                                        } catch (IOException e) {
-                                            // Error while closing socket. Ignore.
-                                        }
-                                    }
-                                };
-                            };
-                            restartThread.setDaemon(false);
-                            restartThread.start();
-                        }
-                    }
-                } catch (IOException e) {
-                    LOG.error("Error occured while restarting AUT.", e); //$NON-NLS-1$
-                }
-            };
-        };
-        
-        agentConnectionThread.setDaemon(true);
-        agentConnectionThread.start();
-        
-        m_startAut.startAut(m_autConfiguration);
     }
 
     /**
@@ -455,5 +287,79 @@ public class AutRun {
             }
             return 0;
         }
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public Object start(IApplicationContext context) throws Exception {
+        String[] args = (String[])context.getArguments().get(
+                IApplicationContext.APPLICATION_ARGS);
+        if (args == null) {
+            args = new String[0];
+        }
+
+        Options options = createCmdLineOptions();
+        Parser parser = new BasicParser();
+        CommandLine cmdLine = null;
+        try {
+            cmdLine = parser.parse(options, args, false);
+        } catch (ParseException pe) {
+            printHelp(pe);
+        }
+        
+        if (cmdLine != null && !cmdLine.hasOption(OPT_HELP)) {
+            String toolkit = StringConstants.EMPTY;
+            if (cmdLine.hasOption(TK_SWING)) {
+                toolkit = "Swing"; //$NON-NLS-1$
+            } else if (cmdLine.hasOption(TK_SWT)) {
+                toolkit = "Swt"; //$NON-NLS-1$
+            } else if (cmdLine.hasOption(TK_RCP)) {
+                toolkit = "Rcp"; //$NON-NLS-1$
+            }
+            
+            int autAgentPort = DEFAULT_AUT_AGENT_PORT;
+            if (cmdLine.hasOption(OPT_AUT_AGENT_PORT)) {
+                try {
+                    autAgentPort = Integer.parseInt(cmdLine
+                            .getOptionValue(OPT_AUT_AGENT_PORT));
+                } catch (NumberFormatException nfe) {
+                    // use default
+                }
+            }
+            String autAgentHost = DEFAULT_AUT_AGENT_HOST;
+            if (cmdLine.hasOption(OPT_AUT_AGENT_HOST)) {
+                autAgentHost = cmdLine.getOptionValue(OPT_AUT_AGENT_HOST);
+            }
+            
+            InetSocketAddress agentAddr = 
+                new InetSocketAddress(autAgentHost, autAgentPort);
+            AutIdentifier autId = new AutIdentifier(cmdLine
+                    .getOptionValue(OPT_AUT_ID));
+            
+            Map<String, Object> autConfiguration = createAutConfig(cmdLine);
+            
+            AutRunner runner = new AutRunner(
+                    toolkit, autId, agentAddr, autConfiguration);
+            try {
+                runner.run();
+            } catch (ConnectException ce) {
+                LOG.info("Could not connect to AUT Agent.", ce); //$NON-NLS-1$
+                System.err.println(I18n.getString("InfoDetail.connGuiDancerServerFailed")); //$NON-NLS-1$
+            }
+        } else {
+            printHelp(null);
+        }
+
+        return IApplication.EXIT_OK;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void stop() {
+        // no-op
     }
 }

@@ -726,9 +726,8 @@ public class NodePM extends PersistenceManager {
             EntityTransaction tx = 
                 Persistor.instance().getTransaction(s);
 
-            IProjectPO parentProject = 
-                (IProjectPO)s.find(
-                    NodeMaker.getProjectPOClass(), parentProjectId);
+            IProjectPO parentProject = s.find(NodeMaker.getProjectPOClass(),
+                    parentProjectId);
 
             if (parentProject == null) {
                 String error = 
@@ -747,8 +746,7 @@ public class NodePM extends PersistenceManager {
             List<IExecTestCasePO> tcList = 
                 getExecTestCasesFor(specTcGuid, projectsThatReuse, s);
 
-            Persistor.instance().commitTransaction(
-                s, tx);
+            Persistor.instance().commitTransaction(s, tx);
 
             return tcList;
 
@@ -814,8 +812,7 @@ public class NodePM extends PersistenceManager {
             EntityTransaction tx = 
                 Persistor.instance().getTransaction(s);
 
-            IProjectPO parentProject = 
-                (IProjectPO)s.find(
+            IProjectPO parentProject = s.find(
                     NodeMaker.getProjectPOClass(), parentProjectId);
 
             if (parentProject == null) {

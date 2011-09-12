@@ -40,7 +40,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * @author BREDEX GmbH
  * @created 18.02.2009
  */
-public abstract class AbstractNewCAP extends AbstractHandler {
+public class NewCAP extends AbstractHandler {
     /**
      * {@inheritDoc}
      */

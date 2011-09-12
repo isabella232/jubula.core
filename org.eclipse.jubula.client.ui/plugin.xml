@@ -367,8 +367,8 @@
 			</enablement>
 		</decorator>
 		<decorator
-			class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.TestDataDecorator"
-			id="org.eclipse.jubula.client.ui.decorators.incompleteTestDataDecorator" label="Incomplete Testdata Decorator"
+			class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.CompletenessDecorator"
+			id="org.eclipse.jubula.client.ui.decorators.completenessCheckDecorator" label="Completeness Check Decorator"
 			lightweight="true" state="true">
 			<enablement>
 				<or>
@@ -2147,7 +2147,7 @@
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.handlers.existing.testcase.AddExistingTestCase"
+			class="org.eclipse.jubula.client.ui.handlers.existing.testcase.ReferenceExistingTestCase"
 			commandId="org.eclipse.jubula.client.ui.commands.newTestCaseReference">
 			<activeWhen>
 				<or>
@@ -2179,7 +2179,7 @@
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.handlers.existing.testcase.AddExistingTestCase"
+			class="org.eclipse.jubula.client.ui.handlers.existing.testcase.ReferenceExistingTestCase"
 			commandId="org.eclipse.jubula.client.ui.commands.newTestCaseReference">
 			<activeWhen>
 				<and>
@@ -2209,7 +2209,7 @@
 				</and>
 			</activeWhen>
 		</handler>
-		<handler class="org.eclipse.jubula.client.ui.handlers.newcap.AddNewCAP"
+		<handler class="org.eclipse.jubula.client.ui.handlers.newcap.NewCAP"
 			commandId="org.eclipse.jubula.client.ui.commands.newCap">
 			<activeWhen>
 				<and>
@@ -2225,7 +2225,7 @@
 				</and>
 			</activeWhen>
 		</handler>
-		<handler class="org.eclipse.jubula.client.ui.handlers.newcap.AddNewCAP"
+		<handler class="org.eclipse.jubula.client.ui.handlers.newcap.NewCAP"
 			commandId="org.eclipse.jubula.client.ui.commands.newCap">
 			<activeWhen>
 				<and>

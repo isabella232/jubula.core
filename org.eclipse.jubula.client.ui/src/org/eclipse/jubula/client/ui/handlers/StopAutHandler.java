@@ -90,8 +90,8 @@ public class StopAutHandler extends AbstractHandler {
         MessageDialog dialog = new MessageDialog(Plugin.getShell(),
                 Messages.StopAUTActionShellTitle,
                 null, questionText, MessageDialog.QUESTION, new String[] {
-                    Messages.NewProjectDialogMessageButton0,
-                    Messages.NewProjectDialogMessageButton1 }, 0);
+                    Messages.DialogMessageButton_YES,
+                    Messages.DialogMessageButton_NO }, 0);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();

@@ -18,13 +18,10 @@ import java.util.Map;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
@@ -87,25 +84,15 @@ public class ComponentNameReuseBP
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
-
-        if (po instanceof IComponentNamePO) {
-            IComponentNamePO compName = (IComponentNamePO)po;
-            switch (dataState) {
-                case ReuseChanged:
-                    m_compNameGuidToIsReusedMap.remove(compName.getGuid());
-                    break;
-                default:
-                    break;
+            if (e.getPo() instanceof IComponentNamePO) {
+                IComponentNamePO compName = (IComponentNamePO)e.getPo();
+                switch (e.getDataState()) {
+                    case ReuseChanged:
+                        m_compNameGuidToIsReusedMap.remove(compName.getGuid());
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

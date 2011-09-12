@@ -78,13 +78,10 @@ public class DependencyFinderOp implements ITreeNodeOperation<INodePO> {
 
     /**
      * {@inheritDoc}
-     *      org.eclipse.jubula.client.core.model.NodePO,
-     *      org.eclipse.jubula.client.core.model.NodePO)
      */
-    public void postOperate(
-        ITreeTraverserContext<INodePO> ctx, 
-        INodePO parent, 
-        INodePO node, boolean alreadyVisited) {
+    public void postOperate(ITreeTraverserContext<INodePO> ctx, INodePO parent,
+            INodePO node, boolean alreadyVisited) {
+        // empty
     }
 
     /**

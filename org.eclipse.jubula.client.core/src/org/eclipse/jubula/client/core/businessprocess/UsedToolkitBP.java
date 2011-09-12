@@ -97,7 +97,6 @@ public class UsedToolkitBP {
      * @throws ProjectDeletedException if the project was deleted in another
      *                                   session.
      */
-    @SuppressWarnings("unchecked")
     public void addToolkit(ISpecTestCasePO specTC, IProjectPO project) 
         throws PMException, ProjectDeletedException {
         
@@ -337,7 +336,6 @@ public class UsedToolkitBP {
      * @param node an InodePO
      * @return the toolkit level.
      */
-    @SuppressWarnings("unchecked")
     public String getToolkitLevel(INodePO node) {
          // FIXME (AT) : Aufteilen fuer TC- und TS-Browser!!!
         String level = ToolkitConstants.LEVEL_ABSTRACT;

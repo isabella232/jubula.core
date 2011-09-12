@@ -44,7 +44,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * @author BREDEX GmbH
  * @created 18.02.2009
  */
-public abstract class AbstractReferenceExistingTestCase 
+public class ReferenceExistingTestCase 
     extends AbstractHandler {
     /**
      * {@inheritDoc}

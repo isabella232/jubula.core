@@ -589,7 +589,6 @@ public class FileStorageBP {
          * @return the amount of work required to save the given node to the 
          *         database.
          */
-        @SuppressWarnings("unchecked")
         private int getWorkForNode(INodePO node) {
             int work = 1;
             if (!(node instanceof IExecTestCasePO)) {
@@ -1311,7 +1310,6 @@ public class FileStorageBP {
          * @return the amount of work required to save the given node to the 
          *         database.
          */
-        @SuppressWarnings("unchecked")
         private int getWorkForNode(INodePO node) {
             int work = 1;
             if (!(node instanceof IExecTestCasePO)) {

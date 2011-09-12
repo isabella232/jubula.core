@@ -215,9 +215,9 @@ public class TestResultSummaryPM {
 
             count = (Number)sess.createQuery(duplicateQuery).getSingleResult();
             if (count.longValue() > 0) {
-                log.error("Duplicate Test Result Summary (GUID=" 
+                log.error("Duplicate Test Result Summary (GUID="  //$NON-NLS-1$
                         + summary.getInternalGuid() 
-                        + ") will not be imported.");
+                        + ") will not be imported."); //$NON-NLS-1$
                 return true;
             }
 
@@ -234,7 +234,7 @@ public class TestResultSummaryPM {
      *            the test suite start time for summaries to be included
      * @return list of metadata objects
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     public static final List<ITestResultSummaryPO> findAllTestResultSummaries(
         Date startTime)
         throws JBException {

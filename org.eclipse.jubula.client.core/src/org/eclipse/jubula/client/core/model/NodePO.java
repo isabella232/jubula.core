@@ -61,7 +61,6 @@ import org.eclipse.persistence.annotations.Index;
  * @author BREDEX GmbH
  * @created 17.08.2004
  */
-@SuppressWarnings("unchecked")
 @Entity
 @Table(name = "NODE")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -111,9 +110,13 @@ abstract class NodePO implements INodePO {
     /**
      * describes, if the node is derived from another node
      */
-    
     private INodePO m_parentNode = null;
 
+    /**
+     * the transient ui parent node
+     */
+    private transient INodePO m_uiParentNode = null;
+    
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
     
@@ -129,7 +132,7 @@ abstract class NodePO implements INodePO {
     
     /** mapping from attribute descriptions to attributes */
     private Map<IDocAttributeDescriptionPO, IDocAttributePO> m_docAttributes = 
-        new HashMap/*<IDocAttributeDescriptionPO, IDocAttributePO>*/();
+        new HashMap<IDocAttributeDescriptionPO, IDocAttributePO>(0);
     
     /** The timestamp */
     private long m_timestamp = 0;
@@ -363,9 +366,9 @@ abstract class NodePO implements INodePO {
      * to <code>null</code>
      */
     public void removeAllNodes() {
-        Iterator iter = getNodeList().iterator();
+        Iterator<INodePO> iter = getNodeList().iterator();
         while (iter.hasNext()) {
-            INodePO childNode = (INodePO)iter.next();
+            INodePO childNode = iter.next();
             childNode.setParentNode(null);
             iter.remove();
         }
@@ -405,7 +408,7 @@ abstract class NodePO implements INodePO {
      */
     @Transient
     public Iterator<INodePO> getNodeListIterator() {
-        List nodeList = Collections.unmodifiableList(getNodeList());
+        List<INodePO> nodeList = Collections.unmodifiableList(getNodeList());
         return nodeList.iterator();
     }
        
@@ -758,5 +761,16 @@ abstract class NodePO implements INodePO {
     /** {@inheritDoc} */
     public Set<IProblem> getProblems() {
         return Collections.unmodifiableSet(m_problems);
+    }
+    
+    /** {@inheritDoc} */
+    @Transient
+    public INodePO getUIParentNode() {
+        return m_uiParentNode;
+    }
+    
+    /** {@inheritDoc} */
+    public void setUIParentNode(INodePO parent) {
+        m_uiParentNode = parent;
     }
 }

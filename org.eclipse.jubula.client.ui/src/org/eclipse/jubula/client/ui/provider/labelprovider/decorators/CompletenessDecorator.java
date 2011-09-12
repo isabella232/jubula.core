@@ -15,7 +15,6 @@ import java.util.Locale;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -26,10 +25,10 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.ui.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.editors.AbstractJBEditor.JBEditorDecorationContext;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestSuiteBrowserLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
@@ -38,44 +37,39 @@ import org.eclipse.swt.graphics.Image;
  * @author BREDEX GmbH
  * @created 10.05.2005
  */
-public class TestDataDecorator extends AbstractLightweightLabelDecorator {
-    
+public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
     /** indicator that there's no decoration */
     private static final int NO_DECORATION = -1;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void decorate(Object element, IDecoration decoration) {
         decoration.setForegroundColor(Layout.DEFAULT_OS_COLOR);
         final INodePO node = (INodePO)element;
-        if (shouldNotDecorate(node, decoration)) {
+        final ITestSuitePO owningTestsuite = UINodeBP.getOwningTestSuite(node);
+        if (shouldNotDecorate(node, decoration, owningTestsuite)) {
             return;
         }
         boolean flag = false;
         if (TestSuiteBrowserLabelProvider.isNodeActive(node)) {
-            ITestSuitePO testSuite = NodeBP.getOwningTestSuite(node);
-            if (testSuite != null) {
+            if (owningTestsuite != null) {
                 final WorkingLanguageBP workLangBP = WorkingLanguageBP
                     .getInstance();
                 Locale locale = workLangBP.getWorkingLanguage();
-                IAUTMainPO aut = testSuite.getAut();
+                IAUTMainPO aut = owningTestsuite.getAut();
                 if (element instanceof ITestSuitePO) {
                     ITestSuitePO execTs = (ITestSuitePO)element;
-                    if (testSuite.getAut() != null
-                            && !workLangBP
-                                .isTestSuiteLanguage(locale, testSuite)) {
+                    if (aut != null && !workLangBP
+                                .isTestSuiteLanguage(locale, owningTestsuite)) {
                         decoration.setForegroundColor(Layout.GRAY_COLOR);
                     } else {
                         decoration.setForegroundColor(Layout.DEFAULT_OS_COLOR);
-                        flag = node.getSumTdFlag(locale) 
-                            && node.getSumOMFlag(aut) 
-                            && node.getSumSpecTcFlag();
+                        flag = node.getSumTdFlag(locale) && node
+                             .getSumOMFlag(aut) && node.getSumSpecTcFlag();
                     }
                     if (execTs.getNodeListSize() == 0) {
                         flag = true;
                     }
-                    if (testSuite.getAut() == null) {
+                    if (aut == null) {
                         flag = false;
                     }
                 } else if (node instanceof IExecTestCasePO) {
@@ -103,6 +97,8 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
                         if (!overWrittenName) {
                             flag = flag && cap.getCompleteOMFlag(aut);
                         }
+                    } else {
+                        flag = true;
                     }
                 }
             } else {
@@ -127,14 +123,16 @@ public class TestDataDecorator extends AbstractLightweightLabelDecorator {
      *            the node
      * @param decoration
      *            the decoration
+     * @param owningTestsuite the owning test suite of the node
      * @return wheter decoration should continue for this element or not
      */
-    private boolean shouldNotDecorate(INodePO node, IDecoration decoration) {
+    private boolean shouldNotDecorate(INodePO node, IDecoration decoration,
+            ITestSuitePO owningTestsuite) {
         return node == null
                 || node.getParentNode() == null
-                || NodeBP.getOwningTestSuite(node) == null
+                || owningTestsuite == null
                 || decoration.getDecorationContext() 
-                    instanceof JBEditorDecorationContext
+                    instanceof NonDecorationContext
                 || node instanceof IProjectPO;
     }
 

@@ -24,12 +24,6 @@ public class ActivateInspectorMessage extends Message {
     private static final double VERSION = 1.0;
 
     /**
-     * <code>true</code> if the inspector should be started, <code>false</code>
-     * if the inspector should be stopped.
-     */
-    private boolean m_startInspector;
-
-    /**
      * Default constructor. Do nothing (required by Betwixt).
      */
     public ActivateInspectorMessage() {

@@ -23,9 +23,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
@@ -86,28 +84,19 @@ public class ToolkitBP implements IProjectLoadedListener, IDataChangedListener {
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void handleDataChanged(IPersistentObject po, DataState dataState, 
-        UpdateState updateState) {
-        
-        if (po instanceof INodePO 
-            && (DataState.StructureModified == dataState)) {
             
-            final INodePO node = (INodePO)po;
-            if (po instanceof ISpecTestCasePO) {
-                UsedToolkitBP.getInstance().updateToolkitLevel(
-                    node, node.getToolkitLevel());
+            if (e.getPo() instanceof INodePO 
+                && (DataState.StructureModified == e.getDataState())) {
+                
+                final INodePO node = (INodePO)e.getPo();
+                if (e.getPo() instanceof ISpecTestCasePO) {
+                    UsedToolkitBP.getInstance().updateToolkitLevel(
+                        node, node.getToolkitLevel());
+                }
             }
         }
     }
-
+    
     /**
      * Showing Info Message if loading old project
      * @param usedToolkits toolkits used in given project

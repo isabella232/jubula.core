@@ -192,9 +192,9 @@ public class TreeTraverser {
                     IProjectPO project = (IProjectPO)node;
                     traverseProject(context, project);
                 } else {
-                    for (Iterator it = node.getNodeListIterator(); 
+                    for (Iterator<INodePO> it = node.getNodeListIterator(); 
                             it.hasNext();) {
-                        INodePO child = (INodePO)it.next();
+                        INodePO child = it.next();
                         traverseImpl(context, node, child);
                     }
                     Class nodePoClass = Persistor.getClass(node);
@@ -210,13 +210,11 @@ public class TreeTraverser {
                             testCase = (ISpecTestCasePO)node;
                         }
                         if (testCase != null) {
-                            for (Iterator it = 
+                            for (Iterator<IEventExecTestCasePO> it = 
                                     testCase.getAllEventEventExecTC()
                                         .iterator();
                                 it.hasNext();) {
-
-                                IEventExecTestCasePO child = 
-                                    (IEventExecTestCasePO)it.next();
+                                IEventExecTestCasePO child = it.next();
                                 traverseImpl(context, node, child);
                             }
                         }
@@ -259,12 +257,10 @@ public class TreeTraverser {
                                 reused);
 
                     if (reusedProject != null) {
-                        for (ISpecPersistable specNode 
-                                : reusedProject.getSpecObjCont()
-                                    .getSpecObjList()) {
+                        for (ISpecPersistable specNode : reusedProject
+                                .getSpecObjCont().getSpecObjList()) {
 
-                            traverseImpl(context, 
-                                    reusedProject, specNode);
+                            traverseImpl(context, reusedProject, specNode);
                         }
                     }
 

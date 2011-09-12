@@ -539,7 +539,7 @@ public class SpecTestCaseGUIPropertySource
                     // Otherwise, we'll be using the Data Cube from the Master 
                     // Session, which confuses EclipseLink.
                     node.setReferencedDataCube(
-                        (IParameterInterfacePO)activeEditor.getEditorHelper()
+                        activeEditor.getEditorHelper()
                             .getEditSupport().getSession().find(
                                     PoMaker.getTestDataCubeClass(), 
                                     dataCube.getId()));

@@ -35,8 +35,6 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.objects.MonitoringValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 
@@ -47,10 +45,6 @@ import org.slf4j.LoggerFactory;
 @Entity
 @Table(name = "TESTRESULT_SUMMARY")
 class TestResultSummaryPO implements ITestResultSummaryPO {
-    
-    /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(TestResultSummaryPO.class); 
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
