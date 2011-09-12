@@ -174,8 +174,8 @@
 	</target>
 	
 	<target name="releaseDevelopment" depends="releaseExampleSwingExtensionAUT, releaseExampleSwingServerExtension">
-		<mkdir dir="${examples.development.dir}"/>
-		<zip destfile="resources/development/${ExampleGEFIdentifierExample}.zip">
+		<mkdir dir="${examples.development.dir}/gef"/>
+		<zip destfile="${examples.development.dir}/gef/${ExampleGEFIdentifierExample}.zip">
 			<zipfileset dir="../${ExampleGEFIdentifierExample}" prefix="${ExampleGEFIdentifierExample}"/>
 		</zip>
 
