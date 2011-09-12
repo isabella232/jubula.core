@@ -794,12 +794,13 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             INodePO editorNode = (INodePO)getEditorHelper().getEditSupport()
                     .getWorkVersion();
             boolean isVisibleInEditor = editorNode.indexOf(changedNode) > -1;
+            if (editorNode instanceof ISpecTestCasePO) {
+                isVisibleInEditor |= ((ISpecTestCasePO)editorNode)
+                        .getAllEventEventExecTC().contains(po);
+            }
             switch (dataState) {
                 case Added:
-                    if (isVisibleInEditor
-                            || (editorNode instanceof ISpecTestCasePO 
-                                    && ((ISpecTestCasePO)editorNode)
-                                    .getAllEventEventExecTC().contains(po))) {
+                    if (isVisibleInEditor) {
                         handleNodeAdded(changedNode);
                     }
                     break;
