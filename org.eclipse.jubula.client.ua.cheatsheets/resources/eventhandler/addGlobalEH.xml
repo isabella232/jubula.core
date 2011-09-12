@@ -51,7 +51,7 @@
          
       </description>
       <subitem
-            label="Locate the &quot;Reset&quot; Test Case you created before.">
+            label="Locate the &quot;Reset&quot; Test Case that you created before in the Test Case Browser.">
       </subitem>
       <subitem
             label="Drag this Test Case into the &quot;Event Handler&quot; area at the bottom of the Test Case Editor for the &quot;Simple Adder with Event Handler&quot; Test Case.">

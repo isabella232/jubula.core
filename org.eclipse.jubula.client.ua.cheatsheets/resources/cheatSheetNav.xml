@@ -18,4 +18,9 @@
        <subitem label="Sub steps must be confirmed using the button on the right hand side of the cheat sheet. Click when you have completed the sub step." skip="false">
        </subitem>
    </item>
+   <item title="Cheat sheets and focus">
+      <description>
+         Performing an action in the cheat sheet viewer (such as clicking &quot;Complete&quot;) may remove the focus from the element (e.g. Test Case) you were editing. When returning to your test, you will need to re-select the item you want to edit to be able to add data or component names for example.
+      </description>
+   </item>
 </cheatsheet>

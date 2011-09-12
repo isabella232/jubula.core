@@ -34,7 +34,7 @@
    <item
          title="Execute the test">
       <description>
-         Save the Test Case Editor and re-execute the test. You will see that the Event Handler selects the checbox and then re-performs the failed action (i.e. the check). This is successful the second time, and the test step is marked as successful. <br/><br/>
+         Save the Test Case Editor and re-execute the test. You will see that the Event Handler selects the checkbox and then re-performs the failed action (i.e. the check). This is successful the second time, and the test step is marked as successful. <br/><br/>
 If you execute the test a second time without deselecting the checkbox, you will see that the Event Handler does not get activated, as no error occurs.
       </description>
    </item>

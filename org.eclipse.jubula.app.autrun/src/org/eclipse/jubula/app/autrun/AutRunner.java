@@ -99,6 +99,7 @@ public class AutRunner {
         final BufferedReader reader = new BufferedReader(
                 new InputStreamReader(agentSocket.getInputStream()));
         
+        // wait for the "Client Type Request" message
         reader.readLine();
         writer.println(ConnectionState.CLIENT_TYPE_AUTRUN);
         

@@ -17,7 +17,7 @@ To be able to test multiple \gdauts{} that are \bxname{not} started by each othe
 \item The first \gdaut{} can either be started using the \bxname{autrun} command \bxpref{autrun} or via an \gdaut{} configuration \bxpref{configuringaut}. Any other \gdauts{} required for the \gdjob{} must have been started with the \bxname{autrun} command.
 \end{itemize}
 
-\bxtipp{To run \gdjobs{} from the test executor, all \gdauts{} for the test run must be started with the \bxname{autrun} command.}
+\bxtipp{To run \gdjobs{} from the test executor, all \gdauts{} for the test run must already be started when the test execution begins. For unattended build and test  processes, this will mean that the \gdauts{} must be started  with the \bxname{autrun} command.}
 
 \subsubsection{Testing \gdauts{} that are launched by other \gdauts{}}
 \label{TasksLenientTest}
