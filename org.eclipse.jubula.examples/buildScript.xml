@@ -27,6 +27,7 @@
 	<property name="ExampleSwingExtensionServer" value="org.eclipse.jubula.examples.extension.swing.rc"/>
 	<property name="ExampleSwingExtensionAUT"    value="org.eclipse.jubula.examples.extension.swing.aut"/>
 	
+	<property name="ExampleGEFIdentifierExample" value="org.eclipse.jubula.examples.extension.rcp.gef.logic.identifier"/>
 	
 	<target name="build"   depends="clean, 
 									createDirStructure,
@@ -173,11 +174,12 @@
 	</target>
 	
 	<target name="releaseDevelopment" depends="releaseExampleSwingExtensionAUT, releaseExampleSwingServerExtension">
-		<copy todir="${examples.development.dir}">
-			<fileset dir="resources/development"/>
-		</copy>
-		<mkdir dir="${examples.development.dir}/extension"/>
+		<mkdir dir="${examples.development.dir}/gef"/>
+		<zip destfile="${examples.development.dir}/gef/${ExampleGEFIdentifierExample}.zip">
+			<zipfileset dir="../${ExampleGEFIdentifierExample}" prefix="${ExampleGEFIdentifierExample}"/>
+		</zip>
 
+		<mkdir dir="${examples.development.dir}/extension"/>
 		<property name="extensionSourceDir" value="${examples.development.dir}/extension/src"/>
 		<mkdir dir="${extensionSourceDir}"/>
 		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingClientExtension.zip">

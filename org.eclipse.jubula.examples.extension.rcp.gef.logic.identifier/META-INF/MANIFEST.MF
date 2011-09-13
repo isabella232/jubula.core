@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Remote Control - RCP: GEF Logic Example Identifier Plug-in
+Bundle-SymbolicName: org.eclipse.jubula.examples.extension.rcp.gef.logic.identifier;singleton:=true
+Bundle-Version: 1.1.0
+Bundle-Activator: org.eclipse.jubula.examples.extension.rcp.gef.logic.identifier.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.gef,
+ org.eclipse.gef.examples.logic,
+ org.eclipse.jubula.rc.rcp
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse Jubula
+Bundle-ClassPath: .
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -570,18 +570,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     }
 
     /**
-     * initializes the client
-     * @param args
-     *      Command Line Parameter
-     * @return int
-     *      ExitCode
-     */
-    public int runAntTask(String[] args) {
-        int exitCode = run(args);
-        return exitCode;
-    }
-
-    /**
      * @return the job
      */
     public JobConfiguration getJob() {

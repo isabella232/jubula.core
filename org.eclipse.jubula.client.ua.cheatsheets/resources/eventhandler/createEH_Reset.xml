@@ -40,7 +40,7 @@
          
       </description>
       <subitem
-            label="In the properties view, enter the textpath &quot;File.*/reset.*&quot; for the TEXTPATH parameter.">
+            label="In the properties view, enter the textpath &quot;File.*/reset.*&quot; for the TEXTPATH parameter and &quot;matches&quot; for the OPERATOR parameter">
       </subitem>
       <subitem
             label="Save the Test Case Editor.">

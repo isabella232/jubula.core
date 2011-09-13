@@ -32,6 +32,7 @@ import org.eclipse.jubula.app.core.JubulaWorkbenchAdvisor;
 import org.eclipse.jubula.app.core.WorkSpaceData;
 import org.eclipse.jubula.app.i18n.Messages;
 import org.eclipse.jubula.app.ui.ChooseWorkspaceDialog;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -255,10 +256,10 @@ public class Launcher implements IApplication,
         }
         OutputStream output = null;
         try {
-            String versionLine = WORKSPACE_VERSION_KEY + '='
-                + WORKSPACE_VERSION_VALUE;
+            String versionLine = WORKSPACE_VERSION_KEY
+                    + StringConstants.EQUALS_SIGN + WORKSPACE_VERSION_VALUE;
             output = new FileOutputStream(versionFile);
-            output.write(versionLine.getBytes("UTF-8"));
+            output.write(versionLine.getBytes("UTF-8")); //$NON-NLS-1$
         } catch (IOException e) {
             log.error(Messages.CouldNotWriteVersionFile, e);
             MessageDialog.openError(shell, Messages

@@ -59,16 +59,13 @@ public class ProfileBuilder {
         if (profiles == null) {
             profiles = new ArrayList();
 
-            Profile profile = new Profile("Standard", //$NON-NLS-1$
-                    0.60, 0.30, 0.10, 0.00, 0.85);
+            Profile profile = new Profile("Standard", 0.60, 0.30, 0.10, 0.85); //$NON-NLS-1$
             profiles.add(profile);
 
-            profile = new Profile("Strict", //$NON-NLS-1$
-                    0.60, 0.30, 0.10, 0.00, 1.00);
+            profile = new Profile("Strict", 0.60, 0.30, 0.10, 1.00); //$NON-NLS-1$
             profiles.add(profile);
 
-            profile = new Profile("Given names", //$NON-NLS-1$
-                    1.00, 0.00, 0.00, 1.00, 1.00);
+            profile = new Profile("Given names", 1.00, 0.00, 0.00, 1.00); //$NON-NLS-1$
             profiles.add(profile);
 
         }
