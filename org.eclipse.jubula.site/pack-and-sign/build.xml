@@ -11,6 +11,7 @@
 	<echo>Running on ${os.name} ${os.version} (${os.arch}) / ${ant.version} / ${java.vendor} ${java.vm.name} ${java.version}</echo>
 
 	<condition property="sign.perform" value="true"><equals arg1="${performSign}" arg2="true"/></condition>
+  	<condition property="promote.perform" value="true"><equals arg1="${performPromote}" arg2="true"/></condition>
   	<condition property="pack.perform" value="true"><equals arg1="${performPack}" arg2="true"/></condition>
  
     <antcall target="do-pack-and-sign" />
@@ -79,7 +80,7 @@
 	</exec>
   </target>
 
-  <target name="promote">	
+  <target name="promote" if="promote.perform">	
 	<chmod perm="755" file="${scriptdir}/promote.sh"/>
   	<chmod perm="755" file="${scriptdir}/update-composite.sh"/>
 	<exec executable="${scriptdir}/promote.sh" dir="${scriptdir}" failonerror="true">
