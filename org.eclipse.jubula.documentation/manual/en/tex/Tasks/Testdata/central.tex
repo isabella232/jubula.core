@@ -84,3 +84,18 @@ You can reuse a central test data set in a \gdcase{} to provide the concrete dat
 For more information on the data sources, see the earlier section \bxpref{TasksDataSources}.
 \bxtipp{You can use central test data sets that contain more parameters than your \gdcase{}. For example, if your \gdcase{} requires the parameters \bxshell{NAME, ADDRESS} and your central test data set contains \bxshell{NAME, ADDRESS, POSTCODE}, you can still use the central test data set.}
 \end{enumerate}
+
+\subsubsection{Importing Excel files as central test data}
+\gdhelpid{guidancerCentralTestDataEditorContextId}{Central Test Data}
+\gdhelpid{guidancerPropertiesViewContextId}{Properties View}
+\label{TasksCentralDataImport}
+
+If you have existing Excel files that you want to convert into central test data, then you can import them via the \gddataeditor{}:
+
+\begin{enumerate}
+\item In the \gddataeditor{}, right-click and select \bxmenu{Import}{}{} from the context-sensitive menu.
+\item In the dialog that appears, browse to the directory containing your Excel file(s).
+\item Either select the whole directory (if it contains all Excel files) on the left, or select the individual Excel files on the right.
+\item Click \bxcaption{Finish} to start the import.
+\bxwarn{Your Excel files must contain the correct amount and type of \gdproject{} languages.}
+\end{enumerate}
