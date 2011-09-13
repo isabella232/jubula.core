@@ -16,7 +16,7 @@
     <antcall target="do-pack-and-sign" />
   </target>
 
-    <target name="do-pack-and-sign" if="sign.perform">
+    <target name="do-pack-and-sign">
     	<!-- sign -->
     	    <antcall target="sign"/>
 
