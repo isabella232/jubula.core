@@ -51,7 +51,7 @@
                   <property name="projectDir" value="${project.build.directory}"/>
                   <property name="repositoryName" value="jubula"/>
                   <property name="performSign" value="${performSign}"/>
-                  <property name="performPromote" value="${performPromote}"/>
+                  <property name="performPack" value="${performPack}"/>
                   <property name="version" value="${unqualifiedVersion}"/>
                   <property name="qualifier" value="${buildQualifier}"/>
                  <!--   
