@@ -1,34 +1,60 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>4.1.1 Supported Swing AUT&#39;s</title>
-    <meta content="4.1.1 Supported Swing AUT&#39;s" name="description" />
+    <title>3.26.4 Configuration Files</title>
+    <meta content="3.26.4 Configuration Files" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a id="SECTION00511000000000000000" name="SECTION00511000000000000000"><span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Supported Swing AUT&#39;s</a></h2>
-    <p>Jubula supports AUT&#39;s written with the Swing GUI toolkit according to the following points:<ul>
-      <li>The AUT is written using Java 1.4 or higher. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>Swing AUT&#39;s written in Java 1.4 cannot be started using an executable file <a href="node72.html#configuringaut">3.5.3</a> and cannot be started using the <i>autrun</i> option <a href="node76.html#autrun">3.5.4</a>. For both of these option,s Java 1.5 or higher is required.</b></td>
-          </tr>
-        </table>
-      <li>It uses a Java SE (Standard Edition) JRE. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img1.jpg" /></td>
-            <td><b>AUT&#39;s based on the NetBeans framework, and NetBeans itself, are currently not supported.</b></td>
-          </tr>
-        </table>
-    </ul>
+    <h2><a name="SECTION004264000000000000000"> <span class="arabic">3</span>.<span class="arabic">26</span>.<span class="arabic">4</span> Using a configuration file</a></h2>
+    <p><a name="5375"></a><ol>
+        <li>You can also enter test executor parameters in an XML configuration file. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The workspace parameter cannot currently be entered in the configuration file for the test executor, it must be entered directly into the command line interface.</b></td>
+            </tr>
+          </table>
+        <li>This saves you typing in the same details each time you start a test. <li>To enter the configuration file path, enter the following command: <br /><tt>&quot;-c &lt;path to file&gt;&quot;</tt><p> For example: <span class="textit">-c &#39;&#39;C:/My Documents/config1.xml&#39;&#39;</span><li>You can also overwrite parameters contained in the configuration file by entering another parameter directly into the interface. <li>For example, if your configuration file contains the Test Suite &quot;<i>Suite1</i>&quot;, but you enter <tt>&quot;-testsuite &#39;&#39;Suite2&#39;&#39;&quot;</tt> in the command line interface, the Test Suite called &quot;<i>Suite2</i>&quot; will be started, not &quot;<i>Suite1</i>&quot;. <li>To create an XML file: <ol>
+            <li>Open a text editor of your choice. <li>Enter the desired parameters as shown in the example: <pre>
+&lt;configuration&gt;
+    &lt;project&gt;ExampleProject&lt;/project&gt;
+    &lt;version&gt;1.0&lt;/version&gt;
+    &lt;autconfig&gt;local configuration&lt;/autconfig&gt;
+           OR
+    &lt;autid&gt;Adder&lt;/autid&gt;
+    &lt;dbscheme&gt;embedded&lt;/dbscheme&gt;
+    &lt;dbuser&gt;sa&lt;/dbuser&gt;
+    &lt;dbpw&gt;&lt;/dbpw&gt;
+    &lt;server&gt;localhost&lt;/server&gt;
+    &lt;port&gt;60000&lt;/port&gt;
+    &lt;language&gt;EN_US&lt;/language&gt;
+    &lt;testsuite&gt;&lt;entry&gt;Suite1&lt;/entry&gt;&lt;/testsuite&gt;
+            OR
+    &lt;testjob&gt;Job1&lt;/testjob&gt;        
+    &lt;datadir&gt;C:/Program Files/guidancer/data&lt;/datadir&gt;
+    &lt;resultdir&gt;C:/Program Files/guidancer/results&lt;/resultdir&gt;
+&lt;/configuration&gt;
+</pre><li>Save the file as an XML file. <li>This file will be used when you enter the &quot;<i>-c &lt;path to file&gt;</i>&quot; parameter. <table>
+                <tr>
+                  <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                  <td><b>The no-run and quiet mode parameters can only be entered in the command line interface. They cannot be entered in the configuration file.</b></td>
+                </tr>
+              </table>
+              <table>
+                <tr>
+                  <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                  <td><b>Java Virtual Machine parameters can only be entered in the command line interface. They cannot be entered in the configuration file.</b></td>
+                </tr>
+              </table>
+          </ol>
+        <li>A template configuration file was installed with Jubula . It can be found under: <br /><i>InstallationDirectory/examples/scripts</i></ol>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

@@ -1,61 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.26.4 Configuration Files</title>
-    <meta content="3.26.4 Configuration Files" name="description" />
+    <title>3.25.3 Closing Jubula and stopping the AUT Agent </title>
+    <meta content="3.25.3 Closing Jubula and stopping the AUT Agent " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h2><a id="SECTION004264000000000000000" name="SECTION004264000000000000000"><span class="arabic">3</span>.<span class="arabic">26</span>.<span class="arabic">4</span> Using a configuration file</a></h2>
-    <p><a name="5104"></a><ol>
-      <li>You can also enter test executor parameters in an XML configuration file. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>The workspace parameter cannot currently be entered in the configuration file for the test executor, it must be entered directly into the command line interface.</b></td>
-          </tr>
-        </table>
-      <li>This saves you typing in the same details each time you start a test.<li>To enter the configuration file path, enter the following command:<br /><tt>&quot;-c &lt;path to file&gt;&quot;</tt><p>For example: <span class="textit">-c &#39;&#39;C:/My Documents/config1.xml&#39;&#39;</span><li>You can also overwrite parameters contained in the configuration file by entering another parameter directly into the interface.<li>For example, if your configuration file contains the Test Suite &quot;<i>Suite1</i>&quot;, but you enter <tt>&quot;-testsuite &#39;&#39;Suite2&#39;&#39;&quot;</tt> in the command line interface, the Test Suite called &quot;<i>Suite2</i>&quot; will be started, not &quot;<i>Suite1</i>&quot;.<li>To create an XML file: <ol>
-          <li>Open a text editor of your choice.<li>Enter the desired parameters as shown in the example: <pre>
-&lt;configuration&gt;
-    &lt;project&gt;ExampleProject&lt;/project&gt;
-    &lt;version&gt;1.0&lt;/version&gt;
-    &lt;autconfig&gt;local configuration&lt;/autconfig&gt;
-           OR
-    &lt;autid&gt;Adder&lt;/autid&gt;
-    &lt;dbscheme&gt;embedded&lt;/dbscheme&gt;
-    &lt;dbuser&gt;sa&lt;/dbuser&gt;
-    &lt;dbpw&gt;&lt;/dbpw&gt;
-    &lt;server&gt;localhost&lt;/server&gt;
-    &lt;port&gt;60000&lt;/port&gt;
-    &lt;language&gt;EN_US&lt;/language&gt;
-    &lt;testsuite&gt;&lt;entry&gt;Suite1&lt;/entry&gt;&lt;/testsuite&gt;
-            OR
-    &lt;testjob&gt;Job1&lt;/testjob&gt;        
-    &lt;datadir&gt;C:/Program Files/guidancer/data&lt;/datadir&gt;
-    &lt;resultdir&gt;C:/Program Files/guidancer/results&lt;/resultdir&gt;
-&lt;/configuration&gt;
-</pre><li>Save the file as an XML file.<li>This file will be used when you enter the &quot;<i>-c &lt;path to file&gt;</i>&quot; parameter. <table>
-              <tr>
-                <td><img align="bottom" border="0" src="img2.jpg" /></td>
-                <td><b>The no-run and quiet mode parameters can only be entered in the command line interface. They cannot be entered in the configuration file.</b></td>
-              </tr>
-            </table>
-            <table>
-              <tr>
-                <td><img align="bottom" border="0" src="img2.jpg" /></td>
-                <td><b>Java Virtual Machine parameters can only be entered in the command line interface. They cannot be entered in the configuration file.</b></td>
-              </tr>
-            </table>
-        </ol>
-      <li>A template configuration file was installed with Jubula . It can be found under:<br /><i>InstallationDirectory/examples/scripts</i></ol>
-    <p>
+  <body><a name="problemViewContextId"></a><h2><a name="SECTION004253000000000000000"> <span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">3</span> Closing Jubula and stopping the AUT Agent </a></h2>
+    <p><a name="5217"></a> <a name="5218"></a><p> Once the Test Suite , AUT and AUT Agent have been stopped or disconnected, make sure any changes are saved and select: <br />
+      <table border="0" style="margin:0px;padding:0px;">
+        <tr>
+          <td bgcolor="#DDDDDD">File</td>
+          <td>--&gt;</td>
+          <td bgcolor="#DDDDDD">Exit</td>
+        </tr>
+      </table> . <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

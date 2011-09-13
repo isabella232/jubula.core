@@ -1,143 +1,54 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.5.4 Starting AUT&#39;s with the autrun command</title>
-    <meta content="3.5.4 Starting AUT&#39;s with the autrun command" name="description" />
+    <title>3.5.3.2 Advanced AUT configuration</title>
+    <meta content="3.5.3.2 Advanced AUT configuration" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="autSettingWizardPagePageContextId" name="autSettingWizardPagePageContextId"></a><h2><a id="SECTION00454000000000000000" name="SECTION00454000000000000000"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">4</span> Starting AUT&#39;s with the <i>autrun</i> command</a></h2><a id="autrun" name="autrun"></a><p><a name="1245"></a> <a name="1246"></a><p>The <i>autrun</i> command can be used as an alternative to starting your AUT via Jubula (i.e. with an AUT configuration <a href="node72.html#configuringaut">3.5.3</a>). It can only be used if your AUT can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Java Standard Edition JRE.<table>
-      <tr>
-        <td><img align="bottom" border="0" src="img1.jpg" /></td>
-        <td><b>The <i>autrun</i> command cannot be used for HTML or pure SWT AUT&#39;s .</b></td>
-      </tr>
-    </table>
-    <p>The command allows you to start your AUT independently of Jubula , on a machine where the AUT Agent is running. The Jubula ITE , when connected to this AUT Agent will then recognize the running AUT as a testable application.<p>To use the <i>autrun</i> command:<ol>
-      <li>Ensure that the AUT Agent is installed on the machine where you will be starting the AUT .<li>Start your AUT via the command line by entering <tt>&quot;autrun.exe&quot;</tt> then the following parameters:<br />
-        <div align="center"><a name="1297"></a><table>
-            <caption><strong>Table 3.1:</strong> Parameters for autrun command</caption>
+  <body>
+    <h3><a name="SECTION00453200000000000000"></a> <a name="AdvancedAUTConfig"></a><br /><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Advanced AUT configuration </h3>
+    <p> You can use the advanced dialog (<a href="#autconfigadvanced">3.11</a>) if your AUT is a Java JAR which can be started with a double click, or if your application can be started using the class name and the classpaths to your AUT . The advanced configuration dialog also lets you create a working/base directory for your AUT , and add command-line arguments needed to start the AUT . You can select a JRE executable and keyboard layout. <p>
+      <div align="CENTER"><a name="autconfigadvanced"></a><a name="1238"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.11:</strong> AUT configuration window: advanced</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image autconfigwindowadvanced" border="0" height="722" src="./autconfigwindowadvanced.png" width="524" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p>
+      <ol>
+        <li>Enter the JAR path (directory and file name) into the <i>Executable JAR File Name</i> field. <p> This path can be relative (if you define a base/working directory), or absolute. This JAR file must contain a manifest file which contains the main class and the classpath. <p>
+        <li>You can optionally create a working/base directory to store files in. The server directory of the Jubula installation is selected as default. To create a base directory elsewhere, browse to and select the location. <p> The base directory is the working directory for any classpaths, classnames, JAR files and JRE binaries. If you create a base directory, you can enter the paths to these items using a relative path, with the base directory as the root. For more information on relative paths, read the section in the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node38.html#relativepath"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+        <li>If your AUT must be started with the class name, add the main class name and the classpaths into their relative fields. The paths can be relative (if you have defined a base directory), or absolute. <table>
             <tr>
-              <td><a id="autrunparams" name="autrunparams"></a><div align="center">
-                </div>
-                <table border="1" cellpadding="3">
-                  <tr valign="baseline">
-                    <th align="left"><span class="textbf">Detail</span></th>
-                    <th align="left"><span class="textbf">Parameter</span></th>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-h</td>
-                    <td align="left"><tt>&quot;-h&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">Gives parameter help</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-w, <code>--</code>workingdir</td>
-                    <td align="left"><tt>&quot;-w &lt;directory&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">Enter the working directory for the AUT</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-a, <code>--</code>autagenthost</td>
-                    <td align="left"><tt>&quot;-a &lt;hostname&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">Enter the hostname for the AUT Agent</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-p, <code>--</code>autagentport</td>
-                    <td align="left"><tt>&quot;-p &lt;port number&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">Enter the port number for the AUT Agent</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-swing</td>
-                    <td align="left">&nbsp;</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">If the AUT is a Swing AUT</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-rcp</td>
-                    <td align="left">&nbsp;</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">If the AUT is an RCP AUT</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-swt</td>
-                    <td align="left">&nbsp;</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">If the AUT is an SWT AUT</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-k, <code>--</code>kblayout</td>
-                    <td align="left"><tt>&quot;-k &lt;en_US&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">Enter the keyboard layout for SWT/RCP AUT&#39;s</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-i, <code>--</code>autid</td>
-                    <td align="left"><tt>&quot;-i &lt;ID&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">Enter the ID to give to this AUT</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-e, <code>--</code>exec</td>
-                    <td align="left"><tt>&quot;-e &lt;AUT.exe&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">Enter the executable file for the AUT</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">-g, <code>--</code>generatenames (optional)</td>
-                    <td align="left"><tt>&quot;-g &lt;true/false&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">For RCP AUT&#39;s , enter whether</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">to generate technical names. <a href="node71.html#Defineaut">3.5.2</a></td>
-                  </tr>
-                </table>
-              </td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Add all the necessary files and directories to start the AUT . </b></td>
             </tr>
           </table>
-        </div>
-        <br />
-    </ol>
-    <table>
-      <tr>
-        <td><img align="bottom" border="0" src="img2.jpg" /></td>
-        <td><b>If your AUT is an RCP AUT , use <tt>&quot;-data&#39;&lt;WORKSPACE&gt;&#39;&quot;</tt> after the executable file to specify the workspace the AUT should use.</b></td>
-      </tr>
-    </table>
-    <br />
-    <hr /><a id="CHILD_LINKS" name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-      <li><a href="node77.html" id="tex2html1924" name="tex2html1924"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Creating an AUT definition from a running AUT</a></ul>
-    <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+        <li>Enter any necessary command-line arguments for the AUT in the <i>AUT Arguments</i> field. <li>Browse to a JRE executable or add a new one by clicking &quot;<i>New</i>&quot;. The Java version used must be 1.4 or later. <p> Java is installed with Jubula . You can find the Java file in: <br />
+            <table border="0" style="margin:0px;padding:0px;">
+              <tr>
+                <td bgcolor="#DDDDDD">Jubula </td>
+                <td>--&gt;</td>
+                <td bgcolor="#DDDDDD">jre</td>
+                <td>--&gt;</td>
+                <td bgcolor="#DDDDDD">bin</td>
+              </tr>
+            </table> . Use java.exe if you want to use a console, use javaw.exe if you do not want a console. <li>For SWT and RCP AUT&#39;s , select which keyboard layout is used on the machine on which the AUT will run. g <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The keyboard layout is not the actual keyboard attached to the computer, but is based on the regional language settings for the operating system.</b></td>
+            </tr>
+          </table>
+          <p> Jubula supports English (US) and German (DE) keyboard layouts out-of-the box. If you want to use a different keyboard layout, see the reference manual for information on creating keyboard layouts --&gt;<i>Reference Manual</i> <a href="../reference/node44.html#keyboardlayout"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. </ol> For information on the expert properties for the AUT configuration, see the next section <a href="node77.html#ExpertAUTConfig">3.5.3.3</a>. <p>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

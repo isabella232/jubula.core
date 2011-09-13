@@ -1,40 +1,40 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.11.2 Configuring Test Suites in the Properties View</title>
-    <meta content="3.11.2 Configuring Test Suites in the Properties View" name="description" />
+    <title>3.10.5 Deleting unused component names</title>
+    <meta content="3.10.5 Deleting unused component names" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="guidancerPropertiesViewContextId" name="guidancerPropertiesViewContextId"></a><a id="testSuiteEditorContextId" name="testSuiteEditorContextId"></a><a id="testExecViewContextId" name="testExecViewContextId"></a><h2><a id="SECTION004112000000000000000" name="SECTION004112000000000000000"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span> Configuring Test Suites in the Properties View</a></h2><a id="TestSuiteEdit" name="TestSuiteEdit"></a><p><a name="2816"></a> <a name="2817"></a> <a name="2818"></a> <a name="2819"></a> <a name="2820"></a> <a name="2821"></a> <a name="2822"></a> <a name="2823"></a> <a name="2824"></a> <a name="2825"></a> <a name="2826"></a> <a name="2827"></a> <a name="2828"></a> <a name="2829"></a> <a name="2830"></a> <a name="2831"></a> <a name="2832"></a> <a name="2833"></a> <a id="confsuite" name="confsuite"></a><p>To configure a Test Suite , you must first create one <a href="node140.html#TSeditor">3.11.1</a>.<table>
-      <tr>
-        <td><img align="bottom" border="0" src="img2.jpg" /></td>
-        <td><b>If you are editing the Test Suite , the working language (which is specified via the globe button on the toolbar) must be set to a language supported by the chosen AUT for the Test Suite . Otherwise the Test Suite will be uneditable.</b></td>
-      </tr>
-    </table>
-    <ol>
-      <li>Open the Test Suite Editor by double-clicking on the Test Suite you want to configure.<li>In the Properties View , you can: <ol>
-          <li>Change the Test Suite name by entering a new name in the <i>Test Suite name</i> field.<li>Add a comment to the Test Suite <a href="node86.html#TasksEditorAddComment">3.7.5</a>.<li>Enter a value in the <i>step delay</i> field. <table>
-              <tr>
-                <td><img align="bottom" border="0" src="img2.jpg" /></td>
-                <td><b>The step delay is the time Jubula leaves between each Test Step during test execution. The default is 0 milliseconds <a href="node179.html#TasksExecSpeed">3.16.6</a>.</b></td>
-              </tr>
-            </table>
-          <li>Select the AUT for this Test Suite . To be able to select an AUT (and object map, and execute your test) you must have added at least one AUT to the Project <a href="node71.html#Defineaut">3.5.2</a>. <table>
-              <tr>
-                <td><img align="bottom" border="0" src="img2.jpg" /></td>
-                <td><b>You don&#39;t have to choose an AUT for a Test Suite as soon as you have created it, but you will have to choose one before object mapping, for example.</b></td>
-              </tr>
-            </table>
-          <li>Choose a default reentry type for each of the four error types in Jubula from the combo-boxes. <p>Event Handlers are Test Cases used to deal with errors during test execution. When an error occurs, the current Test Case is searched for an Event Handler for that error type. If none is found, the parent Test Case is searched, and so on. If no Event Handler for the test is found, then a default Event Handler (specified in the Test Suite properties)is activated.<p>As a general rule, you should avoid default Event Handlers being executed. See the sections on Event Handlers for information on the event types <a href="node194.html#eventtype">3.18.2</a>, reentry types <a href="node195.html#reentrytype">3.18.3</a> and creating your own Event Handlers .<li>Save the changes in the Test Suite Editor .</ol>
-    </ol>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><h2><a name="SECTION004105000000000000000"> <span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">5</span> Deleting unused component names</a></h2><a name="TasksDeleteCompName"></a><p><a name="2873"></a> <a name="2874"></a><p> When you reassign component names in the Component Names View , you automatically create new component names if the name you enter did not previously exist in the Project . <p> Larger Projects can often end up with a number of component names that are no longer used. You can see and delete these names in the Component Name Browser &nbsp; . The names in the <i>Unused Component Names</i> category (<a href="#compnamebrowser">3.20</a>) are not used anywhere in this Project - they are not present in any Test Cases and they have not been mapped to any technical names from the AUT in the Object Mapping Editor . <p>
+      <div align="CENTER"><a name="compnamebrowser"></a><a name="7457"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.20:</strong> The Component Name Browser &nbsp; </caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image compnamebrowser" border="0" height="259" src="./compnamebrowser.png" width="405" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p> To delete unused component names, select the name you want to delete and select: <br />
+      <table border="0" style="margin:0px;padding:0px;">
+        <tr>
+          <td bgcolor="#DDDDDD">Delete</td>
+        </tr>
+      </table>
+      <br /> from the context-menu. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>To cleanup component names that are only used in mappings, or that are no longer used for a specific AUT , use the function <i>Cleanup unused component names</i> in the Object Mapping Editor <a href="node169.html#TasksOMCleanup">3.15.3.1</a>.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

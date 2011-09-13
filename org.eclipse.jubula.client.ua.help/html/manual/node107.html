@@ -1,47 +1,37 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.9.3 Using references for data in Test Cases</title>
-    <meta content="3.9.3 Using references for data in Test Cases" name="description" />
+    <title>3.9 Working with test data</title>
+    <meta content="3.9 Working with test data" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="guidancerPropertiesViewContextId" name="guidancerPropertiesViewContextId"></a><h2><a id="SECTION00493000000000000000" name="SECTION00493000000000000000"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">3</span> Using references for data in Test Cases</a></h2><a id="TasksTestdataReferences" name="TasksTestdataReferences"></a><p><a name="2061"></a> <a name="2062"></a><ul>
-      <li>If there are parameters in a Test Case that you want to change when you reuse it, you can enter a reference instead of a concrete value. Deciding which data to parametrize is an important decision in test creation. See the Best Practices section for more information on this <a href="node287.html#BPKeywordData">5.1.2</a>. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to get content assist in the Properties View for certain parameters.</b></td>
-          </tr>
-        </table>
-      <li>To enter a reference for a parameter, in the Properties View , enter a reference name, preceded by an equals sign: <tt>&quot;=REF_NAME&quot;</tt>. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>Reference names may only consist of letters, numbers and underscores. You cannot use spaces in reference names.</b></td>
-          </tr>
-        </table>
-      <li>Press <tt>&raquo;ENTER&laquo;</tt>. A yellow arrow will appear next to the <i>parameter</i> field in the Properties View .<br />
-        <div class="margin"><img align="bottom" border="0" height="241" src="./refArrow.png" width="256" />&nbsp; reference symbol</div>
-        <br />
-        <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>It helps to choose names that are meaningful so that you know what sort of data to enter later. Instead of <i>=TEXT</i>, you could use <i>=CATEGORY_NAME</i>, for example <a href="node293.html#BPParamNames">5.2.4</a>.</b></td>
-          </tr>
-        </table>
-      <li>You will see that the reference becomes a parameter of the parent Test Case . It appears in the Test Case Browser next to the parent Test Case in square brackets.<li>You will be able to enter data for this parameter when you reuse the Test Case . <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>You can enter data for it now if you want to - this is essentially like having default data. They appear when you reuse the Test Case , but you can overwrite them <a href="node129.html#TasksOverwriteData">3.9.12</a>.</b></td>
-          </tr>
-        </table>
-    </ul>
-    <p>For information on editing and deleting referenced parameters from Test Cases , see the following section <a href="node108.html#TasksTestdataEditParams">3.9.4</a>.<p>
+  <body>
+    <h1><a name="SECTION00490000000000000000"></a> <a name="WorkingWithData"></a><br /><span class="arabic">3</span>.<span class="arabic">9</span> Working with test data </h1>
+    <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node108.html" name="tex2html2363"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">1</span> Data types and entering data for Test Cases </a><li><a href="node109.html" name="tex2html2364"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Entering concrete values as data in Test Cases </a><li><a href="node110.html" name="tex2html2365"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">3</span> Using references for data in Test Cases </a><li><a href="node111.html" name="tex2html2366"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">4</span> Using the edit parameters dialog to add, edit and delete references</a><li><a href="node112.html" name="tex2html2367"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span> Using variables as data for Test Cases </a><ul>
+            <li><a href="node113.html" name="tex2html2368"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Reading and using values (variables) from the AUT </a><li><a href="node114.html" name="tex2html2369"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span>.<span class="arabic">2</span> Using environment variables in tests</a><li><a href="node115.html" name="tex2html2370"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span>.<span class="arabic">3</span> Using the Jubula pre-defined test execution variables</a></ul>
+          <br />
+        <li><a href="node116.html" name="tex2html2371"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">6</span> Concatenating (combining) parameters</a><li><a href="node117.html" name="tex2html2372"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">7</span> Viewing and changing data sources for Test Cases </a><ul>
+            <li><a href="node118.html" name="tex2html2373"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">7</span>.<span class="arabic">1</span> Changing the data source for a Test Case </a></ul>
+          <br />
+        <li><a href="node119.html" name="tex2html2374"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span> Using central data sets</a><ul>
+            <li><a href="node120.html" name="tex2html2375"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">1</span> Creating and editing central test data sets</a><li><a href="node121.html" name="tex2html2376"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">2</span> Deleting central test data sets</a><li><a href="node122.html" name="tex2html2377"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">3</span> Adding and modifying parameters for central test data sets</a><li><a href="node123.html" name="tex2html2378"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">4</span> Entering data for central test data sets</a><li><a href="node124.html" name="tex2html2379"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">5</span> Reusing central test data sets in Test Cases </a><li><a href="node125.html" name="tex2html2380"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">6</span> Importing Excel files as central test data</a></ul>
+          <br />
+        <li><a href="node126.html" name="tex2html2381"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span> Using an Excel file as an external data source</a><ul>
+            <li><a href="node127.html" name="tex2html2382"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">1</span> Configuring the Excel file</a><li><a href="node128.html" name="tex2html2383"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Using the =TODAY() function in Excel</a></ul>
+          <br />
+        <li><a href="node129.html" name="tex2html2384"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">10</span> Using the Data Sets View to enter data loops and to translate data</a><ul>
+            <li><a href="node130.html" name="tex2html2385"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">10</span>.<span class="arabic">1</span> Data Sets View : adding multiple data sets to a Test Case </a><li><a href="node131.html" name="tex2html2386"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">10</span>.<span class="arabic">2</span> Data Sets View : translating test data</a></ul>
+          <br />
+        <li><a href="node132.html" name="tex2html2387"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">11</span> Special parameters: empty strings and the escape character</a><li><a href="node133.html" name="tex2html2388"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">12</span> Overwriting data for Test Cases and Test Suites </a></ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

@@ -1,18 +1,46 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.10.2.1 Writing Test Cases that can test different components in the AUT</title>
-    <meta content="3.10.2.1 Writing Test Cases that can test different components in the AUT" name="description" />
+    <title>3.9.12 Overwriting data for Test Cases and Test Suites </title>
+    <meta content="3.9.12 Overwriting data for Test Cases and Test Suites " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="compNameViewContextId" name="compNameViewContextId"></a><h3><a id="SECTION004102100000000000000" name="SECTION004102100000000000000"><span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Writing Test Cases that can test different components in the AUT</a></h3><a id="TasksCompNamesCheckbox" name="TasksCompNamesCheckbox"></a>Select the checkbox on the left of the Component Names View to be able to see and edit (reassign) this component name when you reuse the parent of the Test Case you are editing. <p>This is useful for creating flexible keywords that can be used for the same workflow on different components. Depending on what you want the keyword to do when you reuse it, you can reassign the name to test different components in the AUT .<p>
+  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerSpecTestCaseEditorContextId"></a><a name="guidancerExecTestCaseEditorContextId"></a><h2><a name="SECTION004912000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">12</span> Overwriting data for Test Cases and Test Suites </a></h2><a name="TasksOverwriteData"></a><p><a name="2669"></a> <a name="2670"></a><p> When you reuse Test Cases , you reuse them with any concrete values they contain, and with any default values that you have entered for their referenced parameters. <p> Data which has been entered for referenced parameters can be overwritten when you reuse a Test Case . <p> Reusing Test Cases happens in two ways: <ul>
+        <li>by adding the Test Case to another Test Case <a href="node88.html#TasksEditorAdd">3.7.2</a>. The Test Case is then <i>nested</i> in the Test Case . <li>by adding the Test Case to a Test Suite <a href="node88.html#TasksEditorAdd">3.7.2</a>. The Test Case is then <i>nested</i> in the Test Suite . </ul>
+    <p>
+      <ol>
+        <li>Single-click the reused Test Case in the editor for the Test Case or Test Suite where you have reused it. <p>
+        <li>In the Properties View , you can see the parameters you referenced from in this Test Case . The data source for this Test Case is shown as <i>referenced Test Case </i> to denote that the data have not been changed after reusing the Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>A grey diamond next to the <i>parameter value</i> field means that the values in it were entered in the original specification of the Test Case .</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>You can enter parameter values here or reference the parameters again. They would then become parameters of the <i>parent</i> Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>If you enter values here, you can see a yellow diamond next to the <i>parameter value</i> field. This means that the original data have been overwritten. The data source changes to <i>local Test Case </i></b></td>
+              </tr>
+            </table>
+          <p> If you add references here, you will be able to enter or overwrite data when you reuse the parent Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>Once you change the parameter values of a reused Test Case , any changes to the parameters in the original specification of that Test Case will not affect your new values. You can reset any local changes to the data of the Test Case by removing all Excel files or Central Test Data Sets and then selecting <i>Referenced Test Case </i> from the data source combo box.</b></td>
+              </tr>
+            </table>
+      </ol>
+    <p>
+    <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

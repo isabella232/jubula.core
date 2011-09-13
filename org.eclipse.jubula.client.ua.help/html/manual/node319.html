@@ -1,20 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>6.3.4 Central Test Data Editor</title>
-    <meta content="6.3.4 Central Test Data Editor" name="description" />
+    <title>5.4.2 Using Event Handlers locally for specific Test Cases </title>
+    <meta content="5.4.2 Using Event Handlers locally for specific Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="guidancerCentralTestDataEditorContextId" name="guidancerCentralTestDataEditorContextId"></a><h2><a id="SECTION00734000000000000000" name="SECTION00734000000000000000"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">4</span> Central Test Data Editor</a></h2> <a name="6166"></a> <a name="6167"></a> <a name="6168"></a><p>You can open the Central Test Data Editor via the button on the toolbar.<p>In the Central Test Data Editor :<ul>
-      <li>You can create, modify and delete central test data sets.<li>You can search for places where central test data sets have been used.</ul>
-    <p>
+  <body>
+    <h2><a name="SECTION00642000000000000000"></a> <a name="BPEHLocal"></a><br /><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Using Event Handlers locally for specific Test Cases </h2>
+    <p> Often, there are errors that occasionally occur at specific points in the test. A good example of this is a prompt dialog that sometimes occurs when saving, for example. For errors that can be expected in some way, you can add Event Handlers to the Test Cases that cause the error to deal with the error and carry on with the test without activating the global Event Handlers . <p> You can use local Event Handlers to specify a particular response to an error at this point - e.g. if you have a check for the existence of a project in the Database and it fails, you may not want to continue with this test. <p> You can also use local Event Handlers to wait for, or create a state in the AUT that you require before the test can continue. In this case, you should structure your Test Case so that it checks for the status you require. If this isn&#39;t the case, the Event Handler is activated and takes the necessary steps to produce the status. Using the <i>retry</i> reentry type <a href="node200.html#reentrytype">3.18.3</a>, you can specify that the failed Test Step (the check) is retried after the Event Handler has been executed. An example of this is below. <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node320.html" name="tex2html5085"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Dealing with occasional dialogs</a></ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

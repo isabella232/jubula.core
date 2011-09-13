@@ -1,49 +1,41 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.15.4 Collecting components (technical names) from the AUT</title>
-    <meta content="3.15.4 Collecting components (technical names) from the AUT" name="description" />
+    <title>3.15.2.4 The configuration view in the Object Mapping Editor </title>
+    <meta content="3.15.2.4 The configuration view in the Object Mapping Editor " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="objectMapEditorContextId" name="objectMapEditorContextId"></a><h2><a id="SECTION004154000000000000000" name="SECTION004154000000000000000"><span class="arabic">3</span>.<span class="arabic">15</span>.<span class="arabic">4</span> Collecting components (technical names) from the AUT</a></h2><a id="TasksOMCollect" name="TasksOMCollect"></a><p><a name="3433"></a><p>Once your test specification is ready, you can <i>collect</i> components (technical names) from the AUT to <i>map</i> (assign) to the component names you used in your tests.<p>To collect components from the AUT , you must have:<ul>
-      <li>started the AUT Agent <a href="node34.html#otherportnumber">3.1</a><li>created a Test Case containing Test Steps <a href="node91.html#TasksCreateTC">3.8.1</a><li>added Test Cases to a Test Suite <a href="node139.html#WorkingWithSuites">3.11</a><li>specified an AUT <a href="node71.html#Defineaut">3.5.2</a><li>configured an AUT <a href="node72.html#configuringaut">3.5.3</a> if you want to start the AUT via Jubula<li>chosen an AUT for the Test Suite <a href="node141.html#confsuite">3.11.2</a><li>checked that your current working language is supported by the chosen AUT .<li>connected to the AUT Agent <a href="node170.html#connectserv">3.16.2</a><li>started the AUT to be mapped <a href="node171.html#startaut">3.16.3</a><li>opened the object mapping editor <a href="node158.html#TasksOpenOME">3.15.2.1</a></ul>
-    <ol>
-      <li>Start the Object Mapping Mode by clicking the arrow next to the<i>Start Object Mapping Mode</i> on the toolbar and selecting which AUT (based on the AUT ID) you want to map.<br />
-        <div class="margin"><img align="bottom" border="0" height="256" src="./startOM.png" width="256" />&nbsp;start Object Mapping Mode</div>
-        <br />
-        <table>
+  <body><a name="objectMapEditorContextId"></a><h3><a name="SECTION004152400000000000000"> <span class="arabic">3</span>.<span class="arabic">15</span>.<span class="arabic">2</span>.<span class="arabic">4</span> The configuration view in the Object Mapping Editor </a></h3>
+    <p><a name="3527"></a> <a name="3528"></a> <a name="3529"></a> <a name="TasksOMConfiguration"></a><p> In the configuration view in the Object Mapping Editor you can alter the object recognition for the test execution. <p><span class="textbf">Understanding object recognition</span><br /> Object recognition in Jubula is based on a calculation which takes various factors into account. For some applications, some factors may be more important than others, and you can change their weighting accordingly. <p> The factors Jubula uses in the calculation are: <p>
+      <dl>
+        <dt><strong>Name:</strong><dd>The name of the object within the AUT code, as given by the developer (if a name was given). <dt><strong>Path:</strong><dd>The route through the AUT hierarchy to get to this component. <dt><strong>Context:</strong><dd>The components in the vicinity of this component. <dt><strong>Threshold:</strong><dd>This determines what percentage value a component in the AUT must have in order to be considered as the originally mapped component. Components with a value under the threshold are not considered. The component with the highest value above the threshold is chosen during execution. </dl>
+    <p><span class="textbf">Options for object recognition</span> You can change the profile used during test execution using the combo box: <p>
+      <dl>
+        <dt><strong>Standard:</strong><dd>This is the default profile. It has a high value for name weight and lower values for context and path. The threshold is 85%. <dt><strong>Strict:</strong><dd>In this profile, the values for name, path and context are the same as in the standard profile. The threshold is at 100%. This means that a component must exactly correspond to the originally mapped component. <dt><strong>Given names:</strong><dd>In this profile, only the component name is considered. A component will only be selected if it has the same name as the originally mapped component. This profile can be used when you are sure that all of the components in the AUT have unique names. <dt><strong>Custom:</strong><dd>This profile lets you move the sliders yourself. You can lock sliders to stop them being affected by other sliders. </dl>
+    <p>
+      <div align="CENTER"><a name="objectmappingpref"></a><a name="3551"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.22:</strong> Object Mapping Configuration</caption>
           <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>If you have the same AUT running more than once, you will only be able to collect components from the AUT whose ID you chose. The object map for AUT&#39;s that are the same is, however, identical.</b></td>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image objectmappingpref" border="0" height="397" src="./objectmappingpref.png" width="345" /></div>
+            </td>
           </tr>
         </table>
-        <p>The status bar will show that the Object Mapping Mode is active.<li>Bring the AUT into focus by clicking on its titlebar. <p><span class="textbf">For Java AUT&#39;s</span><ul>
-          <li>In the AUT for which the Object Mapping Mode was started, move the cursor over components. They will be highlighted with a green border (see <a href="node166.html#greenborders">3.22</a>).<li>To collect a technical name for a component, hover the cursor over the component whose name you want to collect.<li>Press <tt>&raquo;CTRL+SHIFT+Q&laquo;</tt>. <table>
-              <tr>
-                <td><img align="bottom" border="0" src="img2.jpg" /></td>
-                <td><b>You can change the key combination for the object mapping in the object mapping preferences <a href="node202.html#TasksPrefsOMM">3.19.5</a>. This is a good idea if the current key combination has a specific meaning in your AUT . You can also set the object mapping combination to a mouse click if your AUT does not accept key combinations.</b></td>
-              </tr>
-            </table>
-        </ul><span class="textbf">For HTML AUT&#39;s</span><ul>
-          <li>While the Object Mapping Mode is active, the AUT cannot be used.<li>To collect a technical name for a component, click the component whose name you want to collect.</ul>
-      <li>In the Object Mapping Editor , the technical name for this component will appear in the <i>unassigned technical names</i> category. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>If you have already mapped this component, it will be highlighted in the Object Mapping Editor .</b></td>
-          </tr>
-        </table>
-      <li>Collect all the names you need from the AUT and then click the <i>Stop Object Mapping Mode</i> button on the toolbar.<br />
-        <div class="margin"><img align="bottom" border="0" height="256" src="./stopOM.png" width="256" />&nbsp; stop Object Mapping Mode</div>
-        <br />
-      <li>You can now map (assign) the component names you used in your Test Cases to the technical names you have collected from the AUT <a href="node166.html#TasksOMMap">3.15.5</a>.</ol>
+      </div>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>Take care when manually customizing the object mapping settings. You may have test execution problems if you have set the values too strictly, or not strictly enough.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

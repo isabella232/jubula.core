@@ -1,40 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.16.4.1 Starting a Test Suite or a Test Job</title>
-    <meta content="3.16.4.1 Starting a Test Suite or a Test Job" name="description" />
+    <title>3.15.6 Object mapping and AUT changes</title>
+    <meta content="3.15.6 Object mapping and AUT changes" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a id="SECTION004164100000000000000" name="SECTION004164100000000000000"></a> <a name="3643"></a> <a name="3644"></a> <a name="3645"></a> <a name="3646"></a> <a name="3647"></a> <a name="3648"></a> <a name="3649"></a><br /><span class="arabic">3</span>.<span class="arabic">16</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Starting a Test Suite or a Test Job</h3>
-    <p>To start a Test Suite or a Test Job , you must:<ul>
-      <li>have started the AUT <a href="node171.html#startaut">3.16.3</a><li>have completed object mapping for the Test Suite or Test Suites <a href="node156.html#objectmappingtasks">3.15.1</a><li>have entered complete test data for your Test Suites , for the language you want the test to run in.</ul>
-    <table>
-      <tr>
-        <td><img align="bottom" border="0" src="img2.jpg" /></td>
-        <td><b>Before starting a Test Suite or a Test Job , it is a good idea to review your preferences for the test results <a href="node204.html#testresprefs">3.19.7</a>.</b></td>
-      </tr>
-    </table>
-    <dl>
-      <dt><strong>Starting a Test Suite :</strong><dd>You can start a Test Suite from the Test Suite Browser or from the Running AUT&#39;s View . Click on the arrow next to the &quot;<i>Start test execution</i>&quot; button and select a Test Suite to start from the list.<dt><strong>Starting a Test Job :</strong><dd>You can start a Test Job from the Test Suite Browser . Click on the arrow next to the &quot;<i>start test execution</i>&quot; button and select a Test Job to start from the list.</dl>
+  <body><a name="objectMapEditorContextId"></a><h2><a name="SECTION004156000000000000000"> <span class="arabic">3</span>.<span class="arabic">15</span>.<span class="arabic">6</span> Object mapping and AUT changes</a></h2>
+    <p><a name="3784"></a> <a name="omchanges"></a>If your AUT has changed from one version to the next, your tests may still run, depending on the nature and extent of the changes. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>Please bear in mind that changing the look and feel of your AUT may lead to different technical names for the components in your AUT if you have not named the components.</b></td>
+        </tr>
+      </table>
+    <p> If your test does not run, a few simple steps will update it. <p> If you get a <i>component not found</i> error, or Jubula selects the wrong component during the test, remap the new component from the AUT and assign it to your component name. <p> This updates this component for the whole test. <p>
+    <p>
     <p>
       <br />
-    <div class="margin"><img align="bottom" border="0" height="256" src="./startSuite.png" width="256" />&nbsp; start test</div>
-    <br />
-    <table>
-      <tr>
-        <td><img align="bottom" border="0" src="img2.jpg" /></td>
-        <td><b>The amount of Test Suites or Test Jobs in the list for the &quot;<i>start test</i>&quot; button depends on your selection. In the Running AUT&#39;s View , only Test Suites for the currently selected AUT will be shown. In the Test Suite Browser , if you have selected a Test Suite or a Test Job , only the selected item will be startable.</b></td>
-      </tr>
-    </table>
-    <p>
-      <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

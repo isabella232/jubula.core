@@ -1,31 +1,24 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.24.10 Creating a support information package</title>
-    <meta content="3.24.10 Creating a support information package" name="description" />
+    <title>3.24.4 I can&#39;t start the AUT </title>
+    <meta content="3.24.4 I can&#39;t start the AUT " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="problemViewContextId" name="problemViewContextId"></a><a id="supportRequestDialogContextId" name="supportRequestDialogContextId"></a><h2><a id="SECTION0042410000000000000000" name="SECTION0042410000000000000000"><span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">10</span> Creating a support information package</a></h2>
-    <p><a name="4891"></a><p>If you have found a problem in Jubula , you can create a support information package from within the ITE . You can choose which information to include in the package, which can be uploaded to a bug-tracking system as a .zip file.<ol>
-      <li>Select:<br />
-        <table border="0" style="margin:0px;padding:0px;">
-          <tr>
-            <td bgcolor="#DDDDDD">Help</td>
-            <td>--&gt;</td>
-            <td bgcolor="#DDDDDD">Create Support Information Package</td>
-          </tr>
-        </table>
-      <li>In the dialog which appears, select what to add to the package: <dl>
-          <dt><strong>Configuration information:</strong><dd>This includes information about how you have configured Jubula , which other plugins you are using, and information about your environment.<dt><strong>The AUT Agent log</strong><dd>This lets us see the messages from the AUT Agent . If you are not connected to the AUT Agent , this option will be grayed out.<dt><strong>The client log</strong><dd>This lets us see the messages from the ITE .<dt><strong>The Project and depending Projects</strong><dd>The currently open Project and any Projects it reuses.</dl>
-      <li>Browse to the destination to save the .zip file.<li>Click &quot;<i>OK</i>&quot;.<li>The prepared package will be saved to the destination you specified.</ol>
-    <p>
+  <body>
+    <h2><a name="SECTION004244000000000000000"></a> <a name="troublestartaut"></a><br /><span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">4</span> I can&#39;t start the AUT </h2>
+    <p><a name="5042"></a> <a name="5043"></a> <span class="textbf">If the start AUT button is disabled</span><br /> If you cannot start a particular AUT , this could be because: <p>
+      <ul>
+        <li>You have not connected to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a>. <li>You have not defined an AUT <a href="node73.html#Defineaut">3.5.2</a>. <li>You have not configured an AUT <a href="node74.html#configuringaut">3.5.3</a>. <li>The AUT does not support the current working language. </ul>
+    <p><span class="textbf">Errors starting the AUT </span><br /> If there is an error starting the AUT , this could be because: <dl>
+        <dt><strong>The AUT cannot be found:</strong><dd>Make sure that the JAR or executable file for the AUT is correct, or that the classpaths are correct <a href="node74.html#configuringaut">3.5.3</a>. <dt><strong>The main class has not been found:</strong><dd>Make sure that the JAR file or the classpaths you have entered contain the main class <a href="node74.html#configuringaut">3.5.3</a>. <dt><strong>The JAR given as a classpath is not valid:</strong><dd>Check that you have entered the right JAR file, and that the path to it is correct from this computer. If you have entered a relative path, make sure that it is relative to the AUT base directory, if there is one, or to the AUT Agent directory if you have not specified a AUT base directory. <dt><strong>The JAR given as a classpath does not contain a distinct main class:</strong><dd>Check that you have entered a JAR which contains a main class. </dl>
+    <p><span class="textbf">If the AUT does not appear in the Running AUT&#39;s View </span><br /> If the AUT does not appear in the Running AUT&#39;s View and you are testing an RCP application, make sure that the RCP Remote Control plugin has been installed <a href="node280.html#rcpaut">4.2</a>. <p> Otherwise, check that the toolkit you specified in the AUT configuration <a href="node74.html#configuringaut">3.5.3</a> is the right toolkit for this AUT . <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

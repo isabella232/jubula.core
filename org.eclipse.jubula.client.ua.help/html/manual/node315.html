@@ -1,26 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>6.3 Editors</title>
-    <meta content="6.3 Editors" name="description" />
+    <title>5.4 Best practices for using Event Handlers to deal with errors</title>
+    <meta content="5.4 Best practices for using Event Handlers to deal with errors" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h1><a id="SECTION00730000000000000000" name="SECTION00730000000000000000"><span class="arabic">6</span>.<span class="arabic">3</span> Editors</a></h1>
-    <p>Editors appear in the editor area in the middle of the perspective when you double-click an item in one of the browsers or in the Navigator View &nbsp; .<p>You can tell what sort of editor it is in two ways:<ol>
-      <li>The tab for each editor shows an ID-code for what type of editor it is: <ul>
-          <li>&quot;<i>TC</i>&quot; for the Test Case Editor<li>&quot;<i>TS</i>&quot; for the Test Suite Editor<li>&quot;<i>OM</i>&quot; for the Object Mapping Editor<li>&quot;<i>TD</i>&quot; for the Central Test Data Editor</ul> The tab also shows the name of the item the editor is for.</ol>
-    <p>
+  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="eventHandlerAddContextId"></a><h1><a name="SECTION00640000000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span> Best practices for using Event Handlers to deal with errors</a></h1><a name="BPEHandlers"></a><p> By using Event Handlers in the right way, you can ensure that your FULLTEST will run through all of its use cases, even if errors occur in the individual use cases. <p> You can also ensure that you get as much information as possible about the error, and where it happened. <p> The following sections deal with two uses of Event Handlers . First of all, an error handling strategy for the whole test is explained. This strategy can be used for any Project . The second section deals with Event Handlers on individual Test Cases to deal with local (expected) errors <p>
       <br />
-    <hr /><a id="CHILD_LINKS" name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-      <li><a href="node316.html" id="tex2html5008" name="tex2html5008"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Test Case Editor</a><li><a href="node317.html" id="tex2html5009" name="tex2html5009"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Test Suite Editor</a><li><a href="node318.html" id="tex2html5010" name="tex2html5010"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Object Mapping Editor</a><li><a href="node319.html" id="tex2html5011" name="tex2html5011"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">4</span> Central Test Data Editor</a></ul>
-    <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node316.html" name="tex2html5034"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Structuring global Event Handlers for your test</a><ul>
+            <li><a href="node317.html" name="tex2html5035"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Creating general Event Handlers </a><li><a href="node318.html" name="tex2html5036"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Adding the Event Handlers to the use case</a></ul>
+          <br />
+        <li><a href="node319.html" name="tex2html5037"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Using Event Handlers locally for specific Test Cases </a><ul>
+            <li><a href="node320.html" name="tex2html5038"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Dealing with occasional dialogs</a></ul>
+      </ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

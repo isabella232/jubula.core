@@ -1,38 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.16.4.3 Pausing a Test Suite or Test Job</title>
-    <meta content="3.16.4.3 Pausing a Test Suite or Test Job" name="description" />
+    <title>3.16.1 Prerequisites for test execution</title>
+    <meta content="3.16.1 Prerequisites for test execution" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a id="SECTION004164300000000000000" name="SECTION004164300000000000000"></a> <a id="PauseExec" name="PauseExec"></a><a name="3704"></a> <a name="3705"></a> <a name="3706"></a> <a name="3707"></a> <a name="3708"></a> <a name="3709"></a> <a name="3710"></a><br /><span class="arabic">3</span>.<span class="arabic">16</span>.<span class="arabic">4</span>.<span class="arabic">3</span> Pausing a Test Suite or Test Job</h3>
-    <ol>
-      <li>To pause a test, click on the &quot;<i>pause test execution</i>&quot; button on the main toolbar. <p>
-          <br />
-        <div class="margin"><img align="bottom" border="0" height="256" src="./pause.png" width="256" />&nbsp; pause test</div>
-        <br />
-      <li>To continue with the test, press the &quot;<i>Pause test execution</i>&quot; button again. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>You can opt to automatically pause the test execution when an error occurs via the toolbar <a href="node176.html#TasksPauseOnError">3.16.5</a>.</b></td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img1.jpg" /></td>
-            <td><b>If the client and AUT Agent are installed on the same machine, moving the mouse will disrupt the test.</b></td>
-          </tr>
-        </table>
-    </ol>
+  <body><a name="testExecViewContextId"></a><a name="runningAutsViewContextId"></a><h2><a name="SECTION004161000000000000000"> <span class="arabic">3</span>.<span class="arabic">16</span>.<span class="arabic">1</span> Prerequisites for test execution</a></h2>
+    <p><a name="3799"></a> <a name="3800"></a> To be able to start a test you must: <p>
+      <ol>
+        <li>Create a Test Suite <a href="node144.html#TSeditor">3.11.1</a>. <li>Add Test Cases to be executed to the Test Suite <a href="node88.html#TasksEditorAdd">3.7.2</a><li>Define an AUT <a href="node73.html#Defineaut">3.5.2</a>. <li>Configure an AUT <a href="node74.html#configuringaut">3.5.3</a> if you want to start the AUT via Jubula . <li>Choose an AUT for the Test Suite <a href="node145.html#confsuite">3.11.2</a>. <li>Set the working language to the language you want to execute the test in. <li>Connect to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a>. <li>Start the AUT <a href="node176.html#startaut">3.16.2</a> (either via Jubula or using the <i>autrun</i> command). <li>Complete object mapping <a href="node160.html#objectmappingtasks">3.15.1</a>. <li>Make sure that your test data is complete in your Test Cases . </ol>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>It is a good idea to set your preferences for test results in the preferences dialog <a href="node202.html#gdprefs">3.26</a> before test execution.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

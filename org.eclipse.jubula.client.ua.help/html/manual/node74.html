@@ -1,51 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.5.3.2 Advanced AUT configuration</title>
-    <meta content="3.5.3.2 Advanced AUT configuration" name="description" />
+    <title>3.5.3 Configuring AUT&#39;s to be started via Jubula </title>
+    <meta content="3.5.3 Configuring AUT&#39;s to be started via Jubula " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a id="SECTION00453200000000000000" name="SECTION00453200000000000000"></a> <a id="AdvancedAUTConfig" name="AdvancedAUTConfig"></a><br /><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Advanced AUT configuration</h3>
-    <p>You can use the advanced dialog (<a href="#autconfigadvanced">3.11</a>) if your AUT is a Java JAR which can be started with a double click, or if your application can be started using the class name and the classpaths to your AUT . The advanced configuration dialog also lets you create a working/base directory for your AUT , and add command-line arguments needed to start the AUT . You can select a JRE executable and keyboard layout.<div align="center"><a id="autconfigadvanced" name="autconfigadvanced"></a><a name="1172"></a><table>
-        <caption align="bottom"><strong>Figure 3.11:</strong> AUT configuration window: advanced</caption>
+  <body><a name="autConfigSettingWizardPagePageContextId"></a><h2><a name="SECTION00453000000000000000"></a> <a name="configuringaut"></a><br /><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span> Configuring AUT&#39;s to be started via Jubula </h2>
+    <p><a name="1152"></a> <a name="1153"></a> <a name="1154"></a> <a name="1155"></a> <a name="1156"></a> <a name="1157"></a> <a name="1158"></a> <a name="1159"></a> <a name="1160"></a> <a name="1161"></a> <a name="1162"></a> <a name="1163"></a> <a name="1164"></a> <a name="1165"></a> <a name="1166"></a><p> Once you have created a Project <a href="node52.html#newproject">3.4.1</a> and defined an AUT <a href="node73.html#Defineaut">3.5.2</a>, you can add and edit AUT configurations. Use this option if you want Jubula to start your AUT for you. The details in the AUT configuration tell Jubula how to start the AUT , e.g. on which machine. An AUT can have multiple configurations (for example, for local and remote testing). <p>
+      <table>
         <tr>
-          <td>
-            <div align="center"><img align="bottom" border="0" height="722" src="./autconfigwindowadvanced.png" width="524" /></div>
-          </td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>If you want to start your AUT yourself, and have Jubula connect to it, then use the <i>autrun</i> command to start the AUT <a href="node78.html#autrun">3.5.4</a>. In this case, you do not need to create an AUT configuration.</b></td>
         </tr>
       </table>
-    </div>
-    <ol>
-      <li>Enter the JAR path (directory and file name) into the <i>Executable JAR File Name</i> field. <p>This path can be relative (if you define a base/working directory), or absolute. This JAR file must contain a manifest file which contains the main class and the classpath.<li>You can optionally create a working/base directory to store files in. The server directory of the Jubula installation is selected as default. To create a base directory elsewhere, browse to and select the location. <p>The base directory is the working directory for any classpaths, classnames, JAR files and JRE binaries. If you create a base directory, you can enter the paths to these items using a relative path, with the base directory as the root. For more information on relative paths, read the section in the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node38.html#relativepath"><img align="bottom" border="1" src="crossref.gif" /></a>.<li>If your AUT must be started with the class name, add the main class name and the classpaths into their relative fields. The paths can be relative (if you have defined a base directory), or absolute. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>Add all the necessary files and directories to start the AUT .</b></td>
-          </tr>
-        </table>
-      <li>Enter any necessary command-line arguments for the AUT in the <i>AUT Arguments</i> field.<li>Browse to a JRE executable or add a new one by clicking &quot;<i>New</i>&quot;. The Java version used must be 1.4 or later. <p>Java is installed with Jubula . You can find the Java file in:<br />
-        <table border="0" style="margin:0px;padding:0px;">
-          <tr>
-            <td bgcolor="#DDDDDD">Jubula</td>
-            <td>--&gt;</td>
-            <td bgcolor="#DDDDDD">jre</td>
-            <td>--&gt;</td>
-            <td bgcolor="#DDDDDD">bin</td>
-          </tr>
-        </table> . Use java.exe if you want to use a console, use javaw.exe if you do not want a console.<li>For SWT and RCP AUT&#39;s , select which keyboard layout is used on the machine on which the AUT will run. g <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>The keyboard layout is not the actual keyboard attached to the computer, but is based on the regional language settings for the operating system.</b></td>
-          </tr>
-        </table>
-        <p>Jubula supports English (US) and German (DE) keyboard layouts out-of-the box. If you want to use a different keyboard layout, see the reference manual for information on creating keyboard layouts --&gt;<i>Reference Manual</i> <a href="../reference/node44.html#keyboardlayout"><img align="bottom" border="1" src="crossref.gif" /></a>.</ol> For information on the expert properties for the AUT configuration, see the next section <a href="node75.html#ExpertAUTConfig">3.5.3.3</a>. <p>
+    <p> The AUT configuration dialog has three different levels of detail: basic, advanced and expert. <p> See the sections below for information on the different levels. <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node75.html" name="tex2html1950"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Basic AUT configuration</a><li><a href="node76.html" name="tex2html1951"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Advanced AUT configuration</a><li><a href="node77.html" name="tex2html1952"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Expert AUT configuration</a></ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

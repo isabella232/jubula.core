@@ -1,82 +1,107 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
     <title>5.4.1 Browser</title>
     <meta content="5.4.1 Browser" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a id="SECTION00641000000000000000" name="SECTION00641000000000000000"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Browser</a></h2><a name="14959"></a> <a name="14960"></a><p><b>Description</b>:<p><a id="HTML_WebBrowser" name="HTML_WebBrowser"></a><ul>
-      <li>The <i>Web Browser</i> component is the container for all other components in a HTML AUT .<li>It represents the AUT as a whole.</ul>
-    <p><b>Synopsis</b>:<br />
-    <ul>
-      <li>Browser (html)</ul> HTML_WebBrowser_BrowserBackAction HTML_WebBrowser_BrowserGotoAction HTML_WebBrowser_BrowserReloadAction <table border="1" cellpadding="3">
-      <tr>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3"><b>New Actions</b></td>
-      </tr>
-      <tr>
-        <td><small>Name</small></td>
-        <td><small>Type</small></td>
-        <td><small>Parameters</small></td>
-      </tr>
-      <tr>
-        <td><small>Go Back</small></td>
-        <td><small>e</small></td>
-      </tr>
-      <tr>
-        <td><small>Open URL</small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>String:URL<br /></small></td>
-      </tr>
-      <tr>
-        <td><small>Reload page</small></td>
-        <td><small>e</small></td>
-      </tr>
-    </table>
-    <p><b>Inherited Actions</b><p><i>none</i><p>
-      <br /><span class="textbf"><big class="LARGE">Go Back</big></span> <tt><small class="FOOTNOTESIZE">(Browser)</small></tt> <a name="45077"></a><a name="45078"></a><p><a id="HTML_WebBrowser_BrowserBackAction" name="HTML_WebBrowser_BrowserBackAction"></a><ul>
-      <li>Use this action to go back one page in the browser.<li>Use this action instead of actually clicking the back button in the AUT . <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img3.jpg" /></td>
-            <td><b>This action does not work in Internet Explorer</b></td>
-          </tr>
-        </table>
-    </ul>
-    <p>This action has no parameters.<p>
-      <br /><span class="textbf"><big class="LARGE">Open URL</big></span> <tt><small class="FOOTNOTESIZE">(Browser)</small></tt> <a name="45084"></a><a name="45085"></a><p><a id="HTML_WebBrowser_BrowserGotoAction" name="HTML_WebBrowser_BrowserGotoAction"></a><ul>
-      <li>Use this action to specify a URL which you would like to open in the current window of the browser.</ul>
-    <p><i>Parameters</i><br />
-    <table border="1" cellpadding="3">
-      <tr>
-        <td><small>Name</small></td>
-        <td><small>Data Type</small></td>
-        <td><small>Values</small></td>
-        <td><small>Default</small></td>
-      </tr>
-      <tr>
-        <td><small>URL</small></td>
-        <td><small>String</small></td>
-        <td><small>-</small></td>
-        <td><small>none</small></td>
-      </tr>
-    </table><a id="HTML_WebBrowser_BrowserGotoAction_BrowserGotoUrl" name="HTML_WebBrowser_BrowserGotoAction_BrowserGotoUrl"></a><ul>
-      <li>Enter the URL you wish to open, e.g. <tt>&quot;http://www.bredex.de&quot;</tt>.<li>We recommend writing single quotes around the URL so that you do not have to escape special characters: <tt>&quot;&#39;http://www.bredex.de&#39;&quot;</tt>.</ul>
+    <h2><a name="SECTION00641000000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Browser</a></h2><a name="14960"></a> <a name="14961"></a><p><b>Description</b>:<p><a name="HTML_WebBrowser"></a><p>
+      <ul>
+        <li>The <i>Web Browser</i> component is the container for all other components in a HTML AUT . <li>It represents the AUT as a whole. </ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Reload page</big></span> <tt><small class="FOOTNOTESIZE">(Browser)</small></tt> <a name="45091"></a><a name="45092"></a><p><a id="HTML_WebBrowser_BrowserReloadAction" name="HTML_WebBrowser_BrowserReloadAction"></a><ul>
-      <li>Use this action to go reload the current page in the browser.<li>Use this action instead of actually clicking the refresh button in the AUT .</ul>
+    <p><b>Synopsis</b>: <br />
+      <ul>
+        <li>Browser (html)</ul>
+    <p>
+      <table border="1" cellpadding="3">
+        <tr>
+        </tr>
+        <tr>
+          <td colspan="3"><b>New Actions</b></td>
+        </tr>
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Type</small></td>
+          <td><small>Parameters</small></td>
+        </tr>
+        <tr>
+          <td><small>Go Back</small></td>
+          <td><small>e</small></td>
+        </tr>
+        <tr>
+          <td> HTML_WebBrowser_BrowserBackAction </td>
+        </tr>
+        <tr>
+          <td><small>Open URL</small></td>
+          <td><small>e</small></td>
+          <td><small><p> String:URL <br /></small></td>
+        </tr>
+        <tr>
+          <td> HTML_WebBrowser_BrowserGotoAction </td>
+        </tr>
+        <tr>
+          <td><small>Reload page</small></td>
+          <td><small>e</small></td>
+        </tr>
+        <tr>
+          <td> HTML_WebBrowser_BrowserReloadAction </td>
+        </tr>
+      </table>
+    <p>
+    <p><b>Inherited Actions</b><p><i>none</i><p>
+    <p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Go Back</big></span> <tt><small class="FOOTNOTESIZE">(Browser)</small></tt> <a name="46004"></a><a name="46005"></a><p><a name="HTML_WebBrowser_BrowserBackAction"></a><p>
+      <ul>
+        <li>Use this action to go back one page in the browser. <li>Use this action instead of actually clicking the back button in the AUT . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img3.jpg" width="102" /></td>
+              <td><b>This action does not work in Internet Explorer</b></td>
+            </tr>
+          </table>
+      </ul>
+    <p>
+    <p>
+    <p>This action has no parameters.<p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Open URL</big></span> <tt><small class="FOOTNOTESIZE">(Browser)</small></tt> <a name="46011"></a><a name="46012"></a><p><a name="HTML_WebBrowser_BrowserGotoAction"></a><p>
+      <ul>
+        <li>Use this action to specify a URL which you would like to open in the current window of the browser. </ul>
+    <p>
+    <p><i>Parameters</i><br />
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>URL</small></td>
+          <td><small>String</small></td>
+          <td><small>-</small></td>
+          <td><small>none</small></td>
+        </tr>
+      </table><a name="HTML_WebBrowser_BrowserGotoAction_BrowserGotoUrl"></a><p>
+      <ul>
+        <li>Enter the URL you wish to open, e.g. <tt>&quot;http://www.bredex.de&quot;</tt>. <li>We recommend writing single quotes around the URL so that you do not have to escape special characters: <tt>&quot;&#39;http://www.bredex.de&#39;&quot;</tt>. </ul>
+    <p>
+    <p>
+    <p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Reload page</big></span> <tt><small class="FOOTNOTESIZE">(Browser)</small></tt> <a name="46018"></a><a name="46019"></a><p><a name="HTML_WebBrowser_BrowserReloadAction"></a><p>
+      <ul>
+        <li>Use this action to go reload the current page in the browser. <li>Use this action instead of actually clicking the refresh button in the AUT . </ul>
+    <p>
+    <p>
     <p>This action has no parameters.<p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

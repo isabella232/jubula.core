@@ -1,27 +1,47 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.9.10.1 Data Sets View : adding multiple data sets to a Test Case</title>
-    <meta content="3.9.10.1 Data Sets View : adding multiple data sets to a Test Case" name="description" />
+    <title>3.9.9 Using an Excel file as an external data source</title>
+    <meta content="3.9.9 Using an Excel file as an external data source" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a id="SECTION004910100000000000000" name="SECTION004910100000000000000"></a> <a id="TasksDSVDataSets" name="TasksDSVDataSets"></a><br /><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">10</span>.<span class="arabic">1</span> Data Sets View : adding multiple data sets to a Test Case</h3> If your Test Case has parameters which have been referenced from the Test Cases and Test Steps it contains, you can enter <i>data sets</i> in the Data Sets View . <p>This means that the Test Case will loop and be executed for each set of data you enter.<p>To enter data sets for a Test Case :<ol>
-      <li>Open the Test Case Editor or Test Suite Editor by double-clicking on the Test Case or Test Suite you want to edit in the browser.<li>In the editor, single-click the Test Case you want to add data to.<li>In the Data Sets View , make sure the language in the combo box on the right is the right language for your data.<li>Select &quot;<i>Add</i>&quot; to add a row.<li>Enter the values for the parameters in the row. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>You can also add references in the Data Sets View if you want to specify the concrete values for your data sets when you reuse this Test Case .</b></td>
-          </tr>
-        </table>
-      <li>Use the buttons in the Data Sets View to add more rows, delete rows (if no row is selected, the last row is deleted) and insert rows above the currently selected row.</ol>
+  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION00499000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span> Using an Excel file as an external data source</a></h2><a name="TasksExcel"></a><p><a name="2525"></a> <a name="2526"></a> In the Properties View , you can add Excel files as a data source to Test Cases which contain parameters referenced from the Test Cases or Test Steps they contain. <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>The addition of data via Excel is discouraged. We recommend using the central data sets in Jubula to manage data within the Project <a href="node119.html#TasksCentralData">3.9.8</a>.</b></td>
+        </tr>
+      </table>
+      <ol>
+        <li>Navigate to the Properties View for the Test Case you want to add the Excel file to. <li>Enter the path to the Excel file in the <i>Excel data file</i> field. <p> The path to the Excel file can be absolute or relative (if you have specified a data files path <a href="node202.html#gdprefs">3.26</a>). <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>The Excel file must be configured in a specific way in order for Jubula to read it <a href="node127.html#TasksConfigureExcel">3.9.9.1</a></b></td>
+              </tr>
+            </table>. <p>
+        <li>If you reuse this Test Case , the Excel file you enter will be reused along with the Test Case . When you reuse the Test Case , you can choose whether you leave this file or change it for another one. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If you store your Excel files in your workspace, you will be able to open these directly in Jubula from the navigator view using the in-place editor. </b></td>
+            </tr>
+          </table>
+        <li>A Test Case with an Excel file as data is marked with a small Excel icon in the browsers to help you find it more easily later. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Please note that the Excel file is read at the start of the test execution. Any changes to the file after this will not affect the test data. For information on using the date function in Excel, see the section later <a href="node128.html#exceltoday">3.9.9.2</a>.</b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node127.html" name="tex2html2621"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">1</span> Configuring the Excel file</a><li><a href="node128.html" name="tex2html2622"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Using the =TODAY() function in Excel</a></ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

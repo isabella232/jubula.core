@@ -1,44 +1,48 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>6.4.1 The Properties View</title>
-    <meta content="6.4.1 The Properties View" name="description" />
+    <title>6. User interface</title>
+    <meta content="6. User interface" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="guidancerPropertiesViewContextId" name="guidancerPropertiesViewContextId"></a><h2><a id="SECTION00741000000000000000" name="SECTION00741000000000000000"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">1</span> The Properties View</a></h2>
-    <p>The Properties View is in the upper right-hand corner of each perspective. The Properties View shows details about the selected item in a browser or editor.<p>If you select something from a browser, you can see its details in the Properties View , but you can&#39;t edit them. You can only edit details from within an editor. Read-only fields in the Properties View have a lock icon at their left-hand side.<br />
-    <div class="margin"><img align="bottom" border="0" height="256" src="./readonly.png" width="225" />&nbsp;read only</div>
-    <br />
-    <p><span class="textbf">Test Suite details</span><p>If you select a Test Suite , you will see the following:<ul>
-      <li>The Test Suite name.<li>Any comments for the Test Suite .<li>The step delay for this Test Suite .<li>The name of the AUT this Test Suite uses.<li>The reentry properties for the default Event Handlers .</ul>
-    <p><span class="textbf">Test Case details</span><p>If you select a Test Case , the Properties View shows the following:<ul>
-      <li>The Test Case name.<li>Any comments for the Test Case .<li>The data source details for this Test Case<li>Any parameters/parameter values if references have been used in the Test Case .</ul>
-    <p><span class="textbf">Test Step details</span><p>If you select a Test Step , you will see the following:<ul>
-      <li>The Test Step name.<li>Any comments for this Test Step .<li>Details about the component in the Test Step : <ul>
-          <li>The component type.<li>The component name (given by you).</ul>
-      <li>Details about the action in the Test Step .<li>Details about the parameters in the Test Step . For each parameter you will see: <ul>
-          <li>The parameter name.<li>The parameter type (e.g. if it is an integer, a string etc).<li>The parameter value (either a concrete value or a reference).</ul>
-    </ul>
-    <p><span class="textbf">Test result details</span><p>If you select an item from the Test Result View , you will see the following:<ul>
-      <li>The result details: <ul>
-          <li>The name of the item.<li>What type of item it is.<li>Any comments for the item.</ul>
-      <li>The test result - if it passed or failed.<li>For Test Steps , you can also see the component, action and parameter details. If the Test Step failed, you can also see the error details.<li>For Event Handlers , you can see the type of Event Handler it was, and what the reentry property was.</ul>
-    <p><span class="textbf">Icons in the Properties View</span><p>When the Properties View contains data (i.e. a filled-in <span class="textit">parameter value</span> field), there are certain icons to help you understand the data.<ul>
-      <li>Values which are the same as in the original specification display a small gray diamond to the left of the field.<br />
-        <div class="margin"><img align="bottom" border="0" height="256" src="./originalData.png" width="256" />&nbsp;original data</div>
-        <br />
-      <li>Values which have been overwritten at a place of reuse show a small yellow diamond.<br />
-        <div class="margin"><img align="bottom" border="0" height="256" src="./overwrittenData.png" width="256" />&nbsp;overwritten data</div>
-        <br />
-    </ul>
+  <body>
+    <h1><a name="SECTION00700000000000000000"></a> <a name="ChapterUserInterface"></a><br /><span class="arabic">6</span>. User interface </h1>
+    <p><a name="6265"></a> <a name="6266"></a> <a name="6267"></a> <a name="6268"></a><p> There are four types of area in the Jubula user interface: <p>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+    <p><span class="textbf">Perspectives</span><p> A perspective is a collection of views, editors and browsers on the screen. <p><span class="textbf">Browsers</span><p> Browsers let you see the Test Cases and Test Suites you have created in their hierarchical structures. There is also a browser for component names. <p><span class="textbf">Editors</span><p> Editors let you modify, add and delete items. You can open editors by double-clicking on a node (e.g. Test Suite or Test Case ) in a browser. <p><span class="textbf">Views</span><p> Views show details about the currently selected item. If you single-click an item in a browser, the details in the views are read-only. If you select an item from within an editor, you can edit some of the values in the views. <p>
+    <p>
+    <p>
+      <br />
+    <p> You can change the way your user interface looks by moving areas, changing the colors, and hiding/showing views <a href="node222.html#adapting_views">3.22</a>. <p> To reset the default layout at any time, select: <br />
+      <table border="0" style="margin:0px;padding:0px;">
+        <tr>
+          <td bgcolor="#DDDDDD">Window</td>
+          <td>--&gt;</td>
+          <td bgcolor="#DDDDDD">Reset Perspective</td>
+        </tr>
+      </table> . <p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node322.html" name="tex2html5108"><span class="arabic">6</span>.<span class="arabic">1</span> Perspectives</a><ul>
+            <li><a href="node323.html" name="tex2html5109"><span class="arabic">6</span>.<span class="arabic">1</span>.<span class="arabic">1</span> The Functional Test Specification Perspective </a><li><a href="node324.html" name="tex2html5110"><span class="arabic">6</span>.<span class="arabic">1</span>.<span class="arabic">2</span> The Functional Test Execution Perspective </a><li><a href="node325.html" name="tex2html5111"><span class="arabic">6</span>.<span class="arabic">1</span>.<span class="arabic">3</span> The Functional Test Reporting Perspective </a><li><a href="node326.html" name="tex2html5112"><span class="arabic">6</span>.<span class="arabic">1</span>.<span class="arabic">4</span> The Jubula workspace perspective</a></ul>
+          <br />
+        <li><a href="node327.html" name="tex2html5113"><span class="arabic">6</span>.<span class="arabic">2</span> Browsers</a><ul>
+            <li><a href="node328.html" name="tex2html5114"><span class="arabic">6</span>.<span class="arabic">2</span>.<span class="arabic">1</span> The Test Suite Browser </a><li><a href="node329.html" name="tex2html5115"><span class="arabic">6</span>.<span class="arabic">2</span>.<span class="arabic">2</span> The Test Case Browser </a><li><a href="node330.html" name="tex2html5116"><span class="arabic">6</span>.<span class="arabic">2</span>.<span class="arabic">3</span> The Component Name Browser &nbsp; </a></ul>
+          <br />
+        <li><a href="node331.html" name="tex2html5117"><span class="arabic">6</span>.<span class="arabic">3</span> Editors</a><ul>
+            <li><a href="node332.html" name="tex2html5118"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Test Case Editor </a><li><a href="node333.html" name="tex2html5119"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Test Suite Editor </a><li><a href="node334.html" name="tex2html5120"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Object Mapping Editor </a><li><a href="node335.html" name="tex2html5121"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">4</span> Central Test Data Editor </a></ul>
+          <br />
+        <li><a href="node336.html" name="tex2html5122"><span class="arabic">6</span>.<span class="arabic">4</span> Views</a><ul>
+            <li><a href="node337.html" name="tex2html5123"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">1</span> The Properties View </a><li><a href="node338.html" name="tex2html5124"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">2</span> The Data Sets View </a><li><a href="node339.html" name="tex2html5125"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">3</span> The Component Names View </a><li><a href="node340.html" name="tex2html5126"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">4</span> The Test Result View </a><li><a href="node341.html" name="tex2html5127"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">5</span> The Problem View </a><li><a href="node342.html" name="tex2html5128"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">6</span> The search result view</a><li><a href="node343.html" name="tex2html5129"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">7</span> The Navigator View &nbsp; </a><li><a href="node344.html" name="tex2html5130"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">8</span> The console</a><li><a href="node345.html" name="tex2html5131"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">9</span> The Inspector View </a><li><a href="node346.html" name="tex2html5132"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">10</span> The Test Result Summary View </a><li><a href="node347.html" name="tex2html5133"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">11</span> The Running AUT&#39;s View </a><li><a href="node348.html" name="tex2html5134"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">12</span> The Image View </a><li><a href="node349.html" name="tex2html5135"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">13</span> The Progress View</a></ul>
+          <br />
+        <li><a href="node350.html" name="tex2html5136"><span class="arabic">6</span>.<span class="arabic">5</span> The status bar</a></ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

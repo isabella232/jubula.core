@@ -1,35 +1,38 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.9.9.2 Using the =TODAY() function in Excel</title>
-    <meta content="3.9.9.2 Using the =TODAY() function in Excel" name="description" />
+    <title>3.9.8.5 Reusing central test data sets in Test Cases </title>
+    <meta content="3.9.8.5 Reusing central test data sets in Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a id="SECTION00499200000000000000" name="SECTION00499200000000000000"></a> <a name="2400"></a> <a id="exceltoday" name="exceltoday"></a><br /><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Using the =TODAY() function in Excel</h3>
-    <ol>
-      <li>Because Excel stores the &quot;<i>=today()</i>&quot; function as a six-digit number, you must use a particular process to use this function to check a date as part of a test.<li>Enter the function <tt>&quot;=today()&quot;</tt> in a a different sheet to the one you are using for your data sets. You can enter it in the same sheet if you want to, but make sure that it has its own column. It must not be in one of the columns you will use as a data set.<li>For example, your =today() function is in sheet one, cell G4.<li>You want your date to appear as dd.mm.yyyy.<li>In the column for your data set, enter the following formula: <blockquote>=text(Sheet1!G4, &#39;&#39;dd.mm.yyyy&#39;&#39;)</blockquote>
-      <li>This will mean that the date will be treated as it appears with Excel. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>If you are using the =today() function, don&#39;t forget to open the Excel file before starting your test. Otherwise, the data from the last-opened state will be used.</b></td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>If you store your Excel files in your workspace, you will be able to open these directly in Jubula from the navigator view using the in-place editor.</b></td>
-          </tr>
-        </table>
-    </ol>
+  <body><a name="guidancerCentralTestDataEditorContextId"></a><a name="guidancerPropertiesViewContextId"></a><h3><a name="SECTION00498500000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">5</span> Reusing central test data sets in Test Cases </a></h3><a name="TasksCentralDataReference"></a><p> You can reuse a central test data set in a Test Case to provide the concrete data for the parameters required by the Test Case . <p>
+      <ol>
+        <li>In the Properties View for the Test Case , enter the name of the central test data set you want to use in the <i>Central Test Data Set</i> field. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to see a list of possible data sets for this Test Case . You will only be shown data sets that contain the correct parameters with the correct types.</b></td>
+            </tr>
+          </table>
+        <li>When you have entered a central test data set, then the Properties View shows <i>central test data set</i> as the data type. You will see the data from the central test data set in read-only form in the Data Sets View . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If data is missing from the central test data set, you will receive the error that test data is incomplete for any Test Suites this Test Case is used in.</b></td>
+            </tr>
+          </table>
+        <li>You can delete the central test data set used by removing it from the <i>central test data set</i> field. The data type reverts to <i>local data</i>. For more information on the data sources, see the earlier section <a href="node117.html#TasksDataSources">3.9.7</a>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You can use central test data sets that contain more parameters than your Test Case . For example, if your Test Case requires the parameters <tt>&quot;NAME, ADDRESS&quot;</tt> and your central test data set contains <tt>&quot;NAME, ADDRESS, POSTCODE&quot;</tt>, you can still use the central test data set.</b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

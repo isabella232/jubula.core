@@ -1,29 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.8 Working with Test Cases</title>
-    <meta content="3.8 Working with Test Cases" name="description" />
+    <title>3.7.4 Renaming items in editors</title>
+    <meta content="3.7.4 Renaming items in editors" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="testSpecificationViewContextId" name="testSpecificationViewContextId"></a><a id="problemViewContextId" name="problemViewContextId"></a><h1><a id="SECTION00480000000000000000" name="SECTION00480000000000000000"><span class="arabic">3</span>.<span class="arabic">8</span> Working with Test Cases</a></h1><a id="WorkingWithTestCases" name="WorkingWithTestCases"></a><p>Test Cases are the &#39;&#39;building blocks&#39;&#39; (keywords) in Jubula . They can:<ul>
-      <li>contain other (referenced) Test Cases <a href="node83.html#TasksEditorAdd">3.7.2</a><li>contain Test Steps <a href="node150.html#specsteps">3.13.1</a><li>be used in Test Suites <a href="node83.html#TasksEditorAdd">3.7.2</a><li>be used as Event Handlers <a href="node192.html#customizedehandler">3.18</a></ul>
+  <body><a name="guidancerTestJobEditorContextId"></a><a name="guidancerSpecTestCaseEditorContextId"></a><a name="testSuiteEditorContextId"></a><h2><a name="SECTION00474000000000000000"> <span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">4</span> Renaming items in editors</a></h2><a name="TasksEditorRename"></a><p><a name="1614"></a> <a name="1615"></a><p> You can rename items referenced in Test Cases , Test Suites and Test Jobs . <p>
+      <ol>
+        <li>Open the editor containing the items you want to rename. <li>Select the item you want to rename in the editor. <li>In the Properties View , enter the new name for the item in the <i>Reference Name</i> field at the top of the Properties View . <li>Save the editor. <p> The angled brackets from the item you just edited will disappear from the name in the editor. This indicates that the item has been renamed here. You will still see the original item name behind the new name in brackets. In the preferences, you can opt not to see the original name when you have renamed an item <a href="node202.html#gdprefs">3.26</a>. <p> The original item in the browser still has its original name. The referenced item you just renamed will keep its new name even if you rename the original item. <p> If you want to reset the original specification name, empty the <i>Reference Name</i> field and save the editor. The item will redisplay the angled brackets and will have the same name as the specification name. </ol>
     <p>
       <br />
-    <hr /><a id="CHILD_LINKS" name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-      <li><a href="node91.html" id="tex2html2097" name="tex2html2097"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">1</span> Creating Test Cases</a><li><a href="node92.html" id="tex2html2098" name="tex2html2098"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">2</span> Creating tests from the library of pre-defined Test Cases</a><ul>
-          <li><a href="node93.html" id="tex2html2099" name="tex2html2099"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Using the library to create tests</a><li><a href="node94.html" id="tex2html2100" name="tex2html2100"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Information about the library</a><li><a href="node95.html" id="tex2html2101" name="tex2html2101"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Tips and tricks for using the Test Case library</a></ul>
-        <br />
-      <li><a href="node96.html" id="tex2html2102" name="tex2html2102"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">3</span> Opening existing Test Cases</a><li><a href="node97.html" id="tex2html2103" name="tex2html2103"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">4</span> Opening Test Cases based on their ID</a><ul>
-          <li><a href="node98.html" id="tex2html2104" name="tex2html2104"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Copying the ID of a Test Case to the clipboard</a><li><a href="node99.html" id="tex2html2105" name="tex2html2105"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Opening a Test Case based on an ID in the clipboard</a></ul>
-        <br />
-      <li><a href="node100.html" id="tex2html2106" name="tex2html2106"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">5</span> Editing Test Cases</a><li><a href="node101.html" id="tex2html2107" name="tex2html2107"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">6</span> Adding and inserting new Test Cases to a Test Case</a><li><a href="node102.html" id="tex2html2108" name="tex2html2108"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">7</span> Categories for Test Cases</a><li><a href="node103.html" id="tex2html2109" name="tex2html2109"><span class="arabic">3</span>.<span class="arabic">8</span>.<span class="arabic">8</span> Moving Test Cases to external Projects</a></ul>
-    <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

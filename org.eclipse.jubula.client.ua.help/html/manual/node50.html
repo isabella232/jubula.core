@@ -1,43 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.4.1 Creating a new Project</title>
-    <meta content="3.4.1 Creating a new Project" name="description" />
+    <title>3.3.3 Migrating to newer versions of the Database </title>
+    <meta content="3.3.3 Migrating to newer versions of the Database " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="projectWizardContextId" name="projectWizardContextId"></a><a id="problemViewNoProjectContextId" name="problemViewNoProjectContextId"></a><h2><a id="SECTION00441000000000000000" name="SECTION00441000000000000000"></a> <a id="newproject" name="newproject"></a><br /><span class="arabic">3</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Creating a new Project</h2>
-    <p><a name="500"></a> <a name="501"></a> <a name="502"></a> <a name="503"></a> <a name="504"></a> <a name="505"></a> <a name="506"></a> <a name="507"></a><ol>
-      <li>From the ITE , select:<br />
-        <table border="0" style="margin:0px;padding:0px;">
-          <tr>
-            <td bgcolor="#DDDDDD">Test</td>
-            <td>--&gt;</td>
-            <td bgcolor="#DDDDDD">New</td>
-          </tr>
-        </table> .<li>If you haven&#39;t already logged into the database, a dialog will appear to ask you to do so.<br /> See the previous section <a href="node46.html#tasksdblogin">3.3.1</a> for details.<li>A wizard to create a new Project will appear (<a href="#projsettings">3.2</a>). <div align="center"><a id="projsettings" name="projsettings"></a><a name="519"></a><table>
-            <caption align="bottom"><strong>Figure 3.2:</strong> New Project Dialog</caption>
-            <tr>
-              <td>
-                <div align="center"><img align="bottom" border="0" height="769" src="./newprojectdialog.png" width="493" /></div>
-              </td>
-            </tr>
-          </table>
-        </div>
-      <li>In the <i>project name</i> field, enter a meaningful and unique Project name. Do not use any special characters in Project names.<li>Activate the &quot;<i>reusable project</i>&quot; checkbox if you want to be able to reference the Test Cases from this Project in other Projects . This will let you use the Test Cases in this Project as the basis or library for other Projects (see the section later for more details on this <a href="node58.html#reuseproject">3.5</a>).<li>Choose whether this Project should be protected. In a protected Projects , you cannot delete Test Cases or edit parameters for Test Cases . This is only necessary if the Project is reused in another Project - the protection ensures that irreversible changes cannot be made to the reused Project that would adversely affect its dependent Projects .<li>Select the toolkit your Project will use from the combo box. The toolkit is the library used to create the GUI. <p><span class="textbf">Toolkits for Projects</span><br /><a id="projtoolkit" name="projtoolkit"></a>The default toolkit is <i>concrete</i>. Choose this if you want to write Test Cases that can be used for different applications (e.g. for Swing and for RCP).<p>Choose another toolkit if you want to write Test Cases just for a Swing, SWT, RCP or HTML application.<p>The choice of toolkit you make here will determine what actions are available to you to specify your tests. If you choose <i>concrete</i>, you will not be able to specify tests for components specific to HTML or SWT.<li>From the list of available languages, select the languages supported by your AUT and move them into the &quot;<i>project language</i>&quot; box using the arrow button. Use <tt>&raquo;CTRL&laquo;</tt> to select multiple languages. <p>You will be able to start the AUT in these languages, and translate test data into these languages.<li>Select a default language from the combo box. The default language is the language your Project is started in.<li>You can now click &quot;<i>Next</i>&quot; to define an AUT for this Project <a href="node71.html#Defineaut">3.5.2</a>.</ol>
-    <p>If you want to define the AUT later, you can click &quot;<i>Finish</i>&quot; to create the Project as it is. You can define an AUT later via the Project properties under<table border="0" style="margin:0px;padding:0px;">
-      <tr>
-        <td bgcolor="#DDDDDD">Test</td>
-        <td>--&gt;</td>
-        <td bgcolor="#DDDDDD">Properties</td>
-      </tr>
-    </table> . <p>You can also edit the Project details later in the Project properties dialog <a href="node51.html#projectproperties">3.4.2</a>.<p>
+  <body><a name="databaseMigrationAssistantContextId"></a><h2><a name="SECTION00433000000000000000"></a> <a name="DBMigrate"></a><br /><span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Migrating to newer versions of the Database </h2>
+    <p> If a new version of Jubula uses a new Database scheme, you will be informed of this when attempting to connect to the Database . <p> From the information dialog, you can start the migration wizard. This wizard removes the old Database scheme (and any Projects in it) and automatically creates the new scheme for the current version. <p> You can choose which Projects (exported from the old version) you want to import into the new Database . <p> If you do not have sufficient privileges to clear your Database , then you must manually clear it using a Database administration tool. <p>
+    <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

@@ -1,22 +1,153 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>4.2.1 Supported RCP AUT&#39;s</title>
-    <meta content="4.2.1 Supported RCP AUT&#39;s" name="description" />
+    <title>3.27.2 Parameters for the dbtool</title>
+    <meta content="3.27.2 Parameters for the dbtool" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a id="SECTION00521000000000000000" name="SECTION00521000000000000000"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Supported RCP AUT&#39;s</a></h2>
-    <p>Jubula supports AUT&#39;s written with the RCP GUI toolkit according to the following points:<ul>
-      <li>The AUT is written using Java 1.5 or higher.<li>It uses a Java SE (Standard Edition) JRE.<li>The AUT uses SWT version 3.1 or higher.</ul>
+    <h2><a name="SECTION004272000000000000000"> <span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">2</span> Parameters for the dbtool</a></h2>
+    <p><a name="5414"></a><ol>
+        <li>Once you have browsed to the Jubula installation directory and entered <tt>&quot;dbtool&quot;</tt>, you can enter the parameters for the Database actions. <li>The dbtool uses the parameters described in the table <a href="#dbtoolparams">2</a>: <p>
+            <br />
+          <p>
+          <div align="CENTER"><a name="5452"></a><table>
+              <caption><strong>Table 3.2:</strong> Parameters for the dbtool</caption>
+              <tr>
+                <td><a name="dbtoolparams"></a><div align="CENTER">
+                  </div>
+                  <table border="1" cellpadding="3">
+                    <tr valign="BASELINE">
+                      <th align="LEFT"><span class="textbf">Detail</span></th>
+                      <th align="LEFT"><span class="textbf">Parameter</span></th>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Help</td>
+                      <td align="LEFT"><tt>&quot;-h&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">Gives parameter help</td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Delete Project</td>
+                      <td align="LEFT"><tt>&quot;-delete &lt;project-name project-version&gt;&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-delete &#39;&#39;ExampleProject&#39;&#39; 1.0</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Delete All</td>
+                      <td align="LEFT"><tt>&quot;-deleteall&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-deleteall</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Keep test result summaries</td>
+                      <td align="LEFT"><tt>&quot;-keepsummary&quot;</tt> (optional)</td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-keepsummary</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Directory</td>
+                      <td align="LEFT"><tt>&quot;-directory &lt;directory path&gt;&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-directory &#39;&#39;D:/Test/Projects/&#39;&#39;</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Export Project</td>
+                      <td align="LEFT"><tt>&quot;-export &lt;project-name project-version&gt;&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-export &#39;&#39;ExampleProject&#39;&#39; &#39;&#39;1.0&#39;&#39;</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Export All</td>
+                      <td align="LEFT"><tt>&quot;-exportall&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-exportall</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Import Project</td>
+                      <td align="LEFT"><tt>&quot;-import &lt;import-file&gt;&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-import &lt;ExampleProject.xml&gt;</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Workspace</td>
+                      <td align="LEFT"><tt>&quot;-data &lt;path to workspace&gt;&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-data &#39;&#39;C:/Users/Test&#39;&#39;</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Database scheme</td>
+                      <td align="LEFT"><tt>&quot;-dbscheme &lt;scheme&gt;&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-dbscheme &#39;&#39;Oracle&#39;&#39;</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Database username</td>
+                      <td align="LEFT"><tt>&quot;-dbuser &lt;username&gt;&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-dbuser &#39;&#39;myusername&#39;&#39;</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Database password</td>
+                      <td align="LEFT"><tt>&quot;-dbpw &lt;password&gt;&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-dbpw &#39;&#39;mypassword&#39;&#39;</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">Database URL (optional)</td>
+                      <td align="LEFT"><tt>&quot;-dburl &lt;URL&gt;&quot;</tt></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">e.g. <span class="textit">-dburl &#39;&#39;db.example.de&#39;&#39;</span></td>
+                    </tr>
+                    <tr valign="BASELINE">
+                      <td align="LEFT">&nbsp;</td>
+                      <td align="LEFT">If no URL is given, the default will be used.</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <p>
+          <br />
+          <p>
+        <li>You can use the parameter <tt>&quot;-keepsummary&quot;</tt> to specify that the test result summaries should not be deleted when the Project or Projects are deleted. This is useful for continuous integration processes, where the test results over time should be kept, but the Projects are reimported into the Database (for example from the version control system) each night. If you do not enter this parameter, the summaries will be deleted with the Projects . <p>
+        <li>Once you have entered all the necessary parameters, press <tt>&raquo;ENTER&laquo;</tt>. <p>
+      </ol>
+    <p>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

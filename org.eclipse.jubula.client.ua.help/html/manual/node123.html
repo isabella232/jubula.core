@@ -1,49 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.9.9.1 Configuring the Excel file</title>
-    <meta content="3.9.9.1 Configuring the Excel file" name="description" />
+    <title>3.9.8.4 Entering data for central test data sets</title>
+    <meta content="3.9.8.4 Entering data for central test data sets" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a id="SECTION00499100000000000000" name="SECTION00499100000000000000"></a> <a name="2370"></a> <a id="TasksConfigureExcel" name="TasksConfigureExcel"></a><br /><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">1</span> Configuring the Excel file</h3>
-    <ul>
-      <li>The worksheet in Excel must be named with the language code for the language your data are in. See the Reference Manual (--&gt;<i>Reference Manual</i> <a href="../reference/node43.html#langcodes"><img align="bottom" border="1" src="crossref.gif" /></a>) for a list of language codes. <p>For example, if the data of your first sheet are for French, then name the first sheet: <tt>&quot;fr_FR&quot;</tt> (<a href="#excel">3.16</a>).<div align="center"><a id="excel" name="excel"></a><a name="2380"></a><table>
-            <caption align="bottom"><strong>Figure 3.16:</strong> Example Excel Table</caption>
+  <body><a name="guidancerCentralTestDataEditorContextId"></a><h3><a name="SECTION00498400000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">4</span> Entering data for central test data sets</a></h3><a name="TasksDSVCentral"></a><p> Once you have created a central test data set <a href="node120.html#TasksCentralDataCreate">3.9.8.1</a> and have added parameters to the central test data set <a href="node122.html#TasksCentralDataEditParams">3.9.8.3</a> then you can enter data for these parameters in the Data Sets View . <p> To enter data sets for a central test data set: <ol>
+        <li>Open the Central Test Data Editor by clicking the &quot;<i>Central Test Data Editor</i>&quot; on the toolbar or selecting: <br />
+          <table border="0" style="margin:0px;padding:0px;">
             <tr>
-              <td>
-                <div align="center"><img align="bottom" border="0" height="388" src="./excelexample.png" width="444" /></div>
-              </td>
+              <td bgcolor="#DDDDDD">Open with</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Central Test Data Editor</td>
             </tr>
           </table>
-        </div>
-        <p>You can create sheets for every language you need. Make sure that each sheet is named with the language code. Jubula will read the sheet which corresponds to the working language when the test is being executed.<li>Name the top cell of each column with a parameter name from your Test Case . <p>For example, if you entered the reference &quot;<i>=VALUE1</i>&quot;, then you must enter <tt>&quot;VALUE1&quot;</tt> in the top cell of the column which will contain data for that parameter.<table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>Jubula is case sensitive.</b></td>
-          </tr>
-        </table>
-      <li>Make sure that all the parameters for your Test Case have a column.<li>Do not leave any gaps in the table.<li>You must have an entry for each parameter used in the Test Case .<li>You can then fill in the values or formulae you want to use for these parameters. Each row in the table represents one set of data for the parameters used. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>We recommend that you format cells as text <span class="textit">before</span> adding the test data. This ensures that Excel&#39;s number formatting won&#39;t modify the test data in unexpected and undesirable ways. Especially for the boolean values<i>true</i> and <i>false</i>, make sure you format the column as text.</b></td>
-          </tr>
-        </table>
-      <li>If your Excel table contains data which change from day-to-day, then make sure you open the file before starting your test. Otherwise, the data from the last-opened state will be used. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>If you store your Excel files in your workspace, you will be able to open these directly in Jubula from the navigator view using the in-place editor.</b></td>
-          </tr>
-        </table>
-      <li>See the section later on using the <i>today</i> function in Excel to get the current date <a href="node124.html#exceltoday">3.9.9.2</a>.<li>Excel files may not contain autofilters in any of the worksheets to be used as data sources for Jubula . Remove any filters from all your Excel sheets before running a test.</ul>
+          <br /> from the Test Suite Browser . <li>In the editor, single-click the central test data set you want to add data to. <li>In the Data Sets View , make sure the language in the combo box on the right is the right language for your data. <li>Select &quot;<i>Add</i>&quot; to add a row. <li>Enter the values for the parameters in the row. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You cannot add referenced parameters (i.e. reference names preceded by the equals sign) in the Data Sets View for a central test data set.</b></td>
+            </tr>
+          </table>
+        <li>Use the buttons in the Data Sets View to add more rows, delete rows and insert rows above the currently selected row. </ol>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

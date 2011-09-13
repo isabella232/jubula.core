@@ -1,24 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.25.1 Stopping the AUT</title>
-    <meta content="3.25.1 Stopping the AUT" name="description" />
+    <title>3.24.6 I can&#39;t execute my Test Suite </title>
+    <meta content="3.24.6 I can&#39;t execute my Test Suite " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="testExecViewContextId" name="testExecViewContextId"></a><a id="runningAUTsViewContextId" name="runningAUTsViewContextId"></a><h2><a id="SECTION004251000000000000000" name="SECTION004251000000000000000"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">1</span> Stopping the AUT</a></h2>
-    <p><a name="4917"></a> <a name="4918"></a><ol>
-      <li>When you stop the AUT Agent , any AUT&#39;s that were connected to this AUT Agent are closed.<li>AUT&#39;s which were started from a configuration are automatically closed when the test execution via the test executor stops.<li>To stop the AUT manually, select the AUT you want to stop from the Running AUT&#39;s View and then click the Stop AUT button.<br />
-        <div class="margin"><img align="bottom" border="0" height="256" src="./stopAUT.png" width="256" />&nbsp; stop AUT</div>
-        <br />
-      <li>A dialog will appear to ask you if you are sure you want to stop the AUT . Click &quot;<i>yes</i>&quot;.<li>You can opt to not see this dialog in the preferences <a href="node197.html#gdprefs">3.24</a>.</ol>
+  <body>
+    <h2><a name="SECTION004246000000000000000"></a> <a name="troubleexecute"></a><br /><span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">6</span> I can&#39;t execute my Test Suite </h2>
+    <p><a name="5093"></a> <a name="5094"></a> If you cannot start a Test Suite , check that: <ul>
+        <li>The Test Suite has complete data for the current language. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>No parameter values can be empty in a Test Suite . If you no longer need the parameter, delete it.</b></td>
+            </tr>
+          </table>
+        <li>The object mapping is complete <a href="node160.html#objectmappingtasks">3.15.1</a>. <li>The Object Mapping Mode and the observation mode have been switched off. <li>You have connected to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a>. <li>You have started the AUT <a href="node176.html#startaut">3.16.2</a>. </ul>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>You can use the Test Suite Browser to click through the Test Suite to see the exact places where data and object maps are missing.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

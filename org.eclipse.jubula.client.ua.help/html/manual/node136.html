@@ -1,32 +1,66 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.10.4 Merging component names</title>
-    <meta content="3.10.4 Merging component names" name="description" />
+    <title>3.10.2 Entering and reassigning component names in the Component Names View </title>
+    <meta content="3.10.2 Entering and reassigning component names in the Component Names View " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="guidancerComponentNameBrowserContextId" name="guidancerComponentNameBrowserContextId"></a><a id="objectMapEditorContextId" name="objectMapEditorContextId"></a><a id="mergeComponentNameContextId" name="mergeComponentNameContextId"></a><h2><a id="SECTION004104000000000000000" name="SECTION004104000000000000000"><span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">4</span> Merging component names</a></h2><a id="TasksMergeCompName" name="TasksMergeCompName"></a><p><a name="2677"></a> <a name="2678"></a><p>You can merge two or more component names to one unifying name in the Component Name Browser &nbsp; . This makes sense if you have accidentally created two component names for the same component.<table>
-      <tr>
-        <td><img align="bottom" border="0" src="img2.jpg" /></td>
-        <td><b>The component types must be the same to be able to merge the component names, and the component names must not have already been mapped to different technical names from the AUT . The component names must all come from the current Project , not from any of the reused Projects .</b></td>
-      </tr>
-    </table>
-    <p>To merge component names:<ol>
-      <li>Select the component names you want to merge. Use <tt>&raquo;CTRL&laquo;</tt> to select multiple names.<li>From the context-menu, select:<br />
-        <table border="0" style="margin:0px;padding:0px;">
-          <tr>
-            <td bgcolor="#DDDDDD">Merge Component Names</td>
-          </tr>
-        </table>
-      <li>A dialog will appear in which you can choose which of the selected names you want to merge all the names to. Select the name you want and click &quot;<i>OK</i>&quot;.<li>The component names you selected will be merged to the name you specified throughout your test.</ol>
+  <body><a name="compNameViewContextId"></a><h2><a name="SECTION004102000000000000000"> <span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">2</span> Entering and reassigning component names in the Component Names View </a></h2><a name="TasksReassignCompName"></a><p><a name="2745"></a> <a name="2746"></a> <a name="2747"></a> <a name="2748"></a> <a name="2749"></a> <a name="2750"></a> <a name="2751"></a> <a name="2752"></a> <a name="2753"></a> <a name="2754"></a><p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>The following section deals with entering component names in the Component Names View when you have added Test Cases from the library. For information on component names in Test Steps , see the Test Steps section <a href="node154.html#specsteps">3.13.1</a>.</b></td>
+        </tr>
+      </table>
+    <p>
+      <ol>
+        <li>Once you have added a Test Case from the library of Test Cases <a href="node98.html#usingtemplate">3.8.2</a>, you will need to enter a component name for the component you want to test. <li>In the Component Names View , you will see the <i>old name</i> for this component, which was given in the Test Step contained in the library Test Case . The old name is just a placeholder and should be <i>reassigned</i> (<a href="#compnamesview">3.19</a>). <p>
+            <div align="CENTER"><a name="compnamesview"></a><a name="7449"></a><table>
+                <caption align="BOTTOM"><strong>Figure 3.19:</strong> The Component Names View </caption>
+                <tr>
+                  <td>
+                    <div align="CENTER"><img align="BOTTOM" alt="Image compnamesview" border="0" height="265" src="./compnamesview.png" width="461" /></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>When you enter a component name in the Component Names View , you create a new reference to a component in the AUT . This component name appears in the Object Mapping Editor to be mapped to a component in your AUT . A Test Case containing component names to be reassigned can therefore be used at a variety of different places to test different actual components. If you want to rename a component name, you can do so in the Component Name Browser &nbsp; <a href="node139.html#TasksRenameCompName">3.10.3</a>.</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>In the <i>new name</i> field, enter your name for this component, e.g. <tt>&quot;MainWindow_NavigationTree_tre&quot;</tt>. <p> We recommend using naming conventions for component names <a href="node307.html#BPComponentNames">5.2.2</a>. <p>
+        <li>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to see a list of component names you have already used for this type of component: <p>
+            <dl>
+              <dt><strong><i>Local</i></strong><dd> component names are names you have used in this Test Case for this component type. <br />
+                <div class="margin"><img align="BOTTOM" alt="Image localName" border="0" height="256" src="./localName.png" width="256" />&nbsp;Local name</div>
+                <br />
+              <dt><strong><i>Global</i></strong><dd> component names are names you have used for this component type, but not in this Test Case . <br />
+                <div class="margin"><img align="BOTTOM" alt="Image globalName" border="0" height="256" src="./globalName.png" width="256" />&nbsp;Global name</div>
+                <br />
+            </dl>
+          <p>
+        <li>The component name you enter here will be collected by the Object Mapping Editor when you carry out object mapping so that you can assign it to a component in the AUT . <p>
+        <li>Every time you want to carry out an action on this component, use this name. </ol>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>See the section on the component hierarchy for some tips on using component names in your tests <a href="node142.html#TasksCompNameType">3.10.6</a>.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node137.html" name="tex2html2747"><span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Propagating component names: writing Test Cases that can test different components in the AUT </a><li><a href="node138.html" name="tex2html2748"><span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Changing component names</a></ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

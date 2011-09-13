@@ -1,302 +1,293 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
     <title>5.1.2 Component with Text</title>
     <meta content="5.1.2 Component with Text" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a id="SECTION00612000000000000000" name="SECTION00612000000000000000"><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Component with Text</a></h2><a name="631"></a> <a name="632"></a><p><b>Description</b>:<p><a id="ABSTRACT_TextVerifiable" name="ABSTRACT_TextVerifiable"></a><ul>
-      <li>This is an abstract component.<li>It is implemented by all components which contain a text value that can be verified.</ul>
-    <p><b>Synopsis</b>:<br />
-    <ul>
-      <li>Component with Text (abstract)<li style="list-style: none; display: inline">
-        <ul>
+    <h2><a name="SECTION00612000000000000000"> <span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Component with Text</a></h2><a name="632"></a> <a name="633"></a><p><b>Description</b>:<p><a name="ABSTRACT_TextVerifiable"></a><p>
+      <ul>
+        <li>This is an abstract component. <li>It is implemented by all components which contain a text value that can be verified. </ul>
+    <p>
+    <p><b>Synopsis</b>: <br />
+      <ul>
+        <li>Component with Text (abstract)<ul>
           <li>Graphics Component (abstract)</ul>
-    </ul> ABSTRACT_TextVerifiable_VerifyText ABSTRACT_TextVerifiable_ReadValue <table border="1" cellpadding="3">
-      <tr>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="3"><b>New Actions</b></td>
-      </tr>
-      <tr>
-        <td><small>Name</small></td>
-        <td><small>Type</small></td>
-        <td><small>Parameters</small></td>
-      </tr>
-      <tr>
-        <td><small>Check Text</small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>String:Text<br /> String:Operator<br /></small></td>
-      </tr>
-      <tr>
-        <td><small>Store Value</small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>Variable:Variable Name<br /></small></td>
-      </tr>
-    </table>
-    <table border="1" cellpadding="3">
-      <tr>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="4"><b>Inherited Actions</b></td>
-      </tr>
-      <tr>
-        <td><small>Name</small></td>
-        <td><small>Type</small></td>
-        <td><small>Parameters</small></td>
-        <td><small>Inherited from</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_VerifyEnabled">Check Enablement</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>Boolean:Enabled<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByIndexpath">Check Enablement of Context Menu Entry by Indexpath</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>String:Indexpath<br /> Boolean:Enabled<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByIndexpathPosition">Check Enablement of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Indexpath<br /> Boolean:Enabled<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByTextpath">Check Enablement of Context Menu Entry by Textpath</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>String:Textpath<br /> String:Operator<br /> Boolean:Enabled<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByTextpathPosition">Check Enablement of Context Menu Entry by Textpath (Specify Position)</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Textpath<br /> String:Operator<br /> Boolean:Enabled<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_VerifyExists">Check Existence</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>Boolean:Exists<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByIndexpath">Check Existence of Context Menu Entry by Indexpath</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>String:Indexpath<br /> Boolean:Exists<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByIndexpathPosition">Check Existence of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Indexpath<br /> Boolean:Exists<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByTextpath">Check Existence of Context Menu Entry by Textpath</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>String:Textpath<br /> String:Operator<br /> Boolean:Exists<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByTextpathPosition">Check Existence of Context Menu Entry by Textpath (Specify Position)</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Textpath<br /> String:Operator<br /> Boolean:Exists<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_VerifyFocus">Check Focus</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>Boolean:Has Focus<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_VerifyProperty">Check Property</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>String:Property Name<br /> String:Property Value<br /> String:Operator<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByIndexpath">Check Selection of Context Menu Entry by Indexpath</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>String:Indexpath<br /> Boolean:Selected<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByIndexpathPosition">Check Selection of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Indexpath<br /> Boolean:Selected<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByTextpath">Check Selection of Context Menu Entry by Textpath</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>String:Textpath<br /> String:Operator<br /> Boolean:Selected<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByTextpathPosition">Check Selection of Context Menu Entry by Textpath (Specify Position)</a></small></td>
-        <td><small>c</small></td>
-        <td>
-          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Textpath<br /> String:Operator<br /> Boolean:Selected<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_Click">Click</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>Integer:Number of Clicks<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_ClickDirect">Click in Component</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>Integer:Number of Clicks<br /> Integer:Mouse Button<br /> Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_Drag">Drag</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>Integer:Mouse Button<br /> String:Modifier Keys<br /> Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_Drop">Drop</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> Integer:Delay before drop (milliseconds)<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupSelectByIndexPathNew">Select Context Menu Entry by Indexpath</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>String:Indexpath<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupSelectByIndexPathPositionNew">Select Context Menu Entry by Indexpath (Specify Position)</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Indexpath<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupSelectByTextPathNew">Select Context Menu Entry by Textpath</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>String:Textpath<br /> String:Operator<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_PopupSelectByTextPathPositionNew">Select Context Menu Entry by Textpath (Specify Position)</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>Integer:x-position<br /> String:x-units<br /> Integer:y-position<br /> String:y-units<br /> String:Menupath<br /> String:Operator<br /> Integer:Mouse Button<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_ShowText">Show Text</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>String:Text<br /> Integer:Text Size (in points)<br /> Integer:Time per Word (in milliseconds)<br /> Integer:Window Width (in pixels)<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-      <tr>
-        <td><small><a href="node11.html#ABSTRACT_Widget_WaitForComponent">Wait for Component</a></small></td>
-        <td><small>e</small></td>
-        <td>
-          <p><small>Integer:Timeout in ms<br /> Integer:Delay after Visibility<br /></small></td>
-        <td><small>Graphics Component (abstract)</small></td>
-      </tr>
-    </table>
+      </ul>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Text</big></span> <tt><small class="FOOTNOTESIZE">(Component with Text)</small></tt> <a name="41927"></a><a name="41928"></a><p><a id="ABSTRACT_TextVerifiable_VerifyText" name="ABSTRACT_TextVerifiable_VerifyText"></a><ul>
-      <li>Use this action to check whether the text in a component matches a given value.</ul>
-    <p><i>Parameters</i><br />
-    <table border="1" cellpadding="3">
-      <tr>
-        <td><small>Name</small></td>
-        <td><small>Data Type</small></td>
-        <td><small>Values</small></td>
-        <td><small>Default</small></td>
-      </tr>
-      <tr>
-        <td><small>Text</small></td>
-        <td><small>String</small></td>
-        <td><small>-</small></td>
-        <td><small>none</small></td>
-      </tr>
-    </table><a id="ABSTRACT_TextVerifiable_VerifyText_Text" name="ABSTRACT_TextVerifiable_VerifyText_Text"></a><ul>
-      <li>Enter the text you want to check against the text in the component.<li>This parameter will be compared to the text in the component, using the Operator provided.</ul>
-    <table border="1" cellpadding="3">
-      <tr>
-        <td><small>Name</small></td>
-        <td><small>Data Type</small></td>
-        <td><small>Values</small></td>
-        <td><small>Default</small></td>
-      </tr>
-      <tr>
-        <td><small>Operator</small></td>
-        <td><small>String</small></td>
-        <td><small>equals<br /> not equals<br /> matches<br /> simple match<br /></small></td>
-        <td><small>equals</small></td>
-      </tr>
-    </table><a id="ABSTRACT_TextVerifiable_VerifyText_Operator" name="ABSTRACT_TextVerifiable_VerifyText_Operator"></a><ul>
-      <li>The <i>operator</i> parameter has four possible values.<li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match.<li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match.<li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>.<li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>.<li>Regardless of the operator used: If there is more than one match, the first found will be chosen.</ul>
+      <table border="1" cellpadding="3">
+        <tr>
+        </tr>
+        <tr>
+          <td colspan="3"><b>New Actions</b></td>
+        </tr>
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Type</small></td>
+          <td><small>Parameters</small></td>
+        </tr>
+        <tr>
+          <td><small>Check Text</small></td>
+          <td><small>c</small></td>
+          <td><small><p> String:Text <br /> String:Operator <br /></small></td>
+        </tr>
+        <tr>
+          <td> ABSTRACT_TextVerifiable_VerifyText </td>
+        </tr>
+        <tr>
+          <td><small>Store Value</small></td>
+          <td><small>e</small></td>
+          <td><small><p> Variable:Variable Name <br /></small></td>
+        </tr>
+        <tr>
+          <td> ABSTRACT_TextVerifiable_ReadValue </td>
+        </tr>
+      </table>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Store Value</big></span> <tt><small class="FOOTNOTESIZE">(Component with Text)</small></tt> <a name="41934"></a><a name="41935"></a><p><a id="ABSTRACT_TextVerifiable_ReadValue" name="ABSTRACT_TextVerifiable_ReadValue"></a><ul>
-      <li>Use this action to read the value out of a field so that you can use it as data for other Test Steps .</ul>
+      <table border="1" cellpadding="3">
+        <tr>
+        </tr>
+        <tr>
+          <td colspan="4"><b>Inherited Actions</b></td>
+        </tr>
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Type</small></td>
+          <td><small>Parameters</small></td>
+          <td><small>Inherited from</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_VerifyEnabled">Check Enablement</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> Boolean:Enabled <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByIndexpath">Check Enablement of Context Menu Entry by Indexpath</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> String:Indexpath <br /> Boolean:Enabled <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByIndexpathPosition">Check Enablement of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Indexpath <br /> Boolean:Enabled <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByTextpath">Check Enablement of Context Menu Entry by Textpath</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> String:Textpath <br /> String:Operator <br /> Boolean:Enabled <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByTextpathPosition">Check Enablement of Context Menu Entry by Textpath (Specify Position)</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Textpath <br /> String:Operator <br /> Boolean:Enabled <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_VerifyExists">Check Existence</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> Boolean:Exists <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByIndexpath">Check Existence of Context Menu Entry by Indexpath</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> String:Indexpath <br /> Boolean:Exists <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByIndexpathPosition">Check Existence of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Indexpath <br /> Boolean:Exists <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByTextpath">Check Existence of Context Menu Entry by Textpath</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> String:Textpath <br /> String:Operator <br /> Boolean:Exists <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByTextpathPosition">Check Existence of Context Menu Entry by Textpath (Specify Position)</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Textpath <br /> String:Operator <br /> Boolean:Exists <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_VerifyFocus">Check Focus</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> Boolean:Has Focus <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_VerifyProperty">Check Property</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> String:Property Name <br /> String:Property Value <br /> String:Operator <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByIndexpath">Check Selection of Context Menu Entry by Indexpath</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> String:Indexpath <br /> Boolean:Selected <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByIndexpathPosition">Check Selection of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Indexpath <br /> Boolean:Selected <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByTextpath">Check Selection of Context Menu Entry by Textpath</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> String:Textpath <br /> String:Operator <br /> Boolean:Selected <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByTextpathPosition">Check Selection of Context Menu Entry by Textpath (Specify Position)</a></small></td>
+          <td><small>c</small></td>
+          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Textpath <br /> String:Operator <br /> Boolean:Selected <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_Click">Click</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Integer:Number of Clicks <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_ClickDirect">Click in Component</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Integer:Number of Clicks <br /> Integer:Mouse Button <br /> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_Drag">Drag</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Integer:Mouse Button <br /> String:Modifier Keys <br /> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_Drop">Drop</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> Integer:Delay before drop (milliseconds) <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupSelectByIndexPathNew">Select Context Menu Entry by Indexpath</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> String:Indexpath <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupSelectByIndexPathPositionNew">Select Context Menu Entry by Indexpath (Specify Position)</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Indexpath <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupSelectByTextPathNew">Select Context Menu Entry by Textpath</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> String:Textpath <br /> String:Operator <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupSelectByTextPathPositionNew">Select Context Menu Entry by Textpath (Specify Position)</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Menupath <br /> String:Operator <br /> Integer:Mouse Button <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_ShowText">Show Text</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> String:Text <br /> Integer:Text Size (in points) <br /> Integer:Time per Word (in milliseconds) <br /> Integer:Window Width (in pixels) <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_WaitForComponent">Wait for Component</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Integer:Timeout in ms <br /> Integer:Delay after Visibility <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+      </table>
+    <p>
+    <p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Text</big></span> <tt><small class="FOOTNOTESIZE">(Component with Text)</small></tt> <a name="42854"></a><a name="42855"></a><p><a name="ABSTRACT_TextVerifiable_VerifyText"></a><p>
+      <ul>
+        <li>Use this action to check whether the text in a component matches a given value. </ul>
+    <p>
     <p><i>Parameters</i><br />
-    <table border="1" cellpadding="3">
-      <tr>
-        <td><small>Name</small></td>
-        <td><small>Data Type</small></td>
-        <td><small>Values</small></td>
-        <td><small>Default</small></td>
-      </tr>
-      <tr>
-        <td><small>Variable Name</small></td>
-        <td><small>Variable</small></td>
-        <td><small>-</small></td>
-        <td><small>none</small></td>
-      </tr>
-    </table><a id="ABSTRACT_TextVerifiable_ReadValue_Variable" name="ABSTRACT_TextVerifiable_ReadValue_Variable"></a><ul>
-      <li>Enter the name you want to give to this variable.<li>Variable names may only contain letters, numbers and underscores.<li>You can then enter this variable name as data for other Test Steps .<li>When you enter the variable name as data, place a dollar sign before it.<li>The data associated with this variable name remains the same until the Project is closed, or until you overwrite the name by using it for another value.</ul>
-    <p>Button/Check Box/Radio Button (concrete)<br /> Combo Box (concrete)<br /> HTML Hyperlink (html)<br /> Label (concrete)<br /> List (concrete)<br /> Table (concrete)<br /> Text Field/Text Area/Editor Pane/Text Pane (concrete)<br /> Toolbar Item (swt)<p>
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Text</small></td>
+          <td><small>String</small></td>
+          <td><small>-</small></td>
+          <td><small>none</small></td>
+        </tr>
+      </table><a name="ABSTRACT_TextVerifiable_VerifyText_Text"></a><p>
+      <ul>
+        <li>Enter the text you want to check against the text in the component. <li>This parameter will be compared to the text in the component, using the Operator provided. </ul>
+    <p>
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Operator</small></td>
+          <td><small>String</small></td>
+          <td><small>equals <br /> not equals <br /> matches <br /> simple match <br /></small></td>
+          <td><small>equals</small></td>
+        </tr>
+      </table><a name="ABSTRACT_TextVerifiable_VerifyText_Operator"></a><p>
+      <ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+    <p>
+    <p>
+    <p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Store Value</big></span> <tt><small class="FOOTNOTESIZE">(Component with Text)</small></tt> <a name="42861"></a><a name="42862"></a><p><a name="ABSTRACT_TextVerifiable_ReadValue"></a><p>
+      <ul>
+        <li>Use this action to read the value out of a field so that you can use it as data for other Test Steps . </ul>
+    <p>
+    <p><i>Parameters</i><br />
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Variable Name</small></td>
+          <td><small>Variable</small></td>
+          <td><small>-</small></td>
+          <td><small>none</small></td>
+        </tr>
+      </table><a name="ABSTRACT_TextVerifiable_ReadValue_Variable"></a><p>
+      <ul>
+        <li>Enter the name you want to give to this variable. <li>Variable names may only contain letters, numbers and underscores. <li>You can then enter this variable name as data for other Test Steps . <li>When you enter the variable name as data, place a dollar sign before it. <li>The data associated with this variable name remains the same until the Project is closed, or until you overwrite the name by using it for another value. </ul>
+    <p>
+    <p> Button/Check Box/Radio Button (concrete) <br /> Combo Box (concrete) <br /> HTML Hyperlink (html) <br /> Label (concrete) <br /> List (concrete) <br /> Table (concrete) <br /> Text Field/Text Area/Editor Pane/Text Pane (concrete) <br /> Toolbar Item (swt) <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

@@ -1,22 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>7.7.0.1 Abstract, concrete and toolkit specific components</title>
-    <meta content="7.7.0.1 Abstract, concrete and toolkit specific components" name="description" />
+    <title>7.3.2 AUT Agent </title>
+    <meta content="7.3.2 AUT Agent " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a id="SECTION00870100000000000000" name="SECTION00870100000000000000"></a> <a id="ConceptsAbstractComps" name="ConceptsAbstractComps"></a><br /><span class="arabic">7</span>.<span class="arabic">7</span>.<span class="arabic">0</span>.<span class="arabic">1</span> Abstract, concrete and toolkit specific components</h3>
-    <p>Jubula has three levels of components:<dl>
-      <dt><strong>Abstract components</strong><dd>are general, high-level components from which other components are derived. They are described in terms of what features a component has, e.g. graphics component, component with text. They group actions together which can all be executed on components of this type.<dt><strong>Concrete components</strong><dd>are components which are available to all graphical toolkits, but which are restricted to a certain component type, e.g. combo box, list.<dt><strong>Toolkit specific components</strong><dd>are the most specific components in Jubula . They are only available for certain toolkits. For example, a HTML link is a component which is only available in Web applications.</dl>
-    <p>We recommend that you specify your tests as abstractly as possible, and as concretely as necessary. If you want to create a Test Case to click a button, it is better to use the abstract component <i>graphics component</i>. The <i>graphics component</i> also contains the <i>click</i> action, and has the advantage that the Test Case can then be used on other components than buttons. If you want to select a cell from a table, however, you will have to use the concrete component <i>table</i>, because this is the highest level which offers this action.<p>The more abstract your specification, the more flexible your Test Cases are.<p>
+    <h2><a name="SECTION00832000000000000000"> <span class="arabic">7</span>.<span class="arabic">3</span>.<span class="arabic">2</span> AUT Agent </a></h2>
+    <p><a name="6793"></a> The AUT Agent is the link between your specified tests and the AUT . Once the AUT Agent has started the AUT , object mapping can take place, and tests can be observed and executed. <p> You can install the AUT Agent on the same machine as the client or on any other machine in the network, as long as the AUT can also run on the machine. The AUT Agent can even run on a different platform than the client. <p> This separation of the client and AUT Agent means that you don&#39;t have to sacrifice control of your machine during test execution. It also means that you can test your AUT on different systems using the same test, and from the same client. <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

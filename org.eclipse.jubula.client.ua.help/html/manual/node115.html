@@ -1,21 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.9.7.1 Changing the data source for a Test Case</title>
-    <meta content="3.9.7.1 Changing the data source for a Test Case" name="description" />
+    <title>3.9.5.3 Using the Jubula pre-defined test execution variables</title>
+    <meta content="3.9.5.3 Using the Jubula pre-defined test execution variables" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="guidancerPropertiesViewContextId" name="guidancerPropertiesViewContextId"></a><h3><a id="SECTION00497100000000000000" name="SECTION00497100000000000000"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">7</span>.<span class="arabic">1</span> Changing the data source for a Test Case</a></h3>
-    <ul>
-      <li>The data source changes automatically to reflect the new data source when you enter an Excel file, a Central Test Data Set or when you enter new data in the Test Case .<li>To change the data set back to the original specification data (<i>referenced Test Case</i> ), first remove all Excel files or Central Test Data Sets, then change the data source in the combo box back to <i>referenced Test Case</i> .</ul>
+  <body>
+    <h3><a name="SECTION00495300000000000000"></a> <a name="TasksPredefinedVariables"></a><a name="2328"></a> <a name="2329"></a><br /><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span>.<span class="arabic">3</span> Using the Jubula pre-defined test execution variables </h3>
+    <p>
+      <ol>
+        <li>Jubula contains pre-defined test execution variables which you can use in your tests. <li>The following variables are automatically initialized when executing a Test Suite : <dl>
+            <dt><strong>TEST_TESTSUITE:</strong><dd>The Test Suite name. <dt><strong>TEST_USERNAME:</strong><dd>The account name you are logged into your computer under. <dt><strong>TEST_DBUSERNAME:</strong><dd>The Database user. <dt><strong>TEST_AUTAGENT:</strong><dd>The hostname for the AUT Agent the test is running on. <dt><strong>TEST_PORTNUMBER:</strong><dd>The port number for the AUT Agent the test is running on. <dt><strong>TEST_AUT:</strong><dd>The AUT name. <dt><strong>TEST_AUTCONFIG:</strong><dd>The AUT configuration name. <dt><strong>TEST_CLIENTVERSION:</strong><dd>The version of the Jubula client you are using. <dt><strong>TEST_LANGUAGE:</strong><dd>The language the AUT and the test are running in, e.g en_US. </dl>
+        <li>To use the value of one of these variables in your test, enter: <br /><code>${VARIABLE_NAME}</code><br /> as the parameter value. </ol>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>For a list of language codes, see the section in the reference manual (--&gt;<i>Reference Manual</i> <a href="../reference/node43.html#langcodes"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for details. </b></td>
+        </tr>
+      </table>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

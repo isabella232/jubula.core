@@ -1,55 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>4.3.3.2 Walkthrough</title>
-    <meta content="4.3.3.2 Walkthrough" name="description" />
+    <title>4. Toolkit-specific information</title>
+    <meta content="4. Toolkit-specific information" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a id="SECTION00533200000000000000" name="SECTION00533200000000000000"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Walkthrough</a></h3>
-    <p>The first step to implementing your accessibility plug-in is to create Identifiers for each type of GEF component that you wish to make accessible for Jubula tests. An Identifier is a Java class that implements <i>org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier</i> and provides Jubula with additional and/or more precise information about a specific org.eclipse.gef.EditPart. The granularity of your Identifier classes will depend on the class hierarchy of the EditParts in the AUT . For example, if many of the EditParts share a common superclass, then you can write a single Identifier for that superclass that will be able to provide accessibility for all EditParts that inherit from that superclass. See <a href="node277.html#gefreference">4.3.3.3</a> for a sample implementation.<p>The next step is to create an Adapter Factory. This extension will provide Jubula with information regarding which Identifier to use for each Edit Part.<ol>
-      <li>Open the plugin.xml file for your accessibility plug-in and select the &#39;Extension&#39; tab (<a href="#extensionstab">4.1</a>). <div align="center"><a id="extensionstab" name="extensionstab"></a><a name="5424"></a><table>
-            <caption align="bottom"><strong>Figure 4.1:</strong> Plug-in Editor with Extensions tab selected</caption>
-            <tr>
-              <td>
-                <div align="center"><img align="bottom" border="0" height="337" src="./extensionstab.png" width="493" /></div>
-              </td>
-            </tr>
-          </table>
-        </div>
-      <li>Add an instance of the <i>org.eclipse.core.runtime.adapters</i> extension.<li>Add a &#39;factory&#39; to the new extension for each type of GEF component for which you wish to provide accessibility. Each factory must provide adapters from the GEF component that implements <i>org.eclipse.gef.EditPart</i> to <i>org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier</i> (<a href="#factory">4.2</a>). <div align="center"><a id="factory" name="factory"></a><a name="5435"></a><table>
-            <caption align="bottom"><strong>Figure 4.2:</strong> Plug-in Editor with defined Adapter Factory</caption>
-            <tr>
-              <td>
-                <div align="center"><img align="bottom" border="0" height="475" src="./factory.png" width="493" /></div>
-              </td>
-            </tr>
-          </table>
-        </div>
-      <li>Once you have defined your Adapter Factory, you will need to implement it. Your Adapter Factory, which must implement <i>org.eclipse.core.runtime.IAdapaterFactory</i>, provides appropriate instances of your created Identifiers for a given Edit Part. See <a href="node277.html#gefreference">4.3.3.3</a> for a sample implementation.<li>Once you have created your Identifiers and Adapter Factories, you can export your plug-in and copy it to the &#39;plugins&#39; directory of your AUT (<a href="#exportplugin">4.3</a>). <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>When starting your AUT after adding or replacing your accessibility plug-in, it is recommended that the AUT be started with the -clean parameter.</b></td>
-          </tr>
-        </table>
-        <div align="center"><a id="exportplugin" name="exportplugin"></a><a name="5448"></a><table>
-            <caption align="bottom"><strong>Figure 4.3:</strong> Exporting the Project to a Plug-in</caption>
-            <tr>
-              <td>
-                <div align="center"><img align="bottom" border="0" height="516" src="./exportplugin.png" width="493" /></div>
-              </td>
-            </tr>
-          </table>
-        </div>
-    </ol>
-    <p>
+    <h1><a name="SECTION00500000000000000000"></a> <a name="Toolkit"></a><br /><span class="arabic">4</span>. Toolkit-specific information </h1>
+    <p> This chapter contains information testing AUT&#39;s written in the various toolkits supported by Jubula . <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node277.html" name="tex2html4509"><span class="arabic">4</span>.<span class="arabic">1</span> Testing Swing AUT&#39;s </a><ul>
+            <li><a href="node278.html" name="tex2html4510"><span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Supported Swing AUT&#39;s </a><li><a href="node279.html" name="tex2html4511"><span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Design for testability in Swing</a></ul>
+          <br />
+        <li><a href="node280.html" name="tex2html4512"><span class="arabic">4</span>.<span class="arabic">2</span> Testing RCP AUT&#39;s </a><ul>
+            <li><a href="node281.html" name="tex2html4513"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Supported RCP AUT&#39;s </a><li><a href="node282.html" name="tex2html4514"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Setting up an RCP AUT for testing</a><li><a href="node283.html" name="tex2html4515"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Keyboard Layouts</a><li><a href="node284.html" name="tex2html4516"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Design for testability in RCP</a><li><a href="node285.html" name="tex2html4517"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">5</span> Component name generation in RCP</a><li><a href="node286.html" name="tex2html4518"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Best practices for testing RCP AUT&#39;s </a></ul>
+          <br />
+        <li><a href="node287.html" name="tex2html4519"><span class="arabic">4</span>.<span class="arabic">3</span> Testing GEF AUT&#39;s </a><ul>
+            <li><a href="node288.html" name="tex2html4520"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Testing GEF components</a><li><a href="node289.html" name="tex2html4521"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Using the GEF inspector</a><li><a href="node290.html" name="tex2html4522"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Adding GEF accessibility to your AUT </a><ul>
+                <li><a href="node291.html" name="tex2html4523"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Setting up your Workspace</a><li><a href="node292.html" name="tex2html4524"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Walkthrough</a><li><a href="node293.html" name="tex2html4525"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">3</span> References</a></ul>
+          </ul>
+          <br />
+        <li><a href="node294.html" name="tex2html4526"><span class="arabic">4</span>.<span class="arabic">4</span> Testing HTML AUT&#39;s </a><ul>
+            <li><a href="node295.html" name="tex2html4527"><span class="arabic">4</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Supported HTML AUT&#39;s </a><li><a href="node296.html" name="tex2html4528"><span class="arabic">4</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Design for testability in HTML AUT&#39;s </a></ul>
+      </ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

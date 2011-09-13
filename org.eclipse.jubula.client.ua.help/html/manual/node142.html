@@ -1,26 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.12 Working with Test Jobs to test multiple AUT&#39;s</title>
-    <meta content="3.12 Working with Test Jobs to test multiple AUT&#39;s" name="description" />
+    <title>3.10.6 Understanding the component hierarchy</title>
+    <meta content="3.10.6 Understanding the component hierarchy" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h1><a id="SECTION004120000000000000000" name="SECTION004120000000000000000"></a> <a id="WorkingWithJobs" name="WorkingWithJobs"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span> Working with Test Jobs to test multiple AUT&#39;s</h1>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="compNameViewContextId"></a><a name="objectMapEditorContextId"></a><h2><a name="SECTION004106000000000000000"> <span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">6</span> Understanding the component hierarchy</a></h2><a name="TasksCompNameType"></a><p><a name="2907"></a> <a name="2908"></a> <a name="2909"></a> The component hierarchy in Jubula is designed to allow flexible test specification and robust tests. For a graphical overview of the component hierarchy, see the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node37.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
     <p>
       <br />
-    <hr /><a id="CHILD_LINKS" name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-      <li><a href="node143.html" id="tex2html2765" name="tex2html2765"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">1</span> Combining Test Suites into a Test Job</a><li><a href="node144.html" id="tex2html2766" name="tex2html2766"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span> Testing different AUT&#39;s in one test run</a><ul>
-          <li><a href="node145.html" id="tex2html2767" name="tex2html2767"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Testing independently started AUT&#39;s</a><li><a href="node146.html" id="tex2html2768" name="tex2html2768"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Testing AUT&#39;s that are launched by other AUT&#39;s</a></ul>
-        <br />
-      <li><a href="node147.html" id="tex2html2769" name="tex2html2769"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">3</span> Creating a new Test Job</a><li><a href="node148.html" id="tex2html2770" name="tex2html2770"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">4</span> Specifying which AUT to test in a Test Job</a></ul>
-    <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+    <p><span class="textbf">Abstract components</span><br />
+    <p> Jubula lets you write tests very abstractly at the beginning, only adding detail later. You will notice that the library contains categories such as <i>Component with Text Input</i> and <i>Graphics Component</i>. <p> These are <i>abstract components</i> - actions in these categories can be used on a wide range of actual components in the AUT . You can use a <i>Click</i> action on the <i>Graphics Component</i> to click any component in the AUT . You just need to enter different component names for it in the Component Names View . <p>
+    <p>
+      <br /><span class="textbf">Using the same component name for different component types</span><br />
+    <p> What happens if you want to specify a test that clicks in a table and then selects a cell in the table? <p> The click action is on the <i>Graphics Component</i> and the select cell action is on the <i>Table</i> component - but you don&#39;t want to have two different component names. <p> This isn&#39;t a problem for Jubula . You can use the same component name for different components as long as these are compatible. So, in this case, the <i>Graphics Component</i> and the <i>Table</i> component can both use the component name e.g. <i>TableView_MainTable_tbl</i>. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>You cannot use the same component name for incompatible types, for example, trees and tables.</b></td>
+        </tr>
+      </table>
+    <p> An overview of the component hierarchy can be seen in: --&gt;<i>Reference Manual</i> <a href="../reference/node37.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+    <p>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

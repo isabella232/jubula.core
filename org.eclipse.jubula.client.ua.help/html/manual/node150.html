@@ -1,64 +1,43 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.13.1 Specifying Test Steps</title>
-    <meta content="3.13.1 Specifying Test Steps" name="description" />
+    <title>3.12.2.2 Testing AUT&#39;s that are launched by other AUT&#39;s </title>
+    <meta content="3.12.2.2 Testing AUT&#39;s that are launched by other AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a id="SECTION004131000000000000000" name="SECTION004131000000000000000"></a> <a id="specsteps" name="specsteps"></a><br /><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">1</span> Specifying Test Steps</h2>
-    <p><a name="3054"></a> <a name="3055"></a> <a name="3056"></a> <a name="3057"></a> <a name="3058"></a> <a name="3059"></a> <a name="3060"></a> <a name="3061"></a><table>
-      <tr>
-        <td><img align="bottom" border="0" src="img2.jpg" /></td>
-        <td><b>You must have created a Test Case <a href="node91.html#TasksCreateTC">3.8.1</a> in order to create Test Steps .</b></td>
-      </tr>
-    </table>
-    <ol>
-      <li>Open the Test Case Editor by double-clicking on the Test Case you want to edit in the Test Case Browser .<li>Create a Test Step from the context-sensitive menu in the Test Case Editor :<br />
-        <table border="0" style="margin:0px;padding:0px;">
-          <tr>
-            <td bgcolor="#DDDDDD">Add</td>
-            <td>--&gt;</td>
-            <td bgcolor="#DDDDDD">New Test Step</td>
-          </tr>
-        </table> .<br /> (This adds the Test Step after any other items in the Test Case Editor .)<li>Alternatively, use the option in the context-sensitive menu to insert a Test Step . This inserts the new Test Step above the currently selected item.<li>The <i>New Test Step</i> (<a href="#newstep">3.19</a>) dialog will appear.</ol>
-    <div align="center"><a id="newstep" name="newstep"></a><a name="7116"></a><table>
-        <caption align="bottom"><strong>Figure 3.19:</strong> New Test Step Dialog</caption>
+    <h3><a name="SECTION004122200000000000000"></a> <a name="TasksLenientTest"></a><a name="3126"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Testing AUT&#39;s that are launched by other AUT&#39;s </h3>
+    <p> If your AUT starts other AUT&#39;s which you also want to test, then the following criteria must be met: <p>
+      <ul>
+        <li>The AUT Agent must be running in <i>lenient</i> or <i>non-strict</i> mode <a href="node38.html#TasksAgentLenient">3.1.1.3</a>. <li>The AUT&#39;s must be written with the same toolkit (e.g. Swing) <a href="node52.html#projtoolkit">7</a>. <li>The AUT&#39;s have all been defined for this Project <a href="node73.html#Defineaut">3.5.2</a>. <li>The order in which the launched AUT&#39;s will appear and be tested must be known. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>When an AUT is launched by another AUT , the AUT ID for the new AUT is formed as <tt>&quot;AUT ID + 1&quot;</tt>. The next AUT to be started receives the ID <tt>&quot;AUT ID + 2&quot;</tt>, and so on. You can enter these AUT IDs in the Test Suites in the Test Job . </b></td>
+            </tr>
+          </table>
+      </ul>
+    <p><span class="textbf">Behavior of AUT&#39;s when being started by other AUT&#39;s </span><br />
+      <dl>
+        <dt>
+        <dd>RCP starting RCP:[The newly started RCP AUT receives the ID <tt>&quot;ID+1&quot;</tt>.] <dt>
+        <dd>Swing Jar or main class starting Swing Jar or main class:[This is currently not possible.] <dt>
+        <dd>Swing Jar or main class starting Swing executable:[This is currently not possible.] <dt>
+        <dd>Swing executable starting Swing Jar or main class:[The newly started Swing AUT receives the ID <tt>&quot;ID+1&quot;</tt>.] <dt>
+        <dd>Swing executable starting Swing executable:[The newly started Swing AUT receives the ID <tt>&quot;ID+1&quot;</tt>.] </dl>
+    <p>
+      <table>
         <tr>
-          <td>
-            <div align="center"><img align="bottom" border="0" height="271" src="./teststepdialog.png" width="438" /></div>
-          </td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>If the AUT Agent is not running in lenient mode, then the newly started AUT will shut down.</b></td>
         </tr>
       </table>
-    </div>
-    <p><span class="textbf">Filling in the Test Step dialog</span><br /><span class="textbf">Test Step name</span><ol>
-      <li>In the <i>Test Step Name</i> field, enter a name for the Test Step . This name is just for recognition purposes, but should be easily identifiable at a later point. <p><span class="textbf">Component type</span><li>Select the component you want to test from the combo box. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>A component is an element of the user interface you can execute an action on, e.g. a button, a text field.</b></td>
-          </tr>
-        </table>
-        <p><span class="textbf">Component name</span> <a id="componentnameteststep" name="componentnameteststep"></a><li>Enter a component name. This is your user-defined name that you will use to refer to this particular component. It will later be mapped to the real component in the AUT . Again, we suggest using conventions to name components <a href="node291.html#BPComponentNames">5.2.2</a>.<li>When you are entering component names, a combo box appears with a list of names you have already used. <p>If any of the names are grayed out, this means they have been used for other component types and cannot be used for the currently selected component type.<p>You can change, or <i>reassign</i> component names later when you reuse this Test Case . Doing this means that you can execute the same actions on different components in the interface. The section on the Component Names View <a href="node132.html#TasksReassignCompName">3.10.2</a> contains information on reassigning component names.<p><span class="textbf">Action</span><li>From the combo box, choose the action you want to execute on this component. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>Refer to the chapter on Components, Actions, and Parameters (--&gt;<i>Reference Manual</i> <a href="../reference/node6.html#actparam"><img align="bottom" border="1" src="crossref.gif" /></a>) for information on components, the actions they support, and their parameters.</b></td>
-          </tr>
-        </table>
-      <li>Click &quot;<i>OK</i>&quot;.<li>The Test Step will appear as nested in the Test Case . <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>You can change the position of Test Steps using drag-and-drop.</b></td>
-          </tr>
-        </table>
-        <p>You can see and edit the details of any selected Test Step in the Properties View .<p>The next step is to add parameter values (data) for Test Steps in the Properties View <a href="node104.html#WorkingWithData">3.9</a>.</ol>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

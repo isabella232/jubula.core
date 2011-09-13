@@ -1,36 +1,52 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.19.2 AUT Agent preferences</title>
-    <meta content="3.19.2 AUT Agent preferences" name="description" />
+    <title>3.18.1 Adding Event Handlers to a Test Case </title>
+    <meta content="3.18.1 Adding Event Handlers to a Test Case " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="prefPageServerContextId" name="prefPageServerContextId"></a><a id="autConfigPropDialogContextId" name="autConfigPropDialogContextId"></a><a id="autConfigSettingWizardPagePageContextId" name="autConfigSettingWizardPagePageContextId"></a><h2><a id="SECTION004192000000000000000" name="SECTION004192000000000000000"><span class="arabic">3</span>.<span class="arabic">19</span>.<span class="arabic">2</span> AUT Agent preferences</a></h2>
-    <p><a id="serverConfigPrefPage" name="serverConfigPrefPage"></a><a name="4113"></a> <a name="4114"></a> <a name="4115"></a> <a name="4116"></a><p>You can find the AUT Agent preference page under:<br /><i>Test-AUT Agent</i><br /> in the preferences dialog.<ol>
-      <li>In the AUT Agent preference page, you can add, edit and delete AUT Agent s and port numbers. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>The AUT Agent preference page can also be accessed from the AUT configuration dialog which you can open from the Project properties.</b></td>
-          </tr>
-        </table>
-    </ol>
-    <div align="center"><a id="serverconfig" name="serverconfig"></a><a name="4128"></a><table>
-        <caption align="bottom"><strong>Figure 3.25:</strong> AUT Agent Configuration Dialog</caption>
-        <tr>
-          <td>
-            <div align="center"><img align="bottom" border="0" height="394" src="./serverconfig.png" width="493" /></div>
-          </td>
-        </tr>
-      </table>
-    </div>
+  <body><a name="guidancerSpecTestCaseEditorContextId"></a><h2><a name="SECTION004181000000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">1</span> Adding Event Handlers to a Test Case </a></h2>
+    <p><a name="4204"></a> <a name="4205"></a><p> This section deals with adding Event Handlers to Test Cases . For information on using Event Handlers meaningfully to ensure that your test execution is as robust as possible, see the section on Event Handlers in the Best Practices section <a href="node315.html#BPEHandlers">5.4</a>. <p>
+      <ol>
+        <li>Open the Test Case Editor by double-clicking on the Test Case you want to edit in the Test Case Browser . <li>Select <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Add</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Test Case as Event Handler </td>
+            </tr>
+          </table>
+          <br /> from the context-sensitive menu in the editor or use <tt>&raquo;CTRL+ENTER&laquo;</tt>. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>You can also drag the Test Case you want to use straight into the Event Handlers area of at the bottom of th the Test Case Editor . </b></td>
+              </tr>
+            </table>
+          <p>
+        <li>Choose a Test Case to add from the dialog that appears. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You can&#39;t add a Test Case to itself as an Event Handler , because this would create an infinite loop. </b></td>
+            </tr>
+          </table>
+        <li>Select an event type from the combo box <a href="node199.html#eventtype">3.18.2</a>. <li>Select a reentry type from the combo box <a href="node200.html#reentrytype">3.18.3</a>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>For each Test Case you can only add one Event Handler for each event type.</b></td>
+            </tr>
+          </table>
+        <li>Click &quot;<i>OK</i>&quot;. <li>The Event Handler appears in the lower half of the Test Case Editor . <br />
+          <div class="margin"><img align="BOTTOM" alt="Image EventHandler" border="0" height="256" src="./EventHandler.png" width="256" />&nbsp; Event Handler </div>
+          <br />
+        <li>Save the changes in the editor. </ol>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

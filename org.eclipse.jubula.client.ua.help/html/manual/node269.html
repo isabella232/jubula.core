@@ -1,19 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>4.2.5 Component name generation in RCP</title>
-    <meta content="4.2.5 Component name generation in RCP" name="description" />
+    <title>3.28.3 Customizing the Perspective</title>
+    <meta content="3.28.3 Customizing the Perspective" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="autSettingWizardPagePageContextId" name="autSettingWizardPagePageContextId"></a><a id="autWizardPageGenerateNamesPageContextId" name="autWizardPageGenerateNamesPageContextId"></a><a id="autSettingsPageContextId" name="autSettingsPageContextId"></a><h2><a id="SECTION00525000000000000000" name="SECTION00525000000000000000"></a> <a id="RCPgenerate" name="RCPgenerate"></a><br /><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">5</span> Component name generation in RCP</h2>
-    <p><a name="5325"></a><p>RCP AUT&#39;s often use wizards and standard dialogs. The components in these dialogs are not often named by developers, and are in different places on Windows, Linux and Mac systems.<p>Jubula lets you decide if unique names should be generated for these components in your AUT , if no name has been given. You can configure this in the AUT settings <a href="node71.html#Defineaut">3.5.2</a>. We recommend selecting this option, as it makes your tests more robust to any changes and also makes platform-independent testing possible in RCP AUT&#39;s .<p>
+  <body>
+    <h2><a name="SECTION004283000000000000000"></a> <a name="LaunchConfigurationsCustomizePerspective"></a><br /><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">3</span> Customizing the Perspective </h2>
+    <p> In most cases, the button to start AUT&#39;s is not included in the main toolbar. The following steps describe how to add this button to a Perspective&#39;s toolbar: <ol>
+        <li>Select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Window</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Customize Perspective...</td>
+            </tr>
+          </table>
+          <br /> from the main menu. <li>In the dialog that appears, select the <i>Command Groups Availability</i> tab. <li>Ensure that the entry <i>Start AUT </i> in the section <i>Available command groups:</i> is checked. <li>Close the dialog by pressing the <i>OK</i> button. </ol>
+    <p> Once you have completed the steps listed above, the <i>Start AUT </i> button should be visible in the main toolbar of the active Perspective. <br />
+      <div class="margin"><img align="BOTTOM" alt="Image startAUT" border="0" height="256" src="./startAUT.png" width="256" />&nbsp;Start AUT </div>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+    <p>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

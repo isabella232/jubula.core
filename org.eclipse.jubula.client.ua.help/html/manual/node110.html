@@ -1,35 +1,47 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.9.5.1 Reading and using values (variables) from the AUT</title>
-    <meta content="3.9.5.1 Reading and using values (variables) from the AUT" name="description" />
+    <title>3.9.3 Using references for data in Test Cases </title>
+    <meta content="3.9.3 Using references for data in Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a id="SECTION00495100000000000000" name="SECTION00495100000000000000"></a> <a name="2136"></a> <a name="2137"></a> <a id="TasksAUTVariables" name="TasksAUTVariables"></a><br /><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Reading and using values (variables) from the AUT</h3>
-    <p>You can store values read from the AUT to use as data in other Test Cases .<ol>
-      <li>Use one of the <i>store value</i> actions on the various components to reads a value from a component in the AUT . <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>You can also use the <i>store value</i> action on the <i>application</i> component to store a value you enter.</b></td>
-          </tr>
-        </table>
-      <li>In the parameter field, enter a name for this variable (e.g. USERNAME). <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>Variable names may only contain letters, numbers and underscores</b></td>
-          </tr>
-        </table>
-      <li>When you want to use this value as data for a parameter, enter the variable name preceded by a dollar sign ($) as the parameter value (e.g. $USERNAME). <p>Bear in mind that the variable has to be stored before it can be used as a parameter value.</ol> Read the following sections for more information on: <ul>
-      <li>Using system variables in tests <a href="node111.html#TasksSystemVariables">3.9.5.2</a>.<li>Using the pre-defined Jubula variables in tests <a href="node112.html#TasksPredefinedVariables">3.9.5.3</a></ul>
-    <p>
+  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION00493000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">3</span> Using references for data in Test Cases </a></h2><a name="TasksTestdataReferences"></a><p><a name="2220"></a> <a name="2221"></a><ul>
+        <li>If there are parameters in a Test Case that you want to change when you reuse it, you can enter a reference instead of a concrete value. Deciding which data to parametrize is an important decision in test creation. See the Best Practices section for more information on this <a href="node303.html#BPKeywordData">5.1.2</a>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to get content assist in the Properties View for certain parameters. </b></td>
+            </tr>
+          </table>
+        <li>To enter a reference for a parameter, in the Properties View , enter a reference name, preceded by an equals sign: <tt>&quot;=REF_NAME&quot;</tt>. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>Reference names may only consist of letters, numbers and underscores. You cannot use spaces in reference names.</b></td>
+              </tr>
+            </table>
+        <li>Press <tt>&raquo;ENTER&laquo;</tt>. A yellow arrow will appear next to the <i>parameter</i> field in the Properties View . <br />
+          <div class="margin"><img align="BOTTOM" alt="Image refArrow" border="0" height="241" src="./refArrow.png" width="256" />&nbsp; reference symbol</div>
+          <br />
+          <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>It helps to choose names that are meaningful so that you know what sort of data to enter later. Instead of <i>=TEXT</i>, you could use <i>=CATEGORY_NAME</i>, for example <a href="node309.html#BPParamNames">5.2.4</a>.</b></td>
+            </tr>
+          </table>
+        <li>You will see that the reference becomes a parameter of the parent Test Case . It appears in the Test Case Browser next to the parent Test Case in square brackets. <li>You will be able to enter data for this parameter when you reuse the Test Case . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You can enter data for it now if you want to - this is essentially like having default data. They appear when you reuse the Test Case , but you can overwrite them <a href="node133.html#TasksOverwriteData">3.9.12</a>.</b></td>
+            </tr>
+          </table>
+      </ul>
+    <p> For information on editing and deleting referenced parameters from Test Cases , see the following section <a href="node111.html#TasksTestdataEditParams">3.9.4</a>. <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

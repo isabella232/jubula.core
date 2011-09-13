@@ -1,37 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.12.2.2 Testing AUT&#39;s that are launched by other AUT&#39;s</title>
-    <meta content="3.12.2.2 Testing AUT&#39;s that are launched by other AUT&#39;s" name="description" />
+    <title>3.12 Working with Test Jobs to test multiple AUT&#39;s </title>
+    <meta content="3.12 Working with Test Jobs to test multiple AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a id="SECTION004122200000000000000" name="SECTION004122200000000000000"></a> <a id="TasksLenientTest" name="TasksLenientTest"></a><a name="2942"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Testing AUT&#39;s that are launched by other AUT&#39;s</h3>
-    <p>If your AUT starts other AUT&#39;s which you also want to test, then the following criteria must be met:<ul>
-      <li>The AUT Agent must be running in <i>lenient</i> or <i>non-strict</i> mode <a href="node37.html#TasksAgentLenient">3.1.3</a>.<li>The AUT&#39;s must be written with the same toolkit (e.g. Swing) <a href="node50.html#projtoolkit">7</a>.<li>The AUT&#39;s have all been defined for this Project Defineaut.<li>The order in which the launched AUT&#39;s will appear and be tested must be known. <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>When an AUT is launched by another AUT , the AUT ID for the new AUT is formed as <tt>&quot;AUT ID + 1&quot;</tt>. The next AUT to be started receives the ID <tt>&quot;AUT ID + 2&quot;</tt>, and so on. You can enter these AUT IDs in the Test Suites in the Test Job .</b></td>
-          </tr>
-        </table>
-    </ul>
-    <p><span class="textbf">Behavior of AUT&#39;s when being started by other AUT&#39;s</span><br />
-    <dl>
-      <dd>RCP starting RCP:[The newly started RCP AUT receives the ID <tt>&quot;ID+1&quot;</tt>.]<dd>Swing Jar or main class starting Swing Jar or main class:[This is currently not possible.]<dd>Swing Jar or main class starting Swing executable:[This is currently not possible.]<dd>Swing executable starting Swing Jar or main class:[The newly started Swing AUT receives the ID <tt>&quot;ID+1&quot;</tt>.]<dd>Swing executable starting Swing executable:[The newly started Swing AUT receives the ID <tt>&quot;ID+1&quot;</tt>.]</dl>
-    <table>
-      <tr>
-        <td><img align="bottom" border="0" src="img1.jpg" /></td>
-        <td><b>If the AUT Agent is not running in lenient mode, then the newly started AUT will shut down.</b></td>
-      </tr>
-    </table>
+    <h1><a name="SECTION004120000000000000000"></a> <a name="WorkingWithJobs"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span> Working with Test Jobs to test multiple AUT&#39;s </h1>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node147.html" name="tex2html2865"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">1</span> Combining Test Suites into a Test Job </a><li><a href="node148.html" name="tex2html2866"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span> Testing different AUT&#39;s in one test run</a><ul>
+            <li><a href="node149.html" name="tex2html2867"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Testing independently started AUT&#39;s </a><li><a href="node150.html" name="tex2html2868"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Testing AUT&#39;s that are launched by other AUT&#39;s </a></ul>
+          <br />
+        <li><a href="node151.html" name="tex2html2869"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">3</span> Creating a new Test Job </a><li><a href="node152.html" name="tex2html2870"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">4</span> Specifying which AUT to test in a Test Job </a></ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

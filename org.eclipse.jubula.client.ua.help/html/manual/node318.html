@@ -1,20 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>6.3.3 Object Mapping Editor</title>
-    <meta content="6.3.3 Object Mapping Editor" name="description" />
+    <title>5.4.1.2 Adding the Event Handlers to the use case</title>
+    <meta content="5.4.1.2 Adding the Event Handlers to the use case" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="objectMapEditorContextId" name="objectMapEditorContextId"></a><h2><a id="SECTION00733000000000000000" name="SECTION00733000000000000000"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Object Mapping Editor</a></h2> <a name="6142"></a> <a name="6143"></a><p>Each AUT in a Project has an Object Mapping Editor . You can open the Object Mapping Editor by right-clicking on a Test Suite in the Test Suite Browser and selecting &quot;<i>open with Object Mapping Editor</i> &quot;.<p>You can also open the Object Mapping Editor by single-clicking the chosen Test Suite and clicking on the &quot;<i>start Object Mapping Mode</i> &quot; button on the toolbar. This also starts the Object Mapping Mode .<p>The Object Mapping Editor has four tabs, a split view, a tree view, a table view and configuration tab. In the Object Mapping Editor :<ul>
-      <li>You can see all the component names you have used in the Test Suite you selected, and any other Test Suites which use the same AUT .<li>You can see any technical names you have collected from the AUT .<li>You can see the component and technical names you have assigned to each other to complete mapping.</ul>
-    <p>
+  <body>
+    <h3><a name="SECTION00641200000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Adding the Event Handlers to the use case</a></h3> The next step is to add the Test Cases as Event Handlers to the use case so that they are activated when an error occurs. <p>
+      <ol>
+        <li>Open a use case in the Test Case Editor . Remember that each use case should be independent, and entirely contained in one single top level Test Case <a href="node304.html#BPKeywordSuites">5.1.3</a>. <li>Add the <i>Action Error</i> Test Case to the use case as an Event Handler <a href="node197.html#customizedehandler">3.18</a>. Specify <i>Action Error</i> as the error type, and <i>return</i> as the reentry type. <li>Add the <i>Check Failed</i> Test Case to the use case as an Event Handler . Specify <i>Check Failed</i> as the error type, and <i>continue</i> as the reentry type. <li>Add the <i>Component Not Found</i> Test Case to the use case as an Event Handler . Specify <i>Component Not Found</i> as the error type, and <i>return</i> as the reentry type. <li>Add the <i>Configuration Error</i> Test Case to the use case as an Event Handler . Specify <i>Configuration Error</i> as the error type, and <i>return</i> as the reentry type. </ol>
+    <p> Now, any error in this use case (which is not handled by a local Event Handler within the use case) will result in one of these Event Handlers being activated. <i>Check failed</i> errors will mean that the test continues. <i>Action errors</i>, <i>Component not found</i> and <i>Configuration errors</i> will provoke a restart of the AUT . The test execution leaves the branch in which the Event Handler was nested (the use case) and carries on at the next Test Case (use case) or Test Suite . <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>The <i>app_startup</i> Test Case is important at the beginning of each use case in case the AUT has just been restarted <a href="node304.html#BPKeywordSuites">5.1.3</a>. </b></td>
+        </tr>
+      </table>
+    <p> Carry out these steps for each use case as you create it. <p> In this way, unexpected errors can be dealt with in a way that allows them to be identified later on. The test does not stop at the error, but tries to carry on at the next relevant point. This is the reason why use cases should be independent from each other - to stop further errors occurring. <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

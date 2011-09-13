@@ -1,148 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.27.2 Parameters for the dbtool</title>
-    <meta content="3.27.2 Parameters for the dbtool" name="description" />
+    <title>3.26.1 Starting</title>
+    <meta content="3.26.1 Starting" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a id="SECTION004272000000000000000" name="SECTION004272000000000000000"><span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">2</span> Parameters for the dbtool</a></h2>
-    <p><a name="5143"></a><ol>
-      <li>Once you have browsed to the Jubula installation directory and entered <tt>&quot;dbtool&quot;</tt>, you can enter the parameters for the Database actions.<li>The dbtool uses the parameters described in the table <a href="#dbtoolparams">2</a>: <p>
-          <br />
-        <div align="center"><a name="5181"></a><table>
-            <caption><strong>Table 3.2:</strong> Parameters for the dbtool</caption>
-            <tr>
-              <td><a id="dbtoolparams" name="dbtoolparams"></a><div align="center">
-                </div>
-                <table border="1" cellpadding="3">
-                  <tr valign="baseline">
-                    <th align="left"><span class="textbf">Detail</span></th>
-                    <th align="left"><span class="textbf">Parameter</span></th>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Help</td>
-                    <td align="left"><tt>&quot;-h&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">Gives parameter help</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Delete Project</td>
-                    <td align="left"><tt>&quot;-delete &lt;project-name project-version&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-delete &#39;&#39;ExampleProject&#39;&#39; 1.0</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Delete All</td>
-                    <td align="left"><tt>&quot;-deleteall&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-deleteall</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Keep test result summaries</td>
-                    <td align="left"><tt>&quot;-keepsummary&quot;</tt> (optional)</td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-keepsummary</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Directory</td>
-                    <td align="left"><tt>&quot;-directory &lt;directory path&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-directory &#39;&#39;D:/Test/Projects/&#39;&#39;</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Export Project</td>
-                    <td align="left"><tt>&quot;-export &lt;project-name project-version&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-export &#39;&#39;ExampleProject&#39;&#39; &#39;&#39;1.0&#39;&#39;</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Export All</td>
-                    <td align="left"><tt>&quot;-exportall&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-exportall</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Import Project</td>
-                    <td align="left"><tt>&quot;-import &lt;import-file&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-import &lt;ExampleProject.xml&gt;</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Workspace</td>
-                    <td align="left"><tt>&quot;-data &lt;path to workspace&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-data &#39;&#39;C:/Users/Test&#39;&#39;</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Database scheme</td>
-                    <td align="left"><tt>&quot;-dbscheme &lt;scheme&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-dbscheme &#39;&#39;Oracle&#39;&#39;</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Database username</td>
-                    <td align="left"><tt>&quot;-dbuser &lt;username&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-dbuser &#39;&#39;myusername&#39;&#39;</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Database password</td>
-                    <td align="left"><tt>&quot;-dbpw &lt;password&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-dbpw &#39;&#39;mypassword&#39;&#39;</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">Database URL (optional)</td>
-                    <td align="left"><tt>&quot;-dburl &lt;URL&gt;&quot;</tt></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">e.g. <span class="textit">-dburl &#39;&#39;db.example.de&#39;&#39;</span></td>
-                  </tr>
-                  <tr valign="baseline">
-                    <td align="left">&nbsp;</td>
-                    <td align="left">If no URL is given, the default will be used.</td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <br />
-      <li>You can use the parameter <tt>&quot;-keepsummary&quot;</tt> to specify that the test result summaries should not be deleted when the Project or Projects are deleted. This is useful for continuous integration processes, where the test results over time should be kept, but the Projects are reimported into the Database (for example from the version control system) each night. If you do not enter this parameter, the summaries will be deleted with the Projects .<li>Once you have entered all the necessary parameters, press <tt>&raquo;ENTER&laquo;</tt>.</ol>
+    <h2><a name="SECTION004261000000000000000"> <span class="arabic">3</span>.<span class="arabic">26</span>.<span class="arabic">1</span> Starting the test executor</a></h2>
+    <p><a name="5248"></a><ol>
+        <li>In a command line interface, locate the Jubula installation directory and open the Jubula directory within it. <li>Enter <tt>&quot;testexec.exe&quot;</tt>. <p> This will run the executable <span class="textit">testexec.exe</span>. <li>Do not press <tt>&raquo;ENTER&laquo;</tt> until you have entered the necessary parameters. See the next section for details on the parameters. </ol>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>Be sure to start the AUT Agent before executing a test</b></td>
+        </tr>
+      </table>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

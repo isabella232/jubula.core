@@ -1,122 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>5.2.2 Naming conventions for component names</title>
-    <meta content="5.2.2 Naming conventions for component names" name="description" />
+    <title>4.3.3.1 Setting up your Workspace</title>
+    <meta content="4.3.3.1 Setting up your Workspace" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="newComponentNameContextId" name="newComponentNameContextId"></a><a id="compNameViewContextId" name="compNameViewContextId"></a><h2><a id="SECTION00622000000000000000" name="SECTION00622000000000000000"><span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Naming conventions for component names</a></h2><a id="BPComponentNames" name="BPComponentNames"></a><p>Component names in Jubula are your link between the test specification and the object mapping. Naming components well means that your mapping will be easy to understand and maintain, as you will always be able to tell what components you are referring to from the names alone.<p>We suggest the following three-part structure for naming components:<br /><tt>&quot;&lt;LOCATION&gt;_&lt;FUNCTION&gt;_&lt;TYPE&gt;&quot;</tt><p>So the components in a login dialog could be named:<ul>
-      <li><i>LoginDialog_Username_cti</i><li><i>LoginDialog_Password_cti</i><li><i>LoginDialog_Language_cbx</i><li><i>LoginDialog_OK_btn</i><li><i>LoginDialog_Cancel_btn</i></ul>
-    <table>
-      <tr>
-        <td><img align="bottom" border="0" src="img2.jpg" /></td>
-        <td><b>Using the <i>New Component Name</i> feature in Jubula , <a href="node131.html#TasksCreateNewCompName">3.10.1</a>, you can create component names for your AUT at the beginning to set conventions the whole team should use.</b></td>
-      </tr>
-    </table>
-    <p>The table below gives some common abbreviations to distinguish between component types.<p>
-      <br />
-    <div align="center"><a name="5677"></a><table>
-        <caption><strong>Table 5.1:</strong> Component Naming</caption>
-        <tr>
-          <td>
-            <div align="center">
-            </div>
-            <table border="1" cellpadding="3">
-              <tr valign="baseline">
-                <td align="left"><b>Abbreviation</b></td>
-                <td align="left"><b>Component</b></td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>app</tt></td>
-                <td align="left">Application</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>btc</tt></td>
-                <td align="left">Button Component</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>btn</tt></td>
-                <td align="left">Button / RadioButton / CheckBox</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>cbx</tt></td>
-                <td align="left">ComboBox</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>grc</tt></td>
-                <td align="left">Graphics Component</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>hyl</tt></td>
-                <td align="left">HTML Hyperlink</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>ctx</tt></td>
-                <td align="left">Component with Text</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>cti</tt></td>
-                <td align="left">Component with Text Input</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>lbl</tt></td>
-                <td align="left">Label</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>lst</tt></td>
-                <td align="left">List</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>mbr</tt></td>
-                <td align="left">Menu Bar</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>tpn</tt></td>
-                <td align="left">Tabbed Pane</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>tbl</tt></td>
-                <td align="left">Table</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>tbi</tt></td>
-                <td align="left">Toolbar Item</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>txf</tt></td>
-                <td align="left">TextField / TextArea / EditorPane / TextPane</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>tre</tt></td>
-                <td align="left">Tree</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>trt</tt></td>
-                <td align="left">Tree Table</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left"><tt>brw</tt></td>
-                <td align="left">Web Browser</td>
-              </tr>
-              <tr valign="baseline">
-                <td align="left">&nbsp;</td>
-                <td align="left">&nbsp;</td>
-              </tr>
-            </table><a id="compconventions" name="compconventions"></a></td>
-        </tr>
-      </table>
-    </div>
-    <br />
+  <body>
+    <h3><a name="SECTION00533100000000000000"> <span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Setting up your Workspace</a></h3>
+    <p> Although you can use the IDE of your choice to develop your accessibility plug-in, this guide will use Eclipse (specifically, Eclipse 3.4.1 with PDE plug-ins). <p>
+      <ol>
+        <li>Before setting up your workspace, it is important to have the ECP Remote Control plug-in available, as this contains libraries and interfaces that are required in order to develop your accessibility plug-in. The archive file <i>rcp-support.zip</i>, available from the Jubula installation directory, contains the RCP Remote Control plug-in. Once you have extracted the RCP Remote Control plug-in, you can continue setting up your workspace. <p>
+        <li>In order to cleanly separate test code from application code, we recommend using separate workspaces for application and accessibility development. Create a new Eclipse workspace for accessibility plug-in development. <li>Once you have created your new workspace, change that workspace&#39;s Plug-in Development Target Platform to include the RCP Remote Control plug-in, as well as all plug-ins that make up your AUT . Information on configuring the Target Platform plug-ins can be found in Eclipse&#39;s online Help under: <br /><i>Plug-in Development Environment Guide &gt; Tools &gt; Preferences &gt; Target Plug-ins</i>. <p>
+        <li>Create a new Plug-in Project. The default values proposed by the New Plug-in Project wizard are acceptable, so simply enter a name for your new Project and complete the wizard without additional modifications. <p>
+        <li>You now have a workspace with a properly configured Target Platform as well as a new Plug-in Project. You can now begin developing your accessibility plug-in. </ol>
     <p>
       <br />
-    <p>
-      <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

@@ -1,28 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>4.2.2 Setting up an RCP AUT for testing</title>
-    <meta content="4.2.2 Setting up an RCP AUT for testing" name="description" />
+    <title>3.28 Launch Configurations</title>
+    <meta content="3.28 Launch Configurations" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a id="SECTION00522000000000000000" name="SECTION00522000000000000000"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Setting up an RCP AUT for testing</a></h2>
-    <p><a name="5268"></a> <a name="5269"></a> <a name="5270"></a> <a name="5271"></a><p>If you want to test a <i>Rich Client Platform</i> application, you must first unzip our &quot;<i>RCP Remote Control</i>&quot; plugin into your AUT . This can be done as follows:<ol>
-      <li>Locate the Jubula installation directory.<li>Extract the content of the <i>rcp-support.zip</i> folder into the <i>plugins</i> directory for your RCP AUT . <table>
-          <tr>
-            <td><img align="bottom" border="0" src="img2.jpg" /></td>
-            <td><b>When you install a new version of Jubula , you must repeat these steps with the new RCP remote control plugin. We recommend starting your AUT once with <tt>&quot;-clean&quot;</tt> to ensure that the new remote control plugin is used.</b></td>
-          </tr>
-        </table>
-      <li>RCP applications generally have a configuration/config.ini file which contains the parameter <i>osgi.bundles</i>. This parameter may need to be modified to allow the RCP remote control plugin to load on AUT startup. The <i>org.eclipse.update.configurator</i> plugin automatically loads all plugins found in the plugins directory, which means that the RCP remote control plugin should start with the AUT if <i>org.eclipse.update.configurator@3:start</i> is already defined in the <i>osgi.bundles</i> parameter. Otherwise, you may need to add <i>org.eclipse.jubula.rc.rcp</i> to the end of the <i>osgi.bundles</i> parameter.</ol>
-    <p>If you do not follow the above steps, the AUT Agent will not be able to communicate with your AUT !<p>
+    <h1><a name="SECTION004280000000000000000"></a> <a name="LaunchConfigurations"></a><br /><span class="arabic">3</span>.<span class="arabic">28</span> Launch Configurations </h1>
+    <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node267.html" name="tex2html4382"><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">1</span> Intro</a><li><a href="node268.html" name="tex2html4383"><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">2</span> Requirements</a><li><a href="node269.html" name="tex2html4384"><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">3</span> Customizing the Perspective</a><li><a href="node270.html" name="tex2html4385"><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">4</span> Starting the AUT </a><li><a href="node271.html" name="tex2html4386"><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">5</span> AUT Agent</a><li><a href="node272.html" name="tex2html4387"><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">6</span> Additional information for RCP AUT&#39;s </a><ul>
+            <li><a href="node273.html" name="tex2html4388"><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">6</span>.<span class="arabic">1</span> Keyboard Layout</a><li><a href="node274.html" name="tex2html4389"><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">6</span>.<span class="arabic">2</span> RCP Remote Control Plug-in</a></ul>
+          <br />
+        <li><a href="node275.html" name="tex2html4390"><span class="arabic">3</span>.<span class="arabic">28</span>.<span class="arabic">7</span> Common Pitfalls</a></ul>
+      <br />
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

@@ -1,51 +1,54 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.5.3.1 Basic AUT configuration</title>
-    <meta content="3.5.3.1 Basic AUT configuration" name="description" />
+    <title>3.5.2 Defining an AUT </title>
+    <meta content="3.5.2 Defining an AUT " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a id="SECTION00453100000000000000" name="SECTION00453100000000000000"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Basic AUT configuration</a></h3>
-    <p>You can use the basic setting (<a href="#autconfigbasic">3.10</a>) to configure your AUT if it can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Java Standard Edition JRE.<table>
-      <tr>
-        <td><img align="bottom" border="0" src="img1.jpg" /></td>
-        <td><b>If you are testing RCP or GEF AUT&#39;s , there are certain specific steps you need to take to configure them. See the sections on RCP testing <a href="node264.html#rcpaut">4.2</a>, GEF testing <a href="node271.html#geftest">4.3</a> for details.</b></td>
-      </tr>
-    </table>
-    <div align="center"><a id="autconfigbasic" name="autconfigbasic"></a><a name="1128"></a><table>
-        <caption align="bottom"><strong>Figure 3.10:</strong> AUT configuration window: basic</caption>
+  <body><a name="autSettingWizardPagePageContextId"></a><a name="runningAutsViewContextId"></a><h2><a name="SECTION00452000000000000000"></a> <a name="Defineaut"></a><br /><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">2</span> Defining an AUT </h2>
+    <p><a name="1064"></a> <a name="1065"></a> <a name="1066"></a> <a name="1067"></a> <a name="1068"></a> <a name="1069"></a> <a name="1070"></a> <a name="1071"></a> <a name="1072"></a> <a name="1073"></a> <a name="1074"></a><p> Once you have created a Project , you can define (and edit) AUT&#39;s . You can define a new AUT straight after creating the Project in the Project wizard or you can do it later on via the Project properties <a href="node53.html#projectproperties">3.4.2</a>. <p>
+      <table>
         <tr>
-          <td>
-            <div align="center"><img align="bottom" border="0" height="395" src="./autconfigwindow_basic.png" width="509" /></div>
-          </td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>If you will be starting your AUT with the <i>autrun</i> command <a href="node78.html#autrun">3.5.4</a>, then you can automatically define your AUT <a href="node79.html#createAUTDef">3.5.4.1</a></b></td>
         </tr>
       </table>
-    </div>
-    <ol>
-      <li>A suggested name for this AUT configuration is generated automatically based on your AUT name and the default AUT Agent host. You can change this name if you wish.<li>The default AUT Agent host is also automatically selected. You can select a new AUT Agent from the combo box or add a new one by clicking &quot;<i>New</i>&quot;. For more information on adding and editing an AUT Agent , see the section later <a href="node198.html#serverConfigPrefPage">3.19.2</a>.<li>Enter the executable file name in the <i>Executable File Name</i> field. This path can be relative if you define a base/working directory <a href="node74.html#AdvancedAUTConfig">3.5.3.2</a>).<li>Enter the AUT ID that will be given to this AUT when it is started.</ol> For information on the advanced properties for the AUT configuration, see the next section <a href="node74.html#AdvancedAUTConfig">3.5.3.2</a>. <p><span class="textbf">Configuring HTML applications</span><br />
-    <p>HTML applications have a considerably reduced configuration dialog. The information needed to start the AUT is:<ol>
-      <li>the AUT configuration name (automatically generated)<li>the AUT Agent host<li>the AUT Agent hostAUT ID<li>the base directory<li>the URL of your application <table>
+    <p> The AUT dialog (<a href="#autdialog">3.9</a>) appears when you define or edit an AUT . <p>
+      <div align="CENTER"><a name="autdialog"></a><a name="1093"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.9:</strong> AUT Dialog</caption>
           <tr>
-            <td><img align="bottom" border="0" src="img1.jpg" /></td>
-            <td><b>Relative paths to the URL cannot be used!</b></td>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image autdialog" border="0" height="503" src="./autdialog.png" width="493" /></div>
+            </td>
           </tr>
         </table>
-      <li>the browser you want to start the AUT in<li>optionally, the browser path, to use a specific version of the browser (not available for Internet Explorer).<li>you can also enter an <i>ID attribute name</i>. If you have used a specific tag to name components in your application, enter the tag in the Expert Configuration area <a href="node75.html#ExpertAUTConfig">3.5.3.3</a>. Jubula will then use this information instead of the <i>name</i> attribute in the object recognition.</ol>
-    <table>
-      <tr>
-        <td><img align="bottom" border="0" src="img2.jpg" /></td>
-        <td><b>HTML applications cannot currently be started using the <i>autrun</i> command.</b></td>
-      </tr>
-    </table>
+      </div>
+    <p>
+      <ol>
+        <li>Enter a meaningful and unique AUT name. This is used to easily identify the AUT later. <li>Select the toolkit the AUT uses from the combo box. <li>If you choose RCP, decide whether or not Jubula should generate names for components in the AUT which have not been named by your developers <a href="node285.html#RCPgenerate">4.2.5</a>. We recommend leaving this option checked, as it increases the robustness of your tests. <li>If you will be starting this AUT using the <i>autrun</i> command <a href="node78.html#autrun">3.5.4</a>, or if the AUT will be launched from another AUT during the test <a href="node150.html#TasksLenientTest">3.12.2.2</a>, then enter the ID(s) for these AUT&#39;s here. <span class="textbf">IDs for AUT&#39;s started by the <i>autrun</i> command</span><br /> Enter the AUT IDs you will use for any AUT&#39;s started by the <i>autrun</i> command (the AUT ID for the AUT is given as a parameter in the <i>autrun</i> command <a href="node78.html#autrun">3.5.4</a>. <p><span class="textbf">IDs for AUT&#39;s launched by other AUT&#39;s </span><br /> The AUT ID will take a specific form <a href="node150.html#TasksLenientTest">3.12.2.2</a> and must be defined as such in the AUT definition. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>If you will be starting your AUT from Jubula (i.e. via an AUT configuration <a href="node74.html#configuringaut">3.5.3</a>) then you do not need to enter any IDs here.</b></td>
+              </tr>
+            </table>
+        <li>From the list of Project languages, select which languages are supported by the AUT . <p> The languages you select are the languages the AUT can be started in. You will be able to translate the data in your Test Cases into these languages so that a Test Suite will test the AUT in the right language. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+                <td><b>If you are editing the AUT and remove an AUT language for which you have already specified data, this will result in the data for that language being lost. </b></td>
+              </tr>
+            </table>
+          <p>
+        <li>If you want to start this AUT via Jubula , you can do so in the Project properties <a href="node74.html#configuringaut">3.5.3</a>. </ol>
+    <p> If you do not require an AUT configuration, because you will be starting the AUT using the <i>autrun</i> command <a href="node78.html#autrun">3.5.4</a>, then you do not need to create an AUT configuration. <p>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

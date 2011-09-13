@@ -1,21 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.17.3 Working with the Test Result Summary View</title>
-    <meta content="3.17.3 Working with the Test Result Summary View" name="description" />
+    <title>3.16.4.2 Continuing after an error</title>
+    <meta content="3.16.4.2 Continuing after an error" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="testResultViewContextId" name="testResultViewContextId"></a><a id="prefPageTestResultContextId" name="prefPageTestResultContextId"></a><a id="testResultSummaryViewContextId" name="testResultSummaryViewContextId"></a><h2><a id="SECTION004173000000000000000" name="SECTION004173000000000000000"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span> Working with the Test Result Summary View</a></h2><a id="TestResSumView" name="TestResSumView"></a><p>Jubula stores a test result summary and full details about the whole test for each test run. Individual Test Suites within a Test Job are counted as one test run each.<p>You can see the test result summaries in the Functional Test Reporting Perspective , in the Test Result Summary View .<p>
+  <body>
+    <h3><a name="SECTION004164200000000000000"> <span class="arabic">3</span>.<span class="arabic">16</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Continuing after an error</a></h3> Once you have analyzed the error in the AUT or in the test specification, you have two options: <p>
+      <dl>
+        <dt><strong>Continue with the Event Handler :</strong><dd>Press the &quot;<i>Pause test execution</i>&quot; button on the toolbar <a href="node180.html#PauseExec">3.16.3.3</a> to continue with the test. This will result in a Event Handler (either a default Event Handler or one of your own) being activated. <dt><strong>Continue without Event Handler :</strong><dd>Press the &quot;<i>Continue without Event Handler </i>&quot; button or <tt>&raquo;F8&laquo;</tt> to continue with the test <i>as if the failed Test Step had been successful</i>. No Event Handler is activated. This option is useful if the Event Handler that would be activated would restart the AUT or exit the test, but you are either able to ignore the error for the moment or make changes in the AUT to ensure that the test will be able to continue. </dl>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>Any changes you make to the test specification while the test is paused will not become valid until the next test execution start.</b></td>
+        </tr>
+      </table>
+    <p>
       <br />
-    <hr /><a id="CHILD_LINKS" name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-      <li><a href="node184.html" id="tex2html3294" name="tex2html3294"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Re-opening the test result view for a test run</a><li><a href="node185.html" id="tex2html3295" name="tex2html3295"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Filtering and sorting in the Test Result Summary View</a><li><a href="node186.html" id="tex2html3296" name="tex2html3296"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Changing the amount of result summaries shown in the Test Result Summary View</a><li><a href="node187.html" id="tex2html3297" name="tex2html3297"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">4</span> Changing the relevance of a test run</a><li><a href="node188.html" id="tex2html3298" name="tex2html3298"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">5</span> Refreshing the Test Result Summary View</a><li><a href="node189.html" id="tex2html3299" name="tex2html3299"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">6</span> Deleting test runs from the Test Result Summary View</a><li><a href="node190.html" id="tex2html3300" name="tex2html3300"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">7</span> Exporting test results from the Test Result Summary View as HTML and XML reports</a><li><a href="node191.html" id="tex2html3301" name="tex2html3301"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">8</span> Entering comments for test runs in the Test Result Summary View</a></ul>
-    <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

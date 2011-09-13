@@ -1,22 +1,41 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>3.25.2 Disconnecting from the AUT Agent</title>
-    <meta content="3.25.2 Disconnecting from the AUT Agent" name="description" />
+    <title>3.24.7 My Test Suite failed</title>
+    <meta content="3.24.7 My Test Suite failed" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="problemViewContextId" name="problemViewContextId"></a><h2><a id="SECTION004252000000000000000" name="SECTION004252000000000000000"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span> Disconnecting from the AUT Agent</a></h2>
-    <p><a name="4937"></a> <a name="4938"></a><p>To disconnect from the AUT Agent , select the &quot;<i>Disconnect from AUT Agent</i> &quot; button on the toolbar.<br />
-    <div class="margin"><img align="bottom" border="0" height="256" src="./stopServer.png" width="256" />&nbsp;disconnect AUT Agent</div>
-    <br />
+  <body>
+    <h2><a name="SECTION004247000000000000000"></a> <a name="troublefailed"></a><br /><span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">7</span> My Test Suite failed </h2>
+    <p><a name="5110"></a> If your test fails, you can find exact details about the problem by looking at the Test Result View <a href="node186.html#testresultview">3.25</a>. A screenshot of the AUT is automatically taken when an error occurs and can be seen in the Image View . <p> For other problems with test execution, check: <p>
+      <ul>
+        <li>That the AUT is in focus and is visible. You can automatically activate the AUT in the AUT properties <a href="node74.html#configuringaut">3.5.3</a> or you can use a Test Case to activate the AUT . You can also set your preferences to minimize Jubula when test execution begins <a href="node202.html#gdprefs">3.26</a>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Bear in mind that different platforms have different focus behavior. You may need to specifically bring the AUT into focus by clicking into it as a part of the test.</b></td>
+            </tr>
+          </table>
+        <li>That the AUT is ready when the test begins. To ensure this, you can insert a Test Case at the beginning of each test which waits for the window or for the first component you want to test. This is especially important when you are running tests from the command line with the Test Executor. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>Waiting for a window to appear is generally a good idea whenever a new window or dialog is opened during the test. Waiting for the window or the component you want to test will make sure that your tests run even under different timing conditions. </b></td>
+              </tr>
+            </table>
+        <li>Make sure that the Test Cases and Test Steps are in the right order. <li>Ensure that the data you have entered is correct. <li>Check your object mapping configuration <a href="node165.html#TasksOMConfiguration">3.15.2.4</a>. We recommend that you set the recognition to &quot;<i>standard</i>&quot;. <li>If the AUT is an RCP application, make sure that the keyboard layout is correct <a href="node74.html#configuringaut">3.5.3</a>. Otherwise, make sure you have the current version of the RCP Remote Control plugin (start your application with -clean to be sure). <li>Check that the Test Steps preceding the failed Test Step were successful by looking at the state of the application. </ul>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>To help you analyze the reasons for Test Suite failure, you can use the <i>pause on error</i> option <a href="node181.html#TasksPauseOnError">3.16.4</a>.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

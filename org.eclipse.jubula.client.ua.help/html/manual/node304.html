@@ -1,19 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>5.4.2.1 Dealing with occasional dialogs</title>
-    <meta content="5.4.2.1 Dealing with occasional dialogs" name="description" />
+    <title>5.1.3 Structuring your use cases and Test Suites </title>
+    <meta content="5.1.3 Structuring your use cases and Test Suites " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a id="SECTION00642100000000000000" name="SECTION00642100000000000000"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Dealing with occasional dialogs</a></h3> In the case of occasional dialogs, your Test Case in the test should contain an action which checks that the dialog does <span class="textbf">not</span> exist (e.g.<i>Check Existence of Window</i> with the parameter <i>false</i>). If the dialog is not visible, the test will continue normally. <p>If the dialog is present, an error occurs. Add an Event Handler to the <i>Check Existence of Window</i> Test Case that clicks e.g. the cancel button in the window and waits for the window to close. The Event Handler should react to a <i>check failed</i> event, and should use <i>retry</i> as the reentry property. Once the window has closed, the failed Test Step (check existence) will be carried out again. This time, the check will succeed, and the test will continue. The Test Step will be marked as successful on retry.<p>
+    <h2><a name="SECTION00613000000000000000"></a> <a name="BPKeywordSuites"></a><br /><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Structuring your use cases and Test Suites </h2>
+    <p> When it comes to executing tests, there are two important things to bear in mind when working with Jubula : <ul>
+        <li>All the necessary keywords for a single <i>use case</i> should be grouped together in one Test Case , which is named after the use case it tests. The use case should be complete - it should not require any data or component names. This makes it much easier to add and remove whole use cases from Test Suites and gives you a good overview of which use cases you have tested. <li>Each use case should assume (and create) a well-defined state of the AUT and leave the AUT in a well-defined state. This is important for error handling later. It is a good idea to create a keyword called <i>app_startup</i> which creates the right state for the AUT , and to use this keyword at the beginning of each use case. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The well-defined state of your AUT may be completely empty, or may contain test data. Deciding what data your test needs and what data it will create itself is an important part of an automation strategy.</b></td>
+            </tr>
+          </table>
+      </ul>
+    <p> Use cases are then grouped together into Test Suites . The Jubula team uses the following Test Suites in their tests: <ul>
+        <li>FULLTEST <li>FULLTEST_BROKEN <li>WORK_(INITIALS) </ul>
+    <p> The FULLTEST Test Suite contains all of the executable <i>Use Cases</i> from the Project . There can also be Test Cases which reproduce errors from the bug-tracking system, called <i>ticket tests</i>. Each ticket Test Case can be linked to the bug-tracking system via its ID. <p> The FULLTEST_BROKEN Test Suite contains any use cases which are currently broken and which have been removed from the FULLTEST so as not to affect any test reports or statistics. Put tests in the broken Test Suite if they have been broken for some time. Tests that are critical, or which should be fixed in the next build, should be left in the FULLTEST Test Suite . <p> The WORK Test Suites can be used by testers as a sandbox to execute single use cases during specification, or to replay tests with the intention of watching the execution. <p>
       <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>

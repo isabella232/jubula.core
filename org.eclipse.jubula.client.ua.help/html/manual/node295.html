@@ -1,21 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta content="HTML Tidy for Linux (vers 14 June 2007), see www.w3.org" name="generator" />
-    <title>5.3.1 Best practices for structuring the Test Case Browser</title>
-    <meta content="5.3.1 Best practices for structuring the Test Case Browser" name="description" />
+    <title>4.4.1 Supported HTML AUT&#39;s </title>
+    <meta content="4.4.1 Supported HTML AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
-    <link href="/help/topic/org.eclipse.jubula.client.ua.help/css/style.css" rel="STYLESHEET" type="text/css" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a id="testSpecificationViewContextId" name="testSpecificationViewContextId"></a><h2><a id="SECTION00631000000000000000" name="SECTION00631000000000000000"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Best practices for structuring the Test Case Browser</a></h2><a id="BPCategories" name="BPCategories"></a><p>We recommend using categories <a href="node102.html#TasksTCCats">3.8.7</a> to structure the Test Case Browser . This makes your keywords easier to find when you are creating tests.<p>We recommend using two main categories to organize the Test Case Browser : executable tests and modules.<p>
+  <body>
+    <h2><a name="SECTION00541000000000000000"> <span class="arabic">4</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Supported HTML AUT&#39;s </a></h2>
+    <p> Jubula supports AUT&#39;s written with the HTML GUI toolkit according to the following points: <p>
+      <ul>
+        <li>AUT&#39;s can be run in Internet Explorer (versions 7 and 8), Firefox (3.0 to 3.5) and Safari (version 5). <li>We strongly recommend writing HTML AUT&#39;s so that they are conform to the <i>W3C</i> standard. You can check whether your AUT is <i>W3C</i> conform using an online validator: http://validator.w3.org <li>Frames and IFrames are not supported. <li>Some of the Jubula actions in the <i>concrete</i> toolkit (i.e. which are theoretically valid for all AUT types) may not (yet) be supported. In some cases, this is because the component doesn&#39;t exist as such in HTML AUT&#39;s (menu bars for example). In other cases, text components such as tables or lists do not have a concept for dealing with selection as they do in e.g. Swing. <li>The <i>autrun</i> option to start AUT&#39;s <a href="node78.html#autrun">3.5.4</a> cannot be used for HTML AUT&#39;s . <li>Unlike other toolkits supported by Jubula , real clicks and key events are not sent to HTML AUT&#39;s . </ul>
+    <p>
       <br />
-    <hr /><a id="CHILD_LINKS" name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-      <li><a href="node296.html" id="tex2html4739" name="tex2html4739"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Executable tests</a><li><a href="node297.html" id="tex2html4740" name="tex2html4740"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Modules</a></ul>
-    <br />
-    <hr />
-    <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <hr />
+      <address> Copyright BREDEX GmbH 2011 </address>
   </body>
 </html>
