@@ -37,14 +37,12 @@ public class Profile {
      * @param nameFactor double
      * @param pathFactor double
      * @param contextFactor double
-     * @param nameMalus double
      * @param threshold double
      */
     public Profile(String name, 
             double nameFactor, 
             double pathFactor, 
-            double contextFactor,
-            double nameMalus, 
+            double contextFactor, 
             double threshold) {
         setName(name);
         setNameFactor(nameFactor);
