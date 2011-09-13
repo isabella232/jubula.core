@@ -160,11 +160,4 @@ public class Param {
         return new HashCodeBuilder().append(m_name).append(m_type)
             .toHashCode();
     }
-
-    /**
-     * @param valueSet the valueSet to set
-     */
-    private void setValueSet(ParamValueSet valueSet) {
-        m_valueSet = valueSet;
-    }
 }
