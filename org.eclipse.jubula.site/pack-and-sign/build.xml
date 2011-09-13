@@ -109,15 +109,6 @@
 	  <arg line="-verbose ${args}" />
 	  <arg line="-outputDir ${site} ${site}" />
 	</java>
-	
-	<!-- remove corrupted jars -->
-	<!--
-	<delete>
-	  <fileset dir="${projectDir}/site">
-		<include name="plugins/com.google.gwt*.pack.gz"/>
-	  </fileset>
-	</delete>
-	-->
   </target>
 
   <target name="publish">	
