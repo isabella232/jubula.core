@@ -1,0 +1,10 @@
+Although \app{}'s automatic \gdagent{} selection generally selects the correct
+\gdagent{}, it can be useful to know what criteria go into the selection 
+process. \app{} follows these rules when deciding with which \gdagent{} the 
+starting \gdaut{} should be registered:
+\begin{enumerate}
+\item{If \app{} is currently connected to an \gdagent{}, then that 
+	  \gdagent{} will be used.}
+\item{If an embedded \gdagent{} is running, then \app{} will connect to the embedded \gdagent{} and use that for \gdaut{} registration.}
+\item{\app{} will start an embedded \gdagent{}, connect to it, and use that for \gdaut{} registration.}
+\end{enumerate}
