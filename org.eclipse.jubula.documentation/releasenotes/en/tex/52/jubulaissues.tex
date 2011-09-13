@@ -11,6 +11,13 @@ directory no longer exists.
 \item If you want to change the error type for an \gdehandler{}, then you must delete it and re-add it with the correct error type. 
 \end{itemize}
 
+\textbf{JFace decoration error}\\
+\begin{itemize}
+\item Under some circumstances, there may be an error in the decoration resulting from our use of the org.eclipse.jface.resource.CompositeImageDescriptor. This results in a Null Pointer exception.
+\item If this occurs, please restart \app{}.
+\end{itemize}
+
+
 \textbf{Necessary SWT Version}\\
 \begin{itemize}
 \item To be able to test \gdauts{} on Mac systems, the required SWT version is 3.6. 
