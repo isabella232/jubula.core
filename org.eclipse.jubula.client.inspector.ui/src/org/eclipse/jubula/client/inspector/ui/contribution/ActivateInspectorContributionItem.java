@@ -55,7 +55,7 @@ public class ActivateInspectorContributionItem
                     InspectableAutSourceProvider.INSPECTABLE_AUTS);
         
         if (inspectableAutsProvider != null) {
-            Map state = inspectableAutsProvider.getCurrentState();
+            Map<?, ?> state = inspectableAutsProvider.getCurrentState();
             if (state != null) {
                 Collection<AutIdentifier> inspectableAuts = 
                     (Collection<AutIdentifier>)state.get(
