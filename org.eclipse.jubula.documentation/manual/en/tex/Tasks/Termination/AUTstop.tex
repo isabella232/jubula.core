@@ -1,3 +1,4 @@
+
 % $Id: AUTstop.tex 10592 2010-03-19 15:52:43Z alexandra $
 % Local Variables:
 % ispell-check-comments: nil
@@ -17,3 +18,8 @@
 \item A dialog will appear to ask you if you are sure you want to stop the \gdaut{}. Click \bxcaption{yes}. 
 \item You can opt to not see this dialog in the  preferences \bxpref{gdprefs}. 
 \end{enumerate}
+
+\textbf{Stopping an \gdaut{} in a test}\\
+Stopping an \gdaut{} as part of a test is generally not possible. The \gdaut{} will be stopped automatically at the end of testing according to the points mentioned above.
+
+You can use the \bxname{restart} action to restart the \gdaut{} during the test. You may be able to use the action \bxname{External Key Combination} to send an unconfirmed keystroke to the \gdaut{} (i.e. \bxkey{ENTER} on a prompt dialog for closing the \gdaut{}) to close the \gdaut{} at the end of your test, however, the success of this is dependent on the \gdaut{} and environment as well as timing and synchronization issues. 
