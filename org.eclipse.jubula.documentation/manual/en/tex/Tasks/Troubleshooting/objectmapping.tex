@@ -30,7 +30,17 @@
 If you are in the \gdomm{}  and cannot see a green border around components, then this could mean the following:
 \begin{itemize}
 \item The border cannot be drawn -- try collecting the component anyway and see if the technical name appears in the \gdomeditor{}. 
-\item The component is not supported -- find out whether the component in your \gdaut{} is a standard component or a custom component. If it is a custom component, you may need to extend \app{} to be able to test it. A simple mechanism for adding basic support is available directly in the \gdproject{} settings \bxpref{TasksBasicExtension}.
+\item The component is not supported -- find out whether the component in your \gdaut{} is a standard component or a custom component. If it is a custom component, you may need to extend \app{} to be able to test it. 
+%% A simple mechanism for adding basic support is available directly in the \gdproject{} settings \bxpref{TasksBasicExtension}.
+\end{itemize}
+
+\textbf{Green border is shown but component cannot be mapped}\\
+If you can see the green border in the \gdomm{} but cannot collect the component, this could mean the following:
+
+\begin{itemize}
+\item The key combination you are using is being blocked by the \gdaut{} -- try changing the combination \bxpref{TasksPrefsOMM}.
+\item The component is already mapped. Check whether a technical name in the \bxname{unassigned technical names} or \bxname{assigned names} category is being highlighted.
+\item The component is not supported -- find out whether the component in your \gdaut{} is a standard component or a custom component. If it is a custom component, you may need to extend \app{} to be able to test it.
 \end{itemize}
 
 
