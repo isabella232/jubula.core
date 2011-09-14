@@ -13,6 +13,6 @@
     <h3><a name="SECTION00642100000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Dealing with occasional dialogs</a></h3> In the case of occasional dialogs, your Test Case in the test should contain an action which checks that the dialog does <span class="textbf">not</span> exist (e.g.<i>Check Existence of Window</i> with the parameter <i>false</i>). If the dialog is not visible, the test will continue normally. <p> If the dialog is present, an error occurs. Add an Event Handler to the <i>Check Existence of Window</i> Test Case that clicks e.g. the cancel button in the window and waits for the window to close. The Event Handler should react to a <i>check failed</i> event, and should use <i>retry</i> as the reentry property. Once the window has closed, the failed Test Step (check existence) will be carried out again. This time, the check will succeed, and the test will continue. The Test Step will be marked as successful on retry. <p>
       <br />
       <hr />
-      <address> Copyright BREDEX GmbH 2011 </address>
+      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>
