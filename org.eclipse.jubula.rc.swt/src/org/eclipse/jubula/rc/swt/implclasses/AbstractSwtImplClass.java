@@ -19,7 +19,6 @@ import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.IBaseImplementationClass;
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
@@ -51,14 +50,8 @@ public abstract class AbstractSwtImplClass implements IBaseImplementationClass {
     /** constants for communication */
     protected static final String POS_UNI_PERCENT = "Percent"; //$NON-NLS-1$
     
-    /** the logger */
-    private static AutServerLogger log = 
-        new AutServerLogger(AbstractSwtImplClass.class);
-
     /** The robot factory. */
     private IRobotFactory m_robotFactory;
-    
-    
     
     /**
      * Gets the Robot factory. The factory is created once per instance.

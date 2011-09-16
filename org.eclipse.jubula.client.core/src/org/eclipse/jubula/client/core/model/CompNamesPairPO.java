@@ -64,7 +64,7 @@ class CompNamesPairPO implements ICompNamesPairPO {
     /**
      * For Persistence (JPA / EclipseLink)
      */
-    private CompNamesPairPO() {
+    CompNamesPairPO() {
         // OK
     }
     

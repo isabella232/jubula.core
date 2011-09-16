@@ -33,6 +33,7 @@ public class SetKeyboardLayoutMessage extends Message {
      * @deprecated
      */
     public SetKeyboardLayoutMessage() {
+        // currently empty
     }
     
     /**

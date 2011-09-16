@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.core.persistence;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 import org.apache.commons.collections.MapUtils;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
@@ -47,8 +46,7 @@ public class MonitoringValuePM {
         EntityManager session = Persistor.instance().openSession();
         ITestResultSummaryPO summary;
         try {
-            EntityTransaction tx = Persistor.instance()
-                    .getTransaction(session);
+            Persistor.instance().getTransaction(session);
             summary = session.find(PoMaker.getTestResultSummaryClass(),
                     summaryID);
         } finally {

@@ -46,8 +46,7 @@ public class ProcessDirCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        
-        
+        // currently empty
     }
 
     /**

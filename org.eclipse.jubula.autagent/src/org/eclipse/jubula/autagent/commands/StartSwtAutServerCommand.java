@@ -61,7 +61,7 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
                     EnvironmentUtils.getProcessEnvironment(), 
                     IStartAut.PROPERTY_DELIMITER);
         }
-        Vector envList = new Vector(Arrays.asList(envArray));
+        Vector<String> envList = new Vector<String>(Arrays.asList(envArray));
         envList.addAll(getConnectionProperties(
                 parameters, ENV_VAR_PREFIX, ENV_VALUE_SEP));
         envArray = (String [])envList.toArray(new String [envList.size()]);
@@ -77,10 +77,10 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
      *                       property values.
      * @return the list of properties.
      */
-    private List getConnectionProperties(Map parameters, 
+    private List<String> getConnectionProperties(Map parameters, 
             String propPrefix, String valueSeparator) {
         
-        List props = new ArrayList();
+        List<String> props = new ArrayList<String>();
         StringBuffer sb = new StringBuffer();
         sb = new StringBuffer();
         sb.append(propPrefix).append(RcpAccessorConstants.KEYBOARD_LAYOUT)

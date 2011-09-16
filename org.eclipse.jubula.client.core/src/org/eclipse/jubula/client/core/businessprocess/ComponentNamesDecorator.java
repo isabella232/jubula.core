@@ -225,10 +225,9 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
-    public void removeReuse(String guid) throws PMException {
+    public void removeReuse(String guid) {
         Integer timesReused = m_reuseChanged.get(guid);
         if (timesReused == null) {
             m_reuseChanged.put(guid, -1);
@@ -438,7 +437,7 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
      * {@inheritDoc}
      */
     public void initCache(Set<String> guids) {
-        Set ids = new HashSet();
+        Set<Long> ids = new HashSet<Long>();
         // Collect ids
         for (String guid : guids) {
             IComponentNamePO cnPo = 
@@ -453,7 +452,7 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
                 "select compName from ComponentNamePO as compName where compName.id in :ids"); //$NON-NLS-1$
         
         for (ValueListIterator iter = new ValueListIterator(
-            new ArrayList(ids)); iter.hasNext();) {
+            new ArrayList<Long>(ids)); iter.hasNext();) {
             q.setParameter("ids", iter.nextList()); //$NON-NLS-1$
             List <IComponentNamePO> list = q.getResultList();
             for (IComponentNamePO cn : list) {

@@ -99,7 +99,6 @@ public class CAPTestResponseMessage extends Message {
     }
 
     /**
-     * @deprecated
      * @return Returns the returnType.
      */
     public String getReturnType() {
@@ -107,7 +106,6 @@ public class CAPTestResponseMessage extends Message {
     }
 
     /**
-     * @deprecated
      * @param returnType
      *            The returnType to set.
      */
@@ -130,7 +128,6 @@ public class CAPTestResponseMessage extends Message {
     }
 
     /**
-     * @deprecated Evaluate the test error event instead.
      * @return Returns the state.
      */
     public int getState() {
@@ -138,7 +135,6 @@ public class CAPTestResponseMessage extends Message {
     }
 
     /**
-     * @deprecated
      * @param state
      *            The state to set.
      */

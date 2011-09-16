@@ -439,7 +439,6 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                                     if (node.toString().equals(
                                             gdObject.toString())) {
                                         ctx.setContinued(false);
-                                        INodePO selectedNode = node;
                                         INodePO editableNode = 
                                             node.getParentNode();
                                         if (editableNode == null) {

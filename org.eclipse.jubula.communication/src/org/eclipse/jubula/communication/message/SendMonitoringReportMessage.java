@@ -25,7 +25,7 @@ public class SendMonitoringReportMessage extends Message {
 
     /** Default Constructor */
     public SendMonitoringReportMessage() {
-
+        // currently empty
     }
 
     /** {@inheritDoc} */

@@ -30,16 +30,6 @@ public class ConfigVersion {
     private String m_minorV = null;
     
     /**
-     * <code>m_majorVersion</code>majorCustomVersion read from client config xml
-     */
-    private String m_majorCustomV = null;
-    
-    /**
-     * <code>m_minorVersion</code>minorCustomVersion read from client config xml
-     */
-    private String m_minorCustomV = null;
-    
-    /**
      * <code>m_majorVersion</code>majorVersion read from client config xml
      */
     private Integer m_majorVersion = null;
@@ -48,16 +38,6 @@ public class ConfigVersion {
      * <code>m_minorVersion</code>minorVersion read from client config xml
      */
     private Integer m_minorVersion = null;
-    
-    /**
-     * <code>m_majorVersion</code>majorCustomVersion read from client config xml
-     */
-    private Integer m_majorCustomVersion = null;
-    
-    /**
-     * <code>m_minorVersion</code>minorCustomVersion read from client config xml
-     */
-    private Integer m_minorCustomVersion = null;
     
     /**
      * 
@@ -96,6 +76,7 @@ public class ConfigVersion {
         return new EqualsBuilder().append(m_majorVersion, rhs.m_majorVersion)
             .append(m_minorVersion, rhs.m_minorVersion).isEquals();
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -103,7 +84,6 @@ public class ConfigVersion {
         return new HashCodeBuilder().append(m_majorVersion)
             .append(m_minorVersion).toHashCode();
     }
-
 
     /**
      * @param majorVersion The majorVersion to set.
@@ -113,17 +93,9 @@ public class ConfigVersion {
     }
 
     /**
-     * @param minorCustomVersion The minorCustomVersion to set.
-     */
-    public void setMinorCustomVersion(Integer minorCustomVersion) {
-        m_minorCustomVersion = minorCustomVersion;
-    }
-
-    /**
      * @param minorVersion The minorVersion to set.
      */
     public void setMinorVersion(Integer minorVersion) {
         m_minorVersion = minorVersion;
     }
-
 }

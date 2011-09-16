@@ -354,37 +354,6 @@ public class OMEditorDndSupport {
     }
 
     /**
-     * Moves the categories in <code>toMove</code> to <code>target</code>.
-     * 
-     * @param toMove The categories to move.
-     * @param target The category into which the other categories will be moved.
-     * @param editor The editor in which the move occurs.
-     */
-    public static void checkAndMoveCategories(
-            List<IObjectMappingCategoryPO> toMove, 
-            IObjectMappingCategoryPO target, 
-            ObjectMappingMultiPageEditor editor) {
-        
-        // FIXME zeb workaround for delete-orphan mapping om categories to 
-        //           child om categories
-        // workaround: disallow moving of categories
-//        IObjectMappingCategoryPO newSection = 
-//            editor.getOmEditorBP().getSection(target);
-//        for (IObjectMappingCategoryPO category : toMove) {
-//            IObjectMappingCategoryPO oldSection =
-//                editor.getOmEditorBP().getSection(category);
-//            
-//            if (!target.equals(category)
-//                    && oldSection.equals(newSection)
-//                    && !editor.getOmEditorBP().existCategory(
-//                            target, category.getName())) {
-//                moveAndMergeCategory(target, category);
-//            }
-//        }
-        // FIXME zeb end workaround
-    }
-
-    /**
      * Checks if there are categories to be merged. Ask User if he wants to merge and
      * returns the result
      * 
@@ -420,98 +389,6 @@ public class OMEditorDndSupport {
             }
         }
         return doIt;
-    }
-
-    
-    /**
-     * move a category to a target destination, if already one category exists, move
-     * children into it
-     * @param target The target category.
-     * @param srcCategory The category to move/merge. 
-     */
-    private static void moveAndMergeCategory(IObjectMappingCategoryPO target, 
-            IObjectMappingCategoryPO srcCategory) {
-
-        IObjectMappingCategoryPO existingCategory = null;
-        srcCategory.getParent().removeCategory(srcCategory);
-
-        for (IObjectMappingCategoryPO child 
-                : target.getUnmodifiableCategoryList()) {
-            if (child.getName().equals(srcCategory.getName())) {
-                existingCategory = child;
-                break;                            
-            }
-        }
-        if (existingCategory != null) {
-            for (IObjectMappingAssoziationPO child 
-                    : new ArrayList<IObjectMappingAssoziationPO>(
-                            srcCategory.getUnmodifiableAssociationList())) {
-                
-                srcCategory.removeAssociation(child);
-                existingCategory.addAssociation(child);
-            }
-            for (IObjectMappingCategoryPO child 
-                    : new ArrayList<IObjectMappingCategoryPO>(
-                            srcCategory.getUnmodifiableCategoryList())) {
-                moveAndMergeCategory(existingCategory, child);
-            }
-        } else {
-            target.addCategory(srcCategory);
-        }
-        
-    }
-    
-    /**
-     * 
-     * @param toMove The categories for which the move operation is 
-     *               to be checked.
-     * @param target The target category for which the move operation is to be
-     *               checked.
-     * @param editor The editor in which the move operation would occur.
-     * @return <code>true</code> if the arguments represent a valid move 
-     *         operation. Otherwise <code>false</code>.
-     */
-    public static boolean canMoveCategories(
-            List<IObjectMappingCategoryPO> toMove, 
-            IObjectMappingCategoryPO target, 
-            ObjectMappingMultiPageEditor editor) {
-
-        // FIXME zeb workaround for delete-orphan mapping om categories to 
-        //           child om categories
-        // workaround: disallow moving of categories
-//        for (IObjectMappingCategoryPO category : toMove) {
-//            if (!canMove(category, target, editor)) {
-//                return false;
-//            }
-//        }
-//        
-//        return true;
-        return false;
-        // FIXME zeb end workaround
-    }
-
-    /**
-     * 
-     * @param category The category for which the move operation is 
-     *               to be checked.
-     * @param target The target category for which the move operation is to be
-     *               checked.
-     * @param editor The editor in which the move operation would occur.
-     * @return <code>true</code> if the arguments represent a valid move 
-     *         operation. Otherwise <code>false</code>.
-     */
-    private static boolean canMove(
-            IObjectMappingCategoryPO category,
-            IObjectMappingCategoryPO target, 
-            ObjectMappingMultiPageEditor editor) {
-
-        IObjectMappingCategoryPO newSection = getSection(target);
-        IObjectMappingCategoryPO oldSection = getSection(category);
-        
-        return !target.equals(category)
-                && oldSection.equals(newSection)
-                && !editor.getOmEditorBP().existCategory(
-                        target, category.getName());
     }
 
     /**

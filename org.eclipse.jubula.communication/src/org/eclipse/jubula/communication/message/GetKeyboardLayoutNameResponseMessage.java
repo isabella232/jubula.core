@@ -33,6 +33,7 @@ public class GetKeyboardLayoutNameResponseMessage extends Message {
      * @deprecated
      */
     public GetKeyboardLayoutNameResponseMessage() {
+        // currently empty 
     }
     
     /**

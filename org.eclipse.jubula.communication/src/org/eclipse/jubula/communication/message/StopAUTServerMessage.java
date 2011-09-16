@@ -30,8 +30,6 @@ public class StopAUTServerMessage extends Message {
     /**
      * Default constructor. Not for use in standard development. Do nothing
      * (required by Betwixt).
-     * 
-     * @deprecated
      */
     public StopAUTServerMessage() {
         // Nothing to initialize

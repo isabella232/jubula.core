@@ -392,22 +392,6 @@ public abstract class MenuUtil extends MenuUtilBase {
     }
     
     /**
-     * Removes the shortcut sign (&) of the given menu name.
-     * @param menuName a menu name
-     * @return the menu name without shortcut sign or the given menuName
-     * if there is no shortcut sign.
-     */
-    private static String removeShortcutSign(String menuName) {
-        int shortCutIdx = menuName.indexOf("&"); //$NON-NLS-1$
-        StringBuffer buf = new StringBuffer(menuName);
-        if (shortCutIdx > -1) {
-            buf.deleteCharAt(shortCutIdx);
-            return buf.toString();
-        }
-        return menuName;
-    }
-    
-    /**
      * Checks whether the given menu item is a separator. 
      * This method runs in the GUI thread.
      * @param menuItem the menu item to check

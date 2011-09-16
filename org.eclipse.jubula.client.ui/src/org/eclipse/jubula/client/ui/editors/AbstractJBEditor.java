@@ -652,7 +652,8 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * @param po
      *            The corresponding NodePO.
      */
-    protected void renameGUINode(IPersistentObject po) {
+    protected void renameGUINode(
+        @SuppressWarnings("unused") IPersistentObject po) {
         getMainTreeViewer().refresh(true);
         // rename the editor based on currently edited node
         createPartName();

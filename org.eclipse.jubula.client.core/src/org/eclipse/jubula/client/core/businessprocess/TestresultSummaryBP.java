@@ -175,7 +175,7 @@ public class TestresultSummaryBP {
         int nodeSequence = startingNodeSequence;
         TestResultNode resultNode = result;
         ITestResultPO keyword = PoMaker.createTestResultPO();
-        fillNode(keyword, resultNode, sess);
+        fillNode(keyword, resultNode);
         keyword.setKeywordLevel(nodeLevel);
         keyword.setKeywordSequence(nodeSequence);
         keyword.setInternalTestResultSummaryID(summaryId);
@@ -194,10 +194,8 @@ public class TestresultSummaryBP {
      * fill result node
      * @param keyword ITestResultPO
      * @param node ITestResultPO
-     * @param sess the session to use (required e.g. BLOBs)
      */
-    private void fillNode(ITestResultPO keyword, TestResultNode node, 
-        EntityManager sess) {
+    private void fillNode(ITestResultPO keyword, TestResultNode node) {
         INodePO inode = node.getNode();
         keyword.setKeywordName(node.getNode().getName());
         keyword.setInternalKeywordGuid(inode.getGuid());

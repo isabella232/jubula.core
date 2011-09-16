@@ -33,7 +33,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedLis
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -1209,6 +1208,7 @@ public abstract class AbstractDataSetPage extends Page
      */
     private static class ParameterContentProvider 
         extends LanguageContentProvider {
+        // currently empty
     }
     
     /**
@@ -1366,14 +1366,12 @@ public abstract class AbstractDataSetPage extends Page
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
     /** {@inheritDoc} */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
+    public void handleDataChanged(IPersistentObject po, DataState dataState) {
         if (dataState == DataState.Deleted 
                 && po.equals(getParamInterfaceObj())) {
             setParamInterfaceObj(null);

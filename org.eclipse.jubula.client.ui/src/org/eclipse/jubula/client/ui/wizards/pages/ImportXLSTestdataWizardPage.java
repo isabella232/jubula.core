@@ -519,9 +519,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
         });
 
         m_sourceNameField.addKeyListener(new KeyListener() {
-            /*
-             * @see KeyListener.keyPressed
-             */
+            /* @see KeyListener.keyPressed */
             public void keyPressed(KeyEvent e) {
                 // If there has been a key pressed then mark as dirty
                 m_entryChanged = true;
@@ -531,23 +529,19 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                 }
             }
 
-            /*
-             * @see KeyListener.keyReleased
-             */
-            public void keyReleased(KeyEvent e) { }
+            /* @see KeyListener.keyReleased */
+            public void keyReleased(KeyEvent e) {
+                // currently empty 
+            }
         });
 
         m_sourceNameField.addFocusListener(new FocusListener() {
-            /*
-             * @see FocusListener.focusGained(FocusEvent)
-             */
+            /* @see FocusListener.focusGained(FocusEvent) */
             public void focusGained(FocusEvent e) {
-            // Do nothing when getting focus
+                // Do nothing when getting focus
             }
 
-            /*
-             * @see FocusListener.focusLost(FocusEvent)
-             */
+            /* @see FocusListener.focusLost(FocusEvent) */
             public void focusLost(FocusEvent e) {
                 // Clear the flag to prevent constant update
                 if (m_entryChanged) {
@@ -741,13 +735,6 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
 
             public boolean hasChildren(Object o) {
                 if (o instanceof MinimizedFileSystemElement) {
-                    MinimizedFileSystemElement element = 
-                        (MinimizedFileSystemElement)o;
-                    // if (element.isPopulated()) {
-                    // return getChildren(element).length > 0;
-                    // }
-
-                    // If we have not populated then wait until asked
                     return true;
                 }
                 return false;

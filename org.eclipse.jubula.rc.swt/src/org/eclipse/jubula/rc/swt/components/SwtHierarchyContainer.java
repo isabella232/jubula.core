@@ -96,7 +96,6 @@ public class SwtHierarchyContainer extends HierarchyContainer {
     
     /**
      * {@inheritDoc}
-     * @param listener
      */
     public void addContainerListener(SWTEventListener listener) {
         super.addContainerListnr(listener);

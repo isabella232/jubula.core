@@ -14,8 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -49,15 +47,14 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.tools.constants.DebugConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -170,11 +167,6 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 // has a version conflict with installed Toolkit Plugin.
                 log.error(Messages.
                         ToolkitVersionConflictWhileSaveProjectAsAction);
-            } catch (ConverterException e) { // should not occur
-                final String msg = Messages.Exception + StringConstants.SPACE
-                    + e + StringConstants.SPACE + Messages.ShouldNotOccur;
-                log.error(msg);
-                Assert.notReached(msg);  
             } finally {
                 NodePM.getInstance().setUseCache(false);
                 Plugin.stopLongRunning();

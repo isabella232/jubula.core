@@ -12,11 +12,9 @@ package org.eclipse.jubula.rc.swt.listener;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Set;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.NameValidator;
 import org.eclipse.jubula.rc.swt.components.FindSWTComponentBP;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
@@ -25,7 +23,6 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.MappingConstants;
 import org.eclipse.jubula.tools.utils.StringParsing;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
@@ -51,19 +48,11 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 
-
-
-
 /**
  * @author BREDEX GmbH
  * @created 23.08.2004
  */
 public class RecordHelperSWT {    
-    
-    /** The logging. */
-    private static AutServerLogger log = 
-        new AutServerLogger(RecordHelperSWT.class);
-    
     /** counter */
     private int m_counter = 0;
     
@@ -722,21 +711,6 @@ public class RecordHelperSWT {
             return text.substring(0, index);
         }
         return text;
-    }
-    
-    /**
-     * shows GDComponentType Hierarchy
-     * @param id IComponentIdentifier
-     */
-    private void getGDComponentTypes(IComponentIdentifier id) {
-        Component cppp = null;
-        cppp = AUTServerConfiguration.getInstance()
-            .findComponent(id.getComponentClassName());
-        Set zet = cppp.getAllRealized();
-        Iterator it = zet.iterator();
-        while (it.hasNext()) {
-            Component com = (Component)it.next();        
-        }
     }
     
     /**

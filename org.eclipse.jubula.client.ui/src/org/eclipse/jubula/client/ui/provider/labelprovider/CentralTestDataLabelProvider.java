@@ -16,6 +16,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.swt.graphics.Image;
 
@@ -44,7 +45,7 @@ public class CentralTestDataLabelProvider extends GeneralLabelProvider {
                             .next();
                     info.append(
                             CompSystemI18n.getString(descr.getType(), true));
-                    info.append(":");
+                    info.append(StringConstants.COLON);
                     info.append(descr.getName());
                     if (iter.hasNext()) {
                         info.append(SEPARATOR);

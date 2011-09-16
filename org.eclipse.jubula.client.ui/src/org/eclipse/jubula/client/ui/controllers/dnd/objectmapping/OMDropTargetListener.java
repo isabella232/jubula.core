@@ -84,7 +84,7 @@ public class OMDropTargetListener extends ViewerDropAdapter {
                 IObjectMappingCategoryPO.class)) {
             // Use logic for dropping categories
             List<IObjectMappingCategoryPO> toMove = selection.toList();
-            dropCategories(editor, toMove, target);
+            dropCategories(toMove, target);
         } else if (containsOnlyType(selection, IComponentNamePO.class)) {
             // Use logic for dropping Component Names
             List<IComponentNamePO> toMove = selection.toList();
@@ -139,8 +139,6 @@ public class OMDropTargetListener extends ViewerDropAdapter {
 
     /**
      * 
-     * @param editor
-     *            The editor in which the drop occurred.
      * @param toMove
      *            The categories being moved.
      * @param target
@@ -149,8 +147,8 @@ public class OMDropTargetListener extends ViewerDropAdapter {
      * @return <code>true</code> if the drop was successful. Otherwise
      *         <code>false</code>.
      */
-    protected boolean dropCategories(ObjectMappingMultiPageEditor editor,
-            List<IObjectMappingCategoryPO> toMove, Object target) {
+    protected boolean dropCategories(List<IObjectMappingCategoryPO> toMove,
+            Object target) {
 
         if (target instanceof IObjectMappingCategoryPO) {
             IObjectMappingCategoryPO targetCategory = 
@@ -158,8 +156,7 @@ public class OMDropTargetListener extends ViewerDropAdapter {
             if (!OMEditorDndSupport.isMergeIfNeeded(toMove, targetCategory)) {
                 return false;
             }
-            OMEditorDndSupport.checkAndMoveCategories(toMove, targetCategory,
-                    editor);
+            return false;
         }
 
         return true;
@@ -213,12 +210,7 @@ public class OMDropTargetListener extends ViewerDropAdapter {
                 IObjectMappingCategoryPO.class)) {
             // Use logic for validating categories
             if (dropTarget instanceof IObjectMappingCategoryPO) {
-                IObjectMappingCategoryPO targetCategory = 
-                    (IObjectMappingCategoryPO)dropTarget;
-                List<IObjectMappingCategoryPO> toMove = 
-                    selection.toList();
-                return OMEditorDndSupport.canMoveCategories(toMove,
-                        (IObjectMappingCategoryPO)dropTarget, m_editor);
+                return false;
             }
 
             return false;

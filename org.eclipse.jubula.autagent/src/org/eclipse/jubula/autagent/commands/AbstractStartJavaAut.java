@@ -389,17 +389,17 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         });
         URL[] urls;
         if (extJars != null) {           
-            LOG.error("jars are " + extJars);
+            LOG.error("jars are " + extJars); //$NON-NLS-1$
             urls = new URL[extJars.length];
             for (int i = 0; i < extJars.length; i++) {
                 try {                          
                     urls[i] = extJars[i].toURI().toURL();
                 } catch (MalformedURLException e) {                   
-                    LOG.error("URL is malformed", e);
+                    LOG.error("URL is malformed", e); //$NON-NLS-1$
                 }                  
             }
         } else {
-            LOG.error("no ext jars");
+            LOG.error("no ext jars"); //$NON-NLS-1$
             urls = new URL[0];
         }
         return urls;

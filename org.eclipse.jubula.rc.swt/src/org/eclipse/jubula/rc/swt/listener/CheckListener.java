@@ -14,8 +14,6 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.communication.message.ServerShowDialogMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
@@ -73,10 +71,6 @@ public class CheckListener extends AbstractAutSwtEventListener {
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
         CheckListener.class);
-    
-    /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(CheckListener.class);
     
     /** active listener */
     private boolean m_active = true;

@@ -18,7 +18,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
@@ -664,23 +663,6 @@ public class RecordHelper {
         return AbstractSwingImplClass.getRenderedText(renderer);
     }
         
-    /**
-     * method for getting RealizedTypes
-     * @param id IComponentIdentifier
-     */
-    private void getGDComponentTypes(IComponentIdentifier id) {        
-        org.eclipse.jubula.tools.xml.businessmodell.Component cppp = null;
-        cppp = AUTServerConfiguration.getInstance()
-            .findComponent(id.getSupportedClassName());
-        Set zet = cppp.getAllRealized();
-        Iterator it = zet.iterator();
-        while (it.hasNext()) {
-            org.eclipse.jubula.tools.xml.businessmodell
-                .Component com = (org.eclipse.jubula.tools.xml
-                        .businessmodell.Component)it.next();   
-        }
-    }
-    
     /**
      * @param border Border
      * @return the title of the border

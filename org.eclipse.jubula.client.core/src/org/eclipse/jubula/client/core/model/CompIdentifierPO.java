@@ -136,14 +136,15 @@ class CompIdentifierPO extends ComponentIdentifier implements
      */
     public ICompIdentifierPO makePoClone() {
         ICompIdentifierPO clone = new CompIdentifierPO();
-        clone.setHierarchyNames(new ArrayList(
+        clone.setHierarchyNames(new ArrayList<Object>(
             getHierarchyNames()));
         clone.setComponentClassName(getComponentClassName());
         if (getComponentClassName() != null) {
             clone.setSupportedClassName(getComponentClassName());
         }
         if (getNeighbours() != null) {
-            clone.setNeighbours(new ArrayList(getNeighbours()));
+            clone.setNeighbours(new ArrayList<Object>(
+                    getNeighbours()));
         }
         if (getParentProjectId() != null) {
             clone.setParentProjectId(getParentProjectId());

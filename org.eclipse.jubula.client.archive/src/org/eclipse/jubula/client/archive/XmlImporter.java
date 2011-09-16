@@ -183,13 +183,13 @@ class XmlImporter {
             new SimpleDateFormat(DATE_PATTERN);
         Converter stringConverter = new Converter() {
             
-            @SuppressWarnings("rawtypes")
+            @SuppressWarnings({ "rawtypes", "unused" })
             protected Class getDefaultType() {
                 return String.class;
             }
             
             
-            @SuppressWarnings("rawtypes")
+            @SuppressWarnings({ "rawtypes", "unused" })
             protected Object convertToType(
                     Class type, Object value) throws Throwable {
                 return value.toString();
@@ -737,7 +737,7 @@ class XmlImporter {
         for (NamedTestData testDataCube : xml.getNamedTestDataList()) {
             checkCancel();
             proj.getTestDataCubeCont().addTestDataCube(createTestDataCube(
-                    testDataCube, proj, assignNewGuid, mapper));
+                    testDataCube, assignNewGuid, mapper));
         }
         for (Category catXml : xml.getCategoryList()) {
             checkCancel();
@@ -1267,7 +1267,7 @@ class XmlImporter {
             cap.setComment(xml.getComment());
         }
         if (xml.getTestdata() != null) {
-            ITDManager tdman = fillTDManager(cap, xml, proj);
+            ITDManager tdman = fillTDManager(cap, xml);
             cap.setDataManager(tdman);                
         }
         return cap;
@@ -1523,11 +1523,9 @@ class XmlImporter {
      * The existent TDManager of the CAP is filled with the TestData
      * @param owner The CAP.
      * @param xmlCap The abstraction of the XML CAP (see Apache XML Beans)
-     * @param proj The current Project
      * @return the filled TDManager of the given owner
      */
-    private ITDManager fillTDManager(IParamNodePO owner, Cap xmlCap, 
-        IProjectPO proj) {
+    private ITDManager fillTDManager(IParamNodePO owner, Cap xmlCap) {
                 
         final ITDManager tdman = owner.getDataManager();
         List<ParamDescription> parDescList = xmlCap
@@ -1634,18 +1632,14 @@ class XmlImporter {
      * XML element used as prameter. The method generates all dependend objects
      * as well.
      * @param xml Abstraction of the XML element (see Apache XML Beans).
-     * @param proj The IProjectPO which is currently build. The instance is
-     * needed by some objects to verify that their data confirms to project
-     * specification (for instance languages).
      * @param assignNewGuids <code>true</code> if the parameters were given
      *        new unique IDs. Otherwise <code>false</code>.
      * @param mapper Mapper to resolve param names.
      * @return a persistent object generated from the information in the XML
      *         element
      */
-    private IParameterInterfacePO createTestDataCube(
-            NamedTestData xml, IProjectPO proj, boolean assignNewGuids, 
-            IParamNameMapper mapper) {
+    private IParameterInterfacePO createTestDataCube(NamedTestData xml,
+            boolean assignNewGuids, IParamNameMapper mapper) {
 
         ITestDataCubePO testDataCube = 
             PoMaker.createTestDataCubePO(xml.getName());
@@ -1663,9 +1657,8 @@ class XmlImporter {
                         mapper);
             }
         }
-        testDataCube.setDataManager(
-                createTDManager(testDataCube, xml.getTestData(), 
-                        proj, assignNewGuids));
+        testDataCube.setDataManager(createTDManager(testDataCube,
+                xml.getTestData(), assignNewGuids));
         return testDataCube;
     }
     
@@ -1678,14 +1671,11 @@ class XmlImporter {
      * the test data, otherwise a new TDManager is created.
      * @return a persistent object generated from the information in the XML
      * element
-     * @param proj The IProjectPO which is currently build. The instance is
-     * needed by some objects to verify that their data confirms to project
-     * specification (for instance languages).
      * @param assignNewGuids <code>true</code> if the parameters were given
      *        new unique IDs. Otherwise <code>false</code>.
      */
     private ITDManager createTDManager(IParameterInterfacePO owner, 
-        TestData xml, IProjectPO proj, boolean assignNewGuids) {
+        TestData xml, boolean assignNewGuids) {
 
         List<String> uniqueIds = new ArrayList<String>(
             xml.getUniqueIdsList());
@@ -1791,8 +1781,8 @@ class XmlImporter {
                 }
             }
         }
-        tc.setDataManager(createTDManager(tc, xml.getTestdata(), proj, 
-            assignNewGuid));
+        tc.setDataManager(
+                createTDManager(tc, xml.getTestdata(), assignNewGuid));
         return tc;
     }
     
@@ -1930,8 +1920,8 @@ class XmlImporter {
             // ExecTestCasePO doesn't have an own parameter list.
             // It uses generally the parameter from the associated
             // SpecTestCase.
-            exec.setDataManager(createTDManager(exec, xml.getTestdata(), proj, 
-                assignNewGuid));
+            exec.setDataManager(createTDManager(exec, xml.getTestdata(),
+                    assignNewGuid));
         }
         for (CompNames overriddenXml : xml.getOverriddenNamesList()) {
             final ICompNamesPairPO compName = PoMaker.createCompNamesPairPO(

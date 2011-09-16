@@ -13,8 +13,6 @@
 	<configVersion>
 		<majorVersion>4</majorVersion>
 		<minorVersion>0</minorVersion>
-		<majorCustomVersion>0</majorCustomVersion>
-		<minorCustomVersion>0</minorCustomVersion>
 	</configVersion>
 		<toolkitComponent
 		type="com.bredexsw.guidancer.server.implclasses.GraphicApplication" visible="false">

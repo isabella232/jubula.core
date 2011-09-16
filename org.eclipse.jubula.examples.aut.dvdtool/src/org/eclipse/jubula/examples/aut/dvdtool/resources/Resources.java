@@ -68,7 +68,7 @@ public class Resources {
         try {
             resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME);
         } catch (MissingResourceException mre) {
-            String message = mre.getMessage();
+            mre.printStackTrace();
         }
     }
     

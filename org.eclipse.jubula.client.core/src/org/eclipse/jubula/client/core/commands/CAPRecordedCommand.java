@@ -502,7 +502,7 @@ public class CAPRecordedCommand implements ICommand {
     public String removeMnemonics(String name) {
         String fixedName = name;
         if (fixedName != null) {
-            fixedName = fixedName.replaceAll("&", StringConstants.EMPTY); //$NON-NLS-2$
+            fixedName = fixedName.replaceAll("&", StringConstants.EMPTY); //$NON-NLS-1$
         }             
         return fixedName;        
     }

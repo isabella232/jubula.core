@@ -29,8 +29,6 @@ import java.util.TimerTask;
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -50,11 +48,12 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
@@ -269,8 +268,7 @@ public class XmlStorage {
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
         IProgressConsole io) 
-        throws PMReadException, JBVersionException, InterruptedException, 
-        ConverterException {
+        throws PMReadException, JBVersionException, InterruptedException {
         
         return load(xmlString, assignNewGuid, null, null, paramNameMapper, 
                 compNameCache, monitor, io);
@@ -304,8 +302,7 @@ public class XmlStorage {
     public static IProjectPO load(String xmlString, boolean assignNewGuid, 
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor) 
-        throws PMReadException, JBVersionException, InterruptedException, 
-        ConverterException {
+        throws PMReadException, JBVersionException, InterruptedException {
         return load(xmlString, assignNewGuid, null, null, paramNameMapper, 
                 compNameCache, monitor, new NullImportOutput());
     }
@@ -346,8 +343,7 @@ public class XmlStorage {
         Integer majorVersion, Integer minorVersion,
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor) 
-        throws PMReadException, JBVersionException, InterruptedException, 
-        ConverterException {
+        throws PMReadException, JBVersionException, InterruptedException {
         return load(xmlString, assignNewGuid, majorVersion, minorVersion, 
                 paramNameMapper, compNameCache, 
                 monitor, new NullImportOutput());
@@ -392,8 +388,7 @@ public class XmlStorage {
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
         IProgressConsole io) 
-        throws PMReadException, JBVersionException, InterruptedException, 
-        ConverterException {
+        throws PMReadException, JBVersionException, InterruptedException {
         
         ContentDocument contentDoc;
         try {
@@ -535,11 +530,6 @@ public class XmlStorage {
             String xml = buildXmlHeader() 
                 + XmlStorage.save(proj, includeTestResultSummaries, monitor);
 
-            if (xml == null) {
-                // Operation cancelled
-                return null;
-            }
-            
             if (fileName == null) {
                 return xml;
             }
@@ -796,8 +786,7 @@ public class XmlStorage {
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, boolean assignNewGuids, 
         IProgressMonitor monitor, IProgressConsole io) throws PMReadException, 
-        JBVersionException, 
-        InterruptedException, ConverterException {
+        JBVersionException, InterruptedException {
 
         return load(readProjectFile(fileURL), assignNewGuids, paramNameMapper, 
                 compNameCache, monitor, io);
@@ -832,8 +821,7 @@ public class XmlStorage {
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache, boolean assignNewGuids, 
         IProgressMonitor monitor) throws PMReadException, 
-        JBVersionException, 
-        InterruptedException, ConverterException {
+        JBVersionException, InterruptedException {
 
         return load(readProjectFile(fileURL), assignNewGuids, paramNameMapper, 
                 compNameCache, monitor, new NullImportOutput());
@@ -845,7 +833,7 @@ public class XmlStorage {
      * @param project The project for which the work is predicted.
      * @return The predicted amount of work required to save a project.
      */
-    public static int getWorkToSave(IProjectPO project) throws PMException {
+    public static int getWorkToSave(IProjectPO project) {
         return new XmlExporter(new NullProgressMonitor())
             .getPredictedWork(project);
     }
@@ -856,8 +844,7 @@ public class XmlStorage {
      * @return The predicted amount of work required to save the
      *         given projects.
      */
-    public static int getWorkToSave(List<IProjectPO> projectsToSave) 
-        throws PMException {
+    public static int getWorkToSave(List<IProjectPO> projectsToSave) {
         int totalWork = 0;
         
         for (IProjectPO project : projectsToSave) {

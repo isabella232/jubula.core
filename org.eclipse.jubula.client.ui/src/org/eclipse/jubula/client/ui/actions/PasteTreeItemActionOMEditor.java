@@ -87,8 +87,6 @@ public class PasteTreeItemActionOMEditor extends AbstractPasteTreeItemAction {
                             toMove, targetCategory)) {
                         return;
                     }
-                    OMEditorDndSupport.checkAndMoveCategories(
-                            toMove, targetCategory, ome);
                 }
             } else if (transfer.containsOnlyType(IComponentNamePO.class)) {
                 // Use logic for dropping Component Names

@@ -34,7 +34,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -405,8 +404,7 @@ public class TestResultTreeView extends ViewPart
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
@@ -414,8 +412,7 @@ public class TestResultTreeView extends ViewPart
      * {@inheritDoc}
      */
     public void handleDataChanged(final IPersistentObject po, 
-        final DataState dataState, 
-        UpdateState updateState) {
+        final DataState dataState) {
         
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {

@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -37,19 +35,18 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.ServerManager.Server;
-import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendCompSystemI18nMessage;
 import org.eclipse.jubula.communication.message.StopAUTServerMessage;
-import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.osgi.util.NLS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -86,28 +83,22 @@ public class TestExecutionGUIController {
             
             @Override
             public void run() {
-                try {
-                    if (aut.getToolkit()
-                            .equals(CommandConstants.RCP_TOOLKIT)) {
-                        AutIdentifier autId = new AutIdentifier(
-                                conf.getConfigMap().get(
-                                        AutConfigConstants.AUT_ID));
-                        m_infoRCPTask = new RCPAUTStartDelayNagTask(autId);
-                        Timer timer = new Timer();
-                        try {
-                            timer.schedule(m_infoRCPTask, NAGGER_TIMEOUT);
-                        } catch (IllegalStateException e) {
-                            // do nothing if task has already been cancelled
-                        }
+                if (aut.getToolkit()
+                        .equals(CommandConstants.RCP_TOOLKIT)) {
+                    AutIdentifier autId = new AutIdentifier(
+                            conf.getConfigMap().get(
+                                    AutConfigConstants.AUT_ID));
+                    m_infoRCPTask = new RCPAUTStartDelayNagTask(autId);
+                    Timer timer = new Timer();
+                    try {
+                        timer.schedule(m_infoRCPTask, NAGGER_TIMEOUT);
+                    } catch (IllegalStateException e) {
+                        // do nothing if task has already been cancelled
                     }
-                    
-                    TestExecutionContributor.getInstance().startAUTaction(
-                            aut, conf);
-                } catch (ToolkitPluginException tpe) {
-                    interrupt();
-                    Utils.createMessageDialog(
-                            MessageIDs.E_AUT_TOOLKIT_NOT_AVAILABLE);
                 }
+                
+                TestExecutionContributor.getInstance().startAUTaction(
+                        aut, conf);
             }
 
             @Override

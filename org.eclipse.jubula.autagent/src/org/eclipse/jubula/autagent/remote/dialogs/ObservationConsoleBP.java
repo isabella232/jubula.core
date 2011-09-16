@@ -69,7 +69,7 @@ public class ObservationConsoleBP {
                                 - shell.getWidth()), (screenSize.height 
                                         - shell.getHeight()) - 30);
                         
-                        shell.show();
+                        shell.setVisible(true);
                     }                    
                 });
             } catch (InterruptedException e) {

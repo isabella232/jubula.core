@@ -210,7 +210,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
                     EnvironmentUtils.getProcessEnvironment(), 
                     IStartAut.PROPERTY_DELIMITER);
         }
-        Vector envList = new Vector(Arrays.asList(envArray));
+        Vector<String> envList = new Vector<String>(Arrays.asList(envArray));
         envList.addAll(getConnectionProperties(
                 parameters, StartSwtAutServerCommand.ENV_VAR_PREFIX, 
                 StartSwtAutServerCommand.ENV_VALUE_SEP));
@@ -237,10 +237,10 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
      *                       property values.
      * @return the list of properties.
      */
-    private List getConnectionProperties(Map parameters, 
+    private List<String> getConnectionProperties(Map parameters, 
             String propPrefix, String valueSeparator) {
         
-        List props = new ArrayList();
+        List<String> props = new ArrayList<String>();
         StringBuffer sb = new StringBuffer();
 
         if (AutStarter.getInstance().getAutCommunicator() != null) {

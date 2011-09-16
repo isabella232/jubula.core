@@ -13,8 +13,6 @@ package org.eclipse.jubula.rc.swing.swing.implclasses;
 import java.awt.KeyboardFocusManager;
 import java.awt.Window;
 
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-
 
 /**
  * Utility methods
@@ -23,11 +21,6 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
  * @created Jun 21, 2007
  */
 public class WindowHelper {
-
-    /** the logger */
-    private static AutServerLogger log = 
-        new AutServerLogger(WindowHelper.class);
-    
     /**
      * Constructor
      */
@@ -35,9 +28,7 @@ public class WindowHelper {
         // hidden utility Constructor
     }
     
-    
     /**
-     * 
      * @return The active application window, or <code>null</code> if no 
      *         application window is currently active. If the returned value
      *         is not <code>null</code>, it is guaranteed to be of type 
@@ -47,5 +38,4 @@ public class WindowHelper {
         return KeyboardFocusManager.getCurrentKeyboardFocusManager()
             .getActiveWindow();
     }
-    
 }

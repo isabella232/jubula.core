@@ -18,8 +18,6 @@ import org.eclipse.jubula.client.ui.wizards.pages.ImportXLSTestdataWizardPage;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -36,10 +34,6 @@ public class ImportTestDataSetsWizard extends Wizard implements IImportWizard {
 
     /** ID for the "Import CSV Data Set" page */
     private static final String IMPORT_XLS_DATA_SET_PAGE_ID = "ImportTestDataSetsWizard.ImportXLSPage"; //$NON-NLS-1$
-
-    /** the logger */
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ImportTestDataSetsWizard.class);
 
     /**
      * <code>m_importCSVData</code>

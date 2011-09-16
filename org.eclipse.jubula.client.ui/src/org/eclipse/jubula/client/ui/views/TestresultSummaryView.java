@@ -1765,7 +1765,7 @@ public class TestresultSummaryView extends ViewPart implements
                     if (monitoringValueTyp.equals(
                             MonitoringConstants.DOUBLE_VALUE)) {
                         return String.format(Locale.getDefault(), 
-                                "%f", monitoringValue);
+                                "%f", monitoringValue); //$NON-NLS-1$
                     }
                     return StringUtils.defaultString(monitoringValue);
                 } 
@@ -1997,13 +1997,6 @@ public class TestresultSummaryView extends ViewPart implements
          */
         public void setFilterType(String filterType) {
             m_filterType = filterType;
-        }
-
-        /**
-         * @return the filterType
-         */
-        public String getFilterType() {
-            return m_filterType;
         }
     }
     

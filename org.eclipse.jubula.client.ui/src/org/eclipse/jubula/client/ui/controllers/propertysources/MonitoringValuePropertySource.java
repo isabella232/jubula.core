@@ -54,7 +54,7 @@ public class MonitoringValuePropertySource implements IPropertySource {
      * {@inheritDoc}
      */
     public Object getEditableValue() {
-        return "editableValue";
+        return "editableValue"; //$NON-NLS-1$
     }
 
     /**

@@ -373,31 +373,6 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
     }
     
     /**
-     * Gets/loads external jars from the ext directory
-     * @return the absolute path  
-     */
-    private String getExtJarPath() {
-        
-        final File extDir = new File(CommandConstants.EXT_JARS_PATH);        
-        final StringBuffer paths = new StringBuffer(extDir.getAbsolutePath());
-        final File[] extJars = extDir.listFiles(new FilenameFilter() {
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".jar"); //$NON-NLS-1$
-            }
-        });
-        
-        if (extJars != null) {           
-            for (int i = 0; i < extJars.length; i++) {
-                File f = extJars[i];
-                paths.append(PATH_SEPARATOR);
-                paths.append(f.getAbsolutePath());
-            }
-        }
-        return paths.toString();
-        
-    }
-    
-    /**
      * Gets the absolute path of the GDAgent.jar file.
      * @return the absolute path
      */

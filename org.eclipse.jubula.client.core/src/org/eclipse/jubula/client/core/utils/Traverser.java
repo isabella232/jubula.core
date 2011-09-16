@@ -844,8 +844,6 @@ public class Traverser {
     private static class EventObject {        
         /** <code>m_eventExecTc</code> managed eventExecTestCase */
         private IEventExecTestCasePO m_eventExecTc;
-        /** <code>m_eventType</code> associated eventType */
-        private String m_eventType;
         /** <code>m_stackPos</code> place of discovery of eventExecTestCase in execStack */
         private int m_stackPos;
 
@@ -855,7 +853,6 @@ public class Traverser {
          */
         private EventObject(IEventExecTestCasePO eventExecTc, int stackPos) {
             m_eventExecTc = eventExecTc;
-            m_eventType = eventExecTc.getEventType();
             m_stackPos = stackPos;
         }
         /**
@@ -863,12 +860,6 @@ public class Traverser {
          */
         public IEventExecTestCasePO getEventExecTc() {
             return m_eventExecTc;
-        }
-        /**
-         * @return Returns the eventType.
-         */
-        public String getEventType() {
-            return m_eventType;
         }
         /**
          * @return Returns the stackPos.

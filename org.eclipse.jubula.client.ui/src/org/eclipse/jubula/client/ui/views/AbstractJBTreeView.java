@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.views;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -36,7 +34,6 @@ import org.eclipse.jubula.client.ui.filter.JBBrowserPatternFilter;
 import org.eclipse.jubula.client.ui.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.sorter.NodeNameViewerSorter;
-import org.eclipse.jubula.client.ui.utils.NodeSelection;
 import org.eclipse.jubula.client.ui.utils.UIIdentitiyElementComparer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -72,18 +69,6 @@ public abstract class AbstractJBTreeView extends ViewPart implements
      * <code>m_treeFilterText</code>tree Viewer
      */
     private Text m_treeFilterText;
-    
-    /**
-     * <code>m_selElemList</code> list of selected elements. Used for restoring
-     * selection state.
-     */
-    private List<NodeSelection> m_selElemList;
-
-    /**
-     * <code>m_expElemList</code> list of expanded elements. Used for restoring
-     * expansion state.
-     */
-    private List<Object> m_expElemList;
     
     /** the parent composite */
     private Composite m_parentComposite;

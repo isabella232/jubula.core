@@ -13,8 +13,6 @@
 	<configVersion>
 		<majorVersion>4</majorVersion>
 		<minorVersion>6</minorVersion>
-		<majorCustomVersion>0</majorCustomVersion>
-		<minorCustomVersion>0</minorCustomVersion>
 	</configVersion>
 	
 	<concreteComponent type="guidancer.concrete.GraphicApplication">

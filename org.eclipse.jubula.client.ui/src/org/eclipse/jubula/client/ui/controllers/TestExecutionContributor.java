@@ -15,8 +15,6 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
@@ -54,7 +52,6 @@ import org.eclipse.jubula.client.ui.provider.labelprovider.OMEditorTreeLabelProv
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
-import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
@@ -66,6 +63,8 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PartInitException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -703,8 +702,7 @@ public class TestExecutionContributor
      * @param conf configuration to use for AUT
      * @param aut The IAUTMainPO
      */
-    public void startAUTaction(final IAUTMainPO aut, final IAUTConfigPO conf) 
-        throws ToolkitPluginException {
+    public void startAUTaction(final IAUTMainPO aut, final IAUTConfigPO conf) {
         Validate.notNull(conf, Messages.ConfigurationMustNotNull);
         Job job = new StartAutJob(aut, conf);
         JobUtils.executeJob(job, null);

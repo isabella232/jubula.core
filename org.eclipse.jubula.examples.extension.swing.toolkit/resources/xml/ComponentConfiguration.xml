@@ -13,8 +13,6 @@
 	<configVersion>
 		<majorVersion>1</majorVersion>
 		<minorVersion>36</minorVersion>
-		<majorCustomVersion>0</majorCustomVersion>
-		<minorCustomVersion>0</minorCustomVersion>
 	</configVersion>
 	
 	<!-- Concrete components -->

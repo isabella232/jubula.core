@@ -50,7 +50,7 @@ public class BuildMonitoringReportCommand implements ICommand {
         byte[] report = agent.buildMonitoringReport();
         SendMonitoringReportMessage message = new SendMonitoringReportMessage();
         if (report.length > MonitoringConstants.MAX_REPORT_SIZE) {            
-            LOG.warn("Monitoring report is too large to send.");
+            LOG.warn("Monitoring report is too large to send."); //$NON-NLS-1$
             BufferedOutputStream bos = null;
             try {
                 File fileToWrite = File.createTempFile("report", ".zip"); //$NON-NLS-1$ //$NON-NLS-2$

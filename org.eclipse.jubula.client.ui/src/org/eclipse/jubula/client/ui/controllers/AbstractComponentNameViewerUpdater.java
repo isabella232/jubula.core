@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.controllers;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -36,14 +35,13 @@ public abstract class AbstractComponentNameViewerUpdater
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
     /** {@inheritDoc} */
     public final void handleDataChanged(IPersistentObject po, 
-            DataState dataState, UpdateState updateState) {
+            DataState dataState) {
 
         if (po instanceof IComponentNamePO) {
             IComponentNamePO compName = (IComponentNamePO)po;

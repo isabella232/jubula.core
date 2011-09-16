@@ -109,7 +109,10 @@ public class ShowWhereUsedComponentNameQuery
             }
             StringBuilder assocSb = new StringBuilder();
             if (aut != null) {
-                assocSb.append(aut.getName()).append(" / ");
+                assocSb.append(aut.getName())
+                       .append(StringConstants.SPACE)
+                       .append(StringConstants.SLASH)
+                       .append(StringConstants.SPACE);
             }
             assocSb.append(
                     assoc.getTechnicalName().getComponentNameToDisplay());

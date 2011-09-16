@@ -920,7 +920,6 @@ public class Messages extends NLS {
     public static String TestDataDecoratorTestSuiteWithoutAUT;
     public static String TestDataDecoratorUnsupportedAUTLanguage;
     public static String TestDataPreferencePageCharForEsc;
-    public static String TestDataPreferencePageCharForFunc;
     public static String TestDataPreferencePageCharForRef;
     public static String TestDataPreferencePagedescription;
     public static String TestDataPreferencePageEscEmpty;

@@ -31,14 +31,6 @@ public final class AutIdentifier {
     /** name of executable used to start the AUT */
     private String m_executableName;
 
-    /**
-     * Default constructor.
-     * Do nothing (required by Betwixt).
-     */
-    private AutIdentifier() {
-        // Nothing to initialize
-    }
-    
     /** 
      * Constructor
      * 

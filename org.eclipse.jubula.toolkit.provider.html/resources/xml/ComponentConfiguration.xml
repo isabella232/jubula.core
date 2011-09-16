@@ -17,8 +17,6 @@
 	<configVersion>
 		<majorVersion>1</majorVersion>
 		<minorVersion>1</minorVersion>
-		<majorCustomVersion>1</majorCustomVersion>
-		<minorCustomVersion>0</minorCustomVersion>
 	</configVersion>
 
 	<!-- Button -->

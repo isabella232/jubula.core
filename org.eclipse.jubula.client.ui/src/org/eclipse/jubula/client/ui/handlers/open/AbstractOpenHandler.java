@@ -72,7 +72,6 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
         return true;
     }
 
-
     /**
      * @param specTc the spec to open the editor for
      */

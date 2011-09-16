@@ -39,9 +39,10 @@ public class NullComponentNameMapper implements IWritableComponentNameMapper {
     /**
      * {@inheritDoc}
      */
-    public void changeReuse(IComponentNameReuser oldUser, 
-            IComponentNameReuser newUser,
-            String compNameGuid) {
+    public void changeReuse(
+            @SuppressWarnings("unused") IComponentNameReuser oldUser,
+            @SuppressWarnings("unused") IComponentNameReuser newUser,
+            @SuppressWarnings("unused") String compNameGuid) {
         // Null implementation
     }
 

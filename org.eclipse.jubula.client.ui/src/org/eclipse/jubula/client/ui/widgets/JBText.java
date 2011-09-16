@@ -25,8 +25,6 @@ import org.eclipse.swt.widgets.Text;
  * @created 02.03.2006
  */
 public class JBText extends Text {
-    /** An id to identfiy the GDText object */
-    private String m_id;
     /**
      * @param parent parent
      * @param style style

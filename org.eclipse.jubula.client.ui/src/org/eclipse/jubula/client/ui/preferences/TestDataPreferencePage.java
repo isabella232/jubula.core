@@ -83,12 +83,8 @@ public class TestDataPreferencePage extends PreferencePage
     /** textfield to define character for seperator path */
     private CheckedRequiredText m_textPathSep = null;
 
-    /** textfield to define character for function */
-    private CheckedRequiredText m_textFunc = null;
-    
     /**
      * Default Constructor
-     *  
      */
     public TestDataPreferencePage() { //
         setPreferenceStore(Plugin.getDefault().getPreferenceStore());
@@ -270,23 +266,6 @@ public class TestDataPreferencePage extends PreferencePage
             Layout.getFontMetrics(parent), ESC_TF_LIMIT + 1);
         textDataEsc.horizontalSpan = HORIZONTAL_SPAN;
         m_textEscape.setLayoutData(textDataEsc);
-    }
-
-    /**
-     * @param parent parent of this textfield
-     */
-    private void createFuncTextfield(Composite parent) {
-        Label labelFunc = new Label(parent, SWT.NONE);
-        labelFunc.setText(Messages.TestDataPreferencePageCharForFunc);
-        m_textFunc = new CheckedRequiredText(parent, SWT.SINGLE | SWT.BORDER);
-        m_textFunc.setText(getPreferenceStore()
-                .getString(Constants.FUNCTION_CHAR_KEY));
-        m_textFunc.setTextLimit(ESC_TF_LIMIT);
-        GridData textDataFunc = new GridData();
-        textDataFunc.widthHint = Dialog.convertWidthInCharsToPixels(
-            Layout.getFontMetrics(parent), ESC_TF_LIMIT + 1);
-        textDataFunc.horizontalSpan = HORIZONTAL_SPAN;
-        m_textFunc.setLayoutData(textDataFunc);
     }
 
     /**

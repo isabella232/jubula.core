@@ -124,8 +124,9 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
      * @param contextFactor the new percentage weight for the context factor.
      */
     private void setHbmContextFactor(double contextFactor) {
-        m_pcs.firePropertyChange("contextFactor", this.m_contextFactor, //$NON-NLS-1$
-                this.m_contextFactor = contextFactor);
+        double oldValue = m_contextFactor;
+        m_contextFactor = contextFactor;
+        m_pcs.firePropertyChange("contextFactor", oldValue, m_contextFactor); //$NON-NLS-1$
     }
 
     /**
@@ -134,8 +135,9 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
      * @param nameFactor the new percentage weight for the name factor.
      */
     private void setHbmNameFactor(double nameFactor) {
-        m_pcs.firePropertyChange("nameFactor", this.m_nameFactor, //$NON-NLS-1$
-                this.m_nameFactor = nameFactor);
+        double oldValue = m_nameFactor;
+        m_nameFactor = nameFactor;
+        m_pcs.firePropertyChange("nameFactor", oldValue, m_nameFactor); //$NON-NLS-1$
     }
 
     /**
@@ -144,17 +146,18 @@ class ObjectMappingProfilePO implements IObjectMappingProfilePO {
      * @param pathFactor the new percentage weight for the path factor.
      */
     private void setHbmPathFactor(double pathFactor) {
-        m_pcs.firePropertyChange("pathFactor", this.m_pathFactor, //$NON-NLS-1$
-                this.m_pathFactor = pathFactor);
+        double oldValue = m_pathFactor;
+        m_pathFactor = pathFactor;
+        m_pcs.firePropertyChange("pathFactor", oldValue, m_pathFactor); //$NON-NLS-1$
     }
 
     /**
      * {@inheritDoc}
      */
     public void setThreshold(double threshold) {
-        m_pcs.firePropertyChange("threshold",  //$NON-NLS-1$
-                this.m_threshold, 
-                this.m_threshold = threshold);
+        double oldValue = m_threshold;
+        m_threshold = threshold;
+        m_pcs.firePropertyChange("threshold", oldValue, m_threshold); //$NON-NLS-1$
     }
 
     /**

@@ -602,14 +602,6 @@ public class TestResultPreferencePage extends PreferencePage
     }
 
     /**
-     * @return default value
-     * @param key preference key
-     */
-    private int getDefaultPrefsInt(String key) {
-        return getPreferenceStore().getDefaultInt(key);
-    }
-    
-    /**
      * Method declared on IPreferencePage. 
      * 
      * @return performOK

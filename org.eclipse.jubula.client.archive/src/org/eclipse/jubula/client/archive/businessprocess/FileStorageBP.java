@@ -62,13 +62,13 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
@@ -76,7 +76,6 @@ import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
@@ -193,13 +192,6 @@ public class FileStorageBP {
                         m_console.writeErrorLine(NLS.bind(
                                 Messages.ImportFileActionErrorImportFailed,
                                 fileName));
-                    } catch (ConverterException e) {
-                        m_console.writeErrorLine(NLS.bind(
-                                Messages.ImportFileActionErrorImportFailed,
-                                fileName));
-                        ErrorMessagePresenter.getPresenter().showErrorMessage(
-                                e, null, new String[] {Messages
-                                        .ImportFileActionErrorMissingDepProj});
                     }
                 }
                 showFinishedReadingProjects(m_console);
@@ -455,16 +447,6 @@ public class FileStorageBP {
          */
         public boolean wasImportSuccessful() {
             return m_wasImportSuccessful;
-        }
-        
-        /**
-         * 
-         * @return <code>true</code> if the currently open project should
-         *         be refreshed after the import. Otherwise 
-         *         <code>false</code>
-         */
-        public boolean isRefreshRequired() {
-            return m_isRefreshRequired;
         }
     
         /**
@@ -865,9 +847,6 @@ public class FileStorageBP {
         /** indicates what part(s) of the project(s) will be imported */
         private int m_elements;
     
-        /** whether a refresh is required after import */
-        private boolean m_isRefreshRequired;
-    
         /** mapping: projects to import => corresponding name mapper List */
         private Map<IProjectPO, List<INameMapper>> m_projectToMapperMap;
     
@@ -909,7 +888,6 @@ public class FileStorageBP {
                 boolean openProject) {
             
             m_elements = elements;
-            m_isRefreshRequired = false;
             m_projectToMapperMap = projectToMapperMap;
             m_projectToCompCacheMap = projectToCompCacheMap;
             m_console = console;
@@ -948,7 +926,6 @@ public class FileStorageBP {
                             break;
                         }
                     }
-                    m_isRefreshRequired = op.isRefreshRequired();
                 } else {
                     new PartsImportOperation(m_projectToMapperMap, 
                             m_projectToCompCacheMap, m_elements, m_console)
@@ -960,16 +937,6 @@ public class FileStorageBP {
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();
             }
-        }
-    
-        /**
-         * 
-         * @return <code>true</code> if the currently open project should
-         *         be refreshed after the import. Otherwise 
-         *         <code>false</code>
-         */
-        public boolean isRefreshRequired() {
-            return m_isRefreshRequired;
         }
     }
 

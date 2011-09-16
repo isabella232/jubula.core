@@ -72,10 +72,6 @@ public class ObjectMappingConfigComponent {
      */
     private class JBEditorUpdateValueStrategy 
             extends UpdateValueStrategy {
-        /** 
-         * the editor within which this update value strategy does its work 
-         */
-        private IJBEditor m_editor; 
         
         /**
          * Constructor
@@ -85,19 +81,15 @@ public class ObjectMappingConfigComponent {
          */
         public JBEditorUpdateValueStrategy(IJBEditor editor) {
             super();
-            m_editor = editor;
         }
 
         /**
          * Constructor
          * 
          * @param updatePolicy The updatePolicy to use.
-         * @param editor The editor within which this update value strategy 
-         *               does its work.
          */
-        public JBEditorUpdateValueStrategy(int updatePolicy, IJBEditor editor) {
+        public JBEditorUpdateValueStrategy(int updatePolicy) {
             super(updatePolicy);
-            m_editor = editor;
         }
 
         /**
@@ -302,11 +294,6 @@ public class ObjectMappingConfigComponent {
         new ModelToSliderConverter();
     
     /**
-     * Textfield for m_nameFactor
-     */
-    private Label m_nameMalusText = null;
-
-    /**
      * slider for recognitionParameter
      */
     private Scale m_threshold = null;
@@ -404,7 +391,7 @@ public class ObjectMappingConfigComponent {
         linkFactorSliders(m_bindingContext, factorSliders, editor);
 
         createThresholdSlider(m_sliderComposite, m_bindingContext,
-                m_profileObservable, editor);
+                m_profileObservable);
 
         m_bindingContext.updateTargets();
 
@@ -556,7 +543,7 @@ public class ObjectMappingConfigComponent {
 
         bindingContext.bindValue(uiElement, modelElement, 
                 new JBEditorUpdateValueStrategy(
-                        UpdateValueStrategy.POLICY_ON_REQUEST, editor)
+                        UpdateValueStrategy.POLICY_ON_REQUEST)
                             .setConverter(m_sliderToModelConverter),
                 new UpdateValueStrategy()
                     .setConverter(m_modelToSliderConverter));
@@ -694,11 +681,10 @@ public class ObjectMappingConfigComponent {
      * @param masterObservable Observable value used to determine
      *                         which model object is currently
      *                         being observed in detail.
-     * @param editor The editor that contains this slider.
      */
     private void createThresholdSlider(Composite parent,
             DataBindingContext bindingContext, 
-            IObservableValue masterObservable, IJBEditor editor) {
+            IObservableValue masterObservable) {
         
         String boundProperty = 
             IObjectMappingProfilePO.PROP_THRESHOLD;
@@ -721,7 +707,7 @@ public class ObjectMappingConfigComponent {
                     boundProperty, 
                     double.class);
         bindingContext.bindValue(uiElement, modelElement, 
-                new JBEditorUpdateValueStrategy(editor)
+                new UpdateValueStrategy()
                     .setConverter(m_sliderToModelConverter),
                 new UpdateValueStrategy()
                     .setConverter(m_modelToSliderConverter));

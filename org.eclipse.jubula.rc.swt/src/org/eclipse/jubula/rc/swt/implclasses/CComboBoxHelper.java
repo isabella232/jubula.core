@@ -364,16 +364,6 @@ public class CComboBoxHelper extends AbstractComboBoxHelper {
     }
     
     /**
-     * Takes the currently selected item for the combo box selection.
-     * Implicitly closes the dropdown list, if it is open.
-     */
-    private void completeSelection() {
-        List dropdownList = getDropdownList();
-        m_robot.keyPress(dropdownList, SWT.CR);
-        m_robot.keyRelease(dropdownList, SWT.CR);
-    }
-
-    /**
      * {@inheritDoc}
      */
     public int getSelectedIndex() {
@@ -412,41 +402,6 @@ public class CComboBoxHelper extends AbstractComboBoxHelper {
     }
 
     /**
-     * Selects the given index in the combo box's list using the up and down
-     * arrow keys.
-     * 
-     * @param index The index of the item to select.
-     */
-    private void selectIndexWithKeyboard(int index) {
-        final CCombo combo = (CCombo)m_implClass.getComponent();
-        List dropdownList = getDropdownList();
-        
-        int selectedIndex = ((Integer)m_eventThreadQueuer.invokeAndWait(
-                ComboBoxHelper.class.getName()
-                + "comboItemCount", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return new Integer(combo.getSelectionIndex());
-                    }
-                })).intValue();
-        
-        while (selectedIndex != index) {
-            if (selectedIndex < index) {
-                m_robot.keyPress(dropdownList, SWT.ARROW_DOWN);
-                m_robot.keyRelease(dropdownList, SWT.ARROW_DOWN);
-                selectedIndex++;
-            } else {
-                m_robot.keyPress(dropdownList, SWT.ARROW_UP);
-                m_robot.keyRelease(dropdownList, SWT.ARROW_UP);
-                selectedIndex--;
-            }
-        }
-
-        completeSelection();
-
-    }
-
-    /**
-     * 
      * {@inheritDoc}
      */
     protected boolean isComboEnabled() {

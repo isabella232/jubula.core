@@ -16,4 +16,5 @@ package org.eclipse.jubula.client.ui.search.query;
  * @created Jul 27, 2010
  */
 public abstract class AbstractShowWhereUsedQuery extends AbstractSearchQuery {
+    // currently empty 
 }

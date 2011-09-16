@@ -118,16 +118,12 @@ public class RobotAwtImpl implements IRobot {
     private class Scroller {
         /** The component to scroll to visible. */
         private Component m_component; 
-        /** Bounds inside the component to scroll to visible. */
-        private Rectangle m_bounds;
 
         /**
          * @param component The component to scroll to visible.
-         * @param bounds Bounds inside the component to scroll to visible, <code>null</code> is allowed.
          */
-        public Scroller(Component component, Rectangle bounds) {
+        public Scroller(Component component) {
             m_component = component;
-            m_bounds = bounds;
         }
 
         /**
@@ -475,20 +471,6 @@ public class RobotAwtImpl implements IRobot {
     }
     
     /**
-     * Checks whether the given point lies within the given rectangle. The point
-     * is also considered within the rectangle even if the point lies directly
-     * on the border of the rectangle.
-     * 
-     * @param bounds The rectangle to use for the check.
-     * @param p The point to check.
-     * @return <code>true</code> if the given point lies in or on the border of
-     *         <code>bounds</code>. Otherwise, <code>false</code>.
-     */
-    private boolean containsInclusive(Rectangle bounds, Point p) {
-        return bounds.union(new Rectangle(p)).equals(bounds);
-    }
-
-    /**
      * Returns an adjacent point of <code>a</code> mostly
      * inside <code>comp</code>
      * @param comp a component
@@ -747,7 +729,7 @@ public class RobotAwtImpl implements IRobot {
                     if (log.isDebugEnabled()) {
                         log.debug("Scrolling rectangle to visible: " + rectangle); //$NON-NLS-1$
                     }
-                    Scroller scroller = new Scroller(component, bounds);
+                    Scroller scroller = new Scroller(component);
                     scroller.scrollRectToVisible(rectangle);
                     return null;
                 }

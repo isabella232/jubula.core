@@ -1149,8 +1149,7 @@ public class TableImplClass extends AbstractControlImplClass
         
         final Cell cell = invokeGetSelectedCell();
         // Ensure that the cell is visible.
-        Rectangle rectangle = invokeScrollCellToVisible(cell.getRow(), cell
-                .getCol());
+        invokeScrollCellToVisible(cell.getRow(), cell.getCol());
         
         // Get the editor for the cell
         Control editor = activateEditor(cell);

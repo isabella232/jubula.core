@@ -20,7 +20,6 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.interfaces.IToolItemImplClass;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
@@ -44,11 +43,6 @@ import org.eclipse.swt.widgets.ToolItem;
  */
 public class ToolItemImplClass extends AbstractSwtImplClass 
     implements IToolItemImplClass {
-
-    /** the logger */
-    private static AutServerLogger log = 
-        new AutServerLogger(ToolItemImplClass.class);
-
     /** 
      * The dropdown menu, or <code>null</code> when the dropdown
      * menu is not showing.

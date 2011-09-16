@@ -103,11 +103,10 @@ public class SwtRobot {
         private boolean m_shift;
         /**
          * Constructor
-         * @param character the character
          * @param keycode the key code
          * @param shift the shift
          */
-        private CharCode(char character, int keycode, int shift) {
+        private CharCode(int keycode, int shift) {
             m_keycode = keycode;
             m_shift = (shift == 1);
         }
@@ -123,7 +122,7 @@ public class SwtRobot {
             keycodes = new HashMap();
             for (int i = 0; i < mappings.length; i++) {
                 keycodes.put(new Character((char)mappings[i][0]), new CharCode(
-                        (char)mappings[i][0], mappings[i][1], mappings[i][2]));
+                        mappings[i][1], mappings[i][2]));
             }
         } catch (AWTException awte) {
             throw new SWTException("(Translated AWTException) " + awte.getMessage()); //$NON-NLS-1$

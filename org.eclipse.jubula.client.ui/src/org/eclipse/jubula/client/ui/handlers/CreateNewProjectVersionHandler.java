@@ -47,9 +47,6 @@ import org.eclipse.jubula.client.ui.dialogs.VersionDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.ConverterException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -144,12 +141,6 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
                 // should not be occur
                 log.error(Messages.
                         ToolkitVersionConflictWhileCreatingNewProjectVersion);
-            } catch (ConverterException e) {
-                // should not occur
-                final String msg = Messages.Exception + StringConstants.SPACE
-                    + e + StringConstants.SPACE + Messages.ShouldNotOccur;
-                log.error(msg);
-                Assert.notReached(msg);  
             } finally {
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();
@@ -176,8 +167,7 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
                 final ParamNameBPDecorator paramNameMapper,
                 final IWritableComponentNameCache compNameCache)
             throws ProjectDeletedException, PMException,
-                InterruptedException, PMReadException, JBVersionException,
-                ConverterException {
+                InterruptedException, PMReadException, JBVersionException {
             
             NodePM.getInstance().setUseCache(true);
             GeneralStorage.getInstance().validateProjectExists(

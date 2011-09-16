@@ -202,13 +202,6 @@ public class ExtractTestCaseHandler extends AbstractHandler {
         }
 
         /**
-         * @param errorMessage The errorMessage to set.
-         */
-        public void setErrorMessage(String errorMessage) {
-            m_errorMessage = errorMessage;
-        }
-
-        /**
          * @param execTestCasePO The execTestCasePO to set.
          */
         public void setExecTestCasePO(IExecTestCasePO execTestCasePO) {

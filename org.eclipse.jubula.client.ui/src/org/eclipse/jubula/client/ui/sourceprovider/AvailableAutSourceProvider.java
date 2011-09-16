@@ -27,7 +27,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedL
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.ui.businessprocess.StartAutBP;
@@ -158,16 +157,14 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
     /**
      * {@inheritDoc}
      */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
+    public void handleDataChanged(IPersistentObject po, DataState dataState) {
 
         if (po instanceof IProjectPO && dataState == DataState.Deleted) {
             fireSourceChanged();

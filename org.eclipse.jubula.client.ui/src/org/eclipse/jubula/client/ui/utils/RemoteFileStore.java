@@ -100,8 +100,7 @@ public class RemoteFileStore extends FileStore {
     /**
      * {@inheritDoc}
      */
-    public IFileInfo fetchInfo(int options, IProgressMonitor monitor)
-        throws CoreException {
+    public IFileInfo fetchInfo(int options, IProgressMonitor monitor) {
         FileInfo result = new FileInfo(m_path);
         result.setDirectory(m_isDirectory);
         result.setExists(m_isContentValid);
@@ -155,8 +154,7 @@ public class RemoteFileStore extends FileStore {
     /**
      * {@inheritDoc}
      */
-    public InputStream openInputStream(int options, IProgressMonitor monitor)
-        throws CoreException {
+    public InputStream openInputStream(int options, IProgressMonitor monitor) {
         return new ByteArrayInputStream(new byte[0]);
     }
 

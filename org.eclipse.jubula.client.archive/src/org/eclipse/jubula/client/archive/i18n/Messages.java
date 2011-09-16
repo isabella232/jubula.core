@@ -46,7 +46,6 @@ public class Messages extends NLS {
     public static String ImportFileActionErrorImportFailed;
     public static String ImportFileActionErrorImportFailedProject;
     public static String ImportFileActionErrorIncompatibleToolkits;
-    public static String ImportFileActionErrorMissingDepProj;
     public static String ImportFileActionInfoFinishedImport;
     public static String ImportFileActionInfoFinishedImportProject;
     public static String ImportFileActionInfoFinishedReadingProjects;

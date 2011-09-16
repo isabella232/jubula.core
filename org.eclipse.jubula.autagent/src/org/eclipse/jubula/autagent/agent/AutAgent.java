@@ -148,8 +148,8 @@ public class AutAgent {
         /**
          * {@inheritDoc}
          */
-        public void initConnection(final Socket socket, 
-                final BufferedReader reader) throws IOException {
+        public void initConnection(final Socket socket,
+                final BufferedReader reader) {
 
             new Thread("Register autrun") { //$NON-NLS-1$
                 /**

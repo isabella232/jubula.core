@@ -120,13 +120,6 @@ public class ManualTestStepOptionPane extends JOptionPane {
     }
     
     /**
-     * Constructor
-     */
-    private ManualTestStepOptionPane() {
-        // hide
-    }
-
-    /**
      * @param message the message
      * @param messageType the message type
      * @param optiontype the option type

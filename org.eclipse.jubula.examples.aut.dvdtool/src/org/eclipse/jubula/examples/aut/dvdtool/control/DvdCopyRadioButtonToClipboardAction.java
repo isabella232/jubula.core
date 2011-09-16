@@ -51,7 +51,7 @@ abstract class DvdCopyRadioButtonToClipboardAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         JRadioButton button = getRadioButton();
         String text = 
-            button.getLabel() + ":" //$NON-NLS-1$
+            button.getText() + ":" //$NON-NLS-1$
             + (button.isSelected() ? "true" : "false"); //$NON-NLS-1$ //$NON-NLS-2$
 
         // copy text to clipboard

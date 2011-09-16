@@ -130,7 +130,7 @@ public class ChooseCheckModeDialogBP {
                 }
                 dialog.setLocation((screenSize.width - frameSize.width) / 2,
                                    (screenSize.height - frameSize.height) / 2);
-                dialog.show();
+                dialog.setVisible(true);
                 dialog.toFront();
             }
         });

@@ -60,7 +60,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedLis
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IPartClosedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -487,8 +486,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
@@ -496,7 +494,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
      * {@inheritDoc}
      */
     public void handleDataChanged(final IPersistentObject po, 
-            final DataState dataState, final UpdateState updateState) {
+            final DataState dataState) {
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 // indirection necessary due to Checkstyle BUG

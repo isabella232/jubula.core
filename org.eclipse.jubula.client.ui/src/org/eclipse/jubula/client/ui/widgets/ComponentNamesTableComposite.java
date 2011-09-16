@@ -832,16 +832,14 @@ public class ComponentNamesTableComposite extends Composite implements
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
     /**
      * {@inheritDoc}
      */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
+    public void handleDataChanged(IPersistentObject po, DataState dataState) {
         IExecTestCasePO selectedExecNode = getSelectedExecNode();
         if ((selectedExecNode != null) && selectedExecNode.equals(po)) {
             m_tableViewer.refresh();

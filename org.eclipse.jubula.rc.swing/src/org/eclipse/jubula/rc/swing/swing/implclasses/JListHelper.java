@@ -287,25 +287,4 @@ public class JListHelper {
         }
         return startingIndex;
     }
-
-    /**
-     * @param switchToGUIThread Should the method switch to the GUI thread? It
-     * is safe but maybe inefficient to specify true.
-     * @return the String from the Cell Renderer
-     */
-    public String getText(boolean switchToGUIThread) {
-        String[] values =
-            getSelectedValues((JList)(m_implClass.getComponent()));
-        int size = 0;
-        for (int i = 0; i < values.length; ++i) {
-            size += values[i].length();
-        }
-        StringBuffer txt = new StringBuffer(size);
-        for (int i = 0; i < values.length; ++i) {
-            txt.append(values[i]);
-        }
-
-        return txt.toString();
-    }
-
 }

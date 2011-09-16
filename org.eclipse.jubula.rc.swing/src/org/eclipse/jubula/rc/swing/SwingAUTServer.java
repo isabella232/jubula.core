@@ -79,7 +79,7 @@ public class SwingAUTServer extends AUTServer {
      * regular expression to use when waiting for the Event Dispatch Thread
      * to start 
      */
-    private static final String EDT_NAME_REGEX_KEY = "TEST_EDT_NAME_REGEX";
+    private static final String EDT_NAME_REGEX_KEY = "TEST_EDT_NAME_REGEX"; //$NON-NLS-1$
     
     /** 
      * private constructor

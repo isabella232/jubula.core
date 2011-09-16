@@ -299,11 +299,11 @@ public class DBLoginDialog extends TitleAreaDialog {
                 new ISelectionChangedListener() {
             
                     public void selectionChanged(SelectionChangedEvent event) {
-                        IStructuredSelection sel = 
+                        IStructuredSelection csel = 
                             (IStructuredSelection)event.getSelection();
                         selectSchemaCbxAction();
                         checkEmbeddedDbOrNoSchemaSelected(
-                                (DatabaseConnection)sel.getFirstElement());
+                                (DatabaseConnection)csel.getFirstElement());
                         setUserAndPwdVisible(!m_isEmbeddedOrNoSelection);
                     }
                 });

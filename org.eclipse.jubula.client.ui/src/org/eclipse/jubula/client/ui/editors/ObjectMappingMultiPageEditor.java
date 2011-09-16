@@ -728,35 +728,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         }
         
         /**
-         * 
-         * @param toMove The categories on the clipboard.
-         * @param targetList The currently selected elements.
-         * @return <code>true</code> if the paste operation should be
-         *         enabled for the given arguments. Otherwise, 
-         *         <code>false</code>.
-         */
-        private boolean getPasteActionEnablementForCategories(
-                List<IObjectMappingCategoryPO> toMove, 
-                List<Object> targetList) {
-
-            for (Object target : targetList) {
-                if (target instanceof IObjectMappingCategoryPO) {
-                    if (!OMEditorDndSupport.canMoveCategories(
-                            toMove, (IObjectMappingCategoryPO)target, 
-                            ObjectMappingMultiPageEditor.this)) {
-                        
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }                
-
-            return true;
-        }
-
-        /**
-         * 
          * @param targetList The currently selected elements.
          * @return <code>true</code> if the paste operation should be
          *         enabled for the given arguments. Otherwise, 
@@ -812,9 +783,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             } else if (transfer.containsOnlyType(
                     IObjectMappingCategoryPO.class)) {
                 // Use logic for validating categories
-                isEnabled = getPasteActionEnablementForCategories(
-                        transfer.getSelection().toList(), 
-                        sel.toList());
+                isEnabled = false;
             } else if (transfer.containsOnlyType(IComponentNamePO.class)) {
                 // Use logic for validating Component Names
                 isEnabled = getPasteActionEnablementForCompNames(sel.toList());
@@ -2209,18 +2178,16 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+            handleDataChanged(e.getPo(), e.getDataState());
         }
     }
     
     /** {@inheritDoc} */
-    public void handleDataChanged(IPersistentObject po, DataState dataState,
-            UpdateState updateState) {
+    public void handleDataChanged(IPersistentObject po, DataState dataState) {
 
         getEditorHelper().handleDataChanged(po, dataState);
         if (m_treeViewerUpdater != null) {
-            m_treeViewerUpdater.handleDataChanged(po, dataState, updateState);
+            m_treeViewerUpdater.handleDataChanged(po, dataState);
         }
     }
     
