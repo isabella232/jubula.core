@@ -31,4 +31,11 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>.settings</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/jubula/org.eclipse.jubula.project.configuration/settings/1.4</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
