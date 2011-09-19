@@ -14,7 +14,9 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.AutStarter.Verbosity;
@@ -22,6 +24,8 @@ import org.eclipse.jubula.client.autagent.Activator;
 import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
 import org.eclipse.jubula.client.ui.actions.StartServerAction;
 import org.eclipse.jubula.client.ui.utils.ServerManager.Server;
+import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
  * Handler for "Connect to Embedded AUT Agent" command.
@@ -58,8 +62,15 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
                 AutStarter.getInstance().start(
                         port, false, Verbosity.QUIET, false);
             } catch (Exception e) {
-                throw new ExecutionException(
+                ExecutionException execException = new ExecutionException(
                         "An error occurred while starting the embedded AUT Agent", e); //$NON-NLS-1$
+                StatusManager.getManager().handle(
+                        new Status(IStatus.ERROR, Activator.PLUGIN_ID, 
+                                I18n.getString("AUTAgent.StartCommErrorText", //$NON-NLS-1$
+                                        new String[] {String.valueOf(port)}), 
+                                e), 
+                        StatusManager.SHOW);
+                throw execException;
             }
         }
     
