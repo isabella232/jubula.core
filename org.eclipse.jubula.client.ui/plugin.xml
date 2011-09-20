@@ -428,6 +428,20 @@
 				Decorates Test Steps or Test Case References which have been marked as active / inactive.
      		</description>
 		</decorator>
+  <decorator
+        class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.TestResultDurationDecorator"
+        id="org.eclipse.jubula.client.ui.decorators.resultDurationDecorator"
+        label="Test Result Duration Decorator"
+        lightweight="true"
+        state="true">
+			<enablement>
+				<objectClass
+					name="org.eclipse.jubula.client.core.model.TestResultNode" />
+			</enablement>
+     <description>
+        Adds the execution duration to the label of a Test Result.
+     </description>
+  </decorator>
 	</extension>
 	<extension point="org.eclipse.ui.actionSets">
 		<actionSet

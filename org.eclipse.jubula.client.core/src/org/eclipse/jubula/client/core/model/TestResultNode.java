@@ -20,6 +20,9 @@ import org.eclipse.jubula.client.core.businessprocess.ITestResultEventListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.osgi.util.NLS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -28,6 +31,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @created 21.04.2005
  */
 public class TestResultNode {
+    
     /**
      * Status if not yet tested
      */
@@ -72,6 +76,10 @@ public class TestResultNode {
      * Status if test was aborted due to internal AutServer errors
      */
     public static final int ABORT = 9;
+    
+    /** the logger */
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(TestResultNode.class);
     
     /**
      * index for Tree Tracker
@@ -431,9 +439,10 @@ public class TestResultNode {
     }
     
     /**
-     * Gets the actual Time during Testexecution
      * 
-     * @return The Timestamp
+     * @return the time at which the keyword execution corresponding to the 
+     *         receiver began, or <code>null</code> if the receiver does not 
+     *         correspond to an executed keyword.
      */
     public Date getTimeStamp() {
         return m_timestamp;
@@ -495,5 +504,87 @@ public class TestResultNode {
      */
     public int getNoOfSimilarComponents() {
         return m_noOfSimilarComponents;
+    }
+
+    /**
+     * 
+     * @return the sibling immediately following the receiver in the 
+     *         receiver's parent's child list, or <code>null</code> if the 
+     *         receiver is the last element in this list.
+     */
+    private TestResultNode getNextSibling() {
+        TestResultNode parent = getParent();
+        if (parent != null) {
+            List<TestResultNode> siblingList = parent.getResultNodeList();
+            int nodeIndex = siblingList.indexOf(this);
+            if (nodeIndex == -1) {
+                LOG.error(NLS.bind(
+                        Messages.ParentChildInconsistency, getName()));
+            } else {
+                int nextSiblingIndex = nodeIndex + 1;
+                if (siblingList.size() > nextSiblingIndex) {
+                    return siblingList.get(nextSiblingIndex);
+                }
+            }
+            
+        }
+        
+        return null;
+    }
+
+    /**
+     * 
+     * @return the {@link TestResultNode} corresponding to the Keyword that was 
+     *         executed after the receiver's Keyword, or <code>null</code> if 
+     *         the receiver's Keyword was the last executed element in a 
+     *         Test Suite.
+     */
+    private TestResultNode getNextExecutedNode() {
+        TestResultNode nextSibling = getNextSibling();
+        TestResultNode currentNode = this;
+        // having a timestamp indicates that the keyword was executed
+        while ((nextSibling == null || nextSibling.getTimeStamp() == null) 
+                && currentNode.getParent() != null) {
+            currentNode = currentNode.getParent();
+            nextSibling = currentNode.getNextSibling();
+        }
+        
+        if (nextSibling != null && nextSibling.getTimeStamp() == null) {
+            // corner case: Last executed Keyword, but not the last Keyword
+            //              in the Test Suite (e.g. test aborted).
+            return null;
+        }
+        
+        return nextSibling;
+    }
+    
+    /**
+     * 
+     * @param testEndTime The time at which the Test Suite execution containing 
+     *                    the receiver was ended. May be <code>null</code> if 
+     *                    the Test Suite end time is not available.
+     * @return the duration of the receiver's execution (in milliseconds), 
+     *         or <code>-1</code> if the duration cannot be calculated 
+     *         (e.g. the Keyword was not executed, or the keyword was the last
+     *         executed and no Test Suite end time is available).
+     */
+    public long getDuration(Date testEndTime) {
+        Date start = getTimeStamp();
+        if (start != null) {
+            TestResultNode nextExecutedNode = getNextExecutedNode();
+            if (nextExecutedNode != null) {
+                Date end = nextExecutedNode.getTimeStamp();
+                return end.getTime() - start.getTime();
+            } 
+
+            // Receiver was the last executed node in the Test Suite Execution,
+            // so use Test Suite end time (if available) to determine duration.
+            if (testEndTime != null) {
+                return testEndTime.getTime() - start.getTime();
+            }
+        } 
+        
+        // keyword was not executed, so duration cannot be calculated
+        return -1;
     }
 }

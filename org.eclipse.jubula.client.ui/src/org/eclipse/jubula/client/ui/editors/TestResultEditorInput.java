@@ -40,8 +40,12 @@ public class TestResultEditorInput implements IEditorInput {
     /** start time of the corresponding Test Suite */
     private Date m_testSuiteStartTime;
     
+    /** end time of the corresponding Test Suite */
+    private Date m_testSuiteEndTime;
+
     /** database ID of the Project associated with the test run */
     private Long m_parentProjectId;
+    
 
     /**
      * Constructor
@@ -54,6 +58,7 @@ public class TestResultEditorInput implements IEditorInput {
         m_testResultSumaryId = testResultSummary.getId();
         m_testSuiteName = testResultSummary.getTestsuiteName();
         m_testSuiteStartTime = testResultSummary.getTestsuiteStartTime();
+        m_testSuiteEndTime = testResultSummary.getTestsuiteEndTime();
         m_parentProjectId = testResultSummary.getInternalProjectID();
     }
 
@@ -144,5 +149,13 @@ public class TestResultEditorInput implements IEditorInput {
      */
     public int hashCode() {
         return new HashCodeBuilder().append(getToolTipText()).toHashCode();
+    }
+    
+    /**
+     * 
+     * @return the time at which the corresponding Test Suite execution ended.
+     */
+    public Date getTestSuiteEndTime() {
+        return m_testSuiteEndTime;
     }
 }

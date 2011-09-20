@@ -28,6 +28,8 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.DecorationContext;
+import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -87,6 +89,13 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     /** Constant: Editor ID */
     public static final String EDITOR_ID = 
         "org.eclipse.jubula.client.ui.editors.TestResultViewer"; //$NON-NLS-1$
+    
+    /** 
+     * ID of the decoration context property for Test Suite end time.
+     * The value of the property is a {@link java.util.Date}.
+     */
+    public static final String DECORATION_CONTEXT_SUITE_END_TIME_ID = 
+        "org.eclipse.jubula.client.ui.editors.TestResultViewer.testSuiteEndTime"; //$NON-NLS-1$
     
     /** the logger */
     private static final Logger LOG = 
@@ -408,18 +417,26 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
      * {@inheritDoc}
      */
     public void createPartControl(Composite parent) {
+        TestResultEditorInput editorInput = 
+            (TestResultEditorInput)getEditorInput();
         m_viewer = new TreeViewer(parent);
         m_viewer.setContentProvider(new TestResultTreeViewContentProvider());
-        m_viewer.setLabelProvider(new DecoratingLabelProvider(
+        DecoratingLabelProvider labelProvider = new DecoratingLabelProvider(
             new TestResultTreeViewLabelProvider(), Plugin.getDefault()
-                .getWorkbench().getDecoratorManager().getLabelDecorator()));
+                .getWorkbench().getDecoratorManager().getLabelDecorator());
+        IDecorationContext decorationContext = 
+            labelProvider.getDecorationContext();
+        if (decorationContext instanceof DecorationContext) {
+            ((DecorationContext)decorationContext).putProperty(
+                    DECORATION_CONTEXT_SUITE_END_TIME_ID, 
+                    editorInput.getTestSuiteEndTime());
+        }
+        m_viewer.setLabelProvider(labelProvider);
 
         getSite().setSelectionProvider(m_viewer);
         JubulaStateController.getInstance().
             addSelectionListenerToSelectionService();
         createContextMenu(m_viewer);
-        TestResultEditorInput editorInput = 
-            (TestResultEditorInput)getEditorInput();
         m_viewer.setAutoExpandLevel(2);
         Plugin.getHelpSystem().setHelp(m_viewer.getControl(),
                 ContextHelpIds.RESULT_TREE_VIEW);
