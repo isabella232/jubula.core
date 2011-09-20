@@ -233,6 +233,7 @@
 											select="'TC'"/>
 									</xsl:call-template>
 									</A>
+                                    <xsl:apply-templates select="@duration" />
 									<ul>
 										<xsl:apply-templates select="test-run"/>
 									</ul>
@@ -247,6 +248,7 @@
 											select="'TC'"/>
 									</xsl:call-template>
 									</A>
+                                    <xsl:apply-templates select="@duration" />
 									<ul>
 										<xsl:apply-templates select="test-run"/>
 									</ul>
@@ -311,6 +313,7 @@
 						<xsl:with-param name="text" select="'TC'"/>
 					</xsl:call-template>
 					</A>
+                    <xsl:apply-templates select="@duration" />
 					<xsl:variable name="child_nodes" 
 							      select="testcase|step|eventhandler"/>
 					<xsl:if test="count($child_nodes) != 0">
@@ -329,6 +332,7 @@
 						<xsl:with-param name="text" select="'TC'"/>
 					</xsl:call-template>
 					</A>
+                    <xsl:apply-templates select="@duration" />
 					<xsl:variable name="child_nodes" 
 							      select="testcase|step|eventhandler"/>
 					<xsl:if test="count($child_nodes) != 0">
@@ -353,6 +357,7 @@
 						<xsl:with-param name="text" select="'CAP'"/>
 					</xsl:call-template>
 					</A>
+                    <xsl:apply-templates select="@duration" />
 					<UL>
 						<table bgcolor="#BBBBBB" border="0">
                             <tr> 
@@ -390,6 +395,7 @@
 						<xsl:with-param name="text" select="'CAP'"/>
 					</xsl:call-template>
 					</A>
+                    <xsl:apply-templates select="@duration" />
 					<UL>
 						<table bgcolor="#BBBBBB" border="0">
                             <tr> 
@@ -487,6 +493,7 @@
 						<xsl:with-param name="text" select="'Event Handler'"/>
 					</xsl:call-template>
 					</A>
+                    <xsl:apply-templates select="@duration" />
 					<ul>
 						<table border="0" bgcolor="#BBBBBB">
 							<tr>
@@ -514,6 +521,7 @@
 						<xsl:with-param name="text" select="'Event Handler'"/>
 					</xsl:call-template>
 					</A>
+                    <xsl:apply-templates select="@duration" />
 					<ul>
 						<table border="0" bgcolor="#BBBBBB">
 							<tr>
@@ -536,6 +544,11 @@
 		</xsl:choose>
 		
 	</xsl:template>
+
+    <xsl:template match="@duration">
+    <!-- prepends non-breaking space to avoid cluttered appearance -->
+		&#160;- <xsl:value-of select="."/>
+    </xsl:template>
 
 	<!-- functional templates-->
 	<xsl:template name="writeColored">

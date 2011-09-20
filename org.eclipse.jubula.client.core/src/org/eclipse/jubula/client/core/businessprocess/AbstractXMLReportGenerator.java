@@ -14,8 +14,7 @@ import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.time.DurationFormatUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -33,6 +32,8 @@ import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -330,6 +331,13 @@ public abstract class AbstractXMLReportGenerator {
         }
         Element status = insertInto.addElement("status"); //$NON-NLS-1$
         status.addText(String.valueOf(resultNode.getStatus()));
+        
+        long durationMillis = 
+            resultNode.getDuration(m_testResult.getEndTime());
+        if (durationMillis != -1) {
+            insertInto.addAttribute("duration", //$NON-NLS-1$
+                    DurationFormatUtils.formatDurationHMS(durationMillis));
+        }
     }
     /**
      * 
