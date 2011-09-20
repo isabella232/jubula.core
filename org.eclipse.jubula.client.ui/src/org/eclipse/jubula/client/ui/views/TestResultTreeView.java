@@ -19,7 +19,10 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.DecorationContext;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IBaseLabelProvider;
+import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -47,6 +50,7 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
+import org.eclipse.jubula.client.ui.editors.TestResultViewer;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -248,6 +252,11 @@ public class TestResultTreeView extends ViewPart
     public void stateChanged(TestExecutionEvent event) {
         if (event.getState() == TestExecutionEvent.
                 TEST_EXEC_RESULT_TREE_READY) {
+
+            putDecorationContextProperty(
+                    TestResultViewer.DECORATION_CONTEXT_SUITE_END_TIME_ID, 
+                    null);
+            
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     if (!getTreeViewer().getControl().isDisposed()) { 
@@ -356,6 +365,10 @@ public class TestResultTreeView extends ViewPart
      * {@inheritDoc}
      */
     public void endTestExecution() {
+        putDecorationContextProperty(
+                TestResultViewer.DECORATION_CONTEXT_SUITE_END_TIME_ID, 
+                ((TestResult)getInput()).getEndTime());
+
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 if (!getTreeViewer().getControl().isDisposed()) { 
@@ -482,5 +495,34 @@ public class TestResultTreeView extends ViewPart
      */
     public TreeViewer getTreeViewer() {
         return m_treeViewer;
+    }
+    
+    /**
+     * Attempts a {@link DecorationContext#putProperty(String, Object)} with the
+     * given arguments and the current viewer. Fails silently if any objects are
+     * of incorrect type (e.g. label provider not a 
+     * {@link DecoratingLabelProvider}, decorating context not a 
+     * {@link DecorationContext}, etc).
+     * 
+     * @see DecorationContext#putProperty(String, Object)
+     * @param property The property.
+     * @param value The value of the property or <code>null</code> if the 
+     *              property is to be removed.
+     */
+    private void putDecorationContextProperty(String property, Object value) {
+        TreeViewer viewer = getTreeViewer();
+        if (viewer != null) {
+            IBaseLabelProvider labelProvider = viewer.getLabelProvider();
+            if (labelProvider instanceof DecoratingLabelProvider) {
+                IDecorationContext context = 
+                    ((DecoratingLabelProvider)labelProvider)
+                        .getDecorationContext();
+                if (context instanceof DecorationContext) {
+                    ((DecorationContext)context).putProperty(
+                            property, 
+                            value);
+                }
+            }
+        }
     }
 }
