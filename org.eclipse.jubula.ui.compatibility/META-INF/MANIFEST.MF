@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula UI Compatibility Layer
+Bundle-SymbolicName: org.eclipse.jubula.ui.compatibility
+Bundle-Version: 1.1.0.qualifier
+Bundle-Vendor: Eclipse Jubula
+Require-Bundle: org.eclipse.swt;bundle-version="[3.6.1,4.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.rap.rwt;bundle-version="[1.4.0,2.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.jface;bundle-version="[3.6.1,4.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.rap.jface;bundle-version="[1.4.0,2.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.jface.databinding;bundle-version="[1.4.0,2.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.rap.jface.databinding;bundle-version="[1.4.0,2.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.ui.workbench;bundle-version="[3.6.1,4.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.rap.ui.workbench;bundle-version="[1.4.0,2.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.ui;bundle-version="[3.6.1,4.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.rap.ui;bundle-version="[1.4.0,2.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.ui.views;bundle-version="[3.5.0,4.0.0)";resolution:=optional;visibility:=reexport,
+ org.eclipse.rap.ui.views;bundle-version="[1.4.0,2.0.0)";resolution:=optional;visibility:=reexport
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Bundle-ActivationPolicy: lazy

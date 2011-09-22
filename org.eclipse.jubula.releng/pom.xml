@@ -13,6 +13,7 @@
         <module>../org.eclipse.jubula.tools</module>
         <module>../org.eclipse.jubula.communication</module>
 		<module>../org.eclipse.jubula.toolkit.generate.interfaces</module>
+        <module>../org.eclipse.jubula.ui.compatibility</module>
 		<module>../org.eclipse.jubula.releng.server</module>
 		<module>../org.eclipse.jubula.releng.client</module>
 	</modules>
