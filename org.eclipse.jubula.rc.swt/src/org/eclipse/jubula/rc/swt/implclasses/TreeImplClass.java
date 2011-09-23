@@ -975,10 +975,13 @@ public class TreeImplClass extends AbstractControlImplClass {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());                    
-                    shakeMouse();
+                    
+                    java.awt.Point dragOrigin = 
+                            getRobot().getCurrentMousePosition();
                     // drop
                     gdSelect(pathType, preAscend, treePath, operator, 0, 1,
                             CompSystemConstants.EXTEND_SELECTION_NO);
+                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });
@@ -1042,10 +1045,13 @@ public class TreeImplClass extends AbstractControlImplClass {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
-                    shakeMouse();
+
+                    java.awt.Point dragOrigin = 
+                            getRobot().getCurrentMousePosition();
                     // drop
                     gdSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
                             CompSystemConstants.EXTEND_SELECTION_NO);
+                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });

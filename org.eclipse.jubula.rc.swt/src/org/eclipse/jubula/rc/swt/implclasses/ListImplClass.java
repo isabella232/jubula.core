@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.implclasses;
 
+import java.awt.Point;
 import java.util.Arrays;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -450,7 +451,8 @@ public class ListImplClass extends AbstractControlImplClass
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
-                    shakeMouse();
+
+                    Point dragOrigin = getRobot().getCurrentMousePosition();
                     // drop
                     // It is important to only take a single element.
                     // Otherwise, a deadlock will occur when trying to press and confirm
@@ -461,6 +463,7 @@ public class ListImplClass extends AbstractControlImplClass
                     selectIndices(ArrayUtils.toPrimitive(indices),
                                     ClickOptions.create().setClickCount(0),
                                     false);
+                    shakeMouse(dragOrigin);
 
                     return null;
                 }            
@@ -512,13 +515,13 @@ public class ListImplClass extends AbstractControlImplClass
         
         pressOrReleaseModifiers(dndHelper.getModifier(), true);
         try {
-            // drag
             getEventThreadQueuer().invokeAndWait("gdDropIndex", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() throws StepExecutionException {
+                    // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
-                    shakeMouse();
+                    Point dragOrigin = getRobot().getCurrentMousePosition();
                     // drop
                     // It is important to only take a single element.
                     // Otherwise, a deadlock will occur when trying to press and 
@@ -527,6 +530,7 @@ public class ListImplClass extends AbstractControlImplClass
                             index);
                     selectIndices(new int [] {implIndex}, ClickOptions.create()
                             .setClickCount(0), false);
+                    shakeMouse(dragOrigin);
                     return null;
                 }
             });

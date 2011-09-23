@@ -54,7 +54,7 @@ public class EnvironmentUtils {
     /** Substring for matching Windows. */
     private static final String OS_NAME_WIN = "windows"; //$NON-NLS-1$
 
-    /** Substring for matching Windows. */
+    /** Substring for matching MacOS. */
     private static final String OS_NAME_MAC = "mac"; //$NON-NLS-1$
     
     /**

@@ -45,6 +45,9 @@ import org.eclipse.swt.widgets.Text;
  */
 public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
     
+    /** number of pixels by which a "mouse shake" offsets the mouse cursor */
+    private static final int MOUSE_SHAKE_OFFSET = 10;
+    
     /**
      * Default constructor
      */
@@ -924,9 +927,10 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             mouseButton);
-                    shakeMouse();
+                    Point dragOrigin = getRobot().getCurrentMousePosition();
                     // drop
                     gdClickDirect(0, mouseButton, xPos, xUnits, yPos, yUnits);
+                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });
@@ -940,19 +944,37 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
 
     /**
      * Move the mouse pointer from its current position to a few points in
-     * its proximity. THis is used to initiate a drag operation after the 
-     * button press occured.
+     * its proximity, if necessary. This is used to initiate a drag operation 
+     * if the distance between origin and target may be too small to initiate
+     * the operation through direct mouse movement from origin to target.
+     * 
+     * @param dragOrigin The point at which the drag was initiated. 
+     *                   May not be <code>null</code>. This is used to evaluate
+     *                   whether or not a "mouse shake" needs to occur.
      */
-    protected void shakeMouse() {
-        Point p = getRobot().getCurrentMousePosition();
-        SwtRobot lowLevelRobot = new SwtRobot(Display.getDefault());
-        lowLevelRobot.mouseMove(p.x + 10, p.y + 10);
-        lowLevelRobot.mouseMove(p.x - 10, p.y - 10);
-        lowLevelRobot.mouseMove(p.x, p.y);
-        if (!EnvironmentUtils.isWindowsOS()) {
-            boolean moreEvents = true;
-            while (moreEvents) {
-                moreEvents = Display.getDefault().readAndDispatch();
+    protected void shakeMouse(Point dragOrigin) {
+        Point dropPoint = getRobot().getCurrentMousePosition();
+        java.awt.Rectangle dndTriggerBounds = new java.awt.Rectangle(
+                dragOrigin.x - MOUSE_SHAKE_OFFSET, 
+                dragOrigin.y - MOUSE_SHAKE_OFFSET, 
+                MOUSE_SHAKE_OFFSET * 2, 
+                MOUSE_SHAKE_OFFSET * 2);
+        
+        if (dndTriggerBounds.contains(dropPoint)) {
+            SwtRobot lowLevelRobot = new SwtRobot(Display.getDefault());
+            lowLevelRobot.mouseMove(
+                    dropPoint.x + MOUSE_SHAKE_OFFSET, 
+                    dropPoint.y + MOUSE_SHAKE_OFFSET);
+            lowLevelRobot.mouseMove(
+                    dropPoint.x - MOUSE_SHAKE_OFFSET, 
+                    dropPoint.y - MOUSE_SHAKE_OFFSET);
+            lowLevelRobot.mouseMove(dropPoint.x, dropPoint.y);
+            if (!EnvironmentUtils.isWindowsOS() 
+                    && !EnvironmentUtils.isMacOS()) {
+                boolean moreEvents = true;
+                while (moreEvents) {
+                    moreEvents = Display.getDefault().readAndDispatch();
+                }
             }
         }
     }
