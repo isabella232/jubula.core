@@ -1171,7 +1171,7 @@
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.RevertChanges"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.jubula.client.ui.defaultKeyScheme"
-			sequence="F3">
+			sequence="M2+F6">
 		</key>
 		<key commandId="org.eclipse.jubula.client.ui.commands.ToggleActiveStatus"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
@@ -1201,7 +1201,7 @@
         commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
         contextId="org.eclipse.ui.contexts.window"
         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        sequence="M2+F6">
+        sequence="F3">
   </key>
   <key
         commandId="org.eclipse.jubula.client.ui.commands.AddEventHandler"
