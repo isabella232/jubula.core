@@ -8,9 +8,13 @@
 	<classpathentry kind="lib" path="lib/ch.qos.logback.slf4j.jar"/>
 	<classpathentry kind="lib" path="lib/org.apache.commons.beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/org.apache.commons.lang.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.communication"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.communication.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.rc.common"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.rc.common.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.rc.swt"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.rc.swt.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.jubula.tools"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.tools.jar"/>
 	<classpathentry kind="lib" path="lib/org.slf4j.api.jar"/>
 	<classpathentry kind="lib" path="lib/org.slf4j.jcl.jar"/>
