@@ -461,14 +461,12 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             mouseButton);
                     
-                    java.awt.Point dragOrigin = 
-                            getRobot().getCurrentMousePosition();
+                    shakeMouse();
 
                     // drop
                     gdClickInFigure(textPath, operator, 0, 
                             mouseButton, xPos, xUnits, yPos, yUnits);
                     
-                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });
