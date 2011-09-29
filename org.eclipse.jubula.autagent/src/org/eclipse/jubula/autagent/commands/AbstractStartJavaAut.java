@@ -388,8 +388,8 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             }
         });
         URL[] urls;
-        if (extJars != null) {           
-            LOG.error("jars are " + extJars); //$NON-NLS-1$
+        if (extJars != null) {
+            LOG.info("jars are " + extJars); //$NON-NLS-1$
             urls = new URL[extJars.length];
             for (int i = 0; i < extJars.length; i++) {
                 try {                          
@@ -399,7 +399,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                 }                  
             }
         } else {
-            LOG.error("no ext jars"); //$NON-NLS-1$
+            LOG.info("no ext jars"); //$NON-NLS-1$
             urls = new URL[0];
         }
         return urls;
