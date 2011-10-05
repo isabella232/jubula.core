@@ -74,7 +74,6 @@ public class JListHelper {
         Rectangle r = (Rectangle) m_implClass.getEventThreadQueuer()
                 .invokeAndWait("getCellBounds", new IRunnable() {
 
-                    @Override
                     public Object run() throws StepExecutionException {
                         return list.getCellBounds(index, index);
                     }
