@@ -869,8 +869,20 @@ public class RobotSwtImpl implements IRobot {
      */
     public void keyPress(Object graphicsComponent, int keycode)
         throws RobotException {
-        
-        keyPressReleaseImpl(graphicsComponent, keycode, true);
+
+        // A direct "post" is necessary here (rather than using the AWT Robot)
+        // because we do not receive event confirmation for the KeyDown event
+        // on MacOS X Cocoa.
+        if (!post(new KeyCodeTyper(keycode).createKeyDownEvent())) {
+            final String msg = "Failed to post key event for keycode '" //$NON-NLS-1$
+                    + keycode + "'"; //$NON-NLS-1$
+            log.warn(msg);
+            throw new RobotException(
+                    msg,
+                    EventFactory.createActionError(
+                            TestErrorEvent.INVALID_INPUT));
+        }
+
     }
 
     /**

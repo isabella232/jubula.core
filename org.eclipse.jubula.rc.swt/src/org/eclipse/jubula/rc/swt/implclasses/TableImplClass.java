@@ -1788,12 +1788,12 @@ public class TableImplClass extends AbstractControlImplClass
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
 
-                    Point dragOrigin = getRobot().getCurrentMousePosition();
+                    shakeMouse();
+
                     // drop
                     gdSelectCell(row, rowOperator, col, colOperator, 0, xPos,
                             xUnits, yPos, yUnits, 
                             CompSystemConstants.EXTEND_SELECTION_NO, 1);
-                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });
@@ -1843,11 +1843,11 @@ public class TableImplClass extends AbstractControlImplClass
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
                     
-                    Point dragOrigin = getRobot().getCurrentMousePosition();
+                    shakeMouse();
+
                     // drop
                     gdSelectCell(row, col, 0, xPos, xUnits, yPos, yUnits, 
                             CompSystemConstants.EXTEND_SELECTION_NO);
-                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });
@@ -1945,13 +1945,13 @@ public class TableImplClass extends AbstractControlImplClass
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
 
-                    Point dragOrigin = getRobot().getCurrentMousePosition();
+                    shakeMouse();
+
                     // drop
                     gdSelectRowByValue(col, colOperator, value, regexOp,
                             CompSystemConstants.EXTEND_SELECTION_NO, 
                             searchType, 
                             ClickOptions.create().setClickCount(0));
-                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });
@@ -1996,12 +1996,12 @@ public class TableImplClass extends AbstractControlImplClass
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
 
-                    Point dragOrigin = getRobot().getCurrentMousePosition();
+                    shakeMouse();
+
                     // drop
                     gdSelectRowByValue(col, value, regexOp, 
                             CompSystemConstants.EXTEND_SELECTION_NO,
                             searchType, 0);
-                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });
@@ -2099,13 +2099,13 @@ public class TableImplClass extends AbstractControlImplClass
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
 
-                    Point dragOrigin = getRobot().getCurrentMousePosition();
+                    shakeMouse();
+
                     // drop
                     gdSelectCellByColValue(row, rowOperator, value, regex,
                             CompSystemConstants.EXTEND_SELECTION_NO, 
                             searchType, 
                             ClickOptions.create().setClickCount(0));
-                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });
@@ -2149,12 +2149,12 @@ public class TableImplClass extends AbstractControlImplClass
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
 
-                    Point dragOrigin = getRobot().getCurrentMousePosition();
+                    shakeMouse();
+
                     // drop
                     gdSelectCellByColValue(row, value, regex, 
                             CompSystemConstants.EXTEND_SELECTION_NO, 
                             searchType, 0);
-                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });

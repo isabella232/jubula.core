@@ -927,10 +927,11 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             mouseButton);
-                    Point dragOrigin = getRobot().getCurrentMousePosition();
+
+                    shakeMouse();
+                    
                     // drop
                     gdClickDirect(0, mouseButton, xPos, xUnits, yPos, yUnits);
-                    shakeMouse(dragOrigin);
                     return null;
                 }            
             });
@@ -944,37 +945,23 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
 
     /**
      * Move the mouse pointer from its current position to a few points in
-     * its proximity, if necessary. This is used to initiate a drag operation 
-     * if the distance between origin and target may be too small to initiate
-     * the operation through direct mouse movement from origin to target.
-     * 
-     * @param dragOrigin The point at which the drag was initiated. 
-     *                   May not be <code>null</code>. This is used to evaluate
-     *                   whether or not a "mouse shake" needs to occur.
+     * its proximity. This is used to initiate a drag operation.
      */
-    protected void shakeMouse(Point dragOrigin) {
-        Point dropPoint = getRobot().getCurrentMousePosition();
-        java.awt.Rectangle dndTriggerBounds = new java.awt.Rectangle(
-                dragOrigin.x - MOUSE_SHAKE_OFFSET, 
-                dragOrigin.y - MOUSE_SHAKE_OFFSET, 
-                MOUSE_SHAKE_OFFSET * 2, 
-                MOUSE_SHAKE_OFFSET * 2);
-        
-        if (dndTriggerBounds.contains(dropPoint)) {
-            SwtRobot lowLevelRobot = new SwtRobot(Display.getDefault());
-            lowLevelRobot.mouseMove(
-                    dropPoint.x + MOUSE_SHAKE_OFFSET, 
-                    dropPoint.y + MOUSE_SHAKE_OFFSET);
-            lowLevelRobot.mouseMove(
-                    dropPoint.x - MOUSE_SHAKE_OFFSET, 
-                    dropPoint.y - MOUSE_SHAKE_OFFSET);
-            lowLevelRobot.mouseMove(dropPoint.x, dropPoint.y);
-            if (!EnvironmentUtils.isWindowsOS() 
-                    && !EnvironmentUtils.isMacOS()) {
-                boolean moreEvents = true;
-                while (moreEvents) {
-                    moreEvents = Display.getDefault().readAndDispatch();
-                }
+    protected void shakeMouse() {
+        Point origin = getRobot().getCurrentMousePosition();
+        SwtRobot lowLevelRobot = new SwtRobot(Display.getDefault());
+        lowLevelRobot.mouseMove(
+                origin.x + MOUSE_SHAKE_OFFSET, 
+                origin.y + MOUSE_SHAKE_OFFSET);
+        lowLevelRobot.mouseMove(
+                origin.x - MOUSE_SHAKE_OFFSET, 
+                origin.y - MOUSE_SHAKE_OFFSET);
+        lowLevelRobot.mouseMove(origin.x, origin.y);
+        if (!EnvironmentUtils.isWindowsOS() 
+                && !EnvironmentUtils.isMacOS()) {
+            boolean moreEvents = true;
+            while (moreEvents) {
+                moreEvents = Display.getDefault().readAndDispatch();
             }
         }
     }
