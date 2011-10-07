@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.common.implclasses.tree;
 import java.awt.Rectangle;
 import java.util.Collection;
 
+
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;

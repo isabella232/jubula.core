@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.core.communication;
 
 import java.net.InetAddress;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.ICommand;
@@ -23,6 +21,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

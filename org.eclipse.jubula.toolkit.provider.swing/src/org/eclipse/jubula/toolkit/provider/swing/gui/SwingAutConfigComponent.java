@@ -12,7 +12,7 @@ package org.eclipse.jubula.toolkit.provider.swing.gui;
 
 import java.util.Map;
 
-import org.eclipse.jubula.client.ui.widgets.JavaAutConfigComponent;
+import org.eclipse.jubula.client.ui.rcp.widgets.JavaAutConfigComponent;
 import org.eclipse.swt.widgets.Composite;
 
 

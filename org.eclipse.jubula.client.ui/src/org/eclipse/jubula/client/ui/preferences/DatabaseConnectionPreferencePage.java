@@ -19,10 +19,12 @@ import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -34,7 +36,6 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
-import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.dialogs.DatabaseConnectionDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.widgets.JBText;
@@ -226,15 +227,15 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
             DatabaseConnectionDialog databaseConnectionWizard,
             Display display) {
         WizardDialog dialog = 
-            new WizardDialog(Plugin.getShell(), 
+            new WizardDialog(display.getActiveShell(), 
                     databaseConnectionWizard) {
                 protected void createButtonsForButtonBar(
                         Composite parent) {
                     super.createButtonsForButtonBar(parent);
                     Button finishButton = 
                         getButton(IDialogConstants.FINISH_ID);
-                    finishButton.setText(
-                            IDialogConstants.OK_LABEL);
+                    finishButton.setText(JFaceResources.getString(
+                            IDialogLabelKeys.OK_LABEL_KEY));
                 }
             };
         databaseConnectionWizard.setWindowTitle(

@@ -10,13 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.commands;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.remote.dialogs.ChooseCheckModeDialogBP;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.ServerShowDialogMessage;
 import org.eclipse.jubula.communication.message.ServerShowDialogResponseMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

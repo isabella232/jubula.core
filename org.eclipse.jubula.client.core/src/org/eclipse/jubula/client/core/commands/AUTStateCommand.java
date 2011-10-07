@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.core.commands;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
@@ -30,6 +28,8 @@ import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

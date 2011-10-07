@@ -11,13 +11,13 @@
 package org.eclipse.jubula.client.ui.utils;
 
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.ui.PlatformUI;
 
 
 /**
@@ -95,9 +95,10 @@ public final class DialogUtils {
      *            the relative height factor; must be 0 <= relWidth <= 1
      */
     public static void adjustShellSizeRelativeToClientSize(Shell shell,
-        float relWidth, float relHeight) {
+            float relWidth, float relHeight) {
         adjustShellSizeRelativeToRectangleSize(shell, relWidth, relHeight,
-                Plugin.getActiveWorkbenchWindowShell().getBounds());
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
+                    .getBounds());
     }
     
     /**

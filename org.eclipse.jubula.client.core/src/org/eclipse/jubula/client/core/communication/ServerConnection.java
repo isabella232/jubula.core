@@ -13,8 +13,6 @@ package org.eclipse.jubula.client.core.communication;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.AutStarterEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.ServerEvent;
@@ -25,6 +23,8 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

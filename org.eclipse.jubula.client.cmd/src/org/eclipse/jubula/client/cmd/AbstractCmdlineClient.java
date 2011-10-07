@@ -25,8 +25,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.cmd.exceptions.PreValidateException;
@@ -51,6 +49,8 @@ import org.eclipse.jubula.tools.messagehandling.Message;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.osgi.util.NLS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

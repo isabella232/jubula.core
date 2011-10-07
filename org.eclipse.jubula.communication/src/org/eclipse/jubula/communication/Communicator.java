@@ -25,8 +25,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.connection.AutStarterSocket;
 import org.eclipse.jubula.communication.connection.Connection;
 import org.eclipse.jubula.communication.connection.ConnectionState;
@@ -45,6 +43,8 @@ import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.SerialisationException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

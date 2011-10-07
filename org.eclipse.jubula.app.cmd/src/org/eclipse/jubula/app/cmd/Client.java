@@ -13,8 +13,6 @@ package org.eclipse.jubula.app.cmd;
 
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.app.cmd.batch.ExecutionController;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
@@ -25,6 +23,8 @@ import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @created Mar 21, 2006

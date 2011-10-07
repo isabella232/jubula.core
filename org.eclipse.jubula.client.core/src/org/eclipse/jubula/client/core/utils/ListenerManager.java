@@ -14,10 +14,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.exception.UnexpectedGenericTypeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 

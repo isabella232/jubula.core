@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Date;
 
+
 /**
  * @author BREDEX GmbH
  * @created Aug 13, 2010

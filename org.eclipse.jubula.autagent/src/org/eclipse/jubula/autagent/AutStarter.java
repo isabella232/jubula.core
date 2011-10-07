@@ -25,8 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.agent.AutAgent;
 import org.eclipse.jubula.autagent.remote.dialogs.ChooseCheckModeDialogBP;
 import org.eclipse.jubula.autagent.remote.dialogs.ObservationConsoleBP;
@@ -44,6 +42,8 @@ import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.DevNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

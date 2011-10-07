@@ -19,12 +19,12 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
-import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
+import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.inspector.ui.commands.ActivateInspectorResponseCommand;
 import org.eclipse.jubula.client.inspector.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.client.ui.utils.Utils;
 import org.eclipse.jubula.communication.message.ActivateInspectorMessage;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -62,12 +62,12 @@ public class ActivateInspectorHandler extends AbstractHandler {
                     AUTConnection.getInstance().request(message, 
                             new ActivateInspectorResponseCommand(), 5000);
                 } catch (NotConnectedException nce) {
-                    Utils.createMessageDialog(
+                    ErrorHandlingUtil.createMessageDialog(
                             MessageIDs.E_NO_AUT_CONNECTION_ERROR);
                 } catch (ConnectionException ce) {
-                    Utils.createMessageDialog(ce, null, null);
+                    ErrorHandlingUtil.createMessageDialog(ce, null, null);
                 } catch (CommunicationException ce) {
-                    Utils.createMessageDialog(ce, null, null);
+                    ErrorHandlingUtil.createMessageDialog(ce, null, null);
                 }
                 monitor.done();
                 return Status.OK_STATUS;

@@ -36,7 +36,6 @@ import org.eclipse.jubula.client.core.preferences.database.H2ConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.MySQLConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
-import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.databinding.SimpleIntegerToStringConverter;
 import org.eclipse.jubula.client.ui.databinding.SimpleStringToIntegerConverter;
@@ -519,8 +518,9 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                         DatabaseConnectionInfo.PROP_NAME_CONN_URL, 
                         null));
         
-        Plugin.getHelpSystem().setHelp(composite, ContextHelpIds
-                .DATABASE_CONNECTION_CONFIGURATION_DIALOG);
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(
+                composite, 
+                ContextHelpIds.DATABASE_CONNECTION_CONFIGURATION_DIALOG);
     }
 
     /**

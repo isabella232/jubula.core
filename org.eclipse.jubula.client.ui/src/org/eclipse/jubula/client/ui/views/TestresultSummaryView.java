@@ -16,17 +16,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -72,9 +68,8 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestresultSummaryContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestresultSummaryViewColumnLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.client.ui.utils.Utils;
-import org.eclipse.jubula.client.ui.wizards.ExportTestResultDetailsWizard;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -102,8 +97,10 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * View for presenting summaries of Test Results.
@@ -461,7 +458,8 @@ public class TestresultSummaryView extends ViewPart implements
         // set table viewer / refresh
         refreshView();
         m_tableViewer.addFilter(m_filter);
-        Plugin.getHelpSystem().setHelp(m_tableViewer.getControl(),
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(
+                m_tableViewer.getControl(),
                 ContextHelpIds.TESTRESULT_SUMMARY_VIEW);
         setTableViewerLayout();
         restoreViewStatus();
@@ -538,13 +536,6 @@ public class TestresultSummaryView extends ViewPart implements
                 CommandIDs.DELETE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.TOGGLE_RELEVANCE_COMMAND_ID);
-        Map<String, String> params = new HashMap<String, String>();
-        params.put(CommandIDs.EXPORT_WIZARD_PARAM_ID, 
-                ExportTestResultDetailsWizard.ID);
-        mgr.add(CommandHelper.createContributionItem(
-                CommandIDs.ECLIPSE_RCP_FILE_EXPORT_COMMAND_ID, 
-                params, Messages.Export,
-                CommandContributionItem.STYLE_PUSH));
     }
     
     /**
@@ -1785,10 +1776,10 @@ public class TestresultSummaryView extends ViewPart implements
     }
     /**
      * Opens an error dialog.
-     * @param message the messag eto show in the dialog.
+     * @param message the message to show in the dialog.
      */
     private void showErrorDialog(String message) {
-        Utils.createMessageDialog(new JBException(message,
+        ErrorHandlingUtil.createMessageDialog(new JBException(message,
                 MessageIDs.E_PERSISTENCE_LOAD_FAILED), null,
                 new String[] { message });
     }
@@ -1841,7 +1832,7 @@ public class TestresultSummaryView extends ViewPart implements
      * Clears the view (table).
      */
     public void clear() {
-        Plugin.getDisplay().syncExec(new Runnable() {
+        m_tableViewer.getTable().getDisplay().syncExec(new Runnable() {
             public void run() {
                 // avoid resetting selection on database change               
                 m_tableViewer.setSelection(StructuredSelection.EMPTY);
@@ -1892,7 +1883,7 @@ public class TestresultSummaryView extends ViewPart implements
          * {@inheritDoc}
          */
         protected IStatus run(IProgressMonitor monitor) {
-            Plugin.getDisplay().syncExec(new Runnable() {
+            m_tableViewer.getTable().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     m_filter.setPattern(m_filterText);
                     m_tableViewer.refresh();

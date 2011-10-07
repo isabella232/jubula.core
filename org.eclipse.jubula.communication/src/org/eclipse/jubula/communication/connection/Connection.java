@@ -24,8 +24,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.IExceptionHandler;
 import org.eclipse.jubula.communication.listener.IErrorHandler;
 import org.eclipse.jubula.communication.listener.IMessageHandler;
@@ -36,6 +34,8 @@ import org.eclipse.jubula.communication.writer.MessageWriter;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.SerialisationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

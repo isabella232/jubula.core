@@ -22,8 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.LogManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.AUTServerStateMessage;
@@ -47,6 +45,8 @@ import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 

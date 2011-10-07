@@ -27,7 +27,8 @@
 <!-- 		<module>../org.eclipse.jubula.standalone</module> -->
 		<module>../org.eclipse.jubula.feature</module>
 		<module>../org.eclipse.jubula.client.core</module>
-		<module>../org.eclipse.jubula.client.ui</module>
+        <module>../org.eclipse.jubula.client.ui</module>
+		<module>../org.eclipse.jubula.client.ui.rcp</module>
 		<module>../org.eclipse.jubula.client.inspector.ui</module>
 		<module>../org.eclipse.jubula.client.archive</module>
 		<module>../org.eclipse.jubula.toolkit.provider.base</module>
@@ -75,6 +76,7 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<resolver>p2</resolver>
+					<pomDependencies>consider</pomDependencies>
 					<target>
 						<artifact>
 							<groupId>${project.groupId}</groupId>

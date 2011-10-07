@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.perspective;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
@@ -25,8 +23,9 @@ import org.eclipse.ui.IPerspectiveFactory;
  */
 public class ReportPerspective implements IPerspectiveFactory {
 
-    /** The logger */
-    static final Logger LOG = LoggerFactory.getLogger(ReportPerspective.class);
+    /** perspective ID */
+    public static final String PERSPECTIVE_ID = 
+            "org.eclipse.jubula.client.ui.perspectives.ReportPerspective"; 
     
     /**
      * constructor

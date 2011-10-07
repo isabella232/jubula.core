@@ -13,6 +13,8 @@ package org.eclipse.jubula.client.core.persistence;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.PersistenceException;
+
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -20,7 +22,6 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import javax.persistence.PersistenceException;
 
 
 /**

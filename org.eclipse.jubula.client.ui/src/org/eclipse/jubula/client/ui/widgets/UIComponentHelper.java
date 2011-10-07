@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.widgets;
 
 import java.util.List;
 
-import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
@@ -81,7 +81,7 @@ public abstract class UIComponentHelper {
         final JBText textField = new JBText(parent, SWT.BORDER);
         GridData textGrid = new GridData(GridData.FILL, GridData.CENTER, 
             true , false, hSpan, 1);
-        Layout.addToolTipAndMaxWidth(textGrid, textField); // FIXME al
+        LayoutUtil.addToolTipAndMaxWidth(textGrid, textField); // FIXME al
         textField.setLayoutData(textGrid);
         return textField;
     }
@@ -149,7 +149,7 @@ public abstract class UIComponentHelper {
                 comboDispObjects, nullSelectionIsAllowed, false);
         GridData comboGrid = new GridData(GridData.FILL, GridData.CENTER, 
             true , false, hSpan, 1);
-        Layout.addToolTipAndMaxWidth(comboGrid, combo);
+        LayoutUtil.addToolTipAndMaxWidth(comboGrid, combo);
         combo.setLayoutData(comboGrid);
         return combo;
     }
@@ -169,7 +169,7 @@ public abstract class UIComponentHelper {
             | SWT.READ_ONLY, baseKey, enumClass, false, false); 
         GridData comboGrid = new GridData(GridData.FILL, GridData.CENTER, true,
             false, hSpan, 1);
-        Layout.addToolTipAndMaxWidth(comboGrid, combo);
+        LayoutUtil.addToolTipAndMaxWidth(comboGrid, combo);
         combo.setLayoutData(comboGrid);
         return combo;
     }
@@ -190,7 +190,8 @@ public abstract class UIComponentHelper {
         textField.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
                 if (((JBText)e.widget).getCharCount() == limit) {
-                    Utils.createMessageDialog(MessageIDs.W_MAX_CHAR, 
+                    ErrorHandlingUtil.createMessageDialog(
+                            MessageIDs.W_MAX_CHAR, 
                             new Object[] {limit}, null);  
                 }
             }

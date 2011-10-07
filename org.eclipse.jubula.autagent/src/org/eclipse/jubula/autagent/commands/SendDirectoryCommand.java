@@ -12,12 +12,12 @@ package org.eclipse.jubula.autagent.commands;
 
 import java.io.File;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendDirectoryMessage;
 import org.eclipse.jubula.communication.message.SendDirectoryResponseMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

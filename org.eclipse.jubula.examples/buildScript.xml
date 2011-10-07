@@ -183,7 +183,7 @@
 		<property name="extensionSourceDir" value="${examples.development.dir}/extension/src"/>
 		<mkdir dir="${extensionSourceDir}"/>
 		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingClientExtension.zip">
-			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, buildScript.xml"/>
+			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
 		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingServerExtension.zip">
 			<zipfileset dir="../${ExampleSwingExtensionServer}" prefix="${ExampleSwingExtensionServer}" excludes="build, build/**, buildScript.xml"/>
@@ -195,7 +195,7 @@
 
 	<target name="releaseLibrary">
 		<copy todir="${examples.library.dir}">
-			<fileset dir="../org.eclipse.jubula.client.ui/resources/library"/>
+			<fileset dir="../org.eclipse.jubula.client.ui.rcp/resources/library"/>
 		</copy>
 	</target>
 	

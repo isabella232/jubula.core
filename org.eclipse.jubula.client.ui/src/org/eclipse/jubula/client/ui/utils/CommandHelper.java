@@ -13,25 +13,11 @@ package org.eclipse.jubula.client.ui.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.views.AbstractJBTreeView;
-import org.eclipse.jubula.client.ui.views.TestSuiteBrowser;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
@@ -39,6 +25,8 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -58,32 +46,6 @@ public abstract class CommandHelper {
     // hide
     }
     
-    /**
-     * @param node
-     *            the node to open the editor for; may also be null
-     * @param gdtv
-     *            the gdtree view this node hast been found for
-     */
-    public static void openEditorForNode(INodePO node, 
-        AbstractJBTreeView gdtv) {
-        if (node instanceof ISpecTestCasePO || node instanceof IExecTestCasePO
-                || node instanceof IEventExecTestCasePO
-                || node instanceof ICapPO) {
-            if (gdtv instanceof TestSuiteBrowser) {
-                executeCommand(CommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
-            } else {
-                executeCommand(CommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID);
-            }
-        } else if (node instanceof ITestSuitePO) {
-            executeCommand(CommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
-        } else if (node instanceof IRefTestSuitePO
-                || node instanceof ITestJobPO) {
-            executeCommand(CommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
-        } else if (node instanceof ITestDataCubePO) {
-            executeCommand(CommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
-        }
-    }
-
     /**
      * Execute the given commmandId using the workbench handler service
      * 

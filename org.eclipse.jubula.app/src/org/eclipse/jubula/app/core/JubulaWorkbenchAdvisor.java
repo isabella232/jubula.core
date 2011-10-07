@@ -16,8 +16,6 @@ import java.net.URL;
 
 import javax.persistence.PersistenceException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -28,10 +26,10 @@ import org.eclipse.jface.bindings.keys.KeySequenceText;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jubula.app.i18n.Messages;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
-import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.Plugin.ClientStatus;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.utils.Utils;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.Plugin.ClientStatus;
+import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.JBRuntimeException;
@@ -54,6 +52,8 @@ import org.eclipse.ui.internal.console.ConsoleView;
 import org.eclipse.ui.internal.ide.IDEInternalWorkbenchImages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.osgi.framework.Bundle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -211,7 +211,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
                 + StringConstants.LEFT_PARENTHESES + e 
                 + StringConstants.RIGHT_PARENTHESES
                 + StringConstants.DOT);
-            Utils.createMessageDialog(MessageIDs.E_NO_PERSPECTIVE, 
+            ErrorHandlingUtil.createMessageDialog(MessageIDs.E_NO_PERSPECTIVE, 
                     new Object[]{Constants.SPEC_PERSPECTIVE}, null);
         }
         Plugin.getDefault().setClientStatus(ClientStatus.RUNNING);
@@ -232,11 +232,12 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
             }
             log.error(Messages.UnhandledRuntimeException, exception);
             if (exception instanceof JBRuntimeException) {
-                Utils.createMessageDialog(((JBRuntimeException)exception)
-                        .getErrorId());
+                ErrorHandlingUtil.createMessageDialog(
+                        ((JBRuntimeException)exception).getErrorId());
                 return;
             } else if (exception instanceof PersistenceException) {
-                Utils.createMessageDialog(MessageIDs.E_UNKNOWN_DB_ERROR);
+                ErrorHandlingUtil.createMessageDialog(
+                        MessageIDs.E_UNKNOWN_DB_ERROR);
                 return;
             } else if (exception instanceof IllegalStateException) {
                 // Check whether this error is caused by an invalid workspace
@@ -249,7 +250,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
                     }
                     if (workspaceDir == null || !workspaceDir.canWrite()) {
                         String displayDir = getWorkspaceLocation();
-                        Utils.createMessageDialog(
+                        ErrorHandlingUtil.createMessageDialog(
                             MessageIDs.E_INVALID_WORKSPACE, 
                             new String [] {displayDir}, null);
                         
@@ -265,7 +266,8 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
 
             if (!Plugin.isRCPException(exception) 
                     && !Plugin.isContentAssistException(exception)) {
-                Utils.createMessageDialog(new JBFatalException(exception,
+                ErrorHandlingUtil.createMessageDialog(
+                        new JBFatalException(exception,
                         MessageIDs.E_UNEXPECTED_EXCEPTION));
             }
         } else {

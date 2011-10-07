@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.problems;
 
+
 /**
  * Describes a Problem of a Resource.
  * 

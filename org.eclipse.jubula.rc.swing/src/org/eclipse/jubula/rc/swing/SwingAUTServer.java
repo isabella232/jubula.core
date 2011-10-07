@@ -23,8 +23,6 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
@@ -39,6 +37,8 @@ import org.eclipse.jubula.rc.swing.listener.RecordListener;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 

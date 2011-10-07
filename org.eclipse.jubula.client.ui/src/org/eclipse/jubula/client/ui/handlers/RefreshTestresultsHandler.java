@@ -11,10 +11,10 @@
 package org.eclipse.jubula.client.ui.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
 import org.eclipse.jubula.client.ui.views.TestresultSummaryView;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Handler for refreshing testresults in testresult summary view
@@ -27,7 +27,7 @@ public class RefreshTestresultsHandler extends AbstractProjectHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        IWorkbenchPart activePart = Plugin.getActivePart();
+        IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof TestresultSummaryView) {
             final TestresultSummaryView summary = 
                 (TestresultSummaryView)activePart;

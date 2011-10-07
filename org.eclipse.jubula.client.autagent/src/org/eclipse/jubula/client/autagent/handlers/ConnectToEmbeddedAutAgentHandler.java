@@ -22,8 +22,8 @@ import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.AutStarter.Verbosity;
 import org.eclipse.jubula.client.autagent.Activator;
 import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
-import org.eclipse.jubula.client.ui.actions.StartServerAction;
-import org.eclipse.jubula.client.ui.utils.ServerManager.Server;
+import org.eclipse.jubula.client.ui.rcp.actions.StartServerAction;
+import org.eclipse.jubula.client.ui.rcp.utils.ServerManager.Server;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.statushandlers.StatusManager;
 

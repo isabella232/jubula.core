@@ -46,18 +46,14 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
-import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.jubula.client.ui.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
-import org.eclipse.jubula.client.ui.views.JBPropertiesView;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -70,9 +66,9 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.progress.IProgressService;
-import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -422,8 +418,9 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         m_viewer = new TreeViewer(parent);
         m_viewer.setContentProvider(new TestResultTreeViewContentProvider());
         DecoratingLabelProvider labelProvider = new DecoratingLabelProvider(
-            new TestResultTreeViewLabelProvider(), Plugin.getDefault()
-                .getWorkbench().getDecoratorManager().getLabelDecorator());
+            new TestResultTreeViewLabelProvider(), 
+            PlatformUI.getWorkbench()
+                .getDecoratorManager().getLabelDecorator());
         IDecorationContext decorationContext = 
             labelProvider.getDecorationContext();
         if (decorationContext instanceof DecorationContext) {
@@ -434,11 +431,9 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         m_viewer.setLabelProvider(labelProvider);
 
         getSite().setSelectionProvider(m_viewer);
-        JubulaStateController.getInstance().
-            addSelectionListenerToSelectionService();
         createContextMenu(m_viewer);
         m_viewer.setAutoExpandLevel(2);
-        Plugin.getHelpSystem().setHelp(m_viewer.getControl(),
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(m_viewer.getControl(),
                 ContextHelpIds.RESULT_TREE_VIEW);
         try {
             m_viewer.setInput(new TestResultNode[] {
@@ -478,7 +473,8 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
      * @param mgr the menu manager
      */
     private void fillContextMenu(IMenuManager mgr) {
-        mgr.add(SearchTreeAction.getAction());
+        // FIXME zeb not searchable yet
+//        mgr.add(SearchTreeAction.getAction());
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
@@ -535,13 +531,4 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         return m_viewer;
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    public Object getAdapter(Class adapter) {
-        if (adapter.equals(IPropertySheetPage.class)) {
-            return new JBPropertiesView(false, null);
-        }
-        return super.getAdapter(adapter);
-    }
 }

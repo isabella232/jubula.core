@@ -27,8 +27,6 @@ import java.util.Map;
 
 import javax.swing.JTextField;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.message.CAPRecordedMessage;
@@ -43,6 +41,8 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.implclasses.tree;
 
+
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeOperation;
 import org.eclipse.jubula.rc.swt.implclasses.TreeOperationContext;

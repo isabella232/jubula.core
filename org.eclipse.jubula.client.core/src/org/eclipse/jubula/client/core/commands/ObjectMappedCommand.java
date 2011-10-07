@@ -13,8 +13,6 @@ package org.eclipse.jubula.client.core.commands;
 
 import java.util.Iterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -23,6 +21,8 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.ObjectMappedMessage;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

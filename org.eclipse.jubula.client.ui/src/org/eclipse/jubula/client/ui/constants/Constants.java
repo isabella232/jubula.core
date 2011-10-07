@@ -16,7 +16,6 @@ import java.awt.event.KeyEvent;
 import javax.print.attribute.standard.Severity;
 
 import org.eclipse.jubula.client.ui.preferences.utils.Utils;
-import org.eclipse.jubula.client.ui.widgets.JavaAutConfigComponent;
 import org.eclipse.jubula.tools.constants.InputConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.ui.IPageLayout;
@@ -52,11 +51,11 @@ public interface Constants {
     
     /** the ID of the specification perspective */
     public static final String SPEC_PERSPECTIVE = 
-        "org.eclipse.jubula.client.ui.perspectives.SpecificationPerspective"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective"; //$NON-NLS-1$
     
     /** the ID of the execution perspective */
     public static final String EXEC_PERSPECTIVE = 
-        "org.eclipse.jubula.client.ui.perspectives.ExecutionPerspective"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective"; //$NON-NLS-1$
     
     /** The ID of the aut property page. */
     public static final String AUT_PROPERTY_ID = 
@@ -94,7 +93,7 @@ public interface Constants {
     public static final String PROPVIEW_ID = IPageLayout.ID_PROP_SHEET;
 
     /** ID of the ImageView */
-    public static final String IMAGEVIEW_ID = "org.eclipse.jubula.client.ui.views.Image"; //$NON-NLS-1$
+    public static final String IMAGEVIEW_ID = "org.eclipse.jubula.client.ui.rcp.views.Image"; //$NON-NLS-1$
     
     /** ID of the Jubula Component Names View (override component names) */
     public static final String COMPNAMESVIEW_ID =
@@ -260,9 +259,6 @@ public interface Constants {
     /** Key for m_text value to be stored as a resource property */
     public static final String TREEAUTOSCROLL_KEY = "TREEAUTOSCROLL_PREF_KEY"; //$NON-NLS-1$
 
-    /** Key for m_text value to be stored as a resource property */
-    public static final String SERVER_SETTINGS_KEY = "SERVER_SETTINGS_KEY"; //$NON-NLS-1$
-    
     /** Key for m_text value to be stored as a resource property */
     public static final String LAST_USED_SERVER_KEY = "LAST_USED_SERVER_KEY"; //$NON-NLS-1$
     
@@ -445,9 +441,6 @@ public interface Constants {
     public static final boolean NODE_INSERT_KEY_DEFAULT = false;
     /** Key for boolean value to be stored as a resource property */
     public static final boolean SHOWCAPINFO_KEY_DEFAULT = true;
-    /** Value for the default AUT Config mode */
-    public static final String AUT_CONFIG_DIALOG_MODE_KEY_DEFAULT = 
-        JavaAutConfigComponent.Mode.BASIC.name();
     /** default value for showing transient childrens */
     public static final boolean SHOW_TRANSIENT_CHILDREN_KEY_DEFAULT = true;
 

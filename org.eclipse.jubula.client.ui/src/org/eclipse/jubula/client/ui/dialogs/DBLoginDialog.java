@@ -31,8 +31,8 @@ import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
@@ -48,6 +48,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 
 /**
@@ -130,7 +131,7 @@ public class DBLoginDialog extends TitleAreaDialog {
         gridLayoutParent.marginHeight = MARGIN_HEIGHT;
         parent.setLayout(gridLayoutParent);
 
-        Plugin.createSeparator(parent);
+        LayoutUtil.createSeparator(parent);
 
         Composite area = new Composite(parent, SWT.NONE);
         final GridLayout gridLayout = new GridLayout();
@@ -151,9 +152,10 @@ public class DBLoginDialog extends TitleAreaDialog {
         
         setUserAndPwdVisible(!m_isEmbeddedOrNoSelection);
         
-        Plugin.createSeparator(parent);
+        LayoutUtil.createSeparator(parent);
         
-        Plugin.getHelpSystem().setHelp(parent, ContextHelpIds.DB_LOGIN_ID);
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(
+                parent, ContextHelpIds.DB_LOGIN_ID);
         setHelpAvailable(true);
         
         return area;
@@ -196,9 +198,9 @@ public class DBLoginDialog extends TitleAreaDialog {
         m_userText = new JBText(area, SWT.BORDER);
         m_userText.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.userTxf"); //$NON-NLS-1$
         GridData gridData = newGridData();
-        Layout.addToolTipAndMaxWidth(gridData, m_userText);
+        LayoutUtil.addToolTipAndMaxWidth(gridData, m_userText);
         m_userText.setLayoutData(gridData);
-        Layout.setMaxChar(m_userText);
+        LayoutUtil.setMaxChar(m_userText);
         IPreferenceStore store = Plugin.getDefault().getPreferenceStore();
         m_userText.setText(store.getString(Constants.USER_KEY));
         m_userText.selectAll();
@@ -224,9 +226,9 @@ public class DBLoginDialog extends TitleAreaDialog {
         m_pwdText = new JBText(area, SWT.PASSWORD | SWT.BORDER);
         m_pwdText.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.pwdTxf"); //$NON-NLS-1$
         GridData gridData = newGridData();
-        Layout.addToolTipAndMaxWidth(gridData, m_pwdText);
+        LayoutUtil.addToolTipAndMaxWidth(gridData, m_pwdText);
         m_pwdText.setLayoutData(gridData);
-        Layout.setMaxChar(m_pwdText);
+        LayoutUtil.setMaxChar(m_pwdText);
         if (!StringUtils.isEmpty(m_userText.getText())) {
             m_pwdText.setFocus();
         }

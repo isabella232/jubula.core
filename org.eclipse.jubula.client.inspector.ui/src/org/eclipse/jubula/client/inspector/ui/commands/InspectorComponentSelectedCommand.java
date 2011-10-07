@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.inspector.ui.commands;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.inspector.ui.i18n.Messages;
@@ -25,6 +23,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.services.ISourceProviderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

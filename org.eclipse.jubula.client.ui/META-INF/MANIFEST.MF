@@ -1,73 +1,46 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula UI
-Bundle-SymbolicName: org.eclipse.jubula.client.ui; singleton:=true
+Bundle-SymbolicName: org.eclipse.jubula.client.ui;singleton:=true
 Bundle-Version: 1.1.0.qualifier
+Bundle-Vendor: Eclipse Jubula
 Bundle-ClassPath: .,
  icons/
-Bundle-Activator: org.eclipse.jubula.client.ui.Plugin
-Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
-Export-Package: org.eclipse.jubula.client.ui,
- org.eclipse.jubula.client.ui.actions,
- org.eclipse.jubula.client.ui.businessprocess,
- org.eclipse.jubula.client.ui.constants,
- org.eclipse.jubula.client.ui.controllers,
- org.eclipse.jubula.client.ui.controllers.propertydescriptors,
- org.eclipse.jubula.client.ui.controllers.propertysources,
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-BundleShape: jar
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
+ org.slf4j.api;bundle-version="[1.5.11,2.0.0)",
+ javax.persistence;bundle-version="[2.0.3,3.0.0)",
+ org.eclipse.persistence.core;bundle-version="[2.2.0,3.0.0)",
+ org.eclipse.jubula.ui.compatibility;bundle-version="[1.1.0,1.2.0)",
+ org.eclipse.jubula.tools;bundle-version="[1.1.0,1.2.0)",
+ org.apache.commons.codec;bundle-version="[1.3.0,2.0.0)",
+ org.apache.commons.collections;bundle-version="[3.2.0,4.0.0)",
+ org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
+ org.eclipse.jubula.client.core;bundle-version="[1.1.0,1.2.0)",
+ org.eclipse.core.databinding;bundle-version="[1.3.100,2.0.0)",
+ org.eclipse.core.databinding.beans;bundle-version="[1.2.100,2.0.0)",
+ org.eclipse.core.databinding.property;bundle-version="[1.3.0,2.0.0)",
+ org.eclipse.help;bundle-version="[3.5.0,4.0.0)"
+Export-Package: org.eclipse.jubula.client.ui.constants,
  org.eclipse.jubula.client.ui.databinding,
  org.eclipse.jubula.client.ui.databinding.validators,
  org.eclipse.jubula.client.ui.dialogs,
  org.eclipse.jubula.client.ui.editors,
- org.eclipse.jubula.client.ui.events,
- org.eclipse.jubula.client.ui.factory,
+ org.eclipse.jubula.client.ui.filter,
  org.eclipse.jubula.client.ui.handlers,
  org.eclipse.jubula.client.ui.handlers.open,
  org.eclipse.jubula.client.ui.handlers.project,
+ org.eclipse.jubula.client.ui.i18n,
  org.eclipse.jubula.client.ui.perspective,
- org.eclipse.jubula.client.ui.preferences,
- org.eclipse.jubula.client.ui.preferences.editors,
- org.eclipse.jubula.client.ui.properties,
- org.eclipse.jubula.client.ui.provider,
+ org.eclipse.jubula.client.ui.preferences.utils,
  org.eclipse.jubula.client.ui.provider.contentprovider,
- org.eclipse.jubula.client.ui.provider.contextprovider,
  org.eclipse.jubula.client.ui.provider.labelprovider,
- org.eclipse.jubula.client.ui.search.query,
- org.eclipse.jubula.client.ui.search.result,
- org.eclipse.jubula.client.ui.sourceprovider,
+ org.eclipse.jubula.client.ui.provider.labelprovider.decorators,
  org.eclipse.jubula.client.ui.utils,
+ org.eclipse.jubula.client.ui.validator.cell,
  org.eclipse.jubula.client.ui.views,
- org.eclipse.jubula.client.ui.views.problemview,
- org.eclipse.jubula.client.ui.widgets,
- org.eclipse.jubula.client.ui.wizards,
- org.eclipse.jubula.client.ui.wizards.pages
-Require-Bundle: org.eclipse.jubula.ui.compatibility;bundle-version="[1.1.0,1.2.0)",
- org.eclipse.jubula.tools;bundle-version="[1.1.0,1.2.0)",
- org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
- org.eclipse.help;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.ui.console;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.ui.ide;bundle-version="[3.6.1,4.0.0)",
- org.eclipse.core.filesystem;bundle-version="[1.3.1,2.0.0)",
- org.eclipse.core.resources;bundle-version="[3.6.0,4.0.0)",
- org.eclipse.search;bundle-version="[3.6.0,4.0.0)",
- org.apache.oro;bundle-version="[2.0.8,3.0.0)",
- org.apache.commons.codec;bundle-version="[1.3.0,2.0.0)",
- org.apache.commons.collections;bundle-version="[3.2.0,4.0.0)",
- org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
- org.apache.commons.beanutils;bundle-version="[1.7.0,2.0.0)",
- org.slf4j.api;bundle-version="[1.5.11,2.0.0)",
- ch.qos.logback.classic;bundle-version="0.9.19",
- ch.qos.logback.core;bundle-version="0.9.19",
- javax.persistence;bundle-version="[2.0.3,3.0.0)",
- org.eclipse.persistence.core;bundle-version="[2.2.0,3.0.0)",
- org.eclipse.persistence.jpa;bundle-version="[2.2.0,3.0.0)",
- org.eclipse.jubula.communication;bundle-version="[1.1.0,1.2.0)",
- org.eclipse.jubula.toolkit.common;bundle-version="[1.1.0,1.2.0)",
- org.eclipse.jubula.client.core;bundle-version="[1.1.0,1.2.0)",
- org.eclipse.jubula.client.archive;bundle-version="[1.1.0,1.2.0)",
- org.eclipse.core.databinding;bundle-version="[1.3.0,2.0.0)",
- org.eclipse.core.databinding.beans;bundle-version="[1.2.100,2.0.0)",
- org.eclipse.core.databinding.property;bundle-version="1.3.0"
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Eclipse-BundleShape: jar
+ org.eclipse.jubula.client.ui.widgets
+Bundle-Activator: org.eclipse.jubula.client.ui.Plugin

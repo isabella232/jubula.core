@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.core;
 
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jubula.app.Activator;
 import org.eclipse.jubula.app.i18n.Messages;
@@ -25,7 +26,6 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
 import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
-import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;

@@ -11,7 +11,7 @@
       label="Jubula"
       version="1.1.0.qualifier"
       provider-name="Eclipse Jubula"
-      plugin="org.eclipse.jubula.client.ui">
+      plugin="org.eclipse.jubula.client.ui.rcp">
 
    <description url="http://www.eclipse.org/jubula">
       Eclipse functional UI testing environment.
@@ -113,7 +113,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.client.ui"
+         id="org.eclipse.jubula.client.ui.rcp"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -372,6 +372,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
 
    <plugin
          id="org.eclipse.jubula.ui.compatibility"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

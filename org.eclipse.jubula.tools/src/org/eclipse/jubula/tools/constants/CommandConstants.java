@@ -182,7 +182,7 @@ public abstract class CommandConstants {
     /** remotely browse for files/directories */
     public static final String SEND_DIRECTORY_COMMAND = "org.eclipse.jubula.autagent.commands.SendDirectoryCommand"; //$NON-NLS-1$
     /** process the directory/files list */
-    public static final String PROCESS_DIR_COMMAND = "org.eclipse.jubula.client.ui.businessprocess.HandleRemoteFileBrowsing"; //$NON-NLS-1$
+    public static final String PROCESS_DIR_COMMAND = "org.eclipse.jubula.client.ui.rcp.businessprocess.HandleRemoteFileBrowsing"; //$NON-NLS-1$
 
     /** client-side handling for AUT registration with the AUT Agent */
     public static final String AUT_REGISTERED_COMMAND = "org.eclipse.jubula.client.core.commands.AutRegisteredCommand"; //$NON-NLS-1$

@@ -20,7 +20,6 @@ import org.eclipse.jface.viewers.TreeNodeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.inspector.ui.model.InspectedComponent;
 import org.eclipse.jubula.client.inspector.ui.provider.labelprovider.InspectorLabelProvider;
-import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.swt.widgets.Composite;
@@ -87,7 +86,8 @@ public class InspectorView extends ViewPart {
         // Register menu for extension.
         getViewSite().registerContextMenu(VIEW_ID, menuMgr, m_treeViewer);
         
-        Plugin.getHelpSystem().setHelp(m_treeViewer.getControl(),
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(
+                m_treeViewer.getControl(),
                 ContextHelpIds.INSPECTOR_VIEW);
     }
 

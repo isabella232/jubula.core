@@ -11,8 +11,8 @@
 package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
-import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
+import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;

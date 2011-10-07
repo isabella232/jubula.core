@@ -24,9 +24,9 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jubula.client.core.utils.Languages;
-import org.eclipse.jubula.client.ui.constants.Layout;
-import org.eclipse.jubula.client.ui.utils.DialogStatusParameter;
-import org.eclipse.jubula.client.ui.widgets.JavaAutConfigComponent;
+import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
+import org.eclipse.jubula.client.ui.rcp.widgets.JavaAutConfigComponent;
+import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -82,7 +82,7 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
         Combo keyboardLayoutCombo = m_keyboardLayoutCombo.getCombo();
         GridData comboGrid = new GridData(GridData.FILL, GridData.CENTER, 
             true , false, 2, 1);
-        Layout.addToolTipAndMaxWidth(comboGrid, keyboardLayoutCombo);
+        LayoutUtil.addToolTipAndMaxWidth(comboGrid, keyboardLayoutCombo);
         keyboardLayoutCombo.setLayoutData(comboGrid);
         ((GridData)keyboardLayoutCombo.getLayoutData()).widthHint = 
             COMPOSITE_WIDTH;

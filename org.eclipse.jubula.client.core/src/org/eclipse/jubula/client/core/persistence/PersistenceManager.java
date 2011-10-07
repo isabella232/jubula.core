@@ -20,8 +20,6 @@ import javax.persistence.PersistenceException;
 import javax.persistence.PessimisticLockException;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
@@ -30,6 +28,8 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * base persistence manager class

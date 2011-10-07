@@ -10,14 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.commands;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.CAPRecordedMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.RecordActionMessage;
 import org.eclipse.jubula.tools.exception.CommunicationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

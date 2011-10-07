@@ -15,7 +15,6 @@ import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jubula.client.ui.Plugin;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -199,26 +198,12 @@ public class IconConstants {
     public static final Image OPEN_TC_DIALOG_IMAGE = Plugin.getImage("openTC.gif"); //$NON-NLS-1$
     /** event handler CAP image */
     public static final Image EH_CAP_IMAGE = Plugin.getImage("EventHandlerCap.gif"); //$NON-NLS-1$
-    /** no server image */
-    public static final Image NO_SERVER_IMAGE = Plugin.getImage("NoServer.gif"); //$NON-NLS-1$
-    /** no connection image */
-    public static final Image NO_CONNECTION_IMAGE = Plugin.getImage("NoSC.gif"); //$NON-NLS-1$
-    /** aut running image */
-    public static final Image AUT_RUNNING_IMAGE = Plugin.getImage("AUTup.gif"); //$NON-NLS-1$
-    /** camera image */
-    public static final Image CAM_IMAGE = Plugin.getImage("cam.gif"); //$NON-NLS-1$
-    /** checkcamera image */
-    public static final Image CHECK_CAM_IMAGE = Plugin.getImage("checkcam.gif"); //$NON-NLS-1$
     /** clock image */
     public static final Image CLOCK_IMAGE = Plugin.getImage("longRunning.gif"); //$NON-NLS-1$
-    /** map image */
-    public static final Image MAP_IMAGE = Plugin.getImage("map.gif"); //$NON-NLS-1$
     /** missing project image */
     public static final Image MISSING_PROJECT_IMAGE = Plugin.getImage("missingReusedProject.gif"); //$NON-NLS-1$
-    /** pause image */
-    public static final Image PAUSE_IMAGE = Plugin.getImage("pause.gif"); //$NON-NLS-1$
-    /** no aut image */
-    public static final Image NO_AUT_IMAGE = Plugin.getImage("NoAUT.gif"); //$NON-NLS-1$
+    /** aut running image */
+    public static final Image AUT_RUNNING_IMAGE = Plugin.getImage("AUTup.gif"); //$NON-NLS-1$
     /** propagate image */
     public static final Image PROPAGATE_IMAGE = Plugin.getImage("propagate.gif"); //$NON-NLS-1$
     /** global name image */
@@ -283,15 +268,10 @@ public class IconConstants {
     /** test case image */
     public static final Image TC_IMAGE = Plugin.getImage("testCase.gif"); //$NON-NLS-1$
     /** testCase_disabled image */
-    public static final Image TC_DISABLED_IMAGE = 
-        new Image(TC_IMAGE.getDevice(), TC_IMAGE, SWT.IMAGE_GRAY);
     /** test case image */
     public static final Image ROOT_IMAGE = Plugin.getImage("root.gif"); //$NON-NLS-1$
     /** test case image */
     public static final Image PROBLEM_CAT_IMAGE = Plugin.getImage("problemCategory.gif"); //$NON-NLS-1$
-    /**ImageDescrptor for the Link with Editor-Button */
-    public static final ImageDescriptor LINK_WITH_EDITOR_IMAGE_DESCRIPTOR = 
-        Plugin.getImageDescriptor("linkWithEditor.gif"); //$NON-NLS-1$
     /** name for new test case dialog-image */
     public static final String RENAME_TC_DIALOG_STRING = "renameTC.gif"; //$NON-NLS-1$
     /** name for new test suite dialog-image */
@@ -327,10 +307,6 @@ public class IconConstants {
         GEN_IMAGES.put(CATEGORY_IMAGE, Plugin.getImage("category_generated.gif")); //$NON-NLS-1$
     }
 
-    /** maps images to their "cut" (grayscale) counterparts */
-    private static final Map<Image, Image> CUT_IMAGES = 
-        new HashMap<Image, Image>();
-
     /** to prevent instantiation */
     private IconConstants() {
         // do nothing
@@ -352,20 +328,4 @@ public class IconConstants {
         return genImage;
     }
 
-    /**
-     * 
-     * @param original The original, or base, image.
-     * @return the "cut" version of the image. Client should not 
-     *         dispose this image.
-     */
-    public static Image getCutImage(Image original) {
-        Image cutImage = CUT_IMAGES.get(original);
-        if (cutImage == null) {
-            cutImage = 
-                new Image(original.getDevice(), original, SWT.IMAGE_GRAY);
-            CUT_IMAGES.put(original, cutImage);
-        }
-        
-        return cutImage;
-    }
 }

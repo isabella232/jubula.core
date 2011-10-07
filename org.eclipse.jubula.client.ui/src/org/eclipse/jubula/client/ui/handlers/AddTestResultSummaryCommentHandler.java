@@ -21,9 +21,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.dialogs.EnterCommentDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -31,6 +30,7 @@ import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 
@@ -63,7 +63,7 @@ public class AddTestResultSummaryCommentHandler
             dialog.setHelpAvailable(true);
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
-            Plugin.getHelpSystem().setHelp(dialog.getShell(),
+            PlatformUI.getWorkbench().getHelpSystem().setHelp(dialog.getShell(),
                     ContextHelpIds.ADD_COMMENT);
             int result = dialog.open();
             if (result != Window.OK) {

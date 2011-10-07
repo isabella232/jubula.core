@@ -16,8 +16,8 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jubula.client.ui.constants.Layout;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -121,7 +121,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
         GridData gridData;
         JBText commentTitleField = createCommentTitleText(area);
         gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
-        Layout.addToolTipAndMaxWidth(gridData, commentTitleField);
+        LayoutUtil.addToolTipAndMaxWidth(gridData, commentTitleField);
         commentTitleField.setLayoutData(gridData);
         
         IObservableValue commentTitleFieldText = 
@@ -136,7 +136,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
         if (!StringUtils.isEmpty(m_initialTitle)) {
             m_commentTitle.setValue(m_initialTitle);
         }
-        Layout.setMaxChar(commentTitleField, 4000);
+        LayoutUtil.setMaxChar(commentTitleField, 4000);
         
         commentTitleField.selectAll();
     }
@@ -148,7 +148,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
         GridData gridData;
         JBText commentDetailField = createCommentDetailText(area);
         gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-        Layout.addToolTipAndMaxWidth(gridData, commentDetailField);
+        LayoutUtil.addToolTipAndMaxWidth(gridData, commentDetailField);
         commentDetailField.setLayoutData(gridData);
         
         IObservableValue commentDetailFieldText = 
@@ -164,7 +164,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
         if (!StringUtils.isEmpty(m_initialDetail)) {
             m_commentDetail.setValue(m_initialDetail);
         }
-        Layout.setMaxChar(commentDetailField, 4000);
+        LayoutUtil.setMaxChar(commentDetailField, 4000);
     }
 
     /**

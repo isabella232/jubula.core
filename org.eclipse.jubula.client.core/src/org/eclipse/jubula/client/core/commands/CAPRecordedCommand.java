@@ -19,8 +19,6 @@ import java.util.Set;
 
 import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.IRecordListener;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.businessprocess.CompletenessGuard;
@@ -60,6 +58,8 @@ import org.eclipse.jubula.tools.objects.MappingConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**

@@ -34,8 +34,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.ExternalCommandExecutor;
-import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.jubula.tools.utils.ExternalCommandExecutor.MonitorTask;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 
 
 /**

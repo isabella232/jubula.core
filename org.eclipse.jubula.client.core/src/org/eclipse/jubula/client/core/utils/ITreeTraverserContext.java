@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.utils;
 
 import java.util.List;
 
+
 /**
  * Defines the context of the tree traverser.
  * 

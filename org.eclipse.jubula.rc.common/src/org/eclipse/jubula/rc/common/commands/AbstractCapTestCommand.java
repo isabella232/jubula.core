@@ -13,8 +13,6 @@ package org.eclipse.jubula.rc.common.commands;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.lang.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.CAPTestMessage;
 import org.eclipse.jubula.communication.message.CAPTestResponseMessage;
@@ -24,13 +22,13 @@ import org.eclipse.jubula.communication.message.MessageCap;
 import org.eclipse.jubula.communication.message.MessageParam;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.EventSupportException;
 import org.eclipse.jubula.rc.common.exception.ExecutionEvent;
-import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
-import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.exception.MethodParamException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -38,6 +36,8 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
