@@ -160,7 +160,7 @@
 		</copy>
 		<copy todir="../${ExampleSwingExtensionServer}/lib" overwrite="true">
 			<fileset dir="${release}/server/plugins/">
-				<include name="*tools*.jar"/>
+				<include name="org.eclipse.jubula.tools_*.jar"/>
 			</fileset>
 			<mapper type="merge" to="org.eclipse.jubula.tools.jar"/>
 		</copy>
