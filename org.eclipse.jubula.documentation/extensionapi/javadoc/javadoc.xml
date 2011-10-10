@@ -8,15 +8,12 @@
 
 <project default="javadoc">
 	<target name="javadoc">
-		<property name="cp" refid="rc.extension.classpath"/>
-		<echo message="Classpath is ${cp}"/>
 		<property name="sp" refid="rc.extension.sourcepath"/>
 		<echo message="Sourcepath is ${sp}"/>
 
 		<javadoc 
 			access="protected" 
 			author="false" 
-			classpathref="rc.extension.classpath"
 			destdir="${outputdir}" 
 			doctitle="GUIdancer External Swing Component API" 
 			nodeprecated="false" 

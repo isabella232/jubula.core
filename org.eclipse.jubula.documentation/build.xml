@@ -56,7 +56,6 @@
 		<ant dir="${buildRoot}/extensionapi/javadoc" antfile="javadoc.xml" 
 			target="javadoc" inheritAll="false" inheritRefs="false">
 			<property name="outputdir" location="${buildRoot}/extensionapi/javadoc/html" />
-			<reference refid="rc.extension.classpath" />
 			<reference refid="rc.extension.sourcepath" />
 		</ant>
 		<delete dir="${buildRoot}/extensionapi/javadoc/zip" />
