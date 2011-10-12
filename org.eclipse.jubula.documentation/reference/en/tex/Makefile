@@ -62,7 +62,6 @@ htmlandpdf: clean-html pdf userlabels.pl
 	rm -f ${OUTPUTHTML}/html/images.* ${OUTPUTHTML}/html/*.log ${OUTPUTHTML}/html/WARNINGS
 
 texgen:
-	cd ${TEXGEN}/script; ant jar; 
 	if [ ! -d Action/Generated ]; then mkdir Action/Generated; fi
 	cd ${TEXGEN}/script; sh texgen.sh ../../org.eclipse.jubula.documentation/reference/en/tex/Action/Generated en_US actions
 UserManual.aux:
