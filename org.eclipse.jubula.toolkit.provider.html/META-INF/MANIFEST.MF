@@ -17,3 +17,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse Jubula
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.eclipse.jubula.toolkit.provider.html.gui
