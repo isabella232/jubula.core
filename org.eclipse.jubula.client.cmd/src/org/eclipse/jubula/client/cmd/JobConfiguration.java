@@ -15,8 +15,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,7 +34,6 @@ import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
-import org.eclipse.jubula.tools.utils.StringParsing;
 import org.eclipse.osgi.util.NLS;
 
 import com.thoughtworks.xstream.XStream;
@@ -86,13 +83,13 @@ public class JobConfiguration {
     /** configuration detail */
     private String m_autConfigName;
     /** configuration detail */
-    private List<String> m_testSuiteNames = new ArrayList<String>();
+    private String m_testSuiteName;
     /** the name of the Test Job to execute */
     private String m_testJobName;
     /** configuration detail */
     private Locale m_language;
-    /** list for Test Suites */
-    private List<ITestSuitePO> m_testSuites = new ArrayList<ITestSuitePO>();
+    /** the test suite */
+    private ITestSuitePO m_testSuite;
     /** the Test Job to execute */
     private ITestJobPO m_testJob;
     /** list for Test Suites */
@@ -101,8 +98,6 @@ public class JobConfiguration {
     private AutIdentifier m_autId;
     /** actual project */
     private IProjectPO m_project;
-    /** actual testSuite */
-    private int m_actualTestSuite = 0;
     /** where are the external data files */
     private String m_dataDir;
     /** timeout for this run */
@@ -213,41 +208,6 @@ public class JobConfiguration {
     }
 
     /**
-     * @return ITestSuitePO
-     */
-    public ITestSuitePO getActualTestSuite() {
-        if (m_testSuites.size() > m_actualTestSuite) {
-            return m_testSuites.get(m_actualTestSuite);
-        }
-        return null;
-    }
-
-    /**
-     * @return int
-     */
-    public int getActualTestSuiteIndex() {
-        return m_actualTestSuite;
-    }
-
-    /**
-     * @return int
-     */
-    public int getJobSize() {
-        return m_testSuites.size();
-    }
-
-    /**
-     * @return ITestSuitePO
-     */
-    public ITestSuitePO getNextTestSuite() {
-        m_actualTestSuite++;
-        if (m_testSuites.size() > m_actualTestSuite) {
-            return m_testSuites.get(m_actualTestSuite);
-        }
-        return null;
-    }
-
-    /**
      * @return String
      */
     public String getPort() {
@@ -281,17 +241,15 @@ public class JobConfiguration {
                     String.valueOf(m_projectMajor), 
                     String.valueOf(m_projectMinor)}));
         // searching for testsuites with the given names
-        for (String name : m_testSuiteNames) {
-            for (ITestSuitePO ts : getProject().getTestSuiteCont().
-                getTestSuiteList()) {
-                if (ts.getName().equals(name)) {
-                    m_testSuites.add(ts);
-                    break;
-                }
+        for (ITestSuitePO ts : getProject().getTestSuiteCont()
+                .getTestSuiteList()) {
+            if (ts.getName().equals(m_testSuiteName)) {
+                setTestSuite(ts);
+                break;
             }
         }
-        Validate.isTrue((m_testSuiteNames.size() == m_testSuites.size()), 
-            Messages.JobConfigurationValidateTestSuiteExist);
+        Validate.isTrue((getTestSuite() != null),
+                Messages.JobConfigurationValidateTestSuiteExist);
 
         for (ITestJobPO tj : getProject().getTestJobCont().getTestJobList()) {
             if (tj.getName().equals(m_testJobName)) {
@@ -299,15 +257,13 @@ public class JobConfiguration {
             }
         }
         
-        if (!m_testSuites.isEmpty()) {
+        if (getTestSuite() != null) {
             // checking that all Test Suites are assigned to an AUT
-            for (ITestSuitePO ts : m_testSuites) {
-                Validate.notNull(ts.getAut(), 
-                        Messages.JobConfigurationValidateAnyAut);
-            }
+            Validate.notNull(getTestSuite().getAut(),
+                    Messages.JobConfigurationValidateAnyAut);
             
             // checking if specified AUT Config exists
-            IAUTMainPO aut = getActualTestSuite().getAut();
+            IAUTMainPO aut = getTestSuite().getAut();
             if (m_autConfigName != null) {
                 for (IAUTConfigPO config : aut.getAutConfigSet()) {
                     if (m_autConfigName.equals(config.getName())) {
@@ -437,12 +393,7 @@ public class JobConfiguration {
                     cmd.getOptionValue(ClientTestStrings.LANGUAGE))); 
         }
         if (cmd.hasOption(ClientTestStrings.TESTSUITE)) { 
-            String tsNames = cmd.getOptionValue(ClientTestStrings.TESTSUITE); 
-            List<String> tsNamesList = new ArrayList<String>();
-            tsNamesList = StringParsing.splitToList(tsNames, ',', '\\', false);
-            if (!tsNamesList.isEmpty()) {
-                setTestSuiteNames(tsNamesList);
-            }
+            setTestSuiteName(cmd.getOptionValue(ClientTestStrings.TESTSUITE));
         }
         if (cmd.hasOption(ClientTestStrings.TESTJOB)) { 
             setTestJobName(cmd.getOptionValue(ClientTestStrings.TESTJOB));
@@ -525,22 +476,6 @@ public class JobConfiguration {
     }
     
     /**
-     * parse the parameter received from the client
-     * @param testsuite name of the testsuite to execute
-     * @param timeout timeout value for test execution
-     */
-    @SuppressWarnings("unchecked")
-    public void parseServerParams(Object testsuite, Object timeout) {
-        String tsNames = (String)testsuite; 
-        List<String> tsNamesList = new ArrayList<String>();
-        tsNamesList = StringParsing.splitToList(tsNames, ',', '\\', false);
-        if (!tsNamesList.isEmpty()) {
-            setTestSuiteNames(tsNamesList);
-        }
-        setTimeout((Integer)timeout);
-    }
-    
-    /**
      * @param cmd CommandLine
      */
     private void parseDBOptions(CommandLine cmd) {
@@ -560,12 +495,11 @@ public class JobConfiguration {
         }
     }
  
- 
     /**
-     * @return List<String>
+     * @return the test suite name to execute
      */
-    public List<String> getTestSuiteNames() {
-        return m_testSuiteNames;
+    public String getTestSuiteName() {
+        return m_testSuiteName;
     }
 
     /**
@@ -605,10 +539,10 @@ public class JobConfiguration {
     }
 
     /**
-     * @param testSuiteNames List<String>
+     * @param testSuiteName the test suite to execute
      */
-    private void setTestSuiteNames(List<String> testSuiteNames) {
-        m_testSuiteNames = testSuiteNames;
+    private void setTestSuiteName(String testSuiteName) {
+        m_testSuiteName = testSuiteName;
     }
 
     /**
@@ -669,13 +603,6 @@ public class JobConfiguration {
      */
     public IAUTConfigPO getAutConfig() {
         return m_autConfig;
-    }
-
-    /** 
-     * @return List <ITestSuitePO>
-     */
-    public List<ITestSuitePO> getTestSuites() {
-        return Collections.unmodifiableList(m_testSuites);
     }
 
     /** 
@@ -755,11 +682,7 @@ public class JobConfiguration {
             arg1.endNode();
 
             arg1.startNode(ClientTestStrings.TESTSUITE);
-            for (String ts : job.getTestSuiteNames()) {
-                arg1.startNode(ClientTestStrings.ENTRY);
-                arg1.setValue(ts);
-                arg1.endNode();
-            }
+            arg1.setValue(job.getTestSuiteName());
             arg1.endNode();
 
             arg1.startNode(ClientTestStrings.AUT_CONFIG);
@@ -821,16 +744,7 @@ public class JobConfiguration {
                     job.setDataDir(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.TESTSUITE)) {
-                    List<String> testSuiteNames = new ArrayList<String>();
-                    while (arg0.hasMoreChildren()) {
-                        arg0.moveDown();
-                        if (arg0.getNodeName().
-                                equals(ClientTestStrings.ENTRY)) {
-                            testSuiteNames.add(arg0.getValue());
-                        }
-                        arg0.moveUp();
-                    }
-                    job.setTestSuiteNames(testSuiteNames);
+                    job.setTestSuiteName(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.TESTJOB)) {
                     job.setTestJobName(arg0.getValue());
@@ -976,5 +890,19 @@ public class JobConfiguration {
         }
 
         return null;
+    }
+
+    /**
+     * @param testSuite the testSuite to set
+     */
+    public void setTestSuite(ITestSuitePO testSuite) {
+        m_testSuite = testSuite;
+    }
+
+    /**
+     * @return the testSuite
+     */
+    public ITestSuitePO getTestSuite() {
+        return m_testSuite;
     }
 }
