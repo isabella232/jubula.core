@@ -21,8 +21,8 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.StartAutBP;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.handlers.StartAutHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
@@ -67,8 +67,9 @@ public class StartAutContributionItem extends CompoundContributionItem {
                     }
                     itemName += " : " + conf.getName(); //$NON-NLS-1$;
                     contributionItems.add(CommandHelper.createContributionItem(
-                            CommandIDs.START_AUT_COMMAND_ID, params, itemName,
-                            CommandContributionItem.STYLE_CHECK));
+                            RCPCommandIDs.START_AUT_COMMAND_ID, 
+                            params,
+                            itemName, CommandContributionItem.STYLE_CHECK));
                 }
             }
             contributionItems.add(new Separator());

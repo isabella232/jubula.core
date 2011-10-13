@@ -800,10 +800,6 @@
 			id="org.eclipse.jubula.client.ui.rcp.commands.EditParameters" name="Edit Parameters" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-			id="org.eclipse.jubula.client.ui.rcp.commands.ShowSpecification"
-			name="%FindSpecTestCase" />
-		<command
-			categoryId="org.eclipse.jubula.client.ui.rcp.commands"
 			id="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed" name="%ShowWhereUsed" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.rcp.commands"
@@ -893,10 +889,6 @@
 		</commandParameterType>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-			id="org.eclipse.jubula.client.ui.rcp.commands.ExpandTreeItem" name="%Expand">
-		</command>
-		<command
-			categoryId="org.eclipse.jubula.client.ui.rcp.commands"
 			id="org.eclipse.jubula.client.ui.rcp.commands.RevertChanges" name="Revert Changes">
 		</command>
 		<command
@@ -955,11 +947,6 @@
         categoryId="org.eclipse.jubula.client.ui.rcp.commands"
         id="org.eclipse.jubula.client.ui.rcp.commands.AddNewTestDataManager"
         name="%AddNewDataCube">
-  </command>
-  <command
-        categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-        id="org.eclipse.jubula.client.ui.rcp.commands.OpenSpecification"
-        name="%OpenSpecification">
   </command>
   <command
         categoryId="org.eclipse.jubula.client.ui.rcp.commands"
@@ -1095,7 +1082,7 @@
 		<key commandId="org.eclipse.jubula.client.ui.rcp.commands.EditParameters"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.jubula.client.ui.rcp.defaultKeyScheme"
 			sequence="M1+M2+A" />
-		<key commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowSpecification"
+		<key commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F6" />
 		<key commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed"
@@ -1138,7 +1125,7 @@
 			sequence="INSERT">
 		</key>
   <key
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenSpecification"
+        commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
         contextId="org.eclipse.ui.contexts.window"
         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
         sequence="F3">
@@ -2571,12 +2558,6 @@
 		<image commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestJobEditor"
 			icon="icons/testJobEditor.gif">
 		</image>
-		<image commandId="org.eclipse.jubula.client.ui.rcp.commands.ExpandTreeItem"
-			icon="icons/expand.gif">
-		</image>
-		<image commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowSpecification"
-			icon="icons/testCase.gif">
-		</image>
 		<image commandId="org.eclipse.jubula.client.ui.rcp.commands.RevertChanges"
 			icon="icons/revertChanges.gif">
 		</image>
@@ -2638,10 +2619,6 @@
         commandId="org.eclipse.search.ui.openSearchDialog"
         disabledIcon="icons/openSearchDialog_disabled.gif"
         icon="icons/openSearchDialog.gif">
-  </image>
-  <image
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenSpecification"
-        icon="icons/openSpecification.gif">
   </image>
   <image
         commandId="org.eclipse.jubula.client.ui.rcp.commands.AddEventHandler"
@@ -3067,7 +3044,7 @@
 		</handler>
 		<handler
 			class="org.eclipse.jubula.client.ui.rcp.handlers.ExpandTreeItemHandler"
-			commandId="org.eclipse.jubula.client.ui.rcp.commands.ExpandTreeItem">
+			commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem">
 			<activeWhen>
 				<and>
 					<count value="+">
@@ -3092,7 +3069,7 @@
 		</handler>
 		<handler
 			class="org.eclipse.jubula.client.ui.rcp.handlers.ShowSpecificationHandler"
-			commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowSpecification">
+			commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification">
 			<activeWhen>
 				<and>
 					<with
@@ -3116,7 +3093,7 @@
 		</handler>
 		<handler
 			class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenSpecificationHandler"
-			commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenSpecification">
+			commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification">
 			<activeWhen>
 				<and>
 					<with
@@ -3139,7 +3116,7 @@
 		</handler>
 		<handler
 			class="org.eclipse.jubula.client.ui.rcp.handlers.ShowSpecificationHandlerRefTS"
-			commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowSpecification">
+			commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification">
 			<activeWhen>
 				<and>
 					<count value="1" />
@@ -3153,7 +3130,7 @@
 		</handler>
 		<handler
 			class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenSpecificationHandlerRefTS"
-			commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenSpecification">
+			commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification">
 			<activeWhen>
 				<and>
 					<count value="1" />

@@ -19,11 +19,11 @@ import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.ServerManager;
 import org.eclipse.jubula.client.ui.rcp.utils.ServerManager.Server;
@@ -339,13 +339,13 @@ public class NewServerPortDialog extends TitleAreaDialog {
             if (dialog.getReturnCode() == Window.OK) {
                 if (dialog.getSelectionIndex() == 0) { // create
                     CommandHelper.executeCommand(
-                            CommandIDs.NEW_PROJECT_COMMAND_ID);
+                            RCPCommandIDs.NEW_PROJECT_COMMAND_ID);
                 } else if (dialog.getSelectionIndex() == 1) { // import
                     CommandHelper.executeCommand(
-                            CommandIDs.IMPORT_PROJECT_COMMAND_ID);
+                            RCPCommandIDs.IMPORT_PROJECT_COMMAND_ID);
                 } else if (dialog.getSelectionIndex() == 2) { // open
                     CommandHelper.executeCommand(
-                            CommandIDs.OPEN_PROJECT_COMMAND_ID);
+                            RCPCommandIDs.OPEN_PROJECT_COMMAND_ID);
                 }
             }
         }

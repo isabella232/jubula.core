@@ -54,6 +54,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TreeViewerContainerDragSourceListener;
@@ -155,21 +156,23 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                 IStructuredSelection selection = getSuiteTreeSelection();
                 Object firstElement = selection.getFirstElement();
                 if (firstElement instanceof ITestSuitePO) {
-                    ITestSuitePO testSuite = (ITestSuitePO)firstElement;
+                    ITestSuitePO testSuite = (ITestSuitePO) firstElement;
                     if (testSuite.isEditable()) {
-                        runCommand(CommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
+                        runCommand(
+                                RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
                     }
                 } else if (firstElement instanceof ITestJobPO) {
-                    if (((ITestJobPO)firstElement).isEditable()) {
-                        runCommand(CommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
+                    if (((ITestJobPO) firstElement).isEditable()) {
+                        runCommand(
+                                RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
                     }
                 } else if (firstElement instanceof IProjectPO) {
-                    runCommand(CommandIDs
+                    runCommand(RCPCommandIDs
                             .OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
                 } else if (firstElement instanceof ITestSuiteContPO) {
-                    runCommand(CommandIDs.NEW_TESTSUITE_COMMAND_ID);
+                    runCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
                 } else if (firstElement instanceof ITestJobContPO) {
-                    runCommand(CommandIDs.NEW_TESTJOB_COMMAND_ID);
+                    runCommand(RCPCommandIDs.NEW_TESTJOB_COMMAND_ID);
                 }
             }
             
@@ -195,21 +198,21 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
             MenuManager submenuOpenWith = new MenuManager(
                     Messages.TestSuiteBrowserOpenWith, OPEN_WITH_ID);
             CommandHelper.createContributionPushItem(submenuNew,
-                    CommandIDs.NEW_TESTSUITE_COMMAND_ID);
+                    RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
             CommandHelper.createContributionPushItem(submenuNew,
-                    CommandIDs.NEW_TESTJOB_COMMAND_ID);
+                    RCPCommandIDs.NEW_TESTJOB_COMMAND_ID);
             CommandHelper.createContributionPushItem(submenuOpenWith,
-                    CommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
             CommandHelper.createContributionPushItem(submenuOpenWith,
-                    CommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
             CommandHelper.createContributionPushItem(submenuOpenWith,
-                    CommandIDs.OPEN_OBJECTMAPPING_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_OBJECTMAPPING_EDITOR_COMMAND_ID);
             CommandHelper.createContributionPushItem(submenuOpenWith,
-                    CommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
             mgr.add(submenuNew);
             mgr.add(new Separator());
             CommandHelper.createContributionPushItem(mgr,
-                    CommandIDs.RENAME_COMMAND_ID);
+                    RCPCommandIDs.RENAME_COMMAND_ID);
             mgr.add(SearchTreeAction.getAction());
             CommandHelper.createContributionPushItem(mgr,
                     CommandIDs.DELETE_COMMAND_ID);
@@ -221,7 +224,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                     CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
             mgr.add(new Separator());
             CommandHelper.createContributionPushItem(mgr,
-                    CommandIDs.COPY_ID_COMMAND_ID);
+                    RCPCommandIDs.COPY_ID_COMMAND_ID);
             mgr.add(new Separator());
             CommandHelper.createContributionPushItem(mgr,
                     CommandIDs.REFRESH_COMMAND_ID);
@@ -229,7 +232,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
             mgr.add(submenuOpenWith);
             mgr.add(new Separator());
             CommandHelper.createContributionPushItem(mgr,
-                    CommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
+                    RCPCommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
             m_isContextMenuInitialized = true;
         }
     }

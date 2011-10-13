@@ -474,8 +474,8 @@ public class TestResultTreeView extends ViewPart
      * handles a DClick on the tree
      */
     private void handleDClick() {
-        CommandHelper.executeCommand(CommandIDs.SHOW_SPECIFICATION_COMMAND_ID,
-                getSite());
+        CommandHelper.executeCommand(
+                CommandIDs.SHOW_SPECIFICATION_COMMAND_ID, getSite());
     }
     
     /**

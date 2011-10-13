@@ -97,6 +97,7 @@ import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionOMEditor;
 import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.OMEditorBP;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.ComponentNameTreeViewerUpdater;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
@@ -1265,19 +1266,19 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     protected void fillTreeContextMenu(IMenuManager mgr) {
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.NEW_CATEGORY_COMMAND_ID);
+                RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         mgr.add(m_cutTreeItemAction);
         mgr.add(m_pasteTreeItemAction);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.RENAME_COMMAND_ID);
+                RCPCommandIDs.RENAME_COMMAND_ID);
         mgr.add(SearchTreeAction.getAction());
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.REFRESH_COMMAND_ID);
@@ -1286,14 +1287,14 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         mgr.add(OMSetCategoryToMapInto.getAction());
         mgr.add(OMMarkInAutAction.getAction());
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.SHOW_WHERE_USED_COMMAND_ID);
+                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.SHOW_RESPONSIBLE_NODE_COMMAND_ID);
+                RCPCommandIDs.SHOW_RESPONSIBLE_NODE_COMMAND_ID);
         mgr.add(new Separator());
         MenuManager submenuNew = new MenuManager(
                 Messages.ObjectMappingEditorCleanupMenu, CLEANUP_ID);
         CommandHelper.createContributionPushItem(submenuNew,
-                CommandIDs.OME_DELETE_UNUSED_COMPONENT_NAME_COMMAND_ID);
+                RCPCommandIDs.OME_DELETE_UNUSED_COMPONENT_NAME_COMMAND_ID);
         mgr.add(submenuNew);
     }
 
@@ -1340,7 +1341,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     protected void fillConfigContextMenu(IMenuManager mgr) {
         CommandHelper.createContributionPushItem(mgr, 
-                CommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
     }
 
     /**
@@ -1369,7 +1370,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     protected void fillTableContextMenu(IMenuManager mgr) {
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.REFRESH_COMMAND_ID);
     }

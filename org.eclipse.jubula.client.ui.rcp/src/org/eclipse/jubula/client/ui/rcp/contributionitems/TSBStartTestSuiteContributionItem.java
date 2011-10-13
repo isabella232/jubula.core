@@ -29,8 +29,8 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ChooseTestSuiteBP;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.handlers.StartTestJobHandler;
 import org.eclipse.jubula.client.ui.rcp.handlers.StartTestSuiteHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -136,7 +136,7 @@ public class TSBStartTestSuiteContributionItem
             .append(autId.getExecutableName())
             .append(StringConstants.RIGHT_PARENTHESES);
         return CommandHelper.createContributionItem(
-                CommandIDs.START_TEST_SUITE_COMMAND_ID, params, labelBuilder
+                RCPCommandIDs.START_TEST_SUITE_COMMAND_ID, params, labelBuilder
                         .toString(), CommandContributionItem.STYLE_CHECK);
     }
 
@@ -155,7 +155,7 @@ public class TSBStartTestSuiteContributionItem
         StringBuilder labelBuilder = new StringBuilder();
         labelBuilder.append(jobToStart.getName());
         return CommandHelper.createContributionItem(
-                CommandIDs.START_TEST_JOB_COMMAND_ID, params, labelBuilder
+                RCPCommandIDs.START_TEST_JOB_COMMAND_ID, params, labelBuilder
                         .toString(), CommandContributionItem.STYLE_CHECK);
     }
     

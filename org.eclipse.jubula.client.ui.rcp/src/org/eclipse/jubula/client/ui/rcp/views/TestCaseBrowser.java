@@ -50,6 +50,7 @@ import org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction;
 import org.eclipse.jubula.client.ui.rcp.actions.NewTestCaseActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
@@ -229,10 +230,10 @@ public class TestCaseBrowser extends AbstractJBTreeView
         mgr.add(submenuAdd);
         submenuNew.add(m_newTestCaseAction);
         CommandHelper.createContributionPushItem(submenuNew,
-                CommandIDs.NEW_CATEGORY_COMMAND_ID);
+                RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.RENAME_COMMAND_ID);
+                RCPCommandIDs.RENAME_COMMAND_ID);
         mgr.add(m_moveTestCaseAction);
         mgr.add(SearchTreeAction.getAction());
         mgr.add(m_cutTreeItemAction);
@@ -244,15 +245,15 @@ public class TestCaseBrowser extends AbstractJBTreeView
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.SHOW_WHERE_USED_COMMAND_ID);
+                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.COPY_ID_COMMAND_ID);
+                RCPCommandIDs.COPY_ID_COMMAND_ID);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(submenuOpenWith,
-                CommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID);
+                RCPCommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID);
         mgr.add(new Separator());
         mgr.add(submenuOpenWith);
     } 
@@ -348,7 +349,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 }
             } else {
                 CommandHelper.executeCommand(
-                        CommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID, getSite());
+                    RCPCommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID,
+                    getSite());
             }
         }
     }

@@ -33,10 +33,10 @@ import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.ChooseServerAction;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.handlers.project.ProjectPropertiesHandler;
@@ -334,7 +334,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             public void run(IMarker marker) {
                 Command projectPropertiesCommand = CommandHelper
                         .getCommandService().getCommand(
-                                CommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
+                                RCPCommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put(ProjectPropertiesHandler.SECTION_TO_OPEN,
                         Constants.REUSED_PROJECT_PROPERTY_ID);
@@ -513,7 +513,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             public void run(IMarker marker) {
                 Command projectPropertiesCommand = CommandHelper
                         .getCommandService().getCommand(
-                                CommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
+                                RCPCommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put(ProjectPropertiesHandler.SECTION_TO_OPEN,
                         Constants.AUT_PROPERTY_ID);
@@ -573,7 +573,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
                 public void run(IMarker marker) {
                     CommandHelper.executeCommand(
-                            CommandIDs.NEW_PROJECT_COMMAND_ID);
+                            RCPCommandIDs.NEW_PROJECT_COMMAND_ID);
                 }
                 
             },
@@ -585,7 +585,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
                 public void run(IMarker marker) {
                     CommandHelper.executeCommand(
-                            CommandIDs.IMPORT_PROJECT_COMMAND_ID);
+                            RCPCommandIDs.IMPORT_PROJECT_COMMAND_ID);
                 }
                 
             },
@@ -597,7 +597,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
                 public void run(IMarker marker) {
                     CommandHelper.executeCommand(
-                            CommandIDs.OPEN_PROJECT_COMMAND_ID);
+                            RCPCommandIDs.OPEN_PROJECT_COMMAND_ID);
                 }
             },
         };
@@ -661,7 +661,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
             public void run(IMarker marker) {
                 CommandHelper
-                        .executeCommand(CommandIDs.NEW_TESTSUITE_COMMAND_ID);
+                        .executeCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
             }
         }
         };

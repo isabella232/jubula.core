@@ -37,6 +37,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TSEditorDndSupport;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TSEditorDropTargetListener;
@@ -253,25 +254,25 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         MenuManager submenuInsert = new MenuManager(
                 Messages.TestSuiteEditorInsert, INSERT_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.REFERENCE_TC_COMMAND_ID);
+                RCPCommandIDs.REFERENCE_TC_COMMAND_ID);
         mgr.add(submenuAdd);
         mgr.add(submenuInsert);
         mgr.add(submenuRefactor);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                CommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
+                RCPCommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                CommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
+                RCPCommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
         mgr.add(new Separator());
         mgr.add(getCutTreeItemAction());
         mgr.add(getPasteTreeItemAction());
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.TOGGLE_ACTIVE_STATE_COMMAND_ID);
+                RCPCommandIDs.TOGGLE_ACTIVE_STATE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.SHOW_WHERE_USED_COMMAND_ID);
+                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,

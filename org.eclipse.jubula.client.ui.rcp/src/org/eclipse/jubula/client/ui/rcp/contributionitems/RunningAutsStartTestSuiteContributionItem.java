@@ -28,8 +28,8 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ChooseTestSuiteBP;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.handlers.StartTestSuiteHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -159,7 +159,7 @@ public class RunningAutsStartTestSuiteContributionItem extends
             .append(StringConstants.SPACE)
             .append(suiteToStart.getName());
         return CommandHelper.createContributionItem(
-                CommandIDs.START_TEST_SUITE_COMMAND_ID, params, labelBuilder
+                RCPCommandIDs.START_TEST_SUITE_COMMAND_ID, params, labelBuilder
                         .toString(), CommandContributionItem.STYLE_CHECK);
     }
 }

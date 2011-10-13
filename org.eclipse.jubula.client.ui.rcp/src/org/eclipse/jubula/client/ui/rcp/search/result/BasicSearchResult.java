@@ -33,10 +33,10 @@ import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
@@ -445,21 +445,21 @@ public class BasicSearchResult implements ISearchResult {
                 || node instanceof ICapPO) {
             if (gdtv instanceof TestSuiteBrowser) {
                 CommandHelper.executeCommand(
-                        CommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
+                        RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
             } else {
                 CommandHelper.executeCommand(
-                        CommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID);
+                        RCPCommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID);
             }
         } else if (node instanceof ITestSuitePO) {
             CommandHelper.executeCommand(
-                    CommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
         } else if (node instanceof IRefTestSuitePO
                 || node instanceof ITestJobPO) {
             CommandHelper.executeCommand(
-                    CommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
         } else if (node instanceof ITestDataCubePO) {
             CommandHelper.executeCommand(
-                    CommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
         }
     }
 

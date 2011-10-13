@@ -18,7 +18,7 @@ import java.util.Map;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jubula.client.core.businessprocess.RunningAutBP;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.handlers.StartObservationModeHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
@@ -65,7 +65,7 @@ public class StartObservationModeContributionItem extends
         StringBuilder labelBuilder = new StringBuilder();
         labelBuilder.append(autId.getExecutableName());
         return CommandHelper.createContributionItem(
-                CommandIDs.START_OBSERVATION_MODE_COMMAND_ID, params,
+                RCPCommandIDs.START_OBSERVATION_MODE_COMMAND_ID, params,
                 labelBuilder.toString(), CommandContributionItem.STYLE_PUSH);
     }
 }

@@ -46,6 +46,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
@@ -102,7 +103,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setSorter(new ViewerSorter());
         getMainTreeViewer().setComparer(new PersistentObjectComparer());
-        addTreeDoubleClickListener(CommandIDs.EDIT_PARAMETERS_COMMAND_ID);
+        addTreeDoubleClickListener(RCPCommandIDs.EDIT_PARAMETERS_COMMAND_ID);
         addFocusListener(getMainTreeViewer());
         getEditorHelper().addListeners();
         setActionHandlers();
@@ -146,25 +147,25 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
     /** {@inheritDoc} */
     protected void fillContextMenu(IMenuManager mgr) {
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.NEW_TESTDATACUBE_COMMAND_ID);
+                RCPCommandIDs.NEW_TESTDATACUBE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.RENAME_COMMAND_ID);
+                RCPCommandIDs.RENAME_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.EDIT_PARAMETERS_COMMAND_ID);
+                RCPCommandIDs.EDIT_PARAMETERS_COMMAND_ID);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.SHOW_WHERE_USED_COMMAND_ID);
+                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
         mgr.add(SearchTreeAction.getAction());
         mgr.add(new Separator());
         Map<String, String> params = new HashMap<String, String>();
-        params.put(CommandIDs.IMPORT_WIZARD_PARAM_ID, 
+        params.put(RCPCommandIDs.IMPORT_WIZARD_PARAM_ID, 
                 ImportTestDataSetsWizard.ID);
         mgr.add(CommandHelper.createContributionItem(
-                CommandIDs.ECLIPSE_RCP_FILE_IMPORT_COMMAND_ID, 
+                RCPCommandIDs.ECLIPSE_RCP_FILE_IMPORT_COMMAND_ID, 
                 params, null,
                 CommandContributionItem.STYLE_PUSH));
     }

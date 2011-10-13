@@ -82,6 +82,7 @@ import org.eclipse.jubula.client.ui.rcp.actions.AddNewTestCaseAction;
 import org.eclipse.jubula.client.ui.rcp.actions.InsertNewTestCaseAction;
 import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
@@ -138,7 +139,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 new Transfer[] {LocalSelectionTransfer.getInstance()});
         getEditorHelper().addListeners();
         setActionHandlers();
-        addTreeDoubleClickListener(CommandIDs.REFERENCE_TC_COMMAND_ID);
+        addTreeDoubleClickListener(RCPCommandIDs.REFERENCE_TC_COMMAND_ID);
         GuiEventDispatcher.getInstance()
             .addEditorDirtyStateListener(this, true);
         DataEventDispatcher.getInstance().addDataChangedListener(
@@ -688,20 +689,20 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         MenuManager submenuRefactor = new MenuManager(
                 Messages.TestCaseEditorRefactor, REFACTOR_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.REFERENCE_TC_COMMAND_ID);
+                RCPCommandIDs.REFERENCE_TC_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.NEW_CAP_COMMAND_ID);
+                RCPCommandIDs.NEW_CAP_COMMAND_ID);
         mgr.add(submenuAdd);
         mgr.add(submenuInsert);
         mgr.add(getCutTreeItemAction());
         mgr.add(getPasteTreeItemAction());
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.TOGGLE_ACTIVE_STATE_COMMAND_ID);
+                RCPCommandIDs.TOGGLE_ACTIVE_STATE_COMMAND_ID);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.EDIT_PARAMETERS_COMMAND_ID);
+                RCPCommandIDs.EDIT_PARAMETERS_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
         mgr.add(new Separator());
         mgr.add(submenuRefactor);
         mgr.add(new Separator());
@@ -713,17 +714,17 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.SHOW_WHERE_USED_COMMAND_ID);
+                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         submenuInsert.add(m_insertNewTCAction);
         submenuAdd.add(m_addNewTCAction);
         CommandHelper.createContributionPushItem(submenuAdd,
-                CommandIDs.ADD_EVENT_HANDLER_COMMAND_ID);
+                RCPCommandIDs.ADD_EVENT_HANDLER_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                CommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
+                RCPCommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                CommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
+                RCPCommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
     }
 
     /**

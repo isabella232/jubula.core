@@ -58,6 +58,16 @@
         commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase"
         icon="icons/selectDB.gif">
   </image>
+	<image commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem"
+		icon="icons/expand.gif">
+	</image>
+	<image commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification"
+			icon="icons/showSpecification.gif">
+		</image>
+	  <image
+        commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
+        icon="icons/openSpecification.gif">
+  </image>
     </extension>
     <extension
           point="org.eclipse.ui.handlers">
@@ -125,6 +135,19 @@
             categoryId="org.eclipse.jubula.client.ui.commands"
             id="org.eclipse.jubula.client.ui.commands.SelectDatabase" name="%SelectDatabase">
         </command>
+        <command
+			categoryId="org.eclipse.jubula.client.ui.commands"
+			id="org.eclipse.jubula.client.ui.commands.ExpandTreeItem" name="%Expand">
+		</command>
+		<command
+			categoryId="org.eclipse.jubula.client.ui.commands"
+			id="org.eclipse.jubula.client.ui.commands.ShowSpecification"
+			name="%FindSpecTestCase" />
+		<command
+		    categoryId="org.eclipse.jubula.client.ui.commands"
+		    id="org.eclipse.jubula.client.ui.commands.OpenSpecification"
+		    name="%OpenSpecification">
+  </command>
     </extension>
     <extension
           point="org.eclipse.ui.preferencePages">

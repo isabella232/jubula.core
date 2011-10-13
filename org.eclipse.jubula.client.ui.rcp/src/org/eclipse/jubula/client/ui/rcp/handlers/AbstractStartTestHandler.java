@@ -21,9 +21,9 @@ import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -85,7 +85,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                 .getSite().getService(ICommandService.class);
         if (cmdService != null) {
             final Command command = cmdService
-                    .getCommand(CommandIDs.PAUSE_TEST_SUITE_COMMAND_ID);
+                    .getCommand(RCPCommandIDs.PAUSE_TEST_SUITE_COMMAND_ID);
             if (command != null) {
                 final Display display = Plugin.getDisplay();
                 ITestExecutionEventListener l = new 
