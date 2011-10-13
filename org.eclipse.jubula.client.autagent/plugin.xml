@@ -40,7 +40,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.eclipse.jubula.client.ui.preferences.AutAgentPrefPage"
+            category="org.eclipse.jubula.client.ui.rcp.preferences.AutAgentPrefPage"
             class="org.eclipse.jubula.client.autagent.preferences.ui.EmbeddedAutAgentPreferencePage"
             id="org.eclipse.jubula.client.autagent.page1"
             name="%EmbeddedAgentPreferencePageName">
