@@ -12,7 +12,7 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="menu:org.eclipse.jubula.client.ui.actions.ChooseServerAction.dropdown">
+            locationURI="menu:org.eclipse.jubula.client.ui.rcp.actions.ChooseServerAction.dropdown">
          <command
                commandId="org.eclipse.jubula.client.autagent.commands.ConnectToEmbeddedAutAgent"
                style="toggle">
