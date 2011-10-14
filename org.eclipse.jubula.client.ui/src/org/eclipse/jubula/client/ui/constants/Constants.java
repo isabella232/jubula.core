@@ -515,9 +515,7 @@ public interface Constants {
     //  -------------------------------------------------------------
     
     /** AUT-Agent Preference Page */
-    public static final String JB_PREF_PAGE_AUTAGENT = "org.eclipse.jubula.client.ui.preferences.AutAgentPrefPage"; //$NON-NLS-1$
-    /** Jubula main preference page */
-    public static final String JB_MAIN_PREF_PAGE = "org.eclipse.jubula.client.ui.preferences.prefpage1"; //$NON-NLS-1$
+    public static final String JB_PREF_PAGE_AUTAGENT = "org.eclipse.jubula.client.ui.rcp.preferences.AutAgentPrefPage"; //$NON-NLS-1$
     //  'status icon' constants
     /** constant for state "not connected to server" */
     public static final int NO_SERVER = 0;
