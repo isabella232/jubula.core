@@ -109,23 +109,23 @@ public interface Constants {
     
     /** ID of the ObjectMappingEditor */
     public static final String OBJECTMAPPINGEDITOR_ID = 
-        "org.eclipse.jubula.client.ui.editors.ObjectMappingEditor"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor"; //$NON-NLS-1$
     
     /** ID of the TestSuiteEditor */
     public static final String TEST_SUITE_EDITOR_ID = 
-        "org.eclipse.jubula.client.ui.editors.TestSuiteEditor"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor"; //$NON-NLS-1$
     
     /** ID of the TestJobEditor */
     public static final String TEST_JOB_EDITOR_ID = 
-        "org.eclipse.jubula.client.ui.editors.TestJobEditor"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor"; //$NON-NLS-1$
 
     /** ID of the central test data editor */
     public static final String CENTRAL_TESTDATA_EDITOR_ID = 
-        "org.eclipse.jubula.client.ui.editors.CentralTestDataEditor"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor"; //$NON-NLS-1$
     
     /** ID of the SpecTestCaseEditor */
     public static final String TEST_CASE_EDITOR_ID = 
-        "org.eclipse.jubula.client.ui.editors.TestCaseEditor"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor"; //$NON-NLS-1$
     
     /** ID of the TestresultSummaryView */
     public static final String TESTRESULT_SUMMARY_VIEW_ID = 
