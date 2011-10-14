@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.core;
 
-import org.eclipse.core.commands.HandlerEvent;
-import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.ICoolBarManager;
@@ -25,10 +23,8 @@ import org.eclipse.jface.commands.ActionHandler;
 import org.eclipse.jubula.app.i18n.Messages;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.swt.SWT;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -131,8 +127,6 @@ public class ActionBuilder {
     private void makeActions(IActionBarConfigurer configurer) {
         IHandlerService handlerService = (IHandlerService) m_window
                 .getService(IHandlerService.class);
-        String saveCommandId = "org.eclipse.ui.file.save"; //$NON-NLS-1$
-        String saveAllCommandId = "org.eclipse.ui.file.saveAll"; //$NON-NLS-1$
         String refreshCommandId = CommandIDs.REFRESH_COMMAND_ID;
         String cutCommandId = "org.eclipse.ui.edit.cut"; //$NON-NLS-1$
         String pasteCommandId = "org.eclipse.ui.edit.paste"; //$NON-NLS-1$
@@ -146,29 +140,7 @@ public class ActionBuilder {
         m_prefAction = ActionFactory.PREFERENCES.create(m_window);
         m_prefAction.setText(Messages.ActionBuilderPreferencesItem);
         m_fileSaveAll = ActionFactory.SAVE_ALL.create(m_window);
-        m_fileSaveAll.setToolTipText(Messages.ActionBuilderSaveAllToolTip);
-        m_fileSaveAll.setText(Messages.ActionBuilderSaveAllItem);
-        m_fileSaveAll.setActionDefinitionId(saveAllCommandId);
-        handlerService.activateHandler(saveAllCommandId, new ActionHandler(
-            m_fileSaveAll));
         m_fileSave = ActionFactory.SAVE.create(m_window);
-        m_fileSave.setToolTipText(Messages.ActionBuilderSaveToolTip);
-        m_fileSave.setText(Messages.ActionBuilderSaveItem);
-        m_fileSave.setActionDefinitionId(saveCommandId);
-        // Special handling for disabling "Save all...", if no editor is dirty
-        ActionHandler saveHandler = new ActionHandler(m_fileSave);
-        saveHandler.addHandlerListener(new IHandlerListener() {
-            public void handlerChanged(HandlerEvent handlerEvent) {
-                IEditorPart[] parts = Plugin.getDefault().getDirtyEditors();
-                if (parts.length == 0 || (parts.length == 1 
-                        && parts[0] == Plugin.getActiveEditor()) 
-                        && !m_fileSave.isEnabled()) {
-                        
-                    m_fileSaveAll.setEnabled(false);
-                }
-            }
-        });
-        handlerService.activateHandler(saveCommandId, saveHandler);
         m_refresh = ActionFactory.REFRESH.create(m_window);
         m_refresh.setText(Messages.ActionBuilderrefreshItem);
         m_refresh.setActionDefinitionId(refreshCommandId);
