@@ -63,7 +63,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class AutStarter {
-
     /**
      * Possible values for determining how much output should be produced.
      */
@@ -76,7 +75,7 @@ public class AutStarter {
         
         /** messages will be shown in dialogs */
         VERBOSE
-    };
+    }
     
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(AutStarter.class);
