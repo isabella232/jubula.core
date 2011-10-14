@@ -75,19 +75,19 @@ public interface Constants {
 
     /** the ID of the test suite browser */
     public static final String TS_BROWSER_ID = 
-        "org.eclipse.jubula.client.ui.views.TestSuiteBrowser"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser"; //$NON-NLS-1$
     
     /** the ID of the test result tree view */
     public static final String TESTRE_ID = 
-        "org.eclipse.jubula.client.ui.views.TestResultTreeView"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView"; //$NON-NLS-1$
     
     /** the ID of the test case browser */
     public static final String TC_BROWSER_ID = 
-        "org.eclipse.jubula.client.ui.views.TestCaseBrowser"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser"; //$NON-NLS-1$
     
     /** ID of the Jubula Data Set View */
     public static final String JB_DATASET_VIEW_ID = 
-        "org.eclipse.jubula.client.ui.views.DataSetView"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.views.DataSetView"; //$NON-NLS-1$
     
     /** ID of the Eclipse Properties View */
     public static final String PROPVIEW_ID = IPageLayout.ID_PROP_SHEET;
@@ -97,11 +97,11 @@ public interface Constants {
     
     /** ID of the Jubula Component Names View (override component names) */
     public static final String COMPNAMESVIEW_ID =
-        "org.eclipse.jubula.client.ui.views.CompNamesView"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.views.CompNamesView"; //$NON-NLS-1$
     
     /** ID of the Jubula Component Name Browser */
     public static final String COMPNAMEBROWSER_ID =
-        "org.eclipse.jubula.client.ui.views.ComponentNameBrowser"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.views.ComponentNameBrowser"; //$NON-NLS-1$
 
     /** ID of the Eclipse help View */
     public static final String ECLIPSE_HELP_VIEW_ID =
@@ -133,7 +133,7 @@ public interface Constants {
 
     /** ID of the TestresultSummaryView */
     public static final String RUNNING_AUTS_VIEW_ID = 
-        "org.eclipse.jubula.client.ui.views.RunningAuts"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.views.RunningAuts"; //$NON-NLS-1$
     
     /** ID of the Start Incomplete Test Suite Action */
     public static final String START_INCOMPLETE_TEST_SUITE_ACTION_ID = 
