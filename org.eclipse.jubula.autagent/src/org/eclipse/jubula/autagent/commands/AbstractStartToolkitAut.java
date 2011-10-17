@@ -59,7 +59,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      *
      * {@inheritDoc}
      */
-    
+    @SuppressWarnings("unchecked")
     public StartAUTServerStateMessage startAut(Map parameters)
         throws IOException {
         StartAUTServerStateMessage envCheckMsg = validateEnvironment();
@@ -267,9 +267,14 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      *         </ul>
      *         an empty array will be returned.
      */
-    @SuppressWarnings("unchecked")
     public static String[] getClasspathEntriesForBundleId(String bundleId) {
         Bundle bundle = Platform.getBundle(bundleId);
+        
+        if (bundle == null) {
+            log.error("No bundle found for ID '" + bundleId + "'."); //$NON-NLS-1$//$NON-NLS-2$
+            return new String[0];
+        }
+        
         List<String> classpathEntries = new ArrayList<String>();
         try {
             File bundleFile = FileLocator.getBundleFile(bundle);
