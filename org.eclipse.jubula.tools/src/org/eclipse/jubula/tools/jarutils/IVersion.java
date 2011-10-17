@@ -44,9 +44,4 @@ public interface IVersion {
     /** minimum required metadata version for project import */
     public final Integer JB_CLIENT_MIN_XML_METADATA_VERSION = new Integer(5);
     
-    /** major version for Jubula preference store */
-    public final Integer JB_PREF_MAJOR_VERSION = new Integer(1);
-
-    /** minor version for Jubula preference store */
-    public final Integer JB_PREF_MINOR_VERSION = new Integer(1);
 }

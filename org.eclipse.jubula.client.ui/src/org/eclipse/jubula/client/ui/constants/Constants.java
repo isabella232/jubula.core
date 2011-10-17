@@ -28,6 +28,9 @@ import org.eclipse.ui.IPageLayout;
  * @created 13.07.2004
  */
 public interface Constants {
+    /** plugin id */
+    public static final String PLUGIN_ID = "org.eclipse.jubula.client.ui"; //$NON-NLS-1$
+
     /** the category id of the Jubula views */
     public static final String JB_VIEWS_CATEGORY_ID = "org.eclipse.jubula.client.views"; //$NON-NLS-1$
     //  -------------------------------------------------------------
@@ -159,24 +162,6 @@ public interface Constants {
 
     /** Key for preference version to be stored as a resource property */
     public static final String PREF_MAJORVERSION_KEY = "MAJORVERSION_PREF_KEY"; //$NON-NLS-1$
-
-    /** Key for escape character value to be stored as a resource property */
-    public static final String ESCAPE_CHAR_KEY = "ESCAPE_CHAR_PREF_KEY"; //$NON-NLS-1$
-
-    /** Key for path character value to be stored as a resource property */
-    public static final String PATH_CHAR_KEY = "PATH_CHAR_PREF_KEY"; //$NON-NLS-1$
-
-    /** Key for values character value to be stored as a resource property */
-    public static final String VALUE_CHAR_KEY = "VALUE_CHAR_PREF_KEY"; //$NON-NLS-1$
-    
-    /** Key for variable character value to be stored as a resource property */
-    public static final String VARIABLE_CHAR_KEY = "VARIABLE_CHAR_PREF_KEY";  //$NON-NLS-1$
-
-    /** Key for reference character value to be stored as a resource property */
-    public static final String REFERENCE_CHAR_KEY = "REFERENCE_CHAR_PREF_KEY"; //$NON-NLS-1$
-
-    /** Key for reference character value to be stored as a resource property */
-    public static final String FUNCTION_CHAR_KEY = "FUNCTION_CHAR_PREF_KEY"; //$NON-NLS-1$
 
     /** Key for m_text value to be stored as a resource property */
     public static final String SHOWCHILDCOUNT_KEY = "SHOWCHILDCOUNT_PREF_KEY"; //$NON-NLS-1$

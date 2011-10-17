@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -42,7 +43,6 @@ import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.core.utils.Languages;
-import org.eclipse.jubula.client.core.utils.PrefStoreHelper;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer;
@@ -52,7 +52,6 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ProblemsBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ToolkitBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
-import org.eclipse.jubula.client.ui.rcp.constants.PreferenceConstants;
 import org.eclipse.jubula.client.ui.rcp.constants.RcpIconConstants;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
@@ -66,13 +65,11 @@ import org.eclipse.jubula.client.ui.rcp.search.query.AbstractSearchQuery;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView;
 import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
-import org.eclipse.jubula.client.ui.rcp.widgets.JavaAutConfigComponent;
 import org.eclipse.jubula.client.ui.rcp.widgets.StatusLineContributionItem;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
-import org.eclipse.jubula.tools.constants.ConfigurationConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
@@ -109,6 +106,7 @@ import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.IContributedContentsView;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,17 +143,13 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private static final String AUT_TOOLKIT_STATUSLINE_ITEM = "autToolKitInfo"; //$NON-NLS-1$
     /** <code>LANG_STATUSLINE_ITEM</code> */
     private static final String LANG_STATUSLINE_ITEM = "lang"; //$NON-NLS-1$
-    /**
-     * <code>AUT_AGENT_DEFAULT_HOST</code>
-     */
-    private static final String AUT_AGENT_DEFAULT_HOST = "localhost"; //$NON-NLS-1$
     
     /** the client status */
     private ClientStatus m_status = ClientStatus.STARTING;
     /** a list with the unsaved editors*/
     private List < String > m_dirtyEditors;
-    /** true, if preference store was initialized */
-    private boolean m_isPrefStoreInitialized = false;
+    /** the preference store for this bundle */
+    private ScopedPreferenceStore m_preferenceStore = null;
     /** the console */
     private MessageConsole m_console;
     /** standard message stream for the console */
@@ -227,12 +221,20 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      * {@inheritDoc}
      */
     public IPreferenceStore getPreferenceStore() {
-        if (!m_isPrefStoreInitialized) {
-            m_isPrefStoreInitialized = true;
-            initializeDefaultPluginPreferences(super.getPreferenceStore());
-            initializePrefStoreHelper();
+
+        // Create the preference store lazily.
+        if (m_preferenceStore == null) {
+            // Use the Plugin ID from org.eclipse.jubula.client.ui so that 
+            // preferences will continue to be saved to that area. Otherwise,
+            // users would lose their preferences after the UI bundle was split
+            // into client.ui and client.ui.rcp.
+            m_preferenceStore = new ScopedPreferenceStore(
+                    InstanceScope.INSTANCE, 
+                    Constants.PLUGIN_ID);
         }
-        return super.getPreferenceStore();
+
+        return m_preferenceStore;
+
     }
     
     /**
@@ -387,20 +389,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         return m_treeViewerContainer;
     }
 
-    /**
-     * @param store IPreferenceStore
-     */
-    private static void initializeDefaultPluginPreferences(
-            IPreferenceStore store) {
-
-        store.setDefault(
-                PreferenceConstants.SERVER_SETTINGS_KEY, AUT_AGENT_DEFAULT_HOST
-                + StringConstants.COLON
-                + ConfigurationConstants.AUT_AGENT_DEFAULT_PORT);
-        store.setDefault(Constants.AUT_CONFIG_DIALOG_MODE,
-                JavaAutConfigComponent.AUT_CONFIG_DIALOG_MODE_KEY_DEFAULT);
-    }
-    
     /**
      * Returns the active View or null.
      * @return a <code>ViewPart</code> value. The active View.
@@ -1110,19 +1098,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         ToolkitBP.getInstance();
     }
 
-    /**
-     * Initializes the <code>PrefStoreHelper</code> to set the test data preferences
-     */
-    private void initializePrefStoreHelper() {
-        IPreferenceStore store = super.getPreferenceStore();
-        PrefStoreHelper helper = PrefStoreHelper.getInstance();
-        helper.setEscapeChar(store.getString(Constants.ESCAPE_CHAR_KEY));
-        helper.setFunctionChar(store.getString(Constants.FUNCTION_CHAR_KEY));
-        helper.setReferenceChar(store.getString(Constants.REFERENCE_CHAR_KEY));
-        helper.setValueChar(store.getString(Constants.VALUE_CHAR_KEY));
-        helper.setVariableChar(store.getString(Constants.VARIABLE_CHAR_KEY));
-    }
-    
     /**
      * displays the working language 
      */

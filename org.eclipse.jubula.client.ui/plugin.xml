@@ -197,4 +197,10 @@
          </description>
       </decorator>
     </extension>
+    <extension
+          point="org.eclipse.core.runtime.preferences">
+       <initializer
+             class="org.eclipse.jubula.client.ui.preferences.PreferenceInitializer">
+       </initializer>
+    </extension>
 </plugin>

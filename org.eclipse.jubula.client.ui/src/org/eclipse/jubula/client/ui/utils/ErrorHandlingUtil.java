@@ -25,7 +25,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -166,7 +166,7 @@ public class ErrorHandlingUtil {
         }
         IStatus[] status = new Status[detail.length];
         for (int i = 0; i < detail.length; i++) {
-            status[i] = new Status(msg.getSeverity(), Plugin.PLUGIN_ID,
+            status[i] = new Status(msg.getSeverity(), Constants.PLUGIN_ID,
                     IStatus.OK, detail[i], null);
         }
         if ((msg.getSeverity() == Message.INFO 
@@ -184,7 +184,7 @@ public class ErrorHandlingUtil {
                     .toString(), imageID, labels, 0);
         } else {
             dlg = new ErrorDialog(new Shell(SWT.ON_TOP), title,
-                    message, new MultiStatus(Plugin.PLUGIN_ID, IStatus.OK,
+                    message, new MultiStatus(Constants.PLUGIN_ID, IStatus.OK,
                             status, msg.getMessage(params), null), IStatus.OK
                             | IStatus.INFO | IStatus.WARNING | IStatus.ERROR);
         }
