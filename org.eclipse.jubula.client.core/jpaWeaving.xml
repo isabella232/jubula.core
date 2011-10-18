@@ -6,9 +6,10 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 <project name="org.eclipse.jubula.client.core" default="weaveMaven">
-
+	<property name="currentPluginDir" value="/projects/guidancer/Workspace/hu_snapshot/current/platforms/lin.gtk.x86/guidancer/plugins" />
+	
 	<path id="eclipselink.weaving.classpath">
-		<fileset dir="${basedir}/../../guidancer/com.bredexsw.guidancer.project.configuration/target/platform/persistence/plugins">
+		<fileset dir="${currentPluginDir}">
 			<include name="org.eclipse.persistence.*.jar" />
 			<include name="javax.persistence_*.jar" />
 		</fileset>
@@ -20,12 +21,13 @@
 		</taskdef>
 	</target>
 
-	<target name="eclipse-autobuild-weaving" description="Perform EclipseLink static weaving after Eclipse autobuild.">
+	<target name="eclipse-ide-weaving" description="Perform EclipseLink static weaving after Eclipse autobuild.">
 		<path id="weaving.classpath">
 			<pathelement location="${basedir}/../org.eclipse.jubula.tools/bin" />
 			<pathelement location="${basedir}/../org.eclipse.jubula.communication/bin" />
-			<fileset dir="${basedir}/../../guidancer/com.bredexsw.guidancer.project.configuration/target/platform/eclipse/plugins">
+			<fileset dir="${currentPluginDir}">
 				<include name="**/*.jar" />
+				<exclude name="**/*org.eclipse.jubula.client.core*"/>
 			</fileset>
 			<fileset dir="${basedir}/lib">
 				<include name="**/*.jar" />
@@ -42,7 +44,10 @@
 	</target>
 
 	<target name="weaving" description="Perform EclipseLink static weaving in-place during deployment." depends="define-weaving-task">
-		<weave source="${weaving.src}" target="${weaving.src}" persistenceinfo="${weaving.persistence}">
+		<weave source="${weaving.src}" 
+			   target="${weaving.src}" 
+			   persistenceinfo="${weaving.persistence}" 
+			   loglevel="WARNING">
 			<classpath refid="weaving.classpath" />
 		</weave>
 	</target>
