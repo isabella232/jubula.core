@@ -3499,10 +3499,4 @@
        </description>
     </transfer>
  </extension>
- <extension
-       point="org.eclipse.core.runtime.preferences">
-    <initializer
-          class="org.eclipse.jubula.client.ui.rcp.preferences.PreferenceInitializer">
-    </initializer>
- </extension>
 </plugin>

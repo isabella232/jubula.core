@@ -10,11 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.preferences;
 
+import org.apache.commons.codec.binary.Base64;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.tools.constants.ConfigurationConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 /**
  * 
@@ -22,6 +25,11 @@ import org.eclipse.jubula.client.ui.constants.Constants;
  * @created 17.10.2011
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
+
+    /**
+     * <code>AUT_AGENT_DEFAULT_HOST</code>
+     */
+    private static final String AUT_AGENT_DEFAULT_HOST = "localhost"; //$NON-NLS-1$
 
     @Override
     public void initializeDefaultPreferences() {
@@ -44,6 +52,17 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 Constants.DATADIR_WS_KEY_DEFAULT);
         prefNode.put(Constants.DATADIR_PATH_KEY, 
                 Platform.getLocation().toOSString());
+        
+        StringBuilder serverValuesBuilder = new StringBuilder();
+        serverValuesBuilder.append(new String(Base64.encodeBase64(
+                AUT_AGENT_DEFAULT_HOST.getBytes())));
+        serverValuesBuilder.append(StringConstants.SEMICOLON);
+        serverValuesBuilder.append(new String(
+            Base64.encodeBase64(String.valueOf(
+                ConfigurationConstants.AUT_AGENT_DEFAULT_PORT).getBytes())));
+        prefNode.put(
+                Constants.SERVER_SETTINGS_KEY, 
+                serverValuesBuilder.toString());
     }
 
     /**

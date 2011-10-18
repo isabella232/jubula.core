@@ -10,24 +10,21 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.constants.PreferenceConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -37,6 +34,11 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * @created 08.12.2005
  */
 public class ServerManager {
+    
+    /** the logger */
+    private static final Logger LOG = 
+            LoggerFactory.getLogger(ServerManager.class);
+    
     /**
      * <code>instance</code>single instance of ServerManager
      */
@@ -47,22 +49,8 @@ public class ServerManager {
      */
     private SortedSet<Server> m_servers = new TreeSet<Server>();
     
-    /**
-     * <code>jreCont</code>container to manage associations between server and
-     * corresponding JREs (key is server name)
-     */
-    private Map<String, SortedSet<String>> m_jreCont = 
-        new HashMap<String, SortedSet<String>>();    
-    
-    
     /** last used server object*/
     private Server m_lastUsedServer = null;
-    
-    /**
-     * <code>m_defaultServer</code> default server result from
-     * installation information
-     */
-    private Server m_defaultServer = null;
     
     /**
      * <p>The constructor.</p>
@@ -70,16 +58,7 @@ public class ServerManager {
      * <p>If there are no stored values, the default values will filled in the list</p>
      */
     private ServerManager() {
-        try {
-            readFromPrefStore(false);
-            if (m_servers.isEmpty()) {
-                setDefaultValues();
-            }
-        } catch (StringIndexOutOfBoundsException e) {
-            handleError();
-        } catch (JBException e) {
-            handleError();
-        }
+        readFromPrefStore();
     }
     
     
@@ -96,46 +75,40 @@ public class ServerManager {
     
 
     /**
+     * 
      * Reads the pref storage to build the serverList.
-     * @param restored True, if default-values should be restored.
-     * @throws StringIndexOutOfBoundsException if prefs are out-of-date/wrong.
-     * @throws JBException if prefs are out-of-date/wrong.
      */
-    private void readFromPrefStore(boolean restored) 
-        throws StringIndexOutOfBoundsException, JBException {
+    private void readFromPrefStore() {
+
+        IPreferenceStore prefStore = Plugin.getDefault().getPreferenceStore();
+        String serversValue = 
+                prefStore.getString(Constants.SERVER_SETTINGS_KEY);
+        String lastUsedServerValue = 
+                prefStore.getString(Constants.LAST_USED_SERVER_KEY);
         
-        String storage = StringConstants.EMPTY;
-        if (restored) {
-            // add default server from installation
-            addServer(getDefaultServer());
-        } else {
-            // set last used server
-            String serverPort = Plugin.getDefault().getPreferenceStore()
-                .getString(Constants.LAST_USED_SERVER_KEY);
-            if (serverPort != null 
-                && !serverPort.equals(StringConstants.EMPTY)
-                && !serverPort.equals(":-1")) { //$NON-NLS-1$
-                m_lastUsedServer = new Server(
-                    serverPort.substring(0, serverPort.indexOf(":")), //$NON-NLS-1$
-                    (new Integer(
-                        serverPort.substring(serverPort.indexOf(":") + 1)))); //$NON-NLS-1$
-                m_servers.add(m_lastUsedServer);
-                
-            } else {
-                m_lastUsedServer = null;
-            }
-            // set server list
-            storage = Plugin.getDefault().getPreferenceStore().getString(
-                    PreferenceConstants.SERVER_SETTINGS_KEY);
-            String defServer = Plugin.getDefault().getPreferenceStore()
-                .getDefaultString(PreferenceConstants.SERVER_SETTINGS_KEY);
-            if (storage != null && !storage.equals(defServer)) {
-                decodeServerPrefs(storage);
-            }
-            if (m_servers.isEmpty()) {
-                addServer(getDefaultServer());
+        try {
+            decodeServerPrefs(serversValue);
+        } catch (JBException jbe) {
+            LOG.error("Error occurred while loading AUT Agent preferences. Resetting to default values.", jbe); //$NON-NLS-1$
+            prefStore.setToDefault(
+                    Constants.SERVER_SETTINGS_KEY);
+            try {
+                decodeServerPrefs(serversValue);
+            } catch (JBException e) {
+                LOG.error("Error occurred while reading AUT Agent preferences default values.", jbe); //$NON-NLS-1$
             }
         }
+        
+        // set last used server
+        if (!StringUtils.isEmpty(lastUsedServerValue)) {
+            m_lastUsedServer = new Server(
+                lastUsedServerValue.substring(0, lastUsedServerValue.indexOf(":")), //$NON-NLS-1$
+                (new Integer(
+                    lastUsedServerValue.substring(lastUsedServerValue.indexOf(":") + 1)))); //$NON-NLS-1$
+        } else {
+            m_lastUsedServer = null;
+        }
+
     }
 
     /**
@@ -143,62 +116,42 @@ public class ServerManager {
      * @param store string read from preference store
      * @throws JBException in case of problem with preference store
      */
-    private void decodeServerPrefs(String store) 
-        throws JBException {
+    private void decodeServerPrefs(String store) throws JBException {
         m_servers.clear();
-        String storage = store;
-        while (storage.length() > 0) {
-            String serverName = decodeString(storage, ";"); //$NON-NLS-1$
-            storage = storage.substring(storage.indexOf(";") + 1); //$NON-NLS-1$
-            String portPart = storage.substring(0, storage.indexOf(";")); //$NON-NLS-1$
-            while (portPart.length() > 0) {
-                String port = decodeString(portPart, ","); //$NON-NLS-1$
-                portPart = portPart.substring(portPart.indexOf(",") + 1); //$NON-NLS-1$
-                m_servers.add(new Server(serverName, new Integer(port)));
+        String[] serverStrings = StringUtils.split(store, ';');
+        // We expect the length to be divisible by 2 (hostname;ports;)
+        if (serverStrings.length % 2 == 0) {
+            for (int i = 0; i < serverStrings.length; i += 2) {
+                String hostname = decodeString(serverStrings[i]);
+
+                // May be multiple ports. If so, then we create a server for each port.
+                String[] encodedPorts = 
+                        StringUtils.split(serverStrings[i + 1], ',');
+                for (String encodedPort : encodedPorts) {
+                    String port = decodeString(encodedPort);
+                    m_servers.add(new Server(hostname, Integer.valueOf(port)));
+                }
             }
-            storage = storage.substring(storage.indexOf(";") + 1); //$NON-NLS-1$
-            String jrePart = storage.substring(0, storage.indexOf(";")); //$NON-NLS-1$
-            SortedSet <String> jres = new TreeSet<String>();
-            while (jrePart.length() > 0) {
-                String jre = decodeString(jrePart, ","); //$NON-NLS-1$
-                jrePart = jrePart.substring(jrePart.indexOf(",") + 1); //$NON-NLS-1$
-                jres.add(jre);
-            }
-            storage = storage.substring(storage.indexOf(";") + 1); //$NON-NLS-1$
-            m_jreCont.put(serverName, jres);
+            
+        } else {
+            throw new JBException("Number of entries in server list must be even.", Integer.valueOf(0)); //$NON-NLS-1$
         }
+
     }
 
     
     /**
-     * @param encodedString decode a base64 encoded string
-     * @param delimiter delimiter to separate string part from index 0 to delimiter
-     * @return decoded string part
-     * @throws JBException in case of not base64 decoded string
+     * @param encodedString A base64 encoded string.
+     * @return the decoded string.
+     * @throws JBException in case of not base64 encoded string
      */
-    String decodeString(String encodedString, String delimiter) 
-        throws JBException {
-        String decodedString = StringConstants.EMPTY;
-        checkPreferences(encodedString.substring(0, 
-            encodedString.indexOf(delimiter)));
-        decodedString = new String(Base64.decodeBase64(
-            encodedString.substring(0, 
-                encodedString.indexOf(delimiter)).getBytes()));
-        return decodedString;
+    String decodeString(String encodedString) throws JBException {
+        if (!Base64.isArrayByteBase64(encodedString.getBytes())) {
+            throw new JBException(StringConstants.EMPTY, new Integer(0));
+        }
+        return new String(Base64.decodeBase64(encodedString.getBytes()));
     }
 
-    /**
-     * Sets the default values from the store.
-     */
-    public void setDefaultValues() {
-        m_servers.clear();
-        try {
-            readFromPrefStore(true);
-        } catch (JBException e) {
-            // correct: do nothing
-        }
-    }
-    
     /**
      * Adds a server to the list.
      * @param server The server to add.
@@ -213,44 +166,6 @@ public class ServerManager {
     }
     
     /**
-     * adds a jre to the server
-     * @param serverName name of server, which get a new JRE
-     * @param jre jre to add
-     */
-    public void addJRE(String serverName, String jre) {
-        if (m_jreCont.get(serverName) != null) {
-            SortedSet<String> jres = m_jreCont.get(serverName);
-            if (!jres.contains(jre)) {
-                jres.add(jre);
-            }
-        } else {
-            SortedSet<String> jres = new TreeSet<String>();
-            jres.add(jre);
-            m_jreCont.put(serverName, jres);
-        }
-    }
-    
-    /**
-     * remove a jre from a server
-     * @param serverName name of server, for which is to remove a JRE
-     * @param jre jre to add
-     */
-    public void removeJRE(String serverName, String jre) {
-        if (m_jreCont.get(serverName) != null) {
-            SortedSet<String> jres = m_jreCont.get(serverName);
-            if (jres.contains(jre)) {
-                jres.remove(jre);
-                if (jres.isEmpty()) {
-                    m_jreCont.remove(serverName);
-                }
-            }
-        }
-    }
-    
-    
-    
-    
-    /**
      * Removes a server from the list.
      * @param server The server to remove.
      */
@@ -259,40 +174,30 @@ public class ServerManager {
             m_lastUsedServer = null;
         }
         m_servers.remove(server);
-        m_jreCont.remove(server);
     }
     
     
     /**
      * Stores the server list in the preferences.
+     * Old format (base64-encoded):
+     *  hostname1;port1,port2,...;hostname2;port1,port2,...;
+     *  
+     * Current Format (base64-encoded):
+     *  hostname1;port;hostname2;port;
      */
     public void storeServerList() {
-        String storage = StringConstants.EMPTY;
+        StringBuilder storage = new StringBuilder();
         for (Server server : m_servers) {
-            // servername;
+            // servername;port;
             byte[] serverArray = server.getName().getBytes();
             String serverEncoded = new String(Base64.encodeBase64(serverArray));
-            storage = storage + serverEncoded + ";"; //$NON-NLS-1$
-            // servername:port1,port2,...,;
-            for (Integer port : getAllPorts(server.getName())) {
-                serverArray = port.toString().getBytes();
-                serverEncoded = new String(Base64.encodeBase64(serverArray));
-                storage = storage + serverEncoded + ","; //$NON-NLS-1$
-            }
-            storage = storage + ";"; //$NON-NLS-1$
-            // servername:port1,port2,...,;jre1,jre2,...,;
-            if (m_jreCont.get(server.getName()) != null) {
-                for (String jre : m_jreCont.get(server.getName())) {
-                    serverArray = jre.getBytes();
-                    serverEncoded = 
-                        new String(Base64.encodeBase64(serverArray));
-                    storage = storage + serverEncoded + ","; //$NON-NLS-1$
-                }
-            }
-            storage = storage + ";"; //$NON-NLS-1$
-        }        
+            storage.append(serverEncoded).append(";"); //$NON-NLS-1$
+            storage.append(new String(Base64.encodeBase64(
+                    server.getPort().toString().getBytes())));
+            storage.append(";"); //$NON-NLS-1$
+        }
         Plugin.getDefault().getPreferenceStore().setValue(
-                PreferenceConstants.SERVER_SETTINGS_KEY, storage);
+                Constants.SERVER_SETTINGS_KEY, storage.toString());
         if (m_lastUsedServer != null) {
             if (m_servers.contains(m_lastUsedServer)) {                
                 Plugin.getDefault().getPreferenceStore().setValue(
@@ -367,48 +272,6 @@ public class ServerManager {
     }
     
     /**
-     * @param name name of given server
-     * @return all port for given server name
-     */
-    public SortedSet <Integer> getPorts(String name) {
-        Validate.notNull(name);
-        SortedSet<Integer> ports = new TreeSet<Integer>();
-        for (Server server : m_servers) {
-            if (name.equals(server.getName())) {
-                ports.add(server.getPort());
-            }
-        }
-        return ports;      
-    }
-    
-    /**
-     * @param serverName servername associated with jre list
-     * @return jre list for given server, if available or an empty list
-     */
-    public SortedSet<String> getJREs(String serverName) {
-        SortedSet<String> jres = new TreeSet<String>();
-        if (m_jreCont.get(serverName) != null) {
-            jres = m_jreCont.get(serverName);
-        }
-        return jres;
-    }
-    
-    /**
-     * @param serverName name of server
-     * @return all ports associated with the given server name
-     */
-    public List<Integer> getAllPorts(String serverName) {
-        List<Integer> ports = new ArrayList<Integer>();
-        for (Server server : m_servers) {
-            if (serverName.equals(server.getName())) {
-                ports.add(server.getPort());
-            }
-        }
-        return ports;
-    }
-    
-    
-    /**
      * @return Returns the last used server, if available in Preference Store
      * or null.
      */
@@ -416,41 +279,6 @@ public class ServerManager {
         return m_lastUsedServer;
     }
 
-
-    
-    /**
-     * Checks correctness of the stored preferences.
-     * @param pref The readed, base64-coded preference.
-     * @throws JBException if the prefrence is not base64-coded.
-     */
-    private void checkPreferences(String pref) throws JBException {
-        if (!Base64.isArrayByteBase64(pref.getBytes())) {
-            throw new JBException(StringConstants.EMPTY, new Integer(0));
-        }
-    }
-    
-    /**
-     * Shows an error-dialog/stores the default prefs, if some preferences are wrong
-     */
-    private void handleError() {
-        ErrorHandlingUtil.createMessageDialog(MessageIDs.I_WRONG_SERVER_PREFS);
-        setDefaultValues();
-        storeServerList();
-    }
-
-    /**
-     * @return Returns the defaultServer.
-     */
-    public Server getDefaultServer() {
-        if (m_defaultServer == null) {
-            String defServer = Plugin.getDefault().getPreferenceStore()
-                .getDefaultString(PreferenceConstants.SERVER_SETTINGS_KEY);
-            String[] str = defServer.split(StringConstants.COLON);
-            m_defaultServer = new Server(str[0], new Integer(str[1]));
-        }
-        return m_defaultServer;
-    }
-    
     /**
      * @return Returns the servers.
      */
@@ -528,15 +356,6 @@ public class ServerManager {
     public void setServers(SortedSet<Server> servers) {
         m_servers = servers;
     }
-
-
-    /**
-     * @param jreCont The jreCont to set.
-     */
-    public void setJreCont(Map<String, SortedSet<String>> jreCont) {
-        m_jreCont = jreCont;
-    }
-
 
     /**
      * @param server last used server

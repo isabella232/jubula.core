@@ -39,7 +39,6 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.constants.PreferenceConstants;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.editors.PersistableEditorInput;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -98,7 +97,7 @@ public class Utils {
     public static boolean isLocalhost() {
         IPreferenceStore prefStore = Plugin.getDefault().getPreferenceStore();
         String serverPort = 
-                prefStore.getString(PreferenceConstants.SERVER_SETTINGS_KEY);
+                prefStore.getString(Constants.SERVER_SETTINGS_KEY);
         String server = serverPort.split(StringConstants.COLON)[0];
         if (server.equals(Messages.UtilsLocalhost1)
             || server.equals(Messages.UtilsLocalhost3)

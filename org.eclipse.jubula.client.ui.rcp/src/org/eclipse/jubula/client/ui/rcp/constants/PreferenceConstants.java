@@ -17,8 +17,6 @@ package org.eclipse.jubula.client.ui.rcp.constants;
  */
 public final class PreferenceConstants {
 
-    /** Key for m_text value to be stored as a resource property */
-    public static final String SERVER_SETTINGS_KEY = "SERVER_SETTINGS_KEY"; //$NON-NLS-1$
     
     /**
      * Private constructor to prevent instantiation of constants class.

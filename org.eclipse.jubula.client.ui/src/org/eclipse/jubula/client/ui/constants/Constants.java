@@ -145,11 +145,8 @@ public interface Constants {
     //  preference keys
     //  -------------------------------------------------------------
     
-    /** Key for preference version to be stored as a resource property */
-    public static final String PREF_MINORVERSION_KEY = "MINORVERSION_PREF_KEY"; //$NON-NLS-1$
-
-    /** Key for preference version to be stored as a resource property */
-    public static final String PREF_MAJORVERSION_KEY = "MAJORVERSION_PREF_KEY"; //$NON-NLS-1$
+    /** Key for m_text value to be stored as a resource property */
+    public static final String SERVER_SETTINGS_KEY = "SERVER_SETTINGS_KEY"; //$NON-NLS-1$
 
     /** Key for m_text value to be stored as a resource property */
     public static final String SHOWCHILDCOUNT_KEY = "SHOWCHILDCOUNT_PREF_KEY"; //$NON-NLS-1$

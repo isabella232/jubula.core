@@ -60,7 +60,6 @@ import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.constants.PreferenceConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
@@ -517,7 +516,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
         // Connection Check
         final String serverPortPref = 
                 Plugin.getDefault().getPreferenceStore().getString(
-                        PreferenceConstants.SERVER_SETTINGS_KEY);
+                        Constants.SERVER_SETTINGS_KEY);
         boolean isConnected = false;
         boolean isServerDefined = (serverPortPref.length() != 0);
         if (state == null) {

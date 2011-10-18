@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ConnectServerBP;
-import org.eclipse.jubula.client.ui.rcp.constants.PreferenceConstants;
 import org.eclipse.jubula.client.ui.rcp.dialogs.RemoteFileBrowserDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
@@ -679,7 +678,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 currentlySelectedServer)) {
 
             String defaultServerInfo = Plugin.getDefault().getPreferenceStore()
-                .getDefaultString(PreferenceConstants.SERVER_SETTINGS_KEY);
+                .getDefaultString(Constants.SERVER_SETTINGS_KEY);
             String defaultServerPort = 
                 defaultServerInfo.substring(defaultServerInfo.indexOf(
                         StringConstants.COLON) + 1);
