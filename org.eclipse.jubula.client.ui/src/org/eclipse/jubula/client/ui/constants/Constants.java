@@ -37,20 +37,12 @@ public interface Constants {
     //  Keys for Views, Editors, Perspectives, Plugins
     //  -------------------------------------------------------------
     /** the ID of the DeleteTreeItemAction (e.g. for retargeting) */
-    public static final String NEW_CAP_ACTION_ID = 
-        "org.eclipse.jubula.client.ui.actions.AbstractNewCapAction"; //$NON-NLS-1$
-    
-    /** the ID of the DeleteTreeItemAction (e.g. for retargeting) */
     public static final String NEW_TC_ACTION_ID = 
-        "org.eclipse.jubula.client.ui.actions.AbstractNewTestCaseAction"; //$NON-NLS-1$
-    
-    /** the ID of the DeleteTreeItemAction (e.g. for retargeting) */
-    public static final String EXISTING_TC_ACTION_ID = 
-        "org.eclipse.jubula.client.ui.actions.AbstractAddExistingAction"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.actions.AbstractNewTestCaseAction"; //$NON-NLS-1$
     
     /** the ID of the MoveTestCaseAction (e.g. for retargeting) */
     public static final String MOVE_TESTCASE_ACTION_ID = 
-        "org.eclipse.jubula.client.ui.actions.MoveTestCaseAction"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction"; //$NON-NLS-1$
     
     /** the ID of the specification perspective */
     public static final String SPEC_PERSPECTIVE = 
@@ -138,20 +130,16 @@ public interface Constants {
     public static final String RUNNING_AUTS_VIEW_ID = 
         "org.eclipse.jubula.client.ui.rcp.views.RunningAuts"; //$NON-NLS-1$
     
-    /** ID of the Start Incomplete Test Suite Action */
-    public static final String START_INCOMPLETE_TEST_SUITE_ACTION_ID = 
-        "org.eclipse.jubula.client.ui.actions.StartIncompleteTestSuiteAction"; //$NON-NLS-1$
-    
     //  -------------------------------------------------------------
     //  decorator ids
     //  -------------------------------------------------------------
     /** ID of the completeness check decorator */
     public static final String CC_DECORATOR_ID = 
-        "org.eclipse.jubula.client.ui.decorators.completenessCheckDecorator"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.decorators.completenessCheckDecorator"; //$NON-NLS-1$
     
     /** ID of the active element decorator */
     public static final String ACTIVE_ELEMENT_DECORATOR_ID = 
-        "org.eclipse.jubula.client.ui.decorators.activeElementDecorator"; //$NON-NLS-1$
+        "org.eclipse.jubula.client.ui.rcp.decorators.activeElementDecorator"; //$NON-NLS-1$
     
     //  -------------------------------------------------------------
     //  preference keys
@@ -489,7 +477,7 @@ public interface Constants {
     /** Info severity constant Severity.REPORT indicating information only. */
     public static int GD_SEVERITY_INFO = Severity.REPORT.getValue();
     /** GD Problem marker ID */
-    public static String GD_PROBLEM_MARKER = "org.eclipse.jubula.client.ui.gdProblem"; //$NON-NLS-1$
+    public static String GD_PROBLEM_MARKER = "org.eclipse.jubula.client.ui.rcp.gdProblem"; //$NON-NLS-1$
     /** Object marker type. */
     public static final String GD_OBJECT = "gdObject"; //$NON-NLS-1$
     /** Reason marker attribute. */
