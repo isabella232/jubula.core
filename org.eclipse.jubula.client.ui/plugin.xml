@@ -39,7 +39,7 @@
          style="push">
       <parameter
             name="exportWizardId"
-            value="org.eclipse.jubula.client.ui.exportWizard.ExportTestResultDetailsWizard">
+            value="org.eclipse.jubula.client.ui.rcp.exportWizard.ExportTestResultDetailsWizard">
       </parameter>
    </command>
         </menuContribution>
