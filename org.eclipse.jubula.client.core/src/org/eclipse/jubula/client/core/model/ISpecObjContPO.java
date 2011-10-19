@@ -21,6 +21,11 @@ import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
  */
 public interface ISpecObjContPO extends IPersistentObject {
     /**
+     * the pseudo root node for the test case browser
+     */
+    public static final ICategoryPO TCB_ROOT_NODE = NodeMaker.createCategoryPO("TCB_ROOT"); //$NON-NLS-1$
+    
+    /**
      * @return unmodifiable SpecObjList
      */
     public abstract List<ISpecPersistable> getSpecObjList();

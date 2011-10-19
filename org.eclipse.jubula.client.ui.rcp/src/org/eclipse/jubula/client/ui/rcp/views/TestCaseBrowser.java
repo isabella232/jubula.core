@@ -37,6 +37,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -47,7 +48,6 @@ import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLi
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction;
-import org.eclipse.jubula.client.ui.rcp.actions.NewTestCaseActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
@@ -87,12 +87,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
     public static final String NEW_ID = PlatformUI.PLUGIN_ID + ".NewSubMenu"; //$NON-NLS-1$
     /** Identifies the workbench plug-in */
     public static final String OPEN_WITH_ID = PlatformUI.PLUGIN_ID + ".OpenWithSubMenu"; //$NON-NLS-1$
-    /** the newCAP menu ID */
-    public static final String NEW_CAP_ID = PlatformUI.PLUGIN_ID + ".NewCAPMenu"; //$NON-NLS-1$    
     /** Add-Submenu ID */
     public static final String ADD_ID = PlatformUI.PLUGIN_ID + ".AddSubMenu"; //$NON-NLS-1$
-    /** postfix for add-action id */
-    private static final String ADD = "_ADD"; //$NON-NLS-1$
        
     /** The action to cut TreeItems */
     private CutTreeItemActionTCBrowser m_cutTreeItemAction;
@@ -105,8 +101,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
     /** <code>m_doubleClickListener</code> */
     private final DoubleClickListener m_doubleClickListener = 
         new DoubleClickListener();
-    /** action to add new test cases */
-    private NewTestCaseActionTCBrowser m_newTestCaseAction;
     /** menu manager for context menu */
     private final MenuManager m_menuMgr = new MenuManager();
     /** menu listener for <code>m_menuMgr</code> */
@@ -130,7 +124,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
         m_cutTreeItemAction = new CutTreeItemActionTCBrowser();
         m_pasteTreeItemAction = new PasteTreeItemActionTCBrowser();
         m_moveTestCaseAction = new MoveTestCaseAction();
-        m_newTestCaseAction = new NewTestCaseActionTCBrowser();
 
         int ops = DND.DROP_MOVE;
         Transfer[] transfers = new Transfer[] {LocalSelectionTransfer
@@ -193,8 +186,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 ActionFactory.PASTE.getId(), m_pasteTreeItemAction);
         getViewSite().getActionBars().setGlobalActionHandler(
             Constants.MOVE_TESTCASE_ACTION_ID, m_moveTestCaseAction);
-        getViewSite().getActionBars().setGlobalActionHandler(
-                Constants.NEW_TC_ACTION_ID + ADD, m_newTestCaseAction);
         getViewSite().getWorkbenchWindow().getSelectionService()
             .addSelectionListener(m_actionListener);
         getViewSite().getActionBars().updateActionBars();
@@ -228,7 +219,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
         // build menu
         mgr.add(submenuNew);
         mgr.add(submenuAdd);
-        submenuNew.add(m_newTestCaseAction);
+        CommandHelper.createContributionPushItem(submenuNew,
+                RCPCommandIDs.NEW_TESTCASE_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuNew,
                 RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
         mgr.add(new Separator());
@@ -309,7 +301,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
     protected void rebuildTree() {
         IProjectPO activeProject = GeneralStorage.getInstance().getProject();
         if (activeProject != null) {
-            getTreeViewer().setInput(new IProjectPO[] {activeProject});
+            getTreeViewer().setInput(
+                    new ISpecObjContPO[] {activeProject.getSpecObjCont()});
             getTreeViewer().expandToLevel(DEFAULT_EXPANSION);
         } else {
             getTreeViewer().setInput(null);
@@ -340,17 +333,14 @@ public class TestCaseBrowser extends AbstractJBTreeView
         public void doubleClick(DoubleClickEvent event) {
             IStructuredSelection selection = getActualSelection();
             int[] counter = SelectionChecker.selectionCounter(selection);
-            if (counter[SelectionChecker.PROJECT] 
-                        == selection.size() 
-                        || counter[SelectionChecker.CATEGORY] 
-                                  == selection.size()) { 
-                if (m_newTestCaseAction.isEnabled()) {
-                    m_newTestCaseAction.run();
-                }
+            if (counter[SelectionChecker.PROJECT] == selection.size()
+                    || counter[SelectionChecker.CATEGORY] == selection.size()) {
+                CommandHelper.executeCommand(
+                        RCPCommandIDs.NEW_TESTCASE_COMMAND_ID, getSite());
             } else {
                 CommandHelper.executeCommand(
-                    RCPCommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID,
-                    getSite());
+                        RCPCommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID,
+                        getSite());
             }
         }
     }
@@ -423,18 +413,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
         }
 
         /**
-         * en-/disable new-action
-         * @param selList actual selection list
-         */
-        private void enableNewAction(INodePO[] selList) {
-            if ((selList.length > 0) && NodeBP.isEditable(selList[0])) {
-                m_newTestCaseAction.setEnabled(true);
-            } else {
-                m_newTestCaseAction.setEnabled(false);
-            }
-        }
-
-        /**
          * {@inheritDoc}
          */
         public void selectionChanged(IWorkbenchPart part, 
@@ -453,10 +431,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 m_cutTreeItemAction.setEnabled(false);
                 m_pasteTreeItemAction.setEnabled(false);
                 m_moveTestCaseAction.setEnabled(false);
-                m_newTestCaseAction.setEnabled(false);
                 return;
             }
-            m_newTestCaseAction.setEnabled(isThisPart);
             
             if (!isThisPart) {
                 m_moveTestCaseAction.setEnabled(false);
@@ -471,7 +447,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
                         m_cutTreeItemAction.setEnabled(false);
                         m_pasteTreeItemAction.setEnabled(false);
                         m_moveTestCaseAction.setEnabled(false);
-                        m_newTestCaseAction.setEnabled(false);
                         return;
                     }
                 }
@@ -479,7 +454,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 enableCutAction(selectedNodes);
                 enablePasteAction(selectedNodes);
                 enableMoveAction(selectedNodes);
-                enableNewAction(selectedNodes);
             }
         }
     }

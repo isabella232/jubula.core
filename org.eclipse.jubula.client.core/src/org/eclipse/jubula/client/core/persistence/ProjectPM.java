@@ -46,7 +46,6 @@ import org.eclipse.jubula.client.core.model.IProjectNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
@@ -603,9 +602,8 @@ public class ProjectPM extends PersistenceManager {
         preloadDataPerClass(s, projectIds, "AUTContPO");
         List nodes = preloadDataPerClass(s, projectIds, "NodePO");
         preloadDataPerClass(s, projectIds, "SpecObjContPO");
+        preloadDataPerClass(s, projectIds, "ExecObjContPO");
         preloadDataPerClass(s, projectIds, "TestDataCubeContPO");
-        preloadDataPerClass(s, projectIds, "TestJobContPO");
-        preloadDataPerClass(s, projectIds, "TestSuiteContPO");
         preloadDataPerClass(s, projectIds, "ObjectMappingAssoziationPO");
         preloadDataPerClass(s, projectIds, "ParamDescriptionPO");
         
@@ -1222,17 +1220,17 @@ public class ProjectPM extends PersistenceManager {
             List<ISpecPersistable> specObjList = 
                 new ArrayList<ISpecPersistable>(
                         p.getSpecObjCont().getSpecObjList());
-            List<ITestSuitePO> testSuiteList = 
-                new ArrayList<ITestSuitePO>(
-                        p.getTestSuiteCont().getTestSuiteList());
+            List<IExecPersistable> execObjList = 
+                new ArrayList<IExecPersistable>(
+                        p.getExecObjCont().getExecObjList());
             for (ISpecPersistable po : specObjList) {
                 PersistenceUtil.removeChildNodes(po, deleteSess);
                 p.getSpecObjCont().removeSpecObject(po);
                 Persistor.instance().deletePO(deleteSess, po);
             }
-            for (ITestSuitePO po : testSuiteList) {
+            for (IExecPersistable po : execObjList) {
                 PersistenceUtil.removeChildNodes(po, deleteSess);
-                p.getTestSuiteCont().removeTestSuite(po);
+                p.getExecObjCont().removeExecObject(po);
                 Persistor.instance().deletePO(deleteSess, po);
             }
             deleteSess.flush();
@@ -1283,10 +1281,10 @@ public class ProjectPM extends PersistenceManager {
         int totalWork = 1;
         
         // (INodePO=1)
-        for (ITestSuitePO testSuite 
-                : proj.getTestSuiteCont().getTestSuiteList()) {
+        for (IExecPersistable exec 
+                : proj.getExecObjCont().getExecObjList()) {
             
-            totalWork += getWorkForNode(testSuite);
+            totalWork += getWorkForNode(exec);
         }
         for (ISpecPersistable spec 
                 : proj.getSpecObjCont().getSpecObjList()) {

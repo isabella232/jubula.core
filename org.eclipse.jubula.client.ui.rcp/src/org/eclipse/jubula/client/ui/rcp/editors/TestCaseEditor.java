@@ -73,7 +73,6 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.EventHandlerContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
-import org.eclipse.jubula.client.ui.rcp.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -355,22 +354,9 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             }
             IStructuredSelection sel = 
                 (IStructuredSelection)event.getSelection();
-            boolean topViewerEnabled = 
-                m_currentTreeViewer == getTreeViewer();
-            boolean specIsNotInSelList = false;
-            if (sel != null && !sel.isEmpty()) {
-                int[] counter = SelectionChecker.selectionCounter(sel);
-                specIsNotInSelList = 
-                    counter[SelectionChecker.SPEC_TESTCASE] == 0;
-            }
-            getInsertNewTCAction().setEnabled(specIsNotInSelList 
-                && topViewerEnabled);
-            getAddNewTCAction().setEnabled(topViewerEnabled);
             
             if (GeneralStorage.getInstance().getProject() == null
-                    || (sel == null 
-                            || sel.isEmpty())) {
-                
+                    || (sel == null || sel.isEmpty())) {
                 getCutTreeItemAction().setEnabled(false);
                 getPasteTreeItemAction().setEnabled(false);
             } else {

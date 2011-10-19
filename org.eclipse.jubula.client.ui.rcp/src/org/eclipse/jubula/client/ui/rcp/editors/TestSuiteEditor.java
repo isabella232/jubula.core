@@ -251,12 +251,9 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 ADD_ID);
         MenuManager submenuRefactor = new MenuManager(
             Messages.TestCaseEditorRefactor, REFACTOR_ID);
-        MenuManager submenuInsert = new MenuManager(
-                Messages.TestSuiteEditorInsert, INSERT_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REFERENCE_TC_COMMAND_ID);
         mgr.add(submenuAdd);
-        mgr.add(submenuInsert);
         mgr.add(submenuRefactor);
         CommandHelper.createContributionPushItem(submenuRefactor,
                 RCPCommandIDs.EXTRACT_TESTCASE_COMMAND_ID);

@@ -30,6 +30,7 @@ import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatch
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
@@ -792,8 +793,7 @@ public class TestExecutionContributor
         if (project == null) {
             return;
         }
-        List<ITestSuitePO> tsList = project.getTestSuiteCont()
-            .getTestSuiteList();
+        List<ITestSuitePO> tsList = TestSuiteBP.getListOfTestSuites(project);
         for (ITestSuitePO ts : tsList) {
             ts.setStarted(false);
         }

@@ -22,11 +22,11 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.ui.rcp.actions.AbstractNewTestCaseAction;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
+import org.eclipse.jubula.client.ui.rcp.handlers.NewTestCaseHandlerTCEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteTreeItemHandlerTCEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages.AdditionalInformationPage;
@@ -143,7 +143,7 @@ public class ReplaceTCRWizard extends Wizard {
         IExecTestCasePO placeToInsert = m_listOfExecsToReplace.get(0);
         ISpecTestCasePO specTcToInsert = m_choosePage.getChoosenTestCase();
         try {
-            Integer index = AbstractNewTestCaseAction.getPositionToInsert(
+            Integer index = NewTestCaseHandlerTCEditor.getPositionToInsert(
                     m_parentTC, placeToInsert);
             JBEditorHelper eh = m_editor.getEditorHelper();
             IExecTestCasePO replacementTCReference = TestCaseBP

@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -154,8 +155,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
          * {@inheritDoc}
          */
         public void run(IMarker marker) {
-            List<ITestSuitePO> tsList = GeneralStorage.getInstance()
-                .getProject().getTestSuiteCont().getTestSuiteList();
+            List<ITestSuitePO> tsList = TestSuiteBP.getListOfTestSuites();
             for (ITestSuitePO ts : tsList) {
                 if (ts.toString().equals(m_tsName)) {
                     IEditorPart editor = AbstractOpenHandler.openEditor(ts); 
@@ -209,8 +209,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
          * {@inheritDoc}
          */
         public void run(IMarker marker) {
-            List<ITestSuitePO> tsList = GeneralStorage.getInstance()
-                .getProject().getTestSuiteCont().getTestSuiteList();
+            List<ITestSuitePO> tsList = TestSuiteBP.getListOfTestSuites();
             for (ITestSuitePO ts : tsList) {
                 if (ts.toString().equals(m_tsName)) {
                     ObjectMappingMultiPageEditor editor =

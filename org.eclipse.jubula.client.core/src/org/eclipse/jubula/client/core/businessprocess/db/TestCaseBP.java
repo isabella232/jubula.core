@@ -14,11 +14,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -30,7 +28,6 @@ import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 
@@ -193,25 +190,6 @@ public class TestCaseBP  extends NodeBP {
         return specTC;
     }
 
-    /**
-     * Returns a INodePO which is able to contain SpecTestCasePOs in 
-     * hierarchical relation to the given node. If the current node is not a 
-     * possible container, its parent will be checked and so on.
-     * @param currentNode the current node to check
-     * @return a container for SpecTestCasePOs.
-     */
-    public static INodePO getSpecTestCaseContainer(INodePO currentNode) {
-        INodePO parent = currentNode;
-        Class parentClass = Persistor.getClass(parent);
-        while (!(Persistor.isPoClassSubclass(
-                    parentClass, IProjectPO.class) || Persistor
-                        .isPoClassSubclass(parentClass, ICategoryPO.class))) {
-            parent = parent.getParentNode();
-            parentClass = Persistor.getClass(parent);
-        }
-        return parent;
-    }
-    
     /**
      * @param specTc
      *            the spec test case to test

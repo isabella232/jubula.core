@@ -12,30 +12,30 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.List;
 
+import org.eclipse.jubula.client.core.persistence.IExecPersistable;
+
+
 /**
- * @author BREDEX GmbH
- * @created 20.12.2005
+ * @author Markus Tiede
+ * @created 14.10.2011
  */
-public interface ITestSuiteContPO extends IPersistentObject {
+public interface IExecObjContPO extends IPersistentObject {
+    /**
+     * the pseudo root node for the test suite browser
+     */
+    public static final ICategoryPO TSB_ROOT_NODE = NodeMaker.createCategoryPO("TSB_ROOT"); //$NON-NLS-1$
+    /**
+     * @return unmodifiable ExecObjList
+     */
+    public abstract List<IExecPersistable> getExecObjList();
 
     /**
-     * @return an unmodifiable list of testsuites
+     * @param execObj ExecObj to add
      */
-    public abstract List<ITestSuitePO> getTestSuiteList();
+    public abstract void addExecObject(IExecPersistable execObj);
 
     /**
-     * @param ts testsuite to add
+     * @param execObj ExecObj to remove
      */
-    public abstract void addTestSuite(ITestSuitePO ts);
-
-    /**
-     * @param position position of testsuite to add in testsuiteList
-     * @param ts testsuite to add
-     */
-    public abstract void addTestSuite(int position, ITestSuitePO ts);
-
-    /**
-     * @param ts testsuite to remove
-     */
-    public abstract void removeTestSuite(ITestSuitePO ts);
+    public abstract void removeExecObject(IExecPersistable execObj);
 }

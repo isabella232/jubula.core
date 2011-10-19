@@ -9,6 +9,7 @@
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -16,12 +17,10 @@ import java.util.Locale;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestJobContPO;
-import org.eclipse.jubula.client.core.model.ITestSuiteContPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.slf4j.Logger;
@@ -44,14 +43,15 @@ public class TestSuiteBrowserContentProvider
      * @return object array
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof IProjectPO[]) {
-            return new Object[] { ((IProjectPO[])parentElement)[0] };
+        if (parentElement instanceof IExecObjContPO[]) {
+            return new Object[] { ((IExecObjContPO[])parentElement)[0] };
         }
 
-        if (parentElement instanceof IProjectPO) {
-            IProjectPO project = (IProjectPO)parentElement;
-            return new Object[] { project.getTestJobCont(),
-                    project.getTestSuiteCont(), };
+        if (parentElement instanceof IExecObjContPO) {
+            IExecObjContPO execObjects = (IExecObjContPO)parentElement;
+            List<Object> elements = new ArrayList<Object>();
+            elements.addAll(execObjects.getExecObjList());
+            return elements.toArray();
         }
 
         if (parentElement instanceof IExecTestCasePO) {
@@ -96,16 +96,6 @@ public class TestSuiteBrowserContentProvider
             }
             return nodes.toArray();
         }
-        
-        if (parentElement instanceof ITestSuiteContPO) {
-            return ((ITestSuiteContPO)parentElement)
-                .getTestSuiteList().toArray();
-        }
-
-        if (parentElement instanceof ITestJobContPO) {
-            return ((ITestJobContPO)parentElement).getTestJobList().toArray();
-        }
-
 
         LOG.error("Wrong type for parent element: " + parentElement); //$NON-NLS-1$
         return ArrayUtils.EMPTY_OBJECT_ARRAY;

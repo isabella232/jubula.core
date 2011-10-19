@@ -17,6 +17,7 @@ import java.util.TreeSet;
 
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
@@ -302,7 +303,7 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
         IProjectPO project = GeneralStorage.getInstance().getProject();
         if (project != null) {
             List<ITestSuitePO> tsInProject = 
-                project.getTestSuiteCont().getTestSuiteList();
+                TestSuiteBP.getListOfTestSuites(project);
             for (ITestSuitePO ts : tsInProject) {
                 if (isTestSuiteStartable(ts)) {
                     testSuites.add(ts);

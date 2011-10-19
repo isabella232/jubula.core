@@ -10,13 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 
+import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.ITestJobContPO;
-import org.eclipse.jubula.client.core.model.ITestSuiteContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
@@ -63,9 +63,9 @@ public abstract class AbstractTreeViewContentProvider extends
             }
             return parent;
         }
-        if (element instanceof ITestSuiteContPO
-                || element instanceof ITestJobContPO
-                || element instanceof IReusedProjectPO) {
+        if (element instanceof IReusedProjectPO
+                || element instanceof ISpecObjContPO
+                || element instanceof IExecObjContPO) {
             return GeneralStorage.getInstance().getProject();
         }
         if (element instanceof ITestDataCubeContPO

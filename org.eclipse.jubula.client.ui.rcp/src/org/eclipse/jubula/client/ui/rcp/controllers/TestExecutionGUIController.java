@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
@@ -27,7 +28,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.nag.RCPAUTStartDelayNagTask;
 import org.eclipse.jubula.client.ui.rcp.handlers.AbstractStartTestHandler;
@@ -168,9 +168,8 @@ public class TestExecutionGUIController {
             public void run() {
                 TestExecutionContributor.getInstance().
                     stopTestSuiteAction();
-                List<ITestSuitePO> testSuites = GeneralStorage.getInstance()
-                    .getProject().
-                    getTestSuiteCont().getTestSuiteList();
+                List<ITestSuitePO> testSuites = TestSuiteBP
+                        .getListOfTestSuites();
                 for (ITestSuitePO ts : testSuites) {
                     ts.setStarted(false);
                 }

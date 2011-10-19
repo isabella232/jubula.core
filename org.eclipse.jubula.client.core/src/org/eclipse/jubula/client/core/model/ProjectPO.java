@@ -32,6 +32,7 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.slf4j.Logger;
@@ -56,12 +57,11 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     private AUTContPO m_autCont = null;
 
     /**
-     * <code>m_testSuiteCont</code> object to manage all testsuites
+     * <code>m_execObjCont</code>object to manage all executable object such as
+     * test suites, test jobs and the categories they belong to
      */
-    private TestSuiteContPO m_testSuiteCont;
+    private ExecObjContPO m_execObjCont = null;
     
-    /** object to manage all test jobs */
-    private TestJobContPO m_testJobCont;
     /**
      * <code>m_specObjCont</code>object to manage all specObjects
      */
@@ -142,9 +142,8 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
                 PoMaker.createProjectPropertiesPO(
                     majorNumber, minorNumber));
         setAutCont(PoMaker.createAUTContPO());
-        setTestSuiteCont(PoMaker.createTestSuiteContPO());
-        setTestJobContPO(PoMaker.createTestJobContPO());
         setTestDataCubeContPO(PoMaker.createTestDataCubeContPO());
+        setExecObjCont(PoMaker.createExecObjContPO());
         setSpecObjCont(PoMaker.createSpecObjContPO());
         setClientMetaDataVersion(metadataVersion);
     }
@@ -171,7 +170,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      */
     public void removeAUTMain(IAUTMainPO aut) {
         getHbmAutCont().removeAUTMain(aut);
-        List<ITestSuitePO> tsList = getTestSuiteCont().getTestSuiteList();
+        List<ITestSuitePO> tsList = TestSuiteBP.getListOfTestSuites();
         for (ITestSuitePO ts : tsList) {
             if (aut == ts.getAut()) {
                 ts.setAut(null);
@@ -193,24 +192,37 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     public void setDefaultLanguage(Locale defaultLanguage) {
         m_projectProperties.setDefaultLanguage(defaultLanguage);
     }    
-    
-      
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Transient
     public ISpecObjContPO getSpecObjCont() {
         return getHbmSpecObjCont();
     }
-
+    
     /**
      * @param specObjCont The specObjCont to set.
      */
     private void setSpecObjCont(ISpecObjContPO specObjCont) {
         setHbmSpecObjCont((SpecObjContPO)specObjCont);
         getHbmSpecObjCont().setParentProjectId(getId());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Transient
+    public IExecObjContPO getExecObjCont() {
+        return getHbmExecObjCont();
+    }
+    
+    /**
+     * @param execObjCont The execObjCont to set.
+     */
+    private void setExecObjCont(IExecObjContPO execObjCont) {
+        setHbmExecObjCont((ExecObjContPO)execObjCont);
+        getHbmExecObjCont().setParentProjectId(getId());
     }
 
     /**
@@ -238,6 +250,24 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
         m_specObjCont = specObjCont;
     }
 
+    /**
+     *      
+     * @return Returns the execObjCont.
+     */
+    @OneToOne(cascade = CascadeType.ALL,
+               fetch = FetchType.LAZY)
+    @JoinColumn(name = "EXECOBJ_CONT", unique = true)
+    private ExecObjContPO getHbmExecObjCont() {
+        return m_execObjCont;
+    }
+
+    /**
+     * @param execObjCont The execObjCont to set.
+     */
+    private void setHbmExecObjCont(ExecObjContPO execObjCont) {
+        m_execObjCont = execObjCont;
+    }
+    
     /**
      *      
      * @return Returns the AutCont.
@@ -269,82 +299,11 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * 
      * {@inheritDoc}
      */
-    @Transient
-    public ITestSuiteContPO getTestSuiteCont() {
-        return getHbmTestSuiteCont();
-    }
-
-    /**
-     * @param testSuiteCont The testSuiteCont to set.
-     */
-    private void setTestSuiteCont(ITestSuiteContPO testSuiteCont) {
-        setHbmTestSuiteCont((TestSuiteContPO)testSuiteCont);
-        getHbmTestSuiteCont().setParentProjectId(getId());
-    }
-
-    /**
-     *      
-     * @return Returns the testSuiteCont.
-     */
-    @OneToOne(cascade = CascadeType.ALL,
-               fetch = FetchType.LAZY)
-    @JoinColumn(name = "TS_CONT", unique = true)
-    private TestSuiteContPO getHbmTestSuiteCont() {
-        return m_testSuiteCont;
-    }
-
-    /**
-     * @param testSuiteCont The testSuiteCont to set.
-     */
-    private void setHbmTestSuiteCont(TestSuiteContPO testSuiteCont) {
-        m_testSuiteCont = testSuiteCont;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public ITestJobContPO getTestJobCont() {
-        return getHbmTestJobContPO();
-    }
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void setTestJobContPO(ITestJobContPO tjc) {
-        setHbmTestJobContPO((TestJobContPO)tjc);
-        getHbmTestJobContPO().setParentProjectId(getId());
-    }
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
     public void setTestDataCubeContPO(ITestDataCubeContPO tdcc) {
         setHbmTestDataCubeContPO((TestDataCubeContPO)tdcc);
         getHbmTestDataCubeContPO().setParentProjectId(getId());
     }
     
-    /**
-     *      
-     * @return Returns the testJobCont.
-     */
-    @OneToOne(cascade = CascadeType.ALL,
-               fetch = FetchType.LAZY)
-    @JoinColumn(name = "TJ_CONT", unique = true)
-    private TestJobContPO getHbmTestJobContPO() {
-        return m_testJobCont;
-    }
-
-    /**
-     * @param testJobCont The testJobCont to set.
-     */
-    private void setHbmTestJobContPO(TestJobContPO testJobCont) {
-        m_testJobCont = testJobCont;
-    }
- 
-
     /**
      * 
      * @return Returns the clientMetaDataVersion.
@@ -595,11 +554,8 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
         if (getHbmSpecObjCont() != null) {
             getHbmSpecObjCont().setParentProjectId(projectId);
         }
-        if (getHbmTestSuiteCont() != null) {
-            getHbmTestSuiteCont().setParentProjectId(projectId);
-        }
-        if (getHbmTestJobContPO() != null) {
-            getHbmTestJobContPO().setParentProjectId(projectId);
+        if (getHbmExecObjCont() != null) {
+            getHbmExecObjCont().setParentProjectId(projectId);
         }
         if (getHbmTestDataCubeContPO() != null) {
             getHbmTestDataCubeContPO().setParentProjectId(projectId);

@@ -8,9 +8,9 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.actions;
+package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
@@ -20,11 +20,11 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
@@ -35,48 +35,17 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 
-
 /**
- *  Superclass of all NewTestCaseActions
- *
  * @author BREDEX GmbH
  * @created 27.06.2006
  */
-public abstract class AbstractNewTestCaseAction extends Action {
-
-    /** the help id */
-    private String m_helpid = null;
-
-    /**
-     * Constructor
-     */
-    public AbstractNewTestCaseAction() {
-        this(null);
-    }
-    
-    /**
-     * Constructor
-     * 
-     * @param helpId The Help Context ID to use for the opened dialog.
-     *               May be <code>null</code>.
-     */
-    public AbstractNewTestCaseAction(String helpId) {
-        super(Messages.AbstractNewTestCaseActionNewTC);
-        setImageDescriptor(IconConstants.NEW_TC_IMAGE_DESCRIPTOR); 
-        setDisabledImageDescriptor(IconConstants.
-                NEW_TC_DISABLED_IMAGE_DESCRIPTOR); 
-        setEnabled(false);
-        m_helpid = helpId;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void run() {
+public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
+    /** {@inheritDoc} */
+    public Object execute(ExecutionEvent event) {
         TestCaseEditor tce = (TestCaseEditor)Plugin.getActiveEditor();
         if (!(tce.getTreeViewer().getSelection() 
                 instanceof IStructuredSelection)) {
-            return;
+            return null;
         }
         if (JBEditorHelper.EditableState.OK == tce.getEditorHelper()
                 .requestEditableState()) {
@@ -93,19 +62,17 @@ public abstract class AbstractNewTestCaseAction extends Action {
                     Messages.NewTestCaseActionDoubleTCName,
                     IconConstants.NEW_TC_DIALOG_STRING,
                     Messages.NewTestCaseActionTCShell, false);
-            if (m_helpid != null) {
-                dialog.setHelpAvailable(true);
-                dialog.create();
-                Plugin.getHelpSystem().setHelp(dialog.getShell(), m_helpid);
-            } else {
-                dialog.create();
-            }
+            
+            dialog.setHelpAvailable(true);
+            dialog.create();
+            Plugin.getHelpSystem().setHelp(dialog.getShell(),
+                    ContextHelpIds.DIALOG_TC_ADD_NEW);
             DialogUtils.setWidgetNameForModalDialog(dialog);
             dialog.open();
             ISpecTestCasePO newSpecTC = null;
             if (Window.OK == dialog.getReturnCode()) {
                 String tcName = dialog.getName();
-                IProjectPO parent = GeneralStorage.getInstance().getProject();
+                INodePO parent = ISpecObjContPO.TCB_ROOT_NODE;
                 try {
                     newSpecTC = TestCaseBP.createNewSpecTestCase(tcName,
                             parent, null);
@@ -125,7 +92,7 @@ public abstract class AbstractNewTestCaseAction extends Action {
                 }
 
                 try {
-                    ISpecTestCasePO workNewSpecTC = (ISpecTestCasePO)tce
+                    ISpecTestCasePO workNewSpecTC = (ISpecTestCasePO) tce
                             .getEditorHelper().getEditSupport()
                             .createWorkVersion(newSpecTC);
                     IExecTestCasePO newExecTC = TestCaseBP
@@ -141,6 +108,7 @@ public abstract class AbstractNewTestCaseAction extends Action {
                 }
             }
         }
+        return null;
     }
     
     /**

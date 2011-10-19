@@ -28,12 +28,12 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.actions.AbstractNewTestCaseAction;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
+import org.eclipse.jubula.client.ui.rcp.handlers.NewTestCaseHandlerTCEditor;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.ISelectionListener;
@@ -117,7 +117,7 @@ public class ReferenceExistingTestCase
                         try {
                             Integer index = null;
                             if (node instanceof IExecTestCasePO) {
-                                index = AbstractNewTestCaseAction
+                                index = NewTestCaseHandlerTCEditor
                                         .getPositionToInsert(editorNode,
                                                 (IExecTestCasePO)node);
                             }

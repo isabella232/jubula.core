@@ -36,10 +36,6 @@ public interface Constants {
     //  -------------------------------------------------------------
     //  Keys for Views, Editors, Perspectives, Plugins
     //  -------------------------------------------------------------
-    /** the ID of the DeleteTreeItemAction (e.g. for retargeting) */
-    public static final String NEW_TC_ACTION_ID = 
-        "org.eclipse.jubula.client.ui.rcp.actions.AbstractNewTestCaseAction"; //$NON-NLS-1$
-    
     /** the ID of the MoveTestCaseAction (e.g. for retargeting) */
     public static final String MOVE_TESTCASE_ACTION_ID = 
         "org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction"; //$NON-NLS-1$

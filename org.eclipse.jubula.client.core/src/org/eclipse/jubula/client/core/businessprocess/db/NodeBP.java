@@ -19,6 +19,7 @@ import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -105,17 +106,17 @@ public class NodeBP {
     
     /**
      * 
-     * @param node The node to check.
+     * @param po The persistent object to check.
      * @return <code>true</code> if the given node can be modified within
      *         the active project. Otherwise <code>false</code>.
      */
-    public static boolean isEditable(INodePO node) {
-        Validate.notNull(node);
+    public static boolean isEditable(IPersistentObject po) {
+        Validate.notNull(po);
         IProjectPO activeProject = GeneralStorage.getInstance().getProject();
-        if (activeProject == node) {
+        if (activeProject == po) {
             return true;
         }
         return activeProject != null 
-            && activeProject.getId().equals(node.getParentProjectId());
+            && activeProject.getId().equals(po.getParentProjectId());
     }
 }

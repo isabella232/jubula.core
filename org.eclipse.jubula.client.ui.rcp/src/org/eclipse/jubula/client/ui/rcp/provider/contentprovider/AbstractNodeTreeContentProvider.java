@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.core.model.INodePO;
 
 /**
  * @author Markus Tiede
@@ -25,8 +24,8 @@ public abstract class AbstractNodeTreeContentProvider implements
      * {@inheritDoc}
      */
     public Object[] getElements(Object inputElement) {
-        Validate.isTrue(inputElement instanceof INodePO[]);
-        return (INodePO[])inputElement;
+        Validate.isTrue(inputElement instanceof Object[]);
+        return (Object[])inputElement;
     }
     
     /**

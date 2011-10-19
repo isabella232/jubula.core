@@ -14,11 +14,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ProjectPM;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.JBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,27 +53,6 @@ class CategoryPO extends NodePO implements ICategoryPO {
      */
     CategoryPO() {
         // nothing
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public INodePO getParentNode() {
-        INodePO parent = super.getParentNode();
-        if (parent == null) {
-            try {
-                parent = ProjectPM.loadProjectById(getParentProjectId(), 
-                    GeneralStorage.getInstance().getMasterSession());
-            } catch (JBException e) {
-                LOG.error(Messages.CouldNotFindParentForCategory 
-                    + StringConstants.COLON + StringConstants.SPACE + this
-                    + StringConstants.SEMICOLON + StringConstants.SPACE
-                    + Messages.ReturningNull + StringConstants.DOT 
-                    + StringConstants.DOT, e);
-            }
-        }
-        return parent;
     }
 
     /** {@inheritDoc}

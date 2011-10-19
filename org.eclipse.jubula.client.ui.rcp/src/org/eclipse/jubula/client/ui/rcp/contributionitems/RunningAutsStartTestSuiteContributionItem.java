@@ -24,6 +24,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -72,8 +73,8 @@ public class RunningAutsStartTestSuiteContributionItem extends
                     .getRunningAuts(currentProject, selectedAutIds);
 
             Set<ITestSuitePO> startableSuites = new HashSet<ITestSuitePO>();
-            for (ITestSuitePO suite : currentProject.getTestSuiteCont()
-                    .getTestSuiteList()) {
+            for (ITestSuitePO suite : TestSuiteBP
+                    .getListOfTestSuites(currentProject)) {
                 if (runningAuts.keySet().contains(suite.getAut())
                         && ChooseTestSuiteBP.getInstance()
                             .isTestSuiteStartable(suite)) {

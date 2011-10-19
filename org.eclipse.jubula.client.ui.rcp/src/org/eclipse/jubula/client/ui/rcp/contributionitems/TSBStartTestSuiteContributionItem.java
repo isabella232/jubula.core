@@ -24,6 +24,8 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
+import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -66,7 +68,7 @@ public class TSBStartTestSuiteContributionItem
             GeneralStorage.getInstance().getProject();
         if (currentProject != null) {
             for (ITestJobPO testJob 
-                    : currentProject.getTestJobCont().getTestJobList()) {
+                    : TestJobBP.getListOfTestJobs(currentProject)) {
                 contributionItems.add(createItem(testJob));
                 contributionItems.add(new Separator());
             }
@@ -75,8 +77,8 @@ public class TSBStartTestSuiteContributionItem
                 AutAgentRegistration.getRunningAuts(currentProject, null);
 
             if (selectedSuites.isEmpty()) {
-                selectedSuites.addAll(
-                        currentProject.getTestSuiteCont().getTestSuiteList());
+                selectedSuites.addAll(TestSuiteBP
+                        .getListOfTestSuites(currentProject));
             }
             
             Set<ITestSuitePO> startableSuites = new HashSet<ITestSuitePO>();

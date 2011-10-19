@@ -429,7 +429,7 @@ public class Persistor {
             Integer dbMaj = dbVersion.getMajorVersion();
             Integer dbMin = dbVersion.getMinorVersion();
             if (dbMaj.equals(IVersion.JB_DB_MAJOR_VERSION)) {
-                if (dbMin.equals(IVersion.GD_DB_MINOR_VERSION)) {
+                if (dbMin.equals(IVersion.JB_DB_MINOR_VERSION)) {
                     log.info(Messages.DBVersion + StringConstants.COLON
                             + StringConstants.SPACE + Messages.OK);
                 } else {
@@ -523,11 +523,11 @@ public class Persistor {
                 DBVersionPO version = 
                     (DBVersionPO)em.createQuery("select version from DBVersionPO as version").getSingleResult(); //$NON-NLS-1$
                 version.setMajorVersion(IVersion.JB_DB_MAJOR_VERSION);
-                version.setMinorVersion(IVersion.GD_DB_MINOR_VERSION);
+                version.setMinorVersion(IVersion.JB_DB_MINOR_VERSION);
                 em.merge(version);
             } catch (NoResultException nre) {
                 em.merge(new DBVersionPO(IVersion.JB_DB_MAJOR_VERSION,
-                        IVersion.GD_DB_MINOR_VERSION));
+                        IVersion.JB_DB_MINOR_VERSION));
             }
 
             tx.commit();
@@ -602,7 +602,7 @@ public class Persistor {
                         || (IVersion.JB_DB_MAJOR_VERSION.equals(e
                                 .getDatabaseMajorVersion()) 
                                 && 
-                                IVersion.GD_DB_MINOR_VERSION > e
+                                IVersion.JB_DB_MINOR_VERSION > e
                                 .getDatabaseMinorVersion())) {
                     // Client is newer than database schema
                     if (!handleDatabaseVersionConflict(e)) {

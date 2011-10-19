@@ -19,7 +19,9 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -35,15 +37,17 @@ public class TestCaseBrowserContentProvider
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof IProjectPO[]) {
-            return new Object[] { ((IProjectPO[])parentElement)[0] };
+        if (parentElement instanceof ISpecObjContPO[]) {
+            return new Object[] { ((ISpecObjContPO[])parentElement)[0] };
         }
 
-        if (parentElement instanceof IProjectPO) {
-            IProjectPO project = (IProjectPO)parentElement;
+        if (parentElement instanceof ISpecObjContPO) {
+            ISpecObjContPO specObjects = (ISpecObjContPO)parentElement;
             List<Object> elements = new ArrayList<Object>();
-            elements.addAll(project.getSpecObjCont().getSpecObjList());
-            elements.addAll(project.getUsedProjects());
+            elements.addAll(specObjects.getSpecObjList());
+            elements.addAll(
+                    GeneralStorage.getInstance()
+                        .getProject().getUsedProjects());
             return elements.toArray();
         }
         

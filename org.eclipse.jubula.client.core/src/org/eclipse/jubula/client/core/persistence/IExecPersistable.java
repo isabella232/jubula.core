@@ -8,16 +8,17 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.model;
+package org.eclipse.jubula.client.core.persistence;
 
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
+import org.eclipse.jubula.client.core.model.INodePO;
+
 
 /**
- * @author BREDEX GmbH
- * @created 19.12.2005
+ * Interface for tagging classes as persistable in the ExecStore.
+ *
+ * @author Markus Tiede
+ * @created 14.10.2011
  */
-public interface ICategoryPO extends INodePO, IExecPersistable,
-        ISpecPersistable {
-    // currently empty
+public interface IExecPersistable extends INodePO {
+// nothing
 }

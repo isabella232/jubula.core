@@ -12,9 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.Iterator;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -30,7 +28,6 @@ import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
-import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -39,40 +36,29 @@ import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
  * @author BREDEX GmbH
  * @created 04.07.2005
  */
-public class AddNewCategoryHandler extends AbstractHandler {
-
+public class NewCategoryHandler extends AbstractNewHandler {
     /**
      * {@inheritDoc}
      */
     public Object execute(ExecutionEvent event) {
-        IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
-        if (activePart != null 
-                && Constants.TC_BROWSER_ID.equals(
-                        activePart.getSite().getId())) {
-            IStructuredSelection selection = Plugin.getTreeViewSelection(
-                    Constants.TC_BROWSER_ID);            
-            try {
-                createNewCategory(selection);
-            } catch (PMException e) {
-                PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleGDProjectDeletedException();
-            }
+        try {
+            createNewCategory(event);
+        } catch (PMException e) {
+            PMExceptionHandler.handlePMExceptionForMasterSession(e);
+        } catch (ProjectDeletedException e) {
+            PMExceptionHandler.handleGDProjectDeletedException();
         }
         return null;
     }
     
     /**
-     * @param selection
-     *            the parent of the new category.
+     * @param event the execution event
      * @throws PMSaveException
      *             in case of DB storage problem
      * @throws PMAlreadyLockedException
@@ -82,20 +68,11 @@ public class AddNewCategoryHandler extends AbstractHandler {
      * @throws ProjectDeletedException
      *             if the project was deleted in another instance
      */
-    private void createNewCategory(IStructuredSelection selection)
+    private void createNewCategory(ExecutionEvent event)
         throws PMSaveException, PMAlreadyLockedException, PMException, 
         ProjectDeletedException {
-        INodePO catParentPO;
-        if (!selection.isEmpty()) {
-            catParentPO = (INodePO)selection.getFirstElement();
-            while (!(catParentPO instanceof ICategoryPO) 
-                    && !(catParentPO instanceof IProjectPO)) {
-                catParentPO = catParentPO.getParentNode();
-            }
-        } else {
-            catParentPO = GeneralStorage.getInstance().getProject();
-        }
-        final INodePO finalCatParent = catParentPO;
+
+        final INodePO categoryParent = getParentNode(event);
         InputDialog dialog = new InputDialog(
             Plugin.getShell(), 
             Messages.CreateNewCategoryActionCatTitle,
@@ -111,7 +88,7 @@ public class AddNewCategoryHandler extends AbstractHandler {
              * @return False, if the input name already exists.
              */
             protected boolean isInputAllowed() {
-                return !existCategory(finalCatParent, getInputFieldText());
+                return !existCategory(categoryParent, getInputFieldText());
             }
 
         };
@@ -124,8 +101,8 @@ public class AddNewCategoryHandler extends AbstractHandler {
         if (Window.OK == dialog.getReturnCode()) {
             String categoryName = dialog.getName();
             ICategoryPO category = NodeMaker.createCategoryPO(categoryName);
-            NodePM.addAndPersistChildNode(catParentPO, category, null, NodePM
-                .getCmdHandleChild(catParentPO, category));
+            NodePM.addAndPersistChildNode(categoryParent, category, null, NodePM
+                .getCmdHandleChild(categoryParent, category));
             DataEventDispatcher.getInstance().fireDataChangedListener(category, 
                 DataState.Added, UpdateState.all);
         }

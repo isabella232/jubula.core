@@ -95,21 +95,14 @@ public interface IProjectPO extends IParamNodePO {
     public abstract ISpecObjContPO getSpecObjCont();
 
     /**
+     * @return Returns the excObjCont.
+     */
+    public abstract IExecObjContPO getExecObjCont();
+    
+    /**
      * @return Returns the test data container.
      */
     public abstract ITestDataCubeContPO getTestDataCubeCont();
-    
-    /**
-     *      
-     * @return Returns the testSuiteCont.
-     */
-    public abstract ITestSuiteContPO getTestSuiteCont();
-    
-    /**
-     * 
-     * @return the container for TestJobs
-     */
-    public abstract ITestJobContPO getTestJobCont();
     
     /**
      * All data from this PO is available from delegate methods in IProjectPO.

@@ -21,7 +21,6 @@ import org.apache.commons.collections.IteratorUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -76,10 +75,7 @@ import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
-import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.actions.AddNewTestCaseAction;
-import org.eclipse.jubula.client.ui.rcp.actions.InsertNewTestCaseAction;
 import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
@@ -105,7 +101,6 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 
 
@@ -115,13 +110,6 @@ import org.eclipse.ui.IWorkbenchActionConstants;
  */
 @SuppressWarnings("synthetic-access")
 public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
-
-    /** the retarget action to insert new tc */
-    private InsertNewTestCaseAction m_insertNewTCAction = 
-        new InsertNewTestCaseAction();
-    /** the retarget action to add new tc */
-    private AddNewTestCaseAction m_addNewTCAction = new AddNewTestCaseAction();
-    
     /**
      * Creates the initial Context of this Editor.<br>
      * Subclasses may override this method. 
@@ -146,19 +134,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 new CentralTestDataUpdateListener(), false);
     }
     
-    /**
-     * Sets all necessary global action handlers for this editor. This
-     * ensures that the editor's actions control the enablement of the 
-     * corresponding actions in the main menu.
-     */
-    protected void setActionHandlers() {
-        getEditorSite().getActionBars().setGlobalActionHandler(
-                Constants.NEW_TC_ACTION_ID + INSERT, m_insertNewTCAction);
-        getEditorSite().getActionBars().setGlobalActionHandler(
-                Constants.NEW_TC_ACTION_ID + ADD, m_addNewTCAction);
-        super.setActionHandlers();
-    }
-
     /**
      * adds Drag and Drop support for the trees.
      * 
@@ -682,8 +657,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         if (getStructuredSelection().getFirstElement() == null) {
             return;
         }
-        MenuManager submenuInsert = new MenuManager(
-                Messages.TestCaseEditorInsert, INSERT_ID);
         MenuManager submenuAdd = new MenuManager(Messages.TestSuiteBrowserAdd,
                 ADD_ID);
         MenuManager submenuRefactor = new MenuManager(
@@ -693,7 +666,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.NEW_CAP_COMMAND_ID);
         mgr.add(submenuAdd);
-        mgr.add(submenuInsert);
         mgr.add(getCutTreeItemAction());
         mgr.add(getPasteTreeItemAction());
         CommandHelper.createContributionPushItem(mgr,
@@ -717,8 +689,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
-        submenuInsert.add(m_insertNewTCAction);
-        submenuAdd.add(m_addNewTCAction);
+        CommandHelper.createContributionPushItem(submenuAdd,
+                RCPCommandIDs.NEW_TESTCASE_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuAdd,
                 RCPCommandIDs.ADD_EVENT_HANDLER_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuRefactor,
@@ -755,30 +727,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      * editor is responsible for clearing its own action handlers.
      */
     private void removeGlobalActionHandler() {
-        removeGlobalActionHandler(
-            Constants.NEW_TC_ACTION_ID + INSERT, getInsertNewTCAction());
-        removeGlobalActionHandler(
-            Constants.NEW_TC_ACTION_ID + ADD, getAddNewTCAction());
-
         getEditorSite().getActionBars().updateActionBars();
-    }
-    
-    /**
-     * Conditionally clears the global action handler for the given action id.
-     * This method does *not* update the action bars. The invoker must perform
-     * the update after calling this method.
-     * 
-     * @param actionId The id of the global action to clear.
-     * @param handler The handler that should be removed from the given action
-     *                id. If the current handler for the action id is *not*
-     *                <code>handler</code>, no changes will be made to the 
-     *                action.
-     */
-    private void removeGlobalActionHandler(String actionId, IAction handler) {
-        IActionBars actionBars = getEditorSite().getActionBars();
-        if (actionBars.getGlobalActionHandler(actionId) == handler) {
-            actionBars.setGlobalActionHandler(actionId, null);        
-        }
     }
     
     /** {@inheritDoc} */
@@ -928,20 +877,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             + StringConstants.EXCLAMATION_MARK);
 
         eventHandler.setMaxRetries(maxRetries);
-    }
-    
-    /**
-     * @return the action
-     */
-    protected AddNewTestCaseAction getAddNewTCAction() {
-        return m_addNewTCAction;
-    }
-
-    /**
-     * @return the action
-     */
-    protected InsertNewTestCaseAction getInsertNewTCAction() {
-        return m_insertNewTCAction;
     }
     
     /**

@@ -841,7 +841,6 @@ public class Messages extends NLS {
     public static String TestCaseEditorDoubleTsuiteName;
     public static String TestCaseEditorEHAreaHeadline;
     public static String TestCaseEditorEmptyCompName;
-    public static String TestCaseEditorInsert;
     public static String TestCaseEditorMissingCompName;
     public static String TestCaseEditorMmissingCompName;
     public static String TestCaseEditorNoCapName;
@@ -1017,7 +1016,6 @@ public class Messages extends NLS {
     public static String TestSuiteBrowserRefreshProjectPrompt;
     public static String TestSuiteBrowserRefreshProjectTitle;
     public static String TestSuiteEditorEmptyStepDelay;
-    public static String TestSuiteEditorInsert;
     public static String TestSuiteGUIPropertySourceAUTName;
     public static String TestSuiteGUIPropertySourceEventHandler;
     public static String TestSuiteGUIPropertySourceStepDelay;
@@ -1027,8 +1025,6 @@ public class Messages extends NLS {
     public static String ToolkitVersionConflictWhileCreatingNewProjectVersion;
     public static String ToolkitVersionConflictWhileSaveProjectAsAction;
     public static String TreeBuilderTestCases;
-    public static String TSBCategoryTJ;
-    public static String TSBCategoryTS;
     public static String UIJobCleaningTestResultFromDB;
     public static String UIJobConnectToAUTAgent;
     public static String UIJobDeletingTestResultDetails;

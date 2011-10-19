@@ -334,10 +334,6 @@ public interface ContextHelpIds {
     public static final String DIALOG_PROJECT_IMPORT_RENAME = PRAEFIX
         + "dialogProjectImportRenameContextId"; //$NON-NLS-1$
 
-    /** for the "insert new test case" dialog */
-    public static final String DIALOG_TC_INSERT_NEW = PRAEFIX
-        + "dialogTestcaseInsertNewContextId"; //$NON-NLS-1$
-
     /** for the "add new test case" dialog */
     public static final String DIALOG_TC_ADD_NEW = PRAEFIX
         + "dialogTestcaseAddNewContextId"; //$NON-NLS-1$

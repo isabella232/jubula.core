@@ -43,6 +43,8 @@
         	</xs:choice>
         	<xs:element name="testsuite" type="gd:testSuite"
         		minOccurs="0" maxOccurs="unbounded" />
+       		<xs:element name="execCategories" type="gd:execCategory"
+        		minOccurs="0" maxOccurs="unbounded" />
         	<xs:element name="xmlConfMajorVersion" type="xs:int"
         		minOccurs="0" maxOccurs="1" />
         	<xs:element name="xmlConfMinorVersion" type="xs:int"
@@ -231,6 +233,20 @@
           <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="testcase" type="gd:testCase" />
             <xs:element name="category" type="gd:category" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="execCategory">
+    <!--checked-->
+    <xs:complexContent>
+      <xs:extension base="gd:node">
+        <xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="testsuite" type="gd:testSuite" />
+            <xs:element name="testjob"  type="gd:testJobs" />
+            <xs:element name="category" type="gd:execCategory" />
           </xs:choice>
         </xs:sequence>
       </xs:extension>

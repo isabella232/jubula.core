@@ -22,25 +22,25 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
+import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 
 
 /**
- * @author BREDEX GmbH
- * @created 02.12.2005
+ * @author Markus Tiede
+ * @created 14.10.2011
  */
 @Entity
-@Table(name = "SPEC_CONT")
-public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
+@Table(name = "EXEC_CONT")
+public class ExecObjContPO extends WrapperPO implements IExecObjContPO {
     
     /**
-     * <code>m_specObjList</code>list with all toplevel specTestCases and categories
+     * <code>m_execObjList</code>list with all toplevel execTestCases and categories
      */
-    private List<ISpecPersistable> m_specObjList = 
-            new ArrayList<ISpecPersistable>();
+    private List<IExecPersistable> m_execObjList = 
+            new ArrayList<IExecPersistable>();
 
     /** default constructor */
-    SpecObjContPO() {
+    ExecObjContPO() {
         // nothing
     }
 
@@ -49,14 +49,14 @@ public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
      */
     @Transient
     public String getName() {
-        return "SpecObjContPO"; //$NON-NLS-1$
+        return "ExecObjContPO"; //$NON-NLS-1$
     }
 
     /**
-     * @return Returns the specObjList.
+     * @return Returns the execObjList.
      */
     // FIXME zeb Persistence (JPA / EclipseLink): although this property is semantically a OneToMany, 
-    //                      it must be specified as ManyToMany in order to avoid
+    //                      it must be execified as ManyToMany in order to avoid
     //                      the problem described on the following pages:
     //                      http://opensource.atlassian.com/projects/Persistence (JPA / EclipseLink)/browse/HHH-1268
     //                      http://stackoverflow.com/questions/4022509/constraint-violation-in-Persistence (JPA / EclipseLink)-unidirectional-onetomany-mapping-with-jointable
@@ -66,44 +66,45 @@ public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
                fetch = FetchType.EAGER, 
                targetEntity = NodePO.class)
     @OrderColumn(name = "IDX")
-    List<ISpecPersistable> getHbmSpecObjList() {
-        return m_specObjList;
+    List<IExecPersistable> getHbmExecObjList() {
+        return m_execObjList;
     }
     
     /**
-     * @return unmodifiable SpecObjList
+     * @return unmodifiable ExecObjList
      */
     @Transient
-    public List<ISpecPersistable> getSpecObjList() {
-        for (ISpecPersistable spec : m_specObjList) {
-            spec.setParentNode(TCB_ROOT_NODE);
+    public List<IExecPersistable> getExecObjList() {
+        for (IExecPersistable exec : m_execObjList) {
+            exec.setParentNode(TSB_ROOT_NODE);
         }
-        return Collections.unmodifiableList(getHbmSpecObjList());
+        return Collections.unmodifiableList(getHbmExecObjList());
     }
 
     /**
-     * @param specObjList The specObjList to set.
+     * @param execObjList The execObjList to set.
      */
     @SuppressWarnings("unused")
-    private void setHbmSpecObjList(List<ISpecPersistable> specObjList) {
-        m_specObjList = specObjList;
+    private void setHbmExecObjList(List<IExecPersistable> execObjList) {
+        m_execObjList = execObjList;
     }
     
     /**
-     * @param specObj specObj to add
+     * @param execObj execObj to add
      */
-    public void addSpecObject(ISpecPersistable specObj) {
-        getHbmSpecObjList().add(specObj);
-        specObj.setParentNode(TCB_ROOT_NODE);
-        specObj.setParentProjectId(getParentProjectId());
+    public void addExecObject(IExecPersistable execObj) {
+        getHbmExecObjList().add(execObj);
+        execObj.setParentNode(TSB_ROOT_NODE);
+        execObj.setParentProjectId(getParentProjectId());
     }
     
+    
     /**
-     * @param specObj specObj to remove
+     * @param execObj execObj to remove
      */
-    public void removeSpecObject(ISpecPersistable specObj) {
-        getHbmSpecObjList().remove(specObj);
-        specObj.setParentNode(null);
+    public void removeExecObject(IExecPersistable execObj) {
+        getHbmExecObjList().remove(execObj);
+        execObj.setParentNode(null);
     }
 
     /**
@@ -111,8 +112,8 @@ public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
      */
     public void setParentProjectId(Long projectId) {
         super.setParentProjectId(projectId);
-        for (ISpecPersistable spec : getSpecObjList()) {
-            spec.setParentProjectId(projectId);
+        for (IExecPersistable exec : getExecObjList()) {
+            exec.setParentProjectId(projectId);
         }
     }
 

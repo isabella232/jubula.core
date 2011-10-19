@@ -26,7 +26,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Transient;
 
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 
 
@@ -225,14 +224,6 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
         if (defaultEventHandler != null) {
             m_defaultEventHandler = defaultEventHandler;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public INodePO getParentNode() {
-        return GeneralStorage.getInstance().getProject();
     }
 
     /**

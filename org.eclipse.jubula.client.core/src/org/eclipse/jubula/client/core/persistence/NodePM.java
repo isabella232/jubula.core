@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -40,7 +41,6 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -103,21 +103,13 @@ public class NodePM extends PersistenceManager {
          * @param parent the parent node
          */
         public void setParentProjectId(INodePO child, INodePO parent) {
-            if (parent instanceof IProjectPO) {
-                child.setParentProjectId(parent.getId());
-            } else {
-                child.setParentProjectId(parent.getParentProjectId());
+            Long parentProjectId = parent.getParentProjectId();
+            if (parentProjectId == null) {
+                parentProjectId = GeneralStorage.getInstance().getProject()
+                        .getId();
             }
+            child.setParentProjectId(parentProjectId);
         }
-        /**
-         * Sets the parentProjectId for a node inserted directly into a Project.
-         * @param child the child node
-         * @param project the parent Project node
-         */
-        public void setParentProjectId(INodePO child, IProjectPO project) {
-            child.setParentProjectId(project.getId());
-        }
-        
     }
 
     /**
@@ -177,67 +169,29 @@ public class NodePM extends PersistenceManager {
     /**
      * {@inheritDoc}
      */
-    public static class CmdHandleChildIntoTestSuiteList extends
+    public static class CmdHandleChildIntoExecList extends
         AbstractCmdHandleChild {
 
         /**
          * {@inheritDoc}
          *      org.eclipse.jubula.client.core.model.INodePO)
          */
-        public void add(INodePO project, INodePO ts, Integer pos) {
+        public void add(INodePO parent, INodePO child, Integer pos) {
+            // pos is not used here
             IProjectPO proj = GeneralStorage.getInstance().getProject();
-            if (pos != null) {
-                proj.getTestSuiteCont().addTestSuite(pos.intValue(), 
-                    (ITestSuitePO)ts);
-            } else {
-                proj.getTestSuiteCont().addTestSuite((ITestSuitePO)ts);
-            }
-            setParentProjectId(ts, project);
+            proj.getExecObjCont().addExecObject((IExecPersistable)child);
+            setParentProjectId(child, parent);
         }
 
         /**
          * {@inheritDoc}
          *      org.eclipse.jubula.client.core.model.INodePO)
-         * @param parent
-         * @param child
          */
-        public void remove(INodePO project, INodePO ts) {
+        public void remove(INodePO parent, INodePO child) {
             IProjectPO proj = GeneralStorage.getInstance().getProject();
-            proj.getTestSuiteCont().removeTestSuite((ITestSuitePO)ts);
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public static class CmdHandleChildIntoTestJobList extends
-        AbstractCmdHandleChild {
-
-        /**
-         * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.INodePO)
-         */
-        public void add(INodePO project, INodePO tj, Integer pos) {
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            if (pos != null) {
-                proj.getTestJobCont().addTestJob(pos.intValue(), 
-                    (ITestJobPO)tj);
-            } else {
-                proj.getTestJobCont().addTestJob((ITestJobPO)tj);
-            }
-            setParentProjectId(tj, project);
+            proj.getExecObjCont().removeExecObject((IExecPersistable)child);
         }
 
-        /**
-         * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.INodePO)
-         * @param parent
-         * @param child
-         */
-        public void remove(INodePO project, INodePO tj) {
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            proj.getTestJobCont().removeTestJob((ITestJobPO)tj);
-        }
     }
     
     /**
@@ -334,23 +288,10 @@ public class NodePM extends PersistenceManager {
             INodePO child) {
         Class parentNodePoClass = Persistor.getClass(parent);
         Class childNodePoClass = Persistor.getClass(child);
-        if (Persistor.isPoClassSubclass(
-                parentNodePoClass, IProjectPO.class)) {
-            // testsuite in TestExecTree
-            if (Persistor.isPoClassSubclass(childNodePoClass,
-                    ITestSuitePO.class)) {
-                return new CmdHandleChildIntoTestSuiteList();
-                // category/specTc in SpecTree (toplevel)
-            } else if (Persistor.isPoClassSubclass(childNodePoClass,
-                    ITestJobPO.class)) {
-                // test jobs
-                return new CmdHandleChildIntoTestJobList();
-            } else if (Persistor.isPoClassSubclass(childNodePoClass,
-                    ICategoryPO.class)
-                    || Persistor.isPoClassSubclass(childNodePoClass,
-                            ISpecTestCasePO.class)) {
-                return new CmdHandleChildIntoSpecList();
-            }
+        if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
+            return new CmdHandleChildIntoSpecList();
+        } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
+            return new CmdHandleChildIntoExecList();
         } else if (Persistor.isPoClassSubclass(parentNodePoClass,
                 ICategoryPO.class)) {
             // category/specTc in category
@@ -422,24 +363,14 @@ public class NodePM extends PersistenceManager {
         boolean doAdd) throws PMException, ProjectDeletedException {
         EntityTransaction tx = null;
         IPersistentObject lockedObj = null;
-        final EntityManager sess = 
-            GeneralStorage.getInstance().getMasterSession();
+        GeneralStorage gs = GeneralStorage.getInstance();
+        final EntityManager sess = gs.getMasterSession();
+        IProjectPO currentProject = gs.getProject();
         final Persistor persistor = Persistor.instance();
-        if (Persistor.isPoSubclass(parent, IProjectPO.class)) {
-            if (Persistor.isPoSubclass(child, ITestSuitePO.class)) {
-                lockedObj = GeneralStorage.getInstance().getProject()
-                    .getTestSuiteCont();
-            } else if (Persistor.isPoSubclass(child, ITestJobPO.class)) {
-                lockedObj = GeneralStorage.getInstance().getProject()
-                    .getTestJobCont();
-            } else if (Persistor.isPoSubclass(child, ISpecTestCasePO.class)
-                || Persistor.isPoSubclass(child, ICategoryPO.class)) {
-                lockedObj = GeneralStorage.getInstance().getProject()
-                    .getSpecObjCont();
-            } else {
-                throw new JBFatalException(Messages.NotSupportedChildForProject,
-                    MessageIDs.E_UNEXPECTED_EXCEPTION);
-            }
+        if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
+            lockedObj = currentProject.getSpecObjCont();
+        } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
+            lockedObj = currentProject.getExecObjCont();
         } else {
             lockedObj = parent;
         }

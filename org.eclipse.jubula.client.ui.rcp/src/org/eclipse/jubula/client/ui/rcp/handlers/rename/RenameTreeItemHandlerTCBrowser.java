@@ -17,27 +17,21 @@ import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-
 /**
- *@author Clemens Fabig
+ * @author Clemens Fabig
  * @created 09.03.2006
  */
-public class RenameTreeItemHandlerTCBrowser 
-    extends AbstractRenameTreeItemHandler {
-
-    /**
-     * {@inheritDoc}
-     */
+public class RenameTreeItemHandlerTCBrowser extends
+        AbstractRenameTreeItemHandler {
+    /** {@inheritDoc} */
     public Object execute(ExecutionEvent event) {
         IWorkbenchPart part = HandlerUtil.getActivePart(event);
         ISelection sel = HandlerUtil.getCurrentSelection(event);
-        
-        if (part instanceof TestCaseBrowser 
-                && sel instanceof IStructuredSelection) {
-            dialogPopUp((IStructuredSelection)sel);
-        }
 
+        if (part instanceof TestCaseBrowser
+                && sel instanceof IStructuredSelection) {
+            dialogPopUp((IStructuredSelection) sel);
+        }
         return null;
     }
-    
 }

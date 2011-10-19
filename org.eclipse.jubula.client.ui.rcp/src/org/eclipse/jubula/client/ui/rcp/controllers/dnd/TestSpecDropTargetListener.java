@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.Constants;
@@ -49,7 +50,7 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
     @SuppressWarnings("unchecked")
     public boolean performDrop(Object data) {
         LocalSelectionTransfer transfer = LocalSelectionTransfer.getInstance();
-        INodePO target = (INodePO)getCurrentTarget();
+        IPersistentObject target = (IPersistentObject)getCurrentTarget();
         List <INodePO> nodesToBeMoved = transfer.getSelection().toList();
         try {
             TCBrowserDndSupport.moveNodes(nodesToBeMoved, target);

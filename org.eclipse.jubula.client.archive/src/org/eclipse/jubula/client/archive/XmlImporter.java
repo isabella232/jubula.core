@@ -49,6 +49,7 @@ import org.eclipse.jubula.client.archive.schema.CompNames;
 import org.eclipse.jubula.client.archive.schema.ComponentName;
 import org.eclipse.jubula.client.archive.schema.EventHandler;
 import org.eclipse.jubula.client.archive.schema.EventTestCase;
+import org.eclipse.jubula.client.archive.schema.ExecCategory;
 import org.eclipse.jubula.client.archive.schema.I18NString;
 import org.eclipse.jubula.client.archive.schema.MapEntry;
 import org.eclipse.jubula.client.archive.schema.MonitoringValues;
@@ -118,6 +119,7 @@ import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
+import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
@@ -236,6 +238,10 @@ class XmlImporter {
     /** Remember which instance belongs to the id/guid used in the XML element */
     private Map<String, ISpecTestCasePO> m_tcRef = 
         new HashMap<String, ISpecTestCasePO>();
+    
+    /** Remember which instance belongs to the id/guid used in the XML element */
+    private Map<String, ICategoryPO> m_execCategoryCache = 
+        new HashMap<String, ICategoryPO>();
     
     /** Mapping between old and new GUIDs. Only used when assigning new GUIDs */
     private Map<String, String> m_oldToNewGuids = 
@@ -757,15 +763,12 @@ class XmlImporter {
             checkCancel();
             completeTestCase(proj, tcXml, assignNewGuid, attrDescSession);
         }
-
-        for (TestSuite tsXml : xml.getTestsuiteList()) {
-            checkCancel();
-            initTestSuite(assignNewGuid, proj, attrDescSession, tsXml);
-        }
-        for (TestJobs tjXml : xml.getTestJobsList()) {
-            checkCancel();
-            initTestJob(assignNewGuid, proj, tjXml);
-        }
+        // BEGIN - pre 1.2 xml data model handling
+        handleOldTestSuitesAndTestJobs(proj, xml, attrDescSession,
+                assignNewGuid);
+        // END - pre 1.2 xml data model handling
+        handleTestSuitesAndTestJobsAndCategories(proj, xml, assignNewGuid);
+        
         for (CheckConfiguration xmlConf : xml.getCheckConfigurationList()) {
             checkCancel();
             initCheckConf(
@@ -775,6 +778,69 @@ class XmlImporter {
             initTestResultSummaries(xml.getTestresultSummaries(), proj);
         }
         createComponentNames(xml, proj, cNC, assignNewGuid);
+    }
+
+    /**
+     * @param proj
+     *            the project po
+     * @param xml
+     *            the project xml
+     * @param assignNewGuid
+     *            flag to indicate whether new ids should be assigned
+     * @throws InterruptedException
+     *             in case of interruption
+     * @throws InvalidDataException
+     *             in case of invalid data
+     */
+    private void handleTestSuitesAndTestJobsAndCategories(IProjectPO proj,
+            Project xml, boolean assignNewGuid) throws InterruptedException,
+            InvalidDataException {
+        for (ExecCategory catXml : xml.getExecCategoriesList()) {
+            checkCancel();
+            List<IExecPersistable> tsAndCats = 
+                    createListOfCategoriesAndTestsuites(
+                    proj, catXml, assignNewGuid);
+            for (IExecPersistable exec : tsAndCats) {
+                proj.getExecObjCont().addExecObject(exec);
+            }
+            List<IExecPersistable> tjs = createListOfTestJobs(catXml,
+                    assignNewGuid);
+            for (IExecPersistable exec : tjs) {
+                proj.getExecObjCont().addExecObject(exec);
+            }
+        }
+    }
+
+    /**
+     * Handle "old"-XML data structure for pre 1.2 datamodel
+     * 
+     * @param proj the project
+     * @param xml the project xml
+     * @param attrDescSession the attribute description
+     * @param assignNewGuid whether new GUIDs should be assigned or not
+     * @throws InterruptedException in case of an interruption
+     */
+    private void handleOldTestSuitesAndTestJobs(IProjectPO proj, Project xml,
+        EntityManager attrDescSession, boolean assignNewGuid)
+        throws InterruptedException {
+        if (!xml.getTestsuiteList().isEmpty()) {
+            ICategoryPO catTS = NodeMaker.createCategoryPO("Test Suites");
+            for (TestSuite tsXml : xml.getTestsuiteList()) {
+                checkCancel();
+                ITestSuitePO tsPO = createTestSuite(proj, tsXml, assignNewGuid);
+                createTestSuiteAttributes(proj, tsPO, tsXml, attrDescSession);
+                catTS.addNode(tsPO);
+            }
+            proj.getExecObjCont().addExecObject(catTS);
+        }
+        if (!xml.getTestsuiteList().isEmpty()) {
+            ICategoryPO catTJ = NodeMaker.createCategoryPO("Test Jobs");
+            for (TestJobs tjXml : xml.getTestJobsList()) {
+                checkCancel();
+                catTJ.addNode(createTestJob(tjXml, assignNewGuid));
+            }
+            proj.getExecObjCont().addExecObject(catTJ);
+        }
     }
 
     /**
@@ -902,39 +968,6 @@ class XmlImporter {
         
         }
             
-    }
-
-    /**
-     * Creates and initializes a test suite.
-     * 
-     * @param assignNewGuid <code>true</code> if the test suite and all 
-     *                      sub-elements should be assigned new GUIDs. Otherwise 
-     *                      <code>false</code>.
-     * @param proj The project to which the test suite belongs.
-     * @param attrDescSession The session used for locating attribute 
-     *                        descriptions in the database.
-     * @param tsXml The XML element for the test suite.
-     */
-    private void initTestSuite(boolean assignNewGuid, IProjectPO proj,
-            EntityManager attrDescSession, TestSuite tsXml) {
-        ITestSuitePO tsPO = createTestSuite(proj, tsXml, assignNewGuid);
-        createTestSuiteAttributes(proj, tsPO, tsXml, attrDescSession);
-        proj.getTestSuiteCont().addTestSuite(tsPO);
-    }
-
-    /**
-     * Creates and initializes a test job.
-     * 
-     * @param assignNewGuid <code>true</code> if the test job and all 
-     *                      sub-elements should be assigned new GUIDs. Otherwise 
-     *                      <code>false</code>.
-     * @param proj The project to which the test suite belongs.
-     * @param tjXml The XML element for the test job.
-     */
-    private void initTestJob(boolean assignNewGuid, IProjectPO proj,
-            TestJobs tjXml) {
-        ITestJobPO tjPO = createTestJob(tjXml, assignNewGuid);
-        proj.getTestJobCont().addTestJob(tjPO);
     }
 
     /**
@@ -1313,6 +1346,139 @@ class XmlImporter {
         }
         return cat;
     }
+    
+    /**
+     * Creates the instance of the persistent object which is defined by the
+     * XML element used as parameter. The method generates all dependend objects
+     * as well.
+     * @param proj The IProjectPO which is currently build. The instance is
+     * needed by some objects to verify that their data confirms to project
+     * specification (for instance languages).
+     * @param xml Abstraction of the XML element (see Apache XML Beans)
+     * @param assignNewGuid <code>true</code> if the category and all subnodes
+     *                      should be assigned new GUIDs. Otherwise 
+     *                      <code>false</code>.
+     * @return a persistent object generated from the information in the XML
+     * element
+     * @throws InvalidDataException if some data is invalid when constructing
+     * an object. This should not happen for exported project, but may happen
+     * when someone generates XML project description outside of GUIdancer.
+     */
+    private List<IExecPersistable> createListOfCategoriesAndTestsuites(
+        IProjectPO proj, ExecCategory xml, boolean assignNewGuid)
+        throws InvalidDataException {
+        List<IExecPersistable> execNodes = new ArrayList<IExecPersistable>();
+
+        for (ExecCategory catXml : xml.getCategoryList()) {
+            execNodes.add(
+                    createExecObjects(proj, catXml, assignNewGuid));
+        }
+
+        for (TestSuite tsXml : xml.getTestsuiteList()) {
+            execNodes.add(createTestSuite(proj, tsXml, assignNewGuid));
+        }
+
+        return execNodes;
+    }
+    
+    /**
+     * Creates the instance of the persistent object which is defined by the
+     * XML element used as parameter. The method generates all dependend objects
+     * as well.
+     * needed by some objects to verify that their data confirms to project
+     * specification (for instance languages).
+     * @param xml Abstraction of the XML element (see Apache XML Beans)
+     * @param assignNewGuid <code>true</code> if the category and all subnodes
+     *                      should be assigned new GUIDs. Otherwise 
+     *                      <code>false</code>.
+     * @return a persistent object generated from the information in the XML
+     * element
+     * @throws InvalidDataException if some data is invalid when constructing
+     * an object. This should not happen for exported project, but may happen
+     * when someone generates XML project description outside of GUIdancer.
+     */
+    private List<IExecPersistable> createListOfTestJobs(ExecCategory xml,
+            boolean assignNewGuid) throws InvalidDataException {
+        List<IExecPersistable> execNodes = new ArrayList<IExecPersistable>();
+
+        for (ExecCategory catXml : xml.getCategoryList()) {
+            createTestJobs(catXml, assignNewGuid);
+        }
+        for (TestJobs tjXml : xml.getTestjobList()) {
+            execNodes.add(createTestJob(tjXml, assignNewGuid));
+        }
+        return execNodes;
+    }
+    
+    /**
+     * Creates the instance of the persistent object which is defined by the
+     * XML element used as parameter. The method generates all dependend objects
+     * as well.
+     * needed by some objects to verify that their data confirms to project
+     * specification (for instance languages).
+     * @param xml Abstraction of the XML element (see Apache XML Beans)
+     * @param assignNewGuid <code>true</code> if the category and all subnodes
+     *                      should be assigned new GUIDs. Otherwise 
+     *                      <code>false</code>.
+     * @throws InvalidDataException if some data is invalid when constructing
+     * an object. This should not happen for exported project, but may happen
+     * when someone generates XML project description outside of GUIdancer.
+     */
+    private void createTestJobs(ExecCategory xml, boolean assignNewGuid)
+        throws InvalidDataException {
+        for (ExecCategory catXml : xml.getCategoryList()) {
+            createTestJobs(catXml, assignNewGuid);
+        }
+        ICategoryPO cat = m_execCategoryCache.get(xml.getGUID());
+        for (TestJobs tjXml : xml.getTestjobList()) {
+            cat.addNode(createTestJob(tjXml, assignNewGuid));
+        }
+    }
+    
+    /**
+     * Creates the instance of the persistent object which is defined by the
+     * XML element used as parameter. The method generates all dependend objects
+     * as well.
+     * @param proj The IProjectPO which is currently build. The instance is
+     * needed by some objects to verify that their data confirms to project
+     * specification (for instance languages).
+     * @param xml Abstraction of the XML element (see Apache XML Beans)
+     * @param assignNewGuid <code>true</code> if the category and all subnodes
+     *                      should be assigned new GUIDs. Otherwise 
+     *                      <code>false</code>.
+     * @return a persistent object generated from the information in the XML
+     * element
+     * @throws InvalidDataException if some data is invalid when constructing
+     * an object. This should not happen for exported project, but may happen
+     * when someone generates XML project description outside of GUIdancer.
+     */
+    private IExecPersistable createExecObjects(IProjectPO proj, 
+        ExecCategory xml, boolean assignNewGuid) 
+        throws InvalidDataException {
+        ICategoryPO cat;
+        if (xml.getGUID() != null && !assignNewGuid) {
+            cat = NodeMaker.createCategoryPO(xml.getName(), xml.getGUID());
+            m_execCategoryCache.put(xml.getGUID(), cat);
+        } else {
+            cat = NodeMaker.createCategoryPO(xml.getName());
+            m_execCategoryCache.put(cat.getGuid(), cat);
+            m_oldToNewGuids.put(xml.getGUID(), cat.getGuid());
+        }
+        cat.setGenerated(xml.getGenerated());
+        cat.setComment(xml.getComment());
+        
+        for (ExecCategory catXml  : xml.getCategoryList()) {
+            cat.addNode(createExecObjects(proj, catXml, assignNewGuid));
+        }
+        
+        for (TestSuite tsXml : xml.getTestsuiteList()) {
+            cat.addNode(
+                    createTestSuite(proj, tsXml, assignNewGuid));
+        }
+        
+        return cat;
+    }
+    
     /**
      * Creates the instance of the persistent object which is defined by the
      * XML element used as prameter. The method generates all dependend objects
@@ -1847,7 +2013,6 @@ class XmlImporter {
      * @return a persistent object generated from the information in the XML
      * element
      */
-
     private ITestJobPO createTestJob(TestJobs xml, boolean assignNewGuid) {
         ITestJobPO tj;
         if (xml.getGUID() != null && !assignNewGuid) {

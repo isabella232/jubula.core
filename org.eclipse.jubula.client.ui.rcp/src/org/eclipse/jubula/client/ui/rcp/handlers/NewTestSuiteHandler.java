@@ -10,14 +10,15 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -41,32 +42,34 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
  * @author BREDEX GmbH
  * @created 03.07.2009
  */
-public class NewTestSuiteHandler extends AbstractHandler {
-
+public class NewTestSuiteHandler extends AbstractNewHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent arg0) {
-        newTestSuite();
+    public Object execute(ExecutionEvent event) {
+        newTestSuite(event);
         return null;
     }
 
     /**
      * Creates a new TestSuite.
+     * @param event the execution event
      */
-    public void newTestSuite() {
+    public void newTestSuite(ExecutionEvent event) {
+        final INodePO finalTSParent = getParentNode(event);
+
         InputDialog dialog = newTestSuitePopUp();
         if (dialog.getReturnCode() == Window.CANCEL) {
             return;
         }
-        IProjectPO project = GeneralStorage.getInstance().getProject();
+        
         try {
             ITestSuitePO testSuite = NodeMaker.createTestSuitePO(dialog
                     .getName());
-            setDefaultValuesToTestSuite(testSuite, project);
-            AbstractCmdHandleChild cmd = NodePM.getCmdHandleChild(project,
+            setDefaultValuesToTestSuite(testSuite);
+            AbstractCmdHandleChild cmd = NodePM.getCmdHandleChild(finalTSParent,
                     testSuite);
-            NodePM.addAndPersistChildNode(project, testSuite, null, cmd);
+            NodePM.addAndPersistChildNode(finalTSParent, testSuite, null, cmd);
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     testSuite, DataState.Added, UpdateState.all);
         } catch (PMException e) {
@@ -82,12 +85,9 @@ public class NewTestSuiteHandler extends AbstractHandler {
      * 
      * @param testSuite
      *            the new test suite.
-     * @param project
-     *            the parent of this test suite.
      */
-    private void setDefaultValuesToTestSuite(ITestSuitePO testSuite,
-            IProjectPO project) {
-
+    private void setDefaultValuesToTestSuite(ITestSuitePO testSuite) {
+        IProjectPO project = GeneralStorage.getInstance().getProject();
         // set default AUTMainPO to testSuite
         int autListSize = project.getAutMainList().size();
         if (autListSize == 0 || autListSize > 1) {
@@ -110,8 +110,7 @@ public class NewTestSuiteHandler extends AbstractHandler {
      */
     private InputDialog newTestSuitePopUp() {
         final IProjectPO project = GeneralStorage.getInstance().getProject();
-        int testSuiteCount = project.getTestSuiteCont().getTestSuiteList()
-                .size();
+        int testSuiteCount = TestSuiteBP.getListOfTestSuites(project).size();
         String str = StringConstants.EMPTY;
         if (testSuiteCount > 0) {
             str = str + testSuiteCount;

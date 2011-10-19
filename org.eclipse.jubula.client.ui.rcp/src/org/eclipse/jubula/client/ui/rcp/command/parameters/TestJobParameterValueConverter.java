@@ -12,9 +12,8 @@ package org.eclipse.jubula.client.ui.rcp.command.parameters;
 
 import org.eclipse.core.commands.AbstractParameterValueConverter;
 import org.eclipse.core.commands.ParameterValueConversionException;
-import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 
 
 /**
@@ -36,13 +35,9 @@ public class TestJobParameterValueConverter extends
         throws ParameterValueConversionException {
 
         Long id = ParameterValueConverterUtil.parseId(parameterValue);
-        IProjectPO activeProject = GeneralStorage.getInstance().getProject();
-        if (activeProject != null) {
-            for (ITestJobPO testJob 
-                    : activeProject.getTestJobCont().getTestJobList()) {
-                if (id.equals(testJob.getId())) {
-                    return testJob;
-                }
+        for (ITestJobPO testJob : TestJobBP.getListOfTestJobs()) {
+            if (id.equals(testJob.getId())) {
+                return testJob;
             }
         }
 

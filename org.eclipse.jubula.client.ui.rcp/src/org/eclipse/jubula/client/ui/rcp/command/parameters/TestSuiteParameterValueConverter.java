@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.command.parameters;
 
 import org.eclipse.core.commands.AbstractParameterValueConverter;
 import org.eclipse.core.commands.ParameterValueConversionException;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -38,7 +39,7 @@ public class TestSuiteParameterValueConverter extends
         IProjectPO activeProject = GeneralStorage.getInstance().getProject();
         if (activeProject != null) {
             for (ITestSuitePO testSuite 
-                    : activeProject.getTestSuiteCont().getTestSuiteList()) {
+                    : TestSuiteBP.getListOfTestSuites(activeProject)) {
                 if (id.equals(testSuite.getId())) {
                     return testSuite;
                 }

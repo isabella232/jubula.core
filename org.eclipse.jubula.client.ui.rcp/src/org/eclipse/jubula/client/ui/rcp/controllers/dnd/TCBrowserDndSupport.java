@@ -18,7 +18,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
@@ -65,19 +66,21 @@ public class TCBrowserDndSupport {
             if ((!(obj instanceof ISpecTestCasePO) 
                     && !(obj instanceof ICategoryPO))
                 || (obj instanceof INodePO 
-                    && !NodeBP.isEditable((INodePO)obj))) {
+                    && !NodeBP.isEditable((IPersistentObject)obj))) {
                 
                 return false;
             }
             // check the object to drop on (target)
             if (!(target instanceof ICategoryPO
-                    || target instanceof IProjectPO)
+                    || target instanceof ISpecObjContPO)
                     || (target instanceof INodePO
-                            && !NodeBP.isEditable((INodePO)target))) {
+                            && !NodeBP.isEditable((IPersistentObject)target))) {
                 
                 return false;
             }
-            if (((INodePO)obj).hasCircularDependences(((INodePO)target))) {
+            if (target instanceof INodePO
+                    && ((INodePO) obj)
+                            .hasCircularDependences(((INodePO) target))) {
                 return false;
             }
         }
@@ -91,8 +94,9 @@ public class TCBrowserDndSupport {
      * @param nodesToBeMoved The nodes to move.
      * @param target The target location.
      */
-    public static void moveNodes(List<INodePO> nodesToBeMoved, 
-            INodePO target) throws PMException, ProjectDeletedException {
+    public static void moveNodes(List<INodePO> nodesToBeMoved,
+            IPersistentObject target) throws PMException,
+            ProjectDeletedException {
         if (getSpecView() != null) {
             doMove(nodesToBeMoved, target);
         }
@@ -106,7 +110,7 @@ public class TCBrowserDndSupport {
      * @param nodes
      *      List <INodePO>
      */
-    private static void doMove(List <INodePO> nodes, INodePO target) 
+    private static void doMove(List <INodePO> nodes, IPersistentObject target) 
         throws PMException, ProjectDeletedException {
 
         // persist changes into database
