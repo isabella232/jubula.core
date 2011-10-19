@@ -56,13 +56,13 @@ import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
+import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TestExecDropTargetListener;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestSuiteBrowserContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TestSuiteBrowserLabelProvider;
-import org.eclipse.jubula.client.ui.rcp.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -131,6 +131,8 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
             .getInstance()};
         getTreeViewer().addDragSupport(ops, transfers,
             new TreeViewerContainerDragSourceListener(getTreeViewer()));
+        getTreeViewer().addDropSupport(ops, transfers,
+            new TestExecDropTargetListener(this));
         
         m_mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         Menu menu = m_mgr.createContextMenu(getTreeViewer().getControl());
@@ -243,19 +245,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     protected void fillContextMenu(IMenuManager mgr) {
         if (!m_isContextMenuInitialized) {
             createContextMenu(mgr);
-        }
-        IStructuredSelection selection = getSuiteTreeSelection();
-        // Action enabling happens here, because GDStateController cant handle OpenActions
-        if (selection.size() > 0) {
-            int[] counter = SelectionChecker.selectionCounter(selection);
-            boolean enabled = !(counter[SelectionChecker.PROJECT] < 1);
-            if (counter[SelectionChecker.EXEC_TESTSUITE] == 1 
-                && selection.getFirstElement() instanceof ITestSuitePO) {
-                
-                ITestSuitePO testSuite = 
-                    (ITestSuitePO)selection.getFirstElement();
-                enabled = testSuite.isEditable() && !enabled;
-            } 
         }
     }
 

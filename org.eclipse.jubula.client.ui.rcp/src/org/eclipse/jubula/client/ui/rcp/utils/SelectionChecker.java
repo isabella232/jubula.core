@@ -22,7 +22,7 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 
@@ -56,7 +56,7 @@ public class SelectionChecker {
     public static final int CATEGORY = 7;
     
     /** Constant for Project */
-    public static final int PROJECT = 8;
+    public static final int SPEC_CONT = 8;
     
     /** Constant for technical name (om editor) */
     public static final int OM_TECH_NAME = 9;
@@ -126,8 +126,8 @@ public class SelectionChecker {
                 }
             } else if (sel instanceof ICategoryPO) {
                 counter[CATEGORY]++;
-            } else if (sel instanceof IProjectPO) {
-                counter[PROJECT]++;
+            } else if (sel instanceof ISpecObjContPO) {
+                counter[SPEC_CONT]++;
             } else if (sel instanceof IObjectMappingAssoziationPO) {
                 counter[OM_TECH_NAME]++;
             } else if (sel instanceof IComponentNamePO) {

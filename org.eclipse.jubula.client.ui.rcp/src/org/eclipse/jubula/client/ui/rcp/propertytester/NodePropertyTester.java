@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.propertytester;
 
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
+import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 
 
@@ -42,6 +43,9 @@ public class NodePropertyTester extends AbstractBooleanPropertyTester {
      * @return the results of <code>guiNode.isEditable()</code>.
      */
     private boolean testIsEditable(IPersistentObject node) {
+        if (node instanceof IObjectMappingCategoryPO) {
+            return true;
+        }
         return NodeBP.isEditable(node);
     }
 

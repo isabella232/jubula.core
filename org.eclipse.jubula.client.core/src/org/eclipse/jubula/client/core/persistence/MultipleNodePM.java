@@ -590,8 +590,8 @@ public class MultipleNodePM  extends PersistenceManager {
             if (newParent instanceof ISpecObjContPO) {
                 ((ISpecObjContPO)newParent).addSpecObject(
                     (ISpecPersistable)node);
-            } else if (oldParent instanceof IExecObjContPO) {
-                ((IExecObjContPO)oldParent).addExecObject(
+            } else if (newParent instanceof IExecObjContPO) {
+                ((IExecObjContPO)newParent).addExecObject(
                     (IExecPersistable)node);
             } else {
                 ((INodePO)newParent).addNode(node);

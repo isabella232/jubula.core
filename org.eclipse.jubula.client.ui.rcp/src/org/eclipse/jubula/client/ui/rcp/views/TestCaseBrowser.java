@@ -333,7 +333,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         public void doubleClick(DoubleClickEvent event) {
             IStructuredSelection selection = getActualSelection();
             int[] counter = SelectionChecker.selectionCounter(selection);
-            if (counter[SelectionChecker.PROJECT] == selection.size()
+            if (counter[SelectionChecker.SPEC_CONT] == selection.size()
                     || counter[SelectionChecker.CATEGORY] == selection.size()) {
                 CommandHelper.executeCommand(
                         RCPCommandIDs.NEW_TESTCASE_COMMAND_ID, getSite());
