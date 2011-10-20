@@ -10,13 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -40,30 +41,30 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
  * @author BREDEX GmbH
  * @created Mar 16, 2010
  */
-public class NewTestJobHandler extends AbstractHandler {
-
+public class NewTestJobHandler extends AbstractNewHandler {
     /**
      * {@inheritDoc}
      */
     public Object execute(ExecutionEvent event) {
-        newTestJob();
+        newTestJob(event);
         return null;
     }
 
     /**
      * create a new test job
+     * @param event the event
      */
-    private void newTestJob() {
+    private void newTestJob(ExecutionEvent event) {
+        INodePO parent = getParentNode(event);
         InputDialog dialog = newTestJobPopUp();
         if (dialog.getReturnCode() == Window.CANCEL) {
             return;
         }
-        IProjectPO project = GeneralStorage.getInstance().getProject();
         try {
             ITestJobPO testJob = NodeMaker.createTestJobPO(dialog.getName());
-            AbstractCmdHandleChild cmd = NodePM.getCmdHandleChild(project,
+            AbstractCmdHandleChild cmd = NodePM.getCmdHandleChild(parent,
                     testJob);
-            NodePM.addAndPersistChildNode(project, testJob, null, cmd);
+            NodePM.addAndPersistChildNode(parent, testJob, null, cmd);
             DataEventDispatcher.getInstance().fireDataChangedListener(testJob,
                     DataState.Added, UpdateState.all);
         } catch (PMException e) {
@@ -78,7 +79,7 @@ public class NewTestJobHandler extends AbstractHandler {
      */
     private InputDialog newTestJobPopUp() {
         final IProjectPO project = GeneralStorage.getInstance().getProject();
-        int testJobCount = project.getTestJobCont().getTestJobList().size();
+        int testJobCount = TestJobBP.getListOfTestJobs(project).size();
         String str = StringConstants.EMPTY;
         if (testJobCount > 0) {
             str = str + testJobCount;

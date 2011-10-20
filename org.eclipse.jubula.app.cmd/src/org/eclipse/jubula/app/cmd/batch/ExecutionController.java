@@ -48,6 +48,7 @@ import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListene
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -119,8 +120,7 @@ public class ExecutionController implements IAUTServerEventListener,
             m_result = 0;
             IProjectPO project = m_job.getProject();
             ITestSuitePO workUnit = null;
-            for (ITestSuitePO ts : project.getTestSuiteCont()
-                    .getTestSuiteList()) {
+            for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites(project)) {
                 if (ts.getName().equals(tsName)) {
                     workUnit = ts;
                     break;
@@ -461,7 +461,7 @@ public class ExecutionController implements IAUTServerEventListener,
         ITestSuitePO workUnit = null;
         IAUTConfigPO autConfig = null;
         
-        for (ITestSuitePO ts : project.getTestSuiteCont().getTestSuiteList()) {
+        for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites(project)) {
             for (IAUTConfigPO cfg : ts.getAut().getAutConfigSet()) {
                 if (autConfigName.equals(cfg.getName())) {
                     workUnit = ts;

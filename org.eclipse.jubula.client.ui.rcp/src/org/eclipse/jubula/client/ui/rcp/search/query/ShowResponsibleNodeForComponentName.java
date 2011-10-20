@@ -19,6 +19,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.FindResponsibleNodesForComponentNameOp;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -116,8 +117,8 @@ public class ShowResponsibleNodeForComponentName
         Set<INodePO> compnameUsingNodes = new HashSet<INodePO>();
 
         IProjectPO currentProject = GeneralStorage.getInstance().getProject();
-        for (ITestSuitePO ts : currentProject.getTestSuiteCont()
-                .getTestSuiteList()) {
+        for (ITestSuitePO ts : TestSuiteBP
+                .getListOfTestSuites(currentProject)) {
             IAUTMainPO aut = ts.getAut();
             if (aut != null
                     && ObjectUtils.equals(aut.getGuid(), searchAUT.getGuid())) {

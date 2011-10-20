@@ -16,14 +16,15 @@ import java.util.List;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
+import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.ui.IViewPart;
 
@@ -33,14 +34,14 @@ import org.eclipse.ui.IViewPart;
  * cut and paste operations in the Test Case Browser.
  *
  * @author BREDEX GmbH
- * @created 19.03.2008
+ * @created 19.10.2011
  */
-public class TCBrowserDndSupport extends AbstractBrowserDndSupport {
+public class TSBrowserDndSupport extends AbstractBrowserDndSupport {
 
     /**
      * Private constructor
      */
-    private TCBrowserDndSupport() {
+    private TSBrowserDndSupport() {
         // Do nothing
     }
 
@@ -59,19 +60,18 @@ public class TCBrowserDndSupport extends AbstractBrowserDndSupport {
         while (iter.hasNext()) {
             Object obj = iter.next();
             // check the object to drag
-            if ((!(obj instanceof ISpecTestCasePO) 
-                    && !(obj instanceof ICategoryPO))
+            if ((!(obj instanceof ITestSuitePO) 
+                    && !(obj instanceof ICategoryPO)
+                    && !(obj instanceof ITestJobPO))
                 || (obj instanceof INodePO 
                     && !NodeBP.isEditable((IPersistentObject)obj))) {
-                
                 return false;
             }
             // check the object to drop on (target)
             if (!(target instanceof ICategoryPO
-                    || target instanceof ISpecObjContPO)
+                    || target instanceof IExecObjContPO)
                     || (target instanceof INodePO
                             && !NodeBP.isEditable((IPersistentObject)target))) {
-                
                 return false;
             }
             if (target instanceof INodePO
@@ -93,18 +93,18 @@ public class TCBrowserDndSupport extends AbstractBrowserDndSupport {
     public static void moveNodes(List<INodePO> nodesToBeMoved,
             IPersistentObject target) throws PMException,
             ProjectDeletedException {
-        if (getSpecView() != null) {
+        if (getExecView() != null) {
             doMove(nodesToBeMoved, target);
         }
     }
     
     /**
-     * @return instance of TestCaseBrowser, or null.
+     * @return instance of TestSuiteBrowser, or null.
      */
-    private static TestCaseBrowser getSpecView() {
-        IViewPart viewPart = Plugin.getView(Constants.TC_BROWSER_ID);
+    private static TestSuiteBrowser getExecView() {
+        IViewPart viewPart = Plugin.getView(Constants.TS_BROWSER_ID);
         if (viewPart != null) {
-            return (TestCaseBrowser)viewPart;
+            return (TestSuiteBrowser)viewPart;
         }
         return null;
     }

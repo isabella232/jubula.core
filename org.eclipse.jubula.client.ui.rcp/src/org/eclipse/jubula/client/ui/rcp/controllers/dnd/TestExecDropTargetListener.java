@@ -15,29 +15,28 @@ import java.util.List;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
+import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
 
-
-
 /**
  * @author BREDEX GmbH
- * @created 06.07.2005
+ * @created 19.10.2011
  */
-public class TestSpecDropTargetListener extends ViewerDropAdapter {
+public class TestExecDropTargetListener extends ViewerDropAdapter {
 
     /**
      * @param view the depending view.
      */
-    public TestSpecDropTargetListener(TestCaseBrowser view) {
+    public TestExecDropTargetListener(TestSuiteBrowser view) {
         super(view.getTreeViewer());
         boolean scrollExpand = Plugin.getDefault().getPreferenceStore().
             getBoolean(Constants.TREEAUTOSCROLL_KEY);
@@ -53,7 +52,7 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
         IPersistentObject target = (IPersistentObject)getCurrentTarget();
         List <INodePO> nodesToBeMoved = transfer.getSelection().toList();
         try {
-            TCBrowserDndSupport.moveNodes(nodesToBeMoved, target);
+            TSBrowserDndSupport.moveNodes(nodesToBeMoved, target);
             return true;
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
@@ -84,7 +83,7 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
             return false;
         }
 
-        return TCBrowserDndSupport.canMove(transfer.getSelection(), target);
+        return TSBrowserDndSupport.canMove(transfer.getSelection(), target);
     }
 
     /**
@@ -94,7 +93,8 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
     public void dragOver(DropTargetEvent event) {
         super.dragOver(event);
         if (event.item != null
-            && event.item.getData() instanceof ISpecTestCasePO) {
+            && event.item.getData() instanceof ITestSuitePO
+            && event.item.getData() instanceof ITestJobPO) {
             event.feedback &= ~DND.FEEDBACK_EXPAND;
         }
         if (getCurrentLocation() == LOCATION_BEFORE

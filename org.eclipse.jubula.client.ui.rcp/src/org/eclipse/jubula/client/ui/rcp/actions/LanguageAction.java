@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -82,7 +83,7 @@ public class LanguageAction extends Action {
         List<String> editorsToSave = new ArrayList<String>();
         List<String> editorsToClose = new ArrayList<String>();
         for (ITestSuitePO testSuite
-            : project.getTestSuiteCont().getTestSuiteList()) {
+            : TestSuiteBP.getListOfTestSuites(project)) {
             
             IEditorPart editor = Utils.getEditorByPO(testSuite);
             if (testSuite.getAut() != null 

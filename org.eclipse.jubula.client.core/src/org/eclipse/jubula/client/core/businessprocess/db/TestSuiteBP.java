@@ -10,15 +10,24 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.collections.ListUtils;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
+import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
+import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 
 /**
  * @author BREDEX GmbH
@@ -100,6 +109,76 @@ public class TestSuiteBP extends NodeBP {
         if (NodePM.getInternalRefTestSuites(referencedTS.getGuid(),
                 referencedTS.getParentProjectId()).size() <= minSize) {
             lockPO(editSupport, referencedTS);
+        }
+    }
+    
+    /**
+     * @return an unmodifiable list of test suite for the current project 
+     */
+    public static List<ITestSuitePO> getListOfTestSuites() {
+        return getListOfTestSuites(GeneralStorage.getInstance().getProject());
+    }
+    
+    /**
+     * @param project the project to use for test suite retrieval
+     * @return an unmodifiable list of test suite for the current project 
+     */
+    public static List<ITestSuitePO> getListOfTestSuites(IProjectPO project) {
+        if (project != null) {
+            final ExecNodeFinder<ITestSuitePO> op = 
+                    new ExecNodeFinder<ITestSuitePO>(ITestSuitePO.class);
+            final ExecTreeTraverser traverser = 
+                    new ExecTreeTraverser(project, op);
+            traverser.traverse(false);
+            return op.getListOfExecNodes();
+        }
+        
+        return ListUtils.EMPTY_LIST;
+    }
+    
+    /**
+     * @author Markus Tiede
+     */
+    public static class ExecNodeFinder <T>
+        implements ITreeNodeOperation<INodePO> {
+        /**
+         * the list of test suites
+         */
+        private List<T> m_listOfExecNodes = new ArrayList<T>();
+        /**
+         * the node type to search for
+         */
+        private final Class<T> m_nodeType;
+
+        /**
+         * @param nodeType the node type to search for
+         */
+        public ExecNodeFinder(Class<T> nodeType) {
+            this.m_nodeType = nodeType;
+        }
+
+        /** {@inheritDoc} */
+        public boolean operate(ITreeTraverserContext<INodePO> ctx,
+                INodePO parent, INodePO node, boolean alreadyVisited) {
+            boolean nodeFound = false;
+            if (m_nodeType.isAssignableFrom(node.getClass())) {
+                nodeFound = true;
+                m_listOfExecNodes.add((T) node);
+            }
+            return nodeFound;
+        }
+
+        /** {@inheritDoc} */
+        public void postOperate(ITreeTraverserContext<INodePO> ctx,
+                INodePO parent, INodePO node, boolean alreadyVisited) {
+            // currently empty
+        }
+
+        /**
+         * @return the listOfTestSuites
+         */
+        public List<T> getListOfExecNodes() {
+            return m_listOfExecNodes;
         }
     }
 }

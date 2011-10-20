@@ -17,10 +17,12 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
@@ -29,8 +31,8 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
-import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTJHandle;
-import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTSHandle;
+import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteCatHandle;
+import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteExecHandle;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -108,9 +110,11 @@ public class DeleteTreeItemHandlerTSBrowser
         Iterator iter = selection.iterator();
         IProjectPO project = GeneralStorage.getInstance().getProject();
         List<AbstractCmdHandle> cmds = new ArrayList<AbstractCmdHandle>();
-        List<INodePO> tsbList = new ArrayList<INodePO>();
-        if (selection.getFirstElement() instanceof ITestSuitePO
-                || selection.getFirstElement() instanceof ITestJobPO) {
+        List<INodePO> deletedNodes = new ArrayList<INodePO>();
+        Object selElement = selection.getFirstElement();
+        if (selElement instanceof ITestSuitePO
+                || selElement instanceof ITestJobPO
+                || selElement instanceof ICategoryPO) {
             while (iter.hasNext()) {
                 INodePO execTS = (INodePO)iter.next();
                 AbstractCmdHandle cmd = null;
@@ -127,13 +131,17 @@ public class DeleteTreeItemHandlerTSBrowser
                     }
                     
                     closeEditors(project, testSuite, editors);
-                    tsbList.add(testSuite);
-                    cmd = new DeleteTSHandle(testSuite);
+                    deletedNodes.add(testSuite);
+                    cmd = new DeleteExecHandle(testSuite);
                 } else if (execTS instanceof ITestJobPO) {
                     ITestJobPO testjob = (ITestJobPO)execTS;
                     closeEditors(testjob, editors);
-                    tsbList.add(testjob);
-                    cmd = new DeleteTJHandle(testjob);
+                    deletedNodes.add(testjob);
+                    cmd = new DeleteExecHandle(testjob);
+                } else if (execTS instanceof ICategoryPO) {
+                    ICategoryPO category = (ICategoryPO)execTS;
+                    deletedNodes.add(category);
+                    cmd = new DeleteCatHandle(category);
                 }
                 cmds.add(cmd);
             }
@@ -141,8 +149,8 @@ public class DeleteTreeItemHandlerTSBrowser
         MultipleNodePM.getInstance().executeCommands(cmds);
 
         // FIXME : we need a concept to execute just one gui update
-        for (INodePO tsbe : tsbList) {
-            DataEventDispatcher.getInstance().fireDataChangedListener(tsbe,
+        for (INodePO node : deletedNodes) {
+            DataEventDispatcher.getInstance().fireDataChangedListener(node,
                     DataState.Deleted, UpdateState.all);
         }
     }
@@ -193,8 +201,8 @@ public class DeleteTreeItemHandlerTSBrowser
                 ObjectMappingMultiPageEditor omEditor = 
                     (ObjectMappingMultiPageEditor)editor.getPart(true);
                 IAUTMainPO omAut = omEditor.getAut();
-                List<ITestSuitePO> tsList = project.getTestSuiteCont()
-                    .getTestSuiteList();
+                List<ITestSuitePO> tsList = TestSuiteBP
+                        .getListOfTestSuites(project);
                 for (ITestSuitePO ts : tsList) {
                     if (ts.getAut() != null && ts.getAut().equals(omAut)) {
                         autCounter++;

@@ -23,6 +23,8 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
+import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -241,8 +243,7 @@ public class JobConfiguration {
                     String.valueOf(m_projectMajor), 
                     String.valueOf(m_projectMinor)}));
         // searching for testsuites with the given names
-        for (ITestSuitePO ts : getProject().getTestSuiteCont()
-                .getTestSuiteList()) {
+        for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites(getProject())) {
             if (ts.getName().equals(m_testSuiteName)) {
                 setTestSuite(ts);
                 break;
@@ -251,7 +252,7 @@ public class JobConfiguration {
         Validate.isTrue((getTestSuite() != null),
                 Messages.JobConfigurationValidateTestSuiteExist);
 
-        for (ITestJobPO tj : getProject().getTestJobCont().getTestJobList()) {
+        for (ITestJobPO tj : TestJobBP.getListOfTestJobs(getProject())) {
             if (tj.getName().equals(m_testJobName)) {
                 m_testJob = tj;
             }

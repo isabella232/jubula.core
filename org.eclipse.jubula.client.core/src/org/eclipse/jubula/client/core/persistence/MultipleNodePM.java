@@ -38,6 +38,7 @@ import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
@@ -48,9 +49,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
-import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestSuiteContPO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -108,63 +106,42 @@ public class MultipleNodePM  extends PersistenceManager {
     /**
      * Command to delete a single test suite
      */
-    public static class DeleteTSHandle extends AbstractCmdHandle {
+    public static class DeleteExecHandle extends AbstractCmdHandle {
 
-        /** test suite to delete */
-        private ITestSuitePO m_testSuite;
+        /** the exec node to delete */
+        private IExecPersistable m_execNode;
         
         /**
          * constructor 
-         * @param ts
-         *      ITestSuitePO
+         * @param exec
+         *      the exec node to delete
          */
-        public DeleteTSHandle(ITestSuitePO ts) {
-            m_testSuite = ts;
-            getObjsToLock().add(ts);
+        public DeleteExecHandle(IExecPersistable exec) {
+            m_execNode = exec;
+            getObjsToLock().add(exec);
             
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            getObjsToLock().add(proj.getTestSuiteCont());  
+            if (isNestedNode(exec)) {
+                getObjsToLock().add(exec.getParentNode());
+            } else {
+                IProjectPO proj = GeneralStorage.getInstance().getProject();
+                getObjsToLock().add(proj.getExecObjCont());  
+            }
         }
         
         /**
          * {@inheritDoc}
          */
         public MessageInfo execute(EntityManager sess) {
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            proj.getTestSuiteCont().removeTestSuite(m_testSuite);  
-            sess.remove(m_testSuite);
-            return null;
-        }
-    }
-    
-    /**
-     * Command to delete a single test job
-     */
-    public static class DeleteTJHandle extends AbstractCmdHandle {
-
-        /** test job to delete */
-        private ITestJobPO m_testjob;
-        
-        /**
-         * constructor 
-         * @param tj
-         *      ITestJobPO
-         */
-        public DeleteTJHandle(ITestJobPO tj) {
-            m_testjob = tj;
-            getObjsToLock().add(tj);
+            if (isNestedNode(m_execNode)) {
+                m_execNode.getParentNode().removeNode(m_execNode);
+            } else {
+                IProjectPO proj = GeneralStorage.getInstance().getProject();
+                proj.getExecObjCont().removeExecObject(m_execNode);  
+            }
             
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            getObjsToLock().add(proj.getTestJobCont());  
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public MessageInfo execute(EntityManager sess) {
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            proj.getTestJobCont().removeTestJob(m_testjob);  
-            sess.remove(m_testjob);
+            PersistenceUtil.removeChildNodes(m_execNode, sess);
+            
+            sess.remove(m_execNode);
             return null;
         }
     }
@@ -557,29 +534,21 @@ public class MultipleNodePM  extends PersistenceManager {
          * @param newParent
          *      INodePO
          */
-        public MoveNodeHandle(
-            INodePO node,
-            IPersistentObject oldParent,
-            IPersistentObject newParent) {
+        public MoveNodeHandle(INodePO node, IPersistentObject oldParent,
+                IPersistentObject newParent) {
             IProjectPO proj = GeneralStorage.getInstance().getProject();
             m_oldParent = oldParent;
-            if (oldParent instanceof IProjectPO) {
-                if (node instanceof ITestSuitePO) {
-                    m_oldParent = proj.getTestSuiteCont();
-                } else if (node instanceof ISpecTestCasePO
-                    || node instanceof ICategoryPO) {
-                    m_oldParent = proj.getSpecObjCont();
-                }
-            } 
+            if (oldParent == IExecObjContPO.TSB_ROOT_NODE) {
+                m_oldParent = proj.getExecObjCont();
+            } else if (oldParent == ISpecObjContPO.TCB_ROOT_NODE) {
+                m_oldParent = proj.getSpecObjCont();
+            }
             m_newParent = newParent;
-            if (newParent instanceof IProjectPO) {
-                if (node instanceof ITestSuitePO) {
-                    m_newParent = proj.getTestSuiteCont();
-                } else if (node instanceof ISpecTestCasePO
-                    || node instanceof ICategoryPO) {
-                    m_newParent = proj.getSpecObjCont();
-                }
-            } 
+            if (m_newParent == IExecObjContPO.TSB_ROOT_NODE) {
+                m_newParent = proj.getExecObjCont();
+            } else if (m_newParent == ISpecObjContPO.TCB_ROOT_NODE) {
+                m_newParent = proj.getSpecObjCont();
+            }
             m_node = node;
             getObjsToLock().add(m_node);
             getObjsToLock().add(m_oldParent);
@@ -610,9 +579,9 @@ public class MultipleNodePM  extends PersistenceManager {
             if (oldParent instanceof ISpecObjContPO) {
                 ((ISpecObjContPO)oldParent).removeSpecObject(
                     (ISpecPersistable)node);
-            } else if (oldParent instanceof ITestSuiteContPO) {
-                ((ITestSuiteContPO)oldParent).removeTestSuite(
-                    (ITestSuitePO)node);
+            } else if (oldParent instanceof IExecObjContPO) {
+                ((IExecObjContPO)oldParent).removeExecObject(
+                    (IExecPersistable)node);
             } else {
                 ((INodePO)oldParent).removeNode(node);
             }
@@ -621,9 +590,9 @@ public class MultipleNodePM  extends PersistenceManager {
             if (newParent instanceof ISpecObjContPO) {
                 ((ISpecObjContPO)newParent).addSpecObject(
                     (ISpecPersistable)node);
-            } else if (newParent instanceof ITestSuiteContPO) {
-                ((ITestSuiteContPO)newParent).addTestSuite(
-                    (ITestSuitePO)node);
+            } else if (newParent instanceof IExecObjContPO) {
+                ((IExecObjContPO)newParent).addExecObject(
+                    (IExecPersistable)node);
             } else {
                 ((INodePO)newParent).addNode(node);
             }
@@ -756,7 +725,7 @@ public class MultipleNodePM  extends PersistenceManager {
             m_dec = mapper;
             getObjsToLock().add(tc);
             
-            if (isNestedTestCase(tc)) {
+            if (isNestedNode(tc)) {
                 getObjsToLock().add(tc.getParentNode());
             } else {
                 IProjectPO proj = GeneralStorage.getInstance().getProject();
@@ -768,7 +737,7 @@ public class MultipleNodePM  extends PersistenceManager {
          * {@inheritDoc}
          */
         public MessageInfo execute(EntityManager sess) {
-            if (isNestedTestCase(m_testCase)) {
+            if (isNestedNode(m_testCase)) {
                 m_testCase.getParentNode().removeNode(m_testCase);
             } else {
                 IProjectPO proj = GeneralStorage.getInstance().getProject();
@@ -783,21 +752,6 @@ public class MultipleNodePM  extends PersistenceManager {
             return null;
         }
 
-        /**
-         * @param tc
-         *            the test case to check wheter its nested = non-top level
-         *            test case
-         * @return true if non top-level test case
-         */
-        private boolean isNestedTestCase(ISpecTestCasePO tc) {
-            boolean isNested = false;
-            if (tc.getParentNode() != null
-                    && !(tc.getParentNode() instanceof IProjectPO)) {
-                isNested = true;
-            }
-            return isNested;
-        }
-        
         /**
          * @param specTcPO specTc to delete
          */
@@ -861,12 +815,16 @@ public class MultipleNodePM  extends PersistenceManager {
             m_category = cat;
             getObjsToLock().add(cat);
             
-            if (cat.getParentNode() != null
-                && !(cat.getParentNode() instanceof IProjectPO)) {
+            if (isNestedNode(cat)) {
                 getObjsToLock().add(cat.getParentNode());
             } else {
                 IProjectPO proj = GeneralStorage.getInstance().getProject();
-                getObjsToLock().add(proj.getSpecObjCont());  
+                INodePO parent = m_category.getParentNode();
+                if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
+                    getObjsToLock().add(proj.getSpecObjCont());  
+                } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
+                    getObjsToLock().add(proj.getExecObjCont());
+                }
             }
         }
         
@@ -874,12 +832,16 @@ public class MultipleNodePM  extends PersistenceManager {
          * {@inheritDoc}
          */
         public MessageInfo execute(EntityManager sess) {
-            if (m_category.getParentNode() != null
-                && !(m_category.getParentNode() instanceof IProjectPO)) {
+            if (isNestedNode(m_category)) {
                 m_category.getParentNode().removeNode(m_category);
             } else {
                 IProjectPO proj = GeneralStorage.getInstance().getProject();
-                proj.getSpecObjCont().removeSpecObject(m_category);  
+                INodePO parent = m_category.getParentNode();
+                if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
+                    proj.getSpecObjCont().removeSpecObject(m_category);  
+                } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
+                    proj.getExecObjCont().removeExecObject(m_category);
+                }
             }
 
             PersistenceUtil.removeChildNodes(m_category, sess);
@@ -1040,7 +1002,22 @@ public class MultipleNodePM  extends PersistenceManager {
         } catch (PMException e) {
             throw new PersistenceException(e);
         }
-
     }
 
+    /**
+     * @param node
+     *            the node to check wheter its nested = non-top level
+     *            node
+     * @return true if non top-level node
+     */
+    private static boolean isNestedNode(INodePO node) {
+        boolean isNested = false;
+        INodePO parent = node.getParentNode();
+        if (parent != null
+                && parent != ISpecObjContPO.TCB_ROOT_NODE 
+                && parent != IExecObjContPO.TSB_ROOT_NODE) {
+            isNested = true;
+        }
+        return isNested;
+    }
 }

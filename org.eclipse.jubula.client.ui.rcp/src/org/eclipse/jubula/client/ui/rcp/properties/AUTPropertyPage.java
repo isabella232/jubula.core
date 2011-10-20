@@ -16,6 +16,7 @@ import java.util.Arrays;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -337,8 +338,8 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
      * @return True, if the selected AUT is not used in any TestSuite.
      */
     private boolean checkTestSuiteAUT(IAUTMainPO autMain) {
-        java.util.List<ITestSuitePO> tsList = getProject()
-            .getTestSuiteCont().getTestSuiteList();
+        java.util.List<ITestSuitePO> tsList = TestSuiteBP
+                .getListOfTestSuites(getProject());
         java.util.List<String> tsNameList = new ArrayList<String>();
         for (ITestSuitePO ts : tsList) {    
             if (ts.getAut() != null && ts.getAut().equals(autMain)) {

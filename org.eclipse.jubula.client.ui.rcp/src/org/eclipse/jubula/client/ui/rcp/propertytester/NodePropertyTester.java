@@ -11,7 +11,8 @@
 package org.eclipse.jubula.client.ui.rcp.propertytester;
 
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
-import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 
 
 /**
@@ -30,9 +31,9 @@ public class NodePropertyTester extends AbstractBooleanPropertyTester {
     
     /** {@inheritDoc} */
     public boolean testImpl(Object receiver, String property, Object[] args) {
-        INodePO guiNode = (INodePO)receiver;
+        IPersistentObject po = (IPersistentObject)receiver;
         if (property.equals(EDITABLE_PROP)) {
-            return testIsEditable(guiNode);
+            return testIsEditable(po);
         }
         return false;
     }
@@ -41,13 +42,16 @@ public class NodePropertyTester extends AbstractBooleanPropertyTester {
      * @param node The node for which to check the editabilty.
      * @return the results of <code>guiNode.isEditable()</code>.
      */
-    private boolean testIsEditable(INodePO node) {
+    private boolean testIsEditable(IPersistentObject node) {
+        if (node instanceof IObjectMappingCategoryPO) {
+            return true;
+        }
         return NodeBP.isEditable(node);
     }
 
     /** {@inheritDoc} */
     public Class<? extends Object> getType() {
-        return INodePO.class;
+        return IPersistentObject.class;
     }
 
     /** {@inheritDoc} */

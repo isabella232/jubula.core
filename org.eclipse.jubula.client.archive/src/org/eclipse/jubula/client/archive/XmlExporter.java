@@ -41,6 +41,7 @@ import org.eclipse.jubula.client.archive.schema.CompNames;
 import org.eclipse.jubula.client.archive.schema.ComponentName;
 import org.eclipse.jubula.client.archive.schema.EventHandler;
 import org.eclipse.jubula.client.archive.schema.EventTestCase;
+import org.eclipse.jubula.client.archive.schema.ExecCategory;
 import org.eclipse.jubula.client.archive.schema.I18NString;
 import org.eclipse.jubula.client.archive.schema.MapEntry;
 import org.eclipse.jubula.client.archive.schema.MonitoringValues;
@@ -106,6 +107,7 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -393,23 +395,11 @@ class XmlExporter {
         // test cases and categories (visible in test case view)
         List<IDocAttributeDescriptionPO> tcDescList = po
                 .getTestCaseAttributeDescriptions();
-        for (ISpecPersistable tcOrCat : po.getSpecObjCont().getSpecObjList()) {
-            checkForCancel();
-            if (tcOrCat instanceof ICategoryPO) {
-                Category cat = xml.addNewCategory();
-                fillCategory(cat, (ICategoryPO)tcOrCat);
-            } else {
-                TestCase tc = xml.addNewTestcase();
-                fillTestCase(tc, (ISpecTestCasePO)tcOrCat);
-                fillAttributes(tc, tcOrCat, tcDescList);
-            }
-        }
-        // test suites
-        handleTestSuites(xml, po);
-        checkForCancel();
-        // test jobs
-        handleTestJobs(xml, po);
-        checkForCancel();
+        
+        handleSpecPersistables(xml, po, tcDescList);
+        
+        handleExecPersistables(xml, po);
+        
         // reused projects
         handleReusedProjects(xml, po);
         checkForCancel();
@@ -428,6 +418,56 @@ class XmlExporter {
         xml.setTestResultDetailsCleanupInterval(
                 po.getTestResultCleanupInterval());
         m_monitor.worked(1);
+    }
+
+    /**
+     * @param xml
+     *            the project xml
+     * @param po
+     *            the project po
+     */
+    private void handleExecPersistables(Project xml, IProjectPO po) {
+        for (IExecPersistable tsOrTjOrCat : po.getExecObjCont()
+                .getExecObjList()) {
+            ExecCategory execCat = xml.addNewExecCategories();
+            checkForCancel();
+            if (tsOrTjOrCat instanceof ICategoryPO) {
+                ExecCategory cat = execCat.addNewCategory();
+                fillCategory(cat, (ICategoryPO) tsOrTjOrCat);
+            } else if (tsOrTjOrCat instanceof ITestSuitePO) {
+                TestSuite xmlTs = execCat.addNewTestsuite();
+                ITestSuitePO ts = (ITestSuitePO) tsOrTjOrCat;
+                fillTestsuite(xmlTs, ts);
+                List<IDocAttributeDescriptionPO> tsDescs = po
+                        .getTestSuiteAttributeDescriptions();
+                fillAttributes(xmlTs, ts, tsDescs);
+            } else {
+                TestJobs xmlTj = execCat.addNewTestjob();
+                ITestJobPO tj = (ITestJobPO) tsOrTjOrCat;
+                fillNode(xmlTj, tj);
+                fillTestJob(xmlTj, tj);
+            }
+        }
+    }
+
+    /**
+     * @param xml the project xml
+     * @param po the project po
+     * @param tcDescList the tc IDocAttributeDescription  
+     */
+    private void handleSpecPersistables(Project xml, IProjectPO po,
+            List<IDocAttributeDescriptionPO> tcDescList) {
+        for (ISpecPersistable tcOrCat : po.getSpecObjCont().getSpecObjList()) {
+            checkForCancel();
+            if (tcOrCat instanceof ICategoryPO) {
+                Category cat = xml.addNewCategory();
+                fillCategory(cat, (ICategoryPO)tcOrCat);
+            } else {
+                TestCase tc = xml.addNewTestcase();
+                fillTestCase(tc, (ISpecTestCasePO)tcOrCat);
+                fillAttributes(tc, tcOrCat, tcDescList);
+            }
+        }
     }
 
     /**
@@ -569,42 +609,6 @@ class XmlExporter {
               
             }
             
-        }
-    }
-
-    /**
-     * Writes all of the given project's test suite information to XML.
-     * 
-     * @param xml
-     *            The XML element representation of the project.
-     * @param po
-     *            The PO representation of the project.
-     */
-    private void handleTestSuites(Project xml, IProjectPO po) {
-        List<IDocAttributeDescriptionPO> tsDescs = po
-                .getTestSuiteAttributeDescriptions();
-        for (ITestSuitePO ts : po.getTestSuiteCont().getTestSuiteList()) {
-            checkForCancel();
-            TestSuite xmlTs = xml.addNewTestsuite();
-            fillTestsuite(xmlTs, ts);
-            fillAttributes(xmlTs, ts, tsDescs);
-        }
-    }
-
-    /**
-     * Writes all of the given project's test job information to XML.
-     * 
-     * @param xml
-     *            The XML element representation of the project.
-     * @param po
-     *            The PO representation of the project.
-     */
-    private void handleTestJobs(Project xml, IProjectPO po) {
-        for (ITestJobPO tj : po.getTestJobCont().getTestJobList()) {
-            checkForCancel();
-            TestJobs xmlTj = xml.addNewTestJobs();
-            fillNode(xmlTj, tj);
-            fillTestJob(xmlTj, tj);
         }
     }
 
@@ -1118,6 +1122,36 @@ class XmlExporter {
                 } else {
                     TestCase tc = xml.addNewTestcase();
                     fillTestCase(tc, (ISpecTestCasePO)tcOrCat);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Write the information from the Object to its corresponding XML element.
+     * 
+     * @param xml
+     *            The XML element to be filled
+     * @param po
+     *            The persistent object which contains the information
+     */
+    private void fillCategory(ExecCategory xml, ICategoryPO po) {
+        fillNode(xml, po);
+        for (Object o : po.getUnmodifiableNodeList()) {
+            checkForCancel();
+            if (o instanceof IExecPersistable) {
+                IExecPersistable tcOrCat = (IExecPersistable)o;
+                if (tcOrCat instanceof ICategoryPO) {
+                    ExecCategory xmlCat = xml.addNewCategory();
+                    fillCategory(xmlCat, (ICategoryPO)tcOrCat);
+                } else if (tcOrCat instanceof ITestSuitePO) {
+                    TestSuite xmlTs = xml.addNewTestsuite();
+                    ITestSuitePO ts = (ITestSuitePO)tcOrCat;
+                    fillTestsuite(xmlTs, ts);
+                } else {
+                    TestJobs xmlTj = xml.addNewTestjob();
+                    fillNode(xmlTj, (ITestJobPO)tcOrCat);
+                    fillTestJob(xmlTj, (ITestJobPO)tcOrCat);
                 }
             }
         }

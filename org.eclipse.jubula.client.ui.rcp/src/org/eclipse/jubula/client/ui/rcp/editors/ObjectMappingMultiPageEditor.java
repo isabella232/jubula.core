@@ -57,6 +57,7 @@ import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCach
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
@@ -2090,8 +2091,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         int addedItems = 0;
         Set<IObjectMappingAssoziationPO> addedNodes = 
             new HashSet<IObjectMappingAssoziationPO>();
-        for (ITestSuitePO ts : GeneralStorage.getInstance().getProject()
-                .getTestSuiteCont().getTestSuiteList()) {
+        for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites()) {
             if (ts.getAut() == null) {
                 continue;
             }

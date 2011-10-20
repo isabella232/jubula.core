@@ -26,18 +26,18 @@ import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestJobContPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestSuiteContPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
@@ -200,15 +200,6 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             return node.getName();
         }
 
-        
-        if (element instanceof ITestSuiteContPO) {
-            return Messages.TSBCategoryTS;
-        }
-        
-        if (element instanceof ITestJobContPO) {
-            return Messages.TSBCategoryTJ;
-        }
-
         if (element instanceof IReusedProjectPO) {
             IReusedProjectPO reusedProject = (IReusedProjectPO)element;
             String projectName = reusedProject.getProjectName();
@@ -217,7 +208,11 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             }
             return projectName + reusedProject.getVersionString();
         }
-        
+        if (element instanceof ISpecObjContPO) {
+            return Messages.TreeBuilderTestCases;
+        } else if (element instanceof IExecObjContPO) { 
+            return GeneralStorage.getInstance().getProject().getName();
+        }
         return element == null ? StringConstants.EMPTY : element.toString();
     }
     
@@ -242,7 +237,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             return IconConstants.CAP_IMAGE;
         }
         
-        if (element instanceof IProjectPO) {
+        if (element instanceof IExecObjContPO) {
             return IconConstants.PROJECT_IMAGE;
         }
 
@@ -262,9 +257,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             return IconConstants.TJ_IMAGE;
         }
 
-        if (element instanceof ITestSuiteContPO
-                || element instanceof ITestJobContPO
-                || element instanceof ICategoryPO
+        if (element instanceof ICategoryPO
                 || element instanceof IReusedProjectPO) {
             return IconConstants.CATEGORY_IMAGE;
         }

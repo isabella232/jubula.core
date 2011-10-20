@@ -12,10 +12,12 @@ package org.eclipse.jubula.client.core.utils;
 
 import java.util.Iterator;
 
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 
 
 /**
@@ -58,10 +60,17 @@ public class ExecTreeTraverser extends TreeTraverser {
             }
             if (node instanceof IProjectPO) {
                 IProjectPO project = (IProjectPO)node;
-                for (ITestSuitePO suite : project.getTestSuiteCont()
-                        .getTestSuiteList()) {
-                    
-                    traverseImpl(context, project, suite);
+                for (IExecPersistable exec : project.getExecObjCont()
+                        .getExecObjList()) {
+
+                    traverseImpl(context, project, exec);
+                }
+            } else if (node instanceof ICategoryPO) {
+                ICategoryPO category = (ICategoryPO)node;
+                Iterator<INodePO> iter =  category.getNodeListIterator();
+                while (iter.hasNext()) {
+                    INodePO next = iter.next();
+                    traverseImpl(context, parent, next);
                 }
             } else if (node instanceof ITestSuitePO) {
                 ITestSuitePO suite = (ITestSuitePO)node;

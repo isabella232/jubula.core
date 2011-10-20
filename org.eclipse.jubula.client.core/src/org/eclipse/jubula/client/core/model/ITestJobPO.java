@@ -10,11 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import org.eclipse.jubula.client.core.persistence.IExecPersistable;
+
 /**
  * @author BREDEX GmbH
  * @created 19.12.2005
  */
-public interface ITestJobPO extends INodePO, Comparable {
+public interface ITestJobPO extends INodePO, IExecPersistable, Comparable {
 
     /**
      * @return if this Test Job is editable or not

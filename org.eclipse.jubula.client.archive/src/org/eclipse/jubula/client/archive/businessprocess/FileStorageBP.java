@@ -46,6 +46,7 @@ import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -548,7 +549,7 @@ public class FileStorageBP {
             
             // (INodePO=1)
             for (ITestSuitePO testSuite 
-                    : proj.getTestSuiteCont().getTestSuiteList()) {
+                    : TestSuiteBP.getListOfTestSuites(proj)) {
                 
                 totalWork += getWorkForNode(testSuite);
             }

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
@@ -72,7 +73,7 @@ public class ComponentNameReuseBP
                 currentProject.getAutMainList();
             boolean isReused = ComponentNamesBP.getInstance().isCompNameReused(
                     specsToSearch, 
-                    currentProject.getTestSuiteCont().getTestSuiteList(), 
+                    TestSuiteBP.getListOfTestSuites(currentProject), 
                     autsToSearch, compNameGuid);
             m_compNameGuidToIsReusedMap.put(compNameGuid, isReused);
             return isReused;

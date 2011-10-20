@@ -50,9 +50,8 @@
 		<class>org.eclipse.jubula.client.core.model.WrapperPO</class>
 		<class>org.eclipse.jubula.client.core.model.AUTContPO</class>
 		<class>org.eclipse.jubula.client.core.model.SpecObjContPO</class>
+		<class>org.eclipse.jubula.client.core.model.ExecObjContPO</class>
 		<class>org.eclipse.jubula.client.core.model.TestDataCubeContPO</class>
-		<class>org.eclipse.jubula.client.core.model.TestJobContPO</class>
-		<class>org.eclipse.jubula.client.core.model.TestSuiteContPO</class>
 		<class>org.eclipse.jubula.client.core.model.ParamNamePO</class>
 		<class>org.eclipse.jubula.client.core.model.ProjectNamePO</class>
 		<class>org.eclipse.jubula.client.core.model.ComponentNamePO</class>

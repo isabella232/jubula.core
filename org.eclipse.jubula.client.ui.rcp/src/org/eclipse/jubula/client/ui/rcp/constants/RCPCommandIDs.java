@@ -59,6 +59,9 @@ public interface RCPCommandIDs {
     /** the ID of the "add new test data manager" command */
     public static final String NEW_TESTDATACUBE_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.AddNewTestDataManager"; //$NON-NLS-1$
 
+    /** the ID of the "new test case" command */
+    public static final String NEW_TESTCASE_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.NewTestCaseCommand"; //$NON-NLS-1$
+    
     /** the ID of the "new test job" command */
     public static final String NEW_TESTJOB_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.NewTestJobCommand"; //$NON-NLS-1$
     

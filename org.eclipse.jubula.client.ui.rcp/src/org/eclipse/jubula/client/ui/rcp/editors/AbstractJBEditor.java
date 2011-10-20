@@ -77,9 +77,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     /** Add-Submenu ID */
     public static final String ADD_ID = PlatformUI.PLUGIN_ID + ".AddSubMenu"; //$NON-NLS-1$
 
-    /** Insert-menu ID */
-    public static final String INSERT_ID = PlatformUI.PLUGIN_ID + ".NewSubMenu"; //$NON-NLS-1$
-
     /** Refactor-menu ID */
     public static final String REFACTOR_ID = PlatformUI.PLUGIN_ID
             + ".RefactorSubMenu"; //$NON-NLS-1$
@@ -89,9 +86,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
 
     /** postfix for add-action id */
     protected static final String ADD = "_ADD"; //$NON-NLS-1$
-
-    /** postfix for insert-action id */
-    protected static final String INSERT = "_INSERT"; //$NON-NLS-1$
 
     /** the logger */
     protected static final Logger LOG = LoggerFactory

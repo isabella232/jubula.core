@@ -358,7 +358,6 @@ public abstract class PoMaker {
         return createReusedProjectPO(proj.getGuid(), 
             proj.getMajorProjectVersion(), proj.getMinorProjectVersion());
     }
-    
 
     /**
      * factory method to replace constructor
@@ -366,6 +365,14 @@ public abstract class PoMaker {
      */
     public static ISpecObjContPO createSpecObjContPO() {
         return new SpecObjContPO();
+    }
+    
+    /**
+     * factory method to replace constructor
+     * @return SpecObjContPO
+     */
+    public static IExecObjContPO createExecObjContPO() {
+        return new ExecObjContPO();
     }
 
     /**
@@ -420,22 +427,6 @@ public abstract class PoMaker {
         return new TestDataPO();
     }
 
-    /**
-     * factory method to replace constructor
-     * @return TestSuiteContPO
-     */
-    public static ITestSuiteContPO createTestSuiteContPO() {
-        return new TestSuiteContPO();
-    }
-
-    /**
-     * factory method to replace constructor
-     * @return TestJobContPO
-     */
-    public static ITestJobContPO createTestJobContPO() {
-        return new TestJobContPO();
-    }
-    
     /**
      * factory method to replace constructor
      * @return TestDataCubeContPO

@@ -87,7 +87,7 @@
 			class="org.eclipse.jubula.client.ui.rcp.propertytester.NodePropertyTester"
 			id="org.eclipse.jubula.client.ui.rcp.propertytester.GuiNodePropertyTester"
 			namespace="org.eclipse.jubula.client.ui.rcp.model" properties="isEditable"
-			type="org.eclipse.jubula.client.core.model.INodePO">
+			type="org.eclipse.jubula.client.core.model.IPersistentObject">
 		</propertyTester>
 		<propertyTester
 			class="org.eclipse.jubula.client.ui.rcp.propertytester.ComponentNameCollectionPropertyTester"
@@ -435,14 +435,6 @@
 				label="%Connect" style="pulldown"
 				toolbarPath="org.eclipse.jubula.client.ui.rcp.toolbar.AutStarterToolbar/GlobalActions"
 				tooltip="%ConnectToolTip" />
-			<action icon="icons/newTestCaseIcon.gif"
-				id="org.eclipse.jubula.client.ui.rcp.actions.AbstractNewTestCaseAction_INSERT"
-				label="%TestCase" menubarPath="edit/JubulaInsertMenu/JubulaInsertSeparator1" retarget="true"
-				tooltip="%TestCaseToolTip" />
-			<action icon="icons/newTestCaseIcon.gif"
-				id="org.eclipse.jubula.client.ui.rcp.actions.AbstractNewTestCaseAction_ADD"
-				label="%TestCase" menubarPath="edit/JubulaAddMenu/JubulaAddSeparator1" retarget="true"
-				tooltip="%TestCaseToolTip" />
 			<action
 				class="org.eclipse.jubula.client.ui.rcp.actions.ShowClientLogAction"
 				icon="icons/clientLogView.gif"
@@ -650,6 +642,11 @@
 			description="%NewTestSuiteToolTip"
 			id="org.eclipse.jubula.client.ui.rcp.commands.NewTestSuiteCommand"
 			name="%NewTestSuite" />
+		<command
+			categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+			description="%TestCaseToolTip"
+			id="org.eclipse.jubula.client.ui.rcp.commands.NewTestCaseCommand"
+			name="%TestCase" />
 		<command
 			categoryId="org.eclipse.jubula.client.ui.rcp.commands"
 			description="%NewTestJobToolTip"
@@ -1586,6 +1583,16 @@
            </reference>
         </visibleWhen>
 			</command>
+   <command
+         commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestCaseCommand"
+         style="push">
+      <visibleWhen
+            checkEnabled="false">
+         <reference
+               definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive">
+         </reference>
+      </visibleWhen>
+   </command>
 		</menuContribution>
 		<menuContribution
 			locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.AutToolbar.ChooseAutCommand">
@@ -1884,9 +1891,9 @@
 					</count>
 					<iterate ifEmpty="false" operator="and">
 						<or>
-							<instanceof
-								value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+							<instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
 							<instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
+							<instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
 						</or>
 					</iterate>
 				</and>
@@ -2036,8 +2043,7 @@
 			commandId="org.eclipse.ui.edit.delete">
 			<activeWhen>
 				<with variable="activePartId">
-					<equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser">
-					</equals>
+					<equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
 				</with>
 			</activeWhen>
 			<enabledWhen>
@@ -2045,6 +2051,7 @@
 					<or>
 						<instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
 						<instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
+						<instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
 					</or>
 				</iterate>
 			</enabledWhen>
@@ -2516,6 +2523,10 @@
 			commandId="org.eclipse.jubula.client.ui.rcp.commands.ClearTestResultView"
 			disabledIcon="icons/view_disabled.gif" icon="icons/view.gif">
 		</image>
+		<image
+			commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestCaseCommand"
+			icon="icons/newTestCaseIcon.gif">
+		</image>
 		<image commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed"
 			icon="icons/showSpec.gif">
 		</image>
@@ -2862,19 +2873,13 @@
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.jubula.client.ui.rcp.handlers.AddNewCategoryHandler"
+			class="org.eclipse.jubula.client.ui.rcp.handlers.NewCategoryHandler"
 			commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand">
 			<activeWhen>
 				<and>
-					<with variable="activePartId">
-						<equals value="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser">
-						</equals>
-					</with>
-					<count value="1">
-					</count>
+					<count value="1" />
 					<iterate ifEmpty="false" operator="and">
-						<test property="org.eclipse.jubula.client.ui.rcp.model.isEditable">
-						</test>
+						<test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
 					</iterate>
 				</and>
 			</activeWhen>
@@ -2885,11 +2890,55 @@
 			<activeWhen>
 				<and>
 					<with variable="activePartId">
-						<equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser">
-						</equals>
+						<equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
 					</with>
+					<count value="1" />
+				</and>
+			</activeWhen>
+		</handler>
+		<handler
+			class="org.eclipse.jubula.client.ui.rcp.handlers.NewTestCaseHandlerTCBrowser"
+			commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestCaseCommand">
+			<activeWhen>
+				<and>
+					<with variable="activePartId">
+						<equals value="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
+					</with>
+					<count value="1" />
+					<iterate ifEmpty="false" operator="and">
+						<test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+					</iterate>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler
+			class="org.eclipse.jubula.client.ui.rcp.handlers.NewTestCaseHandlerTCEditor"
+			commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestCaseCommand">
+			<activeWhen>
+				<and>
+					<or>
+						<with variable="activePartId">
+							<equals
+								value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor">
+							</equals>
+						</with>
+						<with variable="activePartId">
+							<equals
+								value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor">
+							</equals>
+						</with>
+					</or>
 					<count value="1">
 					</count>
+					<iterate ifEmpty="false" operator="or">
+						<or>
+							<instanceof
+								value="org.eclipse.jubula.client.core.model.IExecTestCasePO">
+							</instanceof>
+							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO">
+							</instanceof>
+						</or>
+					</iterate>
 				</and>
 			</activeWhen>
 		</handler>

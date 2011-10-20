@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
@@ -252,7 +253,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
         } else {
             
             // checks if actual server and aut fit together
-            if (project.getTestSuiteCont().getTestSuiteList().size() == 0) {
+            if (TestSuiteBP.getListOfTestSuites().size() == 0) {
                 problemNoTestSuiteExists();
             } 
             
@@ -368,8 +369,7 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
         } else {
             checkAutConfigs();
         }
-        List<ITestSuitePO> testSuites = project.getTestSuiteCont()
-            .getTestSuiteList();
+        List<ITestSuitePO> testSuites = TestSuiteBP.getListOfTestSuites();
         
         for (ITestSuitePO testSuite : testSuites) {
             if (testSuite.getAut() == null) {

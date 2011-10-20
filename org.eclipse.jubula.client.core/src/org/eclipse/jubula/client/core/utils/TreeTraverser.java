@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -270,10 +270,10 @@ public class TreeTraverser {
                 }
             }
         } else {
-            for (ITestSuitePO suite : project.getTestSuiteCont()
-                    .getTestSuiteList()) {
+            for (IExecPersistable exec : project.getExecObjCont()
+                    .getExecObjList()) {
 
-                traverseImpl(context, project, suite);
+                traverseImpl(context, project, exec);
             }
         }
     }

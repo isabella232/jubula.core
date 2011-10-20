@@ -24,6 +24,7 @@ import javax.persistence.Query;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -352,8 +353,7 @@ public class UsedToolkitBP {
         }
         Iterator< ? extends INodePO> iter = node.getNodeListIterator();
         if (node instanceof IProjectPO) {
-            final IProjectPO project = (IProjectPO)node;
-            iter = project.getTestSuiteCont().getTestSuiteList().iterator();
+            iter = TestSuiteBP.getListOfTestSuites().iterator();
         }
         String mainLevel = ToolkitConstants.LEVEL_ABSTRACT;
         while (iter.hasNext()) {

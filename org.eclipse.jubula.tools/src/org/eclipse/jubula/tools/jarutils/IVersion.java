@@ -24,10 +24,10 @@ public interface IVersion {
     public final Integer JB_PROTOCOL_MAJOR_VERSION = new Integer(11);
     
     /** major version for DB */
-    public final Integer JB_DB_MAJOR_VERSION = new Integer(36);
+    public final Integer JB_DB_MAJOR_VERSION = new Integer(37);
     
     /** minor version for DB */
-    public final Integer GD_DB_MINOR_VERSION = new Integer(0);
+    public final Integer JB_DB_MINOR_VERSION = new Integer(0);
     
     /** major version for xml import support */
     public final Integer JB_XML_IMPORT_MAJOR_VERSION = new Integer(1);

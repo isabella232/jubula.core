@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChange
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -39,9 +40,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
-import org.eclipse.jubula.client.core.model.ITestJobContPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestSuiteContPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -57,13 +56,13 @@ import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
+import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TestExecDropTargetListener;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestSuiteBrowserContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TestSuiteBrowserLabelProvider;
-import org.eclipse.jubula.client.ui.rcp.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -119,7 +118,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                         .getLabelDecorator());
 
         getTreeViewer().setLabelProvider(lp);
-        getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION + 1);
+        getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
         
         setViewerInput();
         Plugin.getHelpSystem().setHelp(getTreeViewer().getControl(),
@@ -132,6 +131,8 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
             .getInstance()};
         getTreeViewer().addDragSupport(ops, transfers,
             new TreeViewerContainerDragSourceListener(getTreeViewer()));
+        getTreeViewer().addDropSupport(ops, transfers,
+            new TestExecDropTargetListener(this));
         
         m_mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         Menu menu = m_mgr.createContextMenu(getTreeViewer().getControl());
@@ -167,12 +168,9 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                                 RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
                     }
                 } else if (firstElement instanceof IProjectPO) {
-                    runCommand(RCPCommandIDs
-                            .OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
-                } else if (firstElement instanceof ITestSuiteContPO) {
                     runCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
-                } else if (firstElement instanceof ITestJobContPO) {
-                    runCommand(RCPCommandIDs.NEW_TESTJOB_COMMAND_ID);
+                } else if (firstElement instanceof ICategoryPO) {
+                    runCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
                 }
             }
             
@@ -201,6 +199,8 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                     RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
             CommandHelper.createContributionPushItem(submenuNew,
                     RCPCommandIDs.NEW_TESTJOB_COMMAND_ID);
+            CommandHelper.createContributionPushItem(submenuNew,
+                    RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
             CommandHelper.createContributionPushItem(submenuOpenWith,
                     RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
             CommandHelper.createContributionPushItem(submenuOpenWith,
@@ -245,19 +245,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     protected void fillContextMenu(IMenuManager mgr) {
         if (!m_isContextMenuInitialized) {
             createContextMenu(mgr);
-        }
-        IStructuredSelection selection = getSuiteTreeSelection();
-        // Action enabling happens here, because GDStateController cant handle OpenActions
-        if (selection.size() > 0) {
-            int[] counter = SelectionChecker.selectionCounter(selection);
-            boolean enabled = !(counter[SelectionChecker.PROJECT] < 1);
-            if (counter[SelectionChecker.EXEC_TESTSUITE] == 1 
-                && selection.getFirstElement() instanceof ITestSuitePO) {
-                
-                ITestSuitePO testSuite = 
-                    (ITestSuitePO)selection.getFirstElement();
-                enabled = testSuite.isEditable() && !enabled;
-            } 
         }
     }
 
@@ -410,7 +397,8 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 if (po instanceof ITestSuitePO
-                        || po instanceof ITestJobPO) {
+                        || po instanceof ITestJobPO
+                        || po instanceof ICategoryPO) {
 
                     getTreeViewer().refresh();
 
@@ -427,7 +415,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      *            The persistent object that was added
      */
     private void handleDataAdded(IPersistentObject po) {
-        if ((po instanceof ISpecTestCasePO) || (po instanceof ICategoryPO)) {
+        if (po instanceof ISpecTestCasePO) {
             return;
         }
         getTreeViewer().refresh();
@@ -531,7 +519,8 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     private void setViewerInput() {
         IProjectPO activeProject = GeneralStorage.getInstance().getProject();
         if (activeProject != null) {
-            getTreeViewer().setInput(new IProjectPO[] {activeProject});
+            getTreeViewer().setInput(
+                    new IExecObjContPO[] {activeProject.getExecObjCont()});
         } else {
             getTreeViewer().setInput(null);
         }
