@@ -49,6 +49,9 @@ public class MonitoringValuePM {
             Persistor.instance().getTransaction(session);
             summary = session.find(PoMaker.getTestResultSummaryClass(),
                     summaryID);
+            if (summary == null) {
+                return Collections.emptyMap();
+            }
         } finally {
             Persistor.instance().dropSession(session);
         }
