@@ -157,16 +157,9 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                 IStructuredSelection selection = getSuiteTreeSelection();
                 Object firstElement = selection.getFirstElement();
                 if (firstElement instanceof ITestSuitePO) {
-                    ITestSuitePO testSuite = (ITestSuitePO) firstElement;
-                    if (testSuite.isEditable()) {
-                        runCommand(
-                                RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
-                    }
+                    runCommand(RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
                 } else if (firstElement instanceof ITestJobPO) {
-                    if (((ITestJobPO) firstElement).isEditable()) {
-                        runCommand(
-                                RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
-                    }
+                    runCommand(RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
                 } else if (firstElement instanceof IExecObjContPO) {
                     runCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
                 } else if (firstElement instanceof ICategoryPO) {
@@ -274,11 +267,10 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                 .removeSelectionListenerFromSelectionService();
         } finally {
             m_mgr.removeMenuListener(m_menuListener);
-            DataEventDispatcher.getInstance().removeDataChangedListener(this);
-            DataEventDispatcher.getInstance()
-                .removeLanguageChangedListener(this);
-            DataEventDispatcher.getInstance()
-                .removeCompletenessCheckListener(this);
+            DataEventDispatcher ded = DataEventDispatcher.getInstance();
+            ded.removeDataChangedListener(this);
+            ded.removeLanguageChangedListener(this);
+            ded.removeCompletenessCheckListener(this);
             super.dispose();
         }
     }
