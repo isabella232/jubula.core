@@ -167,7 +167,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                         runCommand(
                                 RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
                     }
-                } else if (firstElement instanceof IProjectPO) {
+                } else if (firstElement instanceof IExecObjContPO) {
                     runCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
                 } else if (firstElement instanceof ICategoryPO) {
                     runCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
