@@ -10,11 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.persistence;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
 
-import org.apache.commons.collections.MapUtils;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
@@ -41,7 +41,7 @@ public class MonitoringValuePM {
     public static final Map<String, IMonitoringValue> loadMonitoringValues(
             Object summaryID) {
         if (Persistor.instance() == null) {
-            return MapUtils.EMPTY_MAP;
+            return Collections.emptyMap();
         }
         EntityManager session = Persistor.instance().openSession();
         ITestResultSummaryPO summary;
