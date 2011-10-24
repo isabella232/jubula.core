@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -136,14 +137,14 @@ public class DeleteTreeItemHandlerTCBrowser
         try {
             MultipleNodePM.getInstance().executeCommands(cmds, dec);
 
-            // FIXME : we need a concept to execute just one gui update.
-            // we will just update top level nodes for now 
+            List<DataChangedEvent> eventList = 
+                    new ArrayList<DataChangedEvent>();
             for (INodePO node : topNodesToDelete) {
-                // notify listeners
-                DataEventDispatcher.getInstance().
-                    fireDataChangedListener(node, 
-                        DataState.Deleted, UpdateState.all);
+                eventList.add(new DataChangedEvent(node, DataState.Deleted,
+                        UpdateState.all));
             }
+            DataEventDispatcher.getInstance().fireDataChangedListener(
+                    eventList.toArray(new DataChangedEvent[0]));
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (ProjectDeletedException e) {
@@ -193,7 +194,6 @@ public class DeleteTreeItemHandlerTCBrowser
      * @param node
      *      INodePO
      */     
-    @SuppressWarnings("unchecked") 
     private void collectNodesToDelete(List<INodePO> nodesToDelete, 
         INodePO node) {
         nodesToDelete.add(node);
