@@ -298,7 +298,7 @@ public class MoveTestCaseAction extends Action {
             // Perform move
             MessageInfo errorMessageInfo = 
                 MultipleNodePM.getInstance().executeCommands(
-                        commands, null, sess);
+                        commands, sess);
 
             if (errorMessageInfo == null) {
                 GeneralStorage.getInstance().getMasterSession().refresh(

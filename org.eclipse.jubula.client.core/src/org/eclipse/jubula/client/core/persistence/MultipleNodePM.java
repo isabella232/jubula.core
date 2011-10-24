@@ -757,10 +757,17 @@ public class MultipleNodePM  extends PersistenceManager {
          */
         private void registerParamNamesForDeletion(ISpecTestCasePO specTcPO) {
             for (IParamDescriptionPO desc : specTcPO.getParameterList()) {
-                m_dec.registerParamDescriptions((ITcParamDescriptionPO)desc);
-                m_dec.removeParamNamePO(desc.getUniqueId());
+                getDec().registerParamDescriptions((ITcParamDescriptionPO)desc);
+                getDec().removeParamNamePO(desc.getUniqueId());
             }
             
+        }
+
+        /**
+         * @return the m_dec
+         */
+        public ParamNameBPDecorator getDec() {
+            return m_dec;
         }
     }
 
@@ -870,7 +877,8 @@ public class MultipleNodePM  extends PersistenceManager {
     }
     
     /**
-     * executes a list of commands in a single transaction
+     * executes a list of commands in a single transaction in the Master
+     * Session.
      * 
      * @param cmds
      *      List<AbstractCmdHandle>
@@ -885,30 +893,8 @@ public class MultipleNodePM  extends PersistenceManager {
     public MessageInfo executeCommands(List<AbstractCmdHandle> cmds) 
         throws PMException, ProjectDeletedException {
 
-        return executeCommands(cmds, null);    
-    }
-
-    /**
-     * executes a list of commands in a single transaction in the Master
-     * Session.
-     * 
-     * @param cmds
-     *      List<AbstractCmdHandle>
-     * @param dec the descriptor used during the transaction
-     * @throws PMException
-     *      error occured
-     * @throws ProjectDeletedException
-     *      error occured
-     * @return a message containing information about the error that 
-     *         occurred during execution, or <code>null</code> if no error
-     *         occurred.
-     */
-    public MessageInfo executeCommands(List<AbstractCmdHandle> cmds, 
-        ParamNameBPDecorator dec) 
-        throws PMException, ProjectDeletedException {
-
-        return executeCommands(cmds, dec, 
-                GeneralStorage.getInstance().getMasterSession());
+        return executeCommands(cmds, GeneralStorage.getInstance()
+                .getMasterSession());
     }
 
     /**
@@ -918,7 +904,6 @@ public class MultipleNodePM  extends PersistenceManager {
      * 
      * @param cmds
      *      List<AbstractCmdHandle>
-     * @param dec the descriptor used during the transaction
      * @param sess The session in which to execute the commands.
      * @throws PMException
      *      error occured
@@ -928,8 +913,8 @@ public class MultipleNodePM  extends PersistenceManager {
      *         occurred during execution, or <code>null</code> if no error
      *         occurred.
      */
-    public MessageInfo executeCommands(List<AbstractCmdHandle> cmds, 
-            ParamNameBPDecorator dec, EntityManager sess) 
+    public MessageInfo executeCommands(List<AbstractCmdHandle> cmds,
+        EntityManager sess) 
         throws PMException, ProjectDeletedException {
         
         final Persistor persistor = Persistor.instance();
@@ -951,12 +936,18 @@ public class MultipleNodePM  extends PersistenceManager {
             // lock objects
             persistor.lockPOSet(sess, objectsToLock);
             
+            // the param name bp decorator which should be used for param changes
+            ParamNameBPDecorator dec = null;
+            
             // execute command code in transaction
             for (AbstractCmdHandle cmd : cmds) {
                 MessageInfo errorMessage = cmd.execute(sess);
                 if (errorMessage != null) {
                     persistor.rollbackTransaction(sess, tx);
                     return errorMessage;
+                }
+                if (cmd instanceof DeleteTCHandle) {
+                    dec = ((DeleteTCHandle) cmd).getDec();
                 }
             }
             if (dec != null) {
