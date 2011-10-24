@@ -21,6 +21,7 @@ import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -200,7 +201,8 @@ public class ComponentNameBrowser extends ViewPart implements
     public void handleDataChanged(DataChangedEvent... events) {
         boolean refreshView = false;
         for (DataChangedEvent e : events) {
-            if (e.getPo() instanceof IComponentNamePO) {
+            if (e.getUpdateState() != UpdateState.onlyInEditor
+                    && e.getPo() instanceof IComponentNamePO) {
                 refreshView = true;
                 break;
             }
