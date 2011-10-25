@@ -626,7 +626,9 @@ class ExecTestCasePO extends TestCasePO implements
 
     /**
      *    
-     * @return the GUID of the parent project of the referenced test case.
+     * @return the GUID of the parent Project of the referenced Test Case, or 
+     *         <code>null</code> if the referenced Test Case has the same parent
+     *         Project as the receiver.
      */
     @Basic
     @Column(name = "PARENT_PROJ_GUID")

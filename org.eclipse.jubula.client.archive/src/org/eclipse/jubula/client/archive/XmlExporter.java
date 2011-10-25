@@ -112,11 +112,9 @@ import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
-import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
@@ -881,21 +879,15 @@ class XmlExporter {
         } else {
             xml.setName(execName);
         }
+        
         xml.setTestcaseGuid(po.getSpecTestCaseGuid());
+
+        // A Project GUID value of null indicates that the Test Case Reference
+        // and the referenced Test Case are in the same Project. If they are
+        // *not* in the same Project, then the exported file needs to contain
+        // information about the Reused Project (i.e. Project GUID).
         if (po.getProjectGuid() != null) {
             xml.setProjectGuid(po.getProjectGuid());
-        } else if (po.getSpecTestCase() != null) {
-            // FIXME zeb This is only necessary now because project guid was not
-            // created when the test case was created. Once all current
-            // projects are converted, we won't need this if/else anymore.
-            // This will not work for testcases that don't exist in the
-            // exporting DB.
-            try {
-                xml.setProjectGuid(ProjectPM.loadProjectById(
-                        po.getSpecTestCase().getParentProjectId()).getGuid());
-            } catch (JBException e) {
-                // FIXME zeb Could not load project for spec testcase
-            }
         }
         xml.setHasOwnTestdata(!po.getHasReferencedTD());
         xml.setDatafile(po.getDataFile());
