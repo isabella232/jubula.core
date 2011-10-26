@@ -844,27 +844,6 @@ public class RobotSwtImpl implements IRobot {
     }
 
     /**
-     * Implements the key press or release.
-     * @param graphicsComponent The component, may be <code>null</code>
-     * @param keyCode The key code
-     * @param press If <code>true</code>, the key is pressed, otherwise released
-     */
-    private void keyPressReleaseImpl(Object graphicsComponent, int keyCode,
-        boolean press) {
-
-        InterceptorOptions options = new InterceptorOptions(new long[]{
-            SWT.KeyDown, SWT.KeyUp});
-        IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
-        if (press) {
-            m_robot.keyPress(keyCode);
-        } else {
-            m_robot.keyRelease(keyCode);
-        }
-        confirmer.waitToConfirm(graphicsComponent, new KeySwtEventMatcher(
-            press ? SWT.KeyDown : SWT.KeyUp));
-    }
-
-    /**
      * {@inheritDoc}
      */
     public void keyPress(Object graphicsComponent, int keycode)
@@ -891,8 +870,19 @@ public class RobotSwtImpl implements IRobot {
      */
     public void keyRelease(Object graphicsComponent, int keycode)
         throws RobotException {
-        
-        keyPressReleaseImpl(graphicsComponent, keycode, false);
+
+        // A direct "post" is necessary here (rather than using the AWT Robot)
+        // because we do not receive event confirmation for the KeyDown event
+        // on MacOS X Cocoa.
+        if (!post(new KeyCodeTyper(keycode).createKeyUpEvent())) {
+            final String msg = "Failed to post key event for keycode '" //$NON-NLS-1$
+                    + keycode + "'"; //$NON-NLS-1$
+            log.warn(msg);
+            throw new RobotException(
+                    msg,
+                    EventFactory.createActionError(
+                            TestErrorEvent.INVALID_INPUT));
+        }
     }
 
     /**
