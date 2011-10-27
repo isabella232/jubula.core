@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jubula.client.core.businessprocess.CompletenessGuard;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -26,7 +26,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChange
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -108,10 +107,7 @@ public class CompletenessBP implements
         }
         INodePO root = GeneralStorage.getInstance().getProject();
         
-        // manipulating CategoryPOs does not affect completeness
-        if (po instanceof ICategoryPO) {
-            return;
-        } else if (po instanceof ISpecTestCasePO) {
+        if (po instanceof ISpecTestCasePO) {
             // you could change parameters in a SpecTestCase used in TS
             if (dataState != DataState.StructureModified) {
                 return;

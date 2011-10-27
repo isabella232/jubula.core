@@ -126,7 +126,7 @@ public class IconConstants {
     /** overwritten data image */
     public static final Image OVERWRITTEN_DATA_IMAGE = Plugin.getImage("overwrittenData.gif"); //$NON-NLS-1$
     /** complete data imageDescriptor */
-    public static final ImageDescriptor INCOMPLETE_DATA_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("incomplData.gif"); //$NON-NLS-1$
+    public static final ImageDescriptor ERROR_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("incomplData.gif"); //$NON-NLS-1$
     /** excel data imageDescriptor */
     public static final ImageDescriptor EXCEL_DATA_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("excelData.gif"); //$NON-NLS-1$
     /** greenDot imageDescriptor */

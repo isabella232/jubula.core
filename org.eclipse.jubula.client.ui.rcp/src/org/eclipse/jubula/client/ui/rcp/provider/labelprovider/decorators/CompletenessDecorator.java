@@ -47,12 +47,13 @@ public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
     public void decorate(Object element, IDecoration decoration) {
         decoration.setForegroundColor(LayoutUtil.DEFAULT_OS_COLOR);
         final INodePO node = (INodePO)element;
-        final ITestSuitePO owningTestsuite = UINodeBP.getOwningTestSuite(node);
-        if (shouldNotDecorate(node, decoration, owningTestsuite)) {
+        if (shouldNotDecorate(node, decoration)) {
             return;
         }
         boolean flag = false;
         if (TestSuiteBrowserLabelProvider.isNodeActive(node)) {
+            final ITestSuitePO owningTestsuite = 
+                    UINodeBP.getOwningTestSuite(node);
             if (owningTestsuite != null) {
                 final WorkingLanguageBP workLangBP = WorkingLanguageBP
                     .getInstance();
@@ -141,14 +142,11 @@ public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
      *            the node
      * @param decoration
      *            the decoration
-     * @param owningTestsuite the owning test suite of the node
      * @return wheter decoration should continue for this element or not
      */
-    private boolean shouldNotDecorate(INodePO node, IDecoration decoration,
-            ITestSuitePO owningTestsuite) {
+    private boolean shouldNotDecorate(INodePO node, IDecoration decoration) {
         return node == null
                 || node.getParentNode() == null
-                || owningTestsuite == null
                 || decoration.getDecorationContext() 
                     instanceof NonDecorationContext
                 || node instanceof IProjectPO;
@@ -164,7 +162,7 @@ public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
      */
     private static int getStatus(INodePO element, boolean flag) {
         if (!flag) {
-            return IStatus.ERROR; // if there's a flag, its an ERROR
+            return IStatus.ERROR; // if flag == false it's an ERROR
         }
         int status = NO_DECORATION;
         for (IProblem problem : element.getProblems()) {
@@ -183,8 +181,7 @@ public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
      */
     private static void setIcon(IDecoration decoration, int status) {
         if (status == IStatus.ERROR) {
-            decoration.addOverlay(
-                    IconConstants.INCOMPLETE_DATA_IMAGE_DESCRIPTOR);
+            decoration.addOverlay(IconConstants.ERROR_IMAGE_DESCRIPTOR);
         } else if (status == IStatus.WARNING) {
             Image warning = IconConstants.WARNING_SMALL_IMAGE;
             decoration.addOverlay(ImageDescriptor.createFromImage(warning));

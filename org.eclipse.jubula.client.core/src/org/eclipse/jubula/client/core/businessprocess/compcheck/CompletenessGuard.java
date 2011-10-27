@@ -8,16 +8,20 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.businessprocess;
+package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
+import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -73,12 +77,13 @@ public final class CompletenessGuard {
         /**
          * {@inheritDoc}
          */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx, 
+        public void postOperate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
 
-            if (parent != null && parent.getSumSpecTcFlag()) {
+            if (parent != null && parent.getSumSpecTcFlag()
+                    && !(parent instanceof ICategoryPO)) {
                 parent.setSumSpecTcFlag(node.getSumSpecTcFlag());
-            }            
+            }
         }
         
     }
@@ -205,6 +210,8 @@ public final class CompletenessGuard {
                     if (parent != null && !m_sumOMFlag) {
                         parent.setSumOMFlag(m_aut, m_sumOMFlag);
                     }
+                } else if (node instanceof ICategoryPO) {
+                    node.setSumOMFlag(m_aut, true);
                 // Only set the OM flag if it's possible that the node could 
                 // actually *have* incomplete mappings (i.e. if a node is not a 
                 // Test Step and has no children, then it can't have mappings 
@@ -445,5 +452,4 @@ public final class CompletenessGuard {
         final TreeTraverser traverser = new TreeTraverser(root, omOp);
         traverser.traverse(true);
     }
-
 }

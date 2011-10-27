@@ -141,6 +141,8 @@ public class Messages extends NLS {
     public static String ErrorFileWriting;
     public static String ErrorInitializingComponentNamesLocking;
     public static String ErrorInTestExecutionTree;
+    public static String TooltipWarningInChildren;
+    public static String TooltipErrorInChildren;
     public static String ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE;
     public static String ErrorMessageDATABASE_GENERAL;
     public static String ErrorMessageDATASOURCE_LOCALE_NOTSUPPORTED;

@@ -13,8 +13,8 @@ package org.eclipse.jubula.client.ui.rcp.views.dataset;
 import java.util.List;
 import java.util.Locale;
 
-import org.eclipse.jubula.client.core.businessprocess.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;

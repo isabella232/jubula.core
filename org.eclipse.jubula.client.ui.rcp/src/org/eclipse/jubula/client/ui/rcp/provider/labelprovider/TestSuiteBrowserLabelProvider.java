@@ -16,9 +16,11 @@ import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -49,7 +51,6 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
         }
         return super.getToolTipText(element);
     }
-    
 
     /**
      * @param node
@@ -125,6 +126,12 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
                     addMessage(toolTip, 
                             Messages.TestDataDecoratorTestJobIncompl);
                 }
+            } else if (node instanceof ICategoryPO) {
+                IProblem worstProblem = ProblemFactory.getWorstProblem(node
+                        .getProblems());
+                if (worstProblem != null) {
+                    addMessage(toolTip, worstProblem.getTooltipMessage());
+                }
             } else if (node instanceof IRefTestSuitePO) {
                 if (!isRefTestSuiteGuiValid((IRefTestSuitePO)node)) {
                     addMessage(toolTip, Messages.TestDataDecoratorRefTsIncompl);
@@ -176,7 +183,6 @@ public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
      * @param toolTip the tooltip
      * @return the changed tooltip
      */
-    @SuppressWarnings("unchecked")
     private StringBuilder checkNode(IExecTestCasePO execTC, IAUTMainPO aut,
         Locale locale, StringBuilder toolTip) {  
         

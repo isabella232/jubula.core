@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.businessprocess.problems;
 
 import java.util.Locale;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -25,7 +26,6 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
  * @created 24.01.2011
  */
 public final class ProblemFactory {
-
     /** 
      * private constructor because its a utility class 
      */
@@ -75,9 +75,8 @@ public final class ProblemFactory {
      *            Status with which the problem will be intialized.
      * @return An instance of this problem
      */
-    public static IProblem createExternalProblem(IStatus status) {
-        return new Problem(null, status, null, 
-                ProblemType.EXTERNAL);
+    public static IProblem createProblem(IStatus status) {
+        return new Problem(null, status, null, ProblemType.EXTERNAL);
     }
 
     /**
@@ -88,10 +87,25 @@ public final class ProblemFactory {
      * @return An instance of this problem which will create an marker when
      *         attached to a INodePO.
      */
-    public static IProblem createExternalProblemWithMarker(
-            IStatus status, String markerMessage) {
-        return new Problem(markerMessage, status, null, 
-                ProblemType.EXTERNAL);
+    public static IProblem createProblemWithMarker(IStatus status,
+            String markerMessage) {
+        return new Problem(markerMessage, status, null, ProblemType.EXTERNAL);
     }
 
+    /**
+     * @param problems
+     *            The list of problems which should be searched for the worst
+     *            problem.
+     * @return The problem with the worst severity or null if none is found.
+     */
+    public static IProblem getWorstProblem(Set<IProblem> problems) {
+        IProblem worstProblem = null;
+        for (IProblem problem : problems) {
+            if (worstProblem == null
+                    || worstProblem.getSeverity() < problem.getSeverity()) {
+                worstProblem = problem;
+            }
+        }
+        return worstProblem;
+    }
 }
