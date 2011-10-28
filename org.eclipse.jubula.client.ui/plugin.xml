@@ -196,6 +196,20 @@
             Adds the execution duration to the label of a Test Result.
          </description>
       </decorator>
+      <decorator
+            class="org.eclipse.jubula.client.ui.provider.labelprovider.decorators.TestResultParametersDecorator"
+            id="org.eclipse.jubula.client.ui.rcp.decorators.resultParameterDecorator"
+            label="Test Result Parameter Decorator"
+            lightweight="true"
+            state="true">
+                <enablement>
+                    <objectClass
+                        name="org.eclipse.jubula.client.core.model.TestResultNode" />
+                </enablement>
+         <description>
+            Adds parameter values to the label of a Test Result.
+         </description>
+      </decorator>
     </extension>
     <extension
           point="org.eclipse.core.runtime.preferences">

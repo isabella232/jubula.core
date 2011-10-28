@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
+import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
@@ -210,7 +211,13 @@ public class TestresultSummaryBP {
             keyword.setInternalParentKeywordID(
                     node.getParent().getNode().getId());
         }
-        
+
+        if (inode instanceof IParameterInterfacePO) {
+            //set parameters
+            addParameterListToResult(keyword, node, 
+                    (IParameterInterfacePO)inode);
+        }
+
         if (inode instanceof ICapPO) {
             keyword.setInternalKeywordType(TYPE_TEST_STEP);
             keyword.setKeywordType("Test Step"); //$NON-NLS-1$
@@ -227,8 +234,6 @@ public class TestresultSummaryBP {
             keyword.setInternalActionName(cap.getActionName());
             keyword.setActionName(CompSystemI18n.getString(
                     cap.getActionName()));
-            //set parameters
-            addParameterListToResult(keyword, node, cap);
             //add error details
             addErrorDetails(keyword, node);
             keyword.setNoOfSimilarComponents(node.getNoOfSimilarComponents());
@@ -245,15 +250,16 @@ public class TestresultSummaryBP {
     /**
      * get a list of parameters for cap
      * @param node TestResultNode
-     * @param cap ICapPO
+     * @param parameterInterface Source for Parameter information.
      * @param keyword ITestResultPO
      * @return result mit parameter
      */
     private ITestResultPO addParameterListToResult(ITestResultPO keyword,
-            TestResultNode node, ICapPO cap) {
+            TestResultNode node, IParameterInterfacePO parameterInterface) {
         
         int index = 0;
-        for (IParamDescriptionPO param : cap.getParameterList()) {
+        for (IParamDescriptionPO param 
+                : parameterInterface.getParameterList()) {
             IParameterDetailsPO parameter = PoMaker.createParameterDetailsPO();
             
             parameter.setParameterName(param.getName());

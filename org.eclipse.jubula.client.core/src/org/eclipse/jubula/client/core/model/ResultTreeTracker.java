@@ -106,6 +106,9 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         m_endNode = m_lastNonCap;
         if (m_lastNonCap.getStatus() == TestResultNode.NOT_YET_TESTED) {
             m_lastNonCap.setResult(TestResultNode.TESTING, null);
+            if (node instanceof IParamNodePO) {
+                addParameters((IParamNodePO)node, m_lastNonCap);
+            }
         }
         if (m_lastNonCap.getParent().getStatus() 
                 == TestResultNode.NOT_YET_TESTED) {
@@ -162,6 +165,10 @@ public class ResultTreeTracker implements IExecStackModificationListener {
                     get(nextIndex);
         }
         if (m_lastNonCap.getStatus() == TestResultNode.NOT_YET_TESTED) {
+            INodePO node = m_lastNonCap.getNode();
+            if (node instanceof IParamNodePO) {
+                addParameters((IParamNodePO)node, m_lastNonCap);
+            }
             m_lastNonCap.setResult(TestResultNode.TESTING, null);
         }
         if (m_lastNonCap.getParent().getStatus() 
@@ -198,28 +205,48 @@ public class ResultTreeTracker implements IExecStackModificationListener {
     /**
      * Adds the parameters from the given cap to the given result node.
      * 
-     * @param cap The cap from which to copy the paremter info.
+     * @param paramNode The node from which to copy the parameter info.
      * @param resultNode The result node to which the parameter info will
      *                   be copied.
      */
-    private void addParameters(ICapPO cap, TestResultNode resultNode) {
-        List<IParamDescriptionPO> parameterList = cap.getParameterList();
+    private void addParameters(IParamNodePO paramNode, 
+            TestResultNode resultNode) {
+        
+        List<IParamDescriptionPO> parameterList = paramNode.getParameterList();
         String value = null;
         for (IParamDescriptionPO desc : parameterList) {
             ITDManager tdManager = null;
             try {
                 tdManager = 
-                    m_externalTestDataBP.getExternalCheckedTDManager(cap);
+                    m_externalTestDataBP.getExternalCheckedTDManager(
+                            paramNode);
             } catch (JBException e) {
                 log.error(Messages.TestDataNotAvailable + StringConstants.DOT, 
                     e);
             }
-            ITestDataPO date = tdManager.getCell(0, desc);
             TestExecution te = TestExecution.getInstance();
-            ParamValueConverter conv = new ModelParamValueConverter(
-                date.getValue(te.getLocale()), cap, te.getLocale(), desc);
             List <ExecObject> stackList = 
                 new ArrayList<ExecObject>(te.getTrav().getExecStackAsList());
+            int dataSetIndex = te.getTrav().getDataSetNumber();
+
+            // Special handling for Test Case References that are repeated 
+            // via Data Set. The test data manager for such References only has 
+            // information about a single Data Set, so we need to ignore the 
+            // actual current Data Set number.
+            if (tdManager.getDataSetCount() <= 1) {
+                dataSetIndex = 0;
+            }
+            
+            // Special handling for Test Steps. Their test data manager has 
+            // information about multiple Data Sets, but we are only interested 
+            // in the first one.
+            if (paramNode instanceof ICapPO) {
+                dataSetIndex = 0;
+            }
+
+            ITestDataPO date = tdManager.getCell(dataSetIndex, desc);
+            ParamValueConverter conv = new ModelParamValueConverter(
+                date.getValue(te.getLocale()), paramNode, te.getLocale(), desc);
             try {
                 value = 
                     conv.getExecutionString(stackList, te.getLocale());

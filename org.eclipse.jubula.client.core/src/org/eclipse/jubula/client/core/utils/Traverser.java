@@ -447,8 +447,8 @@ public class Traverser {
             IExecStackModificationListener l = it.next();
             try {
                 l.stackIncremented(node);
-            } catch (Throwable t) {                // NOPMD by al on 3/19/07 1:42 PM
-            // nothing, just prevent abort in case of errors in listener
+            } catch (Throwable t) {
+                LOG.error(Messages.ErrorWhileNotifyingListeners, t);
             }
         }
     }
@@ -463,8 +463,8 @@ public class Traverser {
             IExecStackModificationListener l = it.next();
             try {
                 l.stackDecremented();
-            } catch (Throwable t) {                // NOPMD by al on 3/19/07 1:43 PM
-                // nothing, just prevent abort in case of errors in listener
+            } catch (Throwable t) {
+                LOG.error(Messages.ErrorWhileNotifyingListeners, t);
             }
         }
     }
@@ -479,8 +479,8 @@ public class Traverser {
             IEventStackModificationListener l = it.next();
             try {
                 l.eventStackIncremented();
-            } catch (Throwable t) {                // NOPMD by al on 3/19/07 1:42 PM
-                // nothing, just prevent abort in case of errors in listener
+            } catch (Throwable t) {
+                LOG.error(Messages.ErrorWhileNotifyingListeners, t);
             }
         }
     }
@@ -495,8 +495,8 @@ public class Traverser {
             IEventStackModificationListener l = it.next();
             try {
                 l.eventStackDecremented();
-            } catch (Throwable t) {                // NOPMD by al on 3/19/07 1:43 PM
-                // nothing, just prevent abort in case of errors in listener
+            } catch (Throwable t) {
+                LOG.error(Messages.ErrorWhileNotifyingListeners, t);
             }
         }
     }
@@ -511,8 +511,8 @@ public class Traverser {
             IExecStackModificationListener l = it.next();
             try {
                 l.nextDataSetIteration();
-            } catch (Throwable t) {                // NOPMD by al on 3/19/07 1:43 PM
-                // nothing, just prevent abort in case of errors in listener
+            } catch (Throwable t) {
+                LOG.error(Messages.ErrorWhileNotifyingListeners, t);
             }
         }
     }
@@ -528,8 +528,8 @@ public class Traverser {
             IExecStackModificationListener l = it.next();
             try {
                 l.nextCap(cap);
-            } catch (Throwable t) {                // NOPMD by al on 3/19/07 1:43 PM
-                // nothing, just prevent abort in case of errors in listener
+            } catch (Throwable t) {
+                LOG.error(Messages.ErrorWhileNotifyingListeners, t);
             }
         }
     }
@@ -691,8 +691,8 @@ public class Traverser {
             IExecStackModificationListener l = it.next();
             try {
                 l.retryCap(toRetry);
-            } catch (Throwable t) {                // NOPMD by zf on 3/07/08
-                // nothing, just prevent abort in case of errors in listener
+            } catch (Throwable t) {
+                LOG.error(Messages.ErrorWhileNotifyingListeners, t);
             }
         }
     }
