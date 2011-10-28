@@ -33,6 +33,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -290,7 +291,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         dialog.open();
         if (Window.OK == dialog.getReturnCode()) {
             String tcName = dialog.getName();
-            final INodePO parentPO = GeneralStorage.getInstance().getProject();
+            final INodePO parentPO = ISpecObjContPO.TCB_ROOT_NODE;
             ISpecTestCasePO recSpecTestCase = NodeMaker
                     .createSpecTestCasePO(tcName);
             try {

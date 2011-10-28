@@ -25,6 +25,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -104,10 +105,10 @@ public class TreeOpsBP {
             ownerNode instanceof ISpecTestCasePO;
         ISpecTestCasePO newTc = NodeMaker.createSpecTestCasePO(newTcName);
         s.persist(newTc); // to get an id for newTc
-        IProjectPO project = GeneralStorage.getInstance().getProject();
-        AbstractCmdHandleChild handler = NodePM.getCmdHandleChild(project, 
+        INodePO parent = ISpecObjContPO.TCB_ROOT_NODE;
+        AbstractCmdHandleChild handler = NodePM.getCmdHandleChild(parent, 
             newTc);
-        handler.add(project, newTc, null);
+        handler.add(parent, newTc, null);
         int pos = -1;
         Map<String, String> oldToNewParamGuids = new HashMap<String, String>();
         for (IParamNodePO selectecNode : modNodes) {
