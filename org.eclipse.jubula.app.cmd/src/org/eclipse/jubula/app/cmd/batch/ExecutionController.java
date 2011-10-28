@@ -383,11 +383,11 @@ public class ExecutionController implements IAUTServerEventListener,
             if (m_rmiBase != null) { // run as a CLS server
                 doClcService();
             } else if (m_job.getTestJob() != null) {
-                ensureAutIsStarted(m_job.getTestSuite(), 
+                ensureAutIsStarted(m_job.getActualTestSuite(), 
                         m_job.getAutConfig());
                 doTestJob();
             } else {
-                ensureAutIsStarted(m_job.getTestSuite(), 
+                ensureAutIsStarted(m_job.getActualTestSuite(), 
                         m_job.getAutConfig());
                 doTestSuite();
             }
@@ -404,11 +404,11 @@ public class ExecutionController implements IAUTServerEventListener,
     }
 
     /**
-     * executing batch of test suites
+     * execute a test suite
      */
     private void doTestSuite() {
         // executing batch of test suites
-        while (m_job.getTestSuite() != null 
+        while (m_job.getActualTestSuite() != null 
                 && !m_stopProcessing) {
             while (m_idle && !m_stopProcessing) {
                 try {
@@ -417,7 +417,7 @@ public class ExecutionController implements IAUTServerEventListener,
                     // do nothing
                 }
             }
-            if (m_job.getTestSuite() != null 
+            if (m_job.getActualTestSuite() != null 
                     && !m_stopProcessing
                     && !m_idle && !m_isFirstAutStart) {
    
@@ -425,11 +425,11 @@ public class ExecutionController implements IAUTServerEventListener,
                 AbstractCmdlineClient.printConsoleLn(StringConstants.TAB
                         + NLS.bind(Messages
                                 .ExecutionControllerTestSuiteBegin, 
-                                 m_job.getTestSuite()
-                                    .getName()), 
+                                m_job.getActualTestSuite()
+                                    .getName()),
                         true); 
                 ClientTestFactory.getClientTest().startTestSuite(
-                        m_job.getTestSuite(),
+                        m_job.getActualTestSuite(),
                         m_job.getLanguage(),
                         m_startedAutId != null ? m_startedAutId : m_job
                                 .getAutId(), m_job.isAutoScreenshot());
@@ -756,29 +756,29 @@ public class ExecutionController implements IAUTServerEventListener,
         List<String> suitesWithIncompleteOM = new LinkedList<String>();
         List<String> suitesWithIncompleteTD = new LinkedList<String>();
         List<String> suitesWithMissingSpecTc = new LinkedList<String>();
-        ITestSuitePO ts = m_job.getTestSuite();
-        final String tsName = ts.getName();
-        if (!ts.getSumSpecTcFlag()) {
-            suitesWithMissingSpecTc.add(NLS.bind(
-                    Messages.ExecutionControllerCheckSpecTc, tsName));
-            AbstractCmdlineClient.printConsoleLn(NLS.bind(
-                    Messages.ExecutionControllerCheckSpecTc, tsName), true);
+        for (ITestSuitePO ts : m_job.getTestSuites()) {
+            final String tsName = ts.getName();
+            if (!ts.getSumSpecTcFlag()) {
+                suitesWithMissingSpecTc.add(NLS.bind(
+                        Messages.ExecutionControllerCheckSpecTc, tsName));
+                AbstractCmdlineClient.printConsoleLn(NLS.bind(
+                        Messages.ExecutionControllerCheckSpecTc, tsName), true);
+            }
+            if (!ts.getSumOMFlag(ts.getAut())) {
+                suitesWithIncompleteOM.add(NLS.bind(
+                        Messages.ExecutionControllerCheckOM, tsName));
+                AbstractCmdlineClient.printConsoleLn(
+                        NLS.bind(Messages.ExecutionControllerCheckOM, tsName),
+                        true);
+            }
+            if (!ts.getSumTdFlag(m_job.getLanguage())) {
+                suitesWithIncompleteTD.add(NLS.bind(
+                        Messages.ExecutionControllerCheckTD, tsName));
+                AbstractCmdlineClient.printConsoleLn(
+                        NLS.bind(Messages.ExecutionControllerCheckTD, tsName),
+                        true);
+            }
         }
-        if (!ts.getSumOMFlag(ts.getAut())) {
-            suitesWithIncompleteOM.add(NLS.bind(
-                    Messages.ExecutionControllerCheckOM, tsName));
-            AbstractCmdlineClient.printConsoleLn(
-                    NLS.bind(Messages.ExecutionControllerCheckOM, tsName),
-                    true);
-        }
-        if (!ts.getSumTdFlag(m_job.getLanguage())) {
-            suitesWithIncompleteTD.add(NLS.bind(
-                    Messages.ExecutionControllerCheckTD, tsName));
-            AbstractCmdlineClient.printConsoleLn(
-                    NLS.bind(Messages.ExecutionControllerCheckTD, tsName),
-                    true);
-        }
-        
         StringBuilder sb = new StringBuilder(
                 Messages.ExecutionControllerCheckError);
         sb.append(StringConstants.COLON);
@@ -928,6 +928,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 AbstractCmdlineClient.printConsoleLn(
                         Messages.ExecutionControllerTestSuiteEnd,
                         true);
+                m_job.getNextTestSuite();
                 m_clcServiceImpl.tsDone(isNoErrorWhileExecution() ? 0 : 1);
                 break;
             case TestExecutionEvent.TEST_EXEC_PAUSED:
@@ -936,6 +937,7 @@ public class ExecutionController implements IAUTServerEventListener,
             case TestExecutionEvent.TEST_EXEC_ERROR:
             case TestExecutionEvent.TEST_EXEC_FAILED:
             case TestExecutionEvent.TEST_EXEC_STOP:
+                m_job.getNextTestSuite();
                 break;
             default:
                 break;

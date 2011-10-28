@@ -210,7 +210,7 @@ public class Client extends AbstractCmdlineClient {
             appendError(errorMsgs, ClientTestStrings.DATA_DIR, 
                     ClientTestStrings.DATA_DIR_EX);
         }
-        if (job.getTestSuiteName() == null && job.getTestJobName() == null
+        if (job.getTestSuiteNames().isEmpty() && job.getTestJobName() == null
                 && job.getServerPort() == null) {
             appendError(errorMsgs, ClientTestStrings.TESTSUITE, 
                     ClientTestStrings.TESTSUITE);
