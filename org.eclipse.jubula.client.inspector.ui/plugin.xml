@@ -189,13 +189,13 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="org.eclipse.jubula.client.ui.perspectives.SpecificationPerspective">
+            targetID="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective">
          <viewShortcut
                id="org.eclipse.jubula.client.inspector.views.inspectorView">
          </viewShortcut>
       </perspectiveExtension>
       <perspectiveExtension
-            targetID="org.eclipse.jubula.client.ui.perspectives.ExecutionPerspective">
+            targetID="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective">
          <viewShortcut
                id="org.eclipse.jubula.client.inspector.views.inspectorView">
          </viewShortcut>
