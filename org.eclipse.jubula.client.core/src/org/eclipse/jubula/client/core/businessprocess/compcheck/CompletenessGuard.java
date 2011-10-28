@@ -74,18 +74,15 @@ public final class CompletenessGuard {
             return !alreadyVisited;
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void postOperate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
-
-            if (parent != null && parent.getSumSpecTcFlag()
-                    && !(parent instanceof ICategoryPO)) {
+            if (parent instanceof ICategoryPO) {
+                parent.setSumSpecTcFlag(true);
+            } else if (parent != null && parent.getSumSpecTcFlag()) {
                 parent.setSumSpecTcFlag(node.getSumSpecTcFlag());
             }
         }
-        
     }
 
     /**
