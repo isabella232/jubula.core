@@ -367,9 +367,12 @@ public class TestResultTreeView extends ViewPart
      * {@inheritDoc}
      */
     public void endTestExecution() {
-        putDecorationContextProperty(
-                TestResultViewer.DECORATION_CONTEXT_SUITE_END_TIME_ID, 
-                getInput().getEndTime());
+        TestResult input = getInput();
+        if (input != null) {
+            putDecorationContextProperty(
+                    TestResultViewer.DECORATION_CONTEXT_SUITE_END_TIME_ID, 
+                    input.getEndTime());
+        }
 
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
