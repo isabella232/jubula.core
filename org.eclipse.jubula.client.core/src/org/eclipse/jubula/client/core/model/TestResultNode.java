@@ -11,8 +11,10 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -114,6 +116,9 @@ public class TestResultNode {
     /** the Component Name name for this result node */
     private String m_componentName;
 
+    /** the Component Name type for this result node */
+    private String m_componentType;
+
     /**
      * <code>m_resultNodeList</code> childList
      */
@@ -126,9 +131,13 @@ public class TestResultNode {
     private TestResultNode m_parent;
     
     /**
-     * values for parameter, if node is a cap
+     * Parameters used during test execution for the corresponding keyword.
      */
-    private List < String > m_paramValues = new ArrayList < String > ();
+    private List<TestResultParameter> m_parameters = 
+            new LinkedList<TestResultParameter>();
+
+    /** the name of the Action that caused this Test Result */
+    private String m_actionName;
     
     /**
      * The listener
@@ -405,19 +414,18 @@ public class TestResultNode {
 
     /**
      * 
-     * @return Parameter values used in CapPo
+     * @return the receiver's Parameters.
      */
-    public List < String > getParamValues() {
-        return m_paramValues;
+    public List<TestResultParameter> getParameters() {
+        return Collections.unmodifiableList(m_parameters);
     }
 
     /**
-     * Parameter values used in CapPo
      * 
-     * @param value String[]
+     * @param parameter The Parameter to add.
      */
-    public void addParamValue(String value) {
-        m_paramValues.add(value);
+    public void addParameter(TestResultParameter parameter) {
+        m_parameters.add(parameter);
     }
     
     /**
@@ -436,6 +444,45 @@ public class TestResultNode {
      */
     public String getComponentName() {
         return m_componentName;
+    }
+    
+    /**
+     * 
+     * @param componentType The Component Name type to set. 
+     *                      This is a human-readable component type.
+     */
+    public void setComponentType(String componentType) {
+        m_componentType = componentType;
+    }
+    
+    /**
+     * 
+     * @return the Component Name type for this result node. 
+     *         This is a human-readable component type.
+     */
+    public String getComponentType() {
+        return m_componentType;
+    }
+
+    /**
+     * 
+     * @param actionName The name of the executed Action that caused this 
+     *                   Test Result. May be <code>null</code>, which means that
+     *                   the Test Result was not caused by any Action 
+     *                   (e.g. Test Case Reference, as opposed to Test Step).
+     */
+    public void setActionName(String actionName) {
+        m_actionName = actionName;
+    }
+
+    /**
+     * 
+     * @return  The name of the executed Action that caused this Test Result, 
+     *          or <code>null</code> if the Test Result was not caused by any 
+     *          Action (e.g. Test Case Reference, as opposed to Test Step).
+     */
+    public String getActionName() {
+        return m_actionName;
     }
     
     /**

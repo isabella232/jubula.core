@@ -24,6 +24,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -187,6 +188,10 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         if (m_eventHierarchy > 0) {
             m_endNode = new TestResultNode(cap, m_lastNonCap);
             m_endNode.getParent().updateResultNode(nextIndex, m_endNode);
+            m_endNode.setActionName(
+                    CompSystemI18n.getString(cap.getActionName()));
+            m_endNode.setComponentType(
+                    CompSystemI18n.getString(cap.getComponentType()));
         } else {
             m_endNode = m_lastNonCap.getResultNodeList().
                 get(nextIndex);
@@ -262,7 +267,9 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             } else {
                 value = StringConstants.EMPTY;
             }
-            resultNode.addParamValue(value);
+            resultNode.addParameter(new TestResultParameter(
+                    desc.getName(), CompSystemI18n.getString(desc.getType()), 
+                    value));
         }
     }
 

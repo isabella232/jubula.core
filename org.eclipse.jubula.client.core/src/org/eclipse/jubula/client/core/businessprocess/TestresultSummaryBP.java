@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -32,6 +33,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
@@ -269,8 +271,9 @@ public class TestresultSummaryBP {
             
             String paramValue = StringConstants.EMPTY;
             //parameter-value
-            if (node.getParamValues().size() >= index + 1) {
-                final String value = node.getParamValues().get(index);
+            List<TestResultParameter> parameters = node.getParameters();
+            if (parameters.size() >= index + 1) {
+                final String value = parameters.get(index).getValue();
                 if (value != null) {
                     if (value.length() == 0) {
                         paramValue = TestDataConstants.EMPTY_SYMBOL;

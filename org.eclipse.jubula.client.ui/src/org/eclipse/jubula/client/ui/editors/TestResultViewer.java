@@ -43,6 +43,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
@@ -203,11 +204,12 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                             parentNodeStack.isEmpty() ? null 
                                     : parentNodeStack.peek());
                     createdNode.setComponentName(result.getComponentName());
+                    createdNode.setComponentType(result.getComponentType());
                     
                     for (IParameterDetailsPO param 
                             : result.getUnmodifiableParameterList()) {
-                        createdNode.addParamValue(
-                                param.getParameterValue());
+                        createdNode.addParameter(
+                                new TestResultParameter(param));
                     }
 
                     createdNode.setResult(result.getInternalKeywordStatus(), 

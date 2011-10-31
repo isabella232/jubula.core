@@ -18,17 +18,15 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.graphics.Image;
@@ -174,9 +172,48 @@ public class TestResultNodeGUIPropertySource
         if (getGuiNode().getEvent() != null) { 
             initErrorEventPropDescriptor();
         }
-        if (Persistor.isPoSubclass(node, ICapPO.class)) {
-            initCapDetailsPropDescriptor();
+
+        initComponentNameDetailsPropDescriptor(getGuiNode());
+        initActionDetailsPropDescriptor(getGuiNode());
+        initParameterDescriptor(getGuiNode());
+        
+    }
+    
+    /**
+     * 
+     * @param testResult The Test Result for which to display the Parameters.
+     */
+    private void initParameterDescriptor(TestResultNode testResult) {
+        for (final TestResultParameter parameter : testResult.getParameters()) {
+            insertEmptyRow(P_CAP_CAT);
+            JBPropertyDescriptor propDesc = new JBPropertyDescriptor(
+                    new ComponentController() {
+                        public Object getProperty() {
+                            return parameter.getName();
+                        }
+                    } , P_ELEMENT_DISPLAY_PARAMETERNAME);
+            propDesc.setCategory(P_CAP_CAT);
+            addPropertyDescriptor(propDesc);
+            
+            propDesc = new JBPropertyDescriptor(
+                    new ComponentController() {
+                        public Object getProperty() {
+                            return parameter.getType();
+                        }
+                    } , P_ELEMENT_DISPLAY_PARAMETERTYPE);
+            propDesc.setCategory(P_CAP_CAT);
+            addPropertyDescriptor(propDesc);
+
+            propDesc = new JBPropertyDescriptor(
+                    new ComponentController() {
+                        public Object getProperty() {
+                            return parameter.getValue();
+                        }
+                    } , P_ELEMENT_DISPLAY_PARAMETERVALUE);
+            propDesc.setCategory(P_CAP_CAT);
+            addPropertyDescriptor(propDesc);
         }
+
     }
 
     /**
@@ -250,92 +287,63 @@ public class TestResultNodeGUIPropertySource
 
     /**
      * 
+     * @param testResult The Test Result for which to display the 
+     *                   Component Name information.
      */
-    private void initCapDetailsPropDescriptor() {
-        final ICapPO node = (ICapPO)getGuiNode().getNode();
-        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
-            new ComponentController() {
-                public Object getProperty() {
-                    return getGuiNode().getComponentName();
-                }
-            } , P_ELEMENT_DISPLAY_COMPNAME);
-        propDes.setCategory(P_CAP_CAT);
-        addPropertyDescriptor(propDes);
-        propDes = new JBPropertyDescriptor(
-            new ComponentController() {
-                public Object getProperty() {
-                    return CompSystemI18n.getString(
-                            node.getComponentType(), true);
-                }
-            } , P_ELEMENT_DISPLAY_COMPTYPE);
-        propDes.setCategory(P_CAP_CAT);
-        addPropertyDescriptor(propDes);
-        insertEmptyRow(P_CAP_CAT);
-        propDes = new JBPropertyDescriptor(
-            new ComponentController() {
-                public Object getProperty() {
-                    return CompSystemI18n.getString(node.getActionName());
-                }
-            } , P_ELEMENT_DISPLAY_ACTIONTYPE);
-        propDes.setCategory(P_CAP_CAT);
-        addPropertyDescriptor(propDes);
-        int index = 0;
-        insertEmptyRow(P_CAP_CAT);
-        for (final IParamDescriptionPO desc : node.getParameterList()) {
+    private void initComponentNameDetailsPropDescriptor(
+            TestResultNode testResult) {
+
+        JBPropertyDescriptor propDes;
+
+        final String componentName = testResult.getComponentName();
+        if (componentName != null) {
             propDes = new JBPropertyDescriptor(
-                new ComponentController() {
-                    public Object getProperty() {
-                        return CompSystemI18n.getString(desc
-                            .getUniqueId(), true);
-                    }
-                } , P_ELEMENT_DISPLAY_PARAMETERNAME);
+                    new ComponentController() {
+                        public Object getProperty() {
+                            return componentName;
+                        }
+                    } , P_ELEMENT_DISPLAY_COMPNAME);
             propDes.setCategory(P_CAP_CAT);
             addPropertyDescriptor(propDes);
-            
-            propDes = new JBPropertyDescriptor(
-                new ComponentController() {
-                    public Object getProperty() {
-                        return CompSystemI18n.getString(desc.getType());
-                    }
-                } , P_ELEMENT_DISPLAY_PARAMETERTYPE);
-            propDes.setCategory(P_CAP_CAT);
-            addPropertyDescriptor(propDes);
-            propDes = createPropDescriptorForParamValue(index);
-            addPropertyDescriptor(propDes);
-            index++;
-            insertEmptyRow(P_CAP_CAT);
         }
+        
+        final String componentType = testResult.getComponentType();
+        if (componentType != null) {
+            propDes = new JBPropertyDescriptor(
+                    new ComponentController() {
+                        public Object getProperty() {
+                            return componentType;
+                        }
+                    } , P_ELEMENT_DISPLAY_COMPTYPE);
+            propDes.setCategory(P_CAP_CAT);
+            addPropertyDescriptor(propDes);
+        }
+
     }
 
     /**
-     * @param index of parameter value
-     * @return property descriptor
+     * 
+     * @param testResult The Test Result for which to display the Action 
+     *                   details.
      */
-    private JBPropertyDescriptor createPropDescriptorForParamValue(
-        final int index) {
-        
-        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
-            new ComponentController() {
-                public Object getProperty() {
-                    if (getGuiNode().
-                            getParamValues().size() >= index + 1) {
-                        String returnVal = getGuiNode().
-                            getParamValues().get(index);
-                        if (returnVal != null
-                            && returnVal.length() == 0) {
-                            return 
-                                TestDataConstants.EMPTY_SYMBOL;
-                        } 
-                        return returnVal == null 
-                            ? StringConstants.EMPTY : returnVal;
-                    }
-                    return StringConstants.EMPTY;
-                }
-            } , P_ELEMENT_DISPLAY_PARAMETERVALUE); 
-        propDes.setCategory(P_CAP_CAT);
-        return propDes;
+    private void initActionDetailsPropDescriptor(TestResultNode testResult) {
+
+        JBPropertyDescriptor propDes;
+
+        final String actionName = testResult.getActionName();
+        if (actionName != null) {
+            insertEmptyRow(P_CAP_CAT);
+            propDes = new JBPropertyDescriptor(
+                    new ComponentController() {
+                        public Object getProperty() {
+                            return actionName;
+                        }
+                    } , P_ELEMENT_DISPLAY_ACTIONTYPE);
+            propDes.setCategory(P_CAP_CAT);
+            addPropertyDescriptor(propDes);
+        }
     }
-    
+
     /**
      * inserts an empty row into a cat
      * @param cat
@@ -356,7 +364,6 @@ public class TestResultNodeGUIPropertySource
     /**
      * 
      */
-    @SuppressWarnings("unchecked")
     private void initErrorEventPropDescriptor() {
         JBPropertyDescriptor propDes = new JBPropertyDescriptor(
             new ComponentController() {

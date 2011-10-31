@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.utils.Traverser;
+import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 
 
 /**
@@ -76,6 +77,9 @@ public class ResultTreeBuilder implements IExecStackModificationListener {
      */
     public void nextCap(ICapPO cap) {
         m_lastCap = new TestResultNode(cap, m_endNode);
+        m_lastCap.setActionName(CompSystemI18n.getString(cap.getActionName()));
+        m_lastCap.setComponentType(
+                CompSystemI18n.getString(cap.getComponentType()));
     }
     /**
      * @return Returns the lastCap.

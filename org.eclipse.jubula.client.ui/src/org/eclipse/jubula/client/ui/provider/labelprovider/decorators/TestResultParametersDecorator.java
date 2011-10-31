@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.client.core.model.TestResultParameter;
 
 /**
  * @author BREDEX GmbH
@@ -34,7 +35,8 @@ public class TestResultParametersDecorator extends
         if (element instanceof TestResultNode) {
             TestResultNode testResult = (TestResultNode)element;
             StringBuilder paramValueBuilder = new StringBuilder();
-            for (String value : testResult.getParamValues()) {
+            for (TestResultParameter parameter : testResult.getParameters()) {
+                String value = parameter.getValue();
                 if (value != null) {
                     paramValueBuilder.append(value).append(SEPARATOR);
                 }

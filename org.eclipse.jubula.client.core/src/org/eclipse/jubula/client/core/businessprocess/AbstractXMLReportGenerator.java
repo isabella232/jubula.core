@@ -22,13 +22,12 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestResult;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -208,12 +207,52 @@ public abstract class AbstractXMLReportGenerator {
         } else if (node instanceof ICapPO) {
             insertInto = element.addElement("step"); //$NON-NLS-1$
             addGeneralElements(resultNode, insertInto);
-            addCapElement(resultNode, insertInto, node);
+            addCapElements(resultNode, insertInto, (ICapPO)node);
         }
+
+        addParamNodeElements(resultNode, insertInto);
         
         return insertInto;
     }
 
+    /**
+     * Adds Parameter elements to the given element based on the given 
+     * Test Result Node.
+     * 
+     * @param resultNode The source for Parameter data.
+     * @param insertInto The target for the Parameter data.
+     */
+    protected void addParamNodeElements(
+            TestResultNode resultNode, Element insertInto) {
+        
+        for (TestResultParameter parameter : resultNode.getParameters()) {
+            String name = parameter.getName();
+            String type = parameter.getType();
+            String value = parameter.getValue();
+            
+            Element paramEl = insertInto.addElement("parameter"); //$NON-NLS-1$
+            
+            if (name != null) {
+                Element paramNameEl = paramEl.addElement("parameter-name"); //$NON-NLS-1$
+                paramNameEl.addText(name);
+            }
+
+            if (type != null) {
+                Element paramTypeEl = paramEl.addElement("parameter-type"); //$NON-NLS-1$
+                paramTypeEl.addText(type);
+            }
+
+            if (value != null) {
+                Element paramValueEl = paramEl.addElement("parameter-value"); //$NON-NLS-1$
+                paramValueEl.addText(value);
+            }
+
+            if (!paramEl.hasContent()) {
+                insertInto.remove(paramEl);
+            }
+        }
+    }
+    
     /**
      * adds information for a Cap to the XML file
      * 
@@ -224,8 +263,8 @@ public abstract class AbstractXMLReportGenerator {
      * @param node
      *      NodePO
      */
-    protected void addCapElement(TestResultNode resultNode, 
-            Element insertInto, Object node) {
+    protected void addCapElements(TestResultNode resultNode, 
+            Element insertInto, ICapPO node) {
         ICapPO cap = (ICapPO) node;
         getTimestampFromResultNode(resultNode, insertInto);
         Element compEl = insertInto.addElement("component-name"); //$NON-NLS-1$
@@ -236,33 +275,6 @@ public abstract class AbstractXMLReportGenerator {
             true));
         Element actionEl = insertInto.addElement("action-type"); //$NON-NLS-1$
         actionEl.addText(CompSystemI18n.getString(cap.getActionName(), true));
-        int index = 0;
-        for (IParamDescriptionPO param : cap.getParameterList()) {
-            Element paramEl = insertInto.addElement("parameter"); //$NON-NLS-1$
-            
-            Element paramNameEl = paramEl.addElement("parameter-name"); //$NON-NLS-1$
-            paramNameEl.addText(CompSystemI18n.getString(param.getUniqueId(), 
-                true));
-            Element paramTypeEl = paramEl.addElement("parameter-type"); //$NON-NLS-1$
-            paramTypeEl.addText(CompSystemI18n.getString(param.getType(), 
-                true));
-            Element paramValueEl = paramEl.addElement("parameter-value"); //$NON-NLS-1$
-            if (resultNode.getParamValues().size() >= index + 1) {
-                final String value = resultNode.getParamValues().get(index);
-                if (value != null) {
-                    if (value.length() == 0) {
-                        paramValueEl.addText(TestDataConstants.EMPTY_SYMBOL);
-                    } else {
-                        paramValueEl.addText(value);                        
-                    }
-                } else {
-                    paramValueEl.addText(StringConstants.EMPTY);
-                }
-            } else {
-                paramValueEl.addText(StringConstants.EMPTY);
-            }            
-            index++;
-        }
         
         if (resultNode.getStatus() == TestResultNode.ERROR 
                 || resultNode.getStatus() == TestResultNode.RETRYING) {
