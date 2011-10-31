@@ -347,7 +347,7 @@ public class TestResultTreeView extends ViewPart
     public void testResultNodeUpdated(final TestResultNode parent,
             final int index, final TestResultNode newNode) {
         
-        addListenerTo(((TestResultNode)getTreeViewer().getInput()));
+        addListenerTo(newNode);
         if (!getTreeViewer().getControl().isDisposed()) {
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
