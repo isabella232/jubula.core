@@ -50,6 +50,7 @@ import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.ConfigurationConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -677,15 +678,12 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             && !m_listOfServers.getServerNames().contains(
                 currentlySelectedServer)) {
 
-            String defaultServerInfo = Plugin.getDefault().getPreferenceStore()
-                .getDefaultString(Constants.SERVER_SETTINGS_KEY);
-            String defaultServerPort = 
-                defaultServerInfo.substring(defaultServerInfo.indexOf(
-                        StringConstants.COLON) + 1);
+            int defaultServerPort = 
+                    ConfigurationConstants.AUT_AGENT_DEFAULT_PORT;
             m_listOfServers.addServer(
                 new ServerManager.Server(
                     currentlySelectedServer, 
-                    Integer.valueOf(defaultServerPort)));
+                    defaultServerPort));
 
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.I_SERVER_NAME_ADDED, null, 
