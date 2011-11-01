@@ -1,6 +1,6 @@
 \textbf{Test Execution Duration now shown for each node in \gdtestresultview{}}\\
 \begin{itemize}
-\item The amount of time taken to execute each Test Step, Test Case and Test Suite is now shown in the \gdtestresultview{}.
+\item The amount of time taken to execute each \gdstep{}, \gdcase{} and \gdsuite{} is now shown in the \gdtestresultview{}.
 \item You can use this information to see whether your tests or parts of your tests are taking longer than you expected them to, 
 without having to set timers or manually check timestamps.
 \item The HTML and XML reports generated or exported for the test results also show the execution times.
@@ -11,6 +11,13 @@ without having to set timers or manually check timestamps.
 \begin{itemize}
 \item It is now possible to create categories for \gdsuites{} and \gdjobs{} in the \gdtestsuitebrowser{}. 
 \item Existing \gdprojects{} will be shown as having two categories (\bxname{Test Suites} and \bxname{Test Jobs}) as was previously the case. However, you can now rename, delete and rearrange categories in the \gdtestsuitebrowser{}. 
+\end{itemize} 
+
+\textbf{Parameter values now shown for each node in \gdtestresultview{}}\\
+\begin{itemize}
+\item The parameter values entered or used at a specific level (\gdcase{}, \gdstep{}) are now shown in the \gdtestresultview{}.
+\item You can use this information to see which data were used for your \gdcases{}, without having to click through each individual node in the \gdtestresultview{}. This can be especially useful if you have one \gdcase{} that runs multiple times with different datasets.
+\item You can switch off the decoration in the \app{} client in the \bxname{label decoration} preferences.
 \end{itemize} 
 
 %% \textbf{Support for adding basic component extensions to a \gdproject{}}\\
