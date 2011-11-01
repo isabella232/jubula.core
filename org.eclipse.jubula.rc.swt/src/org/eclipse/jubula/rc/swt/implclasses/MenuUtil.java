@@ -36,6 +36,8 @@ import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MenuEvent;
+import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -100,6 +102,45 @@ public abstract class MenuUtil extends MenuUtilBase {
         }
     }
 
+    /**
+     * Listens for a menu to be hidden, the removes itself from the menu's
+     * listener list.
+     * 
+     * @author BREDEX GmbH
+     * @created Nov 01, 2011
+     */
+    private static final class MenuHiddenListener implements MenuListener {
+
+        /** whether the expected event has occurred */
+        private boolean m_eventOccurred = false;
+        
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void menuHidden(MenuEvent e) {
+            m_eventOccurred = true;
+            ((Menu)e.widget).removeMenuListener(this);
+        }
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void menuShown(MenuEvent e) {
+            // no-op
+        }
+
+        /**
+         * 
+         * @return <code>true</code> if the menu has been hidden since this 
+         *         listener was registered. Otherwise, <code>false</code>.
+         */
+        public boolean isMenuHidden() {
+            return m_eventOccurred;
+        }
+    }
+    
     /** The Class name of this class */
     private static final String CLASSNAME = MenuUtil.class.getName();
     
@@ -677,13 +718,21 @@ public abstract class MenuUtil extends MenuUtilBase {
         maxCascadeLength) {
         
         if (item != null) {
-            Menu menuOfItem = getMenu(item);
+            final Menu menuOfItem = getMenu(item);
             if (menuOfItem != null) {
+                final MenuHiddenListener menuListener = 
+                        new MenuHiddenListener();
+                menuOfItem.getDisplay().syncExec(new Runnable() {
+                    public void run() {
+                        menuOfItem.addMenuListener(menuListener);
+                    }
+                });
+
                 // Press 'ESC' key until the first menu is gone or we reach
                 // the maxCascadeLength. This prevents infinite loops if this
                 // is used on a platform that does not use 'ESC' to close menus.
                 for (int i = 0; 
-                    i < maxCascadeLength && isMenuVisible(menuOfItem);
+                    i < maxCascadeLength && !menuListener.isMenuHidden();
                     i++) {
 
                     robot.keyType(menuOfItem, SWT.ESC);
