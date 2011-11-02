@@ -62,6 +62,7 @@ import org.eclipse.jubula.client.archive.schema.TechnicalName;
 import org.eclipse.jubula.client.archive.schema.TestCase;
 import org.eclipse.jubula.client.archive.schema.TestCase.Teststep;
 import org.eclipse.jubula.client.archive.schema.TestData;
+import org.eclipse.jubula.client.archive.schema.TestDataCategory;
 import org.eclipse.jubula.client.archive.schema.TestDataCell;
 import org.eclipse.jubula.client.archive.schema.TestDataRow;
 import org.eclipse.jubula.client.archive.schema.TestJobs;
@@ -100,6 +101,8 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummary;
@@ -378,6 +381,12 @@ class XmlExporter {
             m_monitor.worked(1);
         }
         // Test Data Cubes
+        ITestDataCategoryPO testDataRootCategory = po.getTestDataCubeCont();
+        for (ITestDataCategoryPO testDataCategory 
+                : testDataRootCategory.getCategoryChildren()) {
+            TestDataCategory xmlTestDataCategory = xml.addNewTestDataCategory();
+            fillTestDataCategory(xmlTestDataCategory, testDataCategory);
+        }
         for (IParameterInterfacePO testDataCube 
                 : po.getTestDataCubeCont().getTestDataChildren()) {
             NamedTestData xmlTestDataCube = xml.addNewNamedTestData();
@@ -1034,6 +1043,28 @@ class XmlExporter {
         }
         xml.setType(po.getType());
         xml.setUniqueId(po.getUniqueId());
+    }
+
+    /**
+     * Write the information from the Object to its corresponding XML element.
+     * 
+     * @param xml
+     *            The XML element to be filled
+     * @param po
+     *            The persistent object which contains the information
+     */
+    private void fillTestDataCategory(TestDataCategory xml, 
+            ITestDataCategoryPO po) {
+        
+        xml.setName(po.getName());
+        for (ITestDataCategoryPO category : po.getCategoryChildren()) {
+            TestDataCategory xmlCategory = xml.addNewTestDataCategory();
+            fillTestDataCategory(xmlCategory, category);
+        }
+        for (ITestDataCubePO testData : po.getTestDataChildren()) {
+            NamedTestData xmlTestData = xml.addNewNamedTestData();
+            fillNamedTestData(xmlTestData, testData);
+        }
     }
 
     /**

@@ -429,10 +429,24 @@ public abstract class PoMaker {
 
     /**
      * factory method to replace constructor
-     * @return TestDataCubeContPO
+     * 
+     * @return TestDataCategoryPO
      */
     public static ITestDataCategoryPO createTestDataCategoryPO() {
         return new TestDataCategoryPO();
+    }
+
+    /**
+     * factory method to replace constructor
+     * 
+     * @param name The name of the category.
+     * 
+     * @return TestDataCategoryPO
+     */
+    public static ITestDataCategoryPO createTestDataCategoryPO(String name) {
+        ITestDataCategoryPO testDataCategory = new TestDataCategoryPO();
+        testDataCategory.setName(name);
+        return testDataCategory;
     }
 
     /**

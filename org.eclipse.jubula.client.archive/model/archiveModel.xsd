@@ -33,7 +33,9 @@
         	<xs:element name="defaultLanguage" type="gd:locale" />
         	<xs:element name="projectLanguage" type="gd:locale"
         		maxOccurs="unbounded" />
-        	<xs:element name="namedTestData" id="id" type="gd:namedTestData" minOccurs="0"
+            <xs:element name="testDataCategory" type="gd:testDataCategory" minOccurs="0"
+                maxOccurs="unbounded" />
+        	<xs:element name="namedTestData" type="gd:namedTestData" minOccurs="0"
         		maxOccurs="unbounded" />
         	<xs:element name="aut" type="gd:aut" minOccurs="0"
         		maxOccurs="unbounded" />
@@ -362,6 +364,16 @@
         		minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
 	<xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="testDataCategory">
+    <!--checked-->
+    <xs:sequence>
+        <xs:element name="testDataCategory" type="gd:testDataCategory" minOccurs="0"
+                maxOccurs="unbounded" />
+        <xs:element name="namedTestData" type="gd:namedTestData" 
+                minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
   <xs:complexType name="testDataRow">
     <!--checked-->

@@ -68,6 +68,7 @@ import org.eclipse.jubula.client.archive.schema.TechnicalName;
 import org.eclipse.jubula.client.archive.schema.TestCase;
 import org.eclipse.jubula.client.archive.schema.TestCase.Teststep;
 import org.eclipse.jubula.client.archive.schema.TestData;
+import org.eclipse.jubula.client.archive.schema.TestDataCategory;
 import org.eclipse.jubula.client.archive.schema.TestDataCell;
 import org.eclipse.jubula.client.archive.schema.TestDataRow;
 import org.eclipse.jubula.client.archive.schema.TestJobs;
@@ -109,6 +110,7 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -739,6 +741,12 @@ class XmlImporter {
         for (Aut autXml : xml.getAutList()) {
             checkCancel();
             proj.addAUTMain(createAUTMain(autXml, assignNewGuid));
+        }
+        for (TestDataCategory testDataCategory 
+                : xml.getTestDataCategoryList()) {
+            checkCancel();
+            proj.getTestDataCubeCont().addCategory(createTestDataCategory(
+                    testDataCategory, assignNewGuid, mapper));
         }
         for (NamedTestData testDataCube : xml.getNamedTestDataList()) {
             checkCancel();
@@ -1793,6 +1801,36 @@ class XmlImporter {
         return localeToValue;
     }
     
+    /**
+     * Creates the instance of the persistent object which is defined by the
+     * XML element used as prameter. The method generates all dependend objects
+     * as well.
+     * @param xml Abstraction of the XML element (see Apache XML Beans).
+     * @param assignNewGuids <code>true</code> if the parameters were given
+     *        new unique IDs. Otherwise <code>false</code>.
+     * @param mapper Mapper to resolve param names.
+     * @return a persistent object generated from the information in the XML
+     *         element
+     */
+    private ITestDataCategoryPO createTestDataCategory(TestDataCategory xml, 
+            boolean assignNewGuids, IParamNameMapper mapper) {
+        
+        ITestDataCategoryPO testDataCategory = 
+                PoMaker.createTestDataCategoryPO(xml.getName());
+        
+        for (TestDataCategory subCategory : xml.getTestDataCategoryList()) {
+            testDataCategory.addCategory(createTestDataCategory(
+                    subCategory, assignNewGuids, mapper));
+        }
+        
+        for (NamedTestData testData : xml.getNamedTestDataList()) {
+            testDataCategory.addTestData(
+                    createTestDataCube(testData, assignNewGuids, mapper));
+        }
+
+        return testDataCategory;
+    }
+
     /**
      * Creates the instance of the persistent object which is defined by the
      * XML element used as prameter. The method generates all dependend objects
