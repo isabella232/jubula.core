@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.ArrayUtils;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 
 
 /**
@@ -25,10 +28,14 @@ public class CentralTestDataContentProvider extends
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof ITestDataCubeContPO) {
-            return ((ITestDataCubeContPO)parentElement).getTestDataCubeList()
-                    .toArray();
+        if (parentElement instanceof ITestDataCategoryPO) {
+            ITestDataCategoryPO category = (ITestDataCategoryPO)parentElement;
+            List<Object> childList = new ArrayList<Object>();
+            childList.addAll(category.getCategoryChildren());
+            childList.addAll(category.getTestDataChildren());
+            return childList.toArray();
         }
+        
         return ArrayUtils.EMPTY_OBJECT_ARRAY;
     }
 }

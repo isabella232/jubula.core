@@ -431,8 +431,8 @@ public abstract class PoMaker {
      * factory method to replace constructor
      * @return TestDataCubeContPO
      */
-    public static ITestDataCubeContPO createTestDataCubeContPO() {
-        return new TestDataCubeContPO();
+    public static ITestDataCategoryPO createTestDataCategoryPO() {
+        return new TestDataCategoryPO();
     }
 
     /**

@@ -25,10 +25,9 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
-import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -379,10 +378,10 @@ public class BasicSearchResult implements ISearchResult {
          * {@inheritDoc}
          */
         public void jumpTo(Long id) {
-            ITestDataCubeContPO tdcContainer = GeneralStorage.getInstance()
+            ITestDataCategoryPO tdcContainer = GeneralStorage.getInstance()
                     .getProject().getTestDataCubeCont();
-            for (IParameterInterfacePO testdatacube : tdcContainer
-                    .getTestDataCubeList()) {
+            for (ITestDataCubePO testdatacube : tdcContainer
+                    .getTestDataChildren()) {
                 if (id.equals(testdatacube.getId())) {
                     IEditorPart editor = AbstractOpenHandler
                             .openEditor(tdcContainer);

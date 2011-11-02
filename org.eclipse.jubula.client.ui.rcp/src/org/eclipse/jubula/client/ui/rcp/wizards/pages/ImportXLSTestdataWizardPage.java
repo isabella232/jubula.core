@@ -39,7 +39,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -145,8 +145,8 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                     try {
                         EditSupport es = m_ctde.getEditorHelper()
                                 .getEditSupport();
-                        ITestDataCubeContPO cont = (ITestDataCubeContPO)es
-                                .getWorkVersion();
+                        ITestDataCategoryPO cont = 
+                                (ITestDataCategoryPO)es.getWorkVersion();
                         Set<String> usedNames = AddNewTestDataManagerHandler
                                 .getSetOfUsedNames(m_ctde);
                         if (merge) {
@@ -180,7 +180,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                             ITestDataCubePO testdata = PoMaker
                                     .createTestDataCubePO(name);
                             fillCentralTestDataSet(f, ll, testdata);
-                            cont.addTestDataCube(testdata);
+                            cont.addTestData(testdata);
                             p.writeLine(NLS.bind(Messages
                                     .ImportXLSTestDataWizardSuccessfullImport,
                                     new Object[] { absoluteFilePath }));

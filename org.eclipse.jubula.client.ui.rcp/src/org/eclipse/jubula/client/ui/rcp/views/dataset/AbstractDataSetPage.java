@@ -40,7 +40,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
@@ -1382,7 +1382,7 @@ public abstract class AbstractDataSetPage extends Page
         }
 
         if (dataState == DataState.StructureModified
-                && po instanceof ITestDataCubeContPO) {
+                && po instanceof ITestDataCategoryPO) {
             updateView();
         }
         

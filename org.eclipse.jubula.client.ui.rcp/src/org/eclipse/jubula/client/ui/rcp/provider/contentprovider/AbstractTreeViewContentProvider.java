@@ -15,7 +15,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -68,9 +68,13 @@ public abstract class AbstractTreeViewContentProvider extends
                 || element instanceof IExecObjContPO) {
             return GeneralStorage.getInstance().getProject();
         }
-        if (element instanceof ITestDataCubeContPO
-                || element instanceof ITestDataCubePO
-                || element instanceof SearchResultElement) {
+        if (element instanceof ITestDataCategoryPO) {
+            return ((ITestDataCategoryPO)element).getParent();
+        }
+        if (element instanceof ITestDataCubePO) {
+            return ((ITestDataCubePO)element).getParent();
+        }
+        if (element instanceof SearchResultElement) {
             return null;
         }
         Assert.notReached(Messages.WrongTypeOfElement 

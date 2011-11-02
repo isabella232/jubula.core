@@ -379,7 +379,7 @@ class XmlExporter {
         }
         // Test Data Cubes
         for (IParameterInterfacePO testDataCube 
-                : po.getTestDataCubeCont().getTestDataCubeList()) {
+                : po.getTestDataCubeCont().getTestDataChildren()) {
             NamedTestData xmlTestDataCube = xml.addNewNamedTestData();
             fillNamedTestData(xmlTestDataCube, testDataCube);
         }

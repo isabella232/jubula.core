@@ -16,7 +16,7 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.slf4j.Logger;
@@ -75,7 +75,7 @@ public final class CompNameMapperFactory {
             return new NullComponentNameMapper();
         } else if (node instanceof ITestJobPO) {
             return new NullComponentNameMapper();
-        } else if (node instanceof ITestDataCubeContPO) {
+        } else if (node instanceof ITestDataCategoryPO) {
             return new NullComponentNameMapper();
         }
 

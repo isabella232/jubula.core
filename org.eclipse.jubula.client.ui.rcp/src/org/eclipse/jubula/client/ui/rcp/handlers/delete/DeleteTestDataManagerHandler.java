@@ -22,7 +22,8 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -80,7 +81,7 @@ public class DeleteTestDataManagerHandler
     @SuppressWarnings("nls")
     private void deleteSelection(CentralTestDataEditor editor,
             IStructuredSelection structuredSelection) {
-        ITestDataCubeContPO cont = (ITestDataCubeContPO)editor
+        ITestDataCategoryPO cont = (ITestDataCategoryPO)editor
                 .getEditorHelper().getEditSupport().getWorkVersion();
         List<String> reusedCubeList = new ArrayList<String>(0);
 
@@ -105,10 +106,10 @@ public class DeleteTestDataManagerHandler
             ErrorHandlingUtil.createMessageDialog(MessageIDs.I_REUSED_TDC,
                     new Object[] { sb.toString() }, null);
         } else {
-            for (Iterator<IParameterInterfacePO> it = structuredSelection
+            for (Iterator<ITestDataCubePO> it = structuredSelection
                     .iterator(); it.hasNext();) {
-                IParameterInterfacePO td = it.next();
-                cont.removeTestDataCube(td);
+                ITestDataCubePO td = it.next();
+                cont.removeTestData(td);
                 DataEventDispatcher.getInstance().fireDataChangedListener(td,
                         DataState.Deleted, UpdateState.onlyInEditor);
             }

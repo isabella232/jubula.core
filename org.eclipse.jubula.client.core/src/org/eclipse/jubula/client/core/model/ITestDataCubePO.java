@@ -19,4 +19,16 @@ public interface ITestDataCubePO extends IModifiableParameterInterfacePO {
      * @param name The new name.
      */
     public void setName(String name);
+
+    /**
+     * 
+     * @return the receiver's parent category.
+     */
+    public ITestDataCategoryPO getParent();
+
+    /**
+     * 
+     * @param parent The receiver's new parent.
+     */
+    public void setParent(ITestDataCategoryPO parent);
 }

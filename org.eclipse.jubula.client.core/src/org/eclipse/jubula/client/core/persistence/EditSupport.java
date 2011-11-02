@@ -38,7 +38,7 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBFatalAbortException;
@@ -205,10 +205,10 @@ public class EditSupport {
                     ((ITcParamDescriptionPO)desc)
                             .setParamNameMapper(m_paramMapper);
                 }
-            } else if (m_workVersion instanceof ITestDataCubeContPO) {
+            } else if (m_workVersion instanceof ITestDataCategoryPO) {
                 for (IParameterInterfacePO pio 
-                        : ((ITestDataCubeContPO)m_workVersion)
-                            .getTestDataCubeList()) {
+                        : ((ITestDataCategoryPO)m_workVersion)
+                            .getTestDataChildren()) {
                     List<IParamDescriptionPO> params = pio.getParameterList();
                     for (IParamDescriptionPO desc : params) {
                         ((ITcParamDescriptionPO)desc)
@@ -259,7 +259,7 @@ public class EditSupport {
                 try {
                     boolean mayModifyParamNames = 
                         m_workVersion instanceof ISpecTestCasePO
-                            || m_workVersion instanceof ITestDataCubeContPO;
+                            || m_workVersion instanceof ITestDataCategoryPO;
                     if (mayModifyParamNames) {
                         saveParamNames();
                     }

@@ -20,7 +20,7 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -158,7 +158,7 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
         if (node instanceof ITestJobPO) {
             return Constants.TEST_JOB_EDITOR_ID;
         }
-        if (node instanceof ITestDataCubeContPO) {
+        if (node instanceof ITestDataCategoryPO) {
             return Constants.CENTRAL_TESTDATA_EDITOR_ID;
         }
         

@@ -20,7 +20,8 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -67,10 +68,10 @@ public class AddNewTestDataManagerHandler extends AbstractHandler {
      */
     public static Set<String> getSetOfUsedNames(
             CentralTestDataEditor ctdEditor) {
-        ITestDataCubeContPO po = (ITestDataCubeContPO)ctdEditor
+        ITestDataCategoryPO po = (ITestDataCategoryPO)ctdEditor
                 .getEditorHelper().getEditSupport().getWorkVersion();
         Set<String> usedNames = new HashSet<String>();
-        for (IParameterInterfacePO cube : po.getTestDataCubeList()) {
+        for (IParameterInterfacePO cube : po.getTestDataChildren()) {
             usedNames.add(cube.getName());
         }
         return usedNames;
@@ -107,9 +108,9 @@ public class AddNewTestDataManagerHandler extends AbstractHandler {
     private void performOperation(CentralTestDataEditor ctdEditor,
             String newName) {
         EditSupport es = ctdEditor.getEditorHelper().getEditSupport();
-        ITestDataCubeContPO cont = (ITestDataCubeContPO)es.getWorkVersion();
-        IParameterInterfacePO testdata = PoMaker.createTestDataCubePO(newName);
-        cont.addTestDataCube(testdata);
+        ITestDataCategoryPO cont = (ITestDataCategoryPO)es.getWorkVersion();
+        ITestDataCubePO testdata = PoMaker.createTestDataCubePO(newName);
+        cont.addTestData(testdata);
         ctdEditor.getEditorHelper().setDirty(true);
         DataEventDispatcher.getInstance().fireDataChangedListener(cont,
                 DataState.StructureModified, UpdateState.onlyInEditor);

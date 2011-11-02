@@ -17,6 +17,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
@@ -34,7 +35,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedLi
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -178,7 +179,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
 
     /** {@inheritDoc} */
     protected void setInitialInput() {
-        ITestDataCubeContPO rootPOTop = (ITestDataCubeContPO)getEditorHelper()
+        ITestDataCategoryPO rootPOTop = (ITestDataCategoryPO)getEditorHelper()
                 .getEditSupport().getWorkVersion();
         try {
             getTreeViewer().getTree().getParent().setRedraw(false);
@@ -340,4 +341,8 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         return m_elementsToRefresh;
     }
     
+    @Override
+    public String getTitleToolTip() {
+        return StringUtils.EMPTY;
+    }
 }

@@ -142,7 +142,7 @@ public class TestDataCubeRefContentProposalProvider implements
         List<TestDataCubeRefContentProposal> proposalList = 
             new ArrayList<TestDataCubeRefContentProposal>();
         for (IParameterInterfacePO dataCube 
-                : m_project.getTestDataCubeCont().getTestDataCubeList()) {
+                : m_project.getTestDataCubeCont().getTestDataChildren()) {
             if (dataCubeFulfillsNameRequirements(
                         dataCube, contents.substring(0, position))
                     && dataCubeFulfillsParameterRequirements(

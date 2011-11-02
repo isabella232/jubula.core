@@ -56,7 +56,7 @@ public class TestDataCubeReferenceValidator implements IValidator {
         String newValue = workValue.toString();
         boolean mightMatch = false;
         for (IParameterInterfacePO dataCube 
-                : m_project.getTestDataCubeCont().getTestDataCubeList()) {
+                : m_project.getTestDataCubeCont().getTestDataChildren()) {
             if (StringUtils.equals(e.text, dataCube.getName())) {
                 return ValidationState.OK;
             }

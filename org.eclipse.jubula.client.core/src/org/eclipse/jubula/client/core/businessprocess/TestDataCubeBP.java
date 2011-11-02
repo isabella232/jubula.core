@@ -51,7 +51,7 @@ public class TestDataCubeBP {
         
         for (IParameterInterfacePO testDataCube 
                 : containingProject.getTestDataCubeCont()
-                    .getTestDataCubeList()) {
+                    .getTestDataChildren()) {
             
             if (cubeName.equals(testDataCube.getName())) {
                 return testDataCube;

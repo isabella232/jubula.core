@@ -38,6 +38,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
+import org.eclipse.persistence.annotations.Index;
 
 
 /**
@@ -54,9 +55,15 @@ class TestDataCubePO implements ITestDataCubePO {
     /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
 
+    /** The ID of the parent project */
+    private Long m_parentProjectId = null;
+    
     /** the name by which the cube can be referenced */
     private String m_name = null;
     
+    /** parent category */
+    private ITestDataCategoryPO m_parent = null;
+
     /**
      * <code>m_parameters</code>parameters for testcase
      */
@@ -286,6 +293,7 @@ class TestDataCubePO implements ITestDataCubePO {
      * {@inheritDoc}
      */
     public void setParentProjectId(Long projectId) {
+        setHbmParentProjectId(projectId);
         for (IParamDescriptionPO paramDesc : getHbmParameterList()) {
             paramDesc.setParentProjectId(projectId);
         }
@@ -444,8 +452,29 @@ class TestDataCubePO implements ITestDataCubePO {
      * {@inheritDoc}
      */
     @Transient
-    public Long getParentProjectId() throws UnsupportedOperationException {
-        return null;
+    public Long getParentProjectId() {
+        return getHbmParentProjectId();
+    }
+    
+    /**
+     * JPA accessor for ID of parent Project.
+     * 
+     * @return the parent Project ID.
+     */
+    @Basic
+    @Column(name = "PARENT_PROJ")
+    @Index(name = "PI_TDC_PARENT_PROJ")
+    Long getHbmParentProjectId() {
+        return m_parentProjectId;
+    }
+
+    /**
+     * JPA mutator for ID of parent Project.
+     * 
+     * @param projectId The parent Project ID.
+     */
+    void setHbmParentProjectId(Long projectId) {
+        m_parentProjectId = projectId;
     }
 
     /**
@@ -519,5 +548,24 @@ class TestDataCubePO implements ITestDataCubePO {
             ((TcParamDescriptionPO)desc).getParamNameMapper()
                 .removeParamNamePO(desc.getUniqueId());
         }
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @ManyToOne(targetEntity = TestDataCategoryPO.class)
+    @JoinColumn(name = "FK_PARENT", insertable = false, 
+                updatable = false)
+    public ITestDataCategoryPO getParent() {
+        return m_parent;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void setParent(ITestDataCategoryPO parent) {
+        m_parent = parent;
     }
 }

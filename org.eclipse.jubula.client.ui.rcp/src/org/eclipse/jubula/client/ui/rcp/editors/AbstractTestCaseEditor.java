@@ -54,7 +54,7 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ITimestampPO;
@@ -186,7 +186,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         public void handleDataChanged(IPersistentObject po,
                 DataState dataState, UpdateState updateState) {
 
-            if (po instanceof ITestDataCubeContPO 
+            if (po instanceof ITestDataCategoryPO 
                     && dataState == DataState.StructureModified 
                     && updateState != UpdateState.notInEditor) {
 

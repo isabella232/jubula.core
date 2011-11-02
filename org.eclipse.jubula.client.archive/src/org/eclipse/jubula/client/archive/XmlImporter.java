@@ -742,7 +742,7 @@ class XmlImporter {
         }
         for (NamedTestData testDataCube : xml.getNamedTestDataList()) {
             checkCancel();
-            proj.getTestDataCubeCont().addTestDataCube(createTestDataCube(
+            proj.getTestDataCubeCont().addTestData(createTestDataCube(
                     testDataCube, assignNewGuid, mapper));
         }
         for (Category catXml : xml.getCategoryList()) {
@@ -1804,7 +1804,7 @@ class XmlImporter {
      * @return a persistent object generated from the information in the XML
      *         element
      */
-    private IParameterInterfacePO createTestDataCube(NamedTestData xml,
+    private ITestDataCubePO createTestDataCube(NamedTestData xml,
             boolean assignNewGuids, IParamNameMapper mapper) {
 
         ITestDataCubePO testDataCube = 
@@ -1919,7 +1919,7 @@ class XmlImporter {
         if (xml.getReferencedTestData() != null) {
             String referencedDataName = xml.getReferencedTestData();
             for (IParameterInterfacePO testDataCube 
-                    : proj.getTestDataCubeCont().getTestDataCubeList()) {
+                    : proj.getTestDataCubeCont().getTestDataChildren()) {
                 if (referencedDataName.equals(testDataCube.getName())) {
                     tc.setReferencedDataCube(testDataCube);
                     break;
@@ -2073,7 +2073,7 @@ class XmlImporter {
         if (xml.getReferencedTestData() != null) {
             String referencedDataName = xml.getReferencedTestData();
             for (IParameterInterfacePO testDataCube 
-                    : proj.getTestDataCubeCont().getTestDataCubeList()) {
+                    : proj.getTestDataCubeCont().getTestDataChildren()) {
                 if (referencedDataName.equals(testDataCube.getName())) {
                     exec.setReferencedDataCube(testDataCube);
                     break;

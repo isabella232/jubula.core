@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers.open;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ITestDataCubeContPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.ui.IEditorPart;
 
@@ -36,7 +36,7 @@ public class OpenCentralTestDataEditorHandler extends AbstractOpenHandler {
     public Object execute(ExecutionEvent event) {
         IProjectPO project = GeneralStorage.getInstance().getProject();
         if (project != null) {
-            ITestDataCubeContPO centralTestData = project.getTestDataCubeCont();
+            ITestDataCategoryPO centralTestData = project.getTestDataCubeCont();
             if (centralTestData != null) {
                 IEditorPart editor = openEditor(centralTestData);
                 if (editor != null) {

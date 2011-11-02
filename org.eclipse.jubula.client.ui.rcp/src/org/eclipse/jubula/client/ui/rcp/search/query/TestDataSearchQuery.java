@@ -82,7 +82,7 @@ public class TestDataSearchQuery extends AbstractSearchQuery {
             } else if (ITestDataCubePO.class.isAssignableFrom(searchType)) {
                 IProjectPO cProject = GeneralStorage.getInstance().getProject();
                 centralTestData.addAll(cProject.getTestDataCubeCont()
-                        .getTestDataCubeList());
+                        .getTestDataChildren());
             }
             monitor.worked(1);
         }

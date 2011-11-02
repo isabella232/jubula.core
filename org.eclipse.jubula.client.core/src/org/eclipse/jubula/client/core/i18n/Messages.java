@@ -52,7 +52,6 @@ public class Messages extends NLS {
     public static String CantReadProjectFromDatabase;
     public static String CantSaveProject;
     public static String CantSetupPersistence;
-    public static String CentralTestDataEditorName;
     public static String ClearingOfMasterSessionFailed;
     public static String ClientBuildingReport;
     public static String ClientCalculating;

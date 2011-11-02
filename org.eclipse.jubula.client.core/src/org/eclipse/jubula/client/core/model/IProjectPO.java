@@ -102,7 +102,7 @@ public interface IProjectPO extends IParamNodePO {
     /**
      * @return Returns the test data container.
      */
-    public abstract ITestDataCubeContPO getTestDataCubeCont();
+    public abstract ITestDataCategoryPO getTestDataCubeCont();
     
     /**
      * All data from this PO is available from delegate methods in IProjectPO.

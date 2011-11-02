@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.editors;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
@@ -65,7 +66,7 @@ public class PersistableEditorInput implements IEditorInput {
      * @return
      */
     public String getName() {
-        return m_node.getName();
+        return StringUtils.defaultString(m_node.getName());
     }
 
     /**

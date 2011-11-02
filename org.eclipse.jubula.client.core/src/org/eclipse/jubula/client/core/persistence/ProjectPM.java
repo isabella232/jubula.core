@@ -603,7 +603,6 @@ public class ProjectPM extends PersistenceManager {
         List nodes = preloadDataPerClass(s, projectIds, "NodePO");
         preloadDataPerClass(s, projectIds, "SpecObjContPO");
         preloadDataPerClass(s, projectIds, "ExecObjContPO");
-        preloadDataPerClass(s, projectIds, "TestDataCubeContPO");
         preloadDataPerClass(s, projectIds, "ObjectMappingAssoziationPO");
         preloadDataPerClass(s, projectIds, "ParamDescriptionPO");
         

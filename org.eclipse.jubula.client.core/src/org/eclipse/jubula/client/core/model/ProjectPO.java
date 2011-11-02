@@ -94,7 +94,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     /**
      * <code>m_testdatacubecont</code> object to manage all test data cubes
      */
-    private TestDataCubeContPO m_testdatacubecont;
+    private ITestDataCategoryPO m_testdatacubecont;
 
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -142,7 +142,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
                 PoMaker.createProjectPropertiesPO(
                     majorNumber, minorNumber));
         setAutCont(PoMaker.createAUTContPO());
-        setTestDataCubeContPO(PoMaker.createTestDataCubeContPO());
+        setTestDataCubeContPO(PoMaker.createTestDataCategoryPO());
         setExecObjCont(PoMaker.createExecObjContPO());
         setSpecObjCont(PoMaker.createSpecObjContPO());
         setClientMetaDataVersion(metadataVersion);
@@ -299,9 +299,9 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * 
      * {@inheritDoc}
      */
-    public void setTestDataCubeContPO(ITestDataCubeContPO tdcc) {
-        setHbmTestDataCubeContPO((TestDataCubeContPO)tdcc);
-        getHbmTestDataCubeContPO().setParentProjectId(getId());
+    public void setTestDataCubeContPO(ITestDataCategoryPO testDataCategory) {
+        setHbmTestDataCubeContPO(testDataCategory);
+        testDataCategory.setParentProjectId(getId());
     }
     
     /**
@@ -748,24 +748,27 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * {@inheritDoc}
      */
     @Transient
-    public ITestDataCubeContPO getTestDataCubeCont() {
+    public ITestDataCategoryPO getTestDataCubeCont() {
         return getHbmTestDataCubeContPO();
     }
 
     /**
-     * @param tdcc The testdata cube container to set.
+     * 
+     * @param testDataCategory The receiver's new top-level Test Data Category.
      */
-    private void setHbmTestDataCubeContPO(TestDataCubeContPO tdcc) {
-        m_testdatacubecont = tdcc;
+    private void setHbmTestDataCubeContPO(
+            ITestDataCategoryPO testDataCategory) {
+        m_testdatacubecont = testDataCategory;
     }
     
     /**
      *      
      * @return Returns the test data cube container.
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, 
+              targetEntity = TestDataCategoryPO.class)
     @JoinColumn(name = "TDC_CONT", unique = true)
-    private TestDataCubeContPO getHbmTestDataCubeContPO() {
+    private ITestDataCategoryPO getHbmTestDataCubeContPO() {
         return m_testdatacubecont;
     }
 
