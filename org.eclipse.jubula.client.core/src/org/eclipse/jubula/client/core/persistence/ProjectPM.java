@@ -608,25 +608,24 @@ public class ProjectPM extends PersistenceManager {
         
         // for performance reasons, we prefill the cachedSpecTestCase
         // in ExecTestCasePOs
-        Set exTC = new HashSet();
-        Map sTc = new HashMap();
+        Set<IExecTestCasePO> exTC = new HashSet<IExecTestCasePO>();
+        Map<String, ISpecTestCasePO> sTc = 
+                new HashMap<String, ISpecTestCasePO>();
         for (Iterator iterator = nodes.iterator(); iterator.hasNext();) {
-            INodePO node = (INodePO) iterator.next();
+            Object node = iterator.next();
             if (node instanceof ISpecTestCasePO) {
-                sTc.put(node.getGuid(), node);
+                ISpecTestCasePO testCase = (ISpecTestCasePO)node;
+                sTc.put(testCase.getGuid(), testCase);
             } else if (node instanceof IExecTestCasePO) {
-                exTC.add(node);
+                exTC.add((IExecTestCasePO)node);
             }
             
         }
-        for (Iterator iterator = exTC.iterator(); iterator.hasNext();) {
-            IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
-            ISpecTestCasePO spec = (ISpecTestCasePO)sTc.
-                get(exec.getSpecTestCaseGuid());
+        for (IExecTestCasePO testCaseRef : exTC) {
+            ISpecTestCasePO spec = sTc.get(testCaseRef.getSpecTestCaseGuid());
             if (spec != null) {
-                exec.setCachedSpecTestCase(spec);
+                testCaseRef.setCachedSpecTestCase(spec);
             }
-            
         }
     }
     /**
@@ -635,7 +634,6 @@ public class ProjectPM extends PersistenceManager {
      * @param simpleClassName class name for the prefetch
      * @return List lodaded data
      */
-    @SuppressWarnings("unchecked")
     private static List preloadDataPerClass(EntityManager s, Set projectIds,
             String simpleClassName) {
         StringBuilder qString = new StringBuilder(100);
