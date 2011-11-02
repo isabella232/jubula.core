@@ -26,7 +26,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -102,7 +102,20 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
 
 
         getMainTreeViewer().setLabelProvider(lp);
-        getMainTreeViewer().setSorter(new ViewerSorter());
+        getMainTreeViewer().setComparator(new ViewerComparator() {
+            @Override
+            public int category(Object element) {
+                if (element instanceof ITestDataCategoryPO) {
+                    return 0;
+                }
+                
+                if (element instanceof ITestDataCubePO) {
+                    return 1;
+                }
+                
+                return 2;
+            }
+        });
         getMainTreeViewer().setComparer(new PersistentObjectComparer());
         addTreeDoubleClickListener(RCPCommandIDs.EDIT_PARAMETERS_COMMAND_ID);
         addFocusListener(getMainTreeViewer());
@@ -279,37 +292,78 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
     /** {@inheritDoc} */
     public void handleDataChanged(IPersistentObject po, DataState dataState,
             UpdateState updateState) {
+        
         if (po instanceof ITestDataCubePO) {
             if (updateState == UpdateState.onlyInEditor) {
                 getEditorHelper().setDirty(true);
             }
             ITestDataCubePO tdc = (ITestDataCubePO)po;
             handleDataChanged(dataState, tdc);
+        } else if (po instanceof ITestDataCategoryPO) {
+            if (updateState == UpdateState.onlyInEditor) {
+                getEditorHelper().setDirty(true);
+            }
+            handleDataChanged(dataState, (ITestDataCategoryPO)po);
         }
-        getMainTreeViewer().refresh();
-        getEditorHelper().handleDataChanged(po, dataState);
+
     }
 
     /**
      * @param dataState
      *            the data state
-     * @param tdc
+     * @param testData
      *            the data cube
      */
-    private void handleDataChanged(DataState dataState, ITestDataCubePO tdc) {
+    private void handleDataChanged(
+            DataState dataState, ITestDataCubePO testData) {
+        
         switch (dataState) {
             case Added:
-                getTreeViewer().setSelection(new StructuredSelection(tdc));
+                getTreeViewer().add(testData.getParent(), testData);
+                getTreeViewer().setSelection(new StructuredSelection(testData));
                 break;
             case Deleted:
+                getTreeViewer().remove(testData);
                 break;
             case Renamed:
-                getElementsToRefresh().add(tdc);
+                getTreeViewer().update(testData, null);
+                getElementsToRefresh().add(testData);
                 break;
             case ReuseChanged:
                 break;
             case StructureModified:
-                getTreeViewer().setSelection(new StructuredSelection(tdc));
+                getTreeViewer().update(testData, null);
+                getTreeViewer().setSelection(new StructuredSelection(testData));
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * @param dataState
+     *            the data state
+     * @param category
+     *            the category
+     */
+    private void handleDataChanged(
+            DataState dataState, ITestDataCategoryPO category) {
+        
+        switch (dataState) {
+            case Added:
+                getTreeViewer().add(category.getParent(), category);
+                getTreeViewer().setSelection(new StructuredSelection(category));
+                break;
+            case Deleted:
+                getTreeViewer().remove(category);
+                break;
+            case Renamed:
+                getTreeViewer().update(category, null);
+                break;
+            case ReuseChanged:
+                break;
+            case StructureModified:
+                getTreeViewer().refresh(category);
                 break;
             default:
                 break;

@@ -365,7 +365,11 @@ public interface ContextHelpIds {
     /** for the new test data cube name dialog */
     public static final String NEW_TESTDATACUBE_NAME = PRAEFIX
         + "newTestDataCubeNameContextId"; //$NON-NLS-1$
-    
+
+    /** dialog for creating a new Test Data Category */
+    public static final String NEW_TEST_DATA_CATEGORY = PRAEFIX
+        + "newTestDataCategoryContextId"; //$NON-NLS-1$
+
     /** for the merge component name dialog */
     public static final String MERGE_COMPONENT_NAME = PRAEFIX
         + "mergeComponentNameContextId"; //$NON-NLS-1$

@@ -2417,6 +2417,18 @@
 		</activeWhen>
   </handler>
   <handler
+        class="org.eclipse.jubula.client.ui.rcp.handlers.AddNewTestDataCategoryHandler"
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand">
+     <activeWhen>
+        <with
+              variable="activePartId">
+           <equals
+                 value="org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor">
+           </equals>
+        </with>
+     </activeWhen>
+  </handler>
+  <handler
         class="org.eclipse.jubula.client.ui.rcp.handlers.AddNewTestDataManagerHandler"
         commandId="org.eclipse.jubula.client.ui.rcp.commands.AddNewTestDataManager">
   </handler>

@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -57,6 +58,11 @@ public class CentralTestDataLabelProvider extends GeneralLabelProvider {
             }
             return info.toString();
         }
+        
+        if (element instanceof ITestDataCategoryPO) {
+            return ((ITestDataCategoryPO)element).getName();
+        }
+        
         return super.getText(element);
     }
     
@@ -67,6 +73,11 @@ public class CentralTestDataLabelProvider extends GeneralLabelProvider {
         if (element instanceof ITestDataCubePO) {
             return IconConstants.TDC_IMAGE;
         }
+        
+        if (element instanceof ITestDataCategoryPO) {
+            return IconConstants.CATEGORY_IMAGE;
+        }
+        
         return super.getImage(element);
     }
 }

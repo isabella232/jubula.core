@@ -15,11 +15,11 @@ import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -48,15 +48,18 @@ public class AddNewTestDataManagerHandler extends AbstractHandler {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof CentralTestDataEditor) {
             CentralTestDataEditor ctdEditor = (CentralTestDataEditor)activePart;
+            ISelection selection = HandlerUtil.getCurrentSelection(event);
             if (ctdEditor.getEditorHelper().requestEditableState() 
                     != EditableState.OK) {
                 return null;
             }
+
+            // Show dialog
             String newName = openDialog(HandlerUtil.getActiveShell(event),
                     getSetOfUsedNames(ctdEditor));
-            // Show dialog
+
             if (newName != null) {
-                performOperation(ctdEditor, newName);
+                performOperation(ctdEditor, newName, selection);
             }
         }
         return null;
@@ -71,12 +74,30 @@ public class AddNewTestDataManagerHandler extends AbstractHandler {
         ITestDataCategoryPO po = (ITestDataCategoryPO)ctdEditor
                 .getEditorHelper().getEditSupport().getWorkVersion();
         Set<String> usedNames = new HashSet<String>();
-        for (IParameterInterfacePO cube : po.getTestDataChildren()) {
-            usedNames.add(cube.getName());
-        }
+
+        getSetOfUsedNames(po, usedNames);
+        
         return usedNames;
     }
 
+    /**
+     * Recursively adds the names of all contained Central Test Data instances
+     * to the provided collection.
+     * 
+     * @param category The category containing the Central Test Data.
+     * @param usedNames The collection to modify.
+     */
+    private static void getSetOfUsedNames(
+            ITestDataCategoryPO category, Set<String> usedNames) {
+        
+        for (ITestDataCategoryPO subCategory : category.getCategoryChildren()) {
+            getSetOfUsedNames(subCategory, usedNames);
+        }
+        for (ITestDataCubePO cube : category.getTestDataChildren()) {
+            usedNames.add(cube.getName());
+        }
+    }
+    
     /**
      * Opens the "New Test Data Set..." dialog.
      * 
@@ -104,16 +125,17 @@ public class AddNewTestDataManagerHandler extends AbstractHandler {
      *            the editor
      * @param newName
      *            the new name
+     * @param selection
+     *            the current selection
      */
     private void performOperation(CentralTestDataEditor ctdEditor,
-            String newName) {
+            String newName, ISelection selection) {
         EditSupport es = ctdEditor.getEditorHelper().getEditSupport();
-        ITestDataCategoryPO cont = (ITestDataCategoryPO)es.getWorkVersion();
+        ITestDataCategoryPO parent = AddNewTestDataCategoryHandler.getParent(
+                selection, (ITestDataCategoryPO)es.getWorkVersion());
         ITestDataCubePO testdata = PoMaker.createTestDataCubePO(newName);
-        cont.addTestData(testdata);
+        parent.addTestData(testdata);
         ctdEditor.getEditorHelper().setDirty(true);
-        DataEventDispatcher.getInstance().fireDataChangedListener(cont,
-                DataState.StructureModified, UpdateState.onlyInEditor);
         DataEventDispatcher.getInstance().fireDataChangedListener(testdata,
                 DataState.Added, UpdateState.onlyInEditor);
     }
