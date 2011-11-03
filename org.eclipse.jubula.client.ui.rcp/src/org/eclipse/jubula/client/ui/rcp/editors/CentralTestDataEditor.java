@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.ui.rcp.editors;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,12 +23,16 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.jubula.client.core.businessprocess.CentralTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -50,6 +56,8 @@ import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
+import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.LimitingDragSourceListener;
+import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.rcp.filter.JBBrowserPatternFilter;
 import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
@@ -60,6 +68,9 @@ import org.eclipse.jubula.client.ui.rcp.wizards.ImportTestDataSetsWizard;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.graphics.Image;
@@ -84,6 +95,121 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
     private Set<ITestDataCubePO> m_elementsToRefresh = 
         new HashSet<ITestDataCubePO>();
 
+    /**
+     * 
+     * @author Zeb Ford-Reitz
+     * @created Nov 03, 2011
+     */
+    private class CentralTestDataDropSupport extends ViewerDropAdapter {
+    
+        /**
+         * Constructor
+         * 
+         * @param viewer The viewer.
+         */
+        public CentralTestDataDropSupport(Viewer viewer) {
+            super(viewer);
+        }
+        
+        @Override
+        public boolean validateDrop(Object target, int operation,
+                TransferData transferType) {
+
+            ISelection selection = 
+                    LocalSelectionTransfer.getTransfer().getSelection();
+            if (getTargetCategory(target) != null 
+                    && selection instanceof IStructuredSelection) {
+                for (Object element 
+                        : ((IStructuredSelection)selection).toArray()) {
+                    if (!(element instanceof ITestDataCategoryPO 
+                            || element instanceof ITestDataCubePO)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            return false;
+        }
+        
+        @Override
+        public boolean performDrop(Object data) {
+            if (getEditorHelper().requestEditableState() 
+                    != EditableState.OK) {
+                return false;
+            }
+            ITestDataCategoryPO targetCategory = 
+                    getTargetCategory(getCurrentTarget());
+            ISelection selection = 
+                    LocalSelectionTransfer.getTransfer().getSelection();
+            Set<ITestDataCategoryPO> structuresToUpdate = 
+                    new HashSet<ITestDataCategoryPO>();
+            structuresToUpdate.add(targetCategory);
+            for (Object element 
+                    : ((IStructuredSelection)selection).toArray()) {
+            
+                if (element instanceof ITestDataCategoryPO) {
+                    ITestDataCategoryPO category = 
+                            (ITestDataCategoryPO)element;
+                    if (!CentralTestDataBP.getAncestors(targetCategory)
+                                .contains(category)
+                            && category.getParent() != targetCategory) {
+                        ITestDataCategoryPO oldParent = 
+                                category.getParent();
+                        structuresToUpdate.add(oldParent);
+                        oldParent.removeCategory(category);
+                        targetCategory.addCategory(category);
+                    }
+                } else if (element instanceof ITestDataCubePO) {
+                    ITestDataCubePO testData = (ITestDataCubePO)element;
+                    ITestDataCategoryPO oldParent = 
+                            testData.getParent();
+                    structuresToUpdate.add(oldParent);
+                    oldParent.removeTestData(testData);
+                    targetCategory.addTestData(testData);
+                }
+
+            }
+
+            List<DataChangedEvent> events = 
+                    new LinkedList<DataChangedEvent>();
+            for (ITestDataCategoryPO categoryToUpdate 
+                    : structuresToUpdate) {
+                
+                events.add(new DataChangedEvent(categoryToUpdate, 
+                        DataState.StructureModified, 
+                        UpdateState.onlyInEditor));
+            }
+
+            DataEventDispatcher.getInstance().fireDataChangedListener(
+                    events.toArray(
+                            new DataChangedEvent[events.size()]));
+            
+            return true;
+        }
+
+        /**
+         * 
+         * @param target The drop target.
+         * @return the adjusted drop target. For example, the top-level category
+         *         if <code>target</code> is null. Returns <code>null</code>
+         *         if no valid drop target can be computed.
+         */
+        private ITestDataCategoryPO getTargetCategory(Object target) {
+            if (target == null) {
+                return (ITestDataCategoryPO)getViewer().getInput();
+            }
+            
+            if (target instanceof ITestDataCategoryPO) {
+                return (ITestDataCategoryPO)target;
+            }
+            
+            return null;
+        }
+        
+
+    } 
+    
     /** {@inheritDoc} */
     protected void createPartControlImpl(Composite parent) {
         createMainPart(parent);
@@ -116,7 +242,18 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 return 2;
             }
         });
-        getMainTreeViewer().setComparer(new PersistentObjectComparer());
+        
+        int ops = DND.DROP_MOVE;
+        Transfer[] transfers = 
+            new Transfer[] { 
+                LocalSelectionTransfer.getTransfer()};
+        ViewerDropAdapter dropSupport = 
+                new CentralTestDataDropSupport(getMainTreeViewer());
+        dropSupport.setFeedbackEnabled(false);
+        getMainTreeViewer().addDragSupport(ops, transfers, 
+                new LimitingDragSourceListener(getMainTreeViewer(), null));
+        getMainTreeViewer().addDropSupport(ops, transfers, dropSupport);
+        
         addTreeDoubleClickListener(RCPCommandIDs.EDIT_PARAMETERS_COMMAND_ID);
         addFocusListener(getMainTreeViewer());
         getEditorHelper().addListeners();
@@ -283,9 +420,14 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
 
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
-        for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
+        getMainTreeViewer().getTree().setRedraw(false);
+        try {
+            for (DataChangedEvent e : events) {
+                handleDataChanged(e.getPo(), e.getDataState(),
+                        e.getUpdateState());
+            }
+        } finally {
+            getMainTreeViewer().getTree().setRedraw(true);
         }
     }
     

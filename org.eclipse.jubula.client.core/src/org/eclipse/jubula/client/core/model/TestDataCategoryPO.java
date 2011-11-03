@@ -24,7 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -71,8 +70,7 @@ class TestDataCategoryPO implements ITestDataCategoryPO {
     @OneToMany(cascade = CascadeType.ALL, 
                fetch = FetchType.EAGER, 
                targetEntity = TestDataCubePO.class, 
-               orphanRemoval = true)
-    @OrderColumn(name = "IDX")
+               mappedBy = "parent")
     List<ITestDataCubePO> getHbmTestDataChildList() {
         return m_testDataChildList;
     }
@@ -102,9 +100,8 @@ class TestDataCategoryPO implements ITestDataCategoryPO {
      */
     @OneToMany(cascade = CascadeType.ALL, 
             fetch = FetchType.EAGER, 
-            targetEntity = TestDataCategoryPO.class, 
-            orphanRemoval = true)
-    @OrderColumn(name = "IDX")
+            targetEntity = TestDataCategoryPO.class,
+            mappedBy = "parent")
     List<ITestDataCategoryPO> getHbmCategoryChildList() {
         return m_categoryChildList;
     }
@@ -268,8 +265,7 @@ class TestDataCategoryPO implements ITestDataCategoryPO {
      * {@inheritDoc}
      */
     @ManyToOne(targetEntity = TestDataCategoryPO.class)
-    @JoinColumn(name = "FK_PARENT", insertable = false, 
-                updatable = false)
+    @JoinColumn(name = "FK_PARENT")
     public ITestDataCategoryPO getParent() {
         return m_parent;
     }

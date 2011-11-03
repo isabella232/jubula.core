@@ -555,8 +555,7 @@ class TestDataCubePO implements ITestDataCubePO {
      * {@inheritDoc}
      */
     @ManyToOne(targetEntity = TestDataCategoryPO.class)
-    @JoinColumn(name = "FK_PARENT", insertable = false, 
-                updatable = false)
+    @JoinColumn(name = "FK_PARENT")
     public ITestDataCategoryPO getParent() {
         return m_parent;
     }

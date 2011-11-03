@@ -51,6 +51,8 @@ public class LimitingDragSourceListener extends DragSourceAdapter {
         ObjectMappingTransferHelper.setDndToken(m_token);
         LocalSelectionTransfer.getTransfer().setSelection(
                 m_selectionProvider.getSelection());
+        LocalSelectionTransfer.getTransfer().setSelectionSetTime(
+                event.time & 0xFFFFFFFFL);
     }
 
     /**
@@ -59,5 +61,6 @@ public class LimitingDragSourceListener extends DragSourceAdapter {
     public void dragFinished(DragSourceEvent event) {
         ObjectMappingTransferHelper.setDndToken(null);
         LocalSelectionTransfer.getTransfer().setSelection(null);
+        LocalSelectionTransfer.getTransfer().setSelectionSetTime(0);
     }
 }
