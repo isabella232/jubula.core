@@ -32,6 +32,7 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.rcp.gef.inspector.GefInspectorListenerAppender;
 import org.eclipse.jubula.rc.rcp.gef.listener.GefPartListener;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
+import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -50,7 +51,6 @@ import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
@@ -195,30 +195,10 @@ public class Startup implements IStartup {
                     // they represent, if possible.
                     String actionId = ((IContributionItem)data).getId();
                     if (actionId != null && actionId.trim().length() > 0) {
+
                         widget.setData(Startup.TEST_RCP_DATA_KEY, actionId);
-                        
-                        // AutHierarchy will only know about the new name
-                        // after a repaint, so we send a paint event for the
-                        // item's parent.
-                        Control parent = null;
-                        try {
-                            if (widget instanceof ToolItem) {
-                                parent = ((ToolItem)widget).getParent();
-                            } else if (widget instanceof CoolItem) {
-                                parent = ((CoolItem)widget).getParent();
-                            } else if (widget instanceof Control) {
-                                parent = ((Control)widget).getParent();
-                            }
-                        } catch (NoClassDefFoundError e) {
-                            // we may be running in eRCP which doesn't know
-                            // about
-                            // toolbars, so we just ignore this
-                        }
-                        if (parent != null && !parent.isDisposed()) {
-                            parent.update();
-                            parent.redraw();
-                            parent.update();
-                        }
+                        ComponentHandler.getAutHierarchy()
+                            .refreshComponentName(widget);
 
                     }
                 } else if (data instanceof PreferenceDialog) {

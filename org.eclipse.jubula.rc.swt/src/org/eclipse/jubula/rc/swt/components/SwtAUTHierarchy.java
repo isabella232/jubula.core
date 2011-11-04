@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
@@ -410,6 +411,14 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
     }
     
     /**
+     * 
+     * @param toRefresh The component for which the name should be refreshed.
+     */
+    public synchronized void refreshComponentName(Widget toRefresh) {
+        rename(getHierarchyContainer(toRefresh));
+    }
+    
+    /**
      * Add the new component to the hierarchy if it is not already there.
      * @param toAdd The component to add to the hierarchy.
      */
@@ -736,19 +745,32 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
         if (hierarchyContainer != null) {
             Widget component = 
                 hierarchyContainer.getComponentID().getRealComponent();
-            
-            String compName = FindSWTComponentBP.getComponentName(component);
             SwtHierarchyContainer hierarchyParent = null;
             Widget parent = SwtUtils.getWidgetParent(component);
             if (parent != null) {
                 hierarchyParent = getHierarchyContainer(parent);
                 hierarchyContainer.setParent(hierarchyParent);
             }
-            if (hierarchyContainer.getName() != null 
-                    && hierarchyContainer.getName().length() != 0) {
-                
-                return;
+            if (StringUtils.isEmpty(hierarchyContainer.getName())) {
+                rename(hierarchyContainer);
             }
+        }
+    }
+    
+    /**
+     * Renames the given hierarchy container (or just names it, if it did not
+     * previously have a name).
+     * 
+     * @param hierarchyContainer The container to rename.
+     */
+    private synchronized void rename(SwtHierarchyContainer hierarchyContainer) {
+        if (hierarchyContainer != null) {
+            Widget component = 
+                hierarchyContainer.getComponentID().getRealComponent();
+            
+            String compName = FindSWTComponentBP.getComponentName(component);
+            SwtHierarchyContainer hierarchyParent = 
+                    hierarchyContainer.getParent();
             
             // isUniqueName is null safe, see description there
             int count = 1;
