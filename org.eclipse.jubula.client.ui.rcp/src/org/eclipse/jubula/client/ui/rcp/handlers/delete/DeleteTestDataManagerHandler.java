@@ -11,8 +11,9 @@
 package org.eclipse.jubula.client.ui.rcp.handlers.delete;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
@@ -21,9 +22,9 @@ import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
+import org.eclipse.jubula.client.core.model.ITestDataNodePO;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -66,8 +67,8 @@ public class DeleteTestDataManagerHandler
      * {@inheritDoc}
      */
     protected String getName(Object obj) {
-        if (obj instanceof IParameterInterfacePO) {
-            return ((IParameterInterfacePO)obj).getName();
+        if (obj instanceof ITestDataNodePO) {
+            return ((ITestDataNodePO)obj).getName();
         }
         return super.getName(obj);
     }
@@ -78,16 +79,13 @@ public class DeleteTestDataManagerHandler
      * @param structuredSelection
      *            the selected elements to delete
      */
-    @SuppressWarnings("nls")
     private void deleteSelection(CentralTestDataEditor editor,
             IStructuredSelection structuredSelection) {
-        ITestDataCategoryPO cont = (ITestDataCategoryPO)editor
-                .getEditorHelper().getEditSupport().getWorkVersion();
         List<String> reusedCubeList = new ArrayList<String>(0);
-
-        for (Iterator<IParameterInterfacePO> it = structuredSelection
-                .iterator(); it.hasNext();) {
-            IParameterInterfacePO td = it.next();
+        Set<ITestDataCubePO> toCheck = new HashSet<ITestDataCubePO>();
+        computeCubesToCheck(structuredSelection.toArray(), toCheck);
+        
+        for (ITestDataCubePO td : toCheck) {
             if (TestDataCubeBP.isCubeReused(td)) {
                 reusedCubeList.add(td.getName());
             }
@@ -106,17 +104,50 @@ public class DeleteTestDataManagerHandler
             ErrorHandlingUtil.createMessageDialog(MessageIDs.I_REUSED_TDC,
                     new Object[] { sb.toString() }, null);
         } else {
-            for (Iterator<ITestDataCubePO> it = structuredSelection
-                    .iterator(); it.hasNext();) {
-                ITestDataCubePO td = it.next();
-                cont.removeTestData(td);
-                DataEventDispatcher.getInstance().fireDataChangedListener(td,
-                        DataState.Deleted, UpdateState.onlyInEditor);
+            for (Object toDelete : structuredSelection.toArray()) {
+                if (toDelete instanceof ITestDataNodePO) {
+                    ITestDataNodePO node = (ITestDataNodePO)toDelete;
+                    editor.getEditorHelper().getEditSupport().getSession()
+                        .remove(node);
+                    editor.getEditorHelper().setDirty(true);
+                    
+                    // Necessary for proper UI updating. Otherwise, the deleted 
+                    // child is still considered to belong to the parent until
+                    // the change is committed to the DB and new working objects
+                    // are created.
+                    ITestDataCategoryPO parent = node.getParent();
+                    if (parent != null) {
+                        parent.removeNode(node);
+                    }
+                    
+                    DataEventDispatcher.getInstance().fireDataChangedListener(
+                            node, DataState.Deleted, UpdateState.onlyInEditor);
+                }
             }
-
-            editor.getEditorHelper().setDirty(true);
-            DataEventDispatcher.getInstance().fireDataChangedListener(cont,
-                    DataState.StructureModified, UpdateState.onlyInEditor);
         }
     }
+    /**
+     * Adds all Central Test Data instances (recursively) contained in the
+     * given array of objects to the given collection. 
+     * 
+     * @param selectedObjects The initial objects to analyze.
+     * @param toCheck The collection of Central Test Data to be filled or added
+     *                to by this computation. 
+     */
+    private void computeCubesToCheck(
+            Object[] selectedObjects, Set<ITestDataCubePO> toCheck) {
+
+        for (Object selected : selectedObjects) {
+            if (selected instanceof ITestDataCubePO) {
+                toCheck.add((ITestDataCubePO)selected);
+            } else if (selected instanceof ITestDataCategoryPO) {
+                ITestDataCategoryPO category = (ITestDataCategoryPO)selected;
+                computeCubesToCheck(
+                        category.getCategoryChildren().toArray(), 
+                        toCheck);
+                toCheck.addAll(category.getTestDataChildren());
+            }
+        }
+    }
+
 }

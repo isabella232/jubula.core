@@ -16,7 +16,7 @@ import java.util.List;
  * @author BREDEX GmbH
  * @created Nov 01, 2011
  */
-public interface ITestDataCategoryPO extends IPersistentObject {
+public interface ITestDataCategoryPO extends ITestDataNodePO {
 
     /**
      * @return an unmodifiable list of Test Data Categories
@@ -58,22 +58,14 @@ public interface ITestDataCategoryPO extends IPersistentObject {
 
     /**
      * 
-     * @return the receiver's parent category, or <code>null</code> if the 
-     *         receiver is a top-level element (i.e. has no parent category).
-     */
-    public ITestDataCategoryPO getParent();
-
-    /**
-     * 
-     * @param parent The receiver's new parent. A value of <code>null</code>
-     *               indicates that the receiver is a top-level element (i.e.
-     *               has no parent category).
-     */
-    public void setParent(ITestDataCategoryPO parent);
-
-    /**
-     * 
      * @param name The receiver's new name. Must not be <code>null</code>.
      */
     public void setName(String name);
+    
+    /**
+     * Removes the given node from the receiver's children.
+     * 
+     * @param toRemove The node to remove.
+     */
+    public void removeNode(ITestDataNodePO toRemove);
 }

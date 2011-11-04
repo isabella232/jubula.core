@@ -14,21 +14,12 @@ package org.eclipse.jubula.client.core.model;
  * @author BREDEX GmbH
  * @created Jul 15, 2010
  */
-public interface ITestDataCubePO extends IModifiableParameterInterfacePO {
+public interface ITestDataCubePO 
+        extends IModifiableParameterInterfacePO, ITestDataNodePO {
+    
     /**
      * @param name The new name.
      */
     public void setName(String name);
 
-    /**
-     * 
-     * @return the receiver's parent category.
-     */
-    public ITestDataCategoryPO getParent();
-
-    /**
-     * 
-     * @param parent The receiver's new parent.
-     */
-    public void setParent(ITestDataCategoryPO parent);
 }

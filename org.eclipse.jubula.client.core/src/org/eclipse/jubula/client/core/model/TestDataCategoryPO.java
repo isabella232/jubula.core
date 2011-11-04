@@ -277,4 +277,16 @@ class TestDataCategoryPO implements ITestDataCategoryPO {
     public void setParent(ITestDataCategoryPO parent) {
         m_parent = parent;
     }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void removeNode(ITestDataNodePO toRemove) {
+        if (toRemove instanceof ITestDataCubePO) {
+            removeTestData((ITestDataCubePO)toRemove);
+        } else if (toRemove instanceof ITestDataCategoryPO) {
+            removeCategory((ITestDataCategoryPO)toRemove);
+        }
+    }
 }
