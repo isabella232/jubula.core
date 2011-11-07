@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
+import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -142,7 +143,7 @@ public class TestDataCubeRefContentProposalProvider implements
         List<TestDataCubeRefContentProposal> proposalList = 
             new ArrayList<TestDataCubeRefContentProposal>();
         for (IParameterInterfacePO dataCube 
-                : m_project.getTestDataCubeCont().getTestDataChildren()) {
+                : TestDataCubeBP.getAllTestDataCubesFor(m_project)) {
             if (dataCubeFulfillsNameRequirements(
                         dataCube, contents.substring(0, position))
                     && dataCubeFulfillsParameterRequirements(

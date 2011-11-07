@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.validator;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText.IValidator;
@@ -56,7 +57,7 @@ public class TestDataCubeReferenceValidator implements IValidator {
         String newValue = workValue.toString();
         boolean mightMatch = false;
         for (IParameterInterfacePO dataCube 
-                : m_project.getTestDataCubeCont().getTestDataChildren()) {
+                : TestDataCubeBP.getAllTestDataCubesFor(m_project)) {
             if (StringUtils.equals(e.text, dataCube.getName())) {
                 return ValidationState.OK;
             }

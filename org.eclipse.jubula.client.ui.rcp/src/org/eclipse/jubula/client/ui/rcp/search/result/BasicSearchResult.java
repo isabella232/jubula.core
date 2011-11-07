@@ -19,15 +19,16 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -378,18 +379,21 @@ public class BasicSearchResult implements ISearchResult {
          * {@inheritDoc}
          */
         public void jumpTo(Long id) {
-            ITestDataCategoryPO tdcContainer = GeneralStorage.getInstance()
-                    .getProject().getTestDataCubeCont();
-            for (ITestDataCubePO testdatacube : tdcContainer
-                    .getTestDataChildren()) {
+            IProjectPO activeProject = 
+                    GeneralStorage.getInstance().getProject();
+            for (ITestDataCubePO testdatacube 
+                    : TestDataCubeBP.getAllTestDataCubesFor(activeProject)) {
+                
                 if (id.equals(testdatacube.getId())) {
                     IEditorPart editor = AbstractOpenHandler
-                            .openEditor(tdcContainer);
+                            .openEditor(activeProject.getTestDataCubeCont());
                     if (editor instanceof CentralTestDataEditor) {
                         CentralTestDataEditor ctdEditor = 
                             (CentralTestDataEditor)editor;
                         ctdEditor.getTreeViewer().setSelection(
-                                new StructuredSelection(testdatacube));
+                            new StructuredSelection(ctdEditor.getEditorHelper()
+                                    .getEditSupport().getSession().find(
+                                            testdatacube.getClass(), id)));
                     }
                     return;
                 }
