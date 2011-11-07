@@ -7,10 +7,10 @@ without having to set timers or manually check timestamps.
 \item You can switch off the decoration in the \app{} client in the \bxname{label decoration} preferences.
 \end{itemize} 
 
-\textbf{Categories now supported in the \gdtestsuitebrowser{}}\\
+\textbf{Categories now supported in the \gdtestsuitebrowser{} and \gddataeditor}\\
 \begin{itemize}
-\item It is now possible to create categories for \gdsuites{} and \gdjobs{} in the \gdtestsuitebrowser{}. 
-\item Existing \gdprojects{} will be shown as having two categories (\bxname{Test Suites} and \bxname{Test Jobs}) as was previously the case. However, you can now rename, delete and rearrange categories in the \gdtestsuitebrowser{}. 
+\item It is now possible to create categories for \gdsuites{} and \gdjobs{} in the \gdtestsuitebrowser{}, as well as for central data sets in the \gddataeditor{}. 
+\item Existing \gdprojects{} will be shown as having two categories (\bxname{Test Suites} and \bxname{Test Jobs}) in the \gdtestsuitebrowser{} as was previously the case. However, you can now rename, delete and rearrange categories in the \gdtestsuitebrowser{}. 
 \end{itemize} 
 
 \textbf{Parameter values now shown for each node in \gdtestresultview{}}\\
@@ -20,14 +20,8 @@ without having to set timers or manually check timestamps.
 \item You can switch off the decoration in the \app{} client in the \bxname{label decoration} preferences.
 \end{itemize} 
 
-%% \textbf{Support for adding basic component extensions to a \gdproject{}}\\
-%% \begin{itemize}
-%% \item Alongside the full extension mechanism for adding new supported components and actions, there is now an easier way to add basic support 
-%% for as yet unsupported components. 
-%% \item In the \gdproject{} properties, there is a new area for \bxname{Component Extensions}. On this page, you can enter the class name 
-%% (e.g. \bxname{javax.swing.JSeparator}) for currently unsupported components. 
-%% \item The component types you add must be of the type \bxname{JComponent} in Swing and \bxname{Control} in SWT. This mechanism is not currently supported for HTML \gdauts{}.
-%% \item Once you have added the component, you will be able to collect components of this type in the \gdomm{} and you will be able to perform 
-%% actions on them that are defined for \bxname{Graphics Component} (i.e. clicking, waiting for them, checking their existence, enablement, focus and properties). 
-%% \end{itemize}
-
+\textbf{Completeness check shown as progress window}\\
+\begin{itemize}
+\item After saving in the \ite{}, the completeness check which validates the state of the \gdproject{} (test data, object mapping, missing \gdcases{} etc) is now shown explicitly as a progress window.
+\item This results from performance improvements made to the completeness check.
+\end{itemize} 
