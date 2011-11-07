@@ -300,6 +300,8 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.NEW_TESTDATACUBE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.RENAME_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.EDIT_PARAMETERS_COMMAND_ID);
