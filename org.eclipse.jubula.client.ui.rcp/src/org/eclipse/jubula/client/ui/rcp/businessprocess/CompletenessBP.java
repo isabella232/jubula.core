@@ -10,39 +10,40 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.businessprocess;
 
-import java.util.ConcurrentModificationException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.IExecutionListener;
+import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
-import org.eclipse.jubula.client.core.events.DataChangedEvent;
+import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IObjectMappingPO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.jubula.tools.constants.DebugConstants;
+import org.eclipse.ui.IWorkbenchCommandConstants;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * @author BREDEX GmbH
  * @created 12.03.2007
  */
-public class CompletenessBP implements 
-    IDataChangedListener, IProjectLoadedListener, ILanguageChangedListener {
+public class CompletenessBP implements IProjectLoadedListener,
+    ILanguageChangedListener {
+    /** for log messages */
+    private static Logger log = LoggerFactory.getLogger(CompletenessBP.class);
     
     /** this instance */
     private static CompletenessBP instance; 
@@ -52,9 +53,36 @@ public class CompletenessBP implements
      */
     private CompletenessBP() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
-        ded.addDataChangedListener(this, false);
         ded.addLanguageChangedListener(this, false);
         ded.addProjectLoadedListener(this, false);
+        ICommandService commandService = (ICommandService) PlatformUI
+                .getWorkbench().getService(ICommandService.class);
+
+        IExecutionListener saveListener = new IExecutionListener() {
+            /** {@inheritDoc} */
+            public void preExecute(String commandId, ExecutionEvent event) {
+                // empty is ok
+            }
+            /** {@inheritDoc} */
+            public void postExecuteSuccess(String commandId, 
+                    Object returnValue) {
+                completeProjectCheck();
+            }
+            /** {@inheritDoc} */
+            public void postExecuteFailure(String commandId,
+                    ExecutionException exception) {
+                completeProjectCheck();
+            }
+            /** {@inheritDoc} */
+            public void notHandled(String commandId, 
+                NotHandledException exception) {
+                // empty is ok
+            }
+        };
+        commandService.getCommand(IWorkbenchCommandConstants.FILE_SAVE)
+                .addExecutionListener(saveListener);
+        commandService.getCommand(IWorkbenchCommandConstants.FILE_SAVE_ALL)
+            .addExecutionListener(saveListener);
     }
 
     /**
@@ -67,66 +95,6 @@ public class CompletenessBP implements
         return instance;
     }
 
-    /** {@inheritDoc} */
-    public void handleDataChanged(DataChangedEvent... events) {
-        for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void handleDataChanged(
-        IPersistentObject po, 
-        DataState dataState, 
-        UpdateState updateState) {
-        // update only when global changes
-        switch (updateState) {
-            case onlyInEditor :
-                return;
-            case notInEditor :
-            case all :
-            default :
-                break;
-        }
-
-        // skip updates in several cases
-        switch (dataState) {
-            case Renamed :
-            case Deleted :
-                return;
-            case Added :
-                if (!(po instanceof IProjectPO)
-                    && !(po instanceof ITestSuitePO)) {
-                    return;
-                }
-            default :
-                break;
-        }
-        INodePO root = GeneralStorage.getInstance().getProject();
-        
-        if (po instanceof ISpecTestCasePO) {
-            // you could change parameters in a SpecTestCase used in TS
-            if (dataState != DataState.StructureModified) {
-                return;
-            }
-        } else if (po instanceof ITestSuitePO) {
-            // check only changed test suite
-            root = (INodePO)po;
-        } else if (po instanceof IAUTMainPO || po instanceof IObjectMappingPO) {
-            
-            // only object-mapping has to be checked again
-            CompletenessGuard.checkOM(root);
-            fireCompletenessCheckFinished();
-            return;
-        }
-        
-        Locale wl = WorkingLanguageBP.getInstance().getWorkingLanguage();
-        runCheck(false, root, wl);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -136,57 +104,55 @@ public class CompletenessBP implements
          * all data) can't be run in a job, so checkProject must be called
          * with runInJob==false.
          */
-        checkProject(false); 
+        completeProjectCheck(); 
     }
 
     /**
      * checks the project regardless of user preferences
-     * @param runInJob if true submit the check to a Job
      */
-    public void checkProject(boolean runInJob) {
+    public void completeProjectCheck() {
         final INodePO root = GeneralStorage.getInstance().getProject();
         if (root != null) {
-            final Locale wl = WorkingLanguageBP.getInstance()
-                    .getWorkingLanguage();
-            runCheck(runInJob, root, wl);
+            Plugin.startLongRunning(Messages
+                    .CompletenessCheckRunningOperation);
+            try {
+                PlatformUI.getWorkbench().getProgressService().run(true, false,
+                        new CompletnessCheckOperation());
+            } catch (InvocationTargetException e) {
+                log.error(DebugConstants.ERROR, e);
+            } catch (InterruptedException e) {
+                log.error(DebugConstants.ERROR, e);
+            } finally {
+                Plugin.stopLongRunning();
+            }
         }
     }
     
     /**
-     * @param runInJob
-     *            if true submit the check to a Job
-     * @param root
-     *            top node to start check
-     * @param wl
-     *            locale to use
+     * @author Markus Tiede
+     * @created 07.11.2011
      */
-    private void runCheck(boolean runInJob, final INodePO root, 
-        final Locale wl) {
-        if (runInJob) {
-            final String jobName = NLS.bind(Messages.UIJobRunCompletenessCheck,
-                    root.getName());
-            Job job = new Job(jobName) {
-                @SuppressWarnings("synthetic-access")
-                public IStatus run(IProgressMonitor monitor) {
-                    IStatus result = Status.OK_STATUS;
-                    monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
-                    try {
-                        CompletenessGuard.checkAll(wl, root);
-                        fireCompletenessCheckFinished();
-                        monitor.done();
-                    } catch (ConcurrentModificationException e) {
-                        result = Status.CANCEL_STATUS;
-                        monitor.setCanceled(true);
-                        runCheck(true, root, wl);
-                    }
-                    monitor.done();
-                    return result;
-                }
-            };
-            job.schedule();
-        } else {
-            CompletenessGuard.checkAll(wl, root);
-            fireCompletenessCheckFinished();
+    public static class CompletnessCheckOperation implements
+            IRunnableWithProgress {
+
+        /** {@inheritDoc} */
+        public void run(IProgressMonitor monitor) {
+
+            monitor.beginTask(Messages.CompletenessCheckRunningOperation,
+                    IProgressMonitor.UNKNOWN);
+
+            ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
+
+            try {
+                final INodePO root = GeneralStorage.getInstance().getProject();
+                final Locale wl = WorkingLanguageBP.getInstance()
+                        .getWorkingLanguage();
+                CompletenessGuard.checkAll(wl, root);
+            } finally {
+                ProgressMonitorTracker.getInstance().setProgressMonitor(null);
+                fireCompletenessCheckFinished();
+                monitor.done();
+            }
         }
     }
     
@@ -203,7 +169,7 @@ public class CompletenessBP implements
     /**
      * Notifies that the check is finished.
      */
-    private void fireCompletenessCheckFinished() {
+    private static void fireCompletenessCheckFinished() {
         DataEventDispatcher.getInstance().fireCompletenessCheckFinished();
     }
 }

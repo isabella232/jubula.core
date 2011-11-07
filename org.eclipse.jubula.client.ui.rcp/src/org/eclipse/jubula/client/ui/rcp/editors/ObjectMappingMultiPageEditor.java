@@ -1778,8 +1778,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         final boolean isUpToDate = TimestampBP.refreshEditorNodeInMasterSession(
             objMap);
         if (!isUpToDate) {
-            CompletenessBP.getInstance().handleDataChanged(objMap, 
-                DataState.StructureModified, UpdateState.notInEditor);
+            CompletenessBP.getInstance().completeProjectCheck();
         }
     }
 

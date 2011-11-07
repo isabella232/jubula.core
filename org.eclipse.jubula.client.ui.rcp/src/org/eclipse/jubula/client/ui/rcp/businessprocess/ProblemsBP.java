@@ -30,26 +30,18 @@ import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
-import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ICompletenessCheckListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -66,7 +58,6 @@ import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.xml.businessmodell.InvalidAction;
@@ -77,14 +68,12 @@ import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 /**
  * @author BREDEX GmbH
  * @created 12.03.2007
  */
-public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
-    ILanguageChangedListener, IServerConnectionListener {
+public class ProblemsBP implements ICompletenessCheckListener,
+    IServerConnectionListener {
     
     /** this instance */
     private static ProblemsBP instance; 
@@ -124,16 +113,10 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
      * private constructor
      */
     private ProblemsBP() {
-        
         // add business process to event dispatcher
-        DataEventDispatcher.getInstance().
-            addDataChangedListener(this, true);
-        DataEventDispatcher.getInstance().
-            addLanguageChangedListener(this, true);
-        DataEventDispatcher.getInstance().
-            addProjectLoadedListener(this, true);
-        DataEventDispatcher.getInstance().
-            addServerConnectionListener(this, true);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addServerConnectionListener(this, true);
+        ded.addCompletenessCheckListener(this);
         
         // trigger first problem check
         doProblemsCheck(true, null);
@@ -151,25 +134,8 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
     /**
      * {@inheritDoc}
      */
-    public void handleProjectLoaded() {
-        try {
-            doProblemsCheck(true, null);
-        } catch (GDConfigXmlException e) {
-            // nothing
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
     public void handleServerConnStateChanged(ServerState state) {
         doProblemsCheck(false, state);   
-    }
-    /**
-     * {@inheritDoc}
-     */
-    public void handleLanguageChanged(Locale locale) {
-        doProblemsCheck(false, null);   
     }
 
     /**
@@ -185,51 +151,6 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                 NLS.bind(Messages.ProblemCheckerProjectDoesNotExist, label),
                 IMarker.SEVERITY_ERROR, StringConstants.EMPTY, node,
                 ProblemType.REASON_PROJECT_DOES_NOT_EXIST);
-    }
-    
-    /** {@inheritDoc} */
-    public void handleDataChanged(DataChangedEvent... events) {
-        for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void handleDataChanged(IPersistentObject po, DataState dataState, 
-        UpdateState updateState) {
-        if (po instanceof ICategoryPO) {
-            return;
-        }
-        if (po instanceof IAUTMainPO) {
-            doProblemsCheck(false, null);
-            return;
-        }
-        if (dataState == DataState.Deleted
-            && po instanceof ISpecTestCasePO) {
-
-            doProblemsCheck(true, null);
-            return;
-        }
-        if (dataState == DataState.Added
-            && updateState == UpdateState.all
-            && po instanceof ISpecTestCasePO) {
-
-            return;
-        }
-        // just refresh problem view on rename actions to show new label names
-        if (dataState == DataState.Renamed) {
-            if (po instanceof ISpecTestCasePO) {
-                return;
-            }
-            doProblemsCheck(false, null);   
-            return;
-        }
-        if (updateState != UpdateState.onlyInEditor) {
-            doProblemsCheck(true, null);   
-        }
     }
     
     /**
@@ -1127,14 +1048,15 @@ public class ProblemsBP implements IProjectLoadedListener, IDataChangedListener,
                 ProblemType.REASON_NO_COMPTYPE);
         }
 
-        /**
-         * 
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void postOperate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
             // no op
         }
     }
     
+    /** {@inheritDoc} */
+    public void completenessCheckFinished() {
+        doProblemsCheck(true, null);
+    }
 }

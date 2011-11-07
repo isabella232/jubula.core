@@ -208,6 +208,7 @@ public class Messages extends NLS {
     public static String CompNamesViewNoCompNameInfo;
     public static String CompNamesViewOldNameColumn;
     public static String CompNamesViewTypeColumn;
+    public static String CompletenessCheckRunningOperation; 
     public static String Component;
     public static String ComponentCouldNotBeFoundInRunningAut;
     public static String ComponentExtensionDialog_Message;
@@ -1032,7 +1033,6 @@ public class Messages extends NLS {
     public static String UIJobLoadingImage;
     public static String UIJobResolveStartableAuts;
     public static String UIJobResolvingStartableAuts;
-    public static String UIJobRunCompletenessCheck;
     public static String UIJobSearchingCompNames;
     public static String UIJobSearchingResponsibleCompNames;
     public static String UIJobSearchingTestCases;

@@ -33,6 +33,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -549,6 +550,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     GeneralStorage.getInstance().getProject(),
                     DataState.Renamed, UpdateState.notInEditor);
+            CompletenessBP.getInstance().completeProjectCheck();
         } catch (PMException e) {
             ErrorHandlingUtil.createMessageDialog(e, null, null);
         } catch (ProjectDeletedException e) {
