@@ -391,7 +391,9 @@ public class BasicSearchResult implements ISearchResult {
                         CentralTestDataEditor ctdEditor = 
                             (CentralTestDataEditor)editor;
                         ctdEditor.getTreeViewer().setSelection(
-                                new StructuredSelection(testdatacube));
+                            new StructuredSelection(ctdEditor.getEditorHelper()
+                                    .getEditSupport().getSession().find(
+                                            testdatacube.getClass(), id)));
                     }
                     return;
                 }
