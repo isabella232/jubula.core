@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.search.query;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -20,6 +21,7 @@ import org.apache.commons.collections.functors.InstanceofPredicate;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -81,8 +83,8 @@ public class TestDataSearchQuery extends AbstractSearchQuery {
                         .getAllNodesForGivenTypeInCurrentProject(searchType));
             } else if (ITestDataCubePO.class.isAssignableFrom(searchType)) {
                 IProjectPO cProject = GeneralStorage.getInstance().getProject();
-                centralTestData.addAll(cProject.getTestDataCubeCont()
-                        .getTestDataChildren());
+                centralTestData.addAll(Arrays.asList(
+                        TestDataCubeBP.getAllTestDataCubesFor(cProject)));
             }
             monitor.worked(1);
         }

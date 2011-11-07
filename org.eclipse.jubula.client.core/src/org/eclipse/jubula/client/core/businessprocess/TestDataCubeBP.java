@@ -10,12 +10,16 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.TestDataCubePM;
 
@@ -50,8 +54,7 @@ public class TestDataCubeBP {
         Validate.notNull(containingProject);
         
         for (IParameterInterfacePO testDataCube 
-                : containingProject.getTestDataCubeCont()
-                    .getTestDataChildren()) {
+                : getAllTestDataCubesFor(containingProject)) {
             
             if (cubeName.equals(testDataCube.getName())) {
                 return testDataCube;
@@ -59,6 +62,44 @@ public class TestDataCubeBP {
         }
         
         return null;
+    }
+
+    /**
+     * Convenience method to get all Central Test Data for a Project, regardless
+     * of how the Central Test Data is nested in categories. 
+     * 
+     * @param project The project containing the Central Test Data.
+     * @return all Central Test Data instances contained in the given Project.
+     */
+    public static ITestDataCubePO[] getAllTestDataCubesFor(IProjectPO project) {
+        if (project == null) {
+            return new ITestDataCubePO[0];
+        }
+        
+        Set<ITestDataCubePO> dataCollection = new HashSet<ITestDataCubePO>();
+        getAllTestDataCubesFor(project.getTestDataCubeCont(), dataCollection);
+        
+        return dataCollection.toArray(
+                new ITestDataCubePO[dataCollection.size()]);
+    }
+
+    /**
+     * 
+     * @param category The category containing the Central Test Data.
+     * @param dataCollection The collection to fill.
+     */
+    private static void getAllTestDataCubesFor(
+            ITestDataCategoryPO category, Set<ITestDataCubePO> dataCollection) {
+
+        if (category != null) {
+            for (ITestDataCubePO testData : category.getTestDataChildren()) {
+                dataCollection.add(testData);
+            }
+            for (ITestDataCategoryPO subCategory 
+                    : category.getCategoryChildren()) {
+                getAllTestDataCubesFor(subCategory, dataCollection);
+            }
+        }
     }
 
     /**
