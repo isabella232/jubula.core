@@ -2,16 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Launch Java / Swing Core
 Bundle-SymbolicName: org.eclipse.jubula.launch.java;singleton:=true
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-Activator: org.eclipse.jubula.launch.java.Activator
 Bundle-Vendor: Eclipse Jubula
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.debug.core;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.jdt.launching;bundle-version="[3.5.1,4.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
- org.eclipse.jubula.tools;bundle-version="[1.1.0,1.2.0)",
- org.eclipse.jubula.communication;bundle-version="[1.1.0,1.2.0)",
- org.eclipse.jubula.autagent;bundle-version="[1.1.0,1.2.0)",
- org.eclipse.jubula.launch;bundle-version="[1.1.0,1.2.0)"
+ org.eclipse.jubula.tools;bundle-version="[1.2.0,1.3.0)",
+ org.eclipse.jubula.communication;bundle-version="[1.2.0,1.3.0)",
+ org.eclipse.jubula.autagent;bundle-version="[1.2.0,1.3.0)",
+ org.eclipse.jubula.launch;bundle-version="[1.2.0,1.3.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
