@@ -41,7 +41,7 @@ LANG="$2"
 TEMPL_DIR="$GDWS_DIR/org.eclipse.jubula.documentation.gen/templates"
 
 # classpath
-CL_PATH="$TEXGEN_DIR/target/org.eclipse.jubula.documentation.gen-1.1.0-SNAPSHOT-jar-with-dependencies.jar"
+CL_PATH="$TEXGEN_DIR/target/org.eclipse.jubula.documentation.gen-1.2.0-SNAPSHOT-jar-with-dependencies.jar"
 
 for i in `ls $GDWS_DIR/org.eclipse.jubula.tools/lib/*.jar`
 do
