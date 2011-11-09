@@ -2892,6 +2892,17 @@
 				<and>
 					<count value="1" />
 					<iterate ifEmpty="false" operator="and">
+      <or>
+         <instanceof
+               value="org.eclipse.jubula.client.core.model.INodePO">
+         </instanceof>
+         <instanceof
+               value="org.eclipse.jubula.client.core.model.ISpecObjContPO">
+         </instanceof>
+         <instanceof
+               value="org.eclipse.jubula.client.core.model.IExecObjContPO">
+         </instanceof>
+      </or>
 						<test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
 					</iterate>
 				</and>
