@@ -81,6 +81,7 @@ import org.eclipse.jubula.client.core.businessprocess.DocAttributeDescriptionBP;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
+import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError.ERROR;
@@ -2111,7 +2112,7 @@ class XmlImporter {
         if (xml.getReferencedTestData() != null) {
             String referencedDataName = xml.getReferencedTestData();
             for (IParameterInterfacePO testDataCube 
-                    : proj.getTestDataCubeCont().getTestDataChildren()) {
+                    : TestDataCubeBP.getAllTestDataCubesFor(proj)) {
                 if (referencedDataName.equals(testDataCube.getName())) {
                     exec.setReferencedDataCube(testDataCube);
                     break;
