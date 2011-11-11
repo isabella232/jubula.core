@@ -57,11 +57,12 @@ public abstract class AbstractTreeViewContentProvider extends
             
             IProjectPO activeProject = 
                 GeneralStorage.getInstance().getProject();
-            if (nodeProjId != null && !nodeProjId.equals(activeProject.getId())
-                    && parent == ISpecObjContPO.TCB_ROOT_NODE) {
-                // Parent is a TCB_ROOT_NODE, but node is not from the current
-                // project. So it must be a reused project.
-                if (activeProject != null && nodeProjId != null) {
+            if (activeProject != null && nodeProjId != null) {
+                if (!nodeProjId.equals(activeProject.getId())
+                        && parent == ISpecObjContPO.TCB_ROOT_NODE) {
+                    // Parent is a TCB_ROOT_NODE, but node is not from the
+                    // current
+                    // project. So it must be a reused project.
                     try {
                         String nodeProjGUID = ProjectPM
                                 .getGuidOfProjectId(nodeProjId);
@@ -73,7 +74,8 @@ public abstract class AbstractTreeViewContentProvider extends
                             }
                         }
                     } catch (JBException e) {
-                        LOG.warn("Could not load referenced project information", e); //$NON-NLS-1$
+                        LOG.warn(
+                                "Could not load referenced project information", e); //$NON-NLS-1$
                     }
                 }
             }
