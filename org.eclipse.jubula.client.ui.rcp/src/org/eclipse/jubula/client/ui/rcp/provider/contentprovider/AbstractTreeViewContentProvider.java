@@ -63,7 +63,6 @@ public abstract class AbstractTreeViewContentProvider extends
                 // project. So it must be a reused project.
                 if (activeProject != null && nodeProjId != null) {
                     try {
-                        System.out.println("hit");
                         String nodeProjGUID = ProjectPM
                                 .getGuidOfProjectId(nodeProjId);
                         for (IReusedProjectPO reusedProject : activeProject
