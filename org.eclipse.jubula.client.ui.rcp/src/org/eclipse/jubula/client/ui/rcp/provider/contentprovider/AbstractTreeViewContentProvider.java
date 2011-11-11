@@ -18,10 +18,14 @@ import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
+import org.eclipse.jubula.tools.exception.JBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -30,6 +34,9 @@ import org.eclipse.jubula.tools.exception.Assert;
  */
 public abstract class AbstractTreeViewContentProvider extends
     AbstractNodeTreeContentProvider {
+    /** the logger */
+    private static final Logger LOG = 
+        LoggerFactory.getLogger(AbstractTreeViewContentProvider.class);
     
     /** {@inheritDoc} */
     public Object[] getElements(Object inputElement) {
@@ -44,20 +51,30 @@ public abstract class AbstractTreeViewContentProvider extends
     /** {@inheritDoc} */
     public Object getParent(Object element) {
         if (element instanceof INodePO) {
-            INodePO parent = ((INodePO)element).getParentNode();
+            INodePO node = ((INodePO)element);
+            INodePO parent = node.getParentNode();
+            Long nodeProjId = node.getParentProjectId();
+            
             IProjectPO activeProject = 
                 GeneralStorage.getInstance().getProject();
-            if (parent instanceof IProjectPO 
-                    && !parent.equals(activeProject)) {
-                // Parent is a project, but not the active project.
-                // So it must be a reused project.
-                String parentGuid = parent.getGuid();
-                if (activeProject != null && parentGuid != null) {
-                    for (IReusedProjectPO reusedProject 
-                            : activeProject.getUsedProjects()) {
-                        if (parentGuid.equals(reusedProject.getProjectGuid())) {
-                            return reusedProject;
+            if (nodeProjId != null && !nodeProjId.equals(activeProject.getId())
+                    && parent == ISpecObjContPO.TCB_ROOT_NODE) {
+                // Parent is a TCB_ROOT_NODE, but node is not from the current
+                // project. So it must be a reused project.
+                if (activeProject != null && nodeProjId != null) {
+                    try {
+                        System.out.println("hit");
+                        String nodeProjGUID = ProjectPM
+                                .getGuidOfProjectId(nodeProjId);
+                        for (IReusedProjectPO reusedProject : activeProject
+                                .getUsedProjects()) {
+                            if (nodeProjGUID.equals(reusedProject
+                                    .getProjectGuid())) {
+                                return reusedProject;
+                            }
                         }
+                    } catch (JBException e) {
+                        LOG.warn("Could not load referenced project information", e); //$NON-NLS-1$
                     }
                 }
             }
