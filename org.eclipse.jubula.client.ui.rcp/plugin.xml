@@ -928,16 +928,6 @@
 		</command>
   <command
         categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-        id="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError"
-        name="Go to Next Error">
-  </command>
-  <command
-        categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-        id="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError"
-        name="Go to Previous Error">
-  </command>
-  <command
-        categoryId="org.eclipse.jubula.client.ui.rcp.commands"
         id="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
         name="%OpenCentralTestDataEditor">
   </command>
@@ -1421,35 +1411,6 @@
 						</with>
 					</visibleWhen>
 				</command>
-			</toolbar>
-			<toolbar
-				id="org.eclipse.jubula.client.ui.rcp.toolbar.TestResultToolbar">
-				<command
-					commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError"
-					id="org.eclipse.jubula.client.ui.rcp.toolbar.TestResultToolbar.GoToNextError"
-					style="push">
-					<visibleWhen checkEnabled="false">
-						<with variable="activeEditorId">
-							<equals
-								value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
-							</equals>
-						</with>
-					</visibleWhen>
-				</command>
-				<command
-					commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError"
-					id="org.eclipse.jubula.client.ui.rcp.toolbar.TestResultToolbar.GoToPreviousError"
-					style="push">
-					<visibleWhen checkEnabled="false">
-						<with variable="activeEditorId">
-							<equals
-								value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
-							</equals>
-						</with>
-					</visibleWhen>
-				</command>
-				<separator name="GlobalActions" visible="false">
-				</separator>
 			</toolbar>
 		</menuContribution>
 		<menuContribution
@@ -2374,30 +2335,6 @@
      </enabledWhen>
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.rcp.handlers.GoToNextTestResultErrorHandler"
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError">
-     <activeWhen>
-        <with
-              variable="activeEditorId">
-           <equals
-                 value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
-           </equals>
-        </with>
-     </activeWhen>
-  </handler>
-  <handler
-        class="org.eclipse.jubula.client.ui.rcp.handlers.GoToPreviousTestResultErrorHandler"
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError">
-     <activeWhen>
-        <with
-              variable="activeEditorId">
-           <equals
-                 value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
-           </equals>
-        </with>
-     </activeWhen>
-  </handler>
-  <handler
         class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenCentralTestDataEditorHandler"
         commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor">
         <activeWhen>
@@ -2623,14 +2560,6 @@
 			commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenProject"
 			disabledIcon="icons/loadDB_disabled.gif" icon="icons/loadDB.gif">
 		</image>
-  <image
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError"
-        icon="icons/goToNextError.gif">
-  </image>
-  <image
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError"
-        icon="icons/goToPreviousError.gif">
-  </image>
   <image
         commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
         icon="icons/centralTestData.gif">

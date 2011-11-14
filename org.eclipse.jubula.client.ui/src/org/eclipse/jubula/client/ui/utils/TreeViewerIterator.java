@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.utils;
+package org.eclipse.jubula.client.ui.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
