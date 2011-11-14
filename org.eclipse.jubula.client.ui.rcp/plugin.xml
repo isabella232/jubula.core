@@ -1100,11 +1100,11 @@
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F8">
 		</key>
-		<key commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError"
+		<key commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M3+ARROW_DOWN">
 		</key>
-		<key commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError"
+		<key commandId="org.eclipse.jubula.client.ui.commands.GoToPreviousError"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M3+ARROW_UP">
 		</key>
