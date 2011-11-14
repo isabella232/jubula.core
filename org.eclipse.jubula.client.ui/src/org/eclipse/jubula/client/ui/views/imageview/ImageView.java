@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.views.imageview;
+package org.eclipse.jubula.client.ui.views.imageview;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.runtime.IAdaptable;
@@ -21,20 +21,19 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.views.JBPropertiesView;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.ui.views.properties.IPropertySheetPage;
 
 
 /**
@@ -43,24 +42,24 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
  */
 public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
     /**
-     * <code>viewer</code>
-     */
-    private ImageViewer m_viewer;
-
-    /**
-     * <code>provider</code>
-     */
-    private ImageProvider m_provider;
-
-    /**
      * <code>image</code>
      */
-    private Image m_image;
-
+    private Label m_image;
+    
     /**
      * <code>m_oldSelection</code>
      */
     private ISelection m_currSelection = null;
+    
+    /**
+     * the scrolled composite
+     */
+    private ScrolledComposite m_scrollComposite;
+    
+    /**
+     * the child
+     */
+    private Composite m_child;
     
     /**
      * The selectionListener listens for changes in the workbench's selection
@@ -107,20 +106,12 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
         }
         
         if (provider == null) {
-            clear();
+            m_image.setImage(null);
         } else {
             handleSelection(provider);
         }
     }
 
-    /**
-     * clears the views content
-     */
-    private void clear() {
-        disposeImage();
-        m_viewer.redraw();
-    }
-    
     /**
      * @param provider
      *            the provider
@@ -130,7 +121,7 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
         Job job = new Job(jobName) {
             public IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
-                setImageProvider(provider);
+                setImage(provider);
                 monitor.done();
                 return Status.OK_STATUS;
             }
@@ -143,7 +134,19 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
      */
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout());
-        m_viewer = new ImageViewer(parent, SWT.NONE);
+        m_scrollComposite = new ScrolledComposite(parent,
+                SWT.V_SCROLL | SWT.H_SCROLL);
+
+        m_child = new Composite(m_scrollComposite, SWT.NONE);
+        m_child.setLayout(new FillLayout());
+        
+        m_image = new Label(m_child, SWT.NONE);
+        m_scrollComposite.setExpandHorizontal(true);
+        m_scrollComposite.setExpandVertical(true);
+        m_scrollComposite.setMinSize(m_child.computeSize(
+                SWT.DEFAULT, SWT.DEFAULT));
+        m_scrollComposite.setContent(m_child);
+        
         getSelectionService().addSelectionListener(m_selectionListener);
         handleSelection(getSelectionService().getSelection());
         getSite().setSelectionProvider(this);
@@ -152,50 +155,34 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
     /**
      * @param provider the provider
      */
-    protected void setImageProvider(ImageProvider provider) {
-        final Image image = provider.getImage(m_viewer.getDisplay());
-        Plugin.getDisplay().syncExec(new Runnable() {
+    protected void setImage(final ImageProvider provider) {
+        m_scrollComposite.getDisplay().syncExec(new Runnable() {
             public void run() {
-                if (image != null) {
-                    m_viewer.setImage(image);
-                } else {
-                    clear();
+                Image img = provider.getImage(m_scrollComposite.getDisplay());
+                m_image.setImage(img);
+                if (img != null) {
+                    m_image.setSize(img.getBounds().width,
+                            img.getBounds().height);
                 }
+                m_scrollComposite.setMinSize(m_child.computeSize(SWT.DEFAULT,
+                        SWT.DEFAULT));
             }
         });
-        this.m_provider = provider;
-        this.m_image = image;
     }
 
     /**
      * {@inheritDoc}
      */
     public void dispose() {
-        super.dispose();
         getSelectionService().removeSelectionListener(m_selectionListener);
-        disposeImage();
-    }
-
-    /**
-     * dispose the image
-     */
-    private void disposeImage() {
-        if (m_provider == null) {
-            return;
-        }
-        if (m_image == null) {
-            return;
-        }
-        m_provider.disposeImage(m_image);
-        m_provider = null;
-        m_image = null;
+        super.dispose();
     }
 
     /**
      * {@inheritDoc}
      */
     public void setFocus() {
-        m_viewer.setFocus();
+        m_image.setFocus();
     }
 
     /**
@@ -205,16 +192,6 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
         return getSite().getWorkbenchWindow().getSelectionService();
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    public Object getAdapter(Class adapter) {
-        if (adapter.equals(IPropertySheetPage.class)) {
-            return new JBPropertiesView(true, null);
-        }
-        return super.getAdapter(adapter);
-    }
-
     /**
      * {@inheritDoc}
      */

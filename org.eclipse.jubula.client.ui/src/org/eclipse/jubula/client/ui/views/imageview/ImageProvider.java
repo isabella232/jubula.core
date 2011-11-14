@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.views.imageview;
+package org.eclipse.jubula.client.ui.views.imageview;
 
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Image;
@@ -29,13 +29,4 @@ public interface ImageProvider {
      * @return {@link Image}
      */
     Image getImage(Device target);
-
-    /**
-     * This method is used to dispose an image obtained by the getImage(Device)
-     * method.
-     * 
-     * @param image
-     *            the image that needs to be disposed of.
-     */
-    void disposeImage(Image image);
 }

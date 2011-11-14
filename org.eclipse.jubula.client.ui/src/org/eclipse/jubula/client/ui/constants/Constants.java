@@ -84,7 +84,7 @@ public interface Constants {
     public static final String PROPVIEW_ID = IPageLayout.ID_PROP_SHEET;
 
     /** ID of the ImageView */
-    public static final String IMAGEVIEW_ID = "org.eclipse.jubula.client.ui.rcp.views.Image"; //$NON-NLS-1$
+    public static final String IMAGEVIEW_ID = "org.eclipse.jubula.client.ui.views.Image"; //$NON-NLS-1$
     
     /** ID of the Jubula Component Names View (override component names) */
     public static final String COMPNAMESVIEW_ID =

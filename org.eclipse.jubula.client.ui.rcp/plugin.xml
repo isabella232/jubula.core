@@ -216,10 +216,6 @@
 			class="org.eclipse.jubula.client.ui.rcp.adapter.TestResultNodeAdapterFactory">
 			<adapter type="org.eclipse.jubula.client.core.model.TestResultNode" />
 		</factory>
-		<factory adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
-			class="org.eclipse.jubula.client.ui.rcp.adapter.TestResultNodeAdapterFactory">
-			<adapter type="org.eclipse.jubula.client.ui.rcp.views.imageview.ImageProvider" />
-		</factory>
         <factory
             adaptableType="org.eclipse.jubula.client.core.model.ITestResultSummaryPO"
             class="org.eclipse.jubula.client.ui.rcp.adapter.MonitoringSourceAdapterFactory">
@@ -276,13 +272,6 @@
 			class="org.eclipse.jubula.client.ui.rcp.views.RunningAutsView" id="org.eclipse.jubula.client.ui.rcp.views.RunningAuts"
 			name="%RunningAutsView" restorable="true">
 		</view>
-  <view
-        category="org.eclipse.jubula.client.views"
-        class="org.eclipse.jubula.client.ui.rcp.views.imageview.ImageView"
-        id="org.eclipse.jubula.client.ui.rcp.views.Image"
-        name="%ImageView"
-        restorable="true">
-  </view>
 	</extension>
 	<extension point="org.eclipse.ui.editors">
 		<editor
@@ -536,7 +525,7 @@
 				id="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
 			</viewShortcut>
    <viewShortcut
-         id="org.eclipse.jubula.client.ui.rcp.views.Image">
+         id="org.eclipse.jubula.client.ui.views.Image">
    </viewShortcut>
    <viewShortcut
          id="org.eclipse.search.ui.views.SearchView">
@@ -579,7 +568,7 @@
 				id="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
 			</viewShortcut>
    <viewShortcut
-         id="org.eclipse.jubula.client.ui.rcp.views.Image">
+         id="org.eclipse.jubula.client.ui.views.Image">
    </viewShortcut>
    <viewShortcut
          id="org.eclipse.search.ui.views.SearchView">
@@ -622,7 +611,7 @@
 				id="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
 			</viewShortcut>
    <viewShortcut
-         id="org.eclipse.jubula.client.ui.rcp.views.Image">
+         id="org.eclipse.jubula.client.ui.views.Image">
    </viewShortcut>
    <viewShortcut
          id="org.eclipse.search.ui.views.SearchView">

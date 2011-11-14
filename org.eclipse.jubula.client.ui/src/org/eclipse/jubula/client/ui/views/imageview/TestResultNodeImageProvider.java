@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.views.imageview;
+package org.eclipse.jubula.client.ui.views.imageview;
 
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
@@ -43,12 +43,5 @@ public class TestResultNodeImageProvider implements ImageProvider {
                     .getScreenshot()));
         }
         return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void disposeImage(Image image) {
-        image.dispose();
     }
 }
