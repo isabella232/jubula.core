@@ -44,9 +44,11 @@ import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.StringParsing;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
@@ -969,7 +971,7 @@ public class TreeImplClass extends AbstractControlImplClass {
         final IRobot robot = getRobot();
         try {
             pressOrReleaseModifiers(dndHelper.getModifier(), true);
-            getEventThreadQueuer().invokeAndWait("gdDropByTextPath", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("gdDropByTextPath - perform drag", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() throws StepExecutionException {
                     // drag
@@ -978,6 +980,22 @@ public class TreeImplClass extends AbstractControlImplClass {
                     
                     shakeMouse();
 
+                    return null;
+                }            
+            });
+
+            // Post a MouseMove event in order to break the Display out of its
+            // post-drag "freeze". It appears as though the mouse position 
+            // change needs to be extreme in order to nudge the Display back 
+            // into action (i.e. (<mouse-location> + 1) was insufficient), 
+            // so the default Event values (x, y = 0) are used.
+            Event wakeEvent = new Event();
+            wakeEvent.type = SWT.MouseMove;
+            getComponent().getDisplay().post(wakeEvent);
+            
+            getEventThreadQueuer().invokeAndWait("gdDropByTextPath - perform drop", new IRunnable() { //$NON-NLS-1$
+
+                public Object run() throws StepExecutionException {
                     // drop
                     gdSelect(pathType, preAscend, treePath, operator, 0, 1,
                             CompSystemConstants.EXTEND_SELECTION_NO);
@@ -1038,7 +1056,7 @@ public class TreeImplClass extends AbstractControlImplClass {
         final IRobot robot = getRobot();
         try {
             pressOrReleaseModifiers(dndHelper.getModifier(), true);
-            getEventThreadQueuer().invokeAndWait("gdDropByTextPath", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("gdDropByIndexPath - perform drag", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() throws StepExecutionException {
                     // drag
@@ -1047,6 +1065,22 @@ public class TreeImplClass extends AbstractControlImplClass {
 
                     shakeMouse();
 
+                    return null;
+                }            
+            });
+
+            // Post a MouseMove event in order to break the Display out of its
+            // post-drag "freeze". It appears as though the mouse position 
+            // change needs to be extreme in order to nudge the Display back 
+            // into action (i.e. (<mouse-location> + 1) was insufficient), 
+            // so the default Event values (x, y = 0) are used.
+            Event wakeEvent = new Event();
+            wakeEvent.type = SWT.MouseMove;
+            getComponent().getDisplay().post(wakeEvent);
+            
+            getEventThreadQueuer().invokeAndWait("gdDropByIndexPath - perform drop", new IRunnable() { //$NON-NLS-1$
+
+                public Object run() throws StepExecutionException {
                     // drop
                     gdSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
                             CompSystemConstants.EXTEND_SELECTION_NO);
