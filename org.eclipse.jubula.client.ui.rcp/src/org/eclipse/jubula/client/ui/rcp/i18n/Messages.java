@@ -1030,7 +1030,6 @@ public class Messages extends NLS {
     public static String UIJobConnectToAUTAgent;
     public static String UIJobDeletingTestResultDetails;
     public static String UIJobFindingNodes;
-    public static String UIJobLoadingImage;
     public static String UIJobResolveStartableAuts;
     public static String UIJobResolvingStartableAuts;
     public static String UIJobSearchingCompNames;

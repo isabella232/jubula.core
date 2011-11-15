@@ -8,13 +8,12 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.adapter;
+package org.eclipse.jubula.client.ui.adapter;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.TestResultNodeGUIPropertySource;
-import org.eclipse.ui.views.properties.IPropertySource;
-
+import org.eclipse.jubula.client.ui.views.imageview.ImageProvider;
+import org.eclipse.jubula.client.ui.views.imageview.TestResultNodeImageProvider;
 
 /**
  * Adapter factory for test result nodes.
@@ -24,20 +23,15 @@ import org.eclipse.ui.views.properties.IPropertySource;
  */
 public class TestResultNodeAdapterFactory implements IAdapterFactory {
     /** types for which adapters are available */
-    private final Class[] m_types = 
-    { TestResultNode.class, IPropertySource.class };
+    private final Class[] m_types = { ImageProvider.class };
 
     /**
      * {@inheritDoc}
      */
     public Object getAdapter(Object adaptableObject, Class adapterType) {
-        if (adapterType == TestResultNode.class) {
-            return new TestResultNodeGUIPropertySource(
-                    (TestResultNode)adaptableObject);
-        } else if (adapterType == IPropertySource.class
-                && adaptableObject instanceof TestResultNode) {
-            return new TestResultNodeGUIPropertySource(
-                    (TestResultNode)adaptableObject);
+        if (adapterType == ImageProvider.class) {
+            return new TestResultNodeImageProvider(
+                    (TestResultNode) adaptableObject);
         }
         return null;
     }
@@ -48,5 +42,4 @@ public class TestResultNodeAdapterFactory implements IAdapterFactory {
     public Class[] getAdapterList() {
         return m_types;
     }
-
 }

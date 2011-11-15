@@ -216,10 +216,6 @@
 			class="org.eclipse.jubula.client.ui.rcp.adapter.TestResultNodeAdapterFactory">
 			<adapter type="org.eclipse.jubula.client.core.model.TestResultNode" />
 		</factory>
-		<factory adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
-			class="org.eclipse.jubula.client.ui.rcp.adapter.TestResultNodeAdapterFactory">
-			<adapter type="org.eclipse.jubula.client.ui.rcp.views.imageview.ImageProvider" />
-		</factory>
         <factory
             adaptableType="org.eclipse.jubula.client.core.model.ITestResultSummaryPO"
             class="org.eclipse.jubula.client.ui.rcp.adapter.MonitoringSourceAdapterFactory">
@@ -276,13 +272,6 @@
 			class="org.eclipse.jubula.client.ui.rcp.views.RunningAutsView" id="org.eclipse.jubula.client.ui.rcp.views.RunningAuts"
 			name="%RunningAutsView" restorable="true">
 		</view>
-  <view
-        category="org.eclipse.jubula.client.views"
-        class="org.eclipse.jubula.client.ui.rcp.views.imageview.ImageView"
-        id="org.eclipse.jubula.client.ui.rcp.views.Image"
-        name="%ImageView"
-        restorable="true">
-  </view>
 	</extension>
 	<extension point="org.eclipse.ui.editors">
 		<editor
@@ -536,7 +525,7 @@
 				id="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
 			</viewShortcut>
    <viewShortcut
-         id="org.eclipse.jubula.client.ui.rcp.views.Image">
+         id="org.eclipse.jubula.client.ui.views.Image">
    </viewShortcut>
    <viewShortcut
          id="org.eclipse.search.ui.views.SearchView">
@@ -579,7 +568,7 @@
 				id="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
 			</viewShortcut>
    <viewShortcut
-         id="org.eclipse.jubula.client.ui.rcp.views.Image">
+         id="org.eclipse.jubula.client.ui.views.Image">
    </viewShortcut>
    <viewShortcut
          id="org.eclipse.search.ui.views.SearchView">
@@ -622,7 +611,7 @@
 				id="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
 			</viewShortcut>
    <viewShortcut
-         id="org.eclipse.jubula.client.ui.rcp.views.Image">
+         id="org.eclipse.jubula.client.ui.views.Image">
    </viewShortcut>
    <viewShortcut
          id="org.eclipse.search.ui.views.SearchView">
@@ -928,16 +917,6 @@
 		</command>
   <command
         categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-        id="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError"
-        name="Go to Next Error">
-  </command>
-  <command
-        categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-        id="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError"
-        name="Go to Previous Error">
-  </command>
-  <command
-        categoryId="org.eclipse.jubula.client.ui.rcp.commands"
         id="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
         name="%OpenCentralTestDataEditor">
   </command>
@@ -1110,11 +1089,11 @@
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="F8">
 		</key>
-		<key commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError"
+		<key commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M3+ARROW_DOWN">
 		</key>
-		<key commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError"
+		<key commandId="org.eclipse.jubula.client.ui.commands.GoToPreviousError"
 			contextId="org.eclipse.ui.contexts.window" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			sequence="M3+ARROW_UP">
 		</key>
@@ -1421,35 +1400,6 @@
 						</with>
 					</visibleWhen>
 				</command>
-			</toolbar>
-			<toolbar
-				id="org.eclipse.jubula.client.ui.rcp.toolbar.TestResultToolbar">
-				<command
-					commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError"
-					id="org.eclipse.jubula.client.ui.rcp.toolbar.TestResultToolbar.GoToNextError"
-					style="push">
-					<visibleWhen checkEnabled="false">
-						<with variable="activeEditorId">
-							<equals
-								value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
-							</equals>
-						</with>
-					</visibleWhen>
-				</command>
-				<command
-					commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError"
-					id="org.eclipse.jubula.client.ui.rcp.toolbar.TestResultToolbar.GoToPreviousError"
-					style="push">
-					<visibleWhen checkEnabled="false">
-						<with variable="activeEditorId">
-							<equals
-								value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
-							</equals>
-						</with>
-					</visibleWhen>
-				</command>
-				<separator name="GlobalActions" visible="false">
-				</separator>
 			</toolbar>
 		</menuContribution>
 		<menuContribution
@@ -2374,30 +2324,6 @@
      </enabledWhen>
   </handler>
   <handler
-        class="org.eclipse.jubula.client.ui.rcp.handlers.GoToNextTestResultErrorHandler"
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError">
-     <activeWhen>
-        <with
-              variable="activeEditorId">
-           <equals
-                 value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
-           </equals>
-        </with>
-     </activeWhen>
-  </handler>
-  <handler
-        class="org.eclipse.jubula.client.ui.rcp.handlers.GoToPreviousTestResultErrorHandler"
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError">
-     <activeWhen>
-        <with
-              variable="activeEditorId">
-           <equals
-                 value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
-           </equals>
-        </with>
-     </activeWhen>
-  </handler>
-  <handler
         class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenCentralTestDataEditorHandler"
         commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor">
         <activeWhen>
@@ -2623,14 +2549,6 @@
 			commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenProject"
 			disabledIcon="icons/loadDB_disabled.gif" icon="icons/loadDB.gif">
 		</image>
-  <image
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToNextError"
-        icon="icons/goToNextError.gif">
-  </image>
-  <image
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.GoToPreviousError"
-        icon="icons/goToPreviousError.gif">
-  </image>
   <image
         commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
         icon="icons/centralTestData.gif">

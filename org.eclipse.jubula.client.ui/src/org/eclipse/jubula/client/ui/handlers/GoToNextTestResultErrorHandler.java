@@ -8,21 +8,20 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.handlers;
+package org.eclipse.jubula.client.ui.handlers;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.ui.rcp.utils.TreeViewerIterator;
-
+import org.eclipse.jubula.client.ui.utils.TreeViewerIterator;
 
 /**
  * Handler for navigating to the "next" error in a Test Result.
- *
+ * 
  * @author BREDEX GmbH
  * @created May 17, 2010
  */
-public class GoToNextTestResultErrorHandler 
-        extends AbstractGoToTestResultErrorHandler {
+public class GoToNextTestResultErrorHandler extends
+        AbstractGoToTestResultErrorHandler {
 
     /**
      * {@inheritDoc}
@@ -30,12 +29,12 @@ public class GoToNextTestResultErrorHandler
     protected TestResultNode findTargetNode(TreeViewer viewer,
             TestResultNode startingNode) {
 
-        TreeViewerIterator iter = 
-            new TreeViewerIterator(viewer, startingNode, true);
+        TreeViewerIterator iter = new TreeViewerIterator(
+                viewer, startingNode, true);
         while (iter.hasNext()) {
             Object nextElement = iter.next();
             if (nextElement instanceof TestResultNode) {
-                TestResultNode node = (TestResultNode)nextElement;
+                TestResultNode node = (TestResultNode) nextElement;
                 if (isErrorNode(node)) {
                     return node;
                 }
@@ -45,5 +44,4 @@ public class GoToNextTestResultErrorHandler
         return null;
     }
 
-    
 }

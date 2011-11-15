@@ -100,6 +100,7 @@ public class Messages extends NLS {
     public static String TestresultSummaryTestsuiteStatus;
     public static String TestresultSummaryToolkit;
     public static String UIJobDeletingTestResultFromDB;
+    public static String UIJobLoadingImage;
     public static String UnknownTypeOfElementInTreeOfType;
     public static String UtilsError;
     public static String UtilsErrorOccurred;

@@ -68,9 +68,12 @@ public class JComboBoxHelper {
     }
 
     /**
-     * @param component the combobox
-     * @return the editor component
-     * @throws StepExecutionException if the editor comonent could not be found
+     * @param component
+     *            the combobox
+     * @return the editor used to render and edit the selected item in the
+     *         JComboBox field.
+     * @throws StepExecutionException
+     *             if the editor comonent could not be found
      */
     private Component getComboBoxEditorComponent(JComboBox component)
         throws StepExecutionException {
@@ -346,41 +349,11 @@ public class JComboBoxHelper {
     }
 
     /**
-     * @return The rendered string of the selected value or <code>null</code>, if no value is selected
-     */
-    public String getSelectedValue() {
-        Object o = m_eventThreadQueuer.invokeAndWait(
-            "getSelectedItem", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
-                    return getText();
-                }
-            });
-        return o != null ? o.toString() : null;
-    }
-
-    /**
      * @return the String from the Cell Renderer
      */
     public String getText() {
-        final JComboBox comboBox = ((JComboBox) m_implClass
-                .getComponent());
-        final int selIndex = comboBox.getSelectedIndex();
-        if (selIndex == -1) {
-            return null; // no selection
-        }
-        final JList jlist = new JList(comboBox.getModel());
-        Object o = m_eventThreadQueuer.invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        Component disp = comboBox
-                                .getRenderer()
-                                .getListCellRendererComponent(
-                                        jlist,
-                                        jlist.getModel().getElementAt(selIndex),
-                                        selIndex, true, comboBox.hasFocus());
-                        return m_implClass.getRenderedText(disp, false);
-                    }
-                });
-        return o.toString();
+        JComboBox comboBox = ((JComboBox) m_implClass.getComponent());
+        return m_implClass.getRenderedText(
+                getComboBoxEditorComponent(comboBox), true);
     }
 }

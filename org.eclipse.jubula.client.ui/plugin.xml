@@ -20,6 +20,13 @@
             class="org.eclipse.jubula.client.ui.views.TestresultSummaryView"
             category="org.eclipse.jubula.client.views"
             name="%JubulaTestresultSummaryView" id="org.eclipse.jubula.client.ui.views.TestresultSummaryView" />
+      <view
+			category="org.eclipse.jubula.client.views"
+		    class="org.eclipse.jubula.client.ui.views.imageview.ImageView"
+		    id="org.eclipse.jubula.client.ui.views.Image"
+		    name="%ImageView"
+		    restorable="true">
+  </view>
     </extension>
     <extension
           point="org.eclipse.ui.menus">
@@ -43,6 +50,38 @@
       </parameter>
    </command>
         </menuContribution>
+        <menuContribution
+			locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+			<toolbar
+				id="org.eclipse.jubula.client.ui.toolbar.TestResultToolbar">
+				<command
+					commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
+					id="org.eclipse.jubula.client.ui.toolbar.TestResultToolbar.GoToNextError"
+					style="push">
+					<visibleWhen checkEnabled="false">
+						<with variable="activeEditorId">
+							<equals
+								value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<command
+					commandId="org.eclipse.jubula.client.ui.commands.GoToPreviousError"
+					id="org.eclipse.jubula.client.ui.toolbar.TestResultToolbar.GoToPreviousError"
+					style="push">
+					<visibleWhen checkEnabled="false">
+						<with variable="activeEditorId">
+							<equals
+								value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
+							</equals>
+						</with>
+					</visibleWhen>
+				</command>
+				<separator name="GlobalActions" visible="false">
+				</separator>
+			</toolbar>
+		</menuContribution>
     </extension>
     <extension
           point="org.eclipse.ui.commandImages">
@@ -67,6 +106,14 @@
 	  <image
         commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
         icon="icons/openSpecification.gif">
+  </image>
+    <image
+        commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
+        icon="icons/goToNextError.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.GoToPreviousError"
+        icon="icons/goToPreviousError.gif">
   </image>
     </extension>
     <extension
@@ -109,6 +156,30 @@
                 </with>
             </activeWhen>
         </handler>
+        <handler
+        class="org.eclipse.jubula.client.ui.handlers.GoToNextTestResultErrorHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.GoToNextError">
+     <activeWhen>
+        <with
+              variable="activeEditorId">
+           <equals
+                 value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
+           </equals>
+        </with>
+     </activeWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.GoToPreviousTestResultErrorHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.GoToPreviousError">
+     <activeWhen>
+        <with
+              variable="activeEditorId">
+           <equals
+                 value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
+           </equals>
+        </with>
+     </activeWhen>
+  </handler>
     </extension>
     <extension
           point="org.eclipse.ui.commands">
@@ -148,6 +219,16 @@
 		    id="org.eclipse.jubula.client.ui.commands.OpenSpecification"
 		    name="%OpenSpecification">
   </command>
+		<command
+		    categoryId="org.eclipse.jubula.client.ui.commands"
+		    id="org.eclipse.jubula.client.ui.commands.GoToNextError"
+		    name="Go to Next Error">
+		  </command>
+		  <command
+		    categoryId="org.eclipse.jubula.client.ui.commands"
+		    id="org.eclipse.jubula.client.ui.commands.GoToPreviousError"
+		    name="Go to Previous Error">
+		  </command>
     </extension>
     <extension
           point="org.eclipse.ui.preferencePages">
@@ -217,4 +298,10 @@
              class="org.eclipse.jubula.client.ui.preferences.PreferenceInitializer">
        </initializer>
     </extension>
+    <extension point="org.eclipse.core.runtime.adapters">
+		<factory adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
+			class="org.eclipse.jubula.client.ui.adapter.TestResultNodeAdapterFactory">
+			<adapter type="org.eclipse.jubula.client.ui.views.imageview.ImageProvider" />
+		</factory>
+	</extension>
 </plugin>

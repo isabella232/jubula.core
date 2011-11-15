@@ -21,7 +21,6 @@ import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.swing.swing.interfaces.IJComboBoxImplClass;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.utils.StringParsing;
 
@@ -110,7 +109,7 @@ public class JComboBoxImplClass extends AbstractSwingImplClass
      *            The operator used to verify
      */
     public void gdVerifyText(String text, String operator) {
-        Verifier.match(getComboBoxHelper().getSelectedValue(), text, operator);
+        Verifier.match(getComboBoxHelper().getText(), text, operator);
     }
     /**
      * Verifies if the passed text is currently selected in the combobox.
@@ -268,8 +267,7 @@ public class JComboBoxImplClass extends AbstractSwingImplClass
      * @return the text value.
      */
     public String gdReadValue(String variable) {
-        final String selectedValue = getComboBoxHelper().getSelectedValue();
-        return selectedValue != null ? selectedValue : StringConstants.EMPTY;
+        return getComboBoxHelper().getText();
     }
 
     /**
