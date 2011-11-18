@@ -60,8 +60,20 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      *         {@link IImplementationClass#setComponent(Object)}
      */
     public abstract Control getComponent();
-    
-   
+
+    /**
+     * Forces all outstanding paint requests for the receiver's component's 
+     * display to be processed before this method returns.
+     * 
+     * @see Display#update()
+     */
+    protected void waitForDisplayUpdate() {
+        getComponent().getDisplay().syncExec(new Runnable() {
+            public void run() {
+                getComponent().getDisplay().update();
+            }
+        });
+    }
     
     /**
      * dummy method for "wait for component"

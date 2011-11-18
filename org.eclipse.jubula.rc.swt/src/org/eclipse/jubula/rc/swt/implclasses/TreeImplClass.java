@@ -969,6 +969,7 @@ public class TreeImplClass extends AbstractControlImplClass {
         final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
             .getInstance();
         final IRobot robot = getRobot();
+
         try {
             pressOrReleaseModifiers(dndHelper.getModifier(), true);
             getEventThreadQueuer().invokeAndWait("gdDropByTextPath - perform drag", new IRunnable() { //$NON-NLS-1$
@@ -1003,11 +1004,13 @@ public class TreeImplClass extends AbstractControlImplClass {
                 }            
             });
 
+            waitForDisplayUpdate();
             waitBeforeDrop(delayBeforeDrop);
             
         } finally {
             robot.mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            waitForDisplayUpdate();
         }
     }
     
