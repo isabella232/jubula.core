@@ -310,11 +310,6 @@ public class OMEditorDndSupport {
                 IObjectMappingCategoryPO fromCategory = assoc.getCategory();
                 fromCategory.removeAssociation(assoc);
                 target.addAssociation(assoc);
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        editor.getAut().getObjMap(), 
-                        DataState.StructureModified, 
-                        UpdateState.onlyInEditor);
-                editor.getTreeViewer().setExpandedState(target, true);
             } else if (unmappedTechNames.equals(newSection)) {
                 IObjectMappingCategoryPO unmappedCompNames = 
                     editor.getAut().getObjMap().getUnmappedLogicalCategory();
@@ -344,13 +339,17 @@ public class OMEditorDndSupport {
                 fromCategory.removeAssociation(assoc);
                 target.addAssociation(assoc);
                 
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        editor.getAut().getObjMap(), 
-                        DataState.StructureModified, 
-                        UpdateState.onlyInEditor);
-                editor.getTreeViewer().setExpandedState(target, true);
             }
         }
+
+        if (!toMove.isEmpty()) {
+            DataEventDispatcher.getInstance().fireDataChangedListener(
+                    editor.getAut().getObjMap(), 
+                    DataState.StructureModified, 
+                    UpdateState.onlyInEditor);
+            editor.getTreeViewer().setExpandedState(target, true);
+        }
+
     }
 
     /**
