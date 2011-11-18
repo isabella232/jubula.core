@@ -88,20 +88,7 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
         }
 
         StringBuilder serverClasspath = new StringBuilder();
-        String [] bundlesToAddToClasspath = {
-            CommandConstants.RC_HTML_BUNDLE_ID,
-            CommandConstants.TOOLS_BUNDLE_ID, 
-            CommandConstants.COMMUNICATION_BUNDLE_ID, 
-            CommandConstants.RC_COMMON_BUNDLE_ID,
-            CommandConstants.SLF4J_JCL_BUNDLE_ID,
-            CommandConstants.SLF4J_API_BUNDLE_ID,
-            CommandConstants.LOGBACK_CLASSIC_BUNDLE_ID,
-            CommandConstants.LOGBACK_CORE_BUNDLE_ID,
-            CommandConstants.LOGBACK_SLF4J_BUNDLE_ID,
-            CommandConstants.COMMONS_LANG_BUNDLE_ID,
-            CommandConstants.APACHE_ORO_BUNDLE_ID,
-            CommandConstants.COMMONS_COLLECTIONS_BUNDLE_ID
-        };
+        String [] bundlesToAddToClasspath = getBundlesForClasspath();
             
         for (String bundleId : bundlesToAddToClasspath) {
             serverClasspath.append(
@@ -144,7 +131,26 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
 
         return commands.toArray(new String[commands.size()]);
     }
-    
+
+    /**
+     * @return the bundles to add to the classpath
+     */
+    protected String[] getBundlesForClasspath() {
+        return new String[] { CommandConstants.RC_HTML_BUNDLE_ID,
+                              CommandConstants.RC_HTML_COMMON_BUNDLE_ID,
+                              CommandConstants.TOOLS_BUNDLE_ID,
+                              CommandConstants.COMMUNICATION_BUNDLE_ID,
+                              CommandConstants.RC_COMMON_BUNDLE_ID,
+                              CommandConstants.SLF4J_JCL_BUNDLE_ID,
+                              CommandConstants.SLF4J_API_BUNDLE_ID,
+                              CommandConstants.LOGBACK_CLASSIC_BUNDLE_ID,
+                              CommandConstants.LOGBACK_CORE_BUNDLE_ID,
+                              CommandConstants.LOGBACK_SLF4J_BUNDLE_ID,
+                              CommandConstants.COMMONS_LANG_BUNDLE_ID,
+                              CommandConstants.APACHE_ORO_BUNDLE_ID,
+                              CommandConstants.COMMONS_COLLECTIONS_BUNDLE_ID };
+    }
+
     /**
      * 
      * @param browserPath The path to the browser to start, or 
