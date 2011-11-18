@@ -323,10 +323,11 @@ public class OMEditorBP {
      * collect new logical component names / refresh object mapping editor
      */
     public void collectNewLogicalComponentNames() {
-        getEditor().cleanupNames();
-        DataEventDispatcher.getInstance().fireDataChangedListener(
-                getEditor().getAut().getObjMap(), 
-                DataState.StructureModified, UpdateState.onlyInEditor);
+        if (getEditor().cleanupNames() > 0) {
+            DataEventDispatcher.getInstance().fireDataChangedListener(
+                    getEditor().getAut().getObjMap(), 
+                    DataState.StructureModified, UpdateState.onlyInEditor);
+        }
     }
 
     /**
