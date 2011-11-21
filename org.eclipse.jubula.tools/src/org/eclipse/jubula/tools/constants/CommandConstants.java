@@ -44,10 +44,10 @@ public abstract class CommandConstants {
     public static final String SWING_TOOLKIT = "com.bredexsw.guidancer.SwingToolkitPlugin"; //$NON-NLS-1$
     /** constant: "Rcp" */
     public static final String RCP_TOOLKIT = "com.bredexsw.guidancer.RcpToolkitPlugin"; //$NON-NLS-1$
-    /** constant: "Web" */
-    public static final String WEB_TOOLKIT = "com.bredexsw.guidancer.WebToolkitPlugin"; //$NON-NLS-1$
     /** constant: "Html" */
     public static final String HTML_TOOLKIT = "com.bredexsw.guidancer.HtmlToolkitPlugin"; //$NON-NLS-1$
+    /** constant: "Rap" */
+    public static final String RAP_TOOLKIT = "ui.toolkit.aria.RapToolkitPlugin"; //$NON-NLS-1$
     /** ID of the SLF4J API bundle */
     public static final String SLF4J_API_BUNDLE_ID = "org.slf4j.api"; //$NON-NLS-1$
     /** ID of the SLF4J JCL bundle */

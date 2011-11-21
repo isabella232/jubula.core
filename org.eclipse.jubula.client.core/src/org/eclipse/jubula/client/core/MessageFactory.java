@@ -270,13 +270,11 @@ public class MessageFactory {
         try {
             if (CommandConstants.SWT_TOOLKIT.equals(autToolKit)
                 || CommandConstants.RCP_TOOLKIT.equals(autToolKit)) {
-                
                 messageClassName = "org.eclipse.jubula.communication.message.swt.SendSwtAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$                
             } else if (CommandConstants.SWING_TOOLKIT.equals(autToolKit)) {
                 messageClassName = "org.eclipse.jubula.communication.message.swing.SendSwingAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$                
-            } else if (CommandConstants.WEB_TOOLKIT.equals(autToolKit)) {
-                messageClassName = "org.eclipse.jubula.communication.message.web.SendWebAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$
-            } else if (CommandConstants.HTML_TOOLKIT.equals(autToolKit)) {
+            } else if (CommandConstants.HTML_TOOLKIT.equals(autToolKit)
+                    || CommandConstants.RAP_TOOLKIT.equals(autToolKit)) {
                 messageClassName = "org.eclipse.jubula.communication.message.html.SendHtmlAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$
             }
             Class messageClass = Class.forName(messageClassName, false, 
@@ -290,7 +288,6 @@ public class MessageFactory {
                         + SendAUTListOfSupportedComponentsMessage.class
                         .getName(), MessageIDs.E_MESSAGE_NOT_ASSIGNABLE);
             }
-
             // create a sharedInstance and set the message
             SendAUTListOfSupportedComponentsMessage result = 
                 (SendAUTListOfSupportedComponentsMessage)messageClass
