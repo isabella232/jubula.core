@@ -73,6 +73,8 @@ public class MessageFactory {
             "org.eclipse.jubula.communication.message.swing.CAPSwingTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.HTML_TOOLKIT, 
             "org.eclipse.jubula.communication.message.html.CAPHtmlTestMessage"); //$NON-NLS-1$
+        toolkitToTestMessageClassName.put(CommandConstants.RAP_TOOLKIT, 
+            "org.eclipse.jubula.communication.message.html.CAPHtmlTestMessage"); //$NON-NLS-1$
     }
     
     /**
