@@ -422,20 +422,17 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
     }
 
     /** {@inheritDoc} */
-    @Override
     public Object getEditableValue() {
         return "noEditableValues"; //$NON-NLS-1$
     }
 
     /** {@inheritDoc} */
-    @Override
     public boolean isPropertySet(Object arg0) {
         // Do nothing
         return false;
     }
 
     /** {@inheritDoc} */
-    @Override
     public void resetPropertyValue(Object arg0) {
         // Do nothing
     }
