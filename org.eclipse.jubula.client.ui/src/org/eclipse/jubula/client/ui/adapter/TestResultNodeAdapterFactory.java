@@ -12,8 +12,10 @@ package org.eclipse.jubula.client.ui.adapter;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.client.ui.controllers.propertysources.TestResultNodePropertySource;
 import org.eclipse.jubula.client.ui.views.imageview.ImageProvider;
 import org.eclipse.jubula.client.ui.views.imageview.TestResultNodeImageProvider;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
  * Adapter factory for test result nodes.
@@ -23,7 +25,9 @@ import org.eclipse.jubula.client.ui.views.imageview.TestResultNodeImageProvider;
  */
 public class TestResultNodeAdapterFactory implements IAdapterFactory {
     /** types for which adapters are available */
-    private final Class[] m_types = { ImageProvider.class };
+    private final Class[] m_types = { ImageProvider.class,
+                                      TestResultNode.class, 
+                                      IPropertySource.class};
 
     /**
      * {@inheritDoc}
@@ -32,6 +36,13 @@ public class TestResultNodeAdapterFactory implements IAdapterFactory {
         if (adapterType == ImageProvider.class) {
             return new TestResultNodeImageProvider(
                     (TestResultNode) adaptableObject);
+        } else if (adapterType == TestResultNode.class) {
+            return new TestResultNodePropertySource(
+                    (TestResultNode)adaptableObject);
+        } else if (adapterType == IPropertySource.class
+                && adaptableObject instanceof TestResultNode) {
+            return new TestResultNodePropertySource(
+                    (TestResultNode)adaptableObject);
         }
         return null;
     }

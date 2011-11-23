@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors;
 
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IPropertyController;
+import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

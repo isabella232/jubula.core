@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.provider.labelprovider;
 
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IPropertyController;
+import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.swt.graphics.Image;
 
 

@@ -55,6 +55,7 @@ import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLab
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
+import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -70,6 +71,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.progress.IProgressService;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -327,26 +329,25 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     /** the viewer */
     private TreeViewer m_viewer;
     
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void doSave(IProgressMonitor monitor) {
         // "Save" not supported. Do nothing.
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void doSaveAs() {
         // "Save as" not supported. Do nothing.
     }
+    
+    /** {@inheritDoc} */
+    public Object getAdapter(Class key) {
+        if (key.equals(IPropertySheetPage.class)) {
+            return new NonSortedPropertySheetPage();
+        }
+        return super.getAdapter(key);
+    }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void init(IEditorSite site, IEditorInput input) 
         throws PartInitException {
 
@@ -411,7 +412,6 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public void createPartControl(Composite parent) {

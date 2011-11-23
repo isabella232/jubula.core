@@ -102,5 +102,4 @@ public class PropertySourceAdapterFactory implements IAdapterFactory {
     public Class[] getAdapterList() {
         return m_types;
     }
-
 }

@@ -207,26 +207,10 @@
 			class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
 			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
 		</factory>
-		<factory adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
-			class="org.eclipse.jubula.client.ui.rcp.adapter.TestResultNodeAdapterFactory">
-			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
-		</factory>
-		<factory
-			adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
-			class="org.eclipse.jubula.client.ui.rcp.adapter.TestResultNodeAdapterFactory">
-			<adapter type="org.eclipse.jubula.client.core.model.TestResultNode" />
-		</factory>
         <factory
             adaptableType="org.eclipse.jubula.client.core.model.ITestResultSummaryPO"
             class="org.eclipse.jubula.client.ui.rcp.adapter.MonitoringSourceAdapterFactory">
            <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
-        </factory>
-        <factory
-              adaptableType="org.eclipse.jubula.client.ui.editors.TestResultViewer"
-              class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySheetAdapterFactory">
-           <adapter
-                 type="org.eclipse.ui.views.properties.IPropertySheetPage">
-           </adapter>
         </factory>
 	</extension>
 	<extension point="org.eclipse.ui.perspectives">

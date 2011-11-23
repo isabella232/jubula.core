@@ -56,6 +56,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
+import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -98,12 +99,10 @@ public class TestResultTreeView extends ViewPart
         super();
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object getAdapter(Class adapter) {
         if (adapter.equals(IPropertySheetPage.class)) {
-            return new JBPropertiesView(false, null);
+            return new NonSortedPropertySheetPage();
         }
         return super.getAdapter(adapter);
     }

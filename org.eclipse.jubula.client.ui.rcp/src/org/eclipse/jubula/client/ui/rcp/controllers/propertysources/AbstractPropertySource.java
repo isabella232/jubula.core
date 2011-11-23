@@ -10,23 +10,17 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
-import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.IPropertySource;
 
 
 /**
@@ -37,7 +31,8 @@ import org.eclipse.ui.views.properties.IPropertySource;
  * @param <GUINODE_TYPE> type of node
  */
 public abstract class AbstractPropertySource <GUINODE_TYPE>
-    implements IPropertySource {
+    extends org.eclipse.jubula.client.ui.controllers.
+    propertysources.AbstractPropertySource {
     /** The default image */
     public static final Image DEFAULT_IMAGE = null;
     
@@ -54,15 +49,8 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
     
     /** Image for warning */
     public static final Image WARNING_IMAGE = IconConstants.WARNING_IMAGE;
-    
-    /** List of <code>IPropertyDescriptors</code>  */
-    private List<IPropertyDescriptor> m_propDescriptors = 
-        new ArrayList<IPropertyDescriptor>();
-    
     /** The INodePO for this PropertySource*/
     private GUINODE_TYPE m_guiNode;
-    
-    
     
     /**
      * Constructor.
@@ -71,60 +59,7 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
     public AbstractPropertySource(GUINODE_TYPE guiNode) {
         m_guiNode = guiNode;
     }
-    
-    
-    /**
-     * Adds a <code>IPropertyDescriptor</code> to the List of IPropertyDescriptors.
-     * @param propDescr the IPropertyDescriptor to add.
-     */
-    protected void addPropertyDescriptor(IPropertyDescriptor propDescr) {
-        m_propDescriptors.add(propDescr);
-    }
-    
-    /**
-     * Adds all IPropertyDescriptors of the given Collection.
-     * @param propDescriptors the Collection to add.
-     */
-    protected void addPropertyDescriptor(Collection<IPropertyDescriptor> 
-        propDescriptors) {
-        m_propDescriptors.addAll(propDescriptors);
-    }
 
-    /**
-     * Clears the List of <code>IPropertyDescriptor</code>s.
-     *
-     */
-    protected void clearPropertyDescriptors() {
-        m_propDescriptors.clear();
-    }
-    
- 
-    /**
-     * Inits the PropertyDescriptors
-     */
-    protected abstract void initPropDescriptor();
-    
-    
-    /**
-     * {@inheritDoc}
-     */
-    public IPropertyDescriptor[] getPropertyDescriptors() {
-        initPropDescriptor();
-        IPropertyDescriptor[] propdescr = 
-            m_propDescriptors.toArray(
-                new IPropertyDescriptor[m_propDescriptors.size()]);
-        return propdescr;
-    }
-    
-    /**
-     * @return the <code>List</code> of <code>IPropertyDescriptor</code>s.
-     */
-    protected List<IPropertyDescriptor> getPropertyDescriptorList() {
-        return m_propDescriptors;
-    }
-    
-    
-       
     /**
      * Gets a <code>IPropertyDescriptor</code> by the given ID.
      * @param id the ID of the searched Descriptor.
@@ -143,46 +78,12 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
         return null;
     }
     
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void setPropertyValue(Object id, Object value) {
-        if (id instanceof IPropertyController) {
-            IPropertyController pc = (IPropertyController)id;
-            pc.setProperty(value);
-        } else {
-            Assert.notReached(Messages.PropertyIDInexistent 
-                + StringConstants.COLON + StringConstants.SPACE + id);
-        }
-        initPropDescriptor();
-        DataEventDispatcher.getInstance().firePropertyChanged(false);
-        DataEventDispatcher.getInstance().fireParamChangedListener();
-    }
-    
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Object getPropertyValue(Object id) {
-        Object obj = null;
-        if (id instanceof IPropertyController) {
-            obj = ((IPropertyController)id).getProperty();
-            return obj != null ? obj : StringConstants.EMPTY;
-        }
-        Assert.notReached(Messages.PropertyIDInexistent + StringConstants.COLON
-                + StringConstants.SPACE + id);
-        return obj;
-    }
-    
-    
     /**
      * {@inheritDoc}
      */
     public Object getEditableValue() {
         return this;
     }
-    
     
     /**
      * {@inheritDoc}

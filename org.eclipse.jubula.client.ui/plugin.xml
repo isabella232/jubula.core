@@ -303,5 +303,14 @@
 			class="org.eclipse.jubula.client.ui.adapter.TestResultNodeAdapterFactory">
 			<adapter type="org.eclipse.jubula.client.ui.views.imageview.ImageProvider" />
 		</factory>
+				<factory adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
+			class="org.eclipse.jubula.client.ui.adapter.TestResultNodeAdapterFactory">
+			<adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+		</factory>
+		<factory
+			adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
+			class="org.eclipse.jubula.client.ui.adapter.TestResultNodeAdapterFactory">
+			<adapter type="org.eclipse.jubula.client.core.model.TestResultNode" />
+		</factory>
 	</extension>
 </plugin>

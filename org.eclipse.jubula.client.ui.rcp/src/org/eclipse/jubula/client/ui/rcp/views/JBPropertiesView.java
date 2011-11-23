@@ -65,6 +65,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractGuiNodePropertySource;
@@ -75,7 +76,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIProper
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIPropertySource.ParameterTypeController;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIPropertySource.ParameterValueController;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IParameterPropertyController;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;

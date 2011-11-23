@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
+package org.eclipse.jubula.client.ui.controllers.propertysources;
 
 import java.util.Date;
 import java.util.Set;
@@ -24,21 +24,21 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
-import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 
 /**
- * @author BREDEX GmbH
- * @created 21.04.2005
+ * @author Markus Tiede
+ * @created 22.11.2011
  */
 @SuppressWarnings("synthetic-access")
-public class TestResultNodeGUIPropertySource 
-    extends AbstractPropertySource < TestResultNode > {
+public class TestResultNodePropertySource extends AbstractPropertySource {
     /** Constant for Category Component */
     public static final String P_TESTSTEP_CAT = 
         Messages.TestResultNodeGUIPropertySourceResultStep;
@@ -64,6 +64,10 @@ public class TestResultNodeGUIPropertySource
     public static final String P_ELEMENT_DISPLAY_ERRORTYPE = 
         Messages.TestResultNodeGUIPropertySourceErrorType;        
 
+    /** Constant for Category Test Data */
+    public static final String P_DATA_CAT = 
+        Messages.TestResultNodeGUIPropertySourceDataCat;
+    
     // CAP Details
     /** Constant for Category Component */
     public static final String P_CAP_CAT = 
@@ -86,17 +90,16 @@ public class TestResultNodeGUIPropertySource
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_PARAMETERVALUE = 
         Messages.CapGUIPropertySourceParamValue;
-    /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERTYPE = 
-        Messages.CapGUIPropertySourceParamType;
+    /** the node to display the properties for */
+    private TestResultNode m_node;
 
     /**
      * Constructor 
      * @param node
      *      TestResultNodeGUI
      */
-    public TestResultNodeGUIPropertySource(TestResultNode node) {
-        super(node);
+    public TestResultNodePropertySource(TestResultNode node) {
+        this.m_node = node;
         initPropDescriptor();
     }
 
@@ -105,11 +108,12 @@ public class TestResultNodeGUIPropertySource
      */
     protected void initPropDescriptor() {
         clearPropertyDescriptors();
-        final INodePO node = getGuiNode().getNode();        
-        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
+
+        final INodePO node = m_node.getNode();        
+        PropertyDescriptor propDes = new PropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
-                    final TestResultNode cap = getGuiNode();
+                    final TestResultNode cap = m_node;
                     Date time = cap.getTimeStamp();
                     if (time != null) {
                         String timeStamp = time.toString();
@@ -120,15 +124,15 @@ public class TestResultNodeGUIPropertySource
             }, P_ELEMENT_DISPLAY_TIMESTAMP);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
-        propDes = new JBPropertyDescriptor(
+        propDes = new PropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
-                    return getGuiNode().getName();
+                    return m_node.getName();
                 } 
             } , P_ELEMENT_DISPLAY_STEPNAME);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
-        propDes = new JBPropertyDescriptor(new ComponentController() {
+        propDes = new PropertyDescriptor(new ComponentController() {
             public Object getProperty() {
                 if (Persistor.isPoSubclass(
                         node, IEventExecTestCasePO.class)) {
@@ -151,7 +155,7 @@ public class TestResultNodeGUIPropertySource
         }, P_ELEMENT_DISPLAY_STEPTYPE);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
-        propDes = new JBPropertyDescriptor(
+        propDes = new PropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return node == null || node.getComment() == null 
@@ -160,7 +164,6 @@ public class TestResultNodeGUIPropertySource
             } , P_ELEMENT_DISPLAY_CAPCOMMENT);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
-        insertEmptyRow(P_TESTSTEP_CAT);
 
         initResultDetailsPropDesc();
         
@@ -169,14 +172,13 @@ public class TestResultNodeGUIPropertySource
 
         }
 
-        if (getGuiNode().getEvent() != null) { 
+        if (m_node.getEvent() != null) { 
             initErrorEventPropDescriptor();
         }
 
-        initComponentNameDetailsPropDescriptor(getGuiNode());
-        initActionDetailsPropDescriptor(getGuiNode());
-        initParameterDescriptor(getGuiNode());
-        
+        initComponentNameDetailsPropDescriptor(m_node);
+        initActionDetailsPropDescriptor(m_node);
+        initParameterDescriptor(m_node);
     }
     
     /**
@@ -185,35 +187,18 @@ public class TestResultNodeGUIPropertySource
      */
     private void initParameterDescriptor(TestResultNode testResult) {
         for (final TestResultParameter parameter : testResult.getParameters()) {
-            insertEmptyRow(P_CAP_CAT);
-            JBPropertyDescriptor propDesc = new JBPropertyDescriptor(
-                    new ComponentController() {
-                        public Object getProperty() {
-                            return parameter.getName();
-                        }
-                    } , P_ELEMENT_DISPLAY_PARAMETERNAME);
-            propDesc.setCategory(P_CAP_CAT);
-            addPropertyDescriptor(propDesc);
-            
-            propDesc = new JBPropertyDescriptor(
-                    new ComponentController() {
-                        public Object getProperty() {
-                            return parameter.getType();
-                        }
-                    } , P_ELEMENT_DISPLAY_PARAMETERTYPE);
-            propDesc.setCategory(P_CAP_CAT);
-            addPropertyDescriptor(propDesc);
-
-            propDesc = new JBPropertyDescriptor(
+            PropertyDescriptor propDesc = new PropertyDescriptor(
                     new ComponentController() {
                         public Object getProperty() {
                             return parameter.getValue();
                         }
-                    } , P_ELEMENT_DISPLAY_PARAMETERVALUE);
-            propDesc.setCategory(P_CAP_CAT);
+                    },
+                    NLS.bind(
+                            Messages.TestResultNodePropertySourceDataParameter,
+                            parameter.getName()));
+            propDesc.setCategory(P_DATA_CAT);
             addPropertyDescriptor(propDesc);
         }
-
     }
 
     /**
@@ -237,7 +222,7 @@ public class TestResultNodeGUIPropertySource
             }
         } 
         if (Persistor.isPoSubclass(node, ICapPO.class)) {
-            TestResultNode parent = getGuiNode().getParent();
+            TestResultNode parent = m_node.getParent();
             if (Persistor.isPoSubclass(parent.getNode(),
                 IEventExecTestCasePO.class)) {
                 image = IconConstants.EH_CAP_IMAGE;
@@ -251,13 +236,13 @@ public class TestResultNodeGUIPropertySource
     /**
      */
     private void initResultDetailsPropDesc() {
-        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
+        PropertyDescriptor propDes = new PropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
-                    return getGuiNode().getStatusString();
+                    return m_node.getStatusString();
                 }
                 public Image getImage() {
-                    int status = getGuiNode().getStatus();
+                    int status = m_node.getStatus();
                     switch (status) {
                         case TestResultNode.SUCCESS:
                             return IconConstants.STEP_OK_IMAGE;
@@ -282,7 +267,6 @@ public class TestResultNodeGUIPropertySource
             } , P_ELEMENT_DISPLAY_STEPSTATUS);
         propDes.setCategory(P_TESTRESULT_CAT);
         addPropertyDescriptor(propDes);
-        insertEmptyRow(P_TESTRESULT_CAT);
     }
 
     /**
@@ -293,11 +277,11 @@ public class TestResultNodeGUIPropertySource
     private void initComponentNameDetailsPropDescriptor(
             TestResultNode testResult) {
 
-        JBPropertyDescriptor propDes;
+        PropertyDescriptor propDes;
 
         final String componentName = testResult.getComponentName();
         if (componentName != null) {
-            propDes = new JBPropertyDescriptor(
+            propDes = new PropertyDescriptor(
                     new ComponentController() {
                         public Object getProperty() {
                             return componentName;
@@ -309,7 +293,7 @@ public class TestResultNodeGUIPropertySource
         
         final String componentType = testResult.getComponentType();
         if (componentType != null) {
-            propDes = new JBPropertyDescriptor(
+            propDes = new PropertyDescriptor(
                     new ComponentController() {
                         public Object getProperty() {
                             return componentType;
@@ -322,18 +306,16 @@ public class TestResultNodeGUIPropertySource
     }
 
     /**
-     * 
      * @param testResult The Test Result for which to display the Action 
      *                   details.
      */
     private void initActionDetailsPropDescriptor(TestResultNode testResult) {
 
-        JBPropertyDescriptor propDes;
+        PropertyDescriptor propDes;
 
         final String actionName = testResult.getActionName();
         if (actionName != null) {
-            insertEmptyRow(P_CAP_CAT);
-            propDes = new JBPropertyDescriptor(
+            propDes = new PropertyDescriptor(
                     new ComponentController() {
                         public Object getProperty() {
                             return actionName;
@@ -345,40 +327,23 @@ public class TestResultNodeGUIPropertySource
     }
 
     /**
-     * inserts an empty row into a cat
-     * @param cat
-     *      String
-     */
-    private void insertEmptyRow(String cat) {
-        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
-                new ComponentController() {
-                    
-                    public Object getProperty() {
-                        return StringConstants.EMPTY;
-                    }
-                }, StringConstants.EMPTY);
-        propDes.setCategory(cat);
-        addPropertyDescriptor(propDes);
-    }
-    
-    /**
      * 
      */
     private void initErrorEventPropDescriptor() {
-        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
+        PropertyDescriptor propDes = new PropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
-                    return I18n.getString(getGuiNode()
+                    return I18n.getString(m_node
                         .getEvent().getId());
                 }
             } , P_ELEMENT_DISPLAY_ERRORTYPE);
         propDes.setCategory(P_TESTERROR_CAT);
         addPropertyDescriptor(propDes);
-        final TestErrorEvent event = getGuiNode().getEvent();
+        final TestErrorEvent event = m_node.getEvent();
         if (event.getId().equals(TestErrorEvent.ID.VERIFY_FAILED)) {
             Set keys = event.getProps().keySet();
             for (final Object key : keys) {
-                propDes = new JBPropertyDescriptor(new ComponentController() {
+                propDes = new PropertyDescriptor(new ComponentController() {
                     public Object getProperty() {
                         return event.getProps().get(key);
                     }
@@ -391,7 +356,7 @@ public class TestResultNodeGUIPropertySource
             && event.getProps().keySet().contains(
                 TestErrorEvent.Property.DESCRIPTION_KEY)) {
             
-            propDes = new JBPropertyDescriptor(new ComponentController() {
+            propDes = new PropertyDescriptor(new ComponentController() {
                 public Object getProperty() {
                     String key = (String)event.getProps().get(
                         TestErrorEvent.Property.DESCRIPTION_KEY);
@@ -406,18 +371,16 @@ public class TestResultNodeGUIPropertySource
             propDes.setCategory(P_TESTERROR_CAT);
             addPropertyDescriptor(propDes);
         }
-        insertEmptyRow(P_TESTERROR_CAT);
     }
 
     /**
      * @param node
      *            NodePO
-     * 
      */
     private void initEventTestCasePropDescriptor(final INodePO node) {
         
         final IEventExecTestCasePO tc = (IEventExecTestCasePO) node;
-        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
+        PropertyDescriptor propDes = new PropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return I18n.getString(tc.getEventType());
@@ -426,7 +389,7 @@ public class TestResultNodeGUIPropertySource
         propDes.setCategory(
                 Messages.TestResultNodeGUIPropertySourceEventhandler);
         addPropertyDescriptor(propDes);
-        propDes = new JBPropertyDescriptor(
+        propDes = new PropertyDescriptor(
             new ComponentController() {
                 public Object getProperty() {
                     return tc.getReentryProp();
@@ -435,15 +398,6 @@ public class TestResultNodeGUIPropertySource
         propDes.setCategory(
                 Messages.TestResultNodeGUIPropertySourceEventhandler);
         addPropertyDescriptor(propDes);
-        insertEmptyRow(Messages.TestResultNodeGUIPropertySourceEventhandler);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isPropertySet(Object id) {
-        boolean isPropSet = false;
-        return isPropSet;
     }
 
     /**
@@ -452,27 +406,44 @@ public class TestResultNodeGUIPropertySource
      * @author BREDEX GmbH
      * @created 07.01.2005
      */
-    private abstract class ComponentController extends
-        AbstractPropertyController {
-        /**
-         * {@inheritDoc}
-         */
-        
+    private abstract class ComponentController implements IPropertyController {
+        /** {@inheritDoc} */
         public boolean setProperty(Object value) {
-            // readonly
-            return true;
+            return true; // readonly
         }
         
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public abstract Object getProperty();
         
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public Image getImage() {
             return null;
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Object getEditableValue() {
+        return "noEditableValues"; //$NON-NLS-1$
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isPropertySet(Object arg0) {
+        // Do nothing
+        return false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void resetPropertyValue(Object arg0) {
+        // Do nothing
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setPropertyValue(Object arg0, Object arg1) {
+        // Do nothing
     }
 }

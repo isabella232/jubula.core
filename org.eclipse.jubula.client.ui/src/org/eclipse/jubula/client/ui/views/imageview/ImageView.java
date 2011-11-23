@@ -24,6 +24,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
+import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Image;
@@ -34,6 +35,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
 
 
 /**
@@ -220,5 +222,13 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
      */
     public void setSelection(ISelection selection) {
         // empty
+    }
+    
+    /** {@inheritDoc} */
+    public Object getAdapter(Class key) {
+        if (key.equals(IPropertySheetPage.class)) {
+            return new NonSortedPropertySheetPage();
+        }
+        return super.getAdapter(key);
     }
 }

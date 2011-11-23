@@ -122,7 +122,7 @@ public class RefTestSuiteGUIPropertySource
                         }
                         return m_autIdList[((Integer)element).intValue()];
                     }
-                    Assert.notReached(Messages.WrongElementType 
+                    Assert.notReached(Messages.WrongTypeOfElement 
                             + StringConstants.DOT);
                     return String.valueOf(element);
                 }

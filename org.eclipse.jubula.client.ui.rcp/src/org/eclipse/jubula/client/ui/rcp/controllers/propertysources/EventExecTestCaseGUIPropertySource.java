@@ -160,7 +160,7 @@ public class EventExecTestCaseGUIPropertySource extends
                     if (element instanceof Integer) {
                         return EVENT_TYPES[((Integer)element).intValue()];
                     }
-                    Assert.notReached(Messages.WrongElementType 
+                    Assert.notReached(Messages.WrongTypeOfElement 
                             + StringConstants.EXCLAMATION_MARK);
                     return String.valueOf(element);
                 }

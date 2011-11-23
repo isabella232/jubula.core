@@ -38,6 +38,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.NullValidator;
 import org.eclipse.jubula.client.core.utils.StringHelper;
+import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
@@ -45,7 +46,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBProper
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.PopupCompNameTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.factory.TestDataControlFactory;
-import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.ParameterValueLabelProvider;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -285,7 +285,7 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                     if (element instanceof Integer) {
                         return m_actionTypes[((Integer)element).intValue()];
                     }
-                    Assert.notReached(Messages.WrongElementType 
+                    Assert.notReached(Messages.WrongElementType
                             + StringConstants.DOT);
                     return String.valueOf(element);
                 }

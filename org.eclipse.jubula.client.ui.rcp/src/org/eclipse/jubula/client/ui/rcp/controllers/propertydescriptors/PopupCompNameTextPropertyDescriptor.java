@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.widgets.CompNamePopupTextCellEditor;
 import org.eclipse.swt.widgets.Composite;

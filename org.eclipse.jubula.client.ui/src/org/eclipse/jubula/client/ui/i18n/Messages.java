@@ -17,10 +17,21 @@ import org.eclipse.osgi.util.NLS;
  * @created 19.01.2011
  */
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.i18n.messages"; //$NON-NLS-1$
-
     public static String AnErrorHasOccurred;
+
+    private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.i18n.messages"; //$NON-NLS-1$
     public static String CantLoadMetadataFromDatabase;
+    public static String CapGUIPropertySourceAction;
+    public static String CapGUIPropertySourceActionType;
+    public static String CapGUIPropertySourceComponent;
+    public static String CapGUIPropertySourceComponentName;
+    public static String CapGUIPropertySourceCompType;
+    public static String CapGUIPropertySourceParameter;
+    public static String CapGUIPropertySourceParamName;
+    public static String CapGUIPropertySourceParams;
+    public static String CapGUIPropertySourceParamType;
+    public static String CapGUIPropertySourceParamValue;
+    public static String CapGUIPropertySourceStepName;
     public static String DatabaseConnectionDialogDefaultName;
     public static String DatabaseConnectionDialogTitle;
     public static String DatabaseConnectionPreferencePageAddButtonLabel;
@@ -52,11 +63,32 @@ public class Messages extends NLS {
     public static String NoEditorInputCouldBeCreated;
     public static String ParentElementHasInvalidTypeReturningEmptyArray;
     public static String PluginConnectProgress;
+    public static String PropertyIDInexistent;
     public static String SelectDatabaseConnectFailed;
     public static String SelectDatabaseConnectSuccessful;
     public static String SelectedElementIsNotTestResultSummary;
     public static String SetItemsNotValidForThisSubclass;
     public static String StoringOfMetadataFailed;
+    public static String TestResultNodeGUIPropertySourceCapDetail;
+    public static String TestResultNodeGUIPropertySourceDataCat;
+    public static String TestResultNodePropertySourceDataParameter;
+    public static String TestResultNodeGUIPropertySourceComment;
+    public static String TestResultNodeGUIPropertySourceErrorDetail;
+    public static String TestResultNodeGUIPropertySourceErrorType;
+    public static String TestResultNodeGUIPropertySourceEventhandler;
+    public static String TestResultNodeGUIPropertySourceEventTestCase;
+    public static String TestResultNodeGUIPropertySourceParameters;
+    public static String TestResultNodeGUIPropertySourceReentry;
+    public static String TestResultNodeGUIPropertySourceResultStep;
+    public static String TestResultNodeGUIPropertySourceStepName;
+    public static String TestResultNodeGUIPropertySourceStepStatus;
+    public static String TestResultNodeGUIPropertySourceStepType;
+    public static String TestResultNodeGUIPropertySourceTestCase;
+    public static String TestResultNodeGUIPropertySourceTestResult;
+    public static String TestResultNodeGUIPropertySourceTestStep;
+    public static String TestResultNodeGUIPropertySourceTestSuite;
+    public static String TestResultNodeGUIPropertySourceTimeStamp;
+    public static String TestResultNodeGUIPropertySourceUnknownElement;
     public static String TestresultSummaryAutAgentHostname;
     public static String TestresultSummaryAutConf;
     public static String TestresultSummaryAutHostname;
@@ -111,7 +143,7 @@ public class Messages extends NLS {
     public static String UtilsWarning1;
     public static String UtilsWarning2;
     public static String ValidationPortErrorInvalidPortNumber;
-    
+    public static String WrongElementType;    
     
     static {
         // initialize resource bundle

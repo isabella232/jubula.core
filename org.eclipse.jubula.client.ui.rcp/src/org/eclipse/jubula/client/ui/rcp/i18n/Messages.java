@@ -167,17 +167,6 @@ public class Messages extends NLS {
     public static String CantResolveURLOfFile;
     public static String CapGUIAction;
     public static String CapGUIName;
-    public static String CapGUIPropertySourceAction;
-    public static String CapGUIPropertySourceActionType;
-    public static String CapGUIPropertySourceComponent;
-    public static String CapGUIPropertySourceComponentName;
-    public static String CapGUIPropertySourceCompType;
-    public static String CapGUIPropertySourceParameter;
-    public static String CapGUIPropertySourceParamName;
-    public static String CapGUIPropertySourceParams;
-    public static String CapGUIPropertySourceParamType;
-    public static String CapGUIPropertySourceParamValue;
-    public static String CapGUIPropertySourceStepName;
     public static String CapGUIType;
     public static String CentralTestDataEditorName;
     public static String ClassPathDialogAddDir;
@@ -713,7 +702,6 @@ public class Messages extends NLS {
     public static String PropertiesActionPage3;
     public static String PropertiesActionPage4;
     public static String PropertiesPageSimpleExtensions_Title;
-    public static String PropertyIDInexistent;
     public static String PropertyTesterPropertyNotSupported;
     public static String PropertyTesterTypeNotSupported;
     public static String ProtectedProject;
@@ -925,24 +913,6 @@ public class Messages extends NLS {
     public static String TestExecutionContributorTEST_RUN_INCOMPLETE_TESTDATA_ERROR;
     public static String TestExecutionContributorUnrecognizedJavaAgent;
     public static String TestJobGUIPropertySourceTestJobName;
-    public static String TestResultNodeGUIPropertySourceCapDetail;
-    public static String TestResultNodeGUIPropertySourceComment;
-    public static String TestResultNodeGUIPropertySourceErrorDetail;
-    public static String TestResultNodeGUIPropertySourceErrorType;
-    public static String TestResultNodeGUIPropertySourceEventhandler;
-    public static String TestResultNodeGUIPropertySourceEventTestCase;
-    public static String TestResultNodeGUIPropertySourceParameters;
-    public static String TestResultNodeGUIPropertySourceReentry;
-    public static String TestResultNodeGUIPropertySourceResultStep;
-    public static String TestResultNodeGUIPropertySourceStepName;
-    public static String TestResultNodeGUIPropertySourceStepStatus;
-    public static String TestResultNodeGUIPropertySourceStepType;
-    public static String TestResultNodeGUIPropertySourceTestCase;
-    public static String TestResultNodeGUIPropertySourceTestResult;
-    public static String TestResultNodeGUIPropertySourceTestStep;
-    public static String TestResultNodeGUIPropertySourceTestSuite;
-    public static String TestResultNodeGUIPropertySourceTimeStamp;
-    public static String TestResultNodeGUIPropertySourceUnknownElement;
     public static String TestresultSummaryAutAgentHostname;
     public static String TestresultSummaryAutConf;
     public static String TestresultSummaryAutHostname;
@@ -1073,7 +1043,6 @@ public class Messages extends NLS {
     public static String WrongAUT;
     public static String WrongEditorType;
     public static String WrongEditSupportInTestCaseEditor;
-    public static String WrongElementType;
     public static String WrongTypeOfElement;
     
     
