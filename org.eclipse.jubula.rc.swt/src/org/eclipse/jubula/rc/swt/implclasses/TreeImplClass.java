@@ -946,8 +946,13 @@ public class TreeImplClass extends AbstractControlImplClass {
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setModifier(modifier);
         dndHelper.setDragComponent(null);
+
+        SwtUtils.waitForDisplayIdle(getComponent().getDisplay());
+
         gdSelect(pathType, preAscend, treePath, operator, 0, 1, 
                 CompSystemConstants.EXTEND_SELECTION_NO);
+
+        SwtUtils.waitForDisplayIdle(getComponent().getDisplay());
     }
     
     /**
@@ -993,24 +998,20 @@ public class TreeImplClass extends AbstractControlImplClass {
             Event wakeEvent = new Event();
             wakeEvent.type = SWT.MouseMove;
             getComponent().getDisplay().post(wakeEvent);
-            
-            getEventThreadQueuer().invokeAndWait("gdDropByTextPath - perform drop", new IRunnable() { //$NON-NLS-1$
-
-                public Object run() throws StepExecutionException {
-                    // drop
-                    gdSelect(pathType, preAscend, treePath, operator, 0, 1,
-                            CompSystemConstants.EXTEND_SELECTION_NO);
-                    return null;
-                }            
-            });
 
             waitForDisplayUpdate();
+
+            // drop
+            gdSelect(pathType, preAscend, treePath, operator, 0, 1,
+                    CompSystemConstants.EXTEND_SELECTION_NO);
+
+            SwtUtils.waitForDisplayIdle(getComponent().getDisplay());
             waitBeforeDrop(delayBeforeDrop);
             
         } finally {
             robot.mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
-            waitForDisplayUpdate();
+            SwtUtils.waitForDisplayIdle(getComponent().getDisplay());
         }
     }
     
@@ -1034,8 +1035,13 @@ public class TreeImplClass extends AbstractControlImplClass {
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setModifier(modifier);
         dndHelper.setDragComponent(null);
+        
+        SwtUtils.waitForDisplayIdle(getComponent().getDisplay());
+
         gdSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
                 CompSystemConstants.EXTEND_SELECTION_NO);
+        
+        SwtUtils.waitForDisplayIdle(getComponent().getDisplay());
     }
     
     
@@ -1081,20 +1087,18 @@ public class TreeImplClass extends AbstractControlImplClass {
             wakeEvent.type = SWT.MouseMove;
             getComponent().getDisplay().post(wakeEvent);
             
-            getEventThreadQueuer().invokeAndWait("gdDropByIndexPath - perform drop", new IRunnable() { //$NON-NLS-1$
+            waitForDisplayUpdate();
 
-                public Object run() throws StepExecutionException {
-                    // drop
-                    gdSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
-                            CompSystemConstants.EXTEND_SELECTION_NO);
-                    return null;
-                }            
-            });
+            // drop
+            gdSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
+                    CompSystemConstants.EXTEND_SELECTION_NO);
 
+            SwtUtils.waitForDisplayIdle(getComponent().getDisplay());
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             robot.mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            SwtUtils.waitForDisplayIdle(getComponent().getDisplay());
         }
     }
     

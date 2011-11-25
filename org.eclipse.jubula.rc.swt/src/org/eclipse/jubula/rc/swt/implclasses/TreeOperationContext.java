@@ -282,6 +282,10 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         final TreeItem item = castToTreeItem(node);
         scrollNodeToVisible(item);
 
+        // Wait for all paint events resulting from the scroll to be processed
+        // before calculating bounds.
+        SwtUtils.waitForDisplayIdle(item.getDisplay());
+        
         org.eclipse.swt.graphics.Rectangle visibleRowBounds = 
             (org.eclipse.swt.graphics.Rectangle)getQueuer().invokeAndWait(
                 "getVisibleNodeBounds " + node, new IRunnable() { //$NON-NLS-1$

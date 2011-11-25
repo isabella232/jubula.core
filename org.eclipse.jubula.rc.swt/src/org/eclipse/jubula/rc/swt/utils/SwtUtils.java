@@ -140,6 +140,22 @@ public class SwtUtils {
                 }
             });
     }
+
+    /**
+     * Returns when there are no more events for the display to process.
+     * 
+     * @param display The display to wait on.
+     */
+    public static void waitForDisplayIdle(final Display display) {
+        display.syncExec(new Runnable() {
+            public void run() {
+                while (!display.isDisposed() && display.readAndDispatch()) {
+                    display.readAndDispatch();
+                }
+                display.update();
+            }
+        });
+    }
     
     /**
      * @param widget a Widget
