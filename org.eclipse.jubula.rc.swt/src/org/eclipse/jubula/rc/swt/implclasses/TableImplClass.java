@@ -899,7 +899,7 @@ public class TableImplClass extends AbstractControlImplClass
         final int implCol = getColumnFromString(col, colOperator);
         Boolean valueExists = new Boolean(true);
         valueExists = (Boolean)getEventThreadQueuer().invokeAndWait(
-            "selectRowByValue", //$NON-NLS-1$
+            "verifyValueInColumn", //$NON-NLS-1$
             new IRunnable() {
                 public Object run() throws StepExecutionException {
                     final int itemCount = m_table.getItemCount();
@@ -910,10 +910,12 @@ public class TableImplClass extends AbstractControlImplClass
                             return new Boolean(true);
                         }
                     }
-                    String header = m_table.getColumn(implCol).getText();
-                    if (MatchUtil.getInstance().match(header, value,
-                            operator)) {
-                        return new Boolean(true);
+                    if (m_table.getHeaderVisible()) {
+                        String header = m_table.getColumn(implCol).getText();
+                        if (MatchUtil.getInstance().match(header, value,
+                                operator)) {
+                            return new Boolean(true);
+                        }
                     }
                     return new Boolean(false);
                 }
