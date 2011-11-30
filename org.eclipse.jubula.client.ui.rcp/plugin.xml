@@ -999,6 +999,11 @@
         id="org.eclipse.jubula.client.ui.rcp.commands.ReplaceWithTestCase"
         name="%ReplaceWithTestCase">
   </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+        id="org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew"
+        name="%SaveAsNew">
+  </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<key
@@ -2607,6 +2612,10 @@
         commandId="org.eclipse.jubula.client.ui.rcp.commands.ReplaceWithTestCase"
         icon="icons/replaceWithTestCase.gif">
   </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew"
+        icon="icons/saveAsNew.gif">
+  </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"
 		point="org.eclipse.ui.handlers">
@@ -2722,30 +2731,48 @@
 				<and>
 					<or>
 						<with variable="activePartId">
-							<equals
-								value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor">
-							</equals>
+							<equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
 						</with>
 						<with variable="activePartId">
-							<equals
-								value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor">
-							</equals>
+							<equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
 						</with>
 					</or>
 					<iterate ifEmpty="false" operator="and">
 						<or>
-							<instanceof
-								value="org.eclipse.jubula.client.core.model.IExecTestCasePO">
-							</instanceof>
-							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO">
-							</instanceof>
+							<instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
 						</or>
 					</iterate>
 					<not>
 						<iterate ifEmpty="true" operator="or">
-							<instanceof
-								value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO">
-							</instanceof>
+							<instanceof	value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
+						</iterate>
+					</not>
+				</and>
+			</activeWhen>
+		</handler>
+		<handler
+			class="org.eclipse.jubula.client.ui.rcp.handlers.SaveAsNewTestCaseHandler"
+			commandId="org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew">
+			<activeWhen>
+				<and>
+					<or>
+						<with variable="activePartId">
+							<equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
+						</with>
+						<with variable="activePartId">
+							<equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
+						</with>
+					</or>
+					<iterate ifEmpty="false" operator="and">
+						<or>
+							<instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+							<instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+						</or>
+					</iterate>
+					<not>
+						<iterate ifEmpty="true" operator="or">
+							<instanceof	value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
 						</iterate>
 					</not>
 				</and>

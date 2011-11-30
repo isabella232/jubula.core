@@ -259,6 +259,8 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 RCPCommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuRefactor,
                 RCPCommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuRefactor,
+                RCPCommandIDs.SAVE_AS_NEW_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
         mgr.add(new Separator());

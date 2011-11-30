@@ -697,6 +697,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                 RCPCommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuRefactor,
                 RCPCommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuRefactor,
+                RCPCommandIDs.SAVE_AS_NEW_COMMAND_ID);
     }
 
     /**

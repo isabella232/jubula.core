@@ -110,6 +110,9 @@ public interface RCPCommandIDs {
     /** the ID of the "revert changes" command */
     public static final String REVERT_CHANGES_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.RevertChanges"; //$NON-NLS-1$
     
+    /** the ID of the "save as new" command */
+    public static final String SAVE_AS_NEW_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew"; //$NON-NLS-1$
+    
     /** the ID of the "show responsible node" command */
     public static final String SHOW_RESPONSIBLE_NODE_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.ShowResponsibleNodes"; //$NON-NLS-1$
     
