@@ -242,17 +242,30 @@ public class PopupMenuUtil {
      * @param robot
      *            The robot to use for the click operations.
      */
-    private static void selectItem(MenuItem item, IRobot robot) {
+    private static void selectItem(final MenuItem item, IRobot robot) {
         if (item == null) {
             throw new StepExecutionException("no such menu item found", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
 
         if (EnvironmentUtils.isMacOS()) {
+            // "close" (hide) the context menu. this is necessary because
+            // the selection event will not close the context menu.
+            // we do this before firing the selection event so that the menu
+            // disappears before the effects of the selection event (e.g.
+            // showing a dialog) are presented.
+            item.getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    Menu parentMenu = item.getParent();
+                    while (parentMenu.getParentMenu() != null) {
+                        parentMenu = parentMenu.getParentMenu();
+                    }
+                    parentMenu.setVisible(false);
+                }
+            });
+
             MenuUtil.selectProgramatically(item);
-            // Press 'ESC' to close menu - for some reason the popup menu itself
-            // is already disposed at this point
-            robot.keyType(null, SWT.ESC);
+
         } else {
             MenuUtil.clickMenuItem(robot, item, 1);
         }

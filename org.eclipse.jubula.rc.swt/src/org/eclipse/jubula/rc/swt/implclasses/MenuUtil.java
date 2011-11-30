@@ -514,32 +514,34 @@ public abstract class MenuUtil extends MenuUtilBase {
                                 menuItem.setSelection(true);
                             }                            
                         }
-                        
+
                         menuItem.notifyListeners(SWT.Selection, event);
                         
-                        try {
-                            confirmer.waitToConfirm(menuItem, matcher);
-                        } catch (RobotException re) {
-                            final StringBuffer sb = new StringBuffer(
-                                "Robot exception occurred while clicking...\n"); //$NON-NLS-1$
-                            //logRobotException(menuItem, re, sb);
-                            sb.append("Component: "); //$NON-NLS-1$
-
-                            EVENT_THREAD_QUEUER.invokeAndWait(
-                                "getBounds", new IRunnable() { //$NON-NLS-1$
-                                    public Object run()
-                                        throws StepExecutionException {
-                                        sb.append(menuItem);
-                                        // Return value not used
-                                        return null;
-                                    }
-                                });
-                            log.error(sb.toString(), re);
-                            throw re;
-                        }
                         return null;
                     }            
                 });
+
+        try {
+            confirmer.waitToConfirm(menuItem, matcher);
+        } catch (RobotException re) {
+            final StringBuffer sb = new StringBuffer(
+                "Robot exception occurred while clicking...\n"); //$NON-NLS-1$
+            //logRobotException(menuItem, re, sb);
+            sb.append("Component: "); //$NON-NLS-1$
+
+            EVENT_THREAD_QUEUER.invokeAndWait(
+                "getBounds", new IRunnable() { //$NON-NLS-1$
+                    public Object run()
+                        throws StepExecutionException {
+                        sb.append(menuItem);
+                        // Return value not used
+                        return null;
+                    }
+                });
+            log.error(sb.toString(), re);
+            throw re;
+        }
+    
     }
     
     /**
@@ -571,33 +573,34 @@ public abstract class MenuUtil extends MenuUtilBase {
         
         EVENT_THREAD_QUEUER.invokeAndWait(
                 "openSubMenuProgramatically", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {          
+                    public Object run() {
                         
                         menu.notifyListeners(SWT.Show, event);
                         
-                        try {
-                            confirmer.waitToConfirm(menu, matcher);
-                        } catch (RobotException re) {
-                            final StringBuffer sb = new StringBuffer(
-                                "Robot exception occurred while clicking...\n"); //$NON-NLS-1$
-                            //logRobotException(menuItem, re, sb);
-                            sb.append("Component: "); //$NON-NLS-1$
-    
-                            EVENT_THREAD_QUEUER.invokeAndWait(
-                                    "getBounds", new IRunnable() { //$NON-NLS-1$
-                                        public Object run()
-                                            throws StepExecutionException {
-                                            sb.append(menu);
-                                            // Return value not used
-                                            return null;
-                                        }
-                                    });
-                            log.error(sb.toString(), re);
-                            throw re;
-                        }
                         return null;
                     }            
                 });
+
+        try {
+            confirmer.waitToConfirm(menu, matcher);
+        } catch (RobotException re) {
+            final StringBuffer sb = new StringBuffer(
+                "Robot exception occurred while clicking...\n"); //$NON-NLS-1$
+            //logRobotException(menuItem, re, sb);
+            sb.append("Component: "); //$NON-NLS-1$
+
+            EVENT_THREAD_QUEUER.invokeAndWait(
+                    "getBounds", new IRunnable() { //$NON-NLS-1$
+                        public Object run()
+                            throws StepExecutionException {
+                            sb.append(menu);
+                            // Return value not used
+                            return null;
+                        }
+                    });
+            log.error(sb.toString(), re);
+            throw re;
+        }
     }
 
     /**
