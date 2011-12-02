@@ -279,13 +279,6 @@ public class PopupMenuUtil {
      *                   menus that need to be closed.
      */
     public static void closePopup(IRobot robot, Menu popup, int pathLength) {
-        for (int i = 0; i < pathLength && popup != null
-                && MenuUtil.isMenuVisible(popup); i++) {
-
-            // Press 'ESC' to close menu
-            robot.keyType(popup, SWT.ESC);
-
-            RobotTiming.sleepPostMouseUpDelay();
-        }
+        MenuUtil.closeMenu(robot, popup, pathLength);
     }
 }

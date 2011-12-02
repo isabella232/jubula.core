@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.implclasses;
 
+import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventMatcher;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -714,6 +715,34 @@ public abstract class MenuUtil extends MenuUtilBase {
 
     /**
      * @param robot the IRobot
+     * @param menu the Menu
+     * @param maxCascadeLength the maximum number of submenus that may be open
+     */
+    public static void closeMenu(IRobot robot, final Menu menu, 
+            int maxCascadeLength) {
+
+        Validate.notNull(menu);
+        final MenuHiddenListener menuListener = 
+                new MenuHiddenListener();
+        menu.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                menu.addMenuListener(menuListener);
+            }
+        });
+
+        // Press 'ESC' key until the first menu is gone or we reach
+        // the maxCascadeLength. This prevents infinite loops if this
+        // is used on a platform that does not use 'ESC' to close menus.
+        for (int i = 0; 
+            i < maxCascadeLength && !menuListener.isMenuHidden();
+            i++) {
+
+            robot.keyType(menu, SWT.ESC);
+        }
+    }
+
+    /**
+     * @param robot the IRobot
      * @param item the MenuItem which is to close
      * @param maxCascadeLength the maximum number of submenus that may be open
      */
@@ -723,23 +752,7 @@ public abstract class MenuUtil extends MenuUtilBase {
         if (item != null) {
             final Menu menuOfItem = getMenu(item);
             if (menuOfItem != null) {
-                final MenuHiddenListener menuListener = 
-                        new MenuHiddenListener();
-                menuOfItem.getDisplay().syncExec(new Runnable() {
-                    public void run() {
-                        menuOfItem.addMenuListener(menuListener);
-                    }
-                });
-
-                // Press 'ESC' key until the first menu is gone or we reach
-                // the maxCascadeLength. This prevents infinite loops if this
-                // is used on a platform that does not use 'ESC' to close menus.
-                for (int i = 0; 
-                    i < maxCascadeLength && !menuListener.isMenuHidden();
-                    i++) {
-
-                    robot.keyType(menuOfItem, SWT.ESC);
-                }
+                closeMenu(robot, menuOfItem, maxCascadeLength);
             }
         }
     }
