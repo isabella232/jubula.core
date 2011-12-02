@@ -175,20 +175,17 @@ public class TreeOpsBP {
                             cell.getTestData(), child, lang, childDesc);
                     List<RefToken> refTokens = conv.getRefTokens();
                     for (RefToken refToken : refTokens) {
-                        IParamDescriptionPO parentParamDescr = 
-                            parent.addParameter(
-                                    childDesc.getType(), 
-                                    RefToken.extractCore(
-                                            refToken.getGuiString()), 
-                                    false, mapper);
+                        String uiString = RefToken.extractCore(
+                                refToken.getGuiString());
+                        IParamDescriptionPO parentParamDescr = parent
+                                .addParameter(childDesc.getType(), uiString,
+                                        false, mapper);
                         // get old GUID from owner node
                         List<IParamDescriptionPO> ownerDescs = 
                             ownerNode.getParameterList();
                         String oldGuid = StringConstants.EMPTY;
                         for (IParamDescriptionPO ownerDesc : ownerDescs) {
-                            if (ownerDesc.getName().equals(
-                                    RefToken.extractCore(
-                                            refToken.getGuiString()))) {
+                            if (ownerDesc.getName().equals(uiString)) {
                                 oldGuid = ownerDesc.getUniqueId();
                                 break;
                             }

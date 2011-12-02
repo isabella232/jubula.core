@@ -170,12 +170,4 @@ public class ReplaceTCRWizard extends Wizard {
                 m_listOfExecsToReplace, m_editor);
         return true;
     }
-
-    /**
-     * @return the replacement
-     */
-    public IExecTestCasePO getReplacement() {
-        return NodeMaker.createExecTestCasePO(
-                m_choosePage.getChoosenTestCase());
-    }
 }

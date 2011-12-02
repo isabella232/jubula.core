@@ -30,11 +30,9 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -262,22 +260,8 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
             }
 
         };
-        final EntityManager s = GeneralStorage.getInstance().getMasterSession();
-        new TransactionSupport(s).transact(op);
+        new TransactionSupport().transact(op);
         mapper.updateStandardMapperAndCleanup(ownerNode.getParentProjectId());
         return extractionRet;
-    }
-
-    /**
-     * @param newSpecTc
-     *            new created specTestCase (after extraction)
-     * @param mapper
-     *            mapper to use for resolving of param names in this context
-     */
-    protected void registerParamNamesToSave(ISpecTestCasePO newSpecTc,
-            ParamNameBPDecorator mapper) {
-        for (IParamDescriptionPO desc : newSpecTc.getParameterList()) {
-            mapper.registerParamDescriptions((ITcParamDescriptionPO) desc);
-        }
     }
 }

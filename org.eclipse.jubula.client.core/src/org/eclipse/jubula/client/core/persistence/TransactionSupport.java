@@ -53,6 +53,13 @@ public class TransactionSupport {
     
     /**
      * Constructor
+     */
+    public TransactionSupport() {
+        this(GeneralStorage.getInstance().getEntityManager());
+    }
+    
+    /**
+     * Constructor
      * @param session the database session
      */
     public TransactionSupport(EntityManager session) {
