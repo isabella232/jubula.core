@@ -1,13 +1,11 @@
-package org.eclipse.jubula.client.ui.rcp.adapter;
+package org.eclipse.jubula.client.ui.adapter;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.MonitoringValuePropertySource;
+import org.eclipse.jubula.client.ui.controllers.propertysources.MonitoringValuePropertySource;
 
 /**
- * 
- * @author marc
- * 
+ * @author BREDEX GmbH
  */
 public class MonitoringSourceAdapterFactory implements IAdapterFactory {
 

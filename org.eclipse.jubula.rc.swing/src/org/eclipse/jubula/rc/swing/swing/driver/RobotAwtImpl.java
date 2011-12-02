@@ -299,8 +299,8 @@ public class RobotAwtImpl implements IRobot {
                     new long[] { AWTEvent.MOUSE_EVENT_MASK });
             IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
             try {
-                RobotTiming.sleepPreClickDelay();
                 pressModifier(modifierMask);
+                RobotTiming.sleepPreClickDelay();
                 
                 for (int i = 0; i < clickCount; i++) {
                     m_robot.mousePress(buttonMask);

@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
+package org.eclipse.jubula.client.ui.controllers.propertysources;
 
 import java.text.DecimalFormat;
 import java.util.Iterator;

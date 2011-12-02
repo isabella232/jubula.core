@@ -17,8 +17,12 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -98,5 +102,18 @@ public abstract class AbstractRefactorHandler extends AbstractHandler {
             }
         }
         return newName;
+    }
+    
+    /**
+     * @param newSpecTc
+     *            new created specTestCase (after extraction)
+     * @param mapper
+     *            mapper to use for resolving of param names in this context
+     */
+    public static void registerParamNamesToSave(ISpecTestCasePO newSpecTc,
+            ParamNameBPDecorator mapper) {
+        for (IParamDescriptionPO desc : newSpecTc.getParameterList()) {
+            mapper.registerParamDescriptions((ITcParamDescriptionPO) desc);
+        }
     }
 }

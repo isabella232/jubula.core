@@ -312,5 +312,10 @@
 			class="org.eclipse.jubula.client.ui.adapter.TestResultNodeAdapterFactory">
 			<adapter type="org.eclipse.jubula.client.core.model.TestResultNode" />
 		</factory>
+        <factory
+            adaptableType="org.eclipse.jubula.client.core.model.ITestResultSummaryPO"
+            class="org.eclipse.jubula.client.ui.adapter.MonitoringSourceAdapterFactory">
+           <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+        </factory>
 	</extension>
 </plugin>
