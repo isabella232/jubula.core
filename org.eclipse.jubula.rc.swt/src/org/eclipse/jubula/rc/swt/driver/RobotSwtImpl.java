@@ -1567,8 +1567,8 @@ public class RobotSwtImpl implements IRobot {
             final IRobotEventConfirmer confirmer = m_interceptor
                 .intercept(options);
             try {
-                RobotTiming.sleepPreClickDelay();
                 pressModifier(modifierMask);
+                RobotTiming.sleepPreClickDelay();
                 
                 for (int i = 0; i < clickCount; i++) {
                     m_robot.mousePress(buttonMask);
