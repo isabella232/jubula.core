@@ -1,0 +1,16 @@
+\index{Test Case!Save As}
+\index{Save As! New Test Case}
+
+\app{} lets you save selected \gdcases{} from other \gdcases{} and from \gdsuites{}. This lets you create a new keyword that contains the selected modules without having to manually find them and reuse them. 
+
+\begin{enumerate}
+\item Open the \gdtestcaseeditor{} or \gdtestsuiteeditor{} by double-clicking on the \gdcase{} or \gdsuite{} you  want to edit. 
+\item Select the \gdcases{} you want to save into the new \gdcase{}  by single-clicking them. Use 
+  \bxkey{Ctrl} to select more than one item. 
+\item Right-click in the editor and  select: \\
+\bxmenu{Refactor}{Save as new...}{}.
+\item When prompted, enter a name for the new \gdcase{}. 
+\item A new \gdcase{} will be created containing the \gdcases{} you selected, with the data and component names they used in the current editor.  
+\item The \gdcase{} you just created is visible in the \gdtestcasebrowser{}. 
+\end{enumerate}
+\bxwarn{Use this feature if you have created reusable \gdcases{} that are correctly modularized, but you require them again (e.g. prerequisites for another \gdcase{}). If the sequence of actions you require is a recurring logical sequence (e.g. enter username, enter password, then click OK for a login dialog), then we strongly recommend using the \bxname{Extract} function \bxpref{TasksEditorExtract} instead. This will give you one reusable module, and therefore one central place to make any changes should this sequence change.}

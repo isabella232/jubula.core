@@ -1,3 +1,8 @@
+\textbf{Selenium update}
+\begin{itemize}
+\item The version of Selenium used by \app{} has been updated to 2.12.0.
+\end{itemize}
+
 \textbf{Test Execution Duration now shown for each node in \gdtestresultview{}}\\
 \begin{itemize}
 \item The amount of time taken to execute each \gdstep{}, \gdcase{} and \gdsuite{} is now shown in the \gdtestresultview{}.
@@ -20,8 +25,21 @@ without having to set timers or manually check timestamps.
 \item You can switch off the decoration in the \app{} client in the \bxname{label decoration} preferences.
 \end{itemize} 
 
+\textbf{Save As New \gdcase{}}
+\begin{itemize}
+\item There is a new option in the \gdtestcaseeditor{} and \gdtestsuiteeditor{} to save selected items as a new \gdcase{}.
+\item The selected nodes are added to a new \gdcase{} whose name you define.
+\item The nodes are not copied, but their references are: the effect is the same as if you had manually created a new \gdcase{} and added the \gdcases{} to it. 
+\end{itemize}
+
 \textbf{Completeness check shown as progress window}\\
 \begin{itemize}
 \item After saving in the \ite{}, the completeness check which validates the state of the \gdproject{} (test data, object mapping, missing \gdcases{} etc) is now shown explicitly as a progress window.
 \item This results from performance improvements made to the completeness check.
+\end{itemize} 
+
+\textbf{Changes to layout of properties view for test results}\\
+\begin{itemize}
+\item The properties view for test results now shows all test data as two columns: the parameter name and the value.
+\item This reduces the amount of space required to see test data for test results. 
 \end{itemize} 
