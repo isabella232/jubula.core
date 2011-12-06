@@ -8,10 +8,9 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.views;
+package org.eclipse.jubula.client.ui.views;
 
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 
 /**
  * Interface that allows tree viewer containers to support multiple tree 

@@ -8,22 +8,20 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.handlers;
+package org.eclipse.jubula.client.ui.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.TreeViewContainerGUIController;
-import org.eclipse.jubula.client.ui.rcp.views.IMultiTreeViewerContainer;
+import org.eclipse.jubula.client.ui.controllers.TreeViewContainerGUIController;
+import org.eclipse.jubula.client.ui.views.IMultiTreeViewerContainer;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.ui.IWorkbenchPart;
-
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author BREDEX GmbH
  * @created 27.04.2005
- *
  */
 public class ExpandTreeItemHandler extends AbstractHandler {
 
@@ -31,7 +29,7 @@ public class ExpandTreeItemHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(ExecutionEvent event) {
-        IWorkbenchPart part = Plugin.getActivePart();
+        IWorkbenchPart part = HandlerUtil.getActivePart(event);
         TreeViewer activeTreeViewer = null;
         if (part instanceof IMultiTreeViewerContainer) {
             activeTreeViewer = ((IMultiTreeViewerContainer) part)

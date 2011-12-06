@@ -131,6 +131,24 @@
         </iterate>
      </activeWhen>
   </handler>
+	<handler
+		class="org.eclipse.jubula.client.ui.handlers.ExpandTreeItemHandler"
+		commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem">
+		<activeWhen>
+			<and>
+				<count value="+">
+				</count>
+				<iterate>
+					<or>
+						<instanceof value="org.eclipse.jubula.client.core.model.INodePO" />
+						<instanceof value="org.eclipse.jubula.client.core.model.TestResultNode" />
+						<instanceof	value="org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO" />
+						<instanceof	value="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO" />
+					</or>
+				</iterate>
+			</and>
+		</activeWhen>
+	</handler>
   <handler
         class="org.eclipse.jubula.client.ui.handlers.AddTestResultSummaryCommentHandler"
         commandId="org.eclipse.jubula.client.ui.commands.AddComment">

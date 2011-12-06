@@ -123,13 +123,13 @@ import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.O
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.selectionprovider.SelectionProviderIntermediate;
 import org.eclipse.jubula.client.ui.rcp.utils.SelectionChecker;
-import org.eclipse.jubula.client.ui.rcp.views.IMultiTreeViewerContainer;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.views.ColumnSortListener;
 import org.eclipse.jubula.client.ui.views.IJBPart;
+import org.eclipse.jubula.client.ui.views.IMultiTreeViewerContainer;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
