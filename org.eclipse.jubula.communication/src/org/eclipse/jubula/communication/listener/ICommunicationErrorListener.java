@@ -16,11 +16,11 @@ import org.eclipse.jubula.communication.message.Message;
 
 
 /**
- * The interface a communicator uses to notify interrested listener for
+ * The interface a communicator uses to notify interested listener for
  * communication errors. <br>
  * These are: <br>
  * <ul>
- * <li>connectionGained()</loi>
+ * <li>connectionGained()</li>
  * <li>connectingFailed()</li>
  * <li>acceptingFailed()</li>
  * <li>shutDown()</li>

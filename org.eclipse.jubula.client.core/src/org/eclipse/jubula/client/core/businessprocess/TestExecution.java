@@ -1731,11 +1731,8 @@ public class TestExecution {
                     }
                 };
             try {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    // nothing
-                }
+                TimeUtil.delay(2000);
+                
                 if (LOG.isDebugEnabled()) {
                     LOG.debug(Messages.RequestingAUTAgentToCloseAUTConnection);
                 }

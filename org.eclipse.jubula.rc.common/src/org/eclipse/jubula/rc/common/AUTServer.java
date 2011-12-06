@@ -883,8 +883,6 @@ public abstract class AUTServer {
         public void shutDown() {
             if (log.isInfoEnabled()) {
                 log.info("connection closed"); //$NON-NLS-1$                
-            }
-            if (log.isInfoEnabled()) {
                 log.info("exiting with " + String //$NON-NLS-1$ 
                     .valueOf(AUTServerExitConstants.EXIT_COMMUNICATION_ERROR));
             }
@@ -910,7 +908,6 @@ public abstract class AUTServer {
             extends AbstractCommunicationListener {
 
         /**
-         * 
          * {@inheritDoc}
          */
         protected void terminate() {

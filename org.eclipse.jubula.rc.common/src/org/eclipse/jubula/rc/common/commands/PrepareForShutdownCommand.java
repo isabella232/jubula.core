@@ -63,8 +63,11 @@ public class PrepareForShutdownCommand implements ICommand {
                 }
                 
                 private void terminate() {
-                    AUTServer.getInstance().shutdown();
-                    System.exit(AUTServerExitConstants.EXIT_OK);
+                    try {
+                        AUTServer.getInstance().shutdown();
+                    } finally {
+                        System.exit(AUTServerExitConstants.EXIT_OK);
+                    }
                 }
             });
         }
