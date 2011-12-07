@@ -52,7 +52,6 @@ public class XStreamGenerator {
         
         stream.alias("compSystem", CompSystem.class); //$NON-NLS-1$
         stream.aliasField("configVersion", CompSystem.class, "m_configVersion"); //$NON-NLS-1$ //$NON-NLS-2$
-        stream.aliasAttribute(CompSystem.class, "m_basicTesterClass", "basicTesterClass"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.addImplicitCollection(CompSystem.class, "m_concreteComponents", "toolkitComponent", ConcreteComponent.class); //$NON-NLS-1$ //$NON-NLS-2$
         stream.addImplicitCollection(CompSystem.class, "m_concreteComponents", "concreteComponent", ConcreteComponent.class); //$NON-NLS-1$ //$NON-NLS-2$         
         stream.addImplicitCollection(CompSystem.class, "m_abstractComponents", "abstractComponent", AbstractComponent.class); //$NON-NLS-1$ //$NON-NLS-2$
