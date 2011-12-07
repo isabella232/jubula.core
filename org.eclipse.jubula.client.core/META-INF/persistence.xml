@@ -57,9 +57,6 @@
 		<class>org.eclipse.jubula.client.core.model.ComponentNamePO</class>
 		<class>org.eclipse.jubula.client.core.model.UsedToolkitPO</class>
 		<class>org.eclipse.jubula.client.core.model.ObjectMappingProfilePO</class>
-		<class>org.eclipse.jubula.client.core.model.DocAttributePO</class>
-		<class>org.eclipse.jubula.client.core.model.DocAttributeDescriptionPO</class>
-		<class>org.eclipse.jubula.client.core.model.DocAttributeListPO</class>
 		<class>org.eclipse.jubula.client.core.model.CheckConfContPO</class>
 		<class>org.eclipse.jubula.client.core.model.CheckConfPO</class>
 		<class>org.eclipse.jubula.client.core.model.MonitoringValuePO</class>  

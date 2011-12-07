@@ -12,12 +12,10 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -36,7 +34,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.MapKeyClass;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -129,10 +126,6 @@ abstract class NodePO implements INodePO {
      * contains the comment for a node
      */
     private String m_comment;  
-    
-    /** mapping from attribute descriptions to attributes */
-    private Map<IDocAttributeDescriptionPO, IDocAttributePO> m_docAttributes = 
-        new HashMap<IDocAttributeDescriptionPO, IDocAttributePO>(0);
     
     /** The timestamp */
     private long m_timestamp = 0;
@@ -655,63 +648,6 @@ abstract class NodePO implements INodePO {
      */
     public void setTimestamp(long timestamp) {
         m_timestamp = timestamp;
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Transient
-    public Set<IDocAttributeDescriptionPO> getDocAttributeTypes() {
-        return Collections.unmodifiableSet(getDocAttributeMap().keySet());
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Transient
-    public IDocAttributePO getDocAttribute(
-            IDocAttributeDescriptionPO attributeType) {
-        
-        return getDocAttributeMap().get(attributeType);
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void setDocAttribute(IDocAttributeDescriptionPO attributeType, 
-            IDocAttributePO attribute) {
-
-        getDocAttributeMap().put(attributeType, attribute);
-    }
-
-    /**
-     * 
-     * @return The map of documentation attributes.
-     */
-    @ManyToMany(cascade = CascadeType.ALL, 
-                fetch = FetchType.EAGER, 
-                targetEntity = DocAttributePO.class)
-    @JoinTable(name = "DOC_ATTR_ASSOC", 
-               joinColumns = @JoinColumn(name = "PARENT"), 
-               inverseJoinColumns = @JoinColumn(name = "CHILD"))
-    @MapKeyClass(value = DocAttributeDescriptionPO.class)
-    private Map<IDocAttributeDescriptionPO, IDocAttributePO> 
-    getDocAttributeMap() {
-    
-        return m_docAttributes;
-    }
-    /**
-     * 
-     * @param map The new map.
-     */
-    @SuppressWarnings("unused")
-    private void setDocAttributeMap(
-            Map<IDocAttributeDescriptionPO, IDocAttributePO> map) {
-        
-        m_docAttributes = map;
     }
 
     /**

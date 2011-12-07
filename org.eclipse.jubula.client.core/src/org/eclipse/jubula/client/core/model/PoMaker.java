@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.core.model;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
@@ -720,120 +719,6 @@ public abstract class PoMaker {
         return ComponentNamePO.class;
     }
     
-   
-    /**
-     * @return the class instance of the PO
-     */
-    public static Class<DocAttributeListPO> getDocAttributeListClass() {
-        return DocAttributeListPO.class;
-    }
-
-    /**
-     * @return the class instance of the PO
-     */
-    public static Class<DocAttributePO> getDocAttributeClass() {
-        return DocAttributePO.class;
-    }
-
-    /**
-     * @return the class instance of the PO
-     */
-    public static Class<DocAttributeDescriptionPO> 
-    getDocAttributeDescriptionClass() {
-        return DocAttributeDescriptionPO.class;
-    }
-
-    /**
-     * factory method to replace constructor
-     * 
-     * @param labelKey The i18n key used to fetch the label for this attribute
-     *                 type. This also serves as a unique id for the attribute 
-     *                 type.
-     * @param displayClassName The name of a class capable of loading and 
-     *                         storing objects of this type.
-     * @param initializerClassName The name of a class capable of initializing 
-     *                             objects of this type.
-     * @return the newly created instance.
-     */
-    public static IDocAttributeDescriptionPO createDocAttributeDescription(
-            String labelKey, String displayClassName, 
-            String initializerClassName) {
-
-        return new DocAttributeDescriptionPO(labelKey, displayClassName,
-                initializerClassName);
-    }
-
-    /**
-     * factory method to replace constructor
-     * 
-     * @param labelKey The i18n key used to fetch the label for this attribute
-     *                 type. This also serves as a unique id for the attribute 
-     *                 type.
-     * @param displayClassName The name of a class capable of loading and 
-     *                         storing objects of this type.
-     * @param initializerClassName The name of a class capable of initializing 
-     *                             objects of this type.
-     * @param valueKeySet I18n keys for the possible values for attributes of 
-     *                    this type. A value of <code>null</code> indicates that
-     *                    any value is allowed.
-     * @param defaultValue I18n key for the default value for attributes of this
-     *                     type. Must be contained within 
-     *                     <code>valueKeySet</code> if <code>valueKeySet</code>
-     *                     is not <code>null</code>.
-     * @return the newly created instance.
-     */
-    public static IDocAttributeDescriptionPO createDocAttributeDescription(
-            String labelKey, String displayClassName, 
-            String initializerClassName, Set<String> valueKeySet,
-            String defaultValue) {
-
-        IDocAttributeDescriptionPO description = 
-            new DocAttributeDescriptionPO(labelKey, displayClassName, 
-                    initializerClassName, valueKeySet, defaultValue);
-        
-        if (!description.isValueValid(description.getDefaultValue())) {
-            throw new IllegalArgumentException();
-        }
-        
-        return description;
-    }
-
-    /**
-     * factory method to replace constructor
-     * 
-     * @return the newly created instance.
-     */
-    public static IDocAttributeListPO createDocAttributeList() {
-        return new DocAttributeListPO();
-    }
-
-    /**
-     * factory method to replace constructor
-     * 
-     * @param attributeDescription The type for the attribute.
-     * @return the newly created instance.
-     */
-    public static IDocAttributePO createDocAttribute(
-            IDocAttributeDescriptionPO attributeDescription) {
-        
-        String defaultValue = attributeDescription.getDefaultValue();
-        if (!attributeDescription.isValueValid(defaultValue)) {
-            throw new IllegalArgumentException();
-        }
-        
-        IDocAttributePO attribute = new DocAttributePO(defaultValue);
-        attributeDescription.getInitializer().initializeAttribute(attribute);
-
-        for (IDocAttributeDescriptionPO subDescription 
-                : attributeDescription.getSubDescriptions()) {
-            
-            attribute.setDocAttributeList(subDescription, 
-                createDocAttributeList());
-        }
-
-        return attribute;
-    }
-
     /**
      * @return a new check conf container
      */

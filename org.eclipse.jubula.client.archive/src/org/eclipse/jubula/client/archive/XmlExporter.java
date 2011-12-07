@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.archive.schema.ActivationMethodEnum;
-import org.eclipse.jubula.client.archive.schema.Attribute;
 import org.eclipse.jubula.client.archive.schema.Aut;
 import org.eclipse.jubula.client.archive.schema.AutConfig;
 import org.eclipse.jubula.client.archive.schema.Cap;
@@ -84,9 +83,6 @@ import org.eclipse.jubula.client.core.model.ICompIdentifierPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
-import org.eclipse.jubula.client.core.model.IDocAttributeDescriptionPO;
-import org.eclipse.jubula.client.core.model.IDocAttributeListPO;
-import org.eclipse.jubula.client.core.model.IDocAttributePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -359,7 +355,6 @@ class XmlExporter {
         throws ProjectDeletedException, PMException, 
             OperationCanceledException {
         fillNode(xml, po);
-        fillAttributes(xml, po, po.getProjectAttributeDescriptions());
         checkForCancel();
         fillCheckConfiguration(
                 xml, po.getProjectProperties().getCheckConfCont());
@@ -400,10 +395,7 @@ class XmlExporter {
             m_monitor.worked(1);
         }
         // test cases and categories (visible in test case view)
-        List<IDocAttributeDescriptionPO> tcDescList = po
-                .getTestCaseAttributeDescriptions();
-        
-        handleSpecPersistables(xml, po, tcDescList);
+        handleSpecPersistables(xml, po);
         
         handleExecPersistables(xml, po);
         
@@ -445,9 +437,6 @@ class XmlExporter {
                 TestSuite xmlTs = execCat.addNewTestsuite();
                 ITestSuitePO ts = (ITestSuitePO) tsOrTjOrCat;
                 fillTestsuite(xmlTs, ts);
-                List<IDocAttributeDescriptionPO> tsDescs = po
-                        .getTestSuiteAttributeDescriptions();
-                fillAttributes(xmlTs, ts, tsDescs);
             } else {
                 TestJobs xmlTj = execCat.addNewTestjob();
                 ITestJobPO tj = (ITestJobPO) tsOrTjOrCat;
@@ -460,10 +449,8 @@ class XmlExporter {
     /**
      * @param xml the project xml
      * @param po the project po
-     * @param tcDescList the tc IDocAttributeDescription  
      */
-    private void handleSpecPersistables(Project xml, IProjectPO po,
-            List<IDocAttributeDescriptionPO> tcDescList) {
+    private void handleSpecPersistables(Project xml, IProjectPO po) {
         for (ISpecPersistable tcOrCat : po.getSpecObjCont().getSpecObjList()) {
             checkForCancel();
             if (tcOrCat instanceof ICategoryPO) {
@@ -472,7 +459,6 @@ class XmlExporter {
             } else {
                 TestCase tc = xml.addNewTestcase();
                 fillTestCase(tc, (ISpecTestCasePO)tcOrCat);
-                fillAttributes(tc, tcOrCat, tcDescList);
             }
         }
     }
@@ -709,54 +695,6 @@ class XmlExporter {
         for (IUsedToolkitPO toolkit : toolkits) {
             final UsedToolkit usedToolkit = xml.addNewUsedToolkit();
             fillUsedToolkit(usedToolkit, toolkit);
-        }
-    }
-
-    /**
-     * Adds the attributes for the given node to the given XML element.
-     * 
-     * @param xml
-     *            The XML element to which the attributes will be added.
-     * @param po
-     *            The node from which the attributes will be read.
-     * @param descList
-     *            List describing which types of attributes should be exported
-     *            and in what order they should be exported.
-     */
-    private void fillAttributes(Node xml, INodePO po,
-            List<IDocAttributeDescriptionPO> descList) {
-        for (IDocAttributeDescriptionPO desc : descList) {
-            IDocAttributePO attrPo = po.getDocAttribute(desc);
-            if (attrPo != null) {
-                Attribute attrXml = xml.addNewAttribute();
-                fillAttribute(attrXml, attrPo, desc);
-            }
-        }
-    }
-
-    /**
-     * Adds the subattributes for the given attribute to the given XML element.
-     * 
-     * @param xml
-     *            The XML element to which the attributes will be added.
-     * @param po
-     *            The attribute from which the subattributes will be read.
-     * @param description
-     *            The subattribute's type.
-     */
-    private void fillAttribute(Attribute xml, IDocAttributePO po,
-            IDocAttributeDescriptionPO description) {
-
-        xml.setValue(po.getValue());
-        xml.setType(description.getLabelKey());
-        for (IDocAttributeDescriptionPO subDesc : po.getDocAttributeTypes()) {
-            IDocAttributeListPO attrList = po.getDocAttributeList(subDesc);
-            if (attrList != null) {
-                for (IDocAttributePO subAttrPo : attrList.getAttributes()) {
-                    Attribute subAttrXml = xml.addNewSubAttribute();
-                    fillAttribute(subAttrXml, subAttrPo, subDesc);
-                }
-            }
         }
     }
 

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -23,10 +22,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -74,24 +70,6 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     private Integer m_clientMetaDataVersion = null;
     
     /**
-     * List of attribute descriptions used for this project.
-     */
-    private List<IDocAttributeDescriptionPO> m_projectAttributeDescriptions = 
-        new ArrayList<IDocAttributeDescriptionPO>();
-    
-    /**
-     * List of attribute descriptions used for test cases within this project.
-     */
-    private List<IDocAttributeDescriptionPO> m_testCaseAttributeDescriptions = 
-        new ArrayList<IDocAttributeDescriptionPO>();
-
-    /**
-     * List of attribute descriptions used for test suites within this project.
-     */
-    private List<IDocAttributeDescriptionPO> m_testSuiteAttributeDescriptions = 
-        new ArrayList<IDocAttributeDescriptionPO>();
-
-    /**
      * <code>m_testdatacubecont</code> object to manage all test data cubes
      */
     private ITestDataCategoryPO m_testdatacubecont;
@@ -100,7 +78,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * only for Persistence (JPA / EclipseLink)
      */
     ProjectPO() {
-//      only for Persistence (JPA / EclipseLink)
+        // only for Persistence (JPA / EclipseLink)
     }
     
     /**
@@ -580,168 +558,6 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     @Transient
     public Boolean isReused() {
         return true;
-    }
-
-    /**
-     *      
-     * @return the project attribute descriptions.
-     */
-    @ManyToMany(fetch = FetchType.EAGER, 
-                cascade = CascadeType.ALL, 
-                targetEntity = DocAttributeDescriptionPO.class)
-    @JoinTable(name = "P_DOC_ATTR_DESC_LIST", 
-               joinColumns = @JoinColumn(name = "DOC_ATTR_DESC"), 
-               inverseJoinColumns = @JoinColumn(name = "PROJECT"))
-    @OrderColumn(name = "IDX")
-    List<IDocAttributeDescriptionPO> 
-    getHbmProjectAttributeDescriptions() {
-        return m_projectAttributeDescriptions;
-    }
-    /**
-     * For Persistence (JPA / EclipseLink)
-     * 
-     * @param projectAttributeDescriptions The descriptions to set.
-     */
-    void setHbmProjectAttributeDescriptions(
-            List<IDocAttributeDescriptionPO> projectAttributeDescriptions) {
-        m_projectAttributeDescriptions = projectAttributeDescriptions;
-    }
-
-    /**
-     *      
-     * @return the test case attribute descriptions.
-     */
-    @ManyToMany(fetch = FetchType.EAGER, 
-                cascade = CascadeType.ALL, 
-                targetEntity = DocAttributeDescriptionPO.class)
-    @JoinTable(name = "TC_DOC_ATTR_DESC_LIST", 
-               joinColumns = @JoinColumn(name = "DOC_ATTR_DESC"), 
-               inverseJoinColumns = @JoinColumn(name = "PROJECT"))
-    @OrderColumn(name = "IDX")
-    List<IDocAttributeDescriptionPO> 
-    getHbmTestCaseAttributeDescriptions() {
-        return m_testCaseAttributeDescriptions;
-    }
-    /**
-     * For Persistence (JPA / EclipseLink)
-     * 
-     * @param testCaseAttributeDescriptions The descriptions to set.
-     */
-    void setHbmTestCaseAttributeDescriptions(
-            List<IDocAttributeDescriptionPO> testCaseAttributeDescriptions) {
-        m_testCaseAttributeDescriptions = testCaseAttributeDescriptions;
-    }
-
-    /**
-     *      
-     * @return the test suite attribute descriptions.
-     */
-    @ManyToMany(fetch = FetchType.EAGER, 
-                cascade = CascadeType.ALL, 
-                targetEntity = DocAttributeDescriptionPO.class)
-    @JoinTable(name = "TS_DOC_ATTR_DESC_LIST", 
-               joinColumns = @JoinColumn(name = "DOC_ATTR_DESC"), 
-               inverseJoinColumns = @JoinColumn(name = "PROJECT"))
-    @OrderColumn(name = "IDX")
-    List<IDocAttributeDescriptionPO> 
-    getHbmTestSuiteAttributeDescriptions() {
-    
-        return m_testSuiteAttributeDescriptions;
-    }
-    /**
-     * For Persistence (JPA / EclipseLink)
-     * 
-     * @param testSuiteAttributeDescriptions The descriptions to set.
-     */
-    void setHbmTestSuiteAttributeDescriptions(
-            List<IDocAttributeDescriptionPO> testSuiteAttributeDescriptions) {
-        m_testSuiteAttributeDescriptions = testSuiteAttributeDescriptions;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void addProjectAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc) {
-        
-        getHbmProjectAttributeDescriptions().remove(attrDesc);
-        getHbmProjectAttributeDescriptions().add(attrDesc);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void addTestCaseAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc) {
-
-        getHbmTestCaseAttributeDescriptions().remove(attrDesc);
-        getHbmTestCaseAttributeDescriptions().add(attrDesc);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void addTestSuiteAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc) {
-
-        getTestSuiteAttributeDescriptions().remove(attrDesc);
-        getTestSuiteAttributeDescriptions().add(attrDesc);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeProjectAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc) {
-
-        getHbmProjectAttributeDescriptions().remove(attrDesc);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeTestCaseAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc) {
-
-        getTestCaseAttributeDescriptions().remove(attrDesc);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeTestSuiteAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc) {
-
-        getTestSuiteAttributeDescriptions().remove(attrDesc);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public List<IDocAttributeDescriptionPO> getProjectAttributeDescriptions() {
-        return Collections.unmodifiableList(
-                getHbmProjectAttributeDescriptions());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public List<IDocAttributeDescriptionPO> getTestCaseAttributeDescriptions() {
-        return Collections.unmodifiableList(
-                getHbmTestCaseAttributeDescriptions());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public List<IDocAttributeDescriptionPO> 
-    getTestSuiteAttributeDescriptions() {
-    
-        return Collections.unmodifiableList(
-                getHbmTestSuiteAttributeDescriptions());
     }
 
     /**
