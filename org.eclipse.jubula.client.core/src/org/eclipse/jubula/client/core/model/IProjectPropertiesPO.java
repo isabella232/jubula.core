@@ -114,33 +114,4 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport {
      * @return the check conf container
      */
     public abstract ICheckConfContPO getCheckConfCont();
-    
-    /**
-     * 
-     * @return the fully-qualified names of classes designated as 
-     *         Graphics Components for this Project.
-     */
-    public abstract Set<String> getSimpleExtensionClassNames();
-
-    /**
-     * Designates the class with the given fully-qualified name as a 
-     * Graphics Component.
-     * 
-     * @param className The FQN of the class.
-     * @return <code>true</code> if the class name was successfully added. 
-     *         Otherwise (eg. if the class was already designated as a 
-     *         Graphics Component), <code>false</code>.
-     */
-    public abstract boolean addSimpleExtensionClassName(String className);
-
-    /**
-     * Removes the class with the given FQN from the list of classes to 
-     * designate as Graphics Components.
-     * 
-     * @param className The FQN of the class to remove.
-     * @return <code>true</code> if the class was designated as a 
-     *         Graphics Component before executing this method. 
-     *         Otherwise, <code>false</code>.
-     */
-    public abstract boolean removeSimpleExtensionClassName(String className);
 }

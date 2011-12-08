@@ -98,13 +98,6 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /** The default of auto-cleanup days for test result details */
     private Integer m_testResultCleanupInterval = IProjectPO.CLEANUP_DEFAULT;
     
-    /** 
-     * The list of class names to consider as Graphics Components.
-     * This is part of the Simple Component Extension mechanism that allows 
-     * users to more easily designate a widget as mappable, clickable, etc.
-     */
-    private Set<String> m_simpleExtensionClassNames = new HashSet<String>();
-    
     /**
      * For Persistence (JPA / EclipseLink)
      */
@@ -496,53 +489,5 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      */
     public void setCheckConfCont(ICheckConfContPO checkConfCont) {
         m_checkConfCont = checkConfCont;
-    }
-
-    /**
-     * 
-     * @return all FQCN designated as Graphics Components via the 
-     *         Simple Component Extension mechanism.
-     */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "SIMPLE_EXT_CLASS_NAMES")
-    @Column(name = "CLASS_NAME", length = 4000)
-    @JoinColumn(name = "FK_PROJECT_PROP")
-    private Set<String> getHbmSimpleExtensionClassNames() {
-        return m_simpleExtensionClassNames;
-    }
-    
-    /**
-     * 
-     * @param classNames all FQCN designated as Graphics Components via the 
-     *                   Simple Component Extension mechanism.
-     */
-    @SuppressWarnings("unused")
-    private void setHbmSimpleExtensionClassNames(Set<String> classNames) {
-        m_simpleExtensionClassNames = classNames;
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Transient
-    public Set<String> getSimpleExtensionClassNames() {
-        return Collections.unmodifiableSet(getHbmSimpleExtensionClassNames());
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public boolean addSimpleExtensionClassName(String className) {
-        return getHbmSimpleExtensionClassNames().add(className);
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public boolean removeSimpleExtensionClassName(String className) {
-        return getHbmSimpleExtensionClassNames().remove(className);
     }
 }

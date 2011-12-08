@@ -80,9 +80,6 @@ public class CompSystem {
     /** <code>m_configVersion</code> version for clientConfig.xml */
     private ConfigVersion m_configVersion = null;
 
-    /** the FQN of the Tester Class to use for all Simple Extension components */
-    private String m_basicTesterClass = null;
-    
     /** A List of all DataTypes */
     private Set m_dataTypes = null;
     
@@ -684,16 +681,6 @@ public class CompSystem {
     }
     
     /**
-     * 
-     * @return the FQN of the Tester Class to use for all Simple Extension 
-     *         components, or <code>null</code> if no such class is defined 
-     *         for the receiver.
-     */
-    public String getBasicTesterClass() {
-        return m_basicTesterClass;
-    }
-    
-    /**
      * Collects all default mapping logical names.
      */
     private void collectDefaultMappingNames() {
@@ -873,30 +860,5 @@ public class CompSystem {
         }
         
         return null;
-    }
-    
-    /**
-     * Creates an returns a temporary Component within the context of the 
-     * receiver.
-     * 
-     * @param componentClassName The FQN of the Component Class. 
-     *                           May not be <code>null</code> or empty.
-     * @param testerClassName The FQN of the Tester Class. 
-     *                        May not be <code>null</code> or empty.
-     * @return the created Component.
-     */
-    public ConcreteComponent createSimpleExtension(
-            String componentClassName, 
-            String testerClassName) {
-        
-        Validate.notEmpty(testerClassName);
-        Validate.notEmpty(componentClassName);
-
-        ConcreteComponent component = new ConcreteComponent();
-        component.addRealizedType(getMostAbstractComponent().getType());
-        component.setTesterClass(testerClassName);
-        component.setComponentClass(componentClassName);
-        
-        return component;
     }
 }

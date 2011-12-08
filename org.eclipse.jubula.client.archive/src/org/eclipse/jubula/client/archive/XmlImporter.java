@@ -37,7 +37,6 @@ import org.eclipse.jubula.client.archive.converter.IXmlConverter;
 import org.eclipse.jubula.client.archive.converter.V4C001;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.archive.output.NullImportOutput;
-import org.eclipse.jubula.client.archive.schema.Attribute;
 import org.eclipse.jubula.client.archive.schema.Aut;
 import org.eclipse.jubula.client.archive.schema.AutConfig;
 import org.eclipse.jubula.client.archive.schema.Cap;
@@ -77,7 +76,6 @@ import org.eclipse.jubula.client.archive.schema.TestresultSummaries;
 import org.eclipse.jubula.client.archive.schema.TestresultSummary;
 import org.eclipse.jubula.client.archive.schema.UsedToolkit;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
-import org.eclipse.jubula.client.core.businessprocess.DocAttributeDescriptionBP;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
@@ -94,8 +92,6 @@ import org.eclipse.jubula.client.core.model.ICheckConfContPO;
 import org.eclipse.jubula.client.core.model.ICheckConfPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.IDocAttributeDescriptionPO;
-import org.eclipse.jubula.client.core.model.IDocAttributePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -716,7 +712,6 @@ class XmlImporter {
         EntityManager attrDescSession, boolean assignNewGuid, 
         IParamNameMapper mapper, IWritableComponentNameCache cNC)
         throws InvalidDataException, InterruptedException {
-        createProjectAttributes(proj, xml, attrDescSession);
         proj.setComment(xml.getComment());
         proj.setDefaultLanguage(LocaleUtil.convertStrToLocale(xml
                 .getDefaultLanguage()));
@@ -837,7 +832,6 @@ class XmlImporter {
             for (TestSuite tsXml : xml.getTestsuiteList()) {
                 checkCancel();
                 ITestSuitePO tsPO = createTestSuite(proj, tsXml, assignNewGuid);
-                createTestSuiteAttributes(proj, tsPO, tsXml, attrDescSession);
                 catTS.addNode(tsPO);
             }
             proj.getExecObjCont().addExecObject(catTS);
@@ -997,119 +991,6 @@ class XmlImporter {
     }
 
     /**
-     * Create and initialize all attributes for a project.
-     * 
-     * @param proj The project for which to initialize all attributes.
-     * @param projXml The XML element for the project.
-     * @param attrDescSession The session to use for finding attribute 
-     *                        descriptions in the database.
-     */
-    private void createProjectAttributes(IProjectPO proj, Project projXml, 
-            EntityManager attrDescSession) {
-
-        for (Attribute attrXml : projXml.getAttributeList()) {
-            String labelKey = attrXml.getType();
-            IDocAttributeDescriptionPO desc = 
-                DocAttributeDescriptionBP.getDescription(
-                        labelKey, attrDescSession);
-            if (desc != null) {
-                proj.addProjectAttributeDescription(desc);
-                proj.setDocAttribute(desc, 
-                        createAttribute(attrXml, desc, attrDescSession));
-            }
-        }
-        
-    }
-
-    /**
-     * Create and initialize all attributes for a test case.
-     * 
-     * @param proj The project to which the given test case belongs.
-     * @param tcPO The test case for which to initialize all attributes.
-     * @param tcXml The XML element for the test case.
-     * @param attrDescSession The session to use for finding attribute 
-     *                        descriptions in the database.
-     */
-    private void createTestCaseAttributes(IProjectPO proj, 
-            ISpecTestCasePO tcPO, TestCase tcXml, 
-            EntityManager attrDescSession) {
-
-        for (Attribute attrXml : tcXml.getAttributeList()) {
-            String labelKey = attrXml.getType();
-            IDocAttributeDescriptionPO desc = 
-                DocAttributeDescriptionBP.getDescription(
-                        labelKey, attrDescSession);
-            if (desc != null) {
-                proj.addTestCaseAttributeDescription(desc);
-                tcPO.setDocAttribute(desc, 
-                        createAttribute(attrXml, desc, attrDescSession));
-            }
-        }
-        
-    }
-
-    /**
-     * Create and initialize all attributes for a test suite.
-     * 
-     * @param proj The project to which the given test suite belongs.
-     * @param tsPO The test suite for which to initialize all attributes.
-     * @param tsXml The XML element for the test suite.
-     * @param attrDescSession The session to use for finding attribute 
-     *                        descriptions in the database.
-     */
-    private void createTestSuiteAttributes(IProjectPO proj, 
-            ITestSuitePO tsPO, TestSuite tsXml, EntityManager attrDescSession) {
-
-        for (Attribute attrXml : tsXml.getAttributeList()) {
-            String labelKey = attrXml.getType();
-            IDocAttributeDescriptionPO desc = 
-                DocAttributeDescriptionBP.getDescription(
-                        labelKey, attrDescSession);
-            if (desc != null) {
-                proj.addTestSuiteAttributeDescription(desc);
-                tsPO.setDocAttribute(desc, 
-                        createAttribute(attrXml, desc, attrDescSession));
-            }
-        }
-        
-    }
-
-    /**
-     * Creates and returns an attribute PO corresponding to the given
-     * attribute XML element. All sub-attributes are also created and 
-     * initialized.
-     * 
-     * @param attrXml The XML element on which the new attribute PO is based.
-     * @param desc The type for the attribute.
-     * @param descSession The session used to try to locate the given attribute 
-     *                    in the database.
-     * @return the newly created attribute PO.
-     */
-    private IDocAttributePO createAttribute(Attribute attrXml,
-            IDocAttributeDescriptionPO desc, EntityManager descSession) {
-
-        IDocAttributePO attr = PoMaker.createDocAttribute(desc);
-        attr.setValue(attrXml.getValue());
-        for (Attribute subAttrXml : attrXml.getSubAttributeList()) {
-            String labelKey = attrXml.getType();
-            IDocAttributeDescriptionPO subDesc = 
-                DocAttributeDescriptionBP.getDescription(labelKey, descSession);
-            if (subDesc != null) {
-                if (attr.getDocAttributeList(subDesc) == null) {
-                    attr.setDocAttributeList(subDesc,  
-                        PoMaker.createDocAttributeList());
-                }
-                IDocAttributePO subAttrPo = 
-                    createAttribute(subAttrXml, subDesc, descSession);
-                attr.getDocAttributeList(subDesc).addAttribute(subAttrPo);
-            }
-        }
-        
-
-        return attr;
-    }
-
-    /**
      * Checks whether the operation has been canceled. If the operation has been
      * canceled, an <code>InterruptedException</code> will be thrown.
      * 
@@ -1154,8 +1035,6 @@ class XmlImporter {
         } else {
             tc = m_tcRef.get(xml.getGUID());
         }
-        
-        createTestCaseAttributes(proj, tc, xml, attrDescSession);
         
         for (Teststep stepXml : xml.getTeststepList()) {
             if (stepXml.getCap() != null) {

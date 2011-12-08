@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -190,80 +189,4 @@ public interface IProjectPO extends IParamNodePO {
      * @return Returns the AutCont.
      */
     public IAUTContPO getAutCont();
-
-    /**
-     * Adds the given description to the list of attributes maintained for this
-     * project.
-     * 
-     * @param attrDesc The attribute description to add.
-     */
-    public void addProjectAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc);
-    
-    /**
-     * Removes the given description to the list of attributes maintained for 
-     * this project.
-     * 
-     * @param attrDesc The attribute description to remove.
-     */
-    public void removeProjectAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc);
-
-    /**
-     * 
-     * @return a list of descriptions of attributes maintained for this 
-     *         project. Assume that this list is not modifiable.
-     */
-    public List<IDocAttributeDescriptionPO> getProjectAttributeDescriptions();
-
-    /**
-     * Adds the given description to the list of attributes maintained for 
-     * SpecTestCases within this project.
-     * 
-     * @param attrDesc The attribute description to add.
-     */
-    public void addTestCaseAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc);
-    
-    /**
-     * Removes the given description to the list of attributes maintained for 
-     * SpecTestCases within this project.
-     * 
-     * @param attrDesc The attribute description to remove.
-     */
-    public void removeTestCaseAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc);
-
-    /**
-     * 
-     * @return a list of descriptions of attributes maintained for 
-     *         ExecTestCases within this project. Assume that this list is not 
-     *         modifiable.
-     */
-    public List<IDocAttributeDescriptionPO> getTestCaseAttributeDescriptions();
-
-    /**
-     * Adds the given description to the list of attributes maintained for 
-     * TestSuites within this project.
-     * 
-     * @param attrDesc The attribute description to add.
-     */
-    public void addTestSuiteAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc);
-    
-    /**
-     * Removes the given description to the list of attributes maintained for 
-     * TestSuites within this project.
-     * 
-     * @param attrDesc The attribute description to remove.
-     */
-    public void removeTestSuiteAttributeDescription(
-            IDocAttributeDescriptionPO attrDesc);
-
-    /**
-     * 
-     * @return a list of descriptions of attributes maintained for 
-     * TestSuites within this project. Assume that this list is not modifiable.
-     */
-    public List<IDocAttributeDescriptionPO> getTestSuiteAttributeDescriptions();
 }

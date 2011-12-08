@@ -214,31 +214,6 @@ public interface INodePO extends ITimestampPO {
     public boolean isValid();
 
     /**
-     * 
-     * @return all attribute types associated with this node.
-     */
-    public Set<IDocAttributeDescriptionPO> getDocAttributeTypes();
-    
-    /**
-     * 
-     * @param attributeType The type of the attribute for which to get the 
-     *                      value.
-     * @return The documentation attribute value for the given name, or 
-     *         <code>null</code> if no such attribute exists.
-     */
-    public IDocAttributePO getDocAttribute(
-            IDocAttributeDescriptionPO attributeType);
-
-    /**
-     * 
-     * @param attributeType  The type of the attribute for which to set the 
-     *                       value.
-     * @param attribute The value to set.
-     */
-    public void setDocAttribute(IDocAttributeDescriptionPO attributeType, 
-            IDocAttributePO attribute);
-    
-    /**
      * @return true, if node has been generated, false otherwise
      */
     public boolean isGenerated();

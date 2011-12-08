@@ -19,7 +19,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -37,12 +36,10 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
-import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.utils.StringHelper;
@@ -118,18 +115,6 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 }
                 checkToolkitAvailable(m_selectedProject.getToolkit());
                 try {
-                    EntityManager s = Persistor.instance().openSession();
-                    EntityTransaction tx = Persistor.instance()
-                            .getTransaction(s);
-                    IProjectPO proj = s.find(NodeMaker.getProjectPOClass(),
-                            m_selectedProject.getId());
-
-                    ProjectPM.initAttributeDescriptions(s, proj);
-                    ProjectPM.initAttributes(proj);
-
-                    Persistor.instance().commitTransaction(s, tx);
-                    Persistor.instance().dropSessionWithoutLockRelease(s);
-
                     NodePM.getInstance().setUseCache(true);
                     load(m_selectedProject, monitor);
                     if (monitor.isCanceled()) {

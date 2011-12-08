@@ -29,7 +29,6 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.DocAttributeDescriptionBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
@@ -39,7 +38,6 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.model.IDocAttributeDescriptionPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectNamePO;
@@ -47,7 +45,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
-import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
@@ -677,8 +674,6 @@ public class ProjectPM extends PersistenceManager {
         EntityTransaction tx = null;
         try {
             tx = Persistor.instance().getTransaction(s);
-            initAttributeDescriptions(s, proj);
-            initAttributes(proj);
             
             s.persist(proj);
             proj.setParentProjectId(proj.getId());
@@ -873,41 +868,6 @@ public class ProjectPM extends PersistenceManager {
     }
 
     /**
-     * Initializes the top-level attributes for the given project, if
-     * necessary.
-     * 
-     * @param proj The project for which to initialize the attributes.
-     */
-    public static void initAttributes(IProjectPO proj) {
-        for (IDocAttributeDescriptionPO docAttrDesc 
-                : proj.getProjectAttributeDescriptions()) {
-            if (!proj.getDocAttributeTypes().contains(
-                    docAttrDesc)) {
-                proj.setDocAttribute(docAttrDesc, 
-                        PoMaker.createDocAttribute(docAttrDesc));
-            }
-        }
-    }
-
-    /**
-     * Initializes the attribute descriptions for the given project, 
-     * if necessary.
-     * 
-     * @param s The session used to perform the initialization.
-     * @param proj The project for which to initialize the 
-     *             attribute descriptions.
-     */
-    public static void initAttributeDescriptions(EntityManager s, 
-            IProjectPO proj) {
-        IDocAttributeDescriptionPO [] descArray = 
-            DocAttributeDescriptionBP
-                .initProjectAttributeDescriptions(s);
-        for (IDocAttributeDescriptionPO desc : descArray) {
-            proj.addProjectAttributeDescription(desc);
-        }
-    }
-
-    /**
      * Sets the progress monitor for Persistence progress listeners/interceptors.
      * 
      * @param monitor The progress monitor to use, or <code>null</code> to clear
@@ -942,8 +902,6 @@ public class ProjectPM extends PersistenceManager {
         try {
             tx = Persistor.instance().getTransaction(saveSession);
 
-            refreshDocAttributes(proj, saveSession);
-            
             saveSession.persist(proj);
             proj.setParentProjectId(proj.getId());
             
@@ -991,36 +949,6 @@ public class ProjectPM extends PersistenceManager {
             Persistor.instance().dropSession(saveSession);
         }
     } 
-
-    /**
-     * Refreshes all Documentation Attribute Descriptions associated with the
-     * given project from the database. This prevents 
-     * StaleObjectStateExceptions from Persistence. This is ok because the 
-     * Descriptions are intended to be read-only on import anyway.
-     * 
-     * @param proj The project for which to refresh the Descriptions.
-     * @param saveSession The session in which to refresh the Descriptions.
-     */
-    private static void refreshDocAttributes(IProjectPO proj,
-            EntityManager saveSession) {
-
-        for (IDocAttributeDescriptionPO desc 
-                : proj.getProjectAttributeDescriptions()) {
-            
-            saveSession.refresh(desc);
-        }
-        for (IDocAttributeDescriptionPO desc 
-                : proj.getTestCaseAttributeDescriptions()) {
-            
-            saveSession.refresh(desc);
-        }
-        for (IDocAttributeDescriptionPO desc 
-                : proj.getTestSuiteAttributeDescriptions()) {
-            
-            saveSession.refresh(desc);
-        }
-        
-    }
 
     /**
      * Check if there is a ProjectPO whith the supplied name in the DB.

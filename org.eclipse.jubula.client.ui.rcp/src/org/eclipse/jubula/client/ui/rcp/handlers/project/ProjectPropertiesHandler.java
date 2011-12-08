@@ -152,15 +152,6 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
         mgr.addToRoot(usedNode);
         generalPage.addOkListener(usedPage);
         
-        // Disable due to http://bugzilla.bredex.de/73
-//        PropertyPage simpleExtensionPage = 
-//            new ComponentExtensionPropertyPage(es);
-//        simpleExtensionPage.setTitle(
-//                Messages.PropertiesPageSimpleExtensions_Title);
-//        IPreferenceNode simpleExtensionNode = new PreferenceNode(
-//            Constants.SIMPLE_EXTENSION_PROPERTY_ID, simpleExtensionPage);
-//        mgr.addToRoot(simpleExtensionNode);
-    
         return generalPage;
     }
 }

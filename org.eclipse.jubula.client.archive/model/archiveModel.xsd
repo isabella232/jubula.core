@@ -20,7 +20,6 @@
       <xs:element name="name" type="xs:string" minOccurs="0" nillable="true" />
       <xs:element name="comment" type="xs:string" minOccurs="0" nillable="true" default="" />
       <xs:element name="GUID" type="xs:string" minOccurs="0" nillable="true" />
-      <xs:element name="attribute" type="gd:attribute" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="generated" type="xs:boolean" minOccurs="0" nillable="false" default="false" />
       <xs:element name="active" type="xs:boolean" minOccurs="0" nillable="false" default="true" />
     </xs:sequence>
@@ -138,15 +137,6 @@
       <xs:element name="confAttrMapEntry" type="gd:mapEntry" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="GUID" type="xs:string" minOccurs="0" maxOccurs="1" 
       	  nillable="true" />
-    </xs:sequence>
-    <xs:attribute name="id" type="xs:ID" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="attribute">
-    <!--checked-->
-    <xs:sequence>
-      <xs:element name="value" type="xs:string" default="" nillable="true" />
-      <xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="subAttribute" type="gd:attribute" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute name="id" type="xs:ID" use="optional" />
   </xs:complexType>

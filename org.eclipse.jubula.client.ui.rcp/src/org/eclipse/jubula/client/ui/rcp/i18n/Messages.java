@@ -200,13 +200,6 @@ public class Messages extends NLS {
     public static String CompletenessCheckRunningOperation; 
     public static String Component;
     public static String ComponentCouldNotBeFoundInRunningAut;
-    public static String ComponentExtensionDialog_Message;
-    public static String ComponentExtensionDialog_Title;
-    public static String ComponentExtensionEditDialog_Message;
-    public static String ComponentExtensionEditDialog_Title;
-    public static String ComponentExtensions_AddButton_Text;
-    public static String ComponentExtensions_EditButton_Text;
-    public static String ComponentExtensions_RemoveButton_Text;
     public static String ConfigurationMustNotNull;
     public static String Connection;
     public static String CoreException;
