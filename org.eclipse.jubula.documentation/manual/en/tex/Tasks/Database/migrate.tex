@@ -1,9 +1,32 @@
 If a new version of \app{} uses a new \gddb{} scheme, you will be informed of this when attempting to connect to the \gddb{}.
 
-From the information dialog, you can start the migration wizard. This wizard removes the old \gddb{} scheme (and any \gdprojects{} in it) and automatically creates the new scheme for the current version. 
+%From the information dialog, you can start the migration wizard. This wizard removes the old \gddb{} scheme (and any \gdprojects{} in it) and automatically creates the new scheme for the current version. 
 
-You can choose which \gdprojects{} (exported from the old version) you want to import into the new \gddb{}.
+%You can choose which \gdprojects{} (exported from the old version) you want to import into the new \gddb{}.
 
-If you do not have sufficient privileges to clear your \gddb{}, then you must manually clear it using a \gddb{} administration tool.
+%If you do not have sufficient privileges to clear your \gddb{}, then you must manually clear it using a \gddb{} administration tool.
+
+If this is the case, please follow these instructions:
+
+\begin{enumerate}
+\item From the old version of \app{}, export and backup all the \gdprojects{} from the database. 
+\bxtipp{Make sure you also export and back up any library \gdprojects{} used in your tests, e.g. the unbound modules \gdprojects{}. }
+\item Back up any extensions you have made to \app{}: any customized plugins and implementation classes you have written.  
+\item Export your \gddb{} preferences from the workspace.
+\item Uninstall the old version of \app{}. 
+\item Clear (empty) the \gddb{} schema for all necessary \app{} users. You can do this via a database administration tool which will let you carry out the action \bxname{Drop Tables}. 
+\bxtipp{The \gddb{} migration assistant will automatically notify you if your \gddb{} scheme is incompatible with the new version. }
+%The migration assistant can carry out the \gddb{} migration for you in most cases.}
+\item Install the new version of \app{}.
+\bxtipp{If you have \gdagents{} running on other machines, be sure to install the new version of the \gdagent{} there too.}
+\item Add any extension plugins you backed up from the old version.
+\item Import your \gddb{} preferences into \app{}.
+\bxtipp{If you are testing RCP \gdauts{}, bear in mind that you will need to remove the old version of the RCP Remote Control plugin  from your application and insert the new version in its place. We also recommend starting your application with \bxshell{-clean} to ensure that the old RCP Remote Remote Control plugin is no longer used.}
+\item Start \app{}.  
+%\item When you first connect to the \gddb{}, you will be informed whether your \gddb{} scheme is compatible with the new version. If not, the migration wizard will guide you through the migration process.
+
+\end{enumerate}
 
 
+
+\bxtipp{You will also need to follow the instructions on updating the version of the unbound modules projects you use \bxpref{changingreusedprojectversion}}.
