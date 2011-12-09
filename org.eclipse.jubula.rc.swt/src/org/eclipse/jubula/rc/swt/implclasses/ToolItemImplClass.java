@@ -346,6 +346,20 @@ public class ToolItemImplClass extends AbstractSwtImplClass
     }
 
     /**
+     * Stores the value of the property with the name <code>name</code>.
+     * The name of the property has be specified according to the JavaBean
+     * specification. The value returned by the property is converted into a
+     * string by calling <code>toString()</code> and is stored to the passed
+     * variable.
+     * 
+     * @param variableName The name of the variable to store the property value in
+     * @param propertyName The name of the property
+     */
+    public void gdStoreProperty(String variableName, String propertyName) {
+
+    }
+    
+    /**
      * Verifies the selected property.
      * @param selected The selected property value to verify.
      */
