@@ -28,8 +28,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 import javax.swing.text.JTextComponent;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
@@ -49,6 +47,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swing.swing.driver.KeyCodeConverter;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -439,25 +438,18 @@ public abstract class AbstractSwingImplClass implements
      * @param operator The operator used to verify
      */
     public void gdVerifyProperty(String name, String value, String operator) {
-        Component bean = getComponent();
-        Validate.notNull(bean, "Tested component must not be null"); //$NON-NLS-1$
         try {
-            final Object prop = PropertyUtils.getProperty(bean, name);
-            final String propToStr = String.valueOf(prop);
-            final boolean matches = MatchUtil.getInstance().match(propToStr,
-                    value, operator);
+            final String propToStr = getRobot().
+                    getPropertyValue(getComponent(), name);
+            final boolean matches = MatchUtil.getInstance().match(
+                    propToStr, value, operator);
             if (!matches) {
                 Verifier.throwVerifyFailed(value, propToStr);
             }
-        } catch (IllegalAccessException e) {
-            throw new StepExecutionException(e.getMessage(), EventFactory
-                    .createActionError(TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
-        } catch (InvocationTargetException e) {
-            throw new StepExecutionException(e.getMessage(), EventFactory
-                    .createActionError(TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
-        } catch (NoSuchMethodException e) {
-            throw new StepExecutionException(e.getMessage(), EventFactory
-                    .createActionError(TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
+        } catch (RobotException e) {
+            throw new StepExecutionException(
+                    e.getMessage(), EventFactory.createActionError(
+                            TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
         }
     }
 
@@ -470,9 +462,20 @@ public abstract class AbstractSwingImplClass implements
      * 
      * @param variableName The name of the variable to store the property value in
      * @param propertyName The name of the property
+     * @return the property value.
      */
-    public void gdStoreProperty(String variableName, String propertyName) {
-
+    public String gdStorePropertyValue(String variableName, 
+        String propertyName) {
+        String propertyValue = StringConstants.EMPTY;
+        try {
+            propertyValue = getRobot().
+                    getPropertyValue(getComponent(), propertyName);
+        } catch (RobotException e) {
+            throw new StepExecutionException(
+                    e.getMessage(), EventFactory.createActionError(
+                            TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
+        }
+        return propertyValue;
     }
     
     /**

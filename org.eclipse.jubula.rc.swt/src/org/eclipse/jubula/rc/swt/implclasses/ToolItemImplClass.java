@@ -10,12 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.implclasses;
 
-import java.lang.reflect.InvocationTargetException;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
+import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
@@ -314,26 +311,13 @@ public class ToolItemImplClass extends AbstractSwtImplClass
      */
     public void gdVerifyProperty(final String name, String value, 
             String operator) {
-        
         final Item bean = m_item;
-        Validate.notNull(bean, "Tested component must not be null"); //$NON-NLS-1$
         Object prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
             new IRunnable() {
-
                 public Object run() throws StepExecutionException {
                     try {
-                        return PropertyUtils.getProperty(bean, name);
-                    } catch (IllegalAccessException e) {
-                        throw new StepExecutionException(
-                            e.getMessage(), 
-                            EventFactory.createActionError(
-                                TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
-                    } catch (InvocationTargetException e) {
-                        throw new StepExecutionException(
-                            e.getMessage(), 
-                            EventFactory.createActionError(
-                                TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
-                    } catch (NoSuchMethodException e) {
+                        return getRobot().getPropertyValue(bean, name);
+                    } catch (RobotException e) {
                         throw new StepExecutionException(
                             e.getMessage(), 
                             EventFactory.createActionError(
@@ -342,7 +326,7 @@ public class ToolItemImplClass extends AbstractSwtImplClass
                 }
             });
         final String propToStr = String.valueOf(prop);
-        MatchUtil.getInstance().match(value, propToStr, operator);
+        Verifier.match(propToStr, value, operator);
     }
 
     /**
@@ -354,9 +338,25 @@ public class ToolItemImplClass extends AbstractSwtImplClass
      * 
      * @param variableName The name of the variable to store the property value in
      * @param propertyName The name of the property
+     * @return the property value.
      */
-    public void gdStoreProperty(String variableName, String propertyName) {
-
+    public String gdStorePropertyValue(String variableName, 
+        final String propertyName) {
+        final Item bean = m_item;
+        Object prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
+            new IRunnable() {
+                public Object run() throws StepExecutionException {
+                    try {
+                        return getRobot().getPropertyValue(bean, propertyName);
+                    } catch (RobotException e) {
+                        throw new StepExecutionException(
+                            e.getMessage(), 
+                            EventFactory.createActionError(
+                                TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
+                    }
+                }
+            });
+        return String.valueOf(prop);
     }
     
     /**

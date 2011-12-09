@@ -74,7 +74,7 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
-		</action>		<action name="CompSystem.StoreProperty" changed="1.3">			<method>gdStoreProperty</method>			<param name="CompSystem.Variable">				<type>guidancer.datatype.Variable</type>			</param>			<param name="CompSystem.PropertyName">				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>		</action>
+		</action>		<action name="CompSystem.StorePropertyValue" changed="1.3">			<method>gdStorePropertyValue</method>			<param name="CompSystem.Variable">				<type>guidancer.datatype.Variable</type>			</param>			<param name="CompSystem.PropertyName">				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>		</action>
 		<action name="CompSystem.VerifyFocus" changed="1.3">
 			<method>gdVerifyFocus</method>
 			<param name="CompSystem.HasFocus">

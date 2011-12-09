@@ -267,5 +267,15 @@ public interface IRobot {
      * Mac OS
      */
     public String getSystemModifierSpec();
-    
+ 
+    /**
+     * @param graphicsComponent the component used for property retrieval
+     * @param propertyName
+     *            the name of the property value to return
+     * @return the property value
+     * @throws RobotException
+     *             If the given property is not accessible or not found
+     */
+    public String getPropertyValue(Object graphicsComponent,
+        String propertyName) throws RobotException;
 }

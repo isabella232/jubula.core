@@ -25,6 +25,7 @@ import java.awt.Window;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
@@ -58,6 +60,7 @@ import org.eclipse.jubula.rc.swing.components.SwingHierarchyContainer;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swing.utils.SwingUtils;
 import org.eclipse.jubula.tools.constants.InputConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -907,5 +910,27 @@ public class RobotAwtImpl implements IRobot {
 
         clickImpl(graphicsComponent, constraints, clickOptions, 
                 xPos, xAbsolute, yPos, yAbsolute);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyValue(Object graphicsComponent,
+            String propertyName) throws RobotException {
+        String propertyValue = StringConstants.EMPTY;
+        Validate.notNull(graphicsComponent, "Tested component must not be null"); //$NON-NLS-1$
+        try {
+            final Object prop = PropertyUtils.getProperty(
+                    graphicsComponent, propertyName);
+            propertyValue = String.valueOf(prop);
+        } catch (IllegalAccessException e) {
+            throw new RobotException(e);
+        } catch (InvocationTargetException e) {
+            throw new RobotException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RobotException(e);
+        }
+        
+        return propertyValue;
     }
 }
