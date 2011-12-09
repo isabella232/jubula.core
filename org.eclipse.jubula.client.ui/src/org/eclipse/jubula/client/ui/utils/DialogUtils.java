@@ -25,6 +25,24 @@ import org.eclipse.ui.PlatformUI;
  * @created Apr 16, 2008
  */
 public final class DialogUtils {
+    /**
+     * flag to indicate to keep the original size
+     */
+    public static final float KEEP_ORIG_SIZE = -1;
+    
+    /**
+     * the type of size to adjust
+     */
+    public enum SizeType {
+        /**
+         * the actual size 
+         */
+        SIZE,
+        /**
+         * the shells bounds
+         */
+        BOUNDS
+    }
 
     /** SWT modal constant */
     private static final int MODAL = 
@@ -93,12 +111,13 @@ public final class DialogUtils {
      *            the relative width factor; must be 0 <= relWidth <= 1
      * @param relHeight
      *            the relative height factor; must be 0 <= relWidth <= 1
+     * @param sizeType the size type to adjust
      */
     public static void adjustShellSizeRelativeToClientSize(Shell shell,
-            float relWidth, float relHeight) {
+            float relWidth, float relHeight, SizeType sizeType) {
         adjustShellSizeRelativeToRectangleSize(shell, relWidth, relHeight,
                 PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
-                    .getBounds());
+                    .getBounds(), sizeType);
     }
     
     /**
@@ -113,7 +132,8 @@ public final class DialogUtils {
             float relWidth, float relHeight) {
         Display display = Display.getCurrent();
         Rectangle r = display.getClientArea();
-        adjustShellSizeRelativeToRectangleSize(shell, relWidth, relHeight, r);
+        adjustShellSizeRelativeToRectangleSize(shell, relWidth, relHeight, r,
+                SizeType.SIZE);
     }
     
     /**
@@ -125,17 +145,48 @@ public final class DialogUtils {
      *            the relative height factor; must be 0 <= relWidth <= 1
      * @param relativeTo
      *            the rectangle the size should be computed relative to
+     * @param sizeType the size type to adjust 
      */
     private static void adjustShellSizeRelativeToRectangleSize(Shell shell,
-            float relWidth, float relHeight, Rectangle relativeTo) {
+        float relWidth, float relHeight, Rectangle relativeTo, 
+        SizeType sizeType) {
         int dWidth = relativeTo.width;
         int dHeight = relativeTo.height;
 
-        int newShellWidth = Math.round(relWidth * dWidth);
-        int newShellHeight = Math.round(relHeight * dHeight);
-
-        shell.setSize(newShellWidth, newShellHeight);
-        shell.setLocation(((dWidth - shell.getSize().x) / 2) + relativeTo.x,
-                ((dHeight - shell.getSize().y) / 2) + relativeTo.y);
+        int newShellWidth = 0;
+        int newShellHeight = 0;
+        
+        if (relWidth == KEEP_ORIG_SIZE) {
+            newShellWidth = shell.getBounds().width;
+        } else {
+            newShellWidth = Math.round(relWidth * dWidth);
+        }
+        
+        if (relHeight == KEEP_ORIG_SIZE) {
+            newShellHeight = shell.getBounds().height;
+        } else {
+            newShellHeight = Math.round(relHeight * dHeight);
+        }
+        switch (sizeType) {
+            case SIZE:
+                shell.setSize(newShellWidth, newShellHeight);
+                break;
+            case BOUNDS:
+                break;
+            default:
+                break;
+        }
+        int x = ((dWidth - shell.getSize().x) / 2) + relativeTo.x;
+        int y = ((dHeight - shell.getSize().y) / 2) + relativeTo.y;
+        switch (sizeType) {
+            case SIZE:
+                shell.setLocation(x, y);
+                break;
+            case BOUNDS:
+                shell.setBounds(x, y, newShellWidth, newShellHeight);
+                break;
+            default:
+                break;
+        }
     }
 }

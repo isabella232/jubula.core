@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.ReplaceTCRWizard;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
+import org.eclipse.jubula.client.ui.utils.DialogUtils.SizeType;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -51,7 +52,7 @@ public class ReplaceWithTestCaseHandler extends AbstractHandler {
                 protected void configureShell(Shell newShell) {
                     super.configureShell(newShell);
                     DialogUtils.adjustShellSizeRelativeToClientSize(newShell,
-                            .6f, .6f);
+                            .6f, .6f, SizeType.SIZE);
                 }
             };
             dialog.setHelpAvailable(true);

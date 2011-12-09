@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.ui.rcp.properties.ProjectGeneralPropertyPage.IO
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectLanguagePropertyPage;
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectUsedPropertyPage;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
+import org.eclipse.jubula.client.ui.utils.DialogUtils.SizeType;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -103,7 +104,8 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
             Shell s = dialog.getShell();
             s.setText(Messages.ProjectPropertyPageShellTitle 
                     + generalPage.getProject().getName());
-            DialogUtils.adjustShellSizeRelativeToClientSize(s, .8f, .9f);
+            DialogUtils.adjustShellSizeRelativeToClientSize(
+                    s, .8f, .9f, SizeType.SIZE);
             dialog.open();
             es.close();
         } catch (PMObjectDeletedException e) { 
