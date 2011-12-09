@@ -232,11 +232,20 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
             newExec.setComment(origExec.getComment());
             newExec.setDataFile(origExec.getDataFile());
             newExec.setGenerated(origExec.isGenerated());
-            newExec.setName(origExec.getName());
+            ISpecTestCasePO origSpecTC = origExec.getSpecTestCase();
+            if (!origExec.getName().equals(
+                    origSpecTC.getName())) {
+                newExec.setName(origExec.getName());
+            }
             newExec.setToolkitLevel(origExec.getToolkitLevel());
-            newExec.setHasReferencedTD(false);
-            origExec.getDataManager().deepCopy(
-                    newExec.getDataManager());
+            if (!origExec.getDataManager().equals(
+                    origSpecTC.getDataManager())) {
+                newExec.setHasReferencedTD(false);
+                origExec.getDataManager().deepCopy(
+                        newExec.getDataManager());
+            } else {
+                newExec.setHasReferencedTD(true);
+            }
             newExec.setReferencedDataCube(origExec.getReferencedDataCube());
             
             for (ICompNamesPairPO origPair : origExec.getCompNamesPairs()) {
