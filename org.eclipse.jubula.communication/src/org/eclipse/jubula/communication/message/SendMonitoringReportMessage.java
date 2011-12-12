@@ -17,12 +17,10 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 13.08.2010
  */
 public class SendMonitoringReportMessage extends Message {
-    /** the report data */
-    private byte[] m_data;
 
-    /** path to the monitoring report (if it was too large to send) */
-    private String m_reportPath;
-
+    /** port for the socket connection to stream the report back to the client */
+    private int m_port;
+    
     /** Default Constructor */
     public SendMonitoringReportMessage() {
         // currently empty
@@ -36,31 +34,20 @@ public class SendMonitoringReportMessage extends Message {
     /** {@inheritDoc} */
     public double getVersion() {
         return 1.0;
-    }
-
-    /** @return the data */
-    public byte[] getData() {
-        return m_data;
-    }
-
+    }    
     /**
-     * @param data
-     *            the data to set
+     * 
+     * @return the port to use for data transfer
      */
-    public void setData(byte[] data) {
-        m_data = data;
+    public int getPort() {
+        return m_port;
     }
-
-    /** @return the reportPath if the report was too large to send */
-    public String getReportPath() {
-        return m_reportPath;
-    }
-
     /**
-     * @param path
-     *            Sets the report path
+     * 
+     * @param port the port to use for data transfer
      */
-    public void setReportPath(String path) {
-        this.m_reportPath = path;
+    public void setPort(int port) {
+        this.m_port = port;
     }
+        
 }
