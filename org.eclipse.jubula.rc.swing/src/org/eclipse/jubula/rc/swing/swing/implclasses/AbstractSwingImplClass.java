@@ -40,7 +40,6 @@ import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
@@ -441,11 +440,7 @@ public abstract class AbstractSwingImplClass implements
         try {
             final String propToStr = getRobot().
                     getPropertyValue(getComponent(), name);
-            final boolean matches = MatchUtil.getInstance().match(
-                    propToStr, value, operator);
-            if (!matches) {
-                Verifier.throwVerifyFailed(value, propToStr);
-            }
+            Verifier.match(propToStr, value, operator);
         } catch (RobotException e) {
             throw new StepExecutionException(
                     e.getMessage(), EventFactory.createActionError(
