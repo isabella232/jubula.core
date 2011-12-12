@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.handlers;
+package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -25,6 +25,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.dialogs.EnterCommentDialog;
+import org.eclipse.jubula.client.ui.handlers.AbstractTestResultViewHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.JBFatalException;

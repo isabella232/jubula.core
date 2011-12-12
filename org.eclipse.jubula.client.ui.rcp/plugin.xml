@@ -1184,6 +1184,18 @@
 			<command commandId="org.eclipse.ui.edit.delete" style="push">
 			</command>
 		</menuContribution>
+		<menuContribution locationURI="popup:org.eclipse.jubula.client.ui.editors.TestResultViewer?after=additions">
+			<command commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification" style="push" />
+			<command commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification" style="push" />
+		</menuContribution>
+		<menuContribution locationURI="popup:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
+			<command commandId="org.eclipse.ui.edit.delete" style="push" />
+			<command commandId="org.eclipse.jubula.client.ui.commands.AddComment" style="push" />
+			<command commandId="org.eclipse.jubula.client.ui.commands.ToggleRelevance" style="push" />
+		</menuContribution>
+		<menuContribution locationURI="toolbar:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
+    		<command commandId="org.eclipse.ui.edit.delete" style="push" />
+        </menuContribution>
 		<menuContribution locationURI="popup:ComponentNameBrowserContextMenuID">
 			<command
 				commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand"
@@ -1693,6 +1705,20 @@
   </menuContribution>
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
+	  <handler
+        class="org.eclipse.jubula.client.ui.rcp.handlers.AddTestResultSummaryCommentHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.AddComment">
+        <activeWhen>
+            <and>
+                <count value="+" />
+                <with variable="activePartId">
+                    <equals
+                        value="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
+                    </equals>
+                </with>
+            </and>
+        </activeWhen>
+  	  </handler>
       <handler
             class="org.eclipse.jubula.client.ui.rcp.handlers.project.RcpSelectDatabaseHandler"
             commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase">

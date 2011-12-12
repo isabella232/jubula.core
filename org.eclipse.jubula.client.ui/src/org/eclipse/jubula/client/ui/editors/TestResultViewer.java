@@ -84,7 +84,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TestResultViewer extends EditorPart implements ISelectionProvider,
     ITreeViewerContainer, IAdaptable, IJBPart {
-
     /** Constant: Editor ID */
     public static final String EDITOR_ID = 
         "org.eclipse.jubula.client.ui.editors.TestResultViewer"; //$NON-NLS-1$
@@ -468,19 +467,13 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         Menu menu = menuMgr.createContextMenu(viewerControl);
         viewerControl.setMenu(menu);
         // Register menu for extension.
-        getSite().registerContextMenu(menuMgr, this);
+        getSite().registerContextMenu(menuMgr, getTreeViewer());
     }
     
     /**
      * @param mgr the menu manager
      */
     private void fillContextMenu(IMenuManager mgr) {
-        // FIXME zeb not searchable yet
-//        mgr.add(SearchTreeAction.getAction());
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                         CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));

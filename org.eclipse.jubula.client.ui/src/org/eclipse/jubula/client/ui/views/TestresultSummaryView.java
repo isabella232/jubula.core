@@ -524,18 +524,11 @@ public class TestresultSummaryView extends ViewPart implements
      * @param mgr the menu manager
      */
     private void fillContextMenu(IMenuManager mgr) {
-        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.OPEN_TEST_RESULT_DETAIL_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.ADD_COMMENT_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.REFRESH_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.DELETE_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.TOGGLE_RELEVANCE_COMMAND_ID);
+        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
     
     /**

@@ -38,8 +38,6 @@
      </command>
     <command commandId="org.eclipse.ui.file.refresh" style="push">
     </command>
-    <command commandId="org.eclipse.ui.edit.delete" style="push">
-    </command>
    <command
          commandId="org.eclipse.ui.file.export"
          label="Export"
@@ -149,20 +147,6 @@
 			</and>
 		</activeWhen>
 	</handler>
-  <handler
-        class="org.eclipse.jubula.client.ui.handlers.AddTestResultSummaryCommentHandler"
-        commandId="org.eclipse.jubula.client.ui.commands.AddComment">
-        <activeWhen>
-            <and>
-                <count value="+" />
-                <with variable="activePartId">
-                    <equals
-                        value="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
-                    </equals>
-                </with>
-            </and>
-        </activeWhen>
-  </handler>
         <handler
             class="org.eclipse.jubula.client.ui.handlers.RefreshTestresultsHandler"
             commandId="org.eclipse.ui.file.refresh">
