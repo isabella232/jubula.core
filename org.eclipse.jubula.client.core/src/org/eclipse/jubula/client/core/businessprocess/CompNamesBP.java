@@ -427,11 +427,13 @@ public class CompNamesBP {
      */
     public static boolean searchCompType(
             final ICompNamesPairPO pair, Object node) {
-        
-        if (node instanceof IExecTestCasePO 
-                && ((IExecTestCasePO)node).getSpecTestCase() != null) {
-            for (Object childNode : ((IExecTestCasePO)node).getSpecTestCase()
-                .getUnmodifiableNodeList()) {
+        if (node instanceof IExecTestCasePO) {
+            ISpecTestCasePO specTc = ((IExecTestCasePO)node).getSpecTestCase();
+            if (specTc == null) {
+                // Referenced SpecTestCase does not exist
+                return false;
+            }
+            for (Object childNode : specTc.getUnmodifiableNodeList()) {
 
                 if (childNode instanceof IExecTestCasePO) {
                     IExecTestCasePO exec = (IExecTestCasePO)childNode;
@@ -440,7 +442,7 @@ public class CompNamesBP {
                             && cnp.isPropagated()) {
 
                             pair.setType(cnp.getType());
-                            if (!StringUtils.isEmpty(pair.getType())) {
+                            if (isValidCompNamePair(pair)) {
                                 return true;
                             } 
                             boolean retVal = searchCompType(cnp, exec);
@@ -457,7 +459,6 @@ public class CompNamesBP {
                 }
             }
         }
-
         return false;
     }
     
@@ -559,12 +560,20 @@ public class CompNamesBP {
                 for (ICompNamesPairPO pair : new LinkedList<ICompNamesPairPO>(
                         exec.getCompNamesPairs())) {
                     searchCompType(pair, exec);
-                    if (pair.getType().length() == 0) {
+                    if (!isValidCompNamePair(pair)) {
                         exec.removeCompNamesPair(pair.getFirstName());
                     }
                 }
             }
         }
+    }
+    
+    /**
+     * @param pair the component name pair to check
+     * @return true if the component name pair is valid
+     */
+    public static boolean isValidCompNamePair(ICompNamesPairPO pair) {
+        return pair.getType().length() != 0;
     }
 
 }

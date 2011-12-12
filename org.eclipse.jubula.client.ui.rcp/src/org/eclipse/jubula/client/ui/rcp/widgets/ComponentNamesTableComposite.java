@@ -318,7 +318,7 @@ public class ComponentNamesTableComposite extends Composite implements
                 final ICompNamesPairPO compNamesPair = (ICompNamesPairPO)
                     element;
                 return COLUMN_NEW_NAME.equals(property) && isModifiable()
-                    && compNamesPair.getType().length() != 0;
+                    && CompNamesBP.isValidCompNamePair(compNamesPair);
             }
             return false;
         }

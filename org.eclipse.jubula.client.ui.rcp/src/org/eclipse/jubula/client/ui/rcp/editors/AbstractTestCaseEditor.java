@@ -27,6 +27,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
@@ -413,7 +414,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                                 exec.getCompNamesPairs().size()]);
                     for (ICompNamesPairPO pair : pairArray) {
                         searchAndSetComponentType(pair);
-                        if (pair.getType().equals(StringConstants.EMPTY)) {
+                        if (!CompNamesBP.isValidCompNamePair(pair)) {
                             exec.removeCompNamesPair(pair.getFirstName());
                         }
                     }
@@ -432,7 +433,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      */
     private void searchAndSetComponentType(final ICompNamesPairPO pair) {
         if (pair.getType() != null
-                && !StringConstants.EMPTY.equals(pair.getType())) {
+                && CompNamesBP.isValidCompNamePair(pair)) {
             return;
         }
         final IPersistentObject orig = 
@@ -440,58 +441,18 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         if (orig instanceof ISpecTestCasePO || orig instanceof ITestSuitePO) {
             INodePO origNode = (INodePO)orig;
             for (Object node : origNode.getUnmodifiableNodeList()) {
-                if (searchCompType(pair, node)) {
+                if (CompNamesBP.searchCompType(pair, node)) {
                     return;
                 }
             }
         }
         // if exec was added to an editor session
-        if (getStructuredSelection().getFirstElement() != null
-                && (pair.getType() == null || StringConstants.EMPTY.equals(pair
-                        .getType()))) {
-            searchCompType(pair, getStructuredSelection().getFirstElement());
+        Object selectedElement = getStructuredSelection().getFirstElement();
+        if (selectedElement != null
+                && (pair.getType() == null || !CompNamesBP
+                        .isValidCompNamePair(pair))) {
+            CompNamesBP.searchCompType(pair, selectedElement);
         }
-    }
-
-    /**
-     * @param pair the current compNamesPairPO
-     * @param node the node to search comp type in
-     * @return true, if comp type was found
-     */
-    private boolean searchCompType(final ICompNamesPairPO pair, Object node) {
-        if (node instanceof IExecTestCasePO) {
-            ISpecTestCasePO specTc = ((IExecTestCasePO)node).getSpecTestCase();
-            if (specTc == null) {
-                // Referenced SpecTestCase does not exist
-                return false;
-            }
-            for (Object childNode : specTc.getUnmodifiableNodeList()) {
-
-                if (childNode instanceof IExecTestCasePO) {
-                    IExecTestCasePO exec = (IExecTestCasePO)childNode;
-                    for (ICompNamesPairPO cnp : exec.getCompNamesPairs()) {
-                        if (cnp.getSecondName().equals(pair.getFirstName())
-                            && cnp.isPropagated()) {
-
-                            pair.setType(cnp.getType());
-                            if (pair.getType() != null
-                                    && !StringConstants.EMPTY.equals(pair
-                                            .getType())) {
-                                return true;
-                            }
-                            searchCompType(pair, exec);
-                        }                    
-                    }                    
-                } else if (childNode instanceof ICapPO) {
-                    ICapPO cap = (ICapPO)childNode;
-                    if (cap.getComponentName().equals(pair.getFirstName())) {
-                        pair.setType(cap.getComponentType());
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     /**
