@@ -11,6 +11,7 @@
 package org.eclipse.jubula.autagent.monitoring;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.Map;
 
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
@@ -43,9 +44,8 @@ public abstract class AbstractMonitoring implements IMonitoring {
     /**
      * {@inheritDoc}
      */
-    public byte[] buildMonitoringReport() {
-       
-        return null;
+    public void writeMonitoringReport(OutputStream out) {
+       //do nothing
     }
 
     /**

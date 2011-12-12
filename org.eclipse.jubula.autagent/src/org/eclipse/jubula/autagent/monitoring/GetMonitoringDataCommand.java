@@ -61,7 +61,7 @@ public class GetMonitoringDataCommand implements ICommand {
         try {
             m.send(message);
         } catch (CommunicationException e) {
-            LOG.debug("faild to send GetMonitoringDataResponseMessage", e); //$NON-NLS-1$
+            LOG.error("failed to send " + message.getClass().getName(), e); //$NON-NLS-1$
            
         }
         return null;

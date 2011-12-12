@@ -11,8 +11,14 @@
 package org.eclipse.jubula.client.core.commands;
 
 
-import org.apache.commons.lang.StringUtils;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import org.apache.poi.util.IOUtils;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
+import org.eclipse.jubula.client.core.communication.ConnectionException;
+import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.communication.ICommand;
@@ -20,7 +26,6 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendMonitoringReportMessage;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.objects.MonitoringValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,19 +45,39 @@ public class GetMonitoringReportCommand implements ICommand {
      * {@inheritDoc}
      */
     public Message execute() {
+        
+        byte[] report = null; 
+        Socket socket = null;
+        try {
+            //Reading the monitoring report from the AutAgent
+            socket = new Socket(
+                    ServerConnection.getInstance().
+                    getCommunicator().getHostName(), m_message.getPort());
+            //writing stream content to byte array. This byte array will be stored in the database
+            report = IOUtils.toByteArray(socket.getInputStream());
+            LOG.info("The size of the received monitoring report " + report.length + " byte"); //$NON-NLS-1$ //$NON-NLS-2$
+        } catch (UnknownHostException e) {
+            LOG.error("The given hostname is unknown", e); //$NON-NLS-1$ 
+        } catch (IOException e) {
+            LOG.error("IOException during socket read", e); //$NON-NLS-1$
+        } catch (ConnectionException e) {           
+            LOG.error("Connection to host failed", e); //$NON-NLS-1$
+        } finally {           
+            if (socket != null) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    LOG.error("IOException during socket close", e); //$NON-NLS-1$
+                }
+            }
+        }        
+        
         TestResult result = TestResultBP.getInstance().getResultTestModel(); 
-        //m_message.getReportPath() is not null if report was too large to send
-        if (!StringUtils.isEmpty(m_message.getReportPath())) {            
-            result.getMonitoringValues().put(
-                    MonitoringConstants.MONITORING_ERROR_TOO_LARGE, 
-                    new MonitoringValue(m_message.getReportPath(),
-                    MonitoringConstants.DEFAULT_TYPE));
-        } 
-        byte[] report = m_message.getData();               
         if (report == null) {
             result.setReportData(MonitoringConstants.EMPTY_REPORT);
+            LOG.info("Monitoring report is empty"); //$NON-NLS-1$
         } else {
-            result.setReportData(m_message.getData());
+            result.setReportData(report);
         }
           
         return null;    

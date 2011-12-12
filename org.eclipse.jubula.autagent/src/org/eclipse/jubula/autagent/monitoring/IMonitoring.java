@@ -11,6 +11,7 @@
 package org.eclipse.jubula.autagent.monitoring;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.Map;
 
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
@@ -46,14 +47,15 @@ public interface IMonitoring {
      */
     
     public Map<String, IMonitoringValue> getMonitoringData();   
+
     /**
-     * this method for report generation. It will be called a last.
-     * @return If the profiling agent supports a report generation, use this method
-     * to implement this functionality. The byte[] will be stored in the database.
-     * The byte[] must be a ZIP file otherwise it can not be imported into client workspace
+     * Writes the contents of the monitoring report to the given stream. 
+     * 
+     * @param out The OutputStream in which the report will be written. The 
+     *            caller is responsible for initializing and closing the stream. 
+     * 
      */
-    
-    public byte[] buildMonitoringReport();
+    public void writeMonitoringReport(OutputStream out);
     /**
      * This Method will be executed, when AUT restart is performed.
      */

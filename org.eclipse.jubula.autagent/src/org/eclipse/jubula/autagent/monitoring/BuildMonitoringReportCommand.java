@@ -10,18 +10,17 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.monitoring;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.BuildMonitoringReportMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendMonitoringReportMessage;
-import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,53 +33,77 @@ import org.slf4j.LoggerFactory;
  * @created 13.09.2010
  */
 public class BuildMonitoringReportCommand implements ICommand {
+    
     /** the logger */
     private static final Logger LOG = LoggerFactory
             .getLogger(BuildMonitoringReportCommand.class);  
    
-    /** message */
+    /** the incoming message */
     private BuildMonitoringReportMessage m_message;      
+    
+    /** timeout for ServerSocket accept() method in milliseconds. 
+     *  After this amount of time the Thread will be closed  */
+    private int m_timeout = 30000;
     /** 
      * {@inheritDoc}
      */
     public Message execute() {
-        
-        MonitoringDataStore cm = MonitoringDataStore.getInstance();        
-        IMonitoring agent = cm.getMonitoringAgent(m_message.getAutId());    
-        byte[] report = agent.buildMonitoringReport();
-        SendMonitoringReportMessage message = new SendMonitoringReportMessage();
-        if (report.length > MonitoringConstants.MAX_REPORT_SIZE) {            
-            LOG.warn("Monitoring report is too large to send."); //$NON-NLS-1$
-            BufferedOutputStream bos = null;
-            try {
-                File fileToWrite = File.createTempFile("report", ".zip"); //$NON-NLS-1$ //$NON-NLS-2$
-                message.setReportPath(fileToWrite.getAbsolutePath());
-                bos = new BufferedOutputStream(
-                        new FileOutputStream(fileToWrite));
-                bos.write(report);   
-            } catch (FileNotFoundException e) {            
-                LOG.error("Monitoring report could not be written to file system.", e); //$NON-NLS-1$
-            } catch (IOException e) {            
-                LOG.error("Monitoring report could not be written to file system.", e); //$NON-NLS-1$
-            } finally {
-                if (bos != null) {
-                    try {
-                        bos.close();
-                    } catch (IOException e) {
-                        LOG.error("Output stream could not be closed.", e); //$NON-NLS-1$                        
+        //create new thread for the streaming ServerSocket
+        new Thread(new Runnable() {
+            
+            public void run() {
+                
+                IMonitoring monitoringAgent = 
+                        MonitoringDataStore.getInstance().getMonitoringAgent(
+                                m_message.getAutId());
+
+                ServerSocket serverSocket = null;
+                Socket reportStreamSocket = null;
+                OutputStream reportOutputStream = null;
+                SendMonitoringReportMessage message = 
+                        new SendMonitoringReportMessage();
+                try {
+                    serverSocket = new ServerSocket(0);
+                    message.setPort(serverSocket.getLocalPort());
+                    //sending a message to the client and waiting for client connection
+                    AutStarter.getInstance().getCommunicator().send(message);
+                    serverSocket.setSoTimeout(m_timeout);
+                    reportStreamSocket = serverSocket.accept();
+                    reportOutputStream = reportStreamSocket.getOutputStream();
+                    //building monitoring report
+                    monitoringAgent.writeMonitoringReport(reportOutputStream);
+                } catch (SocketTimeoutException ste) {
+                    LOG.error("Connection timeout while waiting for client to access monitoring report stream.", ste); //$NON-NLS-1$
+                } catch (IOException ioe) {
+                    LOG.error("I/O error occurred while streaming monitoring report.", ioe); //$NON-NLS-1$
+                } catch (CommunicationException ce) {
+                    LOG.error("Failed to send " + message.getClass().getName(), ce); //$NON-NLS-1$
+                } finally {
+                    if (reportOutputStream != null) {
+                        try {
+                            reportOutputStream.close();
+                        } catch (IOException e) {
+                            LOG.error("Error while closing monitoring report output stream.", e); //$NON-NLS-1$
+                        }
+                    }
+                    if (reportStreamSocket != null) {
+                        try {
+                            reportStreamSocket.close();
+                        } catch (IOException e) {
+                            LOG.error("Error while closing monitoring report stream socket.", e); //$NON-NLS-1$
+                        }
+                    }
+                    if (serverSocket != null) {
+                        try {
+                            serverSocket.close();
+                        } catch (IOException e) {
+                            LOG.error("Error while closing monitoring report server socket.", e); //$NON-NLS-1$
+                        }
                     }
                 }
             }
-        } else {
-            message.setData(report);
-        }
+        }, "Monitoring Report Streamer").start(); //$NON-NLS-1$
 
-        try {
-            AutStarter.getInstance().getCommunicator().send(message);
-        } catch (CommunicationException e) {
-            LOG.debug("Failed to send SendMonitoringReportMessage", e); //$NON-NLS-1$
-
-        }       
         return null;
     }
     
