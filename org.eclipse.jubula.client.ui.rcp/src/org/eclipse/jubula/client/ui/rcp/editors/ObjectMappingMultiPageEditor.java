@@ -1257,6 +1257,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         // Create menu.
         Menu menu = menuMgr.createContextMenu(viewer.getControl());
         viewer.getControl().setMenu(menu);
+        getEditorSite().registerContextMenu(menuMgr, getTreeViewer());
     }
 
     /**
@@ -1268,7 +1269,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     protected void fillTreeContextMenu(IMenuManager mgr) {
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
-        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         mgr.add(m_cutTreeItemAction);
         mgr.add(m_pasteTreeItemAction);
         CommandHelper.createContributionPushItem(mgr,
@@ -1297,6 +1297,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         CommandHelper.createContributionPushItem(submenuNew,
                 RCPCommandIDs.OME_DELETE_UNUSED_COMPONENT_NAME_COMMAND_ID);
         mgr.add(submenuNew);
+        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
 
     /**
