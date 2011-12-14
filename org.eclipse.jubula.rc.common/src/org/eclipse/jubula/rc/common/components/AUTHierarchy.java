@@ -95,7 +95,6 @@ public abstract class AUTHierarchy {
      */
     protected void removeFromHierachyMap(
             HierarchyContainer hierarchyContainer) {
-        
         AUTComponent autComponent = hierarchyContainer.getCompID();
         Object realComponent = autComponent.getComp();
         m_hierarchyMap.remove(autComponent);
