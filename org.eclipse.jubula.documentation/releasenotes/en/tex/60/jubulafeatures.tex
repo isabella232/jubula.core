@@ -43,3 +43,11 @@ without having to set timers or manually check timestamps.
 \item The properties view for test results now shows all test data as two columns: the parameter name and the value.
 \item This reduces the amount of space required to see test data for test results. 
 \end{itemize} 
+
+\textbf{New action: Store Property Value}\\
+\begin{itemize}
+\item The \bxname{abstract} toolkit contains a new action on the \bxname{Graphics Component} component to store the value of a property.
+\item The action works in a similar way to the \bxname{Check Property} action, except that the expected value must not be entered. Instead, the actual value is saved into a variable you define.
+\item You can use this value later on in the test, or you can compare various values using the actions to compare string values or compare numeric values. 
+\item One example use case for this new action is to test table filters. The rowCount of the table can be saved into a variable before filtering, and the rowCount after filtering into a different variable. The variables can then be compared with each other to ensure that the second value is less than the first, for example.
+\end{itemize} 
