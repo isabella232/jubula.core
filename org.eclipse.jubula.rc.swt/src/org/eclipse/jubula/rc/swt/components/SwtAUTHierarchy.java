@@ -407,6 +407,16 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             
             componentRemoved(toRefresh);
             componentAdded(toRefresh);
+        } else {
+            // hierarchy container exists and represents same component, so
+            // refresh the children
+            SwtHierarchyContainer [] childContainers = 
+                    currentHierarchyContainer.getComponents();
+            for (int i = 0; i < childContainers.length; i++) {
+                removeFromHierarchy(childContainers[i]);
+            }
+            
+            addToHierarchyDown(currentHierarchyContainer, toRefresh);
         }
     }
     
@@ -694,6 +704,12 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
         if (container == null) {
             return;
         }
+        
+        SwtHierarchyContainer parentContainer = container.getParent();
+        if (parentContainer != null) {
+            parentContainer.remove(container);
+        }
+        
         SwtComponent autCompID = container.getComponentID();
         Widget autComp = autCompID.getRealComponent();
         
