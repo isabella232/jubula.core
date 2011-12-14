@@ -20,7 +20,7 @@ If the \gdaut uses a security manager (or, in some cases, a Java Policy), please
 
 To grant the necessary permission, please use the following policy
 snippet (please use a personal installation directory instead of  the
-\app{}installation directory).
+\app{} installation directory).
 
 
 \footnotesize
@@ -54,6 +54,7 @@ grant {
   permission java.awt.AWTPermission "createRobot";
   permission java.awt.AWTPermission "accessClipboard";
   permission java.awt.AWTPermission "accessEventQueue";
+  access : access denied (java.lang.RuntimePermission accessClassInPackage.sun.reflect)
 }; 
  
 \end{verbatim}
