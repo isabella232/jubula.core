@@ -149,6 +149,13 @@
 			properties="usesExcel,usesCTDS,hasMultipleDataSets" 
 			type="org.eclipse.jubula.client.core.model.IParameterInterfacePO">
 		</propertyTester>
+    <propertyTester
+          class="org.eclipse.jubula.client.ui.rcp.propertytester.MonitoringAgentPropertyTester"
+          id="org.eclipse.jubula.client.ui.rcp.propertytester.MonitoringAgentPropertyTester"
+          namespace="org.eclipse.jubula.client.ui.rcp.propertytester.MonitoringAgentPropertyTester"
+          properties="usedMonitoringAgent"
+          type="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
+    </propertyTester>
 	</extension>
 	<extension id="gdMarker" name="%JubulaMarker"
 		point="org.eclipse.core.resources.markers" />
@@ -1189,12 +1196,20 @@
 			<command commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification" style="push" />
 		</menuContribution>
 		<menuContribution locationURI="popup:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
+   <command
+         commandId="org.eclipse.jubula.client.ui.commands.monitoring.OpenMonitoringReport"
+         style="push">
+   </command>
 			<command commandId="org.eclipse.ui.edit.delete" style="push" />
 			<command commandId="org.eclipse.jubula.client.ui.commands.AddComment" style="push" />
 			<command commandId="org.eclipse.jubula.client.ui.commands.ToggleRelevance" style="push" />
 		</menuContribution>
 		<menuContribution locationURI="toolbar:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
     		<command commandId="org.eclipse.ui.edit.delete" style="push" />
+      <command
+            commandId="org.eclipse.jubula.client.ui.commands.monitoring.OpenMonitoringReport"
+            style="push">
+      </command>
         </menuContribution>
 		<menuContribution locationURI="popup:ComponentNameBrowserContextMenuID">
 			<command

@@ -113,6 +113,10 @@
         commandId="org.eclipse.jubula.client.ui.commands.GoToPreviousError"
         icon="icons/goToPreviousError.gif">
   </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.monitoring.OpenMonitoringReport"
+        icon="icons/root.gif">
+  </image>
     </extension>
     <extension
           point="org.eclipse.ui.handlers">
@@ -231,6 +235,11 @@
 		    id="org.eclipse.jubula.client.ui.commands.GoToPreviousError"
 		    name="Go to Previous Error">
 		  </command>
+    <command
+          categoryId="org.eclipse.jubula.client.ui.commands"
+          id="org.eclipse.jubula.client.ui.commands.monitoring.OpenMonitoringReport"
+          name="Open Monitoring Report">
+    </command>
     </extension>
     <extension
           point="org.eclipse.ui.preferencePages">
