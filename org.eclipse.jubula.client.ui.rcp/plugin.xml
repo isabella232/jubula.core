@@ -392,10 +392,6 @@
 				<separator name="JubulaAddSeparator1" />
 			</menu>
 
-			<action class="org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction"
-				definitionId="org.eclipse.ui.edit.findReplace" icon="icons/search.gif"
-				id="org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction"
-				label="%Search" menubarPath="edit/JubulaEditSeparator3" tooltip="%SearchToolTip" />
 			<action
 				class="org.eclipse.jubula.client.ui.rcp.actions.ChooseLanguageAction"
 				icon="icons/globe.gif"
@@ -1006,6 +1002,10 @@
         id="org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew"
         name="%SaveAsNew">
   </command>
+  <command
+        id="org.eclipse.jubula.client.ui.rcp.commands.Find"
+        name="%Find">
+  </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<key
@@ -1555,6 +1555,16 @@
          </reference>
       </visibleWhen>
    </command>
+   <command
+         commandId="org.eclipse.jubula.client.ui.rcp.commands.Find"
+         style="push">
+         <visibleWhen
+            checkEnabled="false">
+         <reference
+               definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive">
+         </reference>
+      </visibleWhen>
+   </command>
 		</menuContribution>
 		<menuContribution
 			locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.AutToolbar.ChooseAutCommand">
@@ -1733,6 +1743,10 @@
                 </with>
             </and>
         </activeWhen>
+  	  </handler>
+  	  <handler
+        class="org.eclipse.jubula.client.ui.rcp.handlers.FindHandler"
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.Find">
   	  </handler>
       <handler
             class="org.eclipse.jubula.client.ui.rcp.handlers.project.RcpSelectDatabaseHandler"
@@ -2651,6 +2665,10 @@
   <image
         commandId="org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew"
         icon="icons/saveAsNew.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.Find"
+        icon="icons/find.gif">
   </image>
 	</extension>
 	<extension id="jubula.ComponentNameBrowserHandler" name="ComponentNameBrowserHandler"

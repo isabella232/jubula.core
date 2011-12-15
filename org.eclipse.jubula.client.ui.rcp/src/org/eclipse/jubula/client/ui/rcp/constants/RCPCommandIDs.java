@@ -38,6 +38,9 @@ public interface RCPCommandIDs {
     
     /** the ID of the "extract test case" command */
     public static final String EXTRACT_TESTCASE_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.ExtractTestCase"; //$NON-NLS-1$
+
+    /** the ID of the "find" command */
+    public static final String FIND_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.Find"; //$NON-NLS-1$
     
     /** the ID of the "import project" command */
     public static final String IMPORT_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.ImportProject"; //$NON-NLS-1$

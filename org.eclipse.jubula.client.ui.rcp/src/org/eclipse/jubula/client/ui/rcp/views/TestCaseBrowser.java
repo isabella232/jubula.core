@@ -14,7 +14,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -49,7 +48,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCBrowser;
-import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
@@ -69,7 +67,6 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
@@ -101,15 +98,14 @@ public class TestCaseBrowser extends AbstractJBTreeView
     /** <code>m_doubleClickListener</code> */
     private final DoubleClickListener m_doubleClickListener = 
         new DoubleClickListener();
-    /** menu manager for context menu */
-    private final MenuManager m_menuMgr = new MenuManager();
-    /** menu listener for <code>m_menuMgr</code> */
-    private MenuListener m_menuListener = new MenuListener();
     
     /**
      * {@inheritDoc}
      */
     public void createPartControl(Composite parent) {
+        m_cutTreeItemAction = new CutTreeItemActionTCBrowser();
+        m_pasteTreeItemAction = new PasteTreeItemActionTCBrowser();
+        m_moveTestCaseAction = new MoveTestCaseAction();
         super.createPartControl(parent);
         ColumnViewerToolTipSupport.enableFor(getTreeViewer());
         getTreeViewer().setContentProvider(
@@ -121,9 +117,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
         lp.setDecorationContext(
                 new AbstractLightweightLabelDecorator.NonDecorationContext());
         getTreeViewer().setLabelProvider(lp);
-        m_cutTreeItemAction = new CutTreeItemActionTCBrowser();
-        m_pasteTreeItemAction = new PasteTreeItemActionTCBrowser();
-        m_moveTestCaseAction = new MoveTestCaseAction();
 
         int ops = DND.DROP_MOVE;
         Transfer[] transfers = new Transfer[] {LocalSelectionTransfer
@@ -133,7 +126,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         getTreeViewer().addDropSupport(ops, transfers,
             new TestSpecDropTargetListener(this));
         
-        createContextMenu(); 
+        registerContextMenu(); 
         JubulaStateController.getInstance().
             addSelectionListenerToSelectionService();
         Plugin.getHelpSystem().setHelp(getTreeViewer().getControl(),
@@ -191,25 +184,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
         getViewSite().getActionBars().updateActionBars();
     }
 
-    /**
-     * Create context menu.
-     */
-    private void createContextMenu() {
-        m_menuMgr.setRemoveAllWhenShown(true);
-        m_menuMgr.addMenuListener(m_menuListener);
-        // Create menu.
-        Menu menu = m_menuMgr.createContextMenu(getTreeViewer().getControl());
-        getTreeViewer().getControl().setMenu(menu);
-        // Register menu for extension.
-        getViewSite().registerContextMenu(m_menuMgr, getTreeViewer());
-    }
-
-    /**
-     * Fills the context menu, if there is any selection in this view. 
-     * @param mgr IMenuManager
-     */
-    protected void fillContextMenu(IMenuManager mgr) {
-        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+    /** {@inheritDoc} */
+    protected void createContextMenu(IMenuManager mgr) {
         MenuManager submenuNew = new MenuManager(
                 Messages.TestSuiteBrowserNew, NEW_ID);
         MenuManager submenuAdd = new MenuManager(
@@ -227,7 +203,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.RENAME_COMMAND_ID);
         mgr.add(m_moveTestCaseAction);
-        mgr.add(SearchTreeAction.getAction());
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.FIND_COMMAND_ID);
         mgr.add(m_cutTreeItemAction);
         mgr.add(m_pasteTreeItemAction);
         CommandHelper.createContributionPushItem(mgr,
@@ -248,6 +225,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 RCPCommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID);
         mgr.add(new Separator());
         mgr.add(submenuOpenWith);
+        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     } 
     
     /**
@@ -282,7 +260,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
      */
     public void dispose() {
         try {
-            m_menuMgr.removeMenuListener(m_menuListener);
             JubulaStateController.getInstance()
                 .removeSelectionListenerFromSelectionService();
             DataEventDispatcher.getInstance().removeDataChangedListener(this);
@@ -306,19 +283,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
             getTreeViewer().expandToLevel(DEFAULT_EXPANSION);
         } else {
             getTreeViewer().setInput(null);
-        }
-    }
-    
-    /**
-     * @author BREDEX GmbH
-     * @created Jan 22, 2007
-     */
-    private final class MenuListener implements IMenuListener {
-        /**
-         * {@inheritDoc}
-         */
-        public void menuAboutToShow(IMenuManager mgr) {
-            fillContextMenu(mgr);
         }
     }
 

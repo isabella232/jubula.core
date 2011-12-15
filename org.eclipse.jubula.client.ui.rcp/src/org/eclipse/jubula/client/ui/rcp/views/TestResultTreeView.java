@@ -51,7 +51,7 @@ import org.eclipse.jubula.client.ui.editors.TestResultViewer;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
@@ -196,14 +196,15 @@ public class TestResultTreeView extends ViewPart
      * @param mgr IMenuManager
      */
     protected void fillContextMenu(IMenuManager mgr) {
-        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        mgr.add(SearchTreeAction.getAction());
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.FIND_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
+        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
 
     /**
