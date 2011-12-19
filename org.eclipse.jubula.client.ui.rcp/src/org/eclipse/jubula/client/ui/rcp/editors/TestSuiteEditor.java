@@ -243,7 +243,6 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      */
     protected void fillContextMenu(IMenuManager mgr) {
         IStructuredSelection selection = getStructuredSelection();
-        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         if (selection.getFirstElement() == null) {
             return;
         }
@@ -278,6 +277,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
+        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
     
     /**

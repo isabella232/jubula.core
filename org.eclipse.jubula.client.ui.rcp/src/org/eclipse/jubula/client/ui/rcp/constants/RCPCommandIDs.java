@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.constants;
 
+import org.eclipse.ui.actions.ActionFactory;
+
 
 /**
  * Constants for all used RCP CommandIDs
@@ -28,16 +30,22 @@ public interface RCPCommandIDs {
     public static final String DELETE_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.DeleteProject"; //$NON-NLS-1$
     
     /** the ID of the "file export" command */
-    public static final String ECLIPSE_RCP_FILE_EXPORT_COMMAND_ID = "org.eclipse.ui.file.export"; //$NON-NLS-1$
+    public static final String ECLIPSE_RCP_FILE_EXPORT_COMMAND_ID  = 
+            ActionFactory.EXPORT.getCommandId();
     
     /** the ID of the "file import" command */
-    public static final String ECLIPSE_RCP_FILE_IMPORT_COMMAND_ID = "org.eclipse.ui.file.import"; //$NON-NLS-1$
-
+    public static final String ECLIPSE_RCP_FILE_IMPORT_COMMAND_ID  = 
+            ActionFactory.IMPORT.getCommandId();
+    
     /** the ID of the "edit parameters" command */
     public static final String EDIT_PARAMETERS_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.EditParameters"; //$NON-NLS-1$
     
     /** the ID of the "extract test case" command */
     public static final String EXTRACT_TESTCASE_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.ExtractTestCase"; //$NON-NLS-1$
+
+    /** the ID of the "find" command */
+    public static final String FIND_COMMAND_ID = 
+            ActionFactory.FIND.getCommandId();
     
     /** the ID of the "import project" command */
     public static final String IMPORT_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.ImportProject"; //$NON-NLS-1$

@@ -331,6 +331,7 @@ public class Messages extends NLS {
     public static String FileNotFoundFormatXsl;
     public static String Searching;
     public static String SearchingUnusedComponentNames;
+    public static String FindContextMenu;
     public static String FindDialogBackward;
     public static String FindDialogCaseSen;
     public static String FindDialogClose;

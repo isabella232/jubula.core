@@ -14,7 +14,10 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -40,7 +43,10 @@ import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.part.ViewPart;
@@ -289,8 +295,29 @@ public abstract class AbstractJBTreeView extends ViewPart implements
                 m_partListener);
         
         setFocus();
+        registerContextMenu();
     }
     
+    /**
+     * Register the context menu for the receiver so that commands may be added
+     * to it.
+     */
+    protected void registerContextMenu() {
+        MenuManager contextMenu = new MenuManager();
+        createContextMenu(contextMenu);
+        contextMenu.add(new GroupMarker(
+                IWorkbenchActionConstants.MB_ADDITIONS));
+        getSite().registerContextMenu(contextMenu, getTreeViewer());
+        Control control = getTreeViewer().getControl();
+        Menu menu = contextMenu.createContextMenu(control);
+        control.setMenu(menu);
+    }
+    
+    /**
+     * @param contextMenu the MenuManager to create the context menu for
+     */
+    protected abstract void createContextMenu(IMenuManager contextMenu);
+
     /**
      * Adds DoubleClickListener to Treeview.
      */

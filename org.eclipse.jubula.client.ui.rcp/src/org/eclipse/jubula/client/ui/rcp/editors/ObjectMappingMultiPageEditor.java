@@ -95,7 +95,6 @@ import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionOMEditor;
 import org.eclipse.jubula.client.ui.rcp.actions.OMMarkInAutAction;
 import org.eclipse.jubula.client.ui.rcp.actions.OMSetCategoryToMapInto;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionOMEditor;
-import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.OMEditorBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
@@ -165,6 +164,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.swt.IFocusService;
 import org.slf4j.Logger;
@@ -1275,7 +1275,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 CommandIDs.DELETE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.RENAME_COMMAND_ID);
-        mgr.add(SearchTreeAction.getAction());
+        mgr.add(CommandHelper.createContributionItem(
+                RCPCommandIDs.FIND_COMMAND_ID,
+                null, Messages.FindContextMenu,
+                CommandContributionItem.STYLE_PUSH));
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
@@ -1370,11 +1373,11 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      *            IMenuManager
      */
     protected void fillTableContextMenu(IMenuManager mgr) {
-        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.REFRESH_COMMAND_ID);
+        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
 
     /**

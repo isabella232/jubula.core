@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.ui.rcp.views;
 
 import java.util.Locale;
 
-import org.eclipse.jface.action.GroupMarker;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -52,7 +50,6 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.actions.SearchTreeAction;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
@@ -71,10 +68,9 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IDecoratorManager;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.menus.CommandContributionItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,13 +92,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     public static final String ADD_ID = PlatformUI.PLUGIN_ID + ".AddSubMenu"; //$NON-NLS-1$
     /** standard logging */
     static final Logger LOG = LoggerFactory.getLogger(TestSuiteBrowser.class);
-    /** flag for initialization state of context menu */
-    private boolean m_isContextMenuInitialized = false;
-    /** menu manager for context menu */
-    private final MenuManager m_mgr = new MenuManager();
-    /** menu listener for <code>m_menuMgr</code> */
-    private MenuListener m_menuListener = new MenuListener();
-
     /**
      * Creates the SWT controls for this workbench part.
      * @param parent Composite
@@ -134,12 +123,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         getTreeViewer().addDropSupport(ops, transfers,
             new TestExecDropTargetListener(this));
         
-        m_mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-        Menu menu = m_mgr.createContextMenu(getTreeViewer().getControl());
-        getTreeViewer().getControl().setMenu(menu);
-        getViewSite().registerContextMenu(m_mgr, getTreeViewer());
-        m_mgr.addMenuListener(m_menuListener);
-        // Register menu for extension.
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addLanguageChangedListener(this, true);
         ded.addCompletenessCheckListener(this);
@@ -178,67 +161,53 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         });
     }
 
-    /**
-     * Create context menu.
-     * @param mgr current menu manager
-     */
-    private void createContextMenu(IMenuManager mgr) {
-        if (!m_isContextMenuInitialized) {
-            MenuManager submenuNew = new MenuManager(
-                    Messages.TestSuiteBrowserNew, NEW_ID);
-            MenuManager submenuOpenWith = new MenuManager(
-                    Messages.TestSuiteBrowserOpenWith, OPEN_WITH_ID);
-            CommandHelper.createContributionPushItem(submenuNew,
-                    RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
-            CommandHelper.createContributionPushItem(submenuNew,
-                    RCPCommandIDs.NEW_TESTJOB_COMMAND_ID);
-            CommandHelper.createContributionPushItem(submenuNew,
-                    RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
-            CommandHelper.createContributionPushItem(submenuOpenWith,
-                    RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
-            CommandHelper.createContributionPushItem(submenuOpenWith,
-                    RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
-            CommandHelper.createContributionPushItem(submenuOpenWith,
-                    RCPCommandIDs.OPEN_OBJECTMAPPING_EDITOR_COMMAND_ID);
-            CommandHelper.createContributionPushItem(submenuOpenWith,
-                    RCPCommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
-            mgr.add(submenuNew);
-            mgr.add(new Separator());
-            CommandHelper.createContributionPushItem(mgr,
-                    RCPCommandIDs.RENAME_COMMAND_ID);
-            mgr.add(SearchTreeAction.getAction());
-            CommandHelper.createContributionPushItem(mgr,
-                    CommandIDs.DELETE_COMMAND_ID);
-            CommandHelper.createContributionPushItem(mgr,
-                    CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
-            CommandHelper.createContributionPushItem(mgr,
-                    CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
-            CommandHelper.createContributionPushItem(mgr,
-                    CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
-            mgr.add(new Separator());
-            CommandHelper.createContributionPushItem(mgr,
-                    RCPCommandIDs.COPY_ID_COMMAND_ID);
-            mgr.add(new Separator());
-            CommandHelper.createContributionPushItem(mgr,
-                    CommandIDs.REFRESH_COMMAND_ID);
-            mgr.add(new Separator());
-            mgr.add(submenuOpenWith);
-            mgr.add(new Separator());
-            CommandHelper.createContributionPushItem(mgr,
-                    RCPCommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
-            m_isContextMenuInitialized = true;
-        }
-    }
-
-
-    /**
-     * Fills the context menu, if there is any selection in this view. 
-     * @param mgr IMenuManager
-     */
-    protected void fillContextMenu(IMenuManager mgr) {
-        if (!m_isContextMenuInitialized) {
-            createContextMenu(mgr);
-        }
+    /** {@inheritDoc} */
+    protected void createContextMenu(IMenuManager mgr) {
+        MenuManager submenuNew = new MenuManager(
+                Messages.TestSuiteBrowserNew, NEW_ID);
+        MenuManager submenuOpenWith = new MenuManager(
+                Messages.TestSuiteBrowserOpenWith, OPEN_WITH_ID);
+        CommandHelper.createContributionPushItem(submenuNew,
+                RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuNew,
+                RCPCommandIDs.NEW_TESTJOB_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuNew,
+                RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuOpenWith,
+                RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuOpenWith,
+                RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuOpenWith,
+                RCPCommandIDs.OPEN_OBJECTMAPPING_EDITOR_COMMAND_ID);
+        CommandHelper.createContributionPushItem(submenuOpenWith,
+                RCPCommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
+        mgr.add(submenuNew);
+        mgr.add(new Separator());
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.RENAME_COMMAND_ID);
+        mgr.add(CommandHelper.createContributionItem(
+                RCPCommandIDs.FIND_COMMAND_ID,
+                null, Messages.FindContextMenu,
+                CommandContributionItem.STYLE_PUSH));
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.DELETE_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
+        mgr.add(new Separator());
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.COPY_ID_COMMAND_ID);
+        mgr.add(new Separator());
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.REFRESH_COMMAND_ID);
+        mgr.add(new Separator());
+        mgr.add(submenuOpenWith);
+        mgr.add(new Separator());
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
     }
 
     /**
@@ -266,7 +235,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
             JubulaStateController.getInstance()
                 .removeSelectionListenerFromSelectionService();
         } finally {
-            m_mgr.removeMenuListener(m_menuListener);
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             ded.removeDataChangedListener(this);
             ded.removeLanguageChangedListener(this);
@@ -275,19 +243,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         }
     }
   
-    /**
-     * @author BREDEX GmbH
-     * @created Jan 22, 2007
-     */
-    private final class MenuListener implements IMenuListener {
-        /**
-         * {@inheritDoc}
-         */
-        public void menuAboutToShow(IMenuManager imgr) {
-            fillContextMenu(imgr);
-        }
-    }
-
     /**
      * 
      * {@inheritDoc}
