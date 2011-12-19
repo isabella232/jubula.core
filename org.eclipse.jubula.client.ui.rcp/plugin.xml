@@ -1622,6 +1622,11 @@
   	  <handler
         class="org.eclipse.jubula.client.ui.rcp.handlers.FindHandler"
         commandId="org.eclipse.ui.edit.findReplace">
+        <activeWhen>
+			<with variable="activePart">
+			    <instanceof value="org.eclipse.jubula.client.ui.views.ITreeViewerContainer" />
+			</with>
+		</activeWhen>
   	  </handler>
       <handler
             class="org.eclipse.jubula.client.ui.rcp.handlers.project.RcpSelectDatabaseHandler"
