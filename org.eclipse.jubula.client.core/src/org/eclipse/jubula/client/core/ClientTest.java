@@ -46,7 +46,6 @@ import org.eclipse.jubula.client.core.businessprocess.FileXMLReportWriter;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.IXMLReportWriter;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
@@ -1230,8 +1229,11 @@ public class ClientTest implements IClientTest {
         String fileName = createFilename(
                 TestResultBP.getInstance().getResultTestModel());
         
-        IXMLReportWriter writer =  new FileXMLReportWriter(fileName);
-        writer.write(document);
+        try {
+            new FileXMLReportWriter(fileName).write(document);
+        } catch (IOException e) {
+            log.error(Messages.ClientWritingReportError, e);
+        }
     }
 
     /**

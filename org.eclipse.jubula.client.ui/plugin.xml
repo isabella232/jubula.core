@@ -38,15 +38,6 @@
      </command>
     <command commandId="org.eclipse.ui.file.refresh" style="push">
     </command>
-   <command
-         commandId="org.eclipse.ui.file.export"
-         label="Export"
-         style="push">
-      <parameter
-            name="exportWizardId"
-            value="org.eclipse.jubula.client.ui.rcp.exportWizard.ExportTestResultDetailsWizard">
-      </parameter>
-   </command>
         </menuContribution>
         <menuContribution
 			locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
