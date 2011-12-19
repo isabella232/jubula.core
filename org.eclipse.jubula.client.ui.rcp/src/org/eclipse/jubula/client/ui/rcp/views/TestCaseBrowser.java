@@ -72,6 +72,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.menus.CommandContributionItem;
 
 
 /** 
@@ -203,8 +204,10 @@ public class TestCaseBrowser extends AbstractJBTreeView
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.RENAME_COMMAND_ID);
         mgr.add(m_moveTestCaseAction);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.FIND_COMMAND_ID);
+        mgr.add(CommandHelper.createContributionItem(
+                RCPCommandIDs.FIND_COMMAND_ID,
+                null, Messages.FindContextMenu,
+                CommandContributionItem.STYLE_PUSH));
         mgr.add(m_cutTreeItemAction);
         mgr.add(m_pasteTreeItemAction);
         CommandHelper.createContributionPushItem(mgr,
