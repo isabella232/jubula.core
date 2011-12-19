@@ -13,11 +13,9 @@
 		<definition
 			id="org.eclipse.jubula.client.ui.rcp.expression.AreMergeableComponentNames">
 			<and>
-				<count value="+">
-				</count>
+				<count value="+"/>
 				<not>
-					<count value="1">
-					</count>
+					<count value="1"/>
 				</not>
 				<iterate ifEmpty="false" operator="and">
 					<instanceof
@@ -1783,8 +1781,7 @@
 							value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor">
 						</equals>
 					</with>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
 							value="org.eclipse.jubula.client.core.model.IComponentNamePO">
@@ -1796,8 +1793,7 @@
 			</activeWhen>
 			<enabledWhen>
 				<and>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
 							value="org.eclipse.jubula.client.core.model.IComponentNamePO">
@@ -1820,8 +1816,7 @@
 							value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor">
 						</equals>
 					</with>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
 							value="org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO">
@@ -1831,8 +1826,7 @@
 			</activeWhen>
 			<enabledWhen>
 				<and>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
 							value="org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO">
@@ -1856,8 +1850,7 @@
 			</activeWhen>
 			<enabledWhen>
 				<and>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<or>
 							<instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO">
@@ -1883,8 +1876,7 @@
 			</activeWhen>
 			<enabledWhen>
 				<and>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<or>
 							<instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
@@ -1907,8 +1899,7 @@
 			</activeWhen>
 			<enabledWhen>
 				<and>
-					<count value="+">
-					</count>
+					<count value="+"/>
 					<or>
 						<iterate ifEmpty="false" operator="and">
 							<instanceof
@@ -2061,8 +2052,7 @@
 			commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed">
 			<activeWhen>
 				<and>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
 							value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
@@ -2076,8 +2066,7 @@
 			commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed">
 			<activeWhen>
 				<and>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
 							value="org.eclipse.jubula.client.core.model.IComponentNamePO">
@@ -2135,8 +2124,7 @@
 							</equals>
 						</with>
 					</or>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="or">
 						<or>
 							<instanceof
@@ -2173,8 +2161,7 @@
 						<equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor">
 						</equals>
 					</with>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="or">
 						<or>
 							<instanceof
@@ -2301,8 +2288,7 @@
 			<activeWhen>
 				<and>
 					<count
-	                 value="+">
-	           		</count>
+	                 value="+"/>
 					<with variable="activePartId">
 						<equals
 							value="org.eclipse.jubula.client.ui.views.TestresultSummaryView">
@@ -2354,8 +2340,7 @@
               </equals>
            </with>
            <count
-                 value="1">
-           </count>
+                 value="1"/>
            <iterate
                  ifEmpty="false"
                  operator="and">
@@ -2727,8 +2712,7 @@
 			</activeWhen>
 			<enabledWhen>
 				<and>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
 							value="org.eclipse.jubula.client.core.model.IComponentNamePO">
@@ -2772,8 +2756,7 @@
 			</activeWhen>
 			<enabledWhen>
 				<and>
-					<count value="+">
-					</count>
+					<count value="+"/>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
 							value="org.eclipse.jubula.client.core.model.IComponentNamePO">
@@ -2810,8 +2793,7 @@
 			commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand">
 			<activeWhen>
 				<and>
-					<count value="+">
-					</count>
+					<count value="+"/>
 					<with variable="activePartId">
 						<equals
 							value="org.eclipse.jubula.client.ui.rcp.views.ComponentNameBrowser">
@@ -2977,8 +2959,7 @@
 							</equals>
 						</with>
 					</or>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="or">
 						<or>
 							<instanceof
@@ -3000,8 +2981,7 @@
 						<equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser">
 						</equals>
 					</with>
-					<count value="1">
-					</count>
+					<count value="1"/>
 				</and>
 			</activeWhen>
 		</handler>
@@ -3019,8 +2999,7 @@
 							value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor">
 						</equals>
 					</with>
-					<count value="1">
-					</count>
+					<count value="1"/>
 				</and>
 			</activeWhen>
 		</handler>
@@ -3033,8 +3012,7 @@
 						<equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor">
 						</equals>
 					</with>
-					<count value="1">
-					</count>
+					<count value="1"/>
 					<iterate ifEmpty="false" operator="and">
 						<instanceof
 							value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
@@ -3055,8 +3033,7 @@
 						<equals value="org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor">
 						</equals>
 					</with>
-					<count value="1">
-					</count>
+					<count value="1"/>
 				</and>
 			</activeWhen>
 		</handler>
@@ -3349,8 +3326,7 @@
 						value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor">
 					</equals>
 				</with>
-				<count value="1">
-				</count>
+				<count value="1"/>
 				<iterate ifEmpty="false" operator="and">
 					<instanceof
 						value="org.eclipse.jubula.client.core.model.IComponentNamePO">
