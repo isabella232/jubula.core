@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
+import java.io.IOException;
+
 import org.dom4j.Document;
 
 /**
@@ -26,6 +28,6 @@ public interface IXMLReportWriter {
      * @param document
      *      The <code>Document</code> to write.
      */
-    public abstract void write(Document document);
+    public abstract void write(Document document) throws IOException;
 
 }

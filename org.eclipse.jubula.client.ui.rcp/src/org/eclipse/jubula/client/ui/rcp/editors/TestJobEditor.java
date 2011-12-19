@@ -55,6 +55,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.menus.CommandContributionItem;
 
 
 /**
@@ -132,8 +133,10 @@ public class TestJobEditor extends AbstractJBEditor {
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.FIND_COMMAND_ID);
+        mgr.add(CommandHelper.createContributionItem(
+                RCPCommandIDs.FIND_COMMAND_ID,
+                null, Messages.FindContextMenu,
+                CommandContributionItem.STYLE_PUSH));
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
     }

@@ -164,6 +164,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.swt.IFocusService;
 import org.slf4j.Logger;
@@ -1274,8 +1275,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 CommandIDs.DELETE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.RENAME_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.FIND_COMMAND_ID);
+        mgr.add(CommandHelper.createContributionItem(
+                RCPCommandIDs.FIND_COMMAND_ID,
+                null, Messages.FindContextMenu,
+                CommandContributionItem.STYLE_PUSH));
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,

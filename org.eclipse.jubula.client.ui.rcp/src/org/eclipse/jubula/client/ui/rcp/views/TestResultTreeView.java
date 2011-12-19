@@ -53,6 +53,7 @@ import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLab
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
+import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -64,6 +65,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
@@ -196,8 +198,10 @@ public class TestResultTreeView extends ViewPart
      * @param mgr IMenuManager
      */
     protected void fillContextMenu(IMenuManager mgr) {
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.FIND_COMMAND_ID);
+        mgr.add(CommandHelper.createContributionItem(
+                RCPCommandIDs.FIND_COMMAND_ID,
+                null, Messages.FindContextMenu,
+                CommandContributionItem.STYLE_PUSH));
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,

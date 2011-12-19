@@ -311,8 +311,10 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.FIND_COMMAND_ID);
+        mgr.add(CommandHelper.createContributionItem(
+                RCPCommandIDs.FIND_COMMAND_ID,
+                null, Messages.FindContextMenu,
+                CommandContributionItem.STYLE_PUSH));
         mgr.add(new Separator());
         Map<String, String> params = new HashMap<String, String>();
         params.put(RCPCommandIDs.IMPORT_WIZARD_PARAM_ID, 

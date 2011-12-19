@@ -27,7 +27,6 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jubula.client.core.businessprocess.AbstractXMLReportGenerator;
 import org.eclipse.jubula.client.core.businessprocess.CompleteXMLReportGenerator;
 import org.eclipse.jubula.client.core.businessprocess.FileXMLReportWriter;
-import org.eclipse.jubula.client.core.businessprocess.IXMLReportWriter;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.SummarizedTestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
@@ -161,9 +160,11 @@ public class ExportTestResultDetailsWizard extends Wizard
                 File fileToWrite = new File(
                     m_destinationPage.getDestination(), 
                         summary.getTestsuiteName() + "_" + summary.getTestsuiteStartTime().getTime()); //$NON-NLS-1$
+                FileXMLReportWriter reportWriter = 
+                        new FileXMLReportWriter(fileToWrite.getAbsolutePath());
 
                 boolean isWriteFile = m_overwriteState == OVERWRITE_ALL
-                    || !doesFileExist(fileToWrite);
+                    || !doesFileExist(reportWriter);
                 if (!isWriteFile 
                         && m_overwriteState != OVERWRITE_NONE) {
                     final MessageDialog dialog = new MessageDialog(
@@ -212,9 +213,7 @@ public class ExportTestResultDetailsWizard extends Wizard
                 }
                 
                 if (isWriteFile) {
-                    IXMLReportWriter writer = new FileXMLReportWriter(
-                            fileToWrite.getAbsolutePath());
-                    writer.write(document);
+                    reportWriter.write(document);
                 }
                 monitor.worked(1);
             } catch (IOException ioe) {
@@ -224,22 +223,16 @@ public class ExportTestResultDetailsWizard extends Wizard
 
         /**
          * 
-         * @param file The file to check. This file must not contain the 
-         *             extension(s), as these will be checked during method 
-         *             execution.
+         * @param reportWriter The writer with files to check.
          * @return <code>true</code> if the given file exists as an XML file 
          *         (<code>filename</code>.xml) or as an HTML file 
          *         (<code>filename</code>.htm). Otherwise <code>false</code>.
          */
-        private boolean doesFileExist(File file) {
-            boolean doesXmlFileExist =
-                new File(file.getAbsolutePath() 
-                        + FileXMLReportWriter.FILE_EXTENSION_XML)
-                            .exists();
+        private boolean doesFileExist(FileXMLReportWriter reportWriter) {
+            boolean doesXmlFileExist = 
+                    new File(reportWriter.getXmlFileName()).exists();
             boolean doesHtmlFileExist =
-                new File(file.getAbsolutePath() 
-                        + FileXMLReportWriter.FILE_EXTENSION_HTML)
-                            .exists();
+                    new File(reportWriter.getHtmlFileName()).exists();
             return doesHtmlFileExist || doesXmlFileExist;
         }
         

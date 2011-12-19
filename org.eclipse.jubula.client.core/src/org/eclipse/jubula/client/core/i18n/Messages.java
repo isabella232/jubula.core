@@ -58,6 +58,7 @@ public class Messages extends NLS {
     public static String ClientCollectingInformation;
     public static String ClientMonitoringInfoDialog;
     public static String ClientWritingReport;
+    public static String ClientWritingReportError;
     public static String ClientWritingReportToDB;
     public static String CloseSessionFailed;
     public static String ClosingConnectionToTheAUTAgent;

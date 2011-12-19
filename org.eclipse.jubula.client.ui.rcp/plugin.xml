@@ -1002,10 +1002,6 @@
         id="org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew"
         name="%SaveAsNew">
   </command>
-  <command
-        id="org.eclipse.jubula.client.ui.rcp.commands.Find"
-        name="%Find">
-  </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<key
@@ -1209,6 +1205,15 @@
       <command
             commandId="org.eclipse.jubula.client.ui.commands.monitoring.OpenMonitoringReport"
             style="push">
+      </command>
+      <command
+            commandId="org.eclipse.ui.file.export"
+            label="Export"
+            style="push">
+         <parameter
+               name="exportWizardId"
+               value="org.eclipse.jubula.client.ui.rcp.exportWizard.ExportTestResultDetailsWizard">
+         </parameter>
       </command>
         </menuContribution>
 		<menuContribution locationURI="popup:ComponentNameBrowserContextMenuID">
@@ -1556,8 +1561,8 @@
       </visibleWhen>
    </command>
    <command
-         commandId="org.eclipse.jubula.client.ui.rcp.commands.Find"
-         style="push">
+         commandId="org.eclipse.ui.edit.findReplace"
+         style="push" label="%Find">
          <visibleWhen
             checkEnabled="false">
          <reference
@@ -1746,7 +1751,7 @@
   	  </handler>
   	  <handler
         class="org.eclipse.jubula.client.ui.rcp.handlers.FindHandler"
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.Find">
+        commandId="org.eclipse.ui.edit.findReplace">
   	  </handler>
       <handler
             class="org.eclipse.jubula.client.ui.rcp.handlers.project.RcpSelectDatabaseHandler"
@@ -2667,7 +2672,7 @@
         icon="icons/saveAsNew.gif">
   </image>
   <image
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.Find"
+        commandId="org.eclipse.ui.edit.findReplace"
         icon="icons/find.gif">
   </image>
 	</extension>
