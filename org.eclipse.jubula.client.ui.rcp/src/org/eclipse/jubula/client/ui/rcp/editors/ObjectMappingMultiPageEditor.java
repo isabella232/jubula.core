@@ -92,14 +92,11 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionOMEditor;
-import org.eclipse.jubula.client.ui.rcp.actions.OMMarkInAutAction;
-import org.eclipse.jubula.client.ui.rcp.actions.OMSetCategoryToMapInto;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionOMEditor;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.OMEditorBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.ComponentNameTreeViewerUpdater;
-import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
@@ -178,9 +175,9 @@ import org.slf4j.LoggerFactory;
  * @created Oct 21, 2008
  */
 public class ObjectMappingMultiPageEditor extends MultiPageEditorPart 
-                implements IJBPart, IJBEditor, 
-                IObjectMappingObserver, IEditorDirtyStateListener,
-                IMultiTreeViewerContainer, IPropertyListener {
+    implements IJBPart, IJBEditor, IObjectMappingObserver, 
+               IEditorDirtyStateListener, IMultiTreeViewerContainer, 
+               IPropertyListener {
 
     /** Show-menu */
     public static final String CLEANUP_ID = PlatformUI.PLUGIN_ID + ".CleanupSubMenu"; //$NON-NLS-1$
@@ -248,83 +245,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     private Map<Integer, ISelectionProvider> m_pageToSelectionProvider =
         new HashMap<Integer, ISelectionProvider>();
     
-    /** selection changed listener for this editor */
-    private EditorSelectionChangedListener m_editorSelectionChangedListener =
-        new EditorSelectionChangedListener();
-    
-    /**
-     * The SelectionChangedListener for this editor.
-     * @author BREDEX GmbH
-     * @created 04.04.2005
-     */
-    private class EditorSelectionChangedListener 
-        implements ISelectionChangedListener {
-        
-        /**
-         * {@inheritDoc}
-         */
-        @SuppressWarnings("synthetic-access")
-        public void selectionChanged(SelectionChangedEvent event) {
-            if (!(event.getSelection() instanceof IStructuredSelection)) {
-                return;
-            }
-            m_treeSelection = (IStructuredSelection)event.getSelection();
-            Object firstElement = m_treeSelection.getFirstElement();
-            if (m_treeSelection.size() != 1) {
-                OMSetCategoryToMapInto.setEnabled(false);
-                return;
-            }
-            OMMarkInAutAction.setEnabled(
-                (firstElement instanceof IObjectMappingAssoziationPO)
-                && isOmmInAutStarted());
-            if ((firstElement instanceof IObjectMappingCategoryPO 
-                    && (isCorrectMainCategory(
-                        (IObjectMappingCategoryPO)firstElement))
-                    && getAut().getObjMap().getUnmappedTechnicalCategory()
-                        .equals(OMEditorDndSupport.getSection(
-                            ((IObjectMappingCategoryPO)firstElement))))
-                && isOmmInAutStarted()) {
-                
-                OMSetCategoryToMapInto.setEnabled(true);
-                return;
-            }
-            OMSetCategoryToMapInto.setEnabled(false); 
-        }
-        
-        /**
-         * @param firstElement the first element of the current selection (<code>CategoryGUI</code>)
-         * @return true, if the main category of the selected category is <code>OMUnmappedTechNameGUI</code>
-         */
-        private boolean isCorrectMainCategory(
-                IObjectMappingCategoryPO firstElement) {
-            
-            IObjectMappingCategoryPO category = firstElement;
-            while (category.getParent() != null) {
-                category = category.getParent();
-            }
-            return category.equals(
-                    getAut().getObjMap().getUnmappedTechnicalCategory());
-        }
-
-        /**
-         * @return true, if the object mapping mode was started in current aut
-         */
-        private boolean isOmmInAutStarted() {
-            if (TestExecution.getInstance().getConnectedAut() != null) {
-                switch (AUTModeChangedCommand.getAutMode()) {
-                    case ChangeAUTModeMessage.OBJECT_MAPPING:
-                        if (getAut().equals(
-                            TestExecution.getInstance().getConnectedAut())) {
-                            
-                            return true;
-                        }
-                    default:
-                }
-            }
-            return false;
-        }
-    }
-
     /**
      * Always provides an empty selection. Does not track selection listeners.
      *
@@ -862,8 +782,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         getSite().setSelectionProvider(m_selectionProvider);
 
         m_selectionProvider.addSelectionChangedListener(m_actionListener);
-        m_selectionProvider.addSelectionChangedListener(
-                m_editorSelectionChangedListener);
         
         ObjectMappingEventDispatcher.addObserver(this);
 
@@ -1038,8 +956,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_treeViewer.setAutoExpandLevel(2);
         m_treeViewer.setInput(getAut().getObjMap());
         createTreeContextMenu(m_treeViewer, contextMenuMgr);
-        JubulaStateController.getInstance().
-            addSelectionListenerToSelectionService();
         Plugin.getHelpSystem().setHelp(parent,
             ContextHelpIds.OBJECT_MAP_EDITOR);
         
@@ -1288,8 +1204,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 CommandIDs.REFRESH_COMMAND_ID);
         mgr.add(new Separator());
         mgr.add(new Separator());
-        mgr.add(OMSetCategoryToMapInto.getAction());
-        mgr.add(OMMarkInAutAction.getAction());
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.MAP_INTO_CATEGORY_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.HIGHLIGHT_IN_AUT_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,

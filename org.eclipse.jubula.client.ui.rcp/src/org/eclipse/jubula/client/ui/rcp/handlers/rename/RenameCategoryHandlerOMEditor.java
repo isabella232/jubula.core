@@ -21,14 +21,11 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.actions.OMSetCategoryToMapInto;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.OMEditorBP;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.sourceprovider.AbstractJBSourceProvider;
-import org.eclipse.jubula.client.ui.rcp.sourceprovider.ObjectMappingModeSourceProvider;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -68,8 +65,6 @@ public class RenameCategoryHandlerOMEditor
             IStructuredSelection sel) {
         IObjectMappingCategoryPO category = 
             (IObjectMappingCategoryPO)sel.getFirstElement();
-        IObjectMappingCategoryPO categoryToMapIn = 
-            editor.getOmEditorBP().getCategoryToCreateIn();
         InputDialog dialog = createDialog(category, editor.getOmEditorBP());
         if (dialog != null) {
             dialog.setHelpAvailable(true);
@@ -88,18 +83,6 @@ public class RenameCategoryHandlerOMEditor
                     editor.getEditorHelper().setDirty(true);
                     DataEventDispatcher.getInstance().fireDataChangedListener(
                         category, DataState.Renamed, UpdateState.onlyInEditor);
-                    ObjectMappingModeSourceProvider omsp = 
-                        (ObjectMappingModeSourceProvider) 
-                            AbstractJBSourceProvider
-                                .getSourceProviderInstance(null,
-                                        ObjectMappingModeSourceProvider.ID);
-                    if (categoryToMapIn != null && omsp != null
-                            && omsp.isRunning()) {
-                        OMSetCategoryToMapInto action = 
-                            new OMSetCategoryToMapInto();
-                        action.runWithEvent(null, null);
-                        action.dispose();
-                    }
                 }
             }
         }

@@ -53,7 +53,6 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
-import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.LimitingDragSourceListener;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
@@ -528,8 +527,6 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 new JBBrowserPatternFilter(), true);
         setMainTreeViewer(ft.getViewer());
         getMainTreeViewer().setUseHashlookup(true);
-        JubulaStateController.getInstance()
-                .addSelectionListenerToSelectionService();
         getSite().setSelectionProvider(this);
         firePropertyChange(IWorkbenchPartConstants.PROP_INPUT);
     }

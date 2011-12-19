@@ -19,7 +19,6 @@ import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.I18nStringCombo;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -201,8 +200,6 @@ public class TestResultPreferencePage extends PreferencePage
                         SWT.DEFAULT));
             }
         });
-        JubulaStateController.getInstance()
-                .addSelectionListenerToSelectionService();
         return scrollComposite;
     }
 

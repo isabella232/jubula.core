@@ -39,7 +39,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionGDEditor;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCEditor;
 import org.eclipse.jubula.client.ui.rcp.controllers.AbstractPartListener;
-import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.rcp.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
@@ -155,8 +154,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setUseHashlookup(true);
         getMainTreeViewer().setComparer(new UIIdentitiyElementComparer());
-        JubulaStateController.getInstance()
-                .addSelectionListenerToSelectionService();
         getSite().setSelectionProvider(this);
         firePropertyChange(IWorkbenchPartConstants.PROP_INPUT);
     }

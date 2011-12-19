@@ -52,7 +52,6 @@ import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewC
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
-import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
@@ -154,8 +153,6 @@ public class TestResultTreeView extends ViewPart
             ContextHelpIds.RESULT_TREE_VIEW);
         getTreeViewer().getControl().setLayoutData(layoutData);
         getSite().setSelectionProvider(getTreeViewer());
-        JubulaStateController.getInstance().
-            addSelectionListenerToSelectionService();
         createContextMenu();
         DataEventDispatcher.getInstance().addDataChangedListener(this, true);
         DataEventDispatcher.getInstance().addProjectLoadedListener(this, 

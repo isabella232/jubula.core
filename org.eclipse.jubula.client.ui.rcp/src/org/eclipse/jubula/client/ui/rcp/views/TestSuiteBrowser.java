@@ -51,7 +51,6 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
-import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TestExecDropTargetListener;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TreeViewerContainerDragSourceListener;
@@ -112,8 +111,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         setViewerInput();
         Plugin.getHelpSystem().setHelp(getTreeViewer().getControl(),
                 ContextHelpIds.TEST_SUITE_VIEW);
-        JubulaStateController.getInstance()
-            .addSelectionListenerToSelectionService();
         
         int ops = DND.DROP_MOVE;
         Transfer[] transfers = new Transfer[] {LocalSelectionTransfer
@@ -231,16 +228,11 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      * {@inheritDoc}
      */
     public void dispose() {
-        try {
-            JubulaStateController.getInstance()
-                .removeSelectionListenerFromSelectionService();
-        } finally {
-            DataEventDispatcher ded = DataEventDispatcher.getInstance();
-            ded.removeDataChangedListener(this);
-            ded.removeLanguageChangedListener(this);
-            ded.removeCompletenessCheckListener(this);
-            super.dispose();
-        }
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.removeDataChangedListener(this);
+        ded.removeLanguageChangedListener(this);
+        ded.removeCompletenessCheckListener(this);
+        super.dispose();
     }
   
     /**

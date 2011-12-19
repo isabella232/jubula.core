@@ -8,9 +8,10 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.actions;
+package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.jface.action.IAction;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
@@ -24,38 +25,14 @@ import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabelProvider;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
  * @author BREDEX GmbH
  * @created 27.04.2005
  */
-public class OMSetCategoryToMapInto extends AbstractAction {
-
-    /** The handle to this Action */
-    private static IAction handleAction;
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void init(IAction action) {
-        handleAction = action;
-        handleAction.setEnabled(true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void runWithEvent(IAction action, Event event) {
-        ISelection sel = 
-            PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getSelectionService().getSelection();
-        if (sel instanceof IStructuredSelection) {
-            setCategoryToMapInto((IStructuredSelection)sel);
-        }
-    }
+public class MapIntoCategoryHandler extends AbstractHandler {
 
     /**
      * Sets the category to map into.
@@ -115,17 +92,12 @@ public class OMSetCategoryToMapInto extends AbstractAction {
         }
     }
     
-    /**
-     * @return Returns the handleAction.
-     */
-    public static IAction getAction() {
-        return handleAction;
-    }
-    
-    /**
-     * @param enabled The Action to set enabled.
-     */
-    public static void setEnabled(boolean enabled) {
-        handleAction.setEnabled(enabled);
+    /** {@inheritDoc} */
+    public Object execute(ExecutionEvent event) {
+        ISelection sel = HandlerUtil.getCurrentSelection(event);
+        if (sel instanceof IStructuredSelection) {
+            setCategoryToMapInto((IStructuredSelection) sel);
+        }
+        return null;
     }
 }

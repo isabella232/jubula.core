@@ -49,7 +49,6 @@ import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
-import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TCBrowserDndSupport;
@@ -128,8 +127,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
             new TestSpecDropTargetListener(this));
         
         registerContextMenu(); 
-        JubulaStateController.getInstance().
-            addSelectionListenerToSelectionService();
         Plugin.getHelpSystem().setHelp(getTreeViewer().getControl(),
             ContextHelpIds.TEST_SPEC_VIEW);
         
@@ -263,8 +260,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
      */
     public void dispose() {
         try {
-            JubulaStateController.getInstance()
-                .removeSelectionListenerFromSelectionService();
             DataEventDispatcher.getInstance().removeDataChangedListener(this);
             getViewSite().getWorkbenchWindow().getSelectionService()
                 .removeSelectionListener(m_actionListener);

@@ -8,11 +8,12 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.actions;
+package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.ArrayList;
 
-import org.eclipse.jface.action.IAction;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.AUTEvent;
@@ -34,102 +35,70 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-
 
 /**
  * @author BREDEX GmbH
  * @created 27.04.2005
  */
-public class OMMarkInAutAction extends AbstractAction 
-    implements IAUTEventListener {
-
-
-    /** The handle to this Action */
-    private static IAction handleAction;
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void init(IAction action) {
-        handleAction = action;
-        handleAction.setEnabled(true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void runWithEvent(IAction action, Event event) {
-        ObjectMappingMultiPageEditor editor = 
-            ((ObjectMappingMultiPageEditor)Plugin.getActivePart());
-        ISelection sel = editor.getSite().getSelectionProvider().getSelection();
-        if (!(sel instanceof IStructuredSelection)) {
-            return;
-        }
-        IStructuredSelection sSel = (IStructuredSelection)sel;
-        if (AUTModeChangedCommand.getAutMode() 
-                == ChangeAUTModeMessage.OBJECT_MAPPING
-            && sSel.size() == 1
-            && sSel.getFirstElement() instanceof IObjectMappingAssoziationPO) {
-
-            
-            IComponentIdentifier assoCompId = 
-                ((IObjectMappingAssoziationPO)sSel.getFirstElement())
-                    .getTechnicalName();
-            IComponentIdentifier compId = new ComponentIdentifier();
-            if (assoCompId != null) {
-                compId.setComponentClassName(
-                    assoCompId.getComponentClassName());
-                compId.setHierarchyNames(new ArrayList<Object>(
-                    assoCompId.getHierarchyNames()));
-                compId.setNeighbours(new ArrayList<Object>(
-                    assoCompId.getNeighbours()));
-                compId.setSupportedClassName(
-                    assoCompId.getSupportedClassName());
-                compId.setAlternativeDisplayName(
-                    assoCompId.getAlternativeDisplayName());
-            }
-            AUTHighlightComponentCommand response = 
-                new AUTHighlightComponentCommand(this);
-            try {
-                AUTHighlightComponentMessage message = 
-                    new AUTHighlightComponentMessage();
-                message.setComponent(compId);
-                AUTConnection.getInstance().request(message, 
-                    response, 5000);
-            } catch (NotConnectedException nce) {
-                // HERE: notify the listeners about unsuccessfull mode change
-            } catch (CommunicationException ce) {
-                // HERE: notify the listeners about unsuccessfull mode change
-            }
-        } 
-
-    }    
-    /**
-     * @return Returns the handleAction.
-     */
-    public static IAction getAction() {
-        return handleAction;
-    }
-    
-    /**
-     * @param enabled The Action to set enabled.
-     */
-    public static void setEnabled(boolean enabled) {
-        handleAction.setEnabled(enabled);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param event
-     */
+public class HighlightInAUTHandler extends AbstractHandler implements
+        IAUTEventListener {
+    /** {@inheritDoc} */
     public void stateChanged(AUTEvent event) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 ErrorHandlingUtil.createMessageDialog((new JBException(
                         Messages.ComponentCouldNotBeFoundInRunningAut,
-                        MessageIDs.E_COMPONENT_NOT_FOUND)), null, null); 
+                        MessageIDs.E_COMPONENT_NOT_FOUND)), null, null);
             }
         });
+    }
+
+    /** {@inheritDoc} */
+    public Object execute(ExecutionEvent event) {
+        ObjectMappingMultiPageEditor editor = 
+                ((ObjectMappingMultiPageEditor) Plugin
+                .getActivePart());
+        ISelection sel = editor.getSite().getSelectionProvider().getSelection();
+        if (!(sel instanceof IStructuredSelection)) {
+            return null;
+        }
+        IStructuredSelection sSel = (IStructuredSelection) sel;
+        if (AUTModeChangedCommand.getAutMode() 
+                == ChangeAUTModeMessage.OBJECT_MAPPING
+                && sSel.size() == 1
+                && sSel.getFirstElement() 
+                instanceof IObjectMappingAssoziationPO) {
+
+            IComponentIdentifier assoCompId = 
+                    ((IObjectMappingAssoziationPO) sSel
+                    .getFirstElement()).getTechnicalName();
+            IComponentIdentifier compId = new ComponentIdentifier();
+            if (assoCompId != null) {
+                compId.setComponentClassName(
+                        assoCompId.getComponentClassName());
+                compId.setHierarchyNames(new ArrayList<Object>(assoCompId
+                        .getHierarchyNames()));
+                compId.setNeighbours(new ArrayList<Object>(assoCompId
+                        .getNeighbours()));
+                compId.setSupportedClassName(
+                        assoCompId.getSupportedClassName());
+                compId.setAlternativeDisplayName(assoCompId
+                        .getAlternativeDisplayName());
+            }
+            AUTHighlightComponentCommand response = 
+                    new AUTHighlightComponentCommand(
+                    this);
+            try {
+                AUTHighlightComponentMessage message = 
+                        new AUTHighlightComponentMessage();
+                message.setComponent(compId);
+                AUTConnection.getInstance().request(message, response, 5000);
+            } catch (NotConnectedException nce) {
+                // HERE: notify the listeners about unsuccessfull mode change
+            } catch (CommunicationException ce) {
+                // HERE: notify the listeners about unsuccessfull mode change
+            }
+        }
+        return null;
     }
 }

@@ -61,7 +61,6 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
-import org.eclipse.jubula.client.ui.rcp.controllers.JubulaStateController;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.EventHandlerDropTargetListener;
@@ -515,8 +514,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         m_eventHandlerTreeViewer.setUseHashlookup(true);
         m_eventHandlerTreeViewer.getTree()
             .addListener(SWT.MouseDown, new MouseDownListener());
-        JubulaStateController.getInstance().
-            addSelectionListenerToSelectionService();
         firePropertyChange(IWorkbenchPartConstants.PROP_INPUT);
     }
 

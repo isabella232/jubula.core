@@ -420,15 +420,6 @@
 		</actionSet>
 		<actionSet description="all actions, that are not in the main menu- or toolbar"
 			id="org.eclipse.jubula.client.ui.rcp.globalActions" label="Jubula Global Action Set">
-			<action class="org.eclipse.jubula.client.ui.rcp.actions.OMMarkInAutAction"
-				icon="icons/highlight.gif"
-				id="org.eclipse.jubula.client.ui.rcp.actions.OMMarkInAutAction"
-				label="%MarkAutOM" tooltip="%MarkAutOMToolTip" />
-			<action
-				class="org.eclipse.jubula.client.ui.rcp.actions.OMSetCategoryToMapInto"
-				icon="icons/MapInCat.gif"
-				id="org.eclipse.jubula.client.ui.rcp.actions.OMSetCategoryToMapInto"
-				label="%SetCategoryToMapInto" tooltip="%SetCategoryToMapIntoToolTip" />
 			<action icon="icons/moveTestCase.gif"
 				id="org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction"
 				label="%MoveTestCase" retarget="true" />
@@ -1001,6 +992,16 @@
         categoryId="org.eclipse.jubula.client.ui.rcp.commands"
         id="org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew"
         name="%SaveAsNew">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+        id="org.eclipse.jubula.client.ui.rcp.commands.HighlightInAUT"
+        name="%HighlightInAUT">
+  </command>
+  <command
+        categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+        id="org.eclipse.jubula.client.ui.rcp.commands.MapIntoOMCategory"
+        name="%MapIntoOMCategory">
   </command>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
@@ -2483,6 +2484,36 @@
 			</with>
         </activeWhen>
   </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.rcp.handlers.HighlightInAUTHandler"
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.HighlightInAUT">
+        <enabledWhen>
+        	<and>
+	            <with variable="org.eclipse.jubula.client.ui.rcp.variable.isObjectMappingRunning">
+                	<equals value="true" />
+            	</with>
+				<count value="1" />
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO" />
+				</iterate>
+			</and>
+        </enabledWhen>
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.rcp.handlers.MapIntoCategoryHandler"
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.MapIntoOMCategory">
+        <enabledWhen>
+        	<and>
+	            <with variable="org.eclipse.jubula.client.ui.rcp.variable.isObjectMappingRunning">
+                	<equals value="true" />
+            	</with>
+				<count value="1" />
+				<iterate ifEmpty="false" operator="and">
+					<instanceof value="org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO" />
+				</iterate>
+			</and>
+        </enabledWhen>
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.commandImages">
 		<image commandId="org.eclipse.ui.edit.rename" disabledIcon="icons/rename_disabled.gif"
@@ -2527,6 +2558,12 @@
 		</image>
 		<image commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestJobCommand"
 			icon="icons/newTestJobIcon.gif">
+		</image>
+		<image commandId="org.eclipse.jubula.client.ui.rcp.commands.HighlightInAUT"
+			icon="icons/highlight.gif">
+		</image>
+		<image commandId="org.eclipse.jubula.client.ui.rcp.commands.MapIntoOMCategory"
+			icon="icons/MapInCat.gif">
 		</image>
 		<image commandId="org.eclipse.jubula.client.ui.rcp.commands.newCap"
 			disabledIcon="icons/newCapIcon_disabled.gif" icon="icons/newCapIcon.gif">

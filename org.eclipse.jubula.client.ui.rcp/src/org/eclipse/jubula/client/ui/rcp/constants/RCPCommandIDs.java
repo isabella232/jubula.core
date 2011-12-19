@@ -43,6 +43,12 @@ public interface RCPCommandIDs {
     /** the ID of the "extract test case" command */
     public static final String EXTRACT_TESTCASE_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.ExtractTestCase"; //$NON-NLS-1$
 
+    /** the ID of the "highlight in AUT" command */
+    public static final String HIGHLIGHT_IN_AUT_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.HighlightInAUT"; //$NON-NLS-1$
+    
+    /** the ID of the "map into category" command */
+    public static final String MAP_INTO_CATEGORY_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.MapIntoOMCategory"; //$NON-NLS-1$
+    
     /** the ID of the "find" command */
     public static final String FIND_COMMAND_ID = 
             ActionFactory.FIND.getCommandId();
