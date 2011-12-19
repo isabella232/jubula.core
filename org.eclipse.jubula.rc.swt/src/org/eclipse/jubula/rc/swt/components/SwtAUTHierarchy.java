@@ -765,7 +765,13 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             Widget parent = SwtUtils.getWidgetParent(component);
             if (parent != null) {
                 hierarchyParent = getHierarchyContainer(parent);
-                hierarchyContainer.setParent(hierarchyParent);
+                // for some reason, this check is necessary in order to prevent
+                // orphaning the hierarchy container. 
+                // https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=216 
+                // occurred when this null-check was not present.
+                if (hierarchyParent != null) {
+                    hierarchyContainer.setParent(hierarchyParent);
+                }
             }
             if (StringUtils.isEmpty(hierarchyContainer.getName())) {
                 rename(hierarchyContainer);
