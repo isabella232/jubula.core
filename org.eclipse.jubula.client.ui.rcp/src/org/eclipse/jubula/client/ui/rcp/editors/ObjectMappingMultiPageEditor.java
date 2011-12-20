@@ -225,9 +225,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     private ObjectMappingConfigComponent m_mappingConfigComponent;
     
-    /** current selection within the tree view of this editor */
-    private IStructuredSelection m_treeSelection = StructuredSelection.EMPTY;
-
     /** action to cut TreeItems */
     private CutTreeItemActionOMEditor m_cutTreeItemAction;
 
