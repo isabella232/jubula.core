@@ -67,6 +67,9 @@ public interface RCPCommandIDs {
     /** the ID of the "new category" command */
     public static final String NEW_CATEGORY_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand"; //$NON-NLS-1$
 
+    /** the ID of the "new component name" command */
+    public static final String NEW_COMPONENT_NAME_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand"; //$NON-NLS-1$
+    
     /** the ID of the "new project" command */
     public static final String NEW_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.NewProject"; //$NON-NLS-1$
     

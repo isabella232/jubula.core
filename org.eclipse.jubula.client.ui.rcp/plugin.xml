@@ -1159,13 +1159,6 @@
 				style="push">
 			</command>
 		</menuContribution>
-		<menuContribution
-			locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor?after=additions">
-			<command
-				commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand"
-				style="push">
-			</command>
-		</menuContribution>
   <menuContribution
         locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.RunningAuts?after=additions">
      <command

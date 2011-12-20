@@ -732,13 +732,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         createActions();
 
         // Create menu manager.
-        MenuManager menuMgr = new MenuManager();
-        menuMgr.setRemoveAllWhenShown(true);
-        menuMgr.addMenuListener(new IMenuListener() {
-            public void menuAboutToShow(IMenuManager mgr) {
-                fillTreeContextMenu(mgr);
-            }
-        });
+        MenuManager menuMgr = createContextMenu();
 
         GuiEventDispatcher.getInstance().addEditorDirtyStateListener(
                 this, true);
@@ -789,7 +783,15 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_treeViewer.expandToLevel(2);
     }
 
-    /**
+    private MenuManager createContextMenu() {
+    	MenuManager menuMgr = new MenuManager();
+    	fillTreeContextMenu(menuMgr);
+    	menuMgr.add(new GroupMarker(
+                IWorkbenchActionConstants.MB_ADDITIONS));
+		return menuMgr;
+	}
+
+	/**
      * Checks whether data from the editor input is inconsistent and fixes
      * any inconsistencies, saving immediately afterward if necessary.
      */
@@ -1180,6 +1182,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      *            IMenuManager
      */
     protected void fillTreeContextMenu(IMenuManager mgr) {
+    	CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.NEW_COMPONENT_NAME_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
         mgr.add(m_cutTreeItemAction);
@@ -1215,7 +1219,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         CommandHelper.createContributionPushItem(submenuNew,
                 RCPCommandIDs.OME_DELETE_UNUSED_COMPONENT_NAME_COMMAND_ID);
         mgr.add(submenuNew);
-        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
 
     /**
