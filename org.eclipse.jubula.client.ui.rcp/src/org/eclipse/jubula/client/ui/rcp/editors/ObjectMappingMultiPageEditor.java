@@ -783,17 +783,19 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_treeViewer.expandToLevel(2);
     }
 
+    /**
+     * @return the context menu manager
+     */
     private MenuManager createContextMenu() {
-    	MenuManager menuMgr = new MenuManager();
-    	fillTreeContextMenu(menuMgr);
-    	menuMgr.add(new GroupMarker(
-                IWorkbenchActionConstants.MB_ADDITIONS));
-		return menuMgr;
-	}
+        MenuManager menuMgr = new MenuManager();
+        fillTreeContextMenu(menuMgr);
+        menuMgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+        return menuMgr;
+    }
 
-	/**
-     * Checks whether data from the editor input is inconsistent and fixes
-     * any inconsistencies, saving immediately afterward if necessary.
+    /**
+     * Checks whether data from the editor input is inconsistent and fixes any
+     * inconsistencies, saving immediately afterward if necessary.
      */
     private void checkAndFixInconsistentData() {
         
@@ -1182,7 +1184,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      *            IMenuManager
      */
     protected void fillTreeContextMenu(IMenuManager mgr) {
-    	CommandHelper.createContributionPushItem(mgr,
+        CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.NEW_COMPONENT_NAME_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
