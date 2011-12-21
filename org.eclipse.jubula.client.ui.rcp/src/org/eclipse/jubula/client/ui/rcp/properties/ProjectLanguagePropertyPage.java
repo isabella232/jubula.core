@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -90,8 +91,9 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
      * {@inheritDoc}
      */
     protected Control createContents(Composite parent) {
-        createLabel(parent, Messages
-                .ProjectSettingWizardPageSelectLanguagesOfTD);
+        ControlDecorator.decorateInfo(createLabel(parent,
+                Messages.ProjectSettingWizardPageSelectLanguagesOfTD),
+                "GDControlDecorator.NewProjectProjectLanguage", false); //$NON-NLS-1$
         Composite composite = createComposite(parent, NUM_COLUMNS_1,
             SWT.FILL, SWT.FILL, true, true);
 
