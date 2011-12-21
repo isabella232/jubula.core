@@ -113,7 +113,7 @@ public class ExportProjectHandler extends AbstractProjectHandler {
      */
     @SuppressWarnings("synthetic-access")
     private void showExportDialog() {
-        final FileDialog fileDialog = new FileDialog(Plugin.getShell(), 
+        final FileDialog fileDialog = new FileDialog(getActiveShell(), 
             SWT.SAVE | SWT.APPLICATION_MODAL);
         fileDialog.setText(Messages.ActionBuilderSaveAs);
         fileDialog.setFilterExtensions(new String[]{"*.xml"}); //$NON-NLS-1$

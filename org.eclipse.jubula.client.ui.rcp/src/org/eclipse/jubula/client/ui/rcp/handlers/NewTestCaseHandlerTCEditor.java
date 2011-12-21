@@ -41,7 +41,7 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
  */
 public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         TestCaseEditor tce = (TestCaseEditor)Plugin.getActiveEditor();
         if (!(tce.getTreeViewer().getSelection() 
                 instanceof IStructuredSelection)) {
@@ -53,7 +53,7 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
                     .getTreeViewer().getSelection()).getFirstElement();
             final ISpecTestCasePO editorNode = (ISpecTestCasePO)tce
                     .getEditorHelper().getEditSupport().getWorkVersion();
-            InputDialog dialog = new InputDialog(Plugin.getShell(),
+            InputDialog dialog = new InputDialog(getActiveShell(),
                     Messages.NewTestCaseActionTCTitle,
                     InitialValueConstants.DEFAULT_TEST_CASE_NAME,
                     Messages.NewTestCaseActionTCMessage,

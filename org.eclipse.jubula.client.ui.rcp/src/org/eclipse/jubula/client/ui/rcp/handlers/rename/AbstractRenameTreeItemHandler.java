@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.rename;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -30,6 +29,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
@@ -49,8 +49,8 @@ import org.eclipse.ui.PartInitException;
  * @author BREDEX GmbH
  * @created 09.03.2006
  */
-public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
-    
+public abstract class AbstractRenameTreeItemHandler 
+    extends AbstractSelectionBasedHandler {
     /**
      * @param node the corresponding NodePO.
      * @return a new InputDialog.
@@ -74,7 +74,7 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
      */
     private InputDialog createRenameTestJobDialog(final INodePO node) {
         final IProjectPO project = GeneralStorage.getInstance().getProject();
-        return new InputDialog(Plugin.getShell(), 
+        return new InputDialog(getActiveShell(), 
                 Messages.RenameActionTJTitle,
                 node.getName(), Messages.RenameActionTJMessage,
                 Messages.RenameActionTJLabel,
@@ -99,7 +99,7 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
      * @return the dialog for renaming
      */
     private InputDialog createRenameCategoryDialog(final INodePO node) {
-        return new InputDialog(Plugin.getShell(),
+        return new InputDialog(getActiveShell(),
             Messages.RenameActionCatTitle, 
             node.getName(), Messages.RenameActionCatMessage, 
             Messages.RenameActionCatLabel, 
@@ -119,7 +119,7 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
         if (node instanceof IExecTestCasePO) {
             name = ((IExecTestCasePO)node).getRealName();
         }
-        return new InputDialog(Plugin.getShell(),
+        return new InputDialog(getActiveShell(),
             Messages.RenameActionTCTitle,
             name, Messages.RenameActionTCMessage,
             Messages.RenameActionTCLabel,
@@ -137,7 +137,7 @@ public abstract class AbstractRenameTreeItemHandler extends AbstractHandler {
     private InputDialog createRenameTestSuiteDialog(final INodePO node) {
         final IProjectPO project = GeneralStorage.getInstance().
             getProject();
-        return new InputDialog(Plugin.getShell(),
+        return new InputDialog(getActiveShell(),
             Messages.RenameActionTSTitle, 
             node.getName(), Messages.RenameActionTSMessage,
             Messages.RenameActionTSLabel,

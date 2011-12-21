@@ -40,7 +40,7 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object executeImpl(ExecutionEvent event) throws ExecutionException {
         Object testJobToStartObj = null;
         ITestJobPO testJobToStart = null;
         testJobToStartObj = 

@@ -17,15 +17,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -38,47 +35,40 @@ public class MergeComponentNameInViewHandler
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
-        ISelection sel = HandlerUtil.getCurrentSelection(event);
-        if (sel instanceof IStructuredSelection) {
-            IStructuredSelection structuredSel = (IStructuredSelection)sel;
-   
-            // Get model objects from selection
-            Set<IComponentNamePO> compNames = getComponentNames(structuredSel);
+    public Object executeImpl(ExecutionEvent event) {
+        // Get model objects from selection
+        Set<IComponentNamePO> compNames = getComponentNames(getSelection());
 
-            // Dialog
-            IComponentNamePO selectedCompNamePo = openDialog(compNames);
-            
-            if (selectedCompNamePo == null) {
-                // cancel operation
-                return null;
-            }
+        // Dialog
+        IComponentNamePO selectedCompNamePo = openDialog(compNames);
+        
+        if (selectedCompNamePo == null) {
+            // cancel operation
+            return null;
+        }
 
-            EntityManager masterSession = 
-                GeneralStorage.getInstance().getMasterSession();
-            EntityTransaction tx = 
-                Persistor.instance().getTransaction(masterSession);
-            
-            // Make sure that we're using Component Names from the Master Session
-            Set<IComponentNamePO> inSessionCompNames = 
-                new HashSet<IComponentNamePO>();
-            for (IComponentNamePO cn : compNames) {
-                inSessionCompNames.add(masterSession.find(
-                                cn.getClass(), cn.getId()));
-            }
-            
-            performOperation(inSessionCompNames, selectedCompNamePo);
+        EntityManager masterSession = 
+            GeneralStorage.getInstance().getMasterSession();
+        EntityTransaction tx = 
+            Persistor.instance().getTransaction(masterSession);
+        
+        // Make sure that we're using Component Names from the Master Session
+        Set<IComponentNamePO> inSessionCompNames = 
+            new HashSet<IComponentNamePO>();
+        for (IComponentNamePO cn : compNames) {
+            inSessionCompNames.add(masterSession.find(
+                            cn.getClass(), cn.getId()));
+        }
+        
+        performOperation(inSessionCompNames, selectedCompNamePo);
 
-            try {
-                Persistor.instance().commitTransaction(masterSession, tx);
-                fireChangeEvents(inSessionCompNames);
-            } catch (PMException e) {
-                PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleGDProjectDeletedException();
-            }
-            
-            
+        try {
+            Persistor.instance().commitTransaction(masterSession, tx);
+            fireChangeEvents(inSessionCompNames);
+        } catch (PMException e) {
+            PMExceptionHandler.handlePMExceptionForMasterSession(e);
+        } catch (ProjectDeletedException e) {
+            PMExceptionHandler.handleGDProjectDeletedException();
         }
         
         return null;

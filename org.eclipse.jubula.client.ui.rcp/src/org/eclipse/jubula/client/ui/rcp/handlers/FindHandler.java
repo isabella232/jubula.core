@@ -10,11 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.FindDialog;
 import org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -30,15 +29,15 @@ public class FindHandler extends AbstractHandler {
     private FindDialog<?> m_dialog;
 
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart part = HandlerUtil.getActivePart(event);
         if (part instanceof ITreeViewerContainer) {
             if (m_dialog == null || m_dialog.isDisposed()) {
                 if (part instanceof TestResultTreeView) {
                     m_dialog = new FindDialog<TestResultNode>(
-                            Plugin.getShell(), (ITreeViewerContainer) part);
+                            getActiveShell(), (ITreeViewerContainer) part);
                 } else {
-                    m_dialog = new FindDialog<INodePO>(Plugin.getShell(),
+                    m_dialog = new FindDialog<INodePO>(getActiveShell(),
                             (ITreeViewerContainer) part);
                 }
             }

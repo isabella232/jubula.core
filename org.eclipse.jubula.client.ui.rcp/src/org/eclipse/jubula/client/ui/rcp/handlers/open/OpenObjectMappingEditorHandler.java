@@ -29,7 +29,7 @@ public class OpenObjectMappingEditorHandler extends AbstractOpenHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object executeImpl(ExecutionEvent event) throws ExecutionException {
         ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
         if (selection instanceof IStructuredSelection) {
             IStructuredSelection structuredSelection = 

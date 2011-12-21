@@ -17,7 +17,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.Parameter;
 import org.eclipse.jubula.client.ui.rcp.dialogs.EditParametersDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
@@ -33,15 +32,15 @@ public class EditParametersHandler extends AbstractEditParametersHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         final AbstractJBEditor editor = getEditorInEditableState();
         if (editor != null) {
             final JBEditorHelper.EditableState state = editor.getEditorHelper()
                     .getEditableState();
             final ISpecTestCasePO workTC = (ISpecTestCasePO)editor
                     .getEditorHelper().getEditSupport().getWorkVersion();
-            final EditParametersDialog dialog = new EditParametersDialog(Plugin
-                    .getShell(), workTC);
+            final EditParametersDialog dialog = new EditParametersDialog(
+                    getActiveShell(), workTC);
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
             dialog.open();

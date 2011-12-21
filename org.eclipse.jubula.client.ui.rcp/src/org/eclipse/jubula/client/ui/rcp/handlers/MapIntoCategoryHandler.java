@@ -10,30 +10,33 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.OMEditorDndSupport;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabelProvider;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
  * @author BREDEX GmbH
  * @created 27.04.2005
  */
-public class MapIntoCategoryHandler extends AbstractHandler {
-
+public class MapIntoCategoryHandler extends AbstractSelectionBasedHandler {
+    /** {@inheritDoc} */
+    public Object executeImpl(ExecutionEvent event) {
+        setCategoryToMapInto(getSelection());
+        return null;
+    }
+    
     /**
      * Sets the category to map into.
      * 
@@ -90,14 +93,5 @@ public class MapIntoCategoryHandler extends AbstractHandler {
                 Plugin.showStatusLine(Constants.MAPPING, message);
             }
         }
-    }
-    
-    /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
-        ISelection sel = HandlerUtil.getCurrentSelection(event);
-        if (sel instanceof IStructuredSelection) {
-            setCategoryToMapInto((IStructuredSelection) sel);
-        }
-        return null;
     }
 }

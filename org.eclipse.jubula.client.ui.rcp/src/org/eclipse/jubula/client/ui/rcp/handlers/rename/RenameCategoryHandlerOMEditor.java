@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers.rename;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -41,14 +40,11 @@ public class RenameCategoryHandlerOMEditor
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IEditorPart editor = HandlerUtil.getActiveEditor(event);
-        ISelection sel = HandlerUtil.getCurrentSelection(event);
-        if (editor instanceof ObjectMappingMultiPageEditor
-                && sel instanceof IStructuredSelection) {
-            
+        if (editor instanceof ObjectMappingMultiPageEditor) {
             dialogPopUp((ObjectMappingMultiPageEditor)editor, 
-                    (IStructuredSelection)sel);
+                    getSelection());
         }
 
         return null;
@@ -97,7 +93,7 @@ public class RenameCategoryHandlerOMEditor
     private InputDialog createDialog(final IObjectMappingCategoryPO category, 
             final OMEditorBP editorBp) {
         
-        return new InputDialog(Plugin.getShell(), 
+        return new InputDialog(getActiveShell(), 
                 Messages.RenameCategoryActionOMEditorTitle,
                 category.getName(), 
                 Messages.RenameCategoryActionOMEditorMessage,

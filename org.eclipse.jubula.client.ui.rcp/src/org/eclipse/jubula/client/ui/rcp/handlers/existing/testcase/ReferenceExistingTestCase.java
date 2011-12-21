@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -27,6 +26,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.TestCaseTreeDialog;
@@ -45,23 +45,18 @@ import org.eclipse.ui.IWorkbenchPart;
  * @created 18.02.2009
  */
 public class ReferenceExistingTestCase 
-    extends AbstractHandler {
+    extends AbstractSelectionBasedHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         final AbstractTestCaseEditor tce = 
             (AbstractTestCaseEditor)Plugin.getActiveEditor();
         if (tce.getEditorHelper().requestEditableState() 
                 == JBEditorHelper.EditableState.OK) {
             final INodePO editorNode = (INodePO)tce.getEditorHelper()
                     .getEditSupport().getWorkVersion();
-            if (!(tce.getTreeViewer().getSelection() 
-                    instanceof IStructuredSelection)) {
-                return null;
-            }
-            final INodePO node = (INodePO)((IStructuredSelection)tce
-                    .getTreeViewer().getSelection()).getFirstElement();
+            final INodePO node = (INodePO) getSelection().getFirstElement();
             if (node == null) { // check for existing selection
                 return null;
             }
@@ -71,8 +66,8 @@ public class ReferenceExistingTestCase
             if (editorNode instanceof ISpecTestCasePO) {
                 specTC = (ISpecTestCasePO)editorNode;
             }
-            TestCaseTreeDialog dialog = new TestCaseTreeDialog(Plugin
-                    .getShell(), specTC, SWT.MULTI);
+            TestCaseTreeDialog dialog = new TestCaseTreeDialog(
+                    getActiveShell(), specTC, SWT.MULTI);
             dialog.addSelectionListener(listener);
             dialog.setHelpAvailable(true);
             dialog.create();

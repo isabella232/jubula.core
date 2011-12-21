@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -43,13 +42,10 @@ public class DeleteTestDataManagerHandler
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
-        ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
-        if (activePart instanceof CentralTestDataEditor
-                && currentSelection instanceof IStructuredSelection) {
-            IStructuredSelection structuredSelection = 
-                (IStructuredSelection)currentSelection;
+        if (activePart instanceof CentralTestDataEditor) {
+            IStructuredSelection structuredSelection = getSelection();
             CentralTestDataEditor editor = (CentralTestDataEditor)activePart;
             if (editor.getEditorHelper().requestEditableState() 
                     != EditableState.OK) {

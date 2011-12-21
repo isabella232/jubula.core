@@ -161,7 +161,7 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
      * 
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         AutIdentifier runningAut = getRunningAut(event, RUNNING_AUT);
         
         IAUTMainPO mappingAut = AutAgentRegistration.getAutForId(

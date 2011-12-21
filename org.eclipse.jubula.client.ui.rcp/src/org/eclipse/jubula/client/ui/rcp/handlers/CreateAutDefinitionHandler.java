@@ -14,11 +14,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.RunningAutBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -29,6 +25,7 @@ import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AUTPropertiesDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -44,74 +41,68 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author BREDEX GmbH
  * @created Apr 27, 2010
  */
-public class CreateAutDefinitionHandler extends AbstractHandler {
+public class CreateAutDefinitionHandler 
+    extends AbstractSelectionBasedHandler {
     
     /**
-     * 
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        
-        ISelection currentSelection = 
-            HandlerUtil.getCurrentSelectionChecked(event);
-        if (currentSelection instanceof IStructuredSelection) {
-            Object selectedObject = 
-                ((IStructuredSelection)currentSelection).getFirstElement();
-            if (selectedObject instanceof AutIdentifier) {
-                AutIdentifier autId = (AutIdentifier)selectedObject;
-                IProjectPO currentProject = 
-                    GeneralStorage.getInstance().getProject();
-                if (currentProject != null 
-                        && !RunningAutBP.isAutDefined(autId)) {
-                    Set<String> existingNames = new HashSet<String>();
-                    for (IAUTMainPO aut : currentProject.getAutMainList()) {
-                        existingNames.add(aut.getName());
+    public Object executeImpl(ExecutionEvent event) {
+        Object selectedObject = getSelection().getFirstElement();
+        if (selectedObject instanceof AutIdentifier) {
+            AutIdentifier autId = (AutIdentifier)selectedObject;
+            IProjectPO currentProject = 
+                GeneralStorage.getInstance().getProject();
+            if (currentProject != null 
+                    && !RunningAutBP.isAutDefined(autId)) {
+                Set<String> existingNames = new HashSet<String>();
+                for (IAUTMainPO aut : currentProject.getAutMainList()) {
+                    existingNames.add(aut.getName());
+                }
+                String autName = generateUniqueName(
+                        autId.getExecutableName(), existingNames);
+                
+                EditSupport es = null;
+                try {
+                    es = new EditSupport(
+                            currentProject.getProjectProperties(), null);
+                    es.lockWorkVersion();
+                    IAUTMainPO newAut = PoMaker.createAUTMainPO(autName);
+                    newAut.getAutIds().add(autId.getExecutableName());
+                    for (Locale locale : es.getWorkProject()
+                            .getLangHelper().getLanguageList()) {
+                        newAut.getLangHelper().addLanguageToList(locale);
                     }
-                    String autName = generateUniqueName(
-                            autId.getExecutableName(), existingNames);
+                    AUTPropertiesDialog newAutDialog = 
+                        new AUTPropertiesDialog(
+                            HandlerUtil.getActiveWorkbenchWindow(event)
+                                .getShell(), true, 
+                            newAut, es.getWorkProject());
+                    newAutDialog.create();
+                    DialogUtils.setWidgetNameForModalDialog(newAutDialog);
+                    newAutDialog.getShell().setText(
+                        Messages.AUTPropertyPageAUTConfig);
                     
-                    EditSupport es = null;
-                    try {
-                        es = new EditSupport(
-                                currentProject.getProjectProperties(), null);
-                        es.lockWorkVersion();
-                        IAUTMainPO newAut = PoMaker.createAUTMainPO(autName);
-                        newAut.getAutIds().add(autId.getExecutableName());
-                        for (Locale locale : es.getWorkProject()
-                                .getLangHelper().getLanguageList()) {
-                            newAut.getLangHelper().addLanguageToList(locale);
-                        }
-                        AUTPropertiesDialog newAutDialog = 
-                            new AUTPropertiesDialog(
-                                HandlerUtil.getActiveWorkbenchWindow(event)
-                                    .getShell(), true, 
-                                newAut, es.getWorkProject());
-                        newAutDialog.create();
-                        DialogUtils.setWidgetNameForModalDialog(newAutDialog);
-                        newAutDialog.getShell().setText(
-                            Messages.AUTPropertyPageAUTConfig);
+                    if (newAutDialog.open() == Window.OK) {
+                        es.getWorkProject().addAUTMain(newAut);
+                        es.saveWorkVersion();
                         
-                        if (newAutDialog.open() == Window.OK) {
-                            es.getWorkProject().addAUTMain(newAut);
-                            es.saveWorkVersion();
-                            
-                            GeneralStorage.getInstance().getMasterSession()
-                                .refresh(GeneralStorage.getInstance()
-                                    .getProject().getAutCont());
-                            DataEventDispatcher.getInstance()
-                                .fireProjectPropertiesModified();
-                        }
-                    } catch (PMException e) {
-                        ErrorHandlingUtil.createMessageDialog(e, null, null);
-                    } catch (ProjectDeletedException e) {
-                        ErrorHandlingUtil.createMessageDialog(e, null, null);
-                    } catch (IncompatibleTypeException e) {
-                        // Not something we would expect.
-                        ErrorHandlingUtil.createMessageDialog(e, null, null);
-                    } finally {
-                        if (es != null) {
-                            es.close();
-                        }
+                        GeneralStorage.getInstance().getMasterSession()
+                            .refresh(GeneralStorage.getInstance()
+                                .getProject().getAutCont());
+                        DataEventDispatcher.getInstance()
+                            .fireProjectPropertiesModified();
+                    }
+                } catch (PMException e) {
+                    ErrorHandlingUtil.createMessageDialog(e, null, null);
+                } catch (ProjectDeletedException e) {
+                    ErrorHandlingUtil.createMessageDialog(e, null, null);
+                } catch (IncompatibleTypeException e) {
+                    // Not something we would expect.
+                    ErrorHandlingUtil.createMessageDialog(e, null, null);
+                } finally {
+                    if (es != null) {
+                        es.close();
                     }
                 }
             }

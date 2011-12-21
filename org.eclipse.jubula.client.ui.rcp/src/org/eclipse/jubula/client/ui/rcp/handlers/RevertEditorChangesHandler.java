@@ -10,11 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -32,7 +32,7 @@ public class RevertEditorChangesHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         final IWorkbenchPart activePart = Plugin.getActivePart();
         if (activePart == null) {
             return null;
@@ -54,7 +54,7 @@ public class RevertEditorChangesHandler extends AbstractHandler {
      * @return confirm dialog for this action
      */
     private MessageDialog showConfirmDialog() {
-        MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
+        MessageDialog dialog = new MessageDialog(getActiveShell(), 
             Messages.RevertEditorChangesActionShellTitle,
                 null,
                 Messages.RevertEditorChangesActionQuestionText,

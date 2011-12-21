@@ -122,7 +122,7 @@ public class ExportAllHandler extends AbstractProjectHandler {
      */
     private void showExportDialog() {
         final DirectoryDialog dirDialog = 
-            new DirectoryDialog(Plugin.getShell(), SWT.APPLICATION_MODAL);
+            new DirectoryDialog(getActiveShell(), SWT.APPLICATION_MODAL);
         dirDialog.setText(Messages.ActionBuilderExportAll);
         dirDialog.setFilterPath(Utils.getLastDirPath());
         boolean done = false;

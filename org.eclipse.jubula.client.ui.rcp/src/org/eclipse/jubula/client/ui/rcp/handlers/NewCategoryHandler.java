@@ -46,7 +46,7 @@ public class NewCategoryHandler extends AbstractNewHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         try {
             createNewCategory(event);
         } catch (PMException e) {
@@ -74,7 +74,7 @@ public class NewCategoryHandler extends AbstractNewHandler {
 
         final INodePO categoryParent = getParentNode(event);
         InputDialog dialog = new InputDialog(
-            Plugin.getShell(), 
+            getActiveShell(), 
             Messages.CreateNewCategoryActionCatTitle,
             InitialValueConstants.DEFAULT_CATEGORY_NAME,
             Messages.CreateNewCategoryActionCatMessage,

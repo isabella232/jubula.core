@@ -11,8 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers.rename;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -24,13 +22,11 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class RenameTreeItemHandlerTCBrowser extends
         AbstractRenameTreeItemHandler {
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart part = HandlerUtil.getActivePart(event);
-        ISelection sel = HandlerUtil.getCurrentSelection(event);
 
-        if (part instanceof TestCaseBrowser
-                && sel instanceof IStructuredSelection) {
-            dialogPopUp((IStructuredSelection) sel);
+        if (part instanceof TestCaseBrowser) {
+            dialogPopUp(getSelection());
         }
         return null;
     }

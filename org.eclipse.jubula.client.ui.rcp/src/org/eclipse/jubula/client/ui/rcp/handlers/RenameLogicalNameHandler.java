@@ -35,18 +35,15 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class RenameLogicalNameHandler 
     extends AbstractRenameComponentNameHandler {
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public Object execute(ExecutionEvent event) {
+    /** {@inheritDoc} */
+    public Object executeImpl(ExecutionEvent event) {
         IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
         if (activeEditor instanceof ObjectMappingMultiPageEditor) {
             ObjectMappingMultiPageEditor omEditor = 
                 (ObjectMappingMultiPageEditor)activeEditor;
             final IComponentNameMapper compNamesMapper = 
                 omEditor.getEditorHelper().getEditSupport().getCompMapper();
-            IComponentNamePO compName = getSelectedComponentName(event);
+            IComponentNamePO compName = getSelectedComponentName();
             if (compName != null) {
                 String newName = getNewName(event, compNamesMapper, compName);
                 if (newName != null

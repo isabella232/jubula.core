@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.newcap;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -26,6 +25,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NewCAPDialog;
@@ -40,11 +40,11 @@ import org.eclipse.ui.IWorkbenchPart;
  * @author BREDEX GmbH
  * @created 18.02.2009
  */
-public class NewCAP extends AbstractHandler {
+public class NewCAP extends AbstractSelectionBasedHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = Plugin.getActivePart();
         if (activePart instanceof AbstractTestCaseEditor) {
             AbstractTestCaseEditor tse = (AbstractTestCaseEditor)activePart;
@@ -52,12 +52,7 @@ public class NewCAP extends AbstractHandler {
                     == JBEditorHelper.EditableState.OK) {
                 ISpecTestCasePO workTC = (ISpecTestCasePO)tse.getEditorHelper()
                         .getEditSupport().getWorkVersion();
-                if (!(tse.getTreeViewer().getSelection() 
-                        instanceof IStructuredSelection)) {
-                    return null;
-                }
-                IStructuredSelection selection = (IStructuredSelection)tse
-                        .getTreeViewer().getSelection();
+                IStructuredSelection selection = getSelection();
                 INodePO selectedNodeGUI = (INodePO)selection.getFirstElement();
                 if (selectedNodeGUI != null) { // using the CTRL modifier, you
                     // may get a click without a selection
@@ -92,7 +87,7 @@ public class NewCAP extends AbstractHandler {
 
         final NewCAPDialog dialog = 
             new NewCAPDialog(
-                Plugin.getShell(), 
+                getActiveShell(), 
                 specTcGUI, 
                 tse.getEditorHelper().getEditSupport().getCompMapper());
         dialog.create();

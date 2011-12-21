@@ -45,7 +45,7 @@ public class NewProjectHandler extends AbstractProjectHandler {
             public void run() {
                 final ProjectWizard projectWizard = new ProjectWizard();
                 projectWizard.init(null, null);
-                WizardDialog dialog = new WizardDialog(Plugin.getShell(),
+                WizardDialog dialog = new WizardDialog(getActiveShell(),
                         projectWizard) {
                     
                     /**

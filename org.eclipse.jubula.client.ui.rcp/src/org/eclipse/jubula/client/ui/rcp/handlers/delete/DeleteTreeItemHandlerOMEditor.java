@@ -43,15 +43,12 @@ public class DeleteTreeItemHandlerOMEditor
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
-        ISelection sel = HandlerUtil.getCurrentSelection(event);
-        if (!(sel instanceof IStructuredSelection) 
-                || !(activePart instanceof ObjectMappingMultiPageEditor)) {
-
+        if (!(activePart instanceof ObjectMappingMultiPageEditor)) {
             return null;
         }
-        IStructuredSelection selection = (IStructuredSelection)sel;
+        IStructuredSelection selection = getSelection();
         ObjectMappingMultiPageEditor editor = 
             (ObjectMappingMultiPageEditor)activePart;
         if (editor.getEditorHelper().requestEditableState() 
@@ -74,7 +71,7 @@ public class DeleteTreeItemHandlerOMEditor
                     selection.getFirstElement(), editor);
         } else if (selection.size() > 1) {
             boolean delete = false;
-            delete = MessageDialog.openConfirm(Plugin.getShell(),
+            delete = MessageDialog.openConfirm(getActiveShell(),
                 Messages.DeleteTreeItemActionOMEditorOMTitle,
                 Messages.DeleteTreeItemActionOMEditorOMText3);
             if (delete) {
@@ -162,7 +159,7 @@ public class DeleteTreeItemHandlerOMEditor
         boolean delete = false;
         Object lastParent = null;
         if (toDelete instanceof IObjectMappingAssoziationPO) {
-            delete = MessageDialog.openConfirm(Plugin.getShell(),
+            delete = MessageDialog.openConfirm(getActiveShell(),
                 Messages.DeleteTreeItemActionOMEditorOMTitle,
                 Messages.DeleteTreeItemActionOMEditorOMText1);
             if (delete) {
@@ -171,7 +168,7 @@ public class DeleteTreeItemHandlerOMEditor
                 editor.getEditorHelper().setDirty(true);
             }
         } else if (toDelete instanceof IComponentNamePO) {
-            delete = MessageDialog.openConfirm(Plugin.getShell(),
+            delete = MessageDialog.openConfirm(getActiveShell(),
                 Messages.DeleteTreeItemActionOMEditorOMTitle,
                 Messages.DeleteTreeItemActionOMEditorOMText2);
             if (delete) {
@@ -180,7 +177,7 @@ public class DeleteTreeItemHandlerOMEditor
                 editor.getEditorHelper().setDirty(true);
             }
         } else if (toDelete instanceof IObjectMappingCategoryPO) {
-            delete = MessageDialog.openConfirm(Plugin.getShell(),
+            delete = MessageDialog.openConfirm(getActiveShell(),
                 Messages.DeleteTreeItemActionOMEditorOMTitle,
                 Messages.DeleteTreeItemActionOMEditorOMText4);
             if (delete) {

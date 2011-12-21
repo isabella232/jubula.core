@@ -10,10 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -32,7 +32,7 @@ public class DeleteTestresultsHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = Plugin.getActivePart();
         if (activePart instanceof TestresultSummaryView) {
             TestresultSummaryView summary = (TestresultSummaryView)activePart;
@@ -50,7 +50,7 @@ public class DeleteTestresultsHandler extends AbstractHandler {
      * @return returnCode of Dialog
      */
     private int showDeleteTestresultsDialog() {
-        MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
+        MessageDialog dialog = new MessageDialog(getActiveShell(), 
             Messages.TestresultSummaryDeleteTestrunDialogTitle,
                 null,
                 Messages.TestresultSummaryDeleteTestrunDialogMessage,

@@ -237,7 +237,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         AutIdentifier runningAut = getRunningAut(event, RUNNING_AUT);
 
         if (!Utils.openPerspective(Constants.SPEC_PERSPECTIVE)) {
@@ -387,7 +387,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
      */
     private InputDialog createDialog(String newName,
             final Set<String> usedNames) {
-        InputDialog dialog = new InputDialog(Plugin.getShell(), 
+        InputDialog dialog = new InputDialog(getActiveShell(), 
                 Messages.RecordTestCaseActionTCTitle,
                 newName, Messages.RecordTestCaseActionTCMessage,
                 Messages.RecordTestCaseActionTCLabel,

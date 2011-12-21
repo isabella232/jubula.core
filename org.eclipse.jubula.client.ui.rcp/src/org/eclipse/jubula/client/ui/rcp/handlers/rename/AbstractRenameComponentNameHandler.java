@@ -10,15 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.rename;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.RenameLogicalCompNameDialog;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -33,29 +32,18 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @created Mar 5, 2009
  */
 public abstract class AbstractRenameComponentNameHandler extends
-        AbstractHandler {
+        AbstractSelectionBasedHandler {
 
     /**
-     * 
-     * @param event
-     *            An event containing all the information about the current
-     *            state of the application; must not be <code>null</code>.
      * @return the currently selected Component Name, or <code>null</code> if 
      *         no Component Name is currently selected.
      */
-    protected final IComponentNamePO getSelectedComponentName(
-            ExecutionEvent event) {
-
-        ISelection selection = HandlerUtil.getCurrentSelection(event);
-        if (selection instanceof IStructuredSelection) {
-            IStructuredSelection structuredSelection = 
-                (IStructuredSelection)selection;
-            Object selectedObject = structuredSelection.getFirstElement();
-            if (selectedObject instanceof IComponentNamePO) {
-                return (IComponentNamePO)selectedObject;
-            }
+    protected final IComponentNamePO getSelectedComponentName() {
+        IStructuredSelection structuredSelection = getSelection();
+        Object selectedObject = structuredSelection.getFirstElement();
+        if (selectedObject instanceof IComponentNamePO) {
+            return (IComponentNamePO)selectedObject;
         }
-        
         return null;
     }
     

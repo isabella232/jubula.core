@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -28,7 +28,8 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created Aug 11, 2010
  */
-public abstract class AbstractShowSpecificationHandler extends AbstractHandler {
+public abstract class AbstractShowSpecificationHandler 
+    extends AbstractSelectionBasedHandler {
     /**
      * Shows the SpecTS in the Test Suite Browser
      * 

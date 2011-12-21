@@ -33,7 +33,7 @@ public class OpenCentralTestDataEditorHandler extends AbstractOpenHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IProjectPO project = GeneralStorage.getInstance().getProject();
         if (project != null) {
             ITestDataCategoryPO centralTestData = project.getTestDataCubeCont();

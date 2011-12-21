@@ -10,12 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.handlers.project;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 
 /**
@@ -32,18 +32,12 @@ public abstract class AbstractProjectHandler extends AbstractHandler {
             Object result = CommandHelper
                     .executeCommand(CommandIDs.SELECT_DATABASE_COMMAND_ID);
             if (Status.OK_STATUS.equals(result)) {
-                return executeImpl(event);    
+                return super.execute(event);    
             }
         } else {
-            return executeImpl(event);
+            return super.execute(event);
         }
 
         return null;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public abstract Object executeImpl(ExecutionEvent event)
-        throws ExecutionException;
 }

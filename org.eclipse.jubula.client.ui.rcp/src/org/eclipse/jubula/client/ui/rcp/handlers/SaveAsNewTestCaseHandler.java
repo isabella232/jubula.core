@@ -20,8 +20,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -49,7 +48,6 @@ import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.RefToken;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Markus Tiede
@@ -273,23 +271,20 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
     }
 
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
-        ISelection sel = HandlerUtil.getCurrentSelection(event);
+    public Object executeImpl(ExecutionEvent event) {
         String newTestCaseName = getNewTestCaseName(event);
         if (newTestCaseName != null) {
             ISpecTestCasePO newSpecTC = null;
-            if (sel instanceof StructuredSelection) {
-                StructuredSelection ss = (StructuredSelection) sel;
-                final List<IParamNodePO> nodesToClone = 
-                        new ArrayList<IParamNodePO>(
-                        ss.size());
-                Iterator it = ss.iterator();
-                while (it.hasNext()) {
-                    nodesToClone.add((IParamNodePO) it.next());
-                }
-                newSpecTC = createAndPerformNodeDuplication(newTestCaseName,
-                        nodesToClone);
+            IStructuredSelection ss = getSelection();
+            final List<IParamNodePO> nodesToClone = 
+                    new ArrayList<IParamNodePO>(
+                    ss.size());
+            Iterator it = ss.iterator();
+            while (it.hasNext()) {
+                nodesToClone.add((IParamNodePO) it.next());
             }
+            newSpecTC = createAndPerformNodeDuplication(newTestCaseName,
+                    nodesToClone);
 
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     newSpecTC, DataState.Added, UpdateState.all);

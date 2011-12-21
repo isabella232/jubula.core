@@ -42,7 +42,7 @@ public class NewLogicalNameHandler extends AbstractNewComponentNameHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof ObjectMappingMultiPageEditor) {
             ObjectMappingMultiPageEditor omEditor = 
@@ -50,8 +50,7 @@ public class NewLogicalNameHandler extends AbstractNewComponentNameHandler {
             IComponentNameMapper compNameMapper = 
                 omEditor.getEditorHelper().getEditSupport().getCompMapper();
             // Show dialog
-            String newName = openDialog(
-                    compNameMapper, HandlerUtil.getActiveShell(event));
+            String newName = openDialog(compNameMapper);
             if (newName != null) {
                 if (omEditor.getEditorHelper().requestEditableState() 
                         != EditableState.OK) {

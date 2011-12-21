@@ -45,7 +45,7 @@ public class NewTestJobHandler extends AbstractNewHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         newTestJob(event);
         return null;
     }
@@ -85,7 +85,7 @@ public class NewTestJobHandler extends AbstractNewHandler {
             str = str + testJobCount;
         }
         str = InitialValueConstants.DEFAULT_TEST_JOB_NAME + str;
-        InputDialog dialog = new InputDialog(Plugin.getShell(), 
+        InputDialog dialog = new InputDialog(getActiveShell(), 
                 Messages.NewTestJobTJTitle,
                 str, Messages.NewTestJobTJMessage,
                 Messages.NewTestJobTJLabel,

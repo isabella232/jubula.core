@@ -10,19 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.EnterLogicalCompNameDialog;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NewLogicalCompNameDialog;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.swt.widgets.Shell;
 
 
 /**
@@ -35,15 +34,13 @@ public abstract class AbstractNewComponentNameHandler extends AbstractHandler {
      * Opens the "New Component Name..." dialog.
      * 
      * @param compNameMapper The mapper to use for finding Component Names.
-     * @param parentShell The parent Shell for the dialog.
      * @return the name typed into the dialog, or <code>null</code> if the 
      *         dialog was cancelled.
      */
-    protected String openDialog(
-            IComponentNameMapper compNameMapper, Shell parentShell) {
+    protected String openDialog(IComponentNameMapper compNameMapper) {
 
         EnterLogicalCompNameDialog newNameDialog = 
-            new NewLogicalCompNameDialog(compNameMapper, parentShell);
+            new NewLogicalCompNameDialog(compNameMapper, getActiveShell());
         newNameDialog.setHelpAvailable(true);
         newNameDialog.create();
         DialogUtils.setWidgetNameForModalDialog(newNameDialog);

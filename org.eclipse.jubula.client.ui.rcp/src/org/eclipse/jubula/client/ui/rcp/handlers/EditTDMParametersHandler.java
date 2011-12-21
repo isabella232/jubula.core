@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.Parameter;
 import org.eclipse.jubula.client.ui.rcp.dialogs.EditParametersTDMDialog;
@@ -59,7 +58,7 @@ public class EditTDMParametersHandler extends AbstractEditParametersHandler {
     }
     
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         AbstractJBEditor editor = getEditorInEditableState();
         if (editor != null) {
             ITestDataCubePO tdc = getSelectedTestDataManager(event);
@@ -67,7 +66,7 @@ public class EditTDMParametersHandler extends AbstractEditParametersHandler {
                 final JBEditorHelper.EditableState state = editor
                         .getEditorHelper().getEditableState();
                 final AbstractEditParametersDialog dialog = 
-                    new EditParametersTDMDialog(Plugin.getShell(), tdc);
+                    new EditParametersTDMDialog(getActiveShell(), tdc);
                 dialog.create();
                 DialogUtils.setWidgetNameForModalDialog(dialog);
                 dialog.open();

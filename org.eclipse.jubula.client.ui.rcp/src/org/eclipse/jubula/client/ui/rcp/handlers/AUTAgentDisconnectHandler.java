@@ -10,13 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionGUIController;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -49,7 +48,7 @@ public class AUTAgentDisconnectHandler extends AbstractHandler {
      */
     private MessageDialog getConfirmDialog() {      
                 
-        MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
+        MessageDialog dialog = new MessageDialog(getActiveShell(), 
             Messages.ClientDisconnectFromAutAgentTitle,
                 null,
                 Messages.ClientDisconnectFromAutAgentMessage,
@@ -66,7 +65,7 @@ public class AUTAgentDisconnectHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         if (isJobRunning()) {
             MessageDialog dialog = getConfirmDialog();
             if (dialog.getReturnCode() != Window.OK) {

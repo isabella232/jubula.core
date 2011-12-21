@@ -12,12 +12,10 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.Iterator;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.ui.IWorkbenchPart;
@@ -28,25 +26,21 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author BREDEX GmbH
  * @created May 11, 2010
  */
-public class ToggleActiveStatusHandler extends AbstractHandler {
+public class ToggleActiveStatusHandler extends AbstractSelectionBasedHandler {
 
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
-        ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
 
-        if (activePart instanceof AbstractJBEditor
-                && currentSelection instanceof IStructuredSelection) {
+        if (activePart instanceof AbstractJBEditor) {
             AbstractJBEditor tce = (AbstractJBEditor)activePart;
             if (tce.getEditorHelper().requestEditableState() 
                     != JBEditorHelper.EditableState.OK) {
                 return null;
             }
-            IStructuredSelection structuredSelection = 
-                (IStructuredSelection)currentSelection;
-            for (Iterator<INodePO> it = structuredSelection.iterator(); it
+            for (Iterator<INodePO> it = getSelection().iterator(); it
                     .hasNext();) {
                 INodePO node = it.next();
                 node.setActive(!node.isActive());

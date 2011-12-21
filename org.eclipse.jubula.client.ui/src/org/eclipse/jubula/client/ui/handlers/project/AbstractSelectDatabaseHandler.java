@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -30,13 +29,13 @@ import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.core.preferences.database.H2ConnectionInfo;
 import org.eclipse.jubula.client.ui.dialogs.DBLoginDialog;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +51,7 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IStatus returnStatus = Status.CANCEL_STATUS;
         boolean performLogin = false;
         String userName = StringConstants.EMPTY;
@@ -70,8 +69,7 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
             pwd = dbInfo.getProperty(PersistenceUnitProperties.JDBC_PASSWORD);
             performLogin = true;
         } else {
-            DBLoginDialog dialog = 
-                    new DBLoginDialog(HandlerUtil.getActiveShell(event));
+            DBLoginDialog dialog = new DBLoginDialog(getActiveShell());
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
             dialog.open();

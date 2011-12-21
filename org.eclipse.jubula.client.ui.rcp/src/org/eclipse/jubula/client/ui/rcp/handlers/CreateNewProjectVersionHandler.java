@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -41,6 +40,7 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.VersionDialog;
@@ -318,7 +318,7 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
         Integer majNum = Integer.parseInt(versionNumbers[0]);
         Integer minNum = Integer.parseInt(versionNumbers[1]);
         VersionDialog dialog = new VersionDialog(
-            Plugin.getShell(),
+            getActiveShell(),
             Messages.CreateNewProjectVersionActionTitle,
             majNum,
             minNum,
@@ -373,7 +373,7 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         Plugin.startLongRunning(Messages.SaveProjectAsActionWaitWhileSaving);
         VersionDialog dialog = openVersionDialog();
         if (dialog != null && dialog.getReturnCode() == Window.OK) {

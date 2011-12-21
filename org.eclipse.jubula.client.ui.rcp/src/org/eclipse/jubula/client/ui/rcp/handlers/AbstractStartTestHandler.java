@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.net.URL;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.State;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -22,6 +21,7 @@ import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListene
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -142,7 +142,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
         final int returnCodeNO = 257; // since Eclipse3.2 (not 1)
         final int returnCodeCANCEL = -1;
         MessageDialogWithToggle dialog = new MessageDialogWithToggle(
-                Plugin.getShell(),
+                getActiveShell(),
                 Messages.TestExecRelevantDialogTitle,
                 null,
                 Messages.TestExecRelevantDialogQuestion,

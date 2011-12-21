@@ -301,7 +301,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
      */
     private ProjectDialog getComboSelectionDialog(
         List <IProjectPO> projList) {
-        ProjectDialog dialog = new ProjectDialog(Plugin.getShell(),
+        ProjectDialog dialog = new ProjectDialog(getActiveShell(),
             projList,
             Messages.DeleteProjectActionMessage,
             Messages.OpenProjectActionTitle,

@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -25,6 +24,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
@@ -73,7 +73,7 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
     }
     
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IEditorPart editor = Plugin.getActiveEditor();
         Assert.verify(editor instanceof TestCaseEditor, 
             Messages.WrongEditorType + StringConstants.EXCLAMATION_MARK);
@@ -98,8 +98,8 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
             return;
         }
         String title = Messages.AddEventHandlerActionAddEventHandler;
-        TestCaseTreeDialog dialog = new TestCaseTreeDialog(Plugin
-            .getShell(), title, StringConstants.EMPTY, 
+        TestCaseTreeDialog dialog = new TestCaseTreeDialog(
+                getActiveShell(), title, StringConstants.EMPTY, 
             parentNode, title, SWT.SINGLE, 
             IconConstants.ADD_EH_IMAGE); 
         final SelectionTransfer selTransferObj = new SelectionTransfer();

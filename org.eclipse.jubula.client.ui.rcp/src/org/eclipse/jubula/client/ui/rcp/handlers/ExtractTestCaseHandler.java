@@ -58,7 +58,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class ExtractTestCaseHandler extends AbstractRefactorHandler {
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         final AbstractTestCaseEditor editor = (AbstractTestCaseEditor) 
                 HandlerUtil.getActivePart(event);
         String newTestCaseName = getNewTestCaseName(event);
@@ -69,25 +69,20 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
         final INodePO node = (INodePO) editor.getEditorHelper()
                 .getEditSupport().getOriginal();
         if (node != null) {
-            if (editor.getTreeViewer().getSelection() 
-                    instanceof IStructuredSelection) {
-                validateNode(node);
-                final IStructuredSelection selection = 
-                        (IStructuredSelection) editor
-                        .getTreeViewer().getSelection();
-                ExtractionReturn extractRet = performExtraction(
-                        newTestCaseName, node, selection);
-                if (extractRet.getErrorMessage() != null) {
-                    ErrorHandlingUtil.createMessageDialog(new JBException(
-                            extractRet.getErrorMessage(),
-                            MessageIDs.E_UNEXPECTED_EXCEPTION), null,
-                            new String[] { extractRet.getErrorMessage() });
-                }
-                try {
-                    editor.reOpenEditor(node);
-                } catch (PMException e) {
-                    PMExceptionHandler.handlePMExceptionForEditor(e, editor);
-                }
+            validateNode(node);
+            final IStructuredSelection selection = getSelection();
+            ExtractionReturn extractRet = performExtraction(
+                    newTestCaseName, node, selection);
+            if (extractRet.getErrorMessage() != null) {
+                ErrorHandlingUtil.createMessageDialog(new JBException(
+                        extractRet.getErrorMessage(),
+                        MessageIDs.E_UNEXPECTED_EXCEPTION), null,
+                        new String[] { extractRet.getErrorMessage() });
+            }
+            try {
+                editor.reOpenEditor(node);
+            } catch (PMException e) {
+                PMExceptionHandler.handlePMExceptionForEditor(e, editor);
             }
         } else {
             ErrorHandlingUtil.createMessageDialog((new JBException(

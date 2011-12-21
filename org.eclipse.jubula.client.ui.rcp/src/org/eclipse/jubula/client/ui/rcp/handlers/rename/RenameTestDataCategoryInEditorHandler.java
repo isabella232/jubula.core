@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.rename;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -19,13 +18,13 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.utils.SelectionUtils;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -34,16 +33,15 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author Zeb Ford-Reitz
  * @created Nov 06, 2011
  */
-public class RenameTestDataCategoryInEditorHandler extends AbstractHandler {
+public class RenameTestDataCategoryInEditorHandler 
+    extends AbstractSelectionBasedHandler {
 
     /**
-     * 
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
-        ITestDataCategoryPO toRename = SelectionUtils.getFirstElement(
-                HandlerUtil.getCurrentSelection(event),
-                ITestDataCategoryPO.class);
+    public Object executeImpl(ExecutionEvent event) {
+        ITestDataCategoryPO toRename = 
+                getFirstElement(ITestDataCategoryPO.class);
         if (toRename == null) {
             return null;
         }
@@ -52,7 +50,7 @@ public class RenameTestDataCategoryInEditorHandler extends AbstractHandler {
         
         if (activePart instanceof CentralTestDataEditor) {
             CentralTestDataEditor editor = (CentralTestDataEditor)activePart;
-            InputDialog dialog = new InputDialog(Plugin.getShell(), 
+            InputDialog dialog = new InputDialog(getActiveShell(), 
                     Messages.RenameCategoryActionOMEditorTitle,
                     toRename.getName(), 
                     Messages.RenameCategoryActionOMEditorMessage,

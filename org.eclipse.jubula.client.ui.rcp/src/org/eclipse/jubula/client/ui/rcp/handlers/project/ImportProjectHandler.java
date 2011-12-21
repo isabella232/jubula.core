@@ -53,7 +53,7 @@ public class ImportProjectHandler extends AbstractProjectHandler {
      */
     void showImportDialog() {
         ImportProjectDialog importProjectWizard = new ImportProjectDialog();
-        WizardDialog dialog = new WizardDialog(Plugin.getShell(),
+        WizardDialog dialog = new WizardDialog(getActiveShell(),
                 importProjectWizard) {
             protected void createButtonsForButtonBar(Composite parent) {
                 super.createButtonsForButtonBar(parent);

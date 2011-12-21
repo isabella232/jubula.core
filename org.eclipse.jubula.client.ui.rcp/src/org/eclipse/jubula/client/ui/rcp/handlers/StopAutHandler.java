@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.jobs.IJobManager;
@@ -23,6 +22,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionGUIController;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -47,7 +47,7 @@ public class StopAutHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object executeImpl(ExecutionEvent event) throws ExecutionException {
         ISelection sel = HandlerUtil.getCurrentSelectionChecked(event);
         if (sel instanceof IStructuredSelection) {
             IStructuredSelection structSel = (IStructuredSelection)sel;
@@ -87,7 +87,7 @@ public class StopAutHandler extends AbstractHandler {
         } else {
             questionText = Messages.StopAUTActionQuestionText;
         }
-        MessageDialog dialog = new MessageDialog(Plugin.getShell(),
+        MessageDialog dialog = new MessageDialog(getActiveShell(),
                 Messages.StopAUTActionShellTitle,
                 null, questionText, MessageDialog.QUESTION, new String[] {
                     Messages.DialogMessageButton_YES,

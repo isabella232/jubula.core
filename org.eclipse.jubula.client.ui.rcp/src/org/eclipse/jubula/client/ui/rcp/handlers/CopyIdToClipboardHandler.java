@@ -26,7 +26,7 @@ public class CopyIdToClipboardHandler extends AbstractClipboardHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         ISelection sel = HandlerUtil.getCurrentSelection(event);
         if (sel instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection)sel;

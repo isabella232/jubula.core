@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -27,6 +26,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
@@ -40,20 +40,15 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author BREDEX GmbH
  * @created 27.04.2005
  */
-public class OMNewCategoryHandler extends AbstractHandler {
+public class OMNewCategoryHandler extends AbstractSelectionBasedHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object executeImpl(ExecutionEvent event) throws ExecutionException {
         final ObjectMappingMultiPageEditor editor = 
             ((ObjectMappingMultiPageEditor)
                     HandlerUtil.getActivePartChecked(event));
-        if (!(HandlerUtil.getCurrentSelection(event) 
-                instanceof IStructuredSelection)) {
-            return null;
-        }
-        IStructuredSelection selection = 
-            (IStructuredSelection)HandlerUtil.getCurrentSelection(event);
+        IStructuredSelection selection = getSelection();
         if (selection.size() == 1) { 
             ISelectionProvider selectionProvider = 
                 HandlerUtil.getActiveSiteChecked(event)
@@ -89,7 +84,7 @@ public class OMNewCategoryHandler extends AbstractHandler {
         }
         final IObjectMappingCategoryPO node = category;
         InputDialog dialog = 
-            new InputDialog(Plugin.getShell(), 
+            new InputDialog(getActiveShell(), 
                 Messages.OMNewCategoryActionTitle,
                 Messages.OMNewCategoryActionName,
                 Messages.OMNewCategoryActionMessage,

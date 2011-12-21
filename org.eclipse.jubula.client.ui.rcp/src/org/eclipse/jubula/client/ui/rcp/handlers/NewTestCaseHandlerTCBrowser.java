@@ -35,9 +35,9 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
  */
 public class NewTestCaseHandlerTCBrowser extends AbstractNewHandler {
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         INodePO parent = getParentNode(event);
-        InputDialog dialog = new InputDialog(Plugin.getShell(),
+        InputDialog dialog = new InputDialog(getActiveShell(),
                 Messages.NewTestCaseActionTCTitle,
                 InitialValueConstants.DEFAULT_TEST_CASE_NAME,
                 Messages.NewTestCaseActionTCMessage,

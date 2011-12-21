@@ -23,7 +23,7 @@ public class ShowFromClipboard extends AbstractClipboardHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         if (GeneralStorage.getInstance().getProject() != null) {
             String clipboardContent = getClipboardContents();
             String[] content = clipboardContent.split(SPLIT_TOKEN);

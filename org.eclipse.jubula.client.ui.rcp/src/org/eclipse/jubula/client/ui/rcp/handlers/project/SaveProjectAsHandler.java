@@ -243,7 +243,7 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
      */
     private InputDialog openInputDialog() {
         InputDialog dialog = new InputDialog(
-            Plugin.getShell(),
+            getActiveShell(),
             Messages.SaveProjectAsActionTitle,
             GeneralStorage.getInstance().getProject().getName(),
             Messages.SaveProjectAsActionMessage,

@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -29,7 +28,6 @@ import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHand
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -42,17 +40,11 @@ public abstract class AbstractDeleteBrowserTreeItemHandler
     extends AbstractDeleteTreeItemHandler {
 
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
-        ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
-        if (currentSelection instanceof IStructuredSelection) {
-            
-            IStructuredSelection structuredSelection = 
-                (IStructuredSelection)currentSelection;
-            if (confirmDelete(structuredSelection)) {
-                deleteSelection(structuredSelection);
-            }
+    public Object executeImpl(ExecutionEvent event) {
+        IStructuredSelection structuredSelection = getSelection();
+        if (confirmDelete(structuredSelection)) {
+            deleteSelection(structuredSelection);
         }
-        
         return null;
     }
     

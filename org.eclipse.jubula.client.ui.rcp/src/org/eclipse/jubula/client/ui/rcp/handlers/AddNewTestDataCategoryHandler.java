@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -23,6 +22,7 @@ import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
@@ -39,10 +39,9 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class AddNewTestDataCategoryHandler extends AbstractHandler {
 
     /**
-     * 
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof CentralTestDataEditor) {
             CentralTestDataEditor ctdEditor = (CentralTestDataEditor)activePart;
@@ -59,7 +58,7 @@ public class AddNewTestDataCategoryHandler extends AbstractHandler {
                     HandlerUtil.getCurrentSelection(event), rootCategory);
             
             InputDialog dialog = new InputDialog(
-                Plugin.getShell(), 
+                getActiveShell(), 
                 Messages.CreateNewCategoryActionCatTitle,
                 InitialValueConstants.DEFAULT_CATEGORY_NAME,
                 Messages.CreateNewCategoryActionCatMessage,

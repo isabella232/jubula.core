@@ -24,7 +24,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class OpenSpecificationHandler extends AbstractOpenHandler {
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         ISelection sel = HandlerUtil.getCurrentSelection(event);
         if (!(sel instanceof IStructuredSelection)) {
             return null;

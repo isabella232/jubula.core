@@ -15,8 +15,6 @@ import java.util.Set;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
@@ -35,22 +33,17 @@ public class MergeLogicalNameHandler extends AbstractMergeComponentNameHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
-        
-        ISelection sel = HandlerUtil.getCurrentSelection(event);
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
-        if (sel instanceof IStructuredSelection
-                && activePart instanceof IJBEditor) {
-            IStructuredSelection structuredSel = (IStructuredSelection)sel;
-            IJBEditor editor = 
-                (IJBEditor)activePart;
+        if (activePart instanceof IJBEditor) {
+            IJBEditor editor = (IJBEditor)activePart;
             if (editor.isDirty()) {
                 ErrorHandlingUtil.createMessageDialog(MessageIDs.I_SAVE_EDITOR);
                 return null;
             }
    
             // Get model objects from selection
-            Set<IComponentNamePO> compNames = getComponentNames(structuredSel);
+            Set<IComponentNamePO> compNames = getComponentNames(getSelection());
 
             // Dialog
             IComponentNamePO selectedCompNamePo = openDialog(compNames);

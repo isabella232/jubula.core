@@ -12,13 +12,10 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.List;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.ReplaceTCRWizard;
@@ -31,22 +28,18 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author Markus Tiede
  * @created Jul 20, 2011
  */
-public class ReplaceWithTestCaseHandler extends AbstractHandler {
+public class ReplaceWithTestCaseHandler extends AbstractSelectionBasedHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         final AbstractTestCaseEditor tce = 
             (AbstractTestCaseEditor)HandlerUtil.getActiveEditor(event);
         if (tce.getEditorHelper().requestEditableState() 
                 == JBEditorHelper.EditableState.OK) {
-            ISelection selection = tce.getTreeViewer().getSelection();
-            if (!(selection instanceof IStructuredSelection)) {
-                return null;
-            }
-            IStructuredSelection sSelection = (IStructuredSelection) selection;
-            List<IExecTestCasePO> listOfExecsToReplace = sSelection.toList();
-            WizardDialog dialog = new WizardDialog(Plugin.getShell(),
+            List<IExecTestCasePO> listOfExecsToReplace = 
+                    getSelection().toList();
+            WizardDialog dialog = new WizardDialog(getActiveShell(),
                     new ReplaceTCRWizard(tce, listOfExecsToReplace)) {
                 /** {@inheritDoc} */
                 protected void configureShell(Shell newShell) {

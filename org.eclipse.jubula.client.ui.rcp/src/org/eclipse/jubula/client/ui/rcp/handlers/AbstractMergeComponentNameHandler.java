@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -26,6 +25,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.DirectComboBoxDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -39,7 +39,7 @@ import org.eclipse.jubula.client.ui.utils.DialogUtils;
  * @created Mar 13, 2009
  */
 public abstract class AbstractMergeComponentNameHandler 
-        extends AbstractHandler {
+        extends AbstractSelectionBasedHandler {
 
     /**
      * Opens the Merge dialog and returns the dialog's result.
@@ -93,7 +93,7 @@ public abstract class AbstractMergeComponentNameHandler
 
         DirectComboBoxDialog<IComponentNamePO> dialog = 
             new DirectComboBoxDialog<IComponentNamePO>(
-                Plugin.getActiveWorkbenchWindowShell(), 
+                getActiveShell(), 
                 compNamesList, 
                 displayNameList, 
                 Messages.MergeComponentNamesMessage,

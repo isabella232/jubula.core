@@ -50,7 +50,7 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         Object testSuiteToStartObj = null;
         Object runningAutObj = null;
         ITestSuitePO testSuiteToStart = null;

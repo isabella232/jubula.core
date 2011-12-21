@@ -40,8 +40,8 @@ public class RenameComponentNameInViewHandler extends
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
-        IComponentNamePO compName = getSelectedComponentName(event);
+    public Object executeImpl(ExecutionEvent event) {
+        IComponentNamePO compName = getSelectedComponentName();
         if (compName != null) {
             EntityManager renameSession = Persistor.instance().openSession();
             try {

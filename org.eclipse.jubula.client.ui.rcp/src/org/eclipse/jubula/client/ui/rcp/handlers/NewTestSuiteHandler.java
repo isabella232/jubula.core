@@ -46,7 +46,7 @@ public class NewTestSuiteHandler extends AbstractNewHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         newTestSuite(event);
         return null;
     }
@@ -116,7 +116,7 @@ public class NewTestSuiteHandler extends AbstractNewHandler {
             str = str + testSuiteCount;
         }
         str = InitialValueConstants.DEFAULT_TEST_SUITE_NAME + str;
-        InputDialog dialog = new InputDialog(Plugin.getShell(), 
+        InputDialog dialog = new InputDialog(getActiveShell(), 
                 Messages.NewTestSuiteActionTSTitle,
                 str, Messages.NewTestSuiteActionTSMessage,
                 Messages.NewTestSuiteActionTSLabel,

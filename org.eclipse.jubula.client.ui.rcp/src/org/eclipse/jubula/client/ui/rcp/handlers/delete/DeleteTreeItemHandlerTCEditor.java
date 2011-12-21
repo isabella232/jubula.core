@@ -15,7 +15,6 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -41,16 +40,12 @@ public class DeleteTreeItemHandlerTCEditor
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked") 
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
-        ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
         
-        if (activePart instanceof AbstractJBEditor
-                && currentSelection instanceof IStructuredSelection) {
-
+        if (activePart instanceof AbstractJBEditor) {
             AbstractJBEditor tce = (AbstractJBEditor)activePart;
-            IStructuredSelection structuredSelection = 
-                (IStructuredSelection)currentSelection;
+            IStructuredSelection structuredSelection = getSelection();
             if (confirmDelete(structuredSelection)) {
                 if (tce.getEditorHelper().requestEditableState() 
                         != JBEditorHelper.EditableState.OK) {

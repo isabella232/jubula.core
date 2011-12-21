@@ -18,9 +18,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -32,7 +30,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -41,53 +38,47 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author BREDEX GmbH
  * @created Mar 6, 2009
  */
-public class DeleteComponentNameInViewHandler extends AbstractHandler {
+public class DeleteComponentNameInViewHandler 
+    extends AbstractDeleteTreeItemHandler {
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public Object execute(ExecutionEvent event) {
-        ISelection selection = HandlerUtil.getCurrentSelection(event);
-        if (selection instanceof IStructuredSelection) {
-            IStructuredSelection structuredSelection =
-                (IStructuredSelection)selection;
-            Set<IComponentNamePO> toDelete = new HashSet<IComponentNamePO>();
-            for (Object obj : structuredSelection.toArray()) {
-                if (obj instanceof IComponentNamePO) {
-                    toDelete.add((IComponentNamePO)obj);
-                }
+    /** {@inheritDoc} */
+    public Object executeImpl(ExecutionEvent event) {
+        IStructuredSelection structuredSelection = getSelection();
+        Set<IComponentNamePO> toDelete = new HashSet<IComponentNamePO>();
+        for (Object obj : structuredSelection.toArray()) {
+            if (obj instanceof IComponentNamePO) {
+                toDelete.add((IComponentNamePO)obj);
             }
+        }
 
-            List<String> itemNames = new ArrayList<String>();
-            for (IComponentNamePO compName : toDelete) {
-                itemNames.add(compName.getName());
-            }
+        List<String> itemNames = new ArrayList<String>();
+        for (IComponentNamePO compName : toDelete) {
+            itemNames.add(compName.getName());
+        }
 
-            if (DeleteHandlerHelper.confirmDelete(itemNames)) {
-                EntityManager s = GeneralStorage.getInstance()
-                        .getMasterSession();
-                
-                try {
-                    EntityTransaction tx = Persistor.instance()
-                            .getTransaction(s); 
-                    Persistor.instance().lockPOSet(s, toDelete);
-                    for (IComponentNamePO compName : toDelete) {
-                        s.remove(s.merge(compName));
-                    }
-                    Persistor.instance().commitTransaction(s, tx);
-                    for (IComponentNamePO compName : toDelete) {
-                        DataEventDispatcher.getInstance()
-                                .fireDataChangedListener(compName,
-                                        DataState.Deleted, UpdateState.all);
-                        ComponentNamesBP.getInstance().removeComponentNamePO(
-                                compName.getGuid());
-                    }
-                } catch (PMException e) {
-                    PMExceptionHandler.handlePMExceptionForMasterSession(e);
-                } catch (ProjectDeletedException e) {
-                    PMExceptionHandler.handleGDProjectDeletedException();
+        if (confirmDelete(itemNames)) {
+            EntityManager s = GeneralStorage.getInstance()
+                    .getMasterSession();
+            
+            try {
+                EntityTransaction tx = Persistor.instance()
+                        .getTransaction(s); 
+                Persistor.instance().lockPOSet(s, toDelete);
+                for (IComponentNamePO compName : toDelete) {
+                    s.remove(s.merge(compName));
                 }
+                Persistor.instance().commitTransaction(s, tx);
+                for (IComponentNamePO compName : toDelete) {
+                    DataEventDispatcher.getInstance()
+                            .fireDataChangedListener(compName,
+                                    DataState.Deleted, UpdateState.all);
+                    ComponentNamesBP.getInstance().removeComponentNamePO(
+                            compName.getGuid());
+                }
+            } catch (PMException e) {
+                PMExceptionHandler.handlePMExceptionForMasterSession(e);
+            } catch (ProjectDeletedException e) {
+                PMExceptionHandler.handleGDProjectDeletedException();
             }
         }
         

@@ -12,9 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.ArrayList;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.IAUTEventListener;
@@ -23,8 +21,7 @@ import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.communication.message.AUTHighlightComponentMessage;
@@ -40,8 +37,8 @@ import org.eclipse.swt.widgets.Display;
  * @author BREDEX GmbH
  * @created 27.04.2005
  */
-public class HighlightInAUTHandler extends AbstractHandler implements
-        IAUTEventListener {
+public class HighlightInAUTHandler 
+    extends AbstractSelectionBasedHandler implements IAUTEventListener {
     /** {@inheritDoc} */
     public void stateChanged(AUTEvent event) {
         Display.getDefault().asyncExec(new Runnable() {
@@ -54,15 +51,8 @@ public class HighlightInAUTHandler extends AbstractHandler implements
     }
 
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) {
-        ObjectMappingMultiPageEditor editor = 
-                ((ObjectMappingMultiPageEditor) Plugin
-                .getActivePart());
-        ISelection sel = editor.getSite().getSelectionProvider().getSelection();
-        if (!(sel instanceof IStructuredSelection)) {
-            return null;
-        }
-        IStructuredSelection sSel = (IStructuredSelection) sel;
+    public Object executeImpl(ExecutionEvent event) {
+        IStructuredSelection sSel = getSelection();
         if (AUTModeChangedCommand.getAutMode() 
                 == ChangeAUTModeMessage.OBJECT_MAPPING
                 && sSel.size() == 1

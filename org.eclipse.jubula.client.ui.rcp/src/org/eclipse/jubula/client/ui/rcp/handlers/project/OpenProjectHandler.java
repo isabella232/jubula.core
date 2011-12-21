@@ -453,7 +453,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             }
         }
         if (!missingProjects.isEmpty()) {
-            NagDialog.runNagDialog(Plugin.getShell(),
+            NagDialog.runNagDialog(getActiveShell(),
                     "InfoNagger.ImportAllRequiredProjects", //$NON-NLS-1$
                     ContextHelpIds.IMPORT_ALL_REQUIRED_PROJECTS);
         }
@@ -466,7 +466,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
      */
     private ProjectDialog openProjectSelectionDialog(
             List<IProjectPO> projList) {
-        final ProjectDialog dialog = new ProjectDialog(Plugin.getShell(),
+        final ProjectDialog dialog = new ProjectDialog(getActiveShell(),
                 projList, Messages.OpenProjectActionMessage,
                 Messages.OpenProjectActionTitle,
                 IconConstants.OPEN_PROJECT_DIALOG_IMAGE,

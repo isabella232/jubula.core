@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -22,7 +21,6 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.views.AbstractJBTreeView;
 import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
 import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -34,22 +32,19 @@ public class ShowSpecificationHandlerRefTS extends
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
-        ISelection sel = HandlerUtil.getCurrentSelection(event);
-        if (sel instanceof IStructuredSelection) {
-            IStructuredSelection iss = (IStructuredSelection)sel;
-            Object firstElement = iss.getFirstElement();
-            if (firstElement instanceof IRefTestSuitePO) {
-                IRefTestSuitePO refTS = (IRefTestSuitePO)firstElement;
-                String tsGUID = refTS.getTestSuiteGuid();
-                ITestSuitePO testSuite = NodePM.getTestSuite(tsGUID);
-                IViewPart activatedView = 
-                    Plugin.showView(Constants.TS_BROWSER_ID);
-                if (activatedView instanceof TestSuiteBrowser) {
-                    AbstractJBTreeView jbtv = (TestSuiteBrowser)activatedView;
-                    UINodeBP.selectNodeInTree(testSuite.getId(),
-                            jbtv.getTreeViewer(), jbtv.getEntityManager());
-                }
+    public Object executeImpl(ExecutionEvent event) {
+        IStructuredSelection iss = getSelection();
+        Object firstElement = iss.getFirstElement();
+        if (firstElement instanceof IRefTestSuitePO) {
+            IRefTestSuitePO refTS = (IRefTestSuitePO)firstElement;
+            String tsGUID = refTS.getTestSuiteGuid();
+            ITestSuitePO testSuite = NodePM.getTestSuite(tsGUID);
+            IViewPart activatedView = 
+                Plugin.showView(Constants.TS_BROWSER_ID);
+            if (activatedView instanceof TestSuiteBrowser) {
+                AbstractJBTreeView jbtv = (TestSuiteBrowser)activatedView;
+                UINodeBP.selectNodeInTree(testSuite.getId(),
+                        jbtv.getTreeViewer(), jbtv.getEntityManager());
             }
         }
         return null;

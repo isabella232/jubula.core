@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
@@ -25,6 +24,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
@@ -39,7 +39,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author BREDEX GmbH
  * @created Jul 14, 2010
  */
-public abstract class AbstractRefactorHandler extends AbstractHandler {
+public abstract class AbstractRefactorHandler 
+    extends AbstractSelectionBasedHandler {
     /**
      * @param event
      *            the execution event
@@ -61,7 +62,7 @@ public abstract class AbstractRefactorHandler extends AbstractHandler {
                 editor.doSave(new NullProgressMonitor());
             }
             String extractedTCName = getNewName(editor);
-            InputDialog dialog = new InputDialog(Plugin.getShell(),
+            InputDialog dialog = new InputDialog(getActiveShell(),
                     Messages.NewTestCaseActionTCTitle, extractedTCName,
                     Messages.NewTestCaseActionTCMessage,
                     Messages.RenameActionTCLabel, Messages.RenameActionTCError,

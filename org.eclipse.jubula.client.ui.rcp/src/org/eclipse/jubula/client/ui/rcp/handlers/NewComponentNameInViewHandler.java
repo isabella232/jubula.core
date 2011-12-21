@@ -29,7 +29,6 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -42,7 +41,7 @@ public class NewComponentNameInViewHandler extends
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         EntityManager s = Persistor.instance().openSession();
         IWritableComponentNameMapper compNameMapper = 
             new ProjectComponentNameMapper(
@@ -50,8 +49,7 @@ public class NewComponentNameInViewHandler extends
                     GeneralStorage.getInstance().getProject());
 
         // Show dialog
-        String newName = openDialog(
-                compNameMapper, HandlerUtil.getActiveShell(event));
+        String newName = openDialog(compNameMapper);
         
         try {
             if (newName != null) {
