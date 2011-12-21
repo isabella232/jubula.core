@@ -73,9 +73,9 @@ public class TJEditorDndSupport {
         Collections.reverse(selectedElements);
         Iterator iter = selectedElements.iterator();
         while (iter.hasNext()) {
-            Object obj = iter.next();
-            if (obj instanceof ITestSuitePO) {
-                ITestSuitePO testSuite = (ITestSuitePO)obj;
+            Object objectToDrop = iter.next();
+            if (objectToDrop instanceof ITestSuitePO) {
+                ITestSuitePO testSuite = (ITestSuitePO)objectToDrop;
                 if (dropTarget != testSuite) {
                     try {
                         if (dropTarget instanceof IRefTestSuitePO) {
@@ -117,16 +117,16 @@ public class TJEditorDndSupport {
                     }
                 }
             }
-            if (obj instanceof INodePO) {
-                INodePO node = (INodePO)obj;
-                if (node instanceof IRefTestSuitePO) {
+            if (objectToDrop instanceof INodePO) {
+                INodePO nodeToDrop = (INodePO)objectToDrop;
+                if (nodeToDrop instanceof IRefTestSuitePO) {
                     INodePO target = dropTarget;
-                    if (target != node
+                    if (target != nodeToDrop
                             && (target instanceof IRefTestSuitePO)) {
-                        INodePO droppedNode = moveNode(node, target);
-                        postDropAction(droppedNode, targetEditor);
+                        moveNode(nodeToDrop, target);
                     }
                 }
+                postDropAction(nodeToDrop, targetEditor);
             }
         }
         return true;
