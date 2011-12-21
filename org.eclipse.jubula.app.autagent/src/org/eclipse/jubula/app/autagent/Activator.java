@@ -21,11 +21,14 @@ import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 
 /**
- * 
  * @author BREDEX GmbH
  * @created Jun 21, 2011
  */
 public class Activator implements BundleActivator {
+    /**
+     * the configuration file name
+     */
+    private static final String LOGBACK_CONFIG_XML = "logback.xml"; //$NON-NLS-1$
 
     /** the bundle context */
     private static BundleContext context;
@@ -53,7 +56,7 @@ public class Activator implements BundleActivator {
             // configuration
             // rules
             lc.reset();
-            InputStream is = context.getBundle().getResource("logback.xml") //$NON-NLS-1$
+            InputStream is = context.getBundle().getResource(LOGBACK_CONFIG_XML)
                     .openStream();
             configurator.doConfigure(is);
         } catch (JoranException je) {

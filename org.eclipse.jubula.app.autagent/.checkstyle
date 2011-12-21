@@ -5,6 +5,6 @@
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
   <filter name="FilesFromPackage" enabled="true">
-    <filter-data value="src/org/eclipse/jubula/client/ui/i18n"/>
+    <filter-data value="src/org/eclipse/jubula/app/autagent/i18n"/>
   </filter>
 </fileset-config>

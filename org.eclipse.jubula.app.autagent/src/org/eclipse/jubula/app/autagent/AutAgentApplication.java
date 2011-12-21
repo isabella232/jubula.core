@@ -30,6 +30,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jubula.app.autagent.i18n.Messages;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.AutStarter.Verbosity;
 import org.eclipse.jubula.autagent.agent.AutAgent;
@@ -39,6 +40,7 @@ import org.eclipse.jubula.tools.constants.ConfigurationConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +50,26 @@ import org.slf4j.LoggerFactory;
  * @created Jun 21, 2011
  */
 public class AutAgentApplication implements IApplication {
+
+    /**
+     * constant hostname
+     */
+    private static final String HOSTNAME = "hostname"; //$NON-NLS-1$
+
+    /**
+     * commandline constant for port
+     */
+    private static final String COMMANDLINE_PORT = "port"; //$NON-NLS-1$
+
+    /**
+     * constant for autagent launcher
+     */
+    private static final String AUTAGENT_LAUNCHER = "autagent"; //$NON-NLS-1$
+
+    /**
+    * the constant for the default hostname
+    */
+    private static final String DEFAULT_HOSTNAME_LOCALHOST = "localhost"; //$NON-NLS-1$
 
     /** the logger */
     private static final Logger LOG = 
@@ -85,6 +107,11 @@ public class AutAgentApplication implements IApplication {
      * command line argument: quiet output
      */
     private static final String COMMANDLINE_OPTION_QUIET = "q"; //$NON-NLS-1$
+    
+    /**
+     * command line argument: start
+     */
+    private static final String COMMANDLINE_OPTION_START = "start"; //$NON-NLS-1$
 
     /** exit code in case of invalid options */
     private static final int EXIT_INVALID_OPTIONS = -1;
@@ -127,7 +154,7 @@ public class AutAgentApplication implements IApplication {
             int port = getPortNumber(cmd);
             
             if (cmd.hasOption(COMMANDLINE_OPTION_STOP)) {
-                String hostname = "localhost"; //$NON-NLS-1$
+                String hostname = DEFAULT_HOSTNAME_LOCALHOST;
                 if (cmd.getOptionValue(COMMANDLINE_OPTION_STOP) != null) {
                     hostname = cmd.getOptionValue(COMMANDLINE_OPTION_STOP);
                 }
@@ -151,23 +178,23 @@ public class AutAgentApplication implements IApplication {
                 server.start(port, killDuplicateAuts, verbosity, true);
             }
         } catch (ParseException pe) {
-            String message = "invalid option: "; //$NON-NLS-1$
+            String message = Messages.ParseExceptionInvalidOption;
             LOG.error(message, pe);
             printHelp();
             return EXIT_INVALID_OPTIONS;
         } catch (SecurityException se) {
-            LOG.error("security violation", se); //$NON-NLS-1$
+            LOG.error(Messages.SecurityExceptionViolation, se);
             return EXIT_SECURITY_VIOLATION;
         } catch (IOException ioe) {
-            String message = "could not open socket: "; //$NON-NLS-1$
+            String message = Messages.IOExceptionNotOpenSocket;
             LOG.error(message, ioe);
             return EXIT_IO_EXCEPTION;
         } catch (NumberFormatException nfe) {
-            String message = "invalid value for option port"; //$NON-NLS-1$
+            String message = Messages.NumberFormatExceptionInvalidValue;
             LOG.error(message, nfe);
             return EXIT_INVALID_OPTIONS;
         } catch (NullPointerException npe) {
-            LOG.error("no command line", npe); //$NON-NLS-1$
+            LOG.error(Messages.NullPointerExceptionNoCommandLine, npe);
             printHelp();
             return EXIT_INVALID_OPTIONS;
         } catch (JBVersionException ve) {
@@ -191,42 +218,38 @@ public class AutAgentApplication implements IApplication {
      *
      * @return the options
      */
-    @SuppressWarnings("nls")
     private static Options createOptions() {
         Options options = new Options();
 
-        Option portOption = 
-            new Option(COMMANDLINE_OPTION_PORT, true, "the port to listen to");
-        portOption.setArgName("port");
+        Option portOption = new Option(COMMANDLINE_OPTION_PORT, true,
+                Messages.CommandlineOptionPort);
+        portOption.setArgName(COMMANDLINE_PORT);
         options.addOption(portOption);
-        
-        options.addOption(COMMANDLINE_OPTION_LENIENT, 
-                false, "lenient mode; does not shutdown AUTs " 
-                    + "that try to register themselves using an already " 
-                    + "registered AUT ID");
-        options.addOption(COMMANDLINE_OPTION_HELP, false, 
-                "prints this help text and exits");
+
+        options.addOption(COMMANDLINE_OPTION_LENIENT, false,
+                Messages.CommandlineOptionLenient);
+        options.addOption(COMMANDLINE_OPTION_HELP, false,
+                Messages.CommandlineOptionHelp);
 
         OptionGroup verbosityOptions = new OptionGroup();
-        verbosityOptions.addOption(
-                new Option(COMMANDLINE_OPTION_QUIET, false, "quiet mode"));
-        verbosityOptions.addOption(
-                new Option(COMMANDLINE_OPTION_VERBOSE, false, "verbose mode"));
+        verbosityOptions.addOption(new Option(COMMANDLINE_OPTION_QUIET, false,
+                Messages.CommandlineOptionQuiet));
+        verbosityOptions.addOption(new Option(COMMANDLINE_OPTION_VERBOSE,
+                false, Messages.CommandlineOptionVerbose));
         options.addOptionGroup(verbosityOptions);
 
         OptionGroup startStopOptions = new OptionGroup();
-        startStopOptions.addOption(new Option("start", false,
-                "startup mode"));
-        
+        startStopOptions.addOption(new Option(COMMANDLINE_OPTION_START, false,
+                Messages.CommandlineOptionStart));
+
         OptionBuilder.hasOptionalArg();
         Option stopOption = OptionBuilder.create(COMMANDLINE_OPTION_STOP);
-        stopOption.setDescription("stops a running AUT Agent instance "
-                        + "for the given port "
-                        + "on the given hostname (default \"localhost\")");
-        stopOption.setArgName("hostname");
+        stopOption.setDescription(NLS.bind(Messages.OptionStopDescription,
+                DEFAULT_HOSTNAME_LOCALHOST));
+        stopOption.setArgName(HOSTNAME);
         startStopOptions.addOption(stopOption);
         options.addOptionGroup(startStopOptions);
-        
+
         return options;
     }
 
@@ -235,8 +258,7 @@ public class AutAgentApplication implements IApplication {
      */
     private void printHelp() {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("autagent", //$NON-NLS-1$
-            createOptions(), true);
+        formatter.printHelp(AUTAGENT_LAUNCHER, createOptions(), true);
     }
 
     /**
@@ -283,12 +305,11 @@ public class AutAgentApplication implements IApplication {
                 try {
                     port = Integer.valueOf(portStr).intValue();
                 } catch (NumberFormatException nfe) {
-                    LOG.error("Format of portnumber in Environment-Variable '" //$NON-NLS-1$
-                            + ConfigurationConstants.AUTSTARTER_PORT
-                            + "' is not an integer", nfe); //$NON-NLS-1$
+                    LOG.error(NLS.bind(Messages.NumberFormatException,
+                            ConfigurationConstants.AUTSTARTER_PORT), nfe);
                 }
             }
-            LOG.info("using default port " + String.valueOf(port)); //$NON-NLS-1$
+            LOG.info(NLS.bind(Messages.InfoDefaultPort, port));
         }
         return port;
     }
@@ -317,7 +338,8 @@ public class AutAgentApplication implements IApplication {
                     ConnectionState.CLIENT_TYPE_COMMAND_SHUTDOWN);
             waitForAgentToTerminate(br);
         } catch (ConnectException ce) {
-            System.out.println("AUT Agent not found at " + hostname + ":" + port); //$NON-NLS-1$ //$NON-NLS-2$
+            System.out.println(NLS.bind(Messages.AUTAgentNotFound, hostname,
+                    port));
         }
     }
 }
