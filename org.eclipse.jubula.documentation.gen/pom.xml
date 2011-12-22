@@ -3,10 +3,39 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <artifactId>org.eclipse.jubula.releng.client</artifactId>
+    <groupId>org.eclipse.jubula</groupId>
+    <version>1.2.0-SNAPSHOT</version>
+    <relativePath>../org.eclipse.jubula.releng.client</relativePath>
+  </parent>
+
   <groupId>org.eclipse.jubula</groupId>
   <artifactId>org.eclipse.jubula.documentation.gen</artifactId>
   <version>1.2.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>eclipse-plugin</packaging>
+
+  <properties>
+    <target-platform-base-path>../org.eclipse.jubula.project.configuration/target/definitions/</target-platform-base-path>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>jubula-local-build</id>
+      <properties>
+        <target-platform-path>${target-platform-base-path}indigo</target-platform-path>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <id>jubula-remote-fetch</id>
+      <properties>
+        <target-platform-path>${target-platform-base-path}indigo+nightly</target-platform-path>
+      </properties>
+    </profile>
+  </profiles>
 
   <repositories>
     <repository>
@@ -16,82 +45,83 @@
   </repositories>
 
   <dependencies>
-    <dependency>
-      <groupId>org.eclipse.jubula</groupId>
-      <artifactId>org.eclipse.jubula.tools</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
-      <artifactId>org.apache.commons.cli</artifactId>
-      <version>1.2.0.v201011021000</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
-      <artifactId>org.apache.commons.lang</artifactId>
-      <version>2.4.0.v201005080502</version>
-    </dependency>
+    <!-- 
+    This dependency is necessary even though it is already declared in the
+    MANIFEST.MF (as a classpath entry). The MANIFEST.MF dependency is used
+    at compile-time, and this dependency is used for Maven's Dependency Plugin
+    in order to copy dependencies to a "lib" subdirectory in the build 
+    directory. 
+    -->
     <dependency>
       <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
       <artifactId>org.apache.commons.configuration</artifactId>
       <version>1.2.0</version>
     </dependency>
-    <dependency>
-      <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
-      <artifactId>org.apache.commons.collections</artifactId>
-      <version>3.2.0.v201005080500</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
-      <artifactId>org.slf4j.jcl</artifactId>
-      <version>1.5.11.v20100419-1106</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
-      <artifactId>org.slf4j.api</artifactId>
-      <version>1.5.11.v20100519-1910</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
-      <artifactId>ch.qos.logback.classic</artifactId>
-      <version>0.9.19.v20100519-1505</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
-      <artifactId>ch.qos.logback.core</artifactId>
-      <version>0.9.19.v20100419-1216</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
-      <artifactId>ch.qos.logback.slf4j</artifactId>
-      <version>0.9.19.v20100519-1910</version>
-    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-          <configuration>
-            <archive>
-              <manifest>
-                <mainClass>org.eclipse.jubula.documentation.gen.TexGen</mainClass>
-              </manifest>
-            </archive>
-            <descriptorRefs>
-              <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
-          </configuration>
-          <executions>
-            <execution>
-              <id>make-my-jar-with-dependencies</id>
-              <phase>package</phase>
-              <goals>
-                <goal>single</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+                <version>0.12.0</version>
+                <extensions>true</extensions>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <version>0.12.0</version>
+                <configuration>
+                    <resolver>p2</resolver>
+                    <pomDependencies>consider</pomDependencies>
+                    <target>
+                        <artifact>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <version>${project.version}</version>
+                            <classifier>${target-platform-path}</classifier>
+                        </artifact>
+                    </target>
+                    <environments>
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>macosx</os>
+                            <ws>cocoa</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                    </environments>
+                </configuration>
+            </plugin>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-dependency-plugin</artifactId>
+              <version>2.4</version>
+              <executions>
+                  <execution>
+                      <id>copy-dependencies</id>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>copy-dependencies</goal>
+                      </goals>
+                      <configuration>
+                          <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                          <overWriteReleases>false</overWriteReleases>
+                          <overWriteSnapshots>false</overWriteSnapshots>
+                          <overWriteIfNewer>true</overWriteIfNewer>
+                          <stripVersion>true</stripVersion>
+                      </configuration>
+                  </execution>
+              </executions>
+          </plugin>
       </plugins>
   </build>
 
