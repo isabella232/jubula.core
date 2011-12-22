@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
@@ -56,7 +57,7 @@ public class TestResultPM {
     public static final void storeTestResult(EntityManager session) {
         try {            
             final EntityTransaction tx = 
-                Persistor.instance().getTransaction(session);
+                Persistor.instance().getTransaction(session);            
             Persistor.instance().commitTransaction(session, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.StoringOfTestResultsFailed, e,
@@ -109,26 +110,30 @@ public class TestResultPM {
     private static void deleteMonitoringReports(
             EntityManager session, Long summaryId) {
 
+        ITestResultSummaryPO po = session.find(
+                PoMaker.getTestResultSummaryClass(), summaryId);
+        if (po != null) {
+            session.remove(po.getMonitoringReport());
+        }
+        
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append("update ") //$NON-NLS-1$
             .append(PoMaker.getTestResultSummaryClass().getSimpleName())
-            .append(" summary set summary.report = :report, summary.reportWritten = :isReportWritten"); //$NON-NLS-1$
+            .append(" summary.reportWritten = :isReportWritten"); //$NON-NLS-1$
         if (summaryId != null) {
             queryBuilder.append(" where summary.id = :id"); //$NON-NLS-1$
         }
 
-        Query q = session.createQuery(queryBuilder.toString());
-        q.setParameter("report", null); //$NON-NLS-1$
+        Query q = session.createQuery(queryBuilder.toString());       
         q.setParameter("isReportWritten", false); //$NON-NLS-1$
         if (summaryId != null) {
             q.setParameter("id", summaryId); //$NON-NLS-1$
         }
         
         q.executeUpdate();
-
+        
     }    
-    
-    
+   
     /**
      * execute delete-test-result of summary without commit
      * @param session Session

@@ -71,6 +71,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.MonitoringReportPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
@@ -1118,12 +1119,16 @@ public class ClientTest implements IClientTest {
         if (result.getReportData() == MonitoringConstants.EMPTY_REPORT) {
             currentSummary.setReportWritten(false);
         } else {
-            currentSummary.setReport(result.getReportData());
+            currentSummary.setMonitoringReport(
+                    new MonitoringReportPO(result.getReportData()));         
             currentSummary.setReportWritten(true);            
         }
         TestResultSummaryPM
                 .mergeTestResultSummaryInDB(
                         currentSummary);        
+        //set the monitoring report in result to null, 
+        //so it can be garbage collected
+        result.setReportData(null);
     }
     /**
      * find the significant monitoring value

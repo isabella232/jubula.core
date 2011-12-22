@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -23,8 +24,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -60,20 +61,28 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     private Map<String, MonitoringValuePO> m_monitoringValues;   
     /** the significant value */
     private String m_monitoringValue;
+    /**
+     * the monitoring report for this test result summary
+     */   
+    private MonitoringReportPO m_monitoringReport;
     
     /** internal Test job guid */
     private String m_testJobGuid;
     
     /** start time of test job */
+    
     private Date m_testJobStartTime;
         
     /** Date of test run */
+    
     private Date m_testsuiteDate;
     
-    /** Start time */
+    /** Start time **/
+    
     private Date m_testsuiteStartTime;
     
     /** end time */
+    
     private Date m_testsuiteEndTime;
     
     /** duration */
@@ -148,7 +157,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     /** true if testrun is relevant, false otherwise */
     private boolean m_testsuiteRelevant = true;
 
-    /** <code>m_testsuiteFailedTeststeps</code> numer of failed test steps */
+    /** <code>m_testsuiteFailedTeststeps</code> number of failed test steps */
     private int m_testsuiteFailedTeststeps = 
         DEFAULT_NUMBER_OF_FAILED_TEST_STEPS;
 
@@ -160,8 +169,6 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     
     /** comment detail */
     private String m_commentDetail;
-    /** Monitoring-Report */
-    private byte[] m_monitoringReport;
     /** true if blob was written, false otherwise */
     private boolean m_blobWritten = false;
     /** monitoring value typ */
@@ -221,7 +228,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     /**
      * @return the testJobName
      */
-    @Basic()
+    @Basic
     @Column(name = "TEST_JOB_NAME", length = 4000)
     public String getTestJobName() {
         return m_testJobName;
@@ -916,7 +923,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * 
      * @return returns the stored monitored values
      */
-    @ElementCollection(fetch = FetchType.EAGER)    
+    @ElementCollection(fetch = FetchType.LAZY)    
     @CollectionTable(name = "MONITORING_VALUE")
     @MapKeyColumn(name = "MON_KEY")
     private Map<String, MonitoringValuePO> getHbmMonitoringValues() {
@@ -960,24 +967,22 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         }        
         setHbmMonitoringValues(tmpMap);
     }
-    
     /**
-     * @return the report as byte[]
+     * 
+     * @return the monitoring report
      */
-    @Basic
-    @Lob
-    @Column(name = "MONITORING_REPORT")
-    public byte[] getReport() {
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public MonitoringReportPO getMonitoringReport() {
         return m_monitoringReport;
     }
-
     /**
-     * @param report the report to set
+     * 
+     * @param report the monitoring to set report
      */
-    public void setReport(byte[] report) {
-        m_monitoringReport = report;
+    public void setMonitoringReport(MonitoringReportPO report) {
+        this.m_monitoringReport = report;
     }
-
+    
     /**
      * {@inheritDoc}
      */

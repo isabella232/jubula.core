@@ -140,8 +140,7 @@ public class TestresultSummaryBP {
                 result.getRootResultNode().getStatus());      
         //set default monitoring values.       
         summary.setInternalMonitoringId(
-                MonitoringConstants.EMPTY_MONITORING_ID); 
-        summary.setReport(MonitoringConstants.EMPTY_REPORT);
+                MonitoringConstants.EMPTY_MONITORING_ID);         
         summary.setReportWritten(false);
         summary.setMonitoringValueType(MonitoringConstants.EMPTY_TYPE); 
     }

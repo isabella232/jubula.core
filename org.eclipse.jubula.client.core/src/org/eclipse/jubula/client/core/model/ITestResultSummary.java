@@ -385,15 +385,7 @@ public interface ITestResultSummary {
     /**
      * @return the monitoringId
      */
-    public abstract String getInternalMonitoringId();
-    /** 
-     * @param report The byte[] report which will be saved into DB
-     */    
-    public void setReport(byte[] report);    
-    /**
-     * @return the report as an byte[]
-     */
-    public byte[] getReport();    
+    public abstract String getInternalMonitoringId();   
     /**
      * @param isWritten 
      */

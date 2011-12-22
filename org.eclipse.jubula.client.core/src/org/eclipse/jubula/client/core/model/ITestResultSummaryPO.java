@@ -55,5 +55,14 @@ public interface ITestResultSummaryPO extends ITestResultSummary {
      * @return the monitoringValue
      */
     public abstract Map<String, IMonitoringValue> getMonitoringValues();
+    /**
+     * 
+     * @param report the monitoring report which will be stored in the database
+     */
+    public abstract void setMonitoringReport(MonitoringReportPO report);
+    /**
+     * @return the monitoring report for this test result summary
+     */
+    public abstract MonitoringReportPO getMonitoringReport();
     
 }
