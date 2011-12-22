@@ -106,7 +106,7 @@
   </image>
   <image
         commandId="org.eclipse.jubula.client.ui.commands.monitoring.OpenMonitoringReport"
-        icon="icons/root.gif">
+        icon="icons/metrik.png">
   </image>
     </extension>
     <extension
