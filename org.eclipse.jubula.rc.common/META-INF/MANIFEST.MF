@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipse.jubula.rc.common
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Export-Package: org.eclipse.jubula.rc.common,
+ org.eclipse.jubula.rc.common.adaptable,
  org.eclipse.jubula.rc.common.businessprocess,
  org.eclipse.jubula.rc.common.classloader,
  org.eclipse.jubula.rc.common.commands,

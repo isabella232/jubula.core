@@ -29,6 +29,8 @@ import javax.swing.JToggleButton;
 import javax.swing.text.JTextComponent;
 
 import org.eclipse.jubula.rc.common.CompSystemConstants;
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.adaptable.ITextRendererAdapter;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
@@ -270,6 +272,14 @@ public abstract class AbstractSwingImplClass implements
             return ((AbstractButton)renderer).getText();
         } else if (renderer instanceof JTextComponent) {
             return ((JTextComponent)renderer).getText();
+        } 
+        // Check if an adapter exists
+        ITextRendererAdapter textRendererAdapter = 
+            ((ITextRendererAdapter) AdapterFactoryRegistry
+                .getInstance().getAdapter(
+                        ITextRendererAdapter.class, renderer));
+        if (textRendererAdapter != null) {
+            return textRendererAdapter.getText();
         } else if (renderer != null) {
             String[] methodNames = new String[] {
                 RENDERER_FALLBACK_TEXT_GETTER_METHOD_1,
@@ -283,7 +293,7 @@ public abstract class AbstractSwingImplClass implements
         }
         return null;
     }
-    
+
     /**
      * @param obj
      *            the object to invoke the method for

@@ -28,6 +28,7 @@ import org.eclipse.jubula.communication.message.AUTServerStateMessage;
 import org.eclipse.jubula.communication.message.AUTStartMessage;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.commands.AUTStartCommand;
 import org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -244,7 +245,9 @@ public abstract class AUTServer {
     }
 
     /**
-     * Method to get the single instance of this class.
+     * Method to get the single instance of this class. This also once
+     * initializes the adapter factory registry.
+     * 
      * @return the instance of this Singleton
      */
     public static AUTServer getInstance() {
@@ -265,6 +268,7 @@ public abstract class AUTServer {
                                 + autServerName + "failed:" + //$NON-NLS-1$);
                                 iae.getMessage());
             }
+            AdapterFactoryRegistry.initRegistration();
         }
         return instance;
     }
