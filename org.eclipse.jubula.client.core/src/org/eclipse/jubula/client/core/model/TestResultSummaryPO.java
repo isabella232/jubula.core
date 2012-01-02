@@ -971,7 +971,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * 
      * @return the monitoring report
      */
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, 
+            cascade = CascadeType.ALL, 
+            orphanRemoval = true)
     public MonitoringReportPO getMonitoringReport() {
         return m_monitoringReport;
     }

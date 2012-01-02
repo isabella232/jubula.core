@@ -103,35 +103,42 @@ public class TestResultPM {
     }
     
     /**
-     * clean monitoring reports by age (days of existence)
-     * @param session The current session
-     * @param summaryId The summaryToDelete
+     * deleting monitoring reports by age (days of existence) 
+     * or deleting all, if the summaryId is null.
+     * @param session The current session (EntityManager)
+     * @param summaryId The summaryToDelete. 
+     * This value can be null, if all test results were deleted.
+     * if summaryId is null, all monitoring reports will also be deleted.  
      */
     private static void deleteMonitoringReports(
             EntityManager session, Long summaryId) {
-
-        ITestResultSummaryPO po = session.find(
-                PoMaker.getTestResultSummaryClass(), summaryId);
-        if (po != null) {
-            session.remove(po.getMonitoringReport());
-        }
         
-        StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append("update ") //$NON-NLS-1$
-            .append(PoMaker.getTestResultSummaryClass().getSimpleName())
-            .append(" summary.reportWritten = :isReportWritten"); //$NON-NLS-1$
+        ITestResultSummaryPO summaryPo = null;
         if (summaryId != null) {
-            queryBuilder.append(" where summary.id = :id"); //$NON-NLS-1$
-        }
-
-        Query q = session.createQuery(queryBuilder.toString());       
-        q.setParameter("isReportWritten", false); //$NON-NLS-1$
-        if (summaryId != null) {
-            q.setParameter("id", summaryId); //$NON-NLS-1$
-        }
+            summaryPo = session.find(
+                    PoMaker.getTestResultSummaryClass(), summaryId);
+            if (summaryPo != null) {
+                summaryPo.setMonitoringReport(null);
+                summaryPo.setReportWritten(false);
+            }
         
-        q.executeUpdate();
-        
+        } else {
+            
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.append("SELECT summary FROM ") //$NON-NLS-1$
+                    .append(PoMaker.getTestResultSummaryClass().getSimpleName())
+                    .append(" AS summary where summary.reportWritten = :isReportWritten"); //$NON-NLS-1$
+            
+            Query q = session.createQuery(queryBuilder.toString());
+            q.setParameter("isReportWritten", true); //$NON-NLS-1$
+            
+            @SuppressWarnings("unchecked")
+            List<ITestResultSummaryPO> reportList = q.getResultList();
+            for (ITestResultSummaryPO summary : reportList) {
+                summary.setMonitoringReport(null);
+                summary.setReportWritten(false);
+            }
+        }
     }    
    
     /**

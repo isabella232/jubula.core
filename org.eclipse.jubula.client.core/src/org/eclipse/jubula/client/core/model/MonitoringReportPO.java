@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.model;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -82,9 +81,7 @@ public class MonitoringReportPO {
      * 
      * @return the corresponding summary for this monitoring report
      */
-    @OneToOne(mappedBy = "monitoringReport", 
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "monitoringReport", fetch = FetchType.LAZY)
     public TestResultSummaryPO getSummary() {
         return m_summary;
     }
