@@ -145,10 +145,11 @@ public class TableImplClass extends AbstractControlImplClass
                             TableColumn tc = m_table.getColumn(column);
                             int alignment = tc.getAlignment();
                             if (alignment == SWT.CENTER) {
-                                r.x = (tc.getWidth() / 2) - (r.width / 2); 
+                                r.x += ((double)tc.getWidth() / 2) 
+                                        - ((double)r.width / 2);
                             }
                             if (alignment == SWT.RIGHT) {
-                                r.x = tc.getWidth() - r.width;
+                                r.x += tc.getWidth() - r.width;
                             }
                         }
                         
