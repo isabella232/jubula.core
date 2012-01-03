@@ -41,15 +41,19 @@ LANG="$2"
 TEMPL_DIR="$GDWS_DIR/org.eclipse.jubula.documentation.gen/templates"
 
 # classpath
-CL_PATH="$TEXGEN_DIR/target/org.eclipse.jubula.documentation.gen-1.2.0-SNAPSHOT-jar-with-dependencies.jar"
+CL_PATH="$TEXGEN_DIR/target/org.eclipse.jubula.documentation.gen-1.2.0-SNAPSHOT.jar"
 
-for i in `ls $GDWS_DIR/org.eclipse.jubula.tools/lib/*.jar`
+for i in `ls $TEXGEN_DIR/target/lib/*.jar`
 do
   CL_PATH="${CL_PATH}:$i"
 done
-CL_PATH="${CL_PATH}:${TEXGEN_DIR}/resources:${GDWS_DIR}/org.eclipse.jubula.tools/resources"
+for i in `ls $TEXGEN_DIR/target/lib/org.eclipse.jubula.tools-lib/*.jar`
+do
+  CL_PATH="${CL_PATH}:$i"
+done
+CL_PATH="${CL_PATH}:${TEXGEN_DIR}/resources"
 
-
+echo ${CL_PATH}
 if [ "$3" = "actions" ]; then
     java -classpath $CL_PATH org.eclipse.jubula.documentation.gen.TexGen -gt actions -td $TEMPL_DIR -nl $LANG -od $OUT_DIR
 fi
