@@ -119,4 +119,25 @@ public class NodeBP {
         return activeProject != null 
             && activeProject.getId().equals(po.getParentProjectId());
     }
+    
+    /**
+     * @param node
+     *            the node to check
+     * @return whether the given node or one of it's parent is active or not
+     */
+    public static boolean isNodeActive(INodePO node) {
+        if (node == null || !node.isActive()) {
+            return false;
+        }
+        INodePO parentNode = node.getParentNode();
+        while (parentNode != null) {
+            if (node != null) {
+                if (!node.isActive()) {
+                    return false;
+                }
+            }
+            parentNode = parentNode.getParentNode();
+        }
+        return true;
+    }
 }

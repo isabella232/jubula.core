@@ -152,16 +152,17 @@
           type="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
     </propertyTester>
 	</extension>
-	<extension id="gdMarker" name="%JubulaMarker"
+	<extension id="jbMarker" name="%JubulaMarker"
 		point="org.eclipse.core.resources.markers" />
-	<extension id="gdProblem" name="%JubulaProblem"
+	<extension id="jbProblem" name="%JubulaProblem"
 		point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.core.resources.problemmarker" />
-		<super type="org.eclipse.jubula.client.ui.rcp.gdMarker" />
-		<attribute name="gdObject" />
-  <attribute
-        name="tstNodeName">
-  </attribute>
+		<super type="org.eclipse.jubula.client.ui.rcp.jbMarker" />
+		<attribute name="jbFQCN" />
+		<attribute name="jbReason" />
+		<attribute name="jbObjectHashCode" />
+  		<attribute name="jbObjectName" />
+  		<attribute name="jbNodeGUID" />
 	</extension>
 	<extension point="org.eclipse.core.runtime.adapters">
 		<factory adaptableType="org.eclipse.jubula.client.core.model.IComponentNamePO"
@@ -1078,7 +1079,7 @@
 		point="org.eclipse.ui.ide.markerResolution">
 		<markerResolutionGenerator
 			class="org.eclipse.jubula.client.ui.rcp.views.problemview.JBMarkerResolutionGenerator"
-			markerType="org.eclipse.jubula.client.ui.rcp.gdProblem">
+			markerType="org.eclipse.jubula.client.ui.rcp.jbProblem">
 		</markerResolutionGenerator>
 	</extension>
 	<extension point="org.eclipse.ui.menus">

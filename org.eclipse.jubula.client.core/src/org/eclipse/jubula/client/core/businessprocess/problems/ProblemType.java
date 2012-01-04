@@ -59,7 +59,7 @@ public enum ProblemType {
     REASON_NO_AUTCONFIG_FOR_SERVER_EXIST,
 
     /** AutConfig is incomplete - repair : OPEN AUTCONFIG EDITOR */
-    REASON_NOJAR_FOR_AUTCONFIG,
+    REASON_NO_JAR_FOR_AUTCONFIG,
 
     /**  test suite has no TCs - repair : nothing or help window, what all could be wrong */
     REASON_EMPTY_TESTSUITE,
@@ -74,7 +74,7 @@ public enum ProblemType {
     REASON_NO_SERVER_DEFINED,
 
     /** No Server defined in AUT config - repair : Open AUT config */
-    REASON_NOSERVER_FOR_AUTCONFIG,
+    REASON_NO_SERVER_FOR_AUTCONFIG,
 
     /**
      * test suite has reference to missing SpecTestCase - repair : Open TC editor
@@ -88,6 +88,6 @@ public enum ProblemType {
     /** An ExecTestase has unused Test Data  */
     REASON_UNUSED_TESTDATA,
     
-    /** external reasons for failing */ 
-    EXTERNAL
+    /** non specific problem */ 
+    NO_QUICKFIX
 }

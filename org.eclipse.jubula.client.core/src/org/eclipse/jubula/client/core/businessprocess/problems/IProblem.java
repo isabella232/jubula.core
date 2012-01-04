@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.problems;
 
+import org.eclipse.core.runtime.IStatus;
+
 
 /**
  * Describes a Problem of a Resource.
@@ -22,7 +24,7 @@ public interface IProblem {
     /**
      * @return the message to display in the marker for this problem, or 
      *         <code>null</code> if no marker should be displayed.
-     * @see #isWithMarker() 
+     * @see #shouldShowMarker() 
      */
     String getMarkerMessage();
 
@@ -33,14 +35,9 @@ public interface IProblem {
     String getTooltipMessage();
     
     /**
-     * @return the unique identifier of the plugin associated with this problem.
+     * @return the status of this problem.
      */
-    String getPlugin();
-
-    /**
-     * @return the severity of this problem, as defined in {@link IStatus}.
-     */
-    int getSeverity();
+    IStatus getStatus();
 
     /**
      * @return additional data associated with this problem, or 
@@ -59,5 +56,5 @@ public interface IProblem {
      *         the Problems View.
      * @see #getMarkerMessage()
      */
-    boolean isWithMarker();
+    boolean shouldShowMarker();
 }

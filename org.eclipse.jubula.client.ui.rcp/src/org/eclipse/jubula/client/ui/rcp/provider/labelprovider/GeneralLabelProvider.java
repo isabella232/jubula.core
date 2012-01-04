@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -23,6 +24,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -165,12 +167,21 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     
     /** {@inheritDoc} */
     public Image getToolTipImage(Object object) {
-        String tooltipText = getToolTipText(object);
-        if (tooltipText != null) {
-            if (tooltipText.startsWith(COMMENT_PREFIX)) {
-                return IconConstants.INFO_IMAGE;
+        if (object instanceof INodePO) {
+            INodePO node = (INodePO)object;
+            if (ProblemFactory.hasProblem(node)) {
+                switch (ProblemFactory.getWorstProblem(node.getProblems())
+                        .getStatus().getSeverity()) {
+                    case IStatus.INFO:
+                        return IconConstants.INFO_IMAGE;
+                    case IStatus.WARNING:
+                        return IconConstants.WARNING_IMAGE;
+                    case IStatus.ERROR:
+                        return IconConstants.ERROR_IMAGE;
+                    default:
+                        break;
+                }
             }
-            return IconConstants.ERROR_IMAGE;
         }
         return super.getToolTipImage(object);
     }

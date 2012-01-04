@@ -15,8 +15,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ICompletenessCheckListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -29,7 +27,7 @@ import org.eclipse.jubula.client.core.utils.TreeTraverser;
  * @author Markus Tiede
  * @created 27.10.2011
  */
-public class CompletenessPropagator implements ICompletenessCheckListener {
+public class CompletenessPropagator {
     /** this instance */
     private static CompletenessPropagator instance;
 
@@ -37,7 +35,7 @@ public class CompletenessPropagator implements ICompletenessCheckListener {
      * private constructor
      */
     private CompletenessPropagator() {
-        DataEventDispatcher.getInstance().addCompletenessCheckListener(this);
+        // currently empty
     }
 
     /**
@@ -51,11 +49,13 @@ public class CompletenessPropagator implements ICompletenessCheckListener {
     }
     
     /** {@inheritDoc} */
-    public void completenessCheckFinished() {
+    public void propagate() {
         IProjectPO project = GeneralStorage.getInstance().getProject();
-        final TreeTraverser traverser = new TreeTraverser(project, 
-                new CompletenessPropagationOperation());
-        traverser.traverse(true);
+        if (project != null) {
+            final TreeTraverser traverser = new TreeTraverser(project, 
+                    new CompletenessPropagationOperation());
+            traverser.traverse(true);
+        }
     }
     
     /**
@@ -87,10 +87,10 @@ public class CompletenessPropagator implements ICompletenessCheckListener {
         /** {@inheritDoc} */
         public void postOperate(ITreeTraverserContext<INodePO> ctx, 
             INodePO parent, INodePO node, boolean alreadyVisited) {
-            IProblem worstProblem = ProblemFactory.getWorstProblem(
-                    node.getProblems());
-            if (worstProblem != null) {
-                setParentProblem(parent, worstProblem.getSeverity());
+            if (ProblemFactory.hasProblem(node)) {
+                setParentProblem(parent,
+                        ProblemFactory.getWorstProblem(node.getProblems())
+                                .getStatus().getSeverity());
             }
         }
 

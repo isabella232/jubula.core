@@ -134,18 +134,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     }
     
     /**
-     * clients interested in partial changes to the data in the master session
-     *
-     */
-    public interface IProblemChangedListener {
-        
-        /**
-         * reacts when a new problem occurs or a problem was resolved
-         */
-        public void handleRefreshProblem();
-    }
-    
-    /**
      * to notify the DatasetView about modifications in Properties View
      *
      */
@@ -453,19 +441,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     private Set<IParamChangedListener> m_paramChangedListenersPost = 
         new HashSet<IParamChangedListener>();
     
-    /**
-     * <code>m_paramChangedListeners</code> listener for changes to the parameter
-     */
-    private Set<IProblemChangedListener> m_problemChangedListeners = 
-        new HashSet<IProblemChangedListener>();
-    /**
-     * <code>m_paramChangedListeners</code> listener for changes to the parameter
-     *  POST-Event for gui updates 
-     */
-    private Set<IProblemChangedListener> m_problemChangedListenersPost = 
-        new HashSet<IProblemChangedListener>();
-
-
     /**
      * <code>m_projectLoadedListeners</code> listener for load of a project
      */
@@ -1002,55 +977,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         for (IProjectCreatedListener l : stableListenersPost) {
             try {
                 l.handleProjectCreated();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-    }
-    
-    /**
-     * @param l listener for add a new problemListener
-     * @param guiMode
-     *      should this listener be called after the model listener 
-     */
-    public void addProblemChangedListener(
-        IProblemChangedListener l, boolean guiMode) {
-        if (guiMode) {
-            m_problemChangedListenersPost.add(l);
-        } else {
-            m_problemChangedListeners.add(l);
-        }
-    }
-    
-    /**
-     * @param l listener for deleteting an existing problemListener
-     */
-    public void removeProblemChangedListener(IProblemChangedListener l) {
-        m_problemChangedListeners.remove(l);
-        m_problemChangedListenersPost.remove(l);
-    }
-    
-    /**
-     * notify listener about new / corrected problem
-     */
-    public void fireProblemChangedListener() {
-        // model updates
-        final Set<IProblemChangedListener> stableListeners = 
-            new HashSet<IProblemChangedListener>(m_problemChangedListeners);
-        for (IProblemChangedListener l : stableListeners) {
-            try {
-                l.handleRefreshProblem();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-
-        // gui updates
-        final Set<IProblemChangedListener> stableListenersPost = 
-            new HashSet<IProblemChangedListener>(m_problemChangedListenersPost);
-        for (IProblemChangedListener l : stableListenersPost) {
-            try {
-                l.handleRefreshProblem();
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }

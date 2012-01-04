@@ -300,12 +300,12 @@ public class Messages extends NLS {
     public static String PMExceptionWhileWritingUsedToolkitsInDB;
     public static String PrematureEndOfInput;
     public static String ProblemIncompleteObjectMappingMarkerText;
-    public static String ProblemIncompleteObjectMappingMarkerTooltip;
+    public static String ProblemIncompleteObjectMappingTooltip;
     public static String ProblemIncompleteTestDataMarkerText;
-    public static String ProblemIncompleteTestDataMarkerTooltip;
+    public static String ProblemIncompleteTestDataTooltip;
     public static String ProblemInstallingDBScheme;
     public static String ProblemMissingReferencedTestCaseMarkerText;
-    public static String ProblemMissingReferencedTestCaseMarkerTooltip;
+    public static String ProblemMissingReferencedTestCaseTooltip;
     public static String ProblemWithDatabaseSchemeConf;
     public static String ProblemWithInstallingDBScheme;
     public static String ProfessionalName;

@@ -15,9 +15,11 @@ import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
@@ -326,15 +328,13 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
      * @param ts current testsuite
      * @return if testsuite meets general requirements for execution
      */
-    public boolean areGeneralRequirementsAchieved(ITestSuitePO ts) {
+    private boolean areGeneralRequirementsAchieved(ITestSuitePO ts) {
         Locale workingLanguage = 
             WorkingLanguageBP.getInstance().getWorkingLanguage();
         return workingLanguage != null
-            && ts.getAut() != null
             && AutAgentRegistration.getRunningAuts(
                     GeneralStorage.getInstance().getProject(), null)
-                        .keySet().contains(ts.getAut())
-            && ts.getNodeListSize() > 0;
+                        .keySet().contains(ts.getAut());
     }
     
     
@@ -346,9 +346,13 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
     public boolean isTestSuiteComplete(ITestSuitePO ts) {
         Locale workingLanguage = 
             WorkingLanguageBP.getInstance().getWorkingLanguage();
+        boolean addSevereProblems = !ProblemFactory.hasProblem(ts) ? false
+                : ProblemFactory.getWorstProblem(ts.getProblems()).getStatus()
+                        .getSeverity() == IStatus.ERROR;
         return ts.getSumOMFlag(ts.getAut())
             && ts.getSumTdFlag(workingLanguage)
-            && ts.getSumSpecTcFlag();
+            && ts.getSumSpecTcFlag()
+            && !addSevereProblems;
     }
 
     /**

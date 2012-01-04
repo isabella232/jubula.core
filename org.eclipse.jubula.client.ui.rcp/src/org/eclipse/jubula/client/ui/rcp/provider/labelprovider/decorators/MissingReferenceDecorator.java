@@ -37,8 +37,7 @@ public class MissingReferenceDecorator extends
                 projID = null;
             }
             if (projID == null) {
-                decoration
-                        .addOverlay(
+                decoration.addOverlay(
                                 IconConstants.ERROR_IMAGE_DESCRIPTOR);
             }
         }

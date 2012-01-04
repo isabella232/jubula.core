@@ -13,8 +13,6 @@ package org.eclipse.jubula.client.ui.constants;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import javax.print.attribute.standard.Severity;
-
 import org.eclipse.jubula.client.ui.preferences.utils.Utils;
 import org.eclipse.jubula.tools.constants.InputConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -463,21 +461,19 @@ public interface Constants {
     // -------------------------------------------------------------
     // Marker for Problem/Task view
     //  -------------------------------------------------------------
-    /** Error severity constant Severity.ERROR indicating an error state. */
-    public static int GD_SEVERITY_ERROR = Severity.ERROR.getValue();
-    /** Warning severity constant Severity.WARNING indicating a warning. */
-    public static int GD_SEVERITY_WARNING = Severity.WARNING.getValue();
-    /** Info severity constant Severity.REPORT indicating information only. */
-    public static int GD_SEVERITY_INFO = Severity.REPORT.getValue();
     /** GD Problem marker ID */
-    public static String GD_PROBLEM_MARKER = "org.eclipse.jubula.client.ui.rcp.gdProblem"; //$NON-NLS-1$
+    public static String JB_PROBLEM_MARKER = "org.eclipse.jubula.client.ui.rcp.jbProblem"; //$NON-NLS-1$
     /** Object marker type. */
-    public static final String GD_OBJECT = "gdObject"; //$NON-NLS-1$
+    public static final String JB_OBJECT_HASHCODE = "jbObjectHashCode"; //$NON-NLS-1$
+    /** Object marker type. */
+    public static final String JB_FQCN = "jbFQCN"; //$NON-NLS-1$
     /** Reason marker attribute. */
-    public static final String GD_REASON = "gdReason"; //$NON-NLS-1$
+    public static final String JB_REASON = "jbReason"; //$NON-NLS-1$
     /** Object marker name. */
-    public static final String TST_NODENAME = "tstNodeName"; //$NON-NLS-1$
-
+    public static final String JB_OBJECT_NAME = "jbObjectName"; //$NON-NLS-1$
+    /** Object marker name. */
+    public static final String JB_NODE_GUID = "jbNodeGUID"; //$NON-NLS-1$
+    
     //  -------------------------------------------------------------
     
     /** AUT-Agent Preference Page */

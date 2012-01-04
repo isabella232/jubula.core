@@ -466,7 +466,7 @@ abstract class NodePO implements INodePO {
      */
     public boolean getSumTdFlag(Locale loc) {
         return !m_problems.contains(
-                ProblemFactory.createIncompleteTestDataProblem(loc));
+                ProblemFactory.createIncompleteTestDataProblem(loc, this));
     }
     
     /**
@@ -475,7 +475,7 @@ abstract class NodePO implements INodePO {
      * @param flag the state of sumTdFlag to set
      */
     public void setSumTdFlag(Locale loc, boolean flag) {
-        IProblem p = ProblemFactory.createIncompleteTestDataProblem(loc);
+        IProblem p = ProblemFactory.createIncompleteTestDataProblem(loc, this);
         if (flag) {
             m_problems.remove(p);
         } else {

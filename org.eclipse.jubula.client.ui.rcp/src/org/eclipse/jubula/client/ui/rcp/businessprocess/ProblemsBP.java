@@ -25,26 +25,40 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jubula.client.core.Activator;
+import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessPropagator;
+import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ICompletenessCheckListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
@@ -73,10 +87,14 @@ import org.slf4j.LoggerFactory;
  * @created 12.03.2007
  */
 public class ProblemsBP implements ICompletenessCheckListener,
-    IServerConnectionListener {
+    IServerConnectionListener, IDataChangedListener {
     
     /** this instance */
     private static ProblemsBP instance; 
+    
+    /** the workspace root resource */
+    private static final IWorkspaceRoot MARKER_ROOT = ResourcesPlugin
+            .getWorkspace().getRoot();
     
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(ProblemsBP.class);
@@ -105,10 +123,12 @@ public class ProblemsBP implements ICompletenessCheckListener,
     /** a list with all problemMarkers */
     private List<IMarker> m_markerToShowList = new ArrayList<IMarker>();
 
-    /** the workspace root resource */
-    private IWorkspaceRoot m_resource = ResourcesPlugin.getWorkspace()
-        .getRoot();
-
+    /** a list with all problems to show */
+    private List<IProblem> m_allProblemsToShow = new ArrayList<IProblem>();
+    
+    /** a list with all local problems to show */
+    private List<IProblem> m_localProblemsToShow = new ArrayList<IProblem>();
+    
     /**
      * private constructor
      */
@@ -117,12 +137,14 @@ public class ProblemsBP implements ICompletenessCheckListener,
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addServerConnectionListener(this, true);
         ded.addCompletenessCheckListener(this);
+        ded.addDataChangedListener(this, true);
         
         // trigger first problem check
         doProblemsCheck(true, null);
     }
+    
     /**
-     * @return the ComponentNamesList
+     * @return the ProblemsBP instance
      */
     public static ProblemsBP getInstance() {
         if (instance == null) {
@@ -147,10 +169,11 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     private void problemMissingReusedProject(IReusedProjectPO node, 
             String label) {
-        createProblem(
-                NLS.bind(Messages.ProblemCheckerProjectDoesNotExist, label),
-                IMarker.SEVERITY_ERROR, StringConstants.EMPTY, node,
-                ProblemType.REASON_PROJECT_DOES_NOT_EXIST);
+        String message = NLS.bind(Messages.ProblemCheckerProjectDoesNotExist,
+                label);
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.WARNING, Activator.PLUGIN_ID, message),
+                message, node, ProblemType.REASON_PROJECT_DOES_NOT_EXIST));
     }
     
     /**
@@ -163,8 +186,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     private void doProblemsCheck(boolean checkCompNamesPair, 
         ServerState state) {
-        // start recollect needed Problems
-        initProblems();
+        clearOldProblems();
         
         // Is Project open ?
         IProjectPO project = GeneralStorage.getInstance().getProject();
@@ -174,13 +196,15 @@ public class ProblemsBP implements ICompletenessCheckListener,
         } else {
             
             // checks if actual server and aut fit together
-            if (TestSuiteBP.getListOfTestSuites().size() == 0) {
+            if (TestSuiteBP.getListOfTestSuites().isEmpty()) {
                 problemNoTestSuiteExists();
             } 
             
-            // checks if there is a Test Suite that lacks an Aut.
+            // checks if there is a Test Suite that lacks an AUT
             checkAllTestSuites();
             checkAllAutConfigs();
+            
+            checkAllTestJobs();
             
             if (project.getIsProtected()) {
                 problemProtectedProjectLoaded();
@@ -204,8 +228,96 @@ public class ProblemsBP implements ICompletenessCheckListener,
         // check Server Connection
         checkServerState(state);
 
+        collectAdditionalProblemsWhichShouldBeMarked();
+        
+        createMarkers();
+        
         // remove no needed items from ProblemView
         cleanupProblems();
+        
+        CompletenessPropagator.getInstance().propagate();
+    }
+    
+    /**
+     * collect additional problems e.g. from completeness check itself
+     */
+    private void collectAdditionalProblemsWhichShouldBeMarked() {
+        IProjectPO project = GeneralStorage.getInstance().getProject();
+        if (project == null) {
+            return;
+        }
+        final ITreeNodeOperation<INodePO> op = new CollectProblemsOperation();
+        TreeTraverser traverser = new ExecTreeTraverser(project, op);
+        traverser.traverse(true);        
+    }
+    
+    /**
+     * check test jobs 
+     */
+    private void checkAllTestJobs() {
+        for (ITestJobPO testJob : TestJobBP.getListOfTestJobs()) {
+            List<INodePO> nodes = testJob.getUnmodifiableNodeList();
+            for (INodePO node : nodes) {
+                if (node instanceof IRefTestSuitePO) {
+                    IRefTestSuitePO refTS = (IRefTestSuitePO) node;
+                    ITestSuitePO origTS = NodePM.getTestSuite(
+                            refTS.getTestSuiteGuid());
+                    IAUTMainPO aut = origTS.getAut();
+                    refTS.setSumOMFlag(aut, origTS.getSumOMFlag(aut));
+                    
+                    if (TestExecution.isAutNameSet(refTS.getTestSuiteAutID())) {
+                        problemAUTNameNotSet(testJob, refTS);
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * @param testJob the test job
+     * @param refTS the ref test suite to create the problem for
+     */
+    private void problemAUTNameNotSet(ITestJobPO testJob, 
+        IRefTestSuitePO refTS) {
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                        Messages.TestDataDecoratorRefTsIncomplTooltip), NLS
+                        .bind(Messages.TestDataDecoratorRefTsIncompl,
+                                testJob.getName()), refTS,
+                ProblemType.NO_QUICKFIX));
+    }
+    
+    /**
+     * remove all old problems
+     */
+    private void clearOldProblems() {
+        for (IProblem problem : m_localProblemsToShow) {
+            Object data = problem.getData();
+            if (data instanceof INodePO) {
+                INodePO node = (INodePO) data;
+                node.removeProblem(problem);
+            }
+        }
+        
+        m_markerToShowList.clear();
+        m_localProblemsToShow.clear();
+        m_allProblemsToShow.clear();
+    }
+    
+    /**
+     * create marker for all problems
+     */
+    private void createMarkers() {
+        m_allProblemsToShow.addAll(m_localProblemsToShow);
+        for (IProblem problem : m_allProblemsToShow) {
+            Object data = problem.getData();
+            String location = data instanceof IPersistentObject
+                            ? ((IPersistentObject) data).getName() 
+                            : StringConstants.EMPTY;
+            createMarker(problem.getMarkerMessage(),
+                    getMarkerSeverity(problem), location, data,
+                    problem.getProblemType());
+        }
     }
     
     /**
@@ -243,9 +355,9 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     private boolean isCompNameRelated(IMarker marker) {
         try {
-            return marker.getType().equals(Constants.GD_PROBLEM_MARKER) 
+            return marker.getType().equals(Constants.JB_PROBLEM_MARKER) 
                 && m_compNameProblemTypes.contains(
-                    marker.getAttribute(Constants.GD_REASON));
+                    marker.getAttribute(Constants.JB_REASON));
         } catch (CoreException ce) {
             log.error(Messages.CouldNotRetrieveTypeForMarker
                 + StringConstants.COLON
@@ -265,9 +377,9 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     private boolean isMissingProjectRelated(IMarker marker) {
         try {
-            return marker.getType().equals(Constants.GD_PROBLEM_MARKER) 
+            return marker.getType().equals(Constants.JB_PROBLEM_MARKER) 
                 && m_missingProjectProblemTypes.contains(
-                    marker.getAttribute(Constants.GD_REASON));
+                    marker.getAttribute(Constants.JB_REASON));
         } catch (CoreException ce) {
             log.error(Messages.CouldNotRetrieveTypeForMarker
                     + StringConstants.COLON
@@ -299,31 +411,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
             
             if (testSuite.getNodeListSize() == 0) {
                 problemNoEmptyTestSuiteAllowed(testSuite);
-            } else if (testSuite.getAut() != null) {
-                for (IProblem problem : testSuite.getProblems()) {
-                    if (!problem.isWithMarker()) {
-                        continue;
-                    }
-                    switch (problem.getProblemType()) {
-                        case REASON_OM_INCOMPLETE:
-                        case REASON_TD_INCOMPLETE:
-                        case REASON_MISSING_SPEC_TC:
-                            if (!checkTS(testSuite)) {
-                                return;
-                            }
-                        case EXTERNAL:
-                            createProblem(NLS.bind(problem.getMarkerMessage(),
-                                    testSuite.getName()),
-                                    getMarkerSeverity(problem),
-                                    Messages.ProblemCheckerTestSuite
-                                            + testSuite.getName(), testSuite,
-                                    problem.getProblemType());
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
+            } 
         }
     }
     
@@ -334,7 +422,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      *         corresponding to the given problem's severity.
      */
     private int getMarkerSeverity(IProblem problem) {
-        int statusSeverity = problem.getSeverity();
+        int statusSeverity = problem.getStatus().getSeverity();
         int markerSeverity = IMarker.SEVERITY_INFO;
         if (statusSeverity == IStatus.WARNING) {
             markerSeverity = IMarker.SEVERITY_WARNING;
@@ -476,7 +564,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @param object The object reference.
      * @param type The type of this problem
      */
-    private void createProblem(String message, int messageType,
+    private void createMarker(String message, int messageType,
         String location, Object object, ProblemType type) {
         boolean existProblem = false;
         for (IMarker marker : m_markerList) {
@@ -484,10 +572,11 @@ public class ProblemsBP implements ICompletenessCheckListener,
                 if (marker.getAttribute(IMarker.LOCATION).equals(location)
                     && marker.getAttribute(IMarker.SEVERITY).equals(messageType)
                     && marker.getAttribute(IMarker.MESSAGE).equals(message)
-                    && ((object != null && object.toString().equals(
-                        marker.getAttribute(Constants.GD_OBJECT))) 
+                    && ((object != null && new Integer(object.hashCode())
+                        .equals(
+                        marker.getAttribute(Constants.JB_OBJECT_HASHCODE))) 
                         || (object == null && marker.getAttribute(
-                            Constants.GD_OBJECT) == null))) {
+                            Constants.JB_OBJECT_HASHCODE) == null))) {
                     
                     existProblem = true;
                     m_markerToShowList.add(marker);
@@ -500,24 +589,33 @@ public class ProblemsBP implements ICompletenessCheckListener,
             return;
         }
         try {
-            IMarker marker = m_resource
-                .createMarker(Constants.GD_PROBLEM_MARKER);
+            IMarker marker = MARKER_ROOT
+                .createMarker(Constants.JB_PROBLEM_MARKER);
             marker.setAttribute(IMarker.LOCATION, location);
             marker.setAttribute(IMarker.SEVERITY, messageType);
             marker.setAttribute(IMarker.MESSAGE, message);
+            // set specific attributes
             if (object != null) {
-                // use only object.toString() here, 
-                // otherwise we get an IllegalArgumentException from framework!
-                marker.setAttribute(Constants.GD_OBJECT, object.toString());
+                marker.setAttribute(Constants.JB_OBJECT_HASHCODE, 
+                        object.hashCode());
             } else {
-                marker.setAttribute(Constants.GD_OBJECT, null);
+                marker.setAttribute(Constants.JB_OBJECT_HASHCODE, 
+                        null);
             }
-            marker.setAttribute(Constants.GD_REASON, type.ordinal());
+            marker.setAttribute(Constants.JB_REASON, type.ordinal());
             if (object instanceof INodePO) {
                 INodePO node = (INodePO) object;
-                marker.setAttribute(Constants.TST_NODENAME, node.getName());
+                marker.setAttribute(Constants.JB_OBJECT_NAME, node.getName());
+                marker.setAttribute(Constants.JB_NODE_GUID, node.getGuid());
             } else {
-                marker.setAttribute(Constants.TST_NODENAME, 
+                if (object instanceof String) {
+                    marker.setAttribute(Constants.JB_OBJECT_NAME,
+                            (String) object);
+                } else {
+                    marker.setAttribute(Constants.JB_OBJECT_NAME,
+                            StringConstants.EMPTY);
+                }
+                marker.setAttribute(Constants.JB_NODE_GUID,
                         StringConstants.EMPTY);
             }
             m_markerList.add(marker);
@@ -532,22 +630,15 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @return all Markers from FrameWork
      */
     private IMarker[] findProblems() {
-        String type = Constants.GD_PROBLEM_MARKER;
+        String type = Constants.JB_PROBLEM_MARKER;
         IMarker[] markers = null;
         try {
-            markers = m_resource.findMarkers(type, true,
+            markers = MARKER_ROOT.findMarkers(type, true,
                 IResource.DEPTH_INFINITE);
         } catch (CoreException e) {
             // ok
         }
         return markers;
-    }
-
-    /**
-     * refreshes the problem view
-     */
-    private void refreshProblems() {
-        DataEventDispatcher.getInstance().fireProblemChangedListener();
     }
 
     /**
@@ -582,71 +673,82 @@ public class ProblemsBP implements ICompletenessCheckListener,
                 }
             }
         }
-        refreshProblems();
-    }
-
-    /**
-     * initializes the problems
-     * 
-     */
-    private void initProblems() {
-        m_markerToShowList.clear();
     }
 
     /**
      * Shows the status of the server connection in GDProblemView.
      */
     private void problemNoAutStarterConnection() {
-        createProblem(Messages.ProblemCheckerConnectToGDServer,
-            IMarker.SEVERITY_INFO, StringConstants.EMPTY, Messages.Connection,
-            ProblemType.REASON_CONNECTED_TO_NO_SERVER);
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.INFO, Activator.PLUGIN_ID,
+                        Messages.ProblemCheckerConnectToGDServer),
+                Messages.ProblemCheckerConnectToGDServer, Messages.Connection,
+                ProblemType.REASON_CONNECTED_TO_NO_SERVER));
     }
     
     /**
      * Shows the status of the project protection in GDProblemView.
      */
     private void problemProtectedProjectLoaded() {
-        createProblem(Messages.ProblemCheckerProtectedProject,
-            IMarker.SEVERITY_INFO, StringConstants.EMPTY,
-            Messages.ProtectedProject,
-            ProblemType.REASON_PROTECTED_PROJECT);
+        m_localProblemsToShow.add(ProblemFactory
+                .createProblemWithMarker(new Status(IStatus.INFO,
+                        Activator.PLUGIN_ID,
+                        Messages.ProblemCheckerProtectedProject),
+                        Messages.ProblemCheckerProtectedProject,
+                        Messages.ProtectedProject,
+                        ProblemType.REASON_PROTECTED_PROJECT));
     }
     
     /**
      * Called when no server in Workspace.
      */
     private void problemNoServerDefined() {
-        createProblem(Messages.ProblemCheckerNoServer,
-            IMarker.SEVERITY_WARNING, StringConstants.EMPTY, Messages.NoServer,
-            ProblemType.REASON_NO_SERVER_DEFINED);
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(
+                    IStatus.WARNING, Activator.PLUGIN_ID,
+                    Messages.ProblemCheckerNoServer),
+                    Messages.ProblemCheckerNoServer,
+                    Messages.NoServer, 
+                    ProblemType.REASON_NO_SERVER_DEFINED));
     }
 
     /**
      * Shows the existance of a project in GDProblemView.
      */
     private void problemNoProjectExists() {
-        createProblem(Messages.GDStateControllerInfoNoProject,
-            IMarker.SEVERITY_INFO, StringConstants.EMPTY, Messages.Project,
-            ProblemType.REASON_NO_PROJECT);
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(
+                    IStatus.INFO, Activator.PLUGIN_ID,
+                    Messages.GDStateControllerInfoNoProject),
+                    Messages.GDStateControllerInfoNoProject,
+                    Messages.Project, 
+                    ProblemType.REASON_NO_PROJECT));
     }
 
     /**
      * Shows the existance of a project in GDProblemView.
      */
     private void problemNoTestSuiteExists() {
-        createProblem(Messages.ProblemCheckerNoTestSuite,
-            IMarker.SEVERITY_INFO, StringConstants.EMPTY, Messages.Suite,
-            ProblemType.REASON_NO_TESTSUITE);
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(
+                    IStatus.INFO, Activator.PLUGIN_ID,
+                    Messages.ProblemCheckerNoTestSuite),
+                    Messages.ProblemCheckerNoTestSuite,
+                    Messages.Project, 
+                    ProblemType.REASON_NO_TESTSUITE));
     }
 
     /**
      * called when a project lacks an Aut
      */
     private void problemNoAutForProjectExists() {
-        createProblem(
-            Messages.ProblemCheckerNoAutExists,
-            IMarker.SEVERITY_WARNING, StringConstants.EMPTY, Messages.Project,
-            ProblemType.REASON_NO_AUT_FOR_PROJECT_EXISTS);
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(
+                    IStatus.WARNING, Activator.PLUGIN_ID,
+                    Messages.ProblemCheckerNoAutExists),
+                    Messages.ProblemCheckerNoAutExists,
+                    Messages.Project, 
+                    ProblemType.REASON_NO_AUT_FOR_PROJECT_EXISTS));
     }
 
     /**
@@ -654,12 +756,12 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @param testSuite TestSuite where problem occurs
      */
     private void problemNoAutForTestSuiteSelected(ITestSuitePO testSuite) {
-        createProblem(NLS.bind(Messages.ProblemCheckerNoAutSelected,
-                testSuite.getName()), 
-            IMarker.SEVERITY_ERROR,
-            Messages.ProblemCheckerTestSuite + testSuite.getName(),
-            testSuite, 
-            ProblemType.REASON_NO_AUT_FOR_TESTSUITE_SELECTED);
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+            new Status(
+                IStatus.ERROR, Activator.PLUGIN_ID,
+                Messages.TestDataDecoratorTestSuiteWithoutAUT), NLS.bind(
+                Messages.ProblemCheckerNoAutSelected, testSuite.getName()),
+                testSuite, ProblemType.REASON_NO_AUT_FOR_TESTSUITE_SELECTED));
     }
 
     /**
@@ -669,13 +771,12 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     private void problemNoJarOrClassPathForAutConfigExists(IAUTConfigPO config, 
             IAUTMainPO aut) {
-        
-        createProblem(NLS.bind(Messages.ProblemCheckerAutConfigMissesJar,
-            new String[] { config.getName(),
-                    aut.getName() }), IMarker.SEVERITY_WARNING,
-                    Messages.ProblemCheckerAUT
-                + aut.getName(), aut,
-            ProblemType.REASON_NOJAR_FOR_AUTCONFIG);
+        String message = NLS.bind(Messages.ProblemCheckerAutConfigMissesJar,
+                new String[] { config.getName(), aut.getName() });
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.WARNING, Activator.PLUGIN_ID, message),
+                message, Messages.ProblemCheckerAUT + aut.getName(),
+                ProblemType.REASON_NO_JAR_FOR_AUTCONFIG));
     }
 
     /**
@@ -685,13 +786,12 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     private void problemNoServerForAutConfigExists(IAUTConfigPO config, 
             IAUTMainPO aut) {
-        
-        createProblem(NLS.bind(Messages.ProblemCheckerAutConfigMissesJar,
-            new String[] { config.getName(),
-                    aut.getName() }), IMarker.SEVERITY_WARNING,
-                    Messages.ProblemCheckerAUT
-                + aut.getName(), aut,
-            ProblemType.REASON_NOSERVER_FOR_AUTCONFIG);
+        String message = NLS.bind(Messages.ProblemCheckerAutConfigMissesJar,
+                new String[] { config.getName(), aut.getName() });
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.WARNING, Activator.PLUGIN_ID, message),
+                message, Messages.ProblemCheckerAUT + aut.getName(),
+                ProblemType.REASON_NO_SERVER_FOR_AUTCONFIG));
     }
 
     /**
@@ -699,13 +799,13 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @param aut AUT where problem occurs
      */
     private void problemNoAutConfigForServerExists(IAUTMainPO aut) {
-        createProblem(
-                NLS.bind(Messages.ProblemCheckerAutNoConfigurationForServer,
-                aut.getName()),
-            IMarker.SEVERITY_WARNING,
-            Messages.ProblemCheckerAUT + aut.getName(),
-            aut, 
-            ProblemType.REASON_NO_AUTCONFIG_FOR_SERVER_EXIST);
+        String message = NLS.bind(
+                Messages.ProblemCheckerAutNoConfigurationForServer,
+                aut.getName());
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.WARNING, Activator.PLUGIN_ID, message),
+                message, Messages.ProblemCheckerAUT + aut.getName(),
+                ProblemType.REASON_NO_AUTCONFIG_FOR_SERVER_EXIST));
     }
 
     /**
@@ -716,12 +816,11 @@ public class ProblemsBP implements ICompletenessCheckListener,
         if (!checkTS(testSuite)) {
             return;
         }
-        createProblem(NLS.bind(Messages.ProblemCheckerEmptyTestSuite,
-                testSuite.getName()), 
-            IMarker.SEVERITY_WARNING,
-            Messages.ProblemCheckerTestSuite + testSuite.getName(),
-            testSuite, 
-            ProblemType.REASON_EMPTY_TESTSUITE);
+        String message = NLS.bind(Messages.ProblemCheckerEmptyTestSuite,
+                testSuite.getName());
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.WARNING, Activator.PLUGIN_ID, message),
+                message, testSuite, ProblemType.REASON_EMPTY_TESTSUITE));
     }
 
     /**
@@ -792,10 +891,10 @@ public class ProblemsBP implements ICompletenessCheckListener,
                                 // Report as error because it may mean that test
                                 // data is missing.
                                 problemReusedProjectMissingLang(lang, reused
-                                    .getName(), IMarker.SEVERITY_ERROR);
+                                    .getName(), IStatus.ERROR);
                             } else {
                                 problemReusedProjectMissingLang(lang, reused
-                                    .getName(), IMarker.SEVERITY_WARNING);
+                                    .getName(), IStatus.WARNING);
                             }
                         }
                     }
@@ -818,23 +917,26 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     private void problemReusedProjectMissingLang(
         Locale lang, String name, int severity) {
-        createProblem(NLS.bind(
+        String message = NLS.bind(
                 Messages.ProblemCheckerReusedProjectMissingLanguage,
-                new String[] { name, lang.getDisplayName() }), severity,
-                StringConstants.EMPTY, null,
-                ProblemType.REASON_REUSED_PROJECT_MISSING_LANG);
+                new String[] { name, lang.getDisplayName() });
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(severity, Activator.PLUGIN_ID, message),
+                message, StringConstants.EMPTY,
+                ProblemType.REASON_REUSED_PROJECT_MISSING_LANG));
     }
 
     /**
      * @param cap the corresponding cap
      */
     private void problemDeprecatedActionFound(ICapPO cap) {
-        final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
-        
-        createProblem(NLS.bind(Messages.ProblemCheckerDeprecatedAction,
-            new String[] { cap.getName(), tcPO.getName() }),
-            IMarker.SEVERITY_WARNING, Messages.ProblemCheckerTestCase
-            + tcPO.getName(), cap, ProblemType.REASON_DEPRECATED_ACTION);
+        final ITestCasePO tcPO = (ITestCasePO) cap.getParentNode();
+        String message = NLS.bind(Messages.ProblemCheckerDeprecatedAction,
+                new String[] { cap.getName(), tcPO.getName() });
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.WARNING, Activator.PLUGIN_ID, message),
+                message, cap,
+                ProblemType.REASON_DEPRECATED_ACTION));
     }
     
     /**
@@ -842,11 +944,12 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     private void problemDeprecatedCompFound(ICapPO cap) {
         final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
-        
-        createProblem(NLS.bind(Messages.ProblemCheckerDeprecatedComp,
-            new String[] { cap.getName(), tcPO.getName() }),
-            IMarker.SEVERITY_WARNING, Messages.ProblemCheckerTestCase
-            + tcPO.getName(), cap, ProblemType.REASON_DEPRECATED_COMP);
+        String message = NLS.bind(Messages.ProblemCheckerDeprecatedAction,
+                new String[] { cap.getName(), tcPO.getName() });
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.WARNING, Activator.PLUGIN_ID, message),
+                message, cap,
+                ProblemType.REASON_DEPRECATED_COMP));
     }
     
     /**
@@ -855,14 +958,13 @@ public class ProblemsBP implements ICompletenessCheckListener,
     private void problemCompDoesNotExist(ICapPO cap) {
         final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
         
-        createProblem(NLS.bind(Messages.ProblemCheckerCompDoesNotExist,
-            new String[] { 
-                cap.getName(), 
-                tcPO.getName(), 
-                CompSystemI18n.getString(cap.getComponentType(), true) 
-            }),
-            IMarker.SEVERITY_ERROR, Messages.ProblemCheckerTestCase
-            + tcPO.getName(), cap, ProblemType.REASON_COMP_DOES_NOT_EXIST);
+        String message = NLS.bind(Messages.ProblemCheckerCompDoesNotExist,
+                        new String[] { cap.getName(), tcPO.getName(),
+                                CompSystemI18n.getString(
+                                        cap.getComponentType(), true) });
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.ERROR, Activator.PLUGIN_ID, message),
+                message, cap, ProblemType.REASON_COMP_DOES_NOT_EXIST));
     }
 
     /**
@@ -871,30 +973,28 @@ public class ProblemsBP implements ICompletenessCheckListener,
     private void problemActionDoesNotExist(ICapPO cap) {
         final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
         
-        createProblem(NLS.bind(Messages.ProblemCheckerCompDoesNotExist,
-            new String[] { 
-                cap.getName(), 
-                tcPO.getName(), 
-                cap.getComponentName() 
-            }),
-            IMarker.SEVERITY_ERROR, Messages.ProblemCheckerTestCase
-            + tcPO.getName(), cap, ProblemType.REASON_COMP_DOES_NOT_EXIST);
+        String message = NLS.bind(
+                Messages.ProblemCheckerCompDoesNotExist,
+                new String[] { cap.getName(), tcPO.getName(),
+                        cap.getComponentName() });
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.ERROR, Activator.PLUGIN_ID, message),
+                message, cap, ProblemType.REASON_COMP_DOES_NOT_EXIST));
     }
 
     /**
      * @param cap the corresponding cap
      */
     private void problemParamDoesNotExist(ICapPO cap) {
-        final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
-        
-        createProblem(NLS.bind(Messages.ProblemCheckerCompDoesNotExist,
-            new String[] { 
-                cap.getName(), 
-                tcPO.getName(), 
-                cap.getComponentName() 
-            }),
-            IMarker.SEVERITY_ERROR, Messages.ProblemCheckerTestCase
-            + tcPO.getName(), cap, ProblemType.REASON_COMP_DOES_NOT_EXIST);
+        final ITestCasePO tcPO = (ITestCasePO) cap.getParentNode();
+
+        String message = NLS.bind(
+                Messages.ProblemCheckerCompDoesNotExist,
+                new String[] { cap.getName(), tcPO.getName(),
+                        cap.getComponentName() });
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.ERROR, Activator.PLUGIN_ID, message),
+                message, cap, ProblemType.REASON_COMP_DOES_NOT_EXIST));
     }
 
     /**
@@ -910,6 +1010,31 @@ public class ProblemsBP implements ICompletenessCheckListener,
         }
 
         return false;
+    }
+    
+    /**
+     * @author BREDEX GmbH
+     */
+    private final class CollectProblemsOperation implements
+            ITreeNodeOperation<INodePO> {
+        /** {@inheritDoc} */
+        public boolean operate(ITreeTraverserContext<INodePO> ctx,
+                INodePO parent, INodePO node, boolean alreadyVisited) {
+            if (ProblemFactory.hasProblem(node)) {
+                for (IProblem problem : node.getProblems()) {
+                    if (problem.shouldShowMarker()) {
+                        m_allProblemsToShow.add(problem);
+                    }
+                }
+            }
+            return true;
+        }
+
+        /** {@inheritDoc} */
+        public void postOperate(ITreeTraverserContext<INodePO> ctx,
+                INodePO parent, INodePO node, boolean alreadyVisited) {
+            // no op
+        }
     }
     
     /**
@@ -1038,14 +1163,11 @@ public class ProblemsBP implements ICompletenessCheckListener,
                 name = ((IExecTestCasePO)execTC.getParentNode())
                     .getSpecTestCase().getName();
             } 
-            String location = Messages.ProblemCheckerTestCase;
-            if (execTC.getParentNode() instanceof ITestSuitePO) {
-                location = Messages.ProblemCheckerTestSuite;
-            }
-            createProblem(NLS.bind(Messages.ProblemCheckerNoCompType, name),
-                IMarker.SEVERITY_WARNING, location + name, 
-                execTC.getParentNode(), 
-                ProblemType.REASON_NO_COMPTYPE);
+            m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                    new Status(IStatus.WARNING, Activator.PLUGIN_ID, 
+                        NLS.bind(Messages.ProblemCheckerNoCompType, name)),
+                        NLS.bind(Messages.ProblemCheckerNoCompType, name), 
+                    execTC.getParentNode(), ProblemType.REASON_NO_COMPTYPE));
         }
 
         /** {@inheritDoc} */
@@ -1058,5 +1180,25 @@ public class ProblemsBP implements ICompletenessCheckListener,
     /** {@inheritDoc} */
     public void completenessCheckFinished() {
         doProblemsCheck(true, null);
+    }
+    
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        boolean shouldRun = false;
+        for (DataChangedEvent dce : events) {
+            if (dce.getUpdateState() != UpdateState.onlyInEditor) {
+                DataState ds = dce.getDataState();
+                if (ds == DataState.Added 
+                        || ds == DataState.Deleted
+                        || ds == DataState.StructureModified) {
+                    shouldRun = true;
+                    break;
+                }
+            }
+        }
+
+        if (shouldRun) {
+            doProblemsCheck(true, null);
+        }
     }
 }

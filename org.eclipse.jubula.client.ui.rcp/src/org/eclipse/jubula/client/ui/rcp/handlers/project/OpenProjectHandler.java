@@ -109,6 +109,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                             m_selectedProject.getMajorProjectVersion(),
                             m_selectedProject.getMinorProjectVersion() }),
                     totalWork);
+            DataEventDispatcher ded = DataEventDispatcher.getInstance();
             try {
                 if (!checkProjectToolkits(m_selectedProject)) {
                     throw new InterruptedException();
@@ -124,8 +125,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 } catch (GDConfigXmlException ce) {
                     handleCapDataNotFound(ce);
                 }
-                DataEventDispatcher.getInstance().fireProjectLoadedListener(
-                        monitor);
+                ded.fireProjectLoadedListener(monitor);
                 // re-init the string helper in case of a toolkit change during
                 // load
                 StringHelper.getInstance();
@@ -145,7 +145,6 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 ProgressMonitorTracker.getInstance().setProgressMonitor(null);
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();
-                DataEventDispatcher.getInstance().fireProjectOpenedListener();
             }
         }
 
@@ -415,6 +414,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             try {
                 PlatformUI.getWorkbench().getProgressService()
                         .busyCursorWhile(openOperation);
+                DataEventDispatcher.getInstance().fireProjectOpenedListener();
                 checkAndNagForMissingProjects();
             } catch (InvocationTargetException ite) {
                 openOperation.handleOperationException();

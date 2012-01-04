@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuar
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectOpenedListener;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 12.03.2007
  */
-public class CompletenessBP implements IProjectLoadedListener,
+public class CompletenessBP implements IProjectOpenedListener,
     ILanguageChangedListener {
     /** for log messages */
     private static Logger log = LoggerFactory.getLogger(CompletenessBP.class);
@@ -54,7 +54,7 @@ public class CompletenessBP implements IProjectLoadedListener,
     private CompletenessBP() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addLanguageChangedListener(this, false);
-        ded.addProjectLoadedListener(this, false);
+        ded.addProjectOpenedListener(this);
         ICommandService commandService = (ICommandService) PlatformUI
                 .getWorkbench().getService(ICommandService.class);
 
@@ -98,12 +98,7 @@ public class CompletenessBP implements IProjectLoadedListener,
     /**
      * {@inheritDoc}
      */
-    public void handleProjectLoaded() {
-        /* At this time he data is not completely loaded from the database.
-         * Since Persistence (JPA / EclipseLink) is not threadsafe the checks (which will load
-         * all data) can't be run in a job, so checkProject must be called
-         * with runInJob==false.
-         */
+    public void handleProjectOpened() {
         completeProjectCheck(); 
     }
 
@@ -117,7 +112,7 @@ public class CompletenessBP implements IProjectLoadedListener,
                     .CompletenessCheckRunningOperation);
             try {
                 PlatformUI.getWorkbench().getProgressService().run(true, false,
-                        new CompletnessCheckOperation());
+                        new CompletenessCheckOperation());
             } catch (InvocationTargetException e) {
                 log.error(DebugConstants.ERROR, e);
             } catch (InterruptedException e) {
@@ -132,7 +127,7 @@ public class CompletenessBP implements IProjectLoadedListener,
      * @author Markus Tiede
      * @created 07.11.2011
      */
-    public static class CompletnessCheckOperation implements
+    public static class CompletenessCheckOperation implements
             IRunnableWithProgress {
 
         /** {@inheritDoc} */
@@ -156,13 +151,11 @@ public class CompletenessBP implements IProjectLoadedListener,
         }
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void handleLanguageChanged(Locale locale) {
         INodePO root = GeneralStorage.getInstance().getProject();
         Locale wl = WorkingLanguageBP.getInstance().getWorkingLanguage();
-        CompletenessGuard.checkTD(wl, root);
+        CompletenessGuard.checkTestData(wl, root);
         fireCompletenessCheckFinished();
     }
     

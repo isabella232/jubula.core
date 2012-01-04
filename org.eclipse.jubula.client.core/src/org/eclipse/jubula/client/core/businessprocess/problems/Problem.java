@@ -76,13 +76,8 @@ final class Problem implements IProblem {
     }
     
     /** {@inheritDoc} */
-    public String getPlugin() {
-        return m_status.getPlugin();
-    }
-
-    /** {@inheritDoc} */
-    public int getSeverity() {
-        return m_status.getSeverity();
+    public IStatus getStatus() {
+        return m_status;
     }
 
     /** {@inheritDoc} */
@@ -96,7 +91,7 @@ final class Problem implements IProblem {
     }
     
     /** {@inheritDoc} */
-    public boolean isWithMarker() {
+    public boolean shouldShowMarker() {
         return getMarkerMessage() != null;
     }
     
@@ -115,7 +110,8 @@ final class Problem implements IProblem {
             .append(getMarkerMessage(), otherProblem.getMarkerMessage())
             .append(getProblemType(), otherProblem.getProblemType())
             .append(getTooltipMessage(), otherProblem.getTooltipMessage())
-            .append(getSeverity(), otherProblem.getSeverity())
+            .append(getStatus().getSeverity(), 
+                    otherProblem.getStatus().getSeverity())
             .isEquals();
     }
     
@@ -125,7 +121,7 @@ final class Problem implements IProblem {
             .append(getMarkerMessage())
             .append(getProblemType())
             .append(getTooltipMessage())
-            .append(getSeverity())
+            .append(getStatus().getSeverity())
             .toHashCode();
     }
     
@@ -133,5 +129,4 @@ final class Problem implements IProblem {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
-
 }

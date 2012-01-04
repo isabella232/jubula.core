@@ -10,24 +10,20 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
@@ -47,12 +43,10 @@ public final class CompletenessGuard {
     /**
      * Operation to set the CompleteSpecTc flag for a .
      */
-    private static class CompleteSpecTcOperation 
+    private static class MissingTestCaseOperation 
             implements ITreeNodeOperation<INodePO> {
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
             
@@ -89,7 +83,7 @@ public final class CompletenessGuard {
      * Updates the flags for the object mapping (complete or not?)
      * in all nodes down to the test step.
      */
-    private static class OMFlagsOperation 
+    private static class CompleteObjectMappingOperation 
             implements ITreeNodeOperation<INodePO> {
         /**
          * The business process that performs component name operations.
@@ -166,16 +160,6 @@ public final class CompletenessGuard {
          * Sets the object mapping flag of the passed node to <code>true</code>
          * 
          * {@inheritDoc}
-         * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.INodePO,
-         *      org.eclipse.jubula.client.core.model.INodePO)
-         * 
-         * @param ctx
-         *            The context
-         * @param parent
-         *            The parent node
-         * @param node
-         *            The node
          */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
@@ -195,8 +179,6 @@ public final class CompletenessGuard {
          * Updates the object mapping flags of the passed node and its parent.
          * 
          * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.INodePO,
-         *      org.eclipse.jubula.client.core.model.INodePO)
          */
         public void postOperate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
@@ -204,10 +186,8 @@ public final class CompletenessGuard {
             if (m_aut != null) {
                 if (node instanceof ICapPO) {
                     m_sumOMFlag = handleCap(ctx, (ICapPO)node);
-                    if (parent != null && !m_sumOMFlag) {
-                        parent.setSumOMFlag(m_aut, m_sumOMFlag);
-                    }
-                } else if (node instanceof ICategoryPO) {
+                } else if (node instanceof ICategoryPO 
+                        || node instanceof ITestJobPO) {
                     node.setSumOMFlag(m_aut, true);
                 // Only set the OM flag if it's possible that the node could 
                 // actually *have* incomplete mappings (i.e. if a node is not a 
@@ -218,9 +198,6 @@ public final class CompletenessGuard {
                 } else if (node.getNodeListSize() > 0) {  
                     m_sumOMFlag = node.getSumOMFlag(m_aut) && m_sumOMFlag;
                     node.setSumOMFlag(m_aut, m_sumOMFlag);
-                    if (parent != null && !m_sumOMFlag) {
-                        parent.setSumOMFlag(m_aut, m_sumOMFlag);
-                    }
                 }
             }
         }
@@ -231,26 +208,22 @@ public final class CompletenessGuard {
      * @author BREDEX GmbH
      * @created 10.10.2005
      */
-    private static class CompleteTdDataOperation 
+    private static class CompleteTestDataOperation 
             implements ITreeNodeOperation<INodePO> {
 
         /** The Locale to check */
         private Locale m_locale;
         
         /**
-         * 
          * @param loc The Locale to check
          */
-        public CompleteTdDataOperation(Locale loc) {
+        public CompleteTestDataOperation(Locale loc) {
             m_locale = loc;
         }
         
         /**
          * Sets the CompleteTDFlag in all ParamNodePOs.
          * {@inheritDoc}
-         * @param ctx
-         * @param parent
-         * @param node
          */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
@@ -272,8 +245,14 @@ public final class CompletenessGuard {
                     if (!node.isActive() || !paramNode.isActive()) {
                         isComplete = true;
                     }
-                    CompletenessGuard.setCompFlagForTD(paramNode, m_locale, 
-                            isComplete);
+                    if (node instanceof IExecTestCasePO) {
+                        CompletenessGuard.setCompFlagForTD((IParamNodePO) node,
+                                m_locale, isComplete);
+                    } else {
+                        CompletenessGuard.setCompFlagForTD(paramNode, m_locale,
+                                isComplete);
+                    }
+
                     if (!node.isActive() || !paramNode.isActive()) {
                         return false;
                     }
@@ -282,12 +261,7 @@ public final class CompletenessGuard {
             return !alreadyVisited;
         }
 
-        /**
-         * {@inheritDoc}
-         * @param ctx
-         * @param parent
-         * @param node
-         */
+        /** {@inheritDoc} */
         public void postOperate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
             // no op
@@ -334,64 +308,6 @@ public final class CompletenessGuard {
     }
 
     /**
-     * @param node node, for which to summarizes the tdFlag for itself and 
-     * its children to the sumTdFlag
-     * @param locale The Locale to check
-     * @return state of sumTdFlag
-     */
-    private static boolean checkTdFlags(INodePO node, Locale locale) {
-        
-        boolean sumTdFlag = true;
-        if (node instanceof ICapPO) {
-            sumTdFlag = ((IParamNodePO)node).getCompleteTdFlag(locale) 
-                && sumTdFlag;
-            // testsuite or execTestCase
-        } else {
-            if (node instanceof IExecTestCasePO) {
-                final IExecTestCasePO execTC = (IExecTestCasePO)node;
-                if (execTC.getSpecTestCase() != null) {
-                    for (Object obj : execTC.getSpecTestCase()
-                            .getAllEventEventExecTC()) {
-                        
-                        IEventExecTestCasePO ev = (IEventExecTestCasePO)obj;
-                        sumTdFlag = 
-                            checkTdFlags(ev, locale) && sumTdFlag;
-                    }
-                    if (StringUtils.isEmpty(execTC.getDataFile())) {
-                        if (execTC.getHasReferencedTD()) {
-                            sumTdFlag = execTC.getSpecTestCase()
-                                .getCompleteTdFlag(locale) && sumTdFlag;
-                        } else {
-                            sumTdFlag = 
-                                execTC.getCompleteTdFlag(locale) && sumTdFlag;
-                        }
-                    }
-                }
-                // if ExecTC under a TestSuite has references as value
-                if (execTC.getParentNode() instanceof ITestSuitePO 
-                        && execTC.getParamReferencesIterator(locale)
-                            .hasNext()) {
-                    
-                    execTC.setCompleteTdFlag(locale, false);
-                    execTC.setSumTdFlag(locale, false);
-                    sumTdFlag = false;
-                }
-            }
-            final Iterator it = node.getNodeListIterator();
-            while (it.hasNext()) {
-                final INodePO child = (INodePO)it.next();
-                sumTdFlag = checkTdFlags(child, locale) 
-                    && sumTdFlag;
-            }
-            if (!node.isActive()) {
-                sumTdFlag = true;
-            }
-            node.setSumTdFlag(locale, sumTdFlag);
-        }
-        return sumTdFlag;
-    }
-    
-    /**
      * checks OM and TD Completness of all TS
      * @param loc the Locale to check
      * @param root INodePO
@@ -399,19 +315,10 @@ public final class CompletenessGuard {
     public static void checkAll(Locale loc, INodePO root) {
         // Iterate Execution tree
         final TreeTraverser traverser = new TreeTraverser(root);
-        traverser.addOperation(new OMFlagsOperation());
-        traverser.addOperation(new CompleteTdDataOperation(loc));
-        traverser.addOperation(new CompleteSpecTcOperation());
+        traverser.addOperation(new CompleteObjectMappingOperation());
+        traverser.addOperation(new CompleteTestDataOperation(loc));
+        traverser.addOperation(new MissingTestCaseOperation());
         traverser.traverse(true);
-        if (root instanceof ITestSuitePO) {
-            checkTdFlags(root, loc);
-        } else {
-            final List<ITestSuitePO> tsList = TestSuiteBP.getListOfTestSuites();
-            for (ITestSuitePO ts : tsList) {
-                // calculate final td flags
-                checkTdFlags(ts, loc);
-            }
-        }
     }
 
     /**
@@ -420,22 +327,10 @@ public final class CompletenessGuard {
      * @param root
      *      INodePO
      */
-    public static void checkTD(Locale loc, INodePO root) {
+    public static void checkTestData(Locale loc, INodePO root) {
         // Iterate Execution tree
-        final ITreeNodeOperation<INodePO> tdOp = 
-            new CompleteTdDataOperation(loc);
-        final TreeTraverser traverser = new TreeTraverser(root, tdOp);
-        traverser.traverse(true);
-
-        if (root instanceof ITestSuitePO) {
-            checkTdFlags(root, loc);
-        } else {
-            final List<ITestSuitePO> tsList = TestSuiteBP.getListOfTestSuites();
-            for (ITestSuitePO ts : tsList) {
-                // calculate final td flags
-                checkTdFlags(ts, loc);
-            }
-        }
+        new TreeTraverser(root, new CompleteTestDataOperation(loc))
+                .traverse(true);
     }
 
     /**
@@ -443,10 +338,9 @@ public final class CompletenessGuard {
      * @param root
      *      INodePO
      */
-    public static void checkOM(INodePO root) {
+    public static void checkObjectMappings(INodePO root) {
         // Iterate Execution tree
-        final ITreeNodeOperation<INodePO> omOp = new OMFlagsOperation();
-        final TreeTraverser traverser = new TreeTraverser(root, omOp);
-        traverser.traverse(true);
+        new TreeTraverser(root, new CompleteObjectMappingOperation())
+                .traverse(true);
     }
 }

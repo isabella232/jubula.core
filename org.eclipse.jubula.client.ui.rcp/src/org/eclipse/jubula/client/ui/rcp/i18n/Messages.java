@@ -363,8 +363,7 @@ public class Messages extends NLS {
     public static String GDProblemViewOpenAutStarterPreferences;
     public static String GDProblemViewOpenObjectMappingEditor;
     public static String GDProblemViewOpenReusedProjectSettings;
-    public static String GDProblemViewOpenTestCaseEditor;
-    public static String GDProblemViewOpenTestSuiteEditor;
+    public static String GDProblemViewOpenEditor;
     public static String GDProblemViewShellTitle;
     public static String GDProblemViewTitle;
     public static String GDStateControllerInfoNoProject;
@@ -854,6 +853,7 @@ public class Messages extends NLS {
     public static String TestDataDecoratorOMInStepIncompl;
     public static String TestDataDecoratorOMTSIncompl;
     public static String TestDataDecoratorRefTsIncompl;
+    public static String TestDataDecoratorRefTsIncomplTooltip;
     public static String TestDataDecoratorSpecTcChildrenMissing;
     public static String TestDataDecoratorSpecTcMissing;
     public static String TestDataDecoratorTDChildrenIncompl;

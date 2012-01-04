@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.problems;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -18,6 +19,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.utils.Languages;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Factory to create common problems and generic ones for external usage.
@@ -36,13 +40,20 @@ public final class ProblemFactory {
     /**
      * @param loc
      *            Locale for which the test data are incomplete.
+     * @param node
+     *            the affected node
      * @return A Problem that is representing missing test data for this local.
      */
-    public static IProblem createIncompleteTestDataProblem(Locale loc) {
-        return new Problem(Messages.ProblemIncompleteTestDataMarkerText, 
-                new Status(IStatus.ERROR, Activator.PLUGIN_ID, 
-                        Messages.ProblemIncompleteTestDataMarkerTooltip),
-                loc, ProblemType.REASON_TD_INCOMPLETE);
+    public static IProblem createIncompleteTestDataProblem(Locale loc,
+            INodePO node) {
+        
+        return new Problem(NLS.bind(
+                Messages.ProblemIncompleteTestDataMarkerText,
+                new Object[] { Languages.getInstance().getDisplayString(loc),
+                        node.getName() }),
+                new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                        Messages.ProblemIncompleteTestDataTooltip),
+                node, ProblemType.REASON_TD_INCOMPLETE);
     }
 
     /**
@@ -54,10 +65,12 @@ public final class ProblemFactory {
      */
     public static IProblem createIncompleteObjectMappingProblem(
             IAUTMainPO aut) {
-        return new Problem(Messages.ProblemIncompleteObjectMappingMarkerText,
-                new Status(IStatus.ERROR, Activator.PLUGIN_ID, 
-                        Messages.ProblemIncompleteObjectMappingMarkerTooltip), 
-                aut, ProblemType.REASON_OM_INCOMPLETE);
+        return new Problem(NLS.bind(
+                Messages.ProblemIncompleteObjectMappingMarkerText,
+                aut.getName()), new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                        Messages.ProblemIncompleteObjectMappingTooltip), 
+                        aut.getName(),
+                        ProblemType.REASON_OM_INCOMPLETE);
     }
 
     /**
@@ -66,7 +79,7 @@ public final class ProblemFactory {
     public static IProblem createMissingReferencedSpecTestCasesProblem() {
         return new Problem(Messages.ProblemMissingReferencedTestCaseMarkerText,
                 new Status(IStatus.ERROR, Activator.PLUGIN_ID, 
-                        Messages.ProblemMissingReferencedTestCaseMarkerTooltip),
+                        Messages.ProblemMissingReferencedTestCaseTooltip),
                 null, ProblemType.REASON_MISSING_SPEC_TC);
     }
 
@@ -76,7 +89,7 @@ public final class ProblemFactory {
      * @return An instance of this problem
      */
     public static IProblem createProblem(IStatus status) {
-        return new Problem(null, status, null, ProblemType.EXTERNAL);
+        return new Problem(null, status, null, ProblemType.NO_QUICKFIX);
     }
 
     /**
@@ -84,12 +97,21 @@ public final class ProblemFactory {
      *            Status with which the problem will be intialized.
      * @param markerMessage
      *            message of the marker
+     * @param data
+     *            the affected object; if this is a INodePO it's also set as a
+     *            problem of the node itself
+     * @param probType
+     *            the problem type
      * @return An instance of this problem which will create an marker when
      *         attached to a INodePO.
      */
     public static IProblem createProblemWithMarker(IStatus status,
-            String markerMessage) {
-        return new Problem(markerMessage, status, null, ProblemType.EXTERNAL);
+            String markerMessage, Object data, ProblemType probType) {
+        IProblem problem = new Problem(markerMessage, status, data, probType);
+        if (data instanceof INodePO) {
+            ((INodePO)data).addProblem(problem);
+        }
+        return problem;
     }
 
     /**
@@ -102,10 +124,40 @@ public final class ProblemFactory {
         IProblem worstProblem = null;
         for (IProblem problem : problems) {
             if (worstProblem == null
-                    || worstProblem.getSeverity() < problem.getSeverity()) {
+                    || worstProblem.getStatus().getSeverity() 
+                        < problem.getStatus().getSeverity()) {
                 worstProblem = problem;
             }
         }
         return worstProblem;
+    }
+    
+    /**
+     * @param problems
+     *            The list of problems which should be searched for the worst
+     *            problem.
+     * @return a list of problems with the worst severity
+     */
+    public static Set<IProblem> getWorstProblems(Set<IProblem> problems) {
+        IProblem worstProblem = getWorstProblem(problems);
+        Set<IProblem> worstProblems = new HashSet<IProblem>();
+        if (worstProblem != null) {
+            for (IProblem problem : problems) {
+                if (worstProblem.getStatus().getSeverity() 
+                        == problem.getStatus().getSeverity()) {
+                    worstProblems.add(problem);
+                }
+            }
+        }
+        return worstProblems;
+    }
+    
+    /**
+     * @param node
+     *            the node to check for problems.
+     * @return true if problem is present; false otherwise
+     */
+    public static boolean hasProblem(INodePO node) {
+        return node.getProblems().size() > 0;
     }
 }

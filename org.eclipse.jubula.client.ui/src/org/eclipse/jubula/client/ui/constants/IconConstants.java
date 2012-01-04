@@ -32,10 +32,14 @@ public class IconConstants {
     /** warning image */
     public static final Image WARNING_IMAGE = Plugin.getImage("warning.gif"); //$NON-NLS-1$
     /** warning small image */
-    public static final Image WARNING_SMALL_IMAGE = PlatformUI.getWorkbench()
-            .getSharedImages().getImage(ISharedImages.IMG_DEC_FIELD_WARNING);
+    public static final ImageDescriptor WARNING_IMAGE_DESCRIPTOR = PlatformUI
+            .getWorkbench().getSharedImages()
+            .getImageDescriptor(ISharedImages.IMG_DEC_FIELD_WARNING);
+    
+    /** info image descriptor */
+    public static final ImageDescriptor INFO_IMAGE_DESCRIPTOR = Plugin.getImageDescriptor("info.gif"); //$NON-NLS-1$
     /** info image */
-    public static final Image INFO_IMAGE = Plugin.getImage("info.gif"); //$NON-NLS-1$
+    public static final Image INFO_IMAGE = INFO_IMAGE_DESCRIPTOR.createImage();
     /** testSuiteeditor image */
     public static final Image DISABLED_TS_EDITOR_IMAGE = Plugin.getImage("testSuiteEditor_disabled.gif"); //$NON-NLS-1$
     /** testCaseEditor image */
