@@ -61,15 +61,8 @@ public class TestSuiteBrowserContentProvider
                 Collection<IEventExecTestCasePO> eventTCs = Collections
                         .unmodifiableCollection(referencedTestCase
                                 .getAllEventEventExecTC());
-                for (IEventExecTestCasePO exec : eventTCs) {
-                    exec.setUIParentNode((INodePO) parentElement);
-                }
                 List<INodePO> nodes = referencedTestCase
                         .getUnmodifiableNodeList();
-                for (INodePO node : nodes) {
-                    node.setUIParentNode((INodePO) parentElement);
-                }
-
                 return ArrayUtils.addAll(eventTCs.toArray(), nodes.toArray());
             }
             
@@ -91,9 +84,6 @@ public class TestSuiteBrowserContentProvider
         if (parentElement instanceof INodePO) {
             List<INodePO> nodes = ((INodePO)parentElement)
                 .getUnmodifiableNodeList();
-            for (INodePO node : nodes) {
-                node.setUIParentNode((INodePO) parentElement);
-            }
             return nodes.toArray();
         }
 

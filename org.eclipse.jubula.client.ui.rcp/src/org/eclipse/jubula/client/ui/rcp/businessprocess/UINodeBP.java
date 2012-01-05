@@ -22,7 +22,6 @@ import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Persistor;
@@ -148,29 +147,6 @@ public class UINodeBP {
             }
         }
         tv.setSelection(oldSelection);
-        return null;
-    }
-    
-    /**
-     * 
-     * @param node The node to check.
-     * @return the Test Suite that (recursively) contains <code>node</code>, or
-     *         <code>null</code> if <code>node</code> does not belong to any 
-     *         Test Suite.
-     */
-    public static ITestSuitePO getOwningTestSuite(INodePO node) {
-        if (node instanceof ITestSuitePO) {
-            return (ITestSuitePO)node;
-        }
-        
-        INodePO uiParent = node.getUIParentNode();
-        while (uiParent != null) {
-            if (uiParent instanceof ITestSuitePO) {
-                return (ITestSuitePO)uiParent;
-            }
-            uiParent = uiParent.getUIParentNode();
-        }
-        
         return null;
     }
 }

@@ -39,11 +39,6 @@ public interface INodePO extends ITimestampPO {
     public INodePO getParentNode();
     
     /**
-     * @return the ui parent node of this node
-     */
-    public INodePO getUIParentNode();
-
-    /**
      * @return the unmodifiable node list.
      */
     public abstract List<INodePO> getUnmodifiableNodeList();
@@ -188,12 +183,6 @@ public interface INodePO extends ITimestampPO {
      */
     public abstract void setParentNode(INodePO parent);
 
-    /**
-     * @param parent
-     *            the ui parent to set
-     */
-    public abstract void setUIParentNode(INodePO parent);
-    
     /**
      * @return the current toolkit level of this node.
      */
