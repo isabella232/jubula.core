@@ -131,7 +131,7 @@ abstract class NodePO implements INodePO {
     private long m_timestamp = 0;
     
     /** set of problems */
-    private Set<IProblem> m_problems = new HashSet<IProblem>();
+    private Set<IProblem> m_problems = new HashSet<IProblem>(5);
 
     /**
      * constructor for a node with a pre-existing GUID
@@ -430,9 +430,9 @@ abstract class NodePO implements INodePO {
     public void setSumOMFlag(IAUTMainPO aut, boolean sumOMFlag) {
         IProblem p = ProblemFactory.createIncompleteObjectMappingProblem(aut);
         if (sumOMFlag) {
-            m_problems.remove(p);
+            removeProblem(p);
         } else {
-            m_problems.add(p);
+            addProblem(p);
         }
     }
     
@@ -445,17 +445,15 @@ abstract class NodePO implements INodePO {
         return !m_problems.contains(
                 ProblemFactory.createMissingReferencedSpecTestCasesProblem());
     }
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    
+    /** {@inheritDoc} */
     public void setSumSpecTcFlag(boolean sumSpecTcFlag) {
         IProblem p = 
             ProblemFactory.createMissingReferencedSpecTestCasesProblem();
         if (sumSpecTcFlag) {
-            m_problems.remove(p);
+            removeProblem(p);
         } else {
-            m_problems.add(p);
+            addProblem(p);
         }
     }
 
@@ -477,12 +475,11 @@ abstract class NodePO implements INodePO {
     public void setSumTdFlag(Locale loc, boolean flag) {
         IProblem p = ProblemFactory.createIncompleteTestDataProblem(loc, this);
         if (flag) {
-            m_problems.remove(p);
+            removeProblem(p);
         } else {
-            m_problems.add(p);
+            addProblem(p);
         }
     }
-    
     
     /**
      * {@inheritDoc}
@@ -686,7 +683,10 @@ abstract class NodePO implements INodePO {
     
     /** {@inheritDoc} */
     public boolean addProblem(IProblem problem) {
-        return m_problems.add(problem);
+        if (isActive()) {
+            return m_problems.add(problem);
+        }
+        return false;
     }
     
     /** {@inheritDoc} */

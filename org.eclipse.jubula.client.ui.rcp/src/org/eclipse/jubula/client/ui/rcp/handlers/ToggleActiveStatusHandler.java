@@ -28,9 +28,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class ToggleActiveStatusHandler extends AbstractSelectionBasedHandler {
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
 

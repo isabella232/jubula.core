@@ -234,8 +234,8 @@ public interface INodePO extends ITimestampPO {
     public boolean isActive();
     
     /**
-     * Adds a problem to this node. This problem will be used to display a 
-     * tooltip on the guinode, which represents this INodePO.
+     * Adds a problem to this node. This problem will be used to display 
+     * tooltips, decorations and problems in the UI
      * 
      * @param problem The problem that is added to this node.
      * @return <code>true</code> if the problem was added and wasn't already

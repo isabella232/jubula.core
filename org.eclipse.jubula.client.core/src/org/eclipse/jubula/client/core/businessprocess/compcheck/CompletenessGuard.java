@@ -10,11 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -41,7 +44,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 @SuppressWarnings("synthetic-access")
 public final class CompletenessGuard {
     /**
-     * Operation to set the CompleteSpecTc flag for a .
+     * Operation to set the CompleteSpecTc flag for a node
      */
     private static class MissingTestCaseOperation 
             implements ITreeNodeOperation<INodePO> {
@@ -49,14 +52,6 @@ public final class CompletenessGuard {
         /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
-            
-            if (!node.isActive()) {
-                node.setSumSpecTcFlag(true);
-                if (node instanceof IExecTestCasePO) {
-                    ((IExecTestCasePO)node).setCompleteSpecTcFlag(true);
-                }
-                return false;
-            }
             if (node instanceof IExecTestCasePO) {
                 IExecTestCasePO execTc = (IExecTestCasePO)node;
                 boolean isMissingSpecTc = execTc.getSpecTestCase() == null;
@@ -76,6 +71,32 @@ public final class CompletenessGuard {
             } else if (parent != null && parent.getSumSpecTcFlag()) {
                 parent.setSumSpecTcFlag(node.getSumSpecTcFlag());
             }
+        }
+    }
+    
+    /**
+     * Operation to reflect the activity status of a node
+     */
+    private static class InactiveNodesOperation 
+            implements ITreeNodeOperation<INodePO> {
+
+        /** {@inheritDoc} */
+        public boolean operate(ITreeTraverserContext<INodePO> ctx, 
+                INodePO parent, INodePO node, boolean alreadyVisited) {
+            if (!node.isActive()) {
+                Set<IProblem> problemsToRemove = 
+                        new HashSet<IProblem>(node.getProblems());
+                for (IProblem problem : problemsToRemove) {
+                    node.removeProblem(problem);
+                }
+            }
+            return true;
+        }
+
+        /** {@inheritDoc} */
+        public void postOperate(ITreeTraverserContext<INodePO> ctx,
+                INodePO parent, INodePO node, boolean alreadyVisited) {
+            // currently empty
         }
     }
 
@@ -113,10 +134,6 @@ public final class CompletenessGuard {
          */
         private boolean handleCap(ITreeTraverserContext<INodePO> ctx, 
                 ICapPO cap) {
-            if (!cap.isActive()) {
-                cap.setCompleteOMFlag(m_aut, true);
-                return true;
-            }
             IObjectMappingPO objMap = m_aut.getObjMap();
             String compName = cap.getComponentName();
             IComponentNamePO compNamePo = 
@@ -169,9 +186,6 @@ public final class CompletenessGuard {
             }
             if (m_aut != null) {
                 node.setSumOMFlag(m_aut, true);
-                if (!node.isActive()) {
-                    return false;
-                }
             }
             return true;
         }
@@ -242,19 +256,12 @@ public final class CompletenessGuard {
                     // check if there is missing data or Row(0) have to be created
 
                     boolean isComplete = paramNode.isTestDataComplete(m_locale);
-                    if (!node.isActive() || !paramNode.isActive()) {
-                        isComplete = true;
-                    }
                     if (node instanceof IExecTestCasePO) {
                         CompletenessGuard.setCompFlagForTD((IParamNodePO) node,
                                 m_locale, isComplete);
                     } else {
                         CompletenessGuard.setCompFlagForTD(paramNode, m_locale,
                                 isComplete);
-                    }
-
-                    if (!node.isActive() || !paramNode.isActive()) {
-                        return false;
                     }
                 }
             }
@@ -302,9 +309,7 @@ public final class CompletenessGuard {
     private static void updateTdMap(Locale loc, boolean hasCompleteTD,
         IParamNodePO node) {
         node.setCompleteTdFlag(loc, hasCompleteTD);
-        if (!hasCompleteTD) {
-            node.setSumTdFlag(loc, hasCompleteTD);
-        }
+        node.setSumTdFlag(loc, hasCompleteTD);
     }
 
     /**
@@ -318,6 +323,7 @@ public final class CompletenessGuard {
         traverser.addOperation(new CompleteObjectMappingOperation());
         traverser.addOperation(new CompleteTestDataOperation(loc));
         traverser.addOperation(new MissingTestCaseOperation());
+        traverser.addOperation(new InactiveNodesOperation());
         traverser.traverse(true);
     }
 
