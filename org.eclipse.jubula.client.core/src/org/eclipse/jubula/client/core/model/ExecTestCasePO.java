@@ -95,12 +95,6 @@ class ExecTestCasePO extends TestCasePO implements
     private String m_specTestCaseGuid;
     
     /**
-     * <code>m_completeSpecTcFlag</code>: Flag to indicate whether the 
-     * referenced SpecTestCase exists
-     */
-    private transient boolean m_completeSpecTcFlag = false;
-
-    /**
      * only for Persistence (JPA / EclipseLink)
      */
     ExecTestCasePO() {
@@ -371,32 +365,6 @@ class ExecTestCasePO extends TestCasePO implements
         return super.getReferencedDataCube();
     }
     
-    /**
-     * {@inheritDoc}
-     * @param loc the Locale
-     * @return the CompleteTdFlag of the depending SpecTestCasePO or the own
-     * if TestData are overwritten.
-     */
-    public boolean getCompleteTdFlag(Locale loc) {
-        return getHasReferencedTD() ? getSpecTestCase().getCompleteTdFlag(loc) 
-            : super.getCompleteTdFlag(loc);
-    }
-
-    
-    /**
-     * Sets the CompleteTdFlag depending on getHasReferencedTD()
-     * {@inheritDoc}
-     * @param loc
-     * @param flag
-     */
-    public void setCompleteTdFlag(Locale loc, boolean flag) {
-        if (getHasReferencedTD()) {
-            getSpecTestCase().setCompleteTdFlag(loc, flag);
-        } else {
-            super.setCompleteTdFlag(loc, flag);
-        }
-    }
-
     /**
      * @return the DataManager of this ExecTestCase even if getHasReferencedID()
      * returns true. 
@@ -680,23 +648,6 @@ class ExecTestCasePO extends TestCasePO implements
         if (specTestCase != null) {
             specTestCase.setToolkitLevel(toolkitLevel);            
         }
-    }
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Transient
-    public boolean getCompleteSpecTcFlag() {
-        return m_completeSpecTcFlag;
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void setCompleteSpecTcFlag(boolean flag) {
-        m_completeSpecTcFlag = flag;
     }
     
     /** {@inheritDoc}

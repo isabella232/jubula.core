@@ -20,13 +20,11 @@ import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
@@ -46,7 +44,7 @@ public final class CompletenessGuard {
     /**
      * Operation to set the CompleteSpecTc flag for a node
      */
-    private static class MissingTestCaseOperation 
+    private static class CheckMissingTestCaseReferences 
             implements ITreeNodeOperation<INodePO> {
 
         /** {@inheritDoc} */
@@ -55,10 +53,7 @@ public final class CompletenessGuard {
             if (node instanceof IExecTestCasePO) {
                 IExecTestCasePO execTc = (IExecTestCasePO)node;
                 boolean isMissingSpecTc = execTc.getSpecTestCase() == null;
-                execTc.setSumSpecTcFlag(!isMissingSpecTc);
-                execTc.setCompleteSpecTcFlag(!isMissingSpecTc);
-            } else {
-                node.setSumSpecTcFlag(true);
+                execTc.setCompletenessMissingTestCase(!isMissingSpecTc);
             }
             return !alreadyVisited;
         }
@@ -66,11 +61,7 @@ public final class CompletenessGuard {
         /** {@inheritDoc} */
         public void postOperate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
-            if (parent instanceof ICategoryPO) {
-                parent.setSumSpecTcFlag(true);
-            } else if (parent != null && parent.getSumSpecTcFlag()) {
-                parent.setSumSpecTcFlag(node.getSumSpecTcFlag());
-            }
+            // currently empty
         }
     }
     
@@ -104,7 +95,7 @@ public final class CompletenessGuard {
      * Updates the flags for the object mapping (complete or not?)
      * in all nodes down to the test step.
      */
-    private static class CompleteObjectMappingOperation 
+    private static class CheckObjectMappingCompleteness 
             implements ITreeNodeOperation<INodePO> {
         /**
          * The business process that performs component name operations.
@@ -114,16 +105,10 @@ public final class CompletenessGuard {
          * The AUT
          */
         private IAUTMainPO m_aut;
-        /**
-         * The flag of complete object mapping
-         */
-        private boolean m_sumOMFlag = true;
         
         /**
          * Operates on the test step by setting its object mapping flag. The
          * node that is responsible for a component name is also updated.
-         * 
-         * {@inheritDoc}
          * 
          * @param ctx
          *            The tree traverser context
@@ -147,7 +132,7 @@ public final class CompletenessGuard {
                     && ((ConcreteComponent)metaComponentType)
                         .hasDefaultMapping()) {
                 
-                cap.setCompleteOMFlag(m_aut, true);
+                cap.setCompletenessObjectMapping(m_aut, true);
                 return true;
             }
             
@@ -158,20 +143,21 @@ public final class CompletenessGuard {
                     ComponentNamesBP.getInstance());
                 try {
                     id = objMap.getTechnicalName(result.getCompName());
-                } catch (LogicComponentNotManagedException e) { // NOPMD by al on 3/19/07 1:21 PM
+                } catch (LogicComponentNotManagedException e) {
                     // ok
                 }
                 if (id == null) {
-                    result.getResponsibleNode().setSumOMFlag(m_aut, false);
+                    result.getResponsibleNode()
+                        .setCompletenessObjectMapping(m_aut, false);
                     if (result.getResponsibleNode() == cap) {
-                        cap.setCompleteOMFlag(m_aut, false);
+                        cap.setCompletenessObjectMapping(m_aut, false);
                     }
                 } else {
-                    cap.setCompleteOMFlag(m_aut, true);
+                    cap.setCompletenessObjectMapping(m_aut, true);
                 }
             }
             
-            return cap.getCompleteOMFlag(m_aut);
+            return cap.hasCompleteObjectMapping(m_aut);
         }
         /**
          * Sets the object mapping flag of the passed node to <code>true</code>
@@ -185,7 +171,7 @@ public final class CompletenessGuard {
                 m_aut = ts.getAut();
             }
             if (m_aut != null) {
-                node.setSumOMFlag(m_aut, true);
+                node.setCompletenessObjectMapping(m_aut, true);
             }
             return true;
         }
@@ -199,19 +185,7 @@ public final class CompletenessGuard {
             
             if (m_aut != null) {
                 if (node instanceof ICapPO) {
-                    m_sumOMFlag = handleCap(ctx, (ICapPO)node);
-                } else if (node instanceof ICategoryPO 
-                        || node instanceof ITestJobPO) {
-                    node.setSumOMFlag(m_aut, true);
-                // Only set the OM flag if it's possible that the node could 
-                // actually *have* incomplete mappings (i.e. if a node is not a 
-                // Test Step and has no children, then it can't have mappings 
-                // and therefore can't have incomplete mappings). Without this 
-                // check, an empty Test Case could be marked as OM Incomplete if
-                // a "nearby" Test Case is OM Incomplete.
-                } else if (node.getNodeListSize() > 0) {  
-                    m_sumOMFlag = node.getSumOMFlag(m_aut) && m_sumOMFlag;
-                    node.setSumOMFlag(m_aut, m_sumOMFlag);
+                    handleCap(ctx, (ICapPO)node);
                 }
             }
         }
@@ -222,7 +196,7 @@ public final class CompletenessGuard {
      * @author BREDEX GmbH
      * @created 10.10.2005
      */
-    private static class CompleteTestDataOperation 
+    private static class CheckTestDataCompleteness 
             implements ITreeNodeOperation<INodePO> {
 
         /** The Locale to check */
@@ -231,7 +205,7 @@ public final class CompletenessGuard {
         /**
          * @param loc The Locale to check
          */
-        public CompleteTestDataOperation(Locale loc) {
+        public CheckTestDataCompleteness(Locale loc) {
             m_locale = loc;
         }
         
@@ -295,21 +269,7 @@ public final class CompletenessGuard {
      */
     public static void setCompFlagForTD(IParamNodePO node, Locale loc,
         boolean hasCompleteTD) {
-        updateTdMap(loc, hasCompleteTD, node);
-    }
-
-    /**
-     * @param loc
-     *            language, for which the complete flag is modified
-     * @param hasCompleteTD
-     *            state of completeFlag for node
-     * @param node
-     *            node, which has the modified completeTDFlag
-     */
-    private static void updateTdMap(Locale loc, boolean hasCompleteTD,
-        IParamNodePO node) {
-        node.setCompleteTdFlag(loc, hasCompleteTD);
-        node.setSumTdFlag(loc, hasCompleteTD);
+        node.setCompletenessTestData(loc, hasCompleteTD);
     }
 
     /**
@@ -320,9 +280,9 @@ public final class CompletenessGuard {
     public static void checkAll(Locale loc, INodePO root) {
         // Iterate Execution tree
         final TreeTraverser traverser = new TreeTraverser(root);
-        traverser.addOperation(new CompleteObjectMappingOperation());
-        traverser.addOperation(new CompleteTestDataOperation(loc));
-        traverser.addOperation(new MissingTestCaseOperation());
+        traverser.addOperation(new CheckObjectMappingCompleteness());
+        traverser.addOperation(new CheckTestDataCompleteness(loc));
+        traverser.addOperation(new CheckMissingTestCaseReferences());
         traverser.addOperation(new InactiveNodesOperation());
         traverser.traverse(true);
     }
@@ -335,7 +295,7 @@ public final class CompletenessGuard {
      */
     public static void checkTestData(Locale loc, INodePO root) {
         // Iterate Execution tree
-        new TreeTraverser(root, new CompleteTestDataOperation(loc))
+        new TreeTraverser(root, new CheckTestDataCompleteness(loc))
                 .traverse(true);
     }
 
@@ -346,7 +306,7 @@ public final class CompletenessGuard {
      */
     public static void checkObjectMappings(INodePO root) {
         // Iterate Execution tree
-        new TreeTraverser(root, new CompleteObjectMappingOperation())
+        new TreeTraverser(root, new CheckObjectMappingCompleteness())
                 .traverse(true);
     }
 }

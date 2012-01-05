@@ -98,15 +98,6 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * {@inheritDoc}
      */
     @Transient
-    public boolean getCompleteTdFlag(Locale loc) {
-        return getParameterInterface().getCompleteTdFlag(loc);
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Transient
     public String getDataFile() {
         return getParameterInterface().getDataFile();
     }
@@ -221,22 +212,6 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
     @Transient
     public IParameterInterfacePO getReferencedDataCube() {
         return getParameterInterface().getReferencedDataCube();
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void resetCompleteTdFlag() {
-        getParameterInterface().resetCompleteTdFlag();
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void setCompleteTdFlag(Locale loc, boolean flag) {
-        getParameterInterface().setCompleteTdFlag(loc, flag);
     }
 
     /**
@@ -398,7 +373,6 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
         if (!hasReferencedTestData()) {
             getDataManager().clear();
         }
-        resetCompleteTdFlag();
     }
     
     /**

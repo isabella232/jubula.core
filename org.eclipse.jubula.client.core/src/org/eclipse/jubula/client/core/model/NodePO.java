@@ -412,22 +412,23 @@ abstract class NodePO implements INodePO {
     public int getNodeListSize() {
         return getNodeList().size();
     }
-
     
     /**
      * @param aut aut, for which to get the sumOMFlag
      * @return Returns the sumOMFlag or false, if the given AUT isn't contained
      * in map
      */
-    public boolean getSumOMFlag(IAUTMainPO aut) {
+    public boolean hasCompleteObjectMapping(IAUTMainPO aut) {
         IProblem p = ProblemFactory.createIncompleteObjectMappingProblem(aut);
         return !m_problems.contains(p);
     }
+    
     /**
      * @param aut aut, for which to set the sumOMFlag
      * @param sumOMFlag The sumOMFlag to set.
      */
-    public void setSumOMFlag(IAUTMainPO aut, boolean sumOMFlag) {
+    public void setCompletenessObjectMapping(
+            IAUTMainPO aut, boolean sumOMFlag) {
         IProblem p = ProblemFactory.createIncompleteObjectMappingProblem(aut);
         if (sumOMFlag) {
             removeProblem(p);
@@ -441,13 +442,13 @@ abstract class NodePO implements INodePO {
      * {@inheritDoc}
      */
     @Transient
-    public boolean getSumSpecTcFlag() {
+    public boolean hasCompleteTestCaseReferences() {
         return !m_problems.contains(
                 ProblemFactory.createMissingReferencedSpecTestCasesProblem());
     }
     
     /** {@inheritDoc} */
-    public void setSumSpecTcFlag(boolean sumSpecTcFlag) {
+    public void setCompletenessMissingTestCase(boolean sumSpecTcFlag) {
         IProblem p = 
             ProblemFactory.createMissingReferencedSpecTestCasesProblem();
         if (sumSpecTcFlag) {
@@ -462,7 +463,7 @@ abstract class NodePO implements INodePO {
      * @param loc locale, for which to get the sumTdFlag
      * @return the state of sumTdFlag
      */
-    public boolean getSumTdFlag(Locale loc) {
+    public boolean hasCompleteTestData(Locale loc) {
         return !m_problems.contains(
                 ProblemFactory.createIncompleteTestDataProblem(loc, this));
     }
@@ -472,7 +473,7 @@ abstract class NodePO implements INodePO {
      * @param loc  locale, for which to set the sumTdFlag
      * @param flag the state of sumTdFlag to set
      */
-    public void setSumTdFlag(Locale loc, boolean flag) {
+    public void setCompletenessTestData(Locale loc, boolean flag) {
         IProblem p = ProblemFactory.createIncompleteTestDataProblem(loc, this);
         if (flag) {
             removeProblem(p);

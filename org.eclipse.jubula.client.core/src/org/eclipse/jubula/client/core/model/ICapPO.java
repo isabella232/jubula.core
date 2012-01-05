@@ -69,20 +69,4 @@ public interface ICapPO extends IParamNodePO, IComponentNameReuser {
      * {@inheritDoc}
      */
     public abstract void addNode(INodePO childNode);
-
-    /**
-     * @param aut aut, for which the completeOMFlag is valid
-     * @return Returns the completeOMFlag for given AUT
-     */
-    public abstract boolean getCompleteOMFlag(IAUTMainPO aut);
-
-    /**
-     * FIXME Katrin This method should not be in this interface!
-     * <b>Only use this for internal purposes!</b>
-     * @param aut aut, for which to set the completeOMFlag
-     * @param completeOMFlag The completeOMFlag to set.
-     */
-    public abstract void setCompleteOMFlag(IAUTMainPO aut, 
-        boolean completeOMFlag);
-
 }

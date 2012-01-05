@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
 
 /**
  * Interface for objects that require Parameters.
@@ -77,13 +76,6 @@ public interface IParameterInterfacePO extends IPersistentObject {
     public abstract void setDataManager(ITDManager dataManager);
 
     /**
-     * method to get the CompleteTdFlag for a given Locale
-     * @param loc locale, for which to get the completeTdFlag
-     * @return the state of completeTdFlag
-     */
-    public abstract boolean getCompleteTdFlag(Locale loc);
-
-    /**
      * gets the value of the m_dataFile property
      * 
      * @return the name of the node
@@ -110,22 +102,6 @@ public interface IParameterInterfacePO extends IPersistentObject {
      * @param dataCube The Data Cube to be referenced by the receiver.
      */
     public abstract void setReferencedDataCube(IParameterInterfacePO dataCube);
-    
-    /**
-     * FIXME Katrin This method should not be in this interface!
-     * <b>Only use this for internal purposes!</b>
-     * method to reset complete TD Flags
-     */
-    public abstract void resetCompleteTdFlag();
-    
-    /**
-     * FIXME Katrin This method should not be in this interface!
-     * <b>Only use this for internal purposes!</b>
-     * method to set the completeTdFlag for a given Locale
-     * @param loc  locale, for which to set the completeTdFlag
-     * @param flag the state of completeTdFlag to set
-     */
-    public abstract void setCompleteTdFlag(Locale loc, boolean flag);
 
     /**
      * 

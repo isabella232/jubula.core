@@ -122,39 +122,39 @@ public interface INodePO extends ITimestampPO {
      * @return Returns the sumOMFlag or false, if the given AUT isn't contained
      * in map
      */
-    public abstract boolean getSumOMFlag(IAUTMainPO aut);
+    public abstract boolean hasCompleteObjectMapping(IAUTMainPO aut);
 
     /**
      * @return <code>false</code> if this node or any of its children contain
      *         a reference to a non-existing SpecTestCase. Otherwise, 
      *         <code>true</code>.
      */
-    public boolean getSumSpecTcFlag();
+    public boolean hasCompleteTestCaseReferences();
 
     /**
-     * @param sumSpecTcFlag The sumSpecTcFlag to set.
+     * @param existingTestCase The flag to set.
      */
-    public void setSumSpecTcFlag(boolean sumSpecTcFlag);
+    public void setCompletenessMissingTestCase(boolean existingTestCase);
 
     /**
-     * @param aut aut, for which to set the sumOMFlag
-     * @param sumOMFlag The sumOMFlag to set.
+     * @param aut aut, for which to set the object mapping completeness
+     * @param isOMComplete The flag to indicate the completeness
      */
-    public abstract void setSumOMFlag(IAUTMainPO aut, boolean sumOMFlag);
+    public abstract void setCompletenessObjectMapping(
+            IAUTMainPO aut, boolean isOMComplete);
 
     /**
-     * method to get the sumTdFlag for a given Locale
-     * @param loc locale, for which to get the sumTdFlag
-     * @return the state of sumTdFlag
+     * @param loc locale, for which to get the test data completeness
+     * @return the state of test data completeness
      */
-    public abstract boolean getSumTdFlag(Locale loc);
+    public abstract boolean hasCompleteTestData(Locale loc);
 
     /**
-     * method to set the sumTdFlag for a given Locale
-     * @param loc  locale, for which to set the sumTdFlag
-     * @param flag the state of sumTdFlag to set
+     * method to set the test data completeness flag for a given Locale
+     * @param loc  locale, for which to set the test data completeness flag
+     * @param flag the state of test data completeness
      */
-    public abstract void setSumTdFlag(Locale loc, boolean flag);
+    public abstract void setCompletenessTestData(Locale loc, boolean flag);
 
     /**
      * {@inheritDoc}

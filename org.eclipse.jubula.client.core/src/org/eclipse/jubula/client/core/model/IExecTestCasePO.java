@@ -152,19 +152,6 @@ public interface IExecTestCasePO extends ITestCasePO {
     public abstract Collection<ICompNamesPairPO> getCompNamesPairs();
 
     /**
-     * <b>Only use this for internal purposes</b>
-     * method to set the CompleteSpecTcFlag
-     * @param flag the state of completeSpecTcFlag to set
-     */
-    public void setCompleteSpecTcFlag(boolean flag);
-
-    /**
-     * method to get the CompleteSpecTcFlag
-     * @return the state of completeSpecTcFlag
-     */
-    public boolean getCompleteSpecTcFlag();
-
-    /**
      * Sets the SpecTestCase and adds this node to the SpecTestCase.
      * @param specTestCase The specTestCase to set.
      */

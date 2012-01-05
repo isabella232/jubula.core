@@ -758,20 +758,20 @@ public class ExecutionController implements IAUTServerEventListener,
         List<String> suitesWithMissingSpecTc = new LinkedList<String>();
         for (ITestSuitePO ts : m_job.getTestSuites()) {
             final String tsName = ts.getName();
-            if (!ts.getSumSpecTcFlag()) {
+            if (!ts.hasCompleteTestCaseReferences()) {
                 suitesWithMissingSpecTc.add(NLS.bind(
                         Messages.ExecutionControllerCheckSpecTc, tsName));
                 AbstractCmdlineClient.printConsoleLn(NLS.bind(
                         Messages.ExecutionControllerCheckSpecTc, tsName), true);
             }
-            if (!ts.getSumOMFlag(ts.getAut())) {
+            if (!ts.hasCompleteObjectMapping(ts.getAut())) {
                 suitesWithIncompleteOM.add(NLS.bind(
                         Messages.ExecutionControllerCheckOM, tsName));
                 AbstractCmdlineClient.printConsoleLn(
                         NLS.bind(Messages.ExecutionControllerCheckOM, tsName),
                         true);
             }
-            if (!ts.getSumTdFlag(m_job.getLanguage())) {
+            if (!ts.hasCompleteTestData(m_job.getLanguage())) {
                 suitesWithIncompleteTD.add(NLS.bind(
                         Messages.ExecutionControllerCheckTD, tsName));
                 AbstractCmdlineClient.printConsoleLn(

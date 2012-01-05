@@ -61,7 +61,7 @@ public final class ProblemFactory {
      * @param aut
      *            AUT where the object mapping is incomplete
      * @return A problem which represents incomplete object mapping of this
-     *         aut.
+     *         AUT.
      */
     public static IProblem createIncompleteObjectMappingProblem(
             IAUTMainPO aut) {
@@ -85,7 +85,7 @@ public final class ProblemFactory {
 
     /**
      * @param status
-     *            Status with which the problem will be intialized.
+     *            Status with which the problem will be initialized.
      * @return An instance of this problem
      */
     public static IProblem createProblem(IStatus status) {

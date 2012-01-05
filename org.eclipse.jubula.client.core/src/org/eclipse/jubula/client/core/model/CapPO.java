@@ -11,11 +11,9 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -69,14 +67,6 @@ class CapPO extends ParamNodePO implements ICapPO {
      */
     private transient Component m_metaComponentType = null;
     
-    /**
-     * <code>m_completeOmMap</code> manages the completeness Flag for OM
-     * relating to the associated AUT key: AUTMainPO, value: completeness flag
-     * for OM
-     */
-    private transient Map<IAUTMainPO, Boolean> m_completeOmMap = 
-        new HashMap<IAUTMainPO, Boolean>(AUTContPO.DEFAULT_NUMBER_OF_AUTS);
-
     /**
      * corresponding action of xml file
      */
@@ -398,36 +388,6 @@ class CapPO extends ParamNodePO implements ICapPO {
     private void setMetaComponentType(Component metaComponentType) {
         m_metaComponentType = metaComponentType;
     }
-
-    /**
-     * @param aut aut, for which the completeOMFlag is valid
-     * @return Returns the completeOMFlag for given AUT
-     */
-    public boolean getCompleteOMFlag(IAUTMainPO aut) {
-        if (aut != null) {
-            Boolean value = getCompleteOmMap().get(aut);
-            return value != null ? value.booleanValue() : false;
-        }
-        return true;
-    }
-    /**
-     * FIXME Katrin This method should not be public!
-     * <b>Only use this for internal purposes!</b>
-     * @param aut aut, for which to set the completeOMFlag
-     * @param completeOMFlag The completeOMFlag to set.
-     */
-    public void setCompleteOMFlag(IAUTMainPO aut, boolean completeOMFlag) {
-        getCompleteOmMap().put(aut, Boolean.valueOf(completeOMFlag));
-    }
-    
-    /**
-     * @return Returns the completeOmMap.
-     */
-    @Transient
-    private Map<IAUTMainPO, Boolean> getCompleteOmMap() {
-        return m_completeOmMap;
-    }
-
 
     /** {@inheritDoc}
      * @see org.eclipse.jubula.client.core.model.NodePO#isInterfaceLocked()

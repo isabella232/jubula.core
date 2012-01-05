@@ -349,9 +349,9 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
         boolean addSevereProblems = !ProblemFactory.hasProblem(ts) ? false
                 : ProblemFactory.getWorstProblem(ts.getProblems()).getStatus()
                         .getSeverity() == IStatus.ERROR;
-        return ts.getSumOMFlag(ts.getAut())
-            && ts.getSumTdFlag(workingLanguage)
-            && ts.getSumSpecTcFlag()
+        return ts.hasCompleteObjectMapping(ts.getAut())
+            && ts.hasCompleteTestData(workingLanguage)
+            && ts.hasCompleteTestCaseReferences()
             && !addSevereProblems;
     }
 

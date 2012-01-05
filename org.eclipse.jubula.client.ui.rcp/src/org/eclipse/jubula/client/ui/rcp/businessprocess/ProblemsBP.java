@@ -263,7 +263,8 @@ public class ProblemsBP implements ICompletenessCheckListener,
                     ITestSuitePO origTS = NodePM.getTestSuite(
                             refTS.getTestSuiteGuid());
                     IAUTMainPO aut = origTS.getAut();
-                    refTS.setSumOMFlag(aut, origTS.getSumOMFlag(aut));
+                    refTS.setCompletenessObjectMapping(
+                            aut, origTS.hasCompleteObjectMapping(aut));
                     
                     if (TestExecution.isAutNameSet(refTS.getTestSuiteAutID())) {
                         problemAUTNameNotSet(testJob, refTS);
@@ -1088,7 +1089,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
             
             if (node instanceof IExecTestCasePO) {
                 IExecTestCasePO execTC = (IExecTestCasePO)node;
-                if (execTC.getCompleteSpecTcFlag()) {
+                if (execTC.hasCompleteTestCaseReferences()) {
                     // Only check CompNamesPair if test case reference
                     // is available.
 
