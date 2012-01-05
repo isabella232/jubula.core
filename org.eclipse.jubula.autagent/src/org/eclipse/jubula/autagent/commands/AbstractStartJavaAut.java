@@ -12,13 +12,9 @@ package org.eclipse.jubula.autagent.commands;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,6 +22,7 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.autagent.monitoring.IMonitoring;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
@@ -37,6 +34,7 @@ import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.jarutils.MainClassLocator;
 import org.eclipse.osgi.service.datalocation.Location;
+import org.osgi.framework.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -376,47 +374,6 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     }
     
     /**
-     * Searches for *.jar files in the server extension directory (ext). 
-     * @return the extensions (jarfiles) as URL's
-     */
-    private URL[] getExtensions() {
-        
-        final File extDir = getExtDir();
-        final File[] extJars = extDir.listFiles(new FilenameFilter() {
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".jar"); //$NON-NLS-1$
-            }
-        });
-        URL[] urls;
-        if (extJars != null) {
-            LOG.info("jars are " + extJars); //$NON-NLS-1$
-            urls = new URL[extJars.length];
-            for (int i = 0; i < extJars.length; i++) {
-                try {                          
-                    urls[i] = extJars[i].toURI().toURL();
-                } catch (MalformedURLException e) {                   
-                    LOG.error("URL is malformed", e); //$NON-NLS-1$
-                }                  
-            }
-        } else {
-            LOG.info("no ext jars"); //$NON-NLS-1$
-            urls = new URL[0];
-        }
-        return urls;
-    }
-
-    /**
-     * @return A File with the directory where the monitoring extensions
-     * may be found. Note that the directory may not exist!
-     */
-    public static File getExtDir() {
-        File installDir = getInstallDir();
-        final File extDir = new File(installDir, 
-                CommandConstants.EXT_JARS_PATH);
-        return extDir;
-    }
-
-    /**
      * @return the AUTAgent installation directory
      */
     public static File getInstallDir() {
@@ -429,16 +386,20 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * This method will load the class which implements the {@link IMonitoring} 
      * interface, and will invoke the "getAgent" method. 
      * @param parameters The AutConfigMap
-     * @return agentString The agent string 
+     * @return agentString The agent String like -javaagent:myagent.jar
+     * or null if the monitoring agent String could't be generated
      */        
     protected String getMonitoringAgent(Map parameters) {
         
-        String monitoringAgentClass = (String)parameters.get(
+        String monitoringImplClass = (String)parameters.get(
                     MonitoringConstants.AGENT_CLASS); 
         
         String autId = (String)parameters.get(
                 AutConfigConstants.AUT_ID);         
        
+        String bundleId = (String)parameters.get(
+                MonitoringConstants.BUNDLE_ID);
+        
         MonitoringDataStore mds = MonitoringDataStore.getInstance();
         boolean duplicate = MonitoringUtil.checkForDuplicateAutID(autId);
         if (!duplicate) {            
@@ -447,48 +408,40 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         String agentString = null;       
         if (isRunningWithMonitoring(parameters)) {
             try {  
-                ClassLoader loader = new URLClassLoader(
-                        getExtensions(), getClass().getClassLoader());
+                Bundle bundle = Platform.getBundle(bundleId);
+                if (bundle == null) {
+                    LOG.error("No bundle was found for the given bundleId"); //$NON-NLS-1$
+                    return null;
+                }
                 Class<?> monitoringClass = 
-                    loader.loadClass(monitoringAgentClass);     
+                        bundle.loadClass(monitoringImplClass);
                 Constructor<?> constructor = monitoringClass.getConstructor();
                 IMonitoring agentInstance = 
                     (IMonitoring)constructor.newInstance();
                 agentInstance.setAutId(autId);
-                agentInstance.setInstallDir(getInstallDir());
+                //set the path to the agent jar file
+                agentInstance.setInstallDir(FileLocator.getBundleFile(bundle));
                 agentString = agentInstance.createAgent();
                 if (!duplicate) {
                     mds.putMonitoringAgent(autId, agentInstance);  
                 } 
-            } catch (ClassNotFoundException e) {
-                String errorMsg = "The monitoring class could not be loaded via reflection "; //$NON-NLS-1$
-                LOG.error(errorMsg, e);
-               
             } catch (InstantiationException e) {
-                String errorMsg = "The instantiation of the monitoring class failed "; //$NON-NLS-1$
-                LOG.error(errorMsg, e);
-               
+                LOG.error("The instantiation of the monitoring class failed ", e); //$NON-NLS-1$
             } catch (IllegalAccessException e) {
-                String errorMsg = "Access to the monitoring class failed "; //$NON-NLS-1$
-                LOG.error(errorMsg, e);
-                
+                LOG.error("Access to the monitoring class failed ", e); //$NON-NLS-1$
             } catch (SecurityException e) {
-                String errorMsg = "Access to the monitoring class failed "; //$NON-NLS-1$
-                LOG.error(errorMsg, e);
-               
+                LOG.error("Access to the monitoring class failed ", e); //$NON-NLS-1$
             } catch (NoSuchMethodException e) {
-                String errorMsg = "A method in the monitoring class could not be found"; //$NON-NLS-1$
-                LOG.error(errorMsg, e);
-                
+                LOG.error("A method in the monitoring class could not be found", e); //$NON-NLS-1$
             } catch (IllegalArgumentException e) {
-                String errorMsg = "A argument which is passed to monitoring class is invalide"; //$NON-NLS-1$
-                LOG.error(errorMsg, e);
-                
+                LOG.error("A argument which is passed to monitoring class is invalide", e); //$NON-NLS-1$
             } catch (InvocationTargetException e) {
-                String errorMsg = "The method call of 'getAgent' failed, you have to implement the interface 'IMonitoring"; //$NON-NLS-1$
-                LOG.error(errorMsg, e);
+                LOG.error("The method call of 'getAgent' failed, you have to implement the interface IMonitoring", e); //$NON-NLS-1$
+            } catch (ClassNotFoundException e) {
+                LOG.error("The monitoring class can not be found", e); //$NON-NLS-1$
+            } catch (IOException e) {
+                LOG.error("IOException while searching for the given bundle", e); //$NON-NLS-1$
             }     
-          
         }
         return agentString;        
     }

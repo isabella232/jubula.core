@@ -60,15 +60,13 @@ public class MonitoringConstants {
     public static final String INSTALL_DIR = "INSTALL_DIR"; //$NON-NLS-1$    
     /** key for ConfigMap */
     public static final String SOURCE_DIR = "SOURCE_DIR"; //$NON-NLS-1$    
+    /** key for ConfigMap */
+    public static final String BUNDLE_ID = "BUNDLE_ID"; //$NON-NLS-1$
+    
        
-    /** monitoring error, this text will be displayed in the properties view*/
-    public static final String MONITORING_ERROR_TOO_LARGE = "Monitoring Report was too large to send"; //$NON-NLS-1$
     /** default type for monitoring value */
     public static final String DEFAULT_TYPE = "DEFAULT_TYPE"; //$NON-NLS-1$
     
-    /** the maximum size of the monitoring report 
-     *  40000000 byte = 38.1469727 megabyte*/
-    public static final int MAX_REPORT_SIZE = 40000000; 
     /** default value */
     public static final String EMPTY_MONITORING_ID = "none selected"; //$NON-NLS-1$
     /** default value */
@@ -87,10 +85,10 @@ public class MonitoringConstants {
     public static final String NO_CATEGORY = "NO_CATEGORY"; //$NON-NLS-1$   
     
     
-    /** key to identify code coverage widgets */
+    /** key to identify monitoring widgets */
     public static final String MONITORING_KEY = "MONITORING_KEY"; //$NON-NLS-1$
     
-    /** tmp folder name where jacoco exec files are stored to */
+    /** folder name where temporary files can be stored to */
     public static final String TEMP_FOLDER_NAME = "c.b.g.m.j_"; //$NON-NLS-1$
     
     
