@@ -25,7 +25,6 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ICompletenessCheckListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -47,7 +46,6 @@ import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
-import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
@@ -67,7 +65,6 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.slf4j.Logger;
@@ -80,8 +77,7 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("synthetic-access")
 public class TestSuiteBrowser extends AbstractJBTreeView implements
-    ITreeViewerContainer, IJBPart,
-    ILanguageChangedListener, ICompletenessCheckListener {
+    ITreeViewerContainer, IJBPart, ILanguageChangedListener {
 
     /** Identifies the workbench plug-in */
     public static final String OPEN_WITH_ID = PlatformUI.PLUGIN_ID + ".OpenWithSubMenu"; //$NON-NLS-1$
@@ -122,7 +118,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addLanguageChangedListener(this, true);
-        ded.addCompletenessCheckListener(this);
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
         }
@@ -231,7 +226,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.removeDataChangedListener(this);
         ded.removeLanguageChangedListener(this);
-        ded.removeCompletenessCheckListener(this);
         super.dispose();
     }
   
@@ -368,20 +362,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      */
     public void handleLanguageChanged(Locale locale) {
         getTreeViewer().refresh();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void completenessCheckFinished() {
-        getTreeViewer().getTree().getDisplay().syncExec(new Runnable() {
-            public void run() {
-                getTreeViewer().refresh();
-                IDecoratorManager dm = 
-                    Plugin.getDefault().getWorkbench().getDecoratorManager();
-                dm.update(Constants.CC_DECORATOR_ID);
-            }
-        });
     }
 
     /**
