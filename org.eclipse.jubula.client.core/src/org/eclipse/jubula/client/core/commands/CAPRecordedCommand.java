@@ -327,7 +327,8 @@ public class CAPRecordedCommand implements ICommand {
             }
             boolean bool = 
                 !(value == null) && !(value.equals(StringUtils.EMPTY));
-            CompletenessGuard.setCompFlagForTD(recCap, recordLocale, bool);
+            CompletenessGuard.setCompletenessTestData(
+                    recCap, recordLocale, bool);
             paramNumber++;
         }
     }

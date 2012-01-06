@@ -18,6 +18,7 @@ import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -54,7 +55,7 @@ public final class CompletenessGuard {
             if (node instanceof IExecTestCasePO) {
                 IExecTestCasePO execTc = (IExecTestCasePO)node;
                 boolean isMissingSpecTc = execTc.getSpecTestCase() == null;
-                execTc.setCompletenessMissingTestCase(!isMissingSpecTc);
+                setCompletenessMissingTestCase(execTc, !isMissingSpecTc);
             }
             return !alreadyVisited;
         }
@@ -121,7 +122,7 @@ public final class CompletenessGuard {
                     && ((ConcreteComponent)metaComponentType)
                         .hasDefaultMapping()) {
                 
-                cap.setCompletenessObjectMapping(m_aut, true);
+                setCompletenessObjectMapping(cap, m_aut, true);
                 return true;
             }
             
@@ -136,17 +137,15 @@ public final class CompletenessGuard {
                     // ok
                 }
                 if (id == null) {
-                    result.getResponsibleNode()
-                        .setCompletenessObjectMapping(m_aut, false);
-                    if (result.getResponsibleNode() == cap) {
-                        cap.setCompletenessObjectMapping(m_aut, false);
-                    }
+                    INodePO rNode = result.getResponsibleNode();
+                    setCompletenessObjectMapping(rNode, m_aut, false);
                 } else {
-                    cap.setCompletenessObjectMapping(m_aut, true);
+                    setCompletenessObjectMapping(cap, m_aut, true);
                 }
             }
-            
-            return cap.hasCompleteObjectMapping(m_aut);
+            boolean hasCompleteOM = !cap.getProblems().contains(
+                    ProblemFactory.createIncompleteObjectMappingProblem(m_aut));
+            return hasCompleteOM;
         }
         /**
          * Sets the object mapping flag of the passed node to <code>true</code>
@@ -160,7 +159,7 @@ public final class CompletenessGuard {
                 m_aut = ts.getAut();
             }
             if (m_aut != null) {
-                node.setCompletenessObjectMapping(m_aut, true);
+                setCompletenessObjectMapping(node, m_aut, true);
             }
             return true;
         }
@@ -220,10 +219,10 @@ public final class CompletenessGuard {
 
                     boolean isComplete = paramNode.isTestDataComplete(m_locale);
                     if (node instanceof IExecTestCasePO) {
-                        CompletenessGuard.setCompFlagForTD((IParamNodePO) node,
+                        setCompletenessTestData((IParamNodePO) node,
                                 m_locale, isComplete);
                     } else {
-                        CompletenessGuard.setCompFlagForTD(paramNode, m_locale,
+                        setCompletenessTestData(paramNode, m_locale,
                                 isComplete);
                     }
                 }
@@ -237,21 +236,6 @@ public final class CompletenessGuard {
      */
     private CompletenessGuard() {
     // nothing
-    }
-
-    /**
-     * method to label the testdata completeness for a node
-     * 
-     * @param node
-     *            node, for which the complete flag is to set
-     * @param loc
-     *            language, for which the complete flag is valid
-     * @param hasCompleteTD
-     *            logical value for completeness of testdata
-     */
-    public static void setCompFlagForTD(IParamNodePO node, Locale loc,
-        boolean hasCompleteTD) {
-        node.setCompletenessTestData(loc, hasCompleteTD);
     }
 
     /**
@@ -280,15 +264,65 @@ public final class CompletenessGuard {
         new TreeTraverser(root, new CheckTestDataCompleteness(loc))
                 .traverse(true);
     }
+    
+    /**
+     * @param node
+     *            the node
+     * @param aut
+     *            AUT, for which to set the omFlag
+     * @param omFlag
+     *            The omFlag to set.
+     */
+    private static void setCompletenessObjectMapping(INodePO node, 
+            IAUTMainPO aut, boolean omFlag) {
+        setNodeProblem(node, ProblemFactory
+                .createIncompleteObjectMappingProblem(aut), omFlag);
+    }
+    
+    /**
+     * @param node
+     *            the node
+     * @param problem
+     *            the problem
+     * @param deleteOrAdd
+     *            true to delete; false to add problem to node
+     */
+    private static void setNodeProblem(INodePO node, IProblem problem,
+        boolean deleteOrAdd) {
+        if (deleteOrAdd) {
+            node.removeProblem(problem);
+        } else {
+            node.addProblem(problem);
+        }
+    }
+    
+    /**
+     * @param node
+     *            the node
+     * @param completeTCFlag
+     *            true to delete; false to add problem to node
+     */
+    private static void setCompletenessMissingTestCase(INodePO node,
+            boolean completeTCFlag) {
+        setNodeProblem(node,
+                ProblemFactory.createMissingReferencedSpecTestCasesProblem(),
+                completeTCFlag);
+    }
 
     /**
-     * checks OM Completness of all TS
-     * @param root
-     *      INodePO
+     * method to set the sumTdFlag for a given Locale
+     * 
+     * @param node
+     *            the node
+     * @param loc
+     *            locale, for which to set the sumTdFlag
+     * @param flag
+     *            the state of sumTdFlag to set
      */
-    public static void checkObjectMappings(INodePO root) {
-        // Iterate Execution tree
-        new TreeTraverser(root, new CheckObjectMappingCompleteness())
-                .traverse(true);
+    public static void setCompletenessTestData(INodePO node, Locale loc,
+        boolean flag) {
+        setNodeProblem(node,
+                ProblemFactory.createIncompleteTestDataProblem(
+                        loc, node), flag);
     }
 }

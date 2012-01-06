@@ -58,7 +58,6 @@ import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
@@ -261,12 +260,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
             for (INodePO node : nodes) {
                 if (node instanceof IRefTestSuitePO) {
                     IRefTestSuitePO refTS = (IRefTestSuitePO) node;
-                    ITestSuitePO origTS = NodePM.getTestSuite(
-                            refTS.getTestSuiteGuid());
-                    IAUTMainPO aut = origTS.getAut();
-                    refTS.setCompletenessObjectMapping(
-                            aut, origTS.hasCompleteObjectMapping(aut));
-                    
                     if (TestExecution.isAutNameSet(refTS.getTestSuiteAutID())) {
                         problemAUTNameNotSet(testJob, refTS);
                     }
@@ -1075,7 +1068,10 @@ public class ProblemsBP implements ICompletenessCheckListener,
             
             if (node instanceof IExecTestCasePO) {
                 IExecTestCasePO execTC = (IExecTestCasePO)node;
-                if (execTC.hasCompleteTestCaseReferences()) {
+                boolean hasCompleteTestCaseReferences =
+                        !execTC.getProblems().contains(ProblemFactory
+                                .createMissingReferencedSpecTestCasesProblem());
+                if (hasCompleteTestCaseReferences) {
                     // Only check CompNamesPair if test case reference
                     // is available.
 

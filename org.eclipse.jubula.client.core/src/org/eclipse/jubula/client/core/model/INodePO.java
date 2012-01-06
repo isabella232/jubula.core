@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
@@ -111,45 +110,6 @@ public interface INodePO extends ITimestampPO {
      * @return size of nodeList
      */
     public abstract int getNodeListSize();
-
-    /**
-     * @param aut aut, for which to get the sumOMFlag
-     * @return Returns the sumOMFlag or false, if the given AUT isn't contained
-     * in map
-     */
-    public abstract boolean hasCompleteObjectMapping(IAUTMainPO aut);
-
-    /**
-     * @return <code>false</code> if this node or any of its children contain
-     *         a reference to a non-existing SpecTestCase. Otherwise, 
-     *         <code>true</code>.
-     */
-    public boolean hasCompleteTestCaseReferences();
-
-    /**
-     * @param existingTestCase The flag to set.
-     */
-    public void setCompletenessMissingTestCase(boolean existingTestCase);
-
-    /**
-     * @param aut aut, for which to set the object mapping completeness
-     * @param isOMComplete The flag to indicate the completeness
-     */
-    public abstract void setCompletenessObjectMapping(
-            IAUTMainPO aut, boolean isOMComplete);
-
-    /**
-     * @param loc locale, for which to get the test data completeness
-     * @return the state of test data completeness
-     */
-    public abstract boolean hasCompleteTestData(Locale loc);
-
-    /**
-     * method to set the test data completeness flag for a given Locale
-     * @param loc  locale, for which to set the test data completeness flag
-     * @param flag the state of test data completeness
-     */
-    public abstract void setCompletenessTestData(Locale loc, boolean flag);
 
     /**
      * {@inheritDoc}

@@ -101,7 +101,7 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
             .getWorkingLanguage();
         
         boolean bool = nodePo.isTestDataComplete(locale);
-        CompletenessGuard.setCompFlagForTD(nodePo, locale, bool);
+        CompletenessGuard.setCompletenessTestData(nodePo, locale, bool);
     }
     
     /**

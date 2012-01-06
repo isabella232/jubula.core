@@ -337,22 +337,15 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
                         .keySet().contains(ts.getAut());
     }
     
-    
-    
     /**
      * @param ts current testsuite
-     * @return if testsuite has complete data and object mapping
+     * @return if the given testsuite has severe problems
      */
     public boolean isTestSuiteComplete(ITestSuitePO ts) {
-        Locale workingLanguage = 
-            WorkingLanguageBP.getInstance().getWorkingLanguage();
-        boolean addSevereProblems = !ProblemFactory.hasProblem(ts) ? false
+        boolean hasSevereProblems = !ProblemFactory.hasProblem(ts) ? false
                 : ProblemFactory.getWorstProblem(ts.getProblems()).getStatus()
                         .getSeverity() == IStatus.ERROR;
-        return ts.hasCompleteObjectMapping(ts.getAut())
-            && ts.hasCompleteTestData(workingLanguage)
-            && ts.hasCompleteTestCaseReferences()
-            && !addSevereProblems;
+        return !hasSevereProblems;
     }
 
     /**

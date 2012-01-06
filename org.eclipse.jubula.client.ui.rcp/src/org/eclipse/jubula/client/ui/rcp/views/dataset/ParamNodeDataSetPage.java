@@ -66,7 +66,7 @@ public class ParamNodeDataSetPage extends AbstractDataSetPage {
              Locale locale) {
         IParamNodePO node = getParamNodePO(paramNode);
         boolean isComplete = node.isTestDataComplete(locale);
-        CompletenessGuard.setCompFlagForTD(node, locale, isComplete);
+        CompletenessGuard.setCompletenessTestData(node, locale, isComplete);
     }
 
     /** {@inheritDoc} */
