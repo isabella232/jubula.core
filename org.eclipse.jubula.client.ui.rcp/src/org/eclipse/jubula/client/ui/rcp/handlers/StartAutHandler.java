@@ -126,7 +126,6 @@ public class StartAutHandler extends AbstractHandler
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public void updateElement(UIElement element, Map parameters) {
         Object autObj = parameters.get(AUT_TO_START);
         Object autConfObj = parameters.get(AUT_CONF_TO_START);

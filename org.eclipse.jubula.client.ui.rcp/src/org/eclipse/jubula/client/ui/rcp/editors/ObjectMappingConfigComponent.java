@@ -76,16 +76,6 @@ public class ObjectMappingConfigComponent {
         /**
          * Constructor
          * 
-         * @param editor The editor within which this update value strategy 
-         *               does its work.
-         */
-        public JBEditorUpdateValueStrategy(IJBEditor editor) {
-            super();
-        }
-
-        /**
-         * Constructor
-         * 
          * @param updatePolicy The updatePolicy to use.
          */
         public JBEditorUpdateValueStrategy(int updatePolicy) {

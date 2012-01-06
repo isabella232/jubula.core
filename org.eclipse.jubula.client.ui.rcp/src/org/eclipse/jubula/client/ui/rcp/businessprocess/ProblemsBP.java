@@ -605,7 +605,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
             } else {
                 if (object instanceof String) {
                     marker.setAttribute(Constants.JB_OBJECT_NAME,
-                            (String) object);
+                            object);
                 } else {
                     marker.setAttribute(Constants.JB_OBJECT_NAME,
                             StringConstants.EMPTY);

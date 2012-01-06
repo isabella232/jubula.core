@@ -23,7 +23,6 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;

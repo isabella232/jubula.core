@@ -99,9 +99,6 @@ public abstract class AUTServer {
     /** the listener to the agent communicator */
     private ICommunicationErrorListener m_serverCommunicationListener;
 
-    /** the port the Server is listen to */
-    private String m_autStarterPort;
-
     /** the name of the main class of the AUT */
     private String m_autMainClassName;
 
@@ -182,8 +179,6 @@ public abstract class AUTServer {
      * @param args the args given to main() 
      */
     protected void setArgs(String args[]) {
-        // required arguments 
-        m_autStarterPort = args[Constants.ARG_SERVERPORT];
         m_autMainClassName = args[Constants.ARG_AUTMAIN];
         m_autAgentHost = args[Constants.ARG_REG_HOST];
         m_autAgentPort = args[Constants.ARG_REG_PORT];
@@ -1007,7 +1002,6 @@ public abstract class AUTServer {
      * @param autStarterPort the AutStarterPort to set
      */
     public void setAutStarterPort(String autStarterPort) {
-        m_autStarterPort = autStarterPort;
     }
 
     /**

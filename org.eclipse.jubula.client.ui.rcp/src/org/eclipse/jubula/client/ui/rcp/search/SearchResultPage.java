@@ -186,7 +186,6 @@ public class SearchResultPage extends AbstractSearchResultPage
     }
 
     /** {@inheritDoc} */
-    @SuppressWarnings("nls")
     public String getLabel() {
         StringBuilder sb = new StringBuilder();
         sb.append(Messages.SearchResultPageResultPageLabel);

@@ -170,7 +170,6 @@ public class DataSetView extends PageBookView
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public Object getAdapter(Class adapter) {
         if (this.getClass().equals(adapter)) {
             return this;

@@ -330,7 +330,6 @@ public class EditSupport {
      *         the edited node. If the edited node is *not* an 
      *         <code>ISpecTestCasePO</code>, returns an empty set.
      */
-    @SuppressWarnings("unchecked")
     public Set<String> getUsedComponentNameGuids() {
         Set<String> usedCompNameGuids =
             new HashSet<String>();

@@ -219,7 +219,7 @@ public final class CompletenessGuard {
 
                     boolean isComplete = paramNode.isTestDataComplete(m_locale);
                     if (node instanceof IExecTestCasePO) {
-                        setCompletenessTestData((IParamNodePO) node,
+                        setCompletenessTestData(node,
                                 m_locale, isComplete);
                     } else {
                         setCompletenessTestData(paramNode, m_locale,

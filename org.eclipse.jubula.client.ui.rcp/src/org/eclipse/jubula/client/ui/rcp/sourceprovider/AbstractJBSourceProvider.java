@@ -79,7 +79,6 @@ public abstract class AbstractJBSourceProvider extends AbstractSourceProvider {
      *            <code>null</code>. The names must not be <code>null</code>,
      *            but the values may be <code>null</code>.
      */
-    @SuppressWarnings("unchecked")
     protected final void gdFireSourceChanged(final int sourcePriority,
             final Map sourceValuesByName) {
 

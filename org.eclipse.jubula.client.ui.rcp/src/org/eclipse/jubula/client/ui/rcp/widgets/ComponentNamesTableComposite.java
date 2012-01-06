@@ -394,7 +394,6 @@ public class ComponentNamesTableComposite extends Composite implements
         /**
          * {@inheritDoc}
          */
-        @SuppressWarnings("unchecked")
         public Object[] getElements(Object inputElement) {
             return ((List)inputElement).toArray();
         }

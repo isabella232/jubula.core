@@ -243,7 +243,6 @@ public class OMDropTargetListener extends ViewerDropAdapter {
      * @return <code>true</code> if all elements in the selection are instances
      *         of the given class. Otherwise, <code>false</code>.
      */
-    @SuppressWarnings("unchecked")
     public boolean containsOnlyType(
             IStructuredSelection selection, Class supportedClass) {
         

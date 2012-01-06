@@ -224,7 +224,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             envArray = super.createEnvArray(parameters, true);
             
         }        
-        envArray = (String [])envList.toArray(new String [envList.size()]);
+        envArray = envList.toArray(new String [envList.size()]);
       
         return envArray;
     }

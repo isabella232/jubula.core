@@ -59,7 +59,6 @@ public class ComponentNameCollectionPropertyTester
         LoggerFactory.getLogger(ComponentNameCollectionPropertyTester.class);
 
     /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
     public boolean testImpl(Object receiver, String property, Object[] args) {
         Collection collection = (Collection)receiver;
         List<IComponentNamePO> compNames = new ArrayList<IComponentNamePO>();

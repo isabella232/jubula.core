@@ -1111,7 +1111,7 @@ class XmlExporter {
                     fillTestsuite(xmlTs, ts);
                 } else {
                     TestJobs xmlTj = xml.addNewTestjob();
-                    fillNode(xmlTj, (ITestJobPO)tcOrCat);
+                    fillNode(xmlTj, tcOrCat);
                     fillTestJob(xmlTj, (ITestJobPO)tcOrCat);
                 }
             }

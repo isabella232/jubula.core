@@ -468,7 +468,7 @@ public class TestExecution {
 
         // TEST_clientVersion
         varStore.store(TDVariableStore.VAR_CLIENTVERSION, 
-                (String)Platform.getBundle(
+                Platform.getBundle(
                         Activator.PLUGIN_ID).getHeaders().get(
                                 Constants.BUNDLE_VERSION));
         
@@ -1875,16 +1875,6 @@ public class TestExecution {
             // Do nothing
         }
         
-        /**
-         * Reset all counters to their initial values.
-         */
-        private void resetCounter() {
-            m_totalSteps = 0;
-            m_eventHandlerSteps = 0;
-            m_retriedSteps = 0;
-            m_failedSteps = 0;
-        }
-
         /**
          * {@inheritDoc}
          */

@@ -614,7 +614,6 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
      * @param focusCellManager The focus manager on which to perform the 
      *                         workaround.
      */
-    @SuppressWarnings("unchecked")
     private void workaroundSpringySelection(
             TreeViewerFocusCellManager focusCellManager) {
         try {

@@ -96,7 +96,6 @@ public class EventExecTestCaseGUIPropertySource extends
      * Initializes the EventTypes.
      * @return a String-Array of Event Types.
      */
-    @SuppressWarnings("unchecked")
     private static String[] initEventTypes() {
         Set mapKeySet = ComponentBuilder.getInstance().getCompSystem()
             .getEventTypes().keySet(); 

@@ -148,7 +148,6 @@ public class Languages {
      * @return the names of all available Keyboard Layouts. Keyboard Layouts
      *         are contributed by this bundle and its fragments.
      */
-    @SuppressWarnings("unchecked")
     public String[] getKeyboardLayouts() {
         List<String> keyboardLayouts = new ArrayList<String>();
         Enumeration<URL> layoutUrls =

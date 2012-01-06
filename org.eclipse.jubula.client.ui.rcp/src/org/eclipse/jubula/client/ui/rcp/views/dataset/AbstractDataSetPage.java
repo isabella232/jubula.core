@@ -116,7 +116,6 @@ public abstract class AbstractDataSetPage extends Page
     private IParameterInterfacePO m_paramInterfaceObj;
 
     /** List of DirectCombos which depend on each other */
-    @SuppressWarnings("unchecked")
     private List<DirectCombo> m_propertyCombos;
     /** The Combo for selecting a language to display */
     private DirectCombo<Locale> m_languageCombo;
@@ -214,7 +213,6 @@ public abstract class AbstractDataSetPage extends Page
          * Sets the current Combo with its selection.
          * @param combo the current selected DirecCombo
          */
-        @SuppressWarnings("unchecked") 
         public void setComboSelection(DirectCombo combo) {
             m_combo = combo;
             m_value = combo.getSelectedObject();
@@ -893,7 +891,6 @@ public abstract class AbstractDataSetPage extends Page
      * creates the Combos
      * @param parent the parent of the combos
      */
-    @SuppressWarnings("unchecked")
     private void createCombos(Composite parent) {
         m_propertyCombos = new ArrayList<DirectCombo>();
         

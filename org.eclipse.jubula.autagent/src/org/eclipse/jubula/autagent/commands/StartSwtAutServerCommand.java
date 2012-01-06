@@ -64,7 +64,7 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
         Vector<String> envList = new Vector<String>(Arrays.asList(envArray));
         envList.addAll(getConnectionProperties(
                 parameters, ENV_VAR_PREFIX, ENV_VALUE_SEP));
-        envArray = (String [])envList.toArray(new String [envList.size()]);
+        envArray = envList.toArray(new String [envList.size()]);
         return envArray;
 
     }

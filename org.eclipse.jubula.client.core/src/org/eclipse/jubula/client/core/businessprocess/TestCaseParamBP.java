@@ -108,7 +108,6 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * recursive calls
      * @param result storage for results, owned by caller
      */
-    @SuppressWarnings("unchecked")
     private static void getValuesForParameterImp(IParamNodePO node,
             String paramGUID, Locale loc, boolean isFirstCall, 
             Set<Param> result) {
@@ -269,7 +268,6 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * @return a List of IExecTestCasePO with unused TestData of the given 
      * ISpecTestCasePO or an empty List.
      */
-    @SuppressWarnings("unchecked")
     public static final List<IExecTestCasePO> getExecTcWithUnusedTestData(
             INodePO nodePO) {
         

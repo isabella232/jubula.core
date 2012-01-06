@@ -218,7 +218,6 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         IStructuredContentProvider {
 
         /** {@inheritDoc} */
-        @SuppressWarnings("unchecked")
         public Object[] getElements(Object inputElement) {
             return ((List)inputElement).toArray();
         }
@@ -719,7 +718,6 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
              * Handles the selection
              * @param e SelectionEvent
              */
-            @SuppressWarnings("unused")
             private void handleSelection(SelectionEvent e) {
                 removeSelectedParameter();
                 checkOkButtonEnablement();
@@ -768,7 +766,6 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
              * Handles the selection
              * @param e SelectionEvent
              */
-            @SuppressWarnings("unused")
             private void handleSelection(SelectionEvent e) {
                 moveParameter(false);
             }
@@ -814,7 +811,6 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
              * Handles the selection
              * @param e SelectionEvent
              */
-            @SuppressWarnings("unused")
             private void handleSelection(SelectionEvent e) {
                 moveParameter(true);
             }
@@ -860,7 +856,6 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
              * Handles the selection
              * @param e SelectionEvent
              */
-            @SuppressWarnings("unused") 
             private void handleSelection(SelectionEvent e) {
                 addParameter();
                 checkOkButtonEnablement();

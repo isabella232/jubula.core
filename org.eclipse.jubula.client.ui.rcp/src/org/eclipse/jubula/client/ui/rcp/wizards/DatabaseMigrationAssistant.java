@@ -50,10 +50,6 @@ public class DatabaseMigrationAssistant extends Wizard
     private static final String INTRO_PAGE_ID =
         "DatabaseMigrationAssistant.IntroPage"; //$NON-NLS-1$
 
-    /** ID for the "Import Projects" page */
-    private static final String IMPORT_PROJECTS_PAGE_ID =
-        "DatabaseMigrationAssistant.ImportProjectsPage"; //$NON-NLS-1$
-
     /** flag indicating whether the migration was successful */
     private boolean m_wasMigrationSuccessful = false;
 

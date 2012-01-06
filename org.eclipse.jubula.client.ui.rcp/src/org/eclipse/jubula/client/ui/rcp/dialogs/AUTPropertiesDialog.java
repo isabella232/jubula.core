@@ -359,7 +359,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
             if (autName.startsWith(StringConstants.SPACE)
                     || autName.charAt(autName.length() - 1) == ' ') {
                 setMessage(Messages.AUTPropertiesDialogInvalidAUTName,
-                        IMessageProvider.ERROR); //$NON-NLS-1$
+                        IMessageProvider.ERROR);
                 isError |= true;
             }
         }

@@ -265,7 +265,7 @@ public abstract class AbstractXMLReportGenerator {
      */
     protected void addCapElements(TestResultNode resultNode, 
             Element insertInto, ICapPO node) {
-        ICapPO cap = (ICapPO) node;
+        ICapPO cap = node;
         getTimestampFromResultNode(resultNode, insertInto);
         Element compEl = insertInto.addElement("component-name"); //$NON-NLS-1$
         compEl.addText(

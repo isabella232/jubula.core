@@ -108,7 +108,6 @@ public class OMTechNameGUIPropertySource
      * initalizes the hierarchy
      *
      */
-    @SuppressWarnings("unchecked")
     private void initHierarchy() {
         JBPropertyDescriptor propDes = null;
         IComponentIdentifier compId = getGuiNode().getTechnicalName();
@@ -133,7 +132,6 @@ public class OMTechNameGUIPropertySource
      * initalizes the context
      *
      */
-    @SuppressWarnings("unchecked")
     private void initContext() {
         JBPropertyDescriptor propDes = null;
         IComponentIdentifier compId = getGuiNode().getTechnicalName();
