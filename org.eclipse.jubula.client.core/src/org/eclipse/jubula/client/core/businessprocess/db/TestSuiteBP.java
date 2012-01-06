@@ -25,8 +25,8 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
-import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 
 /**
@@ -140,7 +140,7 @@ public class TestSuiteBP extends NodeBP {
      * @author Markus Tiede
      */
     public static class ExecNodeFinder <T>
-        implements ITreeNodeOperation<INodePO> {
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
         /**
          * the list of test suites
          */
@@ -166,12 +166,6 @@ public class TestSuiteBP extends NodeBP {
                 m_listOfExecNodes.add((T) node);
             }
             return nodeFound;
-        }
-
-        /** {@inheritDoc} */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx,
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // currently empty
         }
 
         /**

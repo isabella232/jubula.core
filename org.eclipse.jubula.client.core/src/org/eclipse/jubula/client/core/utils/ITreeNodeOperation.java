@@ -17,7 +17,7 @@ package org.eclipse.jubula.client.core.utils;
  * the tree top-down. The <code>postOperate()</code> method is called
  * when the traverser traverses its way back (bottom-up).
  *
- * @param <T> The class of nodes handled by the operaton.
+ * @param <T> The class of nodes handled by the operation.
  * 
  * @author BREDEX GmbH
  * @created 13.09.2005

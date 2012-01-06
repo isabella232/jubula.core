@@ -15,9 +15,9 @@ import org.eclipse.jubula.client.core.model.INodePO;
 
 /**
  * Operation for finding the parent of a given node.
- * 
  */
-public class FindNodeParentOperation implements ITreeNodeOperation<INodePO> {
+public class FindNodeParentOperation 
+    extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
     /** the found parent */
     private INodePO m_parent;
@@ -48,16 +48,6 @@ public class FindNodeParentOperation implements ITreeNodeOperation<INodePO> {
         }
         
         return m_parent == null;
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void postOperate(ITreeTraverserContext<INodePO> ctx, INodePO parent,
-            INodePO node, boolean alreadyVisited) {
-
-        // no-op
     }
 
     /**

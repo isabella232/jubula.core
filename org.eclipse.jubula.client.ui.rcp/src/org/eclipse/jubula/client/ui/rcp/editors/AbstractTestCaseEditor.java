@@ -69,6 +69,7 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
@@ -192,7 +193,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                     && updateState != UpdateState.notInEditor) {
 
                 ITreeNodeOperation<INodePO> refreshRefDataCubeOp =
-                    new ITreeNodeOperation<INodePO>() {
+                    new AbstractNonPostOperatingTreeNodeOperation<INodePO>() {
                         public boolean operate(
                                 ITreeTraverserContext<INodePO> ctx,
                                 INodePO parent, INodePO node,
@@ -208,13 +209,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                                 }
                             }
                             return true;
-                        }
-
-                        public void postOperate(
-                                ITreeTraverserContext<INodePO> ctx,
-                                INodePO parent, INodePO node,
-                                boolean alreadyVisited) {
-                            // no-op
                         }
                     };
 

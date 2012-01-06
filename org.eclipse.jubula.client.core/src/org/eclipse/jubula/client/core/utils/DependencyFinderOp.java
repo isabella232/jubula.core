@@ -23,8 +23,8 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
  * @author BREDEX GmbH
  * @created 26.09.2005
  */
-public class DependencyFinderOp implements ITreeNodeOperation<INodePO> {
-
+public class DependencyFinderOp 
+    extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
     /**
      * what node could become parent
      */
@@ -74,14 +74,6 @@ public class DependencyFinderOp implements ITreeNodeOperation<INodePO> {
             m_dependentNodes.add(node);
         }
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void postOperate(ITreeTraverserContext<INodePO> ctx, INodePO parent,
-            INodePO node, boolean alreadyVisited) {
-        // empty
     }
 
     /**

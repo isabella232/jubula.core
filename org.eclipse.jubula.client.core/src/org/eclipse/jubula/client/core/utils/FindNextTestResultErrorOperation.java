@@ -17,7 +17,7 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
  * @created Jun 2, 2010
  */
 public class FindNextTestResultErrorOperation 
-        implements ITreeNodeOperation<TestResultNode> {
+    extends AbstractNonPostOperatingTreeNodeOperation<TestResultNode> {
 
     /** the node that was found */
     private TestResultNode m_foundNode = null;
@@ -58,15 +58,6 @@ public class FindNextTestResultErrorOperation
         }
 
         return m_foundNode != null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void postOperate(ITreeTraverserContext<TestResultNode> ctx,
-        TestResultNode parent, TestResultNode node, boolean alreadyVisited) {
-
-        // Do nothing
     }
 
     /**

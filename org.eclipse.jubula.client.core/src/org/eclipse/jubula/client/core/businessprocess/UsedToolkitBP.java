@@ -42,6 +42,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
@@ -246,7 +247,7 @@ public class UsedToolkitBP {
         m_usedToolkits.clear();
 
         final ITreeNodeOperation<INodePO> addToolkitOP = 
-            new ITreeNodeOperation<INodePO>() {
+            new AbstractNonPostOperatingTreeNodeOperation<INodePO>() {
                 @SuppressWarnings("synthetic-access")
                 public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                         INodePO parent, INodePO node, boolean alreadyVisited) {
@@ -259,12 +260,6 @@ public class UsedToolkitBP {
                         addToolkit((ICapPO)node, project);
                     }
                     return true;
-                }
-
-                public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                        INodePO parent, 
-                        INodePO node, boolean alreadyVisited) {
-                    // no op
                 }
             };
 
@@ -604,8 +599,7 @@ public class UsedToolkitBP {
         final BooleanHolder treeOpResult = new BooleanHolder();
         
         final ITreeNodeOperation<INodePO> levelSearchOp = 
-            new ITreeNodeOperation<INodePO>() {
-
+            new AbstractNonPostOperatingTreeNodeOperation<INodePO>() {
                 public boolean operate(
                         ITreeTraverserContext<INodePO> ctx, INodePO parent, 
                         INodePO node, boolean alreadyVisited) {
@@ -618,12 +612,6 @@ public class UsedToolkitBP {
                         }
                     }
                     return true;
-                }
-
-                public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                        INodePO parent, 
-                        INodePO node, boolean alreadyVisited) {
-                    // no op
                 }
             };
         

@@ -125,7 +125,7 @@ import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
-import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
@@ -536,7 +536,7 @@ class XmlImporter {
             final Map<String, String> oldToNewGUID) {
         /** */
         class SwitchCompNamesGuidsOp 
-                implements ITreeNodeOperation<INodePO> {
+            extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
             /** {@inheritDoc} */
             public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                     INodePO parent, INodePO node, boolean alreadyVisited) {
@@ -576,14 +576,6 @@ class XmlImporter {
                 if (newGuid != null) {
                     cap.setComponentName(newGuid);
                 }
-            }
-            /**
-             * {@inheritDoc}
-             */
-            public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                    INodePO parent,
-                    INodePO node, boolean alreadyVisited) {
-                // no op
             }
         }
         final SwitchCompNamesGuidsOp switchGuidOp = 

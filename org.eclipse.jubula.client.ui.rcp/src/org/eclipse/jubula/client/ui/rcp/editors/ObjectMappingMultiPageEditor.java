@@ -84,7 +84,7 @@ import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
-import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
@@ -433,7 +433,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * component names. They are added to the object mapping tree and stored in
      * the member <code>m_componentNames</code>.
      */
-    private class CollectLogicalNamesOp implements ITreeNodeOperation<INodePO> {
+    private class CollectLogicalNamesOp 
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
         /** Number of added component names (nodes). */
         private int m_addedNodeCount = 0;
         /** list of added GuiNodes */
@@ -494,15 +495,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             }
             return true;
         }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // no op
-        }
-        
         /**
          * @return Returns the addedNodeCount.
          */

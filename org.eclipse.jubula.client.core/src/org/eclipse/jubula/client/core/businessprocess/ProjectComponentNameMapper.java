@@ -21,7 +21,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 
@@ -42,8 +42,7 @@ public class ProjectComponentNameMapper extends AbstractComponentNameMapper {
      * @created Feb 10, 2009
      */
     private class ExistingCompTypeHandler 
-            implements ITreeNodeOperation<INodePO> {
-
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
         /** 
          * mapping from GUID of Component Names to save to GUID of existing 
          * Component Names with the same name 
@@ -88,15 +87,6 @@ public class ProjectComponentNameMapper extends AbstractComponentNameMapper {
             }
             return true;
         }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // no op
-        }
-
     }
 
     /**
@@ -106,7 +96,7 @@ public class ProjectComponentNameMapper extends AbstractComponentNameMapper {
      * @created Feb 10, 2009
      */
     private static class ComponentTypeCollector 
-            implements ITreeNodeOperation<INodePO> {
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
         /** GUID of the Component Name for which to find the reuse types */
         private String m_compNameGuid;
@@ -133,7 +123,6 @@ public class ProjectComponentNameMapper extends AbstractComponentNameMapper {
         }
 
         /**
-         * 
          * @return the found reuse types.
          */
         public Set<String> getTypes() {
@@ -163,15 +152,6 @@ public class ProjectComponentNameMapper extends AbstractComponentNameMapper {
             }
             return true;
         }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // no op
-        }
-        
     }
     
     /**

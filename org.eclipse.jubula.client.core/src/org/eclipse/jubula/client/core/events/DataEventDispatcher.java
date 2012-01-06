@@ -236,6 +236,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
          */
         public void completenessCheckFinished();
     }
+    
    /** to notify clients about changes of AUT state */
     public interface IAutStateListener {
         /**

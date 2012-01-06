@@ -14,7 +14,7 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 
 /**
@@ -26,7 +26,7 @@ import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
  * @created Mar 6, 2009
  */
 public class CheckIfComponentNameIsReusedOp 
-        implements ITreeNodeOperation<INodePO> {
+    extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
     /** GUID of Component Name to use for this operation */
     private String m_compNameGuid;
@@ -75,14 +75,6 @@ public class CheckIfComponentNameIsReusedOp
         }
 
         return !alreadyVisited;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void postOperate(ITreeTraverserContext<INodePO> ctx, INodePO parent,
-            INodePO node, boolean alreadyVisited) {
-        // no op
     }
 
     /**

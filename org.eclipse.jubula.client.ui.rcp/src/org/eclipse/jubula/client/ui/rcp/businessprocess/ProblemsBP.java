@@ -60,6 +60,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
@@ -1016,8 +1017,8 @@ public class ProblemsBP implements ICompletenessCheckListener,
     /**
      * @author BREDEX GmbH
      */
-    private final class CollectProblemsOperation implements
-            ITreeNodeOperation<INodePO> {
+    private final class CollectProblemsOperation 
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
         /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
@@ -1030,12 +1031,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
             }
             return true;
         }
-
-        /** {@inheritDoc} */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx,
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // no op
-        }
     }
     
     /**
@@ -1046,11 +1041,9 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     @SuppressWarnings("synthetic-access")
     private final class ActionCheckOperation 
-            implements ITreeNodeOperation<INodePO> {
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
             if (node instanceof ICapPO) {
@@ -1064,13 +1057,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
             }
             return true;
         }
-        /**
-         * {@inheritDoc}
-         */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // no op
-        }
     }
     
     /**
@@ -1079,7 +1065,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      */
     @SuppressWarnings("synthetic-access")
     private final class CheckProblemsOperation 
-            implements ITreeNodeOperation<INodePO> {
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
         
         /**
          * {@inheritDoc}
@@ -1169,12 +1155,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
                         NLS.bind(Messages.ProblemCheckerNoCompType, name)),
                         NLS.bind(Messages.ProblemCheckerNoCompType, name), 
                     execTC.getParentNode(), ProblemType.REASON_NO_COMPTYPE));
-        }
-
-        /** {@inheritDoc} */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // no op
         }
     }
     

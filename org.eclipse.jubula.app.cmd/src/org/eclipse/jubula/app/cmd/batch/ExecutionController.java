@@ -48,6 +48,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessPropagator;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
@@ -753,6 +754,8 @@ public class ExecutionController implements IAUTServerEventListener,
         AbstractCmdlineClient.printConsoleLn(Messages
                 .ExecutionControllerProjectCompleteness, true);
         CompletenessGuard.checkAll(m_job.getLanguage(), m_job.getProject());
+        
+        CompletenessPropagator.getInstance().propagate();
         List<String> suitesWithIncompleteOM = new LinkedList<String>();
         List<String> suitesWithIncompleteTD = new LinkedList<String>();
         List<String> suitesWithMissingSpecTc = new LinkedList<String>();

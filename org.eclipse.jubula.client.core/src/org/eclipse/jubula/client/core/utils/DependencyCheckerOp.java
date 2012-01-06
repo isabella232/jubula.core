@@ -17,7 +17,8 @@ import org.eclipse.jubula.client.core.model.INodePO;
  * @author BREDEX GmbH
  * @created 26.09.2005
  */
-public class DependencyCheckerOp implements ITreeNodeOperation<INodePO> {
+public class DependencyCheckerOp 
+    extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
     /**
      * dependency finder implementation
@@ -55,14 +56,6 @@ public class DependencyCheckerOp implements ITreeNodeOperation<INodePO> {
         m_dependencyFinder.operate(ctx, parent, node, alreadyVisited);
         
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void postOperate(ITreeTraverserContext<INodePO> ctx, INodePO parent,
-            INodePO node, boolean alreadyVisited) {
-        //empty
     }
 
     /**

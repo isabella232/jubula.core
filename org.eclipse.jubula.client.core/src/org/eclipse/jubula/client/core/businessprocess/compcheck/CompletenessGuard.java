@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -45,7 +46,7 @@ public final class CompletenessGuard {
      * Operation to set the CompleteSpecTc flag for a node
      */
     private static class CheckMissingTestCaseReferences 
-            implements ITreeNodeOperation<INodePO> {
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
         /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
@@ -57,19 +58,13 @@ public final class CompletenessGuard {
             }
             return !alreadyVisited;
         }
-
-        /** {@inheritDoc} */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx,
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // currently empty
-        }
     }
     
     /**
      * Operation to reflect the activity status of a node
      */
     private static class InactiveNodesOperation 
-            implements ITreeNodeOperation<INodePO> {
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
         /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
@@ -82,12 +77,6 @@ public final class CompletenessGuard {
                 }
             }
             return true;
-        }
-
-        /** {@inheritDoc} */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx,
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // currently empty
         }
     }
 
@@ -197,7 +186,7 @@ public final class CompletenessGuard {
      * @created 10.10.2005
      */
     private static class CheckTestDataCompleteness 
-            implements ITreeNodeOperation<INodePO> {
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
         /** The Locale to check */
         private Locale m_locale;
@@ -241,13 +230,6 @@ public final class CompletenessGuard {
             }
             return !alreadyVisited;
         }
-
-        /** {@inheritDoc} */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // no op
-        }
-        
     }
     
     /**

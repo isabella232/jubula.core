@@ -18,7 +18,7 @@ import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.persistence.Persistor;
-import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 
 
@@ -29,7 +29,7 @@ import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
  * @created Mar 2, 2009
  */
 public class FindNodesForComponentNameOp 
-        implements ITreeNodeOperation<INodePO> {
+    extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
     /** responsible NodePO */
     private Set<INodePO> m_nodes = new HashSet<INodePO>();
@@ -67,14 +67,6 @@ public class FindNodesForComponentNameOp
             }
         }
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void postOperate(ITreeTraverserContext<INodePO> ctx, INodePO parent,
-            INodePO node, boolean alreadyVisited) {
-        // no op
     }
 
     /**

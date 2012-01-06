@@ -24,15 +24,12 @@ import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
-import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.ChooseServerAction;
@@ -62,56 +59,6 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
     /** the logger */
     private static Logger log = 
         LoggerFactory.getLogger(JBMarkerResolutionGenerator.class);
-
-    /**
-     * @author BREDEX GmbH
-     * @created Mar 12, 2008
-     */
-    private static final class OpenSpecTcEditorOperation 
-        implements ITreeNodeOperation<INodePO> {
-        
-        
-        /**
-         * <code>m_gdObject</code>
-         */
-        private final Object m_gdObject;
-
-        /**
-         * @param gdObject An ISpecTestCasePO.toString() 
-         * or IExecTestCasePO.toString()
-         */
-        public OpenSpecTcEditorOperation(Object gdObject) {
-            m_gdObject = gdObject;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public boolean operate(ITreeTraverserContext<INodePO> ctx, 
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            
-            if (node.toString().equals(m_gdObject.toString())) {
-                ctx.setContinued(false);
-                if (node instanceof IExecTestCasePO) {
-                    IExecTestCasePO execTcPO = (IExecTestCasePO)node;
-                    ISpecTestCasePO specTcPO = execTcPO.getSpecTestCase();
-                    AbstractOpenHandler.openEditor(specTcPO);  
-                } else if (node instanceof ISpecTestCasePO) {
-                    ISpecTestCasePO specTcPO = (ISpecTestCasePO)node;
-                    AbstractOpenHandler.openEditor(specTcPO);
-                }
-            }
-            return true;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx, 
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            // no op
-        }
-    }
 
     /**
      * Opens the editor for a specific test suite.

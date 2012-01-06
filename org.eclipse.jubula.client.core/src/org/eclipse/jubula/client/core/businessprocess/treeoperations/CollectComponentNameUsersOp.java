@@ -17,7 +17,7 @@ import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.tools.exception.JBException;
 
@@ -29,7 +29,7 @@ import org.eclipse.jubula.tools.exception.JBException;
  * @created Mar 30, 2009
  */
 public class CollectComponentNameUsersOp 
-        implements ITreeNodeOperation<INodePO> {
+    extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
     /** mapping from used Component Names to their users */
     private CompNameUsageMap m_usageMap = new CompNameUsageMap();
@@ -101,15 +101,6 @@ public class CollectComponentNameUsersOp
         }
         return true;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void postOperate(ITreeTraverserContext<INodePO> ctx, INodePO parent,
-            INodePO node, boolean alreadyVisited) {
-        // no op
-    }
-
     /**
      * 
      * @return the Component Name usage map.
