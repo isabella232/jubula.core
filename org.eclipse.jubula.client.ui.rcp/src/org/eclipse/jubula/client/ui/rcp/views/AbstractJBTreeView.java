@@ -37,11 +37,8 @@ import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.sorter.NodeNameViewerSorter;
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
-import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
@@ -79,9 +76,6 @@ public abstract class AbstractJBTreeView extends ViewPart implements
      */
     private Text m_treeFilterText;
     
-    /** the parent composite */
-    private Composite m_parentComposite;
-
     /** 
      * This part's reference to the clipboard.
      * Note that the part shares this clipboard with the entire operating 
@@ -242,27 +236,11 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         m_treeViewer = treeViewer;
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void createPartControl(Composite parent) {
-        m_parentComposite = parent;
         m_clipboard = new Clipboard(parent.getDisplay());
         
-        GridLayout layout = new GridLayout();
-        layout.numColumns = NUM_COLUMNS_1;
-        layout.verticalSpacing = VERTICAL_SPACING;
-        layout.marginWidth = LayoutUtil.MARGIN_WIDTH;
-        layout.marginHeight = LayoutUtil.MARGIN_HEIGHT;
-        parent.setLayout(layout);
-        
-        Composite composite = new Composite(parent, SWT.NONE);
-        composite.setLayout(layout);
-        GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL
-                | GridData.FILL_BOTH);
-        composite.setLayoutData(gridData);
-        
-        final FilteredTree ft = new JBFilteredTree(composite, SWT.MULTI
+        final FilteredTree ft = new JBFilteredTree(parent, SWT.MULTI
                 | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER, 
                 new JBBrowserPatternFilter(), true);
         setTreeViewer(ft.getViewer());
@@ -271,16 +249,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setSorter(new NodeNameViewerSorter());
         getTreeViewer().setComparer(new UIIdentitiyElementComparer());
-        
-        GridData layoutData = new GridData();
-        layoutData.grabExcessHorizontalSpace = true;
-        layoutData.horizontalAlignment = GridData.FILL;
-        layoutData = new GridData();
-        layoutData.grabExcessHorizontalSpace = true;
-        layoutData.grabExcessVerticalSpace = true;
-        layoutData.horizontalAlignment = GridData.FILL;
-        layoutData.verticalAlignment = GridData.FILL;
-        getTreeViewer().getControl().setLayoutData(layoutData);
+
         getSite().setSelectionProvider(getTreeViewer());
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
         
@@ -350,13 +319,6 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         return m_clipboard;
     }
     
-    /**
-     * @return The parent composite of this workbench part.
-     */
-    public Composite getParentComposite() {
-        return m_parentComposite;
-    }
-
     /**
      * @param treeFilterText the treeFilterText to set
      */
