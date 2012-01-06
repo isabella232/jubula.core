@@ -66,7 +66,7 @@ final class Problem implements IProblem {
     }
 
     /** {@inheritDoc} */
-    public String getMarkerMessage() {
+    public String getUserMessage() {
         return m_markerMessage;
     }
 
@@ -91,8 +91,8 @@ final class Problem implements IProblem {
     }
     
     /** {@inheritDoc} */
-    public boolean shouldShowMarker() {
-        return getMarkerMessage() != null;
+    public boolean hasUserMessage() {
+        return getUserMessage() != null;
     }
     
     @Override
@@ -107,7 +107,7 @@ final class Problem implements IProblem {
 
         Problem otherProblem = (Problem)obj;
         return new EqualsBuilder().append(getData(), otherProblem.getData())
-            .append(getMarkerMessage(), otherProblem.getMarkerMessage())
+            .append(getUserMessage(), otherProblem.getUserMessage())
             .append(getProblemType(), otherProblem.getProblemType())
             .append(getTooltipMessage(), otherProblem.getTooltipMessage())
             .append(getStatus().getSeverity(), 
@@ -118,7 +118,7 @@ final class Problem implements IProblem {
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(getData())
-            .append(getMarkerMessage())
+            .append(getUserMessage())
             .append(getProblemType())
             .append(getTooltipMessage())
             .append(getStatus().getSeverity())

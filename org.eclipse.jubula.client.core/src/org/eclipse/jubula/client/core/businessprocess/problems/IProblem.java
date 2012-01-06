@@ -20,13 +20,14 @@ import org.eclipse.core.runtime.IStatus;
  * @created 24.01.2011
  */
 public interface IProblem {
-
     /**
-     * @return the message to display in the marker for this problem, or 
-     *         <code>null</code> if no marker should be displayed.
-     * @see #shouldShowMarker() 
+     * @return the message to display for the user e.g. when running in UI this
+     *         will be the marker text in the problems view or when running in
+     *         headless mode this is the text to display on the commandline. 
+     *         Can be <code>null</code> if no text should be displayed.
+     * @see #hasUserMessage()
      */
-    String getMarkerMessage();
+    String getUserMessage();
 
     /**
      * @return an internationalized message suitable for displaying as a 
@@ -52,9 +53,9 @@ public interface IProblem {
     ProblemType getProblemType();
     
     /**
-     * @return <code>true</code> when the problem should result in a marker in 
-     *         the Problems View.
-     * @see #getMarkerMessage()
+     * @return <code>true</code> when the problem has a message to display e.g. 
+     *         the Problems View or when running in headless mode on the commandline.
+     * @see #getUserMessage()
      */
-    boolean shouldShowMarker();
+    boolean hasUserMessage();
 }

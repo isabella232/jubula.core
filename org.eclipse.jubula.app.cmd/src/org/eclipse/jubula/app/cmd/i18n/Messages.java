@@ -19,7 +19,8 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.app.cmd.i18n.messages"; //$NON-NLS-1$
     
-    public static String ConnectionToAUT_Agent;
+    public static String ConnectingToAUTAgent;
+    public static String ConnectionToAUTAgentFailed;
     public static String ClientNameShort;
     public static String ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE;
     public static String ErrorWhileInitializingTestResult;
@@ -31,10 +32,6 @@ public class Messages extends NLS {
     public static String ExecutionControllerAUTStarted;
     public static String ExecutionControllerAUTStartError;
     public static String ExecutionControllerAUTStopped;
-    public static String ExecutionControllerCheckError;
-    public static String ExecutionControllerCheckOM;
-    public static String ExecutionControllerCheckSpecTc;
-    public static String ExecutionControllerCheckTD;
     public static String ExecutionControllerDatabase;
     public static String ExecutionControllerDataBaseEnd;
     public static String ExecutionControllerDatabaseStart;
@@ -48,11 +45,13 @@ public class Messages extends NLS {
     public static String ExecutionControllerLoadingProject;
     public static String ExecutionControllerLogPathError;
     public static String ExecutionControllerProjectCompleteness;
+    public static String ExecutionControllerProjectCompletenessFailed;
     public static String ExecutionControllerProjectLoaded;
     public static String ExecutionControllerServer;
     public static String ExecutionControllerServerNotInstantiated;
     public static String ExecutionControllerTestExecution;
     public static String ExecutionControllerTestJobBegin;
+    public static String ExecutionControllerTestSuiteCompleteness;
     public static String ExecutionControllerTestSuiteBegin;
     public static String ExecutionControllerTestSuiteEnd;
     public static String ReceivedShutdownCommand;

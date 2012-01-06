@@ -16,14 +16,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jubula.app.cmd.i18n.Messages;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
@@ -48,8 +49,9 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
-import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessPropagator;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.ServerConnection;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -65,6 +67,10 @@ import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
+import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
+import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -238,6 +244,33 @@ public class ExecutionController implements IAUTServerEventListener,
         }
     }
 
+    /**
+     * @author BREDEX GmbH
+     */
+    private final class CollectAllErrorsOperation 
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
+        /** the errors to show */
+        private Set<IProblem> m_errorsToShow = new HashSet<IProblem>();
+
+        /** {@inheritDoc} */
+        public boolean operate(ITreeTraverserContext<INodePO> ctx,
+                INodePO parent, INodePO node, boolean alreadyVisited) {
+            if (ProblemFactory.hasProblem(node)) {
+                for (IProblem problem : node.getProblems()) {
+                    if (problem.getStatus().getSeverity() == IStatus.ERROR) {
+                        getErrorsToShow().add(problem);
+                    }
+                }
+            }
+            return true;
+        }
+        
+        /** @return the m_errorsToShow */
+        public Set<IProblem> getErrorsToShow() {
+            return m_errorsToShow;
+        }
+    }
+    
     /** 
      * Name of the environment variable that defines the time the client should
      * wait during AUT startup process.
@@ -362,11 +395,16 @@ public class ExecutionController implements IAUTServerEventListener,
             timer = new WatchdogTimer(m_job.getTimeout());
             timer.start();
         }
+        AbstractCmdlineClient.printConsoleLn(
+                NLS.bind(Messages.ConnectingToAUTAgent,
+                        new Object[] { m_job.getServer(), m_job.getPort() }),
+                true);
         // init ClientTest
         IClientTest clientTest = ClientTestFactory.getClientTest();
         clientTest.connectToServer(m_job.getServer(), m_job.getPort());
         if (!ServerConnection.getInstance().isConnected()) {
-            throw new CommunicationException(Messages.ConnectionToAUT_Agent,
+            throw new CommunicationException(
+                    Messages.ConnectionToAUTAgentFailed,
                     MessageIDs.E_COMMUNICATOR_CONNECTION);
         }
         clientTest.setRelevantFlag(m_job.isRelevant());
@@ -745,60 +783,34 @@ public class ExecutionController implements IAUTServerEventListener,
                     + NLS.bind(Messages.ExecutionControllerProjectLoaded, 
                             m_job.getProjectName()), true);
             }
-        } catch (JBException e1) { // NOPMD by zeb on 10.04.07 14:47
+        } catch (JBException e1) {
             /* An exception was thrown while loading data or closing a session
              * using Persistence (JPA / EclipseLink). The project is never set. This is detected
              * during job validation (initAndValidate). */
         }
-        m_job.initAndValidate();
         AbstractCmdlineClient.printConsoleLn(Messages
                 .ExecutionControllerProjectCompleteness, true);
-        CompletenessGuard.checkAll(m_job.getLanguage(), m_job.getProject());
-        
-        CompletenessPropagator.getInstance().propagate();
-        List<String> suitesWithIncompleteOM = new LinkedList<String>();
-        List<String> suitesWithIncompleteTD = new LinkedList<String>();
-        List<String> suitesWithMissingSpecTc = new LinkedList<String>();
+        m_job.initAndValidate();
+        boolean noErrors = true;
         for (ITestSuitePO ts : m_job.getTestSuites()) {
-            final String tsName = ts.getName();
-            if (!ts.hasCompleteTestCaseReferences()) {
-                suitesWithMissingSpecTc.add(NLS.bind(
-                        Messages.ExecutionControllerCheckSpecTc, tsName));
-                AbstractCmdlineClient.printConsoleLn(NLS.bind(
-                        Messages.ExecutionControllerCheckSpecTc, tsName), true);
-            }
-            if (!ts.hasCompleteObjectMapping(ts.getAut())) {
-                suitesWithIncompleteOM.add(NLS.bind(
-                        Messages.ExecutionControllerCheckOM, tsName));
-                AbstractCmdlineClient.printConsoleLn(
-                        NLS.bind(Messages.ExecutionControllerCheckOM, tsName),
-                        true);
-            }
-            if (!ts.hasCompleteTestData(m_job.getLanguage())) {
-                suitesWithIncompleteTD.add(NLS.bind(
-                        Messages.ExecutionControllerCheckTD, tsName));
-                AbstractCmdlineClient.printConsoleLn(
-                        NLS.bind(Messages.ExecutionControllerCheckTD, tsName),
-                        true);
+            CompletenessGuard.checkAll(m_job.getLanguage(), ts);
+            AbstractCmdlineClient.printConsoleLn(NLS.bind(
+                    Messages.ExecutionControllerTestSuiteCompleteness,
+                    ts.getName()), true);    
+            final CollectAllErrorsOperation op = 
+                    new CollectAllErrorsOperation();
+            TreeTraverser traverser = new ExecTreeTraverser(ts, op);
+            traverser.traverse(true); 
+            for (IProblem problem : op.getErrorsToShow()) {
+                if (problem.hasUserMessage()) {
+                    AbstractCmdlineClient.printConsoleLn(
+                            problem.getUserMessage(), true);
+                }
+                noErrors = false;
             }
         }
-        StringBuilder sb = new StringBuilder(
-                Messages.ExecutionControllerCheckError);
-        sb.append(StringConstants.COLON);
-        for (String suiteName : suitesWithIncompleteOM) {
-            sb.append(StringConstants.NEWLINE + StringConstants.TAB);
-            sb.append(suiteName);
-            sb.append(StringConstants.DOT + StringConstants.SPACE);
-        }
-        for (String suiteName : suitesWithIncompleteTD) {
-            sb.append(StringConstants.NEWLINE + StringConstants.TAB);
-            sb.append(suiteName);
-            sb.append(StringConstants.DOT + StringConstants.SPACE);
-        }
-        Validate.isTrue(
-            suitesWithIncompleteOM.isEmpty() 
-            && suitesWithIncompleteTD.isEmpty(), 
-            sb.toString());
+        Validate.isTrue(noErrors, 
+                Messages.ExecutionControllerProjectCompletenessFailed);
     }
 
     /**

@@ -200,7 +200,6 @@ public class ClientTest implements IClientTest {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public void connectToServer(String serverName, 

@@ -316,7 +316,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
             String location = data instanceof IPersistentObject
                             ? ((IPersistentObject) data).getName() 
                             : StringConstants.EMPTY;
-            createMarker(problem.getMarkerMessage(),
+            createMarker(problem.getUserMessage(),
                     getMarkerSeverity(problem), location, data,
                     problem.getProblemType());
         }
@@ -1024,7 +1024,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
             if (ProblemFactory.hasProblem(node)) {
                 for (IProblem problem : node.getProblems()) {
-                    if (problem.shouldShowMarker()) {
+                    if (problem.hasUserMessage()) {
                         m_allProblemsToShow.add(problem);
                     }
                 }
