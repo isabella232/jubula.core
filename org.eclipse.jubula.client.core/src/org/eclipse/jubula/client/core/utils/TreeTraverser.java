@@ -126,22 +126,6 @@ public class TreeTraverser {
      *            The node where the traversion starts
      * @param operation
      *            The operation to call on any node
-     * @param maxTraversalDepth The maximum depth of traversal. 
-     */
-    public TreeTraverser(INodePO rootNode, 
-            ITreeNodeOperation<INodePO> operation, 
-        int maxTraversalDepth) {
-        this(rootNode, operation);
-        m_maxDepth = maxTraversalDepth;
-    }
-
-    /**
-     * The constructor.
-     * 
-     * @param rootNode
-     *            The node where the traversion starts
-     * @param operation
-     *            The operation to call on any node
      * @param traverseSpecPart
      *          boolean to indicate if specPart or execPart should be traversed,
      *          when project is given as root

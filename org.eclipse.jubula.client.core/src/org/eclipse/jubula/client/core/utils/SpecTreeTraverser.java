@@ -37,9 +37,6 @@ public class SpecTreeTraverser extends TreeTraverser {
 
     /**
      * {@inheritDoc}
-     * @param context
-     * @param parent
-     * @param node
      */
     protected void traverseImpl(ITreeTraverserContext<INodePO> context, 
             INodePO parent, INodePO node) {

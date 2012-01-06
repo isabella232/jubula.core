@@ -68,7 +68,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
-import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
@@ -262,7 +261,7 @@ public class ExecutionController implements IAUTServerEventListener,
                     }
                 }
             }
-            return true;
+            return node.isActive();
         }
         
         /** @return the m_errorsToShow */
@@ -799,7 +798,7 @@ public class ExecutionController implements IAUTServerEventListener,
                     ts.getName()), true);    
             final CollectAllErrorsOperation op = 
                     new CollectAllErrorsOperation();
-            TreeTraverser traverser = new ExecTreeTraverser(ts, op);
+            TreeTraverser traverser = new TreeTraverser(ts, op);
             traverser.traverse(true); 
             for (IProblem problem : op.getErrorsToShow()) {
                 if (problem.hasUserMessage()) {

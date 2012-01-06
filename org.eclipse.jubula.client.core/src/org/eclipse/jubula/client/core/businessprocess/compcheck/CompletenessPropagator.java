@@ -78,10 +78,7 @@ public class CompletenessPropagator {
             INodePO parent, INodePO node, boolean alreadyVisited) {
             node.removeProblem(ERROR_IN_CHILD);
             node.removeProblem(WARNING_IN_CHILD);
-            if (!node.isActive()) {
-                return false;
-            }
-            return true;
+            return node.isActive();
         }
 
         /** {@inheritDoc} */

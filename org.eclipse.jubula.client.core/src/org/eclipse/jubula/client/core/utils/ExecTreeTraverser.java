@@ -47,8 +47,8 @@ public class ExecTreeTraverser extends TreeTraverser {
     public ExecTreeTraverser(INodePO rootNode) {
         super(rootNode);
     }
+    
     /**
-     * 
      * {@inheritDoc}
      */
     protected void traverseImpl(ITreeTraverserContext<INodePO> context, 
