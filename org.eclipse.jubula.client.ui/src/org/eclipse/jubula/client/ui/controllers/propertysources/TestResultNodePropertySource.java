@@ -134,19 +134,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         addPropertyDescriptor(propDes);
         propDes = new PropertyDescriptor(new ComponentController() {
             public Object getProperty() {
-                if (Persistor.isPoSubclass(
-                        node, IEventExecTestCasePO.class)) {
-                    return
-                        Messages.TestResultNodeGUIPropertySourceEventTestCase; 
-                } else if (Persistor.isPoSubclass(node, ITestCasePO.class)) {
-                    return Messages.TestResultNodeGUIPropertySourceTestCase;
-                } else if (Persistor.isPoSubclass(node, ICapPO.class)) {
-                    return Messages.TestResultNodeGUIPropertySourceTestStep; 
-                } else if (Persistor.isPoSubclass(
-                        node, ITestSuitePO.class)) {
-                    return Messages.TestResultNodeGUIPropertySourceTestSuite; 
-                }
-                return Messages.TestResultNodeGUIPropertySourceUnknownElement; 
+                return getTypeOfNode(node);
             }
             public Image getImage() {
                 return getImageForNode(node);
@@ -179,6 +167,23 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         initComponentNameDetailsPropDescriptor(m_node);
         initActionDetailsPropDescriptor(m_node);
         initParameterDescriptor(m_node);
+    }
+    
+    /**
+     * @param node the node
+     * @return a human readable type description for the given node
+     */
+    public static String getTypeOfNode(INodePO node) {
+        if (Persistor.isPoSubclass(node, IEventExecTestCasePO.class)) {
+            return Messages.TestResultNodePropertySourceEventTestCase;
+        } else if (Persistor.isPoSubclass(node, ITestCasePO.class)) {
+            return Messages.TestResultNodePropertySourceTestCase;
+        } else if (Persistor.isPoSubclass(node, ICapPO.class)) {
+            return Messages.TestResultNodePropertySourceTestStep;
+        } else if (Persistor.isPoSubclass(node, ITestSuitePO.class)) {
+            return Messages.TestResultNodePropertySourceTestSuite;
+        }
+        return Messages.TestResultNodePropertySourceUnknownElement;
     }
     
     /**
