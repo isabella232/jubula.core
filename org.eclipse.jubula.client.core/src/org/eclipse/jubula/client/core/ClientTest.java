@@ -514,16 +514,19 @@ public class ClientTest implements IClientTest {
                 TestExecution.getInstance().executeTestSuite(execTestSuite,
                         locale, autId, autoScreenshot, externalVars,
                         getTestresultSummary(), monitor);
+                if (monitor.isCanceled()) {
+                    return Status.CANCEL_STATUS;
+                }
                 return Status.OK_STATUS;
             }
-            
-            /**
-             * {@inheritDoc}
-             */
-            protected void canceling() {
-                stopTestExecution();
-            }
         };
+        runningTestSuite.addJobChangeListener(new JobChangeAdapter() {
+            public void done(IJobChangeEvent event) {
+                if (event.getResult().matches(IStatus.CANCEL)) {
+                    stopTestExecution();         
+                }
+            }
+        }); 
         runningTestSuite.schedule();
     }
 
@@ -580,12 +583,7 @@ public class ClientTest implements IClientTest {
                 ITestSuitePO testSuite = NodePM.getTestSuite(testSuiteGuid);
                 startTestSuite(testSuite, locale, autId, autoScreenshot);
                 while (!isTestExecutionFinished.get()) {
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        // Do nothing. The condition will be checked on the next
-                        // loop iteration
-                    }
+                    TimeUtil.delay(500);
                 }
                 if (!continueTestJobExecution(testExecutionState, 
                         testExecutionMessageId)) {
@@ -617,7 +615,6 @@ public class ClientTest implements IClientTest {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public void stopTestExecution() {
