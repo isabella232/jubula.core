@@ -26,8 +26,10 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
@@ -201,33 +203,39 @@ public final class CompletenessGuard {
          * Sets the CompleteTDFlag in all ParamNodePOs.
          * {@inheritDoc}
          */
-        public boolean operate(ITreeTraverserContext<INodePO> ctx, 
+        public boolean operate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
-            if (node instanceof IParamNodePO) {
-                IParamNodePO paramNode = (IParamNodePO)node;
-                if (node instanceof IExecTestCasePO) {
-                    IExecTestCasePO execTc = (IExecTestCasePO)node;
-                    if (execTc.getHasReferencedTD()) {
-                        paramNode = execTc.getSpecTestCase();
-                    }
-                }
-                
-                if (paramNode != null) { 
-                    // FIXME Andreas : If entering a new Parameter into a step, a parameter is
-                    // created at parent TC. But there is no Row created. Guard should
-                    // check if there is missing data or Row(0) have to be created
-
-                    boolean isComplete = paramNode.isTestDataComplete(m_locale);
-                    if (node instanceof IExecTestCasePO) {
-                        setCompletenessTestData(node,
-                                m_locale, isComplete);
-                    } else {
-                        setCompletenessTestData(paramNode, m_locale,
-                                isComplete);
-                    }
+            INodePO possibleParamNode = node;
+            if (node instanceof IExecTestCasePO) {
+                IExecTestCasePO execTc = (IExecTestCasePO) node;
+                if (execTc.getHasReferencedTD()) {
+                    possibleParamNode = execTc.getSpecTestCase();
                 }
             }
+            if (possibleParamNode instanceof IParamNodePO) {
+                IParamNodePO paramNode = (IParamNodePO) possibleParamNode;
+                INodePO nodeToModify;
+                if (node instanceof IExecTestCasePO) {
+                    nodeToModify = node;
+                } else {
+                    nodeToModify = paramNode;
+                }
+                resetTestDataCompleteness(nodeToModify);
+                setCompletenessTestData(nodeToModify, m_locale,
+                        paramNode.isTestDataComplete(m_locale));
+            }
             return !alreadyVisited;
+        }
+
+        /**
+         * clear all test data related problems for the given node
+         * @param node the node
+         */
+        private void resetTestDataCompleteness(INodePO node) {
+            IProjectPO proj = GeneralStorage.getInstance().getProject();
+            for (Locale locale : proj.getLangHelper().getLanguageList()) {
+                setCompletenessTestData(node, locale, true);
+            }
         }
     }
     
@@ -239,7 +247,7 @@ public final class CompletenessGuard {
     }
 
     /**
-     * checks OM and TD Completness of all TS
+     * checks OM and TD Completeness of all TS
      * @param loc the Locale to check
      * @param root INodePO
      */
@@ -254,7 +262,7 @@ public final class CompletenessGuard {
     }
 
     /**
-     * checks TD Completness of all TS
+     * checks TD Completeness of all TS
      * @param loc the Locale to check
      * @param root
      *      INodePO
