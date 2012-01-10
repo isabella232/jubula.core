@@ -41,40 +41,40 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
 public class TestResultNodePropertySource extends AbstractPropertySource {
     /** Constant for Category Component */
     public static final String P_TESTSTEP_CAT = 
-        Messages.TestResultNodeGUIPropertySourceResultStep;
+        Messages.TestResultNodePropertySourceResultStep;
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_STEPNAME = 
-        Messages.TestResultNodeGUIPropertySourceStepName;
+        Messages.TestResultNodePropertySourceStepName;
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_STEPTYPE = 
-        Messages.TestResultNodeGUIPropertySourceStepType;
+        Messages.TestResultNodePropertySourceStepType;
     /** Constant for Category Component */
     public static final String P_TESTRESULT_CAT = 
-        Messages.TestResultNodeGUIPropertySourceTestResult;
+        Messages.TestResultNodePropertySourceTestResult;
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_TIMESTAMP = 
-        Messages.TestResultNodeGUIPropertySourceTimeStamp;
+        Messages.TestResultNodePropertySourceTimeStamp;
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_STEPSTATUS = 
-        Messages.TestResultNodeGUIPropertySourceStepStatus;
+        Messages.TestResultNodePropertySourceStepStatus;
     /** Constant for Category Component */
     public static final String P_TESTERROR_CAT = 
-        Messages.TestResultNodeGUIPropertySourceErrorDetail;
+        Messages.TestResultNodePropertySourceErrorDetail;
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_ERRORTYPE = 
-        Messages.TestResultNodeGUIPropertySourceErrorType;        
+        Messages.TestResultNodePropertySourceErrorType;        
 
     /** Constant for Category Test Data */
     public static final String P_DATA_CAT = 
-        Messages.TestResultNodeGUIPropertySourceDataCat;
+        Messages.TestResultNodePropertySourceDataCat;
     
     // CAP Details
     /** Constant for Category Component */
     public static final String P_CAP_CAT = 
-        Messages.TestResultNodeGUIPropertySourceCapDetail;
+        Messages.TestResultNodePropertySourceCapDetail;
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_CAPCOMMENT = 
-        Messages.TestResultNodeGUIPropertySourceComment;
+        Messages.TestResultNodePropertySourceComment;
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_COMPNAME = 
         Messages.CapGUIPropertySourceComponentName;
@@ -390,7 +390,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                 public Object getProperty() {
                     return I18n.getString(tc.getEventType());
                 }
-            } , Messages.TestResultNodeGUIPropertySourceErrorType);
+            } , Messages.TestResultNodePropertySourceErrorType);
         propDes.setCategory(
                 Messages.TestResultNodeGUIPropertySourceEventhandler);
         addPropertyDescriptor(propDes);
