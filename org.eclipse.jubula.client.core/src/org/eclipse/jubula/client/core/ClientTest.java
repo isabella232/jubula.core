@@ -32,6 +32,7 @@ import javax.swing.event.EventListenerList;
 
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -95,6 +96,8 @@ import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StopAUTServerMessage;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
+import org.eclipse.jubula.toolkit.common.monitoring.MonitoringAttribute;
+import org.eclipse.jubula.toolkit.common.monitoring.MonitoringUtils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.DebugConstants;
@@ -315,6 +318,30 @@ public class ClientTest implements IClientTest {
             String value = autConfig.getValue(key, null);
             mapToSend.put(key, value);
         }
+        
+        // exists only if the monitoring agent has been selected in the AUT configuration
+        final String monitoringID = 
+                mapToSend.get(AutConfigConstants.MONITORING_AGENT_ID);
+        // add non-rendered monitoring attributes
+        if (!StringUtils.isEmpty(monitoringID)) {  
+            
+            IConfigurationElement monitoringExtension =
+                MonitoringUtils.getElement(monitoringID);
+            
+            if (monitoringExtension != null) {
+                // read all monitoring attributes for the given monitoring id
+                List<MonitoringAttribute> attributeList = MonitoringUtils
+                        .getAttributes(monitoringExtension);
+                
+                for (MonitoringAttribute monitoringAttribute : attributeList) {
+                    if (!monitoringAttribute.isRender()) { 
+                        mapToSend.put(monitoringAttribute.getId(),
+                                monitoringAttribute.getDefaultValue());
+                    }
+                }
+            }
+        }
+        
         try {
             mapToSend.put(AutConfigConstants.AUT_AGENT_PORT, 
                 String.valueOf(ServerConnection.getInstance()

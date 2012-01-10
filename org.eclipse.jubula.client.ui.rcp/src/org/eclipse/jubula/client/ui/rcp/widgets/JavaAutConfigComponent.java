@@ -241,9 +241,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         for (int i = 0; i < monitoringAttributeList.size(); i++) {
             final MonitoringAttribute attribute = 
                 monitoringAttributeList.get(i);
-            if (!attribute.isRender()) { 
-                putConfigValue(attribute.getId(), attribute.getDefaultValue());
-            } else {                     
+            if (attribute.isRender()) { 
                 if (attribute.getType().equalsIgnoreCase(
                         MonitoringConstants.RENDER_AS_TEXTFIELD)) { 
                     createMonitoringWidgetLabel(monitoringComposite, attribute);
