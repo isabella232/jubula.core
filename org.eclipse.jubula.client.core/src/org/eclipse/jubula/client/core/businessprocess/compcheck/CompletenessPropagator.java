@@ -31,15 +31,13 @@ public class CompletenessPropagator {
     /** this instance */
     private static CompletenessPropagator instance;
 
-    /**
-     * private constructor
-     */
+    /** private constructor */
     private CompletenessPropagator() {
         // currently empty
     }
 
     /**
-     * @return the ComponentNamesList
+     * @return the Completeness Propagator instance
      */
     public static CompletenessPropagator getInstance() {
         if (instance == null) {
