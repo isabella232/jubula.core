@@ -151,10 +151,11 @@ public class JBEditorHelper implements ILockedObjects,
         if (getEditSupport() != null) {
             getEditSupport().close();
         }
-        DataEventDispatcher.getInstance().removeDataChangedListener(m_editor);
-        DataEventDispatcher.getInstance().removeProjectLoadedListener(this);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.removeDataChangedListener(m_editor);
+        ded.removeProjectLoadedListener(this);
         // clear corresponding views
-        DataEventDispatcher.getInstance().firePartClosed(m_editor);
+        ded.firePartClosed(m_editor);
         
         if (m_editor.getEditorInput() instanceof PersistableEditorInput) {
             ((PersistableEditorInput)m_editor.getEditorInput()).dispose();

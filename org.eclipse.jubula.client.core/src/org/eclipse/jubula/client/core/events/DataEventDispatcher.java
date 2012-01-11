@@ -280,11 +280,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         public void handlePrefServerChanged();
     }
     
-    /** to notify clients about reset of frame colour */
-    public interface IResetFrameColourListener extends IGenericListener {
-        // nothing
-    }
-    
     /** to notify dialogs about button status */
     public interface IDialogStatusListener extends IGenericListener {
         // do nothing
