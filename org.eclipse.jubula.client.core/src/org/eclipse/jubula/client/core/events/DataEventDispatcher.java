@@ -237,6 +237,15 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         public void completenessCheckFinished();
     }
     
+    /** to notify the clients when the problem propagation is finished */
+    public interface IProblemPropagationListener {
+        
+        /**
+         * Will be called when the completeness check is finished
+         */
+        public void problemPropagationFinished();
+    }
+    
    /** to notify clients about changes of AUT state */
     public interface IAutStateListener {
         /**
@@ -584,6 +593,10 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     private Set<ICompletenessCheckListener> m_completenessCheckListeners = 
         new HashSet<ICompletenessCheckListener>();
     
+    /** The IProblemPropagationListener Listeners */
+    private Set<IProblemPropagationListener> m_problemPropagationListeners = 
+        new HashSet<IProblemPropagationListener>();
+    
     /** The IProjectOpenedListener */
     private Set<IProjectOpenedListener> m_projectOpenedListeners =
         new HashSet<IProjectOpenedListener>();
@@ -756,6 +769,15 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     public void fireCompletenessCheckFinished() {
         for (ICompletenessCheckListener l : m_completenessCheckListeners) {
             l.completenessCheckFinished();
+        }
+    }
+    
+    /**
+     * notifies the Listener that the Completeness Check is finished.
+     */
+    public void fireProblemPropagationFinished() {
+        for (IProblemPropagationListener l : m_problemPropagationListeners) {
+            l.problemPropagationFinished();
         }
     }
 
@@ -1174,6 +1196,26 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             ICompletenessCheckListener l) {
         
         return m_completenessCheckListeners.remove(l);
+    }
+    
+    /**
+     * @param l
+     *            an IProblemPropagationListener.
+     * @return true if the given Listener was added, false otherwise.
+     */
+    public boolean addProblemPropagationListener(
+            IProblemPropagationListener l) {
+        return m_problemPropagationListeners.add(l);
+    }
+    
+    /**
+     * 
+     * @param l an IProblemPropagationListener.
+     * @return true if the given Listener was removed, false otherwise.
+     */
+    public boolean removeProblemPropagationListener(
+            IProblemPropagationListener l) {
+        return m_problemPropagationListeners.remove(l);
     }
     
     /**

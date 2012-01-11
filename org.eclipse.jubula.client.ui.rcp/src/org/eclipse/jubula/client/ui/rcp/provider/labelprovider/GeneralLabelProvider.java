@@ -111,7 +111,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
 
     /** {@inheritDoc} */
     public Image getImage(Object element) {
-        Image image = getGDImage(element);
+        Image image = getImageImpl(element);
         
         // generated elements
         if (element instanceof INodePO
@@ -231,7 +231,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * @param element the element to get the image for 
      * @return an image for the given element
      */
-    public static Image getGDImage(Object element) {
+    public static Image getImageImpl(Object element) {
         if (element instanceof ITestSuitePO) {
             ITestSuitePO testSuite = (ITestSuitePO)element;
             Locale workLang = WorkingLanguageBP.getInstance()

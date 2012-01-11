@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
-import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessPropagator;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagator;
 import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
@@ -235,7 +235,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
         // remove no needed items from ProblemView
         cleanupProblems();
         
-        CompletenessPropagator.getInstance().propagate();
+        ProblemPropagator.getInstance().propagate();
     }
     
     /**

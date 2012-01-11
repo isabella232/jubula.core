@@ -24,9 +24,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * @created 06.07.2004
  */
 public class TestSuiteBrowserLabelProvider extends GeneralLabelProvider {
-    /**
-     * the multi line tooltip prefix
-     */
+    /** the multi line tooltip prefix */
     private static final String MULTI_LINE_TOOLTIP_PREFIX = 
             StringConstants.MINUS + StringConstants.SPACE;
 
