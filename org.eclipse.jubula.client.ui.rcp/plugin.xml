@@ -130,13 +130,6 @@
 	        properties="isDefined"
 	        type="org.eclipse.jubula.tools.registration.AutIdentifier">
         </propertyTester>
-	    <propertyTester
-	        class="org.eclipse.jubula.client.ui.rcp.propertytester.TestResultSummaryPropertyTester"
-	        id="org.eclipse.jubula.client.ui.rcp.propertytester.TestResultSummary"
-	        namespace="org.eclipse.jubula.client.ui.rcp.propertytester.TestResultSummary"
-	        properties="hasMonitoringData"
-	        type="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
-  		</propertyTester>
   		<propertyTester
 			class="org.eclipse.jubula.client.ui.rcp.propertytester.ParameterInterfacePropertyTester"
 			id="org.eclipse.jubula.client.ui.rcp.propertytester.ParameterInterfacePropertyTester"

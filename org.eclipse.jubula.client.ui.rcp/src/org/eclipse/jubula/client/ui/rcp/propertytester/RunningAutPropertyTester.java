@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.propertytester;
 
 import org.eclipse.jubula.client.core.businessprocess.RunningAutBP;
+import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 
 /**

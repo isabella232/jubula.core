@@ -8,9 +8,11 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.propertytester;
+package org.eclipse.jubula.client.ui.propertytester;
 
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.TestResultPM;
 
 /**
  * PropertyTester for TestResultSummary.
@@ -23,17 +25,23 @@ public class TestResultSummaryPropertyTester
     /** the id of the "hasMonitoringData" property */
     public static final String HAS_MONITORING_DATA_PROP = "hasMonitoringData"; //$NON-NLS-1$
 
+    /** the id of the "hasTestResultDetails" property */
+    public static final String HAS_TEST_RESULT_DETAILS_PROP = "hasTestResultDetails"; //$NON-NLS-1$
+    
     /**
      * <code>PROPERTIES</code>
      */
     private static final String[] PROPERTIES = new String[] { 
-        HAS_MONITORING_DATA_PROP };
+        HAS_MONITORING_DATA_PROP, HAS_TEST_RESULT_DETAILS_PROP };
 
     /** {@inheritDoc} */
     public boolean testImpl(Object receiver, String property, Object[] args) {
-        ITestResultSummaryPO summary = (ITestResultSummaryPO)receiver;
+        ITestResultSummaryPO summary = (ITestResultSummaryPO) receiver;
         if (property.equals(HAS_MONITORING_DATA_PROP)) {
-            return  summary.isReportWritten();
+            return summary.isReportWritten();
+        } else if (property.equals(HAS_TEST_RESULT_DETAILS_PROP)) {
+            return TestResultPM.hasTestResultDetails(GeneralStorage
+                    .getInstance().getMasterSession(), summary.getId());
         }
         return false;
     }

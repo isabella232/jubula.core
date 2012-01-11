@@ -109,6 +109,15 @@
         icon="icons/metrik.png">
   </image>
     </extension>
+    <extension point="org.eclipse.core.expressions.propertyTesters">
+    	    <propertyTester
+	        class="org.eclipse.jubula.client.ui.propertytester.TestResultSummaryPropertyTester"
+	        id="org.eclipse.jubula.client.ui.rcp.propertytester.TestResultSummary"
+	        namespace="org.eclipse.jubula.client.ui.propertytester.TestResultSummary"
+	        properties="hasMonitoringData, hasTestResultDetails"
+	        type="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
+  		</propertyTester>
+	</extension>
     <extension
           point="org.eclipse.ui.handlers">
   <handler
@@ -118,9 +127,8 @@
         <iterate
               ifEmpty="false"
               operator="and">
-           <instanceof
-                 value="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
-           </instanceof>
+           <instanceof value="org.eclipse.jubula.client.core.model.ITestResultSummaryPO" />
+           <test property="org.eclipse.jubula.client.ui.propertytester.TestResultSummary.hasTestResultDetails" />
         </iterate>
      </activeWhen>
   </handler>
@@ -129,8 +137,7 @@
 		commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem">
 		<activeWhen>
 			<and>
-				<count value="+">
-				</count>
+				<count value="+" />
 				<iterate>
 					<or>
 						<instanceof value="org.eclipse.jubula.client.core.model.INodePO" />

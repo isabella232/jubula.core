@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.propertytester;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
 
 
 /**

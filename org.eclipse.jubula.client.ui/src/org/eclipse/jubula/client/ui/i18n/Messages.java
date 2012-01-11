@@ -64,6 +64,8 @@ public class Messages extends NLS {
     public static String ParentElementHasInvalidTypeReturningEmptyArray;
     public static String PluginConnectProgress;
     public static String PropertyIDInexistent;
+    public static String PropertyTesterPropertyNotSupported;
+    public static String PropertyTesterTypeNotSupported;
     public static String SelectDatabaseConnectFailed;
     public static String SelectDatabaseConnectSuccessful;
     public static String SelectedElementIsNotTestResultSummary;

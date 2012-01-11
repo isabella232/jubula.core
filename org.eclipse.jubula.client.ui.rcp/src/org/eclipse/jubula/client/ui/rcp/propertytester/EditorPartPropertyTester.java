@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.propertytester;
 
+import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
 import org.eclipse.ui.IEditorPart;
 
 /**

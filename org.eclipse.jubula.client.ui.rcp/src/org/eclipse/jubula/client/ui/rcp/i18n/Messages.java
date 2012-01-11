@@ -695,8 +695,6 @@ public class Messages extends NLS {
     public static String PropertiesActionPage3;
     public static String PropertiesActionPage4;
     public static String PropertiesPageSimpleExtensions_Title;
-    public static String PropertyTesterPropertyNotSupported;
-    public static String PropertyTesterTypeNotSupported;
     public static String ProtectedProject;
     public static String RecomputeProposals;
     public static String RecordTestCaseActionDoubleTCName;

@@ -244,6 +244,9 @@ public class TestResultPM {
     public static boolean hasTestResultDetails(
             EntityManager session, Long summaryId) {
         boolean hasDetails = false;
+        if (session == null) {
+            return hasDetails;
+        }
         
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery query = builder.createQuery();
