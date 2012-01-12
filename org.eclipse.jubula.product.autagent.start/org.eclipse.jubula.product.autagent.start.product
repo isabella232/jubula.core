@@ -7,7 +7,11 @@
    </configIni>
 
    <launcherArgs>
+      <programArgsLin>linProgArgs</programArgsLin>
+      <programArgsWin>winProgArgs</programArgsWin>
+      <vmArgsLin>linVmArgs</vmArgsLin>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+      <vmArgsWin>winVmArgs</vmArgsWin>
    </launcherArgs>
 
    <windowImages/>
@@ -34,7 +38,6 @@
       <plugin id="ch.qos.logback.classic"/>
       <plugin id="ch.qos.logback.core"/>
       <plugin id="ch.qos.logback.slf4j" fragment="true"/>
-      <plugin id="javax.servlet"/>
       <plugin id="org.apache.commons.beanutils"/>
       <plugin id="org.apache.commons.cli"/>
       <plugin id="org.apache.commons.collections"/>
@@ -61,8 +64,6 @@
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.services"/>
       <plugin id="org.slf4j.api"/>
-      <plugin id="org.slf4j.jcl"/>
-      <plugin id="org.slf4j.log4j"/>
    </plugins>
 
 

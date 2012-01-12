@@ -33,6 +33,21 @@
 					</execution>
 				</executions>
 			</plugin>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-compiler-plugin</artifactId>
+            <version>${tycho-version}</version>
+            <configuration>
+              <extraRequirements>
+                <!-- prefer RCP to RAP for compilation  -->
+                <requirement>
+                  <type>eclipse-plugin</type>
+                  <id>org.eclipse.jface</id>
+                  <versionRange>[3.6,4.0)</versionRange>
+                </requirement>
+              </extraRequirements>
+            </configuration>
+          </plugin>
 		</plugins>
 	</build>
 </project>

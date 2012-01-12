@@ -3,7 +3,7 @@
 
 <target name="indigo">
 <locations>
-<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<location includeAllPlatforms="false" includeMode="slicer" type="InstallableUnit">
 <unit id="org.apache.commons.beanutils" version="1.7.0.v200902170505"/>
 <unit id="org.apache.commons.codec" version="1.2.0.v20100518-1135"/>
 <unit id="org.apache.commons.lang" version="2.4.0.v201005080502"/>
@@ -17,16 +17,16 @@
 <unit id="org.w3c.dom.events.source" version="3.0.0.draft20060413_v200905140418"/>
 <repository id="eclipse-orbit-R20100519200754" location="http://download.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository"/>
 </location>
-<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<location includeAllPlatforms="false" includeMode="slicer" type="InstallableUnit">
 <unit id="org.apache.commons.cli" version="1.2.0.v201105210650"/>
 <repository id="eclipse-orbit-R20110523182458" location="http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/repository/"/>
 </location>
-<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<location includeAllPlatforms="false" includeMode="slicer" type="InstallableUnit">
 <unit id="org.eclipse.rcp.feature.group" version="3.7.0.v20110216-9DB5Fm1FpBGy_AaVz-mFamgY"/>
 <unit id="org.eclipse.persistence.jpa.feature.group" version="2.3.0.v20110604-r9504"/>
 <repository id ="eclipse-indigo" location="http://download.eclipse.org/releases/indigo"/>
 </location>
-<location includeAllPlatforms="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jubula.feature.feature.group" version="0.0.0"/>
 <repository location="https://hudson.eclipse.org/hudson/job/jubula-nightly/lastSuccessfulBuild/artifact/org.eclipse.jubula.site/target/site"/>
 </location>
