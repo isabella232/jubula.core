@@ -27,3 +27,33 @@ requires.5.namespace = osgi.bundle
 requires.5.name = org.eclipse.rap.ui.views
 requires.5.greedy = false
 requires.5.optional = true
+
+requires.6.namespace = osgi.bundle
+requires.6.name = org.eclipse.swt
+requires.6.greedy = false
+requires.6.optional = true
+
+requires.7.namespace = osgi.bundle
+requires.7.name = org.eclipse.jface
+requires.7.greedy = false
+requires.7.optional = true
+
+requires.8.namespace = osgi.bundle
+requires.8.name = org.eclipse.jface.databinding
+requires.8.greedy = false
+requires.8.optional = true
+
+requires.9.namespace = osgi.bundle
+requires.9.name = org.eclipse.ui.workbench
+requires.9.greedy = false
+requires.9.optional = true
+
+requires.10.namespace = osgi.bundle
+requires.10.name = org.eclipse.ui
+requires.10.greedy = false
+requires.10.optional = true
+
+requires.11.namespace = osgi.bundle
+requires.11.name = org.eclipse.ui.views
+requires.11.greedy = false
+requires.11.optional = true
