@@ -25,4 +25,42 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+    <profiles>
+        <profile>
+            <id>build-eclipse-org</id>
+            <build>
+                <plugins>
+                    <!--
+                    deploy "development" p2 repository         
+                    -->
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deploy</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <delete includeemptydirs="false">
+                                            <fileset dir="/home/data/httpd/download.eclipse.org/jubula/development">
+                                                <include name="**" />
+                                            </fileset>
+                                        </delete>
+                                        <copy includeemptydirs="false" todir="/home/data/httpd/download.eclipse.org/jubula/development">
+                                            <fileset dir="target/site">
+                                                <include name="**" />
+                                            </fileset>
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
