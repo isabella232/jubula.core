@@ -28,6 +28,12 @@
     <profiles>
         <profile>
             <id>build-eclipse-org</id>
+            <activation>
+                <property>
+                    <name>build.env</name>
+                    <value>eclipse.org</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <!--
