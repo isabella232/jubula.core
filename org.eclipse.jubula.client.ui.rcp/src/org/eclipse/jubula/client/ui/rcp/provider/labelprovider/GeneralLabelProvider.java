@@ -208,6 +208,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 return getText((ISpecTestCasePO)node);
             }
             
+            if (node instanceof IRefTestSuitePO) {
+                return getText((IRefTestSuitePO)node);
+            }
+            
             return node.getName();
         }
 
@@ -291,7 +295,8 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * {@inheritDoc}
      */
     public Color getForeground(Object element) {
-        if (element instanceof IExecTestCasePO || element instanceof ICapPO) {
+        if (element instanceof IExecTestCasePO || element instanceof ICapPO
+                || element instanceof IRefTestSuitePO) { 
             return DISABLED_COLOR;
         }
 
@@ -307,7 +312,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
 
         return null;
     }
-
+    
     /**
      * 
      * @param testStep The Test Step to examine.
@@ -423,5 +428,24 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         
         return nameBuilder.toString();
     }
+    
+    /** 
+     * 
+     * @param testSuitRef The Reference Test Suit to examine.
+     * @return label text for the given Reference Test Suit.
+     */
+    private static String getText(IRefTestSuitePO testSuitRef) {
+        StringBuilder nameBuilder = new StringBuilder();
+        
+        String testSuitRefName = testSuitRef != null 
+                ? testSuitRef.getName() 
+                : StringUtils.EMPTY;
+        nameBuilder.append(StringConstants.LEFT_INEQUALITY_SING)
+            .append(testSuitRefName)
+            .append(StringConstants.RIGHT_INEQUALITY_SING); 
+    
+        return nameBuilder.toString();
+    }
+
     
 }
