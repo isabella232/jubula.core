@@ -55,14 +55,6 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     /** gui button for browser path */
     private Button m_browserPathButton;
     /** gui component */
-    private Label m_activationMethodLabel;
-    /** gui component */
-    private Label m_browserPathLabel;
-    /** gui component */
-    private Label m_browserLabel;
-    /** gui component */
-    private Label m_urlLabel;
-    /** gui component */
     private I18nEnumCombo<Browser> m_browserCombo;
     /** gui component */
     private I18nEnumCombo<ActivationMethod> m_activationMethodCombo;
@@ -91,18 +83,18 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         super.createBasicArea(basicAreaComposite);
 
         // URL property
-        m_urlLabel = UIComponentHelper.createLabel(
+        Label urlLabel = UIComponentHelper.createLabel(
                 basicAreaComposite, "WebAutConfigComponent.URL"); //$NON-NLS-1$
-        m_urlLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.urlLabel"); //$NON-NLS-1$
+        urlLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.urlLabel"); //$NON-NLS-1$
         
         m_autUrlTextField = UIComponentHelper.createTextField(
                 basicAreaComposite, 2);
         m_autUrlTextField.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autUrlTextField"); //$NON-NLS-1$
         
         // browser
-        m_browserLabel = UIComponentHelper.createLabel(
+        Label browserLabel = UIComponentHelper.createLabel(
                 basicAreaComposite, "WebAutConfigComponent.browser"); //$NON-NLS-1$
-        m_browserLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserLabel"); //$NON-NLS-1$
+        browserLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserLabel"); //$NON-NLS-1$
         
         m_browserCombo = UIComponentHelper.createEnumCombo(
                 basicAreaComposite, 2, "WebAutConfigComponent.Browser", //$NON-NLS-1$
@@ -129,9 +121,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         super.createExpertArea(expertAreaComposite);
         
         // activation method editor
-        m_activationMethodLabel = UIComponentHelper.createLabel(
+        Label activationMethodLabel = UIComponentHelper.createLabel(
                 expertAreaComposite, "AUTConfigComponent.activationMethod"); //$NON-NLS-1$
-        m_activationMethodLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.activationMethodLabel"); //$NON-NLS-1$
+        activationMethodLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.activationMethodLabel"); //$NON-NLS-1$
         
         m_activationMethodCombo = UIComponentHelper.createEnumCombo(
                 expertAreaComposite, 2, "AUTConfigComponent.ActivationMethod", //$NON-NLS-1$
@@ -155,9 +147,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      */
     protected void createBrowserPathEditor(Composite parent) {
         
-        m_browserPathLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.browserPath"); //$NON-NLS-1$ 
-        m_browserPathLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathLabel"); //$NON-NLS-1$
-        ControlDecorator.decorateInfo(m_browserPathLabel,  
+        Label browserPathLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.browserPath"); //$NON-NLS-1$ 
+        browserPathLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathLabel"); //$NON-NLS-1$
+        ControlDecorator.decorateInfo(browserPathLabel,  
                 "GDControlDecorator.WebBrowserPath", false); //$NON-NLS-1$
         
         m_browserTextField = UIComponentHelper.createTextField(

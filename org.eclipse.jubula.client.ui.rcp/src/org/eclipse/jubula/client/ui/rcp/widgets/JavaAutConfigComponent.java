@@ -577,7 +577,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      */
     private void initGuiEnvironmentEditor(Composite parent) {
         UIComponentHelper.createLabel(parent, "AUTConfigComponent.envVariables"); //$NON-NLS-1$ 
-        m_envTextArea = new JBText(parent, LayoutUtil.MULTI_TEXT_STYLE);
+        m_envTextArea = new JBText(parent, 
+                LayoutUtil.MULTI_TEXT | SWT.V_SCROLL);
         LayoutUtil.setMaxChar(m_envTextArea, 4000);
         GridData textGridData = new GridData();
         textGridData.horizontalAlignment = GridData.FILL;
@@ -585,7 +586,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         textGridData.grabExcessHorizontalSpace = false;
         textGridData.widthHint = COMPOSITE_WIDTH;
         textGridData.heightHint = Dialog.convertHeightInCharsToPixels(LayoutUtil
-            .getFontMetrics(m_envTextArea), 5);
+            .getFontMetrics(m_envTextArea), 2);
         m_envTextArea.setLayoutData(textGridData);
     }
 
@@ -611,35 +612,40 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      */
     private void initGuiClasspathEditor(Composite parent) {
         UIComponentHelper.createLabel(
-            parent, "AUTConfigComponent.classPath"); //$NON-NLS-1$ 
-        m_classPathListField = new List(parent, 
+                parent, "AUTConfigComponent.classPath"); //$NON-NLS-1$ 
+        Composite classpathComposite = 
+                UIComponentHelper.createLayoutComposite(parent);
+        m_classPathListField = new List(classpathComposite, 
             LayoutUtil.MULTI_TEXT_STYLE | SWT.SINGLE);
         GridData textGridData = new GridData();
         textGridData.horizontalAlignment = GridData.FILL;
         textGridData.grabExcessHorizontalSpace = true;
         textGridData.heightHint = Dialog.convertHeightInCharsToPixels(LayoutUtil
-            .getFontMetrics(m_classPathListField), 8);
+            .getFontMetrics(m_classPathListField), 2);
         LayoutUtil.addToolTipAndMaxWidth(textGridData, m_classPathListField);
         m_classPathListField.setLayoutData(textGridData);
+
+        Composite moveComposite = 
+                UIComponentHelper.createLayoutComposite(parent);
+        m_moveElementUpButton = 
+                new Button(moveComposite, SWT.PUSH);
+        m_moveElementUpButton.setImage(IconConstants.UP_ARROW_DIS_IMAGE);
+        m_moveElementUpButton.setToolTipText(
+                Messages.AutConfigDialogMoveCpUpToolTip);
+        m_moveElementUpButton.setLayoutData(BUTTON_LAYOUT);
+        
+        m_moveElementDownButton = 
+                new Button(moveComposite, SWT.PUSH);
+        m_moveElementDownButton.setImage(IconConstants.DOWN_ARROW_DIS_IMAGE);
+        m_moveElementDownButton.setToolTipText(
+                Messages.AutConfigDialogMoveCpDownToolTip);
+        m_moveElementDownButton.setLayoutData(BUTTON_LAYOUT);
+        
         m_classPathButtonComposite = 
-            UIComponentHelper.createLayoutComposite(parent);
+            UIComponentHelper.createLayoutComposite(classpathComposite, 3);
         m_addElementButton = new Button(m_classPathButtonComposite, SWT.PUSH);
         m_addElementButton.setText(Messages.AUTConfigComponentElement);
         m_addElementButton.setLayoutData(BUTTON_LAYOUT);
-        
-        m_moveElementUpButton = 
-            new Button(m_classPathButtonComposite, SWT.PUSH);
-        m_moveElementUpButton.setImage(IconConstants.UP_ARROW_DIS_IMAGE);
-        m_moveElementUpButton.setToolTipText(
-            Messages.AutConfigDialogMoveCpUpToolTip);
-        m_moveElementUpButton.setLayoutData(BUTTON_LAYOUT);
-
-        m_moveElementDownButton = 
-            new Button(m_classPathButtonComposite, SWT.PUSH);
-        m_moveElementDownButton.setImage(IconConstants.DOWN_ARROW_DIS_IMAGE);
-        m_moveElementDownButton.setToolTipText(
-            Messages.AutConfigDialogMoveCpDownToolTip);
-        m_moveElementDownButton.setLayoutData(BUTTON_LAYOUT);
 
         m_editElementButton = new Button(m_classPathButtonComposite, SWT.PUSH);
         m_editElementButton.setText(Messages.AUTConfigComponentEdit);

@@ -394,10 +394,25 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      */
     private void createLayout(Composite areaComposite) {
         areaComposite.setLayout(
-            LayoutUtil.createDefaultGridLayout(NUM_COLUMNS));
+            createDefaultGridLayout(NUM_COLUMNS));
         GridData gridData = new GridData(GridData.BEGINNING);
         gridData.horizontalSpan = NUM_COLUMNS;
         areaComposite.setLayoutData(gridData);
+    }
+    
+    /**
+     * creates the default GridLayout to be used 
+     * @param numColumns the number of the columns
+     * @return a new instance of GridLayout
+     */
+    public static GridLayout createDefaultGridLayout(int numColumns) {
+        GridLayout result = new GridLayout();
+        result.numColumns = numColumns;
+        result.horizontalSpacing = 5;
+        result.verticalSpacing = 5;
+        result.marginWidth = 0;
+        result.marginHeight = 0;
+        return result;
     }
 
     /**

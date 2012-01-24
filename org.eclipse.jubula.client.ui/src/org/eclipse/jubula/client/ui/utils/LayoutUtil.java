@@ -21,7 +21,6 @@ import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -83,7 +82,7 @@ public class LayoutUtil {
     /** the style for a multi - line m_text */
     public static final int MULTI_TEXT_STYLE = SWT.MULTI | SWT.BORDER
             | SWT.V_SCROLL | SWT.H_SCROLL;
-    /** the style for a multi - line m_text without border*/
+    /** the style for a multi - line text without border*/
     public static final int MULTI_TEXT = SWT.MULTI | SWT.WRAP;
     /** margin width = 2 */
     public static final int MARGIN_WIDTH = 2;    
@@ -136,21 +135,6 @@ public class LayoutUtil {
      */
     private LayoutUtil() {
         super();
-    }
-    
-    /**
-     * creates the default GridLayout to be used 
-     * @param numColumns the number of the columns
-     * @return a new instance of GridLayout
-     */
-    public static GridLayout createDefaultGridLayout(int numColumns) {
-        GridLayout result = new GridLayout();
-        result.numColumns = numColumns;
-        result.horizontalSpacing = SMALL_HORIZONTAL_SPACING;
-        result.verticalSpacing = SMALL_VERTICAL_SPACING;
-        result.marginWidth = SMALL_MARGIN_WIDTH;
-        result.marginHeight = SMALL_MARGIN_HEIGHT;
-        return result;
     }
     
     /**
