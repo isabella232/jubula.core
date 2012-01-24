@@ -34,7 +34,6 @@ import org.eclipse.jubula.client.ui.rcp.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.rcp.wizards.ProjectWizard;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -55,6 +54,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -83,7 +83,7 @@ public class AUTSettingWizardPage extends WizardPage {
     private Button m_leftButton;
 
     /** the AUT name editor */
-    private JBText m_autNameText;
+    private Text m_autNameText;
     
     /** the combo box with the toolkit names */
     private DirectCombo<String> m_autToolKitComboBox;
@@ -296,7 +296,7 @@ public class AUTSettingWizardPage extends WizardPage {
         leftComposite.setLayout(gridLayout);
         rightComposite.setLayout(gridLayout);
         newLabel(leftComposite, Messages.AUTSettingWizardPageAutName);
-        m_autNameText = new JBText(rightComposite, SWT.BORDER);
+        m_autNameText = new Text(rightComposite, SWT.BORDER);
         m_autNameText.setFocus();
         final GridData gridData = new GridData();
         gridData.grabExcessHorizontalSpace = true;

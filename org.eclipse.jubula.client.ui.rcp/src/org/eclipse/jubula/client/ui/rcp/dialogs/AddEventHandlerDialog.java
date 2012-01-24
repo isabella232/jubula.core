@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
@@ -45,6 +44,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
 
 
 /**
@@ -178,7 +178,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
         // create a non-editable text field for the name of the event handler
         Label eventNameLabel = new Label(parent, SWT.NONE);
         eventNameLabel.setText(Messages.AddEventHandlerDialogLabel);
-        JBText nameText = new JBText(parent, SWT.FILL | SWT.BORDER);
+        Text nameText = new Text(parent, SWT.FILL | SWT.BORDER);
         GridData eventNameGridData = 
             new GridData(SWT.FILL, SWT.NONE, true, false);
         nameText.setLayoutData(eventNameGridData);

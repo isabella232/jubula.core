@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.ui.rcp.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.rcp.wizards.ProjectWizard;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
@@ -51,6 +50,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -93,7 +93,7 @@ public class ProjectSettingWizardPage extends WizardPage {
     /** the combo box for the project aut toolkit */
     private DirectCombo<String> m_autToolKitComboBox;
     /** the text field for the project name */
-    private JBText m_projectNameTextField;
+    private Text m_projectNameTextField;
     /** the checkbox for the project reusability */
     private Button m_projectReusabilityCheckbox;
     /** the checkbox for the project reusability */

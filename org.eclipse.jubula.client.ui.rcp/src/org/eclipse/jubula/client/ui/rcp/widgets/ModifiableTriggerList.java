@@ -26,7 +26,6 @@ import org.eclipse.jubula.client.ui.rcp.widgets.ModifiableListObservable.IConten
 import org.eclipse.jubula.client.ui.rcp.widgets.ModifiableListObservable.IOptionalButtonSelectedListener;
 import org.eclipse.jubula.client.ui.rcp.widgets.ModifiableListObservable.ISelectionChangedListener;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
@@ -238,7 +237,7 @@ public class ModifiableTriggerList extends Composite implements
         /***/
         private Control m_toolTipOwner;
         /***/
-        private JBText m_toolTipContent;
+        private Text m_toolTipContent;
         /***/
         private Shell m_tip;
         /***/
@@ -305,7 +304,7 @@ public class ModifiableTriggerList extends Composite implements
                     layout.marginHeight = 2;
                     layout.marginWidth = 2;
                     m_tip.setLayout(layout);
-                    m_toolTipContent = new JBText(m_tip, LayoutUtil.MULTI_TEXT 
+                    m_toolTipContent = new Text(m_tip, LayoutUtil.MULTI_TEXT 
                         | SWT.READ_ONLY);
                     m_tip.setForeground(m_toolTipOwner.getDisplay()
                         .getSystemColor(SWT.COLOR_INFO_FOREGROUND));
@@ -355,10 +354,9 @@ public class ModifiableTriggerList extends Composite implements
 
             /**
              * {@inheritDoc}
-             * @param event
              */
             public void handleEvent(Event event) {
-                JBText label = (JBText) event.widget;
+                Text label = (Text) event.widget;
                 Shell shell = label.getShell();
                 switch (event.type) {
                     case SWT.FocusOut:    

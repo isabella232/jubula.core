@@ -18,7 +18,6 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
@@ -27,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 
 /**
@@ -119,7 +119,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
      */
     private void createCommentTitleField(Composite area) {
         GridData gridData;
-        JBText commentTitleField = createCommentTitleText(area);
+        Text commentTitleField = createCommentTitleText(area);
         gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         LayoutUtil.addToolTipAndMaxWidth(gridData, commentTitleField);
         commentTitleField.setLayoutData(gridData);
@@ -146,7 +146,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
      */
     private void createCommentDetailField(Composite area) {
         GridData gridData;
-        JBText commentDetailField = createCommentDetailText(area);
+        Text commentDetailField = createCommentDetailText(area);
         gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         LayoutUtil.addToolTipAndMaxWidth(gridData, commentDetailField);
         commentDetailField.setLayoutData(gridData);
@@ -171,20 +171,20 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
      * @param area The parent for the created widgets.
      * @return the created text field.
      */
-    private JBText createCommentTitleText(Composite area) {
+    private Text createCommentTitleText(Composite area) {
         new Label(area, SWT.NONE).setText(
                 Messages.EnterCommentDialogTitleLabel);
-        return new JBText(area, SWT.SINGLE | SWT.BORDER);
+        return new Text(area, SWT.SINGLE | SWT.BORDER);
     }
     
     /**
      * @param area The parent for the created widgets.
      * @return the created text field.
      */
-    private JBText createCommentDetailText(Composite area) {
+    private Text createCommentDetailText(Composite area) {
         new Label(area, SWT.NONE).setText(
                 Messages.EnterCommentDialogDetailLabel);
-        return new JBText(area, SWT.V_SCROLL | SWT.BORDER);
+        return new Text(area, SWT.V_SCROLL | SWT.BORDER);
     }
     
     /**

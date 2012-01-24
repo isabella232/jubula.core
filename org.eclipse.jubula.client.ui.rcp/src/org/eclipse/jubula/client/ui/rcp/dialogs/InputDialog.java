@@ -16,7 +16,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -31,6 +30,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 
 
@@ -57,7 +57,7 @@ public class InputDialog extends TitleAreaDialog {
     /** = m_nameField.getText() */
     private String m_name = StringConstants.EMPTY;
     /** the name textfield */
-    private JBText m_nameField;
+    private Text m_nameField;
     /** the message depends on the object that is selected */
     private String m_message = StringConstants.EMPTY;
     /** the errormessage depends on the object that is selected */
@@ -192,7 +192,7 @@ public class InputDialog extends TitleAreaDialog {
      */
     private void createNameField(Composite area) {
         new Label(area, SWT.NONE).setText(m_label);
-        m_nameField = new JBText(area, SWT.SINGLE | SWT.BORDER);
+        m_nameField = new Text(area, SWT.SINGLE | SWT.BORDER);
         GridData gridData = newGridData(false);
         LayoutUtil.addToolTipAndMaxWidth(gridData, m_nameField);
         m_nameField.setLayoutData(gridData);

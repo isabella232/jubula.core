@@ -44,7 +44,6 @@ import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -63,6 +62,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -244,7 +244,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             Messages.ProjectPropertyPageProjectGuid), 
             "GDControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
         
-        JBText projectGuid = new JBText(rightComposite, 
+        Text projectGuid = new Text(rightComposite, 
             SWT.READ_ONLY | SWT.BORDER);
         projectGuid.setText(m_projectGuid);
         Label l = createLabel(rightComposite, StringConstants.EMPTY);

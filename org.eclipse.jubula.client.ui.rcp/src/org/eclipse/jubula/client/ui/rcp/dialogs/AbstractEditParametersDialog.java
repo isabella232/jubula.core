@@ -42,7 +42,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
@@ -985,7 +984,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         final Label nameLabel = new Label(nameFieldArea, SWT.NONE);
         nameLabel.setText(getEditedObjectNameString());
         
-        final JBText nameField = new JBText(nameFieldArea, 
+        final Text nameField = new Text(nameFieldArea, 
                 SWT.SINGLE | SWT.BORDER);
         final GridData nameFieldGridData = new GridData();
         nameFieldGridData.grabExcessHorizontalSpace = true;

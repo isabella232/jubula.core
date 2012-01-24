@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
@@ -49,6 +48,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +69,7 @@ public class ImportProjectsWizardPage extends WizardPage
     private static final int NUM_COLUMS = 6; 
 
     /** TextField for FilePath */
-    private JBText m_fileToAdd;
+    private Text m_fileToAdd;
     /** All files that will be imported */
     private List m_filesToImport;
     /** button to browse for file */
@@ -612,7 +612,7 @@ public class ImportProjectsWizardPage extends WizardPage
         label.setLayoutData(gridData);
         label.setText(Messages.ImportProjectDialogFileLabel);
         
-        m_fileToAdd = new JBText(composite, SWT.BORDER);
+        m_fileToAdd = new Text(composite, SWT.BORDER);
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
         gridData.grabExcessHorizontalSpace = true;

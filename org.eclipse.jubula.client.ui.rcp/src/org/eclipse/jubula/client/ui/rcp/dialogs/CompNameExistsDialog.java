@@ -17,7 +17,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -33,6 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 
 /**
@@ -56,7 +56,7 @@ public class CompNameExistsDialog extends TitleAreaDialog {
     private Label m_typeLabel;
     
     /** The name Text-Field */
-    private JBText m_nameField;
+    private Text m_nameField;
 
     /**
      * @param parentShell The parent shell.
@@ -132,7 +132,7 @@ public class CompNameExistsDialog extends TitleAreaDialog {
         final Label messageLabel2 = new Label(nameFieldArea, SWT.NONE);
         messageLabel2.setText(Messages.CompNameExistsDialogPressOkOrEnter);
         
-        m_nameField = new JBText(nameFieldArea, SWT.SINGLE | SWT.BORDER);
+        m_nameField = new Text(nameFieldArea, SWT.SINGLE | SWT.BORDER);
         final GridData nameFieldGridData = new GridData();
         nameFieldGridData.grabExcessHorizontalSpace = true;
         nameFieldGridData.horizontalAlignment = GridData.FILL;

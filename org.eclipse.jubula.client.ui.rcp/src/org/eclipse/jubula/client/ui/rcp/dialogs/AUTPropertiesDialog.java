@@ -46,7 +46,6 @@ import org.eclipse.jubula.client.ui.rcp.wizards.pages.AUTSettingWizardPage;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -539,12 +538,12 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
      * @param parent The parent composite.
      */
     private void createAutConfigButtons(Composite parent) {
-        JBText invisibleText = new JBText(parent, SWT.BORDER);
+        Text invisibleText = new Text(parent, SWT.BORDER);
         invisibleText.setVisible(false);
         GridData invisibleGrid = new GridData();
         invisibleGrid.widthHint = 10;
         invisibleText.setLayoutData(invisibleGrid);
-        JBText invisibleText2 = new JBText(parent, SWT.BORDER);
+        Text invisibleText2 = new Text(parent, SWT.BORDER);
         invisibleText2.setVisible(false);
         invisibleText2.setLayoutData(invisibleGrid);
         

@@ -17,7 +17,6 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -30,6 +29,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 
 
@@ -57,9 +57,9 @@ public class VersionDialog extends TitleAreaDialog {
     /** int value of minor version field */
     private Integer m_minorVersionNumber = null;
     /** the major version textfield */
-    private JBText m_majorVersionField;
+    private Text m_majorVersionField;
     /** the minor version textfield */
-    private JBText m_minorVersionField;
+    private Text m_minorVersionField;
     /** the message depends on the object that is selected */
     private String m_message = StringConstants.EMPTY;
     /** the errormessage depends on the object that is selected */

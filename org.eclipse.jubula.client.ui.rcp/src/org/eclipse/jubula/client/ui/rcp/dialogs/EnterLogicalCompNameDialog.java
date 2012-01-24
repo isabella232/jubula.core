@@ -18,7 +18,6 @@ import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.ui.dialogs.AbstractValidatedDialog;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.ComponentNameValidator;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -26,6 +25,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 
 
@@ -85,7 +85,7 @@ public abstract class EnterLogicalCompNameDialog
         area.setLayoutData(gridData);
         area.setLayout(new GridLayout(2, false));
 
-        JBText componentNameField = createComponentName(area);
+        Text componentNameField = createComponentName(area);
         gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         LayoutUtil.addToolTipAndMaxWidth(gridData, componentNameField);
         componentNameField.setLayoutData(gridData);
@@ -117,11 +117,11 @@ public abstract class EnterLogicalCompNameDialog
      * @param area The parent for the created widgets.
      * @return the created text field.
      */
-    private JBText createComponentName(Composite area) {
+    private Text createComponentName(Composite area) {
         new Label(area, SWT.NONE).setText(org.eclipse.jubula.client.ui.rcp.i18n.
                 Messages.NewCAPDialogComponentNameLabel);
 
-        JBText componentNameField = new JBText(area, SWT.SINGLE | SWT.BORDER);
+        Text componentNameField = new Text(area, SWT.SINGLE | SWT.BORDER);
         return componentNameField;
     }
 
