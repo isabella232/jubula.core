@@ -431,8 +431,8 @@ public class ExecutionController implements IAUTServerEventListener,
             }
         } catch (ToolkitPluginException e1) {
             AbstractCmdlineClient.printlnConsoleError(
-                    Messages.ExecutionControllerAUT
-                      + Messages.ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE);
+                    NLS.bind(Messages.ExecutionControllerAUT,
+                            Messages.ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE));
         }
         if (timer != null) {
             timer.abort();
@@ -593,9 +593,11 @@ public class ExecutionController implements IAUTServerEventListener,
         throws ToolkitPluginException {
         if (ts != null && autConf != null) {
             final IAUTMainPO aut = ts.getAut();
-            AbstractCmdlineClient.printConsoleLn(Messages.ExecutionControllerAUT
-                    + NLS.bind(Messages.ExecutionControllerAUTStart, 
-                            aut.getName()), true); 
+            AbstractCmdlineClient.printConsoleLn(
+                    NLS.bind(
+                            Messages.ExecutionControllerAUT,
+                            NLS.bind(Messages.ExecutionControllerAUTStart,
+                                    aut.getName())), true);
             
             if (ts != null) {
                 AutIdentifier autToStart = new AutIdentifier(
@@ -760,10 +762,12 @@ public class ExecutionController implements IAUTServerEventListener,
      * loads a project
      */
     private void loadProject() {
-        AbstractCmdlineClient.printConsoleLn(Messages
-                .ExecutionControllerDatabase
-            + NLS.bind(Messages.ExecutionControllerLoadingProject, 
-                    m_job.getProjectName()), true);
+        AbstractCmdlineClient.printConsoleLn(
+                Messages.ExecutionControllerDatabase
+                        + NLS.bind(Messages.ExecutionControllerLoadingProject,
+                            new Object[] { m_job.getProjectName(),
+                                    m_job.getProjectMajor(),
+                                    m_job.getProjectMinor() }), true);
         try {
             IProjectPO actualProject = 
                 ProjectPM.loadProjectByNameAndVersion(m_job.getProjectName(), 
@@ -879,11 +883,9 @@ public class ExecutionController implements IAUTServerEventListener,
     public void stateChanged(AUTEvent event) {
         switch (event.getState()) {
             case AUTEvent.AUT_STARTED:
-                AbstractCmdlineClient.printConsoleLn(Messages
-                        .ExecutionControllerAUT
-                        + Messages.ExecutionControllerAUTStarted, true); 
-                AbstractCmdlineClient.printConsoleLn(Messages
-                        .ExecutionControllerTestExecution,
+                AbstractCmdlineClient.printConsoleLn(NLS.bind(
+                        Messages.ExecutionControllerAUT,
+                        Messages.ExecutionControllerAUTConnectionEstablished),
                         true);
                 break;
             case AUTEvent.AUT_CLASS_VERSION_ERROR:
@@ -896,9 +898,9 @@ public class ExecutionController implements IAUTServerEventListener,
                 stopProcessing();
                 break;
             case AUTEvent.AUT_STOPPED:
-                AbstractCmdlineClient.printConsoleLn(Messages
-                        .ExecutionControllerAUT
-                        + Messages.ExecutionControllerAUTStopped, 
+                AbstractCmdlineClient.printConsoleLn(NLS.bind(
+                        Messages.ExecutionControllerAUT,
+                        Messages.ExecutionControllerAUTDisconnected),
                         true);
                 stopProcessing();
                 break;
@@ -984,10 +986,11 @@ public class ExecutionController implements IAUTServerEventListener,
             } else if (node instanceof IExecTestCasePO) {
                 nodeType = Messages.TestCase;
             }
-            
-            AbstractCmdlineClient.printConsoleLn(nodeType 
-                    + Messages.UtilsSeparator
-                + String.valueOf(node.getName()), true);
+            StringBuilder sb = new StringBuilder(nodeType);
+            sb.append(StringConstants.COLON);
+            sb.append(StringConstants.SPACE);
+            sb.append(String.valueOf(node.getName()));
+            AbstractCmdlineClient.printConsoleLn(sb.toString(), true);
         }
 
         /**
@@ -1009,7 +1012,9 @@ public class ExecutionController implements IAUTServerEventListener,
          */
         public void nextCap(ICapPO cap) {
             AbstractCmdlineClient.printConsoleLn(StringConstants.TAB
-                    + Messages.Step + Messages.UtilsSeparator
+                    + Messages.Step 
+                    + StringConstants.COLON
+                    + StringConstants.SPACE
                     + String.valueOf(cap.getName()), true);
         }
 
@@ -1018,7 +1023,9 @@ public class ExecutionController implements IAUTServerEventListener,
          */
         public void retryCap(ICapPO cap) {
             AbstractCmdlineClient.printConsoleLn(StringConstants.TAB
-                    + Messages.RetryStep + Messages.UtilsSeparator
+                    + Messages.RetryStep 
+                    + StringConstants.COLON
+                    + StringConstants.SPACE
                     + String.valueOf(cap.getName()), true);
         }
     }
@@ -1041,10 +1048,6 @@ public class ExecutionController implements IAUTServerEventListener,
         if ((event.getAutId().equals(m_startedAutId)
                 || event.getAutId().equals(m_job.getAutId()))
                 && event.getStatus() == RegistrationStatus.Register) {
-            AbstractCmdlineClient.printConsoleLn(Messages.ExecutionControllerAUT
-                    + Messages.ExecutionControllerAUTStarted, true); 
-            AbstractCmdlineClient.printConsoleLn(Messages
-                    .ExecutionControllerTestExecution, true);
             // generally do not do this, if AUT-Restart-Action is executed!
             if (m_isFirstAutStart) {
                 m_idle = false;

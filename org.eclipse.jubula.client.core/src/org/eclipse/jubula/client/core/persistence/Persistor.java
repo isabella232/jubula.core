@@ -61,6 +61,7 @@ import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import org.eclipse.persistence.jpa.osgi.PersistenceProvider;
@@ -183,10 +184,8 @@ public class Persistor {
      * @return true if successfull; false otherwise
      */
     private static boolean connectToDB() {
-        Job connectToDBJob = new Job(Messages.ConnectingToDatabase) {
+        Job connectToDBJob = new Job(Messages.ConnectingToDatabaseJob) {
             protected IStatus run(IProgressMonitor monitor) {
-                monitor.beginTask(Messages.ConnectingToDatabase,
-                        IProgressMonitor.UNKNOWN);
                 Integer message = 0;
                 try {
                     instance(user, pw, dburl, monitor);
@@ -273,7 +272,10 @@ public class Persistor {
     private void buildSessionFactoryWithLoginData(String userName, String pwd,
         String url, IProgressMonitor monitor) throws PersistenceException, 
         PMDatabaseConfException, JBException, DatabaseVersionConflictException {
-
+        monitor.beginTask(
+                NLS.bind(Messages.ConnectingToDatabase, new Object[] {
+                    userName, dbConnectionInfo.getConnectionUrl() }),
+                IProgressMonitor.UNKNOWN);
         m_sf = createEntityManagerFactory(dbConnectionInfo, userName, pwd, url);
 
         EntityManager em = null;

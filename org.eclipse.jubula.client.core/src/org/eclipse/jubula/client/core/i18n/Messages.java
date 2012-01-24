@@ -84,6 +84,7 @@ public class Messages extends NLS {
     public static String ConnectingTheAUTAgentFailed;
     public static String ConnectingToAUT;
     public static String ConnectingToDatabase;
+    public static String ConnectingToDatabaseJob;
     public static String ConnectionEstablishedOnPort;
     public static String ConnectionToAUTAgentClosed;
     public static String ConnectionToAUTCouldNotBeEstablished;
@@ -342,6 +343,8 @@ public class Messages extends NLS {
     public static String StartingRecordModus;
     public static String StartingTransaction;
     public static String ExecutingTestSuite;
+    public static String PreparingTestSuiteExecution;
+    public static String StartingTestSuite;
     public static String StartingTestSuite_resolvingTestStepsToExecute;
     public static String StartingTestSuite_resolvingPredefinedVariables;
     public static String StartingTestSuite_resettingMonitoringData;

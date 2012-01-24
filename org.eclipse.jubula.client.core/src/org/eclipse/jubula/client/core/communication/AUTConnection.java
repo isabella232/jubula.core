@@ -39,8 +39,10 @@ import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -179,7 +181,8 @@ public class AUTConnection extends BaseConnection {
             DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
                     ServerState.Connecting);
             try {
-                monitor.subTask(Messages.ConnectingToAUT);
+                monitor.subTask(NLS.bind(Messages.ConnectingToAUT, 
+                        autId.getExecutableName()));
                 LOG.info(Messages.EstablishingConnectionToAUT);
                 run();
                 getCommunicator().addCommunicationErrorListener(
@@ -205,12 +208,7 @@ public class AUTConnection extends BaseConnection {
                 while (!monitor.isCanceled() && !isConnected() 
                         && ServerConnection.getInstance().isConnected()
                         && startTime + timeout > System.currentTimeMillis()) {
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        // Do nothing. The exit conditions will be checked
-                        // again on the next loop iteration.
-                    }
+                    TimeUtil.delay(200);
                 }
                 if (isConnected()) {
                     m_connectedAutId = autId;

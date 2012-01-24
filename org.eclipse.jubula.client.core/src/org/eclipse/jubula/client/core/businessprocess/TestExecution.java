@@ -314,7 +314,8 @@ public class TestExecution {
         setPaused(false);
         Validate.notNull(testSuite, Messages.TestsuiteMustNotBeNull);
         m_executionLanguage = locale;
-        
+        monitor.subTask(NLS.bind(Messages.PreparingTestSuiteExecution,
+                testSuite.getName()));
         m_externalTestDataBP.clearExternalData();
 
         try {
@@ -523,7 +524,8 @@ public class TestExecution {
                     getRootNode(), m_externalTestDataBP);
             IProgressMonitor subMonitor = new SubProgressMonitor(monitor,
                     ClientTest.TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT);
-            subMonitor.beginTask(Messages.ExecutingTestSuite, 
+            subMonitor.beginTask(
+                    NLS.bind(Messages.ExecutingTestSuite, testSuite.getName()),
                     m_expectedNumberOfSteps);
             m_stepCounter = new StepCounter(subMonitor);
             addTestExecutionListener();
@@ -531,7 +533,9 @@ public class TestExecution {
             ClientTestFactory.getClientTest().
                 fireTestExecutionChanged(new TestExecutionEvent(
                         TestExecutionEvent.TEST_EXEC_RESULT_TREE_READY));
-            monitor.subTask(testSuite.getName());
+            monitor.subTask(
+                    NLS.bind(Messages.StartingTestSuite,
+                    testSuite.getName()));
             firstCap = m_trav.next();
         } catch (JBException e) {
             LOG.error(Messages.IncompleteTestdata, e);

@@ -115,6 +115,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -530,9 +531,11 @@ public class ClientTest implements IClientTest {
             final Locale locale, final AutIdentifier autId,
             final boolean autoScreenshot, 
             final Map<String, String> externalVars) {
-        Job runningTestSuite = new Job(Messages.ExecutingTestSuite) {
+        final String jobName = NLS.bind(Messages.ExecutingTestSuite,
+                execTestSuite.getName());
+        Job runningTestSuite = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
-                monitor.beginTask(Messages.ExecutingTestSuite, 
+                monitor.beginTask(jobName,
                         TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT);
                 TestExecution.getInstance().setStartedTestSuite(execTestSuite);
                 execTestSuite.setStarted(true);

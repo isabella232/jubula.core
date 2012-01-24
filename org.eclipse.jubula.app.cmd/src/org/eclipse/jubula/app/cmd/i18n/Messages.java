@@ -29,9 +29,9 @@ public class Messages extends NLS {
     public static String ExecutionControllerAbort;
     public static String ExecutionControllerAUT;
     public static String ExecutionControllerAUTStart;
-    public static String ExecutionControllerAUTStarted;
+    public static String ExecutionControllerAUTConnectionEstablished;
     public static String ExecutionControllerAUTStartError;
-    public static String ExecutionControllerAUTStopped;
+    public static String ExecutionControllerAUTDisconnected;
     public static String ExecutionControllerDatabase;
     public static String ExecutionControllerDataBaseEnd;
     public static String ExecutionControllerDatabaseStart;
@@ -49,7 +49,6 @@ public class Messages extends NLS {
     public static String ExecutionControllerProjectLoaded;
     public static String ExecutionControllerServer;
     public static String ExecutionControllerServerNotInstantiated;
-    public static String ExecutionControllerTestExecution;
     public static String ExecutionControllerTestJobBegin;
     public static String ExecutionControllerTestSuiteCompleteness;
     public static String ExecutionControllerTestSuiteBegin;
@@ -59,7 +58,6 @@ public class Messages extends NLS {
     public static String Step;
     public static String TestCase;
     public static String TestSuite;
-    public static String UtilsSeparator;
     public static String WatchdogTimer;
     
     static {
