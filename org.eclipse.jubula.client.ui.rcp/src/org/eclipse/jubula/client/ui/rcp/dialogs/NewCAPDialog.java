@@ -34,7 +34,6 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.CompNamePopUpTextField;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -55,6 +54,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 
 
@@ -79,7 +79,7 @@ public class NewCAPDialog extends TitleAreaDialog {
     /** horizontal span = 3 */
     private static final int HORIZONTAL_SPAN = 3;
     /** the m_text field for the CapPO name */
-    private JBText m_capNameField;
+    private Text m_capNameField;
     /** the m_text field for the component name */
     private CompNamePopUpTextField m_componentNameField;
     /** the combo box for the components */
@@ -227,7 +227,7 @@ public class NewCAPDialog extends TitleAreaDialog {
     private void createCapNameField(Composite area) {
         Label label = new Label(area, SWT.NONE);
         label.setText(Messages.NewCAPDialogCapNameLabel);
-        m_capNameField = new JBText(area, SWT.SINGLE | SWT.BORDER);
+        m_capNameField = new Text(area, SWT.SINGLE | SWT.BORDER);
         GridData gridData = newGridData();
         LayoutUtil.addToolTipAndMaxWidth(gridData, m_capNameField);
         m_capNameField.setLayoutData(gridData);

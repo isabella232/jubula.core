@@ -44,7 +44,6 @@ import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.toolkit.common.monitoring.MonitoringAttribute;
 import org.eclipse.jubula.toolkit.common.monitoring.MonitoringUtils;
@@ -76,6 +75,7 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Text;
 
 
 
@@ -116,11 +116,11 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     // internally used classes for data handling
     // internally used GUI components
     /** gui component */
-    private JBText m_jarTextField;
+    private Text m_jarTextField;
     /** gui component */
     private Button m_jarButton;
     /** text field for the executable that will launch the AUT */
-    private JBText m_execTextField;
+    private Text m_execTextField;
     /** browse button for the executable */
     private Button m_execButton;
     /** gui component */
@@ -138,23 +138,23 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     /** move down button */
     private Button m_moveElementDownButton;
     /** gui component */
-    private JBText m_classNameTextField;
+    private Text m_classNameTextField;
     /** gui component */
-    private JBText m_autArgsTextField;
+    private Text m_autArgsTextField;
     /** gui component */
     private I18nEnumCombo<ActivationMethod> m_activationMethodCombo;
     /** gui component */
-    private JBText m_autJreTextField;
+    private Text m_autJreTextField;
     /** gui component */
     private Button m_autJreButton;
     /** gui component */
     private Composite m_autJreComposite;
     /** gui component */
-    private JBText m_autJreParamTextField;
+    private Text m_autJreParamTextField;
     /** gui component */
     private DirectCombo<String> m_monitoringCombo;
     /** gui component */
-    private JBText m_envTextArea;
+    private Text m_envTextArea;
     /** the WidgetModifyListener */
     private WidgetModifyListener m_modifyListener;
     /** the WidgetFocusListener */
@@ -287,7 +287,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             MonitoringAttribute att) {
         
         Composite c = UIComponentHelper.createLayoutComposite(composite, 2);
-        final JBText textField = createMonitoringTextFieldWidget(c, att);
+        final Text textField = createMonitoringTextFieldWidget(c, att);
         final Button browseButton = new Button(c, SWT.PUSH);
         browseButton.setText(Messages.AUTConfigComponentBrowse);
         browseButton.setLayoutData(BUTTON_LAYOUT);
@@ -332,10 +332,10 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @return A monitoring textfield
      * 
      */
-    private JBText createMonitoringTextFieldWidget(Composite composite, 
+    private Text createMonitoringTextFieldWidget(Composite composite, 
             final MonitoringAttribute att) {
         
-        final JBText textField = UIComponentHelper.createTextField(
+        final Text textField = UIComponentHelper.createTextField(
                 composite, 1);
         textField.setData(MonitoringConstants.MONITORING_KEY, 
                 att.getId());
@@ -577,7 +577,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      */
     private void initGuiEnvironmentEditor(Composite parent) {
         UIComponentHelper.createLabel(parent, "AUTConfigComponent.envVariables"); //$NON-NLS-1$ 
-        m_envTextArea = new JBText(parent, 
+        m_envTextArea = new Text(parent, 
                 LayoutUtil.MULTI_TEXT | SWT.V_SCROLL);
         LayoutUtil.setMaxChar(m_envTextArea, 4000);
         GridData textGridData = new GridData();
@@ -866,8 +866,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         
         for (int i = 0; i < ca.length; i++) {                       
             if (ca[i].getData(MonitoringConstants.MONITORING_KEY) != null) {
-                if (ca[i] instanceof JBText) {
-                    JBText t = (JBText) ca[i];
+                if (ca[i] instanceof Text) {
+                    Text t = (Text) ca[i];
                     String value = data.get(String.valueOf(
                             t.getData(MonitoringConstants.MONITORING_KEY)));
                     if (value != null && !value.equals(StringConstants.EMPTY)) {
@@ -1088,7 +1088,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @param title window title
      */
     void browseLocal(String [] extensionFilters, String title, 
-            JBText textField, String configVarKey) {
+            Text textField, String configVarKey) {
         String directory;
         FileDialog fileDialog = 
             new FileDialog(getShell(), SWT.APPLICATION_MODAL | SWT.ON_TOP);
@@ -1818,7 +1818,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @param directoryDialog The DirectoryDialog
      * @param textField The textField
      */
-    private void handleBrowseDirButtonEvent(JBText textField,
+    private void handleBrowseDirButtonEvent(Text textField,
             DirectoryDialog directoryDialog) {
         String directory = null;
         directoryDialog.setMessage(Messages.AUTConfigComponentSelectDir);
@@ -1847,7 +1847,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * corresponding to the text field in the monitoring area.
      * @param textField The text field to set the path to.
      */
-    private void monitoringBrowseButtonSelected(JBText textField) {
+    private void monitoringBrowseButtonSelected(Text textField) {
         if (isRemoteRequest()) {
             remoteBrowse(true, 
                     String.valueOf(textField.getData(

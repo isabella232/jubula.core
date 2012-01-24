@@ -38,7 +38,6 @@ import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.ui.dialogs.DatabaseConnectionDialog;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -82,8 +81,8 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
                     case SWT.FocusIn:
                         if (m_isTraversing) {
                             m_isTraversing = false;
-                            if (event.widget instanceof JBText) {
-                                ((JBText)event.widget).selectAll();
+                            if (event.widget instanceof Text) {
+                                ((Text)event.widget).selectAll();
                             }
                         }
                         break;

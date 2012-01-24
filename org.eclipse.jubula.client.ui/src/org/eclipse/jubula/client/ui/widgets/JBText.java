@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Text;
  * @author BREDEX GmbH
  * @created 02.03.2006
  */
-public class JBText extends Text {
+public abstract class JBText extends Text {
     /**
      * @param parent parent
      * @param style style
@@ -32,11 +32,8 @@ public class JBText extends Text {
     public JBText(Composite parent, int style) {
         super(parent, style);
     }   
-   
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected void checkSubclass() {
         // do nothing, therefor allowing subclassing
     }

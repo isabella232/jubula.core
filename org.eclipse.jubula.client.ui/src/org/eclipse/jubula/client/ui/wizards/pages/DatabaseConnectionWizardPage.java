@@ -41,7 +41,6 @@ import org.eclipse.jubula.client.ui.databinding.SimpleIntegerToStringConverter;
 import org.eclipse.jubula.client.ui.databinding.SimpleStringToIntegerConverter;
 import org.eclipse.jubula.client.ui.databinding.validators.StringToPortValidator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
@@ -460,7 +459,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         setControl(composite);
         
         UIComponentHelper.createLabel(composite, I18n.getString("DatabaseConnection.Name"), SWT.NONE); //$NON-NLS-1$
-        JBText nameText = new JBText(composite, SWT.BORDER);
+        Text nameText = new Text(composite, SWT.BORDER);
         DialogUtils.setWidgetName(nameText, "DatabaseConnection.Name"); //$NON-NLS-1$
         nameText.setLayoutData(textGridDataFactory.create());
         dbc.bindValue(SWTObservables.observeText(nameText, SWT.Modify), 
@@ -505,7 +504,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         bindComboViewer(dbc, typeComboViewer, detailArea,
                 connectionInfoObservable);
         
-        JBText url = new JBText(composite, SWT.BORDER);
+        Text url = new Text(composite, SWT.BORDER);
         DialogUtils.setWidgetName(url, "DatabaseConnection.URL"); //$NON-NLS-1$
         url.setEditable(false);
         url.setBackground(composite.getBackground());
@@ -604,7 +603,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
      * @return the created text field.
      */
     private static Text createDetailText(Composite parent) {
-        final JBText detailText = new JBText(parent, SWT.BORDER);
+        final Text detailText = new Text(parent, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false)
             .align(SWT.FILL, SWT.CENTER).applyTo(detailText);
         return detailText;

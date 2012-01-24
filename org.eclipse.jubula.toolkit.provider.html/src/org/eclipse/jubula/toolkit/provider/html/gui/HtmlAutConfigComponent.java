@@ -23,7 +23,6 @@ import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.widgets.AutConfigComponent;
 import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -39,6 +38,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 
 /**
@@ -47,11 +47,11 @@ import org.eclipse.swt.widgets.Label;
  */
 public class HtmlAutConfigComponent extends AutConfigComponent {
     /** gui component */
-    private JBText m_autUrlTextField;
+    private Text m_autUrlTextField;
     /** gui field for browser */
-    private JBText m_browserTextField;
+    private Text m_browserTextField;
     /** gui field for aut id attribute text field */
-    private JBText m_autIdAttibuteTextField;
+    private Text m_autIdAttibuteTextField;
     /** gui button for browser path */
     private Button m_browserPathButton;
     /** gui component */

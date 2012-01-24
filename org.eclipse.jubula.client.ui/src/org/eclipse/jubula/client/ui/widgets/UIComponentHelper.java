@@ -24,6 +24,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 
 /**
@@ -77,8 +78,8 @@ public abstract class UIComponentHelper {
      * @param hSpan number of columns the sepator should span
      * @return a Text
      */
-    public static JBText createTextField(Composite parent, int hSpan) {
-        final JBText textField = new JBText(parent, SWT.BORDER);
+    public static Text createTextField(Composite parent, int hSpan) {
+        final Text textField = new Text(parent, SWT.BORDER);
         GridData textGrid = new GridData(GridData.FILL, GridData.CENTER, 
             true , false, hSpan, 1);
         LayoutUtil.addToolTipAndMaxWidth(textGrid, textField); // FIXME al
@@ -182,14 +183,14 @@ public abstract class UIComponentHelper {
      * @param limit The limit, any number greater than one and less than
      * Text.LIMIT;
      */
-    public static void setMaxTextChars(JBText textField, final int limit) {
+    public static void setMaxTextChars(Text textField, final int limit) {
         if (textField == null) {
             return;
         }
         textField.setTextLimit(limit);
         textField.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
-                if (((JBText)e.widget).getCharCount() == limit) {
+                if (((Text)e.widget).getCharCount() == limit) {
                     ErrorHandlingUtil.createMessageDialog(
                             MessageIDs.W_MAX_CHAR, 
                             new Object[] {limit}, null);  

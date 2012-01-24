@@ -47,7 +47,6 @@ import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.ConfigurationConstants;
@@ -69,6 +68,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
@@ -222,17 +222,17 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /** Composite holding the entire contents of this config component */
     private Composite m_contentComposite;
     /** gui component */
-    private JBText m_autConfigNameTextField;
+    private Text m_autConfigNameTextField;
     /** gui component */
     private Combo m_serverCombo;
     /** gui component */
     private Button m_addServerButton;
     /** gui component */
-    private JBText m_autWorkingDirectoryTextField;
+    private Text m_autWorkingDirectoryTextField;
     /** gui component */
     private Button m_autWorkingDirectoryButton;
     /** gui component */
-    private JBText m_autIdTextField;
+    private Text m_autIdTextField;
     /** validator for the AUT ID text field */
     private IValidator m_autIdValidator;
 
@@ -314,7 +314,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /**
      * @return the text field for the AUT working directory
      */
-    protected JBText getAutWorkingDirField() {
+    protected Text getAutWorkingDirField() {
         return m_autWorkingDirectoryTextField;
     }
     
@@ -982,8 +982,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             String text = combo.getText();
             return checkTextInput(emptyAllowed, textLength, text);
         } 
-        if (modifiedWidget instanceof JBText) {
-            JBText textField = (JBText)modifiedWidget;
+        if (modifiedWidget instanceof Text) {
+            Text textField = (Text)modifiedWidget;
             int textLength = textField.getText().length();
             String text = textField.getText();
             return checkTextInput(emptyAllowed, textLength, text);
@@ -1258,7 +1258,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /**
      * @return the Text component for the Configuration name.
      */
-    protected JBText getAutConfigNameTextField() {
+    protected Text getAutConfigNameTextField() {
         return m_autConfigNameTextField;
     }
     
@@ -1305,7 +1305,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * 
      * @return the text field for the Working Directory.
      */
-    protected JBText getWorkingDirTextField() {
+    protected Text getWorkingDirTextField() {
         return m_autWorkingDirectoryTextField;
     }
     
@@ -1344,7 +1344,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * @return true if the user selected a new entry and no error occured
      */
     protected boolean remoteBrowse(boolean folderSelection,
-            String configVarKey, JBText textfield, String title) {
+            String configVarKey, Text textfield, String title) {
         
         boolean valueChanged = false;
         

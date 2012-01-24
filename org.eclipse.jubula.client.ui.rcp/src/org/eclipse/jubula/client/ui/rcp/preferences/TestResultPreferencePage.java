@@ -22,7 +22,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.I18nStringCombo;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.JBText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
@@ -44,10 +43,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-
-
 
 /**
  * @author BREDEX GmbH
@@ -82,7 +80,7 @@ public class TestResultPreferencePage extends PreferencePage
         "TestResultViewPreferencePage"; //$NON-NLS-1$
     
     /** textfield to define path to xml Generation */
-    private JBText m_path = null;
+    private Text m_path = null;
 
     /**  Checkbox to decide Open ResultView */
     private Button m_openResultView = null;
@@ -118,7 +116,7 @@ public class TestResultPreferencePage extends PreferencePage
      * textfield to define maximum number of results in the test result summary
      * view
      */
-    private JBText m_numberOfDays = null;
+    private Text m_numberOfDays = null;
 
     /**
      * <code>m_testExecRememberValue</code>
@@ -373,8 +371,8 @@ public class TestResultPreferencePage extends PreferencePage
      * @param parent The composite.
      * @return a new m_text field
      */
-    private JBText newTextField(Composite parent) {
-        final JBText textField = new JBText(parent, SWT.BORDER);
+    private Text newTextField(Composite parent) {
+        final Text textField = new Text(parent, SWT.BORDER);
         GridData textGrid = new GridData(GridData.FILL, GridData.CENTER, 
             true , false, 3, 1);
         textGrid.widthHint = Dialog.convertWidthInCharsToPixels(
