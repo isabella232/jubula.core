@@ -72,7 +72,7 @@
                   </equals>
                </with>
                <with
-                     variable="org.eclipse.jubula.client.ui.variable.autConnectionStatus">
+                     variable="org.eclipse.jubula.client.ui.rcp.variable.autConnectionStatus">
                   <equals
                         value="Disconnected">
                   </equals>
