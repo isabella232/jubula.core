@@ -274,7 +274,7 @@ public class ExecutionController implements IAUTServerEventListener,
      * Name of the environment variable that defines the time the client should
      * wait during AUT startup process.
      */
-    private static final String AUT_STARTUP_DELAY_VAR = "GD_AUT_STARTUP_DELAY"; //$NON-NLS-1$
+    private static final String AUT_STARTUP_DELAY_VAR = "TEST_AUT_STARTUP_DELAY"; //$NON-NLS-1$
     
     /**
      * default time to wait during startup process 
@@ -641,11 +641,7 @@ public class ExecutionController implements IAUTServerEventListener,
         } catch (NumberFormatException e) {
             // ignore invalid formatted values and use default instead
         }
-        try {
-            Thread.sleep(timeToWait);
-        } catch (InterruptedException e) {
-            // ignore
-        }
+        TimeUtil.delay(timeToWait);
     }
 
     /**
