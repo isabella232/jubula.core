@@ -51,3 +51,24 @@ without having to set timers or manually check timestamps.
 \item You can use this value later on in the test, or you can compare various values using the actions to compare string values or compare numeric values. 
 \item One example use case for this new action is to test table filters. The rowCount of the table can be saved into a variable before filtering, and the rowCount after filtering into a different variable. The variables can then be compared with each other to ensure that the second value is less than the first, for example.
 \end{itemize} 
+
+\textbf{New extensible adapter mechanism for Swing components}\\
+\begin{itemize}
+\item \app{} now allows you to add support for renderers for Swing components without the getText() method.
+\item An example of the adapter mechanism can be found here:\\
+\bxname{http://git.eclipse.org/c/jubula/org.eclipse.jubula.core.git/}\\
+\bxname{tree/org.eclipse.jubula.examples.extension.swing.rc.adapter}
+\item This does not replace the support for custom Swing renderers that can be changed directly by your developers. 
+\item If you are able to change the renderers yourself, you can still implement one of the following in your renderer:
+\begin{quote}
+public String getTestableText();
+public String getText();
+\end{quote}
+\end{itemize}
+
+
+\textbf{GD\_AUT\_STARTUP\_DELAY renamed to TEST\_AUT\_STARTUP\_DELAY}\\
+\begin{itemize}
+\item There is an undocumented variable that can be set as an environment variable to increase the delay between starting an \gdaut{} and checking that it is there.
+\item This delay was named \bxshell{GD\_AUT\_STARTUP\_DELAY} and has now been updated to \bxshell{TEST\_AUT\_STARTUP\_DELAY}. Any customers using this variable should update it in their test environment. 
+\end{itemize}
