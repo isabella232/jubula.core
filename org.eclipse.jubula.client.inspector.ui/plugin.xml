@@ -43,7 +43,7 @@
                id="org.eclipse.jubula.client.inspector.ui.commands.parameter.activateInspector.autId"
                name="AUT"
                optional="false"
-               typeId="org.eclipse.jubula.client.ui.commands.parametertypes.autId">
+               typeId="org.eclipse.jubula.client.ui.rcp.commands.parametertypes.autId">
          </commandParameter>
       </command>
       <command
