@@ -10,8 +10,8 @@
 These items reside on the machine on which the \gdagent is installed. 
 \begin{itemize}
 \item The paths to these files are entered in the \gdaut{} configuration. 
-\item They are relative to the \gdaut{} \bxname{base directory}, if you have entered one. 
-\item If no \gdaut{} \bxname{base directory} is given, these paths are relative to the ''server'' directory. 
+\item They are relative to the \gdaut{} \bxname{working directory}, if you have entered one. 
+\item If no \gdaut{} \bxname{working directory} is given, these paths are relative to the ''server'' directory. 
 \end{itemize}
 
 
@@ -34,6 +34,6 @@ External data files reside on the machine on which the \ite{} is installed.
 \begin{itemize}
 \item When you use the action \bxname{execute external command}, you specify whether the command should be executed locally or remotely. 
 \item If you execute a local command, the relative path to it uses the test data directory as specified in the preferences as its root, if you have specified one. If not, the root is your workspace directory. 
-\item If you execute a remote command, the root directory for the relative path is the \gdaut{} \bxname{base directory}, if you have defined one. If not, the default root directory is the ''server'' directory. 
+\item If you execute a remote command, the root directory for the relative path is the \gdaut{} \bxname{working directory}, if you have defined one. If not, the default root directory is the ''server'' directory. 
 \end{itemize}
 
