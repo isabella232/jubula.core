@@ -158,12 +158,10 @@ public class TestSuiteBP extends NodeBP {
         /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
-            boolean nodeFound = false;
             if (m_nodeType.isAssignableFrom(node.getClass())) {
-                nodeFound = true;
                 m_listOfExecNodes.add((T) node);
             }
-            return nodeFound;
+            return true;
         }
 
         /**
