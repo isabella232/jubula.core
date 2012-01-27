@@ -23,7 +23,6 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -45,6 +44,7 @@ import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
+import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -262,7 +262,9 @@ public class UsedToolkitBP {
                 }
             };
 
-        new TreeTraverser(project, addToolkitOP, true, false).traverse();
+        SpecTreeTraverser traverser = new SpecTreeTraverser(project, 
+            addToolkitOP);
+        traverser.traverse();
         if (monitor != null && monitor.isCanceled()) {
             return;
         }
@@ -612,7 +614,9 @@ public class UsedToolkitBP {
                 }
             };
         
-        new TreeTraverser(root, levelSearchOp, true, false).traverse();
+        final TreeTraverser traverser = new SpecTreeTraverser(root, 
+            levelSearchOp);
+        traverser.traverse();
         return treeOpResult.getBool();
     }
     
