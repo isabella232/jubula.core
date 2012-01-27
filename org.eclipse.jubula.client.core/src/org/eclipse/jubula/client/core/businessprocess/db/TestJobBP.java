@@ -17,7 +17,7 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP.ExecNodeFin
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
+import org.eclipse.jubula.client.core.utils.TreeTraverser;
 
 /**
  * @author Markus Tiede
@@ -45,9 +45,7 @@ public class TestJobBP extends NodeBP {
         if (project != null) {
             final ExecNodeFinder<ITestJobPO> op = 
                     new ExecNodeFinder<ITestJobPO>(ITestJobPO.class);
-            final ExecTreeTraverser traverser = 
-                    new ExecTreeTraverser(project, op);
-            traverser.traverse(false);
+            new TreeTraverser(project, op, false, true).traverse(false);
             return op.getListOfExecNodes();
         }
         

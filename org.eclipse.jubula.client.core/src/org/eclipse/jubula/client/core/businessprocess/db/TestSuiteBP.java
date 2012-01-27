@@ -26,8 +26,8 @@ import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
-import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
+import org.eclipse.jubula.client.core.utils.TreeTraverser;
 
 /**
  * @author BREDEX GmbH
@@ -127,9 +127,7 @@ public class TestSuiteBP extends NodeBP {
         if (project != null) {
             final ExecNodeFinder<ITestSuitePO> op = 
                     new ExecNodeFinder<ITestSuitePO>(ITestSuitePO.class);
-            final ExecTreeTraverser traverser = 
-                    new ExecTreeTraverser(project, op);
-            traverser.traverse(false);
+            new TreeTraverser(project, op, false, true).traverse(false);
             return op.getListOfExecNodes();
         }
         

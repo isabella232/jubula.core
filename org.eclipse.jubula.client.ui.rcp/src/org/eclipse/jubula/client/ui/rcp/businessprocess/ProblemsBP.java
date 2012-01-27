@@ -60,10 +60,8 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
-import org.eclipse.jubula.client.core.utils.ExecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
-import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -246,9 +244,9 @@ public class ProblemsBP implements ICompletenessCheckListener,
         if (project == null) {
             return;
         }
-        final ITreeNodeOperation<INodePO> op = new CollectProblemsOperation();
-        TreeTraverser traverser = new ExecTreeTraverser(project, op);
-        traverser.traverse(true);        
+        new TreeTraverser(project, 
+            new CollectProblemsOperation(), false, true)
+                .traverse(true);
     }
     
     /**
@@ -828,11 +826,9 @@ public class ProblemsBP implements ICompletenessCheckListener,
             return;
         }
         final ITreeNodeOperation<INodePO> op = new CheckProblemsOperation();
-        TreeTraverser traverser = new SpecTreeTraverser(project, op);
+        TreeTraverser traverser = new TreeTraverser(project, op, true, true);
         traverser.addOperation(new ActionCheckOperation());
         traverser.traverse();        
-        traverser = new ExecTreeTraverser(project, op);
-        traverser.traverse();
     }
     
     /**
