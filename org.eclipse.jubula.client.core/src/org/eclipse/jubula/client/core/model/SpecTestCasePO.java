@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.FindNodeParentOperation;
-import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
+import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.slf4j.Logger;
@@ -187,8 +187,7 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
                 parent = ProjectPM.loadProjectById(getParentProjectId(), 
                     GeneralStorage.getInstance().getMasterSession());
                 FindNodeParentOperation op = new FindNodeParentOperation(this);
-                SpecTreeTraverser traverser = new SpecTreeTraverser(parent, op);
-                traverser.traverse(true);
+                new TreeTraverser(parent, op, true, false).traverse(true);
                 if (op.getParent() != null) {
                     parent = op.getParent();
                     setParentNode(parent);
