@@ -35,6 +35,7 @@ public class GetAutConfigMapCommand implements ICommand {
       
     /** The autConfigMap to return */
     private Map m_autConfigMap;
+    
     /**
      * {@inheritDoc}
      */

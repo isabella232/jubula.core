@@ -39,9 +39,15 @@ public class GetAutConfigMapResponseCommand implements ICommand {
     private Map<String, String> m_autConfigMap;
 
     /**
+     * wheter a response has been received or not
+     */
+    private boolean m_receivedResponse = false;
+    
+    /**
      * {@inheritDoc}
      */
     public Message execute() {
+        setReceivedResponse(true);
         setAutConfigMap(m_message.getAutConfigMap());
         return null;
     }
@@ -83,5 +89,19 @@ public class GetAutConfigMapResponseCommand implements ICommand {
      */
     public Map<String, String> getAutConfigMap() {
         return m_autConfigMap;
+    }
+
+    /**
+     * @return the receivedResponse
+     */
+    public boolean hasReceivedResponse() {
+        return m_receivedResponse;
+    }
+
+    /**
+     * @param receivedResponse the receivedResponse to set
+     */
+    public void setReceivedResponse(boolean receivedResponse) {
+        m_receivedResponse = receivedResponse;
     }
 }
