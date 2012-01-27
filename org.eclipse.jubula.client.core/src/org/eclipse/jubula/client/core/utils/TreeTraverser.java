@@ -66,6 +66,12 @@ public class TreeTraverser {
      */
     private boolean m_traverseSpecPart = false;
     
+    /**
+     * traverses the execution when project as root is given, this is the
+     * default behavior
+     */
+    private boolean m_traverseExecPart = true;
+    
     /** 
      * The maximum traversal depth. <code>NO_DEPTH_LIMIT</code> by default. 
      */
@@ -115,8 +121,31 @@ public class TreeTraverser {
     public TreeTraverser(INodePO rootNode, 
             ITreeNodeOperation<INodePO> operation, 
         boolean traverseSpecPart) {
-        this(rootNode, operation);
+        this(rootNode, operation, traverseSpecPart, !traverseSpecPart);
+    }
+    
+    /**
+     * The constructor.
+     * 
+     * @param rootNode
+     *            The node where the traversion starts
+     * @param operation
+     *            The operation to call on any node
+     * @param traverseSpecPart
+     *          boolean to indicate if specPart should be traversed,
+     *          when project is given as root
+     * @param traverseExecPart
+     *          boolean to indicate if execPart should be traversed,
+     *          when project is given as root
+     */
+    public TreeTraverser(INodePO rootNode, 
+            ITreeNodeOperation<INodePO> operation, 
+        boolean traverseSpecPart,
+        boolean traverseExecPart) {
+        m_rootNode = rootNode;
+        m_operations.add(operation);
         m_traverseSpecPart = traverseSpecPart;
+        m_traverseExecPart = traverseExecPart;
     }
 
     /**
@@ -134,7 +163,7 @@ public class TreeTraverser {
     public TreeTraverser(INodePO rootNode, 
             ITreeNodeOperation<INodePO> operation, 
         boolean traverseSpecPart, int maxTraversalDepth) {
-        this(rootNode, operation, traverseSpecPart);
+        this(rootNode, operation, traverseSpecPart, !traverseSpecPart);
         m_maxDepth = maxTraversalDepth;
     }
 
@@ -225,42 +254,67 @@ public class TreeTraverser {
      * @param project
      *            The Project to traverse.
      */
-    private void traverseProject(ITreeTraverserContext<INodePO> context, 
+    private void traverseProject(ITreeTraverserContext<INodePO> context,
             IProjectPO project) {
         if (m_traverseSpecPart) {
-            for (ISpecPersistable specNode 
-                    : project.getSpecObjCont().getSpecObjList()) {
-                traverseImpl(context, project, specNode);
-            }
-            for (IReusedProjectPO reused
-                    : project.getUsedProjects()) {
+            traverseLocalSpecPart(context, project);
+            traverseReusedProjectSpecPart(context, project);
+        } 
+        if (m_traverseExecPart) {
+            traverseExecPart(context, project);
+        }
+    }
 
-                try {
-                    IProjectPO reusedProject = 
-                        ProjectPM.loadReusedProjectInMasterSession(
-                                reused);
+    /**
+     * @param context the context 
+     * @param project the project
+     */
+    protected void traverseExecPart(ITreeTraverserContext<INodePO> context,
+            IProjectPO project) {
+        for (IExecPersistable exec : project.getExecObjCont()
+                .getExecObjList()) {
 
-                    if (reusedProject != null) {
-                        for (ISpecPersistable specNode : reusedProject
-                                .getSpecObjCont().getSpecObjList()) {
+            traverseImpl(context, project, exec);
+        }
+    }
 
-                            traverseImpl(context, reusedProject, specNode);
-                        }
-                    }
+    /**
+     * @param context the context 
+     * @param project the project
+     */
+    protected void traverseReusedProjectSpecPart(
+            ITreeTraverserContext<INodePO> context, IProjectPO project) {
+        for (IReusedProjectPO reused
+                : project.getUsedProjects()) {
 
-                } catch (JBException e) {
-                    // Unable to load Reused Project.
-                    // The Reused Project will not be traversed.
+            try {
+                IProjectPO reusedProject = 
+                    ProjectPM.loadReusedProjectInMasterSession(
+                            reused);
+
+                if (reusedProject != null) {
+                    traverseLocalSpecPart(context, reusedProject);
                 }
-            }
-        } else {
-            for (IExecPersistable exec : project.getExecObjCont()
-                    .getExecObjList()) {
 
-                traverseImpl(context, project, exec);
+            } catch (JBException e) {
+                // Unable to load Reused Project.
+                // The Reused Project will not be traversed.
             }
         }
     }
+
+    /**
+     * @param context the context 
+     * @param project the project
+     */
+    protected void traverseLocalSpecPart(
+            ITreeTraverserContext<INodePO> context, IProjectPO project) {
+        for (ISpecPersistable specNode 
+                : project.getSpecObjCont().getSpecObjList()) {
+            traverseImpl(context, project, specNode);
+        }
+    }
+    
     /**
      * Starts the traversion of the tree under the root node passed to the
      * constructor. Event handlers are not included during the traversion.

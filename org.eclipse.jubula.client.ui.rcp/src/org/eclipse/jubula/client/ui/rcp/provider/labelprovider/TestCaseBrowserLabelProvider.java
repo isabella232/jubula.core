@@ -22,7 +22,7 @@ import org.eclipse.swt.graphics.Image;
  * @author BREDEX GmbH
  * @created 04.04.2011
  */
-public class TestCaseBrowserLabelProvider extends GeneralLabelProvider {
+public class TestCaseBrowserLabelProvider extends TooltipLabelProvider {
 
     @Override
     public String getText(Object element) {

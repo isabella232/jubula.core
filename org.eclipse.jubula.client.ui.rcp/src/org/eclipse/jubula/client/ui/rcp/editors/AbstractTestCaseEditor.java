@@ -24,6 +24,7 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -33,6 +34,7 @@ import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCach
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
@@ -86,7 +88,9 @@ import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestCaseEditorContentProvider;
+import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TooltipLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -122,6 +126,14 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         setParentComposite(parent);
         // sets the input of the trees.
         setInitialInput();
+
+        ColumnViewerToolTipSupport.enableFor(getTreeViewer());
+        DecoratingCellLabelProvider lp = new DecoratingCellLabelProvider(
+                new TooltipLabelProvider(), Plugin.getDefault()
+                        .getWorkbench().getDecoratorManager()
+                        .getLabelDecorator());
+        getTreeViewer().setLabelProvider(lp);
+        
         final DataEventDispatcher dispatcher = 
             DataEventDispatcher.getInstance();
         dispatcher.addPropertyChangedListener(this, true);
@@ -240,6 +252,20 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
 
         initTopTreeViewer(workVersion);
+        
+        runLocalChecks();
+    }
+
+    /**
+     * run local completeness checks such as test data completeness
+     */
+    protected void runLocalChecks() {
+        INodePO node = (INodePO) getEditorHelper().getEditSupport()
+                .getWorkVersion();
+        for (INodePO child : node.getUnmodifiableNodeList()) {
+            CompletenessGuard.checkLocalTestData(child, WorkingLanguageBP
+                    .getInstance().getWorkingLanguage());
+        }
     }
 
     /**
@@ -697,6 +723,12 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         }
     }
     
+    /** {@inheritDoc} */
+    public void handlePropertyChanged(boolean isCompNameChanged) {
+        super.handlePropertyChanged(isCompNameChanged);
+        runLocalChecks();
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -738,6 +770,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                     break;
                 default:
                     Assert.notReached();
+            }
+            if (isVisibleInEditor) {
+                runLocalChecks();
             }
             getEditorHelper().handleDataChanged(po, dataState);
         }

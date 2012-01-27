@@ -34,7 +34,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IPropertyChange
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionGDEditor;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCEditor;
@@ -149,8 +148,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         DecoratingLabelProvider lp = new DecoratingLabelProvider(
                 new GeneralLabelProvider(), Plugin.getDefault().getWorkbench()
                         .getDecoratorManager().getLabelDecorator());
-        lp.setDecorationContext(
-                new AbstractLightweightLabelDecorator.NonDecorationContext());
         getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setUseHashlookup(true);
         getMainTreeViewer().setComparer(new UIIdentitiyElementComparer());
@@ -296,7 +293,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      */
     public void handlePropertyChanged(boolean isCompNameChanged) {
         createPartName();
-        getMainTreeViewer().refresh();
+        getTreeViewer().refresh();
     }
     
 

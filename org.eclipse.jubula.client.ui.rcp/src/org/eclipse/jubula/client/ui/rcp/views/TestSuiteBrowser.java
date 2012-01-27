@@ -58,7 +58,7 @@ import org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestSuiteBrowserContentProvider;
-import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TestSuiteBrowserLabelProvider;
+import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TooltipLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -101,7 +101,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         getTreeViewer().setContentProvider(
                 new TestSuiteBrowserContentProvider());
         DecoratingCellLabelProvider lp = new DecoratingCellLabelProvider(
-                new TestSuiteBrowserLabelProvider(), Plugin.getDefault()
+                new TooltipLabelProvider(), Plugin.getDefault()
                         .getWorkbench().getDecoratorManager()
                         .getLabelDecorator());
 

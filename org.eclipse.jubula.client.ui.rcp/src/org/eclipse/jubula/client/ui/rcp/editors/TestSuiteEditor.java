@@ -62,10 +62,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
  */
 public class TestSuiteEditor extends AbstractTestCaseEditor {
 
-    /**
-     * {@inheritDoc}
-     * @param parent
-     */
+    /** {@inheritDoc} */
     public void createPartControlImpl(Composite parent) {
         super.createPartControlImpl(parent);
         ActionListener actionListener = new ActionListener();
@@ -76,7 +73,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
     }
 
     /**
-     * Sets the input of the tree viewer for specificaion.
+     * Sets the input of the tree viewer for specification.
      */
     public void setInitialInput() {
         getMainTreeViewer().setContentProvider(
@@ -92,6 +89,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
             getMainTreeViewer().expandAll();
             getMainTreeViewer().setSelection(new StructuredSelection(rootPO));
         }
+        runLocalChecks();
     }
     
     /**

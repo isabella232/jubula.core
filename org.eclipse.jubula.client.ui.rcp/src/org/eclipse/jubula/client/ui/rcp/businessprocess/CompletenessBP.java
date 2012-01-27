@@ -20,12 +20,13 @@ import org.eclipse.core.commands.NotHandledException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
-import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectOpenedListener;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.DebugConstants;
@@ -112,7 +113,7 @@ public class CompletenessBP implements IProjectOpenedListener,
                     .CompletenessCheckRunningOperation);
             try {
                 PlatformUI.getWorkbench().getProgressService().run(true, false,
-                        new CompletenessCheckOperation());
+                        new UICompletenessCheckOperation());
             } catch (InvocationTargetException e) {
                 log.error(DebugConstants.ERROR, e);
             } catch (InterruptedException e) {
@@ -127,24 +128,26 @@ public class CompletenessBP implements IProjectOpenedListener,
      * @author Markus Tiede
      * @created 07.11.2011
      */
-    public static class CompletenessCheckOperation implements
+    public static class UICompletenessCheckOperation implements
             IRunnableWithProgress {
 
         /** {@inheritDoc} */
         public void run(IProgressMonitor monitor) {
-
             monitor.beginTask(Messages.CompletenessCheckRunningOperation,
                     IProgressMonitor.UNKNOWN);
 
-            ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
-
             try {
-                final INodePO root = GeneralStorage.getInstance().getProject();
+                final IProjectPO project = GeneralStorage.getInstance()
+                        .getProject();
                 final Locale wl = WorkingLanguageBP.getInstance()
                         .getWorkingLanguage();
-                CompletenessGuard.checkAll(wl, root);
+                CompletenessGuard.checkAll(wl, 
+                        project);
+                for (ISpecPersistable spec : project.getSpecObjCont()
+                        .getSpecObjList()) {
+                    CompletenessGuard.checkTestData(wl, spec);
+                }
             } finally {
-                ProgressMonitorTracker.getInstance().setProgressMonitor(null);
                 fireCompletenessCheckFinished();
                 monitor.done();
             }

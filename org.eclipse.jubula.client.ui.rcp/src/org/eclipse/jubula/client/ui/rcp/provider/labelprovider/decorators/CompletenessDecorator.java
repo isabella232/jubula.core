@@ -26,8 +26,7 @@ public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
     /** {@inheritDoc} */
     public void decorate(Object element, IDecoration decoration) {
         final INodePO node = (INodePO) element;
-        if (shouldDecorate(node, decoration) 
-                && ProblemFactory.hasProblem(node)) {
+        if (ProblemFactory.hasProblem(node)) {
             IProblem worstProblem = ProblemFactory.getWorstProblem(
                     node.getProblems());
             switch (worstProblem.getStatus().getSeverity()) {
@@ -43,17 +42,5 @@ public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
                     break;
             }
         }
-    }
-
-    /**
-     * @param node
-     *            the node
-     * @param decoration
-     *            the decoration
-     * @return whether decoration should happen for this element or not
-     */
-    private boolean shouldDecorate(INodePO node, IDecoration decoration) {
-        return !(decoration.getDecorationContext() 
-                instanceof NonDecorationContext);
     }
 }

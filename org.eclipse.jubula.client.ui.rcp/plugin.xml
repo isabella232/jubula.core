@@ -328,7 +328,7 @@
 		</decorator>
 		<decorator
 			class="org.eclipse.jubula.client.ui.rcp.provider.labelprovider.decorators.MissingReferenceDecorator"
-			id="org.eclipse.jubula.client.core.model.IExecTestCasePO" label="Missing Reference Decorator"
+			id="org.eclipse.jubula.client.ui.rcp.decorators.MissingReferenceDecorator" label="Missing Reference Decorator"
 			lightweight="true" location="BOTTOM_LEFT" state="true">
 			<description>
 				Decorates Test Cases with references to Test Cases that

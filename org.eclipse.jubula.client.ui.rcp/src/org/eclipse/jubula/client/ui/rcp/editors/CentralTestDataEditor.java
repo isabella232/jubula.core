@@ -50,7 +50,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
@@ -221,9 +220,6 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 new CentralTestDataLabelProvider(), Plugin.getDefault()
                         .getWorkbench().getDecoratorManager()
                         .getLabelDecorator());
-        lp.setDecorationContext(
-                new AbstractLightweightLabelDecorator.NonDecorationContext());
-
 
         getMainTreeViewer().setLabelProvider(lp);
         getMainTreeViewer().setComparator(new ViewerComparator() {

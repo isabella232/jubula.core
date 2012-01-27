@@ -58,7 +58,6 @@ import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
@@ -120,10 +119,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     /** the current TreeViewer */
     private TreeViewer m_currentTreeViewer;
 
-    /**
-     * {@inheritDoc}
-     * @param parent
-     */
+    /** {@inheritDoc} */
     public void createPartControlImpl(Composite parent) {
         super.createPartControlImpl(parent);
         m_eventHandlerTreeViewer.setContentProvider(
@@ -132,14 +128,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                 createContextMenu());
         ActionListener actionListener = new ActionListener();
         getTreeViewer().addSelectionChangedListener(actionListener);
-        
-        DecoratingLabelProvider ld = new DecoratingLabelProvider(
-                new GeneralLabelProvider(), Plugin.getDefault().getWorkbench()
-                        .getDecoratorManager().getLabelDecorator());
-        ld.setDecorationContext(
-                new AbstractLightweightLabelDecorator.NonDecorationContext());
-
-        getTreeViewer().setLabelProvider(ld);
         getEventHandlerTreeViewer().addSelectionChangedListener(actionListener);
         if (!Plugin.getDefault().anyDirtyStar()) {
             checkAndRemoveUnusedTestData();

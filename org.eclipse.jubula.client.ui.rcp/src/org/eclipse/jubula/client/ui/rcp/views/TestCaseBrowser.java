@@ -18,7 +18,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -28,6 +27,7 @@ import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProblemPropagationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -43,7 +43,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction;
@@ -55,6 +54,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TCBrowserDndSupport;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TestSpecDropTargetListener;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TreeViewerContainerDragSourceListener;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestCaseBrowserContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TestCaseBrowserLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.utils.SelectionChecker;
@@ -79,7 +79,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
  * @created 05.07.2004
  */
 public class TestCaseBrowser extends AbstractJBTreeView 
-    implements ITreeViewerContainer, IJBPart {
+    implements ITreeViewerContainer, IJBPart, IProblemPropagationListener {
     /** New-menu ID */
     public static final String NEW_ID = PlatformUI.PLUGIN_ID + ".NewSubMenu"; //$NON-NLS-1$
     /** Identifies the workbench plug-in */
@@ -110,12 +110,10 @@ public class TestCaseBrowser extends AbstractJBTreeView
         ColumnViewerToolTipSupport.enableFor(getTreeViewer());
         getTreeViewer().setContentProvider(
                 new TestCaseBrowserContentProvider());
-        DecoratingLabelProvider lp = new DecoratingLabelProvider(
+        DecoratingCellLabelProvider lp = new DecoratingCellLabelProvider(
                 new TestCaseBrowserLabelProvider(), Plugin.getDefault()
                         .getWorkbench().getDecoratorManager()
                         .getLabelDecorator());
-        lp.setDecorationContext(
-                new AbstractLightweightLabelDecorator.NonDecorationContext());
         getTreeViewer().setLabelProvider(lp);
 
         int ops = DND.DROP_MOVE;
@@ -136,6 +134,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
             handleProjectLoaded();
         }
         
+        DataEventDispatcher.getInstance().addProblemPropagationListener(this);
         Plugin.getDefault().getTreeViewerContainer().add(this);
     }
 
@@ -255,12 +254,12 @@ public class TestCaseBrowser extends AbstractJBTreeView
             ? (IStructuredSelection)selection : StructuredSelection.EMPTY;
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void dispose() {
         try {
-            DataEventDispatcher.getInstance().removeDataChangedListener(this);
+            DataEventDispatcher ded = DataEventDispatcher.getInstance();
+            ded.removeDataChangedListener(this);
+            ded.removeProblemPropagationListener(this);
             getViewSite().getWorkbenchWindow().getSelectionService()
                 .removeSelectionListener(m_actionListener);
             getTreeViewer().removeDoubleClickListener(m_doubleClickListener);
@@ -544,5 +543,14 @@ public class TestCaseBrowser extends AbstractJBTreeView
         } else if (po instanceof IProjectPO) {
             handleProjectLoaded();
         }
+    }
+
+    /** {@inheritDoc} */
+    public void problemPropagationFinished() {
+        getTreeViewer().getTree().getDisplay().syncExec(new Runnable() {
+            public void run() {
+                getTreeViewer().refresh();
+            }
+        });
     }
 }

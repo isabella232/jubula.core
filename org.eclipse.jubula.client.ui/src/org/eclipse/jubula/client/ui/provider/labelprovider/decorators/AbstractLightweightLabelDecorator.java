@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
-import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 
@@ -20,23 +19,6 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
  */
 public abstract class AbstractLightweightLabelDecorator implements
     ILightweightLabelDecorator {
-    /**
-     * Decoration context to *disable* decoration
-     * @author BREDEX GmbH
-     * @created May 17, 2010
-     */
-    public static class NonDecorationContext implements IDecorationContext {
-        /** {@inheritDoc} */
-        public String[] getProperties() {
-            return null;
-        }
-
-        /** {@inheritDoc} */
-        public Object getProperty(String property) {
-            return null;
-        }
-    }
-    
     /**
      * {@inheritDoc}
      */
