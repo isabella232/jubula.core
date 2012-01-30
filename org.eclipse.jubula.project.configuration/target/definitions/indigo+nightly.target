@@ -23,9 +23,7 @@
 </location>
 <location includeAllPlatforms="false" includeMode="slicer" type="InstallableUnit">
 <unit id="org.eclipse.rcp.feature.group" version="3.7.0.v20110216-9DB5Fm1FpBGy_AaVz-mFamgY"/>
-<unit id="org.eclipse.rap.runtime.sdk.feature.group" version="1.4.0.20110614-2335"/>
 <unit id="org.eclipse.persistence.jpa.feature.group" version="2.3.0.v20110604-r9504"/>
-<unit id="org.eclipse.ui.views" version="3.6.0.I20110412-0800"/>
 <repository id ="eclipse-indigo" location="http://download.eclipse.org/releases/indigo"/>
 </location>
 <location includeAllPlatforms="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
