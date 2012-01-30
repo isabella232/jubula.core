@@ -1004,9 +1004,7 @@ public class ClientTest implements IClientTest {
          
     } 
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Map<String, String> requestAutConfigMapFromAgent(String autId) {
         Map<String, String> autConfigMap = null;
         GetAutConfigMapMessage message = new GetAutConfigMapMessage(autId);
@@ -1023,7 +1021,8 @@ public class ClientTest implements IClientTest {
                     timerTimeout.cancel();
                 }
             }, REQUEST_CONFIG_MAP_TIMEOUT);
-            while (response.getAutConfigMap() == null && timeoutFlag.get()) {
+            while (!response.hasReceivedResponse()
+                    && timeoutFlag.get()) {
                 TimeUtil.delay(200);
                 log.info(Messages.WaitingForAutConfigMapFromAgent);
             }
