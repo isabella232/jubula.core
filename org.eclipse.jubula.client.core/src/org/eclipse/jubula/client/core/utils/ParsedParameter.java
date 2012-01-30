@@ -15,12 +15,17 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.gen.parser.parameter.analysis.DepthFirstAdapter;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.AAlphanumericFunctionArgToken;
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.AAlphanumericParamToken;
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.AAnySequenceParamToken;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.AEscapeSequenceFunctionArgToken;
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.AEscapeSequenceParamToken;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.AFunction;
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.ALiteral;
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.AReference;
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.AVariable;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.PFunctionArgList;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.TComma;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -203,6 +208,79 @@ public class ParsedParameter extends DepthFirstAdapter {
         m_paramValueTokens.add(new SimpleValueToken(
                 anySeq.getChar().getText(), 
                 anySeq.getChar().getPos(), m_paramDesc));
+    }
+    
+    @Override
+    public void caseAFunction(AFunction function) {
+        // No call to super() here because we want to traverse the argument list
+        // separately. We do not want the argument list productions to appear
+        // aside from the function.
+        
+        if (function.getFunctionName() == null
+                || StringUtils.isEmpty(function.getFunctionName().getText())) {
+            throw new SemanticParsingException(
+                    I18n.getString(MessageIDs.getMessage(
+                            MessageIDs.E_MISSING_FUNCTION_NAME)),
+                    MessageIDs.E_MISSING_FUNCTION_NAME, 
+                    function.getFunctionToken().getPos());
+        }
+        
+        // collect argument list
+        ParsedParameter argumentParser = new ParsedParameter(
+                m_isGuiSource, m_paramNode, m_paramDesc);
+        PFunctionArgList functionArgList = function.getFunctionArgList();
+        if (functionArgList != null) {
+            functionArgList.apply(argumentParser);
+        }
+
+        IParamValueToken[] argumentTokens = argumentParser.getTokens().toArray(
+                new IParamValueToken[argumentParser.getTokens().size()]);
+        StringBuilder functionTextBuilder = new StringBuilder();
+        functionTextBuilder.append(function.getFunctionToken().getText())
+            .append(function.getFunctionName().getText())
+            .append(function.getBeginFunctionArgsToken().getText());
+
+        String functionPrefix = functionTextBuilder.toString();
+        for (IParamValueToken token : argumentTokens) {
+            functionTextBuilder.append(token.getGuiString());
+        }
+
+        String functionSuffix = function.getEndFunctionArgsToken().getText();
+        functionTextBuilder.append(functionSuffix);
+        
+        m_paramValueTokens.add(new FunctionToken(
+                functionTextBuilder.toString(),
+                functionPrefix, functionSuffix,
+                function.getFunctionToken().getPos(), m_paramDesc, 
+                argumentTokens));
+
+    }
+    
+    @Override
+    public void caseTComma(TComma node) {
+        super.caseTComma(node);
+        m_paramValueTokens.add(new SimpleValueToken(
+                node.getText(), node.getPos(), m_paramDesc));
+    }
+    
+    @Override
+    public void caseAEscapeSequenceFunctionArgToken(
+            AEscapeSequenceFunctionArgToken escapeSequence) {
+        super.caseAEscapeSequenceFunctionArgToken(escapeSequence);
+        m_paramValueTokens.add(new SimpleValueToken(
+                escapeSequence.getEscapedSymbolInFunction().getText(), 
+                escapeSequence.getEscapedSymbolInFunction().getPos(), 
+                m_paramDesc));
+    }
+
+    @Override
+    public void caseAAlphanumericFunctionArgToken(
+            AAlphanumericFunctionArgToken node) {
+        super.caseAAlphanumericFunctionArgToken(node);
+        m_paramValueTokens.add(new SimpleValueToken(
+                node.getFunctionAlphanumeric().getText(), 
+                node.getFunctionAlphanumeric().getPos(), 
+                m_paramDesc));
     }
     
     /**

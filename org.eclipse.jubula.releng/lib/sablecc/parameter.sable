@@ -1,4 +1,10 @@
-/* Grammar for Client parameter values. */
+/** 
+ * Grammar for Client parameter values.
+ * 
+ * nested State functionality implemented in 
+ * org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer 
+ */
+
 Package org.eclipse.jubula.client.core.gen.parser.parameter;
     
 Helpers
@@ -6,7 +12,8 @@ Helpers
     alphanumeric = ['0'..'9'] | ['a'..'z'] | ['A'..'Z'] | '_';
     any_char = [0 .. 0xffff];
     not_literal_symbol = [any_char - literal_symbol];
-    escapable = ''' | '\' | '=' | '$';
+    escapable = ''' | '\' | '=' | '$' | '?';
+    escapable_in_function = escapable | ',' | '(' | ')';
 
 States
     normal,
@@ -14,13 +21,32 @@ States
     var_brace,
     reference,
     ref_brace,
+    function_name,
+    function,
+    function_args,
     literal;
 
 Tokens
-    {normal->literal}
+    {function_args->literal,normal->literal}
     open_literal = ''';
+
+    {function_args->function_name,normal->function_name}
+    function_token = '?';
+    {function_name->function}
+    function_name = alphanumeric+;
+    {function->function_args}
+    begin_function_args_token = '(';
+    {function_args}
+    comma = ','(' ')?;
+    {function_args}
+    escaped_symbol_in_function = '\' escapable_in_function;
+    {function_args}
+    function_alphanumeric = alphanumeric+;
+    {function_args->normal}
+    end_function_args_token = ')';
     
-	{normal->reference}
+    
+	{function_args->reference,normal->reference}
     reference_token = '=';
 	{normal}
     escaped_symbol = '\' escapable;
@@ -28,7 +54,7 @@ Tokens
     open_brace = '{';
 	{variable->normal,var_brace->normal,reference->normal,ref_brace->normal}
     close_brace = '}';
-	{normal->variable}
+	{function_args->variable,normal->variable}
     variable_token = '$';
 	{normal}
     alphanumeric = alphanumeric+;
@@ -52,8 +78,19 @@ Productions
                   {escape_sequence}escaped_symbol | 
                   {reference}P.reference | 
                   {variable}P.variable | 
+                  {function}P.function | 
                   {alphanumeric}alphanumeric |
                   {any_sequence}char;
     literal = open_literal literal_body? close_literal;
     reference = reference_token open_brace? reference_body? close_brace?;
     variable = variable_token open_brace? variable_body? close_brace?;
+    function = function_token function_name begin_function_args_token function_arg_list? end_function_args_token;
+    function_arg_list = {one} function_arg | {many} function_arg_list comma function_arg;
+    function_arg_token = {alphanumeric}function_alphanumeric |
+                         {literal}P.literal | 
+                         {escape_sequence}escaped_symbol_in_function | 
+                         {reference}P.reference | 
+                         {variable}P.variable | 
+                         {function}P.function;
+    function_arg = function_arg_token+;
+    

@@ -26,28 +26,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * @author BREDEX GmbH
  * @created 14.08.2007
  */
-class SimpleValueToken implements IParamValueToken {
-    /** Constant for a Variable as a data type of test data */
-    private static final String VARIABLE = "guidancer.datatype.Variable"; //$NON-NLS-1$
-
-    /**
-     * <code>m_value</code> string represents the token in the GUI
-     */
-    private String m_value = null;
-
-    /**
-     * index of first character of this token in the entire parameter value
-     */
-    private int m_startPos = 0;
-    
-    /**
-     * <code>m_errorKey</code>I18NKey for error message 
-     * associated with result of invocation of validate()
-     */
-    private Integer m_errorKey;
-
-    /** param description belonging to currently edited parameter value */
-    private IParamDescriptionPO m_desc;
+class SimpleValueToken extends AbstractParamValueToken {
 
     /**
      * @param s string represents the token
@@ -55,9 +34,7 @@ class SimpleValueToken implements IParamValueToken {
      * @param desc param description belonging to currently edited parameter value
      */
     public SimpleValueToken(String s, int pos, IParamDescriptionPO desc) {
-        m_value = s;
-        m_startPos = pos;
-        m_desc = desc;
+        super(s, pos, desc);
     }
 
 
@@ -67,9 +44,9 @@ class SimpleValueToken implements IParamValueToken {
      */
     public ConvValidationState validate() {
         ConvValidationState state = ConvValidationState.notSet;
-        if (VARIABLE.equals(m_desc.getType())) {
+        if (VARIABLE.equals(getParamDescription().getType())) {
             final String wordRegex = "[0-9a-z_A-Z]{1,}"; //$NON-NLS-1$
-            if (Pattern.matches(wordRegex, m_value)) {
+            if (Pattern.matches(wordRegex, getValue())) {
                 state = ConvValidationState.valid;                
             } else {
                 state = ConvValidationState.invalid;
@@ -79,62 +56,28 @@ class SimpleValueToken implements IParamValueToken {
         return state;
     }
     
-    
-    
-
     /**
+     * 
      * {@inheritDoc}
-     * @see IParamValueToken#isI18Nrelevant()
-     */
-    public boolean isI18Nrelevant() {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see IParamValueToken#getErrorKey()
-     */
-    public Integer getErrorKey() {
-        return m_errorKey;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getEndIndex()
-     */
-    public int getEndIndex() {
-        return m_startPos + m_value.length();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getStartIndex()
-     */
-    public int getStartIndex() {
-        return m_startPos;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getValue()
      */
     public String getGuiString() {
-        return m_value;
+        return getValue();
     }
 
-    /** {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getExecutionString(int, org.eclipse.jubula.client.core.utils.Traverser, java.util.Locale)
+    /** 
+     * 
+     * {@inheritDoc}
      */
     public String getExecutionString(List<ExecObject> stack, Locale locale) 
         throws InvalidDataException {
         StringBuilder builder = new StringBuilder();
         int index = 0;
         do {
-            char c = m_value.charAt(index);
+            char c = getValue().charAt(index);
             if (c == '\\') {
-                if (index + 1 < m_value.length()) {
+                if (index + 1 < getValue().length()) {
                     index++;
-                    c = m_value.charAt(index);
+                    c = getValue().charAt(index);
                     char[] validChars = {'\\', '=', '{', '}', '$', '\''};
                     boolean isValid = false;
                     for (char validChar : validChars) {
@@ -153,35 +96,30 @@ class SimpleValueToken implements IParamValueToken {
                         msg.append(StringConstants.SPACE);
                         msg.append(Messages.AfterBackslashIn);
                         msg.append(StringConstants.SPACE);
-                        msg.append(m_value);
+                        msg.append(getValue());
                         throw new InvalidDataException(msg.toString(), 
                             MessageIDs.E_SYNTAX_ERROR);
                     }            
                 } else {
                     throw new InvalidDataException(
                         Messages.NotAllowedToSetSingleBackslashIn 
-                        + StringConstants.SPACE + m_value, 
+                        + StringConstants.SPACE + getValue(), 
                         MessageIDs.E_SYNTAX_ERROR);
                 }            
             } else {
                 builder.append(c);
                 index++;
             }
-        } while (index < m_value.length());
+        } while (index < getValue().length());
         return builder.toString();
     }
     
-    /** {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getModelString()
+    /** 
+     * 
+     * {@inheritDoc}
      */
     public String getModelString() {
-        return m_value;
+        return getValue();
     }
 
-    /**
-     * @param errorKey The errorKey to set.
-     */
-    public void setErrorKey(Integer errorKey) {
-        m_errorKey = errorKey;
-    }
 }

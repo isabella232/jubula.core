@@ -19,7 +19,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.Lexer;
 import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.Parser;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
@@ -27,6 +26,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
+import org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,7 +77,17 @@ public class ModelParamValueConverter extends ParamValueConverter {
             for (IParamValueToken token : getTokens()) {
                 builder.append(token.getGuiString());
             }
-            setGuiString(builder.toString());
+            
+            if (builder.length() > 0) {
+                setGuiString(builder.toString());
+            } else {
+                // If no tokens were generated, then either the model string
+                // could not be successfully parsed or the model string is 
+                // empty. Either way, use the model string in
+                // order to show the current (possibly unparseable) state of the
+                // parameter string.
+                return getModelString();
+            }
         }
         return super.getGuiString();
     }
@@ -86,7 +96,7 @@ public class ModelParamValueConverter extends ParamValueConverter {
      * @{inheritDoc}
      */
     void createTokens() {
-        Parser parser = new Parser(new Lexer(new PushbackReader(
+        Parser parser = new Parser(new JubulaParameterLexer(new PushbackReader(
                 new StringReader(StringUtils.defaultString(
                         getModelString())))));
         ParsedParameter parsedParam = 
@@ -130,7 +140,7 @@ public class ModelParamValueConverter extends ParamValueConverter {
     public boolean removeReference(String guid) {
         boolean isRefRemoved = false;
         List<IParamValueToken> tokensCopy = 
-            new ArrayList<IParamValueToken>(getTokens());
+            new ArrayList<IParamValueToken>(getAllTokens());
         for (IParamValueToken token : tokensCopy) {
             if (token instanceof RefToken) {
                 RefToken refToken = (RefToken)token;

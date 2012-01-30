@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -130,7 +131,7 @@ public abstract class ParamValueConverter {
      */
     public List<String> getNamesForReferences() {
         List<String> paramNames = new ArrayList<String>();
-        for (IParamValueToken token : m_tokens) {
+        for (IParamValueToken token : getAllTokens()) {
             if (token instanceof RefToken) {
                 RefToken refToken = (RefToken)token;
                 paramNames.add(RefToken.extractCore(refToken.getGuiString()));
@@ -144,7 +145,7 @@ public abstract class ParamValueConverter {
      */
     public List<String> getVariables() {
         List<String> variables = new ArrayList<String>();
-        for (IParamValueToken token : m_tokens) {
+        for (IParamValueToken token : getAllTokens()) {
             if (token instanceof VariableToken) {
                 variables.add(((VariableToken)token).getGuiString());
             }
@@ -157,7 +158,7 @@ public abstract class ParamValueConverter {
      * @return true, if string contains at least one reference
      */
     public boolean containsReferences() {
-        for (IParamValueToken token : m_tokens) {
+        for (IParamValueToken token : getAllTokens()) {
             if (token instanceof RefToken) {
                 return true;
             }
@@ -169,7 +170,7 @@ public abstract class ParamValueConverter {
      * @return true, if string contains only simple values
      */
     public boolean containsOnlySimpleValues() {
-        for (IParamValueToken token : m_tokens) {
+        for (IParamValueToken token : getTokens()) {
             if (!(token instanceof SimpleValueToken)) {
                 return false;
             }
@@ -186,7 +187,7 @@ public abstract class ParamValueConverter {
     public String getExecutionString(List<ExecObject> stack, 
         Locale locale) throws InvalidDataException {
         StringBuilder builder = new StringBuilder();
-        for (IParamValueToken token : m_tokens) {
+        for (IParamValueToken token : getTokens()) {
             builder.append(token.getExecutionString(
                 new ArrayList<ExecObject>(stack), locale));
         }
@@ -209,8 +210,40 @@ public abstract class ParamValueConverter {
         return m_tokens;
     }
     
-    
+    /**
+     * 
+     * @return all tokens contained in this converter (including nested tokens).
+     */
+    protected List<IParamValueToken> getAllTokens() {
+        List<IParamValueToken> tokens = 
+                new ArrayList<IParamValueToken>(getTokens());
+        for (IParamValueToken token : getTokens()) {
+            if (token instanceof INestableParamValueToken) {
+                addAllSubTokens((INestableParamValueToken)token, tokens);
+            }
+        }
+        
+        return tokens;
+    }
 
+    /**
+     * Recursive method for finding all (recursively) nested tokens.
+     * 
+     * @param token The token from which to acquire nested tokens.
+     * @param tokenList The list to which the nested tokens should be added.
+     */
+    private void addAllSubTokens(
+            INestableParamValueToken token, List<IParamValueToken> tokenList) {
+        
+        IParamValueToken[] nestedTokens = token.getNestedTokens();
+        tokenList.addAll(Arrays.asList(nestedTokens));
+        for (IParamValueToken subToken : nestedTokens) {
+            if (subToken instanceof INestableParamValueToken) {
+                addAllSubTokens((INestableParamValueToken)subToken, tokenList);
+            }
+        }
+    }
+    
     /**
      * @param tokens The tokens to set.
      */
@@ -251,7 +284,7 @@ public abstract class ParamValueConverter {
      */
     public List<RefToken> getRefTokens() {
         List <RefToken> refTokens = new ArrayList<RefToken>();
-        for (IParamValueToken token : getTokens()) {
+        for (IParamValueToken token : getAllTokens()) {
             if (token instanceof RefToken) {
                 refTokens.add((RefToken)token);
             }

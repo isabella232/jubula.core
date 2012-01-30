@@ -19,11 +19,11 @@ import java.io.StringReader;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.Lexer;
 import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.Start;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.Parser;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
+import org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer;
 import org.eclipse.jubula.client.core.utils.ParsedParameter;
 import org.eclipse.jubula.client.core.utils.SemanticParsingException;
 import org.junit.Test;
@@ -46,7 +46,7 @@ public class TestParameterInput {
     @SuppressWarnings("nls")
     @Test
     public void testParameterInput() throws IOException {
-        Parser parser = new Parser(new Lexer(new PushbackReader(
+        Parser parser = new Parser(new JubulaParameterLexer(new PushbackReader(
                 new StringReader(m_inputString))));
         try {
             Start ast = parser.parse();
@@ -80,7 +80,10 @@ public class TestParameterInput {
                 {"={PARAMETER}", true},
                 {"=1", true},
                 {"={1}", true},
-                {"?()", true},
+                {"?abc()", true},
+                {"?abc(arg)", true},
+                {"?abc(arg1, arg2)", true},
+                {"?abc(?abc(arg1, arg2), ={PARAM_ARG}, \\=prefix${VARIABLE_ARG}\\$\\?suffix)", true},
                 
                 {"=", false},       // missing parameter name
                 {"={}", false},       // missing parameter name
@@ -90,11 +93,14 @@ public class TestParameterInput {
                 {"?", false},       // missing function body
                 {"?(", false},       // missing closing parentheses
                 {"?)", false},       // missing opening parentheses
-                {"?a", false},       // invalid (literal) after function symbol
+                {"?()", false},     // missing function name
+                {"?a", false},       // missing function argument list
                 {"?=", false},       // invalid (parameter symbol) after function symbol
                 {"??", false},       // invalid (function symbol) after function symbol
                 {"?$", false},       // invalid (variable symbol) after function symbol
                 {"?''", false},       // invalid (single quote) after function symbol
+                {"?abc(?abc(arg1, arg2))", true},
+                {"?abc(?abc(arg1, arg2), ={PARAM_ARG}, prefix${VARIABLE_ARG}suffix)", true},
                 });
     }
 }

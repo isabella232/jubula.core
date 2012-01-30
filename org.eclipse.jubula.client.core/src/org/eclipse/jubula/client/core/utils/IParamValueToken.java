@@ -51,13 +51,6 @@ public interface IParamValueToken {
         Locale locale) throws InvalidDataException;
 
     /**
-     * validates, if this token must be internationalized
-     * 
-     * @return true, if the token needs consideration of locale
-     */
-    public abstract boolean isI18Nrelevant();
-    
-    /**
      * @return the current value in gui representation for this token
      */
     public abstract String getGuiString();

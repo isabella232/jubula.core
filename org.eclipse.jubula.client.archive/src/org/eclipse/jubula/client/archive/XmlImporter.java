@@ -1657,7 +1657,16 @@ class XmlImporter {
                             LocaleUtil.convertStrToLocale(
                                 i18nVal.getLanguage()), 
                             null);
-                    converter.replaceGuidsInReferences(m_oldToNewGuids);
+
+                    if (!converter.containsErrors()) {
+                        // Only try to replace reference GUIDs if the 
+                        // string could be successfully parsed.
+                        // Otherwise, the model string will be overwritten with
+                        // the empty string because no tokens were created 
+                        // during parsing. 
+                        converter.replaceGuidsInReferences(m_oldToNewGuids);
+                    }
+
                     i18nValString = converter.getModelString();
                 } catch (IllegalArgumentException iae) {
                     // Do nothing.

@@ -45,7 +45,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * @author BREDEX GmbH
  * @created 14.08.2007
  */
-public class RefToken implements IParamValueToken {
+public class RefToken extends AbstractParamValueToken {
     
     /** prefix for a reference */
     private static final String PREFIX = "={"; //$NON-NLS-1$
@@ -62,18 +62,6 @@ public class RefToken implements IParamValueToken {
      */
     private String m_modelString = null; 
 
-    /**
-     * index of first character of this token in the entire parameter value
-     */
-    private int m_startPos = 0;
-    
-
-    /**
-     * <code>m_errorKey</code>I18NKey for error message 
-     * associated with result of invocation of validate()
-     */
-    private Integer m_errorKey;
-
     /** flag for differentiation between token creation based on string in gui- or
      * model representation
      */
@@ -82,9 +70,6 @@ public class RefToken implements IParamValueToken {
     /** node holding this reference */
     private IParameterInterfacePO m_currentNode;
     
-    /** param description belonging to this reference */
-    private IParamDescriptionPO m_desc;
-
     /**
      * use this constructor only for references coming from gui
      * @param string represents the token
@@ -95,12 +80,13 @@ public class RefToken implements IParamValueToken {
      */
     public RefToken(String string, boolean isGuiString, int startPos, 
             IParameterInterfacePO node, IParamDescriptionPO desc) {
+        
+        super(string, startPos, desc);
         if (!isValid(string, isGuiString)) {
             throw new IllegalArgumentException(Messages.SyntaxErrorInReference
                 + StringConstants.SPACE
                 + new StringBuilder(string).toString()); 
         }
-        m_startPos = startPos;
         m_isTokenGuiBased = isGuiString;
         if (isGuiString) {
             m_guiString = string;
@@ -108,7 +94,6 @@ public class RefToken implements IParamValueToken {
             m_modelString = string;
         }
         m_currentNode = node;
-        m_desc = desc;
     }
     
     
@@ -256,7 +241,8 @@ public class RefToken implements IParamValueToken {
                 }
                 if ((paramNames.keySet()).contains(refName)) {
                     IParamDescriptionPO desc = paramNames.get(refName);
-                    if (desc.getType().equals(m_desc.getType())) {
+                    if (desc.getType().equals(
+                            getParamDescription().getType())) {
                         state = ConvValidationState.valid;
                     } else {
                         state = ConvValidationState.invalid;
@@ -272,7 +258,8 @@ public class RefToken implements IParamValueToken {
                             if (paramName.startsWith(refName)) {
                                 IParamDescriptionPO desc = 
                                     paramNames.get(paramName);
-                                if (desc.getType().equals(m_desc.getType())) {
+                                if (desc.getType().equals(
+                                        getParamDescription().getType())) {
                                     state = ConvValidationState.undecided;
                                     break;
                                 }
@@ -341,7 +328,7 @@ public class RefToken implements IParamValueToken {
                         }
                         ParamValueConverter conv = new ModelParamValueConverter(
                             data.getValue(locale), 
-                            execNode, locale, m_desc);
+                            execNode, locale, getParamDescription());
                         stack.remove(stack.size() - 1);
                         return conv.getExecutionString(stack, locale); 
                     }
@@ -366,39 +353,6 @@ public class RefToken implements IParamValueToken {
             MessageIDs.E_NO_REFERENCE);    
     }
     
-
-    /**
-     * {@inheritDoc}
-     * @see IParamValueToken#isI18Nrelevant()
-     */
-    public boolean isI18Nrelevant() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see IParamValueToken#getErrorKey()
-     */
-    public Integer getErrorKey() {
-        return m_errorKey;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getEndIndex()
-     */
-    public int getEndIndex() {
-        return m_startPos + m_guiString.length();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getStartIndex()
-     */
-    public int getStartIndex() {
-        return m_startPos;
-    }
-
     /**
      * {@inheritDoc}
      * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getValue()
@@ -443,16 +397,6 @@ public class RefToken implements IParamValueToken {
         return refName;
     }
         
-
-
-    /**
-     * @param errorKey The errorKey to set.
-     */
-    public void setErrorKey(Integer errorKey) {
-        m_errorKey = errorKey;
-    }
-
-
     /**
      * @param modelString The modelString to set.
      */

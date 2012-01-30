@@ -19,7 +19,6 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.Lexer;
 import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.Parser;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
@@ -27,6 +26,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +73,7 @@ public class GuiParamValueConverter extends ParamValueConverter {
     
     /** create tokens from gui string */
     void createTokens() {
-        Parser parser = new Parser(new Lexer(new PushbackReader(
+        Parser parser = new Parser(new JubulaParameterLexer(new PushbackReader(
                 new StringReader(StringUtils.defaultString(getGuiString())))));
         ParsedParameter parsedParam = 
             new ParsedParameter(true, getCurrentNode(), getDesc());

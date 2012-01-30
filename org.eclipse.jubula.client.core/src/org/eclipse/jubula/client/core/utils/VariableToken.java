@@ -26,35 +26,13 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * @author BREDEX GmbH
  * @created 14.08.2007
  */
-class VariableToken implements IParamValueToken {
+class VariableToken extends AbstractParamValueToken {
     
-    /** Constant for a Variable as a data type of test data */
-    private static final String VARIABLE = "guidancer.datatype.Variable"; //$NON-NLS-1$
-
-    /**
-     * <code>m_value</code> string represents the token in the GUI
-     */
-    private String m_value = null;
-
     /**
      * represents the actual name of the variable (without the additional 
      * pre- and post-fix information contained in <code>m_value</code>).
      */
     private String m_variableName = null;
-
-    /**
-     * index of first character of this token in the entire parameter value
-     */
-    private int m_startPos = 0;
-    
-    /**
-     * <code>m_errorKey</code>I18NKey for error message 
-     * associated with result of invocation of validate()
-     */
-    private Integer m_errorKey = null;
-
-    /** param description belonging to currently edited parameter value */
-    private IParamDescriptionPO m_desc;
 
     /**
      * @param s string represents the token
@@ -66,10 +44,10 @@ class VariableToken implements IParamValueToken {
      */
     public VariableToken(String s, int pos, String variableName, 
             IParamDescriptionPO desc) {
-        m_value = s;
+
+        super(s, pos, desc);
         m_variableName = variableName;
-        m_startPos = pos;
-        m_desc = desc;
+
     }
 
     /**
@@ -79,44 +57,11 @@ class VariableToken implements IParamValueToken {
      */
     public ConvValidationState validate() {
         ConvValidationState state = ConvValidationState.notSet;
-        if (VARIABLE.equals(m_desc.getType())) {
+        if (VARIABLE.equals(getParamDescription().getType())) {
             state = ConvValidationState.invalid;
             setErrorKey(MessageIDs.E_INVALID_VAR_NAME);
         }
         return state;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     * @see IParamValueToken#isI18Nrelevant()
-     */
-    public boolean isI18Nrelevant() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see IParamValueToken#getErrorKey()
-     */
-    public Integer getErrorKey() {
-        return m_errorKey;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getEndIndex()
-     */
-    public int getEndIndex() {
-        return m_startPos + m_value.length();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getStartIndex()
-     */
-    public int getStartIndex() {
-        return m_startPos;
     }
 
     /**
@@ -124,7 +69,7 @@ class VariableToken implements IParamValueToken {
      * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getValue()
      */
     public String getGuiString() {
-        return m_value;
+        return getValue();
     }
 
     /** {@inheritDoc}
@@ -136,7 +81,7 @@ class VariableToken implements IParamValueToken {
             .getVariableStore().getValue(m_variableName);
         if (resolvedVar == null) {
             throw new InvalidDataException(Messages.VariableWithName 
-                + StringConstants.SPACE + m_value 
+                + StringConstants.SPACE + getValue() 
                 + StringConstants.SPACE + Messages.IsNotResolvable, 
                 MessageIDs.E_UNRESOLV_VAR_ERROR);
         }
@@ -147,13 +92,7 @@ class VariableToken implements IParamValueToken {
      * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getModelString()
      */
     public String getModelString() {
-        return m_value;
+        return getValue();
     }
 
-    /**
-     * @param errorKey The errorKey to set.
-     */
-    public void setErrorKey(Integer errorKey) {
-        m_errorKey = errorKey;
-    }
 }
