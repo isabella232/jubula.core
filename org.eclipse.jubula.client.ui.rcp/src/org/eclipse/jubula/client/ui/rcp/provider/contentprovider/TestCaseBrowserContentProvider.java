@@ -23,8 +23,11 @@ import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.exception.JBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
@@ -33,6 +36,10 @@ import org.eclipse.jubula.tools.exception.JBException;
 public class TestCaseBrowserContentProvider 
     extends AbstractTreeViewContentProvider {
 
+    /** the logger */
+    private static final Logger LOG = 
+            LoggerFactory.getLogger(TestCaseBrowserContentProvider.class);
+    
     /**
      * {@inheritDoc}
      */
@@ -45,9 +52,13 @@ public class TestCaseBrowserContentProvider
             ISpecObjContPO specObjects = (ISpecObjContPO)parentElement;
             List<Object> elements = new ArrayList<Object>();
             elements.addAll(specObjects.getSpecObjList());
-            elements.addAll(
-                    GeneralStorage.getInstance()
-                        .getProject().getUsedProjects());
+            IProjectPO activeProject = 
+                    GeneralStorage.getInstance().getProject();
+            if (activeProject != null) {
+                elements.addAll(activeProject.getUsedProjects());
+            } else {
+                LOG.error(Messages.TestCaseBrowser_NoActiveProject);
+            }
             return elements.toArray();
         }
         

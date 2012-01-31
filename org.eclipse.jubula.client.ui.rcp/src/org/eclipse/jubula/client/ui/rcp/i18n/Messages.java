@@ -813,6 +813,7 @@ public class Messages extends NLS {
     public static String StopAUTActionShellTitle;
     public static String Suite;
     public static String TestCaseBrowserLinkWithEditor;
+    public static String TestCaseBrowser_NoActiveProject;
     public static String TestCaseEditorCantDelete;
     public static String TestCaseEditorCcantDelete;
     public static String TestCaseEditorCompNameError;
