@@ -149,7 +149,6 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                         return Status.OK_STATUS;
                     }
                 };
-                job.schedule();
                 if (m_deleteCurrentProject) {
                     Utils.clearClient();
                     GeneralStorage.getInstance().setProject(null);
@@ -160,6 +159,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                     GeneralStorage.getInstance().reloadMasterSession(
                             new NullProgressMonitor());
                 }
+                job.schedule();
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
                 return;
