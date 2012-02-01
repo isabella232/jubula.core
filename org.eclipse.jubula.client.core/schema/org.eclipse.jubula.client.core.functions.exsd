@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.eclipse.jubula.client.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="org.eclipse.jubula.client.core" id="org.eclipse.jubula.client.core.functions" name="Test Functions"/>
+      </appinfo>
+      <documentation>
+         Defines functions that can be entered as test data and evaluated during test execution. This extension point is not yet API. It is available for early adopters, but there will likely be significant changes.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <choice>
+            <element ref="function" minOccurs="0" maxOccurs="unbounded"/>
+         </choice>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="function">
+      <annotation>
+         <documentation>
+            A function that can be used in test data.
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice>
+            <element ref="component" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="varArg" minOccurs="0" maxOccurs="1"/>
+         </choice>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the function. This name will be used to reference the function from test data. The name must be unique among all available functions.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="evaluator" use="default" value="local">
+            <annotation>
+               <documentation>
+                  Indicates where the function will be evaluated.
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="local">
+                  </enumeration>
+                  <enumeration value="aut">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The class that will be instantiated in order to evaluate the function. The class will be instantiated using its no-args constructor.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.jubula.client.core.functions.IFunctionEvaluator"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="parameter">
+      <annotation>
+         <documentation>
+            A single parameter. When using the function in test data, each parameter must have a corresponding argument.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="type" use="default" value="string">
+            <annotation>
+               <documentation>
+                  The argument type expected for this parameter.
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="string">
+                  </enumeration>
+                  <enumeration value="boolean">
+                  </enumeration>
+                  <enumeration value="number">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A short, descriptive name for the parameter. This should provide the person who is using the function for test specification a general idea of what value the corresponding argument should have.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="varArg">
+      <annotation>
+         <documentation>
+            A parameter that can be filled with 0..n arguments.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="type">
+            <annotation>
+               <documentation>
+                  The argument type expected for this element.
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="string">
+                  </enumeration>
+                  <enumeration value="boolean">
+                  </enumeration>
+                  <enumeration value="number">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="component" type="string">
+      <annotation>
+         <documentation>
+            The ID of a Component Type (as well as all subtypes) for which the function can be used. If no entry for this element is defined, then the function can be used with any Component Type.
+
+This element is ignored if the function is not evaluated in an AUT context.
+         </documentation>
+      </annotation>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         1.2
+      </documentation>
+   </annotation>
+
+
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         See org.eclipse.jubula.client.core for an implementation of this extension point.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         Copyright (c) 2012 BREDEX GmbH.&lt;br&gt;
+All rights reserved. This program and the accompanying materials are made
+available under the terms of the Eclipse Public License v1.0 which accompanies
+this distribution, and is available at &lt;a 
+href=&quot;http://www.eclipse.org/legal/epl-v10.html&quot;&gt;http://www.eclipse.org/legal/epl-v10.html&lt;/a&gt;
+      </documentation>
+   </annotation>
+
+</schema>
