@@ -194,6 +194,8 @@ public class Messages extends NLS {
     public static String FlushFailed;
     public static String ForGuid;
     public static String FromTheDatabase;
+    public static String FunctionRegistry_WrongEvaluatorType;
+    public static String FunctionRegistry_EvaluatorCreationError;
     public static String GeneralDatabaseErrorFor;
     public static String GeneralFailure;
     public static String GettingAllComponentsFromAUT;
