@@ -33,6 +33,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
@@ -57,6 +58,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -68,6 +71,7 @@ import org.eclipse.ui.PlatformUI;
  */
 public class GeneralLabelProvider extends ColumnLabelProvider 
     implements IColorProvider, ILabelProvider {
+    
     /** close bracked */
     public static final String CLOSE_BRACKED = "]"; //$NON-NLS-1$
 
@@ -76,6 +80,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     
     /** <code>SEPARATOR</code> */
     public static final String SEPARATOR = "; "; //$NON-NLS-1$
+    
+    /** the logger */
+    private static final Logger LOG = 
+            LoggerFactory.getLogger(GeneralLabelProvider.class);
     
     /**
      * <code>UNNAMED_NODE</code>
@@ -226,7 +234,13 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         if (element instanceof ISpecObjContPO) {
             return Messages.TreeBuilderTestCases;
         } else if (element instanceof IExecObjContPO) { 
-            return GeneralStorage.getInstance().getProject().getName();
+            IProjectPO activeProject = 
+                    GeneralStorage.getInstance().getProject();
+            if (activeProject != null) {
+                return activeProject.getName();
+            }
+            
+            LOG.error(Messages.GeneralLabelProvier_NoActiveProject);
         }
         return element == null ? StringConstants.EMPTY : element.toString();
     }

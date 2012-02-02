@@ -368,6 +368,7 @@ public class Messages extends NLS {
     public static String GDProblemViewTitle;
     public static String GDStateControllerInfoNoProject;
     public static String GeneralGDLabelProviderUnnamedNode;
+    public static String GeneralLabelProvier_NoActiveProject;
     public static String GenericType;
     public static String JubulaDataSetViewAppend;
     public static String JubulaDataSetViewDelete;
