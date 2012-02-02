@@ -1,8 +1,3 @@
-\textbf{Selenium update}
-\begin{itemize}
-\item The version of Selenium used by \app{} has been updated to 2.12.0.
-\end{itemize}
-
 \textbf{Test Execution Duration now shown for each node in \gdtestresultview{}}\\
 \begin{itemize}
 \item The amount of time taken to execute each \gdstep{}, \gdcase{} and \gdsuite{} is now shown in the \gdtestresultview{}.
@@ -12,12 +7,6 @@ without having to set timers or manually check timestamps.
 \item You can switch off the decoration in the \app{} client in the \bxname{label decoration} preferences.
 \end{itemize} 
 
-\textbf{Categories now supported in the \gdtestsuitebrowser{} and \gddataeditor}\\
-\begin{itemize}
-\item It is now possible to create categories for \gdsuites{} and \gdjobs{} in the \gdtestsuitebrowser{}, as well as for central data sets in the \gddataeditor{}. 
-\item Existing \gdprojects{} will be shown as having two categories (\bxname{Test Suites} and \bxname{Test Jobs}) in the \gdtestsuitebrowser{} as was previously the case. However, you can now rename, delete and rearrange categories in the \gdtestsuitebrowser{}. 
-\end{itemize} 
-
 \textbf{Parameter values now shown for each node in \gdtestresultview{}}\\
 \begin{itemize}
 \item The parameter values entered or used at a specific level (\gdcase{}, \gdstep{}) are now shown in the \gdtestresultview{}.
@@ -25,24 +14,49 @@ without having to set timers or manually check timestamps.
 \item You can switch off the decoration in the \app{} client in the \bxname{label decoration} preferences.
 \end{itemize} 
 
+\textbf{Missing data decoration now shown in the \gdtestcaseeditor{}, \gdtestsuiteeditor{} and \gdtestcasebrowser{}}
+\begin{itemize}
+\item When working on a \gdcase{} or \gdsuite{} in their respective editors, you will now see small red crosses on any referenced \gdcases{} or \gdsteps{} in that editor which have missing data \textit{at this level} (i.e. data that should be entered in this editor). 
+\item This will help avoid problems with forgetting to enter data in the \gdpropview{}. 
+\item Once the \gdcase{} is saved, any missing data for its children (any \gdcases{} and \gdsteps{} it contains, as well as items contained in \gdcases{} it reuses) is also displayed using small red crosses in the \gdtestcasebrowser{}. 
+\end{itemize}
+
+\textbf{Functions can be entered as parameter values}
+\begin{itemize}
+\item Alongside concrete values (\bxshell{abc}), references (\bxshell{=P1}) and variables (\bxshell{\$VAR}), you can now enter functions as data, or as parts of your data.
+\item The sign to introduce a function is the question mark: \bxshell{?}
+\bxwarn{Any question marks used as test data will have to be escaped using one or more backslashes in this new version. A warning in the problems view will appear after importing your \gdproject{} if you have any unescaped question marks in your data. You can then use the search function to find them and mask them.} 
+\item The following functions are available out of the box:
+\begin{description}
+\item [add]{Adds the two following numbers: \bxshell{?add(1,2)}}
+\item [sub]{Subtracts the second number from the first: \bxshell{?sub(3,2)}}
+\item [mult]{Multiplies the second number by the first: \bxshell{?mult(2,4)}}
+\item [div]{Divides the first number by the second: \bxshell{?div(2,1)}}
+\item [trunc]{}
+\item [round]{}
+\item [now]{}
+\item [formatDate]{}
+\item [parseDate]{}
+\item [modifyDate]{}
+\end{description}
+\item Functions can be embedded in other functions, e.g. \bxshell{?add(?sub(3,2),4)} to add the result of (3-2) to 4. 
+\item Functions can also make use of other data entry options in \app{} such as variables (\bxshell{?add(\${VAR1},={P1})} adds the number in the variable VAR1 to the number in the reference P1). 
+\item You can add your own functions via an extension point. 
+\end{itemize}
+
+\textbf{Categories now supported in the \gdtestsuitebrowser{} and \gddataeditor}\\
+\begin{itemize}
+\item It is now possible to create categories for \gdsuites{} and \gdjobs{} in the \gdtestsuitebrowser{}, as well as for central data sets in the \gddataeditor{}. 
+\item Existing \gdprojects{} will be shown as having two categories (\bxname{Test Suites} and \bxname{Test Jobs}) in the \gdtestsuitebrowser{} as was previously the case. However, you can now rename, delete and rearrange categories in the \gdtestsuitebrowser{}. 
+\end{itemize} 
+
+
 \textbf{Save As New \gdcase{}}
 \begin{itemize}
 \item There is a new option in the \gdtestcaseeditor{} and \gdtestsuiteeditor{} to save selected items as a new \gdcase{}.
 \item The selected nodes are added to a new \gdcase{} whose name you define.
 \item The nodes are not copied, but their references are: the effect is the same as if you had manually created a new \gdcase{} and added the \gdcases{} to it. 
 \end{itemize}
-
-\textbf{Completeness check shown as progress window}\\
-\begin{itemize}
-\item After saving in the \ite{}, the completeness check which validates the state of the \gdproject{} (test data, object mapping, missing \gdcases{} etc) is now shown explicitly as a progress window.
-\item This results from performance improvements made to the completeness check.
-\end{itemize} 
-
-\textbf{Changes to layout of properties view for test results}\\
-\begin{itemize}
-\item The properties view for test results now shows all test data as two columns: the parameter name and the value.
-\item This reduces the amount of space required to see test data for test results. 
-\end{itemize} 
 
 \textbf{New action: Store Property Value}\\
 \begin{itemize}
@@ -66,9 +80,26 @@ public String getText();
 \end{quote}
 \end{itemize}
 
+\textbf{Completeness check shown as progress window}\\
+\begin{itemize}
+\item After saving in the \ite{}, the completeness check which validates the state of the \gdproject{} (test data, object mapping, missing \gdcases{} etc) is now shown explicitly as a progress window.
+\item This results from performance improvements made to the completeness check.
+\end{itemize} 
+
+\textbf{Changes to layout of properties view for test results}\\
+\begin{itemize}
+\item The properties view for test results now shows all test data as two columns: the parameter name and the value.
+\item This reduces the amount of space required to see test data for test results. 
+\end{itemize} 
+
 
 \textbf{GD\_AUT\_STARTUP\_DELAY renamed to TEST\_AUT\_STARTUP\_DELAY}\\
 \begin{itemize}
 \item There is an undocumented variable that can be set as an environment variable to increase the delay between starting an \gdaut{} and checking that it is there.
 \item This delay was named \bxshell{GD\_AUT\_STARTUP\_DELAY} and has now been updated to \bxshell{TEST\_AUT\_STARTUP\_DELAY}. Any customers using this variable should update it in their test environment. 
+\end{itemize}
+
+\textbf{Selenium update}
+\begin{itemize}
+\item The version of Selenium used by \app{} has been updated to 2.12.0.
 \end{itemize}
