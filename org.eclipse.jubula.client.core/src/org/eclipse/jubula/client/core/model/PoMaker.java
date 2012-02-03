@@ -527,6 +527,14 @@ public abstract class PoMaker {
 
     /**
      * get the class instance of the PO (needed by Persistor)
+     * @return the class instance of the PO
+     */
+    public static Class<MonitoringReportPO> getMonitoringReportClass() {
+        return MonitoringReportPO.class;
+    }
+    
+    /**
+     * get the class instance of the PO (needed by Persistor)
      * 
      * @return the class instance of the PO
      */

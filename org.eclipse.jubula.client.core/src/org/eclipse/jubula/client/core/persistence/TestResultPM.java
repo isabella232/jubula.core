@@ -97,7 +97,7 @@ public class TestResultPM {
             throw new JBFatalException(Messages.DeleteTestresultElementFailed, 
                     e, MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            persistor.dropSession(session);
+            persistor.dropSessionWithoutLockRelease(session);
             persistor.unlockDB();
         }
     }
@@ -123,7 +123,17 @@ public class TestResultPM {
             }
         
         } else {
+            // Optimization: Since all monitoring reports need to be deleted,
+            //               we delete them with a JPQL query before removing 
+            //               them via iteration. This prevents OutOfMemoryErrors
+            //               caused by loading all reports in to memory at the 
+            //               same time.
+            Query deleteMonitoringReportsQuery = session.createQuery(
+                    "DELETE from " + PoMaker.getMonitoringReportClass().getSimpleName()); //$NON-NLS-1$
+            deleteMonitoringReportsQuery.executeUpdate();
+            session.flush();
             
+
             StringBuilder queryBuilder = new StringBuilder();
             queryBuilder.append("SELECT summary FROM ") //$NON-NLS-1$
                     .append(PoMaker.getTestResultSummaryClass().getSimpleName())
