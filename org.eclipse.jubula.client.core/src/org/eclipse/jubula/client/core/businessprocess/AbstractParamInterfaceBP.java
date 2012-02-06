@@ -193,7 +193,7 @@ public abstract class AbstractParamInterfaceBP<T> {
      * @param locale the locale of the test data
      * @param dataSetRow The row of the test data manager
      */
-    protected void writeTestDataEntry(ParamValueConverter conv,
+    protected void writeTestDataEntry(GuiParamValueConverter conv,
         Locale locale, int dataSetRow) {
 
         ITestDataPO oldTd = null;
@@ -221,14 +221,23 @@ public abstract class AbstractParamInterfaceBP<T> {
      *             If the creation of the Test Data fails
      */
     private ITestDataPO createOrUpdateTestDataPO(ITestDataPO testData,
-        ParamValueConverter conv, Locale locale) {
+        GuiParamValueConverter conv, Locale locale) {
+
         ITestDataPO td = null;
         if (testData != null) {
             td = testData;
         } else {
             td = TestDataBP.instance().createEmptyTestData();            
         }
-        td.setValue(locale, conv.getModelString(), 
+
+        // A new converter is instantiated and used here in order to cover
+        // the corner case described in bug 370718.
+        GuiParamValueConverter newConv = new GuiParamValueConverter(
+                conv.getGuiString(), conv.getCurrentNode(), locale, 
+                conv.getDesc(), 
+                AbstractParamInterfaceBP.createParamValueValidator(
+                        TestDataConstants.STR, false));
+        td.setValue(locale, newConv.getModelString(), 
             GeneralStorage.getInstance().getProject());
         return td;
     }
