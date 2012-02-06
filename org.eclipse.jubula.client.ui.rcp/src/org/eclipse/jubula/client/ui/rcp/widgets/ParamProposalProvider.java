@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.parser.parameter.FunctionLocator;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -150,8 +151,9 @@ public class ParamProposalProvider implements IContentProposalProvider {
     public IContentProposal[] getProposals(String contents, int position) {
 
         // handle content proposal for functions, if necessary
+        String proposalSubstring = contents.substring(0, position);
         try {
-            FunctionLocator locator = new FunctionLocator(contents);
+            FunctionLocator locator = new FunctionLocator(proposalSubstring);
             String startingFunctionText = locator.getCurrentFunction();
             if (startingFunctionText != null) {
                 // if the user is currently entering a function, only 
@@ -160,9 +162,11 @@ public class ParamProposalProvider implements IContentProposalProvider {
                 return getProposalsForFunction(startingFunctionText);
             }
         } catch (LexerException e) {
-            LOG.warn(Messages.ParamProposal_ParsingError, e);
+            LOG.warn(NLS.bind(Messages.ParamProposal_ParsingError, 
+                    proposalSubstring), e);
         } catch (IOException e) {
-            LOG.warn(Messages.ParamProposal_ParsingError, e);
+            LOG.warn(NLS.bind(Messages.ParamProposal_ParsingError, 
+                    proposalSubstring), e);
         }
         
         
@@ -179,6 +183,23 @@ public class ParamProposalProvider implements IContentProposalProvider {
         if (m_valueSet != null) {
             proposals.addAll(getValueSetProposals(contents, position));
         }
+
+        proposals.addAll(getParentParamProposals(contents));
+        
+        return proposals.toArray(new IContentProposal[proposals.size()]);
+    }
+ 
+    /**
+     * Creates and returns content proposals based on the Parameters available
+     * from the parent node.
+     * 
+     * @param contents The text for which to generate content proposals.
+     * @return the proposals for the given arguments.
+     */
+    private Collection<IContentProposal> getParentParamProposals(
+            String contents) {
+
+        List<IContentProposal> proposals = new ArrayList<IContentProposal>();
         
         // find a SpecTestCase
         INodePO node = m_node;
@@ -219,9 +240,10 @@ public class ParamProposalProvider implements IContentProposalProvider {
 
             }
         }
-        return proposals.toArray(new IContentProposal[proposals.size()]);
+
+        return proposals;
     }
-    
+
     /**
      * 
      * @param contents The text for which to generate content proposals.
