@@ -129,7 +129,8 @@ public class TestResultPM {
             //               caused by loading all reports in to memory at the 
             //               same time.
             Query deleteMonitoringReportsQuery = session.createQuery(
-                    "DELETE from " + PoMaker.getMonitoringReportClass().getSimpleName()); //$NON-NLS-1$
+                    "UPDATE " + PoMaker.getMonitoringReportClass().getSimpleName()  //$NON-NLS-1$
+                    + " SET report = null"); //$NON-NLS-1$
             deleteMonitoringReportsQuery.executeUpdate();
             session.flush();
             
