@@ -26,7 +26,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectOpenedL
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.DebugConstants;
@@ -141,12 +140,7 @@ public class CompletenessBP implements IProjectOpenedListener,
                         .getProject();
                 final Locale wl = WorkingLanguageBP.getInstance()
                         .getWorkingLanguage();
-                CompletenessGuard.checkAll(wl, 
-                        project);
-                for (ISpecPersistable spec : project.getSpecObjCont()
-                        .getSpecObjList()) {
-                    CompletenessGuard.checkTestData(wl, spec);
-                }
+                CompletenessGuard.checkAll(wl, project);
             } finally {
                 fireCompletenessCheckFinished();
                 monitor.done();

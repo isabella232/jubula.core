@@ -62,7 +62,7 @@ public class ProblemPropagator {
         IProjectPO project = GeneralStorage.getInstance().getProject();
         if (project != null) {
             new TreeTraverser(project, 
-                new ProblemPropagationOperation(), true, true)
+                new ProblemPropagationOperation(), false, true)
                     .traverse(true);
         }
         DataEventDispatcher.getInstance().fireProblemPropagationFinished();
