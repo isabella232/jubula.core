@@ -23,6 +23,7 @@
             evaluator="local"
             name="add">
          <varArg
+               defaultArgumentCount="2"
                type="number">
          </varArg>
       </function>

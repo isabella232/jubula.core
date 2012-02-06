@@ -152,6 +152,13 @@
                </restriction>
             </simpleType>
          </attribute>
+         <attribute name="defaultArgumentCount" type="string" use="default" value="0">
+            <annotation>
+               <documentation>
+                  Number of varargs to include in content proposals for this element. Must be an integer. Default is 0.
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

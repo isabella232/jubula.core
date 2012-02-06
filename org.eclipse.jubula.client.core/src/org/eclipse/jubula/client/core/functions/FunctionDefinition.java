@@ -26,8 +26,8 @@ public class FunctionDefinition {
     /** parameters for the Function */
     private ParameterDefinition[] m_parameters;
     
-    /** type for var args for the Function, if the Function supports var args */
-    private String m_varArgsType;
+    /** var args for the Function, if the Function supports var args */
+    private VarArgsDefinition m_varArgs;
 
     /** object capable of evaluating the Function */
     private IFunctionEvaluator m_evaluator;
@@ -38,14 +38,14 @@ public class FunctionDefinition {
      * @param name The name of the Function. May not be <code>null</code>.
      * @param parameters The parameters for the Function. 
      *                   May not be <code>null</code>.
-     * @param varArgsType The type for var args for the Function, or 
+     * @param varArgs The type for var args for the Function, or 
      *                    <code>null</code> if the Function does not support 
      *                    var args. 
      * @param evaluator An object capabale of evaluating this Function.
      *                  May not be <code>null</code>.
      */
     public FunctionDefinition(String name, ParameterDefinition[] parameters, 
-            String varArgsType, IFunctionEvaluator evaluator) {
+            VarArgsDefinition varArgs, IFunctionEvaluator evaluator) {
 
         Validate.notNull(name);
         Validate.notNull(parameters);
@@ -53,7 +53,7 @@ public class FunctionDefinition {
         
         m_name = name;
         m_parameters = parameters;
-        m_varArgsType = varArgsType;
+        m_varArgs = varArgs;
         m_evaluator = evaluator;
     }
 
@@ -76,11 +76,11 @@ public class FunctionDefinition {
 
     /**
      * 
-     * @return the type for var args for the receiver, or <code>null</code> if
+     * @return the var args for the receiver, or <code>null</code> if
      *         the receiver does not accept var args.
      */
-    public String getVarArgsType() {
-        return m_varArgsType;
+    public VarArgsDefinition getVarArgs() {
+        return m_varArgs;
     }
 
     /**

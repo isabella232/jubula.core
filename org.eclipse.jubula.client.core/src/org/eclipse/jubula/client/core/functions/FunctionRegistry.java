@@ -49,6 +49,11 @@ public class FunctionRegistry {
     /** ID for "type" attribute used for parameters and varArgs */
     private static final String ATTR_TYPE = "type"; //$NON-NLS-1$
 
+    /** 
+     * ID for "defaultArgumentCount" attribute used for parameters and varArgs 
+     */
+    private static final String ATTR_DEFAULT_ARG_COUNT = "defaultArgumentCount"; //$NON-NLS-1$
+
     /** "parameter" sub-element of function */
     private static final String ELEMENT_PARAM = "parameter"; //$NON-NLS-1$
 
@@ -95,7 +100,8 @@ public class FunctionRegistry {
                     : extension.getConfigurationElements()) {
                 
                 String functionName = functionElement.getAttribute(ATTR_NAME);
-                String varArgType = null;
+                
+                VarArgsDefinition varArg = null;
                 List<ParameterDefinition> parameters = 
                         new ArrayList<ParameterDefinition>();
                 for (IConfigurationElement parameterElement 
@@ -108,7 +114,10 @@ public class FunctionRegistry {
                 for (IConfigurationElement varArgElement 
                         : functionElement.getChildren(ELEMENT_VARARG)) {
 
-                    varArgType = varArgElement.getAttribute(ATTR_TYPE);
+                    varArg = new VarArgsDefinition(
+                            varArgElement.getAttribute(ATTR_TYPE), 
+                            Integer.parseInt(varArgElement.getAttribute(
+                                    ATTR_DEFAULT_ARG_COUNT)));
                 }
 
                 ParameterDefinition[] parameterArray = 
@@ -120,7 +129,7 @@ public class FunctionRegistry {
                             ATTR_CLASS);
                     if (evaluator instanceof IFunctionEvaluator) {
                         FunctionDefinition function = new FunctionDefinition(
-                                functionName, parameterArray, varArgType,
+                                functionName, parameterArray, varArg,
                                 (IFunctionEvaluator)evaluator);
                         registeredFunctions.put(function.getName(), function);
                     } else {

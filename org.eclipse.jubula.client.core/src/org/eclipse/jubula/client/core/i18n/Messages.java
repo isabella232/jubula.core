@@ -295,6 +295,7 @@ public class Messages extends NLS {
     public static String ParameterParsingErrorOccurred;
     public static String parametersAreNotValid;
     public static String ParameterWithUniqueId;
+    public static String ParamProposal_ParsingError;
     public static String ParentChildInconsistency;
     public static String ParentProjectDoesNotExistWithID;
     public static String ParentProjectId;
