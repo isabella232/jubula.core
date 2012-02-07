@@ -410,7 +410,7 @@ class XmlImporter {
             for (String param : m_unparseableParameters) {
                 m_io.writeErrorLine(param);
             }
-            m_io.writeErrorLine(StringUtils.EMPTY);
+            m_io.writeLine(StringUtils.EMPTY);
         }
         
         return proj;
