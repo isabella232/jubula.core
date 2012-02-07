@@ -29,6 +29,7 @@ import javax.persistence.EntityManager;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.archive.converter.AbstractXmlConverter;
 import org.eclipse.jubula.client.archive.converter.AutIdGenerationConverter;
@@ -252,6 +253,9 @@ class XmlImporter {
     /** The import output. */
     private IProgressConsole m_io;
 
+    /** Parameters that could not be parsed during import */
+    private List<String> m_unparseableParameters = new ArrayList<String>();
+    
     /**
      * Constructor
      * 
@@ -400,6 +404,14 @@ class XmlImporter {
         
         IProjectPO proj = create(xml, assignNewGuid, paramNameMapper,
                 compNameCache);
+        
+        if (!m_unparseableParameters.isEmpty()) {
+            m_io.writeErrorLine(Messages.UnparseableParameters);
+            for (String param : m_unparseableParameters) {
+                m_io.writeErrorLine(param);
+            }
+            m_io.writeErrorLine(StringUtils.EMPTY);
+        }
         
         return proj;
     }
@@ -1665,6 +1677,8 @@ class XmlImporter {
                         // the empty string because no tokens were created 
                         // during parsing. 
                         converter.replaceGuidsInReferences(m_oldToNewGuids);
+                    } else {
+                        m_unparseableParameters.add(i18nValString);
                     }
 
                     i18nValString = converter.getModelString();

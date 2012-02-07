@@ -86,6 +86,7 @@ public class Messages extends NLS {
     public static String ToolkitSupportToolkitNotFound;
     public static String TreeOpsBPImportedCat;
     public static String UnknownErrorType;
+    public static String UnparseableParameters;
     public static String ValidateFailed;
     public static String XmlImporterProjectDependency;
     public static String XmlImporterProjectXMLTooOld;
