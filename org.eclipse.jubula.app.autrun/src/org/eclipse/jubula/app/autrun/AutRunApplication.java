@@ -28,10 +28,11 @@ import org.apache.commons.cli.Parser;
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jubula.app.autrun.i18n.Messages;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -128,6 +129,36 @@ public class AutRunApplication implements IApplication {
     
     /** executable file used to start the AUT */
     private static final String OPT_EXECUTABLE_LONG = "exec"; //$NON-NLS-1$
+    
+    /** AUT agent hostname */
+    private static final String HOSTNAME = "hostname"; //$NON-NLS-1$
+    
+    /** AUT agent port */
+    private static final String PORT = "port"; //$NON-NLS-1$
+    
+    /** AUT id */
+    private static final String ID = "id"; //$NON-NLS-1$
+    
+    /** technical components */
+    private static final String TRUE_FALSE = "true / false"; //$NON-NLS-1$
+    
+    /** AUT keyboard layout */
+    private static final String LOCALE = "locale"; //$NON-NLS-1$
+    
+    /** AUT working directory */
+    private static final String DIRECTORY = "directory"; //$NON-NLS-1$
+    
+    /** AUT options */
+    private static final String COMMAND = "command"; //$NON-NLS-1$
+    
+    /** swing class prefix */
+    private static final String SWING_AUT_TOOLKIT_CLASS_PREFIX = "Swing"; //$NON-NLS-1$
+    
+    /** swt class prefix */
+    private static final String SWT_AUT_TOOLKIT_CLASS_PREFIX = "Swt"; //$NON-NLS-1$
+    
+    /** rcp class prefix */
+    private static final String RCP_AUT_TOOLKIT_CLASS_PREFIX = "Rcp"; //$NON-NLS-1$
     // - Command line options - End //
 
     /**
@@ -195,75 +226,66 @@ public class AutRunApplication implements IApplication {
     /**
      * @return the command line options available when invoking the main method. 
      */
-    @SuppressWarnings("nls")
     private static Options createCmdLineOptions() {
         Options options = new Options();
-        Option autAgentHostOption = 
-            new Option(OPT_AUT_AGENT_HOST, true,
-                "AUT Agent Host"
-                    + " (default \"" + DEFAULT_AUT_AGENT_HOST + "\")");
+        Option autAgentHostOption = new Option(OPT_AUT_AGENT_HOST, true,
+                NLS.bind(Messages.infoAutAgentHost, DEFAULT_AUT_AGENT_HOST));
         autAgentHostOption.setLongOpt(OPT_AUT_AGENT_HOST_LONG);
-        autAgentHostOption.setArgName("hostname");
+        autAgentHostOption.setArgName(HOSTNAME);
         options.addOption(autAgentHostOption);
 
-        Option autAgentPortOption = 
-            new Option(OPT_AUT_AGENT_PORT, true,
-                "AUT Agent Port between 1024 and 65536"
-                    + " (default \"" + DEFAULT_AUT_AGENT_PORT + "\")");
+        Option autAgentPortOption = new Option(OPT_AUT_AGENT_PORT, true,
+                NLS.bind(Messages.infoAutAgentPort, DEFAULT_AUT_AGENT_PORT));
         autAgentPortOption.setLongOpt(OPT_AUT_AGENT_PORT_LONG);
-        autAgentPortOption.setArgName("port");
+        autAgentPortOption.setArgName(PORT);
         options.addOption(autAgentPortOption);
 
         OptionGroup autToolkitOptionGroup = new OptionGroup();
-        autToolkitOptionGroup.addOption(
-                new Option(TK_SWING, "AUT uses Swing toolkit"));
-        autToolkitOptionGroup.addOption(
-                new Option(TK_SWT,   "AUT uses SWT toolkit"));
-        autToolkitOptionGroup.addOption(
-                new Option(TK_RCP,   "AUT uses RCP toolkit"));
+        autToolkitOptionGroup.addOption(new Option(TK_SWING,
+                Messages.infoSwingToolkit));
+        autToolkitOptionGroup.addOption(new Option(TK_SWT,
+                Messages.infoSwtToolkit));
+        autToolkitOptionGroup.addOption(new Option(TK_RCP,
+                Messages.infoRcpToolkit));
         autToolkitOptionGroup.setRequired(true);
         options.addOptionGroup(autToolkitOptionGroup);
-        
-        Option autIdOption =
-            new Option(OPT_AUT_ID, true, "AUT ID");
+
+        Option autIdOption = new Option(OPT_AUT_ID, true, Messages.infoAutId);
         autIdOption.setLongOpt(OPT_AUT_ID_LONG);
-        autIdOption.setArgName("id");
+        autIdOption.setArgName(ID);
         autIdOption.setRequired(true);
         options.addOption(autIdOption);
-        
-        Option nameTechnicalComponentsOption =
-            new Option(OPT_NAME_TECHNICAL_COMPONENTS, 
-                true, "Generate Names for Technical Components (true / false)");
+
+        Option nameTechnicalComponentsOption = new Option(
+                OPT_NAME_TECHNICAL_COMPONENTS, true,
+                Messages.infoGenerateTechnicalComponentNames);
         nameTechnicalComponentsOption
-            .setLongOpt(OPT_NAME_TECHNICAL_COMPONENTS_LONG);
-        nameTechnicalComponentsOption.setArgName("true / false");
+                .setLongOpt(OPT_NAME_TECHNICAL_COMPONENTS_LONG);
+        nameTechnicalComponentsOption.setArgName(TRUE_FALSE);
         options.addOption(nameTechnicalComponentsOption);
-        
-        Option keyboardLayoutOption =
-            new Option(OPT_KEYBOARD_LAYOUT, 
-                true, "Keyboard Layout");
-        keyboardLayoutOption
-            .setLongOpt(OPT_KEYBOARD_LAYOUT_LONG);
-        keyboardLayoutOption.setArgName("locale");
+
+        Option keyboardLayoutOption = new Option(OPT_KEYBOARD_LAYOUT, true,
+                Messages.infoKbLayout);
+        keyboardLayoutOption.setLongOpt(OPT_KEYBOARD_LAYOUT_LONG);
+        keyboardLayoutOption.setArgName(LOCALE);
         options.addOption(keyboardLayoutOption);
-        
-        Option workingDirOption = new Option(OPT_WORKING_DIR, 
-                true, "AUT Working Directory");
+
+        Option workingDirOption = new Option(OPT_WORKING_DIR, true,
+                Messages.infoAutWorkingDirectory);
         workingDirOption.setLongOpt(OPT_WORKING_DIR_LONG);
-        workingDirOption.setArgName("directory");
+        workingDirOption.setArgName(DIRECTORY);
         options.addOption(workingDirOption);
-        
-        Option helpOption = new Option(OPT_HELP, 
-                false, "Displays this help");
+
+        Option helpOption = new Option(OPT_HELP, false, Messages.infoHelp);
         helpOption.setLongOpt(OPT_HELP_LONG);
         options.addOption(helpOption);
         
         OptionBuilder.hasArgs();
         Option autExecutableFileOption = OptionBuilder.create(OPT_EXECUTABLE);
-        autExecutableFileOption.setDescription("AUT Executable File");
+        autExecutableFileOption.setDescription(Messages.infoExecutableFile);
         autExecutableFileOption.setLongOpt(OPT_EXECUTABLE_LONG);
         autExecutableFileOption.setRequired(true);
-        autExecutableFileOption.setArgName("command");
+        autExecutableFileOption.setArgName(COMMAND);
         options.addOption(autExecutableFileOption);
         
         return options;
@@ -312,13 +334,13 @@ public class AutRunApplication implements IApplication {
         if (cmdLine != null && !cmdLine.hasOption(OPT_HELP)) {
             String toolkit = StringConstants.EMPTY;
             if (cmdLine.hasOption(TK_SWING)) {
-                toolkit = "Swing"; //$NON-NLS-1$
+                toolkit = SWING_AUT_TOOLKIT_CLASS_PREFIX;
             } else if (cmdLine.hasOption(TK_SWT)) {
-                toolkit = "Swt"; //$NON-NLS-1$
+                toolkit = SWT_AUT_TOOLKIT_CLASS_PREFIX;
             } else if (cmdLine.hasOption(TK_RCP)) {
-                toolkit = "Rcp"; //$NON-NLS-1$
+                toolkit = RCP_AUT_TOOLKIT_CLASS_PREFIX;
             }
-            
+
             int autAgentPort = DEFAULT_AUT_AGENT_PORT;
             if (cmdLine.hasOption(OPT_AUT_AGENT_PORT)) {
                 try {
@@ -345,8 +367,8 @@ public class AutRunApplication implements IApplication {
             try {
                 runner.run();
             } catch (ConnectException ce) {
-                LOG.info("Could not connect to AUT Agent.", ce); //$NON-NLS-1$
-                System.err.println(I18n.getString("InfoDetail.connGuiDancerServerFailed")); //$NON-NLS-1$
+                LOG.info(Messages.infoConnectionToAutAgentFailed, ce);
+                System.err.println(Messages.infoNonAutAgentConnectionInfo);
             }
         } else {
             printHelp(null);

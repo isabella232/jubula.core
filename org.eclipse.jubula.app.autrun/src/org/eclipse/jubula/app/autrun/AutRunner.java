@@ -20,6 +20,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jubula.app.autrun.i18n.Messages;
 import org.eclipse.jubula.autagent.commands.IStartAut;
 import org.eclipse.jubula.communication.connection.ConnectionState;
 import org.eclipse.jubula.communication.connection.RestartAutProtocol;
@@ -34,6 +35,12 @@ import org.slf4j.LoggerFactory;
  * @created Sept 07, 2011
  */
 public class AutRunner {
+
+    /** response OK when thread was started */
+    private static final String RESPONSE_OK = "Response.OK"; //$NON-NLS-1$
+
+    /** the thread name */
+    private static final String AGENT_CONNECTION_THREAD_NAME = "AUT Agent Connection"; //$NON-NLS-1$
 
     /** the logger */
     private static final Logger LOG = 
@@ -106,7 +113,8 @@ public class AutRunner {
         writer.println(
                 m_autConfiguration.get(AutConfigConstants.AUT_NAME));
         
-        Thread agentConnectionThread = new Thread("AUT Agent Connection") { //$NON-NLS-1$
+        Thread agentConnectionThread = new Thread
+        (AGENT_CONNECTION_THREAD_NAME) {
             public void run() {
                 try {
                     String line = reader.readLine();
@@ -118,7 +126,7 @@ public class AutRunner {
                             // the JVM won't shut down during AUT restart
                             Thread restartThread = new Thread() {
                                 public void run() {
-                                    writer.println("Response.OK"); //$NON-NLS-1$
+                                    writer.println(RESPONSE_OK);
                                     
                                     try {
                                         String restartReq = reader.readLine();
@@ -128,7 +136,7 @@ public class AutRunner {
                                             AutRunner.this.run();
                                         }
                                     } catch (IOException e) {
-                                        LOG.error("Error occured while restarting AUT.", e); //$NON-NLS-1$
+                                        LOG.error(Messages.restartAutFailed, e);
                                     } finally {
                                         try {
                                             agentSocket.close();
@@ -144,7 +152,7 @@ public class AutRunner {
                         }
                     }
                 } catch (IOException e) {
-                    LOG.error("Error occured while restarting AUT.", e); //$NON-NLS-1$
+                    LOG.error(Messages.restartAutFailed, e);
                 }
             }
         };
