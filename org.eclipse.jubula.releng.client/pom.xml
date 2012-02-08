@@ -14,10 +14,6 @@
   <packaging>pom</packaging>
   <description>Release engineering for Jubula ITE.</description>
 
-	<properties>
-		<tycho-version>0.14.0-SNAPSHOT</tycho-version>
-	</properties>
-
 	<modules>
 		<module>../org.apache.poi</module>
 		<module>../org.eclipse.jubula.site</module>

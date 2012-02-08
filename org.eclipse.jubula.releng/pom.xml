@@ -9,6 +9,24 @@
 	<version>1.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+    <properties>
+        <tycho-version>0.14.0-SNAPSHOT</tycho-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <repository>
+        <id>sonatype-tycho-snapshot</id>
+        <url>https://oss.sonatype.org/content/groups/public</url>
+        <releases>
+           <enabled>true</enabled>
+        </releases>
+        <snapshots>
+          <enabled>true</enabled>
+        </snapshots>        
+     </repository>
+    </repositories>
+
 	<modules>
         <module>../org.eclipse.jubula.tools</module>
         <module>../org.eclipse.jubula.communication</module>
@@ -20,9 +38,5 @@
 	</modules>
 
 	<url>http://www.eclipse.org/jubula</url>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 </project>
