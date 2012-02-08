@@ -242,7 +242,11 @@ public class ParsedParameter extends DepthFirstAdapter {
 
         String functionPrefix = functionTextBuilder.toString();
         for (IParamValueToken token : argumentTokens) {
-            functionTextBuilder.append(token.getGuiString());
+            if (m_isGuiSource) {
+                functionTextBuilder.append(token.getGuiString());
+            } else {
+                functionTextBuilder.append(token.getModelString());
+            }
         }
 
         String functionSuffix = function.getEndFunctionArgsToken().getText();
