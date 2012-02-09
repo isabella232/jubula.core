@@ -11,8 +11,8 @@
 		<tycho-version>0.14.0-SNAPSHOT</tycho-version>
 	</properties>
 
-    <repositories>
-        <repository>
+    <pluginRepositories>
+      <pluginRepository>
         <id>sonatype-tycho-snapshot</id>
         <url>https://oss.sonatype.org/content/groups/public</url>
         <releases>
@@ -21,8 +21,8 @@
         <snapshots>
           <enabled>true</enabled>
         </snapshots>        
-     </repository>
-    </repositories>
+     </pluginRepository>
+    </pluginRepositories>
 
 	<dependencies>
 		<dependency>
