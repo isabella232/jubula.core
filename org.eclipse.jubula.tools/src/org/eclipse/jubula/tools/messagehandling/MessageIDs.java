@@ -301,6 +301,8 @@ public class MessageIDs {
         new Integer(4054);
     /** unsupported toolkit version, e.g. during import of projects */
     public static final Integer E_UNSUPPORTED_TOOLKIT = new Integer(4055);
+    /** if a Function is not available */
+    public static final Integer E_NO_FUNCTION = new Integer(4056);
     // -- CONNECTION ERROR IDs ---------------------------------------------
     /** if problem occurres, during AUT connection initialization */
     public static final Integer E_AUT_CONNECTION_INIT = new Integer(5000);

@@ -256,6 +256,7 @@ public class ParsedParameter extends DepthFirstAdapter {
                 functionTextBuilder.toString(),
                 functionPrefix, functionSuffix,
                 function.getFunctionToken().getPos(), m_paramDesc, 
+                function.getFunctionName().getText(),
                 argumentTokens));
 
     }
@@ -263,7 +264,7 @@ public class ParsedParameter extends DepthFirstAdapter {
     @Override
     public void caseTComma(TComma node) {
         super.caseTComma(node);
-        m_paramValueTokens.add(new SimpleValueToken(
+        m_paramValueTokens.add(new FunctionArgumentSeparatorToken(
                 node.getText(), node.getPos(), m_paramDesc));
     }
     

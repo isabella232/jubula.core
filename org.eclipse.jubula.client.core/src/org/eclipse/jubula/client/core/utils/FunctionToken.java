@@ -10,12 +10,19 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.functions.FunctionDefinition;
+import org.eclipse.jubula.client.core.functions.FunctionRegistry;
+import org.eclipse.jubula.client.core.functions.IFunctionEvaluator;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
+import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Token that represents a function call.
@@ -32,25 +39,31 @@ public class FunctionToken extends AbstractParamValueToken
     /** the string at the end of the function : ) */
     private String m_suffix;
     
+    /** the name of the called Function */
+    private String m_functionName;
+    
     /**
      * Constructor
      * 
-     * @param s string represents the entire token
-     * @param functionPrefix string represents the text at the beginning of the token
-     * @param functionSuffix string represents the text at the end of the token
+     * @param s the entire token
+     * @param functionPrefix the text at the beginning of the token
+     * @param functionSuffix the text at the end of the token
      * @param pos index of first character of token in entire string
      * @param desc param description belonging to currently edited parameter value
+     * @param functionName the name of the called Function
      * @param argTokens the tokens that comprise the arguments for the function
      */
     public FunctionToken(String s,
             String functionPrefix, String functionSuffix, 
             int pos, IParamDescriptionPO desc, 
+            String functionName,
             IParamValueToken[] argTokens) {
 
         super(s, pos, desc);
         m_argTokens = argTokens;
         m_prefix = functionPrefix;
         m_suffix = functionSuffix;
+        m_functionName = functionName;
     }
 
     /**
@@ -59,16 +72,38 @@ public class FunctionToken extends AbstractParamValueToken
      */
     public ConvValidationState validate() {
         // FIXME implement
-        return null;
+        return ConvValidationState.valid;
     }
 
     /**
      * 
      * {@inheritDoc}
      */
-    public String getExecutionString(List<ExecObject> stack, Locale locale) {
-        // FIXME implement
-        return StringUtils.EMPTY;
+    public String getExecutionString(List<ExecObject> stack, Locale locale) 
+        throws InvalidDataException {
+        
+        FunctionDefinition function = 
+                FunctionRegistry.getInstance().getFunction(m_functionName);
+        if (function == null) {
+            throw new InvalidDataException(
+                    NLS.bind(Messages.FunctionNotDefined, m_functionName), 
+                    MessageIDs.E_NO_FUNCTION);
+        }
+        
+        IFunctionEvaluator evaluator = function.getEvaluator();
+        List<String> argList = new ArrayList<String>();
+        StringBuilder argBuilder = new StringBuilder();
+        for (IParamValueToken argToken : getNestedTokens()) {
+            if (argToken instanceof FunctionArgumentSeparatorToken) {
+                argList.add(argBuilder.toString());
+                argBuilder.setLength(0);
+            } else {
+                argBuilder.append(argToken.getExecutionString(stack, locale));
+            }
+        }
+        argList.add(argBuilder.toString());
+        
+        return evaluator.evaluate(argList.toArray(new String[argList.size()]));
     }
 
     /**

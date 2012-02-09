@@ -159,4 +159,13 @@ public class FunctionRegistry {
     public Collection<FunctionDefinition> getAllFunctions() {
         return m_registeredFunctions.values();
     }
+    
+    /**
+     * 
+     * @param functionName The name of the Function to retrieve.
+     * @return the Function registered for the given name.
+     */
+    public FunctionDefinition getFunction(String functionName) {
+        return m_registeredFunctions.get(functionName);
+    }
 }

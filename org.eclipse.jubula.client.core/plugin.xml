@@ -27,6 +27,67 @@
                type="number">
          </varArg>
       </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.RoundFunctionEvaluator"
+            evaluator="local"
+            name="round">
+         <parameter
+               name="toRound"
+               type="number">
+         </parameter>
+         <parameter
+               name="precision"
+               type="number">
+         </parameter>
+      </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.DivideFunctionEvaluator"
+            evaluator="local"
+            name="div">
+         <parameter
+               name="dividend"
+               type="number">
+         </parameter>
+         <parameter
+               name="divisor"
+               type="number">
+         </parameter>
+      </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.MultiplyFunctionEvaluator"
+            evaluator="local"
+            name="mult">
+         <varArg
+               defaultArgumentCount="2"
+               type="number">
+         </varArg>
+      </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.SubtractFunctionEvaluator"
+            evaluator="local"
+            name="sub">
+         <parameter
+               name="minuend"
+               type="number">
+         </parameter>
+         <parameter
+               name="subtrahend"
+               type="number">
+         </parameter>
+      </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.TruncateFunctionEvaluator"
+            evaluator="local"
+            name="trunc">
+         <parameter
+               name="toTruncate"
+               type="number">
+         </parameter>
+         <parameter
+               name="precision"
+               type="number">
+         </parameter>
+      </function>
    </extension>
 
 </plugin>
