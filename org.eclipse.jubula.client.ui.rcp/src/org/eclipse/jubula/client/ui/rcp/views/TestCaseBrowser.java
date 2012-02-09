@@ -27,7 +27,6 @@ import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProblemPropagationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -79,7 +78,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
  * @created 05.07.2004
  */
 public class TestCaseBrowser extends AbstractJBTreeView 
-    implements ITreeViewerContainer, IJBPart, IProblemPropagationListener {
+    implements ITreeViewerContainer, IJBPart {
     /** New-menu ID */
     public static final String NEW_ID = PlatformUI.PLUGIN_ID + ".NewSubMenu"; //$NON-NLS-1$
     /** Identifies the workbench plug-in */
@@ -134,7 +133,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
             handleProjectLoaded();
         }
         
-        DataEventDispatcher.getInstance().addProblemPropagationListener(this);
         Plugin.getDefault().getTreeViewerContainer().add(this);
     }
 
@@ -259,7 +257,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
         try {
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             ded.removeDataChangedListener(this);
-            ded.removeProblemPropagationListener(this);
             getViewSite().getWorkbenchWindow().getSelectionService()
                 .removeSelectionListener(m_actionListener);
             getTreeViewer().removeDoubleClickListener(m_doubleClickListener);
@@ -543,14 +540,5 @@ public class TestCaseBrowser extends AbstractJBTreeView
         } else if (po instanceof IProjectPO) {
             handleProjectLoaded();
         }
-    }
-
-    /** {@inheritDoc} */
-    public void problemPropagationFinished() {
-        getTreeViewer().getTree().getDisplay().syncExec(new Runnable() {
-            public void run() {
-                getTreeViewer().refresh();
-            }
-        });
     }
 }
