@@ -239,6 +239,7 @@ public class Messages extends NLS {
     public static String LockFailedDueToDeletedDOT;
     public static String LockFailedDueToDeletedPO;
     public static String LockingWontStart;
+    public static String LoggingConfigurationError;
     public static String MajorVersionInvalid;
     public static String MalformedName;
     public static String MappedObject;
@@ -429,6 +430,7 @@ public class Messages extends NLS {
     public static String WhileTryingToIdentifyItsType;
     public static String WithID;
     public static String WithReferenceIsNotChildOfParamNode;
+    public static String WrongLoggingImplementation;
     public static String WrongTypeForAdditionOfEventhandler;
     public static String WrongTypeForRemovalOfEventhandler;
     public static String WrongTypeOfReentryProperty;

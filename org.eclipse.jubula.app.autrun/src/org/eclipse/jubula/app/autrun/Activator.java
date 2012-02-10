@@ -14,6 +14,7 @@ import java.io.InputStream;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.LoggerContext;
@@ -48,19 +49,22 @@ public class Activator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
         Activator.context = bundleContext;
         // initialize the logging facility
-        LoggerContext lc = (LoggerContext)LoggerFactory.getILoggerFactory();
-        try {
-            JoranConfigurator configurator = new JoranConfigurator();
-            configurator.setContext(lc);
-            // the context was probably already configured by default
-            // configuration
-            // rules
-            lc.reset();
-            InputStream is = context.getBundle().getResource(LOGBACK_CONFIG_XML)
-                    .openStream();
-            configurator.doConfigure(is);
-        } catch (JoranException je) {
-            // no logging if logger fails :-(
+        ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
+        if (loggerFactory instanceof LoggerContext) {
+            LoggerContext lc = (LoggerContext)loggerFactory;
+            try {
+                JoranConfigurator configurator = new JoranConfigurator();
+                configurator.setContext(lc);
+                // the context was probably already configured by default
+                // configuration rules
+                lc.reset();
+                InputStream is = 
+                        context.getBundle().getResource(LOGBACK_CONFIG_XML)
+                            .openStream();
+                configurator.doConfigure(is);
+            } catch (JoranException je) {
+                // no logging if logger fails :-(
+            }
         }
 
     }
