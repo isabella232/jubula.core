@@ -17,7 +17,8 @@ import java.text.DecimalFormat;
 
 
 /**
- * Function that truncates a given string after a certain number of characters.
+ * Function that truncates a number a certain number of characters after the
+ * decimal point.
  */
 public class TruncateFunctionEvaluator implements IFunctionEvaluator {
 
