@@ -38,7 +38,6 @@
       <plugin id="javax.servlet"/>
       <plugin id="org.apache.commons.cli"/>
       <plugin id="org.apache.commons.lang"/>
-      <plugin id="org.apache.commons.logging"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.jobs"/>
       <plugin id="org.eclipse.core.runtime"/>
@@ -54,8 +53,6 @@
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.services"/>
       <plugin id="org.slf4j.api"/>
-      <plugin id="org.slf4j.jcl"/>
-      <plugin id="org.slf4j.log4j"/>
    </plugins>
 
 

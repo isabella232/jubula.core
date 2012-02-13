@@ -141,7 +141,6 @@ public class StartHtmlAutServerCommand extends AbstractStartToolkitAut {
                               CommandConstants.TOOLS_BUNDLE_ID,
                               CommandConstants.COMMUNICATION_BUNDLE_ID,
                               CommandConstants.RC_COMMON_BUNDLE_ID,
-                              CommandConstants.SLF4J_JCL_BUNDLE_ID,
                               CommandConstants.SLF4J_API_BUNDLE_ID,
                               CommandConstants.LOGBACK_CLASSIC_BUNDLE_ID,
                               CommandConstants.LOGBACK_CORE_BUNDLE_ID,
