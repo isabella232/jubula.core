@@ -462,8 +462,12 @@ public class MessageIDs {
     public static final Integer E_NOT_SUPP_COMBO_ITEM = new Integer(9517);
     /**reference error, because references are invalid for test data cubes.  */
     public static final Integer E_REF_IN_TDC = new Integer(9518);
-    /** missing name for a function in a parameter value */
+    /** missing name for a Function in a parameter value */
     public static final Integer E_MISSING_FUNCTION_NAME = new Integer (9519);
+    /** no Function registered for given name */
+    public static final Integer E_FUNCTION_NOT_REGISTERED = new Integer (9520);
+    /** incorrect number of arguments for a Function in a parameter value */
+    public static final Integer E_WRONG_NUM_FUNCTION_ARGS = new Integer (9521);
     
     
     
@@ -850,6 +854,8 @@ public class MessageIDs {
         messageMap.put(E_TOO_SMALL_VALUE, e, "ErrorMessage.TOO_SMALL_VALUE", null); //$NON-NLS-1$
         messageMap.put(E_NOT_SUPP_COMBO_ITEM, e, "ErrorMessage.NOT_SUPP_COMBO_ITEM", null); //$NON-NLS-1$
         messageMap.put(E_MISSING_FUNCTION_NAME, e, "ErrorMessage.MISSING_FUNCTION_NAME", null); //$NON-NLS-1$
+        messageMap.put(E_FUNCTION_NOT_REGISTERED, e, "ErrorMessage.FUNCTION_NOT_REGISTERED", null); //$NON-NLS-1$
+        messageMap.put(E_WRONG_NUM_FUNCTION_ARGS, e, "ErrorMessage.WRONG_NUM_FUNCTION_ARGS", null); //$NON-NLS-1$
     }
     
     /**

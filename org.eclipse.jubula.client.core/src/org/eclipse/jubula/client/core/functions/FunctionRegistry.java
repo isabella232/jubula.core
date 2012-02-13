@@ -163,7 +163,8 @@ public class FunctionRegistry {
     /**
      * 
      * @param functionName The name of the Function to retrieve.
-     * @return the Function registered for the given name.
+     * @return the Function registered for the given name, or <code>null</code>
+     *         if no function is registered for that name.
      */
     public FunctionDefinition getFunction(String functionName) {
         return m_registeredFunctions.get(functionName);
