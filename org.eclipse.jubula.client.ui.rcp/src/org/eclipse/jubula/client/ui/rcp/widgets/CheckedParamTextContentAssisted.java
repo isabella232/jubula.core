@@ -12,9 +12,10 @@ package org.eclipse.jubula.client.ui.rcp.widgets;
 
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.IContentProposalListener2;
+import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
-import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
 import org.eclipse.jubula.client.ui.rcp.utils.ContentAssistUtil;
 import org.eclipse.swt.widgets.Composite;
@@ -55,24 +56,27 @@ public class CheckedParamTextContentAssisted extends CheckedParamText {
     
     /**
      * 
-     * @param parent {@inheritDoc}
-     * @param style {@inheritDoc}
-     * @param node {@inheritDoc}
-     * @param desc {@inheritDoc}
-     * @param dataValidator {@inheritDoc}
-     * @param valueSet fixed values from the CAP description
+     * @param parent parent
+     * @param style style
+     * @param node current node, associated with parameter for this value
+     * @param desc parameter description associated with current edited value
+     * @param dataValidator validator for data validation
+     * @param proposalProvider The content proposal provider for this text
+     *                         field, or <code>null</code> if no content
+     *                         assist is available.
      */
     @SuppressWarnings("synthetic-access")
     public CheckedParamTextContentAssisted(Composite parent, int style,
-            IParamNodePO node, IParamDescriptionPO desc,
-            IParamValueValidator dataValidator, String[] valueSet) {
+            IParameterInterfacePO node, IParamDescriptionPO desc,
+            IParamValueValidator dataValidator, 
+            IContentProposalProvider proposalProvider) {
         super(parent, style, node, desc, dataValidator);
         
         m_popupListener = new IContentProposalListener2Implementation();
 
         ContentProposalAdapter cpa = new ContentProposalAdapter(this,
                 new TextContentAdapter(), 
-                new ParamProposalProvider(valueSet, node, desc), 
+                proposalProvider, 
                 ContentAssistUtil.getTriggerKeyStroke(), 
                 ContentAssistUtil.getTriggerChars());
         cpa.setFilterStyle(ContentProposalAdapter.FILTER_NONE);

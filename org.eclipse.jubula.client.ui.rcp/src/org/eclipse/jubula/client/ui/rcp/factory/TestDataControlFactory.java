@@ -30,6 +30,8 @@ import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractGuiN
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamTextContentAssisted;
+import org.eclipse.jubula.client.ui.rcp.widgets.FunctionProposalProvider;
+import org.eclipse.jubula.client.ui.rcp.widgets.ParamProposalProvider;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -112,22 +114,29 @@ public class TestDataControlFactory {
             }
 
             return new CheckedParamTextContentAssisted(parent, style,
-                    paramNode, paramDesc, createParamValueValidator(
+                    paramNode, paramDesc, 
+                    createParamValueValidator(
                             paramDesc.getType(), 
                             valueSet != null ? valueSet.isCombinable() : false, 
-                            values), 
-                    values);
+                                    values), 
+                    new ParamProposalProvider(
+                            values, paramNode, paramDesc));
         }
 
         if (paramObj instanceof ITestDataCubePO) {
             ITestDataCubePO tdc = (ITestDataCubePO)paramObj;
             if (TestDataConstants.BOOLEAN.equals(paramDesc.getType())) {
-                return new CheckedParamText(parent, style, tdc, paramDesc,
-                        createParamValueValidator(paramDesc.getType(),
-                                false, BOOLEAN_VALUES));
+                return new CheckedParamTextContentAssisted(parent, style,
+                        tdc, paramDesc, 
+                        createParamValueValidator(
+                                paramDesc.getType(), 
+                                false, BOOLEAN_VALUES), 
+                        new FunctionProposalProvider());
             }
-            return new CheckedParamText(parent, style, tdc, paramDesc,
-                    createParamValueValidator(paramDesc.getType(), false));
+            return new CheckedParamTextContentAssisted(parent, style,
+                    tdc, paramDesc, 
+                    createParamValueValidator(paramDesc.getType(), false), 
+                    new FunctionProposalProvider());
         }
         
         Assert.notReached(Messages.ImplementFor + StringConstants.SPACE 
