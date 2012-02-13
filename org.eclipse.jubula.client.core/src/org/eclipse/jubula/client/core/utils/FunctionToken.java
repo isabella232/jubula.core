@@ -71,8 +71,41 @@ public class FunctionToken extends AbstractParamValueToken
      * {@inheritDoc}
      */
     public ConvValidationState validate() {
-        // FIXME implement
-        return ConvValidationState.valid;
+
+        FunctionDefinition function =
+                FunctionRegistry.getInstance().getFunction(m_functionName);
+        if (function == null) {
+            setErrorKey(MessageIDs.E_FUNCTION_NOT_REGISTERED);
+            return ConvValidationState.invalid;
+        }
+
+        int paramCount = function.getParameters().length;
+        boolean hasVarArgs = function.getVarArgs() != null;
+        int argCount = getArgumentCount();
+        if ((!hasVarArgs && argCount != paramCount) 
+                || (hasVarArgs && argCount < paramCount)) {
+
+            setErrorKey(MessageIDs.E_WRONG_NUM_FUNCTION_ARGS);
+            return ConvValidationState.invalid;
+        }
+        
+        ConvValidationState state = ConvValidationState.valid;
+        Integer errorKey = null;
+        
+        for (IParamValueToken childToken : getNestedTokens()) {
+            ConvValidationState childState = childToken.validate();
+            if (childState == ConvValidationState.invalid) {
+                setErrorKey(childToken.getErrorKey());
+                return childState;
+            }
+            if (childState == ConvValidationState.undecided) {
+                state = childState;
+                errorKey = childToken.getErrorKey();
+            }
+        }
+
+        setErrorKey(errorKey);
+        return state;
     }
 
     /**
@@ -146,4 +179,22 @@ public class FunctionToken extends AbstractParamValueToken
         return m_argTokens;
     }
 
+    /**
+     * 
+     * @return the number of arguments entered for this Function.
+     */
+    private int getArgumentCount() {
+        if (m_argTokens.length == 0) {
+            return 0;
+        }
+        
+        int argCount = 1;
+        for (IParamValueToken token : m_argTokens) {
+            if (token instanceof FunctionArgumentSeparatorToken) {
+                argCount++;
+            }
+        }
+        
+        return argCount;
+    }
 }

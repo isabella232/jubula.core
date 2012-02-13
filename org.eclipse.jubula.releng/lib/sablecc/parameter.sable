@@ -41,7 +41,7 @@ Tokens
     {function_args}
     escaped_symbol_in_function = '\' escapable_in_function;
     {function_args}
-    function_alphanumeric = alphanumeric+;
+    function_alphanumeric = (alphanumeric | '.' | '-')+;
     {function_args->normal}
     end_function_args_token = ')';
     
