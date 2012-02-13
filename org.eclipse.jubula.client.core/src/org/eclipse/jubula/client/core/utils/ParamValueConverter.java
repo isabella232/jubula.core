@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
+import org.eclipse.jubula.client.core.gen.parser.parameter.node.EOF;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
@@ -395,8 +396,16 @@ public abstract class ParamValueConverter {
      * @param input The input string for which the exception occurred.
      */
     protected void createErrors(ParserException e, String input) {
+        ConvValidationState state = ConvValidationState.invalid;
+        if (e.getToken() instanceof EOF) {
+            // unexpected EOF token means that the error occurred at the
+            // end of the parsed string, which implies that, although the
+            // current string is invalid, it could be made valid by appending
+            // the necessary text
+            state = ConvValidationState.undecided;
+        }
         addError(new TokenError(input, 
-                MessageIDs.E_GENERAL_PARSE_ERROR, ConvValidationState.invalid));
+                MessageIDs.E_GENERAL_PARSE_ERROR, state));
     }
 
     /**
