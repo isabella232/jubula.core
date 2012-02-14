@@ -9,6 +9,7 @@ Bundle-Vendor: Eclipse Jubula
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.apache.commons.collections;bundle-version="[3.2.0,4.0.0)",
  org.apache.commons.cli;bundle-version="[1.2.0,2.0.0)",
+ org.slf4j.jcl;bundle-version="[1.5.11,2.0.0)",
  org.slf4j.api;bundle-version="[1.5.11,2.0.0)",
  ch.qos.logback.classic;bundle-version="[0.9.19,1.0.0)",
  ch.qos.logback.core;bundle-version="[0.9.19,1.0.0)",

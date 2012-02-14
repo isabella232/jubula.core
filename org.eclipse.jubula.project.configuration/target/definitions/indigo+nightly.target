@@ -14,6 +14,7 @@
 <unit id="ch.qos.logback.core" version="0.9.19.v20100419-1216"/>
 <unit id="ch.qos.logback.slf4j" version="0.9.19.v20100519-1910"/>
 <unit id="org.slf4j.api" version="1.5.11.v20100519-1910"/>
+<unit id="org.slf4j.jcl" version="1.5.11.v20100419-1106"/>
 <repository id="eclipse-orbit-R20120119162704" location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeMode="slicer" type="InstallableUnit">

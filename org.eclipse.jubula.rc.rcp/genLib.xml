@@ -61,6 +61,12 @@
       </fileset>
       <mergemapper to="org.slf4j.api.jar"/>
     </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.slf4j.jcl*.jar" />
+      </fileset>
+      <mergemapper to="org.slf4j.jcl.jar"/>
+    </copy>
 
     <copy todir="lib">
       <fileset dir="../org.eclipse.jubula.rc.common/target">
