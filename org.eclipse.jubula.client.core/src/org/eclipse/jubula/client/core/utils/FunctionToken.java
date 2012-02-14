@@ -136,7 +136,17 @@ public class FunctionToken extends AbstractParamValueToken
         }
         argList.add(argBuilder.toString());
         
-        return evaluator.evaluate(argList.toArray(new String[argList.size()]));
+        try {
+            return evaluator.evaluate(
+                    argList.toArray(new String[argList.size()]));
+        } catch (Throwable t) {
+            if (t instanceof InvalidDataException) {
+                throw (InvalidDataException)t;
+            }
+
+            throw new InvalidDataException(t.getLocalizedMessage(), 
+                    MessageIDs.E_FUNCTION_EVAL_ERROR);
+        }
     }
 
     /**

@@ -400,6 +400,8 @@ public class MessageIDs {
     public static final Integer E_SYNTAX_ERROR = new Integer(7011);
     /** if observation of a test step fails */
     public static final Integer E_TEST_STEP_NOT_CREATED = new Integer(7012);
+    /** error occurred while evaluating a Function */
+    public static final Integer E_FUNCTION_EVAL_ERROR = new Integer(7013);
     // -- general RUNTIME ERROR IDs (SERVER !!!) ----------------------------
     /** if an opened session failed */
     public static final Integer E_EVENT_SUPPORT = new Integer(8000);
@@ -876,6 +878,7 @@ public class MessageIDs {
         messageMap.put(E_UNRESOLV_VAR_ERROR, e, "ErrorMessage.UNRESOLV_VAR_ERROR", null); //$NON-NLS-1$
         messageMap.put(E_SYNTAX_ERROR, e, "ErrorMessage.SYNTAX_ERROR", null); //$NON-NLS-1$
         messageMap.put(E_TEST_STEP_NOT_CREATED, e, "ErrorMessage.TEST_STEP_NOT_CREATED", null); //$NON-NLS-1$
+        messageMap.put(E_FUNCTION_EVAL_ERROR, e, "ErrorMessage.FUNCTION_EVAL_ERROR", null); //$NON-NLS-1$
     }
     
     /**
