@@ -177,6 +177,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
             CommandConstants.TOOLS_BUNDLE_ID, 
             CommandConstants.COMMUNICATION_BUNDLE_ID, 
             CommandConstants.RC_COMMON_BUNDLE_ID,
+            CommandConstants.SLF4J_JCL_BUNDLE_ID,
             CommandConstants.SLF4J_API_BUNDLE_ID,
             CommandConstants.COMMONS_LANG_BUNDLE_ID,
             CommandConstants.APACHE_ORO_BUNDLE_ID,
