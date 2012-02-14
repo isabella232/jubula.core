@@ -20,7 +20,6 @@
 		<module>../org.eclipse.jubula.app</module>
 		<module>../org.eclipse.jubula.app.cmd</module>
 		<module>../org.eclipse.jubula.app.dbtool</module>
-<!-- 		<module>../org.eclipse.jubula.standalone</module> -->
 		<module>../org.eclipse.jubula.feature</module>
 		<module>../org.eclipse.jubula.client.core</module>
         <module>../org.eclipse.jubula.client.ui</module>
