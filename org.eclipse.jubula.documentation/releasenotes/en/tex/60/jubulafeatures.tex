@@ -14,31 +14,19 @@ without having to set timers or manually check timestamps.
 \item You can switch off the decoration in the \app{} client in the \bxname{label decoration} preferences.
 \end{itemize} 
 
-\textbf{Missing data decoration now shown in the \gdtestcaseeditor{}, \gdtestsuiteeditor{} and \gdtestcasebrowser{}}
+\textbf{Missing data decoration now shown in the \gdtestcaseeditor{} and \gdtestsuiteeditor{}}
 \begin{itemize}
 \item When working on a \gdcase{} or \gdsuite{} in their respective editors, you will now see small red crosses on any referenced \gdcases{} or \gdsteps{} in that editor which have missing data \textit{at this level} (i.e. data that should be entered in this editor). 
 \item This will help avoid problems with forgetting to enter data in the \gdpropview{}. 
-\item Once the \gdcase{} is saved, any missing data for its children (any \gdcases{} and \gdsteps{} it contains, as well as items contained in \gdcases{} it reuses) is also displayed using small red crosses in the \gdtestcasebrowser{}. 
+
 \end{itemize}
 
 \textbf{Functions can be entered as parameter values}
 \begin{itemize}
 \item Alongside concrete values (\bxshell{abc}), references (\bxshell{=P1}) and variables (\bxshell{\$VAR}), you can now enter functions as data, or as parts of your data.
 \item The sign to introduce a function is the question mark: \bxshell{?}
-\bxwarn{Any question marks used as test data will have to be escaped using one or more backslashes in this new version. A warning in the problems view will appear after importing your \gdproject{} if you have any unescaped question marks in your data. You can then use the search function to find them and mask them.} 
-\item The following functions are available out of the box:
-\begin{description}
-\item [add]{Adds the two following numbers: \bxshell{?add(1,2)}}
-\item [sub]{Subtracts the second number from the first: \bxshell{?sub(3,2)}}
-\item [mult]{Multiplies the second number by the first: \bxshell{?mult(2,4)}}
-\item [div]{Divides the first number by the second: \bxshell{?div(2,1)}}
-\item [trunc]{}
-\item [round]{}
-\item [now]{}
-\item [formatDate]{}
-\item [parseDate]{}
-\item [modifyDate]{}
-\end{description}
+\bxwarn{Any question marks used as test data will have to be escaped using one or more backslashes as of this new version. A warning in the console view will appear after importing your \gdproject{} if you have any unescaped question marks in your data. You can then use the search function to find them and mask them.} 
+\item There are functions available out of the box for various mathematical calculations and for working with dates.  
 \item Functions can be embedded in other functions, e.g. \bxshell{?add(?sub(3,2),4)} to add the result of (3-2) to 4. 
 \item Functions can also make use of other data entry options in \app{} such as variables (\bxshell{?add(\${VAR1},={P1})} adds the number in the variable VAR1 to the number in the reference P1). 
 \item You can add your own functions via an extension point. 

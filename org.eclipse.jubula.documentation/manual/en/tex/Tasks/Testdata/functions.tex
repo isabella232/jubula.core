@@ -2,6 +2,7 @@
 \index{Parameter!Function}
 
 You can let \app{} calculate specific values for you without having to enter the results yourself by using \bxname{functions}. There are specific functions that work out-of-the-box with \app{}, and additional functions can be added as well. 
+
 \subsubsection{Syntax for functions}
 \index{Functions!Syntax}
 The sign used to introduce a function is the question mark: \bxshell{?} (without quotes). 
@@ -14,24 +15,37 @@ The arguments are separated by commas and are placed within round brackets.
 
 \subsubsection{Pre-defined functions}
 The following functions are available out of the box:
+
+\textbf{Mathematical functions}\\
+The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc. 
 \begin{description}
-\item [add]{Adds the two following numbers: \bxshell{?add(1,2)}}
-\item [sub]{Subtracts the second number from the first: \bxshell{?sub(3,2)}}
-\item [mult]{Multiplies the second number by the first: \bxshell{?mult(2,4)}}
-\item [div]{Divides the first number by the second: \bxshell{?div(2,1)}}
-\item [trunc]{}
-\item [round]{}
-\item [now]{}
-\item [formatDate]{}
-\item [parseDate]{}
-\item [modifyDate]{}
+\item [add]{Adds 0 or more numbers to 0, e.g.: \bxshell{?add(1,2)}.}
+\item [sub]{Subtracts the second number from the first: \bxshell{?sub(3,2). This function only accepts two numbers.}}
+\item [mult]{Multiplies 0 or more numbers by 1 e.g.: \bxshell{?mult(2,4)}.}
+\item [div]{Divides the first number by the second: \bxshell{?div(2,1)}. This function only accepts two numbers.}
+\item [trunc]{Takes two arguments, the decimal to be truncated and the precision (as an integer) to truncate the decimal to. Use \bxshell{0} to cut off the number to no decimal places (i.e. to receive a plain integer), and use \bxshell{1} to cut off the decimal to one decimal place etc: \bxshell{?trunc(2.396,0)} gives \bxshell{2} and \bxshell{?trunc(2.789,1) gives \bxshell{2.7}}.}
+\item [round]{Takes two arguments, the decimal to be rounded and the precision (as an integer) to round to. This function uses \bxname{half-up} rounding to round the number so that if the final decimal place after rounding is 5 or higher, the final number will be incremented by 1 e.g.: \bxshell{?round(2.56,1)} gives \bxshell{2.6}. If the final number after rounding is 4 or less, there is no incrementation, eg. \bxshell{?round(2.46,1)} gives \bxshell{2.4}. }
+\bxwarn{It is currently only possible to use numbers formatted with the decimal mark \bxname{period} or \bxname{fullstop} (\bxshell{.}). Thousands separators may not be used. For example, \bxshell{1.5} is accepted, but \bxshell{1,5} is not. \bxshell{1000} can be entered but \bxshell{1,000} cannot. Entering \bxshell{1.000} is equivalent to entering \bxshell{1}.}
 \end{description}
 
+%% \textbf{Date functions}\\
+%% \begin{description}
+%% \item [now]{}
+%% \item [formatDate]{}
+%% \item [parseDate]{}
+%% \item [modifyDate]{}
+%% \end{description}
+
 \subsubsection{Embedding functions in other functions}
+Functions can be added as arguments to other functions. If, for example, you want to use the result of a subtraction as the first argument of your addition, you could write it like this:\\
+\bxshell{?add(?sub(2,1),1)}\\
+Results in \bxshell{1.0 + 1}, i.e. \bxshell{1.0}\\
 
-\subsubsection{Concatenating functions with other data}
-
-\subsubsection{Useful examples for functions}
+%\subsubsection{Useful examples for functions}
 
 \subsubsection{Adding your own functions}
+You can also add your own functions using an extension point. This is described in the Extension Manual. 
+
+
+
 

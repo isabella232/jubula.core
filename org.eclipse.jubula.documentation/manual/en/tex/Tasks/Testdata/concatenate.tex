@@ -6,6 +6,7 @@
 \item Concrete values \bxpref{TasksTestdataConcrete}.
 \item Referenced parameters \bxpref{TasksTestdataReferences}.
 \item Variables \bxpref{TasksVariables}.
+\item Functions \bxpref{TasksDataFunctions}.
 \end{itemize}
 
 You can use these parameters separately, or you can combine them to create a parameter value. This is useful if a value you want to enter or check consists of parts that change and parts that stay the same. 
@@ -17,8 +18,8 @@ To combine different types of parameter to make one value, you must write them i
 \item Variable names must also be written with curly brackets around them:\\
 \bxshell{\$\{VAR\_NAME\}}
 \item Concrete values are written as normal. 
-\item For example, to check a file name which has the format \bxname{test\_projectname\_filenumber}, you could enter a parameter thus:\\
-\bxshell{test\_=\{PROJECTNAME\}\_\$\{FILENUMBER\}}\\
-The date value would come from a reference, and the file number from a variable read from the \gdaut{}. 
+\item For example, you can build a data string that contains all four types of data:\\
+\bxshell{test\_=\{PROJECTNAME\}\_\$\{CUSTOMERNUMBER\}\_?now()}\\
+
 \end{enumerate}
 
