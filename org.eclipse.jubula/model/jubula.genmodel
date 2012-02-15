@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.jubula/src"
+    creationIcons="false" modelPluginID="org.eclipse.jubula" modelName="Jubula" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject"
+    rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl" reflectiveDelegation="true"
+    testsDirectory="" importerID="org.eclipse.emf.importer.cdo" featureDelegation="Reflective"
+    complianceLevel="5.0" copyrightFields="false" language="" runtimePlatform="GWT">
+  <foreignModel>jubula.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="Jubula" basePackage="org.eclipse" disposableProviderFactory="true"
+      contentTypeIdentifier="" ecorePackage="jubula.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="jubula.ecore#//EventType">
+      <genEnumLiterals ecoreEnumLiteral="jubula.ecore#//EventType/ComponentNotFound"/>
+      <genEnumLiterals ecoreEnumLiteral="jubula.ecore#//EventType/ActionError"/>
+      <genEnumLiterals ecoreEnumLiteral="jubula.ecore#//EventType/ConfigurationError"/>
+      <genEnumLiterals ecoreEnumLiteral="jubula.ecore#//EventType/CheckFailed"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="jubula.ecore#//ReentryType">
+      <genEnumLiterals ecoreEnumLiteral="jubula.ecore#//ReentryType/Pause"/>
+      <genEnumLiterals ecoreEnumLiteral="jubula.ecore#//ReentryType/Continue"/>
+      <genEnumLiterals ecoreEnumLiteral="jubula.ecore#//ReentryType/Break"/>
+      <genEnumLiterals ecoreEnumLiteral="jubula.ecore#//ReentryType/Retry"/>
+    </genEnums>
+    <genClasses ecoreClass="jubula.ecore#//Project">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//Project/languages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//Project/compCategory"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//Project/specCategory"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//Project/execCategory"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//Project/ctdCategory"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//Project/AUTs"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//TestCase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//TestCase/children"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//TestCase/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//TestCase/defaultValueProvider"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//TestCase/eventHandlerMap"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//SpecCategory">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//SpecCategory/testCases"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//SpecCategory/categories"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//TestCaseRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//TestCaseRef/testCase"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//TestCaseRef/componentRefs"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//TestStep">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//TestStep/component"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="jubula.ecore#//TestCaseChild">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//TestCaseChild/valueProvider"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//TestJob">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//TestJob/testSuiteRefs"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//TestSuite">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//TestSuite/testCaseRefs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//TestSuite/AUT"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//TestSuiteRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//TestSuiteRef/testSuite"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//ExecCategory">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//ExecCategory/categories"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//ExecCategory/testJobs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//ExecCategory/testSuites"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//AUT">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//AUT/configs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//AUT/uiCategory"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//AUTConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//AUTConfig/properties"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//UIComponent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//UIComponent/components"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//CompCategory">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//CompCategory/categories"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//CompCategory/components"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//Component"/>
+    <genClasses ecoreClass="jubula.ecore#//ComponentRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//ComponentRef/component"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//ComponentRef/override"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//UICategory">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//UICategory/uiComponents"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//UICategory/categories"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//Parameter"/>
+    <genClasses ecoreClass="jubula.ecore#//Language"/>
+    <genClasses image="false" ecoreClass="jubula.ecore#//ValueProvider">
+      <genOperations ecoreOperation="jubula.ecore#//ValueProvider/getValues">
+        <genParameters ecoreParameter="jubula.ecore#//ValueProvider/getValues/parameter"/>
+        <genParameters ecoreParameter="jubula.ecore#//ValueProvider/getValues/language"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//LocalValueProvider">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//LocalValueProvider/values"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//Value">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//Value/language"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jubula.ecore#//Value/text"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//Value/parameter"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//ExcelValueProvider">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jubula.ecore#//ExcelValueProvider/fileName"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//RefValueProvider">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference jubula.ecore#//RefValueProvider/testCase"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//CTDValueProvider">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//CTDValueProvider/ctdSet"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//CTDSet">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//CTDSet/valueProvider"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//CTDSet/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//CTDCategory">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//CTDCategory/categories"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference jubula.ecore#//CTDCategory/ctdSets"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//EventHandler">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jubula.ecore#//EventHandler/reentryType"/>
+    </genClasses>
+    <genClasses ecoreClass="jubula.ecore#//HandlerEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jubula.ecore#//HandlerEntry/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference jubula.ecore#//HandlerEntry/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="jubula.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute jubula.ecore#//NamedElement/name"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
