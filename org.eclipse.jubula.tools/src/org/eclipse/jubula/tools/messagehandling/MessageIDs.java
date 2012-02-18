@@ -470,7 +470,8 @@ public class MessageIDs {
     public static final Integer E_FUNCTION_NOT_REGISTERED = new Integer (9520);
     /** incorrect number of arguments for a Function in a parameter value */
     public static final Integer E_WRONG_NUM_FUNCTION_ARGS = new Integer (9521);
-    
+    /** incorrect function parameter value */
+    public static final Integer E_WRONG_PARAMETER_VALUE = new Integer(9522);
     
     
     
