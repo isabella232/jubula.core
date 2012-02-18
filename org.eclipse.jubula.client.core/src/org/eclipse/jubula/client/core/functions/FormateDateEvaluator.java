@@ -22,7 +22,6 @@ public final class FormateDateEvaluator extends AbstractFunctionEvaluator {
      * org.eclipse.jubula.client.core.functions.IFunctionEvaluator#evaluate(
      * java.lang.String[])
      */
-    @Override
     public String evaluate(String[] arguments) throws InvalidDataException {
         validateParamCount(arguments, 2);
         try {
