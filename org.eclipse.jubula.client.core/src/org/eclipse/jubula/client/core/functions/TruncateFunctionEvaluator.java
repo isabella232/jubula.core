@@ -14,19 +14,23 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
+import org.eclipse.jubula.tools.exception.InvalidDataException;
+
 
 
 /**
  * Function that truncates a number a certain number of characters after the
  * decimal point.
  */
-public class TruncateFunctionEvaluator implements IFunctionEvaluator {
+public class TruncateFunctionEvaluator extends AbstractFunctionEvaluator {
 
     /**
      * 
      * {@inheritDoc}
+     * @throws InvalidDataException 
      */
-    public String evaluate(String[] arguments) {
+    public String evaluate(String[] arguments) throws InvalidDataException {
+        validateParamCount(arguments, 2);
         BigDecimal toTruncate = new BigDecimal(arguments[0]);
         int precision = Integer.parseInt(arguments[1]);
 

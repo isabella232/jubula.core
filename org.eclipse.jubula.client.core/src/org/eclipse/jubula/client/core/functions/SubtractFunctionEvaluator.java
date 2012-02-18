@@ -10,16 +10,20 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.functions;
 
+import org.eclipse.jubula.tools.exception.InvalidDataException;
+
 /**
  * Function that subtracts number from another.
  */
-public class SubtractFunctionEvaluator implements IFunctionEvaluator {
+public class SubtractFunctionEvaluator extends AbstractFunctionEvaluator {
 
     /**
      * 
      * {@inheritDoc}
+     * @throws InvalidDataException 
      */
-    public String evaluate(String[] arguments) {
+    public String evaluate(String[] arguments) throws InvalidDataException {
+        validateParamCount(arguments, 2);
         double minuend = Double.parseDouble(arguments[0]);
         double subtrahend = Double.parseDouble(arguments[1]);
         

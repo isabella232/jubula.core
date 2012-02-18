@@ -10,16 +10,20 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.functions;
 
+import org.eclipse.jubula.tools.exception.InvalidDataException;
+
 /**
  * Function that divides 2 numbers.
  */
-public class DivideFunctionEvaluator implements IFunctionEvaluator {
+public class DivideFunctionEvaluator extends AbstractFunctionEvaluator {
 
     /**
      * 
      * {@inheritDoc}
+     * @throws InvalidDataException 
      */
-    public String evaluate(String[] arguments) {
+    public String evaluate(String[] arguments) throws InvalidDataException {
+        validateParamCount(arguments, 2);
         double dividend = Double.parseDouble(arguments[0]);
         double divisor = Double.parseDouble(arguments[1]);
 

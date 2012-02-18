@@ -88,6 +88,50 @@
                type="number">
          </parameter>
       </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.NowEvaluator"
+            evaluator="local"
+            name="now">
+      </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.ModifyDateEvaluator"
+            evaluator="local"
+            name="modifyDate">
+         <parameter
+               name="date"
+               type="string">
+         </parameter>
+         <parameter
+               name="offset"
+               type="string">
+         </parameter>
+      </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.ParseDateEvaluator"
+            evaluator="local"
+            name="parseDate">
+         <parameter
+               name="dateString"
+               type="string">
+         </parameter>
+         <parameter
+               name="formatString"
+               type="string">
+         </parameter>
+      </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.FormateDateEvaluator"
+            evaluator="local"
+            name="formatDate">
+         <parameter
+               name="date"
+               type="string">
+         </parameter>
+         <parameter
+               name="formatString"
+               type="string">
+         </parameter>
+      </function>
    </extension>
 
 </plugin>
