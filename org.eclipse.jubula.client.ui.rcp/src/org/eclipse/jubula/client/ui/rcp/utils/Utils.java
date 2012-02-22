@@ -46,6 +46,8 @@ import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.search.ui.ISearchQuery;
+import org.eclipse.search.ui.NewSearchUI;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewPart;
@@ -261,11 +263,21 @@ public class Utils {
                 setTreeViewerInputNull(Constants.TC_BROWSER_ID);
                 setTreeViewerInputNull(Constants.TS_BROWSER_ID);
                 setTreeViewerInputNull(Constants.COMPNAMEBROWSER_ID);
+                clearAnalyzeResultPage();
             }
         });
         ded.fireProjectLoadedListener(new NullProgressMonitor());
     }
-    
+    /**
+     * Clears the ResultPage of the Analyze-Plugin
+     */
+    private static void clearAnalyzeResultPage() {
+
+        ISearchQuery[] querry = NewSearchUI.getQueries();
+        for (int i = 0; i < querry.length; i++) {
+            NewSearchUI.removeQuery(querry[i]);
+        }
+    }
     /**
      * @param viewID
      *            the id of the view to set it's tree viewer input to null.
