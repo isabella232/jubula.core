@@ -19,7 +19,7 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.IRecordListener;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -60,6 +61,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.EventHandlerDropTargetListener;
@@ -69,8 +71,9 @@ import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TCEditorDropTargetListen
 import org.eclipse.jubula.client.ui.rcp.dialogs.AddEventHandlerDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
+import org.eclipse.jubula.client.ui.rcp.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.EventHandlerContentProvider;
-import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
+import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TooltipLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -494,8 +497,9 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         m_eventHandlerTreeViewer.getTree().setLayout(ehTvLayout);
         m_eventHandlerTreeViewer.getTree().setLayoutData(ehTvGridData);
 
-        DecoratingLabelProvider lp = new DecoratingLabelProvider(
-                new GeneralLabelProvider(), Plugin.getDefault().getWorkbench()
+        ColumnViewerToolTipSupport.enableFor(m_eventHandlerTreeViewer);
+        DecoratingCellLabelProvider lp = new DecoratingCellLabelProvider (
+                new TooltipLabelProvider(), Plugin.getDefault().getWorkbench()
                         .getDecoratorManager().getLabelDecorator());
         m_eventHandlerTreeViewer.setLabelProvider(lp);
         m_eventHandlerTreeViewer.setComparer(new UIIdentitiyElementComparer());
@@ -656,10 +660,19 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected DropTargetListener getViewerDropAdapter() {
         return new TCEditorDropTargetListener(this);
+    }
+    
+    /** {@inheritDoc} */
+    protected void runLocalChecks() {
+        super.runLocalChecks();
+        ISpecTestCasePO workVersion = (ISpecTestCasePO)getEditorHelper()
+                .getEditSupport().getWorkVersion();
+        for (INodePO child : workVersion.getAllEventEventExecTC()) {
+            CompletenessGuard.checkLocalTestData(child, WorkingLanguageBP
+                    .getInstance().getWorkingLanguage());
+        }
     }
 }

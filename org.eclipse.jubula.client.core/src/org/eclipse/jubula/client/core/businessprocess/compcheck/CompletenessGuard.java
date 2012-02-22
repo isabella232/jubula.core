@@ -19,6 +19,7 @@ import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -26,11 +27,9 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
@@ -321,9 +320,15 @@ public final class CompletenessGuard {
      *            the node
      */
     private static void resetTestDataCompleteness(INodePO node) {
-        IProjectPO proj = GeneralStorage.getInstance().getProject();
-        for (Locale locale : proj.getLangHelper().getLanguageList()) {
-            setCompletenessTestData(node, locale, true);
+        Set<IProblem> toRemove = new HashSet<IProblem>();
+        for (IProblem problem : node.getProblems()) {
+            if (problem.getProblemType().equals(
+                    ProblemType.REASON_TD_INCOMPLETE)) {
+                toRemove.add(problem);
+            }
+        }
+        for (IProblem problem : toRemove) {
+            node.removeProblem(problem);
         }
     }
 
