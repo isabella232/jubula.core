@@ -16,12 +16,9 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  */
 public final class ParseDateEvaluator extends AbstractFunctionEvaluator {
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
-     * @see
-     * org.eclipse.jubula.client.core.functions.IFunctionEvaluator#evaluate(
-     * java.lang.String[])
+     * {@inheritDoc}
      */
     public String evaluate(String[] arguments) throws InvalidDataException {
         validateParamCount(arguments, 2);
@@ -30,7 +27,7 @@ public final class ParseDateEvaluator extends AbstractFunctionEvaluator {
                     new String[] { arguments[1] });
             return String.valueOf(result.getTime());
         } catch (ParseException e) {
-            throw new InvalidDataException("parsing failed, reason: "
+            throw new InvalidDataException("parsing failed, reason: " //$NON-NLS-1$
                     + e.getMessage(), MessageIDs.E_WRONG_PARAMETER_VALUE);
         }
     }
