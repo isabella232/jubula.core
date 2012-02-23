@@ -1,7 +1,9 @@
 package org.eclipse.jubula.client.core.functions;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Abstract base class for methods useful in Evaluators
@@ -24,8 +26,10 @@ public abstract class AbstractFunctionEvaluator
         int numParamsExpected)
         throws InvalidDataException {
         if (arguments.length != 2) {
-            throw new InvalidDataException("expected " + numParamsExpected //$NON-NLS-1$
-                    + " arguments, got " + arguments.length, //$NON-NLS-1$
+            throw new InvalidDataException(
+                    NLS.bind(Messages.WrongNumFunctionArgs, 
+                            new Integer[] {
+                                numParamsExpected, arguments.length}),
                     MessageIDs.E_WRONG_NUM_FUNCTION_ARGS);
         }
     }
