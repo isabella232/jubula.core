@@ -12,6 +12,7 @@ package org.eclipse.jubula.tools.objects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -322,10 +323,14 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
     public boolean equals(Object obj) {
         if (obj instanceof IComponentIdentifier) {
             IComponentIdentifier compId = (IComponentIdentifier)obj;
+            List neighbours1 = new ArrayList(getNeighbours());
+            List neighbours2 = new ArrayList(compId.getNeighbours());
+            Collections.sort(neighbours1);
+            Collections.sort(neighbours2);
             return new EqualsBuilder()
-                .append(getHierarchyNames(), compId.getHierarchyNames())
-                .append(getNeighbours(), compId.getNeighbours())
-                .isEquals();
+                    .append(getHierarchyNames(), compId.getHierarchyNames())
+                    .append(neighbours1, neighbours2)
+                    .isEquals();
         }
         return super.equals(obj);
     }
@@ -334,9 +339,11 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      * {@inheritDoc}
      */
     public int hashCode() {
+        List neighbours = new ArrayList(getNeighbours());
+        Collections.sort(neighbours);
         return new HashCodeBuilder()
             .append(getHierarchyNames())
-            .append(getNeighbours())
+            .append(neighbours)
             .toHashCode();
     }
 

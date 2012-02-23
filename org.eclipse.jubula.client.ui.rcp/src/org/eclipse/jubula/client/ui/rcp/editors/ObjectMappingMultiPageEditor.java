@@ -1903,9 +1903,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 techNameAssoc.getCategory(), DataState.StructureModified, 
                 UpdateState.onlyInEditor);
             m_tableViewer.refresh();
-        }
-        
-        if (techNameAssoc == null) {
+        } else {
             // Technical Name already exists
             for (IObjectMappingAssoziationPO assoc : getAut().getObjMap()
                     .getMappings()) {
