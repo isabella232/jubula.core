@@ -431,6 +431,7 @@ public class Messages extends NLS {
     public static String WithID;
     public static String WithReferenceIsNotChildOfParamNode;
     public static String WrongLoggingImplementation;
+    public static String WrongNumFunctionArgs;
     public static String WrongTypeForAdditionOfEventhandler;
     public static String WrongTypeForRemovalOfEventhandler;
     public static String WrongTypeOfReentryProperty;
