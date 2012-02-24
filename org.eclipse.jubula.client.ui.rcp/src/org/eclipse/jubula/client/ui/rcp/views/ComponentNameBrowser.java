@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.ComponentNameTreeViewerUpdater;
+import org.eclipse.jubula.client.ui.rcp.editors.PersistentObjectComparer;
 import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.ComponentNameBrowserContentProvider;
 import org.eclipse.jubula.client.ui.rcp.sorter.ComponentNameNameViewerSorter;
@@ -98,7 +99,7 @@ public class ComponentNameBrowser extends ViewPart implements
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
         getTreeViewer().setSorter(new ComponentNameNameViewerSorter());
-
+        getTreeViewer().setComparer(new PersistentObjectComparer());
         getViewSite().setSelectionProvider(getTreeViewer());
 
         createTreeContextMenu(getViewSite());
@@ -208,9 +209,15 @@ public class ComponentNameBrowser extends ViewPart implements
             }
         }
         if (refreshView) {
-            getTreeViewer().refresh();
+            // retrieve tree state
+            Object[] expandedElements = getTreeViewer().getExpandedElements();
             ISelection selection = getTreeViewer().getSelection();
-            getTreeViewer().setSelection(null);
+
+            // refresh treeview
+            getTreeViewer().refresh();
+
+            // restore tree status
+            getTreeViewer().setExpandedElements(expandedElements);
             getTreeViewer().setSelection(selection);
         }
     }
