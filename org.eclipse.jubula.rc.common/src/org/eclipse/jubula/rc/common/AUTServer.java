@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -20,7 +19,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.LogManager;
 
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
@@ -275,30 +273,6 @@ public abstract class AUTServer {
      * @param args - the args 
      */
     public static void main(String[] args) {
-        InputStream logPropertiesStream = null;
-        try {
-            logPropertiesStream = 
-                AUTServer.class.getClassLoader().getResourceAsStream("resources/logging.properties"); //$NON-NLS-1$
-            if (logPropertiesStream != null) {
-                LogManager.getLogManager().readConfiguration(
-                        logPropertiesStream);
-            } else {
-                System.err.println("RC logging.properties not found."); //$NON-NLS-1$
-            }
-        } catch (SecurityException e) {
-            System.err.println("RC logging.properties not loaded: " + e.getLocalizedMessage()); //$NON-NLS-1$
-        } catch (IOException e) {
-            System.err.println("RC logging.properties not loaded: " + e.getLocalizedMessage()); //$NON-NLS-1$
-        } finally {
-            if (logPropertiesStream != null) {
-                try {
-                    logPropertiesStream.close();
-                } catch (IOException e) {
-                    // ignore any errors that occur while closing the stream
-                }
-            }
-        }
-
         if (args.length < Constants.MIN_ARGS_REQUIRED) {
             log.error("wrong number of arguments: " //$NON-NLS-1$
                     + "must be at least " //$NON-NLS-1$
