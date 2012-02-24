@@ -182,7 +182,10 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
             CommandConstants.COMMONS_LANG_BUNDLE_ID,
             CommandConstants.APACHE_ORO_BUNDLE_ID,
             CommandConstants.COMMONS_BEAN_UTILS_BUNDLE_ID,
-            CommandConstants.COMMONS_COLLECTIONS_BUNDLE_ID
+            CommandConstants.COMMONS_COLLECTIONS_BUNDLE_ID,
+            CommandConstants.LOGBACK_CLASSIC_BUNDLE_ID,
+            CommandConstants.LOGBACK_CORE_BUNDLE_ID,
+            CommandConstants.LOGBACK_SLF4J_BUNDLE_ID
         };
         
         for (String bundleId : bundlesToAddToClasspath) {
