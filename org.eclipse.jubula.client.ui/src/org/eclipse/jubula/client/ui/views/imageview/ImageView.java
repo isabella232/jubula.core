@@ -46,7 +46,12 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
     /**
      * <code>image</code>
      */
-    private Label m_image;
+    private Label m_imgWidget;
+    
+    /**
+     * the image
+     */
+    private Image m_img;
     
     /**
      * <code>m_oldSelection</code>
@@ -108,7 +113,7 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
         }
         
         if (provider == null) {
-            m_image.setImage(null);
+            clearImage();
         } else {
             handleSelection(provider);
         }
@@ -142,7 +147,7 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
         m_child = new Composite(m_scrollComposite, SWT.NONE);
         m_child.setLayout(new FillLayout());
         
-        m_image = new Label(m_child, SWT.NONE);
+        m_imgWidget = new Label(m_child, SWT.NONE);
         m_scrollComposite.setExpandHorizontal(true);
         m_scrollComposite.setExpandVertical(true);
         m_scrollComposite.setMinSize(m_child.computeSize(
@@ -159,12 +164,15 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
      */
     protected void setImage(final ImageProvider provider) {
         m_scrollComposite.getDisplay().syncExec(new Runnable() {
+
             public void run() {
-                Image img = provider.getImage(m_scrollComposite.getDisplay());
-                m_image.setImage(img);
-                if (img != null) {
-                    m_image.setSize(img.getBounds().width,
-                            img.getBounds().height);
+                clearImage();
+                m_img = provider.getImage(m_scrollComposite.getDisplay());
+                m_imgWidget.setImage(m_img);
+                if (m_img != null) {
+                    m_imgWidget.setSize(
+                            m_img.getBounds().width,
+                            m_img.getBounds().height);
                 }
                 m_scrollComposite.setMinSize(m_child.computeSize(SWT.DEFAULT,
                         SWT.DEFAULT));
@@ -173,10 +181,24 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
     }
 
     /**
+     * make image invisible and dispose it
+     */
+    protected void clearImage() {
+        Image oldImage = m_imgWidget.getImage();
+        m_imgWidget.setImage(null);
+        if (oldImage != null) {
+            oldImage.dispose();
+        }
+    }
+    
+    /**
      * {@inheritDoc}
      */
     public void dispose() {
         getSelectionService().removeSelectionListener(m_selectionListener);
+        if (!m_img.isDisposed()) {
+            m_img.dispose();
+        }
         super.dispose();
     }
 
@@ -184,7 +206,7 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
      * {@inheritDoc}
      */
     public void setFocus() {
-        m_image.setFocus();
+        m_imgWidget.setFocus();
     }
 
     /**
