@@ -15,6 +15,13 @@
 	<packaging>eclipse-update-site</packaging>
 	<name>Jubula for Eclipse 3.6 and 3.7</name>
 
+    <pluginRepositories>
+      <pluginRepository>
+        <id>maven.eclipse.org</id>
+        <url>http://maven.eclipse.org/nexus/content/repositories/milestone-indigo</url>
+      </pluginRepository>
+    </pluginRepositories>
+  
     <profiles>
         <profile>
             <id>build-eclipse-org</id>
