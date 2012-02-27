@@ -199,7 +199,6 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             case REASON_CONNECTED_TO_NO_SERVER:
                 return getNoServerConnectionResolutions();
             case REASON_EMPTY_TESTSUITE:
-            case REASON_NO_AUT_FOR_TESTSUITE_SELECTED:
             case REASON_NO_COMPTYPE:
             case REASON_TD_INCOMPLETE:
             case REASON_DEPRECATED_ACTION:

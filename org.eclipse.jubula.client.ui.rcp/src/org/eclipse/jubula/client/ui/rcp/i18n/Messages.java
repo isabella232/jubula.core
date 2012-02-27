@@ -627,10 +627,8 @@ public class Messages extends NLS {
     public static String ProblemCheckerConnectToGDServer;
     public static String ProblemCheckerDeprecatedAction;
     public static String ProblemCheckerDeprecatedComp;
-    public static String ProblemCheckerEmptyTestSuite;
     public static String ProblemCheckerMissingSpecTc;
     public static String ProblemCheckerNoAutExists;
-    public static String ProblemCheckerNoAutSelected;
     public static String ProblemCheckerNoCompType;
     public static String ProblemCheckerNoServer;
     public static String ProblemCheckerNoTestSuite;
@@ -861,7 +859,6 @@ public class Messages extends NLS {
     public static String TestDataDecoratorTDInStepIncompl;
     public static String TestDataDecoratorTdInTestCaseIncompl;
     public static String TestDataDecoratorTestJobIncompl;
-    public static String TestDataDecoratorTestSuiteWithoutAUT;
     public static String TestDataDecoratorUnsupportedAUTLanguage;
     public static String TestDataPreferencePageCharForEsc;
     public static String TestDataPreferencePageCharForRef;

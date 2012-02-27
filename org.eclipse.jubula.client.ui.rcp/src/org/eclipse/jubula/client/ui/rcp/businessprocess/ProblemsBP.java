@@ -56,7 +56,6 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
@@ -394,17 +393,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
             problemNoAutForProjectExists();
         } else {
             checkAutConfigs();
-        }
-        List<ITestSuitePO> testSuites = TestSuiteBP.getListOfTestSuites();
-        
-        for (ITestSuitePO testSuite : testSuites) {
-            if (testSuite.getAut() == null) {
-                problemNoAutForTestSuiteSelected(testSuite);
-            }
-            
-            if (testSuite.getNodeListSize() == 0) {
-                problemNoEmptyTestSuiteAllowed(testSuite);
-            } 
         }
     }
     
@@ -745,19 +733,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
     }
 
     /**
-     * called when a Test Suites lacks an Aut
-     * @param testSuite TestSuite where problem occurs
-     */
-    private void problemNoAutForTestSuiteSelected(ITestSuitePO testSuite) {
-        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
-            new Status(
-                IStatus.ERROR, Activator.PLUGIN_ID,
-                Messages.TestDataDecoratorTestSuiteWithoutAUT), NLS.bind(
-                Messages.ProblemCheckerNoAutSelected, testSuite.getName()),
-                testSuite, ProblemType.REASON_NO_AUT_FOR_TESTSUITE_SELECTED));
-    }
-
-    /**
      * called when an Aut lacks an AutConfig
      * @param config AutConfig where problem occurs
      * @param aut corresponding aut
@@ -799,21 +774,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
                 new Status(IStatus.WARNING, Activator.PLUGIN_ID, message),
                 message, Messages.ProblemCheckerAUT + aut.getName(),
                 ProblemType.REASON_NO_AUTCONFIG_FOR_SERVER_EXIST));
-    }
-
-    /**
-     * called when a Test Suites contains no Test Cases
-     * @param testSuite TestSuite where problem occurs
-     */
-    private void problemNoEmptyTestSuiteAllowed(ITestSuitePO testSuite) {
-        if (!checkTS(testSuite)) {
-            return;
-        }
-        String message = NLS.bind(Messages.ProblemCheckerEmptyTestSuite,
-                testSuite.getName());
-        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
-                new Status(IStatus.WARNING, Activator.PLUGIN_ID, message),
-                message, testSuite, ProblemType.REASON_EMPTY_TESTSUITE));
     }
 
     /**
@@ -988,21 +948,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
                 message, cap, ProblemType.REASON_COMP_DOES_NOT_EXIST));
     }
 
-    /**
-     * @param testSuite the actual testSuite
-     * @return true, if the testSuite is editable, false otherwise.
-     */
-    private boolean checkTS(ITestSuitePO testSuite) {
-        Locale workLang = WorkingLanguageBP.getInstance().getWorkingLanguage();
-        if (testSuite.getAut() != null 
-            && WorkingLanguageBP.getInstance().isTestSuiteLanguage(
-                workLang, testSuite)) {
-            return true;
-        }
-
-        return false;
-    }
-    
     /**
      * @author BREDEX GmbH
      */
