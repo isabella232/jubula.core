@@ -50,6 +50,7 @@ import org.eclipse.jubula.tools.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.utils.ValueListIterator;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.slf4j.Logger;
@@ -521,10 +522,14 @@ public class CompNamePM extends AbstractNamePM {
             new HashMap<String, String>();
         try {
             lockComponentNames(s);
-            Query existingNamesQuery = s.createQuery(Q_PREEXISTING_NAMES);
-            existingNamesQuery.setParameter(P_PARENT_PROJECT_ID, rootProjId);
-            existingNamesQuery.setParameter(P_NAME_SET, names);
-            preExistingNames.addAll(existingNamesQuery.getResultList());
+            for (ValueListIterator iter = new ValueListIterator(
+                    new ArrayList<String>(names)); iter.hasNext();) {
+                Query existingNamesQuery = s.createQuery(Q_PREEXISTING_NAMES);
+                existingNamesQuery.setParameter(P_PARENT_PROJECT_ID, 
+                        rootProjId);
+                existingNamesQuery.setParameter(P_NAME_SET, iter.next());
+                preExistingNames.addAll(existingNamesQuery.getResultList());
+            }
             Set<IComponentNamePO> removeFromAddList = 
                 new HashSet<IComponentNamePO>();
             for (IComponentNamePO preExistingName : preExistingNames) {
