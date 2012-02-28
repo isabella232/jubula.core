@@ -65,12 +65,15 @@ public final class ProblemFactory {
      */
     public static IProblem createIncompleteObjectMappingProblem(
             IAUTMainPO aut) {
+        String autName = aut.getName();
         return new Problem(NLS.bind(
                 Messages.ProblemIncompleteObjectMappingMarkerText,
-                aut.getName()), new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                        Messages.ProblemIncompleteObjectMappingTooltip), 
-                        aut.getName(),
-                        ProblemType.REASON_OM_INCOMPLETE);
+                autName), new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    NLS.bind(
+                            Messages.
+                            ProblemIncompleteObjectMappingTooltip,
+                            autName)), autName,
+                    ProblemType.REASON_OM_INCOMPLETE);
     }
 
     /**
