@@ -22,6 +22,30 @@
       </pluginRepository>
     </pluginRepositories>
   
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.2-beta-4</version>
+          <configuration>
+            <descriptors>
+              <descriptor>assembly.xml</descriptor>
+            </descriptors>
+          </configuration>
+          <executions>
+            <execution>
+              <id>make-assembly</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>    
+  
     <profiles>
         <profile>
             <id>build-eclipse-org</id>
@@ -43,6 +67,9 @@
 		               -->
 		              <execution>
 		                <id>pack</id>
+                        <configuration>
+                          <inputFile>${project.build.directory}/${project.artifactId}-${project.version}-site.zip</inputFile>
+                        </configuration>
 		                <phase>package</phase>
 		                <goals>
 		                  <goal>pack</goal>
@@ -54,6 +81,7 @@
 		              <execution>
 		                <id>sign</id>
 		                <configuration>
+                          <inputFile>${project.build.directory}/${project.artifactId}-${project.version}-site.zip</inputFile>
 		                  <signerInputDirectory>/home/data/httpd/download-staging.priv/technology/jubula/signing</signerInputDirectory>
 		                </configuration>
 		                <phase>package</phase>
