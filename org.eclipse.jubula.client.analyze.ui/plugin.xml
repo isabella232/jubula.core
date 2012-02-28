@@ -10,7 +10,7 @@
           id="org.eclipse.jubula.client.analyze.ui.analyzeToolbar">
        <command
              commandId="org.eclipse.jubula.client.analyze.ui.menuCommand"
-             icon="icons/analyzeToolbarA.gif"
+             icon="icons/analyzeToolbarA.png"
              style="pulldown">
        </command>
     </toolbar>
