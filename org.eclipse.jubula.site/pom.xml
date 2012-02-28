@@ -135,7 +135,7 @@
                                             </fileset>
                                         </delete>
                                         <copy includeemptydirs="false" todir="/home/data/httpd/download.eclipse.org/jubula/development">
-                                            <fileset dir="target/site">
+                                            <fileset dir="target/checksumFix">
                                                 <include name="**" />
                                             </fileset>
                                         </copy>
