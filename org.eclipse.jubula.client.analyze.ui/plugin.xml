@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension 
+		point="org.eclipse.ui.menus">
+ <menuContribution
+       allPopups="false"
+       locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+    <toolbar
+          id="org.eclipse.jubula.client.analyze.ui.analyzeToolbar">
+       <command
+             commandId="org.eclipse.jubula.client.analyze.ui.menuCommand"
+             icon="icons/analyzeToolbarA.png"
+             style="pulldown">
+       </command>
+    </toolbar>
+ </menuContribution>
+ <menuContribution
+       locationURI="menu:org.eclipse.jubula.client.analyze.ui.menuCommand">
+    <dynamic
+          class="org.eclipse.jubula.client.analyze.ui.contributionitems.ToolbarMenuContributionItem"
+          id="org.eclipse.jubula.client.analyze.ui.dynamicMenu">
+    </dynamic>
+ </menuContribution>
+ <menuContribution
+       allPopups="false"
+       locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser?after=additions">
+    <menu
+          label="%analyze">
+       <dynamic
+             class="org.eclipse.jubula.client.analyze.ui.contributionitems.ContextMenuContributionItem"
+             id="org.eclipse.jubula.client.analyze.ui.dynamicMenu">
+       </dynamic>
+    </menu>
+</menuContribution>
+<menuContribution
+       allPopups="false"
+       locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser?after=additions">
+    <menu
+          label="Analyze">
+       <dynamic
+             class="org.eclipse.jubula.client.analyze.ui.contributionitems.ContextMenuContributionItem"
+             id="org.eclipse.jubula.client.analyze.ui.dynamicMenu">
+       </dynamic>
+    </menu>
+</menuContribution>
+<menuContribution
+       allPopups="false"
+       locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor?after=additions">
+    <menu
+          label="Analyze">
+       <dynamic
+             class="org.eclipse.jubula.client.analyze.ui.contributionitems.ContextMenuContributionItem"
+             id="org.eclipse.jubula.client.analyze.ui.dynamicMenu">
+       </dynamic>
+    </menu>
+</menuContribution>
+ <menuContribution
+       allPopups="false"
+       locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor?after=additions">
+    <menu
+          label="Analyze">
+       <dynamic
+             class="org.eclipse.jubula.client.analyze.ui.contributionitems.ContextMenuContributionItem"
+             id="org.eclipse.jubula.client.analyze.ui.dynamicMenu">
+       </dynamic>
+    </menu>
+</menuContribution>
+ <menuContribution
+       allPopups="false"
+       locationURI="popup:ComponentNameBrowserContextMenuID?after=additions">
+    <menu
+          label="Analyze">
+       <dynamic
+             class="org.eclipse.jubula.client.analyze.ui.contributionitems.ContextMenuContributionItem"
+             id="org.eclipse.jubula.client.analyze.ui.dynamicMenu">
+       </dynamic>
+    </menu>
+ </menuContribution>
+ 
+</extension>
+ <extension
+       point="org.eclipse.ui.commands">
+
+     <command
+          defaultHandler="org.eclipse.jubula.client.analyze.ui.handlers.ToolbarButtonDefaultHandler"
+          id="org.eclipse.jubula.client.analyze.ui.RunProfile"
+          name="RunProfile">
+        <commandParameter
+              id="org.eclipse.jubula.client.analyze.ui.commandParameter3"
+              name="name"
+              optional="true">
+        </commandParameter>
+    </command>
+        <command
+              defaultHandler="org.eclipse.jubula.client.analyze.ui.handlers.RunSelectionHandler"
+              id="org.eclipse.jubula.client.analyze.ui.RunSelection"
+              name="RunSelection">
+           <commandParameter
+                 id="org.eclipse.jubula.client.analyze.ui.RunSelection.IDParam"
+                 name="IDParam">
+           </commandParameter> 
+          
+        </command>
+        <command
+              defaultHandler="org.eclipse.jubula.client.analyze.ui.handlers.ToolbarButtonDefaultHandler"
+              id="org.eclipse.jubula.client.analyze.ui.menuCommand"
+              name="%analyze">
+        </command>
+ </extension>
+ <extension
+       point="org.eclipse.search.searchResultViewPages">
+    <viewPage
+          class="org.eclipse.jubula.client.analyze.ui.internal.ResultPage"
+          id="org.eclipse.jubula.client.analyze.ui.internal.resultPage"
+          searchResultClass="org.eclipse.jubula.client.analyze.ui.internal.QueryResult">
+    </viewPage>
+ </extension>
+ <extension
+       point="org.eclipse.jubula.client.analyze.definition">
+    <ResultRenderer
+          ResultType="tableResultMap"
+          id="tableRenderer"
+          rendererClass="org.eclipse.jubula.client.analyze.ui.renderer.TableRenderer">
+    </ResultRenderer>
+    <Context
+          class="org.eclipse.jubula.client.analyze.ui.internal.context.Project"
+          id="project"
+          name="Project">
+    </Context>
+    <ResultRenderer
+          ResultType="ratioResult"
+          id="ratio"
+          rendererClass="org.eclipse.jubula.client.analyze.ui.renderer.RatioRenderer">
+    </ResultRenderer>
+    <ResultRenderer
+          ResultType="chainList"
+          id="chains"
+          rendererClass="org.eclipse.jubula.client.analyze.ui.renderer.ChainRenderer">
+    </ResultRenderer>
+ </extension>
+</plugin>
