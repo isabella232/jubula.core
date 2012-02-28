@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2004, 2012 BREDEX GmbH.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     BREDEX GmbH - initial API and implementation and/or initial documentation
- *******************************************************************************/
 package org.eclipse.jubula.client.analyze.ui.renderer;
 
 import java.text.Collator;
@@ -31,13 +21,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-
-
-
 /**
+ * 
  * @author volker
+ *
  */
-public class TableRenderer implements IResultRendererUI {
+public class RatioRenderer implements IResultRendererUI {
     /**
      * 
      */
@@ -47,9 +36,9 @@ public class TableRenderer implements IResultRendererUI {
     private Control m_topControl;
 
     /**
-     * The TableRenderer is able to display the AnalyzeResult as a Table
+     * The RatioRenderer is able to display the AnalyzeResult as a Table
      */
-    public TableRenderer() {
+    public RatioRenderer() {
     }
 
     /** @return The TopControl of this Renderer */
@@ -83,38 +72,9 @@ public class TableRenderer implements IResultRendererUI {
 
                 TableResult tr = new TableResult();
 
-                if (String.valueOf(e.getKey()).equals(
-                    "class org.eclipse.jubula.client.core.model.TestSuitePO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.Testsuite);
-                }  else if (String.valueOf(e.getKey()).equals(
-                    "class org.eclipse.jubula.client.core.model.CategoryPO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.Category);
-                }  else if (String.valueOf(e.getKey()).equals(
-                        "class org.eclipse.jubula.client.core.model.CapPO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.TestStep);
-                }  else if (String.valueOf(e.getKey()).equals(
-                        "class org.eclipse.jubula.client.core.model.ExecTestCasePO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.ReferencedTestCase);
-                }  else if (String.valueOf(e.getKey()).equals(
-                        "class org.eclipse.jubula.client.core.model.ProjectPO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.Project);
-                }  else if (String.valueOf(e.getKey()).equals(
-                        "class org.eclipse.jubula.client.core.model.SpecTestCasePO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.Testcase);
-                }  else if (String.valueOf(e.getKey()).equals(
-                        "class org.eclipse.jubula.client.core.model.TestJobPO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.TestJob);
-                }  else if (String.valueOf(e.getKey()).equals(
-                        "class org.eclipse.jubula.client.core.model.RefTestSuitePO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.ReferencedTestSuite);
-                }   else if (String.valueOf(e.getKey()).equals(
-                        "class org.eclipse.jubula.client.core.model.ComponentNamePO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.ComponentName);
-                }   else if (String.valueOf(e.getKey()).equals(
-                        "class org.eclipse.jubula.client.core.model.EventExecTestCasePO")) { //$NON-NLS-1$
-                    tr.setCol1(Messages.EventHandler);
-                }
-                tr.setCol2(String.valueOf(e.getValue()));
+                tr.setCol1(e.getKey());
+//                tr.setCol2(String.valueOf(e.getValue()));
+                tr.setCol2(e.getValue());
                 resultList.add(tr);
             }
             createViewer(composite, resultList);
@@ -155,7 +115,7 @@ public class TableRenderer implements IResultRendererUI {
      *            The TableViewer
      */
     private void createColumns(Composite cmp, TableViewer viewer) {
-        String[] titles = { Messages.NodeType, Messages.Amount };
+        String[] titles = { Messages.Ratio, Messages.Value};
         int[] colType = { 0, 1 };
 
         // set the bounds of the table to the aspect ratio 1/3 and 2/3

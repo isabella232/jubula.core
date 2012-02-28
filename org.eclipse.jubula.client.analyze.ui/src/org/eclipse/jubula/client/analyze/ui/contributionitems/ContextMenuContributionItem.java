@@ -43,7 +43,6 @@ public class ContextMenuContributionItem extends CompoundContributionItem {
     /**  */
     public ContextMenuContributionItem() {
     }
-
     /**
      * @param id
      *            The id

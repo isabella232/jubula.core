@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.analyze.ui.internal;
 
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.analyze.ui.internal.listener.AnalyzeTreeViewerDoubleClickListener;
 import org.eclipse.jubula.client.analyze.ui.internal.provider.QueryTreeContentProvider;
@@ -100,13 +102,13 @@ public class ResultPage extends Page implements
 
         StackLayout stack = new StackLayout();
         
-
         Composite cmp = new Composite(sash, SWT.NONE);
         // use a StackLayout to enable to change the content of this Composite
         cmp.setLayout(stack);
         setStackComposite(cmp);
         m_listener = new AnalyzeTreeViewerDoubleClickListener(cmp);
         m_tvl.addDoubleClickListener(m_listener);
+
         sash.setWeights(new int[] { 40, 60 });
         // set the Control
         setControl(sash);
@@ -114,6 +116,7 @@ public class ResultPage extends Page implements
     
     /** {@inheritDoc} */
     public void dispose() {
+        
     }
     /**
      * @param control
@@ -147,6 +150,12 @@ public class ResultPage extends Page implements
         
         getLeftTreeViewer().setInput(search);
         getLeftTreeViewer().expandAll();
+        
+        TreePath[] paths = getLeftTreeViewer().getExpandedTreePaths();
+        if (paths.length > 0) {
+            TreeSelection sel = new TreeSelection(paths);
+            getLeftTreeViewer().setSelection(sel, true);
+        }
     }
     /** {@inheritDoc} */
     public void setViewPart(ISearchResultViewPart part) {

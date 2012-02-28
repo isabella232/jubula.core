@@ -14,14 +14,15 @@
             id="numMet"
             name="Numerical Metrics">
       </Category>
-      <Analyze
-            CategoryID="numMet"
-            ContextType="testsuite, project, exectestcase, spectestcase, execobjcont, testjob, cap ,category, specobjcont, projectLoaded, reftestsuite, componentname"
-            ResultType="tableResultMap"
-            class="org.eclipse.jubula.client.analyze.impl.standard.analyze.NumericalProjectElementCounter"
-            id="countSpecifiedTC"
-            name="Numeric Project Element Counter">
-      </Analyze>
+      <Category
+            id="analysis"
+            name="Analysis">
+      </Category>
+      <Context
+            class="org.eclipse.jubula.client.analyze.impl.standard.context.TestCaseBrowserActiveCX"
+            id="testcasebrowseractive"
+            name="TestCaseBrowserActive">
+      </Context>
       <Context
             class="org.eclipse.jubula.client.analyze.impl.standard.context.ProjectCX"
             id="project"
@@ -87,6 +88,30 @@
             id="componentname"
             name="ComponentName">
       </Context>
+      <Analyze
+            CategoryID="numMet"
+            ContextType="testsuite, project, exectestcase, spectestcase, execobjcont, testjob, cap ,category, specobjcont, projectLoaded, reftestsuite, componentname"
+            ResultType="tableResultMap"
+            class="org.eclipse.jubula.client.analyze.impl.standard.analyze.NumericalProjectElementCounter"
+            id="countSpecifiedTC"
+            name="Numeric Project Element Counter">
+      </Analyze>
+      <Analyze
+            CategoryID="numMet"
+            ContextType="testsuite, project, exectestcase, spectestcase, execobjcont, testjob, cap ,category, specobjcont, projectLoaded, reftestsuite, componentname"
+            ResultType="ratioResult"
+            class="org.eclipse.jubula.client.analyze.impl.standard.analyze.Ratio"
+            id="ratio"
+            name="Ratio (general : specific)">
+      </Analyze>
+      <Analyze
+            CategoryID="analysis"
+            ContextType="testsuite, project, exectestcase, spectestcase, execobjcont, testjob, cap ,category, specobjcont, projectLoaded, reftestsuite, componentname"
+            ResultType="chainList"
+            class="org.eclipse.jubula.client.analyze.impl.standard.analyze.Chain"
+            id="chain"
+            name="Show Empty chains">
+      </Analyze>
    </extension>
 
 </plugin>

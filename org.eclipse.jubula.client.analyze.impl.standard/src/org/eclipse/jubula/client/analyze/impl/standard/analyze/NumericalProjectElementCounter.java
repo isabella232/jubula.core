@@ -19,9 +19,11 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.analyze.definition.IAnalyze;
 import org.eclipse.jubula.client.analyze.internal.AnalyzeParameter;
 import org.eclipse.jubula.client.analyze.internal.AnalyzeResult;
+import org.eclipse.jubula.client.analyze.internal.helper.ProjectContextHelper;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -76,12 +78,15 @@ public class NumericalProjectElementCounter implements IAnalyze {
                 INodePO parent, INodePO node, boolean alreadyVisited) {
 
             Class<? extends INodePO> nodeType = null;
-            if (node instanceof ICategoryPO || node instanceof ISpecTestCasePO
-                    || node instanceof ICapPO || node instanceof ITestSuitePO
+            if (node instanceof ICategoryPO 
+                    || node instanceof ISpecTestCasePO
+                    || node instanceof ICapPO 
+                    || node instanceof ITestSuitePO
                     || node instanceof IExecTestCasePO
                     || node instanceof ITestJobPO
                     || node instanceof IRefTestSuitePO
-                    || node instanceof IComponentNamePO) {
+                    || node instanceof IComponentNamePO
+                    || node instanceof IEventExecTestCasePO) {
                 nodeType = node.getClass();
             }
             if (nodeType != null) {
@@ -127,17 +132,17 @@ public class NumericalProjectElementCounter implements IAnalyze {
     /**
      * {@inheritDoc}
      */
-    public AnalyzeResult execute(Object obj, IProgressMonitor monitor, 
+    public AnalyzeResult execute(Object obj2analyze, IProgressMonitor monitor, 
             String resultType, List<AnalyzeParameter> param,
             String analyzeName) {
         int workAmount = 1;
         // get the number of nodes from the NodePersistenceManager to have a
         // representative workAmount value for the ProgressMonitor
-        if (obj instanceof IProjectPO) {
-            workAmount = (int) NodePM.getNumNodes(((IProjectPO) obj).getId(),
-                    GeneralStorage.getInstance().getMasterSession());
-        } else if (obj instanceof INodePO) {
-            workAmount = (int) NodePM.getNumNodes(((INodePO) obj)
+        if (obj2analyze instanceof IProjectPO) {
+            workAmount = (int) NodePM.getNumNodes(((IProjectPO) obj2analyze)
+                    .getId(), GeneralStorage.getInstance().getMasterSession());
+        } else if (obj2analyze instanceof INodePO) {
+            workAmount = (int) NodePM.getNumNodes(((INodePO) obj2analyze)
                     .getParentProjectId(), GeneralStorage.getInstance().
                     getMasterSession());
         }
@@ -145,7 +150,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
         monitor.subTask(analyzeName);
 
         CountElementOperation c = new CountElementOperation(monitor);
-        traverse(c, obj);
+        traverse(c, obj2analyze, ProjectContextHelper.getObjContType());
 
         monitor.worked(1);
         if (monitor.isCanceled()) {
@@ -163,14 +168,72 @@ public class NumericalProjectElementCounter implements IAnalyze {
      *            The instance of CountElementOperation
      * @param obj
      *            The given selection
+     * @param objContType
+     *            The given objContType
      */
-    private void traverse(CountElementOperation count, Object obj) {
-        
-        if (obj instanceof INodePO) {
+    private void traverse(CountElementOperation count, Object obj,
+            String objContType) {
+
+        if (obj instanceof INodePO && objContType.equals("IExecObjContPO")) {
             final INodePO root = (INodePO) obj;
-            TreeTraverser tt = new TreeTraverser(root);
-            tt.addOperation(count);
-            tt.traverse();
+            
+            TreeTraverser tt = new TreeTraverser(root, count, true, true) {
+                @Override
+                protected void traverseReusedProjectSpecPart(
+                        ITreeTraverserContext<INodePO> context,
+                        IProjectPO project) {
+                    // ignore reused Projects
+                }
+            };
+            tt.traverse(true);
+        } else if (obj instanceof INodePO
+                && objContType.equals("ISpecObjContPO")) {
+            
+            final INodePO root = (INodePO) obj;
+            
+            TreeTraverser tt = new TreeTraverser(root, count, true, false) {
+                @Override
+                protected void traverseReusedProjectSpecPart(
+                        ITreeTraverserContext<INodePO> context,
+                        IProjectPO project) {
+                    // ignore reused Projects
+                }
+            };
+            tt.traverse(true);
         }
+        
+        if (obj instanceof INodePO && objContType.equals("project")) {
+            final INodePO root = (INodePO) obj;
+            
+            TreeTraverser tt = new TreeTraverser(root, count, true, true) {
+                @Override
+                protected void traverseReusedProjectSpecPart(
+                        ITreeTraverserContext<INodePO> context,
+                        IProjectPO project) {
+                    // ignore reused Projects
+                }
+            };
+            tt.traverse(true);
+        }
+//        if (obj2analyze instanceof INodePO) {
+//            final INodePO root = (INodePO) obj2analyze;
+//
+//            TreeTraverser tt = new TreeTraverser(root, count, true, true) {
+//                @Override
+//                protected void traverseReusedProjectSpecPart(
+//                        ITreeTraverserContext<INodePO> context,
+//                        IProjectPO project) {
+//                    // ignore reused Projects
+//                }
+//            };
+//            tt.traverse(true);
+//        }
+        
+//        if (obj instanceof INodePO) {
+//            final INodePO root = (INodePO) obj;
+//            TreeTraverser tt = new TreeTraverser(root);
+//            tt.addOperation(count);
+//            tt.traverse();
+//        }
     }
 }

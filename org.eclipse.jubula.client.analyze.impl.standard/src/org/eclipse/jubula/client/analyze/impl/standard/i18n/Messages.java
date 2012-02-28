@@ -20,7 +20,9 @@ public class Messages extends NLS {
 
     public static String MonitorCanceled;
     public static String Running;
+    public static String General;
 
+    
 
     static {
         // initialize resource bundle

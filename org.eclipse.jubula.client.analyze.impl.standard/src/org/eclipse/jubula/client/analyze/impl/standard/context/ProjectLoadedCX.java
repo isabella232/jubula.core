@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.analyze.impl.standard.context;
 
 import org.eclipse.jubula.client.analyze.definition.IContext;
-import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 
 
 /**
@@ -26,7 +26,7 @@ public class ProjectLoadedCX implements IContext {
      */
     public boolean isActive(Object obj) {
         // checks if the given Object is a Node
-        if (obj instanceof INodePO) {
+        if (GeneralStorage.getInstance().getProject() != null) {
             return true;
         }
         return false;

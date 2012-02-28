@@ -19,6 +19,7 @@ import org.eclipse.jubula.client.analyze.ExtensionRegistry;
 import org.eclipse.jubula.client.analyze.definition.IContext;
 import org.eclipse.jubula.client.analyze.internal.Analyze;
 import org.eclipse.jubula.client.analyze.internal.Context;
+import org.eclipse.jubula.client.analyze.internal.helper.ProjectContextHelper;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -36,6 +37,7 @@ public class ContextHelper {
     /**  The Selection from the UI */
     private static Object selection;
     
+  
     /** Empty because of HelperClass */
     private ContextHelper() {
     }
@@ -49,6 +51,7 @@ public class ContextHelper {
      */
     public static boolean isEnabled(Analyze analyze) {
 
+        ProjectContextHelper.setObjContType("");
         String[] contextData = contextDataToArray(analyze.getContextType());
         
         for (Map.Entry<String, Context> c : ExtensionRegistry.getContexts()
@@ -75,14 +78,20 @@ public class ContextHelper {
                         // it is handled as a project because IExecObjCont and ISpecObjCont
                         // Objects cannot be traversed by the TreeTraverser
                         if (structuredSel.getFirstElement() 
-                                instanceof IExecObjContPO
-                                || structuredSel.getFirstElement() 
-                                instanceof ISpecObjContPO) {
-                           
+                                instanceof IExecObjContPO) {
+                            
                             setSelection(GeneralStorage.
                                     getInstance().getProject());
-                        } else {
+                            ProjectContextHelper.
+                            setObjContType("IExecObjContPO");
+                        } else if (structuredSel.getFirstElement() 
+                                instanceof ISpecObjContPO) {
                             
+                            setSelection(GeneralStorage.
+                                    getInstance().getProject());
+                            ProjectContextHelper.
+                            setObjContType("ISpecObjContPO");
+                        } else {
                             setSelection(structuredSel.getFirstElement());
                         }
                         if (iCon.isActive(getSelection())) {
@@ -94,8 +103,10 @@ public class ContextHelper {
         }
         return false;
     }
+
+
     /**
-     * checks the the isActive state the the Analyzes' Context.
+     * checks the the isActive state the the Analyzes' Context. It is used for the ToolbarEntries
      * @param analyze
      *            The Given Analyze
      * @return true if the ContributionItem is enabled, false if it is disabled
@@ -118,6 +129,7 @@ public class ContextHelper {
 
                     if (GeneralStorage.getInstance().getProject() != null) {
 
+                        ProjectContextHelper.setObjContType("project");
                         setSelection(GeneralStorage.getInstance().getProject());
                         if (iCon.isActive(getSelection())) {
                             return true;

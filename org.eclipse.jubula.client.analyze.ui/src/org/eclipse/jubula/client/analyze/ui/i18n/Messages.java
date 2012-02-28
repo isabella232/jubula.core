@@ -42,6 +42,13 @@ public class Messages extends NLS {
     public static String TestStep;
     public static String Project;
     public static String ComponentName;
+    public static String Value;
+    public static String Ratio;
+    public static String Chainlength;
+    public static String EventHandler;
+    public static String NoChainFound;
+    
+    
 
     
     static {

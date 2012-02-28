@@ -128,5 +128,15 @@
           id="project"
           name="Project">
     </Context>
+    <ResultRenderer
+          ResultType="ratioResult"
+          id="ratio"
+          rendererClass="org.eclipse.jubula.client.analyze.ui.renderer.RatioRenderer">
+    </ResultRenderer>
+    <ResultRenderer
+          ResultType="chainList"
+          id="chains"
+          rendererClass="org.eclipse.jubula.client.analyze.ui.renderer.ChainRenderer">
+    </ResultRenderer>
  </extension>
 </plugin>
