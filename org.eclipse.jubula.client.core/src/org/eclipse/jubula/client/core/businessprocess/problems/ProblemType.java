@@ -52,9 +52,6 @@ public enum ProblemType {
     /** no AUT exists - repair : OPEN PROJECT PROPERTIES EDITOR */
     REASON_NO_AUT_FOR_PROJECT_EXISTS,
 
-    /** TS has no Aut selected - repair : OPEN TESTSUITE EDITOR */
-    REASON_NO_AUT_FOR_TESTSUITE_SELECTED,
-
     /** AUT has no AutConfig for current server - repair : OPEN AUTEDITOR */
     REASON_NO_AUTCONFIG_FOR_SERVER_EXIST,
 

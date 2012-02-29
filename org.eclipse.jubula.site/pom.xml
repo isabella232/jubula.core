@@ -12,84 +12,16 @@
 	<groupId>org.eclipse.jubula</groupId>
 	<artifactId>org.eclipse.jubula.site</artifactId>
 	<version>1.2.0-SNAPSHOT</version>
-	<packaging>eclipse-update-site</packaging>
+	<packaging>eclipse-repository</packaging>
 	<name>Jubula for Eclipse 3.6 and 3.7</name>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2-beta-4</version>
-				<configuration>
-					<descriptors>
-						<descriptor>assembly.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.6</version>
-        <executions>
-          <execution>
-            <id>pack-and-sign</id>
-            <phase>verify</phase>
-            <configuration>
-              <target>
-                <ant antfile="pack-and-sign/build.xml">
-                  <property name="localRepository" value="${settings.localRepository}"/>
-                  <property name="projectDir" value="${project.build.directory}"/>
-                  <property name="repositoryName" value="jubula"/>
-                  <property name="performSign" value="${performSign}"/>
-                  <property name="performPromote" value="${performPromote}"/>
-                  <property name="performPack" value="${performPack}"/>
-                  <property name="version" value="${unqualifiedVersion}"/>
-                  <property name="qualifier" value="${buildQualifier}"/>
-                 <!--   
-                  <property name="localRepository" value="${settings.localRepository}"/>
-                  <property name="projectDir" value="${project.build.directory}"/>
-                  <property name="repositoryName" value="${jubula-main-repository}"/>
-                  
-                  <property name="signDir" value="${sign-dir}"/>
-                  <property name="archiveDir" value="${jubula-archive}"/>
-                  <property name="siteDir" value="${jubula-site}"/>
-
-                  <property name="mirrorsUrl" value="${mirrors-url}"/>                
-
-                  <property name="dist" value="jubula"/>
-                  <property name="filter" value="jubula"/>
-                  <property name="pack200" value="${jubula-pack200}"/>
-                  
-                  <property name="skipPack" value="${jubula-skip-pack}"/>
-                  -->
-                </ant>
-                <echo file="${project.build.directory}/version.properties">
-                  <![CDATA[
-${unqualifiedVersion}
-${buildQualifier}
-]]>
-                </echo>
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-		</plugins>
-	</build>
-
+    <pluginRepositories>
+      <pluginRepository>
+        <id>maven.eclipse.org</id>
+        <url>http://maven.eclipse.org/nexus/content/repositories/milestone-indigo</url>
+      </pluginRepository>
+    </pluginRepositories>
+  
     <profiles>
         <profile>
             <id>build-eclipse-org</id>
@@ -101,6 +33,67 @@ ${buildQualifier}
             </activation>
             <build>
                 <plugins>
+		          <plugin>
+		            <groupId>org.eclipse.dash.maven</groupId>
+		            <artifactId>eclipse-signing-maven-plugin</artifactId>
+		            <version>1.0.5</version>
+		            <executions>
+		              <!-- 
+		              Pack the p2 repository.
+		               -->
+		              <execution>
+		                <id>pack</id>
+                        <configuration>
+                          <inputFile>${project.build.directory}/${project.artifactId}.zip</inputFile>
+                        </configuration>
+		                <phase>package</phase>
+		                <goals>
+		                  <goal>pack</goal>
+		                </goals>
+		              </execution>
+		              <!-- 
+		              Sign the p2 repository
+		              -->
+		              <execution>
+		                <id>sign</id>
+		                <configuration>
+                          <inputFile>${project.build.directory}/packed/${project.artifactId}.zip</inputFile> <!-- this is output from pack mojo -->
+		                  <signerInputDirectory>/home/data/httpd/download-staging.priv/technology/jubula/signing</signerInputDirectory>
+		                </configuration>
+		                <phase>package</phase>
+		                <goals>
+		                  <goal>sign</goal>
+		                </goals>
+		              </execution>
+		              <!-- 
+		              Repack the p2 repository
+		              -->
+		              <execution>
+		                <id>repack</id>
+		                <configuration>
+		                  <inputFile>${project.build.directory}/signed/site_assembly.zip</inputFile> <!-- this is output from signer mojo -->
+		                </configuration>
+		                <phase>package</phase>
+		                <goals>
+		                  <goal>pack</goal>
+		                </goals>
+		              </execution>
+		              <!-- 
+		              Signing and packing alters checksums so fix them
+		              -->
+		              <execution>
+		                <id>fixCheckSums</id>
+                        <configuration>
+                          <inputFile>${project.build.directory}/packed/site_assembly.zip</inputFile> <!-- this is output from repack mojo -->
+                        </configuration>
+		                <phase>package</phase>
+		                <goals>
+		                  <goal>fixCheckSums</goal>
+		                </goals>
+		              </execution>
+		            </executions>
+		          </plugin>
+
                     <!--
                     deploy "development" p2 repository         
                     -->
@@ -121,7 +114,7 @@ ${buildQualifier}
                                             </fileset>
                                         </delete>
                                         <copy includeemptydirs="false" todir="/home/data/httpd/download.eclipse.org/jubula/development">
-                                            <fileset dir="target/site">
+                                            <fileset dir="target/checksumFix">
                                                 <include name="**" />
                                             </fileset>
                                         </copy>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright (c) 2004, 2012 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<plugin>
+   <extension-point id="definition" name="Checkstyle Definition" schema="schema/define.exsd"/>
+   <extension
+         id="csProblem"
+         name="%tsProblem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            class="org.eclipse.jubula.client.teststyle.gui.decoration.GuiNodeDecoratorHandler"
+            id="org.eclipse.jubula.client.teststyle.tsGuiNodeDecorator"
+            label="%tsDecorator"
+            lightweight="true"
+            state="true">
+         <enablement>
+            <objectClass
+                  name="org.eclipse.jubula.client.core.model.INodePO">
+            </objectClass>
+         </enablement>
+      </decorator>
+      <decorator
+            class="org.eclipse.jubula.client.teststyle.gui.decoration.DecoratorHandler"
+            id="org.eclipse.jubula.client.teststyle.tsTestresultDecorator"
+            label="%tsProblem"
+            lightweight="true"
+            state="true">
+         <enablement>
+            <and>
+               <objectClass
+                     name="org.eclipse.jubula.client.core.model.TestResultNode">
+               </objectClass>
+               <objectClass
+                     name="org.eclipse.jubula.client.core.model.ITestDataCubePO">
+               </objectClass>
+               <objectClass
+                     name="org.eclipse.jubula.client.core.model.IComponentNamePO">
+               </objectClass>
+               <objectClass
+                     name="org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO">
+               </objectClass>
+            </and>
+         </enablement>
+      </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="org.eclipse.jubula.client.teststyle.quickfix.CheckstyleMarkerResolution"
+            markerType="org.eclipse.jubula.client.teststyle.csProblem">
+      </markerResolutionGenerator>
+   </extension>
+   <extension
+         point="org.eclipse.jubula.client.ui.rcp.propertyPages">
+      <page
+            class="org.eclipse.jubula.client.teststyle.properties.TeststyleProjectPropertyPage"
+            id="org.eclipse.jubula.client.teststyle.propPage"
+            name="%tsPropertyPageName">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.views.ProblemView">
+         <separator
+               name="org.eclipse.jubula.client.teststyle.separator1">
+         </separator>
+         <command
+               commandId="org.eclipse.jubula.client.teststyle.showIn"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+             <and>
+	             <with variable="activeMenuSelection">
+	                 <count value="1" />
+	             </with>
+	            <iterate ifEmpty="false" operator="and">
+					<and>
+						<instanceof value="org.eclipse.ui.views.markers.MarkerItem" />
+						<test
+							property="org.eclipse.ui.views.markers.MarkerItem.isTeststyleMarkerItem"
+							value="true">
+						</test>
+					</and>
+				</iterate> 
+             </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.jubula.client.ui.commands"
+            id="org.eclipse.jubula.client.teststyle.showIn"
+            name="Show Teststyle Rule">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.jubula.client.teststyle.handlers.ShowInHandler"
+            commandId="org.eclipse.jubula.client.teststyle.showIn">
+      </handler>
+   </extension>
+	<extension point="org.eclipse.core.expressions.propertyTesters">
+		<propertyTester
+			class="org.eclipse.jubula.client.teststyle.propertytester.MarkerItemPropertyTester"
+			id="org.eclipse.jubula.client.teststyle.propertytester.MarkerItemPropertyTester"
+			namespace="org.eclipse.ui.views.markers.MarkerItem" properties="isTeststyleMarkerItem"
+			type="org.eclipse.ui.views.markers.MarkerItem">
+		</propertyTester>
+	</extension>
+</plugin>

@@ -13,11 +13,10 @@ package org.eclipse.jubula.tools.utils;
 import java.util.Iterator;
 import java.util.List;
 
-/** Dieser Iterator teilt eine Liste in mehrere Sublisten mit maximaler
- * Größe von 1000 Einträgen Wird gebraucht für "in (...)" bedingungen in HSQL
- * weil dort maximal 1000 Einträge auftreten dürfen
- * @author BREDEX GmbH
- *
+/** 
+ * Divides a list into multiple sublists, each with a maximum size of 1000 
+ * entries. This can be used to work around the limitation in Oracle that
+ * "in (...)" clauses can contain a maximum of 1000 entries.
  */
 public class ValueListIterator implements Iterator {
     

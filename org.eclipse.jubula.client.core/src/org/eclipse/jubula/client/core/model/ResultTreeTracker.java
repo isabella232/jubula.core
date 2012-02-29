@@ -249,6 +249,14 @@ public class ResultTreeTracker implements IExecStackModificationListener {
                 dataSetIndex = 0;
             }
 
+            if (tdManager.findColumnForParam(desc.getUniqueId()) == -1) {
+                IParameterInterfacePO referencedDataCube = paramNode
+                        .getReferencedDataCube();
+                if (referencedDataCube != null) {
+                    desc = referencedDataCube.getParameterForName(desc
+                            .getName());
+                }
+            }
             ITestDataPO date = tdManager.getCell(dataSetIndex, desc);
             ParamValueConverter conv = new ModelParamValueConverter(
                 date.getValue(te.getLocale()), paramNode, te.getLocale(), desc);

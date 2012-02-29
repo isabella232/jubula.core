@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright (c) 2004, 2012 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<plugin>
+   <extension
+         point="org.eclipse.jubula.client.teststyle.definition">
+      <category
+            description="Standard Rules"
+            name="Standard Rules">
+         <check
+               activeByDefault="true"
+               class="org.eclipse.jubula.client.teststyle.impl.standard.checks.TestSuiteHasAUT"
+               defaultSeverity="ERROR"
+               description="Each Testsuite should be assigned to an AUT"
+               id="org.eclipse.jubula.client.teststyle.impl.standard.checks.testSuiteHasAUT"
+               name="Testsuite has AUT defined">
+            <contexts><TestSuites id="TestSuiteContext" /></contexts>
+            <attributes></attributes>
+         </check>
+         <check
+               activeByDefault="true"
+               class="org.eclipse.jubula.client.teststyle.impl.standard.checks.TestSuiteNotEmpty"
+               defaultSeverity="ERROR"
+               description="Each Testsuite should reference at least one Test Case"
+               id="org.eclipse.jubula.client.teststyle.impl.standard.checks.testSuiteNotEmpty"
+               name="Testsuite references at least one Test Case">
+            <contexts><TestSuites id="TestSuiteContext" /></contexts>
+            <attributes></attributes>
+         </check>
+      </category>
+   </extension>
+
+</plugin>
