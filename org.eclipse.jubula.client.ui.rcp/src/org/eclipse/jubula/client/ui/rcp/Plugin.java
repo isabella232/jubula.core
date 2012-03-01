@@ -970,6 +970,10 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                 if (el.getClassName().indexOf("ContextHelpPart") != -1) { //$NON-NLS-1$
                     return true;
                 }
+                // Problem with missing icon on decoration in JFace; GD bugzilla #84 
+                if (el.getClassName().indexOf("CompositeImageDescriptor") != -1) { //$NON-NLS-1$
+                    return true;
+                }
             }
             // Recursive activation on MacOSX on expand tree item #3618
             String detailMessage = work.getMessage();

@@ -316,9 +316,12 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
                 && Plugin.isGEFException(exception)) {
                 // ignore exception from GEF
                 return false;
-            } else if (exception instanceof NumberFormatException 
-                    && IPageLayout.ID_PROBLEM_VIEW.equals(
-                            getActivePartId())) {
+            } else if ((exception instanceof NullPointerException)
+                && Plugin.isRCPException(exception)) {
+                // ignore exception from RCP
+                return false;
+            } else if (exception instanceof NumberFormatException
+                && IPageLayout.ID_PROBLEM_VIEW.equals(getActivePartId())) {
                 // ignore exception from eclipse framework that occurs 
                 // in problem view when a non-integer is entered into  
                 // the limits field of the view preferences
