@@ -63,7 +63,8 @@ public final class ShowClientLogBP extends AbstractActionBP {
         final File clientLogFile;
 
         // Get location of log file
-        Logger logger = (Logger)LoggerFactory.getLogger("ROOT"); //$NON-NLS-1$
+        Logger logger = (Logger)LoggerFactory.getLogger(
+                org.slf4j.Logger.ROOT_LOGGER_NAME);
         Iterator<Appender<ILoggingEvent>> appenders = logger
                 .iteratorForAppenders();
         FileAppender<?> fileAppender = null;
