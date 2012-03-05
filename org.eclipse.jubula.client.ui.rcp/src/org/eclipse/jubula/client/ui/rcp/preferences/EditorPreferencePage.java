@@ -108,7 +108,7 @@ public class EditorPreferencePage extends PreferencePage
         m_nodeAddButton = new Button(group, SWT.RADIO);
         m_nodeAddButton.setText(Messages.PrefPageBasicAddNewNode);
         m_nodeAddButton.setSelection(Plugin.getDefault()
-                .getPluginPreferences().getBoolean(Constants.NODE_INSERT_KEY));
+                .getPreferenceStore().getBoolean(Constants.NODE_INSERT_KEY));
         m_nodeInsertButton = new Button(group, SWT.RADIO);
         m_nodeInsertButton.setText(Messages.PrefPageBasicInsertNewNode);
         m_nodeInsertButton.setSelection(!m_nodeAddButton.getSelection());
