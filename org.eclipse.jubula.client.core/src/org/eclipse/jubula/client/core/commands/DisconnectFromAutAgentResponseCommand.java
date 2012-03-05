@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.DisconnectFromAutAgentResponseMessage;
@@ -50,7 +50,7 @@ public class DisconnectFromAutAgentResponseCommand implements ICommand {
      */
     public Message execute() {
         try {
-            ServerConnection.getInstance().close();
+            AutAgentConnection.getInstance().close();
         } catch (ConnectionException e) {
             if (log.isInfoEnabled()) {
                 log.info(DebugConstants.ERROR, e);

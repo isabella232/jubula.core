@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.core.communication;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.eclipse.jubula.client.core.AutStarterEvent;
+import org.eclipse.jubula.client.core.AutAgentEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.ServerEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -28,27 +28,28 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * This class represents the connection to the AutStarter. A call to
+ * This class represents the connection to the AUT Agent. A call to
  * createInstance() instantiate this class. <br>
  * Call createInstance() before getting the instance with getInstance().
  * 
  * @author BREDEX GmbH
  * @created 22.07.2004
  */
-public class ServerConnection extends BaseConnection {
+public class AutAgentConnection extends BaseConnection {
     
     /** the logger */
-    private static Logger log = LoggerFactory.getLogger(ServerConnection.class);
+    private static Logger log = 
+            LoggerFactory.getLogger(AutAgentConnection.class);
     
     /** the singleton instance */
-    private static ServerConnection instance = null;
+    private static AutAgentConnection instance = null;
 
     /**
      * private constructor
      * @param inetAddress the host to connect to
      * @param port the port the remote host is listening to
      */
-    private ServerConnection(InetAddress inetAddress, int port) {
+    private AutAgentConnection(InetAddress inetAddress, int port) {
         super();
         
         Communicator communicator = new Communicator(inetAddress, port, 
@@ -79,7 +80,7 @@ public class ServerConnection extends BaseConnection {
         InetAddress inetAddress;
         try {
             inetAddress = InetAddress.getByName(serverName);
-            instance = new ServerConnection(inetAddress, 
+            instance = new AutAgentConnection(inetAddress, 
                 new Integer(port).intValue());
         } catch (UnknownHostException uhe) {
             // log on info level, the configuration may be bad typed
@@ -97,7 +98,7 @@ public class ServerConnection extends BaseConnection {
      *             when the instance was not created with createInstance()
      * @return the instance of this Singleton
      */
-    public static synchronized ServerConnection getInstance() throws 
+    public static synchronized AutAgentConnection getInstance() throws 
         ConnectionException {
         if (instance == null) {
             String message = Messages.ServerConnectionIsNotInitialized;
@@ -131,8 +132,8 @@ public class ServerConnection extends BaseConnection {
                     log.debug(Messages.SecurityViolationGettingHostNameFromIP);
                 }
             }
-            ClientTestFactory.getClientTest().fireAutStarterStateChanged(
-                new AutStarterEvent(ServerEvent.CONNECTION_GAINED));
+            ClientTestFactory.getClientTest().fireAutAgentStateChanged(
+                new AutAgentEvent(ServerEvent.CONNECTION_GAINED));
         }
 
         /**
@@ -145,8 +146,8 @@ public class ServerConnection extends BaseConnection {
             try {
                 AUTConnection.getInstance().close();
                 ClientTestFactory.getClientTest().
-                    fireAutStarterStateChanged(
-                        new AutStarterEvent(ServerEvent.CONNECTION_CLOSED));
+                    fireAutAgentStateChanged(
+                        new AutAgentEvent(ServerEvent.CONNECTION_CLOSED));
             } catch (ConnectionException ce) {
                 // the connection to the AUTServer is not established
                 // -> just log this
@@ -179,8 +180,8 @@ public class ServerConnection extends BaseConnection {
         public void connectingFailed(InetAddress inetAddress, int port) {
             log.warn(Messages.ConnectingTheAUTAgentFailed);
             ClientTestFactory.getClientTest().
-                fireAutStarterStateChanged(new AutStarterEvent(
-                    AutStarterEvent.SERVER_CANNOT_CONNECTED));
+                fireAutAgentStateChanged(new AutAgentEvent(
+                    AutAgentEvent.SERVER_CANNOT_CONNECTED));
         }
     }
     

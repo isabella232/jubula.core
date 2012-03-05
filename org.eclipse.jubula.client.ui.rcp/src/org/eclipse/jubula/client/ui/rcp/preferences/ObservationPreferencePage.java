@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.preferences.utils.Utils;
@@ -415,7 +414,5 @@ public class ObservationPreferencePage extends PreferencePage implements
         
         Plugin.getDefault().getPreferenceStore().setValue(
             Constants.MULTILINETRIGGER_KEY, multiStorage);
-
-        DataEventDispatcher.getInstance().fireServerPreferencesChanged();
     }
 }

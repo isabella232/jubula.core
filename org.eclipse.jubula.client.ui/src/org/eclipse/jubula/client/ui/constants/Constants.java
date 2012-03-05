@@ -140,7 +140,7 @@ public interface Constants {
     //  -------------------------------------------------------------
     
     /** Key for m_text value to be stored as a resource property */
-    public static final String SERVER_SETTINGS_KEY = "SERVER_SETTINGS_KEY"; //$NON-NLS-1$
+    public static final String AUT_AGENT_SETTINGS_KEY = "AUT_AGENT_SETTINGS_KEY"; //$NON-NLS-1$
 
     /** Key for m_text value to be stored as a resource property */
     public static final String SHOWCHILDCOUNT_KEY = "SHOWCHILDCOUNT_PREF_KEY"; //$NON-NLS-1$
@@ -224,7 +224,7 @@ public interface Constants {
     public static final String TREEAUTOSCROLL_KEY = "TREEAUTOSCROLL_PREF_KEY"; //$NON-NLS-1$
 
     /** Key for m_text value to be stored as a resource property */
-    public static final String LAST_USED_SERVER_KEY = "LAST_USED_SERVER_KEY"; //$NON-NLS-1$
+    public static final String LAST_USED_AUT_AGENT_KEY = "LAST_USED_AUT_AGENT_KEY"; //$NON-NLS-1$
     
     /** Key for m_text value to be stored as a resource property */
     public static final String PREFERRED_JRE_KEY = "PREFERRED_JRE_KEY"; //$NON-NLS-1$

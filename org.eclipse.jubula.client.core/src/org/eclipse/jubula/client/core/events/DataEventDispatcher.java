@@ -281,14 +281,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         public void handleRecordModeStateChanged(RecordModeState state);
     }
     
-    /** to notify clients about modification of server preferences */
-    public interface IServerPrefListener {
-        /**
-         * callback method
-         */
-        public void handlePrefServerChanged();
-    }
-    
     /** to notify dialogs about button status */
     public interface IDialogStatusListener extends IGenericListener {
         // do nothing
@@ -336,7 +328,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         Connected,
         /** client is disconnected from server */
         Disconnected,
-        /** connection is beeing established */
+        /** connection is being established */
         Connecting
     }
     
@@ -491,15 +483,15 @@ public class DataEventDispatcher implements IReloadedSessionListener,
 
     
     /**
-     * <code>m_serverConnectionListeners</code>listener for state of server connection
+     * <code>m_autAgentConnectionListener</code>listener for state of server connection
      */
-    private Set<IServerConnectionListener> m_serverConnectionListeners =
+    private Set<IServerConnectionListener> m_autAgentConnectionListener =
         new HashSet<IServerConnectionListener>();
     /**
-     * <code>m_serverConnectionListeners</code>listener for state of server connection
+     * <code>m_autAgentConnectionListener</code>listener for state of server connection
      *  POST-Event for gui updates 
      */
-    private Set<IServerConnectionListener> m_serverConnectionListenersPost =
+    private Set<IServerConnectionListener> m_autAgentConnectionListenerPost =
         new HashSet<IServerConnectionListener>();
 
     /**
@@ -577,18 +569,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     private Set<IRecordModeStateListener> m_recordModeStateListenersPost =
         new HashSet<IRecordModeStateListener>();
 
-    /**
-     * <code>m_serverPrefListeners</code>listener for modification of server preferences
-     */
-    private Set<IServerPrefListener> m_serverPrefListeners =
-        new HashSet<IServerPrefListener>();
-    /**
-     * <code>m_serverPrefListeners</code>listener for modification of server preferences
-     *  POST-Event for gui updates 
-     */
-    private Set<IServerPrefListener> m_serverPrefListenersPost =
-        new HashSet<IServerPrefListener>();
-    
     /** The ICompletenessCheckListener Listeners */
     private Set<ICompletenessCheckListener> m_completenessCheckListeners = 
         new HashSet<ICompletenessCheckListener>();
@@ -1006,12 +986,12 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @param guiMode
      *      should this listener be called after the model listener 
      */
-    public void addServerConnectionListener(IServerConnectionListener l, 
+    public void addAutAgentConnectionListener(IServerConnectionListener l, 
         boolean guiMode) {
         if (guiMode) {
-            m_serverConnectionListenersPost.add(l);
+            m_autAgentConnectionListenerPost.add(l);
         } else {
-            m_serverConnectionListeners.add(l);
+            m_autAgentConnectionListener.add(l);
         }
     }
 
@@ -1019,18 +999,19 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     /**
      * @param l listener for server connection state
      */
-    public void removeServerConnectionListener(IServerConnectionListener l) {
-        m_serverConnectionListeners.remove(l);
-        m_serverConnectionListenersPost.remove(l);
+    public void removeAutAgentConnectionListener(IServerConnectionListener l) {
+        m_autAgentConnectionListener.remove(l);
+        m_autAgentConnectionListenerPost.remove(l);
     }
     
     /**
-     * notify listener about modification of server connection state
+     * notify listener about modification of AUT Agent connection state
      * @param state of server connection
      */
-    public void fireServerConnectionChanged(ServerState state) {
+    public void fireAutAgentConnectionChanged(ServerState state) {
         final Set<IServerConnectionListener> stableListeners = 
-            new HashSet<IServerConnectionListener>(m_serverConnectionListeners);
+            new HashSet<IServerConnectionListener>(
+                    m_autAgentConnectionListener);
         for (IServerConnectionListener l : stableListeners) {
             try {
                 l.handleServerConnStateChanged(state);
@@ -1042,7 +1023,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         // gui updates
         final Set<IServerConnectionListener> stableListenersPost = 
             new HashSet<IServerConnectionListener>(
-                m_serverConnectionListenersPost);
+                m_autAgentConnectionListenerPost);
         for (IServerConnectionListener l : stableListenersPost) {
             try {
                 l.handleServerConnStateChanged(state);
@@ -1449,28 +1430,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             }
         }
     }     
-    
-    /**
-     * @param l listener for modification of server preferences
-     * @param guiMode
-     *      should this listener be called after the model listener 
-     */
-    public void addServerPrefListener(IServerPrefListener l, 
-        boolean guiMode) {
-        if (guiMode) {
-            m_serverPrefListenersPost.add(l);
-        } else {
-            m_serverPrefListeners.add(l);
-        }
-    }
 
-    /**
-     * @param l listener for modification of server preferences
-     */
-    public void removeServerPrefListener(IServerPrefListener l) {
-        m_serverPrefListeners.remove(l);
-        m_serverPrefListenersPost.remove(l);
-    }
     /**
      * notify listeners that a project is opened
      */
@@ -1497,33 +1457,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      */
     public void removeProjectOpenedListener(IProjectOpenedListener l) {
         m_projectOpenedListeners.remove(l);
-    }
-    /**
-     * notify listener about modification of server preferences
-     */
-    public void fireServerPreferencesChanged() {
-        // model updates
-        final Set<IServerPrefListener> stableListeners = 
-            new HashSet<IServerPrefListener>(m_serverPrefListeners);
-        for (IServerPrefListener l : stableListeners) {
-            try {
-                l.handlePrefServerChanged();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-
-        // gui updates
-        final Set<IServerPrefListener> stableListenersPost = 
-            new HashSet<IServerPrefListener>(
-                m_serverPrefListenersPost);
-        for (IServerPrefListener l : stableListenersPost) {
-            try {
-                l.handlePrefServerChanged();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
     }
     
     /**

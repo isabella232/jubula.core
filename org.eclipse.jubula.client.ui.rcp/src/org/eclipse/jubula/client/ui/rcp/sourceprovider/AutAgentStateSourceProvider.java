@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
@@ -23,71 +23,74 @@ import org.eclipse.ui.ISources;
 
 /**
  * Provides variables related to the status of the connection between the
- * client and AUT-Agent.
+ * client and AUT Agent.
  *
  * @author BREDEX GmbH
  * @created Apr 29, 2009
  */
-public class AutStarterStateSourceProvider extends AbstractJBSourceProvider 
+public class AutAgentStateSourceProvider extends AbstractJBSourceProvider 
         implements IServerConnectionListener {
     
     /** 
      * ID of variable that indicates whether the client is currently connected 
-     * to an AutStarter
+     * to an AUT Agent
      */
-    public static final String IS_AUT_STARTER_CONNECTED = 
-        "org.eclipse.jubula.client.ui.rcp.variable.isAutStarterConnected"; //$NON-NLS-1$
+    public static final String IS_CONNECTED_TO_AUT_AGENT = 
+        "org.eclipse.jubula.client.ui.rcp.variable.isConnectedToAutAgent"; //$NON-NLS-1$
 
+    /** 
+     * ID of variable that indicates whether the client is currently connecting 
+     * to an AUT Agent
+     */
+    public static final String IS_CONNECTING_TO_AUT_AGENT = 
+        "org.eclipse.jubula.client.ui.rcp.variable.isConnectingToAutAgent"; //$NON-NLS-1$
+    
     /**
      * Constructor.
      */
-    public AutStarterStateSourceProvider() {
-        DataEventDispatcher.getInstance().addServerConnectionListener(
+    public AutAgentStateSourceProvider() {
+        DataEventDispatcher.getInstance().addAutAgentConnectionListener(
                 this, true);
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void dispose() {
-        DataEventDispatcher.getInstance().removeServerConnectionListener(this);
+        DataEventDispatcher.getInstance()
+            .removeAutAgentConnectionListener(this);
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Map<String, Object> getCurrentState() {
         Map<String, Object> currentState = new HashMap<String, Object>();
-        boolean isConnectedToAutStarter = false;
+        boolean isConnectedToAutAgent = false;
         try {
-            isConnectedToAutStarter = 
-                ServerConnection.getInstance().isConnected();
+            isConnectedToAutAgent = 
+                AutAgentConnection.getInstance().isConnected();
         } catch (ConnectionException e) {
             // Not connected. Do nothing.
         }
 
-        currentState.put(IS_AUT_STARTER_CONNECTED, 
-                isConnectedToAutStarter);
+        currentState.put(IS_CONNECTED_TO_AUT_AGENT, 
+                isConnectedToAutAgent);
+        currentState.put(IS_CONNECTING_TO_AUT_AGENT, 
+                false);
         
         return currentState;
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String[] getProvidedSourceNames() {
-        return new String [] {IS_AUT_STARTER_CONNECTED};
+        return new String [] {IS_CONNECTED_TO_AUT_AGENT,
+                              IS_CONNECTING_TO_AUT_AGENT};
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void handleServerConnStateChanged(ServerState state) {
         gdFireSourceChanged(
                 ISources.WORKBENCH, 
-                IS_AUT_STARTER_CONNECTED, state == ServerState.Connected);
+                IS_CONNECTED_TO_AUT_AGENT, state == ServerState.Connected);
+        gdFireSourceChanged(
+                ISources.WORKBENCH, 
+                IS_CONNECTING_TO_AUT_AGENT, state == ServerState.Connecting);
     }
 }

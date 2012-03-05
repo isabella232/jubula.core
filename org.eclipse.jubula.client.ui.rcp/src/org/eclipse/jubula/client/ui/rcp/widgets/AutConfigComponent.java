@@ -30,18 +30,18 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.ConnectServerBP;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.ConnectAutAgentBP;
 import org.eclipse.jubula.client.ui.rcp.dialogs.RemoteFileBrowserDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.utils.RemoteFileStore;
-import org.eclipse.jubula.client.ui.rcp.utils.ServerManager;
-import org.eclipse.jubula.client.ui.rcp.utils.ServerManager.Server;
+import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager;
+import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -201,7 +201,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     private Map<String, String> m_autConfig;
 
     /** list of the stored servers */
-    private ServerManager m_listOfServers = ServerManager.getInstance();
+    private AutAgentManager m_listOfServers = AutAgentManager.getInstance();
     /** parameter list for callback method of the <code>IDialogStatusListener</code> */
     private java.util.List<DialogStatusParameter> m_paramList = 
         new ArrayList<DialogStatusParameter>();
@@ -525,7 +525,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         setCompositeVisible(monitoringComposite, true);
     }
     /**
-     * Inits the AUT-Configuration and Server area.
+     * Inits the AUT-Configuration and AutAgent area.
      * 
      * @param parent The parent Composite.
      */
@@ -690,13 +690,13 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             getConfigValue(AutConfigConstants.SERVER);
         if (currentlySelectedServer != null 
             && currentlySelectedServer.trim().length() != 0
-            && !m_listOfServers.getServerNames().contains(
+            && !m_listOfServers.getAutAgentNames().contains(
                 currentlySelectedServer)) {
 
             int defaultServerPort = 
                     ConfigurationConstants.AUT_AGENT_DEFAULT_PORT;
             m_listOfServers.addServer(
-                new ServerManager.Server(
+                new AutAgentManager.AutAgent(
                     currentlySelectedServer, 
                     defaultServerPort));
 
@@ -707,7 +707,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                         + StringConstants.NEWLINE + Messages.ServerPortDefault 
                         + defaultServerPort});
         }
-        for (String serverName : m_listOfServers.getServerNames()) {
+        for (String serverName : m_listOfServers.getAutAgentNames()) {
             m_serverCombo.add(serverName);
         }
 
@@ -948,7 +948,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 getShell(), Constants.JB_PREF_PAGE_AUTAGENT, null, null);
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();
-        m_listOfServers = ServerManager.getInstance();
+        m_listOfServers = AutAgentManager.getInstance();
         String oldServer = m_serverCombo.getText();
         fillServerCombo();
         m_serverCombo.setText(oldServer);
@@ -966,7 +966,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * 
      * @return The server list.
      */
-    protected ServerManager getServerList() {
+    protected AutAgentManager getServerList() {
         return m_listOfServers;
     }
 
@@ -997,8 +997,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     protected boolean isRemoteRequest() {        
         boolean enable;
         try {
-            final Server currentServer = 
-                ConnectServerBP.getInstance().getCurrentServer();
+            final AutAgent currentServer = 
+                ConnectAutAgentBP.getInstance().getCurrentAutAgent();
             if (currentServer == null) {
                 return false;
             }
@@ -1358,13 +1358,13 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 oldPath = "."; //$NON-NLS-1$
             }
             RemoteFileStore baseRemoteFS = new RemoteFileStore(
-                    ServerConnection.getInstance().getCommunicator(), ".",  //$NON-NLS-1$
+                    AutAgentConnection.getInstance().getCommunicator(), ".",  //$NON-NLS-1$
                     folderSelection);
             StringBuilder modPath = new StringBuilder(oldPath);
             baseRemoteFS = handleOldPath(baseRemoteFS, modPath);
             directoryDialog.setInput(baseRemoteFS);
             directoryDialog.setInitialSelection(new RemoteFileStore(
-                    ServerConnection.getInstance().getCommunicator(), oldPath
+                    AutAgentConnection.getInstance().getCommunicator(), oldPath
                             .toString(), folderSelection));
             directoryDialog.setFSRoots(baseRemoteFS.getRootFSs());
             directoryDialog.setTitle(title);

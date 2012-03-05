@@ -41,7 +41,7 @@ import org.eclipse.jubula.client.core.commands.TakeScreenshotResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -325,7 +325,7 @@ public class TestExecution {
                         AUTConnection.getInstance().getCommunicator()
                             .getConnection().getAddress()
                             .getCanonicalHostName());
-                summary.setAutAgentName(ServerConnection.getInstance()
+                summary.setAutAgentName(AutAgentConnection.getInstance()
                         .getCommunicator().getHostName());
                 monitor.subTask(Messages.
                         StartingTestSuite_resolvingPredefinedVariables);
@@ -436,7 +436,7 @@ public class TestExecution {
                 Persistor.instance().getCurrentDBUser());
         
         try {
-            ServerConnection serverConn = ServerConnection.getInstance();
+            AutAgentConnection serverConn = AutAgentConnection.getInstance();
 
             // TEST_autstarter
             varStore.store(TDVariableStore.VAR_AUTAGENT, 
@@ -1205,7 +1205,7 @@ public class TestExecution {
                             new ResetMonitoringDataMessage(
                                 AUTConnection.getInstance().getConnectedAutId()
                                         .getExecutableName());
-                        ServerConnection.getInstance().send(message);
+                        AutAgentConnection.getInstance().send(message);
                     } catch (NotConnectedException nce) {
                         LOG.error(DebugConstants.ERROR, nce);
                     } catch (CommunicationException ce) {
@@ -1644,7 +1644,7 @@ public class TestExecution {
                 ICommand command = 
                     new DisplayManualTestStepResponseCommand(this);
 
-                ServerConnection.getInstance()
+                AutAgentConnection.getInstance()
                     .request(message, command, timeout);
                 
                 int waited = 0;
@@ -1749,7 +1749,7 @@ public class TestExecution {
                 boolean wasInterrupted = Thread.interrupted();
                 AutAgentRegistration.getInstance().addListener(
                         registrationListener);
-                ServerConnection.getInstance().send(
+                AutAgentConnection.getInstance().send(
                         new RestartAutMessage(autId));
                 while (!isAutRestarted.get()) {
                     // wait for aut registration

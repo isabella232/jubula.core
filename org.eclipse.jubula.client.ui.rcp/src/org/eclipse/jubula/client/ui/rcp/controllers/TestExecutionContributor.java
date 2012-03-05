@@ -18,7 +18,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
-import org.eclipse.jubula.client.core.AutStarterEvent;
+import org.eclipse.jubula.client.core.AutAgentEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IAUTEventListener;
 import org.eclipse.jubula.client.core.IAUTServerEventListener;
@@ -106,7 +106,7 @@ public class TestExecutionContributor
      */
     private void registerAsListener() {
         ClientTestFactory.getClientTest().addTestEventListener(this);
-        ClientTestFactory.getClientTest().addAutStarterEventListener(this);
+        ClientTestFactory.getClientTest().addAutAgentEventListener(this);
         ClientTestFactory.getClientTest().addAUTServerEventListener(this);
         ClientTestFactory.getClientTest().addTestExecutionEventListener(this);
     }
@@ -116,7 +116,7 @@ public class TestExecutionContributor
      */
     private void deregister() {
         ClientTestFactory.getClientTest().removeTestEventListener(this);
-        ClientTestFactory.getClientTest().removeAutStarterEventListener(
+        ClientTestFactory.getClientTest().removeAutAgentEventListener(
             this);
         ClientTestFactory.getClientTest().removeAUTServerEventListener(this);
         ClientTestFactory.getClientTest()
@@ -143,7 +143,7 @@ public class TestExecutionContributor
     /**
      * {@inheritDoc}
      */
-    public void stateChanged(final AutStarterEvent event) {
+    public void stateChanged(final AutAgentEvent event) {
         handleEvent(event);
     }
     
@@ -448,10 +448,10 @@ public class TestExecutionContributor
     }
     
     /**
-     * display a text for an AutStarterEvent in the status line 
+     * display a text for an AutAgentEvent in the status line 
      * @param event the raised event, determines the displayed message
      */
-    void handleEvent(AutStarterEvent event) {
+    void handleEvent(AutAgentEvent event) {
         if (log.isDebugEnabled()) {
             log.debug(Messages.HandleAUTAgentEvent + StringConstants.COLON
                     + StringConstants.SPACE + event.toString());
@@ -464,27 +464,27 @@ public class TestExecutionContributor
             case ServerEvent.CONNECTION_CLOSED:
                 statusLineMessage = Messages.StatusLine_NotConnected;
                 icon = Constants.NO_SERVER;
-                DataEventDispatcher.getInstance().fireServerConnectionChanged(
+                DataEventDispatcher.getInstance().fireAutAgentConnectionChanged(
                         ServerState.Disconnected);
                 break;
             case ServerEvent.CONNECTION_GAINED:
                 statusLineMessage = getConnectionMessage(statusLineMessage);
                 icon = Constants.NO_SC;
                 DataEventDispatcher.getInstance()
-                    .fireServerConnectionChanged(ServerState.Connected);
+                    .fireAutAgentConnectionChanged(ServerState.Connected);
                 // no changing for the actions, see AUTServerEvent
                 break;
-            case AutStarterEvent.SERVER_CANNOT_CONNECTED:
+            case AutAgentEvent.SERVER_CANNOT_CONNECTED:
                 error = Messages.InfoDetailConnectToAutAgentFailed;
                 statusLineMessage = Messages.StatusLine_NotConnected;
-                DataEventDispatcher.getInstance().fireServerConnectionChanged(
+                DataEventDispatcher.getInstance().fireAutAgentConnectionChanged(
                         ServerState.Disconnected);
                 messageId = MessageIDs.I_SERVER_CANNOT_CONNECTED;
                 break;
-            case AutStarterEvent.VERSION_ERROR:
+            case AutAgentEvent.VERSION_ERROR:
                 error = Messages.ErrorMessageVERSION_ERROR;
                 statusLineMessage = Messages.StatusLine_NotConnected;
-                DataEventDispatcher.getInstance().fireServerConnectionChanged(
+                DataEventDispatcher.getInstance().fireAutAgentConnectionChanged(
                         ServerState.Disconnected);
                 break;
             default:
@@ -712,20 +712,20 @@ public class TestExecutionContributor
 
     /**
      * the connectServer action
-     * @param server The server to start.
+     * @param autAgentHost The server to start.
      * @param port The port of the server to start.
      */
-    public void connectToServeraction(String server, String port) {
-        m_server = server;
+    public void connectToAutAgent(String autAgentHost, String port) {
+        m_server = autAgentHost;
         m_port = port;
-        getClientTest().connectToServer(server, port);
+        getClientTest().connectToAutAgent(autAgentHost, port);
     }
 
     /**
      * the disconnectServer action
      */
-    public void disconnectFromServeraction() {
-        getClientTest().disconnectFromServer();
+    public void disconnectFromAutAgent() {
+        getClientTest().disconnectFromAutAgent();
         m_server = StringConstants.EMPTY;
         m_port = StringConstants.EMPTY;
     }
@@ -735,7 +735,7 @@ public class TestExecutionContributor
      * 
      * @param autId The ID of the Running AUT to stop.
      */
-    public  void stopAUTaction(AutIdentifier autId) {
+    public  void stopAUT(AutIdentifier autId) {
         fireAndSetAutState(false);
         if (TestExecution.getInstance().getStartedTestSuite() != null
             && TestExecution.getInstance().getStartedTestSuite().isStarted()) {

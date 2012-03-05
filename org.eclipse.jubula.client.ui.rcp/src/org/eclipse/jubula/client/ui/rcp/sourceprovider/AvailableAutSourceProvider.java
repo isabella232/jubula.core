@@ -63,7 +63,7 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
     public AvailableAutSourceProvider() {
         DataEventDispatcher dispatcher = DataEventDispatcher.getInstance();
         dispatcher.addLanguageChangedListener(this, true);
-        dispatcher.addServerConnectionListener(this, true);
+        dispatcher.addAutAgentConnectionListener(this, true);
         dispatcher.addProjectPropertiesModifyListener(this, true);
         dispatcher.addProjectLoadedListener(this, true);
         dispatcher.addDataChangedListener(this, true);
@@ -76,7 +76,7 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
     public void dispose() {
         DataEventDispatcher dispatcher = DataEventDispatcher.getInstance();
         dispatcher.removeLanguageChangedListener(this);
-        dispatcher.removeServerConnectionListener(this);
+        dispatcher.removeAutAgentConnectionListener(this);
         dispatcher.removeProjectPropertiesModifyListener(this);
         dispatcher.removeProjectLoadedListener(this);
         dispatcher.removeDataChangedListener(this);

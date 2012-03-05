@@ -33,7 +33,7 @@ import org.eclipse.jubula.client.cmd.progess.HeadlessProgressProvider;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -109,7 +109,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      */
     protected void shutdown() {
         try {
-            if (!ServerConnection.getInstance().isConnected()) {
+            if (!AutAgentConnection.getInstance().isConnected()) {
                 printlnConsoleError(Messages.ConnectionToAutUnexpectedly);
             }
         } catch (ConnectionException e) {
@@ -121,7 +121,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                 AutIdentifier startedAutId = new AutIdentifier(
                         startedConfig.getConfigMap().get(
                                 AutConfigConstants.AUT_ID));
-                if (ServerConnection.getInstance().isConnected()) {
+                if (AutAgentConnection.getInstance().isConnected()) {
                     ClientTestFactory.getClientTest().stopAut(startedAutId);
                 }
             } catch (ConnectionException e) {
@@ -130,8 +130,8 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         }
         
         try {
-            while (ServerConnection.getInstance().isConnected()) {
-                ClientTestFactory.getClientTest().disconnectFromServer();
+            while (AutAgentConnection.getInstance().isConnected()) {
+                ClientTestFactory.getClientTest().disconnectFromAutAgent();
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {

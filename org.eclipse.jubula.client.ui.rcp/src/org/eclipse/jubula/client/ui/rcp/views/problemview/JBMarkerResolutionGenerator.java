@@ -32,7 +32,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.actions.ChooseServerAction;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
@@ -41,7 +40,6 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator;
 import org.eclipse.ui.dialogs.PreferencesUtil;
@@ -231,8 +229,6 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
      * @return resolutions for no connection to server.
      */
     private IMarkerResolution[] getNoServerConnectionResolutions() {
-        // FIXME zeb not sure if this is the correct way to
-        //          globally access an action
         return new IMarkerResolution [] {new IMarkerResolution() {
 
             public String getLabel() {
@@ -240,7 +236,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             }
 
             public void run(IMarker marker) {
-                new ChooseServerAction().runWithEvent(null, new Event());
+                CommandHelper.executeCommand(
+                        RCPCommandIDs.CONNECT_TO_AUT_AGENT_COMMAND_ID);
             }
         }
         };

@@ -60,7 +60,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
             Base64.encodeBase64(String.valueOf(
                 ConfigurationConstants.AUT_AGENT_DEFAULT_PORT).getBytes())));
         prefStore.setDefault(
-                Constants.SERVER_SETTINGS_KEY, 
+                Constants.AUT_AGENT_SETTINGS_KEY, 
                 serverValuesBuilder.toString());
     }
 

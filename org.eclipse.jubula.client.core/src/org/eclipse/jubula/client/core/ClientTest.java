@@ -62,7 +62,7 @@ import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -122,7 +122,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class contains methods for starting and stopping a test. It's also holds
- * the listener for AutStarterEvent, AUTServerEvent and AUTEvent.
+ * the listener for AutAgentEvent, AUTServerEvent and AUTEvent.
  * 
  * @author BREDEX GmbH
  * @created 16.07.2004
@@ -206,20 +206,20 @@ public class ClientTest implements IClientTest {
     /**
      * {@inheritDoc}
      */
-    public void connectToServer(String serverName, 
+    public void connectToAutAgent(String serverName, 
         String port) {
         
         try {
             if (!initServerConnection(serverName, port)) {
                 // *ServerEvnetListener are already notfied from 
                 // initConnections() 
-                fireAutStarterStateChanged(new AutStarterEvent(
-                        AutStarterEvent.SERVER_CANNOT_CONNECTED));
+                fireAutAgentStateChanged(new AutAgentEvent(
+                        AutAgentEvent.SERVER_CANNOT_CONNECTED));
                 return;
             }
         } catch (JBVersionException e) {
-            fireAutStarterStateChanged(new AutStarterEvent(
-                AutStarterEvent.VERSION_ERROR));
+            fireAutAgentStateChanged(new AutAgentEvent(
+                AutAgentEvent.VERSION_ERROR));
         }
     }
 
@@ -227,12 +227,12 @@ public class ClientTest implements IClientTest {
      * 
      * {@inheritDoc}
      */
-    public void disconnectFromServer() {
+    public void disconnectFromAutAgent() {
         // Send request to aut starter and wait for response
         ICommand command = new DisconnectFromAutAgentResponseCommand();
         Message message = new DisconnectFromAutAgentMessage();
         try {
-            ServerConnection.getInstance().request(message, command, 10000);
+            AutAgentConnection.getInstance().request(message, command, 10000);
         } catch (NotConnectedException e) {
             // Exceptions thrown from getInstance(): no connections are
             // established, just log
@@ -271,18 +271,18 @@ public class ClientTest implements IClientTest {
                         .getLocalPort(), autConfigMap, autToolkit, 
                         aut.isGenerateNames());
             startAUTServerMessage.setLocale(locale);
-            ServerConnection.getInstance().send(startAUTServerMessage);
+            AutAgentConnection.getInstance().send(startAUTServerMessage);
             if (log.isDebugEnabled()) {
                 log.debug(Messages.StartAUTServerMessageSend);
             }
         } catch (NotConnectedException nce) {
-            // The ServerConnection was closed. This Exception occurs after 
+            // The AutAgentConnection was closed. This Exception occurs after 
             // initialising the server, so there must be a shutdown(). The 
             // listeners are already notified from the ConnectionListener of
-            // the ServerConnection, -> just log.
+            // the AutAgentConnection, -> just log.
             log.info(DebugConstants.ERROR, nce);
         } catch (ConnectionException ce) {
-            // This exception is thrown from ServerConnection.getInstance(). See comment above.
+            // This exception is thrown from AutAgentConnection.getInstance(). See comment above.
             log.info(DebugConstants.ERROR, ce);
         } catch (CommunicationException cce) {
             log.error(DebugConstants.ERROR, cce);
@@ -299,7 +299,7 @@ public class ClientTest implements IClientTest {
                 // -> no communication possible -> close the connections as a 
                 // precaution
                 AUTConnection.getInstance().close();
-                ServerConnection.getInstance().close();
+                AutAgentConnection.getInstance().close();
             } catch (ConnectionException ce) {
                 log.error(Messages.ClosingTheConnectionsFailed, ce);
             }
@@ -345,10 +345,10 @@ public class ClientTest implements IClientTest {
         
         try {
             mapToSend.put(AutConfigConstants.AUT_AGENT_PORT, 
-                String.valueOf(ServerConnection.getInstance()
+                String.valueOf(AutAgentConnection.getInstance()
                         .getCommunicator().getPort()));
             mapToSend.put(AutConfigConstants.AUT_AGENT_HOST, 
-                    ServerConnection.getInstance()
+                    AutAgentConnection.getInstance()
                         .getCommunicator().getHostName());
             mapToSend.put(AutConfigConstants.AUT_NAME, 
                     mapToSend.get(AutConfigConstants.AUT_ID));
@@ -363,7 +363,7 @@ public class ClientTest implements IClientTest {
      * @throws ConnectionException in case of error.
      */
     private void closeConnections() throws ConnectionException {
-        ServerConnection.getInstance().close();
+        AutAgentConnection.getInstance().close();
         AUTConnection.getInstance().close();
     }
 
@@ -375,7 +375,7 @@ public class ClientTest implements IClientTest {
             log.info(Messages.StoppingTest);            
         }
         try {
-            ServerConnection.getInstance().getCommunicator().send(
+            AutAgentConnection.getInstance().getCommunicator().send(
                     new StopAUTServerMessage(autId));
         } catch (ConnectionException ce) {
             // Exceptions thrown from getInstance(): no connections are
@@ -820,7 +820,7 @@ public class ClientTest implements IClientTest {
      * 
      * {@inheritDoc}
      */
-    public void addAutStarterEventListener(
+    public void addAutAgentEventListener(
             IServerEventListener listener) {
         eventListenerList.add(IServerEventListener.class, listener);
     }
@@ -829,7 +829,7 @@ public class ClientTest implements IClientTest {
      * 
      * {@inheritDoc}
      */
-    public void removeAutStarterEventListener(
+    public void removeAutAgentEventListener(
             IServerEventListener listener) {
 
         eventListenerList.remove(IServerEventListener.class, listener);
@@ -916,7 +916,7 @@ public class ClientTest implements IClientTest {
      * 
      * {@inheritDoc}
      */
-    public void fireAutStarterStateChanged(AutStarterEvent event) {
+    public void fireAutAgentStateChanged(AutAgentEvent event) {
         if (log.isInfoEnabled()) {
             log.info(Messages.FiringAUTStateChanged + StringConstants.COLON 
                     + String.valueOf(event.getState()));
@@ -976,7 +976,7 @@ public class ClientTest implements IClientTest {
                 TestExecution.getInstance().getConnectedAutId()
                 .getExecutableName());
         try {
-            ServerConnection.getInstance().send(message);
+            AutAgentConnection.getInstance().send(message);
         } catch (NotConnectedException nce) {
             log.error(DebugConstants.ERROR, nce);
         } catch (CommunicationException ce) {
@@ -995,7 +995,7 @@ public class ClientTest implements IClientTest {
                         .getExecutableName());
        
         try {
-            ServerConnection.getInstance().send(message);
+            AutAgentConnection.getInstance().send(message);
         } catch (NotConnectedException nce) {
             log.error(DebugConstants.ERROR, nce);
         } catch (CommunicationException ce) {
@@ -1011,7 +1011,7 @@ public class ClientTest implements IClientTest {
         GetAutConfigMapResponseCommand response = 
             new GetAutConfigMapResponseCommand();
         try {
-            ServerConnection.getInstance().request(message, response,
+            AutAgentConnection.getInstance().request(message, response,
                     REQUEST_CONFIG_MAP_TIMEOUT);
             final AtomicBoolean timeoutFlag = new AtomicBoolean(true);
             final Timer timerTimeout = new Timer();
@@ -1301,7 +1301,7 @@ public class ClientTest implements IClientTest {
     }
 
     /**
-     * Initiliazes the ServerConnection and the AUTConnection, in case of an
+     * Initiliazes the AutAgentConnection and the AUTConnection, in case of an
      * error, the listeners are notified with appopriate ServerEvent.
      * @param serverName The name of the server.
      * @param port The port number.
@@ -1313,8 +1313,8 @@ public class ClientTest implements IClientTest {
         throws JBVersionException {
         
         try {
-            ServerConnection.createInstance(serverName, port);
-            ServerConnection.getInstance().run();
+            AutAgentConnection.createInstance(serverName, port);
+            AutAgentConnection.getInstance().run();
             if (log.isDebugEnabled()) {
                 log.debug(Messages.ConnectedToTheServer);
             }

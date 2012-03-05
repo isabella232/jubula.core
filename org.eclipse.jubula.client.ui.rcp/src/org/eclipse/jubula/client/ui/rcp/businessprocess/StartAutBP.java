@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
@@ -266,7 +266,7 @@ public class StartAutBP extends AbstractActionBP {
             m_projLoadedListener, true);
         dataEventDispatcher.addDataChangedListener(
             m_currentProjDeletedListener, true);
-        dataEventDispatcher.addServerConnectionListener(
+        dataEventDispatcher.addAutAgentConnectionListener(
             m_serverConnectListener, true);
         dataEventDispatcher.addAutStateListener(m_autStateListener, true);
         dataEventDispatcher.addLanguageChangedListener(m_langChangedListener, 
@@ -382,7 +382,7 @@ public class StartAutBP extends AbstractActionBP {
     private String resolveAUTAgentHostName() {
         String serverHostName = null;
         try {
-            ServerConnection serverConn = ServerConnection.getInstance();
+            AutAgentConnection serverConn = AutAgentConnection.getInstance();
             if (serverConn.isConnected()
                     && serverConn.getCommunicator() != null) {
                 serverHostName = serverConn.getCommunicator().getHostName();

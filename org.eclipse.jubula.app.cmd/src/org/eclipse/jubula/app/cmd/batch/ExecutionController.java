@@ -32,7 +32,7 @@ import org.eclipse.jubula.client.cmd.controller.IClcServer;
 import org.eclipse.jubula.client.cmd.controller.intern.RmiBase;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
-import org.eclipse.jubula.client.core.AutStarterEvent;
+import org.eclipse.jubula.client.core.AutAgentEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IAUTEventListener;
 import org.eclipse.jubula.client.core.IAUTServerEventListener;
@@ -53,7 +53,7 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -327,7 +327,7 @@ public class ExecutionController implements IAUTServerEventListener,
     private ExecutionController() {
         IClientTest clientTest = ClientTestFactory.getClientTest();
         clientTest.addAUTServerEventListener(this);
-        clientTest.addAutStarterEventListener(this);
+        clientTest.addAutAgentEventListener(this);
         clientTest.addTestEventListener(this);
         clientTest.addTestExecutionEventListener(this);
         AutAgentRegistration.getInstance().addListener(this);
@@ -400,8 +400,8 @@ public class ExecutionController implements IAUTServerEventListener,
                 true);
         // init ClientTest
         IClientTest clientTest = ClientTestFactory.getClientTest();
-        clientTest.connectToServer(m_job.getServer(), m_job.getPort());
-        if (!ServerConnection.getInstance().isConnected()) {
+        clientTest.connectToAutAgent(m_job.getServer(), m_job.getPort());
+        if (!AutAgentConnection.getInstance().isConnected()) {
             throw new CommunicationException(
                     Messages.ConnectionToAUTAgentFailed,
                     MessageIDs.E_COMMUNICATOR_CONNECTION);
@@ -526,7 +526,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 AutIdentifier startedAutId = new AutIdentifier(
                         autConfig.getConfigMap().get(
                                 AutConfigConstants.AUT_ID));
-                if (ServerConnection.getInstance().isConnected()) {
+                if (AutAgentConnection.getInstance().isConnected()) {
                     ClientTestFactory.getClientTest().stopAut(startedAutId);
                 }
             } catch (ConnectionException e) {
@@ -866,7 +866,7 @@ public class ExecutionController implements IAUTServerEventListener,
     /**
      * {@inheritDoc}
      */
-    public void stateChanged(AutStarterEvent event) {
+    public void stateChanged(AutAgentEvent event) {
         AbstractCmdlineClient.printConsoleLn(
                 NLS.bind(Messages.ExecutionControllerServer, event), true);
         switch (event.getState()) {

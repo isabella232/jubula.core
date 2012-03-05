@@ -17,7 +17,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -28,46 +27,46 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Helper-class to manage the server preferences.
+ * Helper-class to manage the AUT Agent preferences.
  *
  * @author BREDEX GmbH
  * @created 08.12.2005
  */
-public class ServerManager {
+public class AutAgentManager {
     
     /** the logger */
     private static final Logger LOG = 
-            LoggerFactory.getLogger(ServerManager.class);
+            LoggerFactory.getLogger(AutAgentManager.class);
     
     /**
-     * <code>instance</code>single instance of ServerManager
+     * <code>instance</code>single instance of AutAgentManager
      */
-    private static ServerManager instance = null;    
+    private static AutAgentManager instance = null;    
     
     /**
-     * <code>m_servers</code> all server read from preference store
+     * <code>m_autAgents</code> all server read from preference store
      */
-    private SortedSet<Server> m_servers = new TreeSet<Server>();
+    private SortedSet<AutAgent> m_autAgents = new TreeSet<AutAgent>();
     
-    /** last used server object*/
-    private Server m_lastUsedServer = null;
+    /** last used AUT Agent object*/
+    private AutAgent m_lastUsedAutAgent = null;
     
     /**
      * <p>The constructor.</p>
      * <p>Fills the list with all stored server settings.</p>
      * <p>If there are no stored values, the default values will filled in the list</p>
      */
-    private ServerManager() {
+    private AutAgentManager() {
         readFromPrefStore();
     }
     
     
     /**
-     * @return single instance of ServerManager
+     * @return single instance of AutAgentManager
      */
-    public static ServerManager getInstance() {
+    public static AutAgentManager getInstance() {
         if (instance == null) {
-            instance = new ServerManager();
+            instance = new AutAgentManager();
         }
         return instance;
     }
@@ -81,55 +80,56 @@ public class ServerManager {
     private void readFromPrefStore() {
 
         IPreferenceStore prefStore = Plugin.getDefault().getPreferenceStore();
-        String serversValue = 
-                prefStore.getString(Constants.SERVER_SETTINGS_KEY);
-        String lastUsedServerValue = 
-                prefStore.getString(Constants.LAST_USED_SERVER_KEY);
+        String autAgentValue = 
+                prefStore.getString(Constants.AUT_AGENT_SETTINGS_KEY);
+        String lastUsedAutAgentValue = 
+                prefStore.getString(Constants.LAST_USED_AUT_AGENT_KEY);
         
         try {
-            decodeServerPrefs(serversValue);
+            decodeAutAgentPrefs(autAgentValue);
         } catch (JBException jbe) {
             LOG.error("Error occurred while loading AUT Agent preferences. Resetting to default values.", jbe); //$NON-NLS-1$
             prefStore.setToDefault(
-                    Constants.SERVER_SETTINGS_KEY);
+                    Constants.AUT_AGENT_SETTINGS_KEY);
             try {
-                decodeServerPrefs(serversValue);
+                decodeAutAgentPrefs(autAgentValue);
             } catch (JBException e) {
                 LOG.error("Error occurred while reading AUT Agent preferences default values.", jbe); //$NON-NLS-1$
             }
         }
         
         // set last used server
-        if (!StringUtils.isEmpty(lastUsedServerValue)) {
-            m_lastUsedServer = new Server(
-                lastUsedServerValue.substring(0, lastUsedServerValue.indexOf(":")), //$NON-NLS-1$
+        if (!StringUtils.isEmpty(lastUsedAutAgentValue)) {
+            m_lastUsedAutAgent = new AutAgent(
+                lastUsedAutAgentValue.substring(0, lastUsedAutAgentValue.indexOf(":")), //$NON-NLS-1$
                 (new Integer(
-                    lastUsedServerValue.substring(lastUsedServerValue.indexOf(":") + 1)))); //$NON-NLS-1$
+                    lastUsedAutAgentValue.substring(lastUsedAutAgentValue.indexOf(":") + 1)))); //$NON-NLS-1$
         } else {
-            m_lastUsedServer = null;
+            m_lastUsedAutAgent = null;
         }
 
     }
 
     /**
-     * load the server list from the preference store into m_servers
+     * load the server list from the preference store into m_autAgents
      * @param store string read from preference store
      * @throws JBException in case of problem with preference store
      */
-    private void decodeServerPrefs(String store) throws JBException {
-        m_servers.clear();
-        String[] serverStrings = StringUtils.split(store, ';');
+    private void decodeAutAgentPrefs(String store) throws JBException {
+        m_autAgents.clear();
+        String[] autAgentStrings = StringUtils.split(store, ';');
         // We expect the length to be divisible by 2 (hostname;ports;)
-        if (serverStrings.length % 2 == 0) {
-            for (int i = 0; i < serverStrings.length; i += 2) {
-                String hostname = decodeString(serverStrings[i]);
+        if (autAgentStrings.length % 2 == 0) {
+            for (int i = 0; i < autAgentStrings.length; i += 2) {
+                String hostname = decodeString(autAgentStrings[i]);
 
                 // May be multiple ports. If so, then we create a server for each port.
                 String[] encodedPorts = 
-                        StringUtils.split(serverStrings[i + 1], ',');
+                        StringUtils.split(autAgentStrings[i + 1], ',');
                 for (String encodedPort : encodedPorts) {
                     String port = decodeString(encodedPort);
-                    m_servers.add(new Server(hostname, Integer.valueOf(port)));
+                    m_autAgents.add(
+                            new AutAgent(hostname, Integer.valueOf(port)));
                 }
             }
             
@@ -154,26 +154,27 @@ public class ServerManager {
 
     /**
      * Adds a server to the list.
-     * @param server The server to add.
+     * @param autAgent The server to add.
      */
-    public void addServer(Server server) {
-        Validate.notNull(server, Messages.ServerObjectMustNotBeNull 
+    public void addServer(AutAgent autAgent) {
+        Validate.notNull(autAgent, Messages.ServerObjectMustNotBeNull 
                 + StringConstants.DOT);
-        if (!server.getName().equals(StringConstants.EMPTY)
-            && !m_servers.contains(server)) {
-            m_servers.add(server);
+        if (!autAgent.getName().equals(StringConstants.EMPTY)
+            && !m_autAgents.contains(autAgent)) {
+            m_autAgents.add(autAgent);
         }
     }
     
     /**
      * Removes a server from the list.
-     * @param server The server to remove.
+     * @param autAgent The autAgent to remove.
      */
-    public void removeServer(Server server) {
-        if (m_lastUsedServer != null && m_lastUsedServer.equals(server)) {
-            m_lastUsedServer = null;
+    public void removeAutAgent(AutAgent autAgent) {
+        if (m_lastUsedAutAgent != null 
+                && m_lastUsedAutAgent.equals(autAgent)) {
+            m_lastUsedAutAgent = null;
         }
-        m_servers.remove(server);
+        m_autAgents.remove(autAgent);
     }
     
     
@@ -185,39 +186,41 @@ public class ServerManager {
      * Current Format (base64-encoded):
      *  hostname1;port;hostname2;port;
      */
-    public void storeServerList() {
+    public void storeAutAgentList() {
         StringBuilder storage = new StringBuilder();
-        for (Server server : m_servers) {
+        for (AutAgent autAgent : m_autAgents) {
             // servername;port;
-            byte[] serverArray = server.getName().getBytes();
-            String serverEncoded = new String(Base64.encodeBase64(serverArray));
-            storage.append(serverEncoded).append(";"); //$NON-NLS-1$
+            byte[] autAgentArray = autAgent.getName().getBytes();
+            String autAgentEncoded = new String(
+                    Base64.encodeBase64(autAgentArray));
+            storage.append(autAgentEncoded).append(";"); //$NON-NLS-1$
             storage.append(new String(Base64.encodeBase64(
-                    server.getPort().toString().getBytes())));
+                    autAgent.getPort().toString().getBytes())));
             storage.append(";"); //$NON-NLS-1$
         }
-        Plugin.getDefault().getPreferenceStore().setValue(
-                Constants.SERVER_SETTINGS_KEY, storage.toString());
-        if (m_lastUsedServer != null) {
-            if (m_servers.contains(m_lastUsedServer)) {                
-                Plugin.getDefault().getPreferenceStore().setValue(
-                    Constants.LAST_USED_SERVER_KEY, 
-                    buildLastUsedServerPortString(m_lastUsedServer));
+        IPreferenceStore preferenceStore = 
+                Plugin.getDefault().getPreferenceStore();
+        preferenceStore.setValue(
+                Constants.AUT_AGENT_SETTINGS_KEY, storage.toString());
+        if (m_lastUsedAutAgent != null) {
+            if (m_autAgents.contains(m_lastUsedAutAgent)) {                
+                preferenceStore.setValue(
+                    Constants.LAST_USED_AUT_AGENT_KEY, 
+                    buildLastUsedAutAgentPortString(m_lastUsedAutAgent));
             } else {
-                m_lastUsedServer = null;
+                m_lastUsedAutAgent = null;
             }
         }
-        DataEventDispatcher.getInstance().fireServerPreferencesChanged();
     }
 
     /**
-     * @param lastUsedServer last used server as server object
+     * @param lastUsedAutAgent last used server as server object
      * @return last used server as string (servername:port)
      */
-    private String buildLastUsedServerPortString(Server lastUsedServer) {
-        if (lastUsedServer != null) {
-            return lastUsedServer.getName() + ":"  //$NON-NLS-1$
-                + lastUsedServer.getPort();
+    private String buildLastUsedAutAgentPortString(AutAgent lastUsedAutAgent) {
+        if (lastUsedAutAgent != null) {
+            return lastUsedAutAgent.getName() + ":"  //$NON-NLS-1$
+                + lastUsedAutAgent.getPort();
         } 
         Integer port = new Integer(-1);
         return StringConstants.EMPTY + ":" + port; //$NON-NLS-1$
@@ -227,14 +230,14 @@ public class ServerManager {
     
     
     /**
-     * @param serverName The name of the wanted server.
-     * @param port port of wanted server
-     * @return The server object for the given server name.
+     * @param autAgentName The name of the wanted AUT Agent.
+     * @param port port of wanted AUT Agent
+     * @return The AUT Agent object for the given AUT Agent name.
      */
-    public Server getServer(String serverName, Integer port) {
-        Server serv = null;
-        for (Server server : m_servers) {
-            if (serverName.equals(server.getName())
+    public AutAgent getAutAgent(String autAgentName, Integer port) {
+        AutAgent serv = null;
+        for (AutAgent server : m_autAgents) {
+            if (autAgentName.equals(server.getName())
                 && server.getPort().equals(port)) {
                 serv = server;
             }
@@ -244,13 +247,13 @@ public class ServerManager {
     
     /**
      * validates, if a server name exists in server preferences
-     * @param serverName name of server to validate
+     * @param autAgentName name of server to validate
      * @return if server name exists in server preferences
      */
-    public boolean containsServer(String serverName) {
-        Validate.notNull(serverName);
-        for (Server server : m_servers) {
-            if (serverName.equals(server.getName())) {
+    public boolean containsAutAgent(String autAgentName) {
+        Validate.notNull(autAgentName);
+        for (AutAgent autAgent : m_autAgents) {
+            if (autAgentName.equals(autAgent.getName())) {
                 return true;
             }
         }
@@ -259,38 +262,38 @@ public class ServerManager {
     
     
     /**
-     * @return all server names
+     * @return all AUT Agent names
      */
-    public SortedSet <String> getServerNames() {
-        SortedSet<String> serverNames = new TreeSet<String>();
-        for (Server server : m_servers) {
+    public SortedSet <String> getAutAgentNames() {
+        SortedSet<String> autAgent = new TreeSet<String>();
+        for (AutAgent server : m_autAgents) {
             if (!StringConstants.EMPTY.equals(server.getName())) {
-                serverNames.add(server.getName());
+                autAgent.add(server.getName());
             }
         }
-        return serverNames;
+        return autAgent;
     }
     
     /**
      * @return Returns the last used server, if available in Preference Store
      * or null.
      */
-    public Server getLastUsedServer() {
-        return m_lastUsedServer;
+    public AutAgent getLastUsedAutAgent() {
+        return m_lastUsedAutAgent;
     }
 
     /**
      * @return Returns the servers.
      */
-    public SortedSet<Server> getServers() {
-        return m_servers;
+    public SortedSet<AutAgent> getAutAgents() {
+        return m_autAgents;
     }
     
     /**
      * @author BREDEX GmbH
      * @created 19.04.2006
      */
-    public static class Server implements Comparable {
+    public static class AutAgent implements Comparable {
         /**
          * <code>m_name</code>server name
          */
@@ -304,7 +307,7 @@ public class ServerManager {
          * @param name server name
          * @param port associated port
          */
-        public Server(String name, Integer port) {
+        public AutAgent(String name, Integer port) {
             m_name = name;
             m_port = port;
         }
@@ -341,26 +344,26 @@ public class ServerManager {
          * {@inheritDoc}
          */
         public int compareTo(Object o) {
-            Server server = (Server)o;
-            if (this.getName().compareTo(server.getName()) == 0) {
-                return this.getPort().compareTo(server.getPort());
+            AutAgent autAgent = (AutAgent)o;
+            if (this.getName().compareTo(autAgent.getName()) == 0) {
+                return this.getPort().compareTo(autAgent.getPort());
             } 
-            return this.getName().compareTo(server.getName());           
+            return this.getName().compareTo(autAgent.getName());           
         }
 
     }
 
     /**
-     * @param servers The servers to set.
+     * @param autAgents The servers to set.
      */
-    public void setServers(SortedSet<Server> servers) {
-        m_servers = servers;
+    public void setAutAgents(SortedSet<AutAgent> autAgents) {
+        m_autAgents = autAgents;
     }
 
     /**
-     * @param server last used server
+     * @param autAgent last used server
      */
-    public void setLastUsedServer(Server server) {
-        m_lastUsedServer = server;
+    public void setLastUsedAutAgent(AutAgent autAgent) {
+        m_lastUsedAutAgent = autAgent;
     }
 }

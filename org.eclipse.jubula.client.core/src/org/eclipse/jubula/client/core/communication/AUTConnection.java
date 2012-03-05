@@ -189,7 +189,7 @@ public class AUTConnection extends BaseConnection {
                         m_autConnectionListener);
                 ConnectToAutResponseCommand responseCommand =
                     new ConnectToAutResponseCommand();
-                ServerConnection.getInstance().getCommunicator().request(
+                AutAgentConnection.getInstance().getCommunicator().request(
                     new ConnectToAutMessage(
                         InetAddress.getLocalHost().getCanonicalHostName(), 
                         getCommunicator().getLocalPort(), autId), 
@@ -206,7 +206,7 @@ public class AUTConnection extends BaseConnection {
                 long timeout = 10000;
                 long startTime = System.currentTimeMillis();
                 while (!monitor.isCanceled() && !isConnected() 
-                        && ServerConnection.getInstance().isConnected()
+                        && AutAgentConnection.getInstance().isConnected()
                         && startTime + timeout > System.currentTimeMillis()) {
                     TimeUtil.delay(200);
                 }

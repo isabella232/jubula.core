@@ -39,16 +39,17 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
 public interface IClientTest {
     /**
      * connects to server
-     * @param serverName The name of the server.
+     * @param autAgentHostName The name of the server.
      * @param port The port number.
      */
-    public abstract void connectToServer(String serverName, String port);
+    public abstract void connectToAutAgent(
+            String autAgentHostName, String port);
 
     /**
      * disconnects from the Server
      *
      */
-    public abstract void disconnectFromServer();
+    public abstract void disconnectFromAutAgent();
 
     /**
      * start the application under test.
@@ -235,7 +236,7 @@ public interface IClientTest {
      * @param listener -
      *            the listener to add
      */
-    public void addAutStarterEventListener(
+    public void addAutAgentEventListener(
             IServerEventListener listener);
 
     /**
@@ -290,12 +291,12 @@ public interface IClientTest {
 
     /**
      * Notify all listeners that have registered interest for notification on
-     * changing the state of the connection to the AutStarter.
+     * changing the state of the connection to the AUT Agent.
      * 
      * @param event
      *            the event containing detailed information about the new state
      */
-    public void fireAutStarterStateChanged(AutStarterEvent event);
+    public void fireAutAgentStateChanged(AutAgentEvent event);
 
     /**
      * Notify all listeners that have registered interest for notification on
@@ -319,7 +320,7 @@ public interface IClientTest {
      * @param listener -
      *            the listener to remove
      */
-    public void removeAutStarterEventListener(
+    public void removeAutAgentEventListener(
             IServerEventListener listener);
 
     /**

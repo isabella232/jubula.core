@@ -202,6 +202,7 @@ public class Messages extends NLS {
     public static String ComponentCouldNotBeFoundInRunningAut;
     public static String ConfigurationMustNotNull;
     public static String Connection;
+    public static String ConnectToAutAgentPulldownItemName;
     public static String CoreException;
     public static String CouldNotConvertParameterValue;
     public static String CouldNotFind;

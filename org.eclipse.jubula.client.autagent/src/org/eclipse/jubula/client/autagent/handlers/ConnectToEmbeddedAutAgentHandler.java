@@ -10,20 +10,25 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.autagent.handlers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.AutStarter.Verbosity;
 import org.eclipse.jubula.client.autagent.Activator;
 import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
-import org.eclipse.jubula.client.ui.rcp.actions.StartServerAction;
-import org.eclipse.jubula.client.ui.rcp.utils.ServerManager.Server;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
+import org.eclipse.jubula.client.ui.rcp.handlers.AUTAgentConnectHandler;
+import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.statushandlers.StatusManager;
 
@@ -45,13 +50,11 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
      */
     private static final String EMBEDDED_AGENT_HOSTNAME = "localhost"; //$NON-NLS-1$
     
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object execute(ExecutionEvent event) throws ExecutionException {
         
-        if (AutStarter.getInstance().getCommunicator() == null) {
+        AutStarter autAgentInstance = AutStarter.getInstance();
+        if (autAgentInstance.getCommunicator() == null) {
             // Embedded Agent is not running. We need to start it before
             // trying to connect to it.
             final int port = Platform.getPreferencesService().getInt(
@@ -59,7 +62,7 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
                     PreferenceInitializer.PREF_EMBEDDED_AGENT_PORT, 
                     PreferenceInitializer.DEFAULT_EMBEDDED_AGENT_PORT, null);
             try {
-                AutStarter.getInstance().start(
+                autAgentInstance.start(
                         port, false, Verbosity.QUIET, false);
             } catch (Exception e) {
                 ExecutionException execException = new ExecutionException(
@@ -73,13 +76,21 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
                 throw execException;
             }
         }
-    
-        StartServerAction connectToServerAction = 
-            new StartServerAction(
-                new Server(EMBEDDED_AGENT_HOSTNAME, 
-                    AutStarter.getInstance().getCommunicator().getLocalPort()), 
-                IAction.AS_CHECK_BOX);
-        connectToServerAction.run();
+        String hostname = EMBEDDED_AGENT_HOSTNAME;
+        int port = autAgentInstance.getCommunicator().getLocalPort();
+        
+        Command connectToAutAgentCommand = CommandHelper
+                .getCommandService().getCommand(
+                        RCPCommandIDs.CONNECT_TO_AUT_AGENT_COMMAND_ID);
+        Map<String, String> parameters = new HashMap<String, String>();
+        parameters.put(AUTAgentConnectHandler.AUT_AGENT_NAME_TO_CONNECT,
+                hostname);
+        parameters.put(AUTAgentConnectHandler.AUT_AGENT_PORT_TO_CONNECT,
+                String.valueOf(port));
+        
+        CommandHelper.executeParameterizedCommand(ParameterizedCommand
+                .generateCommand(connectToAutAgentCommand, parameters));
+        
         return null;
     }
 

@@ -20,7 +20,7 @@ import org.eclipse.ui.ISources;
 
 
 /**
- * Provides variables related to the connected AUT / AUT Server.
+ * Provides variables related to the connected AUT / AUT AutAgent.
  *
  * @author BREDEX GmbH
  * @created Mar 3, 2010
@@ -30,12 +30,12 @@ public class AutServerSourceProvider extends AbstractJBSourceProvider
 
     /** 
      * ID of variable that indicates the state of the connection between 
-     * the Client and the AUT / AUT Server 
+     * the Client and the AUT / AUT AutAgent 
      */
     public static final String CONNECTION_STATUS = 
         "org.eclipse.jubula.client.ui.rcp.variable.autConnectionStatus"; //$NON-NLS-1$
 
-    /** current state of the connection between the client and the AUT Server */
+    /** current state of the connection between the client and the AUT AutAgent */
     private ServerState m_connectionState = ServerState.Disconnected;
     
     /**

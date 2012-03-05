@@ -11,12 +11,12 @@
 package org.eclipse.jubula.client.core;
 
 /**
- * The event class containing state concerning the AutStarter.
+ * The event class containing state concerning the AUT Agent.
  *
  * @author BREDEX GmbH
  * @created 13.08.2004
  */
-public class AutStarterEvent extends ServerEvent {
+public class AutAgentEvent extends ServerEvent {
     /** could not connect to the server */
     public static final int SERVER_CANNOT_CONNECTED = NUMBER_OF_CONSTANTS + 1;
     
@@ -28,13 +28,13 @@ public class AutStarterEvent extends ServerEvent {
         "connection to server failed";  //$NON-NLS-1$
 
     /**
-     * constructor with paramerter for the state, see defined constants above
+     * constructor with parameter for the state, see defined constants above
      * and in <code>ServerEvent</code>.
      * 
      * @param state
-     *            the new state of the AutStarter
+     *            the new state of the AUT Agent
      */
-    public AutStarterEvent(int state) {
+    public AutAgentEvent(int state) {
         super(state);
     }
 

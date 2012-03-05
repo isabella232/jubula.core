@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.businessprocess;
 import org.eclipse.jubula.client.core.IServerLogListener;
 import org.eclipse.jubula.client.core.commands.ServerLogResponseCommand;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
@@ -50,7 +50,7 @@ public final class ShowServerLogBP extends AbstractActionBP
      */
     private ShowServerLogBP() {
         m_isConnectedToServer = false;
-        DataEventDispatcher.getInstance().addServerConnectionListener(this, 
+        DataEventDispatcher.getInstance().addAutAgentConnectionListener(this, 
             true);
     }
     
@@ -96,7 +96,7 @@ public final class ShowServerLogBP extends AbstractActionBP
         ServerLogResponseCommand request = new ServerLogResponseCommand(this);
         SendServerLogMessage message = new SendServerLogMessage();
         try {
-            ServerConnection.getInstance().request(message, request, TIMEOUT);
+            AutAgentConnection.getInstance().request(message, request, TIMEOUT);
         } catch (NotConnectedException nce) {
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.E_NO_SERVER_CONNECTION_INIT);

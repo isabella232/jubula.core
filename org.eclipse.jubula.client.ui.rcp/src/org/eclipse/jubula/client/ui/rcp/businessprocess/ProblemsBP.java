@@ -35,7 +35,7 @@ import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -132,7 +132,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
     private ProblemsBP() {
         // add business process to event dispatcher
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
-        ded.addServerConnectionListener(this, true);
+        ded.addAutAgentConnectionListener(this, true);
         ded.addCompletenessCheckListener(this);
         ded.addDataChangedListener(this, true);
         
@@ -222,7 +222,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
         }
         
         checkReusedProjectLanguages();
-        // check Server Connection
+        // check AutAgent Connection
         checkServerState(state);
 
         collectAdditionalProblemsWhichShouldBeMarked();
@@ -422,11 +422,11 @@ public class ProblemsBP implements ICompletenessCheckListener,
     private void checkAutConfigs() {
         InetAddress connectedServer = null;
         try {
-            if (!ServerConnection.getInstance().isConnected()) {
+            if (!AutAgentConnection.getInstance().isConnected()) {
                 return;
             }
             connectedServer = InetAddress.getByName(
-                ServerConnection.getInstance()
+                AutAgentConnection.getInstance()
                     .getCommunicator().getHostName());
         } catch (UnknownHostException e) {
             // Host does not exist for connected server?!
@@ -498,7 +498,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
 
     
     /**
-     * Checks if there is a Connection to Server
+     * Checks if there is a Connection to AutAgent
      * @param state
      *      ServerState
      */
@@ -506,12 +506,12 @@ public class ProblemsBP implements ICompletenessCheckListener,
         // Connection Check
         final String serverPortPref = 
                 Plugin.getDefault().getPreferenceStore().getString(
-                        Constants.SERVER_SETTINGS_KEY);
+                        Constants.AUT_AGENT_SETTINGS_KEY);
         boolean isConnected = false;
         boolean isServerDefined = (serverPortPref.length() != 0);
         if (state == null) {
             try {
-                isConnected = ServerConnection.getInstance().isConnected();
+                isConnected = AutAgentConnection.getInstance().isConnected();
             } catch (ConnectionException e) {
                 // ok
             }
@@ -748,7 +748,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
     }
 
     /**
-     * called when an Aut lacks an Server
+     * called when an Aut lacks an AutAgent
      * @param config AutConfig where problem occurs
      * @param aut corresponding aut
      */

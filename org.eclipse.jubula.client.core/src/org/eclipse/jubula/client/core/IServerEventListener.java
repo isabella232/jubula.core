@@ -26,5 +26,5 @@ public interface IServerEventListener extends EventListener {
      * @param event -
      *            the detailed event
      */
-    public void stateChanged(AutStarterEvent event);
+    public void stateChanged(AutAgentEvent event);
 }

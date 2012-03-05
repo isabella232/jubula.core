@@ -22,7 +22,7 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -33,7 +33,7 @@ import org.eclipse.jubula.client.ui.rcp.dialogs.nag.RCPAUTStartDelayNagTask;
 import org.eclipse.jubula.client.ui.rcp.handlers.AbstractStartTestHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.JBThread;
-import org.eclipse.jubula.client.ui.rcp.utils.ServerManager.Server;
+import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
@@ -125,7 +125,7 @@ public class TestExecutionGUIController {
      * @param autId The ID of the Running AUT to stop.
      */
     public static void stopAUT(AutIdentifier autId) {
-        TestExecutionContributor.getInstance().stopAUTaction(autId);
+        TestExecutionContributor.getInstance().stopAUT(autId);
     }
 
     /**
@@ -189,14 +189,14 @@ public class TestExecutionGUIController {
      *            server to connect Opens a dialog to select a server/port
      *            combination and connect to selected server.
      */
-    public static void connectToServer(final Server server) {
+    public static void connectToAutAgent(final AutAgent server) {
         final String jobName = NLS.bind(Messages.UIJobConnectToAUTAgent,
                 new Object[]{server.getName(), 
                     String.valueOf(server.getPort())});
         Job connectToAUTAgent = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
-                connectToServerImpl(server);
+                connectToAutAgentImpl(server);
                 monitor.done();
                 return Status.OK_STATUS;
             }
@@ -214,7 +214,7 @@ public class TestExecutionGUIController {
             public void run() {
                 try {
                     if (AUTConnection.getInstance().isConnected()) {
-                        ServerConnection.getInstance().request(
+                        AutAgentConnection.getInstance().request(
                                 new StopAUTServerMessage(), new ICommand() {
                                     public Message execute() {
                                         return null;
@@ -241,7 +241,7 @@ public class TestExecutionGUIController {
                     // no need to react, we are in the process of ending the AUT
                 }
                 TestExecutionContributor.getInstance()
-                        .disconnectFromServeraction();
+                        .disconnectFromAutAgent();
             }
 
             @Override
@@ -254,32 +254,33 @@ public class TestExecutionGUIController {
 
 
     /**
-     * @param server
+     * @param autAgent
      *            server to connect
      */
-    private static void connectToServerImpl(final Server server) {
-        TestExecutionContributor.getInstance().connectToServeraction(
-            server.getName(), server.getPort().toString());
+    private static void connectToAutAgentImpl(final AutAgent autAgent) {
+        TestExecutionContributor.getInstance().connectToAutAgent(
+            autAgent.getName(), autAgent.getPort().toString());
         try {
-            if (ServerConnection.getInstance().isConnected()) {
-                ServerConnection.getInstance();
-                ServerConnection connection = ServerConnection.getInstance();
+            if (AutAgentConnection.getInstance().isConnected()) {
+                AutAgentConnection.getInstance();
+                AutAgentConnection connection = 
+                        AutAgentConnection.getInstance();
                 SendCompSystemI18nMessage message =
                     new SendCompSystemI18nMessage();
                 message.setResourceBundles(CompSystemI18n.bundlesToString());
                 try {
                     connection.send(message);
                 } catch (NotConnectedException e) {
-                    LOG.error("Could not send CompSystemI18nResourceBundle to Server", e);  //$NON-NLS-1$
+                    LOG.error("Could not send CompSystemI18nResourceBundle to AutAgent", e);  //$NON-NLS-1$
                 } catch (IllegalArgumentException e) {
-                    LOG.error("Could not send CompSystemI18nResourceBundle to Server", e);  //$NON-NLS-1$
+                    LOG.error("Could not send CompSystemI18nResourceBundle to AutAgent", e);  //$NON-NLS-1$
                 } catch (CommunicationException e) {
-                    LOG.error("Could not send CompSystemI18nResourceBundle to Server", e);  //$NON-NLS-1$
+                    LOG.error("Could not send CompSystemI18nResourceBundle to AutAgent", e);  //$NON-NLS-1$
                 }
                 // FIXME : CHECK_GLOBAL_ACTION
             }
         } catch (ConnectionException e) {
-            DataEventDispatcher.getInstance().fireServerConnectionChanged(
+            DataEventDispatcher.getInstance().fireAutAgentConnectionChanged(
                     ServerState.Disconnected);
         }
         if (Plugin.getActiveView() != null) {

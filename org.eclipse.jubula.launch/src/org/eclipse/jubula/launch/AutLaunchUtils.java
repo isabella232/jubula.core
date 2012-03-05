@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jubula.client.autagent.handlers.ConnectToEmbeddedAutAgentHandler;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.launch.i18n.Messages;
 import org.eclipse.ui.PlatformUI;
@@ -97,7 +97,7 @@ public class AutLaunchUtils {
     private static InetSocketAddress getConnectedAgentAddress() {
         try {
             Communicator agentCommunicator = 
-                ServerConnection.getInstance().getCommunicator();
+                AutAgentConnection.getInstance().getCommunicator();
             if (agentCommunicator.getConnection() != null) {
                 return new InetSocketAddress(
                         agentCommunicator.getHostName(), 

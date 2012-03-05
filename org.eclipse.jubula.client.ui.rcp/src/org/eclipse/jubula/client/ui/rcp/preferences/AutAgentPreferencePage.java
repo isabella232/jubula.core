@@ -37,7 +37,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.utils.ServerManager;
+import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager;
 import org.eclipse.jubula.client.ui.validator.cell.PortCellEditorValidator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -130,7 +130,8 @@ public class AutAgentPreferencePage extends PreferencePage
          * {@inheritDoc}
          */
         protected Object getValue(Object element) {
-            return String.valueOf(((ServerManager.Server)element).getPort());
+            return String.valueOf(
+                    ((AutAgentManager.AutAgent)element).getPort());
         }
 
         /**
@@ -138,7 +139,8 @@ public class AutAgentPreferencePage extends PreferencePage
          */
         protected void setValue(Object element, Object value) {
             try {
-                ((ServerManager.Server)element).setPort(getPortValue(value));
+                ((AutAgentManager.AutAgent)element).setPort(
+                        getPortValue(value));
                 getViewer().update(element, null);
             } catch (NumberFormatException nfe) {
                 // The value cannot be set to the model.
@@ -192,7 +194,7 @@ public class AutAgentPreferencePage extends PreferencePage
          * {@inheritDoc}
          */
         protected Object getValue(Object element) {
-            return ((ServerManager.Server)element).getName();
+            return ((AutAgentManager.AutAgent)element).getName();
         }
 
         /**
@@ -200,7 +202,7 @@ public class AutAgentPreferencePage extends PreferencePage
          */
         protected void setValue(Object element, Object value) {
             String hostNameValue = String.valueOf(value);
-            ((ServerManager.Server)element).setName(hostNameValue);
+            ((AutAgentManager.AutAgent)element).setName(hostNameValue);
             getViewer().update(element, null);
         }
 
@@ -219,7 +221,7 @@ public class AutAgentPreferencePage extends PreferencePage
          */
         @SuppressWarnings("unchecked")
         public Object[] getElements(Object input) {
-            return ((List<ServerManager.Server>)input).toArray();
+            return ((List<AutAgentManager.AutAgent>)input).toArray();
         }
 
         /**
@@ -247,7 +249,7 @@ public class AutAgentPreferencePage extends PreferencePage
      * Model for the information shown in the dialog. This model is persisted
      * when the dialog's changes are applied. 
      */
-    private List<ServerManager.Server> m_viewModel;
+    private List<AutAgentManager.AutAgent> m_viewModel;
     
     
     /**
@@ -294,9 +296,9 @@ public class AutAgentPreferencePage extends PreferencePage
 
         
         
-        m_viewModel = new LinkedList<ServerManager.Server>();
-        if (ServerManager.getInstance().getServers() != null) {
-            m_viewModel.addAll(ServerManager.getInstance().getServers());
+        m_viewModel = new LinkedList<AutAgentManager.AutAgent>();
+        if (AutAgentManager.getInstance().getAutAgents() != null) {
+            m_viewModel.addAll(AutAgentManager.getInstance().getAutAgents());
         }
         m_addressViewer.setInput(m_viewModel);
         
@@ -321,11 +323,12 @@ public class AutAgentPreferencePage extends PreferencePage
 
             @SuppressWarnings("synthetic-access")
             public void widgetSelected(SelectionEvent event) {
-                ServerManager.Server newServer = 
-                    new ServerManager.Server(DEFAULT_HOSTNAME, DEFAULT_PORT);
-                m_viewModel.add(newServer);
+                AutAgentManager.AutAgent newAUTAgent = 
+                    new AutAgentManager.AutAgent(
+                            DEFAULT_HOSTNAME, DEFAULT_PORT);
+                m_viewModel.add(newAUTAgent);
                 m_addressViewer.refresh();
-                m_addressViewer.editElement(newServer, 0);
+                m_addressViewer.editElement(newAUTAgent, 0);
             }
             
         });
@@ -354,9 +357,9 @@ public class AutAgentPreferencePage extends PreferencePage
      * {@inheritDoc}
      */
     public boolean performOk() {
-        ServerManager.getInstance().setServers(
-              new TreeSet<ServerManager.Server>(m_viewModel));
-        ServerManager.getInstance().storeServerList();
+        AutAgentManager.getInstance().setAutAgents(
+              new TreeSet<AutAgentManager.AutAgent>(m_viewModel));
+        AutAgentManager.getInstance().storeAutAgentList();
 
         return super.performOk();
     }
@@ -395,7 +398,7 @@ public class AutAgentPreferencePage extends PreferencePage
                 .AutAgentPreferencePageColumnHeaderHostName);
         column.setLabelProvider(new ColumnLabelProvider() {
             public String getText(Object element) {
-                return ((ServerManager.Server)element).getName();
+                return ((AutAgentManager.AutAgent)element).getName();
             }
         });
         column.setEditingSupport(
@@ -409,7 +412,7 @@ public class AutAgentPreferencePage extends PreferencePage
         column.setLabelProvider(new ColumnLabelProvider() {
             public String getText(Object element) {
                 return String.valueOf(
-                        ((ServerManager.Server)element).getPort());
+                        ((AutAgentManager.AutAgent)element).getPort());
             }
         });
         column.setEditingSupport(new ServerPortEditingSupport(viewer));

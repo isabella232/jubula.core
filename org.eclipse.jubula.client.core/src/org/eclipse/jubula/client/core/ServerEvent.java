@@ -14,7 +14,7 @@ package org.eclipse.jubula.client.core;
  * Abstract class for server events. Defines constants for the state of a
  * connection to a server. <br>
  * 
- * This class is extended by the classes AUTServerEvent and AutStarterEvent.
+ * This class is extended by the classes AUTServerEvent and AutAgentEvent.
  * 
  * @author BREDEX GmbH
  * @created 26.07.2004

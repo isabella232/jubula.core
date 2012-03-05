@@ -247,7 +247,7 @@ public class ComboBoxDialog extends TitleAreaDialog {
      * Fills the combo box with all items of the input list.
      */
     protected void fillComboBox() {
-//        ServerManager serverList = ServerManager.getInstance();
+//        AutAgentManager serverList = AutAgentManager.getInstance();
 //        String preferred = Constants.EMPTY_STRING;
         for (String newItem : m_inputList) {
             m_comboBox.add(newItem);

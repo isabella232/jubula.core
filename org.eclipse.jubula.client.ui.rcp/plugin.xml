@@ -45,7 +45,7 @@
     </definition>
     <definition id="org.eclipse.jubula.client.ui.rcp.expression.canConnectToAut">
       <and>
-        <with variable="org.eclipse.jubula.client.ui.rcp.variable.isAutStarterConnected">
+        <with variable="org.eclipse.jubula.client.ui.rcp.variable.isConnectedToAutAgent">
           <equals value="true" />
         </with>
         <with variable="org.eclipse.jubula.client.ui.rcp.variable.autConnectionStatus">
@@ -428,15 +428,6 @@
         toolbarPath="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar/GlobalActions"
         tooltip="%ChooseLanguageToolTip" />
       <action
-        class="org.eclipse.jubula.client.ui.rcp.actions.ChooseServerAction"
-        definitionId="org.eclipse.jubula.client.ui.rcp.commands.ChooseServerCommand"
-        icon="icons/startServer.gif"
-        id="org.eclipse.jubula.client.ui.rcp.actions.ChooseServerAction"
-        label="%Connect"
-        style="pulldown"
-        toolbarPath="org.eclipse.jubula.client.ui.rcp.toolbar.AutStarterToolbar/GlobalActions"
-        tooltip="%ConnectToolTip" />
-      <action
         class="org.eclipse.jubula.client.ui.rcp.actions.ShowClientLogAction"
         icon="icons/clientLogView.gif"
         id="org.eclipse.jubula.client.ui.rcp.actions.ShowClientLogAction"
@@ -708,13 +699,22 @@
     </command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand"
+      name="%Connect">
+        <commandParameter
+          id="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand.parameter.name"
+          name="autagent.name"
+          optional="false" />
+        <commandParameter
+          id="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand.parameter.port"
+          name="autagent.port"
+          optional="false" />
+    </command>
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.StopAUTCommand"
       name="%stopAUT"
       description="%stopAUTToolTip" />
-    <command
-      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-      id="org.eclipse.jubula.client.ui.rcp.commands.ChooseServerCommand"
-      name="Connect to Server" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.DisconnectCommand"
@@ -993,7 +993,7 @@
       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
       sequence="M1+T" />
     <key
-      commandId="org.eclipse.jubula.client.ui.rcp.commands.ChooseServerCommand"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand"
       contextId="org.eclipse.ui.contexts.window"
       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
       sequence="M1+M2+C" />
@@ -1263,8 +1263,17 @@
         </command>
         <separator name="GlobalActions" />
       </toolbar>
-      <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.AutStarterToolbar">
+      <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.AutAgentToolbar">
         <separator name="GlobalActions" />
+        <command
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand"
+          id="org.eclipse.jubula.client.ui.rcp.toolbar.AutAgentToolbar.ConnectToAUTAgentCommand"
+          style="pulldown">
+          <visibleWhen checkEnabled="false">
+            <reference
+              definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
+          </visibleWhen>
+        </command>
         <command
           commandId="org.eclipse.jubula.client.ui.rcp.commands.DisconnectCommand"
           style="push">
@@ -1522,6 +1531,12 @@
       <dynamic
         class="org.eclipse.jubula.client.ui.rcp.contributionitems.StartObservationModeContributionItem"
         id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.ObservationToolbar.StartObservationModeCommand.dropdown" />
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.AutAgentToolbar.ConnectToAUTAgentCommand">
+      <dynamic
+        class="org.eclipse.jubula.client.ui.rcp.contributionitems.ConnectToAutAgentContributionItem"
+        id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.AutAgentToolbar.ConnectToAUTAgentCommand.dropdown" />
     </menuContribution>
     <menuContribution
       allPopups="false"
@@ -2040,7 +2055,7 @@
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ChooseAutCommand">
       <enabledWhen>
         <and>
-          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isAutStarterConnected">
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isConnectedToAutAgent">
             <equals value="true" />
           </with>
           <with variable="org.eclipse.jubula.client.ui.rcp.variable.isAutAvailable">
@@ -2327,6 +2342,9 @@
     </handler>
   </extension>
   <extension point="org.eclipse.ui.commandImages">
+    <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand"
+      icon="icons/startServer.gif" />
     <image
       commandId="org.eclipse.ui.edit.rename"
       disabledIcon="icons/rename_disabled.gif"
@@ -3107,9 +3125,23 @@
       class="org.eclipse.jubula.client.ui.rcp.handlers.AUTAgentDisconnectHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.DisconnectCommand">
       <activeWhen>
-        <with variable="org.eclipse.jubula.client.ui.rcp.variable.isAutStarterConnected">
+        <with variable="org.eclipse.jubula.client.ui.rcp.variable.isConnectedToAutAgent">
           <equals value="true" />
         </with>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.AUTAgentConnectHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand">
+      <activeWhen>
+        <and>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isConnectedToAutAgent">
+            <equals value="false" />
+          </with>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isConnectingToAutAgent">
+            <equals value="false" />
+          </with>
+        </and>
       </activeWhen>
     </handler>
     <handler
@@ -3162,9 +3194,12 @@
         priorityLevel="workbench" />
     </sourceProvider>
     <sourceProvider
-      provider="org.eclipse.jubula.client.ui.rcp.sourceprovider.AutStarterStateSourceProvider">
+      provider="org.eclipse.jubula.client.ui.rcp.sourceprovider.AutAgentStateSourceProvider">
       <variable
-        name="org.eclipse.jubula.client.ui.rcp.variable.isAutStarterConnected"
+        name="org.eclipse.jubula.client.ui.rcp.variable.isConnectedToAutAgent"
+        priorityLevel="workbench" />
+      <variable
+        name="org.eclipse.jubula.client.ui.rcp.variable.isConnectingToAutAgent"
         priorityLevel="workbench" />
     </sourceProvider>
     <sourceProvider

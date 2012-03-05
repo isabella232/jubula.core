@@ -18,7 +18,7 @@ import java.net.UnknownHostException;
 import org.apache.poi.util.IOUtils;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.communication.ICommand;
@@ -51,7 +51,7 @@ public class GetMonitoringReportCommand implements ICommand {
         try {
             //Reading the monitoring report from the AutAgent
             socket = new Socket(
-                    ServerConnection.getInstance().
+                    AutAgentConnection.getInstance().
                     getCommunicator().getHostName(), m_message.getPort());
             //writing stream content to byte array. This byte array will be stored in the database
             report = IOUtils.toByteArray(socket.getInputStream());

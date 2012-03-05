@@ -97,7 +97,7 @@ public class Utils {
     public static boolean isLocalhost() {
         IPreferenceStore prefStore = Plugin.getDefault().getPreferenceStore();
         String serverPort = 
-                prefStore.getString(Constants.SERVER_SETTINGS_KEY);
+                prefStore.getString(Constants.AUT_AGENT_SETTINGS_KEY);
         String server = serverPort.split(StringConstants.COLON)[0];
         if (server.equals(Messages.UtilsLocalhost1)
             || server.equals(Messages.UtilsLocalhost3)

@@ -20,13 +20,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.eclipse.jubula.client.core.AutStarterEvent;
+import org.eclipse.jubula.client.core.AutAgentEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IServerEventListener;
 import org.eclipse.jubula.client.core.ServerEvent;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
 import org.eclipse.jubula.client.core.commands.RegisteredAutListCommand;
-import org.eclipse.jubula.client.core.communication.ServerConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -69,7 +69,7 @@ public class AutAgentRegistration
      * Private constructor for singleton.
      */
     private AutAgentRegistration() {
-        ClientTestFactory.getClientTest().addAutStarterEventListener(this);
+        ClientTestFactory.getClientTest().addAutAgentEventListener(this);
     }
     
     /**
@@ -142,14 +142,14 @@ public class AutAgentRegistration
     /**
      * {@inheritDoc}
      */
-    public void stateChanged(AutStarterEvent event) {
+    public void stateChanged(AutAgentEvent event) {
         switch (event.getState()) {
             case ServerEvent.CONNECTION_CLOSED:
                 clearRegisteredAuts();
                 break;
             case ServerEvent.CONNECTION_GAINED:
                 try {
-                    ServerConnection.getInstance().request(
+                    AutAgentConnection.getInstance().request(
                         new GetRegisteredAutListMessage(), 
                         new RegisteredAutListCommand(this), 5000);
                 } catch (CommunicationException ce) {
