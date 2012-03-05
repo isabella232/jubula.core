@@ -32,8 +32,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
@@ -63,9 +61,6 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.DirtyStarListContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DirtyStarListLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.search.query.AbstractSearchQuery;
-import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
-import org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView;
-import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
 import org.eclipse.jubula.client.ui.rcp.widgets.StatusLineContributionItem;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
@@ -665,31 +660,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         return null;
     }
  
-    /**
-     * @param treeViewID the ID of the tree view
-     * @return the selection in the tree view or an <b>empty selection</b>
-     */
-    public static IStructuredSelection getTreeViewSelection(String treeViewID) {
-        Validate.notNull(treeViewID);
-        IStructuredSelection returnValue = StructuredSelection.EMPTY;
-        ViewPart treeView = null;
-        if (treeViewID.equals(Constants.TC_BROWSER_ID)) {
-            treeView = (TestCaseBrowser)getView(treeViewID);
-        } else if (treeViewID.equals(Constants.TS_BROWSER_ID)) {
-            treeView = (TestSuiteBrowser)getView(treeViewID);
-        } else if (treeViewID.equals(Constants.TESTRE_ID)) {
-            treeView = (TestResultTreeView)getView(treeViewID);
-        }
-        
-        if (treeView != null 
-                && (treeView.getViewSite().getSelectionProvider().getSelection()
-                    instanceof IStructuredSelection)) {
-            returnValue = (IStructuredSelection)
-                treeView.getViewSite().getSelectionProvider().getSelection();
-        }
-        return returnValue;
-    }
-
     /**
      * Checks if a view with the given ID is open.
      * @param id The ID of the view.
