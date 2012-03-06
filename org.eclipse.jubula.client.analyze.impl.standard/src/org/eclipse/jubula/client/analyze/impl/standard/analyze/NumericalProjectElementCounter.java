@@ -215,25 +215,18 @@ public class NumericalProjectElementCounter implements IAnalyze {
             };
             tt.traverse(true);
         }
-//        if (obj2analyze instanceof INodePO) {
-//            final INodePO root = (INodePO) obj2analyze;
-//
-//            TreeTraverser tt = new TreeTraverser(root, count, true, true) {
-//                @Override
-//                protected void traverseReusedProjectSpecPart(
-//                        ITreeTraverserContext<INodePO> context,
-//                        IProjectPO project) {
-//                    // ignore reused Projects
-//                }
-//            };
-//            tt.traverse(true);
-//        }
-        
-//        if (obj instanceof INodePO) {
-//            final INodePO root = (INodePO) obj;
-//            TreeTraverser tt = new TreeTraverser(root);
-//            tt.addOperation(count);
-//            tt.traverse();
-//        }
+        if (obj instanceof INodePO && objContType.equals("")) {
+            final INodePO root = (INodePO) obj;
+            
+            TreeTraverser tt = new TreeTraverser(root, count, true, true) {
+                @Override
+                protected void traverseReusedProjectSpecPart(
+                        ITreeTraverserContext<INodePO> context,
+                        IProjectPO project) {
+                    // ignore reused Projects
+                }
+            };
+            tt.traverse(true);
+        }
     }
 }
