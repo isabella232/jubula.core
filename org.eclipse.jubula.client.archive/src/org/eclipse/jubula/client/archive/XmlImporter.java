@@ -1852,7 +1852,7 @@ class XmlImporter {
         if (xml.getReferencedTestData() != null) {
             String referencedDataName = xml.getReferencedTestData();
             for (IParameterInterfacePO testDataCube 
-                    : proj.getTestDataCubeCont().getTestDataChildren()) {
+                    : TestDataCubeBP.getAllTestDataCubesFor(proj)) {
                 if (referencedDataName.equals(testDataCube.getName())) {
                     tc.setReferencedDataCube(testDataCube);
                     break;
