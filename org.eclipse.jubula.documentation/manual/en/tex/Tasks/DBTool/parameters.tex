@@ -32,6 +32,7 @@
                   Directory 
                   & \bxshell{-directory <directory path>}\\
 		  &e.g. \emph{-directory ''D:/Test/Projects/''}\\
+                  & The directory for imports and/or exports\\
                  \hline
                   Export Project
                   & \bxshell{-export <project-name project-version>}\\
@@ -40,10 +41,12 @@
                   Export All
                   & \bxshell{-exportall}\\
 		  &e.g. \emph{-exportall}\\
+                  &The directory for the export all must be empty\\
                  \hline
                   Import Project
                   & \bxshell{-import <import-file>}\\
 		  &e.g. \emph{-import <ExampleProject.xml>}\\
+                  &Existing files with the same name will be overwritten\\
 		\hline
                 Workspace
                   & \bxshell{-data <path to workspace>}\\
