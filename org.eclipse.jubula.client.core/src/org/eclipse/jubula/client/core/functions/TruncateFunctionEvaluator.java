@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core.functions;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 
@@ -37,10 +36,7 @@ public class TruncateFunctionEvaluator extends AbstractFunctionEvaluator {
         BigDecimal truncated = 
                 toTruncate.setScale(precision, RoundingMode.DOWN);
         
-        DecimalFormat format = new DecimalFormat();
-        format.setGroupingUsed(false);
-
-        return format.format(truncated.doubleValue());
+        return truncated.toPlainString();
     }
 
 }

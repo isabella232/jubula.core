@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core.functions;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 
@@ -28,16 +27,13 @@ public class RoundFunctionEvaluator extends AbstractFunctionEvaluator {
      */
     public String evaluate(String[] arguments) throws InvalidDataException {
         validateParamCount(arguments, 2);
-        BigDecimal toTruncate = new BigDecimal(arguments[0]);
+        BigDecimal toRound = new BigDecimal(arguments[0]);
         int precision = Integer.parseInt(arguments[1]);
 
-        BigDecimal truncated = 
-                toTruncate.setScale(precision, RoundingMode.HALF_UP);
-        
-        DecimalFormat format = new DecimalFormat();
-        format.setGroupingUsed(false);
+        BigDecimal rounded = 
+                toRound.setScale(precision, RoundingMode.HALF_UP);
 
-        return format.format(truncated.doubleValue());
+        return rounded.toPlainString();
     }
 
 }
