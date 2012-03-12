@@ -61,6 +61,7 @@ import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
+import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -786,9 +787,14 @@ public class ProblemsBP implements ICompletenessCheckListener,
             return;
         }
         final ITreeNodeOperation<INodePO> op = new CheckProblemsOperation();
-        TreeTraverser traverser = new TreeTraverser(project, op, true, true);
-        traverser.addOperation(new ActionCheckOperation());
-        traverser.traverse();        
+        TreeTraverser traverser = new TreeTraverser(project, op, false, true);
+        CheckForDeprecatedModulesOperation operation = 
+                new CheckForDeprecatedModulesOperation();
+        traverser.addOperation(operation);
+        traverser.traverse();
+        TreeTraverser specTreeTraverser = new SpecTreeTraverser(project, op);
+        specTreeTraverser.addOperation(operation);
+        specTreeTraverser.traverse();
     }
     
     /**
@@ -974,7 +980,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @created 02.03.2007
      */
     @SuppressWarnings("synthetic-access")
-    private final class ActionCheckOperation 
+    private final class CheckForDeprecatedModulesOperation 
         extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
         /** {@inheritDoc} */
