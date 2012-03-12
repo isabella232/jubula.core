@@ -26,10 +26,6 @@
             defaultHandler="org.eclipse.jubula.client.autagent.handlers.ConnectToEmbeddedAutAgentHandler"
             id="org.eclipse.jubula.client.autagent.commands.ConnectToEmbeddedAutAgent"
             name="%ConnectToEmbeddedAgent">
-         <state
-               class="org.eclipse.jface.commands.ToggleState"
-               id="isAutAgentRunning">
-         </state>
       </command>
    </extension>
    <extension

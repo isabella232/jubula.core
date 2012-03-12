@@ -709,6 +709,13 @@
           id="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand.parameter.port"
           name="autagent.port"
           optional="false" />
+        <commandParameter
+          id="org.eclipse.ui.commands.radioStateParameter"
+          name="State"
+          optional="false" />
+        <state
+          class="org.eclipse.ui.handlers.RadioState:localhost:60000"
+          id="org.eclipse.ui.commands.radioState" />
     </command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
