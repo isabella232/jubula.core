@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -310,18 +311,30 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     }
     
     /**
-     * @param parameters The parameters for starting the AUT.
-     * @return <code>true</code> if the AUT is being started with a 
-     * monitoring agent. Otherwise, <code>false</code>.
+     * @param parameters
+     *            The parameters for starting the AUT.
+     * @return <code>true</code> if the AUT is supposed to be started with a
+     *         monitoring agent and all necessary information are available.
+     *         Otherwise <code>false</code>.
      */
-    protected boolean isRunningWithMonitoring(Map parameters) {
+    protected boolean shouldAndCanRunWithMonitoring(Map parameters) {
+        List<String> requiredInformation = new ArrayList<String>();
+        requiredInformation.add((String) parameters
+                .get(AutConfigConstants.MONITORING_AGENT_ID));
+        requiredInformation.add((String) parameters
+                .get(AutConfigConstants.AUT_ID));
         
-        String monitoringId = (String)parameters.get(
-                AutConfigConstants.MONITORING_AGENT_ID);        
-        if (!StringUtils.isEmpty(monitoringId)) { 
-            return true;
-        }                 
-        return false;         
+        requiredInformation.add((String) parameters
+                .get(MonitoringConstants.BUNDLE_ID));
+        requiredInformation.add((String) parameters
+                .get(MonitoringConstants.AGENT_CLASS));
+        
+        for (String required : requiredInformation) {
+            if (StringUtils.isEmpty(required)) {
+                return false;
+            }
+        }
+        return true;
     }
     
     /**
@@ -337,7 +350,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             // set agent and locals
             
             sb.append(JAVA_OPTIONS_INTRO);
-            if (isRunningWithMonitoring(parameters)) {
+            if (shouldAndCanRunWithMonitoring(parameters)) {
                 sb.append(getMonitoringAgent(parameters))
                     .append(StringConstants.SPACE);
             }                 
@@ -355,7 +368,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                     .append(locale.getLanguage());
             }
         } else {
-            if (isRunningWithMonitoring(parameters)) {
+            if (shouldAndCanRunWithMonitoring(parameters)) {
                 sb.append(JAVA_OPTIONS_INTRO)
                     .append(getMonitoringAgent(parameters));
             }
@@ -390,23 +403,19 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * or null if the monitoring agent String could't be generated
      */        
     protected String getMonitoringAgent(Map parameters) {
-        
-        String monitoringImplClass = (String)parameters.get(
-                    MonitoringConstants.AGENT_CLASS); 
-        
         String autId = (String)parameters.get(
-                AutConfigConstants.AUT_ID);         
-       
-        String bundleId = (String)parameters.get(
-                MonitoringConstants.BUNDLE_ID);
-        
+                AutConfigConstants.AUT_ID);
         MonitoringDataStore mds = MonitoringDataStore.getInstance();
         boolean duplicate = MonitoringUtil.checkForDuplicateAutID(autId);
         if (!duplicate) {            
             mds.putConfigMap(autId, parameters); 
         }      
         String agentString = null;       
-        if (isRunningWithMonitoring(parameters)) {
+        if (shouldAndCanRunWithMonitoring(parameters)) {
+            String monitoringImplClass = (String)parameters.get(
+                    MonitoringConstants.AGENT_CLASS); 
+            String bundleId = (String)parameters.get(
+                    MonitoringConstants.BUNDLE_ID);
             try {  
                 Bundle bundle = Platform.getBundle(bundleId);
                 if (bundle == null) {

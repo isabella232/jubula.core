@@ -51,7 +51,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
     protected String[] createEnvArray(Map parameters, boolean isAgentSet) {
         
         if (isRunningFromExecutable(parameters) 
-                || isRunningWithMonitoring(parameters)) {
+                || shouldAndCanRunWithMonitoring(parameters)) {
             setEnv(parameters);
             boolean agentActive = true;
             return super.createEnvArray(parameters, agentActive);
