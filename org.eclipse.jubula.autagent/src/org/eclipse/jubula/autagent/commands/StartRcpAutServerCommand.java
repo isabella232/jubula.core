@@ -215,7 +215,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
                 parameters, StartSwtAutServerCommand.ENV_VAR_PREFIX, 
                 StartSwtAutServerCommand.ENV_VALUE_SEP));
         
-        if (isRunningWithMonitoring(parameters)) {
+        if (shouldAndCanRunWithMonitoring(parameters)) {
             
             StringBuffer sb = new StringBuffer();
             sb.append(JAVA_OPTIONS_INTRO);
