@@ -24,10 +24,8 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.actions.CompoundContributionItem;
-import org.eclipse.ui.handlers.RadioState;
 import org.eclipse.ui.menus.CommandContributionItem;
 
 
@@ -59,11 +57,9 @@ public class ConnectToAutAgentContributionItem
             params.put(AUTAgentConnectHandler.AUT_AGENT_NAME_TO_CONNECT, name);
             params.put(AUTAgentConnectHandler.AUT_AGENT_PORT_TO_CONNECT, 
                     String.valueOf(port));
-            params.put(RadioState.PARAMETER_ID, 
-                    name + StringConstants.COLON + port);
             contributionItems.add(CommandHelper.createContributionItem(
                     RCPCommandIDs.CONNECT_TO_AUT_AGENT_COMMAND_ID, params,
-                    itemName, CommandContributionItem.STYLE_RADIO));
+                    itemName, CommandContributionItem.STYLE_CHECK));
         }
         
         return contributionItems.toArray(
