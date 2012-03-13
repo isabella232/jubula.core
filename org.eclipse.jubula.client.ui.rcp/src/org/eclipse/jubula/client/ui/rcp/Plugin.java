@@ -65,7 +65,6 @@ import org.eclipse.jubula.client.ui.rcp.widgets.StatusLineContributionItem;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
-import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
@@ -159,12 +158,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private String m_runningApplicationTitle = null;
 
     /**
-     * <code>m_treeViewerContainer</code> a list of tree viewer container
-     */
-    private List<ITreeViewerContainer> m_treeViewerContainer = 
-        new ArrayList<ITreeViewerContainer>(2);
-    
-    /**
      * Creates an UI plug-in runtime object
      */
     public Plugin() {
@@ -188,7 +181,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
          */
         STOPPING
     }
-
     
     /**
      * 
@@ -376,13 +368,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      */
     public static ImageDescriptor getImageDescriptor(String name) {
         return ImageUtils.getImageDescriptor(getDefault().getBundle(), name);
-    }
-
-    /**
-     * @return a list of currently available ITreeViewerContainer
-     */
-    public List<ITreeViewerContainer> getTreeViewerContainer() {
-        return m_treeViewerContainer;
     }
 
     /**
