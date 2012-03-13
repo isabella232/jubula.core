@@ -24,6 +24,7 @@ import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.utils.MonitoringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +52,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
     protected String[] createEnvArray(Map parameters, boolean isAgentSet) {
         
         if (isRunningFromExecutable(parameters) 
-                || shouldAndCanRunWithMonitoring(parameters)) {
+                || MonitoringUtil.shouldAndCanRunWithMonitoring(parameters)) {
             setEnv(parameters);
             boolean agentActive = true;
             return super.createEnvArray(parameters, agentActive);

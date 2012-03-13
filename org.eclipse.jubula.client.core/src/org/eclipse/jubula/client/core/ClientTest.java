@@ -97,7 +97,7 @@ import org.eclipse.jubula.communication.message.StopAUTServerMessage;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.monitoring.MonitoringAttribute;
-import org.eclipse.jubula.toolkit.common.monitoring.MonitoringUtils;
+import org.eclipse.jubula.toolkit.common.monitoring.MonitoringRegistry;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.DebugConstants;
@@ -111,6 +111,7 @@ import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.utils.MonitoringUtil;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
@@ -327,11 +328,11 @@ public class ClientTest implements IClientTest {
         if (!StringUtils.isEmpty(monitoringID)) {  
             
             IConfigurationElement monitoringExtension =
-                MonitoringUtils.getElement(monitoringID);
+                MonitoringRegistry.getElement(monitoringID);
             
             if (monitoringExtension != null) {
                 // read all monitoring attributes for the given monitoring id
-                List<MonitoringAttribute> attributeList = MonitoringUtils
+                List<MonitoringAttribute> attributeList = MonitoringRegistry
                         .getAttributes(monitoringExtension);
                 
                 for (MonitoringAttribute monitoringAttribute : attributeList) {
@@ -1183,9 +1184,7 @@ public class ClientTest implements IClientTest {
             Map<String, String> m = requestAutConfigMapFromAgent(
                     autID.getExecutableName());
             if (m != null) {
-                String monitoringID = m.get(
-                        AutConfigConstants.MONITORING_AGENT_ID);
-                if (!StringUtils.isEmpty(monitoringID)) {
+                if (MonitoringUtil.shouldAndCanRunWithMonitoring(m)) {
                     return true;
                 }
             }
