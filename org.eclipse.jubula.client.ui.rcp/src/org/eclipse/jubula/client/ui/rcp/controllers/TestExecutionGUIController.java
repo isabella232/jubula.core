@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.ConnectAutAgentBP;
 import org.eclipse.jubula.client.ui.rcp.dialogs.nag.RCPAUTStartDelayNagTask;
 import org.eclipse.jubula.client.ui.rcp.handlers.AbstractStartTestHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -185,23 +186,26 @@ public class TestExecutionGUIController {
     }
 
     /**
-     * @param server
+     * @param autAgent
      *            server to connect Opens a dialog to select a server/port
      *            combination and connect to selected server.
      */
-    public static void connectToAutAgent(final AutAgent server) {
+    public static void connectToAutAgent(final AutAgent autAgent) {
+        DataEventDispatcher.getInstance().fireAutAgentConnectionChanged(
+                ServerState.Connecting);
         final String jobName = NLS.bind(Messages.UIJobConnectToAUTAgent,
-                new Object[]{server.getName(), 
-                    String.valueOf(server.getPort())});
+                new Object[]{autAgent.getName(), 
+                    String.valueOf(autAgent.getPort())});
         Job connectToAUTAgent = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
-                connectToAutAgentImpl(server);
+                connectToAutAgentImpl(autAgent);
                 monitor.done();
                 return Status.OK_STATUS;
             }
         };
         JobUtils.executeJob(connectToAUTAgent, null);
+        ConnectAutAgentBP.getInstance().setCurrentAutAgent(autAgent);
     }
 
 

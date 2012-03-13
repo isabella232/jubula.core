@@ -196,7 +196,7 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
      */
     public void dispose() {
         getSelectionService().removeSelectionListener(m_selectionListener);
-        if (!m_img.isDisposed()) {
+        if (m_img != null) {
             m_img.dispose();
         }
         super.dispose();
