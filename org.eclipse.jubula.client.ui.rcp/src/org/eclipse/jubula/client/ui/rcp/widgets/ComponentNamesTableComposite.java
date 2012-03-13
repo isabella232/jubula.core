@@ -371,18 +371,29 @@ public class ComponentNamesTableComposite extends Composite implements
          * {@inheritDoc}
          */
         public void checkStateChanged(CheckStateChangedEvent event) {
-            ICompNamesPairPO pair = (ICompNamesPairPO)event.getElement();
-            getCellModifier().setModifiable(m_editable
-                && !StringConstants.EMPTY.equals(
-                    pair.getType()));
-            if (!getCellModifier().isModifiable() 
-                || getSelectedExecNodeOwner() instanceof TestSuiteEditor) { 
-                
-                // Reset the old value if the table is non-editable.
-                m_tableViewer.setChecked(pair, pair.isPropagated());
-                return;
+            boolean editable = false;
+            if (getSelectedExecNodeOwner() instanceof AbstractTestCaseEditor
+                    && ((AbstractTestCaseEditor)getSelectedExecNodeOwner())
+                            .getEditorHelper().requestEditableState() 
+                            == EditableState.OK) {
+                editable = true;
             }
-            updatePropagated(pair, event.getChecked());
+
+            if (editable) {
+                ICompNamesPairPO pair = (ICompNamesPairPO)event.getElement();
+                getCellModifier().setModifiable(m_editable
+                        && !StringConstants.EMPTY.equals(
+                                pair.getType()));
+                if (!getCellModifier().isModifiable() 
+                        || getSelectedExecNodeOwner() 
+                            instanceof TestSuiteEditor) { 
+                    
+                    // Reset the old value if the table is non-editable.
+                    m_tableViewer.setChecked(pair, pair.isPropagated());
+                    return;
+                }
+                updatePropagated(pair, event.getChecked());
+            }
         }
     }
     
