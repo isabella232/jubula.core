@@ -51,7 +51,15 @@
                 Configuration file
                   & \bxshell{-c <path to configuration file>}\\
 		&e.g. \emph{-c ''C:/Program Files/guidancer/config''}\\
+                &Use this instead of entering all arguments \\
+                &via the command line.\\
 	        \hline
+                 Workspace
+                 & \bxshell{-data <path to workspace>}\\
+                 &e.g. \emph{-data ''C:/Users/Test''}\\
+                 &The \app{} workspace with the preference\\
+                 &settings for the \gddb{} connection\\ 
+                \hline
 		Database scheme
                   & \bxshell{-dbscheme <scheme>}\\
 		&e.g. \emph{-dbscheme ''embedded''}\\
@@ -80,16 +88,14 @@
                   & \bxshell{-testsuite <testsuite name>}\\
                    &e.g. \emph{-testsuite ''suite1''}\\
                    &Use to start a \gdsuite{}\\
+                   &Only one \gdsuite{} or \gdjob{} can be started\\
                 \hline
                 Test Job
                   & \bxshell{-testjob <testjob name>}\\
                    &e.g. \emph{-testjob ''job1''}\\
                    &Use to start a \gdjob{}\\
+                    &Only one \gdsuite{} or \gdjob{} can be started\\
                    \hline
-                Workspace
-                  & \bxshell{-data <path to workspace>}\\
-                   &e.g. \emph{-data ''C:/Users/Test''}\\
-                \hline
 		Data directory
                   & \bxshell{-datadir <path to external} \\
                   & \bxshell{test data directory>}\\

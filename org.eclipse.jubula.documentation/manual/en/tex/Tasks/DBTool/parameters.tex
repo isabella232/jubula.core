@@ -33,24 +33,28 @@
                   & \bxshell{-directory <directory path>}\\
 		  &e.g. \emph{-directory ''D:/Test/Projects/''}\\
                   & The directory for imports and/or exports\\
+                  & The directory must already exist\\
                  \hline
                   Export Project
                   & \bxshell{-export <project-name project-version>}\\
 		  &e.g. \emph{-export ''ExampleProject'' ''1.0''}\\
+                  &Existing files with the same name will be overwritten\\
                  \hline
                   Export All
                   & \bxshell{-exportall}\\
 		  &e.g. \emph{-exportall}\\
                   &The directory for the export all must be empty\\
+                  & The directory must already exist\\
                  \hline
                   Import Project
                   & \bxshell{-import <import-file>}\\
 		  &e.g. \emph{-import <ExampleProject.xml>}\\
-                  &Existing files with the same name will be overwritten\\
 		\hline
                 Workspace
                   & \bxshell{-data <path to workspace>}\\
-                   &e.g. \emph{-data ''C:/Users/Test''}\\
+                  &e.g. \emph{-data ''C:/Users/Test''}\\
+                  &The \app{} workspace with the preference\\
+                  &settings for the \gddb{} connection\\ 
                 \hline
                 Database scheme
                 & \bxshell{-dbscheme <scheme>}\\
@@ -59,10 +63,14 @@
 		Database username
                   & \bxshell{-dbuser <username>}\\
 		&e.g. \emph{-dbuser ''myusername''}\\
+                &Use \bxshell{sa} (without quotes) for\\
+                &the embedded \gddb{}.\\
 		\hline
 		Database password
                   & \bxshell{-dbpw <password>}\\
 		&e.g. \emph{-dbpw ''mypassword''}\\
+                &Use <empty> (\bxshell{''''}\\
+                &for the embedded \gddb{} \\      
 		\hline
 		Database URL (optional)
                   & \bxshell{-dburl <URL>}\\
