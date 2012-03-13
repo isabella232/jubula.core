@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ConnectAutAgentBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionGUIController;
@@ -63,10 +61,7 @@ public class AUTAgentConnectHandler extends AbstractHandler {
             }
 
             AutAgent autAgent = new AutAgent(name, portNo);
-            DataEventDispatcher.getInstance().fireAutAgentConnectionChanged(
-                    ServerState.Connecting);
             TestExecutionGUIController.connectToAutAgent(autAgent);
-            ConnectAutAgentBP.getInstance().setCurrentAutAgent(autAgent);
             HandlerUtil.updateRadioState(event.getCommand(), currentState);
         } catch (Exception e) {
             throw new ExecutionException(DebugConstants.ERROR, e);
