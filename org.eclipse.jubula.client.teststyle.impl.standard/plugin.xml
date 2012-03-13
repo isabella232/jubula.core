@@ -17,9 +17,9 @@
                activeByDefault="true"
                class="org.eclipse.jubula.client.teststyle.impl.standard.checks.TestSuiteHasAUT"
                defaultSeverity="ERROR"
-               description="Each Testsuite should be assigned to an AUT"
+               description="Each Test Suite should be assigned to an AUT"
                id="org.eclipse.jubula.client.teststyle.impl.standard.checks.testSuiteHasAUT"
-               name="Testsuite has AUT defined">
+               name="Test Suite has AUT defined">
             <contexts><TestSuites id="TestSuiteContext" /></contexts>
             <attributes></attributes>
          </check>
@@ -27,9 +27,9 @@
                activeByDefault="true"
                class="org.eclipse.jubula.client.teststyle.impl.standard.checks.TestSuiteNotEmpty"
                defaultSeverity="ERROR"
-               description="Each Testsuite should reference at least one Test Case"
+               description="Each Test Suite should reference at least one Test Case"
                id="org.eclipse.jubula.client.teststyle.impl.standard.checks.testSuiteNotEmpty"
-               name="Testsuite references at least one Test Case">
+               name="Test Suite references at least one Test Case">
             <contexts><TestSuites id="TestSuiteContext" /></contexts>
             <attributes></attributes>
          </check>
