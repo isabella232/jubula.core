@@ -52,6 +52,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
      */
     static class CountElementOperation extends
             AbstractNonPostOperatingTreeNodeOperation<INodePO> {
+        
         /**
          * This Map is used to save the amount of the different NodeTypes
          */
@@ -76,10 +77,6 @@ public class NumericalProjectElementCounter implements IAnalyze {
         public boolean operate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
 
-            // if (ProjectContextHelper.getObjContType().equals("project")) {
-            // System.out.println(GeneralStorage.getInstance().getProject().getId()
-            // + " " + node.getClass() + " " + node.getName() + " " +
-            // node.getParentProjectId());
             if (node instanceof IProjectPO) {
                 return !alreadyVisited;
             }
@@ -92,13 +89,21 @@ public class NumericalProjectElementCounter implements IAnalyze {
             }
 
             Class<? extends INodePO> nodeType = null;
-            if (node instanceof ICategoryPO || node instanceof ISpecTestCasePO
-                    || node instanceof ICapPO || node instanceof ITestSuitePO
-                    || node instanceof IExecTestCasePO
+            if (node instanceof ICategoryPO 
+                    || node instanceof ISpecTestCasePO
+                    || node instanceof ITestSuitePO
                     || node instanceof ITestJobPO
-                    || node instanceof IRefTestSuitePO
-                    || node instanceof IEventExecTestCasePO) {
+                    || node instanceof IRefTestSuitePO) {
                 nodeType = node.getClass();
+            }
+            
+            if (node instanceof IEventExecTestCasePO                 
+                    || node instanceof ICapPO
+                    || node instanceof IExecTestCasePO) {
+
+                if (!(parent instanceof IExecTestCasePO)) {
+                    nodeType = node.getClass();
+                }
             }
 
             if (nodeType != null) {
