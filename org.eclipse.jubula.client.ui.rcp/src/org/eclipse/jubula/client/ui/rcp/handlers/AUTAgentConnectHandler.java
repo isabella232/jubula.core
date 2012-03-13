@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
+import java.util.Map;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
@@ -17,38 +19,29 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.ConnectAutAgentBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionGUIController;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
 import org.eclipse.jubula.tools.constants.DebugConstants;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.ui.handlers.RadioState;
+import org.eclipse.ui.commands.IElementUpdater;
+import org.eclipse.ui.menus.UIElement;
 
 /**
  * @created 02.03.2012
  */
-public class AUTAgentConnectHandler extends AbstractHandler {
+public class AUTAgentConnectHandler extends AbstractHandler 
+    implements IElementUpdater {
     /** ID of command parameter for AUT Agent name to connect */
     public static final String AUT_AGENT_NAME_TO_CONNECT = "org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand.parameter.name"; //$NON-NLS-1$
     /** ID of command parameter for AUT Agent port to connect */
     public static final String AUT_AGENT_PORT_TO_CONNECT = "org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand.parameter.port"; //$NON-NLS-1$
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws ExecutionException
-     */
+    /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) throws ExecutionException {
-        String currentState = event.getParameter(RadioState.PARAMETER_ID);
         try {
             String name = event.getParameter(AUT_AGENT_NAME_TO_CONNECT);
             String port = event.getParameter(AUT_AGENT_PORT_TO_CONNECT);
             Integer portNo = null;
 
-            if (currentState != null) {
-                if (HandlerUtil.matchesRadioState(event)) {
-                    return null;
-                }
-                if (port != null && name != null) {
-                    portNo = Integer.parseInt(event
-                            .getParameter(AUT_AGENT_PORT_TO_CONNECT));
-                }
+            if (port != null && name != null) {
+                portNo = Integer.parseInt(event
+                        .getParameter(AUT_AGENT_PORT_TO_CONNECT));
             } else {
                 AutAgent fallbackAgent = ConnectAutAgentBP.getInstance()
                         .getWorkingAutAgent();
@@ -62,10 +55,35 @@ public class AUTAgentConnectHandler extends AbstractHandler {
 
             AutAgent autAgent = new AutAgent(name, portNo);
             TestExecutionGUIController.connectToAutAgent(autAgent);
-            HandlerUtil.updateRadioState(event.getCommand(), currentState);
         } catch (Exception e) {
             throw new ExecutionException(DebugConstants.ERROR, e);
         }
         return null;
+    }
+
+    /** {@inheritDoc} */
+    public void updateElement(UIElement element, Map parameters) {
+        Object oName = parameters.get(AUT_AGENT_NAME_TO_CONNECT);
+        Object oPort = parameters.get(AUT_AGENT_PORT_TO_CONNECT);
+
+        if (oName == null || oPort == null) {
+            return;
+        }
+        
+        String name = oName.toString();
+        String port = oPort.toString();
+        
+        boolean setChecked = false;
+        AutAgent mostRecent = ConnectAutAgentBP.getInstance()
+                .getWorkingAutAgent();
+        if (mostRecent != null) {
+            String mostRecentName = mostRecent.getName();
+            String mostRecentPort = mostRecent.getPort().toString();
+            if (name.equals(mostRecentName) && port.equals(mostRecentPort)) {
+                setChecked = true;
+            }
+        }
+
+        element.setChecked(setChecked);
     }
 }
