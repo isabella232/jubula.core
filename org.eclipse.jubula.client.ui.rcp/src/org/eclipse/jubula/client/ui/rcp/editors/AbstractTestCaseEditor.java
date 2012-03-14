@@ -41,6 +41,7 @@ import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -115,7 +116,8 @@ import org.eclipse.ui.menus.CommandContributionItem;
  * @created 13.10.2004
  */
 @SuppressWarnings("synthetic-access")
-public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
+public abstract class AbstractTestCaseEditor extends AbstractJBEditor 
+    implements IParamChangedListener {
     /**
      * Creates the initial Context of this Editor.<br>
      * Subclasses may override this method. 
@@ -134,9 +136,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
                         .getLabelDecorator());
         getTreeViewer().setLabelProvider(lp);
         
-        final DataEventDispatcher dispatcher = 
-            DataEventDispatcher.getInstance();
-        dispatcher.addPropertyChangedListener(this, true);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addPropertyChangedListener(this, true);
         addDragAndDropSupport(DND.DROP_MOVE, 
                 new Transfer[] {LocalSelectionTransfer.getInstance()});
         getEditorHelper().addListeners();
@@ -144,8 +145,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
         addTreeDoubleClickListener(RCPCommandIDs.REFERENCE_TC_COMMAND_ID);
         GuiEventDispatcher.getInstance()
             .addEditorDirtyStateListener(this, true);
-        DataEventDispatcher.getInstance().addDataChangedListener(
+        ded.addDataChangedListener(
                 new CentralTestDataUpdateListener(), false);
+        ded.addParamChangedListener(this, true);
     }
     
     /**
@@ -691,6 +693,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
      */
     public void dispose() {
         try {
+            DataEventDispatcher ded = DataEventDispatcher.getInstance();
             if (CAPRecordedCommand.getRecordListener() == this) {
                 CAPRecordedCommand.setRecordListener(null);
                 TestExecutionContributor.getInstance().getClientTest()
@@ -698,10 +701,10 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
             }
 
             if (getEditorSite() != null && getEditorSite().getPage() != null) {
-                DataEventDispatcher.getInstance().fireRecordModeStateChanged(
-                        RecordModeState.notRunning);
+                ded.fireRecordModeStateChanged(RecordModeState.notRunning);
                 removeGlobalActionHandler();
             }
+            ded.removeParamChangedListener(this);
         } finally {
             super.dispose();
         }
@@ -728,6 +731,12 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor {
     public void handlePropertyChanged(boolean isCompNameChanged) {
         super.handlePropertyChanged(isCompNameChanged);
         runLocalChecks();
+    }
+    
+    /** {@inheritDoc} */
+    public void handleParamChanged() {
+        runLocalChecks();
+        refresh();
     }
     
     /**
