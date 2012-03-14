@@ -23,7 +23,7 @@ public class Messages extends NLS {
     public static String General;
     public static String AnalysingProjects;
     public static String ChainBeginning;
-    public static String PossibleChilds;
+    public static String PossibleChildren;
     public static String ConstructChains;
     
     static {
