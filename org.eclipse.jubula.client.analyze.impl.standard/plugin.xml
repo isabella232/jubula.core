@@ -94,7 +94,7 @@
             ResultType="tableResultMap"
             class="org.eclipse.jubula.client.analyze.impl.standard.analyze.NumericalProjectElementCounter"
             id="countSpecifiedTC"
-            name="Numeric Project Element Counter">
+            name="Project Element Counter">
       </Analyze>
       <Analyze
             CategoryID="numMet"
