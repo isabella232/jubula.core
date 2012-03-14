@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jubula.client.analyze.definition.IAnalyze;
 import org.eclipse.jubula.client.analyze.impl.standard.i18n.Messages;
 import org.eclipse.jubula.client.analyze.internal.AnalyzeParameter;
@@ -148,43 +149,52 @@ public class Chain implements IAnalyze {
             AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
         /**
-         * the given ProgressMonitor
+         * The given SubMonitor
          */
-        private IProgressMonitor m_monitor;
+        private SubMonitor m_progress;
 
         /** local cache */
         private List<String> m_singleUseNodeGUID = new ArrayList<String>();
+        
+        /** contains the SpecTestCases which are single-used */
+        private List<ISpecTestCasePO> m_singleUsedSpecTCs = 
+                new ArrayList<ISpecTestCasePO>();
 
         /**
          * Constructor
          * 
          * @param monitor
-         *            The given ProgressMonitor
+         *            The given SubMonitor
          */
-        public NodeOperation(IProgressMonitor monitor) {
+        public NodeOperation(SubMonitor monitor) {
             setMonitor(monitor);
         }
 
         /**
-         * @return The ProgressMonitor
+         * @param monitor The given SubMonitor
          */
-        public IProgressMonitor getMonitor() {
-            return m_monitor;
+        public void setMonitor(SubMonitor monitor) {
+            this.m_progress = monitor;
         }
 
         /**
-         * @param monitor
-         *            The given ProgressMonitor
+         * @return The SubMonitor
          */
-        public void setMonitor(IProgressMonitor monitor) {
-            this.m_monitor = monitor;
+        public SubMonitor getMonitor() {
+            return m_progress;
         }
 
         /**
-         * @return The Map that contains the singleUsedNodeGUIDs
+         * @return The List that contains the singleUsedNodeGUIDs
          */
         private List<String> getSingleUsedNodeGUIDs() {
             return m_singleUseNodeGUID;
+        }
+        /**
+         * @return The List that contains the singleUsedSpecTCs
+         */
+        private List<ISpecTestCasePO> getSingleUsedSpecTCs() {
+            return m_singleUsedSpecTCs;
         }
 
         /**
@@ -210,6 +220,7 @@ public class Chain implements IAnalyze {
                             && ((spec.getUnmodifiableNodeList().size() <= 1))) {
 
                         getSingleUsedNodeGUIDs().add(spec.getGuid());
+                        getSingleUsedSpecTCs().add(spec);
                         return !alreadyVisited;
                     }
                 }
@@ -239,6 +250,7 @@ public class Chain implements IAnalyze {
                                                     .getInstance().getProject()
                                                     .getId().toString()))) {
                                 getSingleUsedNodeGUIDs().add(spec.getGuid());
+                                getSingleUsedSpecTCs().add(spec);
                                 return !alreadyVisited;
                             }
                         }
@@ -261,52 +273,39 @@ public class Chain implements IAnalyze {
     public AnalyzeResult execute(Object obj2analyze, IProgressMonitor monitor,
             String resultType, List<AnalyzeParameter> param, 
             String analyzeName) {
-        int workAmount = 1;
-        // get the number of nodes from the NodePersistenceManager to have a
-        // representative workAmount value for the ProgressMonitor
+        
+        SubMonitor progress = SubMonitor.convert(monitor, 100);
+        
+        monitor.subTask(Messages.AnalysingProjects);
+
+        int traverseAmount = 1;
+        
         if (obj2analyze instanceof IProjectPO) {
-            workAmount = 3 + ((int) NodePM.getNumNodes(
-                    ((IProjectPO) obj2analyze).getId(), 
-                    GeneralStorage.getInstance().getMasterSession()));
+            
+            traverseAmount = ((int) NodePM.getNumNodes(
+                    ((IProjectPO) obj2analyze).getId(), GeneralStorage
+                            .getInstance().getMasterSession()));
         } else if (obj2analyze instanceof INodePO) {
-            workAmount = 3 + ((int) NodePM.getNumNodes(
+            
+            traverseAmount = ((int) NodePM.getNumNodes(
                     ((INodePO) obj2analyze).getParentProjectId(),
                     GeneralStorage.getInstance().getMasterSession()));
         }
-        monitor.beginTask("", workAmount);
-        monitor.subTask(Messages.AnalysingProjects);
-        
-
-        NodeOperation nodeOp = new NodeOperation(monitor);
+        NodeOperation nodeOp = new NodeOperation(progress.newChild(30)
+                .setWorkRemaining(traverseAmount));
 
         traverse(obj2analyze, nodeOp, ProjectContextHelper.getObjContType());
-
         monitor.subTask(Messages.ChainBeginning);
         // set the parents List
         setParents(new ArrayList<ISpecTestCasePO>());
-        monitor.worked(1);
-        if (monitor.isCanceled()) {
-            monitor.done();
-            throw new OperationCanceledException();
-        }
         
         monitor.subTask(Messages.PossibleChilds);
-        anlayzePossibleChainElements(nodeOp);
-        if (monitor.isCanceled()) {
-            monitor.done();
-            throw new OperationCanceledException();
-        }
-
+        anlayzePossibleChainElements(nodeOp, progress.newChild(65));
         
         List<ISpecTestCasePO> l = getParents();
         l.size();
         monitor.subTask(Messages.ConstructChains);
-        constructChains();
-        
-        if (monitor.isCanceled()) {
-            monitor.done();
-            throw new OperationCanceledException();
-        }
+        constructChains(progress.newChild(5));
         return new AnalyzeResult(resultType, getLists());
     }
 
@@ -378,69 +377,63 @@ public class Chain implements IAnalyze {
      * 
      * @param nodeOp
      *            The given NodeOperation
+     * @param monitor
+     *            The given SubMonitor
      */
-    private void anlayzePossibleChainElements(NodeOperation nodeOp) {
+    private void anlayzePossibleChainElements(NodeOperation nodeOp,
+            SubMonitor monitor) {
         boolean isParent;
 
-        for (String guid : nodeOp.getSingleUsedNodeGUIDs()) {
+        monitor.setWorkRemaining(nodeOp.getSingleUsedNodeGUIDs().size());
+        int counter = 0;
+        for (ISpecTestCasePO sp : nodeOp.getSingleUsedSpecTCs()) {
+            counter++;
             isParent = true;
-            ISpecTestCasePO toCheck = NodePM.getSpecTestCase(
-                    PortableNodeInformationHelper.getNodeInformation()
-                            .get(guid), guid);
-            if (toCheck != null) {
-
-                for (String ppGuid : nodeOp.getSingleUsedNodeGUIDs()) {
-
-                    ISpecTestCasePO possibleParent = NodePM.getSpecTestCase(
-                            PortableNodeInformationHelper.getNodeInformation()
-                                    .get(ppGuid), ppGuid);
-                    if (possibleParent != null
-                            && possibleParent.getUnmodifiableNodeList().
-                                size() == 1) {
-
-                        IExecTestCasePO exec = (IExecTestCasePO) possibleParent
-                                .getUnmodifiableNodeList().get(0);
-                        if (exec != null) {
-
-                            ISpecTestCasePO spec = exec.getSpecTestCase();
-
-                            if (spec != null) {
-
-                                if ((spec.getGuid().equals(toCheck.getGuid()))
-                                        || (NodePM.getInternalExecTestCases(
-                                                toCheck.getGuid(),
-                                                toCheck.getParentProjectId())
-                                                .size() == 0)
-                                        || toCheck.getUnmodifiableNodeList()
-                                                .size() == 0) {
-                                    isParent = false;
-                                }
+            monitor.subTask(Messages.PossibleChilds + " " + counter + "/"
+                    + nodeOp.getSingleUsedSpecTCs().size());
+            for (ISpecTestCasePO pp : nodeOp.getSingleUsedSpecTCs()) {
+                if (pp != null && pp.getUnmodifiableNodeList().size() == 1) {
+                    IExecTestCasePO exec = (IExecTestCasePO) pp
+                            .getUnmodifiableNodeList().get(0);
+                    if (exec != null) {
+                        ISpecTestCasePO spec = exec.getSpecTestCase();
+                        if (spec != null) {
+                            if (spec.getGuid().equals(sp.getGuid())
+                                    || (NodePM.getInternalExecTestCases(
+                                            sp.getGuid(),
+                                            sp.getParentProjectId()).
+                                            size() == 0)
+                                    || sp.getUnmodifiableNodeList().
+                                            size() == 0) {
+                                isParent = false;
                             }
                         }
                     }
                 }
-                if (isParent
-                        && (!getParents().contains(toCheck))
-                        && (toCheck.getUnmodifiableNodeList().size() == 1)
-                        && (NodePM.getInternalExecTestCases(toCheck.getGuid(),
-                                toCheck.getParentProjectId()).size() == 1)) {
-                    getParents().add(toCheck);
-                }
+            }
+            if (isParent
+                  && (!getParents().contains(sp))
+                  && (sp.getUnmodifiableNodeList().size() == 1)
+                  && (NodePM.getInternalExecTestCases(sp.getGuid(),
+                          sp.getParentProjectId()).size() == 1)) {
+                getParents().add(sp);
+            }
+            monitor.worked(1);
+            if (monitor.isCanceled()) {
+                monitor.done();
+                throw new OperationCanceledException();
             }
         }
     }
 
     /**
-     * 
+     * Constructs the chains and saves every chain as a List
+     * @param monitor 
      */
-    private void constructChains() {
-
+    private void constructChains(SubMonitor monitor) {
+        monitor.setWorkRemaining(getParents().size());
         setLists(new ArrayList<List<String>>());
 
-        List<ISpecTestCasePO> l = getParents();
-//        System.out.println("parents");
-
-        ISpecTestCasePO currentSTC;
         for (ISpecTestCasePO curr : getParents()) {
 
             setChain(new ArrayList<String>());
@@ -448,11 +441,17 @@ public class Chain implements IAnalyze {
             getChain().add(curr.getGuid());
             getChainChildren(curr, getChain());
             getLists().add(getChain());
+            
+            monitor.worked(1);
+            if (monitor.isCanceled()) {
+                monitor.done();
+                throw new OperationCanceledException();
+            }
         }
     }
 
     /**
-     * get the childs of this parent and add them to the chainList
+     * get the children of this parent and add them to the chainList
      * 
      * @param parent
      *            the parentSpecTC
@@ -464,15 +463,22 @@ public class Chain implements IAnalyze {
             List<String> chain) {
         if (parent.getUnmodifiableNodeList().size() == 1) {
 
-            if (parent.getUnmodifiableNodeList().get(0) 
+            if ((parent.getUnmodifiableNodeList().get(0) != null)
+                    && parent.getUnmodifiableNodeList().get(0) 
                     instanceof IExecTestCasePO) {
 
                 IExecTestCasePO exec = (IExecTestCasePO) parent
                         .getUnmodifiableNodeList().get(0);
-                ISpecTestCasePO child = exec.getSpecTestCase();
 
-                chain.add(child.getGuid());
-                getChainChildren(child, chain);
+                if (exec != null) {
+
+                    ISpecTestCasePO child = exec.getSpecTestCase();
+                    if (child != null) {
+
+                        chain.add(child.getGuid());
+                        getChainChildren(child, chain);
+                    }
+                }
             }
         }
         return null;
