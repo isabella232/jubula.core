@@ -39,7 +39,7 @@ import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionGDEditor;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCEditor;
 import org.eclipse.jubula.client.ui.rcp.controllers.AbstractPartListener;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
-import org.eclipse.jubula.client.ui.rcp.handlers.RevertEditorChangesHandler;
+import org.eclipse.jubula.client.ui.rcp.propertytester.EditorPartPropertyTester;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -61,6 +61,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.services.IEvaluationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,10 +113,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     /** action to paste TreeItems */
     private PasteTreeItemActionTCEditor m_pasteTreeItemAction = 
         new PasteTreeItemActionTCEditor();
-    
-    /** the action to revert all changes in the editor */
-    private RevertEditorChangesHandler m_revertEditorChangesAction = 
-        new RevertEditorChangesHandler();
     
     /** PartListener of this WokbenchPart */
     private PartListener m_partListener = new PartListener();
@@ -609,29 +606,17 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
                 ActionFactory.PASTE.getId(), getPasteTreeItemAction());
         getEditorSite().getActionBars().updateActionBars();
     }
-
-    /**
-     * @param revertEditorChangesAction the revertEditorChangesAction to set
-     */
-    public void setRevertEditorChangesAction(
-            RevertEditorChangesHandler revertEditorChangesAction) {
-        m_revertEditorChangesAction = revertEditorChangesAction;
-    }
-
-    /**
-     * @return the revertEditorChangesAction
-     */
-    public RevertEditorChangesHandler getRevertEditorChangesAction() {
-        return m_revertEditorChangesAction;
-    }
     
     /**
      * {@inheritDoc}
      */
-    public void handleEditorDirtyStateChanged(IJBEditor editor, 
-            boolean isDirty) {
-        if (editor == this) {
-            getRevertEditorChangesAction().setEnabled(isDirty);
+    public void handleEditorDirtyStateChanged(
+            IJBEditor gdEditor, boolean isDirty) {
+        
+        if (gdEditor == this) {
+            IEvaluationService service = (IEvaluationService) getSite()
+                    .getService(IEvaluationService.class);
+            service.requestEvaluation(EditorPartPropertyTester.FQN_IS_DIRTY);
         }
     }
     
