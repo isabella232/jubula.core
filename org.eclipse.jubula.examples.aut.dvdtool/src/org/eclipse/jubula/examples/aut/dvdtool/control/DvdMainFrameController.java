@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+import org.eclipse.jubula.examples.aut.dvdtool.DevelopmentState;
 import org.eclipse.jubula.examples.aut.dvdtool.gui.DvdContentPanel;
 import org.eclipse.jubula.examples.aut.dvdtool.gui.DvdMainFrame;
 import org.eclipse.jubula.examples.aut.dvdtool.gui.DvdTableModel;
@@ -73,13 +74,16 @@ public class DvdMainFrameController {
     private DvdExitAction m_exitAction = 
         new DvdExitAction(Resources.getString("menu.file.exit"), this); //$NON-NLS-1$
 
+    /** the load action */
+    private DvdLoadAction m_loadAction =
+        new DvdLoadAction(Resources.getString("menu.load.load"), this); //$NON-NLS-1$
     /** the info action */
     private DvdInfoAction m_infoAction =
         new DvdInfoAction(Resources.getString("menu.help.about"), this); //$NON-NLS-1$
 
     /** the action for adding a category */
-    private DvdAddCategoryAction m_addCategoryAction = 
-        new DvdAddCategoryAction(Resources.getString("menu.edit.add.category"), this); //$NON-NLS-1$ 
+    private DvdAddCategoryActionV2 m_addCategoryAction = 
+        new DvdAddCategoryActionV2(Resources.getString("menu.edit.add.category"), this); //$NON-NLS-1$ 
     
     /** the action for enabling a category */
     private DvdDisableOrEnableCategoryAction m_enableCategoryAction = 
@@ -254,9 +258,14 @@ public class DvdMainFrameController {
     }
     
     /**
-     * constructor, initialises this controller
+     * constructor, initializes this controller
      */
     public DvdMainFrameController() {
+        if (DevelopmentState.instance().isV2()) {
+            m_addCategoryAction = new DvdAddCategoryActionV2(
+                    Resources.getString("menu.edit.add.category"), this); //$NON-NLS-1$ 
+
+        }
         init();
     }
 
@@ -330,6 +339,11 @@ public class DvdMainFrameController {
      * private method for initialisation of the menu items
      */
     private void initMenuItems() {
+        // simulated development states
+        final boolean isVersion1 = DevelopmentState.instance().isV1();
+        final boolean isVersion2 = DevelopmentState.instance().isV2();
+        final boolean isVersion3 = DevelopmentState.instance().isV3();
+
         // set the actions
         m_frame.getMenuItemAddCategory().setAction(m_addCategoryAction);
         m_frame.getMenuItemEnableCategory().setAction(m_enableCategoryAction);
@@ -343,6 +357,9 @@ public class DvdMainFrameController {
         m_frame.getMenuItemOpen().setAction(m_openAction);
         m_frame.getMenuItemExit().setAction(m_exitAction);
         m_frame.getMenuItemInfo().setAction(m_infoAction);
+        if (isVersion1 || isVersion2 || isVersion3) {
+            m_frame.getMenuItemLoad().setAction(m_loadAction);
+        }
         
         m_frame.getMenuItemDvdDetailsTabsToTop()
             .setAction(m_tabPlacementTopAction);
@@ -641,7 +658,7 @@ public class DvdMainFrameController {
     /**
      * @return Returns the addCategoryAction.
      */
-    public DvdAddCategoryAction getAddCategoryAction() {
+    public DvdAddCategoryActionV2 getAddCategoryAction() {
         return m_addCategoryAction;
     }
     

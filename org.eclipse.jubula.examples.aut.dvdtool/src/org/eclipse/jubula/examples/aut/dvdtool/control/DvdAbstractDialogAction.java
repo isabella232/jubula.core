@@ -47,7 +47,7 @@ public abstract class DvdAbstractDialogAction extends AbstractAction {
     /**
      * {@inheritDoc}
      */
-    public final void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         boolean done = false;
         while (!done) {
             // ask for input

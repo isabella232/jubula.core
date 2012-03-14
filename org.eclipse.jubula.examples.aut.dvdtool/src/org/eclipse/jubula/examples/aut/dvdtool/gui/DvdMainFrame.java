@@ -28,6 +28,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import org.eclipse.jubula.examples.aut.dvdtool.DevelopmentState;
 import org.eclipse.jubula.examples.aut.dvdtool.control.DvdTableTransferHandler;
 import org.eclipse.jubula.examples.aut.dvdtool.resources.Resources;
 
@@ -76,6 +77,8 @@ public class DvdMainFrame extends JFrame {
     private JMenu m_menuEdit = new JMenu(); 
     /** the menu 'Config' */
     private JMenu m_menuConfig = new JMenu();
+    /** the menu 'Load' */
+    private JMenu m_menuLoad = new JMenu();
     /** the menu 'Help' */
     private JMenu m_menuHelp = new JMenu();
     /** the menu entry 'Add category' */
@@ -104,6 +107,8 @@ public class DvdMainFrame extends JFrame {
     private JMenuItem m_menuItemSave = new JMenuItem();
     /** the menu entry 'Open' */
     private JMenuItem m_menuItemOpen = new JMenuItem();
+    /** the menu entry 'Load' */
+    private JMenuItem m_menuItemLoad = new JMenuItem();
     /** the menu 'Dvd details' */
     private JMenu m_menuDvdDetails = new JMenu();
     /** the menu entry 'Dvd details / Tabs to top' */
@@ -225,12 +230,21 @@ public class DvdMainFrame extends JFrame {
      *  creates the menu bar with all menues
      */
     private void createMenuBar() {
+        // simulated development states
+        final boolean isVersion1 = DevelopmentState.instance().isV1();
+        final boolean isVersion2 = DevelopmentState.instance().isV2();
+        final boolean isVersion3 = DevelopmentState.instance().isV3();
+
         JMenuBar menuBar = new JMenuBar();
         menuBar.setName("menuBar"); //$NON-NLS-1$
         m_menuFile.setText(Resources.getString("menu.file")); //$NON-NLS-1$
         m_menuFile.add(m_menuItemOpen);
         m_menuFile.add(m_menuItemSave);
         m_menuFile.addSeparator();
+        if (isVersion2 || isVersion3) {
+            m_menuFile.add(m_menuItemLoad);
+            m_menuFile.addSeparator();
+        }
         m_menuFile.add(m_menuItemExit);
         m_menuEdit.setText(Resources.getString("menu.edit")); //$NON-NLS-1$
         m_menuEdit.add(m_menuItemAddCategory);
@@ -247,6 +261,10 @@ public class DvdMainFrame extends JFrame {
         m_menuEdit.add(m_menuItemShowWaitingDialog);
         m_menuConfig.setText(Resources.getString("menu.config")); //$NON-NLS-1$
         m_menuConfig.add(m_menuDvdDetails);
+        if (isVersion1) {
+            m_menuLoad.setText(Resources.getString("menu.load")); //$NON-NLS-1$
+            m_menuLoad.add(m_menuItemLoad);
+        }
         m_menuDvdDetails.setText(Resources.getString(
                 "menu.config.dvddetails")); //$NON-NLS-1$        
         m_menuDvdDetails.add(m_menuItemDvdDetailsTabsToTop);
@@ -266,6 +284,9 @@ public class DvdMainFrame extends JFrame {
         menuBar.add(m_menuFile);
         menuBar.add(m_menuEdit);
         menuBar.add(m_menuConfig);
+        if (isVersion1) {
+            menuBar.add(m_menuLoad);
+        }
         menuBar.add(m_menuHelp);
         setJMenuBar(menuBar);
     }
@@ -540,5 +561,12 @@ public class DvdMainFrame extends JFrame {
      */
     public JSplitPane getSplitPane() {
         return m_splitPane;
+    }
+
+    /**
+     * @return the m_menuItemLoad
+     */
+    public JMenuItem getMenuItemLoad() {
+        return m_menuItemLoad;
     }
 }

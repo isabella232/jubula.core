@@ -11,6 +11,7 @@
 package org.eclipse.jubula.examples.aut.dvdtool.control;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Vector;
 
@@ -96,6 +97,24 @@ public class DvdManager  {
         restoreGuiConfiguration(controller);
     }
     
+    /**
+     * opens dvd library and its gui configuration from file <code>file</code> 
+     * @param is the InputStream to load the library from
+     * @param controller the controller of the main frame
+     * @throws DvdPersistenceException if an io error occurs 
+     * @throws DvdInvalidContentException if the file does not contain the expected data
+     */
+    public void open(DvdMainFrameController controller,
+                     InputStream is) throws DvdPersistenceException,
+        DvdInvalidContentException {
+
+        List list = DvdPersistenceManager.singleton().load(is);
+        m_rootCategory = (DvdCategory) list.get(0);
+        m_guiConfiguration = (DvdGuiConfiguration) list.get(1);
+        
+        restoreGuiConfiguration(controller);
+    }
+
     /**
      * restores the gui configuration according to gui configuration object
      * @param controller the controller of the main frame

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.examples.aut.dvdtool;
 
+import org.eclipse.jubula.examples.aut.dvdtool.DevelopmentState.State;
 import org.eclipse.jubula.examples.aut.dvdtool.control.DvdMainFrameController;
 import org.eclipse.jubula.examples.aut.dvdtool.gui.DvdMainFrame;
 
@@ -34,9 +35,25 @@ public class DVDTool {
      * @param args the given arguments, if any
      */
     public static void main(String[] args) {
+        checkForDevelopmentVersion(args);
         DvdMainFrame frame = new DvdMainFrameController().getDvdMainFrame();
         frame.setLocation(100, 90);
         frame.pack();
         frame.show();
+    }
+
+    /**
+     * check if some development state should be simulated
+     * @param args arguments from main()
+     */
+    private static void checkForDevelopmentVersion(String[] args) {
+        if (args.length == 1) {
+            try {
+                State state = State.valueOf(args[0].toUpperCase());
+                DevelopmentState.instance().setState(state);
+            } catch (IllegalArgumentException e) {
+                // ignore wrong parameters
+            }
+        }
     }
 }

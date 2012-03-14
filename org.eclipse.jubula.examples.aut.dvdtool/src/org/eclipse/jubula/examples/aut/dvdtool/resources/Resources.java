@@ -25,11 +25,11 @@ import javax.swing.ImageIcon;
  */
 public class Resources {
     /** the application icon */
-    public static final String APP_ICON = "icon.gif"; //$NON-NLS-1$
+    public static final String APP_ICON = "icon.png"; //$NON-NLS-1$
     /** the icon for a category with dvds */
-    public static final String CAT_ICON = "category.gif"; //$NON-NLS-1$
+    public static final String CAT_ICON = "category.png"; //$NON-NLS-1$
     /** the icon for a category with no dvds */
-    public static final String EMPTY_CAT_ICON = "empty_category.gif"; //$NON-NLS-1$
+    public static final String EMPTY_CAT_ICON = "empty_category.png"; //$NON-NLS-1$
     /** the directory to the resources */
     private static final String RESOURCES_DIR = "resources"; //$NON-NLS-1$
     /** the bundle name */

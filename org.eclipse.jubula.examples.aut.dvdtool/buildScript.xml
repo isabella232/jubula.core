@@ -26,9 +26,9 @@
 				destdir="${classes}" 	  			 		
 				includes="**/*.java"
 				excludes="**/test/*"
-				source="1.4"
-				target="1.4"
-				debug="${javac.debug}"
+				source="1.5"
+				target="1.5"
+				debug="on"
 	   			fork="true"
 	   			executable="${javac}"/>
 	</target>

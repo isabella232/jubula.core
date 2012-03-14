@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InvalidClassException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
@@ -110,64 +111,77 @@ public class DvdPersistenceManager {
         DvdPersistenceException {
         try {
             FileInputStream fs = new FileInputStream(file);
-            try {
-                ObjectInputStream input = new ObjectInputStream(fs);
-                List list = new Vector();
-                try {
-                    // this infinite loop will be exited by an EOFException
-                    // when the end of the stream is reached
-                    do {
-                        Object object = input.readObject();
-                        list.add(object);
-                    } while (true);
-                } catch (EOFException eofe) {
-                    // EOFException is expected after all objects are read
-                    fs.close();
-                    input.close();
-                    return list;
-                } catch (ClassNotFoundException cnfe) {
-                    fs.close();
-                    input.close();
-                    throw new DvdInvalidContentException(
-                            "exception.invalid.file.content", cnfe); //$NON-NLS-1$
-                } catch (InvalidClassException ice) {
-                    fs.close();
-                    input.close();
-                    throw new DvdInvalidContentException(
-                            "exception.invalid.file.content", ice); //$NON-NLS-1$
-                } catch (StreamCorruptedException sce) {
-                    fs.close();
-                    input.close();
-                    throw new DvdInvalidContentException(
-                            "exception.invalid.file.content", sce); //$NON-NLS-1$
-                } catch (OptionalDataException ode) {
-                    fs.close();
-                    input.close();
-                    throw new DvdInvalidContentException(
-                            "exception.invalid.file.content", ode); //$NON-NLS-1$
-                } catch (IOException ioe) {
-                    fs.close();
-                    input.close();
-                    throw new DvdPersistenceException("exception.ioerror", ioe); //$NON-NLS-1$
-                }
-            } catch (StreamCorruptedException sce) {
-                try {
-                    fs.close();
-                } catch (IOException e) { // NOPMD by zeb on 10.04.07 14:08
-                    // fileInputStream could not be closed -> do nothing
-                }
-                throw new DvdInvalidContentException(
-                        "exception.invalid.file.content", sce); //$NON-NLS-1$
-            } catch (IOException ioe) {
-                try {
-                    fs.close();
-                } catch (IOException e) { // NOPMD by zeb on 10.04.07 14:08
-                    // fileInputStream could not be closed -> do nothing
-                }
-                throw new DvdPersistenceException("exception.ioerror", ioe); //$NON-NLS-1$
-            }
+            return load(fs);
         } catch (FileNotFoundException fnfe) {
             throw new DvdPersistenceException("exception.ioerror", fnfe); //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * Loads an object list from <code>InsputStream</code> (via deserialisation).
+     * @param is the <code>InputStream</code> to load the object list from
+     * @return the read object list
+     * @throws DvdPersistenceException if an io error occurs
+     * @throws DvdInvalidContentException if the <code>file</code> does not 
+     *         contain the expected data
+     */
+    public List load(InputStream is) throws DvdInvalidContentException,
+            DvdPersistenceException {
+        try {
+            ObjectInputStream input = new ObjectInputStream(is);
+            List list = new Vector();
+            try {
+                // this infinite loop will be exited by an EOFException
+                // when the end of the stream is reached
+                do {
+                    Object object = input.readObject();
+                    list.add(object);
+                } while (true);
+            } catch (EOFException eofe) {
+                // EOFException is expected after all objects are read
+                is.close();
+                input.close();
+                return list;
+            } catch (ClassNotFoundException cnfe) {
+                is.close();
+                input.close();
+                throw new DvdInvalidContentException(
+                        "exception.invalid.file.content", cnfe); //$NON-NLS-1$
+            } catch (InvalidClassException ice) {
+                is.close();
+                input.close();
+                throw new DvdInvalidContentException(
+                        "exception.invalid.file.content", ice); //$NON-NLS-1$
+            } catch (StreamCorruptedException sce) {
+                is.close();
+                input.close();
+                throw new DvdInvalidContentException(
+                        "exception.invalid.file.content", sce); //$NON-NLS-1$
+            } catch (OptionalDataException ode) {
+                is.close();
+                input.close();
+                throw new DvdInvalidContentException(
+                        "exception.invalid.file.content", ode); //$NON-NLS-1$
+            } catch (IOException ioe) {
+                is.close();
+                input.close();
+                throw new DvdPersistenceException("exception.ioerror", ioe); //$NON-NLS-1$
+            }
+        } catch (StreamCorruptedException sce) {
+            try {
+                is.close();
+            } catch (IOException e) { // NOPMD by zeb on 10.04.07 14:08
+                // fileInputStream could not be closed -> do nothing
+            }
+            throw new DvdInvalidContentException(
+                    "exception.invalid.file.content", sce); //$NON-NLS-1$
+        } catch (IOException ioe) {
+            try {
+                is.close();
+            } catch (IOException e) { // NOPMD by zeb on 10.04.07 14:08
+                // fileInputStream could not be closed -> do nothing
+            }
+            throw new DvdPersistenceException("exception.ioerror", ioe); //$NON-NLS-1$
         }
     }
 }

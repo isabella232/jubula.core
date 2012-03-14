@@ -23,6 +23,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.eclipse.jubula.examples.aut.dvdtool.DevelopmentState;
 import org.eclipse.jubula.examples.aut.dvdtool.gui.Constants;
 import org.eclipse.jubula.examples.aut.dvdtool.gui.DvdMainFrame;
 import org.eclipse.jubula.examples.aut.dvdtool.model.Dvd;
@@ -384,8 +385,13 @@ public class DvdTreeController {
                 // enable / disable the actions
                 m_controller.getAddCategoryAction().setEnabled(true);
                 if (data.hasParent()) {
-                    m_controller.getRemoveCategoryAction().setEnabled(
-                            !multipleTreeSelections);
+                    if (!DevelopmentState.instance().isV2()) {
+                        m_controller.getRemoveCategoryAction().setEnabled(
+                                !multipleTreeSelections);
+                    } else {
+                        m_controller.getRemoveCategoryAction()
+                                .setEnabled(false);
+                    }
                 } else {
                     m_controller.getRemoveCategoryAction().setEnabled(false);
                 }
