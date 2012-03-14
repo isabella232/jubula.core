@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.propertytester;
 
 import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.ui.IEditorPart;
 
 /**
@@ -18,8 +19,14 @@ import org.eclipse.ui.IEditorPart;
  * @created 30.07.2009
  */
 public class EditorPartPropertyTester extends AbstractBooleanPropertyTester {
-    /** the id of the "isInCurrentProject" property */
+    /** the name space of this property tester */
+    public static final String NS = "org.eclipse.jubula.client.ui.rcp.propertytester.EditorPart"; //$NON-NLS-1$
+    /** the id of the "isDirty" property */
     public static final String IS_DIRTY = "isDirty"; //$NON-NLS-1$
+    /** the fully qualified id of the "isDirty" property */
+    public static final String FQN_IS_DIRTY = 
+            NS + StringConstants.DOT + IS_DIRTY;
+    
     /**
      * <code>PROPERTIES</code>
      */
