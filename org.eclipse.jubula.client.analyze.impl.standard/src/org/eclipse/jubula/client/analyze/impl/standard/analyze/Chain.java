@@ -299,7 +299,7 @@ public class Chain implements IAnalyze {
         // set the parents List
         setParents(new ArrayList<ISpecTestCasePO>());
         
-        monitor.subTask(Messages.PossibleChilds);
+        monitor.subTask(Messages.PossibleChildren);
         anlayzePossibleChainElements(nodeOp, progress.newChild(65));
         
         List<ISpecTestCasePO> l = getParents();
@@ -389,7 +389,7 @@ public class Chain implements IAnalyze {
         for (ISpecTestCasePO sp : nodeOp.getSingleUsedSpecTCs()) {
             counter++;
             isParent = true;
-            monitor.subTask(Messages.PossibleChilds + " " + counter + "/"
+            monitor.subTask(Messages.PossibleChildren + " " + counter + "/"
                     + nodeOp.getSingleUsedSpecTCs().size());
             for (ISpecTestCasePO pp : nodeOp.getSingleUsedSpecTCs()) {
                 if (pp != null && pp.getUnmodifiableNodeList().size() == 1) {
