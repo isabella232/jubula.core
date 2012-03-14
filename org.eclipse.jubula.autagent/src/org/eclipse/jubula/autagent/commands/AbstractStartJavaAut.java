@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.autagent.monitoring.IMonitoring;
@@ -310,21 +309,6 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     }
     
     /**
-     * @param parameters The parameters for starting the AUT.
-     * @return <code>true</code> if the AUT is being started with a 
-     * monitoring agent. Otherwise, <code>false</code>.
-     */
-    protected boolean isRunningWithMonitoring(Map parameters) {
-        
-        String monitoringId = (String)parameters.get(
-                AutConfigConstants.MONITORING_AGENT_ID);        
-        if (!StringUtils.isEmpty(monitoringId)) { 
-            return true;
-        }                 
-        return false;         
-    }
-    
-    /**
      * Sets -javaagent and JRE arguments as SUN environment variable.
      * @param parameters The parameters for starting the AUT
      * @return the _JAVA_OPTIONS environment variable including -javaagent
@@ -337,9 +321,12 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             // set agent and locals
             
             sb.append(JAVA_OPTIONS_INTRO);
-            if (isRunningWithMonitoring(parameters)) {
-                sb.append(getMonitoringAgent(parameters))
-                    .append(StringConstants.SPACE);
+            if (org.eclipse.jubula.tools.utils.MonitoringUtil
+                    .shouldAndCanRunWithMonitoring(parameters)) {
+                String monAgent = getMonitoringAgent(parameters);
+                if (monAgent != null) {
+                    sb.append(monAgent).append(StringConstants.SPACE);
+                }
             }                 
             sb.append(StringConstants.QUOTE)
                 .append("-javaagent:") //$NON-NLS-1$
@@ -355,9 +342,12 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                     .append(locale.getLanguage());
             }
         } else {
-            if (isRunningWithMonitoring(parameters)) {
-                sb.append(JAVA_OPTIONS_INTRO)
-                    .append(getMonitoringAgent(parameters));
+            if (org.eclipse.jubula.tools.utils.MonitoringUtil
+                    .shouldAndCanRunWithMonitoring(parameters)) {
+                String monAgent = getMonitoringAgent(parameters);
+                if (monAgent != null) {
+                    sb.append(JAVA_OPTIONS_INTRO).append(monAgent);
+                }
             }
         }
 
@@ -387,62 +377,56 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * interface, and will invoke the "getAgent" method. 
      * @param parameters The AutConfigMap
      * @return agentString The agent String like -javaagent:myagent.jar
-     * or null if the monitoring agent String could't be generated
+     * or null if the monitoring agent String couldn't be generated
      */        
     protected String getMonitoringAgent(Map parameters) {
-        
-        String monitoringImplClass = (String)parameters.get(
-                    MonitoringConstants.AGENT_CLASS); 
-        
         String autId = (String)parameters.get(
-                AutConfigConstants.AUT_ID);         
-       
-        String bundleId = (String)parameters.get(
-                MonitoringConstants.BUNDLE_ID);
-        
+                AutConfigConstants.AUT_ID);
         MonitoringDataStore mds = MonitoringDataStore.getInstance();
         boolean duplicate = MonitoringUtil.checkForDuplicateAutID(autId);
         if (!duplicate) {            
             mds.putConfigMap(autId, parameters); 
-        }      
-        String agentString = null;       
-        if (isRunningWithMonitoring(parameters)) {
-            try {  
-                Bundle bundle = Platform.getBundle(bundleId);
-                if (bundle == null) {
-                    LOG.error("No bundle was found for the given bundleId"); //$NON-NLS-1$
-                    return null;
-                }
-                Class<?> monitoringClass = 
-                        bundle.loadClass(monitoringImplClass);
-                Constructor<?> constructor = monitoringClass.getConstructor();
-                IMonitoring agentInstance = 
-                    (IMonitoring)constructor.newInstance();
-                agentInstance.setAutId(autId);
-                //set the path to the agent jar file
-                agentInstance.setInstallDir(FileLocator.getBundleFile(bundle));
-                agentString = agentInstance.createAgent();
-                if (!duplicate) {
-                    mds.putMonitoringAgent(autId, agentInstance);  
-                } 
-            } catch (InstantiationException e) {
-                LOG.error("The instantiation of the monitoring class failed ", e); //$NON-NLS-1$
-            } catch (IllegalAccessException e) {
-                LOG.error("Access to the monitoring class failed ", e); //$NON-NLS-1$
-            } catch (SecurityException e) {
-                LOG.error("Access to the monitoring class failed ", e); //$NON-NLS-1$
-            } catch (NoSuchMethodException e) {
-                LOG.error("A method in the monitoring class could not be found", e); //$NON-NLS-1$
-            } catch (IllegalArgumentException e) {
-                LOG.error("A argument which is passed to monitoring class is invalide", e); //$NON-NLS-1$
-            } catch (InvocationTargetException e) {
-                LOG.error("The method call of 'getAgent' failed, you have to implement the interface IMonitoring", e); //$NON-NLS-1$
-            } catch (ClassNotFoundException e) {
-                LOG.error("The monitoring class can not be found", e); //$NON-NLS-1$
-            } catch (IOException e) {
-                LOG.error("IOException while searching for the given bundle", e); //$NON-NLS-1$
-            }     
         }
+        String agentString = null;
+        String monitoringImplClass = (String)parameters.get(
+                MonitoringConstants.AGENT_CLASS); 
+        String bundleId = (String)parameters.get(
+                MonitoringConstants.BUNDLE_ID);
+        try {  
+            Bundle bundle = Platform.getBundle(bundleId);
+            if (bundle == null) {
+                LOG.error("No bundle was found for the given bundleId"); //$NON-NLS-1$
+                return null;
+            }
+            Class<?> monitoringClass = 
+                    bundle.loadClass(monitoringImplClass);
+            Constructor<?> constructor = monitoringClass.getConstructor();
+            IMonitoring agentInstance = 
+                (IMonitoring)constructor.newInstance();
+            agentInstance.setAutId(autId);
+            //set the path to the agent jar file
+            agentInstance.setInstallDir(FileLocator.getBundleFile(bundle));
+            agentString = agentInstance.createAgent();
+            if (!duplicate) {
+                mds.putMonitoringAgent(autId, agentInstance);  
+            } 
+        } catch (InstantiationException e) {
+            LOG.error("The instantiation of the monitoring class failed ", e); //$NON-NLS-1$
+        } catch (IllegalAccessException e) {
+            LOG.error("Access to the monitoring class failed ", e); //$NON-NLS-1$
+        } catch (SecurityException e) {
+            LOG.error("Access to the monitoring class failed ", e); //$NON-NLS-1$
+        } catch (NoSuchMethodException e) {
+            LOG.error("A method in the monitoring class could not be found", e); //$NON-NLS-1$
+        } catch (IllegalArgumentException e) {
+            LOG.error("A argument which is passed to monitoring class is invalide", e); //$NON-NLS-1$
+        } catch (InvocationTargetException e) {
+            LOG.error("The method call of 'getAgent' failed, you have to implement the interface IMonitoring", e); //$NON-NLS-1$
+        } catch (ClassNotFoundException e) {
+            LOG.error("The monitoring class can not be found", e); //$NON-NLS-1$
+        } catch (IOException e) {
+            LOG.error("IOException while searching for the given bundle", e); //$NON-NLS-1$
+        }     
         return agentString;        
     }
     

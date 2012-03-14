@@ -29,9 +29,7 @@ import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.handlers.AUTAgentConnectHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.ui.handlers.RadioState;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
@@ -89,8 +87,6 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
                 hostname);
         parameters.put(AUTAgentConnectHandler.AUT_AGENT_PORT_TO_CONNECT,
                 String.valueOf(port));
-        parameters.put(RadioState.PARAMETER_ID, 
-                hostname + StringConstants.COLON + port);
         
         CommandHelper.executeParameterizedCommand(ParameterizedCommand
                 .generateCommand(connectToAutAgentCommand, parameters));

@@ -21,9 +21,11 @@ public class Messages extends NLS {
     public static String MonitorCanceled;
     public static String Running;
     public static String General;
-
+    public static String AnalysingProjects;
+    public static String ChainBeginning;
+    public static String PossibleChildren;
+    public static String ConstructChains;
     
-
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

@@ -12,10 +12,10 @@ If this is the case, please follow these instructions:
 \item From the old version of \app{}, export and backup all the \gdprojects{} from the database. 
 \bxtipp{Make sure you also export and back up any library \gdprojects{} used in your tests, e.g. the unbound modules \gdprojects{}. }
 \item Back up any extensions you have made to \app{}: any customized plugins and implementation classes you have written.  
-\item Export your \gddb{} preferences from the workspace.
+\item Export your \gddb{} preferences from the workspace \bxpref{TasksPrefsImport}.
 \item Uninstall the old version of \app{}. 
 \item Clear (empty) the \gddb{} schema for all necessary \app{} users. You can do this via a database administration tool which will let you carry out the action \bxname{Drop Tables}. 
-\bxtipp{The \gddb{} migration assistant will automatically notify you if your \gddb{} scheme is incompatible with the new version. }
+%\bxtipp{The \gddb{} migration assistant will automatically notify you if your \gddb{} scheme is incompatible with the new version. }
 %The migration assistant can carry out the \gddb{} migration for you in most cases.}
 \item Install the new version of \app{}.
 \bxtipp{If you have \gdagents{} running on other machines, be sure to install the new version of the \gdagent{} there too.}

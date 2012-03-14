@@ -132,8 +132,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
         }
-        
-        Plugin.getDefault().getTreeViewerContainer().add(this);
     }
 
     /**
@@ -260,7 +258,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
             getViewSite().getWorkbenchWindow().getSelectionService()
                 .removeSelectionListener(m_actionListener);
             getTreeViewer().removeDoubleClickListener(m_doubleClickListener);
-            Plugin.getDefault().getTreeViewerContainer().remove(this);
         } finally {
             super.dispose();
         }

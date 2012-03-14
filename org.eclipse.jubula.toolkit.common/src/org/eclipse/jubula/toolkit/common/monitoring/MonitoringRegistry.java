@@ -28,7 +28,7 @@ import org.eclipse.jubula.tools.constants.MonitoringConstants;
  * @author BREDEX GmbH
  * @created 20.07.2010
  */
-public abstract class MonitoringUtils {
+public abstract class MonitoringRegistry {
     /** gets the eclipse extension registry */    
     private static IExtensionRegistry reg = Platform.getExtensionRegistry();
     
@@ -39,7 +39,7 @@ public abstract class MonitoringUtils {
     /**
      * utility constructor
      */
-    private MonitoringUtils() {
+    private MonitoringRegistry() {
         //utility constructor
     }
         

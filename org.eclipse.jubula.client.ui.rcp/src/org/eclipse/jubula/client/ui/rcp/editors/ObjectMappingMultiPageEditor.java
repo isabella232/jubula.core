@@ -111,8 +111,8 @@ import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher.IEditorDirtyStateListener;
 import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.filter.ObjectMappingEditorPatternFilter;
-import org.eclipse.jubula.client.ui.rcp.handlers.RevertEditorChangesHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.propertytester.EditorPartPropertyTester;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.OMEditorTableContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.ObjectMappingRow;
@@ -163,6 +163,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.part.MultiPageEditorPart;
+import org.eclipse.ui.services.IEvaluationService;
 import org.eclipse.ui.swt.IFocusService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -233,10 +234,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
     /** updater for tree viewer based on changes to Component Names */
     private ComponentNameTreeViewerUpdater m_treeViewerUpdater;
-
-    /** the action to revert all changes in the editor */
-    private RevertEditorChangesHandler m_revertEditorChangesAction = 
-        new RevertEditorChangesHandler();
 
     /** mapping: page number => selection provider for that page */
     private Map<Integer, ISelectionProvider> m_pageToSelectionProvider =
@@ -1970,7 +1967,9 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             IJBEditor gdEditor, boolean isDirty) {
         
         if (gdEditor == this) {
-            m_revertEditorChangesAction.setEnabled(isDirty);
+            IEvaluationService service = (IEvaluationService) getSite()
+                    .getService(IEvaluationService.class);
+            service.requestEvaluation(EditorPartPropertyTester.FQN_IS_DIRTY);
         }
     }
 

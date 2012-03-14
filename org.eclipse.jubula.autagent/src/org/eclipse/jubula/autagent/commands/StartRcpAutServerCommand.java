@@ -24,6 +24,7 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.utils.MonitoringUtil;
 
 
 /**
@@ -215,14 +216,15 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
                 parameters, StartSwtAutServerCommand.ENV_VAR_PREFIX, 
                 StartSwtAutServerCommand.ENV_VALUE_SEP));
         
-        if (isRunningWithMonitoring(parameters)) {
-            
-            StringBuffer sb = new StringBuffer();
-            sb.append(JAVA_OPTIONS_INTRO);
-            sb.append(this.getMonitoringAgent(parameters));
-            envList.add(sb.toString());   
-            envArray = super.createEnvArray(parameters, true);
-            
+        if (MonitoringUtil.shouldAndCanRunWithMonitoring(parameters)) {
+            String monAgent = this.getMonitoringAgent(parameters);
+            if (monAgent != null) {
+                StringBuffer sb = new StringBuffer();
+                sb.append(JAVA_OPTIONS_INTRO);
+                sb.append(monAgent);
+                envList.add(sb.toString());   
+                envArray = super.createEnvArray(parameters, true);
+            }
         }        
         envArray = envList.toArray(new String [envList.size()]);
       

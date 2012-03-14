@@ -293,8 +293,6 @@ public class ChainRenderer implements IResultRendererUI {
                     prev = guid;
                 }
             }
-//                
-//            }
             return null;
         }
         /**

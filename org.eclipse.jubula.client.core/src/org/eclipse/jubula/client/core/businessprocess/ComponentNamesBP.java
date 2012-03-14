@@ -516,16 +516,6 @@ public class ComponentNamesBP
 
         }
         return null;
-//        for (IComponentNamePO compNamePO : getAllComponentNamePOs()) {
-//            if (compNamePO.getGuid().equals(guid)) {
-//                if (resolveRefs && compNamePO.getReferencedGuid() != null) {
-//                    return getCompNamePo(
-//                            compNamePO.getReferencedGuid(), resolveRefs);
-//                }
-//                return compNamePO;
-//            }
-//        }
-//        return null;
     }
 
     /**

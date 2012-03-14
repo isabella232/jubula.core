@@ -350,6 +350,19 @@ public class Ratio implements IAnalyze {
             };
             tt.traverse(true);
         }
+        if (obj instanceof INodePO && objContType.equals("")) {
+            final INodePO root = (INodePO) obj;
+            
+            TreeTraverser tt = new TreeTraverser(root, count, true, true) {
+                @Override
+                protected void traverseReusedProjectSpecPart(
+                        ITreeTraverserContext<INodePO> context,
+                        IProjectPO project) {
+                    // ignore reused Projects
+                }
+            };
+            tt.traverse(true);
+        }
         // checks if there are Referenced TestSuites that have to be considered
         if (count.getRefTestSuites().size() != 0) {
             for (int i = 0; i < count.getRefTestSuites().size(); i++) {

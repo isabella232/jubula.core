@@ -46,7 +46,7 @@ import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.toolkit.common.monitoring.MonitoringAttribute;
-import org.eclipse.jubula.toolkit.common.monitoring.MonitoringUtils;
+import org.eclipse.jubula.toolkit.common.monitoring.MonitoringRegistry;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -205,10 +205,10 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
               
         if (!StringUtils.isEmpty(monitoringID)) {  
             IConfigurationElement monitoringExtension = 
-                MonitoringUtils.getElement(monitoringID);
+                MonitoringRegistry.getElement(monitoringID);
             if (monitoringExtension != null) {
                 createMonitoringUIComponents(monitoringComposite, 
-                        MonitoringUtils.getAttributes(monitoringExtension));
+                        MonitoringRegistry.getAttributes(monitoringExtension));
             } else {
                 StyledText missingExtensionLabel = 
                     new StyledText(monitoringComposite, SWT.WRAP);
@@ -1683,8 +1683,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                         
         m_monitoringCombo = UIComponentHelper.createCombo(
                 expertAreaComposite, 2, 
-                MonitoringUtils.getAllRegisteredMonitoringIds(), 
-                MonitoringUtils.getAllRegisteredMonitoringNames(), true); 
+                MonitoringRegistry.getAllRegisteredMonitoringIds(), 
+                MonitoringRegistry.getAllRegisteredMonitoringNames(), true); 
         
         super.createExpertArea(expertAreaComposite);
        

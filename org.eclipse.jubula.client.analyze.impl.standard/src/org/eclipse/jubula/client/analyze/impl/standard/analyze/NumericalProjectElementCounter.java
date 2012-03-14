@@ -22,7 +22,6 @@ import org.eclipse.jubula.client.analyze.internal.AnalyzeResult;
 import org.eclipse.jubula.client.analyze.internal.helper.ProjectContextHelper;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
-import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -53,6 +52,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
      */
     static class CountElementOperation extends
             AbstractNonPostOperatingTreeNodeOperation<INodePO> {
+        
         /**
          * This Map is used to save the amount of the different NodeTypes
          */
@@ -77,18 +77,35 @@ public class NumericalProjectElementCounter implements IAnalyze {
         public boolean operate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
 
+            if (node instanceof IProjectPO) {
+                return !alreadyVisited;
+            }
+            long currentProjectID = GeneralStorage.getInstance().getProject()
+                    .getId();
+            long nodeParentProjectID = node.getParentProjectId();
+
+            if (currentProjectID != nodeParentProjectID) {
+                return alreadyVisited;
+            }
+
             Class<? extends INodePO> nodeType = null;
             if (node instanceof ICategoryPO 
                     || node instanceof ISpecTestCasePO
-                    || node instanceof ICapPO 
                     || node instanceof ITestSuitePO
-                    || node instanceof IExecTestCasePO
                     || node instanceof ITestJobPO
-                    || node instanceof IRefTestSuitePO
-                    || node instanceof IComponentNamePO
-                    || node instanceof IEventExecTestCasePO) {
+                    || node instanceof IRefTestSuitePO) {
                 nodeType = node.getClass();
             }
+            
+            if (node instanceof IEventExecTestCasePO                 
+                    || node instanceof ICapPO
+                    || node instanceof IExecTestCasePO) {
+
+                if (!(parent instanceof IExecTestCasePO)) {
+                    nodeType = node.getClass();
+                }
+            }
+
             if (nodeType != null) {
                 Integer ccount = getAmount().get(nodeType);
                 if (ccount == null) {
@@ -105,7 +122,6 @@ public class NumericalProjectElementCounter implements IAnalyze {
             }
             return !alreadyVisited;
         }
-
         /**
          * @return The AmountMap containing the amounts of the different NodeTypes
          */
@@ -215,25 +231,18 @@ public class NumericalProjectElementCounter implements IAnalyze {
             };
             tt.traverse(true);
         }
-//        if (obj2analyze instanceof INodePO) {
-//            final INodePO root = (INodePO) obj2analyze;
-//
-//            TreeTraverser tt = new TreeTraverser(root, count, true, true) {
-//                @Override
-//                protected void traverseReusedProjectSpecPart(
-//                        ITreeTraverserContext<INodePO> context,
-//                        IProjectPO project) {
-//                    // ignore reused Projects
-//                }
-//            };
-//            tt.traverse(true);
-//        }
-        
-//        if (obj instanceof INodePO) {
-//            final INodePO root = (INodePO) obj;
-//            TreeTraverser tt = new TreeTraverser(root);
-//            tt.addOperation(count);
-//            tt.traverse();
-//        }
+        if (obj instanceof INodePO && objContType.equals("")) {
+            final INodePO root = (INodePO) obj;
+            
+            TreeTraverser tt = new TreeTraverser(root, count, true, true) {
+                @Override
+                protected void traverseReusedProjectSpecPart(
+                        ITreeTraverserContext<INodePO> context,
+                        IProjectPO project) {
+                    // ignore reused Projects
+                }
+            };
+            tt.traverse(true);
+        }
     }
 }
