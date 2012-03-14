@@ -82,8 +82,8 @@ public class DvdMainFrameController {
         new DvdInfoAction(Resources.getString("menu.help.about"), this); //$NON-NLS-1$
 
     /** the action for adding a category */
-    private DvdAddCategoryActionV2 m_addCategoryAction = 
-        new DvdAddCategoryActionV2(Resources.getString("menu.edit.add.category"), this); //$NON-NLS-1$ 
+    private DvdAddCategoryAction m_addCategoryAction = 
+        new DvdAddCategoryAction(Resources.getString("menu.edit.add.category"), this); //$NON-NLS-1$ 
     
     /** the action for enabling a category */
     private DvdDisableOrEnableCategoryAction m_enableCategoryAction = 
@@ -262,7 +262,7 @@ public class DvdMainFrameController {
      */
     public DvdMainFrameController() {
         if (DevelopmentState.instance().isV2()) {
-            m_addCategoryAction = new DvdAddCategoryActionV2(
+            m_addCategoryAction = new DvdAddCategoryAction(
                     Resources.getString("menu.edit.add.category"), this); //$NON-NLS-1$ 
 
         }
@@ -658,7 +658,7 @@ public class DvdMainFrameController {
     /**
      * @return Returns the addCategoryAction.
      */
-    public DvdAddCategoryActionV2 getAddCategoryAction() {
+    public DvdAddCategoryAction getAddCategoryAction() {
         return m_addCategoryAction;
     }
     
