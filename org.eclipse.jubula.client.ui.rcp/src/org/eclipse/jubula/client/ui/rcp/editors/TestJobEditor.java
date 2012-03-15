@@ -93,6 +93,16 @@ public class TestJobEditor extends AbstractJBEditor {
                 this, true);
     }
 
+    /**
+     * Sets all necessary global action handlers for this editor. This
+     * ensures that the editor's actions control the enablement of the 
+     * corresponding actions in the main menu.
+     */
+    protected void setActionHandlers() {
+        getSite().setSelectionProvider(this);
+        getEditorSite().getActionBars().updateActionBars();
+    }
+    
     @Override
     public void setInitialInput() {
         INodePO root = 
