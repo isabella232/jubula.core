@@ -9,6 +9,7 @@
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.implclasses;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -19,7 +20,9 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
@@ -200,7 +203,24 @@ public class ComboBoxHelper extends AbstractComboBoxHelper {
      */
     public void selectAll() {
         click(new Integer(1));
-        m_robot.keyStroke(m_robot.getSystemModifierSpec() + " A"); //$NON-NLS-1$
+        
+        // fix for https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=201
+        // The keystroke "command + a" sometimes causes an "a" to be entered
+        // into the text field instead of selecting all text (or having no 
+        // effect).
+        if (EnvironmentUtils.isMacOS()) {
+            m_eventThreadQueuer.invokeAndWait("combo.selectAll", //$NON-NLS-1$
+                new IRunnable() {
+                    public Object run() {
+                        Combo comboBox = (Combo)m_implClass.getComponent();
+                        int textLength = StringUtils.length(comboBox.getText());
+                        comboBox.setSelection(new Point(0, textLength));
+                        return null;
+                    }
+                });
+        } else {
+            m_robot.keyStroke(m_robot.getSystemModifierSpec() + " A"); //$NON-NLS-1$
+        }
     }
     
     /**

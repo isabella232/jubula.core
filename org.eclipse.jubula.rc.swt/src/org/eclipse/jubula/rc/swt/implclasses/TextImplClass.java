@@ -19,6 +19,7 @@ import org.eclipse.jubula.rc.swt.interfaces.ITextImplClass;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
@@ -131,12 +132,19 @@ public class TextImplClass extends AbstractControlImplClass
      */
     protected void selectAll() {
         final String totalText = getText();
-        try {
-            getRobot().keyStroke(getRobot().getSystemModifierSpec() + " A"); //$NON-NLS-1$
-        } catch (StepExecutionException see) {
-            /*This might happen under certain circumstances e.g. on MacOS X see
+        
+        // fix for https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=201
+        // The keystroke "command + a" sometimes causes an "a" to be entered
+        // into the text field instead of selecting all text (or having no 
+        // effect).
+        if (!EnvironmentUtils.isMacOS()) {
+            try {
+                getRobot().keyStroke(getRobot().getSystemModifierSpec() + " A"); //$NON-NLS-1$
+            } catch (StepExecutionException see) {
+                /*This might happen under certain circumstances e.g. on MacOS X see
               bug 342691 */ 
-            log.warn(see);
+                log.warn(see);
+            }
         }
         
         if (!totalText.equals(getSelectionText())) {
