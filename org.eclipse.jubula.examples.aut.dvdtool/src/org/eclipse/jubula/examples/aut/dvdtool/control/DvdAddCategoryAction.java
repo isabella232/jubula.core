@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -65,7 +66,6 @@ public class DvdAddCategoryAction extends DvdAbstractDialogAction {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (isVersion1 || isVersion2 || isVersion3) {
             final JTextField textField = new JTextField(30);
@@ -91,14 +91,14 @@ public class DvdAddCategoryAction extends DvdAbstractDialogAction {
                     m_controller.getDvdMainFrame(),
                     Resources.getString("new.category.input.message")); //$NON-NLS-1$
             okButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent ev) {
                     pane.setValue(textField.getText());
                     dialog.setVisible(false);
                 }
             });
             okButton.setEnabled(false);
             cancelButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent ev) {
                     pane.setValue(null);
                     dialog.setVisible(false);
                 }
@@ -146,7 +146,9 @@ public class DvdAddCategoryAction extends DvdAbstractDialogAction {
                 if (cat.getName().equals(newCatName)) {
                     return true;
                 }
-                for (DvdCategory child : cat.getCategories()) {
+                Iterator it = cat.getCategories().iterator();
+                while (it.hasNext()) {
+                    DvdCategory child = (DvdCategory)it.next();
                     if (categoryExists(child, newCatName)) {
                         return true;
                     }

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.examples.aut.dvdtool;
 
-import org.eclipse.jubula.examples.aut.dvdtool.DevelopmentState.State;
 import org.eclipse.jubula.examples.aut.dvdtool.control.DvdMainFrameController;
 import org.eclipse.jubula.examples.aut.dvdtool.gui.DvdMainFrame;
 
@@ -49,9 +48,12 @@ public class DVDTool {
     private static void checkForDevelopmentVersion(String[] args) {
         if (args.length == 1) {
             try {
-                State state = State.valueOf(args[0].toUpperCase());
-                DevelopmentState.instance().setState(state);
-            } catch (IllegalArgumentException e) {
+                String s = args[0].toUpperCase();
+                if ((s.length() == 2) && s.startsWith("V")) { //$NON-NLS-1$
+                    int state = Integer.parseInt(s.substring(1));
+                    DevelopmentState.instance().setState(state);
+                }
+            } catch (NumberFormatException e) {
                 // ignore wrong parameters
             }
         }
