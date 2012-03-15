@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -431,30 +432,11 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
          * {@inheritDoc}
          */
         protected void handleAllTwoToOneButtonEvent() {
-            String[] selection = m_chooseLists.getListTwo().getItems();
-            for (int i = 0; i < selection.length; i++) {
-                if (isLangUsedInAUT(selection[i])) {
-                    ErrorHandlingUtil.createMessageDialog(
-                            MessageIDs.E_DELETE_PROJECT_LANG);
-                    return;
-                }
-            }
-
-            for (int i = 0; i < selection.length; i++) {
-                if (isLangUsedInProject(selection[i])) {
-                    Dialog dialog = ErrorHandlingUtil.createMessageDialog(
-                        MessageIDs.Q_REMOVE_PROJECT_LANGUAGES);
-                    if (!(Window.OK == dialog.getReturnCode())) {
-                        return;
-                    }
-                    break;
-                }
-            }
-            
-            enableLangCombo();
-            super.handleAllTwoToOneButtonEvent();
-            /* has to be filled after updating language list */
-            fillDefaultLanguageComboBox();
+            // Partial fix for bug 373914. Always show a dialog that the
+            // operation is not allowed.
+            MessageDialog.openInformation(getShell(), 
+                    Messages.CannotRemoveLastProjectDialogTitle, 
+                    Messages.CannotRemoveLastProjectDialogMsg);
         }
 
         /**
@@ -462,6 +444,18 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
          */
         protected void handleSelectionTwoToOneButtonEvent() {
             String[] selection = m_chooseLists.getListTwo().getSelection();
+
+            // Partial fix for bug 373914. Show a dialog that the
+            // operation is not allowed if operation would remove the last
+            // Language in the Project.
+            if (selection.length == m_chooseLists.getListTwo().getItemCount()) {
+                MessageDialog.openInformation(getShell(), 
+                        Messages.CannotRemoveLastProjectDialogTitle, 
+                        Messages.CannotRemoveLastProjectDialogMsg);
+                return;
+            }
+
+            
             for (int i = 0; i < selection.length; i++) {
                 if (isLangUsedInAUT(selection[i])) {
                     ErrorHandlingUtil.createMessageDialog(

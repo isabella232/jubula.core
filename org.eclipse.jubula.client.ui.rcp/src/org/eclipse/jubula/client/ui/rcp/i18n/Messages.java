@@ -163,6 +163,8 @@ public class Messages extends NLS {
     public static String AUTSettingWizardPageUpToolTip;
     public static String CannotFindReusableProjects;
     public static String CannotOpenThePerspective;
+    public static String CannotRemoveLastProjectDialogTitle;
+    public static String CannotRemoveLastProjectDialogMsg;
     public static String CantLoadProjectInEditSession;
     public static String CantResolveURLOfFile;
     public static String CapGUIAction;
