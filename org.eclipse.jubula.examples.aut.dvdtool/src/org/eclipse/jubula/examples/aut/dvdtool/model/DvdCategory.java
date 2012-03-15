@@ -28,7 +28,7 @@ public class DvdCategory implements Serializable {
     private DvdCategory m_parent = null;
     
     /** the children categories, a Vector, see insert() and remove() */
-    private List<DvdCategory> m_categories; 
+    private List m_categories; 
     
     /** the dvds of this category, a Vector, see insert() and remove() */
     private List m_dvds;
@@ -146,7 +146,7 @@ public class DvdCategory implements Serializable {
     /**
      * @return Returns the children.
      */
-    public List<DvdCategory> getCategories() {
+    public List getCategories() {
         return m_categories;
     }
     

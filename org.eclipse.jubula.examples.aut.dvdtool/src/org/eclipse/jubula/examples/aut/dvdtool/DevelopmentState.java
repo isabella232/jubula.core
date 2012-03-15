@@ -10,21 +10,25 @@ package org.eclipse.jubula.examples.aut.dvdtool;
  * trigger certain behaviors which simulated development states.
  */
 public final class DevelopmentState {
-    /**
-     * Symbolic names for development states
-     */
-    public enum State { V0, V1, V2, V3 }
+    /**Symbolic name for development state */
+    public static final int V0 = 0;
+    /**Symbolic name for development state */
+    public static final int V1 = 1;
+    /**Symbolic name for development state */
+    public static final int V2 = 2;
+    /**Symbolic name for development state */
+    public static final int V3 = 3;
     
     /** Singleton instance variable */
     private static DevelopmentState instance;
     /** simulated development state */
-    private State m_state;
+    private int m_state;
 
     /**
      * private constructor required by the Singleton pattern.
      */
     private DevelopmentState() {
-        m_state = State.V0;
+        m_state = V0;
     }
     
     /**
@@ -41,14 +45,14 @@ public final class DevelopmentState {
     /**
      * @return the m_state
      */
-    public State getState() {
+    public int getState() {
         return m_state;
     }
 
     /**
      * @param state the m_state to set
      */
-    public void setState(State state) {
+    public void setState(int state) {
         m_state = state;
     }
     
@@ -57,7 +61,7 @@ public final class DevelopmentState {
      * @return true if the state from the method name is set
      */
     public boolean isV0() {
-        return m_state == State.V0;
+        return m_state == V0;
     }
     
     /**
@@ -65,7 +69,7 @@ public final class DevelopmentState {
      * @return true if the state from the method name is set
      */
     public boolean isV1() {
-        return m_state == State.V1;
+        return m_state == V1;
     }
     
     /**
@@ -73,7 +77,7 @@ public final class DevelopmentState {
      * @return true if the state from the method name is set
      */
     public boolean isV2() {
-        return m_state == State.V2;
+        return m_state == V2;
     }
     
     /**
@@ -81,7 +85,7 @@ public final class DevelopmentState {
      * @return true if the state from the method name is set
      */
     public boolean isV3() {
-        return m_state == State.V3;
+        return m_state == V3;
     }
     
 }
