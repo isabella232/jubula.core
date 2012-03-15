@@ -37,10 +37,10 @@ public class DvdLoadAction extends AbstractAction {
         try {
             final InputStream is = 
                     getClass().getClassLoader().getResourceAsStream(
-                            "resources/default.dvd");
+                            "resources/default.dvd"); //$NON-NLS-1$
             if (is != null) {
                 DvdManager.singleton().open(m_controller, is);
-                m_controller.opened("default");
+                m_controller.opened("default"); //$NON-NLS-1$
             }
         } catch (DvdInvalidContentException e) {
             //  Auto-generated catch block
