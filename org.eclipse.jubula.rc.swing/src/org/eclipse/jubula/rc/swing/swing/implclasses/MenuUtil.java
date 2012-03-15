@@ -73,7 +73,7 @@ public abstract class MenuUtil extends MenuUtilBase {
      * 
      * @param mb the menu bar
      * @param idx the index of the menu to find
-     * @return the menu
+     * @return the menu, or <code>null</code> if not found
      */
     public static JMenu findMenu(JMenuBar mb, int idx) {
         List visibleSubMenus = new ArrayList();
@@ -87,7 +87,7 @@ public abstract class MenuUtil extends MenuUtilBase {
             }
         }
 
-        if (idx >= visibleSubMenus.size()) {
+        if (idx >= visibleSubMenus.size() || idx < 0) {
             return null;
         }
 
@@ -217,7 +217,9 @@ public abstract class MenuUtil extends MenuUtilBase {
     public static void closeMenu(IRobot robot, JMenuBar menuBar, int item) {
         if (menuBar.getSelectionModel().getSelectedIndex() == item) {
             JMenu menu = findMenu(menuBar, item);
-            clickMenuItem(robot, menu);
+            if (menu != null) {
+                clickMenuItem(robot, menu);
+            }
         }
     }
     
@@ -231,7 +233,9 @@ public abstract class MenuUtil extends MenuUtilBase {
         final int index = getItemNumber(menuBar, item);
         if (menuBar.getSelectionModel().getSelectedIndex() == index) {
             JMenu menu = findMenu(menuBar, index);
-            clickMenuItem(robot, menu);
+            if (menu != null) {
+                clickMenuItem(robot, menu);
+            }
         }
     }
     
