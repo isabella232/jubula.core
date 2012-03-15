@@ -1,19 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.2.6 Best practices for testing RCP AUT&#39;s </title>
-    <meta content="4.2.6 Best practices for testing RCP AUT&#39;s " name="description" />
+    <title>3.30.1 Stopping the AUT </title>
+    <meta content="3.30.1 Stopping the AUT " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h2><a name="SECTION00526000000000000000"> <span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Best practices for testing RCP AUT&#39;s </a></h2>
-    <p><a name="5689"></a> <a name="5690"></a><p><span class="textbf">Perspective layout reset</span><br /> One of the features of RCP AUT&#39;s is that they generally remember the state of the AUT (position of views, which perspective was open) when the AUT is closed. In order to make tests as robust as possible, we recommend starting each use case with a module to reset the perspective to its defaults, and testing with this default perspective. <p><span class="textbf">Workspace choice</span><br /> RCP AUT&#39;s use a workspace to save user-specific preferences. The choice of workspace is usually offered before the AUT starts. This dialog is not currently testable by Jubula , so we recommend adding the desired workspace as an AUT argument in the AUT configuration <a href="node74.html#configuringaut">3.5.3</a>. The parameter used to specify the workspace is <tt>&quot;-data &#39;&#39;WORKSPACE&#39;&#39;&quot;</tt>. <p>
+  <body><a name="testExecViewContextId"></a><a name="runningAUTsViewContextId"></a><h2><a name="SECTION004301000000000000000"> <span class="arabic">3</span>.<span class="arabic">30</span>.<span class="arabic">1</span> Stopping the AUT </a></h2>
+    <p><a name="5664"></a> <a name="5665"></a><ol>
+        <li>When you stop the AUT Agent , any AUT&#39;s that were connected to this AUT Agent are closed. <li>AUT&#39;s which were started from a configuration are automatically closed when the test execution via the test executor stops. <li>To stop the AUT manually, select the AUT you want to stop from the Running AUT&#39;s View and then click the Stop AUT button. <br />
+          <div class="margin"><img align="BOTTOM" alt="Image stopAUT" border="0" height="256" src="./stopAUT.png" width="256" />&nbsp; stop AUT </div>
+          <br />
+        <li>A dialog will appear to ask you if you are sure you want to stop the AUT . Click &quot;<i>yes</i>&quot;. <li>You can opt to not see this dialog in the preferences <a href="node218.html#gdprefs">3.26</a>. </ol>
+    <p><span class="textbf">Stopping an AUT in a test</span><br /> Stopping an AUT as part of a test is generally not possible. The AUT will be stopped automatically at the end of testing according to the points mentioned above. <p> You can use the <i>restart</i> action to restart the AUT during the test. You may be able to use the action <i>External Key Combination</i> to send an unconfirmed keystroke to the AUT (i.e. <tt>&raquo;ENTER&laquo;</tt> on a prompt dialog for closing the AUT ) to close the AUT at the end of your test, however, the success of this is dependent on the AUT and environment as well as timing and synchronization issues. <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

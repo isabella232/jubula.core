@@ -10,8 +10,8 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00625000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">5</span> List</a></h2><a name="6410"></a> <a name="6411"></a><p><b>Description</b>:<p><a name="CONCRETE_List"></a><p> A <i>List</i> is a component which displays a number of values. Lists allow single or multiple values to be selected. <p> Because the comma (,) is a special symbol for lists, if you want to use a comma as part of your parameter value, you have to mask it. See the section later in this document <a href="node39.html#specialchar">9</a> for more details. <p>
-      <div align="CENTER"><a name="list"></a><a name="6419"></a><table>
+    <h2><a name="SECTION00625000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">5</span> List</a></h2><a name="6531"></a> <a name="6532"></a><p><b>Description</b>:<p><a name="CONCRETE_List"></a><p> A <i>List</i> is a component which displays a number of values. Lists allow single or multiple values to be selected. <p> Because the comma (,) is a special symbol for lists, if you want to use a comma as part of your parameter value, you have to mask it. See the section later in this document <a href="node39.html#specialchar">9</a> for more details. <p>
+      <div align="CENTER"><a name="list"></a><a name="6540"></a><table>
           <caption align="BOTTOM"><strong>Figure 5.8:</strong> List</caption>
           <tr>
             <td>
@@ -21,7 +21,7 @@
         </table>
       </div>
     <p><span class="textbf">Mapping lists</span><p> In the Object Mapping Mode , a list to be mapped looks like this: <p>
-      <div align="CENTER"><a name="maplist"></a><a name="6428"></a><table>
+      <div align="CENTER"><a name="maplist"></a><a name="6549"></a><table>
           <caption align="BOTTOM"><strong>Figure 5.9:</strong> List</caption>
           <tr>
             <td>
@@ -293,6 +293,12 @@
           <td><small>Graphics Component (abstract)</small></td>
         </tr>
         <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_StorePropertyValue">Store Property</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Variable:Variable Name <br /> String:Property Name <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
           <td><small> <a href="node9.html#ABSTRACT_TextVerifiable_ReadValue">Store Value</a></small></td>
           <td><small>e</small></td>
           <td><small><p> Variable:Variable Name <br /></small></td>
@@ -308,7 +314,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44337"></a><a name="44338"></a><p><a name="CONCRETE_List_VerifyContainsValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44837"></a><a name="44838"></a><p><a name="CONCRETE_List_VerifyContainsValue"></a><p>
       <ul>
         <li>This action tests whether a value you specify is contained in the list. </ul>
     <p>
@@ -368,7 +374,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Index/Indices</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44344"></a><a name="44345"></a><p><a name="CONCRETE_List_VerifySelectedIndices"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Index/Indices</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44844"></a><a name="44845"></a><p><a name="CONCRETE_List_VerifySelectedIndices"></a><p>
       <ul>
         <li>Use this action to test whether an item or items in a list is/are currently selected. <li>The items you want to test are given using their index. </ul>
     <p>
@@ -410,7 +416,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Value(s)</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44351"></a><a name="44352"></a><p><a name="CONCRETE_List_VerifySelectedValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Value(s)</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44851"></a><a name="44852"></a><p><a name="CONCRETE_List_VerifySelectedValue"></a><p>
       <ul>
         <li>Use this action to test whether an item or items in a list is/are currently selected. <li>The items you want to test are given using their value (name). Each value given is compared (in order) to the corresponding element of the current selection. <li>If you only want to check that one value is selected, or to check several selected elements using a single value, you can use the &quot;<i>check text</i>&quot; action. <li>This checks whether each value you specify is selected in the list. </ul>
     <p>
@@ -469,7 +475,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drag Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44358"></a><a name="44359"></a><p><a name="CONCRETE_List_DragByIndex"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drag Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44858"></a><a name="44859"></a><p><a name="CONCRETE_List_DragByIndex"></a><p>
       <ul>
         <li>This action drags the list item you specify. <li>The item is specified by its index in the list. <li>The cursor is moved over the component. <li>The mouse button you specify is held, and the item is dragged. <li>Follow this action with a <i>drop</i> action </ul>
     <p> If you want to drag multiple items, use an action to select the items you want to drag before using the drag action. <p>
@@ -491,7 +497,13 @@
       <ul>
         <li>Use this parameter to select which mouse button you want to click with. <ul>
             <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. </ul>
+        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -513,7 +525,13 @@
             <dt><strong><tt>&quot;control&quot;</tt></strong><dd>This is the first modifier for Windows and Linux <dt><strong><tt>&quot;cmd&quot;</tt></strong><dd>This is the first modifier for Mac <dt><strong><tt>&quot;mod&quot;</tt></strong><dd>This is the platform-independent first modifier. It corresponds to <tt>&raquo;CONTROL&laquo;</tt> for Windows and Linux, and <tt>&raquo;CMD&laquo;</tt> for Mac. <dt><strong><tt>&quot;meta&quot;</tt></strong><dd>
             <dt><strong><tt>&quot;alt&quot;</tt></strong><dd>
           </dl>
-        <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier. <li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>. </ul>
+        <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier. <li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not use quotes around the modifiers, enter them in plain text</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -535,7 +553,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drag Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44365"></a><a name="44366"></a><p><a name="CONCRETE_List_DragByValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drag Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44865"></a><a name="44866"></a><p><a name="CONCRETE_List_DragByValue"></a><p>
       <ul>
         <li>This action drags the list item you specify. <li>The item is specified by its value in the list. <li>The cursor is moved over the component. <li>The mouse button you specify is held, and the item is dragged. <li>Follow this action with a <i>drop</i> action. </ul>
     <p> If you want to drag multiple items, use an action to select the items you want to drag before using the drag action. <p>
@@ -557,7 +575,13 @@
       <ul>
         <li>Use this parameter to select which mouse button you want to click with. <ul>
             <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. </ul>
+        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -579,7 +603,13 @@
             <dt><strong><tt>&quot;control&quot;</tt></strong><dd>This is the first modifier for Windows and Linux <dt><strong><tt>&quot;cmd&quot;</tt></strong><dd>This is the first modifier for Mac <dt><strong><tt>&quot;mod&quot;</tt></strong><dd>This is the platform-independent first modifier. It corresponds to <tt>&raquo;CONTROL&laquo;</tt> for Windows and Linux, and <tt>&raquo;CMD&laquo;</tt> for Mac. <dt><strong><tt>&quot;meta&quot;</tt></strong><dd>
             <dt><strong><tt>&quot;alt&quot;</tt></strong><dd>
           </dl>
-        <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier. <li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>. </ul>
+        <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier. <li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not use quotes around the modifiers, enter them in plain text</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -635,7 +665,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44372"></a><a name="44373"></a><p><a name="CONCRETE_List_DropByIndex"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44872"></a><a name="44873"></a><p><a name="CONCRETE_List_DropByIndex"></a><p>
       <ul>
         <li>This action drops a list item. <li>The item on which to drop the dragged item is specified by its index in the list. <li>The cursor is moved over the component. <li>The mouse button is let loose, and the item is dropped. <li>Precede this action with a <i>drag</i> action </ul>
     <p>
@@ -677,7 +707,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44379"></a><a name="44380"></a><p><a name="CONCRETE_List_DropByValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44879"></a><a name="44880"></a><p><a name="CONCRETE_List_DropByValue"></a><p>
       <ul>
         <li>This action drops a list item. <li>The item on which to drop the dragged item is specified by its value in the list. <li>The cursor is moved over the component. <li>The mouse button is let loose, and the item is dropped. <li>Precede this action with a <i>drag</i> action </ul>
     <p>
@@ -753,11 +783,17 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Index/Indices</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44386"></a><a name="44387"></a><p><a name="CONCRETE_List_SelectIndices"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Select Entry by Index/Indices</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44886"></a><a name="44887"></a><p><a name="CONCRETE_List_SelectIndices"></a><p>
       <ul>
         <li>Use this action to select an item or items from the list. <li>Enter the items you want to select using their indices. <li>Jubula realizes this action by: <ul>
             <li>Pressing and holding <tt>&raquo;CTRL&laquo;</tt><li>Clicking on the indicated items <li>Releasing <tt>&raquo;CTRL&laquo;</tt></ul>
       </ul>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+          <td><b>This action is unsupported for the HTML toolkit</b></td>
+        </tr>
+      </table>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -811,16 +847,28 @@
       <ul>
         <li>Use this parameter to select which mouse button you want to click with. <ul>
             <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. </ul>
+        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Value(s)</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44393"></a><a name="44394"></a><p><a name="CONCRETE_List_SelectValues"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Select Entry by Value(s)</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44893"></a><a name="44894"></a><p><a name="CONCRETE_List_SelectValues"></a><p>
       <ul>
         <li>Use this action to select an item or items from the list. <li>Enter the items you want to select using their names (values). <li>Jubula realizes this action by: <ul>
             <li>Pressing and holding <tt>&raquo;CTRL&laquo;</tt><li>Clicking on the indicated items <li>Releasing <tt>&raquo;CTRL&laquo;</tt></ul>
       </ul>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+          <td><b>This action is unsupported for the HTML toolkit</b></td>
+        </tr>
+      </table>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -908,11 +956,17 @@
       <ul>
         <li>Use this parameter to select which mouse button you want to click with. <ul>
             <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. </ul>
+        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

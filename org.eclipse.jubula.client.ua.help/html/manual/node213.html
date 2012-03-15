@@ -1,22 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.19.11 Help preferences</title>
-    <meta content="3.19.11 Help preferences" name="description" />
+    <title>3.21 Dealing with errors in tests: Event Handlers </title>
+    <meta content="3.21 Dealing with errors in tests: Event Handlers " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h2><a name="SECTION0041911000000000000000"> <span class="arabic">3</span>.<span class="arabic">19</span>.<span class="arabic">11</span> Help preferences</a></h2>
-    <p><a name="helpprefs"></a><ol>
-        <li>Choose whether you want to have help displayed in an external browser. This lets you see more information at once. <li>For context-sensitive help for windows and dialogs, choose how you want the help to appear. <li>Choose how many search results should be shown when searching through the help system. </ol>
-    <p>
+  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="eventHandlerAddContextId"></a><a name="testExecViewContextId"></a><h1><a name="SECTION004210000000000000000"> <span class="arabic">3</span>.<span class="arabic">21</span> Dealing with errors in tests: Event Handlers </a></h1><a name="customizedehandler"></a><p><a name="4382"></a> <a name="4383"></a> <a name="4384"></a> <a name="4385"></a> <a name="4386"></a> <a name="4387"></a><p> Event Handlers are Test Cases used to deal with deviations during test execution. When an error occurs, the current Test Case is searched for an Event Handler for that error type. If none is found, the parent Test Case is searched, and so on. If no Event Handler for the test is found, then a default Event Handler is activated. Default Event Handlers are specified in the Test Suite properties <a href="node161.html#confsuite">3.14.2</a>. <p> The advantage of adding your own Event Handlers is that you can define specific behavior for certain errors in each Test Case . An Event Handler can be an empty Test Case , or can contain Test Cases to be executed when the error occurs. <p> For each Event Handler , you must specify: <dl>
+        <dt><strong>an event type</strong><dd>to define what sort of error should activate this Test Case <a href="node215.html#eventtype">3.21.2</a>. <dt><strong>a reentry type</strong><dd>to define how the test should continue once the Event Handler has been executed <a href="node216.html#reentrytype">3.21.3</a>. </dl>
     <p>
       <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node214.html" name="tex2html3811"><span class="arabic">3</span>.<span class="arabic">21</span>.<span class="arabic">1</span> Adding Event Handlers to a Test Case </a><li><a href="node215.html" name="tex2html3812"><span class="arabic">3</span>.<span class="arabic">21</span>.<span class="arabic">2</span> Event types</a><li><a href="node216.html" name="tex2html3813"><span class="arabic">3</span>.<span class="arabic">21</span>.<span class="arabic">3</span> Reentry types</a></ul>
+      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

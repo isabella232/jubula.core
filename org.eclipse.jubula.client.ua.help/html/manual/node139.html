@@ -1,32 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.10.3 Renaming component names</title>
-    <meta content="3.10.3 Renaming component names" name="description" />
+    <title>3.12.9.4 Entering data for central test data sets</title>
+    <meta content="3.12.9.4 Entering data for central test data sets" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="renameComponentNameContextId"></a><h2><a name="SECTION004103000000000000000"> <span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">3</span> Renaming component names</a></h2><a name="TasksRenameCompName"></a><p><a name="2834"></a> <a name="2835"></a><p> Use the rename function to change the name of a component name in your test specification. Whereas <i>reassigning</i> component names results in a new component name being created <a href="node136.html#TasksReassignCompName">3.10.2</a>, renaming just changes the name at all places where it is used. <p> You can rename component names in the Component Name Browser &nbsp; and in the Object Mapping Editor . <ol>
-        <li>Select the component name you want to rename. <li>In the context-menu, select: <br />
+  <body><a name="guidancerCentralTestDataEditorContextId"></a><h3><a name="SECTION004129400000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">9</span>.<span class="arabic">4</span> Entering data for central test data sets</a></h3><a name="TasksDSVCentral"></a><p> Once you have created a central test data set <a href="node136.html#TasksCentralDataCreate">3.12.9.1</a> and have added parameters to the central test data set <a href="node138.html#TasksCentralDataEditParams">3.12.9.3</a> then you can enter data for these parameters in the Data Sets View . <p> To enter data sets for a central test data set: <ol>
+        <li>Open the Central Test Data Editor by clicking the &quot;<i>Central Test Data Editor</i>&quot; on the toolbar or selecting: <br />
           <table border="0" style="margin:0px;padding:0px;">
             <tr>
-              <td bgcolor="#DDDDDD">Rename</td>
+              <td bgcolor="#DDDDDD">Open with</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Central Test Data Editor</td>
             </tr>
           </table>
-        <li>In the dialog that appears, enter a new component name to replace the old name. We recommend using naming conventions for component names <a href="node307.html#BPComponentNames">5.2.2</a>. <li>Press &quot;<i>OK</i>&quot;. The component name you entered will replace the old name throughout your test. </ol>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You cannot rename a component name with a name that already exists. To merge two or more component names to the same name, see the section on merging <a href="node140.html#TasksMergeCompName">3.10.4</a>.</b></td>
-        </tr>
-      </table>
+          <br /> from the Test Suite Browser . <li>In the editor, single-click the central test data set you want to add data to. <li>In the Data Sets View , make sure the language in the combo box on the right is the right language for your data. <li>Select &quot;<i>Add</i>&quot; to add a row. <li>Enter the values for the parameters in the row. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You cannot add referenced parameters (i.e. reference names preceded by the equals sign) in the Data Sets View for a central test data set.</b></td>
+            </tr>
+          </table>
+        <li>Use the buttons in the Data Sets View to add more rows, delete rows and insert rows above the currently selected row. </ol>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

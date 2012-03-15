@@ -1,28 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.5.3 Configuring AUT&#39;s to be started via Jubula </title>
-    <meta content="3.5.3 Configuring AUT&#39;s to be started via Jubula " name="description" />
+    <title>3.7.1.1 AUT activation</title>
+    <meta content="3.7.1.1 AUT activation" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="autConfigSettingWizardPagePageContextId"></a><h2><a name="SECTION00453000000000000000"></a> <a name="configuringaut"></a><br /><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span> Configuring AUT&#39;s to be started via Jubula </h2>
-    <p><a name="1152"></a> <a name="1153"></a> <a name="1154"></a> <a name="1155"></a> <a name="1156"></a> <a name="1157"></a> <a name="1158"></a> <a name="1159"></a> <a name="1160"></a> <a name="1161"></a> <a name="1162"></a> <a name="1163"></a> <a name="1164"></a> <a name="1165"></a> <a name="1166"></a><p> Once you have created a Project <a href="node52.html#newproject">3.4.1</a> and defined an AUT <a href="node73.html#Defineaut">3.5.2</a>, you can add and edit AUT configurations. Use this option if you want Jubula to start your AUT for you. The details in the AUT configuration tell Jubula how to start the AUT , e.g. on which machine. An AUT can have multiple configurations (for example, for local and remote testing). <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If you want to start your AUT yourself, and have Jubula connect to it, then use the <i>autrun</i> command to start the AUT <a href="node78.html#autrun">3.5.4</a>. In this case, you do not need to create an AUT configuration.</b></td>
-        </tr>
-      </table>
-    <p> The AUT configuration dialog has three different levels of detail: basic, advanced and expert. <p> See the sections below for information on the different levels. <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node75.html" name="tex2html1950"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Basic AUT configuration</a><li><a href="node76.html" name="tex2html1951"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Advanced AUT configuration</a><li><a href="node77.html" name="tex2html1952"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Expert AUT configuration</a></ul>
+  <body>
+    <h3><a name="SECTION00471100000000000000"></a> <a name="TasksAUTActivation"></a><br /><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">1</span>.<span class="arabic">1</span> AUT activation </h3>
+    <p> Activation makes sure that the AUT is in focus at the beginning of test execution. This is acheived by clicking somewhere in the AUT window. You can specify the activation method (i.e. where to click) as part of a configuration for an AUT , or you can create a Test Step within a test to do the same thing --&gt;<i>Reference Manual</i> <a href="../reference/node13.html#activate"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p> The advantage of specifying an activation method here is that it is central and affects each test execution started on this AUT with this configuration. <p> Bear in mind that you may need to activate your AUT in order for tests to work, especially if the AUT runs on the same machine as Jubula . <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

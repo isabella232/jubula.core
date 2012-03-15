@@ -1,33 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.9.11 Special parameters: empty strings and the escape character</title>
-    <meta content="3.9.11 Special parameters: empty strings and the escape character" name="description" />
+    <title>3.12.7 Concatenating (combining) parameters</title>
+    <meta content="3.12.7 Concatenating (combining) parameters" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION004911000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">11</span> Special parameters: empty strings and the escape character</a></h2>
-    <p><a name="2642"></a> <a name="2643"></a> <a name="2644"></a> <a name="2645"></a><p><span class="textbf">Entering empty strings as parameters</span><br /> If you want the parameter you enter to be an <i>empty string</i> (i.e. nothing), use two single quote marks: &#39;&#39; <br />
-    <p> You can use this with the <i>equals</i>, <i>matches</i> or <i>simple match</i> operators. <p> You can also use &#39;<code>^$</code>&#39; or &#39;<code>^\s*$</code>&#39; with the operator <i>matches</i> to check that a text area is empty. <p> You can also use &#39;<code>^$</code>&#39; with the operator <i>matches</i> to check that a text area is empty. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If a component looks empty, but entering an empty string doesn&#39;t work, it may be worth asking a developer what is actually in the component.</b></td>
-        </tr>
-      </table>
-    <p><span class="textbf">The escape character</span><br /> Some symbols have a special meaning in Jubula . If you want to use the symbol without the special function, you have to <i>escape</i> it. The symbol to negate any special function of the following symbol is a backslash: (<span class="MATH"><img align="MIDDLE" alt="$\backslash$" border="0" height="38" src="img3.gif" width="15" /></span>). <p> See the Reference Manual (--&gt;<i>Reference Manual</i> <a href="../reference/node39.html#specialchar"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for more details on special symbols and escaping them. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>When you are using regular expressions, you will also need to think about which symbols need neutralising. Sometimes more than one backslash is necessary.</b></td>
-        </tr>
-      </table>
+  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerDataSetViewContextId"></a><h2><a name="SECTION004127000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">7</span> Concatenating (combining) parameters</a></h2><a name="TasksConcatenation"></a><p><a name="2555"></a> <a name="2556"></a><p> Jubula has various different types of parameter: <ul>
+        <li>Concrete values <a href="node119.html#TasksTestdataConcrete">3.12.2</a>. <li>Referenced parameters <a href="node120.html#TasksTestdataReferences">3.12.3</a>. <li>Variables <a href="node122.html#TasksVariables">3.12.5</a>. <li>Functions <a href="node126.html#TasksDataFunctions">3.12.6</a>. </ul>
+    <p> You can use these parameters separately, or you can combine them to create a parameter value. This is useful if a value you want to enter or check consists of parts that change and parts that stay the same. <p> To combine different types of parameter to make one value, you must write them in a specific way: <ol>
+        <li>Referenced parameters must be written with curly brackets around the reference name: <br /><tt>&quot;={REF_NAME}&quot;</tt><li>Variable names must also be written with curly brackets around them: <br /><tt>&quot;${VAR_NAME}&quot;</tt><li>Concrete values are written as normal. <li>For example, you can build a data string that contains all four types of data: <br /><tt>&quot;test_={PROJECTNAME}_${CUSTOMERNUMBER}_?now()&quot;</tt><br />
+          <p>
+      </ol>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

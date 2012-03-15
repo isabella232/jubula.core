@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.4.1 Structuring global Event Handlers for your test</title>
-    <meta content="5.4.1 Structuring global Event Handlers for your test" name="description" />
+    <title>4.2.4 Design for testability in RCP</title>
+    <meta content="4.2.4 Design for testability in RCP" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,15 +10,10 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00641000000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Structuring global Event Handlers for your test</a></h2>
-    <p> When automated tests are running, it is important to ensure that an error in the test will not result in the rest of the test not running. To do this, we recommend adding general Event Handlers to each use case, at the very top level of the use case. <p> The aim of adding Event Handlers here is: <ol>
-        <li>To catch and deal with errors that are not known or expected during the test. For known/expected errors, Event Handlers can be used locally on individual Test Cases <a href="node319.html#BPEHLocal">5.4.2</a>. <li>To ensure that the rest of the test can continue - either in this use case, or in the next one. </ol>
-    <p> A prerequisite for using Event Handlers in a global way is the structure of your tests. Each use case must be contained in a single Test Case , and the use cases must be independent from each other - starting in a well-defined state and leaving the AUT in a well-defined state <a href="node304.html#BPKeywordSuites">5.1.3</a>. <p> The following steps describe how to set up a global error handling concept in your tests. They assume that you have set up a category structure as described earlier <a href="node311.html#BPCategories">5.3.1</a>. <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node317.html" name="tex2html5051"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Creating general Event Handlers </a><li><a href="node318.html" name="tex2html5052"><span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Adding the Event Handlers to the use case</a></ul>
+    <h2><a name="SECTION00524000000000000000"> <span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Design for testability in RCP</a></h2>
+    <p><a name="6163"></a> <a name="6164"></a> <a name="6165"></a> <a name="6166"></a><p> Although Jubula can relocate components in the AUT even when they are not named by the developers, naming components is nevertheless a good idea. In SWT and RCP there is no method like the Swing <i>setName</i> method to name components in the program code. However, you can improve the testability of your application by using the following method in your SWT or RCP code for the current component class: <i>setData(String key, String ComponentName)</i>. For the key, use <i>TEST_COMP_NAME</i>. <p> Even if you do not name components, you can choose to have Jubula generate unique names for your components in the AUT in the AUT dialog <a href="node71.html#Defineaut">3.6</a>. <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

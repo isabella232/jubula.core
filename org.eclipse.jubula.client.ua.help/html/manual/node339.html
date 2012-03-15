@@ -1,17 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>6.4.3 The Component Names View </title>
-    <meta content="6.4.3 The Component Names View " name="description" />
+    <title>5.2.1 Naming conventions for Test Cases </title>
+    <meta content="5.2.1 Naming conventions for Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="compNameViewContextId"></a><h2><a name="SECTION00743000000000000000"> <span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">3</span> The Component Names View </a></h2>The Component Names View is in the lower right-hand corner of the Functional Test Specification Perspective by default, just behind the Data Sets View . It lets you see the component names used in a reused Test Case , and add more component names. This means that you can use a Test Case to execute the same actions on different components. <p>
+  <body><a name="testcaseNewContextId"></a><h2><a name="SECTION00621000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Naming conventions for Test Cases </a></h2><a name="BPTestCaseNames"></a><p> You should name your Test Cases so that it is clear from the name what the Test Case does. Instead of vague or ambiguous names (e.g. Select), try and write names that describe the Test Case in terms of the action and the component it deals with. A few good examples are: <p>
+      <ul>
+        <li>Close Search Dialog with OK Button <li>Select Project Language from Combo Box <li>Fill in Project Wizard, containing: <ul>
+            <li>Enter Project Name in Wizard <li>Select Project Language from List <li>Select Default Language from Combo Box <li>Close Project Wizard with Finish Button </ul>
+      </ul>
+    <p> The Test Case names do not have to exhaustively describe the component, or where it is in the AUT - using categories for the different areas of your AUT saves you having to do this <a href="node344.html#BPCategories">5.3.1</a>. The aim with naming your Test Cases is to make your tests readable and easy to understand. <p> You do not have to write Test Case names in CamelCase or with underscores - Test Case names are not used in the test executor, so there is no problem if they have spaces in them. <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

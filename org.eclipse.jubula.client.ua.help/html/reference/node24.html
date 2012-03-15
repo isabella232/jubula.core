@@ -10,10 +10,10 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00631000000000000000"> <span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Figure Canvas</a></h2><a name="13677"></a> <a name="13678"></a><p><b>Description</b>:<p><a name="GEF_FigureCanvas"></a><p>
+    <h2><a name="SECTION00631000000000000000"> <span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Figure Canvas</a></h2><a name="13858"></a> <a name="13859"></a><p><b>Description</b>:<p><a name="GEF_FigureCanvas"></a><p>
       <ul>
         <li>The figure canvas (<a href="#figurecanvas">5.29</a>) is an editor where figures, connections and anchors are displayed. <p>
-            <div align="CENTER"><a name="figurecanvas"></a><a name="13686"></a><table>
+            <div align="CENTER"><a name="figurecanvas"></a><a name="13867"></a><table>
                 <caption align="BOTTOM"><strong>Figure 5.29:</strong> Figure Canvas</caption>
                 <tr>
                   <td>
@@ -23,8 +23,8 @@
               </table>
             </div>
           <p>
-        <li>Testing GEF components in Jubula involves mapping this figure canvas and locating the figures based on their textpath. <li>Use the GEF Inspector View to find out the textpath of the figures in the canvas --&gt;<i>User Manual</i> <a href="../manual/node289.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <li>The figure canvas itself contains various items which can be addressed by Jubula . <li>Individual figures (<a href="#figure">5.30</a>). <p>
-            <div align="CENTER"><a name="figure"></a><a name="13699"></a><table>
+        <li>Testing GEF components in Jubula involves mapping this figure canvas and locating the figures based on their textpath. <li>Use the GEF Inspector View to find out the textpath of the figures in the canvas --&gt;<i>User Manual</i> <a href="../manual/node321.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <li>The figure canvas itself contains various items which can be addressed by Jubula . <li>Individual figures (<a href="#figure">5.30</a>). <p>
+            <div align="CENTER"><a name="figure"></a><a name="13880"></a><table>
                 <caption align="BOTTOM"><strong>Figure 5.30:</strong> A selected figure containing another figure</caption>
                 <tr>
                   <td>
@@ -35,7 +35,7 @@
             </div>
           <p>
         <li>Tools (<a href="#tools">5.31</a>). <p>
-            <div align="CENTER"><a name="tools"></a><a name="13707"></a><table>
+            <div align="CENTER"><a name="tools"></a><a name="13888"></a><table>
                 <caption align="BOTTOM"><strong>Figure 5.31:</strong> Various tools on the palette</caption>
                 <tr>
                   <td>
@@ -46,7 +46,7 @@
             </div>
           <p>
         <li>Connections (<a href="#connection">5.32</a>). <p>
-            <div align="CENTER"><a name="connection"></a><a name="13715"></a><table>
+            <div align="CENTER"><a name="connection"></a><a name="13896"></a><table>
                 <caption align="BOTTOM"><strong>Figure 5.32:</strong> A connection between two figures</caption>
                 <tr>
                   <td>
@@ -313,6 +313,12 @@
           <td><small>Graphics Component (abstract)</small></td>
         </tr>
         <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_StorePropertyValue">Store Property</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Variable:Variable Name <br /> String:Property Name <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
           <td><small> <a href="node11.html#ABSTRACT_Widget_WaitForComponent">Wait for Component</a></small></td>
           <td><small>e</small></td>
           <td><small><p> Integer:Timeout in ms <br /> Integer:Delay after Visibility <br /></small></td>
@@ -322,7 +328,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Figure Existence</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="45929"></a><a name="45930"></a><p><a name="GEF_FigureCanvas_CheckFigureExists"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Figure Existence</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="46474"></a><a name="46475"></a><p><a name="GEF_FigureCanvas_CheckFigureExists"></a><p>
       <ul>
         <li>Use this action to check whether a figure exists on the canvas. <li>You identify the figure based on its textpath. </ul>
     <p>
@@ -342,7 +348,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_CheckFigureExists_TextPath"></a><p> Use this parameter to enter the textpath to the figure you want to check. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -381,7 +387,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Figure Property</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="45936"></a><a name="45937"></a><p><a name="GEF_FigureCanvas_VerifyFigureProperty"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Figure Property</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="46481"></a><a name="46482"></a><p><a name="GEF_FigureCanvas_VerifyFigureProperty"></a><p>
       <ul>
         <li>Use this action to check a specific property of a figure. <table>
             <tr>
@@ -413,8 +419,8 @@
         </tr>
       </table><a name="GEF_FigureCanvas_VerifyFigureProperty_TextPath"></a><p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
-    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node289.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node321.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
       <table border="1" cellpadding="3">
         <tr>
           <td><small>Name</small></td>
@@ -493,7 +499,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Tool Existence</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="45943"></a><a name="45944"></a><p><a name="GEF_FigureCanvas_CheckToolExists"></a><p> Use this action to check whether a tool entry exists. <p>
+      <br /><span class="textbf"><big class="LARGE">Check Tool Existence</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="46488"></a><a name="46489"></a><p><a name="GEF_FigureCanvas_CheckToolExists"></a><p> Use this action to check whether a tool entry exists. <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -510,7 +516,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_CheckToolExists_TextPath"></a><p> Use this paramter to enter the textpath to the tool you want to check. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -549,7 +555,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Click Connection</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="45950"></a><a name="45951"></a><p><a name="GEF_FigureCanvas_ClickConnection"></a><p> Use this action to click a connection between two figures. <p>
+      <br /><span class="textbf"><big class="LARGE">Click Connection</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="46495"></a><a name="46496"></a><p><a name="GEF_FigureCanvas_ClickConnection"></a><p> Use this action to click a connection between two figures. <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -566,8 +572,8 @@
         </tr>
       </table><a name="GEF_FigureCanvas_ClickConnection_SourceTextPath"></a><p> Use this parameter to enter the textpath of the first figure that has this connection. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
-    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node289.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node321.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
       <table border="1" cellpadding="3">
         <tr>
           <td><small>Name</small></td>
@@ -600,8 +606,8 @@
         </tr>
       </table><a name="GEF_FigureCanvas_ClickConnection_TargetTextPath"></a><p> Use this parameter to specify the textpath of the second figure which has this connection. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
-    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node289.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node321.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
       <table border="1" cellpadding="3">
         <tr>
           <td><small>Name</small></td>
@@ -634,7 +640,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_ClickConnection_ClickCount"></a><p>
       <ul>
-        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> will double-click on the component or item. </ul>
+        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> (without quotes) will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> (without quotes) will double-click on the component or item. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -653,12 +659,18 @@
       <ul>
         <li>Use this parameter to select which mouse button you want to click with. <ul>
             <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. </ul>
+        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Click Figure</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="45957"></a><a name="45958"></a><p><a name="GEF_FigureCanvas_ClickFigure"></a><p> Use this action to click a figure you specify on the canvas. <p>
+      <br /><span class="textbf"><big class="LARGE">Click Figure</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="46502"></a><a name="46503"></a><p><a name="GEF_FigureCanvas_ClickFigure"></a><p> Use this action to click a figure you specify on the canvas. <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -675,7 +687,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_ClickFigure_TextPath"></a><p> Use this parameter to specify the textpath to the figure you want to click. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -709,7 +721,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_ClickFigure_ClickCount"></a><p>
       <ul>
-        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> will double-click on the component or item. </ul>
+        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> (without quotes) will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> (without quotes) will double-click on the component or item. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -728,12 +740,18 @@
       <ul>
         <li>Use this parameter to select which mouse button you want to click with. <ul>
             <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. </ul>
+        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Click in Figure</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="45964"></a><a name="45965"></a><p><a name="GEF_FigureCanvas_ClickInFigure"></a><p> Use this action to click within a figure you specify. The place to click in the figure is given with X and Y units. <p>
+      <br /><span class="textbf"><big class="LARGE">Click in Figure</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="46509"></a><a name="46510"></a><p><a name="GEF_FigureCanvas_ClickInFigure"></a><p> Use this action to click within a figure you specify. The place to click in the figure is given with X and Y units. <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -750,7 +768,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_ClickInFigure_TextPath"></a><p> Use this parameter to specify the textpath to the figure you want to click in. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -784,7 +802,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_ClickInFigure_ClickCount"></a><p>
       <ul>
-        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> will double-click on the component or item. </ul>
+        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> (without quotes) will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> (without quotes) will double-click on the component or item. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -803,7 +821,13 @@
       <ul>
         <li>Use this parameter to select which mouse button you want to click with. <ul>
             <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. </ul>
+        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -820,7 +844,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_ClickInFigure_XPos"></a><p>
       <ul>
-        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the x-axis (the horizontal position). <li>Using the x-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt>, then the click will be performed in the middle of the x-axis. <li>All positions are calculated from the upper left of the component, with the positive x-axis stretching toward the right side of the component. <table>
+        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the x-axis (the horizontal position). <li>Using the x-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt> (without quotes) , then the click will be performed in the middle of the x-axis. <li>All positions are calculated from the upper left of the component, with the positive x-axis stretching toward the right side of the component. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
               <td><b>We recommend not using <tt>&quot;0&quot;</tt> (pixels and percent) or <tt>&quot;100&quot;</tt>(percent) as positions.</b></td>
@@ -860,7 +884,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_ClickInFigure_YPos"></a><p>
       <ul>
-        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the y-axis (the vertical position). <li>Using the y-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt>, then the click will be performed in the middle of the y-axis. <li>All positions are calculated from the upper left of the component, with the positive y-axis stretching toward the bottom of the component. <table>
+        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the y-axis (the vertical position). <li>Using the y-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt> (without quotes), then the click will be performed in the middle of the y-axis. <li>All positions are calculated from the upper left of the component, with the positive y-axis stretching toward the bottom of the component. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
               <td><b>We recommend not using <tt>&quot;0&quot;</tt> (pixels and percent) or <tt>&quot;100&quot;</tt>(percent) as positions.</b></td>
@@ -888,7 +912,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drag Figure</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="45971"></a><a name="45972"></a><p><a name="GEF_FigureCanvas_DragFigure"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drag Figure</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="46516"></a><a name="46517"></a><p><a name="GEF_FigureCanvas_DragFigure"></a><p>
       <ul>
         <li>This action drags the figure you specify. <li>The cursor is moved over the figure. <li>The mouse button you specify is held, and the figure is dragged. <li>Follow this action with a <i>drop</i> action </ul>
     <p> If you want to drag multiple items, use an action to select the items you want to drag before using the drag action. <p>
@@ -908,8 +932,8 @@
         </tr>
       </table><a name="GEF_FigureCanvas_DragFigure_TextPath"></a><p> Use this parameter to specify the textpath to the figure you want to drag. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
-    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node289.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node321.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
       <table border="1" cellpadding="3">
         <tr>
           <td><small>Name</small></td>
@@ -944,7 +968,13 @@
       <ul>
         <li>Use this parameter to select which mouse button you want to click with. <ul>
             <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. </ul>
+        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -966,7 +996,13 @@
             <dt><strong><tt>&quot;control&quot;</tt></strong><dd>This is the first modifier for Windows and Linux <dt><strong><tt>&quot;cmd&quot;</tt></strong><dd>This is the first modifier for Mac <dt><strong><tt>&quot;mod&quot;</tt></strong><dd>This is the platform-independent first modifier. It corresponds to <tt>&raquo;CONTROL&laquo;</tt> for Windows and Linux, and <tt>&raquo;CMD&laquo;</tt> for Mac. <dt><strong><tt>&quot;meta&quot;</tt></strong><dd>
             <dt><strong><tt>&quot;alt&quot;</tt></strong><dd>
           </dl>
-        <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier. <li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>. </ul>
+        <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier. <li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>Do not use quotes around the modifiers, enter them in plain text</b></td>
+            </tr>
+          </table>
+      </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -983,7 +1019,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_DragFigure_XPos"></a><p>
       <ul>
-        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the x-axis (the horizontal position). <li>Using the x-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt>, then the click will be performed in the middle of the x-axis. <li>All positions are calculated from the upper left of the component, with the positive x-axis stretching toward the right side of the component. <table>
+        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the x-axis (the horizontal position). <li>Using the x-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt> (without quotes) , then the click will be performed in the middle of the x-axis. <li>All positions are calculated from the upper left of the component, with the positive x-axis stretching toward the right side of the component. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
               <td><b>We recommend not using <tt>&quot;0&quot;</tt> (pixels and percent) or <tt>&quot;100&quot;</tt>(percent) as positions.</b></td>
@@ -1023,7 +1059,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_DragFigure_YPos"></a><p>
       <ul>
-        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the y-axis (the vertical position). <li>Using the y-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt>, then the click will be performed in the middle of the y-axis. <li>All positions are calculated from the upper left of the component, with the positive y-axis stretching toward the bottom of the component. <table>
+        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the y-axis (the vertical position). <li>Using the y-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt> (without quotes), then the click will be performed in the middle of the y-axis. <li>All positions are calculated from the upper left of the component, with the positive y-axis stretching toward the bottom of the component. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
               <td><b>We recommend not using <tt>&quot;0&quot;</tt> (pixels and percent) or <tt>&quot;100&quot;</tt>(percent) as positions.</b></td>
@@ -1051,7 +1087,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drop on Figure</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="45978"></a><a name="45979"></a><p><a name="GEF_FigureCanvas_DropOnFigure"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drop on Figure</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="46523"></a><a name="46524"></a><p><a name="GEF_FigureCanvas_DropOnFigure"></a><p>
       <ul>
         <li>This action drops a dragged figure onto the figure you specify. <li>The cursor is moved over the figure. <li>The mouse button is let loose, and the figure is dropped. <li>Precede this action with a <i>drag</i> action </ul>
     <p>
@@ -1071,8 +1107,8 @@
         </tr>
       </table><a name="GEF_FigureCanvas_DropOnFigure_TextPath"></a><p> Use this parameter to specify the textpath to the figure you want to drop onto. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
-    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node289.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node321.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
       <table border="1" cellpadding="3">
         <tr>
           <td><small>Name</small></td>
@@ -1105,7 +1141,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_DropOnFigure_XPos"></a><p>
       <ul>
-        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the x-axis (the horizontal position). <li>Using the x-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt>, then the click will be performed in the middle of the x-axis. <li>All positions are calculated from the upper left of the component, with the positive x-axis stretching toward the right side of the component. <table>
+        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the x-axis (the horizontal position). <li>Using the x-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt> (without quotes) , then the click will be performed in the middle of the x-axis. <li>All positions are calculated from the upper left of the component, with the positive x-axis stretching toward the right side of the component. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
               <td><b>We recommend not using <tt>&quot;0&quot;</tt> (pixels and percent) or <tt>&quot;100&quot;</tt>(percent) as positions.</b></td>
@@ -1145,7 +1181,7 @@
         </tr>
       </table><a name="GEF_FigureCanvas_DropOnFigure_YPos"></a><p>
       <ul>
-        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the y-axis (the vertical position). <li>Using the y-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt>, then the click will be performed in the middle of the y-axis. <li>All positions are calculated from the upper left of the component, with the positive y-axis stretching toward the bottom of the component. <table>
+        <li>With this parameter, you can specify where in the component you should click. <li>Use this parameter to enter a value for the y-axis (the vertical position). <li>Using the y-units parameter, you can specify whether the value should be in pixels or in percent. <li>For example, if you enter <tt>&quot;50&quot;</tt> and then <tt>&quot;percent&quot;</tt> (without quotes), then the click will be performed in the middle of the y-axis. <li>All positions are calculated from the upper left of the component, with the positive y-axis stretching toward the bottom of the component. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
               <td><b>We recommend not using <tt>&quot;0&quot;</tt> (pixels and percent) or <tt>&quot;100&quot;</tt>(percent) as positions.</b></td>
@@ -1190,7 +1226,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Tool</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="45985"></a><a name="45986"></a><p><a name="GEF_FigureCanvas_SelectToolByTextPath"></a><p> Use this action to select a tool from the panel in the figure canvas. <p>
+      <br /><span class="textbf"><big class="LARGE">Select Tool</big></span> <tt><small class="FOOTNOTESIZE">(Figure Canvas)</small></tt> <a name="46530"></a><a name="46531"></a><p><a name="GEF_FigureCanvas_SelectToolByTextPath"></a><p> Use this action to select a tool from the panel in the figure canvas. <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -1207,8 +1243,8 @@
         </tr>
       </table><a name="GEF_FigureCanvas_SelectToolByTextPath_TextPath"></a><p> Use this parameter to specify the textpath to the tool you want to select. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
-    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node289.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+    <p> Use the GEF Inspector View to find out the textpath of items on the canvas --&gt;<i>User Manual</i> <a href="../manual/node321.html#TasksInspectorGEF"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
       <table border="1" cellpadding="3">
         <tr>
           <td><small>Name</small></td>
@@ -1241,11 +1277,11 @@
         </tr>
       </table><a name="GEF_FigureCanvas_SelectToolByTextPath_ClickCount"></a><p>
       <ul>
-        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> will double-click on the component or item. </ul>
+        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> (without quotes) will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> (without quotes) will double-click on the component or item. </ul>
     <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

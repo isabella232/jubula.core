@@ -1,37 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.9 Working with test data</title>
-    <meta content="3.9 Working with test data" name="description" />
+    <title>3.11 Working with Test Cases </title>
+    <meta content="3.11 Working with Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h1><a name="SECTION00490000000000000000"></a> <a name="WorkingWithData"></a><br /><span class="arabic">3</span>.<span class="arabic">9</span> Working with test data </h1>
+  <body><a name="testSpecificationViewContextId"></a><a name="problemViewContextId"></a><h1><a name="SECTION004110000000000000000"> <span class="arabic">3</span>.<span class="arabic">11</span> Working with Test Cases </a></h1><a name="WorkingWithTestCases"></a><p> Test Cases are the &#39;&#39;building blocks&#39;&#39; (keywords) in Jubula . They can: <ul>
+        <li>contain other (referenced) Test Cases <a href="node95.html#TasksEditorAdd">3.9.2</a><li>contain Test Steps <a href="node170.html#specsteps">3.16.1</a><li>be used in Test Suites <a href="node95.html#TasksEditorAdd">3.9.2</a><li>be used as Event Handlers <a href="node213.html#customizedehandler">3.21</a></ul>
     <p>
       <br />
       <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node108.html" name="tex2html2363"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">1</span> Data types and entering data for Test Cases </a><li><a href="node109.html" name="tex2html2364"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Entering concrete values as data in Test Cases </a><li><a href="node110.html" name="tex2html2365"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">3</span> Using references for data in Test Cases </a><li><a href="node111.html" name="tex2html2366"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">4</span> Using the edit parameters dialog to add, edit and delete references</a><li><a href="node112.html" name="tex2html2367"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span> Using variables as data for Test Cases </a><ul>
-            <li><a href="node113.html" name="tex2html2368"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Reading and using values (variables) from the AUT </a><li><a href="node114.html" name="tex2html2369"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span>.<span class="arabic">2</span> Using environment variables in tests</a><li><a href="node115.html" name="tex2html2370"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">5</span>.<span class="arabic">3</span> Using the Jubula pre-defined test execution variables</a></ul>
+        <li><a href="node108.html" name="tex2html2446"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">1</span> Creating Test Cases </a><li><a href="node109.html" name="tex2html2447"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span> Creating tests from the library of pre-defined Test Cases </a><ul>
+            <li><a href="node110.html" name="tex2html2448"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Using the library to create tests</a><li><a href="node111.html" name="tex2html2449"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Information about the library</a><li><a href="node112.html" name="tex2html2450"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Tips and tricks for using the Test Case library</a></ul>
           <br />
-        <li><a href="node116.html" name="tex2html2371"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">6</span> Concatenating (combining) parameters</a><li><a href="node117.html" name="tex2html2372"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">7</span> Viewing and changing data sources for Test Cases </a><ul>
-            <li><a href="node118.html" name="tex2html2373"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">7</span>.<span class="arabic">1</span> Changing the data source for a Test Case </a></ul>
-          <br />
-        <li><a href="node119.html" name="tex2html2374"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span> Using central data sets</a><ul>
-            <li><a href="node120.html" name="tex2html2375"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">1</span> Creating and editing central test data sets</a><li><a href="node121.html" name="tex2html2376"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">2</span> Deleting central test data sets</a><li><a href="node122.html" name="tex2html2377"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">3</span> Adding and modifying parameters for central test data sets</a><li><a href="node123.html" name="tex2html2378"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">4</span> Entering data for central test data sets</a><li><a href="node124.html" name="tex2html2379"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">5</span> Reusing central test data sets in Test Cases </a><li><a href="node125.html" name="tex2html2380"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span>.<span class="arabic">6</span> Importing Excel files as central test data</a></ul>
-          <br />
-        <li><a href="node126.html" name="tex2html2381"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span> Using an Excel file as an external data source</a><ul>
-            <li><a href="node127.html" name="tex2html2382"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">1</span> Configuring the Excel file</a><li><a href="node128.html" name="tex2html2383"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Using the =TODAY() function in Excel</a></ul>
-          <br />
-        <li><a href="node129.html" name="tex2html2384"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">10</span> Using the Data Sets View to enter data loops and to translate data</a><ul>
-            <li><a href="node130.html" name="tex2html2385"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">10</span>.<span class="arabic">1</span> Data Sets View : adding multiple data sets to a Test Case </a><li><a href="node131.html" name="tex2html2386"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">10</span>.<span class="arabic">2</span> Data Sets View : translating test data</a></ul>
-          <br />
-        <li><a href="node132.html" name="tex2html2387"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">11</span> Special parameters: empty strings and the escape character</a><li><a href="node133.html" name="tex2html2388"><span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">12</span> Overwriting data for Test Cases and Test Suites </a></ul>
+        <li><a href="node113.html" name="tex2html2451"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">3</span> Opening existing Test Cases </a><li><a href="node114.html" name="tex2html2452"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">4</span> Editing Test Cases </a><li><a href="node115.html" name="tex2html2453"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">5</span> Adding and inserting new Test Cases to a Test Case </a><li><a href="node116.html" name="tex2html2454"><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">6</span> Moving Test Cases to external Projects </a></ul>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.18.2 Event types</title>
-    <meta content="3.18.2 Event types" name="description" />
+    <title>3.19.4.2 Continuing after an error</title>
+    <meta content="3.19.4.2 Continuing after an error" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,13 +10,18 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION004182000000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">2</span> Event types</a></h2>
-    <p><a name="4237"></a> <a name="4238"></a> <a name="4239"></a> <a name="4240"></a> <a name="4241"></a> <a name="4242"></a><p><a name="eventtype"></a><p> The event type is the type of error the Event Handler will react to. There are four events in Jubula . They correspond to common errors which happen during test execution. <p>
+    <h3><a name="SECTION004194200000000000000"> <span class="arabic">3</span>.<span class="arabic">19</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Continuing after an error</a></h3> Once you have analyzed the error in the AUT or in the test specification, you have two options: <p>
       <dl>
-        <dt><strong>Component not found</strong><dd>If a component in the AUT cannot be found, an error occurs. The component might not be found if it has been changed, is not (yet) visible or has been deleted. <dt><strong>Check failed</strong><dd>For some actions, you can specify an expected value to check. If the value you specify is not true, then a <i>check failed</i> error occurs. <dt><strong>Action error</strong><dd>Action errors occur when an action cannot be carried out on a component, when the data is invalid (e.g. an invalid menu path) or when an action takes too long and there is a timeout. <dt><strong>Configuration error</strong><dd>Configuration errors occur when there is an internal problem, for example a changed implementation class in the XML file. </dl>
+        <dt><strong>Continue with the Event Handler :</strong><dd>Press the &quot;<i>Pause test execution</i>&quot; button on the toolbar <a href="node196.html#PauseExec">3.19.3.3</a> to continue with the test. This will result in a Event Handler (either a default Event Handler or one of your own) being activated. <dt><strong>Continue without Event Handler :</strong><dd>Press the &quot;<i>Continue without Event Handler </i>&quot; button or <tt>&raquo;F8&laquo;</tt> to continue with the test <i>as if the failed Test Step had been successful</i>. No Event Handler is activated. This option is useful if the Event Handler that would be activated would restart the AUT or exit the test, but you are either able to ignore the error for the moment or make changes in the AUT to ensure that the test will be able to continue. </dl>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>Any changes you make to the test specification while the test is paused will not become valid until the next test execution start.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

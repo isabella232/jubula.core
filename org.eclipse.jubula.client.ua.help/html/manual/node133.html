@@ -1,46 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.9.12 Overwriting data for Test Cases and Test Suites </title>
-    <meta content="3.9.12 Overwriting data for Test Cases and Test Suites " name="description" />
+    <title>3.12.8 Viewing and changing data sources for Test Cases </title>
+    <meta content="3.12.8 Viewing and changing data sources for Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerSpecTestCaseEditorContextId"></a><a name="guidancerExecTestCaseEditorContextId"></a><h2><a name="SECTION004912000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">12</span> Overwriting data for Test Cases and Test Suites </a></h2><a name="TasksOverwriteData"></a><p><a name="2669"></a> <a name="2670"></a><p> When you reuse Test Cases , you reuse them with any concrete values they contain, and with any default values that you have entered for their referenced parameters. <p> Data which has been entered for referenced parameters can be overwritten when you reuse a Test Case . <p> Reusing Test Cases happens in two ways: <ul>
-        <li>by adding the Test Case to another Test Case <a href="node88.html#TasksEditorAdd">3.7.2</a>. The Test Case is then <i>nested</i> in the Test Case . <li>by adding the Test Case to a Test Suite <a href="node88.html#TasksEditorAdd">3.7.2</a>. The Test Case is then <i>nested</i> in the Test Suite . </ul>
-    <p>
-      <ol>
-        <li>Single-click the reused Test Case in the editor for the Test Case or Test Suite where you have reused it. <p>
-        <li>In the Properties View , you can see the parameters you referenced from in this Test Case . The data source for this Test Case is shown as <i>referenced Test Case </i> to denote that the data have not been changed after reusing the Test Case . <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>A grey diamond next to the <i>parameter value</i> field means that the values in it were entered in the original specification of the Test Case .</b></td>
-              </tr>
-            </table>
-          <p>
-        <li>You can enter parameter values here or reference the parameters again. They would then become parameters of the <i>parent</i> Test Case . <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>If you enter values here, you can see a yellow diamond next to the <i>parameter value</i> field. This means that the original data have been overwritten. The data source changes to <i>local Test Case </i></b></td>
-              </tr>
-            </table>
-          <p> If you add references here, you will be able to enter or overwrite data when you reuse the parent Test Case . <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>Once you change the parameter values of a reused Test Case , any changes to the parameters in the original specification of that Test Case will not affect your new values. You can reset any local changes to the data of the Test Case by removing all Excel files or Central Test Data Sets and then selecting <i>Referenced Test Case </i> from the data source combo box.</b></td>
-              </tr>
-            </table>
-      </ol>
-    <p>
-    <p>
+  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION004128000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">8</span> Viewing and changing data sources for Test Cases </a></h2><a name="TasksDataSources"></a><p> The Properties View shows the currently used <i>data source</i> for each Test Case . The following data sources are available: <p><span class="textbf">Referenced Test Case</span><br /> The data have come directly from the original specification of this Test Case . If the data in the referenced Test Case change, then the changes will also take effect here. <p><span class="textbf">Local Test Case</span><br /> The data being used were entered for this Test Case . Any changes made in the original specifiation of the Test Case will not affect the data here. <p> You can change from <i>local</i> to <i>referenced</i> test data using the combo box to reset the default value from the referenced Test Case . <p><span class="textbf">Central test data set</span><br /> The data have come from a central test data set <a href="node135.html#TasksCentralData">3.12.9</a>. <p><span class="textbf">Excel data file</span><br /> An Excel file has been entered as the data source <a href="node142.html#TasksExcel">3.12.10</a><p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node134.html" name="tex2html2802"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">8</span>.<span class="arabic">1</span> Changing the data source for a Test Case </a></ul>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

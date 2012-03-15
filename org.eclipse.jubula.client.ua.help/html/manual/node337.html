@@ -1,44 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>6.4.1 The Properties View </title>
-    <meta content="6.4.1 The Properties View " name="description" />
+    <title>5.1.3 Structuring your use cases and Test Suites </title>
+    <meta content="5.1.3 Structuring your use cases and Test Suites " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION00741000000000000000"> <span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">1</span> The Properties View </a></h2>
-    <p> The Properties View is in the upper right-hand corner of each perspective. The Properties View shows details about the selected item in a browser or editor. <p> If you select something from a browser, you can see its details in the Properties View , but you can&#39;t edit them. You can only edit details from within an editor. Read-only fields in the Properties View have a lock icon at their left-hand side. <br />
-      <div class="margin"><img align="BOTTOM" alt="Image readonly" border="0" height="256" src="./readonly.png" width="225" />&nbsp;read only</div>
-      <br />
-    <p><span class="textbf">Test Suite details</span><p> If you select a Test Suite , you will see the following: <ul>
-        <li>The Test Suite name. <li>Any comments for the Test Suite . <li>The step delay for this Test Suite . <li>The name of the AUT this Test Suite uses. <li>The reentry properties for the default Event Handlers . </ul>
-    <p><span class="textbf">Test Case details</span><p> If you select a Test Case , the Properties View shows the following: <p>
-      <ul>
-        <li>The Test Case name. <li>Any comments for the Test Case . <li>The data source details for this Test Case <li>Any parameters/parameter values if references have been used in the Test Case . </ul>
-    <p><span class="textbf">Test Step details</span><p> If you select a Test Step , you will see the following: <ul>
-        <li>The Test Step name. <li>Any comments for this Test Step . <li>Details about the component in the Test Step : <ul>
-            <li>The component type. <li>The component name (given by you). </ul>
-        <li>Details about the action in the Test Step . <li>Details about the parameters in the Test Step . For each parameter you will see: <ul>
-            <li>The parameter name. <li>The parameter type (e.g. if it is an integer, a string etc). <li>The parameter value (either a concrete value or a reference). </ul>
+  <body>
+    <h2><a name="SECTION00613000000000000000"></a> <a name="BPKeywordSuites"></a><br /><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Structuring your use cases and Test Suites </h2>
+    <p> When it comes to executing tests, there are two important things to bear in mind when working with Jubula : <ul>
+        <li>All the necessary keywords for a single <i>use case</i> should be grouped together in one Test Case , which is named after the use case it tests. The use case should be complete - it should not require any data or component names. This makes it much easier to add and remove whole use cases from Test Suites and gives you a good overview of which use cases you have tested. <li>Each use case should assume (and create) a well-defined state of the AUT and leave the AUT in a well-defined state. This is important for error handling later. It is a good idea to create a keyword called <i>app_startup</i> which creates the right state for the AUT , and to use this keyword at the beginning of each use case. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The well-defined state of your AUT may be completely empty, or may contain test data. Deciding what data your test needs and what data it will create itself is an important part of an automation strategy.</b></td>
+            </tr>
+          </table>
       </ul>
-    <p><span class="textbf">Test result details</span><p> If you select an item from the Test Result View , you will see the following: <ul>
-        <li>The result details: <ul>
-            <li>The name of the item. <li>What type of item it is. <li>Any comments for the item. </ul>
-        <li>The test result - if it passed or failed. <li>For Test Steps , you can also see the component, action and parameter details. If the Test Step failed, you can also see the error details. <li>For Event Handlers , you can see the type of Event Handler it was, and what the reentry property was. </ul>
-    <p><span class="textbf">Icons in the Properties View </span><p> When the Properties View contains data (i.e. a filled-in <span class="textit">parameter value</span> field), there are certain icons to help you understand the data. <ul>
-        <li>Values which are the same as in the original specification display a small gray diamond to the left of the field. <br />
-          <div class="margin"><img align="BOTTOM" alt="Image originalData" border="0" height="256" src="./originalData.png" width="256" />&nbsp;original data</div>
-          <br />
-        <li>Values which have been overwritten at a place of reuse show a small yellow diamond. <br />
-          <div class="margin"><img align="BOTTOM" alt="Image overwrittenData" border="0" height="256" src="./overwrittenData.png" width="256" />&nbsp;overwritten data</div>
-          <br />
-      </ul>
-    <p>
+    <p> Use cases are then grouped together into Test Suites . The Jubula team uses the following Test Suites in their tests: <ul>
+        <li>FULLTEST <li>FULLTEST_BROKEN <li>WORK_(INITIALS) </ul>
+    <p> The FULLTEST Test Suite contains all of the executable <i>Use Cases</i> from the Project . There can also be Test Cases which reproduce errors from the bug-tracking system, called <i>ticket tests</i>. Each ticket Test Case can be linked to the bug-tracking system via its ID. <p> The FULLTEST_BROKEN Test Suite contains any use cases which are currently broken and which have been removed from the FULLTEST so as not to affect any test reports or statistics. Put tests in the broken Test Suite if they have been broken for some time. Tests that are critical, or which should be fixed in the next build, should be left in the FULLTEST Test Suite . <p> The WORK Test Suites can be used by testers as a sandbox to execute single use cases during specification, or to replay tests with the intention of watching the execution. <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

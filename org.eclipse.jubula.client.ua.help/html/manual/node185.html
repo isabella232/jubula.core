@@ -1,24 +1,39 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.17 Working with test results</title>
-    <meta content="3.17 Working with test results" name="description" />
+    <title>3.18.3.1 Removing unused component names from the Object Mapping Editor </title>
+    <meta content="3.18.3.1 Removing unused component names from the Object Mapping Editor " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h1><a name="SECTION004170000000000000000"> <span class="arabic">3</span>.<span class="arabic">17</span> Working with test results</a></h1>
+  <body><a name="objectMapEditorContextId"></a><h3><a name="SECTION004183100000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Removing unused component names from the Object Mapping Editor </a></h3><a name="TasksOMCleanup"></a><a name="3824"></a> <a name="3825"></a><p> Over time, your Project will change, and these changes may mean that component names you had previously used in Test Suites , then mapped to technical names via the Object Mapping, are no longer used. This results in object mappings in which the component name is no longer used in the test for this AUT . Such component names can be recognized by the fact that <i>Show corresponding specification</i> in the Object Mapping Editor <a href="node262.html#TasksSearchCompNameCorresponding">3.28.3</a> returns no search results in the search result view (i.e. the component name is no longer used in the test), or if the search result view shows only Test Cases that are used in other AUT&#39;s . If you perform <i>Show where used</i> in the Component Name Browser &nbsp; <a href="node262.html#TasksSearchCompNameBrowserShowWhereUsed">3.28.3</a> and the only search result is a mapping, then this is also a component name that is no longer used in the test. <p> You can delete any component names from the Object Mapping Editor that are unused in the Project for this AUT : <p>
+      <ol>
+        <li>In the Object Mapping Editor , select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Cleanup</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">unused component names</td>
+            </tr>
+          </table>
+          <br /> from the context-sensitive menu. <li>The cleanup operation starts, and a progress dialog is shown while unused names are being searched for. Depending on the size of your Project , this search may take some time. <li>If the Object Mapping Editor contains component names that are not used in any of the Test Suites for this AUT (either component names that are already mapped, or are still unassigned), then they are shown in a <i>Delete unused component names</i> dialog. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If no component names are found, then you will see a message informing you of this.</b></td>
+            </tr>
+          </table>
+        <li>In the dialog to delete unused component names, you can see which component names have been identified for deletion. You can deselect individual component names to opt not to delete them. Once you have specified which component names should be deleted, click &quot;<i>OK</i>&quot;. <li>The component names you specify will be deleted from the Object Mapping Editor . Save the editor to save the changes. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Removing component names from the Object Mapping Editor does not mean that the component names are deleted from the Project . However, if the deletion from the object map means that the component name is now used nowhere in the Project , then it will appear under the <i>Unused Component Names</i> category in the Component Name Browser &nbsp; and can be deleted from the whole Project <a href="node157.html#TasksDeleteCompName">3.13.5</a></b></td>
+            </tr>
+          </table>. </ol>
     <p>
       <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node186.html" name="tex2html3360"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">1</span> The Test Result View </a><li><a href="node187.html" name="tex2html3361"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">2</span> XML and HTML reports</a><li><a href="node188.html" name="tex2html3362"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span> Working with the Test Result Summary View </a><ul>
-            <li><a href="node189.html" name="tex2html3363"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Re-opening the test result view for a test run</a><li><a href="node190.html" name="tex2html3364"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Filtering and sorting in the Test Result Summary View </a><li><a href="node191.html" name="tex2html3365"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Changing the amount of result summaries shown in the Test Result Summary View </a><li><a href="node192.html" name="tex2html3366"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">4</span> Changing the relevance of a test run</a><li><a href="node193.html" name="tex2html3367"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">5</span> Refreshing the Test Result Summary View </a><li><a href="node194.html" name="tex2html3368"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">6</span> Deleting test runs from the Test Result Summary View </a><li><a href="node195.html" name="tex2html3369"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">7</span> Exporting test results from the Test Result Summary View as HTML and XML reports</a><li><a href="node196.html" name="tex2html3370"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">8</span> Entering comments for test runs in the Test Result Summary View </a></ul>
-      </ul>
-      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

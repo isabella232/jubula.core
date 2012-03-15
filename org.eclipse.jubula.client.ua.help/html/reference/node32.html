@@ -10,8 +10,8 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00672000000000000000"> <span class="arabic">5</span>.<span class="arabic">7</span>.<span class="arabic">2</span> Toolbar Item</a></h2><a name="16466"></a> <a name="16467"></a><p><b>Description</b>:<p><a name="SWT_ToolItem"></a><p> Toolbar items are buttons and their menus on a toolbar, such as the one in Jubula (<a href="#toolbar">5.33</a>). Each of the buttons on the toolbar is a toolbar item. <p>
-      <div align="CENTER"><a name="toolbar"></a><a name="16475"></a><table>
+    <h2><a name="SECTION00672000000000000000"> <span class="arabic">5</span>.<span class="arabic">7</span>.<span class="arabic">2</span> Toolbar Item</a></h2><a name="16682"></a> <a name="16683"></a><p><b>Description</b>:<p><a name="SWT_ToolItem"></a><p> Toolbar items are buttons and their menus on a toolbar, such as the one in Jubula (<a href="#toolbar">5.33</a>). Each of the buttons on the toolbar is a toolbar item. <p>
+      <div align="CENTER"><a name="toolbar"></a><a name="16691"></a><table>
           <caption align="BOTTOM"><strong>Figure 5.33:</strong> Toolbar items</caption>
           <tr>
             <td>
@@ -20,7 +20,7 @@
           </tr>
         </table>
       </div>
-    <p> Often, toolbar items have drop-down menus (<a href="#toolbarmenu">5.34</a>). <div align="CENTER"><a name="toolbarmenu"></a><a name="16483"></a><table>
+    <p> Often, toolbar items have drop-down menus (<a href="#toolbarmenu">5.34</a>). <div align="CENTER"><a name="toolbarmenu"></a><a name="16699"></a><table>
           <caption align="BOTTOM"><strong>Figure 5.34:</strong> Toolbar item menu</caption>
           <tr>
             <td>
@@ -30,7 +30,7 @@
         </table>
       </div>
     <p><span class="textbf">Mapping toolbar items</span><p> In the Object Mapping Mode , a toolbar item to be mapped looks like this: <p>
-      <div align="CENTER"><a name="maptoolbar"></a><a name="16492"></a><table>
+      <div align="CENTER"><a name="maptoolbar"></a><a name="16708"></a><table>
           <caption align="BOTTOM"><strong>Figure 5.35:</strong> Mapping toolbar items</caption>
           <tr>
             <td>
@@ -304,6 +304,12 @@
           <td><small>Graphics Component (abstract)</small></td>
         </tr>
         <tr>
+          <td><small> <a href="node11.html#ABSTRACT_Widget_StorePropertyValue">Store Property</a></small></td>
+          <td><small>e</small></td>
+          <td><small><p> Variable:Variable Name <br /> String:Property Name <br /></small></td>
+          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
           <td><small> <a href="node9.html#ABSTRACT_TextVerifiable_ReadValue">Store Value</a></small></td>
           <td><small>e</small></td>
           <td><small><p> Variable:Variable Name <br /></small></td>
@@ -319,7 +325,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46421"></a><a name="46422"></a><p><a name="SWT_ToolItem_VerifyEnabledByIndexpath"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46972"></a><a name="46973"></a><p><a name="SWT_ToolItem_VerifyEnabledByIndexpath"></a><p>
       <ul>
         <li>Use this action to check the enablement status of an item in the menu belonging to the toolbar item. <li>The item to check is given using the indexpath to the item. </ul>
     <p>
@@ -339,10 +345,10 @@
         </tr>
       </table><a name="SWT_ToolItem_VerifyEnabledByIndexpath_IndexPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu). <p>
       <ul>
-        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt> (without quotes). <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>The first node is &#39;1&#39;</b></td>
+              <td><b>The first node is &#39;1&#39; (without quotes)</b></td>
             </tr>
           </table>
           <p>
@@ -368,7 +374,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46428"></a><a name="46429"></a><p><a name="SWT_ToolItem_VerifyEnabledByTextpath"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46979"></a><a name="46980"></a><p><a name="SWT_ToolItem_VerifyEnabledByTextpath"></a><p>
       <ul>
         <li>Use this action to check whether an item in a menu belonging to a toolbar item is enabled. <li>The item to check is given using the textpath to the item. </ul>
     <p>
@@ -388,7 +394,7 @@
         </tr>
       </table><a name="SWT_ToolItem_VerifyEnabledByTextpath_MenuPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table>
         <tr>
@@ -434,7 +440,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46435"></a><a name="46436"></a><p><a name="SWT_ToolItem_VerifyExistsByIndexpath"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46986"></a><a name="46987"></a><p><a name="SWT_ToolItem_VerifyExistsByIndexpath"></a><p>
       <ul>
         <li>Use this action to check the existence of an item in a menu belonging to a toolbar item. <li>The item to check is given using the indexpath to the item. </ul>
     <p>
@@ -454,10 +460,10 @@
         </tr>
       </table><a name="SWT_ToolItem_VerifyExistsByIndexpath_IndexPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu). <p>
       <ul>
-        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt> (without quotes). <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>The first node is &#39;1&#39;</b></td>
+              <td><b>The first node is &#39;1&#39; (without quotes)</b></td>
             </tr>
           </table>
           <p>
@@ -483,7 +489,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46442"></a><a name="46443"></a><p><a name="SWT_ToolItem_VerifyExistsByTextpath"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46993"></a><a name="46994"></a><p><a name="SWT_ToolItem_VerifyExistsByTextpath"></a><p>
       <ul>
         <li>Use this action to check the existence of an item in a menu belonging to a toolbar item. <li>The item to check is given using the textpath to the item. </ul>
     <p>
@@ -503,7 +509,7 @@
         </tr>
       </table><a name="SWT_ToolItem_VerifyExistsByTextpath_MenuPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table>
         <tr>
@@ -549,7 +555,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46449"></a><a name="46450"></a><p><a name="SWT_ToolItem_VerifySelectedByIndexpath"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="47000"></a><a name="47001"></a><p><a name="SWT_ToolItem_VerifySelectedByIndexpath"></a><p>
       <ul>
         <li>Use this action to check whether an item in a menu for a toolbar item is selected. <li>You enter the menupath to the item, and whether you expect it to be selected or not. <li>The menupath is given as an indexpath. </ul>
     <p>
@@ -569,10 +575,10 @@
         </tr>
       </table><a name="SWT_ToolItem_VerifySelectedByIndexpath_IndexPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu). <p>
       <ul>
-        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt> (without quotes). <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>The first node is &#39;1&#39;</b></td>
+              <td><b>The first node is &#39;1&#39; (without quotes)</b></td>
             </tr>
           </table>
           <p>
@@ -598,7 +604,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46456"></a><a name="46457"></a><p><a name="SWT_ToolItem_VerifySelectedByTextpath"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="47007"></a><a name="47008"></a><p><a name="SWT_ToolItem_VerifySelectedByTextpath"></a><p>
       <ul>
         <li>Use this action to check whether an item in a menu belonging to a toolbar item is selected. <li>You enter the menupath to the item, and whether you expect it to be selected or not. <li>The menupath is given as a textpath. </ul>
     <p>
@@ -618,7 +624,7 @@
         </tr>
       </table><a name="SWT_ToolItem_VerifySelectedByTextpath_MenuPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table>
         <tr>
@@ -664,7 +670,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46463"></a><a name="46464"></a><p><a name="SWT_ToolItem_SelectMenuItemByIndexpath"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="47014"></a><a name="47015"></a><p><a name="SWT_ToolItem_SelectMenuItemByIndexpath"></a><p>
       <ul>
         <li>Use this action to select an item from a menu belonging to a toolbar item. <li>The item you want to select is given using the indexpath to the item. </ul>
     <p>
@@ -684,10 +690,10 @@
         </tr>
       </table><a name="SWT_ToolItem_SelectMenuItemByIndexpath_IndexPath"></a><p> Use this parameter to specify the menupath to the item you want to select. Make sure you give the whole menupath (start from the very beginning of the menu). <p>
       <ul>
-        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt>. <table>
+        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt> (without quotes). <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>The first node is &#39;1&#39;</b></td>
+              <td><b>The first node is &#39;1&#39; (without quotes)</b></td>
             </tr>
           </table>
           <p>
@@ -696,7 +702,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="46470"></a><a name="46471"></a><p><a name="SWT_ToolItem_SelectMenuItem"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Toolbar Item)</small></tt> <a name="47021"></a><a name="47022"></a><p><a name="SWT_ToolItem_SelectMenuItem"></a><p>
       <ul>
         <li>Use this action to select an item from a menu belonging to a toolbar item. <li>The item you want to select is given using the textpath to the item. </ul>
     <p>
@@ -716,7 +722,7 @@
         </tr>
       </table><a name="SWT_ToolItem_SelectMenuItem_MenuPath"></a><p> Use this parameter to specify the menupath to the item you want to select. Make sure you enter the whole path. <p>
       <ul>
-        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt>. <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table>
         <tr>
@@ -745,6 +751,6 @@
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

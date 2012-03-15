@@ -1,146 +1,38 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.5.4 Starting AUT&#39;s with the autrun command</title>
-    <meta content="3.5.4 Starting AUT&#39;s with the autrun command" name="description" />
+    <title>3.7.2.3 Basic Java AUT configuration</title>
+    <meta content="3.7.2.3 Basic Java AUT configuration" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="autSettingWizardPagePageContextId"></a><h2><a name="SECTION00454000000000000000"> <span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">4</span> Starting AUT&#39;s with the <i>autrun</i> command</a></h2><a name="autrun"></a><p><a name="1311"></a> <a name="1312"></a><p> The <i>autrun</i> command can be used as an alternative to starting your AUT via Jubula (i.e. with an AUT configuration <a href="node74.html#configuringaut">3.5.3</a>). It can only be used if your AUT can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Java Standard Edition JRE. <p>
-      <table>
+  <body>
+    <h3><a name="SECTION00472300000000000000"> <span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Basic Java AUT configuration</a></h3>
+    <p> You can use the basic setting (<a href="#autconfigbasic">3.10</a>) to configure your AUT if it can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Java Standard Edition JRE. <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>The <i>autrun</i> command cannot be used for HTML or pure SWT AUT&#39;s .</b></td>
+          <td><b>If you are testing RCP or GEF AUT&#39;s , there are certain specific steps you need to take to configure them. See the sections on RCP testing <a href="node312.html#rcpaut">4.2</a>, GEF testing <a href="node319.html#geftest">4.3</a> for details. </b></td>
         </tr>
       </table>
-    <p> The command allows you to start your AUT independently of Jubula , on a machine where the AUT Agent is running. The Jubula ITE , when connected to this AUT Agent will then recognize the running AUT as a testable application. <p> To use the <i>autrun</i> command: <ol>
-        <li>Ensure that the AUT Agent is installed on the machine where you will be starting the AUT . <li>Navigate to the <i>server</i> directory in the installation via the command line. <li>Start your AUT via the command line by entering <tt>&quot;autrun.exe&quot;</tt> under Windows or <tt>&quot;autrun&quot;</tt> under Linux then the following parameters: <br />
-          <p>
-          <div align="CENTER"><a name="1365"></a><table>
-              <caption><strong>Table 3.1:</strong> Parameters for autrun command</caption>
-              <tr>
-                <td><a name="autrunparams"></a><div align="CENTER">
-                  </div>
-                  <table border="1" cellpadding="3">
-                    <tr valign="BASELINE">
-                      <th align="LEFT"><span class="textbf">Detail</span></th>
-                      <th align="LEFT"><span class="textbf">Parameter</span></th>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-h</td>
-                      <td align="LEFT"><tt>&quot;-h&quot;</tt></td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">Gives parameter help</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-w, <code>--</code>workingdir</td>
-                      <td align="LEFT"><tt>&quot;-w &lt;directory&gt;&quot;</tt></td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">Enter the working directory for the AUT</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-a, <code>--</code>autagenthost</td>
-                      <td align="LEFT"><tt>&quot;-a &lt;hostname&gt;&quot;</tt></td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">Enter the hostname for the AUT Agent</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-p, <code>--</code>autagentport</td>
-                      <td align="LEFT"><tt>&quot;-p &lt;port number&gt;&quot;</tt></td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">Enter the port number for the AUT Agent</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-swing</td>
-                      <td align="LEFT">&nbsp;</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">If the AUT is a Swing AUT</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-rcp</td>
-                      <td align="LEFT">&nbsp;</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">If the AUT is an RCP AUT</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-swt</td>
-                      <td align="LEFT">&nbsp;</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">If the AUT is an SWT AUT</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-k, <code>--</code>kblayout</td>
-                      <td align="LEFT"><tt>&quot;-k &lt;en_US&gt;&quot;</tt></td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">Enter the keyboard layout for SWT/RCP AUT&#39;s</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-i, <code>--</code>autid</td>
-                      <td align="LEFT"><tt>&quot;-i &lt;ID&gt;&quot;</tt></td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">Enter the ID to give to this AUT</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-e, <code>--</code>exec</td>
-                      <td align="LEFT"><tt>&quot;-e &lt;AUT.exe&gt;&quot;</tt></td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">Enter the executable file for the AUT</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">-g, <code>--</code>generatenames (optional)</td>
-                      <td align="LEFT"><tt>&quot;-g &lt;true/false&gt;&quot;</tt></td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">For RCP AUT&#39;s , enter whether</td>
-                    </tr>
-                    <tr valign="BASELINE">
-                      <td align="LEFT">&nbsp;</td>
-                      <td align="LEFT">to generate technical names. <a href="node73.html#Defineaut">3.5.2</a></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <p>
-          <br />
-      </ol>
     <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If your AUT is an RCP AUT , use <tt>&quot;-data&#39;&lt;WORKSPACE&gt;&#39;&quot;</tt> after the executable file to specify the workspace the AUT should use.</b></td>
-        </tr>
-      </table>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node79.html" name="tex2html1997"><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Creating an AUT definition from a running AUT </a></ul>
+      <div align="CENTER"><a name="autconfigbasic"></a><a name="1238"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.10:</strong> AUT configuration window: basic</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image autconfigwindow_basic" border="0" height="395" src="./autconfigwindow_basic.png" width="509" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p>
+      <ol>
+        <li>A suggested name for this AUT configuration is generated automatically based on your AUT name and the default AUT Agent host. You can change this name if you wish. <li>The default AUT Agent host is also automatically selected. You can select a new AUT Agent from the combo box or add a new one by clicking &quot;<i>New</i>&quot;. For more information on adding and editing an AUT Agent , see the section later <a href="node219.html#TasksPrefsAgent">3.22.2</a>. <p>
+        <li>Enter the executable file name in the <i>Executable File Name</i> field. This path can be relative if you define a working directory <a href="node79.html#AdvancedAUTConfig">3.7.2.4</a>). <li>Enter the AUT ID that will be given to this AUT when it is started. </ol> For information on the advanced properties for the AUT configuration, see the next section <a href="node79.html#AdvancedAUTConfig">3.7.2.4</a>. <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

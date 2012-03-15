@@ -1,28 +1,53 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.9.4 Using the edit parameters dialog to add, edit and delete references</title>
-    <meta content="3.9.4 Using the edit parameters dialog to add, edit and delete references" name="description" />
+    <title>3.11.2.2 Information about the library</title>
+    <meta content="3.11.2.2 Information about the library" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="editParametersDialogContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION00494000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">4</span> Using the edit parameters dialog to add, edit and delete references</a></h2><a name="TasksTestdataEditParams"></a><p><a name="2255"></a> <a name="2256"></a><p> You can use the edit parameters dialog to add, edit and delete parameters for a Test Case or a central test data set. This section is concerned with using the dialog for editing parameters in a Test Case . For editing parameters for a central test data set, see the section later <a href="node119.html#TasksCentralData">3.9.8</a>. <p> To edit the parameters for a Test Case : <ol>
-        <li>Open the edit parameters dialog by right-clicking on the root node in the Test Case Editor and selecting <table border="0" style="margin:0px;padding:0px;">
+  <body>
+    <h3><a name="SECTION004112200000000000000"></a> <a name="LibraryInformation"></a><br /><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Information about the library </h3>
+    <ol>
+      <li>Jubula lets you use a highly reusable library of Test Cases to specify tests. <li>The Projects containing the Test Case libraries are located under: <br /><i>examples/testcaseLibrary</i>. <p>
+      <li>The Projects available are: <ul>
+          <li>unbound_modules_concrete <li>unbound_modules_web <li>unbound_modules_swt <li>unbound_modules_rcp </ul>
+        <p>
+      <li>These Projects contain reusable Test Cases which have been created in advance so you do not have to specify them yourself. <table>
+          <tr>
+            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+            <td><b>Refer to the chapter on Components, Actions, and Parameters (--&gt;<i>Reference Manual</i> <a href="../reference/node6.html#actparam"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for information on components, the actions they support, and their parameters.</b></td>
+          </tr>
+        </table>
+      <li>The library is split into categories of <i>actions</i> on components. To select something in your AUT , open the <i>select</i> category and then open the category for the type of component you want to select something from. <p>
+          <table>
             <tr>
-              <td bgcolor="#DDDDDD">Edit parameters</td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The names for these Test Cases all begin with &quot;<i>ub</i>&quot;. This means that they are <i>unbound</i> - they are not in any way dependent on an AUT . </b></td>
             </tr>
-          </table> from the context-sensitive menu. <li>In the dialog, you can see any parameters you have referenced for this Test Case , and what type of parameters they are. <li>From the dialog, you can add new parameters to the Test Case , edit existing parameters, and delete parameters. You can also change the order the parameters appear in. <li>Use the <i>lock</i> option to lock the parameters for this Test Case . This means that you cannot delete them, rename them or remove them in this Test Case . <table>
+          </table>
+      <li>Each Test Case in the library contains one Test Step which corresponds to the action in the Test Case name. The component name is a placeholder, and the parameters have been referenced so that you can enter your own data. <p>
+          <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The unbound modules Projects which correspond to your chosen Project toolkit are automatically imported into the Database and reused in your Project .</b></td>
+            </tr>
+          </table>
+        <p>
+          <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>In the Properties View , you can only <i>add</i> references for parameters. To edit or delete references, you must use this dialog.</b></td>
+              <td><b>We do not recommend making changes to the installed unbound module Projects , for compatibility reasons. If you have Test Cases you want to reuse in other Projects , we advise creating your own library Project .</b></td>
             </tr>
-          </table>. </ol>
+          </table>
+        <p>
+    </ol>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

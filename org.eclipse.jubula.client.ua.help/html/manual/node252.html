@@ -1,32 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.24.10 Creating a support information package</title>
-    <meta content="3.24.10 Creating a support information package" name="description" />
+    <title>3.26.0.3 Empty chains analysis</title>
+    <meta content="3.26.0.3 Empty chains analysis" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="problemViewContextId"></a><a name="supportRequestDialogContextId"></a><h2><a name="SECTION0042410000000000000000"> <span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">10</span> Creating a support information package</a></h2>
-    <p><a name="5162"></a><p> If you have found a problem in Jubula , you can create a support information package from within the ITE . You can choose which information to include in the package, which can be uploaded to a bug-tracking system as a .zip file. <p>
-      <ol>
-        <li>Select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Help</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Create Support Information Package</td>
-            </tr>
-          </table>
-        <li>In the dialog which appears, select what to add to the package: <dl>
-            <dt><strong>Configuration information:</strong><dd>This includes information about how you have configured Jubula , which other plugins you are using, and information about your environment. <dt><strong>The AUT Agent log</strong><dd>This lets us see the messages from the AUT Agent . If you are not connected to the AUT Agent , this option will be grayed out. <dt><strong>The client log</strong><dd>This lets us see the messages from the ITE . <dt><strong>The Project and depending Projects </strong><dd>The currently open Project and any Projects it reuses. </dl>
-        <li>Browse to the destination to save the .zip file. <li>Click &quot;<i>OK</i>&quot;. <li>The prepared package will be saved to the destination you specified. </ol>
-    <p>
+  <body>
+    <h3><a name="SECTION004260300000000000000"> <span class="arabic">3</span>.<span class="arabic">26</span>.<span class="arabic">0</span>.<span class="arabic">3</span> Empty chains analysis</a></h3> This analysis is in the category <i>Analysis</i>. <p> This analysis examines the current scope for test hierarchies wherein a Test Case is reused in one place - alone in another Test Case . This Test Case is then also reused in one place - again alone which is then reused in one place alone in another Test Case and so on. Such hierarchies can often be redundant: the Test Case at the bottom of the hierarchy could just as well have been reused directly in the Test Case at the top of the hierarchy. <p> Such empty chains are collected during the analysis (which may take longer on larger Projects ) and displayed in the Search Result View. They are shown in order of their length, starting with the longest chains. <p> The analyses and metrics can either be run for the whole Project , or for specific contexts within the Project . <p> To run a metric or analysis for the whole Project , select the metric or analysis you want to perform from the toolbar button. <p> To run a metric or analysis for a specific context, select the context you require (e.g. the top node in the Test Case Browser to perform the metric or analysis just for items within this browser) and then select: <br />
+      <table border="0" style="margin:0px;padding:0px;">
+        <tr>
+          <td bgcolor="#DDDDDD">Analyze</td>
+        </tr>
+      </table>
+      <br /> from the context menu, selecting the required option to run. <p> Once a metric or analysis has run, the results are shown in the Search Result View. <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

@@ -1,27 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.14.2 Executing and analyzing manual tests</title>
-    <meta content="3.14.2 Executing and analyzing manual tests" name="description" />
+    <title>3.13.6 Understanding the component hierarchy</title>
+    <meta content="3.13.6 Understanding the component hierarchy" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testExecViewContextId"></a><h2><a name="SECTION004142000000000000000"> <span class="arabic">3</span>.<span class="arabic">14</span>.<span class="arabic">2</span> Executing and analyzing manual tests</a></h2><a name="TasksManualExec"></a><p> Once you have created a manual Test Case <a href="node157.html#TasksManualCreate">3.14.1</a>, you can execute it. <p>
-      <ol>
-        <li>Start the AUT <a href="node176.html#startaut">3.16.2</a>. <li>Start the Test Suite containing the manual Test Steps <a href="node177.html#TasksStartExec">3.16.3</a>. <li>For each manual Test Step in the test, a dialog will appear with the descriptions and data you entered for the <i>action to perform</i> and the <i>expected behavior</i>. <li>Execute the Test Step as described, enter a comment if necessary, then click either &quot;<i>passed</i>&quot; or &quot;<i>failed</i>&quot; in the dialog to move to the next Test Step . <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>If the Test Step fails, then an automatic screenshot will be taken <a href="node210.html#testresprefs">3.19.8</a>, and any Event Handlers <a href="node197.html#customizedehandler">3.18</a> for this Test Case will be activated.</b></td>
-            </tr>
-          </table>
-        <li>Once the dialog has been closed, the next Test Step dialog will appear. <li>At the end of the test, you can see the test result report like any other automated test <a href="node186.html#testresultview">3.25</a>. </ol>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="compNameViewContextId"></a><a name="objectMapEditorContextId"></a><h2><a name="SECTION004136000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">6</span> Understanding the component hierarchy</a></h2><a name="TasksCompNameType"></a><p><a name="3110"></a> <a name="3111"></a> <a name="3112"></a> The component hierarchy in Jubula is designed to allow flexible test specification and robust tests. For a graphical overview of the component hierarchy, see the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node37.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
     <p>
+      <br />
+    <p><span class="textbf">Abstract components</span><br />
+    <p> Jubula lets you write tests very abstractly at the beginning, only adding detail later. You will notice that the library contains categories such as <i>Component with Text Input</i> and <i>Graphics Component</i>. <p> These are <i>abstract components</i> - actions in these categories can be used on a wide range of actual components in the AUT . You can use a <i>Click</i> action on the <i>Graphics Component</i> to click any component in the AUT . You just need to enter different component names for it in the Component Names View . <p>
+    <p>
+      <br /><span class="textbf">Using the same component name for different component types</span><br />
+    <p> What happens if you want to specify a test that clicks in a table and then selects a cell in the table? <p> The click action is on the <i>Graphics Component</i> and the select cell action is on the <i>Table</i> component - but you don&#39;t want to have two different component names. <p> This isn&#39;t a problem for Jubula . You can use the same component name for different components as long as these are compatible. So, in this case, the <i>Graphics Component</i> and the <i>Table</i> component can both use the component name e.g. <i>TableView_MainTable_tbl</i>. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>You cannot use the same component name for incompatible types, for example, trees and tables.</b></td>
+        </tr>
+      </table>
+    <p> An overview of the component hierarchy can be seen in: --&gt;<i>Reference Manual</i> <a href="../reference/node37.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

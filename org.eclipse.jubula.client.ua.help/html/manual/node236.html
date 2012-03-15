@@ -1,17 +1,45 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.23.5.3 Searching for files in the workspace</title>
-    <meta content="3.23.5.3 Searching for files in the workspace" name="description" />
+    <title>3.23.3.2 Performing checks in the Java observation mode</title>
+    <meta content="3.23.3.2 Performing checks in the Java observation mode" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testSpecificationViewContextId"></a><a name="testExecViewContextId"></a><h3><a name="SECTION004235300000000000000"> <span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">5</span>.<span class="arabic">3</span> Searching for files in the workspace</a></h3><a name="TasksSearchFiles"></a><p> On the third tab of the search dialog, you can search for and in files contained in your workspace. <p> Enter the term you wish to search for and click &quot;<i>Search</i>&quot; to start the search. The results are shown in the Search Result View <a href="node237.html#TasksSearchResultView">3.23.6</a>. <p>
+  <body>
+    <h3><a name="SECTION004233200000000000000"></a> <a name="TasksObsCheckJava"></a><br /><span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Performing checks in the Java observation mode </h3>
+    <p> You can perform checks in the observation mode by taking the following steps: <ol>
+        <li>Start the check mode by pressing <tt>&raquo;CTRL+SHIFT+F11&laquo;</tt>. This key combination can be changed in the preferences <a href="node225.html#TasksPrefsObsModeJava">3.22.7</a>. <li>In the observation console, the check mode will be marked as <i>on</i>. <li>In the AUT , components will be highlighted with a red border (<a href="#redborders">3.32</a>). <p>
+            <div align="CENTER"><a name="redborders"></a><a name="4870"></a><table>
+                <caption align="BOTTOM"><strong>Figure 3.32:</strong> Red borders in the check mode</caption>
+                <tr>
+                  <td>
+                    <div align="CENTER"><img align="BOTTOM" alt="Image redborders" border="0" height="168" src="./redborders.png" width="196" /></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>While the check mode is active, no other actions will be recorded.</b></td>
+              </tr>
+            </table>
+        <li>Hover over the component you want to execute a check on and press <tt>&raquo;CTRL+SHIFT+F12&laquo;</tt>. This key combination can be changed in the preferences <a href="node225.html#TasksPrefsObsModeJava">3.22.7</a>. <li>A dialog will appear showing the type of component you are performing the check on. <li>From the dialog, select the check action you want to perform and enter any parameters the check action needs. Many check actions have predefined parameters based on the state of the AUT . <li>When you have specified your check action, choose whether you want to close the dialog and continue in the check mode (<i>check on</i>) or whether you want to stop the check mode when the dialog closes (<i>stop checking</i>). <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You can manually stop the check mode using the same key combination as you used to start the check mode (<tt>&raquo;CTRL+SHIFT+F11&laquo;</tt> by default).</b></td>
+            </tr>
+          </table>
+        <li>The check action you specify will be added to the Test Case Editor . </ol>
+    <p>
+    <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

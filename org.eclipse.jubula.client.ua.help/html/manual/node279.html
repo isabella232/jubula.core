@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.1.2 Design for testability in Swing</title>
-    <meta content="4.1.2 Design for testability in Swing" name="description" />
+    <title>3.29.6 I can&#39;t execute my Test Suite </title>
+    <meta content="3.29.6 I can&#39;t execute my Test Suite " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,10 +10,25 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00512000000000000000"> <span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Design for testability in Swing</a></h2>
-    <p><a name="5580"></a> <a name="5581"></a> <a name="5582"></a> <a name="5583"></a><p> Although components in the AUT can be recognized even when they are not named by the developers, using the <i>setName</i> method for the current Swing component class certainly makes it easier to test AUT&#39;s . Even if a whole area of the AUT has changed, the component will still be found based on this unique name. <p>
+    <h2><a name="SECTION004296000000000000000"></a> <a name="troubleexecute"></a><br /><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">6</span> I can&#39;t execute my Test Suite </h2>
+    <p><a name="5566"></a> <a name="5567"></a> If you cannot start a Test Suite , check that: <ul>
+        <li>The Test Suite has complete data for the current language. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>No parameter values can be empty in a Test Suite . If you no longer need the parameter, delete it.</b></td>
+            </tr>
+          </table>
+        <li>The object mapping is complete <a href="node176.html#objectmappingtasks">3.18.1</a>. <li>The Object Mapping Mode and the observation mode have been switched off. <li>You have connected to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a>. <li>You have started the AUT <a href="node192.html#startaut">3.19.2</a>. </ul>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>You can use the Test Suite Browser to click through the Test Suite to see the exact places where data and object maps are missing.</b></td>
+        </tr>
+      </table>
+    <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

@@ -1,20 +1,54 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.17.3 Working with the Test Result Summary View </title>
-    <meta content="3.17.3 Working with the Test Result Summary View " name="description" />
+    <title>3.18.5 Mapping (assigning) collected technical names to component names</title>
+    <meta content="3.18.5 Mapping (assigning) collected technical names to component names" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testResultViewContextId"></a><a name="prefPageTestResultContextId"></a><a name="testResultSummaryViewContextId"></a><h2><a name="SECTION004173000000000000000"> <span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span> Working with the Test Result Summary View </a></h2><a name="TestResSumView"></a><p> Jubula stores a test result summary and full details about the whole test for each test run. Individual Test Suites within a Test Job are counted as one test run each. <p> You can see the test result summaries in the Functional Test Reporting Perspective , in the Test Result Summary View . <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node189.html" name="tex2html3405"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Re-opening the test result view for a test run</a><li><a href="node190.html" name="tex2html3406"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Filtering and sorting in the Test Result Summary View </a><li><a href="node191.html" name="tex2html3407"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Changing the amount of result summaries shown in the Test Result Summary View </a><li><a href="node192.html" name="tex2html3408"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">4</span> Changing the relevance of a test run</a><li><a href="node193.html" name="tex2html3409"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">5</span> Refreshing the Test Result Summary View </a><li><a href="node194.html" name="tex2html3410"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">6</span> Deleting test runs from the Test Result Summary View </a><li><a href="node195.html" name="tex2html3411"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">7</span> Exporting test results from the Test Result Summary View as HTML and XML reports</a><li><a href="node196.html" name="tex2html3412"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">3</span>.<span class="arabic">8</span> Entering comments for test runs in the Test Result Summary View </a></ul>
+  <body><a name="objectMapEditorContextId"></a><h2><a name="SECTION004185000000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">5</span> Mapping (assigning) collected technical names to component names</a></h2><a name="TasksOMMap"></a><p><a name="3953"></a> Once you have collected the components from the AUT that you will use during the test <a href="node186.html#TasksOMCollect">3.18.4</a>, you can then map them to the component names you used in your Test Cases . <p>
+      <ol>
+        <li>In the Object Mapping Editor , in the split view or the tree view <a href="node179.html#TasksOMViews">3.18.2.2</a>, you will see the component names you have created <a href="node151.html#TasksCreateNewCompName">3.13.1</a> and/or used in your Test Cases , as well as the names you have collected from the AUT . The names are grouped into categories of unassigned and assigned names <a href="node180.html#TasksOMDefaultCats">3.18.2.3</a>. <li>To map a component name to a technical name, you must drag the <i>unassigned component name</i> onto the corresponding <i>unassigned technical name</i> that you want this component name to refer to. <p>
+        <li>When a component name has been assigned to a techical name, the joined names appear in the <i>assigned names</i> category. The component type for the component name is adjusted so that it reflects the type of component it hasbeen mapped to <a href="node158.html#TasksCompNameType">3.13.6</a>. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>You can also &#39;&#39;unassign&#39;&#39; component names from technical names by dragging the component name back into the <i>unassigned component names</i> category</b></td>
+              </tr>
+            </table>
+        <li>Save the changes in the editor. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You will only be able to map component names to technical names if their types are compatible <a href="node158.html#TasksCompNameType">3.13.6</a>.</b></td>
+            </tr>
+          </table>
+      </ol>
+    <p>
+      <div align="CENTER"><a name="objectmappingeditor"></a><a name="3974"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.23:</strong> Object Mapping Editor</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image objectmappinghowto" border="0" height="428" src="./objectmappinghowto.png" width="529" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p>
+      <div align="CENTER"><a name="greenborders"></a><a name="3981"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.24:</strong> Green Border around Supported Component</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image greenborders" border="0" height="180" src="./greenborders.png" width="200" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

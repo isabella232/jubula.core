@@ -1,54 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.5.3.1 Basic AUT configuration</title>
-    <meta content="3.5.3.1 Basic AUT configuration" name="description" />
+    <title>3.7.2 Starting Java AUT&#39;s (Swing, SWT/RCP/GEF) with Jubula </title>
+    <meta content="3.7.2 Starting Java AUT&#39;s (Swing, SWT/RCP/GEF) with Jubula " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION00453100000000000000"> <span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Basic AUT configuration</a></h3>
-    <p> You can use the basic setting (<a href="#autconfigbasic">3.10</a>) to configure your AUT if it can be started by an executable file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in Java 1.5 or above, and you are using a Java Standard Edition JRE. <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>If you are testing RCP or GEF AUT&#39;s , there are certain specific steps you need to take to configure them. See the sections on RCP testing <a href="node280.html#rcpaut">4.2</a>, GEF testing <a href="node287.html#geftest">4.3</a> for details. </b></td>
-        </tr>
-      </table>
-    <p>
-      <div align="CENTER"><a name="autconfigbasic"></a><a name="1194"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.10:</strong> AUT configuration window: basic</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image autconfigwindow_basic" border="0" height="395" src="./autconfigwindow_basic.png" width="509" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p>
-      <ol>
-        <li>A suggested name for this AUT configuration is generated automatically based on your AUT name and the default AUT Agent host. You can change this name if you wish. <li>The default AUT Agent host is also automatically selected. You can select a new AUT Agent from the combo box or add a new one by clicking &quot;<i>New</i>&quot;. For more information on adding and editing an AUT Agent , see the section later <a href="node203.html#TasksPrefsAgent">3.19.2</a>. <p>
-        <li>Enter the executable file name in the <i>Executable File Name</i> field. This path can be relative if you define a base/working directory <a href="node76.html#AdvancedAUTConfig">3.5.3.2</a>). <li>Enter the AUT ID that will be given to this AUT when it is started. </ol> For information on the advanced properties for the AUT configuration, see the next section <a href="node76.html#AdvancedAUTConfig">3.5.3.2</a>. <p><span class="textbf">Configuring HTML applications</span><br />
-    <p> HTML applications have a considerably reduced configuration dialog. The information needed to start the AUT is: <ol>
-        <li>the AUT configuration name (automatically generated) <li>the AUT Agent host <li>the AUT Agent hostAUT ID <li>the base directory <li>the URL of your application <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>Relative paths to the URL cannot be used!</b></td>
-            </tr>
-          </table>
-        <li>the browser you want to start the AUT in <li>optionally, the browser path, to use a specific version of the browser (not available for Internet Explorer). <li>you can also enter an <i>ID attribute name</i>. If you have used a specific tag to name components in your application, enter the tag in the Expert Configuration area <a href="node77.html#ExpertAUTConfig">3.5.3.3</a>. Jubula will then use this information instead of the <i>name</i> attribute in the object recognition. </ol>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>HTML applications cannot currently be started using the <i>autrun</i> command.</b></td>
-        </tr>
-      </table>
+  <body><a name="autConfigSettingWizardPagePageContextId"></a><h2><a name="SECTION00472000000000000000"></a> <a name="TasksStartJavaAUT"></a><br /><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span> Starting Java AUT&#39;s (Swing, SWT/RCP/GEF) with Jubula </h2>
     <p>
       <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node76.html" name="tex2html2047"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Two options to start Java AUT&#39;s </a><li><a href="node77.html" name="tex2html2048"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Configuring a Java AUT to be started by Jubula </a><li><a href="node78.html" name="tex2html2049"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Basic Java AUT configuration</a><li><a href="node79.html" name="tex2html2050"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Advanced AUT configuration</a><li><a href="node80.html" name="tex2html2051"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">5</span> Expert AUT configuration</a><li><a href="node81.html" name="tex2html2052"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Starting Java AUT&#39;s with the <i>autrun</i> command</a><li><a href="node82.html" name="tex2html2053"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">7</span> Creating an AUT definition from a running AUT </a></ul>
+      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

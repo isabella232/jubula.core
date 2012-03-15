@@ -1,32 +1,47 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.10.6 Understanding the component hierarchy</title>
-    <meta content="3.10.6 Understanding the component hierarchy" name="description" />
+    <title>3.12.10 Using an Excel file as an external data source</title>
+    <meta content="3.12.10 Using an Excel file as an external data source" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="compNameViewContextId"></a><a name="objectMapEditorContextId"></a><h2><a name="SECTION004106000000000000000"> <span class="arabic">3</span>.<span class="arabic">10</span>.<span class="arabic">6</span> Understanding the component hierarchy</a></h2><a name="TasksCompNameType"></a><p><a name="2907"></a> <a name="2908"></a> <a name="2909"></a> The component hierarchy in Jubula is designed to allow flexible test specification and robust tests. For a graphical overview of the component hierarchy, see the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node37.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
-    <p>
-      <br />
-    <p><span class="textbf">Abstract components</span><br />
-    <p> Jubula lets you write tests very abstractly at the beginning, only adding detail later. You will notice that the library contains categories such as <i>Component with Text Input</i> and <i>Graphics Component</i>. <p> These are <i>abstract components</i> - actions in these categories can be used on a wide range of actual components in the AUT . You can use a <i>Click</i> action on the <i>Graphics Component</i> to click any component in the AUT . You just need to enter different component names for it in the Component Names View . <p>
-    <p>
-      <br /><span class="textbf">Using the same component name for different component types</span><br />
-    <p> What happens if you want to specify a test that clicks in a table and then selects a cell in the table? <p> The click action is on the <i>Graphics Component</i> and the select cell action is on the <i>Table</i> component - but you don&#39;t want to have two different component names. <p> This isn&#39;t a problem for Jubula . You can use the same component name for different components as long as these are compatible. So, in this case, the <i>Graphics Component</i> and the <i>Table</i> component can both use the component name e.g. <i>TableView_MainTable_tbl</i>. <p>
-      <table>
+  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION0041210000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">10</span> Using an Excel file as an external data source</a></h2><a name="TasksExcel"></a><p><a name="2728"></a> <a name="2729"></a> In the Properties View , you can add Excel files as a data source to Test Cases which contain parameters referenced from the Test Cases or Test Steps they contain. <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>You cannot use the same component name for incompatible types, for example, trees and tables.</b></td>
+          <td><b>The addition of data via Excel is discouraged, because any problems with the data can only be found once the test is running. We recommend using the central data sets in Jubula to manage data within the Project <a href="node135.html#TasksCentralData">3.12.9</a>.</b></td>
         </tr>
       </table>
-    <p> An overview of the component hierarchy can be seen in: --&gt;<i>Reference Manual</i> <a href="../reference/node37.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+      <ol>
+        <li>Navigate to the Properties View for the Test Case you want to add the Excel file to. <li>Enter the path to the Excel file in the <i>Excel data file</i> field. <p> The path to the Excel file can be absolute or relative (if you have specified a data files path <a href="node218.html#gdprefs">3.26</a>). <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>The Excel file must be configured in a specific way in order for Jubula to read it <a href="node143.html#TasksConfigureExcel">3.12.10.1</a></b></td>
+              </tr>
+            </table>. <p>
+        <li>If you reuse this Test Case , the Excel file you enter will be reused along with the Test Case . When you reuse the Test Case , you can choose whether you leave this file or change it for another one. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If you store your Excel files in your workspace, you will be able to open these directly in Jubula from the navigator view using the in-place editor. </b></td>
+            </tr>
+          </table>
+        <li>A Test Case with an Excel file as data is marked with a small Excel icon in the browsers to help you find it more easily later. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Please note that the Excel file is read at the start of the test execution. Any changes to the file after this will not affect the test data. For information on using the date function in Excel, see the section later <a href="node144.html#exceltoday">3.12.10.2</a>.</b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node143.html" name="tex2html2913"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">10</span>.<span class="arabic">1</span> Configuring the Excel file</a><li><a href="node144.html" name="tex2html2914"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">10</span>.<span class="arabic">2</span> Using the =TODAY() function in Excel</a></ul>
+      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

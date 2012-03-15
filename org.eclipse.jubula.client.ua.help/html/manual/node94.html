@@ -1,68 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.7.8 Replacing Test Cases in editors: Refactoring</title>
-    <meta content="3.7.8 Replacing Test Cases in editors: Refactoring" name="description" />
+    <title>3.9.1 Opening items in editors</title>
+    <meta content="3.9.1 Opening items in editors" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="testSuiteEditorContextId"></a><h2><a name="SECTION00478000000000000000"> <span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">8</span> Replacing Test Cases in editors: Refactoring</a></h2><a name="TasksReplaceTC"></a><p><a name="1707"></a> <a name="1708"></a><p> Jubula lets you <i>replace</i> one or more Test Cases in an editor with another Test Case from your library of Test Cases . This is useful if you have created a module to replace one or more Test Cases and you want to be guided through the replacement process. <p>
-      <ol>
-        <li>Open the Test Case Editor or Test Suite Editor by double-clicking on the Test Case or Test Suite you want to edit. <li>Select the Test Cases you want to replace by single-clicking them. Use <tt>&raquo;CTRL&laquo;</tt> to select more than one item. <li>Right-click in the editor and select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Refactor</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Replace with Test Case</td>
-            </tr>
-          </table> . <li>The first page of a wizard appears in which you can replace selected the Test Cases in a series of steps. </ol>
-    <p>
-      <table>
+  <body><a name="testCaseOpenExistingContextId"></a><a name="testExecViewContextId"></a><a name="testSpecificationViewContextId"></a><h2><a name="SECTION00491000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">1</span> Opening items in editors</a></h2>
+    <p> To open an existing Test Case , Test Suite or Test Job in an editor, you can either double-click the item you want to open in its browser or you can select: <br />
+      <table border="0" style="margin:0px;padding:0px;">
         <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>You may only replace single Test Cases which neither have multiple data sets nor central test data / Excel files as data.</b></td>
+          <td bgcolor="#DDDDDD">Open With</td>
+          <td>--&gt;</td>
+          <td bgcolor="#DDDDDD">... Editor</td>
         </tr>
       </table>
-    <p><span class="textbf">Page 1: Replacing the Test Cases </span><ol>
-        <li>On the first page of the wizard <a href="#ReplaceTC-ChooseTC">3.14</a>, you can select a new Test Case to replace the selected Test Cases . <li>Browse to and select the Test Case you want to add to the editor. <li>Click &quot;<i>Next</i>&quot; to match the component names for the old and new Test Cases , or click &quot;<i>Finish</i>&quot; to replace the selected Test Cases with the bare new Test Case , without any component names transferred. </ol>
-    <p>
-      <div align="CENTER"><a name="ReplaceTC-ChooseTC"></a><a name="7363"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.14:</strong> Select Test Case </caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image ReplaceTC_ChooseTC" border="0" height="330" src="./ReplaceTC_ChooseTC.png" width="493" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p><span class="textbf">Page 2: Matching component names</span><ol>
-        <li>On the second page of the wizard <a href="#ReplaceTC-CompNames">3.15</a>, you can see an overview of component names for the replacement. <ul>
-            <li>On the left-hand side you can see any component names that were entered for the Test Cases to be replaced. If the component names were propagated <a href="node137.html#TasksCompNamesCheckbox">3.10.2.1</a>, you will see a small yellow arrow on the component name icon. <table>
-                <tr>
-                  <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                  <td><b>If the old Test Cases contained no component names, then you will see the text <i>no component names</i>.</b></td>
-                </tr>
-              </table>
-            <li>On the right-hand side, you can see the Component Names View , which shows any component names that are required by the new Test Case . </ul>
-        <li>Use this dialog to transfer any component names from the old Test Cases to the new Test Cases . You can enter component names, or you can leave the new component names as they are. You can also set the checkbox in the Component Names View to propagate the name to the next Test Case in the hierarchy. <li>Once you have transferred the component names, you can click &quot;<i>Next</i>&quot; to add further information or you can click &quot;<i>Finish</i>&quot; to replace the selected Test Cases with the new Test Case and the selected component names. </ol>
-    <p>
-      <div align="CENTER"><a name="ReplaceTC-CompNames"></a><a name="1770"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.15:</strong> Match component names</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image ReplaceTC_CompNames" border="0" height="229" src="./ReplaceTC_CompNames.png" width="493" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p><span class="textbf">Page 3: Further information</span><ol>
-        <li>On the final page of the wizard, you can enter a Test Case reference name and a comment for the new Test Case . <li>Once you have entered a name and/or a comment, you can click &quot;<i>Finish</i>&quot; to complete the replacement. </ol>
-    <p> Once you have replaced the Test Case , you must manually adapt the parameters for the new Test Case . <p>
+      <br /> from the context-sensitive menu for the item. <p> You can also open an existing Test Case without having to select it from the Test Case Browser using the <i>Open Test Case</i> dialog <a href="node113.html#TasksOpenExistingTC">3.11.3</a>. <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

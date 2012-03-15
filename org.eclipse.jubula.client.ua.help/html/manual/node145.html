@@ -1,46 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.11.2 Configuring Test Suites in the Properties View </title>
-    <meta content="3.11.2 Configuring Test Suites in the Properties View " name="description" />
+    <title>3.12.11 Using the Data Sets View to enter data loops and to translate data</title>
+    <meta content="3.12.11 Using the Data Sets View to enter data loops and to translate data" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="testSuiteEditorContextId"></a><a name="testExecViewContextId"></a><h2><a name="SECTION004112000000000000000"> <span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span> Configuring Test Suites in the Properties View </a></h2><a name="TestSuiteEdit"></a><p><a name="2999"></a> <a name="3000"></a> <a name="3001"></a> <a name="3002"></a> <a name="3003"></a> <a name="3004"></a> <a name="3005"></a> <a name="3006"></a> <a name="3007"></a> <a name="3008"></a> <a name="3009"></a> <a name="3010"></a> <a name="3011"></a> <a name="3012"></a> <a name="3013"></a> <a name="3014"></a> <a name="3015"></a> <a name="3016"></a> <a name="confsuite"></a><p> To configure a Test Suite , you must first create one <a href="node144.html#TSeditor">3.11.1</a>. <p>
+  <body><a name="guidancerDataSetViewContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION0041211000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">11</span> Using the Data Sets View to enter data loops and to translate data</a></h2><a name="TasksDataSetsView"></a><p><a name="2798"></a> <a name="2799"></a> <a name="2800"></a><p> The Data Sets View lets you do three things: <ul>
+        <li>Enter multiple data sets for a parameter from a Test Case <a href="node146.html#TasksDSVDataSets">3.12.11.1</a>. <li>Enter data sets for a central test data set <a href="node139.html#TasksDSVCentral">3.12.9.4</a>. <li>Translate your parameter values into other languages <a href="node147.html#TasksDSVTranslate">3.12.11.2</a>. </ul>
+    <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If you are editing the Test Suite , the working language (which is specified via the globe button on the toolbar) must be set to a language supported by the chosen AUT for the Test Suite . Otherwise the Test Suite will be uneditable. </b></td>
+          <td><b>You can also create central test data sets for your Project to reuse in Test Cases <a href="node135.html#TasksCentralData">3.12.9</a>.</b></td>
         </tr>
       </table>
     <p>
-      <ol>
-        <li>Open the Test Suite Editor by double-clicking on the Test Suite you want to configure. <li>In the Properties View , you can: <ol>
-            <li>Change the Test Suite name by entering a new name in the <i>Test Suite name</i> field. <li>Add a comment to the Test Suite <a href="node91.html#TasksEditorAddComment">3.7.5</a>. <li>Enter a value in the <i>step delay</i> field. <p>
-                <table>
-                  <tr>
-                    <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                    <td><b>The step delay is the time Jubula leaves between each Test Step during test execution. The default is 0 milliseconds <a href="node184.html#TasksExecSpeed">3.16.5</a>.</b></td>
-                  </tr>
-                </table>
-              <p>
-            <li>Select the AUT for this Test Suite . To be able to select an AUT (and object map, and execute your test) you must have added at least one AUT to the Project <a href="node73.html#Defineaut">3.5.2</a>. <p>
-                <table>
-                  <tr>
-                    <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                    <td><b>You don&#39;t have to choose an AUT for a Test Suite as soon as you have created it, but you will have to choose one before object mapping, for example.</b></td>
-                  </tr>
-                </table>
-              <p>
-            <li>Choose a default reentry type for each of the four error types in Jubula from the combo-boxes. <p> Event Handlers are Test Cases used to deal with errors during test execution. When an error occurs, the current Test Case is searched for an Event Handler for that error type. If none is found, the parent Test Case is searched, and so on. If no Event Handler for the test is found, then a default Event Handler (specified in the Test Suite properties)is activated. <p> As a general rule, you should avoid default Event Handlers being executed. See the sections on Event Handlers for information on the event types <a href="node199.html#eventtype">3.18.2</a>, reentry types <a href="node200.html#reentrytype">3.18.3</a> and creating your own Event Handlers . <li>Save the changes in the Test Suite Editor . </ol>
-      </ol>
-    <p>
-    <p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node146.html" name="tex2html2949"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">11</span>.<span class="arabic">1</span> Data Sets View : adding multiple data sets to a Test Case </a><li><a href="node147.html" name="tex2html2950"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">11</span>.<span class="arabic">2</span> Data Sets View : translating test data</a></ul>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2011. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>
