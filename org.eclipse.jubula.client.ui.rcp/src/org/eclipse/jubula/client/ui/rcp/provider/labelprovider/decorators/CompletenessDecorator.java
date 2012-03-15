@@ -26,9 +26,9 @@ public class CompletenessDecorator extends AbstractLightweightLabelDecorator {
     /** {@inheritDoc} */
     public void decorate(Object element, IDecoration decoration) {
         final INodePO node = (INodePO) element;
-        if (ProblemFactory.hasProblem(node)) {
-            IProblem worstProblem = ProblemFactory.getWorstProblem(
-                    node.getProblems());
+        IProblem worstProblem = ProblemFactory.getWorstProblem(
+                node.getProblems());
+        if (worstProblem != null) {
             switch (worstProblem.getStatus().getSeverity()) {
                 case IStatus.WARNING:
                     decoration.addOverlay(
