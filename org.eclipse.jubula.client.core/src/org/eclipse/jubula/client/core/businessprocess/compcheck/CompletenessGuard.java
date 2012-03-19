@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -129,8 +130,9 @@ public final class CompletenessGuard {
 
             if (compName != null && objMap != null) {
                 IComponentIdentifier id = null;
+                List<INodePO> currentTreePath = ctx.getCurrentTreePath();
                 CompNameResult result = m_compNamesBP.findCompName(
-                        ctx.getCurrentTreePath(), cap, cap.getComponentName(),
+                        currentTreePath, cap, cap.getComponentName(),
                         ComponentNamesBP.getInstance());
                 try {
                     id = objMap.getTechnicalName(result.getCompName());
@@ -139,6 +141,15 @@ public final class CompletenessGuard {
                 }
                 if (id == null) {
                     INodePO rNode = result.getResponsibleNode();
+                    if (rNode instanceof ICapPO) {
+                        // this is a workaround for issue 
+                        // http://bugzilla.bredex.de/289#c4
+                        int responsibleNodeIdx = currentTreePath
+                                .lastIndexOf(rNode) - 1;
+                        if (responsibleNodeIdx > -1) {
+                            rNode = currentTreePath.get(responsibleNodeIdx);
+                        }
+                    }
                     setCompletenessObjectMapping(rNode, m_aut, false);
                 } else {
                     setCompletenessObjectMapping(cap, m_aut, true);
