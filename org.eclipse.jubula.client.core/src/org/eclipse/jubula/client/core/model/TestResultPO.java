@@ -32,6 +32,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.eclipse.persistence.annotations.Index;
+
 
 /**
  * @author BREDEX GmbH
@@ -190,6 +192,7 @@ class TestResultPO implements ITestResultPO {
      */
     @Basic
     @Column(name = "INTERNAL_TESTRUN_ID")
+    @Index(name = "PI_TESTRUN_ID")
     public Long getInternalTestResultSummaryID() {
         return m_testResultSummaryId;
     }
