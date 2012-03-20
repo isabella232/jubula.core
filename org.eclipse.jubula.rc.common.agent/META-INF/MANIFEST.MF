@@ -3,7 +3,7 @@ Created-By: Eclipse Jubula
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula RC Java Agent
 Bundle-SymbolicName: org.eclipse.jubula.rc.common.agent
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.2.1.qualifier
 Bundle-Vendor: Eclipse Jubula
 Premain-Class: org.eclipse.jubula.rc.common.agent.GDAgent
 Class-Path: lib/org.eclipse.jubula.rc.common.jar

@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.feature"
       label="Jubula"
-      version="1.2.0.qualifier"
+      version="1.2.1.qualifier"
       provider-name="Eclipse Jubula"
       plugin="org.eclipse.jubula.client.ui.rcp">
 

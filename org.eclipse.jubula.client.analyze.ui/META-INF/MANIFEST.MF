@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Analyze UI
 Bundle-SymbolicName: org.eclipse.jubula.client.analyze.ui;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.2.1.qualifier
 Bundle-Activator: org.eclipse.jubula.client.analyze.ui.Activator
 Bundle-Vendor: Eclipse Jubula
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0.v20110110,4.0.0)",

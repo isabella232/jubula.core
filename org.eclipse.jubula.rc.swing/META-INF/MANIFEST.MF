@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Remote Control - Swing
 Bundle-SymbolicName: org.eclipse.jubula.rc.swing
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.2.1.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
 Require-Bundle: org.apache.commons.beanutils;bundle-version="[1.7.0,2.0.0)",

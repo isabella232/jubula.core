@@ -1,6 +1,6 @@
 Bundle-SymbolicName: org.eclipse.jubula.app.cmd;singleton=true
 Bundle-Name: Jubula Commandline Client
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.2.1.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-Activator: org.eclipse.jubula.app.cmd.PluginStarter
 Bundle-ActivationPolicy: lazy
