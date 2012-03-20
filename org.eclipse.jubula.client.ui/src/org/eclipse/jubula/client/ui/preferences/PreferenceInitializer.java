@@ -51,6 +51,9 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 Constants.DATADIR_WS_KEY_DEFAULT);
         prefStore.setDefault(Constants.DATADIR_PATH_KEY, 
                 Platform.getLocation().toOSString());
+
+        prefStore.setDefault(Constants.PREF_KEY_CACHE_TEST_RESULTS, 
+                Constants.PREF_DEFAULT_CACHE_TEST_RESULTS);
         
         StringBuilder serverValuesBuilder = new StringBuilder();
         serverValuesBuilder.append(new String(Base64.encodeBase64(

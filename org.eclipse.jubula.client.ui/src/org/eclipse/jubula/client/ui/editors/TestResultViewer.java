@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
+import javax.persistence.EntityManager;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -46,8 +48,11 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
+import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
@@ -141,6 +146,9 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
 
         /** the root node of the created Test Result tree */
         private TestResultNode m_rootNode;
+
+        /** the manager for Test Result entities */
+        private EntityManager m_session;
         
         /**
          * Constructor
@@ -149,11 +157,16 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
          *                  tree.
          * @param parentProjectId The database ID of the Project associated 
          *                        with the test run.
+         * @param session The manager for Test Result entities. The caller is
+         *                  responsible for managing the session (opening, 
+         *                  closing, etc.). Closing the session before or during
+         *                  the operation will cause errors.
          */
         public GenerateTestResultTreeOperation(
-                Long summaryId, Long parentProjectId) {
+                Long summaryId, Long parentProjectId, EntityManager session) {
             m_summaryId = summaryId;
             m_parentProjectId = parentProjectId;
+            m_session = session;
         }
         
         /**
@@ -167,7 +180,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
             try {
                 List<ITestResultPO> testResultList = 
                     TestResultPM.computeTestResultListForSummary(
-                            GeneralStorage.getInstance().getMasterSession(), 
+                            m_session, 
                             m_summaryId);
                 
                 TestResultNode createdNode = null;
@@ -328,6 +341,15 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     /** the viewer */
     private TreeViewer m_viewer;
     
+    /** the manager for Test Result entities */
+    private EntityManager m_session;
+    
+    /** 
+     * whether the Test Results loaded in this viewer will be cached in the 
+     * master session 
+     */
+    private boolean m_cacheResults;
+    
     /** {@inheritDoc} */
     public void doSave(IProgressMonitor monitor) {
         // "Save" not supported. Do nothing.
@@ -380,7 +402,9 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         
         GenerateTestResultTreeOperation operation = 
             new GenerateTestResultTreeOperation(summaryId, 
-                    parentProjectId);
+                    parentProjectId, m_cacheResults 
+                        ? GeneralStorage.getInstance().getMasterSession() 
+                                : m_session);
         
         try {
             progressService.busyCursorWhile(operation);
@@ -416,6 +440,11 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     public void createPartControl(Composite parent) {
         TestResultEditorInput editorInput = 
             (TestResultEditorInput)getEditorInput();
+        m_cacheResults = Plugin.getDefault().getPreferenceStore().getBoolean(
+                Constants.PREF_KEY_CACHE_TEST_RESULTS);
+        if (!m_cacheResults) {
+            m_session = Persistor.instance().openSession();
+        }
         m_viewer = new TreeViewer(parent);
         m_viewer.setContentProvider(new TestResultTreeViewContentProvider());
         DecoratingLabelProvider labelProvider = new DecoratingLabelProvider(
@@ -526,4 +555,9 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         return m_viewer;
     }
     
+    @Override
+    public void dispose() {
+        super.dispose();
+        Persistor.instance().dropSession(m_session);
+    }
 }

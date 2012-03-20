@@ -261,6 +261,11 @@ public interface Constants {
     public static final String LINK_WITH_EDITOR_TCVIEW_KEY = "LINK_WITH_EDITOR_TCVIEW_KEY"; //$NON-NLS-1$
     /** Key for the mode of the AUT Config dialog */
     public static final String AUT_CONFIG_DIALOG_MODE = "AUT_CONFIG_DIALOG_MODE"; //$NON-NLS-1$
+    /** 
+     * Key for preference whether Test Results opened in the Test Result Viewer
+     * should be cached in the master session (even after closing the viewer) 
+     */
+    public static final String PREF_KEY_CACHE_TEST_RESULTS = "CACHE_TEST_RESULTS"; //$NON-NLS-1$
     
     
     
@@ -407,6 +412,12 @@ public interface Constants {
     public static final boolean SHOWCAPINFO_KEY_DEFAULT = true;
     /** default value for showing transient childrens */
     public static final boolean SHOW_TRANSIENT_CHILDREN_KEY_DEFAULT = true;
+    /** 
+     * Default value for preference whether Test Results opened in the Test 
+     * Result Viewer should be cached in the master session (even after 
+     * closing the viewer) 
+     */
+    public static final boolean PREF_DEFAULT_CACHE_TEST_RESULTS = false;
 
     // --------------------------------------------------------------------
     
