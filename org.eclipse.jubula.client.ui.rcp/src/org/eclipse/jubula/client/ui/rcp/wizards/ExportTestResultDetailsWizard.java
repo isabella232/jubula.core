@@ -128,7 +128,9 @@ public class ExportTestResultDetailsWizard extends Wizard
                     GenerateTestResultTreeOperation operation =
                         new GenerateTestResultTreeOperation(
                                 summary.getId(), 
-                                summary.getInternalProjectID());
+                                summary.getInternalProjectID(),
+                                GeneralStorage.getInstance()
+                                    .getMasterSession());
                     
                     operation.run(subMonitor.newChild(1));
 
