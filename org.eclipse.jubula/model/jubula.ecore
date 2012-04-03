@@ -2,167 +2,40 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="jubula"
-    nsURI="http://www.eclipse.org/jubula/2.0" nsPrefix="jb">
-  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="languages" lowerBound="1"
-        upperBound="-1" eType="#//Language" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="compCategory" lowerBound="1"
-        eType="#//CompCategory" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="specCategory" lowerBound="1"
-        eType="#//SpecCategory" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="execCategory" lowerBound="1"
-        eType="#//ExecCategory" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ctdCategory" lowerBound="1"
-        eType="#//CTDCategory" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="AUTs" upperBound="-1" eType="#//AUT"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TestCase" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="#//TestCaseChild" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
-        eType="#//Parameter" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultValueProvider" eType="#//ValueProvider"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="eventHandlerMap" upperBound="-1"
-        eType="#//HandlerEntry" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SpecCategory" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="testCases" upperBound="-1"
-        eType="#//TestCase" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
-        eType="#//SpecCategory" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TestCaseRef" eSuperTypes="#//TestCaseChild">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="testCase" lowerBound="1"
-        eType="#//TestCase"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="componentRefs" upperBound="-1"
-        eType="#//ComponentRef"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TestStep" eSuperTypes="#//TestCaseChild">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
-        eType="#//Component"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TestCaseChild" abstract="true" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valueProvider" eType="#//ValueProvider"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TestJob" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="testSuiteRefs" upperBound="-1"
-        eType="#//TestSuiteRef" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TestSuite" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="testCaseRefs" upperBound="-1"
-        eType="#//TestCaseRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="AUT" lowerBound="1" eType="#//AUT"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TestSuiteRef" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="testSuite" lowerBound="1"
-        eType="#//TestSuite"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExecCategory" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
-        eType="#//ExecCategory" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="testJobs" upperBound="-1"
-        eType="#//TestJob" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="testSuites" upperBound="-1"
-        eType="#//TestSuite" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AUT" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="configs" upperBound="-1"
-        eType="#//AUTConfig" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="uiCategory" lowerBound="1"
-        eType="#//UICategory" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AUTConfig" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UIComponent">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
-        eType="#//Component"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CompCategory" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
-        eType="#//CompCategory" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
-        eType="#//Component" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Component" eSuperTypes="#//NamedElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ComponentRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
-        eType="#//Component"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="override" eType="#//Component"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UICategory" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="uiComponents" upperBound="-1"
-        eType="#//UIComponent" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
-        eType="#//UICategory" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#//NamedElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Language"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ValueProvider" abstract="true" interface="true">
-    <eOperations name="getValues" lowerBound="1" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eParameters name="parameter" lowerBound="1" eType="#//Parameter"/>
-      <eParameters name="language" lowerBound="1" eType="#//Language"/>
-    </eOperations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LocalValueProvider" eSuperTypes="#//ValueProvider">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="values" lowerBound="1"
-        upperBound="-1" eType="#//Value" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Value">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="language" lowerBound="1"
-        eType="#//Language"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" eType="#//Parameter"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExcelValueProvider" eSuperTypes="#//ValueProvider">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RefValueProvider" eSuperTypes="#//ValueProvider">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="testCase" lowerBound="1"
-        eType="#//TestCase" changeable="false" volatile="true" transient="true" derived="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CTDValueProvider" eSuperTypes="#//ValueProvider">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ctdSet" lowerBound="1"
-        eType="#//CTDSet"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CTDSet" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="valueProvider" lowerBound="1"
-        eType="#//LocalValueProvider" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
-        eType="#//Parameter" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CTDCategory" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
-        eType="#//CTDCategory" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ctdSets" upperBound="-1"
-        eType="#//CTDSet" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EventHandler" eSuperTypes="#//TestCaseRef">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reentryType" lowerBound="1"
-        eType="#//ReentryType"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="EventType">
-    <eLiterals name="ComponentNotFound"/>
-    <eLiterals name="ActionError" value="1"/>
-    <eLiterals name="ConfigurationError" value="2"/>
-    <eLiterals name="CheckFailed" value="3"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="HandlerEntry" instanceClassName="java.util.Map$Entry">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="#//EventType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="#//EventHandler"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="ReentryType">
-    <eLiterals name="Pause"/>
-    <eLiterals name="Continue" value="1"/>
-    <eLiterals name="Break" value="2"/>
-    <eLiterals name="Retry" value="3"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+    nsURI="http://jubula/1.0" nsPrefix="jubula">
+  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//Timestamp.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Timestamp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Timestamp" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Node"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ParamNode" eSuperTypes="#//Node"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RefTestSuite" eSuperTypes="#//Node"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestSuite" eSuperTypes="#//Node"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestJob" eSuperTypes="#//Node"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Cap" eSuperTypes="#//ParamNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ParamNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestCase" eSuperTypes="#//ParamNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecTestCase" eSuperTypes="#//TestCase"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SpecTestCase" eSuperTypes="#//TestCase"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectMapping" eSuperTypes="#//Timestamp.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractGUIDName" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentName" eSuperTypes="#//AbstractGUIDName"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ParamName" eSuperTypes="#//AbstractGUIDName"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ProjectName" eSuperTypes="#//AbstractGUIDName"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AUTConfig" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AUTCont" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AUTMain" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CheckConfCont" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CheckConf" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompIdentifier" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompNamesPair" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataSet" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecObjCont" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectMappingAssoziation" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectMappingCategory" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectMappingProfile" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ParamDescription" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CapParamDescription" eSuperTypes="#//ParamDescription"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TcParamDescription" eSuperTypes="#//ParamDescription"/>
 </ecore:EPackage>
