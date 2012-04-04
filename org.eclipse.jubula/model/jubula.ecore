@@ -3,11 +3,10 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="jubula"
     nsURI="http://jubula/1.0" nsPrefix="jubula">
-  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//Timestamp.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PersistentObject"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Timestamp"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Timestamp" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//Timestamp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Timestamp" abstract="true" interface="true"
+      eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PersistentObject" abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Node"/>
   <eClassifiers xsi:type="ecore:EClass" name="ParamNode" eSuperTypes="#//Node"/>
   <eClassifiers xsi:type="ecore:EClass" name="RefTestSuite" eSuperTypes="#//Node"/>
@@ -18,24 +17,32 @@
   <eClassifiers xsi:type="ecore:EClass" name="TestCase" eSuperTypes="#//ParamNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="ExecTestCase" eSuperTypes="#//TestCase"/>
   <eClassifiers xsi:type="ecore:EClass" name="SpecTestCase" eSuperTypes="#//TestCase"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ObjectMapping" eSuperTypes="#//Timestamp.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractGUIDName" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectMapping" eSuperTypes="#//Timestamp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractGUIDName" eSuperTypes="#//PersistentObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="ComponentName" eSuperTypes="#//AbstractGUIDName"/>
   <eClassifiers xsi:type="ecore:EClass" name="ParamName" eSuperTypes="#//AbstractGUIDName"/>
   <eClassifiers xsi:type="ecore:EClass" name="ProjectName" eSuperTypes="#//AbstractGUIDName"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AUTConfig" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AUTCont" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AUTMain" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="CheckConfCont" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="CheckConf" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="CompIdentifier" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="CompNamesPair" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DataSet" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ExecObjCont" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ObjectMappingAssoziation" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ObjectMappingCategory" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ObjectMappingProfile" eSuperTypes="#//PersistentObject.1"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ParamDescription" eSuperTypes="#//PersistentObject.1"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AUTConfig" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AUTCont" eSuperTypes="#//PersistentObject #//Wrapper"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AUTMain" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CheckConfCont" eSuperTypes="#//PersistentObject #//Wrapper"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CheckConf" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompIdentifier" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompNamesPair" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataSet" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecObjCont" eSuperTypes="#//PersistentObject #//Wrapper"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectMappingAssoziation" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectMappingCategory" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ObjectMappingProfile" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ParamDescription" abstract="true" eSuperTypes="#//PersistentObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="CapParamDescription" eSuperTypes="#//ParamDescription"/>
   <eClassifiers xsi:type="ecore:EClass" name="TcParamDescription" eSuperTypes="#//ParamDescription"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Wrapper" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SpecObjCont" eSuperTypes="#//Wrapper"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ProjectProperties" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReusedProject" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestData" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestDataCategory" eSuperTypes="#//TestData"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestDataCube" eSuperTypes="#//TestData"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UsedToolkit" eSuperTypes="#//PersistentObject"/>
 </ecore:EPackage>
