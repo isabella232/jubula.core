@@ -296,11 +296,13 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             } else {
                 Enumeration<URL> e = bundle.findEntries(
                         "/", "*.jar", true); //$NON-NLS-1$//$NON-NLS-2$
-                while (e.hasMoreElements()) {
-                    URL jarUrl = e.nextElement();
-                    classpathEntries.add(
-                            new File(bundleFile + jarUrl.getFile())
-                            .getAbsolutePath());
+                if (e != null) {
+                    while (e.hasMoreElements()) {
+                        URL jarUrl = e.nextElement();
+                        classpathEntries.add(
+                                new File(bundleFile + jarUrl.getFile())
+                                .getAbsolutePath());
+                    }
                 }
             }
         } catch (IOException ioe) {
