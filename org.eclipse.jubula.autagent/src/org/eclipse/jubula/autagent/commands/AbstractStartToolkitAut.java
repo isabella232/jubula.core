@@ -295,9 +295,8 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
                 }
             } else {
                 Enumeration<URL> e = bundle.findEntries(
-                        "/", "*.jar", true);
+                        "/", "*.jar", true); //$NON-NLS-1$//$NON-NLS-2$
                 if (e != null) {
-                    //$NON-NLS-1$//$NON-NLS-2$
                     while (e.hasMoreElements()) {
                         URL jarUrl = e.nextElement();
                         classpathEntries.add(
