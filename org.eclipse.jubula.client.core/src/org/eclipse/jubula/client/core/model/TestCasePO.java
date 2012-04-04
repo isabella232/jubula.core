@@ -97,7 +97,6 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
     private void setEventExecTcMap(
             Map<String, IEventExecTestCasePO> eventExecTestCaseList) {
         m_eventExecTcMap = eventExecTestCaseList;
-        // only for Persistence (JPA / EclipseLink)
     }
 
     /**
@@ -128,6 +127,7 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
      * @return the eventExecTC for given eventType or null
      */
     public IEventExecTestCasePO getEventExecTC(String eventType) {
+        setParents(getEventExecTcMap().values());
         return getEventExecTcMap().get(eventType);
     }
 
@@ -137,10 +137,8 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
     @Transient
     public Collection<IEventExecTestCasePO> getAllEventEventExecTC() {
         Collection<IEventExecTestCasePO> evHandlers = 
-            getEventExecTcMap().values();
-        for (IEventExecTestCasePO evTc : evHandlers) {
-            evTc.setParentNode(this);
-        }
+                getEventExecTcMap().values();
+        setParents(evHandlers);
         return Collections.unmodifiableCollection(evHandlers);
     }
 
@@ -151,6 +149,15 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
         super.setParentProjectId(projectId);
         for (IEventExecTestCasePO eh : getAllEventEventExecTC()) {
             eh.setParentProjectId(projectId);
+        }
+    }
+    
+    /**
+     * @param evHandlers the event handlers to set the parent for
+     */
+    private void setParents(Collection<IEventExecTestCasePO> evHandlers) {
+        for (IEventExecTestCasePO evTc : evHandlers) {
+            evTc.setParentNode(this);
         }
     }
 }

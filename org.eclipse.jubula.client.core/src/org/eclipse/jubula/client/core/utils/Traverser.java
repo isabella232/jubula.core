@@ -786,9 +786,8 @@ public class Traverser {
             ExecObject obj = m_execStack.get(i);
             IExecTestCasePO execTc = (IExecTestCasePO)obj.getExecNode();
             
-            Map<String, IEventExecTestCasePO> eventMap = execTc.getEventMap();
-            if (!isHandlingError(i) && eventMap.containsKey(eventType)) {
-                IEventExecTestCasePO eventExecTc = eventMap.get(eventType);
+            IEventExecTestCasePO eventExecTc = execTc.getEventExecTC(eventType);
+            if (!isHandlingError(i) && eventExecTc !=  null) {
                 if (!(eventExecTc.getReentryProp().equals(ReentryProperty.RETRY)
                         && m_markerToNumRetriesMap.containsKey(marker) 
                         && m_markerToNumRetriesMap.get(marker)
