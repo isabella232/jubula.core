@@ -82,6 +82,8 @@ public abstract class CommandConstants {
     public static final String RC_HTML_BUNDLE_ID = "com.bredexsw.jubula.rc.html"; //$NON-NLS-1$
     /** ID of the DOTNET RC bundle */
     public static final String RC_DOTNET_BUNDLE_ID = "org.eclipse.jubula.rc.dotnet"; //$NON-NLS-1$
+    /** ID of the DOTNET NATIVE RC bundle */
+    public static final String RC_DOTNET_NATIVE_BUNDLE_ID = "org.eclipse.jubula.rc.dotnet.nativ"; //$NON-NLS-1$
     /** ID of the HTML common RC bundle */
     public static final String RC_HTML_COMMON_BUNDLE_ID = "com.bredexsw.jubula.rc.html.common"; //$NON-NLS-1$
     /** /** constant: "./lib/extImplClasses" - path name to external ImplClasses */
