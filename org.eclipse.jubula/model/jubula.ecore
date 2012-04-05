@@ -3,7 +3,10 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="jubula"
     nsURI="http://jubula/1.0" nsPrefix="jubula">
-  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//Timestamp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//Timestamp">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="NodeList" upperBound="-1"
+        eType="#//Node" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Timestamp" abstract="true" interface="true"
       eSuperTypes="#//PersistentObject">
     <eOperations name="setTimestamp">
