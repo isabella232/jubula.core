@@ -5,8 +5,21 @@
     nsURI="http://jubula/1.0" nsPrefix="jubula">
   <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//Timestamp"/>
   <eClassifiers xsi:type="ecore:EClass" name="Timestamp" abstract="true" interface="true"
-      eSuperTypes="#//PersistentObject"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PersistentObject" abstract="true" interface="true"/>
+      eSuperTypes="#//PersistentObject">
+    <eOperations name="setTimestamp">
+      <eParameters name="timestamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eOperations>
+    <eOperations name="getTimestamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PersistentObject" abstract="true" interface="true">
+    <eOperations name="getVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eOperations name="getId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+    <eOperations name="getName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="getParentProjectId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+    <eOperations name="setParentProjectId">
+      <eParameters name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+    </eOperations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Node"/>
   <eClassifiers xsi:type="ecore:EClass" name="ParamNode" eSuperTypes="#//Node"/>
   <eClassifiers xsi:type="ecore:EClass" name="RefTestSuite" eSuperTypes="#//Node"/>

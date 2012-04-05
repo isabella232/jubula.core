@@ -504,6 +504,26 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_HcAihH5QEeGmWs-qUufVZQ"/>
     </children>
     <children xmi:type="notation:Node" xmi:id="_HcBJkH5QEeGmWs-qUufVZQ" type="5002">
+      <children xmi:type="notation:Node" xmi:id="_LXbUUH8CEeGmWs-qUufVZQ" type="2002">
+        <element xmi:type="ecore:EOperation" href="jubula.ecore#//PersistentObject/getId"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_LXbUUX8CEeGmWs-qUufVZQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_r3IlEH77EeGmWs-qUufVZQ" type="2002">
+        <element xmi:type="ecore:EOperation" href="jubula.ecore#//PersistentObject/getVersion"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_r3IlEX77EeGmWs-qUufVZQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_RNM04H8CEeGmWs-qUufVZQ" type="2002">
+        <element xmi:type="ecore:EOperation" href="jubula.ecore#//PersistentObject/getName"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_RNM04X8CEeGmWs-qUufVZQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_X12j4H8CEeGmWs-qUufVZQ" type="2002">
+        <element xmi:type="ecore:EOperation" href="jubula.ecore#//PersistentObject/getParentProjectId"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_X12j4X8CEeGmWs-qUufVZQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_efWncH8CEeGmWs-qUufVZQ" type="2002">
+        <element xmi:type="ecore:EOperation" href="jubula.ecore#//PersistentObject/setParentProjectId"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_efWncX8CEeGmWs-qUufVZQ"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_HcBJkX5QEeGmWs-qUufVZQ"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_HcBJkn5QEeGmWs-qUufVZQ"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_HcBJk35QEeGmWs-qUufVZQ"/>
@@ -520,6 +540,14 @@
       <styles xmi:type="notation:FilteringStyle" xmi:id="_OYS_NH5QEeGmWs-qUufVZQ"/>
     </children>
     <children xmi:type="notation:Node" xmi:id="_OYS_NX5QEeGmWs-qUufVZQ" type="5002">
+      <children xmi:type="notation:Node" xmi:id="_VCcWMH8EEeGmWs-qUufVZQ" type="2002">
+        <element xmi:type="ecore:EOperation" href="jubula.ecore#//Timestamp/setTimestamp"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_VCcWMX8EEeGmWs-qUufVZQ"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_dQWLwH8EEeGmWs-qUufVZQ" type="2002">
+        <element xmi:type="ecore:EOperation" href="jubula.ecore#//Timestamp/getTimestamp"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_dQWLwX8EEeGmWs-qUufVZQ"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_OYS_Nn5QEeGmWs-qUufVZQ"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_OYS_N35QEeGmWs-qUufVZQ"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_OYS_OH5QEeGmWs-qUufVZQ"/>
