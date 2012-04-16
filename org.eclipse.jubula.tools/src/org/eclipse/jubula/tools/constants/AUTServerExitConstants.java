@@ -62,6 +62,10 @@ public class AUTServerExitConstants {
     
     /** exit state in case of an error while starting the AUT */
     public static final int AUT_START_ERROR = 25;
+    
+    /** exit state in case that the started aut is not supported
+     * through the ui automation framework */
+    public static final int AUT_NOT_UIA_SUPPORTED = 26;
 
     /**
      * do not instantiate
