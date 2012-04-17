@@ -32,7 +32,11 @@ import org.eclipse.ui.part.EditorPart;
  * @created Feb 9, 2007
  */
 public class LogViewer extends EditorPart {
-
+    /**
+     * The ID of this viewer
+     */
+    public static final String ID = "org.eclipse.jubula.client.ui.rcp.editors.LogViewer"; //$NON-NLS-1$
+    
     /** the text field for this viewer */
     private Text m_text = null;
     

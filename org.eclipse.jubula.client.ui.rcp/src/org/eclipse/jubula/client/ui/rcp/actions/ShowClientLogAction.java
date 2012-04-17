@@ -16,6 +16,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.AbstractActionBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ShowClientLogBP;
 import org.eclipse.jubula.client.ui.rcp.editors.ClientLogInput;
+import org.eclipse.jubula.client.ui.rcp.editors.LogViewer;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Event;
@@ -58,8 +59,7 @@ public class ShowClientLogAction extends AbstractAction {
                 m_clientLogInput = new ClientLogInput(clientLogFile);
 
                 try {
-                    currentPage.openEditor(m_clientLogInput, 
-                        "org.eclipse.jubula.client.ui.rcp.editors.LogViewer"); //$NON-NLS-1$
+                    currentPage.openEditor(m_clientLogInput, LogViewer.ID);
                 } catch (PartInitException e) {
                     ErrorHandlingUtil.createMessageDialog(
                             MessageIDs.E_CANNOT_OPEN_EDITOR);
