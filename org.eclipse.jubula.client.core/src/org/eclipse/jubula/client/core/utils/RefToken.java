@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -329,8 +330,15 @@ public class RefToken extends AbstractParamValueToken {
                         ParamValueConverter conv = new ModelParamValueConverter(
                             data.getValue(locale), 
                             execNode, locale, getParamDescription());
-                        stack.remove(stack.size() - 1);
-                        return conv.getExecutionString(stack, locale); 
+
+                        // Look for the reference value further up (or down, 
+                        // actually) the execution stack. We initialize a new 
+                        // list here in order to avoid modifying the provided 
+                        // list, which was the cause of bug 375632.
+                        List<ExecObject> reducedStack = 
+                                new ArrayList<ExecObject>(stack);
+                        reducedStack.remove(reducedStack.size() - 1);
+                        return conv.getExecutionString(reducedStack, locale); 
                     }
                 }
             }
