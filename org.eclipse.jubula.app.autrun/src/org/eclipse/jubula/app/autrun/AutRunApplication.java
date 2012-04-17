@@ -44,10 +44,16 @@ import org.slf4j.LoggerFactory;
  * <li>osgi.noShutdown=true</li> 
  * <li>eclipse.jobs.daemon=true</li> 
  * <li>eclipse.enableStateSaver=false</li> 
+ * <li>osgi.framework.activeThreadType=false</li> 
  * </ul>
  * These parameters are required because the original application was designed 
  * to run outside of an OSGi context, i.e. the application should end only 
  * when no non-daemon threads are active.
+ * 
+ * The <i>osgi.framework.activeThreadType</i> entry can actually be 
+ * anything other than "normal", but it must be present. This requirement exists
+ * since changing org.eclipse.equinox.launcher from 1.1.0 to 1.2.0, and was the
+ * cause of bug 375931.
  * 
  * @author BREDEX GmbH
  * @created Dec 9, 2009
