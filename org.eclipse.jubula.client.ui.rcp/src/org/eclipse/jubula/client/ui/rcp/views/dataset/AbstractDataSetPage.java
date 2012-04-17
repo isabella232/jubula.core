@@ -1085,9 +1085,9 @@ public abstract class AbstractDataSetPage extends Page
         fillDataSetCombo();
         fillLanguageCombo();
         setPriorComboSelection();
-        if (getParamInterfaceObj() != null
-                && isNodeValid(getParamInterfaceObj())) {
-            getTableViewer().setInput(getInputForTable(getParamInterfaceObj()));
+        IParameterInterfacePO paramObj = getParamInterfaceObj();
+        if (paramObj != null && isNodeValid(paramObj)) {
+            getTableViewer().setInput(getInputForTable(paramObj));
             createTable();
         } else {
             getTableViewer().setInput(null);
@@ -1945,8 +1945,10 @@ public abstract class AbstractDataSetPage extends Page
                 // is not a StructuredSelection
                 return;
             }
+            IStructuredSelection strucSelection = 
+                    (IStructuredSelection)selection;
             IParameterInterfacePO paramNode = getSelectedParamInterfaceObj(
-                    (IStructuredSelection)selection);
+                    strucSelection);
 
             boolean correctPart = false;
             if (part != null) {
@@ -1958,7 +1960,7 @@ public abstract class AbstractDataSetPage extends Page
             } else {
                 getTable().setForeground(LayoutUtil.DEFAULT_OS_COLOR);
             }
-            boolean hasInput = !((IStructuredSelection)selection).isEmpty();
+            boolean hasInput = !strucSelection.isEmpty();
             boolean isEditorOpen = isEditorOpen(paramNode);
             boolean hasParameter = false; 
             boolean hasExcelFile = false;

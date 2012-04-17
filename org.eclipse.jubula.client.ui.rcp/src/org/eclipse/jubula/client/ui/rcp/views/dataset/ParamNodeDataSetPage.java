@@ -55,7 +55,8 @@ public class ParamNodeDataSetPage extends AbstractDataSetPage {
     
     /** {@inheritDoc} */
     protected boolean isNodeValid(IParameterInterfacePO paramObj) {
-        return getParamNodePO(paramObj).isValid();
+        return paramObj instanceof IParamNodePO
+                && getParamNodePO(paramObj).isValid();
     }
 
     /**
@@ -72,11 +73,10 @@ public class ParamNodeDataSetPage extends AbstractDataSetPage {
     /** {@inheritDoc} */
     protected boolean isEditorOpen(IParameterInterfacePO paramObj) {
         if (paramObj != null) {
-            IParamNodePO paramNode = getParamNodePO(paramObj);
-            INodePO node = paramNode;
-            if (paramNode instanceof ICapPO 
-                    || paramNode instanceof IExecTestCasePO) {
-                node = paramNode.getParentNode();
+            Object inputNode = paramObj;
+            if (paramObj instanceof ICapPO 
+                    || paramObj instanceof IExecTestCasePO) {
+                inputNode = getParamNodePO(paramObj).getParentNode();
             }
             List<IEditorReference> editors = Plugin.getAllEditors();
             for (IEditorReference reference : editors) {
@@ -86,7 +86,7 @@ public class ParamNodeDataSetPage extends AbstractDataSetPage {
                             ((NodeEditorInput)reference.getEditorInput())
                             .getNode();
                         if (editorInputNode != null 
-                                && editorInputNode.equals(node)) {
+                                && editorInputNode.equals(inputNode)) {
                             return true;
                         }
                     }

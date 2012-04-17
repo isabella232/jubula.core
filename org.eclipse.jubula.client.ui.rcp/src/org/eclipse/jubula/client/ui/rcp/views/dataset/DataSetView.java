@@ -147,7 +147,6 @@ public class DataSetView extends PageBookView
         dispatcher.removeParamChangedListener(this);
         dispatcher.removeLanguageChangedListener(this);
         dispatcher.removeProjectLoadedListener(this);
-        dispatcher.removeParamChangedListener(this);
         super.dispose();
     }
     
@@ -176,7 +175,7 @@ public class DataSetView extends PageBookView
         }
         return super.getAdapter(adapter);
     }
-    //$NON-NLS-1$
+
     /**
      * @return Returns the parent.
      */
