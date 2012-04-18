@@ -10,14 +10,6 @@
 <plugin>
    <extension
          point="org.eclipse.jubula.client.analyze.definition">
-      <Category
-            id="numMet"
-            name="Numerical Metrics">
-      </Category>
-      <Category
-            id="analysis"
-            name="Analysis">
-      </Category>
       <Context
             class="org.eclipse.jubula.client.analyze.impl.standard.context.TestCaseBrowserActiveCX"
             id="testcasebrowseractive"
@@ -27,11 +19,6 @@
             class="org.eclipse.jubula.client.analyze.impl.standard.context.ProjectCX"
             id="project"
             name="Project">
-      </Context>
-      <Context
-            class="org.eclipse.jubula.client.analyze.impl.standard.context.SimpleCount"
-            id="sc"
-            name="simpleC">
       </Context>
       <Context
             class="org.eclipse.jubula.client.analyze.impl.standard.context.TestSuiteCX"
@@ -88,13 +75,26 @@
             id="componentname"
             name="ComponentName">
       </Context>
+      <Context
+            class="org.eclipse.jubula.client.analyze.impl.standard.context.TestResultNodeCX"
+            id="testresultnode"
+            name="TestResultNode">
+      </Context>
+      <Category
+            id="numMet"
+            name="%numMet">
+      </Category>
+      <Category
+            id="analysis"
+            name="%analysis">
+      </Category>
       <Analyze
             CategoryID="numMet"
             ContextType="testsuite, project, exectestcase, spectestcase, execobjcont, testjob, cap ,category, specobjcont, projectLoaded, reftestsuite, componentname"
             ResultType="tableResultMap"
             class="org.eclipse.jubula.client.analyze.impl.standard.analyze.NumericalProjectElementCounter"
             id="countSpecifiedTC"
-            name="Project Element Counter">
+            name="%projectElementCounter">
       </Analyze>
       <Analyze
             CategoryID="numMet"
@@ -102,7 +102,7 @@
             ResultType="ratioResult"
             class="org.eclipse.jubula.client.analyze.impl.standard.analyze.Ratio"
             id="ratio"
-            name="Ratio (general : specific)">
+            name="%ratio">
       </Analyze>
       <Analyze
             CategoryID="analysis"
@@ -110,7 +110,7 @@
             ResultType="chainList"
             class="org.eclipse.jubula.client.analyze.impl.standard.analyze.Chain"
             id="chain"
-            name="Show Empty chains">
+            name="%showEmptyChains">
       </Analyze>
    </extension>
 

@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.analyze.ui.internal.Query;
 import org.eclipse.search.ui.NewSearchUI;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -33,23 +34,29 @@ import org.eclipse.ui.PlatformUI;
  */
 public class RunSelectionHandler extends AbstractHandler {
     /**
-     * Parameter given from the Command
+     * the active part key
      */
-    private String m_idParam;
+    public static final String ACTIVE_PART_KEY = "activePart";  //$NON-NLS-1$
 
+    /**
+     * 
+     */
+    private static final String PARAM_ID = "org.eclipse.jubula.client.analyze.ui.RunSelection.IDParam";  //$NON-NLS-1$
+    
     /**
      * @param event
      *            event
      * @return null
      */
     public Object execute(ExecutionEvent event) throws ExecutionException {
-
-        m_idParam = event.getParameter("org.eclipse.jubula.client.analyze.ui.RunSelection.IDParam");  //$NON-NLS-1$
+        String idParam = event.getParameter(PARAM_ID);
         
-        Analyze ana = ExtensionRegistry.getAnalyze().get(m_idParam);
+        event.getParameters().put(ACTIVE_PART_KEY, 
+                HandlerUtil.getActivePart(event));
         
+        Analyze ana = ExtensionRegistry.getAnalyze().get(idParam);
+        ana.setExecutionEvent(event);
         // This List is used to save the AnalyzeParameters
-        
         ArrayList<AnalyzeParameter> parameterList = 
                 (ArrayList<AnalyzeParameter>) ana.getAnalyzeParameter();
 
@@ -60,8 +67,7 @@ public class RunSelectionHandler extends AbstractHandler {
         if (!apd.getCancelStatus()) {
 
             // fill the ArrayList with the Analyzes that are going to be
-            // executed
-            // and create the AnalyzeRun
+            // executed and create the AnalyzeRun
             
             ArrayList<Analyze> analyzeList = new ArrayList<Analyze>();
             analyzeList.add(ana);

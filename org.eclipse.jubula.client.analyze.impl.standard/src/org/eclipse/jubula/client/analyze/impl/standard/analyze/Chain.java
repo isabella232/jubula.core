@@ -3,6 +3,7 @@ package org.eclipse.jubula.client.analyze.impl.standard.analyze;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
@@ -272,7 +273,7 @@ public class Chain implements IAnalyze {
      */
     public AnalyzeResult execute(Object obj2analyze, IProgressMonitor monitor,
             String resultType, List<AnalyzeParameter> param, 
-            String analyzeName) {
+            String analyzeName, ExecutionEvent event) {
         
         SubMonitor progress = SubMonitor.convert(monitor, 100);
         
@@ -306,7 +307,7 @@ public class Chain implements IAnalyze {
         l.size();
         monitor.subTask(Messages.ConstructChains);
         constructChains(progress.newChild(5));
-        return new AnalyzeResult(resultType, getLists());
+        return new AnalyzeResult(resultType, getLists(), null);
     }
 
     /**

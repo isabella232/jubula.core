@@ -269,19 +269,18 @@ public class AnalyzePreferenceDialog extends Dialog {
             AnalyzeParameter aParam = parameterList.get(i);
             
             GridData sepData = new GridData();
-            sepData.widthHint = 65;
-            GridData dataLeft = new GridData(200, SWT.DEFAULT);
+            sepData.widthHint = 10;
+            GridData dataLeft = new GridData(400, SWT.DEFAULT);
             dataLeft.horizontalAlignment = SWT.CENTER;
-            GridData dataMid = new GridData(50, SWT.DEFAULT);
-            dataMid.widthHint = 50;
-            GridData dataRight = new GridData(150, SWT.DEFAULT);
+            GridData dataMid = new GridData(10, SWT.DEFAULT);
+            GridData dataRight = new GridData(120, SWT.DEFAULT);
             dataRight.grabExcessHorizontalSpace = false;
             
             // A Separator
             Label sepLab = new Label(c, SWT.NONE);
             sepLab.setLayoutData(sepData);
             // This Label shows the name of the AnalyzeParameter
-            Label nameLabel = new Label(c, SWT.NONE);
+            Label nameLabel = new Label(c, SWT.LEFT);
             nameLabel.setText(aParam.getName());
             nameLabel.setLayoutData(dataLeft);
 
@@ -298,10 +297,23 @@ public class AnalyzePreferenceDialog extends Dialog {
             infoLabel.setToolTipText(aParam.getDescription());
             // create the Text which is used to display the parameterValue
             Text text = new Text(c, SWT.BORDER);
+            text.addListener(SWT.Verify, new Listener() {
+                public void handleEvent(Event e) {
+                    String enteredText = e.text;
+                    char[] chars = new char[enteredText.length()];
+                    enteredText.getChars(0, chars.length, chars, 0);
+                    for (int i = 0; i < chars.length; i++) {
+                        if (!('0' <= chars[i] && chars[i] <= '9')) {
+                            e.doit = false;
+                            return;
+                        }
+                    }
+                }
+            });
             text.setLayoutData(dataRight);
             text.setText(aParam.getValue());
-            text.setTextLimit(30);
-            text.setSize(100, 40);
+            text.setTextLimit(20);
+            text.setSize(70, 40);
             // set the AnalyzeParameter as the TextData
             text.setData(aParam);
             text.addModifyListener(new ModifyListener() {

@@ -13,6 +13,8 @@ package org.eclipse.jubula.client.analyze.internal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.commands.ExecutionEvent;
+
 /**
  * This class is a model for an Analyze. It is used to save the different
  * attributes of an Analyze, when the Analyze is registered when the plugin
@@ -42,6 +44,9 @@ public class Analyze {
     
     /** The Instance of this Analyze */
     private Object m_executableExtension;
+    
+    /** The ExecutionEvent that triggered the Analyze */
+    private ExecutionEvent m_event;
     
     /** Map containing the Parameters of this Analyze */
     private ArrayList<AnalyzeParameter> m_analyzeParameter;
@@ -88,6 +93,7 @@ public class Analyze {
         this.m_executableExtension = executableExtension;
     }
 
+    
     /**
      * @return The Analyze-ID String
      */
@@ -192,5 +198,18 @@ public class Analyze {
      */
     public List<AnalyzeParameter> getAnalyzeParameter() {
         return m_analyzeParameter;
+    }
+    /**
+     * @return The ExecutionEvent that triggered the Analyze
+     */
+    public ExecutionEvent getExecutionEvent() {
+        return m_event;
+    }
+
+    /**
+     * @param event The ExecutionEvent that triggered the Analyze
+     */
+    public void setExecutionEvent(ExecutionEvent event) {
+        m_event = event;
     }
 }

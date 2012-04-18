@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.analyze.ui.internal.helper;
 
+
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -61,7 +62,8 @@ public class ContextHelper {
             for (int i = 0; i < contextData.length; i++) {
 
                 // check if the Element is the Context of the given Analyze
-                if (contextData[i].equals(context.getID())) {
+                if (contextData[i].equals(context.getID())
+                        && !(context.getID().equals("projectloaded"))) {
 
                     IContext iCon = (IContext) context.getContextInstance();
 
@@ -70,7 +72,7 @@ public class ContextHelper {
                     ISelection sel = serv.getSelection();
 
                     if (sel instanceof IStructuredSelection) {
-
+                        
                         IStructuredSelection structuredSel = 
                                 (IStructuredSelection) sel;
 
@@ -79,14 +81,13 @@ public class ContextHelper {
                         // Objects cannot be traversed by the TreeTraverser
                         if (structuredSel.getFirstElement() 
                                 instanceof IExecObjContPO) {
-                            
+
                             setSelection(GeneralStorage.
                                     getInstance().getProject());
                             ProjectContextHelper.
                             setObjContType("IExecObjContPO");
                         } else if (structuredSel.getFirstElement() 
                                 instanceof ISpecObjContPO) {
-                            
                             setSelection(GeneralStorage.
                                     getInstance().getProject());
                             ProjectContextHelper.
@@ -94,6 +95,7 @@ public class ContextHelper {
                         } else {
                             setSelection(structuredSel.getFirstElement());
                         }
+                        
                         if (iCon.isActive(getSelection())) {
                             return true;
                         }

@@ -88,15 +88,17 @@ public class Query extends AbstractSearchQuery implements ISearchQuery {
 
         for (int i = 0; i < anaList.size(); i++) {
 
-            IAnalyze executableExtension = (IAnalyze) anaList.get(i)
+            Analyze analyze = anaList.get(i);
+            IAnalyze executableExtension = (IAnalyze) analyze
                     .getExecutableExtension();
-            monitor.subTask(Messages.Running + anaList.get(i).getName());
+            monitor.subTask(Messages.Running + analyze.getName());
 
             AnalyzeResult res = executableExtension.execute(node,
-                    new SubProgressMonitor(monitor, 1), anaList.get(i)
-                            .getResultType(), anaList.get(i)
-                            .getAnalyzeParameter(), anaList.get(i).getName());
-            qr.getResultMap().put(anaList.get(i), res);
+                    new SubProgressMonitor(monitor, 1), analyze
+                            .getResultType(), analyze
+                            .getAnalyzeParameter(), analyze.getName(),
+                    analyze.getExecutionEvent());
+            qr.getResultMap().put(analyze, res);
         }
         // Set the Query Result
         setQueryResult(qr);
@@ -130,7 +132,7 @@ public class Query extends AbstractSearchQuery implements ISearchQuery {
      * {@inheritDoc}
      */
     public ISearchResult getSearchResult() {
-              
+       
         return m_queryResult;
     }
     /**

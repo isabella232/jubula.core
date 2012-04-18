@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.analyze.internal;
 
+import java.util.List;
+
 /**
  * This class is a model for an AnalyzeResult. It is used to save the different
  * attributes of an AnalyzeResult, when the AnalyzeResult is registered when the plugin
@@ -21,7 +23,6 @@ public class AnalyzeResult {
 
     /**
      * ResultType identifier for the Renderer selection in the ResultRendererHandler
-     * has to be int
      */
     private String m_rType = "";
     
@@ -36,15 +37,38 @@ public class AnalyzeResult {
     
     /** The result-Object */
     private Object m_analyzeResult;
+    
+    /** The parameter list of the analyze */
+    private List<AnalyzeParameter> m_parameterList;
+    
+    /** The additionalData of the executed Analyze*/
+    private Object m_additionalData;
 
     /**
      * Constructor
      * @param resultType The ResultType
      * @param result The ResultValue
+     * @param params The AnalyzeParameter list
      */
-    public AnalyzeResult(String resultType, Object result) {
+    public AnalyzeResult(String resultType, Object result,
+            List<AnalyzeParameter> params) {
         setResultType(resultType);
         setResult(result);
+        setParameterList(params);
+    }
+    /**
+     * Constructor
+     * @param resultType The ResultType
+     * @param result The ResultValue
+     * @param params The AnalyzeParameter list
+     * @param workbenchPart The WorkbenchPart of the executed Analyze
+     */
+    public AnalyzeResult(String resultType, Object result,
+            List<AnalyzeParameter> params, Object workbenchPart) {
+        setResultType(resultType);
+        setResult(result);
+        setParameterList(params);
+        setAdditionalData(workbenchPart);
     }
     /**
      * @return The resultType
@@ -114,5 +138,34 @@ public class AnalyzeResult {
      */
     public void setContextType(String contextType) {
         m_context = contextType;
+    }
+    
+    /**
+     * 
+     * @return The list that includes the AnalyzeParameters. Can be null.
+     */
+    public List<AnalyzeParameter> getParameterList() {
+        return m_parameterList;
+    }
+    
+    /**
+     * @param parameterList The List with AnalyzeParameters
+     */
+    public void setParameterList(List<AnalyzeParameter> parameterList) {
+        this.m_parameterList = parameterList;
+    }
+    
+    /**
+     * @param part
+     *             The given additionalData 
+     */
+    public void setAdditionalData(Object part) {
+        this.m_additionalData = part;
+    }
+    /**
+     * @return The additionalData of the executed Analyze
+     */
+    public Object getAdditionalData() {
+        return m_additionalData;
     }
 }

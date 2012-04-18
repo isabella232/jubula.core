@@ -19,6 +19,7 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.analyze.ui.i18n.messages"; //$NON-NLS-1$
 
+
     public static String CreateProfilContributionItem;
     public static String RunningAnalyzes;
     public static String NodeType;
@@ -47,7 +48,9 @@ public class Messages extends NLS {
     public static String Chainlength;
     public static String EventHandler;
     public static String NoChainFound;
-    
+    public static String Action;
+    public static String AmountOfWaits;
+    public static String NoWaitOrDelayFound;
     
 
     

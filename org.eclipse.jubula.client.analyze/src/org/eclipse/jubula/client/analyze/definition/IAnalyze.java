@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.analyze.definition;
 
 import java.util.List;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.analyze.internal.AnalyzeParameter;
 import org.eclipse.jubula.client.analyze.internal.AnalyzeResult;
@@ -35,8 +36,11 @@ public interface IAnalyze {
      *            of this Analyze
      * @param analyzeName 
      *            The name of the Analyze. It is used for the ProgressMonitor
+     * @param event
+     *            the execution event which triggered this analyze
      * @return the AnalyzeResult
      */
     public AnalyzeResult execute(Object obj2analyze, IProgressMonitor monitor,
-           String resultType, List<AnalyzeParameter> param, String analyzeName);
+            String resultType, List<AnalyzeParameter> param,
+            String analyzeName, ExecutionEvent event);
 }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.analyze.definition.IAnalyze;
@@ -14,15 +15,19 @@ import org.eclipse.jubula.client.analyze.internal.AnalyzeParameter;
 import org.eclipse.jubula.client.analyze.internal.AnalyzeResult;
 import org.eclipse.jubula.client.analyze.internal.helper.ProjectContextHelper;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
@@ -82,8 +87,8 @@ public class Ratio implements IAnalyze {
             setLoadedProjectID(GeneralStorage.getInstance().getProject()
                     .getId());
             setCompSystem(ComponentBuilder.getInstance().getCompSystem());
-            setRatioElements("");
-            setRatioValue("");
+            setRatioElements(StringConstants.EMPTY);
+            setRatioValue(StringConstants.EMPTY);
         }
         
         /**
@@ -167,12 +172,13 @@ public class Ratio implements IAnalyze {
                 ICapPO cap = (ICapPO) node;
                 Component comp = getCompSystem().findComponent(
                         cap.getComponentType());
-                String type = "";
+                String type = StringConstants.EMPTY;
 
                 if (comp.getToolkitDesriptor().getName().equals("abstract")
                         || comp.getToolkitDesriptor().getName()
                                 .equals("concrete")
-                        || comp.getToolkitDesriptor().getName().equals("")) {
+                        || comp.getToolkitDesriptor().getName()
+                                .equals(StringConstants.EMPTY)) {
                     type = Messages.General;
                 } else {
                     ToolkitPluginDescriptor tkpd = 
@@ -205,7 +211,8 @@ public class Ratio implements IAnalyze {
         private ToolkitPluginDescriptor getParentToolkitPluginDescriptor(
                 ToolkitPluginDescriptor toolkitdesc) {
 
-            if (toolkitdesc.getDepends().equals("null")) {
+            if (toolkitdesc.getDepends().equals(
+                    ToolkitConstants.EMPTY_EXTPOINT_ENTRY)) {
                 return toolkitdesc;
             } else {
                 ToolkitPluginDescriptor desc = ComponentBuilder.getInstance()
@@ -243,7 +250,7 @@ public class Ratio implements IAnalyze {
      */
     public AnalyzeResult execute(Object obj2analyze, IProgressMonitor monitor,
             String resultType, List<AnalyzeParameter> param,
-            String analyzeName) {
+            String analyzeName, ExecutionEvent event) {
         
         int workAmount = 1;
         // get the number of nodes from the NodePersistenceManager to have a
@@ -256,7 +263,7 @@ public class Ratio implements IAnalyze {
                     .getParentProjectId(), GeneralStorage.getInstance()
                     .getMasterSession());
         }
-        monitor.beginTask("", workAmount);
+        monitor.beginTask(StringConstants.EMPTY, workAmount);
         monitor.subTask(analyzeName);
 
         CountToolkitLvl c = new CountToolkitLvl(monitor);
@@ -291,7 +298,7 @@ public class Ratio implements IAnalyze {
             result.put(e.getKey(), resu);
         }
 
-        return new AnalyzeResult(resultType, result);
+        return new AnalyzeResult(resultType, result, null);
     }
 
 
@@ -308,8 +315,8 @@ public class Ratio implements IAnalyze {
      */
     private void traverse(
             CountToolkitLvl count, Object obj, String objContType) {
-
-        if (obj instanceof INodePO && objContType.equals("IExecObjContPO")) {
+        if (obj instanceof INodePO && objContType.equals(
+                IExecObjContPO.class.getSimpleName())) {
             final INodePO root = (INodePO) obj;
             
             TreeTraverser tt = new TreeTraverser(root, count, true, true) {
@@ -321,8 +328,8 @@ public class Ratio implements IAnalyze {
                 }
             };
             tt.traverse(true);
-        } else if (obj instanceof INodePO
-                && objContType.equals("ISpecObjContPO")) {
+        } else if (obj instanceof INodePO && objContType.equals(
+                        ISpecObjContPO.class.getSimpleName())) {
             
             final INodePO root = (INodePO) obj;
             
@@ -350,7 +357,8 @@ public class Ratio implements IAnalyze {
             };
             tt.traverse(true);
         }
-        if (obj instanceof INodePO && objContType.equals("")) {
+        if (obj instanceof INodePO 
+                && objContType.equals(StringConstants.EMPTY)) {
             final INodePO root = (INodePO) obj;
             
             TreeTraverser tt = new TreeTraverser(root, count, true, true) {

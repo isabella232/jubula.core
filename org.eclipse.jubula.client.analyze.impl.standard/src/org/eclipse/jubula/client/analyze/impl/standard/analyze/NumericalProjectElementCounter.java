@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.analyze.definition.IAnalyze;
@@ -150,7 +151,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
      */
     public AnalyzeResult execute(Object obj2analyze, IProgressMonitor monitor, 
             String resultType, List<AnalyzeParameter> param,
-            String analyzeName) {
+            String analyzeName, ExecutionEvent event) {
         int workAmount = 1;
         // get the number of nodes from the NodePersistenceManager to have a
         // representative workAmount value for the ProgressMonitor
@@ -173,7 +174,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
             monitor.done();
             throw new OperationCanceledException();
         }
-        return new AnalyzeResult(resultType, c.getAmount());
+        return new AnalyzeResult(resultType, c.getAmount(), null);
     }
 
     /**

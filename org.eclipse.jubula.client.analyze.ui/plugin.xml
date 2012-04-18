@@ -46,7 +46,29 @@
 </menuContribution>
 <menuContribution
        allPopups="false"
+       locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView?after=additions">
+    <menu
+          label="Analyze">
+       <dynamic
+             class="org.eclipse.jubula.client.analyze.ui.contributionitems.ContextMenuContributionItem"
+             id="org.eclipse.jubula.client.analyze.ui.dynamicMenu">
+       </dynamic>
+    </menu>
+</menuContribution>
+<menuContribution
+       allPopups="false"
        locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor?after=additions">
+    <menu
+          label="Analyze">
+       <dynamic
+             class="org.eclipse.jubula.client.analyze.ui.contributionitems.ContextMenuContributionItem"
+             id="org.eclipse.jubula.client.analyze.ui.dynamicMenu">
+       </dynamic>
+    </menu>
+</menuContribution>
+<menuContribution
+       allPopups="false"
+       locationURI="popup:org.eclipse.jubula.client.ui.editors.TestResultViewer?after=additions">
     <menu
           label="Analyze">
        <dynamic
