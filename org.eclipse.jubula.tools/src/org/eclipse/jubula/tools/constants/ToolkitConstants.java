@@ -57,5 +57,7 @@ public interface ToolkitConstants {
     
     /** Constant for the Toolkit-Level "toolkit" */
     public static final String LEVEL_TOOLKIT = "toolkit"; //$NON-NLS-1$
-     
+
+    /** Constant for an empty extension point entry */
+    public static final String EMPTY_EXTPOINT_ENTRY = "null"; //$NON-NLS-1$
 }

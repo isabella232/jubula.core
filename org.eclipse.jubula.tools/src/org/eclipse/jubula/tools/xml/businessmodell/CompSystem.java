@@ -41,9 +41,6 @@ import org.slf4j.LoggerFactory;
  * @created 18.07.2005
  */
 public class CompSystem {
-    /** Constant for an empty extension point entry */
-    public static final String EMPTY_EXTPOINT_ENTRY = "null"; //$NON-NLS-1$
-    
     /** The logger */
     private static Logger log = LoggerFactory.getLogger(CompSystem.class); 
     
@@ -204,9 +201,9 @@ public class CompSystem {
             getToolkitPluginDescriptor(toolkitId);
         if (toolkitPluginDescriptor != null) {
             final String includes = toolkitPluginDescriptor.getIncludes();
-            if (!EMPTY_EXTPOINT_ENTRY.equals(includes)) {
+            if (!ToolkitConstants.EMPTY_EXTPOINT_ENTRY.equals(includes)) {
                 getIncludesToolkits(includes, toolkits);
-            }            
+            }
         }
         return toolkits;
     }
@@ -364,8 +361,6 @@ public class CompSystem {
      *         toolkits with the given level.
      */
     public List getIndependentToolkitPluginDescriptors(String level) {
-
-        final String nullStr = "null"; //$NON-NLS-1$
         final String emptyStr = StringConstants.EMPTY;
         
         List toolkitDesriptors = getAllToolkitPluginDescriptors();
@@ -387,9 +382,11 @@ public class CompSystem {
             if (removeDueToToolkitLevel
                     || (!ToolkitConstants.LEVEL_ABSTRACT.equals(level)
                            && (emptyStr.equals(includes) 
-                                || nullStr.equals(includes.toLowerCase())
+                                || ToolkitConstants.EMPTY_EXTPOINT_ENTRY
+                                    .equals(includes.toLowerCase())
                                 || emptyStr.equals(toolkitID) 
-                                || nullStr.equals(toolkitID.toLowerCase())))) {
+                                || ToolkitConstants.EMPTY_EXTPOINT_ENTRY
+                                    .equals(toolkitID.toLowerCase())))) {
 
                 descIt.remove();
             }
@@ -573,7 +570,7 @@ public class CompSystem {
         final String depends = toolkitDesriptor.getDepends();
         if (!component.isExtender()
             && !component.isRealizer()
-            && !EMPTY_EXTPOINT_ENTRY.equals(depends)
+            && !ToolkitConstants.EMPTY_EXTPOINT_ENTRY.equals(depends)
             && toolkitDesriptor.isUserToolkit()) {
             
             final ToolkitPluginDescriptor dependsDescr = 
