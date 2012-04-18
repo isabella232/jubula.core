@@ -150,7 +150,7 @@ public class ToolkitUtils {
         }
         
         while (desc != null && includes != null 
-            && !CompSystem.EMPTY_EXTPOINT_ENTRY.equals(includes)) {
+            && !ToolkitConstants.EMPTY_EXTPOINT_ENTRY.equals(includes)) {
             
             desc = compSys.getToolkitPluginDescriptor(includes);
             if (desc != null) {
