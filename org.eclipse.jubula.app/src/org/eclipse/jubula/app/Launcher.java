@@ -21,6 +21,8 @@ import java.util.Properties;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
+import org.eclipse.core.runtime.ILogListener;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
@@ -30,6 +32,7 @@ import org.eclipse.jubula.app.core.JubulaWorkbenchAdvisor;
 import org.eclipse.jubula.app.core.WorkSpaceData;
 import org.eclipse.jubula.app.i18n.Messages;
 import org.eclipse.jubula.app.ui.ChooseWorkspaceDialog;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
@@ -336,6 +339,15 @@ public class Launcher implements IApplication,
                     shell.dispose();
                 }
             }
+            
+            Platform.addLogListener(new ILogListener() {
+                public void logging(IStatus status, String pluginId) {
+                    if (status.getException() instanceof RuntimeException) {
+                        Plugin.getDefault().handleError(status.getException());
+                    }
+                }
+            });
+
             // create the workbench with this advisor and run it until it exits
             // N.B. createWorkbench remembers the advisor, and also registers
             // the
