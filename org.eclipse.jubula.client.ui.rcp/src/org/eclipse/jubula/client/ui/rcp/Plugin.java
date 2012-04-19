@@ -21,8 +21,6 @@ import java.util.Set;
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.core.runtime.ILogListener;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -993,13 +991,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
-        Platform.addLogListener(new ILogListener() {
-            public void logging(IStatus status, String pluginId) {
-                if (status.getException() instanceof RuntimeException) {
-                    handleError(status.getException());
-                }
-            }
-        });
         ErrorMessagePresenter.setPresenter(new IErrorMessagePresenter() {
             public void showErrorMessage(JBException ex, Object[] params,
                     String[] details) {
