@@ -24,6 +24,7 @@
 	<property name="GEFExample"         value="com.bredexsw.guidancer.examples.aut.gef"/>
 	
 	<property name="ExampleSwingExtensionClient" value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
+    <property name="ExampleSwingExtensionFeature" value="org.eclipse.jubula.examples.extension.swing.feature"/>
 	<property name="ExampleSwingExtensionServer" value="org.eclipse.jubula.examples.extension.swing.rc"/>
 	<property name="ExampleSwingExtensionAUT"    value="org.eclipse.jubula.examples.extension.swing.aut"/>
 	
@@ -184,6 +185,7 @@
 		<mkdir dir="${extensionSourceDir}"/>
 		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingClientExtension.zip">
 			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+            <zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
 		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingServerExtension.zip">
 			<zipfileset dir="../${ExampleSwingExtensionServer}" prefix="${ExampleSwingExtensionServer}" excludes="build, build/**, buildScript.xml"/>
