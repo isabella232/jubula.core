@@ -58,7 +58,7 @@ InstallationDir$\backslash$server$\backslash$lib$\backslash$extImplClasses
 
 The following steps have to be done to extend the \app{} client:
 \begin{enumerate}
- \item Create an eclipse plug-in project
+ \item Create an eclipse plug-in project and a corresponding feature project.
  \item Set ''InstallationDir$\backslash$\app{}$\backslash$plugins'' as your target platform
  \item Define plugin dependencies to the toolkit support plugin
  \item Enter the toolkit support plugin in your toolkit plugin project
@@ -71,33 +71,58 @@ The following steps have to be done to extend the \app{} client:
   \item Define a new component
  \end{itemize}
  \item Manage the i18n keys
- \item Export the toolkit plugin to \app{}
+ \item Export the toolkit feature to \app{}
 \end{enumerate}
 
 Under ''InstallationDirectory/examples/development/extension/src''
 you will find a \\ ''eclipseProjects\_ExampleSwingClientExtension.zip'' which contains
- an example \app{} Client Extension for the Swing component ''JSlider''. This project 
- is a showcase for steps 1-8.
+ an example \app{} Client Extension for the Swing component ''JSlider'' as well
+ as a corresponding feature project. These projects are a showcase for steps 1-8.
  
 \subsection{Exporting the toolkit plugin to \app{}}
- The only step you have to do after importing this project into your Eclipse workspace and 
- setting the target platform (step no. 2) is to export it to the \app{} you want to 
- extend. To export the toolkit plugin to \app{}:
+ The only steps you have to do after importing the projects into your Eclipse workspace and 
+ setting the target platform (step no. 2) is to export the feature to an update site
+ and then use the update site to install the feature into the \app{} you want to 
+ extend.
+ 
+To export the toolkit feature to an update site:
 
 \begin{enumerate}
-\item In the package explorer, right click on the \bxname{plugin.xml} file and select:\\
-\bxmenu{Open with}{plugin manifest editor}{}\\
-from the context-sensitive menu.
-\item Select the \bxname{build} tab from the editor.
-\item In the binary build area, select \bxname{meta-inf, bin, build properties, plugin.xml} and \bxname{resources}.
-\item Save the changes in the editor and close the editor. 
-\item In the package explorer, right click on the project and select \bxname{export} from the context-sensitive menu.
-\item In the dialog that appears, select \bxname{deployable plugins and fragments} and click \bxcaption{next}.
-\item In the next dialog, in the \bxname{destination} tab, enter the location where the plugin should be exported to in the \bxname{directory} field:\\
-\bxname{InstallationPath/\app{}}
-\item In the \bxname{options} tab, deselect the checkbox which will export the plugin as individual jar archives and click \bxcaption{finish}.
-\item You should be able to find the folder \\ \bxcaption{org.eclipse.jubula.examples.extension.swing.toolkit} in the \bxname{InstallationPath/\app{}/plugins/} folder. The exported plugin is in this folder. 
-\item If you need to make changes and export the plugin again, delete the \\ \bxname{org.eclipse.jubula.examples.extension.swing.toolkit} from the \bxname{InstallationPath/\app{}/plugins/} folder first.
+\item In the package explorer, right click on the feature project 
+ (ex. \bxname{org.eclipse.jubula.examples.extension.swing.feature}) and select: 
+ \bxname{Export...} from the context-sensitive menu.
+\item In the dialog that appears, select \bxname{Deployable features} and click \bxcaption{Next}.
+\item In the next dialog, in the \bxname{Available Features} area, ensure that 
+ the checkbox next to the feature you wish to export is selected.
+\item In the \bxname{Destination} tab, enter the location 
+ where the feature's update site should be exported to in the \bxname{Directory} 
+ field. This can be any writable directory. This directory will serve as an 
+ update site, which can later be used to install your feature into \app{}.
+\item In the \bxname{Options} tab, ensure that the \bxname{Package as individual JAR archives} checkbox is selected and click \bxcaption{Finish}.
+\end{enumerate}
+
+To install the toolkit feature from the update site:
+
+\begin{enumerate}
+\item Start \app{} and select \bxmenu{Help}{Install new software...}{} from the main menu.
+\item In the \bxname{Install} dialog that appears, click the \bxname{Add...} button.
+\item In the \bxname{Add Repository} dialog that appears, click the \bxname{Local...} button.
+\item In the file selection dialog that appears, navigate to the directory that contains your update site and confirm the dialog.
+\item Click \bxname{OK} to exit the \bxname{Add Repository} dialog. 
+ The active dialog should now be \bxname{Install}.
+\item Ensure that the \bxname{Group items by category} checkbox is deselected.
+ Your feature should be visible in the central table of the dialog.
+\item Ensure that the checkbox next to your feature is selected and click \bxname{Next}.
+\item Confirm the \bxname{Installation Details} by again clicking \bxname{Next}.
+\item Accept the license agreement terms and click \bxname{Finish}.
+\item A warning dialog may appear to warn of unsigned content. Click 
+ \bxname{OK} in this dialog if the feature comes from a trusted source (ex. 
+ if you have written the software yourself, as in this example). This will
+ begin installation.
+\item After installation, a dialog appears suggesting that \app{} be restarted
+ in order to safely finish the update / installation. Click \bxname{Restart Now}
+ to perform the restart. Once the restart completes, your extension feature has
+ been installed in \app{}.  
 \end{enumerate}
 
 \section{\app{} Server Extension}
