@@ -3,9 +3,25 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="jubula"
     nsURI="http://jubula/1.0" nsPrefix="jubula">
-  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="#//Timestamp">
+  <eClassifiers xsi:type="ecore:EClass" name="Node" abstract="true" eSuperTypes="#//Timestamp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="NodeList" upperBound="-1"
-        eType="#//Node" containment="true"/>
+        eType="#//Node" containment="true" eOpposite="#//Node/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Node"
+        eOpposite="#//Node/NodeList"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Comment" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Version" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Guid" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ParentProjectId" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Timestamp" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Generated" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Active" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="Name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Timestamp" abstract="true" interface="true"
       eSuperTypes="#//PersistentObject">
@@ -58,7 +74,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="ProjectProperties" eSuperTypes="#//PersistentObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="ReusedProject" eSuperTypes="#//PersistentObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="TestData" eSuperTypes="#//PersistentObject"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TestDataCategory" eSuperTypes="#//TestData"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TestDataCube" eSuperTypes="#//TestData"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestDataCategory" eSuperTypes="#//TestDataNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestDataCube" eSuperTypes="#//TestDataNode #//ModifiableParameterInterface"/>
   <eClassifiers xsi:type="ecore:EClass" name="UsedToolkit" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestDataNode" abstract="true" interface="true"
+      eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ModifiableParameterInterface" abstract="true"
+      interface="true"/>
 </ecore:EPackage>
