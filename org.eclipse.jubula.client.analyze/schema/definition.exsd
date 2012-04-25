@@ -139,7 +139,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.jubula.client.analyze.ui.internal.definition.IResultRendererUI"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.jubula.client.analyze.ui.IResultRendererUI"/>
                </appinfo>
             </annotation>
          </attribute>

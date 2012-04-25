@@ -19,8 +19,8 @@ import org.eclipse.jubula.client.analyze.internal.Analyze;
 import org.eclipse.jubula.client.analyze.internal.AnalyzeResult;
 import org.eclipse.jubula.client.analyze.internal.Renderer;
 import org.eclipse.jubula.client.analyze.internal.helper.RendererSelectionHelper;
+import org.eclipse.jubula.client.analyze.ui.definition.IResultRendererUI;
 import org.eclipse.jubula.client.analyze.ui.internal.QueryResult;
-import org.eclipse.jubula.client.analyze.ui.internal.definition.IResultRendererUI;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 

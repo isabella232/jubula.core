@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.analyze.ui.internal.definition;
+package org.eclipse.jubula.client.analyze.ui.definition;
 
 import org.eclipse.jubula.client.analyze.internal.AnalyzeResult;
 import org.eclipse.swt.widgets.Composite;
