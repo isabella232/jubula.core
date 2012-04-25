@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.implclasses;
 
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
 
@@ -57,4 +59,34 @@ public class PopupMenuImplClass extends MenuImplClass {
         int pathLength = pathItems != null ? pathItems.length : 0;
         PopupMenuUtil.closePopup(getRobot(), (Menu)getComponent(), pathLength);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void selectMenuItem(String namePath, final String operator) {
+        final String[] pathItems = MenuUtil.splitPath(namePath);
+        if (pathItems.length == 0) {
+            throw new StepExecutionException("empty path to menuitem not allowed", //$NON-NLS-1$
+                EventFactory.createActionError());
+        }
+
+        PopupMenuUtil.selectMenuItem(getRobot(), (Menu)getComponent(), 
+                pathItems, operator);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void selectMenuItemByIndexpath(String indexPath) {
+        final int[] indexItems = MenuUtil.splitIndexPath(indexPath);
+        if (indexItems.length == 0) {
+            throw new StepExecutionException("empty path to menuitem not allowed", //$NON-NLS-1$
+                EventFactory.createActionError());
+        }
+        
+        PopupMenuUtil.selectMenuItem(getRobot(), (Menu)getComponent(), 
+                indexItems);
+    }    
 }
