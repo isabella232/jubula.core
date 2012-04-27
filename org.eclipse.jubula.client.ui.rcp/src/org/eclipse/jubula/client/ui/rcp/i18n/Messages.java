@@ -513,7 +513,6 @@ public class Messages extends NLS {
     public static String NotOfCorrectType;
     public static String NotSupported;
     public static String NotSupportedControl;
-    public static String NoValidSelectionCount;
     public static String ObjectMappingEditorAssigned;
     public static String ObjectMappingEditorCategory;
     public static String ObjectMappingEditorComponentType;
