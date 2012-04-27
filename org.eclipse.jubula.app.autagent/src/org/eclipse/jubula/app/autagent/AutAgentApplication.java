@@ -37,7 +37,6 @@ import org.eclipse.jubula.autagent.agent.AutAgent;
 import org.eclipse.jubula.autagent.desktop.DesktopIntegration;
 import org.eclipse.jubula.communication.connection.ConnectionState;
 import org.eclipse.jubula.tools.constants.ConfigurationConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.osgi.util.NLS;
@@ -298,16 +297,9 @@ public class AutAgentApplication implements IApplication {
             port = Integer.valueOf(cmd.getOptionValue(COMMANDLINE_OPTION_PORT))
                 .intValue();
         } else {
-            String portStr = EnvironmentUtils.getProcessEnvironment()
-                .getProperty(ConfigurationConstants.AUTSTARTER_PORT);
-            if ((portStr != null) && (!portStr.trim()
-                    .equals(StringConstants.EMPTY))) {
-                try {
-                    port = Integer.valueOf(portStr).intValue();
-                } catch (NumberFormatException nfe) {
-                    LOG.error(NLS.bind(Messages.NumberFormatException,
-                            ConfigurationConstants.AUTSTARTER_PORT), nfe);
-                }
+            int envPort = EnvironmentUtils.getAUTAgentEnvironmentPortNo();
+            if (envPort > 0) {
+                port = envPort;
             }
             LOG.info(NLS.bind(Messages.InfoDefaultPort, port));
         }

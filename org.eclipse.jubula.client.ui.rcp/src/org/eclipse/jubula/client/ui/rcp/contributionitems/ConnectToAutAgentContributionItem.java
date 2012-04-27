@@ -14,16 +14,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.handlers.AUTAgentConnectHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.preferences.AutAgentPreferencePage;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.actions.CompoundContributionItem;
 import org.eclipse.ui.menus.CommandContributionItem;
@@ -42,9 +45,15 @@ public class ConnectToAutAgentContributionItem
     protected IContributionItem[] getContributionItems() {
         List<IContributionItem> contributionItems = 
                 new ArrayList<IContributionItem>();
+        int envPort = EnvironmentUtils.getAUTAgentEnvironmentPortNo();
+        SortedSet<AutAgent> autAgents = new TreeSet<AutAgentManager.AutAgent>();
+        if (envPort > 0) {
+            autAgents.add(new AutAgent(AutAgentPreferencePage.DEFAULT_HOSTNAME,
+                    envPort));
+        }
         contributionItems.add(new Separator());
         AutAgentManager serverMgr = AutAgentManager.getInstance();
-        Set<AutAgent> autAgents = serverMgr.getAutAgents();
+        autAgents.addAll(serverMgr.getAutAgents());
         // read all servers from preference store
         for (AutAgent autAgent : autAgents) {
             String name = autAgent.getName();

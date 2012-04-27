@@ -55,22 +55,21 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 
 /**
- * Preference page for configuring available Aut Agents.
+ * Preference page for configuring available AUT-Agents.
  *
  * @author BREDEX GmbH
  * @created Jan 19, 2010
  */
 public class AutAgentPreferencePage extends PreferencePage 
     implements IWorkbenchPreferencePage {
+    /** default host name for newly created AUT Starter addresses */
+    public static final String DEFAULT_HOSTNAME = "localhost"; //$NON-NLS-1$
 
     /** <code>LAYOUT_NUM_COLUMNS</code> */
     private static final int LAYOUT_NUM_COLUMNS = 2;
 
     /** default port for newly created AUT Starter addresses */
     private static final int DEFAULT_PORT = 60000;
-    
-    /** default host name for newly created AUT Starter addresses */
-    private static final String DEFAULT_HOSTNAME = "localhost"; //$NON-NLS-1$
     
     /**
      * @author BREDEX GmbH

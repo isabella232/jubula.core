@@ -20,6 +20,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+import org.eclipse.jubula.tools.constants.ConfigurationConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -296,5 +297,24 @@ public class EnvironmentUtils {
             // ignore
         }
         return doubleClickSpeed;
+    }
+    
+    /**
+     * @return the defined AUT Agent environment port no or <code>-1</code> of
+     *         not found
+     */
+    public static int getAUTAgentEnvironmentPortNo() {
+        int port = -1;
+        String portStr = EnvironmentUtils.getProcessEnvironment().getProperty(
+                ConfigurationConstants.AUT_AGENT_PORT);
+        if ((portStr != null)
+                && (!portStr.trim().equals(StringConstants.EMPTY))) {
+            try {
+                port = Integer.valueOf(portStr).intValue();
+            } catch (NumberFormatException nfe) {
+                // is ok here - do nothing
+            }
+        }
+        return port;
     }
 }
