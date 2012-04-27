@@ -2929,7 +2929,6 @@
           <iterate operator="and">
             <or>
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
               <instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.TestResultNode" />
@@ -2949,7 +2948,6 @@
           <count value="1" />
           <iterate operator="and">
             <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.TestResultNode" />
