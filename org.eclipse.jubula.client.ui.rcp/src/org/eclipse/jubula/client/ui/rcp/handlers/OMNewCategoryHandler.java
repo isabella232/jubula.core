@@ -41,9 +41,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @created 27.04.2005
  */
 public class OMNewCategoryHandler extends AbstractSelectionBasedHandler {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) throws ExecutionException {
         final ObjectMappingMultiPageEditor editor = 
             ((ObjectMappingMultiPageEditor)
@@ -55,8 +53,6 @@ public class OMNewCategoryHandler extends AbstractSelectionBasedHandler {
                     .getSelectionProvider();
             createNewCategory(selection.getFirstElement(), editor, 
                     selectionProvider);
-        } else {
-            throw new ExecutionException(Messages.NoValidSelectionCount);
         }
         return null;
     }
