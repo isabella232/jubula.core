@@ -40,18 +40,40 @@
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Node"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ParamNode" eSuperTypes="#//Node"/>
-  <eClassifiers xsi:type="ecore:EClass" name="RefTestSuite" eSuperTypes="#//Node"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ParamNode" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ParameterInterface" eType="#//TestDataCube"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RefTestSuite" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="TestSuiteAutID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TestSuite" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="Aut" eType="#//AUTMain"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="StepDelay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="CmdLineParameter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="AUTConfig" eType="#//AUTConfig"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="DefaultEventHandler"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="DefaultEventHandler" upperBound="-1"
+        eType="#//StringToIntegerMap" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TestJob" eSuperTypes="#//Node"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Cap" eSuperTypes="#//ParamNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ParamNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Cap" eSuperTypes="#//ParamNode">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ComponentName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ComponentType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="HbmActionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ParamNode">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ClientMetaDataVersion"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="HbmAutCont" lowerBound="1"
+        eType="#//AUTCont" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="HbmExecObjCont" lowerBound="1"
+        eType="#//ExecObjCont" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="HbmSpecObjCont" lowerBound="1"
+        eType="#//SpecObjCont" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="HbmTestDataCubeCont" lowerBound="1"
+        eType="#//TestDataCategory" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Properties" lowerBound="1"
+        eType="#//ProjectProperties" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TestCase" eSuperTypes="#//ParamNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="ExecTestCase" eSuperTypes="#//TestCase"/>
   <eClassifiers xsi:type="ecore:EClass" name="SpecTestCase" eSuperTypes="#//TestCase"/>
@@ -77,7 +99,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="TcParamDescription" eSuperTypes="#//ParamDescription"/>
   <eClassifiers xsi:type="ecore:EClass" name="Wrapper" eSuperTypes="#//PersistentObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="SpecObjCont" eSuperTypes="#//Wrapper"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ProjectProperties" eSuperTypes="#//PersistentObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ProjectProperties" eSuperTypes="#//PersistentObject">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="CheckConfCont" lowerBound="1"
+        eType="#//CheckConfCont" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="HbmDefaultLanguage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="HbmToolkit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReusedProject" eSuperTypes="#//PersistentObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="TestData" eSuperTypes="#//PersistentObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="TestDataCategory" eSuperTypes="#//TestDataNode"/>
@@ -87,4 +114,9 @@
       eSuperTypes="#//PersistentObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="ModifiableParameterInterface" abstract="true"
       interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToIntegerMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReusedProjectSet" instanceClassName="java.util.Set$Entry"/>
 </ecore:EPackage>
