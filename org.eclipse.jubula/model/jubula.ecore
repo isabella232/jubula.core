@@ -42,7 +42,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Node"/>
   <eClassifiers xsi:type="ecore:EClass" name="ParamNode" eSuperTypes="#//Node"/>
   <eClassifiers xsi:type="ecore:EClass" name="RefTestSuite" eSuperTypes="#//Node"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TestSuite" eSuperTypes="#//Node"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestSuite" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="Aut" eType="#//AUTMain"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="StepDelay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="CmdLineParameter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="AUTConfig" eType="#//AUTConfig"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="DefaultEventHandler"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TestJob" eSuperTypes="#//Node"/>
   <eClassifiers xsi:type="ecore:EClass" name="Cap" eSuperTypes="#//ParamNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//ParamNode"/>
