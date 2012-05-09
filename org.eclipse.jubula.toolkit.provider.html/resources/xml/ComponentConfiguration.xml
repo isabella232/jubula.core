@@ -27,47 +27,42 @@
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
 		<componentClass name="html.forms.Button">
-			<property name="tagName" value="button" />
+			<property name="selector" value="button" />
 		</componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Button" visible="false">
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Button">
-			<property name="tagName" value="input" />
-			<property name="type" value="=button" />
+			<property name="selector" value="input[type=button]" />
 		</componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Submit" visible="false">
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Submit">
-			<property name="tagName" value="input" />
-			<property name="type" value="=submit" />
+			<property name="selector" value="input[type=submit]" />
 		</componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Reset" visible="false">
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Reset">
-			<property name="tagName" value="input" />
-			<property name="type" value="=reset" />
+			<property name="selector" value="input[type=reset]" />
 		</componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Checkbox" visible="false">
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Checkbox">
-			<property name="tagName" value="input" />
-			<property name="type" value="=checkbox" />
+            <property name="selector" value="input[type=checkbox]" />
 		</componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Radio" visible="false">
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.InputButtonImplClass</testerClass>
 		<componentClass name="html.forms.input.Radio">
-			<property name="tagName" value="input" />
-			<property name="type" value="=radio" />
+            <property name="selector" value="input[type=radio]" />
 		</componentClass>
 	</toolkitComponent>
 	<!-- Button Button -->
@@ -75,24 +70,21 @@
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
 		<componentClass name="html.forms.button.Button">
-			<property name="tagName" value="button" />
-			<property name="type" value="=button" />
+            <property name="selector" value="button[type=button]" />
 		</componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.button.Submit" visible="false">
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
 		<componentClass name="html.forms.button.Submit">
-			<property name="tagName" value="button" />
-			<property name="type" value="=submit" />
+            <property name="selector" value="button[type=submit]" />
 		</componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.button.Reset" visible="false">
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ButtonImplClass</testerClass>
 		<componentClass name="html.forms.button.Reset">
-			<property name="tagName" value="button" />
-			<property name="type" value="=reset" />
+            <property name="selector" value="button[type=reset]" />
 		</componentClass>
 	</toolkitComponent>
 	
@@ -104,23 +96,21 @@
         <realizes>abstract.html.Textfield</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
         <componentClass name="html.forms.input.Text">
-            <property name="tagName" value="input" />
-            <property name="type" value="=text" />
+            <property name="selector" value="input[type=text]" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.input.Password" visible="false">
         <realizes>abstract.html.Textfield</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
         <componentClass name="html.forms.input.Password">
-            <property name="tagName" value="input" />
-            <property name="type" value="=password" />
+            <property name="selector" value="input[type=password]" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.TextArea" visible="false">
         <realizes>abstract.html.Textfield</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
         <componentClass name="html.forms.TextArea">
-            <property name="tagName" value="textarea" />
+            <property name="selector" value="textarea" />
         </componentClass>
     </toolkitComponent>
     <!-- Label -->
@@ -131,86 +121,84 @@
         <realizes>abstract.html.Label</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Label">
-            <property name="tagName" value="label" />
+            <property name="selector" value="label" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header1" visible="false">
         <realizes>abstract.html.Label</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header1">
-            <property name="tagName" value="h1" />
+            <property name="selector" value="h1" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header2" visible="false">
         <realizes>abstract.html.Label</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header2">
-            <property name="tagName" value="h2" />
+            <property name="selector" value="h2" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header3" visible="false">
         <realizes>abstract.html.Label</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header3">
-            <property name="tagName" value="h3" />
+            <property name="selector" value="h3" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header4" visible="false">
         <realizes>abstract.html.Label</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header4">
-            <property name="tagName" value="h4" />
+            <property name="selector" value="h4" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header5" visible="false">
         <realizes>abstract.html.Label</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header5">
-            <property name="tagName" value="h5" />
+            <property name="selector" value="h5" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Header6" visible="false">
         <realizes>abstract.html.Label</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Header6">
-            <property name="tagName" value="h6" />
+            <property name="selector" value="h6" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.label.Paragraph" visible="false">
         <realizes>abstract.html.Label</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
         <componentClass name="html.forms.label.Paragraph">
-            <property name="tagName" value="p" />
+            <property name="selector" value="p" />
         </componentClass>
     </toolkitComponent>
     <toolkitComponent type="html.forms.select.List" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.select.ListImplClass</testerClass>
 		<componentClass name="html.forms.select.List">
-            <property name="tagName" value="select" />
-            <property name="size" value="!=1" />
+            <property name="selector" value="select[size!=1]" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.select.ComboBox" visible="false">
 		<realizes>guidancer.concrete.ComboBox</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.select.ComboBoxImplClass</testerClass>
 		<componentClass name="html.forms.select.ComboBox">
-            <property name="tagName" value="select" />
-            <property name="size" value="=1" />
+            <property name="selector" value="select[size=1]" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.Table" visible="false">
 		<realizes>guidancer.concrete.Table</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.TableImplClass</testerClass>
 		<componentClass name="html.forms.Table">
-            <property name="tagName" value="table" />
+            <property name="selector" value="table" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.Anchor" visible="true">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.AnchorImplClass</testerClass>
 		<componentClass name="html.forms.Anchor">
-            <property name="tagName" value="a" />
+            <property name="selector" value="a" />
         </componentClass>
 		<action name="html.AnchorFollow" changed="1.1" deprecated="true">
 			<method>gdFollow</method>
@@ -245,15 +233,14 @@
 		<realizes>guidancer.abstract.Widget</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.ImageImplClass</testerClass>
 		<componentClass name="html.forms.Image">
-            <property name="tagName" value="img" />
+            <property name="selector" value="img" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.forms.input.Image" visible="false">
 		<realizes>abstract.html.Button</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.ImageImplClass</testerClass>
 		<componentClass name="html.forms.input.Image">
-            <property name="tagName" value="input" />
-            <property name="type" value="=image" />
+            <property name="selector" value="input[type=image]" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.GraphicApplication" visible="false">
@@ -313,21 +300,21 @@
 		<realizes>guidancer.abstract.Widget</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.DivImplClass</testerClass>
 		<componentClass name="html.Div">
-            <property name="tagName" value="div" />
+            <property name="selector" value="div" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.text.Ol" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.text.OlImplClass</testerClass>
 		<componentClass name="html.text.Ol">
-            <property name="tagName" value="ol" />
+            <property name="selector" value="ol" />
         </componentClass>
 	</toolkitComponent>
 	<toolkitComponent type="html.text.Ul" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.text.UlImplClass</testerClass>
 		<componentClass name="html.text.Ul">
-            <property name="tagName" value="ul" />
+            <property name="selector" value="ul" />
         </componentClass>
     </toolkitComponent>
 </compSystem>
