@@ -119,11 +119,6 @@ public abstract class AbstractTreeOperationContext {
     }
     
     /**
-     * @return The ClassLoader for the tree
-     */
-    public abstract ClassLoader getClassLoaderForTree();
-    
-    /**
      * Computes the visible rowBounds inside the visible bounds of the tree.<br>
      * The result is the intersection of the visible bounds of the tree and the 
      * rowBounds of the node.

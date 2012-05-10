@@ -282,13 +282,6 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     /**
      * {@inheritDoc}
      */
-    public ClassLoader getClassLoaderForTree() {
-        return getTree().getClass().getClassLoader();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public void collapseNode(Object node) {
         final JTree tree = (JTree)getTree();
         final ClassLoader oldCl = Thread.currentThread()
