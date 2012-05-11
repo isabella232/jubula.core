@@ -139,13 +139,6 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     /**
      * {@inheritDoc}
      */
-    public ClassLoader getClassLoaderForTree() {
-        return getTree().getClass().getClassLoader();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public void collapseNode(Object node) {
         final TreeItem item = castToTreeItem(node);
         final Tree tree = (Tree)getTree();
