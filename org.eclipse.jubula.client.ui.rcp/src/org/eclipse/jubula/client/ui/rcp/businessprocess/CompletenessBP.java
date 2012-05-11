@@ -95,7 +95,6 @@ public class CompletenessBP implements IProjectOpenedListener,
             }
         };
         commandService.addExecutionListener(saveListener);
-        commandService.addExecutionListener(saveListener);
     }
 
     /**
