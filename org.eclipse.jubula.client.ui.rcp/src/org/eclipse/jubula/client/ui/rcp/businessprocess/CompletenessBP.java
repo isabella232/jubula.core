@@ -66,23 +66,36 @@ public class CompletenessBP implements IProjectOpenedListener,
             /** {@inheritDoc} */
             public void postExecuteSuccess(String commandId, 
                     Object returnValue) {
-                completeProjectCheck();
+                if (isInteresting(commandId)) {
+                    completeProjectCheck();
+                }
             }
             /** {@inheritDoc} */
             public void postExecuteFailure(String commandId,
                     ExecutionException exception) {
-                completeProjectCheck();
+                if (isInteresting(commandId)) {
+                    completeProjectCheck();
+                }
             }
             /** {@inheritDoc} */
             public void notHandled(String commandId, 
                 NotHandledException exception) {
                 // empty is ok
             }
+            
+            /** whether the corresponding command is "interesting" */
+            private boolean isInteresting(String commandId) {
+                boolean isInteresting = false;
+                if (IWorkbenchCommandConstants.FILE_SAVE.equals(commandId)
+                        || IWorkbenchCommandConstants.FILE_SAVE_ALL
+                                .equals(commandId)) {
+                    isInteresting = true;
+                }
+                return isInteresting;
+            }
         };
-        commandService.getCommand(IWorkbenchCommandConstants.FILE_SAVE)
-                .addExecutionListener(saveListener);
-        commandService.getCommand(IWorkbenchCommandConstants.FILE_SAVE_ALL)
-            .addExecutionListener(saveListener);
+        commandService.addExecutionListener(saveListener);
+        commandService.addExecutionListener(saveListener);
     }
 
     /**
