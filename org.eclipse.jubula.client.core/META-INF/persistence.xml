@@ -72,7 +72,12 @@
 			https://bugs.eclipse.org/bugs/show_bug.cgi?id=339069
 			 -->
 			<property name="eclipselink.cache.shared.default" value="false"/>
-			<property name="eclipselink.session.customizer" value="org.eclipse.jubula.client.core.persistence.SessionCustomizer"/> 
+			<property name="eclipselink.session.customizer" value="org.eclipse.jubula.client.core.persistence.SessionCustomizer"/>
+			<!-- 
+			use the "old" JPQL parser due to 
+			https://bugs.eclipse.org/bugs/show_bug.cgi?id=379221
+			 -->
+			<property name="eclipselink.jpql.parser" value="org.eclipse.persistence.queries.ANTLRQueryBuilder"/>
 		</properties>
 		
 	</persistence-unit>
