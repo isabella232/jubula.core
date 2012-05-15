@@ -13,14 +13,12 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.views.AbstractJBTreeView;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -35,10 +33,10 @@ public abstract class AbstractShowSpecificationHandler
      * 
      * @param node
      *            the node to show
-     * @param viewId
-     *            the viewId to show the specification in
+     * @param viewPart
+     *            the view part to show the specification in
      */
-    protected void showSpecUINode(INodePO node, String viewId) {
+    protected void showSpecUINode(INodePO node, IViewPart viewPart) {
         if (!Utils.openPerspective(Constants.SPEC_PERSPECTIVE)) {
             return;
         }
@@ -50,10 +48,8 @@ public abstract class AbstractShowSpecificationHandler
                     MessageIDs.I_NO_PERSPECTIVE_CHANGE);
             return;
         }
-        IViewPart view = Plugin.showView(viewId, null,
-                IWorkbenchPage.VIEW_ACTIVATE);
-        if (view instanceof AbstractJBTreeView) {
-            AbstractJBTreeView jbtv = (AbstractJBTreeView)view;
+        if (viewPart instanceof AbstractJBTreeView) {
+            AbstractJBTreeView jbtv = (AbstractJBTreeView)viewPart;
             UINodeBP.selectNodeInTree(node.getId(), jbtv.getTreeViewer(),
                     jbtv.getEntityManager());
         }
