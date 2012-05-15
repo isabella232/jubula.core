@@ -442,16 +442,6 @@
         menubarPath="help/helpEnd"
         style="push" />
     </actionSet>
-    <actionSet
-      description="all actions, that are not in the main menu- or toolbar"
-      id="org.eclipse.jubula.client.ui.rcp.globalActions"
-      label="Jubula Global Action Set">
-      <action
-        icon="icons/moveTestCase.gif"
-        id="org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction"
-        label="%MoveTestCase"
-        retarget="true" />
-    </actionSet>
   </extension>
   <extension point="org.eclipse.ui.perspectiveExtensions">
     <perspectiveExtension
@@ -508,7 +498,6 @@
         relationship="stack"
         relative="org.eclipse.ui.views.ProblemView" />
       <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
-      <actionSet id="org.eclipse.jubula.client.ui.rcp.globalActions" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective" />
       <perspectiveShortcut
@@ -533,7 +522,6 @@
     <perspectiveExtension
       targetID="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective">
       <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
-      <actionSet id="org.eclipse.jubula.client.ui.rcp.globalActions" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective" />
       <perspectiveShortcut
@@ -553,7 +541,6 @@
     </perspectiveExtension>
     <perspectiveExtension targetID="org.eclipse.jubula.client.ui.perspectives.ReportPerspective">
       <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
-      <actionSet id="org.eclipse.jubula.client.ui.rcp.globalActions" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective" />
       <perspectiveShortcut
@@ -963,6 +950,11 @@
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.MapIntoOMCategory"
       name="%MapIntoOMCategory" />
+    <command
+          categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+          id="org.eclipse.jubula.client.ui.rcp.commands.MoveTestCase"
+          name="%MoveTestCaseCommandName">
+    </command>
   </extension>
   <extension point="org.eclipse.ui.bindings">
     <key
@@ -1638,6 +1630,173 @@
           name="exportWizardId"
           value="org.eclipse.jubula.client.ui.rcp.exportWizard.ExportTestResultDetailsWizard" />
       </command>
+    </menuContribution>
+    <menuContribution
+          allPopups="false"
+          locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser?before=defaultTestSuiteBrowserMarker">
+       <menu
+             label="New">
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestSuiteCommand"
+                style="push">
+          </command>
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestJobCommand"
+                style="push">
+          </command>
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand"
+                style="push">
+          </command>
+       </menu>
+       <separator name="separator1"
+             visible="true">
+       </separator>
+       <command
+             commandId="org.eclipse.ui.edit.rename"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.ui.edit.findReplace"
+             label="%Find"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.ui.edit.delete"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem"
+             style="push">
+       </command>
+       <separator name="separator2"
+             visible="true">
+       </separator>
+       <command
+             commandId="org.eclipse.jubula.client.ui.rcp.commands.CopyID"
+             style="push">
+       </command>
+       <separator
+             name="separator3"
+             visible="true">
+       </separator>
+       <command
+             commandId="org.eclipse.ui.file.refresh"
+             style="push">
+       </command>
+       <separator name="separator4"
+             visible="true">
+       </separator>
+       <menu
+             label="Open with">
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestJobEditor"
+                style="push">
+          </command>
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestsuiteEditor"
+                style="push">
+          </command>
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenObjectMappingEditor"
+                style="push">
+          </command>
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
+                style="push">
+          </command>
+       </menu>
+       <separator name="separator5"
+             visible="true">
+       </separator>
+       <command
+             commandId="org.eclipse.jubula.client.ui.rcp.commands.ProjectProperties"
+             style="push">
+       </command>
+    </menuContribution>
+    <menuContribution
+          allPopups="false"
+          locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser?before=defaultTestCaseBrowserMarker">
+       <menu
+             label="New">
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestCaseCommand"
+                style="push">
+          </command>
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand"
+                style="push">
+          </command>
+       </menu>
+       <separator name="separator1"
+             visible="true">
+       </separator>
+       <command
+             commandId="org.eclipse.ui.edit.rename"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.rcp.commands.MoveTestCase"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.ui.edit.findReplace"
+             label="%Find"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.ui.edit.cut"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.ui.edit.paste"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.ui.edit.delete"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem"
+             style="push">
+       </command>
+       <separator name="separator2"
+             visible="true">
+       </separator>
+       <command
+             commandId="org.eclipse.jubula.client.ui.rcp.commands.CopyID"
+             style="push">
+       </command>
+       <separator name="separator3"
+             visible="true">
+       </separator>
+       <menu
+             label="Open with">
+          <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestcaseEditor"
+                style="push">
+          </command>
+       </menu>
     </menuContribution>
   </extension>
   <extension point="org.eclipse.ui.handlers">
@@ -2343,6 +2502,25 @@
         </and>
       </enabledWhen>
     </handler>
+    <handler
+          class="org.eclipse.jubula.client.ui.rcp.handlers.MoveTestCaseHandler"
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.MoveTestCase">
+       <enabledWhen>
+          <iterate
+                ifEmpty="false"
+                operator="and">
+             <or>
+                <instanceof
+                      value="org.eclipse.jubula.client.core.model.ICategoryPO">
+                </instanceof>
+                <instanceof
+                      value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
+                </instanceof>
+             </or>
+            <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+          </iterate>
+       </enabledWhen>
+    </handler>
   </extension>
   <extension point="org.eclipse.ui.commandImages">
     <image
@@ -2522,6 +2700,10 @@
     <image
       commandId="org.eclipse.ui.edit.findReplace"
       icon="icons/find.gif" />
+    <image
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.MoveTestCase"
+          icon="icons/moveTestCase.gif">
+    </image>
   </extension>
   <extension
     id="jubula.ComponentNameBrowserHandler"

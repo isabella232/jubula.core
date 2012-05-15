@@ -15,8 +15,6 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -39,12 +37,9 @@ import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
-import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionTCBrowser;
-import org.eclipse.jubula.client.ui.rcp.actions.MoveTestCaseAction;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
@@ -52,7 +47,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TCBrowserDndSupport;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TestSpecDropTargetListener;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TreeViewerContainerDragSourceListener;
-import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestCaseBrowserContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TestCaseBrowserLabelProvider;
@@ -66,11 +60,9 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.menus.CommandContributionItem;
 
 
 /** 
@@ -90,8 +82,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
     private CutTreeItemActionTCBrowser m_cutTreeItemAction;
     /** The action to paste TreeItems */
     private PasteTreeItemActionTCBrowser m_pasteTreeItemAction;
-    /** The action to move Test Cases */
-    private MoveTestCaseAction m_moveTestCaseAction;
     /** The actionlistener of the treeViewer */
     private ActionListener m_actionListener;
     /** <code>m_doubleClickListener</code> */
@@ -104,7 +94,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
     public void createPartControl(Composite parent) {
         m_cutTreeItemAction = new CutTreeItemActionTCBrowser();
         m_pasteTreeItemAction = new PasteTreeItemActionTCBrowser();
-        m_moveTestCaseAction = new MoveTestCaseAction();
         super.createPartControl(parent);
         ColumnViewerToolTipSupport.enableFor(getTreeViewer());
         getTreeViewer().setContentProvider(
@@ -170,8 +159,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 ActionFactory.CUT.getId(), m_cutTreeItemAction);
         getViewSite().getActionBars().setGlobalActionHandler(
                 ActionFactory.PASTE.getId(), m_pasteTreeItemAction);
-        getViewSite().getActionBars().setGlobalActionHandler(
-            Constants.MOVE_TESTCASE_ACTION_ID, m_moveTestCaseAction);
         getViewSite().getWorkbenchWindow().getSelectionService()
             .addSelectionListener(m_actionListener);
         getViewSite().getActionBars().updateActionBars();
@@ -179,48 +166,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
 
     /** {@inheritDoc} */
     protected void createContextMenu(IMenuManager mgr) {
-        MenuManager submenuNew = new MenuManager(
-                Messages.TestSuiteBrowserNew, NEW_ID);
-        MenuManager submenuAdd = new MenuManager(
-                Messages.TestSuiteBrowserAdd, ADD_ID);
-        MenuManager submenuOpenWith = new MenuManager(
-                Messages.TestSuiteBrowserOpenWith, OPEN_WITH_ID);
-        // build menu
-        mgr.add(submenuNew);
-        mgr.add(submenuAdd);
-        CommandHelper.createContributionPushItem(submenuNew,
-                RCPCommandIDs.NEW_TESTCASE_COMMAND_ID);
-        CommandHelper.createContributionPushItem(submenuNew,
-                RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
-        mgr.add(new Separator());
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.RENAME_COMMAND_ID);
-        mgr.add(m_moveTestCaseAction);
-        mgr.add(CommandHelper.createContributionItem(
-                RCPCommandIDs.FIND_COMMAND_ID,
-                null, Messages.FindContextMenu,
-                CommandContributionItem.STYLE_PUSH));
-        mgr.add(m_cutTreeItemAction);
-        mgr.add(m_pasteTreeItemAction);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.DELETE_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
-        mgr.add(new Separator());
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.COPY_ID_COMMAND_ID);
-        mgr.add(new Separator());
-        CommandHelper.createContributionPushItem(submenuOpenWith,
-                RCPCommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID);
-        mgr.add(new Separator());
-        mgr.add(submenuOpenWith);
-        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+        mgr.add(new GroupMarker("defaultTestCaseBrowserMarker")); //$NON-NLS-1$
     } 
     
     /**
@@ -350,24 +296,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
         }
 
         /**
-         * en-/disable move-action
-         * @param selList actual selection list
-         */
-        private void enableMoveAction(INodePO[] selList) {
-            m_moveTestCaseAction.setEnabled(false);
-            for (INodePO guiNode : selList) {
-                if (!(guiNode instanceof ICategoryPO 
-                        || guiNode instanceof ISpecTestCasePO)
-                        || !NodeBP.isEditable(guiNode)) {
-                    
-                    m_moveTestCaseAction.setEnabled(false);
-                    return;
-                }
-            }
-            m_moveTestCaseAction.setEnabled(true);
-        }
-
-        /**
          * {@inheritDoc}
          */
         public void selectionChanged(IWorkbenchPart part, 
@@ -385,13 +313,10 @@ public class TestCaseBrowser extends AbstractJBTreeView
             if (isNullProject || (selection == null || selection.isEmpty())) {
                 m_cutTreeItemAction.setEnabled(false);
                 m_pasteTreeItemAction.setEnabled(false);
-                m_moveTestCaseAction.setEnabled(false);
                 return;
             }
             
-            if (!isThisPart) {
-                m_moveTestCaseAction.setEnabled(false);
-            } else {
+            if (isThisPart) {
                 IStructuredSelection sel = (IStructuredSelection)selection;
                 Object[] selectedElements = sel.toArray();
                 INodePO[] selectedNodes = new INodePO[selectedElements.length];
@@ -401,14 +326,12 @@ public class TestCaseBrowser extends AbstractJBTreeView
                     } else {
                         m_cutTreeItemAction.setEnabled(false);
                         m_pasteTreeItemAction.setEnabled(false);
-                        m_moveTestCaseAction.setEnabled(false);
                         return;
                     }
                 }
                 
                 enableCutAction(selectedNodes);
                 enablePasteAction(selectedNodes);
-                enableMoveAction(selectedNodes);
             }
         }
     }
