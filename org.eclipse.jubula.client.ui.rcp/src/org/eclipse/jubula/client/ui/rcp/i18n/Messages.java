@@ -451,7 +451,6 @@ public class Messages extends NLS {
     public static String ModifiableListRemove;
     public static String ModifiableListServerCont;
     public static String ModificationOfNonExistingParameter;
-    public static String MoveTestCaseActionMove;
     public static String MoveTestCaseDialogLabel;
     public static String MoveTestCaseDialogMessage;
     public static String MoveTestCaseDialogShellTitle;

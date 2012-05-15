@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.actions;
+package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +17,8 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.CapBP;
@@ -66,7 +67,7 @@ import org.eclipse.ui.IViewPart;
  * @author BREDEX GmbH
  * @created Oct 15, 2007
  */
-public class MoveTestCaseAction extends Action {
+public class MoveTestCaseHandler extends AbstractHandler {
 
     /**
      * A problem with moving a node.
@@ -149,50 +150,24 @@ public class MoveTestCaseAction extends Action {
             return m_problems;
         }
     }
-    
-    /**
-     * Constructor
-     *
-     */
-    public MoveTestCaseAction() {
-        super(Messages.MoveTestCaseActionMove);
-        setEnabled(false);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void run() {
-        move();
-    }
-    
+
     /**
      * 
      * {@inheritDoc}
      */
-    public void setEnabled(boolean enabled) {
-        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
-        boolean projectAvailable = currentProject == null ? false
-            : !currentProject.getUsedProjects().isEmpty();
-        
-        super.setEnabled(enabled && projectAvailable);
-    }
-    
-    /**
-     * moves the selection of the TC Browser to another project.
-     */
     @SuppressWarnings("unchecked")
-    private void move() {
+    public Object execute(ExecutionEvent event) {
         // Gather selected nodes
         TestCaseBrowser tcb = getSpecView();
+        
         if (!(tcb.getSelection() instanceof IStructuredSelection)) {
-            return;
+            return null;
         }
         IStructuredSelection sel = (IStructuredSelection)tcb.getSelection();
         List<INodePO> selectionList = sel.toList();
 
         if (!closeRelatedEditors(selectionList)) {
-            return;
+            return null;
         }
         
         // Check if move is valid
@@ -240,8 +215,22 @@ public class MoveTestCaseAction extends Action {
         } else {
             showProblems(moveProblems);
         }
-    }
 
+        return null;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void setEnabled(boolean enabled) {
+        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
+        boolean projectAvailable = currentProject == null ? false
+            : !currentProject.getUsedProjects().isEmpty();
+        
+        super.setEnabled(enabled && projectAvailable);
+    }
+    
     /**
      * Closes all editors that are related to elements in the given list.
      * 
