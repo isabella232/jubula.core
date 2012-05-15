@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
 import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
+import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.ui.ISources;
 
 
@@ -53,6 +54,12 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
     public static final String IS_DB_CONNECTION_ESTABLISHED =
         "org.eclipse.jubula.client.ui.rcp.variable.isConnectionToDatabaseEstablished"; //$NON-NLS-1$
     
+    /** 
+     * ID of variable that indicates whether multiple test case browser instances are open.
+     */
+    public static final String ARE_MULTIPLE_TCB_OPEN =
+        "org.eclipse.jubula.client.ui.rcp.variable.areMultipleTCBOpen"; //$NON-NLS-1$
+    
     /**
      * Constructor.
      */
@@ -60,6 +67,7 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
         DataEventDispatcher.getInstance().addProjectLoadedListener(this, true);
         DataEventDispatcher.getInstance().addDataChangedListener(this, true);
         DatabaseStateDispatcher.addDatabaseStateListener(this);
+        MultipleTCBTracker.getInstance().setProvider(this);
     }
 
     /**
@@ -70,6 +78,7 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
         DataEventDispatcher.getInstance().removeProjectLoadedListener(this);
         DataEventDispatcher.getInstance().removeDataChangedListener(this);
         DatabaseStateDispatcher.removeDatabaseStateListener(this);
+        MultipleTCBTracker.getInstance().setProvider(null);
     }
 
     /**
@@ -87,6 +96,8 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
         currentState.put(IS_PROJECT_PROTECTED, isProjectProtected);
         currentState.put(IS_DB_CONNECTION_ESTABLISHED,
                 Persistor.instance() != null ? true : false);
+        currentState.put(ARE_MULTIPLE_TCB_OPEN, 
+                MultipleTCBTracker.getInstance().getOpenTCBs().size() > 1);
         return currentState;
     }
 
@@ -97,7 +108,8 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
     public String[] getProvidedSourceNames() {
         return new String[] {   IS_PROJECT_ACTIVE, 
                                 IS_PROJECT_PROTECTED,
-                                IS_DB_CONNECTION_ESTABLISHED };
+                                IS_DB_CONNECTION_ESTABLISHED,
+                                ARE_MULTIPLE_TCB_OPEN };
     }
 
     /**
@@ -129,6 +141,8 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
                 isProjectProtected);
         gdFireSourceChanged(ISources.WORKBENCH, IS_DB_CONNECTION_ESTABLISHED,
                 Persistor.instance() != null ? true : false);
+        gdFireSourceChanged(ISources.WORKBENCH, ARE_MULTIPLE_TCB_OPEN,
+                MultipleTCBTracker.getInstance().getOpenTCBs().size() > 1);
     }
 
     /**

@@ -237,6 +237,7 @@
       icon="icons/specTcBrowser.gif"
       category="org.eclipse.jubula.client.views"
       name="%TestSpec"
+      allowMultiple="true"
       id="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
     <view
       class="org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView"
@@ -951,10 +952,18 @@
       id="org.eclipse.jubula.client.ui.rcp.commands.MapIntoOMCategory"
       name="%MapIntoOMCategory" />
     <command
-          categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-          id="org.eclipse.jubula.client.ui.rcp.commands.MoveTestCase"
-          name="%MoveTestCaseCommandName">
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.MoveTestCase"
+      name="%MoveTestCaseCommandName">
     </command>
+	<command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.CreateNewViewInstance"
+      name="%CreateNewViewInstance" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.SetAsMainViewInstance"
+      name="%SetAsMainViewInstance" />
   </extension>
   <extension point="org.eclipse.ui.bindings">
     <key
@@ -1155,6 +1164,10 @@
     </menuContribution>
     <menuContribution
       locationURI="menu:org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser?after=additions">
+      <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewViewInstance"
+        label="%NewTestCaseBrowserViewInstance"
+        style="push" />
       <menu label="%Show">
         <command
           commandId="org.eclipse.jubula.client.ui.rcp.commands.filterUsedTestCases"
@@ -1387,6 +1400,16 @@
     </menuContribution>
     <menuContribution
       locationURI="toolbar:org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser?after=additions">
+      <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.SetAsMainViewInstance"
+        style="push" >
+        <visibleWhen
+          checkEnabled="false">
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.areMultipleTCBOpen">
+            <equals value="true" />
+          </with>
+        </visibleWhen>
+      </command>
       <command
         commandId="org.eclipse.jubula.client.ui.rcp.commands.CollapseAll"
         style="push" />
@@ -1811,6 +1834,14 @@
           </with>
         </and>
       </activeWhen>
+    </handler>
+    <handler
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewViewInstance"
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NewViewInstanceHandler">
+    </handler>
+    <handler
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.SetAsMainViewInstance"
+      class="org.eclipse.jubula.client.ui.rcp.handlers.SetAsMainViewInstanceHandler">
     </handler>
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.FindHandler"
@@ -2536,6 +2567,12 @@
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.sort.name"
       icon="icons/sort.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewViewInstance"
+      icon="icons/newView.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.SetAsMainViewInstance"
+      icon="icons/mainView.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.MergeLogicalNameCommand"
       icon="icons/mergeLogicalName.gif" />
@@ -3395,6 +3432,9 @@
         priorityLevel="workbench" />
       <variable
         name="org.eclipse.jubula.client.ui.rcp.variable.isConnectionToDatabaseEstablished"
+        priorityLevel="workbench" />
+      <variable
+        name="org.eclipse.jubula.client.ui.rcp.variable.areMultipleTCBOpen"
         priorityLevel="workbench" />
     </sourceProvider>
     <sourceProvider

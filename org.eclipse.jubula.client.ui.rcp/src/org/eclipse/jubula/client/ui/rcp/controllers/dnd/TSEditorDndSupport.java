@@ -17,7 +17,9 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
+import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 
 
 /**
@@ -75,17 +77,15 @@ public class TSEditorDndSupport {
             return false;
         }
 
-        if (sourceViewer != null 
-                && !sourceViewer.equals(targetViewer)) {
-                
-            if (TCEditorDndSupport.getTCBrowser() != null) {
-                if (!(allowFromBrowser 
-                        && sourceViewer.equals(TCEditorDndSupport
-                                .getTCBrowser().getTreeViewer()))) {
-                            
-                    return false;
+        if (sourceViewer != null && !sourceViewer.equals(targetViewer)) {
+            boolean foundOne = false;
+            for (TestCaseBrowser tcb : MultipleTCBTracker.getInstance()
+                    .getOpenTCBs()) {
+                if (sourceViewer.equals(tcb.getTreeViewer())) {
+                    foundOne = true;
                 }
-            } else {
+            }
+            if (!(allowFromBrowser && foundOne)) {
                 return false;
             }
         }
