@@ -37,7 +37,6 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
-import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
@@ -417,24 +416,22 @@ public class BasicSearchResult implements ISearchResult {
             Plugin.showView(viewId);
         }
         
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public void jumpTo(Long id) {
-            AbstractJBTreeView jbtv = MultipleTCBTracker.getInstance()
-                    .getMainTCB();
-            if (jbtv == null) {
-                jbtv = (AbstractJBTreeView) Plugin
-                        .showView(Constants.TC_BROWSER_ID);
-            }
-            TreeViewer tv = jbtv.getTreeViewer();
-            EntityManager em = jbtv.getEntityManager();
+            AbstractJBTreeView gdtv = (AbstractJBTreeView)Plugin
+                    .showView(Constants.TC_BROWSER_ID);
+            TreeViewer tv = gdtv.getTreeViewer();
+            EntityManager em = gdtv.getEntityManager();
             INodePO node = UINodeBP.selectNodeInTree(id, tv, em);
             if (node == null) {
-                jbtv = (AbstractJBTreeView) Plugin
+                gdtv = (AbstractJBTreeView)Plugin
                         .showView(Constants.TS_BROWSER_ID);
-                tv = jbtv.getTreeViewer();
+                tv = gdtv.getTreeViewer();
                 node = UINodeBP.selectNodeInTree(id, tv, em);
             }
-            BasicSearchResult.openEditorForNode(node, jbtv);
+            BasicSearchResult.openEditorForNode(node, gdtv);
         }
     }
 

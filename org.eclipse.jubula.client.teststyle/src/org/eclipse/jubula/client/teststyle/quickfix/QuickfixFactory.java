@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.teststyle.i18n.Messages;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -33,6 +33,7 @@ import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -180,21 +181,19 @@ public class QuickfixFactory {
                             MessageIDs.I_NO_PERSPECTIVE_CHANGE);
                     return;
                 }
-                IViewPart view = MultipleTCBTracker.getInstance()
-                        .getMainTCB();
+                IViewPart view = Plugin.showView(Constants.TC_BROWSER_ID, null,
+                        IWorkbenchPage.VIEW_ACTIVATE);
                 ITreeViewerContainer specView = (ITreeViewerContainer)view;
                 InteractionEventDispatcher.getDefault().
                     fireProgammableSelectionEvent(
                             new StructuredSelection(node));
-                if (specView != null) {
-                    specView.getTreeViewer().refresh();
-                    specView.getTreeViewer().reveal(node);
-                    specView.getTreeViewer().getTree().update();
-                    view.setFocus();
-                    specView.getTreeViewer().expandToLevel(node, 0);
-                    specView.getTreeViewer().setSelection(
-                            new StructuredSelection(node), true);
-                }
+                specView.getTreeViewer().refresh();
+                specView.getTreeViewer().reveal(node);
+                specView.getTreeViewer().getTree().update();
+                view.setFocus();
+                specView.getTreeViewer().expandToLevel(node, 0);
+                specView.getTreeViewer().setSelection(
+                        new StructuredSelection(node), true);
             }
         }
 

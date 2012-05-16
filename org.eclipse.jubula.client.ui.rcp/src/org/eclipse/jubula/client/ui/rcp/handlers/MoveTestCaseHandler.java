@@ -40,10 +40,10 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.dialogs.ReusedProjectSelectionDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -60,6 +60,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageInfo;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IViewPart;
 
 
 /**
@@ -157,7 +158,8 @@ public class MoveTestCaseHandler extends AbstractHandler {
     @SuppressWarnings("unchecked")
     public Object execute(ExecutionEvent event) {
         // Gather selected nodes
-        TestCaseBrowser tcb = MultipleTCBTracker.getInstance().getMainTCB();
+        TestCaseBrowser tcb = getSpecView();
+        
         if (!(tcb.getSelection() instanceof IStructuredSelection)) {
             return null;
         }
@@ -473,6 +475,17 @@ public class MoveTestCaseHandler extends AbstractHandler {
         }
     }
 
+    /**
+     * @return instance of TestCaseBrowser, or null.
+     */
+    private TestCaseBrowser getSpecView() {
+        IViewPart viewPart = Plugin.getView(Constants.TC_BROWSER_ID);
+        if (viewPart != null) {
+            return (TestCaseBrowser)viewPart;
+        }
+        return null;
+    }
+    
     /**
      * Adds all spec testcase descendants of the given node to the given 
      * list.

@@ -42,7 +42,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCBrowser;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
-import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TCBrowserDndSupport;
@@ -122,9 +121,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
         }
-        
-        // register active view tracker
-        MultipleTCBTracker.getInstance().registerListener();
     }
 
     /**
@@ -459,16 +455,10 @@ public class TestCaseBrowser extends AbstractJBTreeView
         if (po instanceof ISpecTestCasePO
                 || po instanceof ICategoryPO) {
             getTreeViewer().refresh();
+            getTreeViewer().setSelection(
+                new StructuredSelection(po), true);
         } else if (po instanceof IProjectPO) {
             handleProjectLoaded();
         }
-    }
-    
-    /**
-     * @param title
-     *            the title
-     */
-    public void setViewTitle(String title) {
-        super.setPartName(title);
     }
 }

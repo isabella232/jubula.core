@@ -37,11 +37,9 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.editors.PersistableEditorInput;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -262,10 +260,7 @@ public class Utils {
                 Plugin.closeAllOpenedJubulaEditors(alsoProjectIndependent);
                 ded.fireTestresultChanged(TestresultState.Refresh);
                 setTreeViewerInputNull(Constants.TESTRE_ID);
-                for (TestCaseBrowser tcb : MultipleTCBTracker.getInstance()
-                        .getOpenTCBs()) {
-                    tcb.getTreeViewer().setInput(null);
-                }
+                setTreeViewerInputNull(Constants.TC_BROWSER_ID);
                 setTreeViewerInputNull(Constants.TS_BROWSER_ID);
                 setTreeViewerInputNull(Constants.COMPNAMEBROWSER_ID);
                 clearAnalyzeResultPage();

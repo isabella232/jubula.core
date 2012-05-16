@@ -30,12 +30,14 @@ import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
+import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
+import org.eclipse.ui.IViewPart;
 
 
 /**
@@ -178,19 +180,21 @@ public class TCEditorDndSupport {
     public static boolean validateDrop(Viewer sourceViewer, Viewer targetViewer,
             IStructuredSelection toDrop, INodePO dropTarget, 
             boolean allowFromBrowser) {
+        
         if (toDrop == null || toDrop.isEmpty() || dropTarget == null) {
             return false;
         }
 
-        if (sourceViewer != null && !sourceViewer.equals(targetViewer)) {
-            boolean foundOne = false;
-            for (TestCaseBrowser tcb : MultipleTCBTracker.getInstance()
-                    .getOpenTCBs()) {
-                if (sourceViewer.equals(tcb.getTreeViewer())) {
-                    foundOne = true;
+        if (sourceViewer != null 
+            && !sourceViewer.equals(targetViewer)) {
+            
+            if (getTCBrowser() != null) {
+                if (!(allowFromBrowser 
+                    && sourceViewer.equals(getTCBrowser().getTreeViewer()))) {
+                    
+                    return false;
                 }
-            }
-            if (!(allowFromBrowser && foundOne)) {
+            } else {
                 return false;
             }
         }
@@ -230,6 +234,17 @@ public class TCEditorDndSupport {
         }
         return true;
 
+    }
+
+    /**
+     * @return instance of TestCaseBrowser, or null.
+     */
+    static TestCaseBrowser getTCBrowser() {
+        IViewPart viewPart = Plugin.getView(Constants.TC_BROWSER_ID);
+        if (viewPart != null) {
+            return (TestCaseBrowser)viewPart;
+        }
+        return null;
     }
 
     /**
