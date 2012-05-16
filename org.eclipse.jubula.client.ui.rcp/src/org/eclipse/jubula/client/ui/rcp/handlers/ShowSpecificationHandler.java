@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
+import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 
 
 /**
@@ -22,13 +22,12 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
  *
  */
 public class ShowSpecificationHandler extends AbstractShowSpecificationHandler {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) {
         ISpecTestCasePO specTc = UINodeBP.getSpecTC(getSelection());
         if (specTc != null) {
-            showSpecUINode(specTc, Constants.TC_BROWSER_ID);
+            showSpecUINode(specTc, MultipleTCBTracker.getInstance()
+                    .getMainTCB());
         }
         return null;
     }

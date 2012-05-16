@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
@@ -26,8 +27,11 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author BREDEX GmbH
@@ -37,6 +41,7 @@ public class NewTestCaseHandlerTCBrowser extends AbstractNewHandler {
     /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) {
         INodePO parent = getParentNode(event);
+        IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         InputDialog dialog = new InputDialog(getActiveShell(),
                 Messages.NewTestCaseActionTCTitle,
                 InitialValueConstants.DEFAULT_TEST_CASE_NAME,
@@ -60,6 +65,11 @@ public class NewTestCaseHandlerTCBrowser extends AbstractNewHandler {
                         tcName, parent, null);
                 DataEventDispatcher.getInstance().fireDataChangedListener(
                         newSpecTC, DataState.Added, UpdateState.all);
+                if (activePart instanceof TestCaseBrowser) {
+                    TestCaseBrowser tcb = (TestCaseBrowser) activePart;
+                    tcb.getTreeViewer().setSelection(
+                            new StructuredSelection(newSpecTC), true);
+                }
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
@@ -68,5 +78,4 @@ public class NewTestCaseHandlerTCBrowser extends AbstractNewHandler {
         }
         return null;
     }
-
 }

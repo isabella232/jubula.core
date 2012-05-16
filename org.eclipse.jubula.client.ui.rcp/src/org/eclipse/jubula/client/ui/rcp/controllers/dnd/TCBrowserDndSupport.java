@@ -21,11 +21,8 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
+import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.ui.IViewPart;
 
 
 /**
@@ -93,20 +90,8 @@ public class TCBrowserDndSupport extends AbstractBrowserDndSupport {
     public static void moveNodes(List<INodePO> nodesToBeMoved,
             IPersistentObject target) throws PMException,
             ProjectDeletedException {
-        if (getSpecView() != null) {
+        if (MultipleTCBTracker.getInstance().getMainTCB() != null) {
             doMove(nodesToBeMoved, target);
         }
     }
-    
-    /**
-     * @return instance of TestCaseBrowser, or null.
-     */
-    private static TestCaseBrowser getSpecView() {
-        IViewPart viewPart = Plugin.getView(Constants.TC_BROWSER_ID);
-        if (viewPart != null) {
-            return (TestCaseBrowser)viewPart;
-        }
-        return null;
-    }
-
 }
