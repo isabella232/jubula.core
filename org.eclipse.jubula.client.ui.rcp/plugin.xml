@@ -3030,14 +3030,13 @@
           <iterate
             ifEmpty="false"
             operator="and">
-            <and>
-              <not>
-                <instanceof value="org.eclipse.jubula.client.core.model.IProjectPO" />
-              </not>
-              <test
-                property="org.eclipse.jubula.client.core.model.ITestSuitePO.hasAUT"
-                value="true" />
-            </and>
+            <instanceof
+                  value="org.eclipse.jubula.client.core.model.ITestSuitePO">
+            </instanceof>
+            <test
+                  property="org.eclipse.jubula.client.core.model.ITestSuitePO.hasAUT"
+                  value="true">
+            </test>
           </iterate>
         </and>
       </activeWhen>
