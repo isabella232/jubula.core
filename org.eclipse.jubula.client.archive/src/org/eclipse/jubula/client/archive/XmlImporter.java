@@ -1321,7 +1321,12 @@ class XmlImporter {
         for (ExecCategory catXml : xml.getCategoryList()) {
             createTestJobs(catXml, assignNewGuid);
         }
-        ICategoryPO cat = m_execCategoryCache.get(xml.getGUID());
+        
+        String guid = xml.getGUID();
+        if (assignNewGuid) {
+            guid = m_oldToNewGuids.get(guid);
+        }
+        ICategoryPO cat = m_execCategoryCache.get(guid);
         for (TestJobs tjXml : xml.getTestjobList()) {
             cat.addNode(createTestJob(tjXml, assignNewGuid));
         }
