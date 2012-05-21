@@ -21,6 +21,7 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -46,7 +47,9 @@ import org.eclipse.jubula.client.core.persistence.TransactionSupport;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransactAction;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.RefToken;
+import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
+import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 
 /**
@@ -288,6 +291,11 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
 
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     newSpecTC, DataState.Added, UpdateState.all);
+            TestCaseBrowser tcb = MultipleTCBTracker.getInstance().getMainTCB();
+            if (tcb != null) {
+                tcb.getTreeViewer().setSelection(
+                        new StructuredSelection(newSpecTC), true);
+            }
         }
         return null;
     }
