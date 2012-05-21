@@ -37,6 +37,13 @@ import org.slf4j.LoggerFactory;
  */
 public class AutAgentConnection extends BaseConnection {
     
+    /**
+     * Job Family ID. All Jobs dealing with connecting to the AUT Agent
+     * will return <code>true</code> when their {@link Job#belongsTo(Object)}
+     * method is called with this Object as the argument. 
+     */
+    public static final Object CONNECT_TO_AGENT_JOB_FAMILY_ID = new Object();
+    
     /** the logger */
     private static Logger log = 
             LoggerFactory.getLogger(AutAgentConnection.class);

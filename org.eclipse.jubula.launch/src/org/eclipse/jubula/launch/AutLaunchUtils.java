@@ -17,10 +17,11 @@ import org.eclipse.core.commands.common.CommandException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jubula.client.autagent.handlers.ConnectToEmbeddedAutAgentHandler;
-import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.AutAgentConnection;
+import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.launch.i18n.Messages;
 import org.eclipse.ui.PlatformUI;
@@ -76,6 +77,17 @@ public class AutLaunchUtils {
                     .CONNECT_TO_EMBEDDED_AGENT_CMD_ID, null);
         } catch (CommandException e) {
             LOG.error("Error occurred while trying to connect to embedded AUT Agent.", e); //$NON-NLS-1$
+        }
+        
+        Job[] connectToAgentJobs = Job.getJobManager().find(
+                AutAgentConnection.CONNECT_TO_AGENT_JOB_FAMILY_ID);
+        for (Job connectJob : connectToAgentJobs) {
+            try {
+                connectJob.join();
+            } catch (InterruptedException ie) {
+                LOG.warn("Interrupt occurred while waiting for connection to AUT Agent.", ie); //$NON-NLS-1$
+                Thread.currentThread().interrupt();
+            }
         }
 
         addr = getConnectedAgentAddress();
