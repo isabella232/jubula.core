@@ -21,6 +21,7 @@ import javax.persistence.PersistenceException;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.businessprocess.TreeOpsBP;
@@ -40,9 +41,11 @@ import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransactAction;
+import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -178,6 +181,11 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
                     .getSpecTestCase();
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     newSpecTc, DataState.Added, UpdateState.all);
+            TestCaseBrowser tcb = MultipleTCBTracker.getInstance().getMainTCB();
+            if (tcb != null) {
+                tcb.getTreeViewer().setSelection(
+                        new StructuredSelection(newSpecTc), true);
+            }
             return extractionRet;
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
