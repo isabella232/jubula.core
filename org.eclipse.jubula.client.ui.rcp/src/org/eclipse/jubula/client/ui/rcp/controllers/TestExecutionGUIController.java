@@ -20,9 +20,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -33,8 +33,8 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.ConnectAutAgentBP;
 import org.eclipse.jubula.client.ui.rcp.dialogs.nag.RCPAUTStartDelayNagTask;
 import org.eclipse.jubula.client.ui.rcp.handlers.AbstractStartTestHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.utils.JBThread;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
+import org.eclipse.jubula.client.ui.rcp.utils.JBThread;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
@@ -202,6 +202,15 @@ public class TestExecutionGUIController {
                 connectToAutAgentImpl(autAgent);
                 monitor.done();
                 return Status.OK_STATUS;
+            }
+            
+            @Override
+            public boolean belongsTo(Object family) {
+                if (family 
+                        == AutAgentConnection.CONNECT_TO_AGENT_JOB_FAMILY_ID) {
+                    return true;
+                }
+                return super.belongsTo(family);
             }
         };
         JobUtils.executeJob(connectToAUTAgent, null);
