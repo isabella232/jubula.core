@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.views.AbstractJBTreeView;
@@ -50,6 +51,7 @@ public abstract class AbstractShowSpecificationHandler
         }
         if (viewPart instanceof AbstractJBTreeView) {
             AbstractJBTreeView jbtv = (AbstractJBTreeView)viewPart;
+            Plugin.activate(jbtv);
             UINodeBP.selectNodeInTree(node.getId(), jbtv.getTreeViewer(),
                     jbtv.getEntityManager());
         }

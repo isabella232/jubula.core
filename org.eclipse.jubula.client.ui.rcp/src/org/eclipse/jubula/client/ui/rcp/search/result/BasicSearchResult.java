@@ -424,6 +424,8 @@ public class BasicSearchResult implements ISearchResult {
             if (jbtv == null) {
                 jbtv = (AbstractJBTreeView) Plugin
                         .showView(Constants.TC_BROWSER_ID);
+            } else {
+                Plugin.activate(jbtv);
             }
             TreeViewer tv = jbtv.getTreeViewer();
             EntityManager em = jbtv.getEntityManager();
