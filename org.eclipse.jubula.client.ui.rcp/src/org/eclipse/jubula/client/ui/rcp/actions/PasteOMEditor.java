@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.ui.rcp.actions;
 
 import java.util.List;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -32,12 +34,13 @@ import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
  * @author BREDEX GmbH
  * @created 20.03.2008
  */
-public class PasteTreeItemActionOMEditor extends AbstractPasteTreeItemAction {
+public class PasteOMEditor extends AbstractHandler {
 
     /**
+     * 
      * {@inheritDoc}
      */
-    public void run() {
+    public Object execute(ExecutionEvent event) {
         ObjectMappingMultiPageEditor ome = 
             (ObjectMappingMultiPageEditor)Plugin.getActiveEditor();
         LocalSelectionClipboardTransfer transfer = 
@@ -45,7 +48,7 @@ public class PasteTreeItemActionOMEditor extends AbstractPasteTreeItemAction {
         
         if (!(ome.getEditorHelper().getClipboard().getContents(transfer)
                 instanceof IStructuredSelection)) {
-            return;
+            return null;
         }
         IStructuredSelection pasteSelection = 
             (IStructuredSelection)ome.getEditorHelper().getClipboard()
@@ -55,7 +58,7 @@ public class PasteTreeItemActionOMEditor extends AbstractPasteTreeItemAction {
             ISelection sel = 
                 ome.getSite().getSelectionProvider().getSelection();
             if (!(sel instanceof IStructuredSelection)) {
-                return;
+                return null;
             }
             IStructuredSelection selection = 
                 (IStructuredSelection)sel;
@@ -64,7 +67,7 @@ public class PasteTreeItemActionOMEditor extends AbstractPasteTreeItemAction {
             
             if (ome.getEditorHelper().requestEditableState() 
                     != EditableState.OK) {
-                return;
+                return null;
             }
 
             if (transfer.containsOnlyType(IObjectMappingAssoziationPO.class)) {
@@ -85,7 +88,7 @@ public class PasteTreeItemActionOMEditor extends AbstractPasteTreeItemAction {
                         transfer.getSelection().toList();
                     if (!OMEditorDndSupport.isMergeIfNeeded(
                             toMove, targetCategory)) {
-                        return;
+                        return null;
                     }
                 }
             } else if (transfer.containsOnlyType(IComponentNamePO.class)) {
@@ -104,6 +107,8 @@ public class PasteTreeItemActionOMEditor extends AbstractPasteTreeItemAction {
 
             handlePostPaste(ome, transfer, target);
         }
+
+        return null;
     }
 
     /**
