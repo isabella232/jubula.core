@@ -8,14 +8,16 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.actions;
+package org.eclipse.jubula.client.ui.rcp.handlers;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -24,19 +26,20 @@ import org.eclipse.swt.dnd.Transfer;
  * @author BREDEX GmbH
  * @created 20.03.2008
  */
-public class CutTreeItemActionOMEditor extends AbstractCutTreeItemAction {
+public class CutOMEditorHandler extends AbstractHandler {
 
     /**
+     * 
      * {@inheritDoc}
      */
-    public void run() {
-        
+    public Object execute(ExecutionEvent event) {
         ObjectMappingMultiPageEditor ome = 
-            (ObjectMappingMultiPageEditor)Plugin.getActiveEditor();
-        ISelection sel = ome.getSite().getSelectionProvider().getSelection();
+            (ObjectMappingMultiPageEditor)HandlerUtil.getActiveEditor(event);
+        ISelection sel = HandlerUtil.getCurrentSelection(event);
         if (!(sel instanceof IStructuredSelection)) {
-            return;
+            return null;
         }
+
         IStructuredSelection selection = (IStructuredSelection)sel;
         LocalSelectionClipboardTransfer transfer = 
             LocalSelectionClipboardTransfer.getInstance(); 
@@ -45,6 +48,7 @@ public class CutTreeItemActionOMEditor extends AbstractCutTreeItemAction {
         transfer.setSelection(selection, 
                 ome.getTreeViewer(), ome.getTreeViewers());
         
+        return null;
     }
 
 }

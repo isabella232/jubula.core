@@ -24,11 +24,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -91,15 +89,12 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionOMEditor;
-import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionOMEditor;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.OMEditorBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.ComponentNameTreeViewerUpdater;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
-import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.LimitingDragSourceListener;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.OMDropTargetListener;
@@ -118,7 +113,6 @@ import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.O
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.ObjectMappingRow;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.selectionprovider.SelectionProviderIntermediate;
-import org.eclipse.jubula.client.ui.rcp.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -161,7 +155,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.dialogs.FilteredTree;
-import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.services.IEvaluationService;
 import org.eclipse.ui.swt.IFocusService;
@@ -226,12 +219,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     private ObjectMappingConfigComponent m_mappingConfigComponent;
     
-    /** action to cut TreeItems */
-    private CutTreeItemActionOMEditor m_cutTreeItemAction;
-
-    /** action to paste TreeItems */
-    private PasteTreeItemActionOMEditor m_pasteTreeItemAction;
-
     /** updater for tree viewer based on changes to Component Names */
     private ComponentNameTreeViewerUpdater m_treeViewerUpdater;
 
@@ -507,9 +494,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         }
     }
     
-    /** listener for action enablement */
-    private ActionListener m_actionListener = new ActionListener();
-    
     /** the selection provider for this editor */
     private SelectionProviderIntermediate m_selectionProvider;
     
@@ -525,185 +509,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     private SelectionProviderIntermediate m_splitPaneSelectionProvider;
     
     /**
-     * SelectionListener to en-/disable delete-action
-     * 
-     * @author BREDEX GmbH
-     * @created 02.03.2006
-     */
-    private class ActionListener implements ISelectionChangedListener {
-
-        /**
-         * {@inheritDoc}
-         * @param event
-         */
-        public void selectionChanged(SelectionChangedEvent event) {
-            if (GeneralStorage.getInstance().getProject() == null
-                    || (event.getSelection() == null 
-                            || event.getSelection().isEmpty())) {
-                
-                m_cutTreeItemAction.setEnabled(false);
-                m_pasteTreeItemAction.setEnabled(false);
-                return;
-            }
-            if (event.getSelection() instanceof IStructuredSelection) {
-                IStructuredSelection sel = 
-                    (IStructuredSelection)event.getSelection();
-                enableCutAction(sel);
-                enablePasteAction(sel);
-            }
-        }
-
-        /**
-         * en-/disable cut-action
-         * @param sel actual selection 
-         */
-        @SuppressWarnings("synthetic-access")
-        private void enableCutAction(IStructuredSelection sel) {
-            boolean onlyCategoriesSelected = false;
-            boolean categoryIsNotInSelList = false;
-            boolean onlyMainCategoriesSelected = false;
-            boolean mainCategoryIsNotInSelList = false;
-            boolean techNamesSelected = false;
-            boolean logicNamesSelected = false;
-            if (sel != null && !sel.isEmpty()) {
-                int selSize = sel.toList().size();
-                int[] counter = SelectionChecker.selectionCounter(sel);
-                onlyCategoriesSelected = 
-                    counter[SelectionChecker.OM_CATEGORY] == selSize;
-                categoryIsNotInSelList = 
-                    counter[SelectionChecker.OM_CATEGORY] == 0;
-                onlyMainCategoriesSelected = 
-                    counter[SelectionChecker.OM_MAIN_CATEGORY] == selSize;
-                mainCategoryIsNotInSelList = 
-                    counter[SelectionChecker.OM_MAIN_CATEGORY] == 0;
-                techNamesSelected = 
-                    counter[SelectionChecker.OM_TECH_NAME] > 0;
-                logicNamesSelected = 
-                    counter[SelectionChecker.OM_LOGIC_NAME] > 0;
-            }
-            // FIXME zeb workaround for delete-orphan mapping om categories to 
-            //           child om categories
-            // workaround: disallow cutting of categories
-            if (!categoryIsNotInSelList) {
-                m_cutTreeItemAction.setEnabled(false);
-                return;
-            }
-            // FIXME zeb end workaround
-            if (onlyMainCategoriesSelected) {
-                m_cutTreeItemAction.setEnabled(false);
-                return;
-            }
-            if (onlyCategoriesSelected) {
-                m_cutTreeItemAction.setEnabled(true);
-                return;
-            }
-            if (techNamesSelected && logicNamesSelected) {
-                m_cutTreeItemAction.setEnabled(false);
-                return;
-            }
-            if (categoryIsNotInSelList && mainCategoryIsNotInSelList) {
-                m_cutTreeItemAction.setEnabled(true);
-                return;
-            }
-            m_cutTreeItemAction.setEnabled(false);
-        }
-
-        /**
-         * 
-         * @param toMove The associations on the clipboard.
-         * @param targetList The currently selected elements.
-         * @return <code>true</code> if the paste operation should be
-         *         enabled for the given arguments. Otherwise, 
-         *         <code>false</code>.
-         */
-        private boolean getPasteActionEnablementForAssocs(
-                List<IObjectMappingAssoziationPO> toMove, 
-                List<Object> targetList) {
-
-            for (Object target : targetList) {
-                if (target instanceof IObjectMappingCategoryPO) {
-                    if (!OMEditorDndSupport.canMoveAssociations(
-                            toMove, (IObjectMappingCategoryPO)target, 
-                            ObjectMappingMultiPageEditor.this)) {
-
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-            return true;
-        }
-        
-        /**
-         * @param targetList The currently selected elements.
-         * @return <code>true</code> if the paste operation should be
-         *         enabled for the given arguments. Otherwise, 
-         *         <code>false</code>.
-         */
-        private boolean getPasteActionEnablementForCompNames(
-                List<Object> targetList) {
-            
-            for (Object target : targetList) {
-                if (target instanceof IObjectMappingAssoziationPO) {
-                    return true;
-                } else if (target instanceof IObjectMappingCategoryPO) {
-                    if (!OMEditorDndSupport.canMoveCompNames(
-                            (IObjectMappingCategoryPO)target, 
-                            ObjectMappingMultiPageEditor.this)) {
-
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-        
-        /**
-         * en-/disable paste-action
-         * @param sel actual selection 
-         */
-        @SuppressWarnings("synthetic-access")
-        private void enablePasteAction(IStructuredSelection sel) {
-            
-            m_pasteTreeItemAction.setEnabled(false);
-            LocalSelectionClipboardTransfer transfer = 
-                LocalSelectionClipboardTransfer.getInstance();
-            Object cbContents = 
-                getEditorHelper().getClipboard().getContents(transfer);
-
-            if (cbContents == null) {
-                return;
-            }
-            if (transfer.getSource() != null 
-                && !transfer.getSource().equals(getTreeViewer())) {
-                return;
-            }
-            boolean isEnabled = false;
-            if (transfer.containsOnlyType(IObjectMappingAssoziationPO.class)) {
-                // Use logic for validating associations
-                isEnabled = getPasteActionEnablementForAssocs(
-                        transfer.getSelection().toList(), 
-                        sel.toList());
-            } else if (transfer.containsOnlyType(
-                    IObjectMappingCategoryPO.class)) {
-                // Use logic for validating categories
-                isEnabled = false;
-            } else if (transfer.containsOnlyType(IComponentNamePO.class)) {
-                // Use logic for validating Component Names
-                isEnabled = getPasteActionEnablementForCompNames(sel.toList());
-            } else {
-                isEnabled = false;
-            }
-            
-            m_pasteTreeItemAction.setEnabled(isEnabled);
-        }
-    }
-    
-    /**
      * {@inheritDoc}
      */
     protected void createPages() {
@@ -717,8 +522,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             getAut().setObjMap(objMap);
         }
         checkMasterSessionUpToDate();
-        
-        createActions();
 
         // Create menu manager.
         MenuManager menuMgr = createContextMenu();
@@ -760,9 +563,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_selectionProvider.setSelectionProviderDelegate(
                 m_pageToSelectionProvider.get(getActivePage()));
         getSite().setSelectionProvider(m_selectionProvider);
+        getEditorSite().registerContextMenu(menuMgr, m_selectionProvider);
 
-        m_selectionProvider.addSelectionChangedListener(m_actionListener);
-        
         ObjectMappingEventDispatcher.addObserver(this);
 
         m_treeViewerUpdater = 
@@ -777,7 +579,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     private MenuManager createContextMenu() {
         MenuManager menuMgr = new MenuManager();
-        fillTreeContextMenu(menuMgr);
         menuMgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
         return menuMgr;
     }
@@ -857,14 +658,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         }
 
         return isChanged;
-    }
-
-    /**
-     * Initializes the actions for this editor.
-     */
-    private void createActions() {
-        m_cutTreeItemAction = new CutTreeItemActionOMEditor();
-        m_pasteTreeItemAction = new PasteTreeItemActionOMEditor();
     }
 
     /**
@@ -948,8 +741,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         createTreeContextMenu(m_treeViewer, contextMenuMgr);
         Plugin.getHelpSystem().setHelp(parent,
             ContextHelpIds.OBJECT_MAP_EDITOR);
-        
-        configureActionBars();
         
         FocusListener activeTreeListener = new FocusAdapter() {
             public void focusGained(FocusEvent e) {
@@ -1102,45 +893,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     }
     
     /**
-     * Registers global action handlers and listeners. 
-     */
-    private void configureActionBars() {
-        getTreeFilterText().addFocusListener(new FocusListener() {
-            /** the default cut action */
-            private IAction m_defaultCutAction = getEditorSite()
-                .getActionBars().getGlobalActionHandler(
-                        ActionFactory.CUT.getId()); 
-            
-            /** the default paste action */
-            private IAction m_defaultPasteAction = getEditorSite()
-                .getActionBars().getGlobalActionHandler(
-                    ActionFactory.PASTE.getId());
-            
-            public void focusGained(FocusEvent e) {
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.CUT.getId(), m_defaultCutAction);
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.PASTE.getId(), m_defaultPasteAction);
-                getEditorSite().getActionBars().updateActionBars();
-            }
-
-            public void focusLost(FocusEvent e) {
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.CUT.getId(), m_cutTreeItemAction);
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.PASTE.getId(), m_pasteTreeItemAction);
-                getEditorSite().getActionBars().updateActionBars();
-            }
-        });
-        
-        getEditorSite().getActionBars().setGlobalActionHandler(
-                ActionFactory.CUT.getId(), m_cutTreeItemAction);
-        getEditorSite().getActionBars().setGlobalActionHandler(
-                ActionFactory.PASTE.getId(), m_pasteTreeItemAction);
-        getEditorSite().getActionBars().updateActionBars();
-    }
-
-    /**
      * @param treeFilterText the treeFilterText to set
      */
     public void setTreeFilterText(Text treeFilterText) {
@@ -1163,53 +915,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         // Create menu.
         Menu menu = menuMgr.createContextMenu(viewer.getControl());
         viewer.getControl().setMenu(menu);
-        getEditorSite().registerContextMenu(menuMgr, getTreeViewer());
-    }
-
-    /**
-     * fill the tree context menu
-     * 
-     * @param mgr
-     *            IMenuManager
-     */
-    protected void fillTreeContextMenu(IMenuManager mgr) {
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.NEW_COMPONENT_NAME_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
-        mgr.add(m_cutTreeItemAction);
-        mgr.add(m_pasteTreeItemAction);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.DELETE_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.RENAME_COMMAND_ID);
-        mgr.add(CommandHelper.createContributionItem(
-                RCPCommandIDs.FIND_COMMAND_ID,
-                null, Messages.FindContextMenu,
-                CommandContributionItem.STYLE_PUSH));
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
-        mgr.add(new Separator());
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.REFRESH_COMMAND_ID);
-        mgr.add(new Separator());
-        mgr.add(new Separator());
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.MAP_INTO_CATEGORY_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.HIGHLIGHT_IN_AUT_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.SHOW_RESPONSIBLE_NODE_COMMAND_ID);
-        mgr.add(new Separator());
-        MenuManager submenuNew = new MenuManager(
-                Messages.ObjectMappingEditorCleanupMenu, CLEANUP_ID);
-        CommandHelper.createContributionPushItem(submenuNew,
-                RCPCommandIDs.OME_DELETE_UNUSED_COMPONENT_NAME_COMMAND_ID);
-        mgr.add(submenuNew);
     }
 
     /**
@@ -2130,30 +1835,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_selectionProvider.setSelectionProviderDelegate(
                 m_pageToSelectionProvider.get(newPageIndex));
         
-        switch (newPageIndex) {
-            case TREE_PAGE_IDX:
-            case SPLIT_PAGE_IDX:
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.CUT.getId(), m_cutTreeItemAction);
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.PASTE.getId(), m_pasteTreeItemAction);
-                break;
-            case TABLE_PAGE_IDX:
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.PASTE.getId(), null);
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.REFRESH.getId(), null);
-            default:
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.CUT.getId(), null);
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.PASTE.getId(), null);
-                getEditorSite().getActionBars().setGlobalActionHandler(
-                        ActionFactory.REFRESH.getId(), null);
-                break;
-        }
-
-        getEditorSite().getActionBars().updateActionBars();
     }
 
     /**
