@@ -114,6 +114,7 @@ public class Messages extends NLS {
     public static String CurrenActionNotAvailabelForSelectedToolkit;
     public static String DatabaseConnectionInvalidPreferenceString;
     public static String DatabaseConnectionEstablished;
+    public static String DatabaseProfileDoesNotExist;
     public static String DataEventDispatcherReopenProject;
     public static String DataSource;
     public static String DBEntryMissingAmbiguous;

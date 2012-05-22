@@ -209,6 +209,11 @@
         <command
             categoryId="org.eclipse.jubula.client.ui.commands"
             id="org.eclipse.jubula.client.ui.commands.SelectDatabase" name="%SelectDatabase">
+           <commandParameter
+                 id="org.eclipse.jubula.client.ui.selectDatabaseParameter"
+                 name="explicitSelection"
+                 optional="true">
+           </commandParameter>
         </command>
         <command
 			categoryId="org.eclipse.jubula.client.ui.commands"
