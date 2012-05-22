@@ -1570,8 +1570,13 @@
           style="push" />
         <separator name="JubulaProjectSeparator0" />
         <command
-          commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase"
-          style="push" />
+              commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase"
+              style="push">
+           <parameter
+                 name="org.eclipse.jubula.client.ui.selectDatabaseParameter"
+                 value="true">
+           </parameter>
+        </command>
         <separator
           name="JubulaProjectSeparator1"
           visible="true" />

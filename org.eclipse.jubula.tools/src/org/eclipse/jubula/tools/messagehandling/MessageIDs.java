@@ -148,6 +148,8 @@ public class MessageIDs {
     public static final Integer E_STORE_TESTRESULT = new Integer(2062);
     /** if sql exception occured */
     public static final Integer E_SQL_EXCEPTION = new Integer(2063);
+    /** if the database profile does not exits anymore */
+    public static final Integer E_DB_PROFILE_NOT_EXIST = new Integer(2064);
     
     // -- GENERAL ERROR IDs ------------------------------------------------
     /** if serilization exception */
@@ -820,6 +822,7 @@ public class MessageIDs {
         messageMap.put(E_DELETE_TESTRESULT, e, "ErrorMessage.DELETE_TESTRESULT", null); //$NON-NLS-1$
         messageMap.put(E_STORE_TESTRESULT, e, "ErrorMessage.STORE_TESTRESULT", null); //$NON-NLS-1$
         messageMap.put(E_SQL_EXCEPTION, e, "ErrorMessage.SQL_ERROR", null); //$NON-NLS-1$
+        messageMap.put(E_DB_PROFILE_NOT_EXIST, e, "ErrorMessage.DB_PROFILE_ERROR", null); //$NON-NLS-1$
     }
 
     /**

@@ -610,6 +610,18 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         }
         return null;
     }
+    
+    /**
+     * activates the given workbench part if an active page is available
+     * 
+     * @param part
+     *            the part to activate
+     */
+    public static void activate(IWorkbenchPart part) {
+        if (getActivePage() != null) {
+            getActivePage().activate(part);
+        }
+    }
 
     /**
      * @return Returns the connectionStatusIcon.

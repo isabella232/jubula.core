@@ -241,6 +241,21 @@ public interface Constants {
     /** Key for m_text value to be stored as a resource property */
     public static final String DATADIR_PATH_KEY = "DATADIR_PATH_KEY"; //$NON-NLS-1$
     
+    /** Key for automatically database connection function */
+    public static final String AUTOMATIC_DATABASE_CONNECTION_KEY = "AUTOMATIC_DATABASE_CONNECTION_KEY"; //$NON-NLS-1$
+    
+    /** Key for the secure storage plugin id */
+    public static final String SECURE_STORAGE_PLUGIN_ID = "org.eclipse.equinox.security.ui.storage"; //$NON-NLS-1$
+    
+    /** Key for secure storage category */
+    public static final String ORG_ECLIPSE_JUBULA_SECURE_KEY = "org.eclipse.jubula.DatabaseProfile"; //$NON-NLS-1$
+    
+    /** Key which associate the secure storage value for the database username */
+    public static final String SECURE_STORAGE_USERNAME_KEY = "Username"; //$NON-NLS-1$
+    
+    /** Key which associate the secure storage value for the database password */
+    public static final String SECURE_STORAGE_PASSWORD_KEY = "Password"; //$NON-NLS-1$
+    
     /** Key for m_text value to be stored as a resource property */
     public static final String PERSP_CHANGE_KEY = "PERSP_CHANGE_KEY"; //$NON-NLS-1$
     /** Key for m_text value to be stored as a resource property */
@@ -249,6 +264,8 @@ public interface Constants {
     public static final String USER_KEY = "USER_KEY"; //$NON-NLS-1$
     /** Key for m_text value to be stored as a resource property */
     public static final String SCHEMA_KEY = "SCHEMA_KEY"; //$NON-NLS-1$
+    /** Key for save profile function */
+    public static final String SAVE_PROFILE_NAMES_KEY = "SAVE_PROFILE_NAMES_KEY"; //$NON-NLS-1$
     /** Key for m_text value to be stored as a resource property */
     public static final String START_BROWSE_PATH_KEY = "START_BROWSE_PATH_KEY"; //$NON-NLS-1$
     /** Key for m_text value to be stored as a resource property */
