@@ -15,6 +15,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -28,6 +29,7 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.businessprocess.SecurePreferenceBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
@@ -39,6 +41,8 @@ import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -46,9 +50,11 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 
 
 /**
@@ -79,8 +85,6 @@ public class DBLoginDialog extends TitleAreaDialog {
     /** horizontal span = 2 */
     private static final int HORIZONTAL_SPAN = 2;
     
-    /** The message m_text */
-    private String m_message = Messages.DBLoginDialogMessage;
     
     /** the username m_text field */
     private Text m_userText;
@@ -92,6 +96,14 @@ public class DBLoginDialog extends TitleAreaDialog {
     private Label m_pwdLabel;
     /** the connection combobox viewer */
     private ComboViewer m_connectionComboViewer;
+    /** save database profile composite*/
+    private Composite m_saveProfileComp;
+    /** save database profile check box */
+    private Button m_profileSave;
+    /** automatic database connection check box */
+    private Button m_automConn; 
+    /** save check box description */
+    private Link m_secureStorageLink;
     
     /** the username */
     private String m_user;
@@ -104,7 +116,8 @@ public class DBLoginDialog extends TitleAreaDialog {
     private List<DatabaseConnection> m_availableConnections;
     
     /** true, if selected db is embedded db */
-    private boolean m_isEmbeddedOrNoSelection = false; 
+    private boolean m_isEmbeddedOrNoSelection = false;
+
 
     /**
      * @param parentShell The parent Shell.
@@ -112,6 +125,8 @@ public class DBLoginDialog extends TitleAreaDialog {
     public DBLoginDialog(Shell parentShell) {
         super(parentShell);
     }
+    
+    
     /**
      * {@inheritDoc}
      */
@@ -119,7 +134,7 @@ public class DBLoginDialog extends TitleAreaDialog {
         m_availableConnections = 
             DatabaseConnectionConverter.computeAvailableConnections();
         
-        setMessage(m_message);
+        setMessage(Messages.DBLoginDialogMessage);
         setTitle(Messages.DBLoginDialogTitle);
         setTitleImage(IconConstants.DB_LOGIN_DIALOG_IMAGE);
         getShell().setText(Messages.DBLoginDialogShell);
@@ -148,9 +163,13 @@ public class DBLoginDialog extends TitleAreaDialog {
         createSchemaCombobox(area);
         createUserTextField(area);
         createPasswordTextField(area);
+        createSavePasswordCheckbox(area);
+        createAutomaticConnectionCheckbox(area);
         fillConnectionCombobox();
+        fillUserNameAndPasswordField();
+        m_automConn.setEnabled(m_profileSave.getSelection());
         
-        setUserAndPwdVisible(!m_isEmbeddedOrNoSelection);
+        setUserAndPwdAndPwdCheckboxVisible(!m_isEmbeddedOrNoSelection);
         
         LayoutUtil.createSeparator(parent);
         
@@ -165,7 +184,7 @@ public class DBLoginDialog extends TitleAreaDialog {
      * {@inheritDoc}
      */
     public int open() {
-        setMessage(m_message);
+        setMessage(Messages.DBLoginDialogMessage);
         return super.open();
     }
     
@@ -297,18 +316,119 @@ public class DBLoginDialog extends TitleAreaDialog {
         checkEmbeddedDbOrNoSchemaSelected(
                 (DatabaseConnection)sel.getFirstElement());
         
-        m_connectionComboViewer.addSelectionChangedListener(
-                new ISelectionChangedListener() {
-            
+        m_connectionComboViewer
+                .addSelectionChangedListener(new ISelectionChangedListener() {
+
                     public void selectionChanged(SelectionChangedEvent event) {
-                        IStructuredSelection csel = 
-                            (IStructuredSelection)event.getSelection();
+                        IStructuredSelection csel = (IStructuredSelection) event
+                                .getSelection();
                         selectSchemaCbxAction();
-                        checkEmbeddedDbOrNoSchemaSelected(
-                                (DatabaseConnection)csel.getFirstElement());
-                        setUserAndPwdVisible(!m_isEmbeddedOrNoSelection);
+                        checkEmbeddedDbOrNoSchemaSelected((DatabaseConnection) 
+                                csel.getFirstElement());
+                        setUserAndPwdAndPwdCheckboxVisible(
+                                !m_isEmbeddedOrNoSelection);
                     }
                 });
+    }
+    
+    /**
+     * Creates the CheckBox to decide saving database password
+     * @param area The parent composite
+     */
+    private void createSavePasswordCheckbox(Composite area) {
+        new Label(area, SWT.NONE).setLayoutData(new GridData(SWT.FILL,
+                SWT.CENTER, false, false,
+                HORIZONTAL_SPAN + 1, 1));
+        new Label(area, SWT.NONE).setText(StringConstants.EMPTY);
+        m_saveProfileComp = new Composite(area, SWT.NONE);
+        m_saveProfileComp.setLayout(RowLayoutFactory.fillDefaults()
+                .spacing(0).create());
+        m_profileSave = new Button(m_saveProfileComp, SWT.CHECK);
+        m_profileSave.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                m_automConn.setEnabled(m_profileSave.getSelection());
+            }
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // do nothing
+            }
+        });
+        m_secureStorageLink = new Link(m_saveProfileComp, SWT.NONE);
+        m_secureStorageLink.setText(Messages.DBLoginDialogSaveDBPassword);
+        m_secureStorageLink.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                final String prefPageID = 
+                        Constants.SECURE_STORAGE_PLUGIN_ID;
+                PreferencesUtil.createPreferenceDialogOn(
+                        Plugin.getDefault().getWorkbench().getDisplay()
+                        .getActiveShell(), prefPageID,
+                        new String[] { prefPageID }, null,
+                        PreferencesUtil.OPTION_FILTER_LOCKED).open();
+            }
+            
+            public void widgetDefaultSelected(SelectionEvent e) {
+                /** do nothing */
+            }
+        });
+    }
+    /**
+     * Fills the username and the password field
+     */
+    private void fillUserNameAndPasswordField() {
+        SecurePreferenceBP spBP = SecurePreferenceBP.getInstance();
+        IStructuredSelection sel = 
+                (IStructuredSelection) m_connectionComboViewer
+                .getSelection();
+        DatabaseConnection conn = (DatabaseConnection)sel.getFirstElement();
+        if (conn != null) {
+            String profileName = conn.getName();
+            m_profileSave.setSelection(spBP
+                    .isSaveCredentialsActive(profileName));
+            if (m_profileSave.getSelection()) {
+                
+                String userName = spBP.getUserName(profileName);
+                String databasePassword = spBP.getPassword(profileName);
+                
+                m_userText.setText(userName);
+                m_pwdText.setText(databasePassword);
+            } else {
+                String userName = spBP.getUserName(profileName);
+                
+                m_userText.setText(userName);
+                m_pwdText.setText(StringConstants.EMPTY);
+                
+            }
+            
+        }
+    }
+
+    
+    /**
+     * saves the database profile with username and encrypted password
+     */
+    private void saveDatabaseProfile() {
+        SecurePreferenceBP spBP = SecurePreferenceBP.getInstance();
+        IStructuredSelection sel = 
+                (IStructuredSelection) m_connectionComboViewer
+                .getSelection();
+        DatabaseConnection conn = (DatabaseConnection)sel.getFirstElement();
+        String profileName = conn.getName().toString();
+        
+        String userName = m_userText.getText();
+        
+        spBP.saveProfile(profileName, userName);
+    }
+    
+    /**
+     * Creates the check box to decide automatic database connection or not
+     * @param area The parent composite
+     */
+    private void createAutomaticConnectionCheckbox(Composite area) {
+        new Label(area, SWT.NONE).setLayoutData(new GridData(SWT.FILL,
+                SWT.CENTER, false, false,
+                HORIZONTAL_SPAN + 1, 1));
+        new Label(area, SWT.NONE).setText(StringConstants.EMPTY);
+        m_automConn = new Button(area, SWT.CHECK);
+        m_automConn.setText(Messages.DBLoginDialogAutoDbConnection);
     }
     
     /**
@@ -340,9 +460,8 @@ public class DBLoginDialog extends TitleAreaDialog {
             m_pwdText.setText(password);
             enableOKButton(true);            
         } else {
-            m_userText.setText(
-                    Plugin.getDefault().getPreferenceStore().getString(
-                            Constants.USER_KEY));
+            fillUserNameAndPasswordField();
+            m_automConn.setEnabled(m_profileSave.getSelection());
             m_isEmbeddedOrNoSelection = false;
         }
     }
@@ -351,11 +470,14 @@ public class DBLoginDialog extends TitleAreaDialog {
      * set visible state of username and pwd 
      * @param visible true if user and pw should be visible, false otherwise
      */
-    private void setUserAndPwdVisible(boolean visible) {
+    private void setUserAndPwdAndPwdCheckboxVisible(boolean visible) {
         m_userText.setVisible(visible);
         m_userLabel.setVisible(visible);
         m_pwdText.setVisible(visible);
         m_pwdLabel.setVisible(visible);
+        m_profileSave.setVisible(visible);
+        m_secureStorageLink.setVisible(visible);
+        m_automConn.setVisible(visible);
     }
     
     /** 
@@ -399,7 +521,7 @@ public class DBLoginDialog extends TitleAreaDialog {
             isCorrect = false;
         }
         if (isCorrect) {
-            setMessage(m_message); 
+            setMessage(Messages.DBLoginDialogMessage); 
         } else {
             setErrorMessage(Messages.DBLoginDialogWrongPwd); 
         }
@@ -446,6 +568,22 @@ public class DBLoginDialog extends TitleAreaDialog {
         IPreferenceStore store = Plugin.getDefault().getPreferenceStore();
         store.setValue(Constants.USER_KEY, m_user);
         store.setValue(Constants.SCHEMA_KEY, m_dbConn.getName());
+        saveDatabaseProfile();
+        SecurePreferenceBP spBP = SecurePreferenceBP.getInstance();
+        if (m_profileSave.getSelection()) {
+            spBP.setSaveCredentialStatus(m_dbConn.getName(), true);
+            String databasePassword = m_pwdText.getText();
+            spBP.saveProfilePassword(m_dbConn.getName(), databasePassword);
+            if (m_automConn.getSelection()) {
+                store.setValue(Constants.AUTOMATIC_DATABASE_CONNECTION_KEY,
+                        m_dbConn.getName());
+            } else {
+                store.setToDefault(Constants.AUTOMATIC_DATABASE_CONNECTION_KEY);
+            }
+        } else {
+            spBP.setSaveCredentialStatus(m_dbConn.getName(), false);
+            spBP.removePassword(m_dbConn.getName());
+        }
         setReturnCode(OK);
         close();
     }
@@ -481,5 +619,11 @@ public class DBLoginDialog extends TitleAreaDialog {
      */
     public DatabaseConnection getDatabaseConnection() {
         return m_dbConn;
+    }
+    /**
+     * @return Returns the schema combo viewer
+     */
+    public ComboViewer getConnectionComboViewer() {
+        return m_connectionComboViewer;
     }
 }

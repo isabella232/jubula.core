@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
@@ -28,6 +29,9 @@ import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.core.preferences.database.H2ConnectionInfo;
+import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.businessprocess.SecurePreferenceBP;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.dialogs.DBLoginDialog;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -47,28 +51,33 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
     /** the logger */
     private static Logger log = 
         LoggerFactory.getLogger(AbstractSelectDatabaseHandler.class);
+    /** the "select database ..." command parameter */
+    private static final  String DB_COMMAND_PARAMETER =
+            "org.eclipse.jubula.client.ui.selectDatabaseParameter";
     
     /**
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
+        String explicitSelectionValue = event.getParameter(
+                DB_COMMAND_PARAMETER);
+        boolean explicitSelection = Boolean.valueOf(explicitSelectionValue);
         IStatus returnStatus = Status.CANCEL_STATUS;
         boolean performLogin = false;
         String userName = StringConstants.EMPTY;
         String pwd = StringConstants.EMPTY;
         DatabaseConnectionInfo dbInfo = null;
+        
+        Credential credentials = new Credential(DatabaseConnectionConverter
+                .computeAvailableConnections());
 
-        List<DatabaseConnection> availableConnections = 
-            DatabaseConnectionConverter
-                .computeAvailableConnections();
-        if (availableConnections.size() == 1
-                && availableConnections.get(0).getConnectionInfo() 
-                    instanceof H2ConnectionInfo) {
-            dbInfo = availableConnections.get(0).getConnectionInfo();
-            userName = dbInfo.getProperty(PersistenceUnitProperties.JDBC_USER);
-            pwd = dbInfo.getProperty(PersistenceUnitProperties.JDBC_PASSWORD);
+        if (credentials.checkH2DatabaseConnection()) {
+            credentials.setH2DatabaseCredentials();
+            dbInfo = credentials.getDatabaseInfo();
+            userName = credentials.getDBusername();
+            pwd = credentials.getDBpassword();
             performLogin = true;
-        } else {
+        } else if (explicitSelection || !credentials.checkAutoDbConnection()) {
             DBLoginDialog dialog = new DBLoginDialog(getActiveShell());
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
@@ -79,8 +88,13 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
                 dbInfo = dialog.getDatabaseConnection().getConnectionInfo();
                 performLogin = true;
             }
+        } else if (credentials.checkAutoDbConnection()) {
+            credentials.setAutoConnCredentials();
+            dbInfo = credentials.getDatabaseInfo();
+            userName = credentials.getDBusername();
+            pwd = credentials.getDBpassword();
+            performLogin = true;
         }
-
         if (performLogin) {
             try {
                 returnStatus = connectToDatabase(userName, pwd, dbInfo);
@@ -88,12 +102,135 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
                 log.error(DebugConstants.ERROR, e);
             }
         }
-        
+        while (performLogin && returnStatus == null) {
+            returnStatus = createLoginDialogAgain();
+        }
         Persistor.setUser(null);
         Persistor.setPw(null);
         return returnStatus;
     }
+    
+    /**
+     * 
+     * @author BREDEX GmbH
+     * @created 24.04.2012
+     *
+     */
+    private static class Credential {
+        /** the available database connections */
+        private List<DatabaseConnection> m_availableDbConnections;
+        
+        /** database connection type */
+        private DatabaseConnectionInfo m_dbInfo;
+        
+        /** the database user name */
+        private String m_userName;
 
+        /** the database password */
+        private String m_pwd;
+
+        /**
+         * the inner class constructor
+         * 
+         * @param connections list of the available database
+         *        connections
+         */
+        private Credential(List<DatabaseConnection> connections) {
+            m_availableDbConnections = connections;
+        }
+        
+        /**
+         * Checks if only an H2 database connection exists
+         * 
+         * @return true if only an H2 database connection
+         * exists and false otherwise
+         */
+        private boolean checkH2DatabaseConnection() {
+            boolean h2DB = false;
+            if (m_availableDbConnections.size() == 1
+                && m_availableDbConnections.get(0).getConnectionInfo() 
+                    instanceof H2ConnectionInfo) {
+                h2DB = true;
+            }
+            return h2DB;
+        }
+        
+        /**
+         * sets the database type, user name and password for
+         * the H2 database connection
+         */
+        private void setH2DatabaseCredentials() {
+            m_dbInfo = m_availableDbConnections.get(0).getConnectionInfo();
+            m_userName = m_dbInfo.getProperty(
+                    PersistenceUnitProperties.JDBC_USER);
+            m_pwd = m_dbInfo.getProperty(
+                    PersistenceUnitProperties.JDBC_PASSWORD);
+            
+        }
+        
+        /**
+         * Checks if automatic database login is active
+         * 
+         * @return true if active and false otherwise
+         */
+        private boolean checkAutoDbConnection() {
+            boolean autoConn = false;
+            IPreferenceStore store = Plugin.getDefault().getPreferenceStore();
+            if (!StringConstants.EMPTY.equals(store
+                    .getString(Constants.AUTOMATIC_DATABASE_CONNECTION_KEY))) {
+                autoConn = true;
+            }
+            return autoConn;
+        }
+        
+        /**
+         * Sets the database type, user name and password for the automatic
+         * database connection
+         */
+        private void setAutoConnCredentials() {
+            IPreferenceStore store = Plugin.getDefault().getPreferenceStore();
+            for (DatabaseConnection currentConnection 
+                    : m_availableDbConnections) {
+                String profileName = currentConnection.getName();
+                if (profileName.equals(store
+                        .getString(Constants
+                                .AUTOMATIC_DATABASE_CONNECTION_KEY))) {
+                    m_dbInfo = currentConnection.getConnectionInfo();
+                    SecurePreferenceBP spBP = SecurePreferenceBP.getInstance();
+                    m_userName = spBP.getUserName(profileName);
+                    m_pwd = spBP.getPassword(profileName);
+                }
+            }
+        }
+        
+        /**
+         * Returns the database informations
+         * 
+         * @return the database connection type
+         */
+        private DatabaseConnectionInfo getDatabaseInfo() {
+            return m_dbInfo;
+        }
+        
+        /**
+         * Returns the database user name
+         * 
+         * @return the database user name
+         */
+        private String getDBusername() {
+            return m_userName;
+        }
+        
+        /**
+         * Returns the database password
+         * 
+         * @return the database password
+         */
+        private String getDBpassword() {
+            return m_pwd;
+        }
+    }
+        
     /**
      * 
      * @param username
@@ -134,6 +271,11 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
                                     Messages.SelectDatabaseConnectSuccessful);
                                 returnStatus.set(Status.OK_STATUS);
                             } else {
+                                IPreferenceStore store = Plugin.getDefault().
+                                        getPreferenceStore();
+                                store.setToDefault(Constants.
+                                        AUTOMATIC_DATABASE_CONNECTION_KEY);
+                                returnStatus.set(null);
                                 writeLineToConsole(
                                     Messages.SelectDatabaseConnectFailed);
                             }
@@ -147,6 +289,42 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
         }
 
         return returnStatus.get();
+    }
+    
+    /**
+     * Creates a new database login dialog when database
+     * connection failed
+     * 
+     * @return returns the status OK when database connection
+     *         was successful and null otherwise
+     */
+    private IStatus createLoginDialogAgain() {
+        IStatus returnStatus = Status.CANCEL_STATUS;
+        boolean performLogin = false;
+        String userName = StringConstants.EMPTY;
+        String pwd = StringConstants.EMPTY;
+        DatabaseConnectionInfo dbInfo = null;
+        
+        DBLoginDialog dialog = new DBLoginDialog(getActiveShell());
+        dialog.create();
+        dialog.setErrorMessage(Messages.DatabaseConnectionErrorMessage);
+        dialog.getErrorMessage();
+        DialogUtils.setWidgetNameForModalDialog(dialog);
+        dialog.open();
+        if (dialog.getReturnCode() == Window.OK) {
+            userName = dialog.getUser();
+            pwd = dialog.getPwd();
+            dbInfo = dialog.getDatabaseConnection().getConnectionInfo();
+            performLogin = true;
+        }
+        if (performLogin) {
+            try {
+                returnStatus = connectToDatabase(userName, pwd, dbInfo);
+            } catch (InterruptedException e) {
+                log.error(DebugConstants.ERROR, e);
+            }
+        }
+        return returnStatus;
     }
     
     /**

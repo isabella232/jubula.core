@@ -272,32 +272,39 @@ public class Persistor {
     private void buildSessionFactoryWithLoginData(String userName, String pwd,
         String url, IProgressMonitor monitor) throws PersistenceException, 
         PMDatabaseConfException, JBException, DatabaseVersionConflictException {
-        monitor.beginTask(
-                NLS.bind(Messages.ConnectingToDatabase, new Object[] {
-                    userName, dbConnectionInfo.getConnectionUrl() }),
-                IProgressMonitor.UNKNOWN);
-        m_sf = createEntityManagerFactory(dbConnectionInfo, userName, pwd, url);
+        if (userName != null) {
+            monitor.beginTask(
+                    NLS.bind(Messages.ConnectingToDatabase, new Object[] {
+                        userName, dbConnectionInfo.
+                            getConnectionUrl() }),
+                    IProgressMonitor.UNKNOWN);
+            m_sf = createEntityManagerFactory(dbConnectionInfo, userName, pwd,
+                    url);
 
-        EntityManager em = null;
-        try {
-            em = m_sf.createEntityManager();
+            EntityManager em = null;
             try {
-                validateDBVersion(em);
-                monitor.subTask(Messages.DatabaseConnectionEstablished);
-            } catch (AmbiguousDatabaseVersionException e) {
-                throw new PMDatabaseConfException(
-                        Messages.DBVersionProblem + StringConstants.DOT, 
-                        MessageIDs.E_NOT_CHECKABLE_DB_VERSION);
-            }
-        } catch (PersistenceException e) {
+                em = m_sf.createEntityManager();
+                try {
+                    validateDBVersion(em);
+                    monitor.subTask(Messages.DatabaseConnectionEstablished);
+                } catch (AmbiguousDatabaseVersionException e) {
+                    throw new PMDatabaseConfException(Messages.DBVersionProblem
+                            + StringConstants.DOT,
+                            MessageIDs.E_NOT_CHECKABLE_DB_VERSION);
+                }
+            } catch (PersistenceException e) {
 
-            log.error(Messages.NoOrWrongUsernameOrPassword, e);
-            throw new JBException(e.getMessage(), 
-                    MessageIDs.E_NO_DB_CONNECTION);
-        } finally {
-            if (em != null) {
-                em.close();
+                log.error(Messages.NoOrWrongUsernameOrPassword, e);
+                throw new JBException(e.getMessage(),
+                        MessageIDs.E_NO_DB_CONNECTION);
+            } finally {
+                if (em != null) {
+                    em.close();
+                }
             }
+        } else {
+            throw new JBException(Messages.DatabaseProfileDoesNotExist, 
+                    MessageIDs.E_DB_PROFILE_NOT_EXIST);
         }
     }
 
