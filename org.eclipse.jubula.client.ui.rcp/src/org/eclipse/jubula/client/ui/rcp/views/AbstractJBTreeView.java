@@ -276,10 +276,10 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         createContextMenu(contextMenu);
         contextMenu.add(new GroupMarker(
                 IWorkbenchActionConstants.MB_ADDITIONS));
-        getSite().registerContextMenu(contextMenu, getTreeViewer());
         Control control = getTreeViewer().getControl();
         Menu menu = contextMenu.createContextMenu(control);
         control.setMenu(menu);
+        getSite().registerContextMenu(contextMenu, getTreeViewer());
     }
     
     /**
