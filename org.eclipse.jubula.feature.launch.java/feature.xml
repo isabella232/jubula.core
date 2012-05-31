@@ -33,7 +33,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
 
    <requires>
       <import feature="org.eclipse.jdt" version="3.6.0" match="compatible"/>
-      <import feature="org.eclipse.jubula.feature" version="1.2.0.qualifier"/>
+      <import feature="org.eclipse.jubula.feature" version="1.2.1" match="compatible"/>
    </requires>
 
    <plugin
