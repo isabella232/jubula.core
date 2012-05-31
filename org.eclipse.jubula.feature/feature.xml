@@ -191,7 +191,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.apache.commons.beanutils"
          download-size="0"
          install-size="0"
-         version="1.7.0"
+         version="1.8.0"
          unpack="false"/>
 
    <plugin
@@ -411,4 +411,5 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 </feature>
