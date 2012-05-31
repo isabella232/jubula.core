@@ -26,20 +26,30 @@ Enter \bxshell{\app{}} into the shell.
 
 \subsection{Choosing a workspace}
 \begin{enumerate}
-\item When you start the \ite{}, a dialog appears asking you to choose a workspace. 
+\item When you start the \ite{}, a dialog appears asking you to choose a workspace (\bxfigref{WorkspaceChooser}).
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{Tasks/Start/PS/workspacechooser}
+\caption{Workspace chooser}
+\label{WorkspaceChooser}
+\end{center}
+\end{figure}
+
 \bxtipp{The workspace is where your preferences are saved.}
 \item Select the default workspace offered, or locate new one. 
+\item You can choose to always select this workspace using the checkbox.
+\bxtipp{You can see and change your workspace options in the preferences \bxpref{TasksPrefsWorkspace}.}
  \item Select \bxcaption{OK}.
  \end{enumerate}
 
+\subsection{Restarting the \ite{}}
+You can restart the \ite{} with the current workspace using:\\
+\bxmenu{File}{Restart}{}
 
-\subsubsection{Deleting the list of used workspaces}
-To remove workspaces from the drop-down box in the workspaces dialog:
-\begin{enumerate}
-\item Go to: \\
-\verb+%USERPROFILE%\user\  +
-\item In the \app{} folder, there is a file called \bxname{recentWorkspaces.xml} where the list of used workspaces can be deleted. 
-\end{enumerate}
+You can also restart the \ite{} with a new workspace by selecting:\\
+\bxmenu{File}{Switch Workspace}{}
+
 
 
 
