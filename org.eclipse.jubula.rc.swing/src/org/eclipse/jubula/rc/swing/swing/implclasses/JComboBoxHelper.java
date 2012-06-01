@@ -352,8 +352,31 @@ public class JComboBoxHelper {
      * @return the String from the Cell Renderer
      */
     public String getText() {
-        JComboBox comboBox = ((JComboBox) m_implClass.getComponent());
-        return m_implClass.getRenderedText(
-                getComboBoxEditorComponent(comboBox), true);
+        final JComboBox comboBox = ((JComboBox) m_implClass.getComponent());
+        String comboBoxText;
+        if (comboBox.isEditable()) {
+            comboBoxText = m_implClass.getRenderedText(
+                    getComboBoxEditorComponent(comboBox), true);
+        } else {
+            final int selIndex = comboBox.getSelectedIndex();
+            if (selIndex == -1) {
+                comboBoxText = String.valueOf(
+                        comboBox.getSelectedItem());
+            } else {
+                final JList jlist = new JList(comboBox.getModel());
+                Object o = m_eventThreadQueuer.invokeAndWait(
+                        "getText", new IRunnable() { //$NON-NLS-1$
+                            public Object run() {
+                                Component disp = comboBox.getRenderer()
+                                    .getListCellRendererComponent(jlist,
+                                        jlist.getModel().getElementAt(selIndex),
+                                        selIndex, true, comboBox.hasFocus());
+                                return m_implClass.getRenderedText(disp, false);
+                            }
+                        });
+                comboBoxText = String.valueOf(o);
+            }
+        }
+        return comboBoxText;
     }
 }
