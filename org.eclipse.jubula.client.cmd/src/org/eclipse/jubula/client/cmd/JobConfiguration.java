@@ -550,7 +550,8 @@ public class JobConfiguration {
      *         <code>null</code> if no connection information available for the
      *         given dbURL.
      */
-    private DatabaseConnectionInfo getConnectionInfo(final String dbURL) {
+    private static DatabaseConnectionInfo getConnectionInfo(
+        final String dbURL) {
         DatabaseConnectionInfo connectionInfo = null;
         if (dbURL.startsWith(OracleConnectionInfo.JDBC_PRE)) {
             connectionInfo = new OracleConnectionInfo() {
@@ -839,7 +840,11 @@ public class JobConfiguration {
                     job.setResultDir(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DBURL)) {
-                    job.setDb(arg0.getValue());
+                    String dbURL = arg0.getValue();
+                    job.setDb(dbURL);
+                    DatabaseConnectionInfo connectionInfo =
+                            getConnectionInfo(dbURL);
+                    job.setDbscheme(connectionInfo);
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DB_SCHEME)) {
                     job.setDbConnectionName(arg0.getValue());
