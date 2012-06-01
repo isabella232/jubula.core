@@ -13,8 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.views;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
@@ -85,16 +83,11 @@ public class ComponentNameBrowser extends ViewPart implements
             new ComponentNameBrowserContentProvider();
 
         setTreeViewer(ft.getViewer());
-        ColumnViewerToolTipSupport.enableFor(getTreeViewer());
 
         getTreeViewer().setContentProvider(cp);
         getTreeViewer().setComparer(new UIIdentitiyElementComparer());
 
-        DecoratingLabelProvider lp = new DecoratingLabelProvider(cp, Plugin
-                .getDefault().getWorkbench().getDecoratorManager()
-                .getLabelDecorator());
-
-        getTreeViewer().setLabelProvider(lp);
+        getTreeViewer().setLabelProvider(cp);
         
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
