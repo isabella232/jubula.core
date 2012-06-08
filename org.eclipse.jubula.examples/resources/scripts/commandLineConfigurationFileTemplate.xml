@@ -9,7 +9,7 @@
     <project>YourProjectName</project>
     <version>1.0</version>
     <autconfig>YourAUTConfiguration</autconfig>
-    <dbscheme>YourDatabaseSchemeName</dbscheme>
+    <dburl>YourDatabaseURL (visible via the preferences)</dburl>
     <dbuser>YourDatabaseUsername</dbuser>
     <dbpw>YourDatabasePassword</dbpw>
     <server>YourAUTAgentHostname</server>
