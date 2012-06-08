@@ -48,6 +48,8 @@ public abstract class CommandConstants {
     public static final String HTML_TOOLKIT = "com.bredexsw.guidancer.HtmlToolkitPlugin"; //$NON-NLS-1$
     /** constant: "Rap" */
     public static final String RAP_TOOLKIT = "ui.toolkit.aria.RapToolkitPlugin"; //$NON-NLS-1$
+    /** constant: ".NET" */
+    public static final String DOTNET_TOOLKIT = "ui.toolkit.DotnetToolkitPlugin"; //$NON-NLS-1$
     /** ID of the SLF4J API bundle */
     public static final String SLF4J_API_BUNDLE_ID = "org.slf4j.api"; //$NON-NLS-1$
     /** ID of the SLF4J JCL bundle */
@@ -94,6 +96,8 @@ public abstract class CommandConstants {
     public static final String ACTIVATE_SWING_APPLICATION_COMMAND = "org.eclipse.jubula.rc.swing.commands.ActivateApplicationCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand" */
     public static final String ACTIVATE_SWT_APPLICATION_COMMAND = "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand" */
+    public static final String ACTIVATE_DOTNET_APPLICATION_COMMAND = "org.eclipse.jubula.rc.dotnet.commands.ActivateApplicationCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.AUTHighlightComponentCommand" */
     public static final String AUT_HIGHLIGHT_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTHighlightComponentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.AUTStartCommand" */
@@ -104,6 +108,8 @@ public abstract class CommandConstants {
     public static final String SWT_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.swt.commands.CAPTestCommand"; //$NON-NLS-1$
     /** constant: "com.bredexsw.jubula.rc.html.commands.CAPTestCommand" */
     public static final String HTML_CAP_TEST_COMMAND = "com.bredexsw.jubula.rc.html.commands.CAPTestCommand"; //$NON-NLS-1$
+    /** constant: "com.bredexsw.jubula.rc.html.commands.CAPTestCommand" */
+    public static final String DOTNET_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.dotnet.commands.CAPTestCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand" */
     public static final String CHANGE_AUT_MODE_COMMAND = "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swing.commands.ChangeAUTModeCommand" */
@@ -112,6 +118,8 @@ public abstract class CommandConstants {
     public static final String SWT_SEND_COMPONENTS_COMMAND = "org.eclipse.jubula.rc.swt.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
     /** constant: "com.bredexsw.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand" */
     public static final String HTML_SEND_COMPONENTS_COMMAND = "com.bredexsw.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.rc.dotnet.message.SendDotNetAUTListOfSupportedComponentsMessage" */
+    public static final String DOTNET_SEND_COMPONENTS_COMMAND = "org.eclipse.jubula.rc.dotnet.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand" */
     public static final String HIGHLIGHT_COMPONENT_COMMAND = "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.AUTModeChangedCommand" */

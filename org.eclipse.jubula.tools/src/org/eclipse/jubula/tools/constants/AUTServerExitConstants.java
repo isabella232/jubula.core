@@ -30,6 +30,9 @@ public class AUTServerExitConstants {
     public static final int EXIT_AUT_NOT_FOUND = 3;
     /** exit state when the aut could not loaded */
     public static final int EXIT_AUT_WRONG_CLASS_VERSION = 4;
+    /** exit state when the process was already closed **/
+    public static final int EXIT_AUT_STOP_FAILED = 5;
+    
     /** exit state in case of an UnknownHostException during connecting the GUIdancerClient */
     public static final int EXIT_UNKNOWN_GUIDANCERCLIENT = 10;
     
