@@ -81,18 +81,7 @@ public class MultipleTCBTracker implements IPartListener2 {
     public void partClosed(IWorkbenchPartReference partRef) {
         if (Constants.TC_BROWSER_ID.equals(partRef.getId())) {
             m_tcb.remove(partRef);
-            int count = m_tcb.size();
-            if (partRef.getPartName().startsWith(
-                    Messages.TestCaseBrowserMainPrefix)) {
-                if (count > 0) {
-                    setMainTCB(getOpenTCBs().get(0));
-                } else {
-                    m_mainTCB = null;
-                }
-            }
-            if (count == 1) {
-                getMainTCB().setViewTitle(Messages.TestCaseBrowser);
-            }
+            setMainTCB(getOpenTCBs().size() > 0 ? getOpenTCBs().get(0) : null);
             fireStateChanged();
         }
     }
@@ -106,7 +95,7 @@ public class MultipleTCBTracker implements IPartListener2 {
     public void partOpened(IWorkbenchPartReference partRef) {
         if (Constants.TC_BROWSER_ID.equals(partRef.getId())) {
             m_tcb.add(partRef);
-            if (m_tcb.size() > 1) {
+            if (getOpenTCBs().size() > 0) {
                 setMainTCB(getOpenTCBs().get(0));
             }
             fireStateChanged();
@@ -156,15 +145,34 @@ public class MultipleTCBTracker implements IPartListener2 {
 
     /**
      * @param mainTCB
-     *            the mainTCB to set
+     *            the mainTCB to set; may be <code>null</code>.
      */
     public void setMainTCB(TestCaseBrowser mainTCB) {
-        if (m_mainTCB != null) {
-            m_mainTCB.setViewTitle(Messages.TestCaseBrowser);
-        }
-        mainTCB.setViewTitle(Messages.TestCaseBrowserMainPrefix
-                + Messages.TestCaseBrowser);
+        TestCaseBrowser oldMainTCB = m_mainTCB;
+        TestCaseBrowser newMainTCB = mainTCB;
+
         m_mainTCB = mainTCB;
+        
+        if (newMainTCB == null) {
+            return;
+        }
+
+        final String tcbTitle = Messages.TestCaseBrowser;
+        final String mainTcbTitle = Messages.TestCaseBrowserMainPrefix
+                + tcbTitle;
+        
+        // reset old name
+        if (oldMainTCB != null) {
+            oldMainTCB.setViewTitle(tcbTitle);
+        }
+        
+        // set new TCB name
+        final int tcbCount = getOpenTCBs().size();
+        if (tcbCount == 1) {
+            newMainTCB.setViewTitle(tcbTitle);
+        } else if (tcbCount > 1) {
+            newMainTCB.setViewTitle(mainTcbTitle);
+        }
     }
     
     /**
