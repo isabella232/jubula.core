@@ -55,10 +55,14 @@
                   &e.g. \emph{-data ''C:/Users/Test''}\\
                   &The \app{} workspace with the preference\\
                   &settings for the \gddb{} connection\\ 
+                 &This is optional if you enter the \bxname{-dburl}\\
+                 &parameter \\
                 \hline
                 Database scheme
                 & \bxshell{-dbscheme <scheme>}\\
 		&e.g. \emph{-dbscheme ''Oracle''}\\
+                 &This is optional if you enter the \bxname{-dburl}\\
+                 &parameter \\
                 \hline
 		Database username
                   & \bxshell{-dbuser <username>}\\
@@ -76,6 +80,9 @@
                   & \bxshell{-dburl <URL>}\\
                   &e.g. \emph{-dburl ''db.example.de''}\\
 		&If no URL is given, the default will be used.\\
+                 &If you enter this, you do not \\
+                &need to enter the \bxname{-data} or \bxname{-dbscheme} parameter\\
+                &You can find the dburl in the \gddb{} preferences\\
 		\hline
 	\end{tabular}
 	\caption{Parameters for the dbtool}
