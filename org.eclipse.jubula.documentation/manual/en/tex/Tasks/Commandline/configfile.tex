@@ -18,7 +18,7 @@
 \index{Test Executor}
 \begin{enumerate}
 \item You can also enter test executor parameters in an XML configuration file.
-\bxtipp{The workspace parameter cannot currently be entered in the configuration file for the test executor, it must be entered directly into the command line interface.}
+\bxtipp{The workspace parameter (\bxname{-data}) cannot currently be entered in the configuration file for the test executor, it must be entered directly into the command line interface.}
 \item This saves you typing in the same details each time you start a test.
 \item To enter the configuration file path, enter the following command:\\
 \bxshell{-c <path to file>}
@@ -40,6 +40,8 @@ For example:
            OR
     <autid>Adder</autid>
     <dbscheme>embedded</dbscheme>
+        OPTIONAL DBURL PARAMETER (to avoid using -data and -dbscheme)
+    <dburl>DBURL</dburl>
     <dbuser>sa</dbuser>
     <dbpw></dbpw>
     <server>localhost</server>
@@ -55,7 +57,7 @@ For example:
 \normalsize
 \item Save the file as an XML file.
 \item This file will be used when you enter the \bxcaption{-c <path to file>} parameter.
-\bxtipp{The no-run and quiet mode parameters can only be entered in the command line interface. They cannot be entered in the configuration file.}
+\bxtipp{The no-run, quiet mode, no screenshot, no relevance and \bxname{-data} (for the workspace) parameters can only be entered in the command line interface. They cannot be entered in the configuration file.}
 \bxtipp{Java Virtual Machine parameters can only be entered in the command line interface. They cannot be entered in the configuration file.}
 \end{enumerate}
 \item A template configuration file was installed with \app{}. It can be found under:\\
