@@ -1,4 +1,6 @@
-You can configure your \gdaut{} to run with Chronon recording so that you can analyze any errors that occur during your automated test runs. 
+You can configure your \gdaut{} to run with Chronon recording so that you can analyze any errors that occur during your automated test runs. See the section later \bxpref{TasksChrononTools} on analysing the reports for information on the tooling required to do this.
+
+\bxtipp{\jb users: The support for Chronon recording in \gdauts{} is currently only available in the standalone software.}
 
 \subsubsection{Adding Chronon information in the \gdaut{} configuration}
 \gdhelpid{autConfigSettingWizardPagePageContextId}{Configuring an AUT}
@@ -11,18 +13,20 @@ You can select Chronon as a monitoring agent and configure it in the Expert Sett
 \item You can then enter the configuration details for the monitoring. 
 \begin{description}
 \item [Package patterns:]{Enter a comma-separated list of packages that you want to be covered by the monitoring.The patterns must be  valid regular expressions. If you enter no patterns, no recording file will be written.}
-\item [Target directory:]{Enter the path to a directory where the recording files should be written. Any non-existing folders will be automatically created. This target directory and all items it contains are deleted when the \gdaut{} is started or restarted. Once the \gdaut{} is started, the target directory is recreated ready for the next run. This means you must ensure you have copied any relevant files before starting or restarting the \gdaut{}. When the \gdaut{} is stopped after a test, the recording file is written to this target directory. The target directory can be relative to the \gdaut{} working directory, if you have entered one.}
+\item [Target directory:]{Enter the path to a directory where the recording files should be written. The \gdaut{} must have write permissions to this place. Any non-existing folders will be automatically created. This target directory and all items it contains are deleted when the \gdaut{} is started or restarted. Once the \gdaut{} is started, the target directory is recreated ready for the next run. This means you must ensure you have copied any relevant files before starting or restarting the \gdaut{}. When the \gdaut{} is stopped after a test, the recording file is written to this target directory. The target directory can be relative to the \gdaut{} working directory, if you have entered one.}
 \item [Operating System:]{Enter \bxshell{win,} \bxshell{lin}, \bxshell{sol} or \bxshell{mac} (without quotes) to specify your operating system. }
 \item[JRE Architecture:]{Enter \bxshell{32} or \bxshell{64} (without quotes) to specify your architecture. If you have entered \bxshell{mac} as an operating system, you can only enter \bxshell{64}.}
 \end{description}
 \end{enumerate}
 
 \subsubsection{Adapting tests to improve data collection}
-You should bear the following in mind when using Chronon for recording information in automated tests.
+You should bear the following in mind when using Chronon for recording information in automated tests.\\
+
 \textbf{Performance in the \gdaut{} may be affected}
 \begin{itemize}
 \item The recordings that Chronon performs are very memory-intensive. For this reason, you may notice performance differences in your \gdaut{}. It may also be necessary to increase the step delay for your tests, and / or add extra synchronization to compensate for the performance differences when Chronon is running. 
 \item For these reasons, we do not recommend having Chronon configured as a part of your standard \gdaut{} configuration. Instead, we suggest running tests with Chronon monitoring when needed. 
+\item We also strongly suggest ensuring that your \gdaut{} and the machine it is running on have sufficient memory to cope with the increased monitoring activity.
 \end{itemize}
 
 \textbf{Stopping or restarting the \gdaut{} will cause the previously recorded information to be lost}
@@ -31,7 +35,11 @@ You should bear the following in mind when using Chronon for recording informati
 \item Because of this, we recommend executing individual \gdcases{} (use cases) in \gdsuites{} that you want to analyze with Chronon. You should ensure that any \gdehandlers{} in the \gdsuite{} will not cause the \gdaut{} to restart.
 \end{itemize}
 
-\subsubsection{Analysing the generated reports}
-To analyze the reports generated, you will require the Chronon Time Travelling Debugger from Chronon Systems. 
+\subsubsection{Analyzing the generated reports}
+\label{TasksChrononTools}
+To analyze the reports generated, you will require the Chronon Time Travelling Debugger from Chronon Systems. \app{} users can download a trial version of this from:\\
+\htmladdnormallink{http://www.chrononsystems.com}{http://www.chrononsystems.com}\\
+
+Open source projects may contact Chronon for free licenses. 
 
 
