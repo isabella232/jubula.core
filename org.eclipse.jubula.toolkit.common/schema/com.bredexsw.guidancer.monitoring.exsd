@@ -74,6 +74,13 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="linkText" type="string">
+            <annotation>
+               <documentation>
+                  This is an optional attribute for documentation / linking purposes e.g. to the monitoring agent provider. The string provided is set AS IS to an SWT Link text.
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 
