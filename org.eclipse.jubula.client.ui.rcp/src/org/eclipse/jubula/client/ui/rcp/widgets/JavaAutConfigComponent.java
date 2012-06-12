@@ -72,10 +72,14 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.internal.about.AboutUtils;
 
 
 
@@ -209,6 +213,19 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             if (monitoringExtension != null) {
                 createMonitoringUIComponents(monitoringComposite, 
                         MonitoringRegistry.getAttributes(monitoringExtension));
+                String extURL = MonitoringRegistry
+                        .getExtUrlForMonitoringId(monitoringID);
+                if (!StringUtils.isEmpty(extURL)) { 
+                    UIComponentHelper.createLabel(monitoringComposite, 
+                            Messages.MonitoringAgentAddInfo);
+                    Link extRef = new Link(monitoringComposite, SWT.NONE);
+                    extRef.setText(extURL);
+                    extRef.addListener(SWT.Selection, new Listener() {
+                        public void handleEvent(Event event) {
+                            AboutUtils.openLink(getShell(), event.text);
+                        }
+                    });
+                }
             } else {
                 StyledText missingExtensionLabel = 
                     new StyledText(monitoringComposite, SWT.WRAP);

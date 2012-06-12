@@ -11,10 +11,15 @@
 package org.eclipse.jubula.autagent.monitoring;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Monitoring agents classes must extend this class.
@@ -23,7 +28,10 @@ import org.eclipse.jubula.tools.objects.IMonitoringValue;
  * @created 11.11.2010
  */
 public abstract class AbstractMonitoring implements IMonitoring {
-
+    /** the logger */
+    private static final Logger LOG = LoggerFactory
+            .getLogger(AbstractMonitoring.class);   
+    
     /** the autId */
     private String m_autId;  
     /** 
@@ -45,7 +53,11 @@ public abstract class AbstractMonitoring implements IMonitoring {
      * {@inheritDoc}
      */
     public void writeMonitoringReport(OutputStream out) {
-       //do nothing
+        try {
+            out.close();
+        } catch (IOException e) {
+            LOG.error(DebugConstants.ERROR, e);
+        }
     }
 
     /**
@@ -60,8 +72,7 @@ public abstract class AbstractMonitoring implements IMonitoring {
      * {@inheritDoc}
      */
     public Map<String, IMonitoringValue> getMonitoringData() {
-        
-        return null;
+        return new HashMap<String, IMonitoringValue>();
     }
 
     /**
