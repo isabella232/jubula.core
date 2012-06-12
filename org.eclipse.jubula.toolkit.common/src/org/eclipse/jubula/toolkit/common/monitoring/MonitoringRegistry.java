@@ -59,6 +59,29 @@ public abstract class MonitoringRegistry {
         
         return list;
     }
+    
+    /**
+     * @param monId the monId
+     * @return returns a String URL for the given monitoring agent ID or
+     *         <code>null</code> if not defined / found
+     */        
+    public static String getExtUrlForMonitoringId(String monId) {
+        String url = null;
+        
+        if (monId != null) {
+            for (int i = 0; i < extensions.length; i++) {
+                IConfigurationElement element = extensions[i];
+                if (monId.equals(element.getAttribute(
+                        MonitoringConstants.M_ID))) {
+                    url = element.getAttribute(MonitoringConstants.M_LINK_TEXT);
+                    break;
+                }
+            }
+        }
+        
+        return url;
+    }
+    
     /**
      * @return returns a list of all registered Monitoring names  
      */

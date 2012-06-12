@@ -28,6 +28,8 @@ public class MonitoringConstants {
     public static final String M_ID = "id";  //$NON-NLS-1$
     /** the query syntax for the extensions name */
     public static final String M_NAME = "name";  //$NON-NLS-1$
+    /** the query syntax for the extensions linkText */
+    public static final String M_LINK_TEXT = "linkText";  //$NON-NLS-1$
     /** the query syntax for the extensions id */
     public static final String M_ATTR_ID = "id";  //$NON-NLS-1$
     /** the query syntax for the extensions type */
