@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.33.2 Requirements</title>
-    <meta content="3.33.2 Requirements" name="description" />
+    <title>3.33.1.1 Turning on the recording</title>
+    <meta content="3.33.1.1 Turning on the recording" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,11 +10,30 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION004332000000000000000"></a> <a name="LaunchConfigurationsRequirements"></a><br /><span class="arabic">3</span>.<span class="arabic">33</span>.<span class="arabic">2</span> Requirements </h2>
-    <p> The following Features need to be installed in order to start Swing AUT&#39;s : <ul>
-        <li>Jubula Launch Support for Java / Swing <li>Java Developer Tools (JDT) </ul>
-    <p> The following Features need to be installed in order to start RCP AUT&#39;s : <ul>
-        <li>Jubula Launch Support for Eclipse RCP <li>Java Developer Tools (JDT) <li>Eclipse Plug-in Development Environment (PDE) </ul>
+    <h3><a name="SECTION004331100000000000000"> <span class="arabic">3</span>.<span class="arabic">33</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Turning on the recording</a></h3>
+    <ol>
+      <li>First, you must make the Chronon embedded recorder available for Jubula . To do this, you must open the Jubula .ini file and remove the comment symbol from the last two lines. Then you must (re)start Jubula . <li>You can activate the Chronon recording in Jubula by selecting: <br />
+        <table border="0" style="margin:0px;padding:0px;">
+          <tr>
+            <td bgcolor="#DDDDDD">Help</td>
+            <td>--&gt;</td>
+            <td bgcolor="#DDDDDD">Start Chronon Recorder</td>
+          </tr>
+        </table>
+        <br />
+      <li>The Progress View will open and you will see the status of the recording. The progress bar continues to run once the recorder has started. The status changes from <i>starting</i> to <i>running</i>. When the recorder is running, you will be able to see the job running in the Progress View and also in the status bar. Do not stop the job - this will stop the recording. <li>Once the recorder is running, your actions in Jubula are written to the recording file. <table>
+          <tr>
+            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+            <td><b>Bear in mind that any data contained within Jubula may be visible by our development team when analysing any Chronon files</b></td>
+          </tr>
+        </table>. </ol>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>We do not recommend running the Chronon recorder constantly, as the collection of additional information can lead to detractions in performance in Jubula . Instead, we would recommend turning Chronon on when you specifically want to reproduce a problem, and turning it off afterwards. Additionally, you should ensure that you have increased the heap space to avoid running into memory problems.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr />

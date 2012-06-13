@@ -1,16 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.4.2.1 Dealing with occasional dialogs</title>
-    <meta content="5.4.2.1 Dealing with occasional dialogs" name="description" />
+    <title>5.3.1 Best practices for structuring the Test Case Browser </title>
+    <meta content="5.3.1 Best practices for structuring the Test Case Browser " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION00642100000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Dealing with occasional dialogs</a></h3> In the case of occasional dialogs, your Test Case in the test should contain an action which checks that the dialog does <span class="textbf">not</span> exist (e.g.<i>Check Existence of Window</i> with the parameter <i>false</i>). If the dialog is not visible, the test will continue normally. <p> If the dialog is present, an error occurs. Add an Event Handler to the <i>Check Existence of Window</i> Test Case that clicks e.g. the cancel button in the window and waits for the window to close. The Event Handler should react to a <i>check failed</i> event, and should use <i>retry</i> as the reentry property. Once the window has closed, the failed Test Step (check existence) will be carried out again. This time, the check will succeed, and the test will continue. The Test Step will be marked as successful on retry. <p>
+  <body><a name="testSpecificationViewContextId"></a><h2><a name="SECTION00631000000000000000"> <span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Best practices for structuring the Test Case Browser </a></h2><a name="BPCategories"></a><p> We recommend using categories <a href="node104.html#WorkingWithCategories">3.10</a> to structure the Test Case Browser . This makes your keywords easier to find when you are creating tests. <p> We recommend using two main categories to organize the Test Case Browser : executable tests and modules. <p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node354.html" name="tex2html5637"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Executable tests</a><li><a href="node355.html" name="tex2html5638"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Modules</a></ul>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

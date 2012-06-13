@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.2.4 Design for testability in RCP</title>
-    <meta content="4.2.4 Design for testability in RCP" name="description" />
+    <title>3.34.6.2 RCP Remote Control Plug-in</title>
+    <meta content="3.34.6.2 RCP Remote Control Plug-in" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,8 +10,7 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00524000000000000000"> <span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Design for testability in RCP</a></h2>
-    <p><a name="6163"></a> <a name="6164"></a> <a name="6165"></a> <a name="6166"></a><p> Although Jubula can relocate components in the AUT even when they are not named by the developers, naming components is nevertheless a good idea. In SWT and RCP there is no method like the Swing <i>setName</i> method to name components in the program code. However, you can improve the testability of your application by using the following method in your SWT or RCP code for the current component class: <i>setData(String key, String ComponentName)</i>. For the key, use <i>TEST_COMP_NAME</i>. <p> Even if you do not name components, you can choose to have Jubula generate unique names for your components in the AUT in the AUT dialog <a href="node71.html#Defineaut">3.6</a>. <p>
+    <h3><a name="SECTION004346200000000000000"> <span class="arabic">3</span>.<span class="arabic">34</span>.<span class="arabic">6</span>.<span class="arabic">2</span> RCP Remote Control Plug-in</a></h3> In order to start an RCP AUT , the RCP Remote Control plug-in (org.eclipse.jubula.rc.rcp) must be included in the launch configuration. The list of plug-ins for the launch configuration can be viewed and modified from the <i>Plug-ins</i> tab of the <i>Start AUT Configurations</i> dialog when an <i>Eclipse Application</i> launch configuration is selected. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

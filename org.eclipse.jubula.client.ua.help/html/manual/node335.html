@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.1.1.3 Utility modules for keywords</title>
-    <meta content="5.1.1.3 Utility modules for keywords" name="description" />
+    <title>4.3.3.3 References</title>
+    <meta content="4.3.3.3 References" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,18 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION00611300000000000000"></a> <a name="BPKeywordsUtility"></a><br /><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Utility modules for keywords </h3> In designing your tests, it may sometimes occur to you that there is a level between the unbound modules and your finished keywords. A good example is a module to to a synchronized text entry on a component: <ul>
-      <li>ub_grc_waitForComponent <li>ub_grc_checkEnablement <li>ub_grc_checkEditability <li>ub_cti_replaceText </ul>
-    <p> It is very likely that a test will have to enter various texts. The only difference for each case will be the text to enter and the component to enter it into. All other things (amount of time to wait for the component, the fact that the component should be enabled and editable etc.) will remain the same. A utility module to perform a synchronized replace text can solve this problem. It can be reused in Test Cases to replace the text on any component <a href="node153.html#TasksCompNamesCheckbox">3.13.2.1</a> and only requires the text to enter as a parameter. <p> Generally, it is worth making a utility module when the unbound module contains one or more parameters whose values will remain constant in your test (typically things like file paths, operators, path types etc.). The utility module can parameterize the data that will change (e.g. boolean values, text entries, what to check etc.) and make your test specification and maintanence quicker. <p><a name="BPKeywordDesign"></a><p>
+    <h3><a name="SECTION00533300000000000000"></a> <a name="gefreference"></a><br /><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">3</span> References </h3>
+    <p> A sample accessibility plug-in for certain elements of the Logic Diagram sample plug-in project (contributed from the GEF plug-ins to Eclipse&#39;s New Project Wizard) are included in the installation of Jubula . You can import the sample accessibility plug-in into an Eclipse workspace in order to examine the general structure of such an accessibility plug-in (<a href="#newlogicwizard">4.4</a>) <p>
+      <div align="CENTER"><a name="newlogicwizard"></a><a name="6408"></a><table>
+          <caption align="BOTTOM"><strong>Figure 4.4:</strong> Creating the &#39;Logic&#39; Project</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image newlogicwizard" border="0" height="469" src="./newlogicwizard.png" width="493" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p> The javadocs containing information about <i>org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier</i> and default implementations can be found in the Jubula installation directory under <i>documentation/gefapi/javadoc.zip</i>. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

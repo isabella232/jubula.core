@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.1.1.1 General guidelines for keywords</title>
-    <meta content="5.1.1.1 General guidelines for keywords" name="description" />
+    <title>4.3.3.1 Setting up your Workspace</title>
+    <meta content="4.3.3.1 Setting up your Workspace" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,18 +10,13 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION00611100000000000000"></a> <a name="BPKeywordsGeneral"></a><br /><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">1</span> General guidelines for keywords </h3> As a rule of thumb, we recommend making a keyword for any action or actions you execute more than once in your test. This ensures that maintenance is much easier later - you will only have one place to change in the test, instead of many. <p> So what is a keyword? A good example is <i>Login</i>. It is obvious from the name what this Test Case does. It contains three of the Jubula unbound modules from the library Project : <br />
-      <ul>
-        <li>ub_cti_replaceText (which has the parameter <tt>&quot;TEXT&quot;</tt>) <li>ub_cti_replaceText (which has the parameter <tt>&quot;TEXT&quot;</tt>) <li>ub_grc_clickLeftSingle (no parameters) </ul>
-    <p> In this keyword, the two TEXT parameters from the replace text modules would be referenced as <tt>&quot;=USERNAME&quot;</tt> and <tt>&quot;PASSWORD&quot;</tt> <a href="node120.html#TasksTestdataReferences">3.12.3</a>. <p> Any time you need to perform a login in your test, you can reuse this keyword and enter the specific use data each time. This has the advantage that your tests will be easy to read, and that any maintenance you need to do to this keyword can be done in one place. <p> Other things that lend themselves well to being made into keywords are: <ul>
-        <li>Synchronized clicks on buttons (e.g. wait for component, then check enablement, then click). <li>Tab selections (e.g. Select Content Tab, Select Options Tab in Tools Dialog). <li>Recurring workflows (e.g. carrying out a search). <li>Anything that you use more than once. </ul>
-    <p> Many of these keywords will use the same modules from the unbound modules Project . However, the advantage of making a keyword is that all or most of the data that you need, and the component names, can be encapsulated into a module which has a recognizable name. <p> Some actions cannot be entirely encapsulated into a keyword with no parameters. Actions to enter text or select items from trees often require a different text or textpath each time they are reused. In this case, it is probably not worth writing a separate keyword for each possible data set. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If you realise later on in your test that you will need a module again, use the refactor function <a href="node100.html#TasksEditorExtract">3.9.7</a> to extract a reusable Test Case . </b></td>
-        </tr>
-      </table>
+    <h3><a name="SECTION00533100000000000000"> <span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Setting up your Workspace</a></h3>
+    <p> Although you can use the IDE of your choice to develop your accessibility plug-in, this guide will use Eclipse (specifically, Eclipse 3.4.1 with PDE plug-ins). <p>
+      <ol>
+        <li>Before setting up your workspace, it is important to have the ECP Remote Control plug-in available, as this contains libraries and interfaces that are required in order to develop your accessibility plug-in. The archive file <i>rcp-support.zip</i>, available from the Jubula installation directory, contains the RCP Remote Control plug-in. Once you have extracted the RCP Remote Control plug-in, you can continue setting up your workspace. <p>
+        <li>In order to cleanly separate test code from application code, we recommend using separate workspaces for application and accessibility development. Create a new Eclipse workspace for accessibility plug-in development. <li>Once you have created your new workspace, change that workspace&#39;s Plug-in Development Target Platform to include the RCP Remote Control plug-in, as well as all plug-ins that make up your AUT . Information on configuring the Target Platform plug-ins can be found in Eclipse&#39;s online Help under: <br /><i>Plug-in Development Environment Guide &gt; Tools &gt; Preferences &gt; Target Plug-ins</i>. <p>
+        <li>Create a new Plug-in Project. The default values proposed by the New Plug-in Project wizard are acceptable, so simply enter a name for your new Project and complete the wizard without additional modifications. <p>
+        <li>You now have a workspace with a properly configured Target Platform as well as a new Plug-in Project. You can now begin developing your accessibility plug-in. </ol>
     <p>
       <br />
       <hr />

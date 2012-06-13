@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.3.1 Best practices for structuring the Test Case Browser </title>
-    <meta content="5.3.1 Best practices for structuring the Test Case Browser " name="description" />
+    <title>5.1.1.3 Utility modules for keywords</title>
+    <meta content="5.1.1.3 Utility modules for keywords" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testSpecificationViewContextId"></a><h2><a name="SECTION00631000000000000000"> <span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Best practices for structuring the Test Case Browser </a></h2><a name="BPCategories"></a><p> We recommend using categories <a href="node104.html#WorkingWithCategories">3.10</a> to structure the Test Case Browser . This makes your keywords easier to find when you are creating tests. <p> We recommend using two main categories to organize the Test Case Browser : executable tests and modules. <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node345.html" name="tex2html5499"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Executable tests</a><li><a href="node346.html" name="tex2html5500"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Modules</a></ul>
+  <body>
+    <h3><a name="SECTION00611300000000000000"></a> <a name="BPKeywordsUtility"></a><br /><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Utility modules for keywords </h3> In designing your tests, it may sometimes occur to you that there is a level between the unbound modules and your finished keywords. A good example is a module to to a synchronized text entry on a component: <ul>
+      <li>ub_grc_waitForComponent <li>ub_grc_checkEnablement <li>ub_grc_checkEditability <li>ub_cti_replaceText </ul>
+    <p> It is very likely that a test will have to enter various texts. The only difference for each case will be the text to enter and the component to enter it into. All other things (amount of time to wait for the component, the fact that the component should be enabled and editable etc.) will remain the same. A utility module to perform a synchronized replace text can solve this problem. It can be reused in Test Cases to replace the text on any component <a href="node153.html#TasksCompNamesCheckbox">3.13.2.1</a> and only requires the text to enter as a parameter. <p> Generally, it is worth making a utility module when the unbound module contains one or more parameters whose values will remain constant in your test (typically things like file paths, operators, path types etc.). The utility module can parameterize the data that will change (e.g. boolean values, text entries, what to check etc.) and make your test specification and maintanence quicker. <p><a name="BPKeywordDesign"></a><p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
