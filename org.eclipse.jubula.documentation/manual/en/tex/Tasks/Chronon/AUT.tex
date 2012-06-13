@@ -12,7 +12,7 @@ You can select Chronon as a monitoring agent and configure it in the Expert Sett
 \item Select Chronon as the monitoring agent. 
 \item You can then enter the configuration details for the monitoring. 
 \begin{description}
-\item [Package patterns:]{Enter a comma-separated list of packages that you want to be covered by the monitoring.The patterns must be  valid regular expressions. If you enter no patterns, no recording file will be written.}
+\item [Package patterns:]{Enter a comma-separated list of packages that you want to be covered by the monitoring.The patterns must be  valid regular expressions. If you enter no patterns, the recording file will be empty.}
 \item [Target directory:]{Enter the path to a directory where the recording files should be written. The \gdaut{} must have write permissions to this place. Any non-existing folders will be automatically created. This target directory and all items it contains are deleted when the \gdaut{} is started or restarted. Once the \gdaut{} is started, the target directory is recreated ready for the next run. This means you must ensure you have copied any relevant files before starting or restarting the \gdaut{}. When the \gdaut{} is stopped after a test, the recording file is written to this target directory. The target directory can be relative to the \gdaut{} working directory, if you have entered one.}
 \item [Operating System:]{Enter \bxshell{win,} \bxshell{lin}, \bxshell{sol} or \bxshell{mac} (without quotes) to specify your operating system. }
 \item[JRE Architecture:]{Enter \bxshell{32} or \bxshell{64} (without quotes) to specify your architecture. If you have entered \bxshell{mac} as an operating system, you can only enter \bxshell{64}.}
@@ -39,6 +39,6 @@ You should bear the following in mind when using Chronon for recording informati
 \label{TasksChrononTools}
 To analyze the reports generated, you will require the Chronon Time Travelling Debugger from Chronon Systems. \app{} users can download a trial version of this tool. The link to the trial version is provided in the expert \gdaut{} configuration.
 
-Open source projects may contact Chronon for free licenses. 
+Open source projects may contact Chronon Systems for free licenses. 
 
 
