@@ -15,7 +15,7 @@ Export-Package: org.eclipse.jubula.communication,
  org.eclipse.jubula.communication.message.swt,
  org.eclipse.jubula.communication.parser,
  org.eclipse.jubula.communication.writer
-Require-Bundle: org.eclipse.jubula.tools;bundle-version="[1.2.0,1.3.0)",
+Require-Bundle: org.eclipse.jubula.tools;bundle-version="[1.2.1,1.3.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.slf4j.api;bundle-version="[1.5.11,2.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
