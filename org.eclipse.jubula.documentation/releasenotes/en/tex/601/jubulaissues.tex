@@ -8,3 +8,8 @@
 \end{quote}
 \end{itemize}
 
+\textbf{Chronon and continuous integration}
+\begin{itemize}
+\item We do not advise using the version of Chronon integrated with \app{} as a part of long-running continuous integration tests (e.g. tests that are started via the test executor and run throughout the night).  
+\item Instead, we recommend activating Chronon monitoring for an \gdaut{} configuration that you use to execute individual tests via the \ite{} to ensure that you get exactly the data you need.
+\end{itemize}
