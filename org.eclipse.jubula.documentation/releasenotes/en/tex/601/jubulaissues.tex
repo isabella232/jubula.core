@@ -8,8 +8,13 @@
 \end{quote}
 \end{itemize}
 
-\textbf{Chronon and continuous integration}
-\begin{itemize}
-\item We do not advise using the version of Chronon integrated with \app{} as a part of long-running continuous integration tests (e.g. tests that are started via the test executor and run throughout the night).  
-\item Instead, we recommend activating Chronon monitoring for an \gdaut{} configuration that you use to execute individual tests via the \ite{} to ensure that you get exactly the data you need.
-\end{itemize}
+\textbf{Chronon and continuous integration}\\
+
+Although you could technically use Chronon with \app{} outside of the \ite{} in Continuous Integration environments, neither BREDEX nor Chronon Systems recommends or will provide support for such cases.
+
+The current integration with Chronon is meant to be used inside of the \ite{}. If you do want to record your tests outside of the \ite{}, please look at Chronon Systems' Chronon recording server:\\
+ \href{http://www.chrononsystems.com/products/chronon-recording-server/}{http://www.chrononsystems.com/products/chronon-recording-server/}\\
+and Embedded Chronon:\\
+\href{http://www.chrononsystems.com/products/embedded-chronon}{http://www.chrononsystems.com/products/embedded-chronon} \\
+ offerings which are explicitly designed for and support such use cases.
+
