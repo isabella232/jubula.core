@@ -47,6 +47,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.ProjectUIBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ToolkitBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
@@ -350,7 +351,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
          * Opens an error dialog.
          * 
          * @param message
-         *            the messag eto show in the dialog.
+         *            the message to show in the dialog.
          */
         private void showErrorDialog(String message) {
             ErrorHandlingUtil.createMessageDialog(new JBException(message,
@@ -366,18 +367,13 @@ public class OpenProjectHandler extends AbstractProjectHandler {
         }
 
     }
-
+    
     /**
-     * Opens a dialog to select a project to open.
+     * Checks all available projects
+     * 
+     * @return list of all projects
      */
-    void selectProjects() {
-        if (GeneralStorage.getInstance().getProject() != null
-                && Plugin.getDefault().anyDirtyStar()
-                && !Plugin.getDefault().showSaveEditorDialog()) {
-
-            Plugin.stopLongRunning();
-            return;
-        }
+    private List<IProjectPO> checkAllAvailableProjects() {
         List<IProjectPO> projList = null;
         try {
             projList = ProjectPM.findAllProjects();
@@ -385,32 +381,76 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 Display.getDefault().asyncExec(new Runnable() {
                     public void run() {
                         ErrorHandlingUtil.createMessageDialog(
-                                MessageIDs.I_NO_PROJECT_IN_DB);
+                            MessageIDs.I_NO_PROJECT_IN_DB);
                     }
                 });
                 Plugin.stopLongRunning();
-                return;
-            }
-
-            SortedMap<String, List<String>> projNameToVersionMap = 
-                new TreeMap<String, List<String>>();
-            for (IProjectPO proj : projList) {
-                String projName = proj.getName();
-                String projVersion = proj.getVersionString();
-                if (!projNameToVersionMap.containsKey(projName)) {
-                    projNameToVersionMap.put(projName, new ArrayList<String>());
+            } else {
+                SortedMap<String, List<String>> projNameToVersionMap = 
+                        new TreeMap<String, List<String>>();
+                for (IProjectPO proj : projList) {
+                    String projName = proj.getName();
+                    String projVersion = proj.getVersionString();
+                    if (!projNameToVersionMap.containsKey(projName)) {
+                        projNameToVersionMap.put(projName,
+                                new ArrayList<String>());
+                    }
+                    projNameToVersionMap.get(projName).add(projVersion);
                 }
-                projNameToVersionMap.get(projName).add(projVersion);
             }
-            ProjectDialog dialog = openProjectSelectionDialog(projList);
+        } catch (final JBException e) {
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    ErrorHandlingUtil.createMessageDialog(e, null, null);
+                }
+            });
+        }
+        return projList;
+    }
+
+    /**
+     * opens the project open dialog
+     * @param projList the project list
+     * @return the open project dialog
+     */
+    public ProjectDialog openProjectOpenDialog(List<IProjectPO> projList) {
+        ProjectDialog dialog = null;
+        if (GeneralStorage.getInstance().getProject() != null
+                && Plugin.getDefault().anyDirtyStar()
+                && !Plugin.getDefault().showSaveEditorDialog()) {
+
+            Plugin.stopLongRunning();
+        } else {
+            dialog = openProjectSelectionDialog(projList);
             if (dialog.getReturnCode() == Window.CANCEL) {
                 Plugin.stopLongRunning();
-                return;
             }
-            final IProjectPO selectedProject = dialog.getSelection();
-
+        }
+        return dialog;
+    }
+    
+    /**
+     * open the selected or the default project 
+     * 
+     * @param projectData the project data
+     * @param projList list which contains all available projects
+     */
+    public void loadProject(ProjectDialog.ProjectData projectData,
+            List<IProjectPO> projList) {
+        IProjectPO projectToOpen = null;
+        for (IProjectPO project : projList) {
+            if (project.getGuid().equals(projectData.getGUID())
+                    && project.getVersionString().equals(
+                            projectData.getVersionString())) {
+                projectToOpen = project;
+                break;
+            }
+        }
+        if (projectToOpen == null) {
+            openProjectOpenDialog(projList);
+        } else {
             OpenProjectOperation openOperation = new OpenProjectOperation(
-                    selectedProject);
+                    projectToOpen);
             try {
                 PlatformUI.getWorkbench().getProgressService()
                         .busyCursorWhile(openOperation);
@@ -421,14 +461,6 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             } catch (InterruptedException ie) {
                 openOperation.handleOperationException();
             }
-
-        } catch (final JBException e) {
-            Display.getDefault().asyncExec(new Runnable() {
-                public void run() {
-                    ErrorHandlingUtil.createMessageDialog(e, null, null);
-                }
-            });
-            return;
         }
     }
 
@@ -492,7 +524,24 @@ public class OpenProjectHandler extends AbstractProjectHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        selectProjects();
+        ProjectDialog.ProjectData project = null;
+        boolean cancelPressed = false;
+        ProjectDialog dialog = null;
+        List<IProjectPO> projList = checkAllAvailableProjects();
+
+        if (ProjectUIBP.getInstance().shouldPerformAutoProjectLoad()) {
+            project = ProjectUIBP.getMostRecentProjectData();
+        } else {
+            dialog = openProjectOpenDialog(projList);
+            if (dialog.getReturnCode() == Window.CANCEL) {
+                cancelPressed = true;
+            } else {
+                project = dialog.getSelection();
+            }
+        }
+        if (!cancelPressed) {
+            loadProject(project, projList);
+        }
         return null;
     }
 }

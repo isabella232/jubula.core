@@ -20,9 +20,15 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.layout.RowLayoutFactory;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.ProjectUIBP;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
+import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -82,14 +88,17 @@ public class ProjectDialog extends TitleAreaDialog {
     private DirectCombo<String> m_versionComboBox;
 
     /**
-     * Mapping from project name to project versions 
+     * Mapping from project GUIDs to project versions 
      */
-    private Map<String, List<String>> m_nameToVersionMap;
+    private Map<String, List<String>> m_guidToVersionMap;
 
     /**
      * Mapping from project data to project 
      */
     private Map<ProjectData, IProjectPO> m_projectMap;
+    
+    /** List of project GUIDs */
+    private List<String> m_guidList;
     
     /** List of project names */
     private List<String> m_nameList;
@@ -98,8 +107,8 @@ public class ProjectDialog extends TitleAreaDialog {
     private List<String> m_versionList;
     
     /** result of dialog, null if nothing was selected */
-    private IProjectPO m_selection = null;
-
+    private ProjectData m_selection;
+    
     /**
      * label of name combo
      */
@@ -126,6 +135,11 @@ public class ProjectDialog extends TitleAreaDialog {
     private String m_shellTitle;
     
     /**
+     * check box to select a default project and project version
+     */
+    private Button m_defaultProject;
+    
+    /**
      * <code>m_isDeleteAction</code> true if dialog is "delete project"-dialog
      */
     private boolean m_isDeleteAction = false;
@@ -145,19 +159,19 @@ public class ProjectDialog extends TitleAreaDialog {
      * @author BREDEX GmbH
      * @created Jun 21, 2007
      */
-    private class ProjectData {
-        /** project name */
-        private String m_name;
+    public static class ProjectData {
+        /** project guid */
+        private String m_guid;
         /** project version */
         private String m_versionString;
 
         /**
          * Constructor
-         * @param name project name
+         * @param guid project's GUID
          * @param versionString project version string
          */
-        public ProjectData(String name, String versionString) {
-            m_name = name;
+        public ProjectData(String guid, String versionString) {
+            m_guid = guid;
             m_versionString = versionString;
         }
 
@@ -165,16 +179,32 @@ public class ProjectDialog extends TitleAreaDialog {
          * 
          * @return version string
          */
-        private String getVersionString() {
+        public String getVersionString() {
             return m_versionString;
+        }
+        
+        /**
+         * sets the project version
+         * @param version the project version
+         */
+        public void setVersionString(String version) {
+            m_versionString = version;
         }
 
         /**
          * 
-         * @return name
+         * @return GUID
          */
-        private String getName() {
-            return m_name;
+        public String getGUID() {
+            return m_guid;
+        }
+        
+        /**
+         * sets the project name
+         * @param guid the projects GUID
+         */
+        public void setGUID(String guid) {
+            m_guid = guid;
         }
         
         /**
@@ -190,7 +220,7 @@ public class ProjectDialog extends TitleAreaDialog {
             }
             
             ProjectData otherData = (ProjectData)obj;
-            return new EqualsBuilder().append(getName(), otherData.getName())
+            return new EqualsBuilder().append(getGUID(), otherData.getGUID())
                 .append(getVersionString(), otherData.getVersionString())
                 .isEquals();
         }
@@ -200,11 +230,10 @@ public class ProjectDialog extends TitleAreaDialog {
          * {@inheritDoc}
          */
         public int hashCode() {
-            return new HashCodeBuilder().append(getName())
+            return new HashCodeBuilder().append(getGUID())
                 .append(getVersionString())
                 .toHashCode();
         }
-
     }
 
     /**
@@ -222,24 +251,26 @@ public class ProjectDialog extends TitleAreaDialog {
         
         super(parentShell);
         
-        m_nameToVersionMap = 
+        m_guidToVersionMap = 
             new HashMap<String, List<String>>();
         m_projectMap = new HashMap<ProjectData, IProjectPO>();
+        m_guidList = new ArrayList<String>();
         m_nameList = new ArrayList<String>();
         m_versionList = new ArrayList<String>();
         for (IProjectPO proj : projectList) {
-            String projName = proj.getName();
+            String projGUID = proj.getGuid();
             String projVersion = proj.getVersionString();
-            if ((projName != null) && (projVersion != null)) { // protect
+            if ((projGUID != null) && (projVersion != null)) { // protect
                                                                // against racing
                                                                // conditions in
                                                                // DB
-                if (!m_nameToVersionMap.containsKey(projName)) {
-                    m_nameList.add(projName);
-                    m_nameToVersionMap.put(projName, new ArrayList<String>());
+                if (!m_guidToVersionMap.containsKey(projGUID)) {
+                    m_nameList.add(proj.getName());
+                    m_guidList.add(projGUID);
+                    m_guidToVersionMap.put(projGUID, new ArrayList<String>());
                 }
-                m_nameToVersionMap.get(projName).add(projVersion);
-                m_projectMap.put(new ProjectData(projName, projVersion), proj);
+                m_guidToVersionMap.get(projGUID).add(projVersion);
+                m_projectMap.put(new ProjectData(projGUID, projVersion), proj);
             } else  {
                 log.warn(Messages.ProjectWithGUID + StringConstants.SPACE 
                         + proj.getGuid() + StringConstants.SPACE 
@@ -286,6 +317,7 @@ public class ProjectDialog extends TitleAreaDialog {
         area.setLayoutData(gridData);
 
         createComboBoxes(area);
+        createDefaultProjectCheckbox(area);
         
         if (m_isDeleteAction) {
             createDeleteTestresultsCheckbox(area);
@@ -316,17 +348,16 @@ public class ProjectDialog extends TitleAreaDialog {
      *            The parent composite.
      */
     private void createComboBoxes(Composite parent) {
-        new Label(parent, SWT.NONE).setLayoutData(new GridData(GridData.FILL, 
-            GridData.CENTER, false, false, HORIZONTAL_SPAN + 1, 1));
+        createEmptyLabel(parent);
         new Label(parent, SWT.NONE).setText(m_label);
         m_nameComboBox = new DirectCombo<String>(parent, SWT.SINGLE | SWT.BORDER
-                | SWT.READ_ONLY, m_nameList, m_nameList, false, true);
+                | SWT.READ_ONLY, m_guidList, m_nameList, false, true);
         GridData gridData = newGridData();
         LayoutUtil.addToolTipAndMaxWidth(gridData, m_nameComboBox);
         m_nameComboBox.setLayoutData(gridData);
         m_nameComboBox.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-                m_versionList = m_nameToVersionMap.get(
+                m_versionList = m_guidToVersionMap.get(
                     m_nameComboBox.getSelectedObject());
                 m_versionComboBox.setItems(m_versionList, m_versionList);
                 m_versionComboBox.select(m_versionComboBox.getItemCount() - 1);
@@ -339,10 +370,9 @@ public class ProjectDialog extends TitleAreaDialog {
         if (m_nameComboBox.getItemCount() > 0) {
             m_nameComboBox.select(0);
         }
-        m_versionList = m_nameToVersionMap.get(
+        m_versionList = m_guidToVersionMap.get(
             m_nameComboBox.getSelectedObject());
-        new Label(parent, SWT.NONE).setLayoutData(new GridData(GridData.FILL, 
-            GridData.CENTER, false, false, HORIZONTAL_SPAN + 1, 1));
+        createEmptyLabel(parent);
         new Label(parent, SWT.NONE).setText(m_label2);
         m_versionComboBox = 
             new DirectCombo<String>(parent, SWT.SINGLE | SWT.BORDER
@@ -374,6 +404,40 @@ public class ProjectDialog extends TitleAreaDialog {
     }
 
     /**
+     * Creates the check box to select a default project and project version
+     * 
+     * @param composite the parent composite
+     */
+    private void createDefaultProjectCheckbox(Composite composite) {
+        if (!m_isDeleteAction) {
+            createEmptyLabel(composite);
+            new Label(composite, SWT.NONE).setLayoutData(new GridData(
+                    GridData.FILL, GridData.CENTER, false, false,
+                    HORIZONTAL_SPAN, 1));
+            IPreferenceStore prefs = Plugin.getDefault().getPreferenceStore();
+            Composite checkLinkComposite = new Composite(composite, SWT.NONE);
+            checkLinkComposite.setLayout(RowLayoutFactory.fillDefaults()
+                    .spacing(0).create());
+            m_defaultProject = new Button(checkLinkComposite, SWT.CHECK);
+            m_defaultProject.setSelection(prefs.getBoolean(
+                    Constants.PERFORM_AUTO_PROJECT_LOAD_KEY));
+            DialogUtils.createLinkToSecureStoragePreferencePage(
+                    checkLinkComposite,
+                    Messages.OpenProjectDialogDefaultProjectCheckbox);
+        }
+    }
+
+    /**
+     * @param composite
+     *            the parent composite to use
+     */
+    private void createEmptyLabel(Composite composite) {
+        new Label(composite, SWT.NONE).setLayoutData(new GridData(
+                GridData.FILL, GridData.CENTER, false, false,
+                HORIZONTAL_SPAN + 1, 1));
+    }
+    
+    /**
      * enables the OK button
      */
     public void enableOKButton() {
@@ -387,12 +451,15 @@ public class ProjectDialog extends TitleAreaDialog {
      * This method is called, when the OK button was pressed
      */
     protected void okPressed() {
-        m_selection = m_projectMap.get(
-                new ProjectData(m_nameComboBox.getSelectedObject(), 
-                    m_versionComboBox.getSelectedObject()));
+        m_selection = new ProjectData(m_nameComboBox.getSelectedObject(),
+                m_versionComboBox.getSelectedObject());
+
+        final ProjectUIBP defaultProject = ProjectUIBP.getInstance();
         if (m_isDeleteAction) {
-            m_keepTestresultSummary = 
-                m_keepTestresultSummaryButton.getSelection();
+            m_keepTestresultSummary = m_keepTestresultSummaryButton
+                    .getSelection();
+        } else if (m_defaultProject.getSelection()) {
+            defaultProject.saveMostRecentProjectData(m_selection);
         }
         setReturnCode(OK);
         close();
@@ -413,7 +480,7 @@ public class ProjectDialog extends TitleAreaDialog {
     /**
      * @return Returns the selection.
      */
-    public IProjectPO getSelection() {
+    public ProjectData getSelection() {
         return m_selection;
     }
     

@@ -87,6 +87,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 Constants.SHOWCAPINFO_KEY_DEFAULT);
         prefStore.setDefault(Constants.SHOW_TRANSIENT_CHILDREN_KEY,
                 Constants.SHOW_TRANSIENT_CHILDREN_KEY_DEFAULT);
+        prefStore.setDefault(Constants.PERFORM_AUTO_PROJECT_LOAD_KEY, 
+                Constants.LOAD_DEFAULT_PROJECT_KEY_DEFAULT);
         prefStore.setDefault(Constants.REMEMBER_KEY,
                 Constants.REMEMBER_KEY_DEFAULT);
     }

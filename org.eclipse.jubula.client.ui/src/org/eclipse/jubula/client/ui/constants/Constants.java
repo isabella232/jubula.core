@@ -169,6 +169,15 @@ public interface Constants {
     /** Key for m_text value to be stored as a resource property */
     public static final String MAX_NUMBER_OF_DAYS_KEY = "MAX_NUMBER_OF_DAYS_KEY"; //$NON-NLS-1$
     
+    /** Key for secure storage category */
+    public static final String ORG_ECLIPSE_JUBULA_MOST_RECENT_PROJECTDATA_KEY = "org.eclipse.jubula.MostRecentProjectdata"; //$NON-NLS-1$
+    
+    /** Key for the most recent project name */
+    public static final String MOST_RECENT_PROJECTDATA_GUID_KEY = "project.guid"; //$NON-NLS-1$
+    
+    /** Key for the most recent project version */
+    public static final String MOST_RECENT_PROJECTDATA_VERSION_KEY = "project.version"; //$NON-NLS-1$
+    
     /** Key for m_text value to be stored as a resource property */
     public static final String GENERATEREPORT_KEY = "GENERATEREPORT_KEY"; //$NON-NLS-1$
 
@@ -283,7 +292,8 @@ public interface Constants {
      * should be cached in the master session (even after closing the viewer) 
      */
     public static final String PREF_KEY_CACHE_TEST_RESULTS = "CACHE_TEST_RESULTS"; //$NON-NLS-1$
-    
+    /** Key for loading the default project automatically */
+    public static final String PERFORM_AUTO_PROJECT_LOAD_KEY = "PERFORM_AUTO_PROJECT_LOAD_KEY"; //$NON-NLS-1$
     
     
     // -------------------------------------------------------------
@@ -435,6 +445,9 @@ public interface Constants {
      * closing the viewer) 
      */
     public static final boolean PREF_DEFAULT_CACHE_TEST_RESULTS = false;
+
+    /** default value for loading the default project */
+    public static final boolean LOAD_DEFAULT_PROJECT_KEY_DEFAULT = false;
 
     // --------------------------------------------------------------------
     
