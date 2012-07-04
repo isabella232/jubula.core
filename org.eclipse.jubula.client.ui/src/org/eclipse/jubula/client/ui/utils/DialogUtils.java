@@ -11,13 +11,20 @@
 package org.eclipse.jubula.client.ui.utils;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jubula.client.ui.Plugin;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 
 
 /**
@@ -188,5 +195,34 @@ public final class DialogUtils {
             default:
                 break;
         }
+    }
+    
+    /**
+     * @param parent
+     *            the parent to use
+     * @param linkText
+     *            the link text
+     * @return a new link instance
+     */
+    public static Link createLinkToSecureStoragePreferencePage(
+            Composite parent, String linkText) {
+        Link l = new Link(parent, SWT.NONE);
+        l.setText(linkText);
+        l.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                final String prefPageID = 
+                        Constants.SECURE_STORAGE_PLUGIN_ID;
+                PreferencesUtil.createPreferenceDialogOn(
+                        Plugin.getDefault().getWorkbench().getDisplay()
+                        .getActiveShell(), prefPageID,
+                        new String[] { prefPageID }, null,
+                        PreferencesUtil.OPTION_FILTER_LOCKED).open();
+            }
+            
+            public void widgetDefaultSelected(SelectionEvent e) {
+                /** do nothing */
+            }
+        });
+        return l;
     }
 }

@@ -34,6 +34,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
@@ -54,7 +55,6 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.PreferencesUtil;
 
 
 /**
@@ -96,8 +96,6 @@ public class DBLoginDialog extends TitleAreaDialog {
     private Label m_pwdLabel;
     /** the connection combobox viewer */
     private ComboViewer m_connectionComboViewer;
-    /** save database profile composite*/
-    private Composite m_saveProfileComp;
     /** save database profile check box */
     private Button m_profileSave;
     /** automatic database connection check box */
@@ -340,10 +338,10 @@ public class DBLoginDialog extends TitleAreaDialog {
                 SWT.CENTER, false, false,
                 HORIZONTAL_SPAN + 1, 1));
         new Label(area, SWT.NONE).setText(StringConstants.EMPTY);
-        m_saveProfileComp = new Composite(area, SWT.NONE);
-        m_saveProfileComp.setLayout(RowLayoutFactory.fillDefaults()
+        Composite saveProfileComp = new Composite(area, SWT.NONE);
+        saveProfileComp.setLayout(RowLayoutFactory.fillDefaults()
                 .spacing(0).create());
-        m_profileSave = new Button(m_saveProfileComp, SWT.CHECK);
+        m_profileSave = new Button(saveProfileComp, SWT.CHECK);
         m_profileSave.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
                 m_automConn.setEnabled(m_profileSave.getSelection());
@@ -352,23 +350,9 @@ public class DBLoginDialog extends TitleAreaDialog {
                 // do nothing
             }
         });
-        m_secureStorageLink = new Link(m_saveProfileComp, SWT.NONE);
-        m_secureStorageLink.setText(Messages.DBLoginDialogSaveDBPassword);
-        m_secureStorageLink.addSelectionListener(new SelectionListener() {
-            public void widgetSelected(SelectionEvent e) {
-                final String prefPageID = 
-                        Constants.SECURE_STORAGE_PLUGIN_ID;
-                PreferencesUtil.createPreferenceDialogOn(
-                        Plugin.getDefault().getWorkbench().getDisplay()
-                        .getActiveShell(), prefPageID,
-                        new String[] { prefPageID }, null,
-                        PreferencesUtil.OPTION_FILTER_LOCKED).open();
-            }
-            
-            public void widgetDefaultSelected(SelectionEvent e) {
-                /** do nothing */
-            }
-        });
+        m_secureStorageLink = DialogUtils
+                .createLinkToSecureStoragePreferencePage(saveProfileComp,
+                        Messages.DBLoginDialogSaveDBPassword);
     }
     /**
      * Fills the username and the password field

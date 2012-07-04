@@ -430,6 +430,7 @@ public class Messages extends NLS {
     public static String InternalGefError;
     public static String InternalRcpError;
     public static String IsAlreadyInUseInDifferentEditor;
+    public static String LoadDefaultProject;
     public static String LogicalNameErrorEmpty;
     public static String LogicalNameErrorExists;
     public static String LogicalNameErrorInvalidChar;
@@ -588,6 +589,7 @@ public class Messages extends NLS {
     public static String OpenProjectActionToolkitVersionConflict4b;
     public static String OpenProjectActionToolkitVersionConflict4c;
     public static String OpenProjectActionToolkitVersionConflict5;
+    public static String OpenProjectDialogDefaultProjectCheckbox;
     public static String OpenProjectOperationOpeningProject;
     public static String OpenTestCaseTableDialogAddButtonText;
     public static String OpenTestCaseTableDialogMessage;
