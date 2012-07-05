@@ -10,13 +10,24 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.preferences.database;
 
+import org.eclipse.jubula.tools.constants.StringConstants;
+
 /**
  * 
  * @author BREDEX GmbH
  * @created 04.02.2011
  */
 public class PostGreSQLConnectionInfo extends AbstractHostBasedConnectionInfo {
-
+    /**
+     * the JDBC driver class name 
+     */
+    public static final String DRIVER_CLASS_NAME = "org.postgresql.Driver"; //$NON-NLS-1$
+    
+    /**
+     * the JDBC connection prefix 
+     */
+    public static final String JDBC_PRE = "jdbc:postgresql://"; //$NON-NLS-1$
+    
     /**
      * Constructor
      */
@@ -27,15 +38,17 @@ public class PostGreSQLConnectionInfo extends AbstractHostBasedConnectionInfo {
     @Override
     public String getConnectionUrl() {
         StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append("jdbc:postgresql://").append(getHostname()) //$NON-NLS-1$
-            .append(":").append(getPort()) //$NON-NLS-1$
-            .append("/").append(getDatabaseName()); //$NON-NLS-1$
+        urlBuilder.append(JDBC_PRE)
+            .append(getHostname())
+            .append(StringConstants.COLON)
+            .append(getPort())
+            .append(StringConstants.SLASH)
+            .append(getDatabaseName());
         return urlBuilder.toString();
     }
 
     @Override
     public String getDriverClassName() {
-        return "org.postgresql.Driver"; //$NON-NLS-1$
+        return DRIVER_CLASS_NAME;
     }
-
 }

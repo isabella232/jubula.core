@@ -59,10 +59,14 @@
                  &e.g. \emph{-data ''C:/Users/Test''}\\
                  &The \app{} workspace with the preference\\
                  &settings for the \gddb{} connection\\ 
+                 &This is optional if you enter the \bxname{-dburl}\\
+                 &parameter \\
                 \hline
 		Database scheme
                   & \bxshell{-dbscheme <scheme>}\\
 		&e.g. \emph{-dbscheme ''embedded''}\\
+                 &This is optional if you enter the \bxname{-dburl}\\
+                 &parameter \\
 		\hline
 		Database username
                   & \bxshell{-dbuser <username>}\\
@@ -119,6 +123,9 @@
                   & \bxshell{-dburl <URL>}\\
                   &e.g. \emph{-dburl ''db.example.de''}\\
 		&If no URL is given, the default will be used.\\
+                 &If you enter this parameter, you do not \\
+                &need to enter the \bxname{-data} or \bxname{-dbscheme} parameter\\
+                &You can find the dburl in the \gddb{} preferences\\
                 \hline
 		Timeout (optional)
                   & \bxshell{-timeout <timeout in seconds>}\\
@@ -145,7 +152,7 @@
 Here is an example of defining mutliple JVM parameters: \bxshell{-J-Xmx128M -JXms128M}.}
 \item Using the no run option will check the completeness of the \gdproject{}, test data and the validity of the \gddb{} connection. The \gdagent{} connection is not checked. 
 \item Once you have entered all the necessary parameters, press \bxkey{enter}. 
-\item The client will connect to the \gdagent, connect to the \gddb{}, open the \gdproject{}, start the \gdaut{} (for \gdsuites{}) or connect to it (for \gdjobs{})  and then execute the \gdsuite{} or \gdjob{} you specified.
+\item The client will connect to the \gdagent, connect to the \gddb{}, open the \gdproject{}, start the \gdaut{} (for a \gdsuite{}) or connect to it (for \gdjobs{})  and then execute the \gdsuite{} or \gdjob{} you specified.
 \item Once the test has finished, the client will show an exit code.
 \begin{itemize}
   \item \bxcaption{Exit code: 0} indicates that the test was successful.

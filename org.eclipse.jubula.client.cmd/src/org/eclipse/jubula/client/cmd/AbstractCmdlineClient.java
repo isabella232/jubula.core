@@ -22,6 +22,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.StringUtils;
@@ -40,6 +41,10 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
+import org.eclipse.jubula.client.core.preferences.database.H2ConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.MySQLConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.DebugConstants;
@@ -69,6 +74,10 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     /** error message */
     protected static final String OPT_UNKNOWN = 
         Messages.UnrecognizedOption + StringConstants.COLON 
+        + StringConstants.SPACE;
+    /** error message */
+    protected static final String JDBC_UNKNOWN = 
+        Messages.UnsupportedJDBC + StringConstants.COLON 
         + StringConstants.SPACE;
     /** log facility */
     private static Logger log = 
@@ -250,12 +259,16 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         options.addOption(createOption(ClientStrings.CONFIG, true, 
                 ClientStrings.CONFIGFILE,
                 Messages.ClientConfigOpt, false));
-        options.addOption(createOption(ClientTestStrings.DBURL, true, 
+        OptionGroup ogConnection = new OptionGroup();
+        
+        ogConnection.addOption(createOption(ClientTestStrings.DBURL, true, 
                 ClientTestStrings.DATABASE,
                 Messages.ClientDburlOpt, false));
-        options.addOption(createOption(ClientTestStrings.DB_SCHEME, true, 
+        ogConnection.addOption(createOption(ClientTestStrings.DB_SCHEME, true, 
                 ClientTestStrings.SCHEME, 
                 Messages.ClientDbschemeOpt, false));
+        options.addOptionGroup(ogConnection);
+        
         options.addOption(createOption(ClientTestStrings.DB_USER, true, 
                 ClientTestStrings.USER, 
                 Messages.ClientDbuserOpt, false));
@@ -428,9 +441,18 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     private void preValidate(JobConfiguration job) throws PreValidateException {
         StringBuilder errorMsg = new StringBuilder();
         errorMsg.append(Messages.ClientMissingArgs);
-        if (job.getDbConnectionName() == null) {
+        if (job.getDbConnectionName() == null && job.getDb() == null) {
             appendError(errorMsg, ClientTestStrings.DB_SCHEME, 
-                    ClientTestStrings.SCHEME);
+                    ClientTestStrings.SCHEME + " OR"); //$NON-NLS-1$
+            appendError(errorMsg, ClientTestStrings.DBURL, 
+                    ClientTestStrings.DATABASE);
+        }
+        if (job.getDb() != null 
+                && !(job.getDb().startsWith(OracleConnectionInfo.JDBC_PRE)
+                || job.getDb().startsWith(MySQLConnectionInfo.JDBC_PRE)
+                || job.getDb().startsWith(PostGreSQLConnectionInfo.JDBC_PRE) 
+                || job.getDb().startsWith(H2ConnectionInfo.JDBC_PRE))) {
+            appendError(errorMsg, JDBC_UNKNOWN, job.getDb());
         }
         if (job.getDbuser() == null) {
             appendError(errorMsg, ClientTestStrings.DB_USER, 
@@ -444,7 +466,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         if (errorOccured) {
             throw new PreValidateException(errorMsg.toString());
         }
-        if (job.getDbscheme() == null) {
+        if (job.getDbscheme() == null && job.getDb() == null) {
             List<DatabaseConnection> availableConnections = 
                 DatabaseConnectionConverter.computeAvailableConnections();
             List<String> connectionNames = new ArrayList<String>();

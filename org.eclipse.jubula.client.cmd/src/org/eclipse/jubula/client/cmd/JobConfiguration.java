@@ -36,6 +36,10 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
+import org.eclipse.jubula.client.core.preferences.database.H2ConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.MySQLConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
+import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.osgi.util.NLS;
@@ -172,7 +176,7 @@ public class JobConfiguration {
     /**
      * @param connectionInfo The connection information to use.
      */
-    private void setDbscheme(DatabaseConnectionInfo connectionInfo) {
+    public void setDbscheme(DatabaseConnectionInfo connectionInfo) {
         m_dbConnectionInfo = connectionInfo;
     }
 
@@ -521,7 +525,11 @@ public class JobConfiguration {
     private void parseDBOptions(CommandLine cmd) {
         
         if (cmd.hasOption(ClientTestStrings.DBURL)) { 
-            setDb(cmd.getOptionValue(ClientTestStrings.DBURL)); 
+            final String dbURL = cmd.getOptionValue(ClientTestStrings.DBURL);
+            setDb(dbURL);
+            DatabaseConnectionInfo connectionInfo = getConnectionInfo(dbURL);
+            
+            setDbscheme(connectionInfo);
         }
         if (cmd.hasOption(ClientTestStrings.DB_SCHEME)) {
             setDbConnectionName(
@@ -535,7 +543,51 @@ public class JobConfiguration {
         }
     }
  
- 
+    /**
+     * @param dbURL
+     *            the dbURL string to get a database connection information for
+     * @return The corresponding database connection information or
+     *         <code>null</code> if no connection information available for the
+     *         given dbURL.
+     */
+    private static DatabaseConnectionInfo getConnectionInfo(
+        final String dbURL) {
+        DatabaseConnectionInfo connectionInfo = null;
+        if (dbURL.startsWith(OracleConnectionInfo.JDBC_PRE)) {
+            connectionInfo = new OracleConnectionInfo() {
+                @Override
+                public String getConnectionUrl() {
+                    return dbURL;
+                }
+            };
+        } else if (dbURL
+            .startsWith(PostGreSQLConnectionInfo.JDBC_PRE)) {
+            connectionInfo = new PostGreSQLConnectionInfo() {
+                @Override
+                public String getConnectionUrl() {
+                    return dbURL;
+                }
+            };
+        } else if (dbURL
+                .startsWith(MySQLConnectionInfo.JDBC_PRE)) {
+            connectionInfo = new MySQLConnectionInfo() {
+                @Override
+                public String getConnectionUrl() {
+                    return dbURL;
+                }
+            };
+        } else if (dbURL
+                .startsWith(H2ConnectionInfo.JDBC_PRE)) {
+            connectionInfo = new H2ConnectionInfo() {
+                @Override
+                public String getConnectionUrl() {
+                    return dbURL;
+                }
+            };
+        }
+        return connectionInfo;
+    }
+
     /**
      * @return List<String>
      */
@@ -788,7 +840,11 @@ public class JobConfiguration {
                     job.setResultDir(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DBURL)) {
-                    job.setDb(arg0.getValue());
+                    String dbURL = arg0.getValue();
+                    job.setDb(dbURL);
+                    DatabaseConnectionInfo connectionInfo =
+                            getConnectionInfo(dbURL);
+                    job.setDbscheme(connectionInfo);
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DB_SCHEME)) {
                     job.setDbConnectionName(arg0.getValue());

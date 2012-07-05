@@ -72,6 +72,7 @@ public class Messages extends NLS {
     public static String NoCorrespondingMessage;
     public static String NoSuchDatabaseConnection;
     public static String UnrecognizedOption;
+    public static String UnsupportedJDBC;
     
     static {
         // initialize resource bundle

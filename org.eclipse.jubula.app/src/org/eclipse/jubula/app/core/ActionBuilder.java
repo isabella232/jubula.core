@@ -34,6 +34,7 @@ import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.ide.IDEActionFactory;
 import org.eclipse.ui.menus.CommandContributionItem;
 
 
@@ -90,6 +91,9 @@ public class ActionBuilder {
 
     /** Action: undo */
     private IWorkbenchAction m_undo;
+
+    /** Action: choose workspace */
+    private IWorkbenchAction m_openWorkspaceAction;
 
     /**
      * 
@@ -160,6 +164,10 @@ public class ActionBuilder {
         m_paste.setText(Messages.ActionBuilderPasteItem);
         m_paste.setActionDefinitionId(pasteCommandId);
         configurer.registerGlobalAction(m_paste);
+        
+        m_openWorkspaceAction = IDEActionFactory.OPEN_WORKSPACE
+                .create(m_window);
+        configurer.registerGlobalAction(m_openWorkspaceAction);
         
         addMBTspecificActions(configurer);
     }
@@ -273,7 +281,11 @@ public class ActionBuilder {
                 IWorkbenchCommandConstants.FILE_RENAME);
         CommandHelper.createContributionPushItem(fileMenu,
                 IWorkbenchCommandConstants.FILE_REFRESH);
-        fileMenu.add(new Separator()); 
+        fileMenu.add(new Separator());
+        fileMenu.add(m_openWorkspaceAction);
+        CommandHelper.createContributionPushItem(fileMenu,
+                IWorkbenchCommandConstants.FILE_RESTART);
+        fileMenu.add(new Separator());
         CommandHelper.createContributionPushItem(fileMenu,
                 ActionFactory.IMPORT.getCommandId());
         CommandHelper.createContributionPushItem(fileMenu,
@@ -386,6 +398,9 @@ public class ActionBuilder {
         }
         if (m_resetPersp != null) {
             m_resetPersp.dispose();
+        }
+        if (m_openWorkspaceAction != null) {
+            m_openWorkspaceAction.dispose();
         }
     }
 }

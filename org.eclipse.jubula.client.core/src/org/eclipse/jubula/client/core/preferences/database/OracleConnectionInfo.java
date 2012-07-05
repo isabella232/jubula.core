@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.preferences.database;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 /**
  * 
@@ -18,7 +19,16 @@ import org.apache.commons.lang.StringUtils;
  * @created 19.01.2011
  */
 public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
+    /**
+     * the JDBC driver class name 
+     */
+    public static final String DRIVER_CLASS_NAME = "oracle.jdbc.driver.OracleDriver"; //$NON-NLS-1$
     
+    /**
+     * the JDBC connection prefix 
+     */
+    public static final String JDBC_PRE = "jdbc:oracle:thin:@"; //$NON-NLS-1$
+
     /**
      * Constructor
      */
@@ -28,15 +38,17 @@ public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
     
     @Override
     public String getConnectionUrl() {
-        StringBuilder sb = new StringBuilder("jdbc:oracle:thin:@"); //$NON-NLS-1$
+        StringBuilder sb = new StringBuilder(JDBC_PRE);
         sb.append(StringUtils.defaultString(getHostname()))
-            .append(":").append(getPort()) //$NON-NLS-1$
-            .append(":").append(StringUtils.defaultString(getDatabaseName())); //$NON-NLS-1$
+            .append(StringConstants.COLON)
+            .append(getPort())
+            .append(StringConstants.COLON)
+            .append(StringUtils.defaultString(getDatabaseName()));
         return sb.toString();
     }
 
     @Override
     public String getDriverClassName() {
-        return "oracle.jdbc.driver.OracleDriver"; //$NON-NLS-1$
+        return DRIVER_CLASS_NAME;
     }
 }

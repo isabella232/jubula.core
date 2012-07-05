@@ -20,7 +20,16 @@ import org.eclipse.persistence.config.PersistenceUnitProperties;
  * @created 19.01.2011
  */
 public class H2ConnectionInfo extends DatabaseConnectionInfo {
-
+    /**
+     * the JDBC driver class name 
+     */
+    public static final String DRIVER_CLASS_NAME = "org.h2.Driver"; //$NON-NLS-1$
+    
+    /**
+     * the JDBC connection prefix 
+     */
+    public static final String JDBC_PRE = "jdbc:h2:"; //$NON-NLS-1$
+    
     /** name of <code>location</code> property */
     public static final String PROP_NAME_LOCATION = "location"; //$NON-NLS-1$
 
@@ -62,7 +71,7 @@ public class H2ConnectionInfo extends DatabaseConnectionInfo {
     @Override
     public String getConnectionUrl() {
         StringBuilder sb = new StringBuilder();
-        sb.append("jdbc:h2:") //$NON-NLS-1$
+        sb.append(JDBC_PRE)
             .append(getLocation())
             .append(";MVCC=TRUE;AUTO_SERVER=TRUE;DB_CLOSE_ON_EXIT=FALSE"); //$NON-NLS-1$
         return sb.toString();
@@ -70,7 +79,7 @@ public class H2ConnectionInfo extends DatabaseConnectionInfo {
 
     @Override
     public String getDriverClassName() {
-        return "org.h2.Driver"; //$NON-NLS-1$
+        return DRIVER_CLASS_NAME;
     }
 
 }

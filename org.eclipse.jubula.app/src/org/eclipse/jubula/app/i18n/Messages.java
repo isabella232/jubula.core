@@ -47,35 +47,8 @@ public class Messages extends NLS {
     public static String ActionBuildershowView;
     public static String ActionBuilderWindowEntry;
     public static String CannotOpenThePerspective;
-    public static String ChooseWorkspaceDialogBrowse;
-    public static String ChooseWorkspaceDialogDialogMessage;
-    public static String ChooseWorkspaceDialogDialogText;
-    public static String ChooseWorkspaceDialogMessaageDir;
-    public static String ChooseWorkspaceDialogMessageArea;
-    public static String ChooseWorkspaceDialogSelectDir;
-    public static String ChooseWorkspaceDialogWorkspace;
-    public static String CouldNotReadVersionFile;
-    public static String CouldNotWriteVersionFile;
-    public static String LauncherAlreadyInUse;
-    public static String LauncherAlreadyInUseTitle;
-    public static String LauncherCannotBeSet;
-    public static String LauncherCannotBeSetTitle;
-    public static String LauncherCouldNotRead;
-    public static String LauncherCouldNotReadTitle;
-    public static String LauncherCouldNotWrite;
-    public static String LauncherCouldNotWriteTitle;
-    public static String LauncherDifferentVersionMessage;
-    public static String LauncherDifferentVersionTitle;
-    public static String LauncherNotValid;
-    public static String LauncherNotValidTitle;
-    public static String LauncherValidWorkspace;
-    public static String LauncherValidWorkspaceTitle;
     public static String JubulaWorkbenchWindowAdvisorWindowTitle;
-    public static String LaunchWorkspaceData;
-    public static String UnableToWriteWorkspaceData;
     public static String UnhandledRuntimeException;
-    public static String WorkSpaceDataCantWriteDataTitle;
-    public static String WorkSpaceDataCanWriteData;
     
     static {
         // initialize resource bundle
