@@ -11,3 +11,35 @@
 \begin{itemize}
 \item The tested versions for web \gdauts{} now include IE 9 and Firefox 10
 \end{itemize}
+
+
+%%%%%%%%%%might want to put this in separate release notes section%%%%%%%%%
+\textbf{Multiple \gdtestcasebrowser{} instances now supported}
+\begin{itemize}
+\item You can now open the \gdtestcasebrowser{} multiple times.
+\item You can designate one \gdtestcasebrowser{} as the main browser. This browser will be used for actions such as show specification etc.
+\end{itemize}
+
+\textbf{Workspace dialog now allows remembering of workspace}
+\begin{itemize}
+\item You can now select the option to remember your default workspace in the workspace chooser.
+\end{itemize}
+
+\textbf{Remember password and auto-login for \gddb{}}
+\begin{itemize}
+\item In the \gddb{} login dialog, you can select the option to remember your password. 
+\item If you have selected this option, you can also specify that the \gddb{} should be used as the default \gddb{} you will be automatically logged in when a \gddb{} connection is required. 
+\item The above options are not available for the embedded \gddb{}.
+\item To change the \gddb{} you are connected to, or to change your default database login, use:\\
+\bxmenu{Test}{Select Database}{}
+\end{itemize}
+
+\textbf{Auto-load for default \gdproject{}}
+\begin{itemize}
+\item In the \bxname{Open Project} dialog, you can now identify the selected \gdproject{} and version number as your default \gdproject{}.
+\item You can have one default \gdproject{} per workspace. 
+\item When you have a default \gdproject{} set, then selecting:\\
+\bxmenu{Test}{Open}{}\\
+will automatically load this \gdproject{}.
+\item You can remove the default loading in the \bxname{Test} preferences. 
+\end{itemize}
