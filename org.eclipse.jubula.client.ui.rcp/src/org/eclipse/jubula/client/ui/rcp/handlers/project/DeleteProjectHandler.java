@@ -216,8 +216,17 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
             if (dialog.getReturnCode() == Window.CANCEL) {
                 return;
             }
-            IProjectPO project = dialog.getSelection();
-            if (project == null) {
+            ProjectDialog.ProjectData project = dialog.getSelection();
+            IProjectPO projectToDelete = null;
+            for (IProjectPO projToDelete : projList) {
+                if (projToDelete.getGuid().equals(
+                        project.getGUID())
+                        && projToDelete.getVersionString().equals(
+                                project.getVersionString())) {
+                    projectToDelete = projToDelete;
+                }
+            }
+            if (projectToDelete == null) {
                 Plugin.stopLongRunning();
                 return;
             }
@@ -225,12 +234,13 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
             Integer questionID = null;
             Object[] param = null;
             IProjectPO actProj = GeneralStorage.getInstance().getProject();
-            if (actProj != null && actProj.getId().equals(project.getId())) {
+            if (actProj != null && actProj.getId().equals(
+                    projectToDelete.getId())) {
                 questionID = MessageIDs.Q_DELETE_ACTUAL_PROJECT;
                 deleteCurrentProject = true;
             } else {
                 questionID = MessageIDs.Q_DELETE_PROJECT;
-                param = new Object[]{project.getName()};
+                param = new Object[]{projectToDelete.getName()};
             }
             Plugin.startLongRunning(
                    Messages.DeleteProjectActionWaitWhileDeleting);
@@ -240,7 +250,8 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                 try {
                     PlatformUI.getWorkbench().getProgressService()
                         .busyCursorWhile(new DeleteProjectOperation(
-                            project, deleteCurrentProject, keepTestresults));
+                            projectToDelete, deleteCurrentProject, 
+                            keepTestresults));
                 } catch (InvocationTargetException e) {
                     // Exception occurred during the operation.
                     // The exception was already handled by the operation.

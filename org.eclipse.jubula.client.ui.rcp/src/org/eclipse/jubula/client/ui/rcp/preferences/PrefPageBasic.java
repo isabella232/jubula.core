@@ -83,6 +83,8 @@ public class PrefPageBasic extends PreferencePage implements
     private Button m_capInfoCheckbox;
     /** checkbox to decide if CAP infos should be displayed after CAP-name in testCaseEditor */
     private Button m_showTransientChildrenCheckBox;
+    /** checkbox to decide if load most recent project is active or not */
+    private Button m_loadDefaultProjectCheckBox;
     /** widgets used in preference page to define preference values private */
     private Button m_perspChange0Button;
     /** widgets used in preference page to define preference values private */
@@ -166,6 +168,7 @@ public class PrefPageBasic extends PreferencePage implements
         createShowOrigTestCaseName(composite);
         createShowCAPInfosCheckbox(composite);
         createShowTransientChildrensCheckbox(composite);
+        createDefaultProjectCheckbox(composite);
         createSeparator(composite, 3);
         createRememberGroup(composite);
         createSeparator(composite, 3);
@@ -226,6 +229,19 @@ public class PrefPageBasic extends PreferencePage implements
         ControlDecorator.decorateInfo(m_showTransientChildrenCheckBox,
                 "GDControlDecorator.showTransientChildrenCheckBox", false); //$NON-NLS-1$
     }
+    
+    /**
+     * creates the check box so set load most recent project as active or inactive
+     * @param composite the parent composite
+     */
+    private void createDefaultProjectCheckbox(Composite composite) {
+        m_loadDefaultProjectCheckBox = new Button(composite, SWT.CHECK);
+        m_loadDefaultProjectCheckBox.setText(
+                Messages.LoadDefaultProject);
+        m_loadDefaultProjectCheckBox.setSelection(Plugin.getDefault()
+                .getPreferenceStore().getBoolean(
+                        Constants.PERFORM_AUTO_PROJECT_LOAD_KEY));
+    }
 
     /**
      * create a grid layout with a selectable number of columns
@@ -233,7 +249,7 @@ public class PrefPageBasic extends PreferencePage implements
      * @param numColumns number of columns in the grid
      */
     private void setGridLayout(final Composite composite, int numColumns) {
-        /** Define laout rules for widget placement */
+        /** Define layout rules for widget placement */
         GridLayout compositeLayout = new GridLayout();
         compositeLayout.numColumns = numColumns;
         compositeLayout.horizontalSpacing = HORIZONTAL_SPACING_10;
@@ -479,6 +495,9 @@ public class PrefPageBasic extends PreferencePage implements
                 .getDefaultBoolean(Constants.SHOWCAPINFO_KEY));
         m_showTransientChildrenCheckBox.setSelection(m_store
                 .getDefaultBoolean(Constants.SHOW_TRANSIENT_CHILDREN_KEY));
+        m_loadDefaultProjectCheckBox.setSelection(m_store
+                .getDefaultBoolean(
+                        Constants.PERFORM_AUTO_PROJECT_LOAD_KEY));
         m_perspChangeValue = m_store.getDefaultInt(Constants.PERSP_CHANGE_KEY);
         m_rememberValue = m_store.getDefaultBoolean(Constants.REMEMBER_KEY);
         setRadioSelection();
@@ -517,6 +536,8 @@ public class PrefPageBasic extends PreferencePage implements
                 m_capInfoCheckbox.getSelection());
         getPreferenceStore().setValue(Constants.SHOW_TRANSIENT_CHILDREN_KEY,
                 m_showTransientChildrenCheckBox.getSelection());
+        getPreferenceStore().setValue(Constants.PERFORM_AUTO_PROJECT_LOAD_KEY, 
+                m_loadDefaultProjectCheckBox.getSelection());
         removeListener();
         return super.performOk();
     }
