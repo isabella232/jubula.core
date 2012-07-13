@@ -46,6 +46,7 @@ public class Messages extends NLS {
     public static String ActionBuilderSearch;
     public static String ActionBuildershowView;
     public static String ActionBuilderWindowEntry;
+    public static String AutoLogonJob;
     public static String CannotOpenThePerspective;
     public static String JubulaWorkbenchWindowAdvisorWindowTitle;
     public static String UnhandledRuntimeException;
