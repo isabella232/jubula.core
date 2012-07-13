@@ -56,6 +56,17 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
             "org.eclipse.jubula.client.ui.selectDatabaseParameter";
     
     /**
+     * Checks if automatic database login is active
+     * 
+     * @return true if active and false otherwise
+     */
+    public static boolean shouldAutoConnectToDB() {
+        return !StringConstants.EMPTY.equals(Plugin.getDefault()
+                .getPreferenceStore()
+                .getString(Constants.AUTOMATIC_DATABASE_CONNECTION_KEY));
+    }
+    
+    /**
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
@@ -77,7 +88,7 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
             userName = credentials.getDBusername();
             pwd = credentials.getDBpassword();
             performLogin = true;
-        } else if (explicitSelection || !credentials.checkAutoDbConnection()) {
+        } else if (explicitSelection || !shouldAutoConnectToDB()) {
             DBLoginDialog dialog = new DBLoginDialog(getActiveShell());
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
@@ -88,7 +99,7 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
                 dbInfo = dialog.getDatabaseConnection().getConnectionInfo();
                 performLogin = true;
             }
-        } else if (credentials.checkAutoDbConnection()) {
+        } else if (shouldAutoConnectToDB()) {
             credentials.setAutoConnCredentials();
             dbInfo = credentials.getDatabaseInfo();
             userName = credentials.getDBusername();
@@ -166,21 +177,6 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
             m_pwd = m_dbInfo.getProperty(
                     PersistenceUnitProperties.JDBC_PASSWORD);
             
-        }
-        
-        /**
-         * Checks if automatic database login is active
-         * 
-         * @return true if active and false otherwise
-         */
-        private boolean checkAutoDbConnection() {
-            boolean autoConn = false;
-            IPreferenceStore store = Plugin.getDefault().getPreferenceStore();
-            if (!StringConstants.EMPTY.equals(store
-                    .getString(Constants.AUTOMATIC_DATABASE_CONNECTION_KEY))) {
-                autoConn = true;
-            }
-            return autoConn;
         }
         
         /**

@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.core;
 
-import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jubula.app.Activator;
 import org.eclipse.jubula.app.i18n.Messages;
@@ -26,6 +29,13 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
 import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
+import org.eclipse.jubula.client.ui.constants.CommandIDs;
+import org.eclipse.jubula.client.ui.handlers.project.AbstractSelectDatabaseHandler;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.ProjectUIBP;
+import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
+import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
@@ -45,6 +55,11 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * @created 23.08.2005
  */
 public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
+    /**
+     * the delay used to schedule the auto logon job
+     */
+    private static final int AUTO_LOGON_JOB_SCHEDULE_DELAY = 1000;
+
     /**
      * @author BREDEX GmbH
      * @created 09.04.2011
@@ -197,6 +212,36 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         Plugin.createStatusLineItems();
         Plugin.showStatusLine((IWorkbenchPart)null);
         addMainWindowTitleUpdater();
+        checkAndPerformStartupHooks();
+    }
+
+    /**
+     * invoke implicit startup hooks
+     */
+    private void checkAndPerformStartupHooks() {
+        boolean performAutoDBConnect = AbstractSelectDatabaseHandler
+                .shouldAutoConnectToDB();
+        boolean performAutoProjectLoad = ProjectUIBP.getInstance()
+                .shouldPerformAutoProjectLoad();
+        if (performAutoDBConnect) {
+            final String commandID;
+            if (performAutoProjectLoad) {
+                commandID = RCPCommandIDs.OPEN_PROJECT_COMMAND_ID;
+            } else {
+                commandID = CommandIDs.SELECT_DATABASE_COMMAND_ID;
+            }
+            JobUtils.executeJob(new Job(Messages.AutoLogonJob) {
+                @Override
+                protected IStatus run(IProgressMonitor monitor) {
+                    Plugin.getDisplay().asyncExec(new Runnable() {
+                        public void run() {
+                            CommandHelper.executeCommand(commandID);
+                        }
+                    });
+                    return Status.OK_STATUS;
+                }
+            }, null, AUTO_LOGON_JOB_SCHEDULE_DELAY);
+        }
     }
 
     /**
