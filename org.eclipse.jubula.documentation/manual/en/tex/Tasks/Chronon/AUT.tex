@@ -38,6 +38,18 @@ You should bear the following in mind when using Chronon for recording informati
 \item Because of this, we recommend executing individual \gdcases{} (use cases) in \gdsuites{} that you want to analyze with Chronon. You should ensure that any \gdehandlers{} in the \gdsuite{} will not cause the \gdaut{} to restart.
 \end{itemize}
 
+\textbf{Chronon and continuous integration}\\
+
+Although you could technically use Chronon with \app{} outside of the \ite{} in Continuous Integration environments, neither BREDEX nor Chronon Systems recommends or will provide support for such cases.
+
+The current integration with Chronon is meant to be used inside of the \ite{}. If you do want to record your tests outside of the \ite{}, please look at Chronon Systems' Chronon recording server:\\
+ \href{http://www.chrononsystems.com/products/chronon-recording-server/}{http://www.chrononsystems.com/products/chronon-recording-server/}\\
+and Embedded Chronon:\\
+\href{http://www.chrononsystems.com/products/embedded-chronon}{http://www.chrononsystems.com/products/embedded-chronon} \\
+ offerings which are explicitly designed for and support such use cases.
+
+
+
 \subsubsection{Analyzing the generated reports}
 \label{TasksChrononTools}
 To analyze the reports generated, you will require the Chronon Time Travelling Debugger from Chronon Systems. \app{} users can download a trial version of this tool. The link to the trial version is provided in the expert \gdaut{} configuration.
