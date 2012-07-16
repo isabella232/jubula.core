@@ -28,6 +28,13 @@ will automatically load this \gdproject{}.
 \item You can remove the default loading in the \bxname{Test} preferences. 
 \end{itemize}
 
+\textbf{Testexec and DBTool can use -dburl instead of workspace (-data) parameter}
+\begin{itemize}
+\item To make working with the testexec and dbtool easier, you can now use the dburl parameter to specify which \gddb{} to connect to during the process.
+\item This removes the need to specify which workspace to use (via \bxshell{-data}) when working with the testexec and dbtool. 
+\item You can still enter the workspace and the -dbscheme information if you prefer not to use the -dburl parameter. 
+\end{itemize}
+
 \textbf{Chronon support}
 \begin{itemize}
 \item \app{} now allows the use of an embedded Chronon recorder and also the production of Chronon recording files during automated tests (\jb{} users: this feature is currently only available in the standalone version). 
