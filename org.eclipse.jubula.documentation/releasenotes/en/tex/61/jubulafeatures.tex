@@ -1,24 +1,3 @@
-%need to add 601 release notes to this as well, make sure nothing double and all in
-
-\textbf{Chronon support}
-\begin{itemize}
-\item \app{} now allows the use of an embedded Chronon recorder and also the production of Chronon recording files during automated tests (\jb{} users: this feature is currently only available in the standalone version). 
-\item Activating the embedded Chronon recorder in \app{} will result in your actions being recorded in a monitoring file which can be used for analysis purposes should you encounter any errors.
-\item You can also configure your \gdaut{} to use Chronon as a monitoring agent so that you can generate recording files from your automated tests. 
-\item The currently used version of Chronon is 2.0. There are some performance issues still in this version that may lead to test runs and performance being affected, particularly in larger \gdauts{} and \gdprojects{}. Please follow the instructions in the documentation for increasing heap size and ensuring the capability of your test machines. 
-\item We do not recommend having Chronon running at all times, due to possible performance degradations through the monitoring. Instead, we recommend that you activate the Chronon recorder when you are trying to reproduce an error.
-\end{itemize}
-
-\textbf{Frames and iFrames now supported for Web Testing}
-\begin{itemize}
-\item \gdauts{} that contain Frames and iFrames can now be tested by \app{}
-\end{itemize}
-
-\textbf{Tests updated to newer versions of IE and Firefox}
-\begin{itemize}
-\item The tested versions for web \gdauts{} now include IE 9 and Firefox 10
-\end{itemize}
-
 \textbf{Multiple \gdtestcasebrowser{} instances now supported}
 \begin{itemize}
 \item You can now open the \gdtestcasebrowser{} multiple times.
@@ -47,4 +26,17 @@
 \bxmenu{Test}{Open}{}\\
 will automatically load this \gdproject{}.
 \item You can remove the default loading in the \bxname{Test} preferences. 
+\end{itemize}
+
+\textbf{Testexec and DBTool can use -dburl instead of workspace (-data) parameter}
+\begin{itemize}
+\item To make working with the testexec and dbtool easier, you can now use the dburl parameter to specify which \gddb{} to connect to during the process.
+\item This removes the need to specify which workspace to use (via \bxshell{-data}) when working with the testexec and dbtool. 
+\item You can still enter the workspace and the -dbscheme information if you prefer not to use the -dburl parameter. 
+\end{itemize}
+
+
+\textbf{Frames and iFrames now supported for Web Testing}
+\begin{itemize}
+\item \gdauts{} that contain Frames and iFrames can now be tested by \app{}
 \end{itemize}
