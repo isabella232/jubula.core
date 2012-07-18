@@ -160,6 +160,9 @@ public class TestSuiteBP extends NodeBP {
                 INodePO parent, INodePO node, boolean alreadyVisited) {
             if (m_nodeType.isAssignableFrom(node.getClass())) {
                 m_listOfExecNodes.add((T) node);
+                // short circuit optimization. we've found the exec node.
+                // we do not need to examine its children
+                return false;
             }
             return true;
         }

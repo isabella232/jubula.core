@@ -32,6 +32,8 @@ import javax.persistence.Version;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 /**
  * @author BREDEX GmbH
@@ -39,7 +41,7 @@ import org.eclipse.jubula.tools.exception.Assert;
  */
 @Entity
 @Table(name = "OM_CATEGORY")
-class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
+public class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
 
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
@@ -257,6 +259,7 @@ class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
                orphanRemoval = true)
     @JoinColumn(name = "FK_CATEGORY")
     @OrderColumn(name = "IDX")
+    @BatchFetch(value = BatchFetchType.JOIN)
     private List<IObjectMappingAssoziationPO> getHbmAssociationList() {
         return m_childAssocList;
     }
@@ -284,6 +287,7 @@ class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
                fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_PARENT")
     @OrderColumn(name = "IDX")
+    @BatchFetch(value = BatchFetchType.JOIN)
     private List<IObjectMappingCategoryPO> getHbmCategoryList() {
         return m_childCategoryList;
     }

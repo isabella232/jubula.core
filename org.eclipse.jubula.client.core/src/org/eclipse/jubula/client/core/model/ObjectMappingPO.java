@@ -38,6 +38,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 
 /** 
@@ -527,6 +529,7 @@ class ObjectMappingPO implements IObjectMappingPO {
     @OneToOne(targetEntity = ObjectMappingCategoryPO.class, 
               cascade = CascadeType.ALL, fetch = FetchType.EAGER, 
               optional = false)
+    @BatchFetch(value = BatchFetchType.JOIN)
     public IObjectMappingCategoryPO getMappedCategory() {
         clearMappingsCache(); // may be changed outside of class
         return m_mappedCategory;
@@ -550,6 +553,7 @@ class ObjectMappingPO implements IObjectMappingPO {
     @OneToOne(targetEntity = ObjectMappingCategoryPO.class, 
               cascade = CascadeType.ALL, fetch = FetchType.EAGER, 
               optional = false)
+    @BatchFetch(value = BatchFetchType.JOIN)
     public IObjectMappingCategoryPO getUnmappedLogicalCategory() {
         clearMappingsCache(); // may be changed outside of class
         return m_unmappedLogicalCategory;
@@ -575,6 +579,7 @@ class ObjectMappingPO implements IObjectMappingPO {
     @OneToOne(targetEntity = ObjectMappingCategoryPO.class, 
               cascade = CascadeType.ALL, fetch = FetchType.EAGER, 
               optional = false)
+    @BatchFetch(value = BatchFetchType.JOIN)
     public IObjectMappingCategoryPO getUnmappedTechnicalCategory() {
         clearMappingsCache(); // may be changed outside of class
         return m_unmappedTechnicalCategory;

@@ -46,6 +46,8 @@ import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.utils.DependencyCheckerOp;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Index;
 
 
@@ -231,6 +233,7 @@ abstract class NodePO implements INodePO {
                joinColumns = @JoinColumn(name = "PARENT"), 
                inverseJoinColumns = @JoinColumn(name = "CHILD"))
     @OrderColumn(name = "IDX")
+    @BatchFetch(value = BatchFetchType.JOIN)
     List<INodePO> getHbmNodeList() {
         return m_nodeList;
     }

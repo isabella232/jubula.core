@@ -42,6 +42,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Index;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -526,6 +528,7 @@ class ExecTestCasePO extends TestCasePO implements
                fetch = FetchType.EAGER, targetEntity = CompNamesPairPO.class)
     @MapKeyColumn(name = "MK_EXECTC_COMPNAMES")
     @JoinColumn(name = "FK_EXECTC")
+    @BatchFetch(value = BatchFetchType.JOIN)
     private Map<String, ICompNamesPairPO> getHbmCompNamesMap() {
         return m_compNamesMap;
     }

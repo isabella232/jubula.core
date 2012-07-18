@@ -35,6 +35,8 @@ import javax.persistence.Version;
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 
 /**
@@ -210,6 +212,7 @@ class TestDataPO implements ITestDataPO {
     @MapKeyColumn(name = "LOCALE")
     @Column(name = "TD_VALUE", length = 4000, nullable = false)
     @JoinColumn(name = "I18N_STR")
+    @BatchFetch(value = BatchFetchType.JOIN)
     private Map<String, String> getMap() {
         return m_map;
     }

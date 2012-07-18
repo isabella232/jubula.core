@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +20,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -36,6 +36,8 @@ import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 /**
  * @author BREDEX GmbH
@@ -147,7 +149,7 @@ public class ObjectMappingAssoziationPO
      * {@inheritDoc}
      */
     public void setLogicalNames(List<String> logicalNames) {
-        m_logicalNames = new ArrayList<String>(logicalNames);
+        m_logicalNames = logicalNames;
     }
     /**
      * {@inheritDoc}
@@ -171,7 +173,9 @@ public class ObjectMappingAssoziationPO
      * 
      * @return Returns the technicalName.
      */
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = CompIdentifierPO.class)
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = CompIdentifierPO.class,
+            fetch = FetchType.EAGER)
+    @BatchFetch(value = BatchFetchType.JOIN)
     public ICompIdentifierPO getTechnicalName() {
         return m_technicalName;
     }
@@ -180,11 +184,12 @@ public class ObjectMappingAssoziationPO
      *         
      * {@inheritDoc}
      */
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "LOGICAL_NAME")
     @JoinColumn(name = "OM_ASSOC")
     @OrderColumn(name = "IDX")
     @Column(name = "LOGICAL_NAME", length = 4000)
+    @BatchFetch(value = BatchFetchType.JOIN)
     public List<String> getLogicalNames() {
         return m_logicalNames;
     }

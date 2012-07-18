@@ -29,6 +29,8 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 
 /**
@@ -84,6 +86,7 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
                joinColumns = @JoinColumn(name = "EVENT_HANDLER_ID"))
     @MapKeyColumn(name = "EVENT_TYPE_KEY", nullable = false, 
                   table = "EVENT_HANDLERS")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public Map<String, IEventExecTestCasePO> getEventExecTcMap() {
         return m_eventExecTcMap;
     }

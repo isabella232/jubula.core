@@ -35,6 +35,8 @@ import javax.persistence.Version;
 
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 /**
  * @author BREDEX GmbH
@@ -233,6 +235,7 @@ class AUTMainPO implements IAUTMainPO {
     @OneToOne(cascade = CascadeType.ALL, 
               fetch = FetchType.EAGER, 
               targetEntity = ObjectMappingPO.class)
+    @BatchFetch(value = BatchFetchType.JOIN)
     private IObjectMappingPO getHbmObjMap() {
         return m_objMap;
     }

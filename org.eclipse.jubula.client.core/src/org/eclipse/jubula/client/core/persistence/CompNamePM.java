@@ -25,7 +25,6 @@ import javax.persistence.FlushModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
 
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
@@ -40,6 +39,8 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.core.persistence.locking.LockedObjectPO;
@@ -131,20 +132,6 @@ public class CompNamePM extends AbstractNamePM {
     private static final String SQ_REUSE_TYPE_PAIRS_IGNORE = 
         " and not compNamePair.id in :" + P_IGNORE_PAIRS; //$NON-NLS-1$
 
-
-    /**
-     * Query to find the types of reuse of a component name by object mapping 
-     * associations.
-     */
-    private static final String Q_REUSE_TYPE_ASSOCS = 
-        "select assoc from ObjectMappingAssoziationPO as assoc," //$NON-NLS-1$
-        + " CompIdentifierPO as compId," //$NON-NLS-1$
-        + " ComponentNamePO as compName" //$NON-NLS-1$
-        + " join assoc.logicalNames as logicalName" //$NON-NLS-1$
-        + " where logicalName = compName.hbmGuid" //$NON-NLS-1$
-        + " and logicalName = :" + P_COMP_NAME_GUID //$NON-NLS-1$
-        + " and assoc.technicalName = compId" //$NON-NLS-1$
-        + " and compName.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
      * Query to find the types of reuse of a component name by test steps.
@@ -805,12 +792,6 @@ public class CompNamePM extends AbstractNamePM {
             toFill.addAll(getPairReuseTypes(
                     compNameGuid, parentProjectId, ignoreNamePairIds, s));
             
-            final Query mappingQuery = s.createQuery(Q_REUSE_TYPE_ASSOCS);
-            mappingQuery.setParameter(P_PARENT_PROJECT_ID, parentProjectId);
-            mappingQuery.setParameter(P_COMP_NAME_GUID, compNameGuid);
-            
-            List<IObjectMappingAssoziationPO> assocs = 
-                mappingQuery.getResultList();
             List<String> assocCompTypes = new ArrayList<String>();
             CompSystem compSystem = 
                 ComponentBuilder.getInstance().getCompSystem();
@@ -818,22 +799,27 @@ public class CompNamePM extends AbstractNamePM {
             // Find the toolkit corresponding to each Association. This allows
             // us to perform the necessary mapping from Component Class to
             // Component Type.
-            CriteriaQuery query = s.getCriteriaBuilder().createQuery();
-            List<IAUTMainPO> allAuts = s.createQuery(query.select(
-                    query.from(PoMaker.getAUTMainClass()))).getResultList();
-            for (IObjectMappingAssoziationPO assoc : assocs) {
-                IComponentIdentifier technicalName = assoc.getTechnicalName();
-                if (technicalName != null) {
-                    for (IAUTMainPO aut : allAuts) {
-                        if (!ignoreAutIds.contains(aut.getId())) {
-                            if (aut.getObjMap().getMappings().contains(assoc)) {
+            IProjectPO inSessionProject = 
+                    s.find(NodeMaker.getProjectPOClass(), parentProjectId);
+            
+            Collection<IAUTMainPO> allAutsForProject = 
+                    inSessionProject.getAutMainList();
+
+            for (IAUTMainPO aut : allAutsForProject) {
+                if (!ignoreAutIds.contains(aut.getId())) {
+                    for (IObjectMappingAssoziationPO assoc 
+                            : aut.getObjMap().getMappings()) {
+                        IComponentIdentifier technicalName = 
+                                assoc.getTechnicalName();
+                        if (technicalName != null) {
+                            if (assoc.getLogicalNames().contains(
+                                    compNameGuid)) {
                                 List<Component> availableComponents = 
-                                    compSystem.getComponents(
-                                            aut.getToolkit(), true);
+                                        compSystem.getComponents(
+                                                aut.getToolkit(), true);
                                 assocCompTypes.add(CompSystem.getComponentType(
                                         technicalName.getSupportedClassName(), 
                                         availableComponents));
-                                break;
                             }
                         }
                     }

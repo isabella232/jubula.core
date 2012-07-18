@@ -28,6 +28,8 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 /**
  * class to manage the list with testdata, associated with a dataset number
@@ -138,6 +140,7 @@ class DataSetPO implements IDataSetPO {
                targetEntity = TestDataPO.class)
     @OrderColumn(name = "IDX_TEST_DATA_LIST")
     @JoinColumn(name = "FK_TEST_DATA_LIST")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public List<ITestDataPO> getList() {
         return m_list;
     }
