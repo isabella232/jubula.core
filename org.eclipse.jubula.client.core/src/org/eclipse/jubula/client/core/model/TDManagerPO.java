@@ -36,6 +36,8 @@ import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Index;
 
 
@@ -182,6 +184,7 @@ class TDManagerPO implements ITDManager {
                targetEntity = DataSetPO.class,
                fetch = FetchType.EAGER)
     @OrderColumn(name = "IDX")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public List<IDataSetPO> getDataTable() {
         return m_dataTable;
     }
@@ -494,6 +497,7 @@ class TDManagerPO implements ITDManager {
     @Column(name = "UNIQUE_ID")
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_TD_MANAGER")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public List<String> getUniqueIds() {
         return m_uniqueIds;
     }

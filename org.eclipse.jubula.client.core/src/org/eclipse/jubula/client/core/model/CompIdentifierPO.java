@@ -29,6 +29,8 @@ import javax.persistence.Version;
 
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 /**
  * @author BREDEX GmbH
@@ -65,6 +67,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
     @Column(name = "NEIGHBOUR", length = 4000)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_COMP_ID")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public List getNeighbours() { // NOPMD by al on 3/19/07 1:26 PM
         return super.getNeighbours();
     }
@@ -119,6 +122,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
     @Column(name = "HIERARCHY_NAME", length = 4000)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_COMP_ID")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public List<String> getHierarchyNames() { // NOPMD by al on 3/19/07 1:26 PM
         return super.getHierarchyNames();
     }

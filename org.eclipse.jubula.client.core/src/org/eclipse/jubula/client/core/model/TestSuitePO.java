@@ -27,6 +27,8 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.Transient;
 
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 
 /**
@@ -125,6 +127,7 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
      */
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = AUTMainPO.class)
     @JoinColumn(name = "AUT")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public IAUTMainPO getAut() {
         return m_aut;
     }
@@ -191,6 +194,7 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
      */
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = AUTConfigPO.class)
     @JoinColumn(name = "AUTCONF")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public IAUTConfigPO getAutConfig() {
         return m_autConfig;
         
@@ -211,6 +215,7 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     @CollectionTable(name = "DEF_EVENTH")
     @MapKeyColumn(name = "EVENT_TYPE")
     @Column(name = "REENTRY")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public Map < String, Integer > getDefaultEventHandler() {
         return m_defaultEventHandler;
     }

@@ -575,7 +575,7 @@ public class ProjectPM extends PersistenceManager {
      * @param s Session to use
      * @param key If of Project to preload
      */
-    @SuppressWarnings("nls")
+    @SuppressWarnings({ "nls", "unchecked" })
     private static void preloadData(EntityManager s, IProjectPO key)
         throws JBException {
 
@@ -585,58 +585,60 @@ public class ProjectPM extends PersistenceManager {
         // adds all project ids of reused projects to set
         findReusedProjects(projectIds, 
                 key.getProjectProperties().getUsedProjects());
-        preloadDataPerClass(s, projectIds, "TestDataPO");
-        preloadDataPerClass(s, projectIds, "DataSetPO");        
-        preloadDataPerClass(s, projectIds, "TDManagerPO");
-        preloadDataPerClass(s, projectIds, "CompNamesPairPO");
-        preloadDataPerClass(s, projectIds, "ComponentNamePO");
-        preloadDataPerClass(s, projectIds, "CompIdentifierPO");
-        preloadDataPerClass(s, projectIds, "AUTConfigPO");
-        preloadDataPerClass(s, projectIds, "AUTMainPO");
-        preloadDataPerClass(s, projectIds, "ObjectMappingPO");
-        preloadDataPerClass(s, projectIds, "ReusedProjectPO");
-        preloadDataPerClass(s, projectIds, "UsedToolkitPO");
-        preloadDataPerClass(s, projectIds, "AUTContPO");
-        List nodes = preloadDataPerClass(s, projectIds, "NodePO");
-        preloadDataPerClass(s, projectIds, "SpecObjContPO");
-        preloadDataPerClass(s, projectIds, "ExecObjContPO");
-        preloadDataPerClass(s, projectIds, "ObjectMappingAssoziationPO");
-        preloadDataPerClass(s, projectIds, "ParamDescriptionPO");
+
+        preloadDataForClass(s, projectIds, "CompNamesPairPO");
+        preloadDataForClass(s, projectIds, "CompIdentifierPO");
+        preloadDataForClass(s, projectIds, "AUTConfigPO");
+        preloadDataForClass(s, projectIds, "AUTMainPO");
+        preloadDataForClass(s, projectIds, "ReusedProjectPO");
+        preloadDataForClass(s, projectIds, "UsedToolkitPO");
+        preloadDataForClass(s, projectIds, "AUTContPO");
+        preloadDataForClass(s, projectIds, "ParamDescriptionPO");
+
+        preloadDataForClass(s, projectIds, "TDManagerPO");
+        preloadDataForClass(s, projectIds, "TestDataCubePO");
+
+        preloadDataForClass(s, projectIds, "CapPO");
+        List<ISpecTestCasePO> testCases = 
+                preloadDataForClass(s, projectIds, "SpecTestCasePO");
+        preloadDataForClass(
+                s, projectIds, "EventExecTestCasePO");
+        preloadDataForClass(s, projectIds, "TestSuitePO");
+        List<IExecTestCasePO> testCaseRefs = 
+                preloadDataForClass(s, projectIds, "ExecTestCasePO");
+        preloadDataForClass(s, projectIds, "CategoryPO");
         
         // for performance reasons, we prefill the cachedSpecTestCase
         // in ExecTestCasePOs
-        Set<IExecTestCasePO> exTC = new HashSet<IExecTestCasePO>();
         Map<String, ISpecTestCasePO> sTc = 
                 new HashMap<String, ISpecTestCasePO>();
-        for (Iterator iterator = nodes.iterator(); iterator.hasNext();) {
-            Object node = iterator.next();
-            if (node instanceof ISpecTestCasePO) {
-                ISpecTestCasePO testCase = (ISpecTestCasePO)node;
-                sTc.put(testCase.getGuid(), testCase);
-            } else if (node instanceof IExecTestCasePO) {
-                exTC.add((IExecTestCasePO)node);
-            }
-            
+        for (ISpecTestCasePO testCase : testCases) {
+            sTc.put(testCase.getGuid(), testCase);
         }
-        for (IExecTestCasePO testCaseRef : exTC) {
+        for (IExecTestCasePO testCaseRef : testCaseRefs) {
             ISpecTestCasePO spec = sTc.get(testCaseRef.getSpecTestCaseGuid());
             if (spec != null) {
                 testCaseRef.setCachedSpecTestCase(spec);
             }
         }
     }
+
     /**
+     * The Class for the given simple name must have the JPA attribute
+     * "hbmParentProjectId", as this attribute will be used to identify
+     * which elements should be preloaded.
+     * 
      * @param s Session to use
      * @param projectIds Ids of projects
      * @param simpleClassName class name for the prefetch
-     * @return List lodaded data
+     * @return List loaded data
      */
-    private static List preloadDataPerClass(EntityManager s, Set projectIds,
+    private static List preloadDataForClass(EntityManager s, Set projectIds,
             String simpleClassName) {
         StringBuilder qString = new StringBuilder(100);
-        qString.append("select node from "); //$NON-NLS-1$
+        qString.append("select e from "); //$NON-NLS-1$
         qString.append(simpleClassName);
-        qString.append(" as node where node.hbmParentProjectId in :ids"); //$NON-NLS-1$
+        qString.append(" as e where e.hbmParentProjectId in :ids"); //$NON-NLS-1$
         Query q = s.createQuery(qString.toString());
         q.setParameter("ids", projectIds); //$NON-NLS-1$
         return q.getResultList();

@@ -582,7 +582,8 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * @return Returns the test data cube container.
      */
     @OneToOne(cascade = CascadeType.ALL, 
-              targetEntity = TestDataCategoryPO.class)
+              targetEntity = TestDataCategoryPO.class,
+              fetch = FetchType.LAZY)
     @JoinColumn(name = "TDC_CONT", unique = true)
     private ITestDataCategoryPO getHbmTestDataCubeContPO() {
         return m_testdatacubecont;

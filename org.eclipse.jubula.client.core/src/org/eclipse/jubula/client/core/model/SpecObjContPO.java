@@ -23,6 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 
 /**
@@ -66,6 +68,7 @@ public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
                fetch = FetchType.EAGER, 
                targetEntity = NodePO.class)
     @OrderColumn(name = "IDX")
+    @BatchFetch(value = BatchFetchType.JOIN)
     List<ISpecPersistable> getHbmSpecObjList() {
         return m_specObjList;
     }

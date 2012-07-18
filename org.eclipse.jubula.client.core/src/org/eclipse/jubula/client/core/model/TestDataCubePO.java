@@ -38,6 +38,8 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Index;
 
 
@@ -120,6 +122,7 @@ class TestDataCubePO implements ITestDataCubePO {
                orphanRemoval = true)
     @JoinColumn(name = "PARAM_NODE")
     @OrderColumn(name = "IDX_PARAM_NODE")
+    @BatchFetch(value = BatchFetchType.JOIN)
     protected List<IParamDescriptionPO> getHbmParameterList() {
         return m_hbmParameterList;
     }   
@@ -270,6 +273,7 @@ class TestDataCubePO implements ITestDataCubePO {
               fetch = FetchType.EAGER, 
               targetEntity = TDManagerPO.class)
     @JoinColumn(name = "TD_MANAGER")
+    @BatchFetch(value = BatchFetchType.JOIN)
     protected ITDManager getHbmDataManager() {
         return m_dataManager;
     }
@@ -411,6 +415,7 @@ class TestDataCubePO implements ITestDataCubePO {
      */
     @ManyToOne(targetEntity = TestDataCubePO.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "REF_DATA_CUBE")
+    @BatchFetch(value = BatchFetchType.JOIN)
     private IParameterInterfacePO getHbmReferencedDataCube() {
         return m_referencedDataCube;
     }

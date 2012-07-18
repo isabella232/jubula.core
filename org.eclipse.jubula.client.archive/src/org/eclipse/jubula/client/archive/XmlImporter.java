@@ -1573,8 +1573,12 @@ class XmlImporter {
                         new ArrayList(tecNameXml.getHierarchyNameList()));
             }
 
+            // It is necessary to create a new (cloneable) list from the list
+            // of component names because the list itself is not cloneable.
+            // If the list is used directly, then 
             IObjectMappingAssoziationPO assoc = 
-                PoMaker.createObjectMappingAssoziationPO(tecName, logNames);
+                PoMaker.createObjectMappingAssoziationPO(tecName, 
+                        new ArrayList<String>(logNames));
             assoc.setType(assocXml.getType());
             category.addAssociation(assoc);
         }
