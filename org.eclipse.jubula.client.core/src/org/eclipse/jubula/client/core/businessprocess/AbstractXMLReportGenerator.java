@@ -271,10 +271,9 @@ public abstract class AbstractXMLReportGenerator {
         compEl.addText(
             StringUtils.defaultString(resultNode.getComponentName()));
         Element compTypeEl = insertInto.addElement("component-type"); //$NON-NLS-1$
-        compTypeEl.addText(CompSystemI18n.getString(cap.getComponentType(), 
-            true));
+        compTypeEl.addText(CompSystemI18n.getString(cap.getComponentType()));
         Element actionEl = insertInto.addElement("action-type"); //$NON-NLS-1$
-        actionEl.addText(CompSystemI18n.getString(cap.getActionName(), true));
+        actionEl.addText(CompSystemI18n.getString(cap.getActionName()));
         
         if (resultNode.getStatus() == TestResultNode.ERROR 
                 || resultNode.getStatus() == TestResultNode.RETRYING) {

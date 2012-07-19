@@ -445,7 +445,7 @@ public class CompSystem {
         }
         
         if (log.isDebugEnabled()) {
-            String translatedName = CompSystemI18n.getString(typeName, true);
+            String translatedName = CompSystemI18n.getString(typeName);
             String message = "Component " + translatedName + " does not exist"; //$NON-NLS-1$ //$NON-NLS-2$
             log.debug(message);
         }
@@ -487,7 +487,7 @@ public class CompSystem {
         }
         
         if (log.isDebugEnabled()) {
-            String translatedName = CompSystemI18n.getString(typeName, true);
+            String translatedName = CompSystemI18n.getString(typeName);
             String message = "Component " + translatedName + " does not exist"; //$NON-NLS-1$ //$NON-NLS-2$
             log.debug(message);
         }
