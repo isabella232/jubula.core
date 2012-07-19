@@ -215,7 +215,8 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     @CollectionTable(name = "DEF_EVENTH")
     @MapKeyColumn(name = "EVENT_TYPE")
     @Column(name = "REENTRY")
-    @BatchFetch(value = BatchFetchType.JOIN)
+    // No @BatchFetch(value = BatchFetchType.JOIN) here, as it was causing
+    // an NPE when deleting (with dbtool) a Project that contains Test Suites.
     public Map < String, Integer > getDefaultEventHandler() {
         return m_defaultEventHandler;
     }
