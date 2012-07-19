@@ -15,14 +15,17 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
@@ -40,6 +43,10 @@ public class CompSystemI18n {
     /** List of ResourceBundles */
     private static final List PLUGIN_BUNDLES = new LinkedList();
     
+    /** 
+     * mapping from i18n keys (String) to i18n values (String)
+     */
+    private static final Map I18N_MAP = new HashMap();
     
     /**
      * Constructor
@@ -68,16 +75,15 @@ public class CompSystemI18n {
      * @return a internationalized <code>String</code>.
      */
     public static String getString(String key) {
-        if (StringConstants.EMPTY.equals(key)) {
-            return key;
-        }
-        String str = key;
+
         try {
-            str = getStringInternal(key);
+            return getStringInternal(key);
         } catch (MissingResourceException mre) {
             logError(key, mre);
         }
-        return str;
+        
+        return key;
+        
     }
 
     /**
@@ -96,42 +102,31 @@ public class CompSystemI18n {
      * @return the value for the given key
      */
     private static String getStringInternal(String key) {
+        
+        if (key == null) {
+            return StringUtils.EMPTY;
+        }
+        
+        String value = (String)I18N_MAP.get(key);
+        if (value != null) {
+            return value;
+        }
+
         Iterator bundleIter = PLUGIN_BUNDLES.iterator();
         while (bundleIter.hasNext()) {
             ResourceBundle bundle = (ResourceBundle)bundleIter.next();
             try {
-                return bundle.getString(key);
+                value = bundle.getString(key);
+                I18N_MAP.put(key, value);
+                return value;
             } catch (MissingResourceException ex) {
                 // ok here, we search in multiple bundles
             }
         }
+        
+        I18N_MAP.put(key, key);
         throw new MissingResourceException("No entry found for key: " + key, //$NON-NLS-1$
             CompSystemI18n.class.getName(), key);
-    }
-    
-    /**
-     * Gets the internationalized String by a given key.
-     * @param key the key for the internationalized String.
-     * @param fallBack returns the key if no value found 
-     * @return a internationalized <code>String</code>.
-     */
-    public static String getString(String key, boolean fallBack) {
-        if (key == null) {
-            return StringConstants.EMPTY;
-        }
-        if (StringConstants.EMPTY.equals(key)) {
-            return key;
-        }
-        String str = StringConstants.EMPTY;
-        try {
-            str = getStringInternal(key);
-        } catch (MissingResourceException mre) {
-            if (fallBack) {
-                return key;
-            }
-            logError(key, mre);
-        }
-        return str;
     }
     
     /**
@@ -141,9 +136,6 @@ public class CompSystemI18n {
      * @return the internationalized string
      */
     public static String getString(String key, Object[] args) {
-        if (StringConstants.EMPTY.equals(key)) {
-            return key;
-        }
         try {
             MessageFormat formatter =
                 new MessageFormat(getStringInternal(key));

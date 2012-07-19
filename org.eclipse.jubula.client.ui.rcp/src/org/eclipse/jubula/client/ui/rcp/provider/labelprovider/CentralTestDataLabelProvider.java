@@ -44,8 +44,7 @@ public class CentralTestDataLabelProvider extends GeneralLabelProvider {
                 while (iter.hasNext()) {
                     IParamDescriptionPO descr = (IParamDescriptionPO)iter
                             .next();
-                    info.append(
-                            CompSystemI18n.getString(descr.getType(), true));
+                    info.append(CompSystemI18n.getString(descr.getType()));
                     info.append(StringConstants.COLON);
                     info.append(descr.getName());
                     if (iter.hasNext()) {

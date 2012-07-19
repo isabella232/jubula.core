@@ -151,8 +151,7 @@ public class StringHelper {
                         String paramValue = vSet.getValue();
                         // i18n only when default values are i18nable
                         if (!m_map.containsKey(paramValue)) {
-                            String value = CompSystemI18n.getString(
-                                paramValue, true);
+                            String value = CompSystemI18n.getString(paramValue);
                             m_map.put(paramValue, value);
                             m_map.put(value, paramValue);
                         }
