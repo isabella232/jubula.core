@@ -149,6 +149,10 @@ public interface ContextHelpIds {
     public static final String PREFPAGE_SERVER = PRAEFIX
         + "prefPageServerContextId"; //$NON-NLS-1$
     
+    /** help context id preference page */
+    public static final String PREFPAGE_EMBEDDED_CHRONON = PRAEFIX
+        + "prefPageEmbeddedChrononContextId"; //$NON-NLS-1$
+    
     /** help context id for the server preference page */
     public static final String PREFPAGE_EMBEDDED_AGENT = PRAEFIX
         + "prefPageEmbeddedAgentContextId"; //$NON-NLS-1$
