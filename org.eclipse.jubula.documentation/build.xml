@@ -5,6 +5,7 @@
 
 	<target name="setupBuildDocumentation">
 		<mkdir dir="${buildLogDir}" />
+		<loadproperties srcFile="${buildRoot}/build.properties" />
 		<fail unless="build.version" />
 		<echo message="Using build.version: ${build.version}" />
 		<exec executable="make" failonerror="true" dir="${buildRoot}">
