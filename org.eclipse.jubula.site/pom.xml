@@ -44,7 +44,7 @@
 		              <execution>
 		                <id>pack</id>
                         <configuration>
-                          <inputFile>${project.build.directory}/${project.artifactId}.zip</inputFile>
+                          <inputFile>${project.build.directory}/${project.artifactId}-${project.version}.zip</inputFile>
                         </configuration>
 		                <phase>package</phase>
 		                <goals>
@@ -57,7 +57,7 @@
 		              <execution>
 		                <id>sign</id>
 		                <configuration>
-                          <inputFile>${project.build.directory}/packed/${project.artifactId}.zip</inputFile> <!-- this is output from pack mojo -->
+                          <inputFile>${project.build.directory}/packed/${project.artifactId}-${project.version}.zip</inputFile> <!-- this is output from pack mojo -->
 		                  <signerInputDirectory>/home/data/httpd/download-staging.priv/technology/jubula/signing</signerInputDirectory>
 		                </configuration>
 		                <phase>package</phase>
