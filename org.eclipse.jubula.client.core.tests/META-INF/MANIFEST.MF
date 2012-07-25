@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests for Jubula Core
 Bundle-SymbolicName: org.eclipse.jubula.client.core.tests
-Bundle-Version: 1.2.1.qualifier
+Bundle-Version: 1.2.2.qualifier
 Bundle-Vendor: BREDEX GmbH
-Fragment-Host: org.eclipse.jubula.client.core;bundle-version="[1.2.1,1.3.0)"
+Fragment-Host: org.eclipse.jubula.client.core;bundle-version="[1.2.2,1.3.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.junit;bundle-version="[4.8.2,5.0.0)"
