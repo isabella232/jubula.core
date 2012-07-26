@@ -1,3 +1,5 @@
+\index{Chronon!Support for AUTs}
+
 You can configure your \gdaut{} to run with Chronon recording so that you can analyze any errors that occur during your automated test runs. See the section later \bxpref{TasksChrononTools} on analysing the reports for information on the tooling required to do this.
 
 \bxtipp{\jb users: The support for Chronon recording in \gdauts{} is currently only available in the standalone software.}
@@ -9,18 +11,63 @@ You can select Chronon as a monitoring agent and configure it in the Expert Sett
 \begin{enumerate}
 \item Open the \gdaut{} configuration dialog from the \gdproject{} properties \bxpref{projectproperties}.
 \item Select the \bxname{Expert} configuration. 
-\item Select Chronon as the monitoring agent. 
-\item You can then enter the configuration details for the monitoring. 
+\item Choose whether you want to use the integrated Chronon version \bxpref{TasksChrononAUTIntegrated} or a separate Chronon installation (recommended for continuous integration) \bxpref{TasksChrononAUTSeparate}. 
+\item You can then enter the configuration details for the monitoring.
+\end{enumerate}
+
+
+\subsubsection{Configuring the integrated Chronon for use with your \gdaut{}}
+\gdhelpid{autConfigSettingWizardPagePageContextId}{Configuring an AUT}
+\label{TasksChrononAUTIntegrated}
+You can use this option if you do not have a separate Chronon installation on your machine. Enter the following configuration details:
 \begin{description}
-\item [Package patterns:]{Enter a comma-separated list of packages that you want to be covered by the monitoring. The packages must adhere to the patterns as defined in the Chronon documentation, for example \bxshell{com.myorg.**} selects the whole com.myorg namespace. \bxshell{com.myorg.*} selects only classes in the com.myorg package. The documentation for the patterns is located at \\
+\item [Include patterns:]{Enter a comma-separated list of packages that you want to be covered by the monitoring. The packages must adhere to the patterns as defined in the Chronon documentation, for example \bxshell{com.myorg.**} selects the whole com.myorg namespace. \bxshell{com.myorg.*} selects only classes in the com.myorg package. The documentation for the patterns is located at \\
 \href{https://chronon.onconfluence.com/display/DOC/Include+and+Exclude+patterns}{https://chronon.onconfluence.com/display/\\
 DOC/Include+and+Exclude+patterns}.\\
  If you enter no patterns, the recording file will be empty.}
+\item [Exclude patterns:]{Enter a comma-separated list of packages that you want to be ignored by the monitoring. The packages must adhere to the patterns as defined in the Chronon documentation, for example \bxshell{com.myorg.**} selects the whole com.myorg namespace. \bxshell{com.myorg.*} selects only classes in the com.myorg package. The documentation for the patterns is located at \\
+\href{https://chronon.onconfluence.com/display/DOC/Include+and+Exclude+patterns}{https://chronon.onconfluence.com/display/\\
+DOC/Include+and+Exclude+patterns}.}
 \item [Target directory:]{Enter the path to a directory where the recording files should be written. The \gdaut{} must have write permissions to this place. Any non-existing folders will be automatically created. This target directory and all items it contains are deleted when the \gdaut{} is started or restarted. Once the \gdaut{} is started, the target directory is recreated ready for the next run. This means you must ensure you have copied any relevant files before starting or restarting the \gdaut{}. When the \gdaut{} is stopped after a test, the recording file is written to this target directory. The target directory can be relative to the \gdaut{} working directory, if you have entered one.}
-\item [Operating System:]{Enter \bxshell{win,} \bxshell{lin}, \bxshell{sol} or \bxshell{mac} (without quotes) to specify your operating system. }
-\item[JRE Architecture:]{Enter \bxshell{32} or \bxshell{64} (without quotes) to specify your architecture. If you have entered \bxshell{mac} as an operating system, you can only enter \bxshell{64}.}
+\item [Operating System:]{Enter \bxshell{win}, \bxshell{lin}, \bxshell{sol} or \bxshell{mac} to specify your operating system. }
+\item[JRE Architecture:]{Enter \bxshell{32} or \bxshell{64} to specify your architecture. If you have entered \bxshell{mac} as an operating system, you can only enter \bxshell{64}.}
 \end{description}
-\end{enumerate}
+
+\textbf{Integrated Chronon and continuous integration}\\
+
+Although you could technically use the integrated Chronon with \app{} outside of the \ite{} in Continuous Integration environments, neither BREDEX nor Chronon Systems recommends or will provide support for such cases.
+
+The use of the integrated Chronon for your \gdaut{}  is meant to be used inside of the \ite{}. If you do want to record your tests outside of the \ite{}, you should use a separate Chronon installation as documented in the following section \bxpref{TasksChrononAUTSeparate}. 
+
+Information on the Chronon Systems' Chronon recording server is available here:\\
+ \href{http://www.chrononsystems.com/products/chronon-recording-server/}{http://www.chrononsystems.com/products/chronon-recording-server/}\\
+and Embedded Chronon:\\
+\href{http://www.chrononsystems.com/products/embedded-chronon}{http://www.chrononsystems.com/products/embedded-chronon} \\
+ offerings which are explicitly designed for and support such use cases.
+
+
+\subsubsection{Configuring a separate Chronon installation for use with your \gdaut{}}
+\gdhelpid{autConfigSettingWizardPagePageContextId}{Configuring an AUT}
+\label{TasksChrononAUTSeparate}
+
+You can use this option if you have a separate Chronon Recording Server installation on your machine. This option is recommended for continuous integration processes.  Enter the following configuration details:
+
+\begin{description}
+\item [Java Agent JAR:]{Enter the path to the Chronon recorder JAR you have installed.}
+\item [Native Agent File:]{The path to the platform-specific native recorder agent library.}
+\item [Config file:]{Enter the absolute path to the configuration file for the recorder. The configuration file has the same setup as a Java properties file. It must contain the following properties:\\
+\bxshell{servermode} (set to true)\\
+\bxshell{name} (the \gdaut{} name as it will be displayed in the Chronon Recording Server UI)\\
+\bxshell{autostartwithconfig} (if you want the recording to start automatically (recommended when working with \app{}), then the recording parameters need to be set in the Chronon application.)\\ 
+\bxshell{port} (optional -- if none is entered, 8042 is used.). \\
+The documentation for the configuration file is available on the Chronon site:\\
+\href{http://chronon.onconfluence.com/\\
+display/DOC/Recorder+Configuration+File}{http://chronon.onconfluence.com/\\
+display/DOC/Recorder+Configuration+File}}
+\end{description}
+
+\bxtipp{You can also refer to the Chronon documentation for information on the required parameters to run your tests with the Recording Server. :\\
+\href{http://chronon.onconfluence.com/display/DOC/Recording+outside+Eclipse}{http://chronon.onconfluence.com/display/DOC/Recording+outside+Eclipse}\\}
 
 \subsubsection{Adapting tests to improve data collection}
 You should bear the following in mind when using Chronon for recording information in automated tests.\\
@@ -38,15 +85,6 @@ You should bear the following in mind when using Chronon for recording informati
 \item Because of this, we recommend executing individual \gdcases{} (use cases) in \gdsuites{} that you want to analyze with Chronon. You should ensure that any \gdehandlers{} in the \gdsuite{} will not cause the \gdaut{} to restart.
 \end{itemize}
 
-\textbf{Chronon and continuous integration}\\
-
-Although you could technically use Chronon with \app{} outside of the \ite{} in Continuous Integration environments, neither BREDEX nor Chronon Systems recommends or will provide support for such cases.
-
-The current integration with Chronon is meant to be used inside of the \ite{}. If you do want to record your tests outside of the \ite{}, please look at Chronon Systems' Chronon recording server:\\
- \href{http://www.chrononsystems.com/products/chronon-recording-server/}{http://www.chrononsystems.com/products/chronon-recording-server/}\\
-and Embedded Chronon:\\
-\href{http://www.chrononsystems.com/products/embedded-chronon}{http://www.chrononsystems.com/products/embedded-chronon} \\
- offerings which are explicitly designed for and support such use cases.
 
 
 

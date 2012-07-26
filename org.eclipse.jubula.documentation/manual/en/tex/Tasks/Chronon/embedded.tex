@@ -1,4 +1,6 @@
-The embedded support for Chronon in \app{} lets you record debug information while you are working with \app{}. Should an error occur, the Chronon report can be added to any bug reports or support conversations to help our team analyse the problem. 
+\index{Chronon!Embedded support}
+
+The embedded support for Chronon in \app{} lets you record debug information while you are working with \app{}. Should an error occur, the Chronon report can be added to any bug reports or support conversations to help our team analyze the problem. 
 
 \subsubsection{Turning on the recording}
 \begin{enumerate}
@@ -18,8 +20,10 @@ You can deactivate the Chronon recording by opening the Progress View and clicki
 Restarting or closing \app{} will also stop the recording. 
 
 \subsubsection{Accessing the Chronon report}
-The Chronon reports are saved to your home directory under:\\
-\bxname{.jubula/Chronon}\\
+The Chronon reports are saved by default to:\\
+\bxname{HOME/.jubula/Chronon}\\
+
+You can alter this location, as well as setting exclude and include patterns for the Chronon recording in the preferences \bxpref{TasksPrefsChronon}. 
 
 When working with Chronon in \app{} itself, a new folder is created for each recording session (one session = starting - recording - stopping). The relevant folder for a bug report can be zipped and attached to help our analysis. 
 
