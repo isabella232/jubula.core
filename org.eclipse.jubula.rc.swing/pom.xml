@@ -13,13 +13,13 @@
   <parent>
     <artifactId>org.eclipse.jubula.releng.client</artifactId>
     <groupId>org.eclipse.jubula</groupId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <relativePath>../org.eclipse.jubula.releng.client</relativePath>
   </parent>
 
   <groupId>org.eclipse.jubula</groupId>
   <artifactId>org.eclipse.jubula.rc.swing</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.3.0-SNAPSHOT</version>
 
   <packaging>eclipse-plugin</packaging>
 
@@ -27,7 +27,7 @@
     <dependency>
       <groupId>org.eclipse.jubula</groupId>
       <artifactId>org.eclipse.jubula.toolkit.generate.interfaces</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.3.0-SNAPSHOT</version>
       <type>pom</type>
     </dependency>
   </dependencies>
