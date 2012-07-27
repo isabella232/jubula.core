@@ -31,7 +31,7 @@ public class RefreshTestresultsHandler extends AbstractProjectHandler {
         if (activePart instanceof TestresultSummaryView) {
             final TestresultSummaryView summary = 
                 (TestresultSummaryView)activePart;
-            summary.refreshView();
+            summary.loadViewInput();
         }
         return null;
     }

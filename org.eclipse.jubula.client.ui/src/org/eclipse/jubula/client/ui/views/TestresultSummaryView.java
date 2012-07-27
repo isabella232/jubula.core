@@ -440,35 +440,25 @@ public class TestresultSummaryView extends ViewPart implements
                 new TestresultSummaryContentProvider());
         m_tableViewer.getTable().setLinesVisible(true);
         m_tableViewer.getTable().setHeaderVisible(true);
-        TableColumn sortColumn = m_tableViewer.getTable().getColumn(0);
-        m_tableViewer.getTable().setSortColumn(sortColumn);
-        m_tableViewer.getTable().setSortDirection(SWT.DOWN);
-        ColumnSortListener sortListener = new ColumnSortListener(
-                m_tableViewer, sortColumn);
 
-        for (TableColumn col : m_tableViewer.getTable().getColumns()) {
-            col.addSelectionListener(sortListener);
-        }
         ClientTestFactory.getClientTest()
             .addTestresultSummaryEventListener(this);
         m_tableViewer.setUseHashlookup(true);
 
         addContextMenu(m_tableViewer, m_headerMenu);
+        setTableViewerLayout();
         
-        // set table viewer / refresh
-        refreshView();
         m_tableViewer.addFilter(m_filter);
         PlatformUI.getWorkbench().getHelpSystem().setHelp(
                 m_tableViewer.getControl(),
                 ContextHelpIds.TESTRESULT_SUMMARY_VIEW);
-        setTableViewerLayout();
-        restoreViewStatus();
-        m_tableViewer.refresh();
         DataEventDispatcher.getInstance().addTestresultListener(
                 this, true);
         DatabaseStateDispatcher.addDatabaseStateListener(this);
         addDoubleClickListener(m_tableViewer);
-            
+
+        loadViewInput();
+        restoreViewStatus();
     }
 
     /**
@@ -534,9 +524,8 @@ public class TestresultSummaryView extends ViewPart implements
     /**
      * @param tableViewer
      *            the table viewer
-     * @return the added column.
      */
-    private TableViewerColumn addFailedCapsColumn(TableViewer tableViewer) {
+    private void addFailedCapsColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.EH_CAP_IMAGE);
@@ -564,15 +553,13 @@ public class TestresultSummaryView extends ViewPart implements
                             .getTestsuiteFailedTeststeps());
             }
         };
-        return column;
     }
 
     /**
      * @param tableViewer
      *            the table viewer
-     * @return the added column.
      */
-    private TableViewerColumn addDetailsColumn(TableViewer tableViewer) {
+    private void addDetailsColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(75);
         column.getColumn().setText(TESTRESULT_SUMMARY_DETAILS_AVAILABLE);
@@ -597,7 +584,6 @@ public class TestresultSummaryView extends ViewPart implements
                         .contains(((ITestResultSummaryPO)e2).getId()));
             }
         };
-        return column;
     }
 
     /**
@@ -690,17 +676,24 @@ public class TestresultSummaryView extends ViewPart implements
                 //restore sorting
                 IMemento sortChild = m_memento.getChild(TAG_SORT);
                 if (sortChild != null) {
-                    //set sort column
                     String sortHeader = sortChild.getString(TAG_SORT_COL);
                     for (int i = 0; i < table.getColumnCount(); i++) {
                         TableColumn tblCol = table.getColumn(i);
                         if (sortHeader.equals(tblCol.getText())) {
+                            //set sort column
                             table.setSortColumn(tblCol);
+                            //set sort direction
+                            final Integer direction = sortChild
+                                    .getInteger(TAG_SORT_DIRECTION);
+                            table.setSortDirection(direction);
+                            tblCol.notifyListeners(SWT.Selection, new Event());
+                            if (direction == SWT.DOWN) {
+                                tblCol.notifyListeners(SWT.Selection, 
+                                        new Event());
+                            }
+                            break;
                         }
                     }
-                    //set sort direction
-                    table.setSortDirection(
-                            sortChild.getInteger(TAG_SORT_DIRECTION));
                 }
             }
         }
@@ -835,7 +828,7 @@ public class TestresultSummaryView extends ViewPart implements
             public IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
                 TestResultSummaryPM.deleteTestruns(testrunIds);
-                refreshView();
+                loadViewInput();
                 monitor.done();
                 return Status.OK_STATUS;
             }
@@ -846,7 +839,7 @@ public class TestresultSummaryView extends ViewPart implements
     /**
      * refresh view
      */
-    public void refreshView() {
+    public void loadViewInput() {
         m_tableViewer.getControl().getDisplay().asyncExec(new Runnable() {
             public void run() {
                 List<ITestResultSummaryPO> metaList;
@@ -898,9 +891,8 @@ public class TestresultSummaryView extends ViewPart implements
     /**
      * Adds a "Testjob name" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addTestJobColumn(TableViewer tableViewer) {
+    private void addTestJobColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.TJ_IMAGE);
@@ -921,15 +913,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getTestJobName());
             }
         };
-        return column;
     }
     
     /**
      * Adds a "Test job Start Time" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addTestJobStartTimeColumn(
+    private void addTestJobStartTimeColumn(
             TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
@@ -955,15 +945,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getTestJobStartTime());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "Status decorator" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addStatusDecoratorColumn(
+    private void addStatusDecoratorColumn(
             TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(100);
@@ -1013,15 +1001,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getTestRunState());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "Project Name" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addProjectNameColumn(TableViewer tableViewer) {
+    private void addProjectNameColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setImage(IconConstants.PROJECT_IMAGE);
@@ -1042,15 +1028,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getProjectName());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "Testsuite name" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addTestsuiteColumn(TableViewer tableViewer) {
+    private void addTestsuiteColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setImage(IconConstants.TS_IMAGE);
@@ -1071,15 +1055,13 @@ public class TestresultSummaryView extends ViewPart implements
             }
         };
         createMenuItem(m_headerMenu, column.getColumn());
-        return column;
     }
 
     /**
      * Adds a "Testsuite status" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addTsStatusColumn(TableViewer tableViewer) {
+    private void addTsStatusColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.TS_IMAGE);
@@ -1100,15 +1082,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getStatusString());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "Aut Name" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addAutNameColumn(TableViewer tableViewer) {
+    private void addAutNameColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.AUT_RUNNING_IMAGE);
@@ -1129,15 +1109,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getAutName());
             }
         };
-        return column;
     }
     
     /**
      * Adds a "Aut Id" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addAutIdColumn(TableViewer tableViewer) {
+    private void addAutIdColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setImage(IconConstants.AUT_RUNNING_IMAGE);
@@ -1158,15 +1136,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getAutId());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "Aut Config" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addAutConfColumn(TableViewer tableViewer) {
+    private void addAutConfColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.AUT_RUNNING_IMAGE);
@@ -1187,15 +1163,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getAutConfigName());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "AutServer" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addAutAgentHostnameColumn(
+    private void addAutAgentHostnameColumn(
             TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
@@ -1217,15 +1191,13 @@ public class TestresultSummaryView extends ViewPart implements
             }
         };
         createMenuItem(m_headerMenu, column.getColumn());
-        return column;
     }
     
     /**
      * Adds a "AutHostname" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addAutHostnameColumn(TableViewer tableViewer) {
+    private void addAutHostnameColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.AUT_RUNNING_IMAGE);
@@ -1246,15 +1218,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getAutHostname());
             }
         };
-        return column;
     }
     
     /**
      * Adds a "AutOS" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addAutOSColumn(TableViewer tableViewer) {
+    private void addAutOSColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.AUT_RUNNING_IMAGE);
@@ -1275,15 +1245,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getAutOS());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "Language" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addLanguageColumn(TableViewer tableViewer) {
+    private void addLanguageColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.LANGUAGE_IMAGE);
@@ -1304,15 +1272,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getTestsuiteLanguage());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "Toolkit" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addToolkitColumn(TableViewer tableViewer) {
+    private void addToolkitColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setText(TESTRESULT_SUMMARY_TOOLKIT);
@@ -1333,16 +1299,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getAutToolkit());
             }
         };
-
-        return column;
     }
 
     /**
      * Adds a "Date" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addDateColumn(TableViewer tableViewer) {
+    private void addDateColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setText(TESTRESULT_SUMMARY_DATE);
@@ -1362,15 +1325,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummary)e2).getTestsuiteDate());
             }
         };
-        return column;
     }
     
     /**
      * Adds a "Comment Title" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addCommentTitleColumn(TableViewer tableViewer) {
+    private void addCommentTitleColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setText(TESTRESULT_SUMMARY_COMMENT_TITLE);
@@ -1390,15 +1351,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getCommentTitle());
             }
         };
-        return column;
     }
     
     /**
      * Adds a "Start Time" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addStartTimeColumn(TableViewer tableViewer) {
+    private void addStartTimeColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.CLOCK_IMAGE);
@@ -1419,15 +1378,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getTestsuiteStartTime());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "End Time" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addEndTimeColumn(TableViewer tableViewer) {
+    private void addEndTimeColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.CLOCK_IMAGE);
@@ -1448,15 +1405,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getTestsuiteEndTime());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "Duration" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addDurationColumn(TableViewer tableViewer) {
+    private void addDurationColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setImage(IconConstants.CLOCK_IMAGE);
@@ -1477,15 +1432,13 @@ public class TestresultSummaryView extends ViewPart implements
             }
         };
         createMenuItem(m_headerMenu, column.getColumn());
-        return column;
     }
 
     /**
      * Adds a "Expected Caps" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addExpecCapsColumn(TableViewer tableViewer) {
+    private void addExpecCapsColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.CAP_IMAGE);
@@ -1508,15 +1461,13 @@ public class TestresultSummaryView extends ViewPart implements
                             .getTestsuiteExpectedTeststeps());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "Executed Caps" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addExecCapsColumn(TableViewer tableViewer) {
+    private void addExecCapsColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.CAP_IMAGE);
@@ -1539,16 +1490,13 @@ public class TestresultSummaryView extends ViewPart implements
                             .getTestsuiteExecutedTeststeps());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "errorhandler caps" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addEventhandlerCapsColumn(
-            TableViewer tableViewer) {
+    private void addEventhandlerCapsColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.EH_CAP_IMAGE);
@@ -1571,15 +1519,13 @@ public class TestresultSummaryView extends ViewPart implements
                             .getTestsuiteEventHandlerTeststeps());
             }
         };
-        return column;
     }
 
     /**
      * Adds a "cmd param " column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addCmdParamColumn(TableViewer tableViewer) {
+    private void addCmdParamColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setText(TESTRESULT_SUMMARY_CMD_PARAM);
@@ -1599,15 +1545,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getAutCmdParameter());
             }
         };
-        return column;
     }
     
     /**
      * Adds a "testrun id" column for birt reporting (test details) to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addTestrunIdColumn(TableViewer tableViewer) {
+    private void addTestrunIdColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setText(TESTRESULT_SUMMARY_TESTRUN_ID);
@@ -1627,15 +1571,13 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getId());
             }
         };
-        return column;
     }
     
     /**
      * Adds a "testrun relevant" column for birt reporting (test details) to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
      */
-    private TableViewerColumn addTestRelevantColumn(TableViewer tableViewer) {
+    private void addTestRelevantColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setText(TESTRESULT_SUMMARY_TESTRUN_RELEVANT);
@@ -1655,13 +1597,12 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).isTestsuiteRelevant());
             }
         };
-        return column;
     }
+    
     /**
      * @param tableViewer the table viewer
-     * @return A column with the monitoring report
      */
-    private TableViewerColumn addMonitoringReportColumn(
+    private void addMonitoringReportColumn(
             TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
@@ -1685,15 +1626,12 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).isReportWritten());
             }
         };
-        return column;
     }
+    
     /**
-     * 
      * @param tableViewer the tableViewer
-     *            
-     * @return A column with the monitoring ID
      */
-    private TableViewerColumn addMonitoringIdColumn(TableViewer tableViewer) {
+    private void addMonitoringIdColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(200);
         column.getColumn().setImage(IconConstants.INFO_IMAGE);
@@ -1715,16 +1653,12 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getInternalMonitoringId());
             }
         };
-        return column;
     }
- /**
-     * 
+    
+    /**
      * @param tableViewer the tableViewer
-     *            
-     * @return A column with the monitoring value
      */
-    private TableViewerColumn addMonitoringValueColumn(
-            TableViewer tableViewer) {
+    private void addMonitoringValueColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(80);
         column.getColumn().setImage(IconConstants.INFO_IMAGE);
@@ -1765,8 +1699,8 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getMonitoringValue());
             }
         };
-        return column;
     }
+    
     /**
      * Opens an error dialog.
      * @param message the message to show in the dialog.
@@ -1842,7 +1776,7 @@ public class TestresultSummaryView extends ViewPart implements
         if (state == TestresultState.Clear) {
             clear();
         } else if (state == TestresultState.Refresh) {
-            refreshView();
+            loadViewInput();
         }
     }
 
@@ -1850,7 +1784,7 @@ public class TestresultSummaryView extends ViewPart implements
      * {@inheritDoc}
      */
     public void testresultSummaryChanged() {
-        refreshView();
+        loadViewInput();
     }
     
     /**
@@ -2002,7 +1936,7 @@ public class TestresultSummaryView extends ViewPart implements
     public void reactOnDatabaseEvent(DatabaseStateEvent e) {
         switch (e.getState()) {
             case DB_LOGIN_SUCCEEDED:
-                refreshView();
+                loadViewInput();
                 break;
             case DB_LOGOUT_SUCCEEDED:
                 clear();

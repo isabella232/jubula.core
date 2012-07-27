@@ -21,9 +21,7 @@ import org.eclipse.jface.viewers.Viewer;
  */
 public class TestresultSummaryContentProvider 
     implements IStructuredContentProvider {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object[] getElements(Object inputElement) {
         if (inputElement instanceof Object[]) {
             return (Object[])inputElement;
@@ -31,18 +29,13 @@ public class TestresultSummaryContentProvider
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void dispose() {
         // Nothing to dispose.
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
         // Do nothing.
     }
-
 }

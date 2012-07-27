@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Table;
 
 /**
  * Helper class for sorting on TableViewerColumns. Taken from 
@@ -59,7 +60,6 @@ public abstract class ColumnViewerSorter extends ViewerComparator {
                         && m_direction == ASC) {
 
                     setSorter(DESC);
-
                 } else {
                     setSorter(ASC);
                 }
@@ -70,17 +70,18 @@ public abstract class ColumnViewerSorter extends ViewerComparator {
     /**
      * Assigns the receiver as its viewer's sorter.
      * 
-     * @param direction The sort direction to use.
+     * @param direction
+     *            The sort direction to use.
      */
     public void setSorter(int direction) {
-        m_column.getColumn().getParent().setSortColumn(
-                m_column.getColumn());
+        final Table parent = m_column.getColumn().getParent();
+        parent.setSortColumn(m_column.getColumn());
         m_direction = direction;
 
         if (direction == ASC) {
-            m_column.getColumn().getParent().setSortDirection(SWT.DOWN);
+            parent.setSortDirection(SWT.UP);
         } else {
-            m_column.getColumn().getParent().setSortDirection(SWT.UP);
+            parent.setSortDirection(SWT.DOWN);
         }
 
         if (m_viewer.getComparator() == this) {

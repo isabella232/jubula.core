@@ -1024,7 +1024,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_tableViewer.getTable().setSortDirection(SWT.DOWN);
         ColumnSortListener sortListener = new ColumnSortListener(
                 m_tableViewer, sortColumn);
-        m_tableViewer.setComparator(sortListener);
         for (TableColumn col 
                 : m_tableViewer.getTable().getColumns()) {
             
