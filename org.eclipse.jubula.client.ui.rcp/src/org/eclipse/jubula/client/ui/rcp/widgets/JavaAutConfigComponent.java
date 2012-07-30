@@ -1724,13 +1724,6 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    protected void createHeader(Composite parent) {
-        // not needed
-    }
-
-    /**
      * 
      * @return a List containing all components that configure Java-related
      *         settings.

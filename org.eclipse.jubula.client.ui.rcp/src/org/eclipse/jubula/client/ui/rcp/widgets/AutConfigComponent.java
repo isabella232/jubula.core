@@ -365,7 +365,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     private void createGUI() {
         m_contentComposite = new Composite(this, SWT.NONE);
         initGuiLayout(m_contentComposite);
-        createHeader(m_contentComposite);
         if (m_isMultiMode) {
             createModeButtons(m_contentComposite);
         }
@@ -414,13 +413,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         result.marginHeight = 0;
         return result;
     }
-
-    /**
-     * Creates the header area (above the mode buttons).
-     * 
-     * @param parent The parent composite
-     */
-    protected abstract void createHeader(Composite parent);
 
     /**
      * Populates GUI for the advanced configuration section.

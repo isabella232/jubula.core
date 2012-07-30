@@ -167,14 +167,6 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * 
      * {@inheritDoc}
      */
-    protected void createHeader(Composite parent) {
-        // No header
-    }
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
     protected void installListeners() {
         super.installListeners();
         WidgetModifyListener modifyListener = getModifyListener();
