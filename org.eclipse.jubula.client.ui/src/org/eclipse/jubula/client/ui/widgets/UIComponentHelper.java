@@ -57,6 +57,7 @@ public abstract class UIComponentHelper {
         sep.setLayoutData(sepData);
         return sep;
     }
+    
     /**
      * Create a Label with a text derived from the supplied I18N key
      * @param parent parent composite
@@ -64,10 +65,23 @@ public abstract class UIComponentHelper {
      * @return a Label with a text set according to the supplied key
      */
     public static Label createLabel(Composite parent, String i18nKey) {
+        return createLabelWithText(parent, I18n.getString(i18nKey, true));
+    }
+    
+    /**
+     * Create a Label with the given text
+     * 
+     * @param parent
+     *            parent composite
+     * @param text
+     *            the text to use
+     * @return a label with a text
+     */
+    public static Label createLabelWithText(Composite parent, String text) {
         Label label = new Label(parent, SWT.NONE);
-        label.setText(I18n.getString(i18nKey, true));
-        GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER, 
-            false , false, 1, 1);
+        label.setText(text);
+        GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER,
+                false, false, 1, 1);
         label.setLayoutData(labelGrid);
         return label;        
     }

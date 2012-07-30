@@ -79,6 +79,12 @@ public class AutConfigConstants {
     /** The URL of the AUT */
     public static final String AUT_URL = "AUT_ARGUMENTS"; //$NON-NLS-1$
 
+    /** The hostname of the AUT */
+    public static final String AUT_HOST = "AUT_HOST"; //$NON-NLS-1$
+
+    /** The port at the remote hostname of the AUT */
+    public static final String AUT_HOST_PORT = "AUT_HOST_PORT"; //$NON-NLS-1$
+    
     /** The key to set the automatically naming of technical components */
     public static final String NAME_TECHNICAL_COMPONENTS = "NAME_TECHNICAL_COMPONENTS"; //$NON-NLS-1$
 
