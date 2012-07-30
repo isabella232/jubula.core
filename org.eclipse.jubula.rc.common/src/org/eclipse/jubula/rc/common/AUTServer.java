@@ -48,9 +48,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
 /**
- * The AutServer controling the AUT. <br>
+ * The AutServer controlling the AUT. <br>
  * A quasi singleton: the instance is created from main(). <br>
  * Expected arguments to main are, see also
  * StartAUTServerCommand.createCmdArray():
@@ -61,14 +60,14 @@ import org.slf4j.LoggerFactory;
  * <li>The main class of the AUT.</li>
  * <li>Any further arguments are interpreted as arguments to the AUT.</li>
  * <ul>
- * When a connetion to the JubulaClient could made, any errors will send as a
+ * When a connection to the JubulaClient could made, any errors will send as a
  * message to the JubulaClient.
  * 
  * Changing the mode to OBJECT_MAPPING results in installing an AWTEventListener
  * (an instance of <code>MappingListener</code>). For simplification the
  * virtual machine is closed  without sending a message to the client when an
  * error occurs during the installation of the AWTEventListener. The exitcode is
- * the appopriate EXIT_* constant
+ * the appropriate EXIT_* constant
  * 
  * Changing the mode to TESTING removes the installed MappingListener.
  * 
@@ -118,13 +117,13 @@ public abstract class AUTServer {
      */
     private int m_mode = ChangeAUTModeMessage.TESTING;
     
-    /** Indicator wether the AUT is runnning or not */
+    /** Indicator whether the AUT is running or not */
     private boolean m_isAutRunning = false;
     
     /** true if open, false otherwise */
     private boolean m_isObservingDialogOpen = false;
     
-    /** timestamp for danymic WaitForWindow-Timeout for OberservMode*/
+    /** timestamp for dynamic WaitForWindow-Timeout for OberservMode*/
     private long m_observTimestamp = 0;
         
     /** the AWTEventLister for mode OBJECT_MAPPING */
@@ -169,7 +168,6 @@ public abstract class AUTServer {
         m_mappingListener = mappingListener;
         m_recordListener = recordListener;
         m_checkListener = checkListener;
-        
     }
     
     /** 
@@ -342,7 +340,7 @@ public abstract class AUTServer {
     /**
      * Stops the AUT-Thread and sets m_autThread to null.<br>
      * Calls the stop() method on the m_autThread instance!
-     * @return true if the AUT has been stoppen, false otherwise
+     * @return true if the AUT has been stopped, false otherwise
      */
     public boolean stopAUT() {
         return closeAUT();
@@ -350,7 +348,7 @@ public abstract class AUTServer {
     
     /**
      * Closes the AUT.
-     * @return true if the AUT has been stoppen, false otherwise
+     * @return true if the AUT has been stopped, false otherwise
      */
     protected abstract boolean closeAUT();
     
@@ -506,9 +504,9 @@ public abstract class AUTServer {
     }
     
     /**
-     * sends an AUTServerStateMessage via Communicator if an error occures
-     * @param e catched exception
-     * @param exitCode the exit code for the catched exception
+     * sends an AUTServerStateMessage via Communicator if an error occurs
+     * @param e caught exception
+     * @param exitCode the exit code for the caught exception
      */
     protected void sendExitReason(Throwable e, int exitCode) {
         log.error("Exception in start()", e); //$NON-NLS-1$
@@ -516,7 +514,7 @@ public abstract class AUTServer {
     }
 
     /**
-     * sends an AUTServerStateMessage via Communicator if an error occures
+     * sends an AUTServerStateMessage via Communicator if an error occurs
      * @param errorMessage Detailed error text for the sent message.
      * @param exitCode the exit code for the error that occurred.
      */
@@ -603,7 +601,7 @@ public abstract class AUTServer {
     protected abstract void addToolkitEventListeners();
     
     /**
-     * loads the aut, does not instantiate the autMainClass nor invoke the main
+     * loads the AUT, does not instantiate the autMainClass nor invoke the main
      * method, just sets the member variable autMainClass and autMainMethod 
      * @throws SecurityException thrown from the security manager
      * @throws ClassNotFoundException thrown by Class.forName()
@@ -634,7 +632,7 @@ public abstract class AUTServer {
     }
     
     /**
-     * Invokes the main method of the aut (stored in m_autMainMethod).
+     * Invokes the main method of the AUT (stored in m_autMainMethod).
      * 
      * @throws ExceptionInInitializerError from call to invoke(), see Method.invoke()
      * @throws InvocationTargetException from call to invoke(), see Method.invoke()
@@ -874,8 +872,6 @@ public abstract class AUTServer {
      * AUT Agent.
      *
      * @author BREDEX GmbH
-     * @created Feb 24, 2010
-     *
      */
     private class AgentCommunicationListener 
             extends AbstractCommunicationListener {
@@ -896,8 +892,6 @@ public abstract class AUTServer {
      * Listener for events that occur during communication with a client.
      * 
      * @author BREDEX GmbH
-     * @created Feb 24, 2010
-     * 
      */
     private class ClientCommunicationListener 
             extends AbstractCommunicationListener {
@@ -979,14 +973,14 @@ public abstract class AUTServer {
     }
 
     /**
-     * @return the true, if aut server runs as plugin in RCP-AUT
+     * @return the true, if AUT server runs as plugin in RCP-AUT
      */
     public boolean isRcpAccessible() {
         return m_isRcpAccessible;
     }
     
     /**
-     * @return true, if aut server got started via Java Agent
+     * @return true, if AUT server got started via Java Agent
      */
     public boolean isAgentSet() {
         return m_isAgentSet;
