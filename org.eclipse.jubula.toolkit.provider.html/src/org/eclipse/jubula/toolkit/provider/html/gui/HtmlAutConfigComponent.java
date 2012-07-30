@@ -342,21 +342,6 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
 
     }
 
-    /**
-     * Possible modes for the dialog
-     *
-     * @author BREDEX GmbH
-     * @created Sep 10, 2007
-     */
-    public static enum Mode {
-        /** basic mode */
-        BASIC,
-        /** advanced mode */
-        ADVANCED, 
-        /** expert mode */
-        EXPERT
-    }
-    
     /** 
      * The action of the activation combo
      * @return true
