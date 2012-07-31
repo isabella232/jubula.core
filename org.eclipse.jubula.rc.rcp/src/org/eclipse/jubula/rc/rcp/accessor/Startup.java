@@ -36,7 +36,6 @@ import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
@@ -573,8 +572,6 @@ public class Startup implements IStartup {
     private void initAutServer(Display display, Properties envVars) {
         ((SwtAUTServer)AUTServer.getInstance(CommandConstants
                 .AUT_SWT_SERVER)).setDisplay(display);
-        AUTServer.getInstance().setAutStarterPort(getValue(
-                RcpAccessorConstants.SERVER_PORT, envVars));
         AUTServer.getInstance().setAutAgentHost(getValue(
                 AutConfigConstants.AUT_AGENT_HOST, envVars));
         AUTServer.getInstance().setAutAgentPort(getValue(

@@ -967,12 +967,6 @@ public abstract class AUTServer {
     }
 
     /**
-     * @param autStarterPort the AutStarterPort to set
-     */
-    public void setAutStarterPort(String autStarterPort) {
-    }
-
-    /**
      * @return the true, if AUT server runs as plugin in RCP-AUT
      */
     public boolean isRcpAccessible() {
@@ -1055,6 +1049,4 @@ public abstract class AUTServer {
     public void setAutName(String autName) {
         m_autName = autName;
     }
-    
-    
 }
