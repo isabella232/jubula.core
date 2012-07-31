@@ -84,11 +84,11 @@ public abstract class AUTServer {
     /** the name of the correct autServer class */
     private static String autServerName;
 
-    /** the communicator to use to communicate with the client*/
-    private Communicator m_communicator;
+    /** the communicator to use to communicate with the ITE */
+    private Communicator m_iteCommunicator;
 
-    /** the communicator to use to communicate to the AutStarter*/
-    private Communicator m_serverCommunicator;
+    /** the communicator to use to communicate to the AUT-Agent*/
+    private Communicator m_autAgentCommunicator;
 
     /** the listener to the client communicator */
     private ICommunicationErrorListener m_communicationListener;
@@ -144,14 +144,14 @@ public abstract class AUTServer {
     /** appenders that will be called when the Inspector is activated */
     private List m_inspectorListenerAppenders = new ArrayList();
 
-    /** the hostname of the Aut Agent to use for registration */
+    /** the hostname of the AUT-Agent to use for registration */
     private String m_autAgentHost;
 
-    /** the port number of the Aut Agent to use for registration */
+    /** the port number of the AUT-Agent to use for registration */
     private String m_autAgentPort;
     
-    /** the AUT name to use for registration with the Aut Agent */
-    private String m_autName;
+    /** the AUT ID to use for registration with the AUT-Agent */
+    private String m_autID;
 
     /** 
      * private constructor instantiates the listeners
@@ -178,7 +178,7 @@ public abstract class AUTServer {
         m_autMainClassName = args[Constants.ARG_AUTMAIN];
         m_autAgentHost = args[Constants.ARG_REG_HOST];
         m_autAgentPort = args[Constants.ARG_REG_PORT];
-        m_autName = args[Constants.ARG_AUT_NAME]; 
+        m_autID = args[Constants.ARG_AUT_NAME]; 
         // arguments for the aut, is >= 0, see definition of the constants
         int numberAutArgs = args.length - Constants.MIN_ARGS_REQUIRED;
         m_autArgs = new String[numberAutArgs];
@@ -225,14 +225,14 @@ public abstract class AUTServer {
      * @return Returns the communicator.
      */
     public synchronized Communicator getCommunicator() {
-        return m_communicator;
+        return m_iteCommunicator;
     }
 
     /**
      * @return Returns the communicator.
      */
     public synchronized Communicator getServerCommunicator() {
-        return m_serverCommunicator;
+        return m_autAgentCommunicator;
     }
 
     /**
@@ -265,22 +265,41 @@ public abstract class AUTServer {
     }
     
     /**
-     * main method:<p>
-     * 1. check args and store args<p>
+     * main method:
+     * <p>
+     * 1. check args and store args
+     * <p>
      * 2. call start
-     * @param args - the args 
+     * 
+     * @param args
+     *            - the args
      */
     public static void main(String[] args) {
-        if (args.length < Constants.MIN_ARGS_REQUIRED) {
+        validateAndLogMainArgsCount(args, Constants.MIN_ARGS_REQUIRED);
+        autServerName = args[Constants.ARG_AUTSERVER_NAME];
+        AUTServer.getInstance().setArgs(args);
+        AUTServer.getInstance().start(false);
+    }
+    
+    /**
+     * @param args
+     *            the args to validate
+     * @param noOfRequiredArgs
+     *            the no of expected args to get
+     */
+    protected static void validateAndLogMainArgsCount(String[] args, 
+        int noOfRequiredArgs) {
+        if (args.length < noOfRequiredArgs) {
             log.error("wrong number of arguments: " //$NON-NLS-1$
                     + "must be at least " //$NON-NLS-1$
-                    + String.valueOf(Constants.MIN_ARGS_REQUIRED)
-                    + ", but were " + Arrays.asList(args).toString());  //$NON-NLS-1$
+                    + String.valueOf(noOfRequiredArgs)
+                    + ", but were " + Arrays.asList(args).toString()); //$NON-NLS-1$
             System.exit(AUTServerExitConstants.EXIT_INVALID_NUMBER_OF_ARGS);
         }
 
         if (log.isDebugEnabled()) {
-            StringBuffer logMessage = new StringBuffer("Arguments to AUTServer\n"); //$NON-NLS-1$
+            StringBuffer logMessage = new StringBuffer(
+                    "Arguments to AUTServer\n"); //$NON-NLS-1$
             for (int i = 0; i < args.length; i++) {
                 logMessage.append(String.valueOf(i));
                 logMessage.append(args[i] + "\n"); //$NON-NLS-1$ 
@@ -290,11 +309,8 @@ public abstract class AUTServer {
         if (log.isInfoEnabled()) {
             log.info(System.getProperty("java.version")); //$NON-NLS-1$
             log.info("user.dir:" + //$NON-NLS-1$
-                System.getProperty("user.dir")); //$NON-NLS-1$
+                    System.getProperty("user.dir")); //$NON-NLS-1$
         }
-        autServerName = args[Constants.ARG_AUTSERVER_NAME];
-        AUTServer.getInstance().setArgs(args);
-        AUTServer.getInstance().start(false);
     }
     
     /**
@@ -305,7 +321,7 @@ public abstract class AUTServer {
             return;
         }
         if (isAgentSet()) {
-            //if java agent is to be used, start tasks without invoking aut again
+            //if java agent is to be used, start tasks without invoking AUT again
             startToolkitThread();
             addToolKitEventListenerToAUT();
             return;
@@ -338,21 +354,6 @@ public abstract class AUTServer {
     }
     
     /**
-     * Stops the AUT-Thread and sets m_autThread to null.<br>
-     * Calls the stop() method on the m_autThread instance!
-     * @return true if the AUT has been stopped, false otherwise
-     */
-    public boolean stopAUT() {
-        return closeAUT();
-    }
-    
-    /**
-     * Closes the AUT.
-     * @return true if the AUT has been stopped, false otherwise
-     */
-    protected abstract boolean closeAUT();
-    
-    /**
      * initializes the AUTServer. <br>
      * 1. create communicator <br>
      * 2. connect to client <br>
@@ -380,8 +381,8 @@ public abstract class AUTServer {
             if (m_isAgentSet || isRcpAccessible) {
                 setAutThread(Thread.currentThread());
             }
-            if (m_communicator != null) {
-                m_communicator.send(new AUTServerStateMessage(
+            if (m_iteCommunicator != null) {
+                m_iteCommunicator.send(new AUTServerStateMessage(
                         AUTServerStateMessage.READY));
             } else {
                 /* calling this method from the AUT-main thread caused an
@@ -445,15 +446,15 @@ public abstract class AUTServer {
      */
     protected IRegisterAut parseAutReg() {
         if (m_autAgentHost != null 
-                && m_autAgentPort != null && m_autName != null) {
+                && m_autAgentPort != null && m_autID != null) {
             try {
                 int autAgentPort = Integer.parseInt(m_autAgentPort);
                 InetSocketAddress agentAddr = 
                     new InetSocketAddress(m_autAgentHost, autAgentPort);
-                AutIdentifier autIdentifier = new AutIdentifier(m_autName);
+                AutIdentifier autIdentifier = new AutIdentifier(m_autID);
                 return new AgentRegisterAut(agentAddr, autIdentifier);
             } catch (NumberFormatException nfe) {
-                log.warn("Unable to parse port number for Aut Agent. Continuing as if no Aut Agent information was provided.", nfe); //$NON-NLS-1$
+                log.warn("Unable to parse port number for AUT-Agent. Continuing as if no Aut Agent information was provided.", nfe); //$NON-NLS-1$
             }
         }
         return null;
@@ -485,15 +486,15 @@ public abstract class AUTServer {
         InetAddress clientAddress = 
             InetAddress.getByName(clientHostName);
         createCommunicator(new InetSocketAddress(clientAddress, clientPort));
-        connectGdClient();
+        connectToITE();
     }
 
     /**
-     * connect the JubulaClient
+     * connect the ITE (integrated testing environment)
      */
-    protected void connectGdClient() {
+    protected void connectToITE() {
         try { 
-            m_communicator.run();
+            m_iteCommunicator.run();
         } catch (SecurityException se) {
             log.error("Exception in start()", se); //$NON-NLS-1$
             System.exit(AUTServerExitConstants
@@ -520,7 +521,7 @@ public abstract class AUTServer {
      */
     protected void sendExitReason(String errorMessage, int exitCode) { 
         try {
-            m_communicator.send(new AUTServerStateMessage(
+            m_iteCommunicator.send(new AUTServerStateMessage(
                     exitCode, errorMessage));
         } catch (CommunicationException ce) {
             log.error("Exception in start()", ce); //$NON-NLS-1$
@@ -532,9 +533,9 @@ public abstract class AUTServer {
      * @param clientAddress the clientAdress
      */
     private void createCommunicator(InetSocketAddress clientAddress) {
-        m_communicator = createComm(clientAddress);
-        m_communicator
-                .addCommunicationErrorListener(m_communicationListener);
+        m_iteCommunicator = createComm(clientAddress);
+        m_iteCommunicator.addCommunicationErrorListener(
+                m_communicationListener);
     }
     
     /**
@@ -566,20 +567,29 @@ public abstract class AUTServer {
             InetAddress agentAddress, int agentPort) 
         throws SecurityException, JBVersionException {
         
-        m_serverCommunicator = new Communicator(agentAddress, agentPort, 
+        m_autAgentCommunicator = new Communicator(agentAddress, agentPort, 
                 Thread.currentThread().getContextClassLoader());
-        m_serverCommunicator.addCommunicationErrorListener(
+        m_autAgentCommunicator.addCommunicationErrorListener(
                 m_serverCommunicationListener);
 
-        m_serverCommunicator.run();
+        m_autAgentCommunicator.run();
     }
     
     /**
-     * Starts the AWT-EventQueue-Thread. <br>
-     * <b>Important:</b> Must be called in complete AUT environment!
-     * (Thread, ClassLoader, etc.)
+     * Starts the AUTs Toolkit event thread - so far only required for Swing / AWT.
+     * Subclasses may override! 
      */
-    protected abstract void startToolkitThread();
+    protected void startToolkitThread() {
+        // default is an empty implementation
+    }
+    
+    /**
+     * Installs the component handler and the focus tracker. This hook may not
+     * be necessary in all toolkits. Subclasses may override! 
+     */
+    protected void addToolkitEventListeners() {
+        // default is an empty implementation
+    }
     
     /**
      * Adds the EventListener to the AUT<br>
@@ -594,11 +604,6 @@ public abstract class AUTServer {
         addToolkitEventListeners();
         Thread.currentThread().setContextClassLoader(oldCL);
     }
-    
-    /**
-     * installs the component handler and the focus tracker
-     */
-    protected abstract void addToolkitEventListeners();
     
     /**
      * loads the AUT, does not instantiate the autMainClass nor invoke the main
@@ -619,7 +624,7 @@ public abstract class AUTServer {
         m_autMainMethod = m_autMainClass.getMethod("main", //$NON-NLS-1$
             new Class[] { m_autArgs.getClass() });
     
-        // make the main method accesible
+        // make the main method accessible
         m_autMainMethod.setAccessible(true);
         int mods = m_autMainMethod.getModifiers();
         if (m_autMainMethod.getReturnType() != void.class
@@ -749,7 +754,7 @@ public abstract class AUTServer {
             BaseAUTListener listener);
     
     /**
-     * @return the mode the AUTserver is in, see als <code>setMode()</code>.
+     * @return the mode the AUTserver is in, see also <code>setMode()</code>.
      */
     public int getMode() {
         return m_mode;
@@ -905,8 +910,8 @@ public abstract class AUTServer {
             ChangeAUTModeCommand changeModeCmd = new ChangeAUTModeCommand();
             changeModeCmd.setMessage(message);
             changeModeCmd.execute();
-            if (m_communicator != null) {
-                m_communicator.close();
+            if (m_iteCommunicator != null) {
+                m_iteCommunicator.close();
             }
         }
         
@@ -1044,9 +1049,9 @@ public abstract class AUTServer {
     }
 
     /**
-     * @param autName the autName to set
+     * @param autID the autName to set
      */
-    public void setAutName(String autName) {
-        m_autName = autName;
+    public void setAutID(String autID) {
+        m_autID = autID;
     }
 }

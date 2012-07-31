@@ -139,13 +139,6 @@ public class SwtAUTServer extends AUTServer {
     /**
      * {@inheritDoc}
      */
-    protected void startToolkitThread() {
-        // do nothing
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     protected void addToolkitEventListeners() {
         // install the component handler
         addToolkitEventListener(new ComponentHandler());
@@ -227,14 +220,6 @@ public class SwtAUTServer extends AUTServer {
         if (getCommunicator() != null) {
             getCommunicator().close();
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected boolean closeAUT() {
-        // FIXME Clemens: not implemented yet
-        return false;
     }
 
     /**

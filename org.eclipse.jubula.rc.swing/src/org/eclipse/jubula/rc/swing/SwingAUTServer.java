@@ -12,14 +12,9 @@ package org.eclipse.jubula.rc.swing;
 
 import java.awt.AWTError;
 import java.awt.AWTEvent;
-import java.awt.Component;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.AWTEventListener;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -27,7 +22,6 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
-import org.eclipse.jubula.rc.swing.components.SwingComponent;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swing.listener.CheckListener;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
@@ -90,7 +84,9 @@ public class SwingAUTServer extends AUTServer {
     }
 
     /**
-     * {@inheritDoc}
+     * Starts the AWT-EventQueue-Thread. <br>
+     * <b>Important:</b> Must be called in complete AUT environment!
+     * (Thread, ClassLoader, etc.)
      */
     protected void startToolkitThread() {
         // add a dummy listener to start the AWT-Thread
@@ -115,7 +111,6 @@ public class SwingAUTServer extends AUTServer {
 
     /**
      * {@inheritDoc}
-     * @param listener
      */
     protected void addToolkitEventListener(BaseAUTListener listener) {
         if (LOG.isInfoEnabled()) {
@@ -142,7 +137,6 @@ public class SwingAUTServer extends AUTServer {
 
     /**
      * {@inheritDoc}
-     * @param listener
      */
     protected void removeToolkitEventListener(BaseAUTListener listener) {
         if (LOG.isInfoEnabled()) {
@@ -167,9 +161,6 @@ public class SwingAUTServer extends AUTServer {
 
     /**
      * {@inheritDoc}
-     * @throws ExceptionInInitializerError
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
      */
     protected void startTasks() throws ExceptionInInitializerError, 
         InvocationTargetException, NoSuchMethodException {
@@ -229,29 +220,6 @@ public class SwingAUTServer extends AUTServer {
         }
         
         AUTServer.getInstance().invokeAUT();
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return true if the AUT has been stoppen, false otherwise
-     */
-    protected boolean closeAUT() {
-        boolean isClosed = false;
-        // new HashSet to avoid ConcurrentModificationException!
-        final Set keys = new HashSet(ComponentHandler.getAutHierarchy()
-            .getHierarchyMap().keySet());
-        final Iterator keyIter = keys.iterator();
-        while (keyIter.hasNext()) {
-            SwingComponent ci = (SwingComponent)
-                keyIter.next();
-            final Component comp = ci.getRealComponent();
-            if (comp instanceof Window) {
-                Window window = (Window)comp;
-                window.dispose();
-                isClosed = true;
-            }
-        }
-        return isClosed;
     }
 
     /**

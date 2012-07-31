@@ -576,7 +576,7 @@ public class Startup implements IStartup {
                 AutConfigConstants.AUT_AGENT_HOST, envVars));
         AUTServer.getInstance().setAutAgentPort(getValue(
                 AutConfigConstants.AUT_AGENT_PORT, envVars));
-        AUTServer.getInstance().setAutName(getValue(
+        AUTServer.getInstance().setAutID(getValue(
                 AutConfigConstants.AUT_NAME, envVars));
 
         AUTServer.getInstance().start(true);
