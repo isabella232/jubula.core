@@ -136,7 +136,7 @@ public class JListImplClass extends AbstractSwingImplClass
         try {
             getRobot().keyPress(m_list,
                     SwingUtils.getSystemDefaultModifier());
-            // folowing selections
+            // following selections
             for (int i = 1; i < indices.length; i++) {
                 m_listHelper.clickOnIndex(m_list, new Integer(indices[i]), co);
             }

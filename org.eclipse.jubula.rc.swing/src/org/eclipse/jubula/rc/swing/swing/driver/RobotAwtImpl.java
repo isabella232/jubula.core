@@ -105,18 +105,18 @@ public class RobotAwtImpl implements IRobot {
     private IEventThreadQueuer m_queuer;
 
     /**
-     * Scrolls a component to visible. The Scroller asumes that the component is
+     * Scrolls a component to visible. The Scroller assumes that the component is
      * embedded (directly or indirectly) into a <code>JScrollPane</code>(
      * <code>JViewPort</code> more precisely). Hierarchies of scrollpanes are
-     * also supported. The default mechanismn of
+     * also supported. The default mechanism of
      * {@link JComponent#scrollRectToVisible(java.awt.Rectangle) is not used}
      * here because of limitations and bugs: <br>
      * <code>JViewPort</code> overrides <code>scrollRectToVisible()</code>,
      * but doesn't call <code>super.scrollRectToVisible()</code>, so that
      * hierarchies of scrollpanes don't work. <br>
-     * <code>JTextField</code> interpretes <code>scrollRectToVisible()</code>
+     * <code>JTextField</code> interprets <code>scrollRectToVisible()</code>
      * in a different way by scrolling the containing text, not the component
-     * ifself. Again, <code>super.scrollRectToVisible()</code> is not called.
+     * itself. Again, <code>super.scrollRectToVisible()</code> is not called.
      */
     private class Scroller {
         /** The component to scroll to visible. */
@@ -274,7 +274,7 @@ public class RobotAwtImpl implements IRobot {
      * @param yPos yPos in component
      * @param yAbsolute true if y-position should be absolute
      * @param xAbsolute true if x-position should be absolute
-     * @throws RobotException If the click delay is interupted or the event confirmation receives a timeout.
+     * @throws RobotException If the click delay is interrupted or the event confirmation receives a timeout.
      */
     private void clickImpl(Object graphicsComponent, Object constraints,
             ClickOptions clickOptions, int xPos,
@@ -414,7 +414,7 @@ public class RobotAwtImpl implements IRobot {
      * @param graphicsComponent The component to move to
      * @param constraints The more specific constraints. Use this, for example 
      *                    when you want the click point to be relative to a part 
-     *                    of the component (eg tree node, table cell, etc)  
+     *                    of the component (e.g. tree node, table cell, etc)  
      *                    rather than the overall component itself. May be  
      *                    <code>null</code>.
      * @param xPos xPos in component           
@@ -422,7 +422,7 @@ public class RobotAwtImpl implements IRobot {
      * @param xAbsolute true if x-position should be absolute  
      * @param yAbsolute true if y-position should be absolute  
      * @param clickOptions The click options 
-     * @throws StepExecutionException If the click delay is interupted or the  
+     * @throws StepExecutionException If the click delay is interrupted or the  
      *                                event confirmation receives a timeout. 
      */ 
     private void moveImpl(Object graphicsComponent,
