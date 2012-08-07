@@ -1011,7 +1011,7 @@
     <key
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ImportProject"
       contextId="org.eclipse.ui.contexts.window"
-      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      schemeId="org.eclipse.jubula.client.ui.rcp.defaultKeyScheme"
       sequence="M1+I" />
     <key
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ExportProject"
@@ -1096,7 +1096,7 @@
     <key
       commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
       contextId="org.eclipse.ui.contexts.window"
-      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      schemeId="org.eclipse.jubula.client.ui.rcp.defaultKeyScheme"
       sequence="F3" />
     <key
       commandId="org.eclipse.jubula.client.ui.rcp.commands.AddEventHandler"
