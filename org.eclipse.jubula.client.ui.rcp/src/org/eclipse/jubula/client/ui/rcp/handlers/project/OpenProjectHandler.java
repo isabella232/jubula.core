@@ -539,7 +539,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 project = dialog.getSelection();
             }
         }
-        if (!cancelPressed) {
+        if (!cancelPressed && !projList.isEmpty()) {
             loadProject(project, projList);
         }
         return null;
