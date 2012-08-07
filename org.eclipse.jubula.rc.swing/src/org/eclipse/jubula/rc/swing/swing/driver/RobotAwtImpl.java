@@ -88,6 +88,9 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @created 17.03.2005
  */
 public class RobotAwtImpl implements IRobot {
+    /** the timeout to flush native events (only relevant for Java 7) */
+    private static final int FLUSH_TIMEOUT = 10000;
+    
     /** the logger */
     private static AutServerLogger log = 
         new AutServerLogger(RobotAwtImpl.class);
@@ -96,7 +99,9 @@ public class RobotAwtImpl implements IRobot {
     /** ID of Metal Look and Feel */
     private static final String METAL_LAF_ID = "Metal"; //$NON-NLS-1$
     /** The AWT Robot instance. */
-    private Robot m_robot; 
+    private Robot m_robot;
+    /** The toolkit utilities */
+    private EventFlusher m_eventFlusher;
     /** The event interceptor. */
     private IRobotEventInterceptor m_interceptor; 
     /** The mouse motion tracker. */
@@ -196,6 +201,7 @@ public class RobotAwtImpl implements IRobot {
         m_interceptor = factory.getRobotEventInterceptor();
         m_mouseMotionTracker = factory.getMouseMotionTracker();
         m_queuer = factory.getEventThreadQueuer();
+        m_eventFlusher = new EventFlusher(m_robot, FLUSH_TIMEOUT);
     }
 
     /**
@@ -308,8 +314,11 @@ public class RobotAwtImpl implements IRobot {
                 for (int i = 0; i < clickCount; i++) {
                     m_robot.mousePress(buttonMask);
                     RobotTiming.sleepPostMouseDownDelay();
+                    m_eventFlusher.flush();
+                    
                     m_robot.mouseRelease(buttonMask);
                     RobotTiming.sleepPostMouseUpDelay();
+                    m_eventFlusher.flush();
                 }
                 if (clickOptions.isConfirmClick()) {
                     confirmer.waitToConfirm(graphicsComponent,
@@ -380,6 +389,7 @@ public class RobotAwtImpl implements IRobot {
             Component c = (root != null) ? root : component;
             Point p = getLocation(c, null);
             m_robot.mouseMove(p.x, p.y);
+            m_eventFlusher.flush();
         }
     }
 
@@ -432,6 +442,7 @@ public class RobotAwtImpl implements IRobot {
         throws StepExecutionException {
         if (clickOptions.isScrollToVisible()) {
             ensureComponentVisible((Component)graphicsComponent, constraints);
+            m_eventFlusher.flush();
         }
         
         Component component = (Component)graphicsComponent;
@@ -462,10 +473,11 @@ public class RobotAwtImpl implements IRobot {
             IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
             Point ap = getAdjacentPoint(component, p);
             m_robot.mouseMove(ap.x, ap.y);
-            
-            RobotTiming.sleepPostMouseUpDelay();
+            m_eventFlusher.flush();
             
             m_robot.mouseMove(p.x, p.y);
+            m_eventFlusher.flush();
+
             if (clickOptions.isConfirmClick()) {
                 confirmer.waitToConfirm(component, 
                         new MouseMovedAwtEventMatcher());
@@ -621,8 +633,10 @@ public class RobotAwtImpl implements IRobot {
             IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
             try {
                 m_robot.keyPress(keycode);
+                m_eventFlusher.flush();
             } finally {
                 m_robot.keyRelease(keycode);
+                m_eventFlusher.flush();
             }
             confirmer.waitToConfirm(graphicsComponent, new KeyAwtEventMatcher(
                 KeyEvent.KEY_RELEASED));
@@ -662,8 +676,10 @@ public class RobotAwtImpl implements IRobot {
         IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
         if (press) {
             m_robot.keyPress(keyCode);
+            m_eventFlusher.flush();
         } else {
             m_robot.keyRelease(keyCode);
+            m_eventFlusher.flush();
         }
         confirmer.waitToConfirm(graphicsComponent, new KeyAwtEventMatcher(
             press ? KeyEvent.KEY_PRESSED : KeyEvent.KEY_RELEASED));
@@ -877,6 +893,7 @@ public class RobotAwtImpl implements IRobot {
         RobotTiming.sleepPreClickDelay();
         
         m_robot.mousePress(getButtonMask(button));
+        m_eventFlusher.flush();
     }
 
     /**
@@ -898,6 +915,7 @@ public class RobotAwtImpl implements IRobot {
         RobotTiming.sleepPreClickDelay();
         
         m_robot.mouseRelease(getButtonMask(button));
+        m_eventFlusher.flush();
         DragAndDropHelper.getInstance().setDragMode(false);
     }
 
