@@ -12,6 +12,10 @@
              commandId="org.eclipse.jubula.client.analyze.ui.menuCommand"
              icon="icons/analyzeToolbarA.png"
              style="pulldown">
+          <visibleWhen checkEnabled="false">
+            <reference
+              definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
+          </visibleWhen>
        </command>
     </toolbar>
  </menuContribution>
