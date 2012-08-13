@@ -1,3 +1,5 @@
-Users working with a MySQL \gddb{} may want to increase the maximum allowed packet size to avoid problems during the communication of large amounts of information (more than one MegaByte) between the \gdagent{} and the \ite{}.
+Users working with a PostgreSQL \gddb{} that is version 9.0 or higher should be aware that the default format from version 9.0 for bytea data types is \bxname{hex}. This results in screenshots in the \gddb{} not being able to be displayed. 
 
-To change the default packet value, you must:
+The default behavior can be changed to \bxname{escape} in \bxname{postgresql.conf} or by executing a command to set the default behavior on a per \gddb{} basis. 
+
+
