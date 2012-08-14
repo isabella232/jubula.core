@@ -103,12 +103,10 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                     final String msg = Messages.ComponenConfigurationNotFound
                         + StringConstants.EXCLAMATION_MARK;
                     log.error(msg, fileNotFoundEx);
-                    throw new ToolkitPluginException(msg, fileNotFoundEx);
                 } catch (CoreException coreEx) {
                     final String msg = Messages.CouldNotCreateToolkitProvider
                         + StringConstants.EXCLAMATION_MARK;
                     log.error(msg, coreEx);
-                    throw new ToolkitPluginException(msg, coreEx);
                 }
             }
         }
