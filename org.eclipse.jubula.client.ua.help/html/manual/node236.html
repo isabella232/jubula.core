@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.23.3.2 Performing checks in the Java observation mode</title>
-    <meta content="3.23.3.2 Performing checks in the Java observation mode" name="description" />
+    <title>3.23.2 Starting observing</title>
+    <meta content="3.23.2 Starting observing" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,33 +10,25 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004233200000000000000"></a> <a name="TasksObsCheckJava"></a><br /><span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Performing checks in the Java observation mode </h3>
-    <p> You can perform checks in the observation mode by taking the following steps: <ol>
-        <li>Start the check mode by pressing <tt>&raquo;CTRL+SHIFT+F11&laquo;</tt>. This key combination can be changed in the preferences <a href="node225.html#TasksPrefsObsModeJava">3.22.7</a>. <li>In the observation console, the check mode will be marked as <i>on</i>. <li>In the AUT , components will be highlighted with a red border (<a href="#redborders">3.32</a>). <p>
-            <div align="CENTER"><a name="redborders"></a><a name="4870"></a><table>
-                <caption align="BOTTOM"><strong>Figure 3.32:</strong> Red borders in the check mode</caption>
-                <tr>
-                  <td>
-                    <div align="CENTER"><img align="BOTTOM" alt="Image redborders" border="0" height="168" src="./redborders.png" width="196" /></div>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>While the check mode is active, no other actions will be recorded.</b></td>
-              </tr>
-            </table>
-        <li>Hover over the component you want to execute a check on and press <tt>&raquo;CTRL+SHIFT+F12&laquo;</tt>. This key combination can be changed in the preferences <a href="node225.html#TasksPrefsObsModeJava">3.22.7</a>. <li>A dialog will appear showing the type of component you are performing the check on. <li>From the dialog, select the check action you want to perform and enter any parameters the check action needs. Many check actions have predefined parameters based on the state of the AUT . <li>When you have specified your check action, choose whether you want to close the dialog and continue in the check mode (<i>check on</i>) or whether you want to stop the check mode when the dialog closes (<i>stop checking</i>). <table>
+    <h2><a name="SECTION004232000000000000000"> <span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">2</span> Starting observing</a></h2>
+    <p><a name="4876"></a> <a name="4877"></a> <a name="startobs"></a>To be able to observe Test Steps , you must: <ul>
+        <li>define an AUT <a href="node72.html#Defineaut">3.6</a><table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>You can manually stop the check mode using the same key combination as you used to start the check mode (<tt>&raquo;CTRL+SHIFT+F11&laquo;</tt> by default).</b></td>
+              <td><b>Only Java AUT&#39;s can use the observation mode. </b></td>
             </tr>
           </table>
-        <li>The check action you specify will be added to the Test Case Editor . </ol>
-    <p>
+        <li>configure an AUT <a href="node74.html#configuringaut">3.7.1</a> if you want to start it via Jubula . <li>set the working language to the language you want to observe in. <li>start the AUT you want to observe from <a href="node194.html#startaut">3.19.2</a> (either via a configuration <a href="node74.html#configuringaut">3.7.1</a> or using the <i>autrun</i> command <a href="node82.html#autrun">3.7.2.6</a>). </ul>
+    <p> Once you have completed these steps, you can select the &quot;<i>observe Test Case </i>&quot; button <br />
+      <div class="margin"><img align="BOTTOM" alt="Image cam" border="0" height="242" src="./cam.png" width="256" />&nbsp;start observation</div>
+      <br /> on the main toolbar. <ol>
+        <li>When asked, enter a name for the observed Test Case . <li>The status bar will show that you are in the observation mode. <li>A Test Case Editor for the observed Test Case will appear. <li>Switch to the AUT and activate it by clicking once in the title bar. <li>You can now observe Test Steps . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If you have a Test Case open in the Test Case Editor , the Test Steps will be observed into this open Test Case . </b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
       <hr />

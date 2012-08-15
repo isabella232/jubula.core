@@ -1,24 +1,24 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.18.1 Object mapping</title>
-    <meta content="3.18.1 Object mapping" name="description" />
+    <title>3.17.2 Executing and analyzing manual tests</title>
+    <meta content="3.17.2 Executing and analyzing manual tests" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="objectMapEditorContextId"></a><h2><a name="SECTION004181000000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">1</span> Object mapping</a></h2><a name="objectmappingtasks"></a><p><a name="3595"></a><p> Object mapping is the joining of the component names you have specified in Test Steps to the real components in the AUT . Each component name you have specified in your Test Cases and used in a Test Suite will be shown in the Object Mapping Editor to be mapped. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>New component names you have created in the Object Mapping Editor but have not yet used in Test Cases will also be shown in the Object Mapping Editor . </b></td>
-        </tr>
-      </table>
-    <p> To be able to carry out object mapping, you must have: <p>
-      <ul>
-        <li>started and connected to the AUT Agent <a href="node34.html#Agent">3.1</a><li>created a Test Case containing Test Steps <a href="node108.html#TasksCreateTC">3.11.1</a><li>added Test Cases to a Test Suite <a href="node159.html#WorkingWithSuites">3.14</a><li>specified an AUT <a href="node71.html#Defineaut">3.6</a><li>configured an AUT if you want to start the AUT via Jubula <a href="node73.html#configuringaut">3.7.1</a><li>chosen an AUT for the Test Suite <a href="node161.html#confsuite">3.14.2</a><li>checked that your current working language is supported by the chosen AUT . <li>connected to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a><li>started the AUT to be mapped <a href="node192.html#startaut">3.19.2</a><li>opened the Object Mapping Editor <a href="node178.html#TasksOpenOME">3.18.2.1</a></ul>
+  <body><a name="testExecViewContextId"></a><h2><a name="SECTION004172000000000000000"> <span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">2</span> Executing and analyzing manual tests</a></h2><a name="TasksManualExec"></a><p> Once you have created a manual Test Case <a href="node175.html#TasksManualCreate">3.17.1</a>, you can execute it. <p>
+      <ol>
+        <li>Start the AUT <a href="node194.html#startaut">3.19.2</a>. <li>Start the Test Suite containing the manual Test Steps <a href="node195.html#TasksStartExec">3.19.3</a>. <li>For each manual Test Step in the test, a dialog will appear with the descriptions and data you entered for the <i>action to perform</i> and the <i>expected behavior</i>. <li>Execute the Test Step as described, enter a comment if necessary, then click either &quot;<i>passed</i>&quot; or &quot;<i>failed</i>&quot; in the dialog to move to the next Test Step . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If the Test Step fails, then an automatic screenshot will be taken <a href="node228.html#testresprefs">3.22.8</a>, and any Event Handlers <a href="node215.html#customizedehandler">3.21</a> for this Test Case will be activated.</b></td>
+            </tr>
+          </table>
+        <li>Once the dialog has been closed, the next Test Step dialog will appear. <li>At the end of the test, you can see the test result report like any other automated test <a href="node204.html#testresultview">3.26</a>. </ol>
+    <p>
     <p>
       <br />
       <hr />

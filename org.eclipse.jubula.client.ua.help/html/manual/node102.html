@@ -1,28 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.9.9 Saving Test Cases from an editor as a new Test Case </title>
-    <meta content="3.9.9 Saving Test Cases from an editor as a new Test Case " name="description" />
+    <title>3.9.7 Extracting Test Cases from editors: Refactoring</title>
+    <meta content="3.9.7 Extracting Test Cases from editors: Refactoring" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="testSuiteEditorContextId"></a><h2><a name="SECTION00499000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span> Saving Test Cases from an editor as a new Test Case </a></h2><a name="TasksSaveAsTC"></a><p><a name="1857"></a> <a name="1858"></a><p> Jubula lets you save selected Test Cases from other Test Cases and from Test Suites . This lets you create a new keyword that contains the selected modules without having to manually find them and reuse them. <p>
+  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="testSuiteEditorContextId"></a><h2><a name="SECTION00497000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">7</span> Extracting Test Cases from editors: Refactoring</a></h2><a name="TasksEditorExtract"></a><p><a name="1812"></a> <a name="1813"></a><p> Jubula lets you <i>extract</i> Test Cases from other Test Cases and from Test Suites . This lets you create keywords even after you have started specifying. <p>
       <ol>
-        <li>Open the Test Case Editor or Test Suite Editor by double-clicking on the Test Case or Test Suite you want to edit. <li>Select the Test Cases you want to save into the new Test Case by single-clicking them. Use <tt>&raquo;CTRL&laquo;</tt> to select more than one item. <li>Right-click in the editor and select: <br />
+        <li>Open the Test Case Editor or Test Suite Editor by double-clicking on the Test Case or Test Suite you want to edit. <li>Select the Test Cases you want to extract by single-clicking them. Use <tt>&raquo;CTRL&laquo;</tt> to select more than one item. <li>Right-click in the editor and select: <br />
           <table border="0" style="margin:0px;padding:0px;">
             <tr>
               <td bgcolor="#DDDDDD">Refactor</td>
               <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Save as new...</td>
+              <td bgcolor="#DDDDDD">Extract Test Case</td>
             </tr>
-          </table> . <li>When prompted, enter a name for the new Test Case . <li>A new Test Case will be created containing the Test Cases you selected, with the data and component names they used in the current editor. <li>The Test Case you just created is visible in the Test Case Browser . </ol>
+          </table> . <li>When prompted, enter a name for the new Test Case . <li>The Test Cases you selected will be extracted into this new Test Case . <li>The extracted Test Case appears as a reused Test Case in the current editor. It is marked with a small arrow to show that it is reused, and the Test Case name is in angled brackets (<tt>&quot;&lt; &gt;&quot;</tt>) to show that it is the same as the specification name. <li>The Test Case you just created is also visible in the Test Case Browser . </ol>
       <table>
         <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>Use this feature if you have created reusable Test Cases that are correctly modularized, but you require them again (e.g. prerequisites for another Test Case ). If the sequence of actions you require is a recurring logical sequence (e.g. enter username, enter password, then click OK for a login dialog), then we strongly recommend using the <i>Extract</i> function <a href="node100.html#TasksEditorExtract">3.9.7</a> instead. This will give you one reusable module, and therefore one central place to make any changes should this sequence change.</b></td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>Use this feature when you realize that you are planning on reusing one or more Test Cases for the same or a similar action again. You will save yourself time in test creation and maintenance.</b></td>
         </tr>
       </table>
     <p>

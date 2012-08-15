@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.2.4 Design for testability in RCP</title>
-    <meta content="4.2.4 Design for testability in RCP" name="description" />
+    <title>4.2.1 Supported RCP AUT&#39;s </title>
+    <meta content="4.2.1 Supported RCP AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,8 +10,11 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00524000000000000000"> <span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Design for testability in RCP</a></h2>
-    <p><a name="6251"></a> <a name="6252"></a> <a name="6253"></a> <a name="6254"></a><p> Although Jubula can relocate components in the AUT even when they are not named by the developers, naming components is nevertheless a good idea. In SWT and RCP there is no method like the Swing <i>setName</i> method to name components in the program code. However, you can improve the testability of your application by using the following method in your SWT or RCP code for the current component class: <i>setData(String key, String ComponentName)</i>. For the key, use <i>TEST_COMP_NAME</i>. <p> Even if you do not name components, you can choose to have Jubula generate unique names for your components in the AUT in the AUT dialog <a href="node71.html#Defineaut">3.6</a>. <p>
+    <h2><a name="SECTION00521000000000000000"> <span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Supported RCP AUT&#39;s </a></h2>
+    <p> Jubula supports AUT&#39;s written with the RCP GUI toolkit according to the following points: <p>
+      <ul>
+        <li>The AUT is written using Java 1.5 or higher. <li>It uses a Java SE (Standard Edition) JRE. <li>The AUT uses SWT version 3.1 or higher. </ul>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

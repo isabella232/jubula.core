@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.4.2.1 Dealing with occasional dialogs</title>
-    <meta content="5.4.2.1 Dealing with occasional dialogs" name="description" />
+    <title>5.4.1.1 Creating general Event Handlers </title>
+    <meta content="5.4.1.1 Creating general Event Handlers " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,7 +10,17 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION00642100000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Dealing with occasional dialogs</a></h3> In the case of occasional dialogs, your Test Case in the test should contain an action which checks that the dialog does <span class="textbf">not</span> exist (e.g.<i>Check Existence of Window</i> with the parameter <i>false</i>). If the dialog is not visible, the test will continue normally. <p> If the dialog is present, an error occurs. Add an Event Handler to the <i>Check Existence of Window</i> Test Case that clicks e.g. the cancel button in the window and waits for the window to close. The Event Handler should react to a <i>check failed</i> event, and should use <i>retry</i> as the reentry property. Once the window has closed, the failed Test Step (check existence) will be carried out again. This time, the check will succeed, and the test will continue. The Test Step will be marked as successful on retry. <p>
+    <h3><a name="SECTION00641100000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Creating general Event Handlers </a></h3> The first thing to do is to create four Test Cases for the four event types: <p>
+      <dl>
+        <dt><strong>Action Error:</strong><dd>This Test Case contains the unbound module <i>restart application</i><dt><strong>Check Failed:</strong><dd>This Test Case is empty <dt><strong>Component Not Found:</strong><dd>This Test Case contains the unbound module <i>restart application</i><dt><strong>Configuration Error:</strong><dd>This Test Case contains the unbound module <i>restart application</i></dl>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>We recommend placing any Event Handlers you write in a category <i>Executable Tests/Event Handlers</i></b></td>
+        </tr>
+      </table>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

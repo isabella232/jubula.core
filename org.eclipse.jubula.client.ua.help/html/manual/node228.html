@@ -1,18 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.22.10 Label decoration preferences</title>
-    <meta content="3.22.10 Label decoration preferences" name="description" />
+    <title>3.22.8 Test result preferences</title>
+    <meta content="3.22.8 Test result preferences" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h2><a name="SECTION0042210000000000000000"></a> <a name="TasksPrefsDecoration"></a><br /><span class="arabic">3</span>.<span class="arabic">22</span>.<span class="arabic">10</span> Label decoration preferences </h2>
-    <p> You can open the label decoration preferences by selecting <i>General - Appearance - Label Decorations</i> from the preference dialog. <p> From this preference page, you can alter your preferences for: <dl>
-        <dt><strong>Completeness Check Decorator:</strong><dd> We recommend leaving this decorator active, as it shows you red crosses and tooltips in the Test Suite Browser when Test Suites and Test Jobs are incomplete. <dt><strong>Test Result Duration Decorator:</strong><dd>Deactivate this option to not see the execution time required for each node in the Test Result View . The times shown are for the execution of each node, including its children. You can use this information to see whether specific Test Cases are taking longer than you expect them to. <dt><strong>Test Result Parameter Decorator:</strong><dd>Deactivate this option to not see the parameter values used at this node (i.e. either entered at this level, or actually used at this place) in the Test Result View . You can use this information to easily see which data were used for your Test Cases , without having to click through each individual node in the Test Result View . This can be especially useful if you have one Test Case that runs multiple times with different datasets. </dl>
+  <body><a name="prefPageTestResultContextId"></a><a name="testResultSummaryViewContextId"></a><h2><a name="SECTION004228000000000000000"> <span class="arabic">3</span>.<span class="arabic">22</span>.<span class="arabic">8</span> Test result preferences</a></h2><a name="testresprefs"></a><p><a name="4756"></a> <a name="4757"></a> <a name="4758"></a> <a name="4759"></a><p> You can open the test result preference page by selecting <i>Test - Test Results</i> from the preference dialog. <p>
+      <div align="CENTER"><a name="testresultprefs"></a><a name="4764"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.31:</strong> Test Result Preference Dialog</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image testresultprefs" border="0" height="546" src="./testresultprefs.png" width="735" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <ol>
+        <li>Choose whether you want the Test Result View to open when testing begins. <p> The Test Result View follows the test execution and shows which Test Steps were successful and which failed. <p>
+        <li>Choose whether you want to track the test execution progress in the Test Result View . When this option is activated, the Test Result View scrolls to follow the test progress. <li>Choose whether you want Jubula to automatically create a screenshot when a test encounters an error. Screenshots are automatically saved in the Database and can be viewed using the Image View when you select the failed Test Step in the Test Result View . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Screenshots are only taken of the primary monitor. Multiple monitors are not supported for screenshots.</b></td>
+            </tr>
+          </table>
+        <li>Choose whether you want to create HTML and XML reports for each execution. When you activate this choice, decide whether you want full reports or just the errors to be shown. Enter a directory for the reports. <li>Decide whether you want all test runs or no test runs to be marked as relevant, or whether you want to be prompted each time. Non-relevant test results are not exported with the Project . <li>Enter the amount of days that test result summaries should be displayed for. This gives you a better overview of the most recent results in the Test Result Summary View . </ol>
     <p>
       <br />
       <hr />

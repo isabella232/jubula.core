@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>7.12.2 Default Event Handlers </title>
-    <meta content="7.12.2 Default Event Handlers " name="description" />
+    <title>7.11 Observing user actions</title>
+    <meta content="7.11 Observing user actions" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,7 +10,16 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION008122000000000000000"> <span class="arabic">7</span>.<span class="arabic">12</span>.<span class="arabic">2</span> Default Event Handlers </a></h2> Default Event Handlers are a part of the Test Suite and can be considered as being present at the Test Suite level. They are activated when no Event Handler has been found for the event type in the part of the tree where the error occurred. The default reentry type for each event type can be specified in the Properties View for the Test Suite Editor . <p> The reentry types for the default Event Handlers are the same throughout the tree. Everywhere a certain type of error occurs, the same action will be taken, unless the part of the tree where the error occurred has its own Event Handler for that event type. <p>
+    <h1><a name="SECTION008110000000000000000"> <span class="arabic">7</span>.<span class="arabic">11</span> Observing user actions</a></h1>
+    <p><a name="7766"></a><p> As explained in the introduction <a href="node6.html#IntroRecording">1.1.3</a> and in the section on how to record <a href="node235.html#TasksObsModeTips">3.23.1</a>, we believe that recording tests has various disadvantages in any tool. <p> However, you can use Jubula to observe Test Cases in a running Java AUT . You can record actions and checks in your AUT , and the output for these actions is Test Steps . <p> You can create the same tests with observing as you can with specification. The real differences are: <ul>
+        <li>object mapping is carried out automatically in observing mode. Because of this, you do not provide a component name, but one is created by Jubula . <li>you must use concrete values for parameters in the observation mode. You can (and should), however, change these to references in the specification perspective later so that your tests are more reusable. </ul>
+    <p> You can reuse observed Test Cases in the same ways as you can reuse specified Test Cases . <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>The observation mode supports high level actions. To find out exactly how an action works, look up the component and its action in --&gt;<i>Reference Manual</i> <a href="../reference/node6.html#actparam"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a></b></td>
+        </tr>
+      </table>. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

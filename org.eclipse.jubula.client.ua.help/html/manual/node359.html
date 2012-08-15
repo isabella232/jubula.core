@@ -1,25 +1,24 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.4.1.1 Creating general Event Handlers </title>
-    <meta content="5.4.1.1 Creating general Event Handlers " name="description" />
+    <title>5.3.2 Best practices for structuring the Object Mapping Editor </title>
+    <meta content="5.3.2 Best practices for structuring the Object Mapping Editor " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION00641100000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Creating general Event Handlers </a></h3> The first thing to do is to create four Test Cases for the four event types: <p>
-      <dl>
-        <dt><strong>Action Error:</strong><dd>This Test Case contains the unbound module <i>restart application</i><dt><strong>Check Failed:</strong><dd>This Test Case is empty <dt><strong>Component Not Found:</strong><dd>This Test Case contains the unbound module <i>restart application</i><dt><strong>Configuration Error:</strong><dd>This Test Case contains the unbound module <i>restart application</i></dl>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>We recommend placing any Event Handlers you write in a category <i>Executable Tests/Event Handlers</i></b></td>
-        </tr>
-      </table>
+  <body><a name="objectMapEditorContextId"></a><h2><a name="SECTION00632000000000000000"> <span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Best practices for structuring the Object Mapping Editor </a></h2><a name="BPOMCategories"></a><p> Organizing the Object Mapping Editor into categories (<a href="#OMCats">5.2</a>) makes it easier to find components you have mapped later on - especially if you have to remap any of them. As a general rule, the categories in the Object Mapping Editor will reflect the categories in the Test Case Browser in the <i>AUT -bound modules</i> category - the AUT should be split up into areas and dialogs, so that you have a simple yet hierarchical overview of your AUT in the Object Mapping Editor <a href="node356.html#BPCategories">5.3.1</a>. <p>
+      <div align="CENTER"><a name="OMCats"></a><a name="8510"></a><table>
+          <caption align="BOTTOM"><strong>Figure 5.2:</strong> Categories in the Object Mapping Editor </caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image OMCats" border="0" height="207" src="./OMCats.png" width="237" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
     <p>
       <br />
       <hr />

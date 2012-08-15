@@ -1,35 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.13.5 Deleting unused component names</title>
-    <meta content="3.13.5 Deleting unused component names" name="description" />
+    <title>3.13.3 Renaming component names</title>
+    <meta content="3.13.3 Renaming component names" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerComponentNameBrowserContextId"></a><h2><a name="SECTION004135000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">5</span> Deleting unused component names</a></h2><a name="TasksDeleteCompName"></a><p><a name="3076"></a> <a name="3077"></a><p> When you reassign component names in the Component Names View , you automatically create new component names if the name you enter did not previously exist in the Project . <p> Larger Projects can often end up with a number of component names that are no longer used. You can see and delete these names in the Component Name Browser &nbsp; . The names in the <i>Unused Component Names</i> category (<a href="#compnamebrowser">3.20</a>) are not used anywhere in this Project - they are not present in any Test Cases and they have not been mapped to any technical names from the AUT in the Object Mapping Editor . <p>
-      <div align="CENTER"><a name="compnamebrowser"></a><a name="8077"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.20:</strong> The Component Name Browser &nbsp; </caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image compnamebrowser" border="0" height="259" src="./compnamebrowser.png" width="405" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p> To delete unused component names, select the name you want to delete and select: <br />
-      <table border="0" style="margin:0px;padding:0px;">
-        <tr>
-          <td bgcolor="#DDDDDD">Delete</td>
-        </tr>
-      </table>
-      <br /> from the context-menu. <p>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="renameComponentNameContextId"></a><h2><a name="SECTION004133000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">3</span> Renaming component names</a></h2><a name="TasksRenameCompName"></a><p><a name="3110"></a> <a name="3111"></a><p> Use the rename function to change the name of a component name in your test specification. Whereas <i>reassigning</i> component names results in a new component name being created <a href="node154.html#TasksReassignCompName">3.13.2</a>, renaming just changes the name at all places where it is used. <p> You can rename component names in the Component Name Browser &nbsp; and in the Object Mapping Editor . <ol>
+        <li>Select the component name you want to rename. <li>In the context-menu, select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Rename</td>
+            </tr>
+          </table>
+        <li>In the dialog that appears, enter a new component name to replace the old name. We recommend using naming conventions for component names <a href="node352.html#BPComponentNames">5.2.2</a>. <li>Press &quot;<i>OK</i>&quot;. The component name you entered will replace the old name throughout your test. </ol>
+    <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>To cleanup component names that are only used in mappings, or that are no longer used for a specific AUT , use the function <i>Cleanup unused component names</i> in the Object Mapping Editor <a href="node185.html#TasksOMCleanup">3.18.3.1</a>.</b></td>
+          <td><b>You cannot rename a component name with a name that already exists. To merge two or more component names to the same name, see the section on merging <a href="node158.html#TasksMergeCompName">3.13.4</a>.</b></td>
         </tr>
       </table>
     <p>

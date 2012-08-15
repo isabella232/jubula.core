@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.11.2.3 Tips and tricks for using the Test Case library</title>
-    <meta content="3.11.2.3 Tips and tricks for using the Test Case library" name="description" />
+    <title>3.11.2.1 Using the library to create tests</title>
+    <meta content="3.11.2.1 Using the library to create tests" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,42 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004112300000000000000"></a> <a name="UnderstandingLibrary"></a><br /><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Tips and tricks for using the Test Case library </h3> The Test Cases in the library are organised into actions. In the <i>basic</i> category, you will find the various actions offered by Jubula . The <i>complex</i> category contains some example keywords which are built up of more than one Test Case . <p> When specifying your tests, you need to find and choose which actions you will need. This takes some practice, but there are some hints which can help you: <p><span class="textbf">High-Level Actions</span><br /> Jubula executes <i>high-level</i> actions. This means that if you want to select something from a menu using the menupath, for example, you need to look in the category: <br /><i>Actions (basic)/Select/Menu Bar</i><br /> and select the Test Case : <br /><i>ub_mbr_selectEntry_byTextpath</i><br /> The Test Case finds the menu, opens it, and clicks the item you specify. <br />
-    <p><span class="textbf">Abstract components</span><br /> There are some actions which are executable on many different components. Clicks, for example can be executed on pratically all components in the interface. You can also check text on labels, combo boxes and text fields. Obviously, it makes sense to specify your Test Cases as abstractly as possible so that they can be reused in more places. This helps keep the maintenance low later. <p> You will notice in the library that there is no <i>Button</i> category under the <i>Click</i> category. Instead, you will find various click actions specified for <i>Graphics Component (grc)</i>. This is because all components which support clicks belong to the <i>Graphics Component</i> group. <p> In the same way, you will find the category <i>Check/Component with Text</i>. You can use the check actions from this category to check text on any component with text - buttons, text fields, combo boxes, labels. <br />
-    <p><span class="textbf">Parameters</span><br /> Different actions require different data. Some Test Cases in the library have been pre-configured with data to make test specification easier (look in the category <i>Input via Keyboard/Application/Key Combination</i> for a long list). <p> Some actions let you choose whether you want to enter data using an <i>indexpath</i> or a <i>textpath</i>. We recommend using the textpath so that you are not dependent on the order of e.g. menu entries or tabbed panes. <p> To make text-based parameters more robust, Jubula often lets you choose an <i>operator</i>. You can choose between <i>equals, matches, simple match, not equals</i>. Using matches lets you use regular expressions so that you don&#39;t have to hard-code the whole text parameter. <p>
+    <h3><a name="SECTION004112100000000000000"></a> <a name="UseLibrary"></a><br /><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Using the library to create tests </h3> Creating tests with Jubula is really just a matter of: <ul>
+      <li>Deciding how to structure your tests (i.e. what keywords to create and how to combine them <a href="node343.html#KeywordDesign">5.1</a>). <li>Choosing the Test Cases from the library (or from your own set of Test Cases ) that you need to create these keywords. </ul>
+    <p> To use the Test Cases from the library, you will first need to create a Test Case of your own <a href="node110.html#TasksCreateTC">3.11.1</a>. <p>
+      <ol>
+        <li>Open the Test Case Editor by double-clicking on the Test Case you want to edit in the Test Case Browser . <li>In the Test Case Browser , browse to a Test Case that you want to add. For help on finding your way around the library, see the later section <a href="node114.html#UnderstandingLibrary">3.11.2.3</a>. <li>You can add the Test Case by dragging and dropping from the Test Case Browser to the Test Case Editor or you can right click on the Test Case in the Test Case Editor and select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Reference Existing Test Case </td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">
+                <br />
+              </td>
+            </tr>
+          </table> to see a list of all Test Cases that you can add to this Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>You can filter in this dialog using the field at the top. Use star <tt>&quot;*&quot;</tt> as a wild card.</b></td>
+              </tr>
+            </table>
+          <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>You can open the dialog to reference an existing Test Case by pressing <tt>&raquo;ENTER&laquo;</tt> on a Test Case in the Test Case Editor .</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>Once you have added the Test Case , you will need to enter a component name in the Component Names View <a href="node154.html#TasksReassignCompName">3.13.2</a> and you will need to enter data for the Test Case in the Properties View <a href="node119.html#WorkingWithData">3.12</a>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>See the Best Practices section for information on how to best structure your Test Cases and tests <a href="node347.html#BPKeywordDesign">5.1.1.3</a>.</b></td>
+            </tr>
+          </table>
+      </ol>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

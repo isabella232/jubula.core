@@ -1,32 +1,50 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.11.3 Opening existing Test Cases </title>
-    <meta content="3.11.3 Opening existing Test Cases " name="description" />
+    <title>3.11.2.2 Information about the library</title>
+    <meta content="3.11.2.2 Information about the library" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="testCaseOpenExistingContextId"></a><h2><a name="SECTION004113000000000000000"> <span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">3</span> Opening existing Test Cases </a></h2><a name="TasksOpenExistingTC"></a><p> You can open an existing Test Case without having to select it from the Test Case Browser using the <i>Open Test Case</i> dialog. <p>
-      <ol>
-        <li>This dialog can be opened using the shortcut <tt>&raquo;CTRL+SHIFT+T&laquo;</tt> or from the menu: <br />
-          <table border="0" style="margin:0px;padding:0px;">
+  <body>
+    <h3><a name="SECTION004112200000000000000"></a> <a name="LibraryInformation"></a><br /><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Information about the library </h3>
+    <ol>
+      <li>Jubula lets you use a highly reusable library of Test Cases to specify tests. <li>The Projects containing the Test Case libraries are located under: <br /><i>examples/testcaseLibrary</i>. <p>
+      <li>The Projects available are: <ul>
+          <li>unbound_modules_concrete <li>unbound_modules_web <li>unbound_modules_swt <li>unbound_modules_rcp </ul>
+        <p>
+      <li>These Projects contain reusable Test Cases which have been created in advance so you do not have to specify them yourself. <table>
+          <tr>
+            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+            <td><b>Refer to the chapter on Components, Actions, and Parameters (--&gt;<i>Reference Manual</i> <a href="../reference/node6.html#actparam"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for information on components, the actions they support, and their parameters.</b></td>
+          </tr>
+        </table>
+      <li>The library is split into categories of <i>actions</i> on components. To select something in your AUT , open the <i>select</i> category and then open the category for the type of component you want to select something from. <p>
+          <table>
             <tr>
-              <td bgcolor="#DDDDDD">Edit</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Open Test Case</td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The names for these Test Cases all begin with &quot;<i>ub</i>&quot;. This means that they are <i>unbound</i> - they are not in any way dependent on an AUT . </b></td>
             </tr>
           </table>
-        <li>In the dialog, you can search for a Test Case or Test Cases in the tree or using the filter <a href="node270.html#TasksFilters">3.28.8</a>. <li>Select the Test Cases you want to add, and click &quot;<i>OK</i>&quot;. <li>The selected Test Cases will be opened in indidivual Test Case editors. </ol>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You can use this option to open a Test Case even if a filter is active in the Test Case Browser .</b></td>
-        </tr>
-      </table>
+      <li>Each Test Case in the library contains one Test Step which corresponds to the action in the Test Case name. The component name is a placeholder, and the parameters have been referenced so that you can enter your own data. <p>
+          <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The unbound modules Projects which correspond to your chosen Project toolkit are automatically imported into the Database and reused in your Project .</b></td>
+            </tr>
+          </table>
+        <p>
+          <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>We do not recommend making changes to the installed unbound module Projects , for compatibility reasons. If you have Test Cases you want to reuse in other Projects , we advise creating your own library Project .</b></td>
+            </tr>
+          </table>
+        <p>
+    </ol>
     <p>
       <br />
       <hr />

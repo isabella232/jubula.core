@@ -1,24 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.1 Keyword design - how to structure your tests</title>
-    <meta content="5.1 Keyword design - how to structure your tests" name="description" />
+    <title>4.4.1 Supported HTML AUT&#39;s </title>
+    <meta content="4.4.1 Supported HTML AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerSpecTestCaseEditorContextId"></a><h1><a name="SECTION00610000000000000000"> <span class="arabic">5</span>.<span class="arabic">1</span> Keyword design - how to structure your tests</a></h1><a name="KeywordDesign"></a><p> This section deals with how to structure your tests in terms of <i>keywords</i>. It covers the following topics: <p>
+  <body>
+    <h2><a name="SECTION00541000000000000000"> <span class="arabic">4</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Supported HTML AUT&#39;s </a></h2>
+    <p> Jubula supports AUT&#39;s written with the HTML GUI toolkit according to the following points: <p>
       <ul>
-        <li>How to decide when to make a keyword and structuring Test Cases to make them maximally reusable as keywords <a href="node344.html#BPKeywordDesign">5.1.1.3</a>. <li>Where to add data - when to reference parameters and when to enter concrete values <a href="node345.html#BPKeywordData">5.1.2</a>. <li>How to structure Test Suites <a href="node346.html#BPKeywordSuites">5.1.3</a>. </ul>
+        <li>AUT&#39;s can be run in Internet Explorer (versions 7, 8 and 9), Firefox (3.0 to 10) and Safari (version 5). <li>We strongly recommend writing HTML AUT&#39;s so that they are conform to the <i>W3C</i> standard. You can check whether your AUT is <i>W3C</i> conform using an online validator: http://validator.w3.org <li>Some of the Jubula actions in the <i>concrete</i> toolkit (i.e. which are theoretically valid for all AUT types) may not (yet) be supported. In some cases, this is because the component doesn&#39;t exist as such in HTML AUT&#39;s (menu bars for example). In other cases, text components such as tables or lists do not have a concept for dealing with selection as they do in e.g. Swing. <li>The <i>autrun</i> option to start AUT&#39;s <a href="node82.html#autrun">3.7.2.6</a> cannot be used for HTML AUT&#39;s . <li>Unlike other toolkits supported by Jubula , real clicks and key events are not sent to HTML AUT&#39;s . </ul>
     <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node341.html" name="tex2html5470"><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Making Test Cases into reusable keywords</a><ul>
-            <li><a href="node342.html" name="tex2html5471"><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">1</span> General guidelines for keywords</a><li><a href="node343.html" name="tex2html5472"><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">2</span> The size of keywords</a><li><a href="node344.html" name="tex2html5473"><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Utility modules for keywords</a></ul>
-          <br />
-        <li><a href="node345.html" name="tex2html5474"><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Data in keywords</a><li><a href="node346.html" name="tex2html5475"><span class="arabic">5</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Structuring your use cases and Test Suites </a></ul>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

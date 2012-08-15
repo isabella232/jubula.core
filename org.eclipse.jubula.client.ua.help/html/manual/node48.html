@@ -11,13 +11,13 @@
   </head>
   <body>
     <h2><a name="SECTION00431000000000000000"></a> <a name="tasksdblogin"></a><br /><span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Logging in to the Database </h2>
-    <p><a name="505"></a> <a name="506"></a><ol>
-        <li>Projects are stored in a Database . Before you can access a Project , you have to log in to the Database . <li>The log-in dialog for the Database (<a href="#dblogin">3.1</a>) appears automatically the first time you need it (e.g. when you try to open or create a Project ). <p>
-            <div align="CENTER"><a name="dblogin"></a><a name="518"></a><table>
-                <caption align="BOTTOM"><strong>Figure 3.1:</strong> Database login</caption>
+    <p><a name="518"></a> <a name="519"></a><ol>
+        <li>Projects are stored in a Database . Before you can access a Project , you have to log in to the Database . <li>The log-in dialog for the Database (<a href="#dblogin">3.2</a>) appears automatically the first time you need it (e.g. when you try to open or create a Project ). <p>
+            <div align="CENTER"><a name="dblogin"></a><a name="531"></a><table>
+                <caption align="BOTTOM"><strong>Figure 3.2:</strong> Database login</caption>
                 <tr>
                   <td>
-                    <div align="CENTER"><img align="BOTTOM" alt="Image dblogin" border="0" height="269" src="./dblogin.png" width="394" /></div>
+                    <div align="CENTER"><img align="BOTTOM" alt="Image dblogin" border="0" height="377" src="./dblogin.png" width="438" /></div>
                   </td>
                 </tr>
               </table>
@@ -44,6 +44,29 @@
                 <td><b>If you previously had another Jubula version installed, you may see the information that your current Database version is not compatible with the latest version. If this is the case, then you can automatically migrate your Database <a href="node50.html#DBMigrate">3.4</a>.</b></td>
               </tr>
             </table>
+          <p>
+        <li>If you want to save your Database password, select the checkbox to store it in the secure store. You can edit your password settings in the preferences via: <br /><i>General/Security/Secure Store</i>. <li>Once you have opted to save your password, you can also choose whether you want to perform an automatic login to this Database when you use this workspace. If you select this option, then the next time you open Jubula and e.g. select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Test</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Open</td>
+            </tr>
+          </table>
+          <br /> you will be automatically connected to this Database with the username and password you entered. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You cannot perform auto-login for an embedded Database unless it is the only Database configured.</b></td>
+            </tr>
+          </table>
+        <li>You can change your auto-login details or select another Database at any time by selecting: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Test</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Select database...</td>
+            </tr>
+          </table>
       </ol>
     <p>
       <br />

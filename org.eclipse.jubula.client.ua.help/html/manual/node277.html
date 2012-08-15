@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.29.4 I can&#39;t start the AUT </title>
-    <meta content="3.29.4 I can&#39;t start the AUT " name="description" />
+    <title>3.29.1 General help</title>
+    <meta content="3.29.1 General help" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,13 +10,23 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION004294000000000000000"></a> <a name="troublestartaut"></a><br /><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">4</span> I can&#39;t start the AUT </h2>
-    <p><a name="5507"></a> <a name="5508"></a> <span class="textbf">If the start AUT button is disabled</span><br /> If you cannot start a particular AUT , this could be because: <p>
-      <ul>
-        <li>You have not connected to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a>. <li>You have not defined an AUT <a href="node71.html#Defineaut">3.6</a>. <li>You have not configured an AUT <a href="node73.html#configuringaut">3.7.1</a>. <li>The AUT does not support the current working language. </ul>
-    <p><span class="textbf">Errors starting the AUT </span><br /> If there is an error starting the AUT , this could be because: <dl>
-        <dt><strong>The AUT cannot be found:</strong><dd>Make sure that the JAR or executable file for the AUT is correct, or that the classpaths are correct <a href="node73.html#configuringaut">3.7.1</a>. <dt><strong>The main class has not been found:</strong><dd>Make sure that the JAR file or the classpaths you have entered contain the main class <a href="node73.html#configuringaut">3.7.1</a>. <dt><strong>The JAR given as a classpath is not valid:</strong><dd>Check that you have entered the right JAR file, and that the path to it is correct from this computer. If you have entered a relative path, make sure that it is relative to the AUT working directory, if there is one, or to the AUT Agent directory if you have not specified a AUT working directory. <dt><strong>The JAR given as a classpath does not contain a distinct main class:</strong><dd>Check that you have entered a JAR which contains a main class. </dl>
-    <p><span class="textbf">If the AUT does not appear in the Running AUT&#39;s View </span><br /> If the AUT does not appear in the Running AUT&#39;s View and you are testing an RCP application, make sure that the RCP Remote Control plugin has been installed <a href="node322.html#rcpaut">4.2</a>. <p> Otherwise, check that the toolkit you specified in the AUT configuration <a href="node73.html#configuringaut">3.7.1</a> is the right toolkit for this AUT . <p>
+    <h2><a name="SECTION004291000000000000000"> <span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">1</span> General help</a></h2> Always check in the Problem View first for any help with your tests. The messages there should help you with most of the problems. Jubula also highlights problems in the browsers and views with red crosses. Hover the mouse over the item to see a tool tip with more information. <p> In some text fields you can only enter certain characters. A red background in a text field means that you have entered something incorrect in that field. A yellow background means that the information entered is incomplete. <p> Looking in the log files may help to resolve some problems. Logs for the Jubula client and AUT Agent can be found via: <br />
+      <table border="0" style="margin:0px;padding:0px;">
+        <tr>
+          <td bgcolor="#DDDDDD">Help</td>
+          <td>--&gt;</td>
+          <td bgcolor="#DDDDDD">Show Client/AUT Agent Log</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>The ITE can only access an AUT Agent log file if it is currently connected to a AUT Agent .</b></td>
+        </tr>
+      </table>
+    <p> This section contains information on some of the more common problems: <ul>
+        <li>Starting the AUT Agent <a href="node278.html#troublestartserver">3.29.2</a>. <li>Connecting to the AUT Agent <a href="node279.html#troubleconnectserver">3.29.3</a>. <li>Starting the AUT <a href="node280.html#troublestartaut">3.29.4</a>. <li>Mapping components from the AUT <a href="node281.html#troubleobjectmapping">3.29.5</a>. <li>Executing Test Suites <a href="node282.html#troubleexecute">3.29.6</a>. <li>Failed Test Suites <a href="node283.html#troublefailed">3.29.7</a>. <li>Locked Test Cases <a href="node285.html#troublelocked">3.29.9</a>. </ul>
+    <p> For other problems, look in the relevant section of the user manual or the reference manual. There are also FAQs on the Jubula website. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

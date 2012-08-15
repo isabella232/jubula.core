@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>6.1.1 The Functional Test Specification Perspective </title>
-    <meta content="6.1.1 The Functional Test Specification Perspective " name="description" />
+    <title>5.4.2.1 Dealing with occasional dialogs</title>
+    <meta content="5.4.2.1 Dealing with occasional dialogs" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,18 +10,7 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00711000000000000000"></a> <a name="6876"></a> <a name="6877"></a> <a name="6878"></a> <a name="6879"></a> <a name="6880"></a> <a name="6881"></a> <a name="6882"></a> <a name="6883"></a> <a name="6884"></a> <a name="6885"></a> <a name="6886"></a> <a name="6887"></a> <a name="6888"></a> <a name="6889"></a> <a name="6890"></a> <a name="6891"></a> <a name="6892"></a> <a name="6893"></a><br /><span class="arabic">6</span>.<span class="arabic">1</span>.<span class="arabic">1</span> The Functional Test Specification Perspective </h2> The Functional Test Specification Perspective (<a href="#clientwindow">6.1</a>) provides browsers, editors and views to let you create and edit tests. <p> It contains: <p>
-      <ul>
-        <li>The Test Suite Browser <li>The Test Case Browser <li>The Component Name Browser &nbsp; <li>The editor area <li>The Properties View <li>The Data Sets View <li>The Component Names View <li>The Problem View <li>The search result view (behind the Problem View ) <li>The Running AUT&#39;s View </ul>
-    <p> The Component Names View , Data Sets View and Properties View show you details about the currently selected item in the browser or editor. <p>
-      <div align="CENTER"><a name="clientwindow"></a><a name="8400"></a><table>
-          <caption align="BOTTOM"><strong>Figure 6.1:</strong> Jubula Specification Perspective</caption>
-          <tr>
-            <td><img align="BOTTOM" alt="Image client" border="0" height="301" src="./client.png" width="493" /></td>
-          </tr>
-        </table>
-      </div>
-    <p>
+    <h3><a name="SECTION00642100000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Dealing with occasional dialogs</a></h3> In the case of occasional dialogs, your Test Case in the test should contain an action which checks that the dialog does <span class="textbf">not</span> exist (e.g.<i>Check Existence of Window</i> with the parameter <i>false</i>). If the dialog is not visible, the test will continue normally. <p> If the dialog is present, an error occurs. Add an Event Handler to the <i>Check Existence of Window</i> Test Case that clicks e.g. the cancel button in the window and waits for the window to close. The Event Handler should react to a <i>check failed</i> event, and should use <i>retry</i> as the reentry property. Once the window has closed, the failed Test Step (check existence) will be carried out again. This time, the check will succeed, and the test will continue. The Test Step will be marked as successful on retry. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

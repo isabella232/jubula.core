@@ -1,20 +1,51 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.25.2.2 Setting the message level for guidelines</title>
-    <meta content="3.25.2.2 Setting the message level for guidelines" name="description" />
+    <title>3.25.1 Activating Teststyle for a Project </title>
+    <meta content="3.25.1 Activating Teststyle for a Project " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION004252200000000000000"></a> <a name="TeststyleMessageLevel"></a><br /><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Setting the message level for guidelines </h3>
-    <p> For each guideline in the Project properties, you can decide how Jubula should notify you that the guideline is not being upheld. <p> The choices available are: <dl>
-        <dt><strong>Information:</strong><dd>Information is shown in the Problem View using a blue icon. Elements in the test are not decorated with information messages. <dt><strong>Warning:</strong><dd>Warnings are shown in the Problem View using a yellow icon. Warnings are also shown on elements in the test (e.g. Test Cases . <dt><strong>Errors:</strong><dd>Errors are shown in the Problem View using a red icon. Warnings are also shown on elements in the test (e.g. Test Cases , Test Suites . If a Test Suite contains a Teststyle error, it will not be executable via the ITE . </dl>
-    <p> To set the message level for a guideline: <ol>
-        <li>In the Project properties, under the section <i>Teststyle</i>, select the guideline you want to configure. <li>In the combo-box on the right-hand side, select the level of message you want to receive if this guideline is not upheld. <li>Click &quot;<i>OK</i>&quot; in the Project properties to save the changes. </ol>
+  <body><a name="testStylePropertyPageContextId"></a><h2><a name="SECTION004251000000000000000"> <span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">1</span> Activating Teststyle for a Project </a></h2><a name="TeststyleActivate"></a><p> You can activate Teststyle for a Project in the Project properties: <p>
+      <ol>
+        <li>Open the Project properties via: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Test</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Properties</td>
+            </tr>
+          </table>
+        <li>Select <i>Teststyle</i> from the left. <li>Using the checkbox at the top of the dialog (<a href="#teststyle">3.36</a>), you can centrally activate or deactivate Teststyle for the whole Project . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>By default, Teststyle is activated for all Projects .</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>Click &quot;<i>OK</i>&quot; in the Project properties to save the changes. <li>If your current Project flouts any of the guidelines that are set, then you will see entries in the Problem View notifying you of the places where guidelines are being flouted. For more information on working with the Problem View to fix tests, see the section later <a href="node249.html#TeststyleProbView">3.25.3</a>. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>The Teststyle settings are central for the whole Project and will be seen by all users of the Project .</b></td>
+              </tr>
+            </table>
+          <p>
+      </ol>
+    <p>
+      <div align="CENTER"><a name="teststyle"></a><a name="5032"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.36:</strong> Teststyle</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image teststyle" border="0" height="416" src="./teststyle.png" width="493" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
     <p>
       <br />
       <hr />

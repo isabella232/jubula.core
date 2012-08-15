@@ -1,36 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.24.1 The Problem View </title>
-    <meta content="3.24.1 The Problem View " name="description" />
+    <title>3.23.3.1 Actions that cannot be recorded</title>
+    <meta content="3.23.3.1 Actions that cannot be recorded" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="problemViewContextId"></a><h2><a name="SECTION004241000000000000000"> <span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">1</span> The Problem View </a></h2>
-    <p><a name="4887"></a> <a name="4888"></a> <a name="4889"></a> <a name="4890"></a> <a name="4891"></a> <a name="4892"></a> <a name="4893"></a> <a name="4894"></a> The Problem View (<a href="#probview">3.33</a>) is in the middle of the specification perspective, at the bottom, by default. <p> It shows three types of message: <ul>
-        <li>Information <br />
-          <div class="margin"><img align="BOTTOM" alt="Image info" border="0" height="256" src="./info.png" width="64" />&nbsp;information</div>
-          <br />
-        <li>Errors <br />
-          <div class="margin"><img align="BOTTOM" alt="Image error" border="0" height="256" src="./error.png" width="256" />&nbsp;error</div>
-          <br />
-        <li>Warnings <br />
-          <div class="margin"><img align="BOTTOM" alt="Image warning" border="0" height="225" src="./warning.png" width="256" />&nbsp;warning</div>
-          <br />
-      </ul>
-    <p> Right-clicking on a message and selecting <i>Quick Fix</i> will either solve the problem or take you to the place where you can solve the problem, if this is possible. <p>
-      <div align="CENTER"><a name="probview"></a><a name="4909"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.33:</strong> Problem View </caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image probview" border="0" height="159" src="./probview.png" width="500" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
+  <body>
+    <h3><a name="SECTION004233100000000000000"> <span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Actions that cannot be recorded</a></h3> A few actions cannot be recorded in the current version. These include: <ul>
+      <li>Key combinations that are used as shortcuts in SWT applications. <li>Click counts on trees. The select actions are correctly recorded, but the click count is set to 0 and must be manually adjusted. <li>Components that contain texts that are too long (more than 3999 characters). <li>Actions on native dialogs e.g. file choosers. </ul>
     <p>
       <br />
       <hr />

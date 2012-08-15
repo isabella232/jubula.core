@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>7.8.1 Project and AUT languages</title>
-    <meta content="7.8.1 Project and AUT languages" name="description" />
+    <title>7.7 Reusability</title>
+    <meta content="7.7 Reusability" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,11 +10,17 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00881000000000000000"></a> <a name="7573"></a> <a name="7574"></a> <a name="7575"></a> <a name="7576"></a> <a name="7577"></a> <a name="7578"></a> <a name="7579"></a><br /><span class="arabic">7</span>.<span class="arabic">8</span>.<span class="arabic">1</span> Project and AUT languages </h2>
-    <p> With Jubula , you can test different language versions of your AUT with the same test. All you have to do is translate the data for the test. <p> To make multilingual testing possible, you have to tell Jubula which languages you are using: <p>
-      <dl>
-        <dt><strong>Project language(s):</strong><dd>These languages are specified during Project creation and are valid for all AUT&#39;s in this Project . You will be able to have AUT&#39;s which support one or more of these languages. <dt><strong>Default language:</strong><dd>One of the Project languages is the default language. This is the language which will automatically be set as the working language when you open the Project . <dt><strong>AUT language(s):</strong><dd>When you are defining an AUT , you choose one or more AUT languages from the selection of Project languages. These languages are the languages the AUT supports. You can start the AUT in these languages and write test data for these languages. <dt><strong>The working language:</strong><dd>In the Jubula toolbar, you can change the working language to any of the Project languages. The working language determines which Test Suites you can edit (only those whose AUT supports this language) and the language the AUT is started in. </dl>
+    <h1><a name="SECTION00870000000000000000"> <span class="arabic">7</span>.<span class="arabic">7</span> Reusability</a></h1>
+    <p> Test Cases are the reusable units in Jubula . Test Cases can be referenced in other Test Cases to create modularly built tests. <p> Being able to reuse Test Cases means that you should put some thought into how to design them so that they are as specific as they need to be while also being generic enough to reuse in different situations. <p> You can improve the flexibility of a Test Case by: <p>
+      <ul>
+        <li>Using references <a href="node122.html#TasksTestdataReferences">3.12.3</a> instead of concrete data if the data can change. References allow you to feed a Test Case with different data each time you reuse it. <li>Using the abstract components (e.g. component with text, component with text input, graphics component) <a href="node422.html#ConceptsAbstractComps">7.7.0.1</a> to specify your tests wherever possible. <li>Allowing the component it tests to be defined when you reuse it <a href="node154.html#TasksReassignCompName">3.13.2</a>. </ul>
     <p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li>
+          <ul>
+            <li><a href="node422.html" name="tex2html6558"><span class="arabic">7</span>.<span class="arabic">7</span>.<span class="arabic">0</span>.<span class="arabic">1</span> Abstract, concrete and toolkit specific components</a></ul>
+      </ul>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

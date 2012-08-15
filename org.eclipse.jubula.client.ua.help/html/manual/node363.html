@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>6. User interface</title>
-    <meta content="6. User interface" name="description" />
+    <title>5.4.1.2 Adding the Event Handlers to the use case</title>
+    <meta content="5.4.1.2 Adding the Event Handlers to the use case" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,37 +10,16 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h1><a name="SECTION00700000000000000000"></a> <a name="ChapterUserInterface"></a><br /><span class="arabic">6</span>. User interface </h1>
-    <p><a name="6857"></a> <a name="6858"></a> <a name="6859"></a> <a name="6860"></a><p> There are four types of area in the Jubula user interface: <p>
-    <p>
-      <br />
-    <p><span class="textbf">Perspectives</span><p> A perspective is a collection of views, editors and browsers on the screen. <p><span class="textbf">Browsers</span><p> Browsers let you see the Test Cases and Test Suites you have created in their hierarchical structures. There is also a browser for component names. <p><span class="textbf">Editors</span><p> Editors let you modify, add and delete items. You can open editors by double-clicking on a node (e.g. Test Suite or Test Case ) in a browser. <p><span class="textbf">Views</span><p> Views show details about the currently selected item. If you single-click an item in a browser, the details in the views are read-only. If you select an item from within an editor, you can edit some of the values in the views. <p>
-    <p>
-    <p>
-      <br />
-    <p> You can change the way your user interface looks by moving areas, changing the colors, and hiding/showing views <a href="node253.html#adapting_views">3.27</a>. <p> To reset the default layout at any time, select: <br />
-      <table border="0" style="margin:0px;padding:0px;">
+    <h3><a name="SECTION00641200000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Adding the Event Handlers to the use case</a></h3> The next step is to add the Test Cases as Event Handlers to the use case so that they are activated when an error occurs. <p>
+      <ol>
+        <li>Open a use case in the Test Case Editor . Remember that each use case should be independent, and entirely contained in one single top level Test Case <a href="node349.html#BPKeywordSuites">5.1.3</a>. <li>Add the <i>Action Error</i> Test Case to the use case as an Event Handler <a href="node215.html#customizedehandler">3.21</a>. Specify <i>Action Error</i> as the error type, and <i>return</i> as the reentry type. <li>Add the <i>Check Failed</i> Test Case to the use case as an Event Handler . Specify <i>Check Failed</i> as the error type, and <i>continue</i> as the reentry type. <li>Add the <i>Component Not Found</i> Test Case to the use case as an Event Handler . Specify <i>Component Not Found</i> as the error type, and <i>return</i> as the reentry type. <li>Add the <i>Configuration Error</i> Test Case to the use case as an Event Handler . Specify <i>Configuration Error</i> as the error type, and <i>return</i> as the reentry type. </ol>
+    <p> Now, any error in this use case (which is not handled by a local Event Handler within the use case) will result in one of these Event Handlers being activated. <i>Check failed</i> errors will mean that the test continues. <i>Action errors</i>, <i>Component not found</i> and <i>Configuration errors</i> will provoke a restart of the AUT . The test execution leaves the branch in which the Event Handler was nested (the use case) and carries on at the next Test Case (use case) or Test Suite . <table>
         <tr>
-          <td bgcolor="#DDDDDD">Window</td>
-          <td>--&gt;</td>
-          <td bgcolor="#DDDDDD">Reset Perspective</td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>The <i>app_startup</i> Test Case is important at the beginning of each use case in case the AUT has just been restarted <a href="node349.html#BPKeywordSuites">5.1.3</a>. </b></td>
         </tr>
-      </table> . <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node364.html" name="tex2html5755"><span class="arabic">6</span>.<span class="arabic">1</span> Perspectives</a><ul>
-            <li><a href="node365.html" name="tex2html5756"><span class="arabic">6</span>.<span class="arabic">1</span>.<span class="arabic">1</span> The Functional Test Specification Perspective </a><li><a href="node366.html" name="tex2html5757"><span class="arabic">6</span>.<span class="arabic">1</span>.<span class="arabic">2</span> The Functional Test Execution Perspective </a><li><a href="node367.html" name="tex2html5758"><span class="arabic">6</span>.<span class="arabic">1</span>.<span class="arabic">3</span> The Functional Test Reporting Perspective </a><li><a href="node368.html" name="tex2html5759"><span class="arabic">6</span>.<span class="arabic">1</span>.<span class="arabic">4</span> The Jubula workspace perspective</a></ul>
-          <br />
-        <li><a href="node369.html" name="tex2html5760"><span class="arabic">6</span>.<span class="arabic">2</span> Browsers</a><ul>
-            <li><a href="node370.html" name="tex2html5761"><span class="arabic">6</span>.<span class="arabic">2</span>.<span class="arabic">1</span> The Test Suite Browser </a><li><a href="node371.html" name="tex2html5762"><span class="arabic">6</span>.<span class="arabic">2</span>.<span class="arabic">2</span> The Test Case Browser </a><li><a href="node372.html" name="tex2html5763"><span class="arabic">6</span>.<span class="arabic">2</span>.<span class="arabic">3</span> The Component Name Browser &nbsp; </a></ul>
-          <br />
-        <li><a href="node373.html" name="tex2html5764"><span class="arabic">6</span>.<span class="arabic">3</span> Editors</a><ul>
-            <li><a href="node374.html" name="tex2html5765"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Test Case Editor </a><li><a href="node375.html" name="tex2html5766"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Test Suite Editor </a><li><a href="node376.html" name="tex2html5767"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Object Mapping Editor </a><li><a href="node377.html" name="tex2html5768"><span class="arabic">6</span>.<span class="arabic">3</span>.<span class="arabic">4</span> Central Test Data Editor </a></ul>
-          <br />
-        <li><a href="node378.html" name="tex2html5769"><span class="arabic">6</span>.<span class="arabic">4</span> Views</a><ul>
-            <li><a href="node379.html" name="tex2html5770"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">1</span> The Properties View </a><li><a href="node380.html" name="tex2html5771"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">2</span> The Data Sets View </a><li><a href="node381.html" name="tex2html5772"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">3</span> The Component Names View </a><li><a href="node382.html" name="tex2html5773"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">4</span> The Test Result View </a><li><a href="node383.html" name="tex2html5774"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">5</span> The Problem View </a><li><a href="node384.html" name="tex2html5775"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">6</span> The search result view</a><li><a href="node385.html" name="tex2html5776"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">7</span> The Navigator View &nbsp; </a><li><a href="node386.html" name="tex2html5777"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">8</span> The console</a><li><a href="node387.html" name="tex2html5778"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">9</span> The Inspector View </a><li><a href="node388.html" name="tex2html5779"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">10</span> The Test Result Summary View </a><li><a href="node389.html" name="tex2html5780"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">11</span> The Running AUT&#39;s View </a><li><a href="node390.html" name="tex2html5781"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">12</span> The Image View </a><li><a href="node391.html" name="tex2html5782"><span class="arabic">6</span>.<span class="arabic">4</span>.<span class="arabic">13</span> The Progress View</a></ul>
-          <br />
-        <li><a href="node392.html" name="tex2html5783"><span class="arabic">6</span>.<span class="arabic">5</span> The status bar</a></ul>
+      </table>
+    <p> Carry out these steps for each use case as you create it. <p> In this way, unexpected errors can be dealt with in a way that allows them to be identified later on. The test does not stop at the error, but tries to carry on at the next relevant point. This is the reason why use cases should be independent from each other - to stop further errors occurring. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

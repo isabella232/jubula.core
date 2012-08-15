@@ -1,18 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.25.3 Working with the Problem View to view and fix Teststyle problems</title>
-    <meta content="3.25.3 Working with the Problem View to view and fix Teststyle problems" name="description" />
+    <title>3.25.2.2 Setting the message level for guidelines</title>
+    <meta content="3.25.2.2 Setting the message level for guidelines" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="problemViewContextId"></a><a name="testStylePropertyPageContextId"></a><h2><a name="SECTION004253000000000000000"> <span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">3</span> Working with the Problem View to view and fix Teststyle problems</a></h2><a name="TeststyleProbView"></a><p> Once you have activated <a href="node240.html#TeststyleActivate">3.25.1</a> and configured <a href="node241.html#TeststyleConfigure">3.25.2</a> Teststyle for a Project , you will be informed when your chosen guidelines are not being upheld. The central place for viewing your Teststyle information, warnings and errors is the Problem View . <p> For each Teststyle message, you will see an entry in the Problem View , with the information on where the guideline is not being upheld. You can use the Problem View to view the rule that has been flouted and also to fix the problem using the Quick Fix option. <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node247.html" name="tex2html4250"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Viewing the broken Teststyle rule from the Problem View </a><li><a href="node248.html" name="tex2html4251"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Using Quick Fix to fix the problem</a></ul>
+  <body>
+    <h3><a name="SECTION004252200000000000000"></a> <a name="TeststyleMessageLevel"></a><br /><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Setting the message level for guidelines </h3>
+    <p> For each guideline in the Project properties, you can decide how Jubula should notify you that the guideline is not being upheld. <p> The choices available are: <dl>
+        <dt><strong>Information:</strong><dd>Information is shown in the Problem View using a blue icon. Elements in the test are not decorated with information messages. <dt><strong>Warning:</strong><dd>Warnings are shown in the Problem View using a yellow icon. Warnings are also shown on elements in the test (e.g. Test Cases . <dt><strong>Errors:</strong><dd>Errors are shown in the Problem View using a red icon. Warnings are also shown on elements in the test (e.g. Test Cases , Test Suites . If a Test Suite contains a Teststyle error, it will not be executable via the ITE . </dl>
+    <p> To set the message level for a guideline: <ol>
+        <li>In the Project properties, under the section <i>Teststyle</i>, select the guideline you want to configure. <li>In the combo-box on the right-hand side, select the level of message you want to receive if this guideline is not upheld. <li>Click &quot;<i>OK</i>&quot; in the Project properties to save the changes. </ol>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

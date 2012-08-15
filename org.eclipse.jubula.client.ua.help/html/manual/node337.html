@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.4.1 Supported HTML AUT&#39;s </title>
-    <meta content="4.4.1 Supported HTML AUT&#39;s " name="description" />
+    <title>4.3.3.2 Walkthrough</title>
+    <meta content="4.3.3.2 Walkthrough" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,10 +10,50 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00541000000000000000"> <span class="arabic">4</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Supported HTML AUT&#39;s </a></h2>
-    <p> Jubula supports AUT&#39;s written with the HTML GUI toolkit according to the following points: <p>
-      <ul>
-        <li>AUT&#39;s can be run in Internet Explorer (versions 7 and 8), Firefox (3.0 to 3.5) and Safari (version 5). <li>We strongly recommend writing HTML AUT&#39;s so that they are conform to the <i>W3C</i> standard. You can check whether your AUT is <i>W3C</i> conform using an online validator: http://validator.w3.org <li>Frames and IFrames are not supported. <li>Some of the Jubula actions in the <i>concrete</i> toolkit (i.e. which are theoretically valid for all AUT types) may not (yet) be supported. In some cases, this is because the component doesn&#39;t exist as such in HTML AUT&#39;s (menu bars for example). In other cases, text components such as tables or lists do not have a concept for dealing with selection as they do in e.g. Swing. <li>The <i>autrun</i> option to start AUT&#39;s <a href="node81.html#autrun">3.7.2.6</a> cannot be used for HTML AUT&#39;s . <li>Unlike other toolkits supported by Jubula , real clicks and key events are not sent to HTML AUT&#39;s . </ul>
+    <h3><a name="SECTION00533200000000000000"> <span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Walkthrough</a></h3>
+    <p> The first step to implementing your accessibility plug-in is to create Identifiers for each type of GEF component that you wish to make accessible for Jubula tests. An Identifier is a Java class that implements <i>org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier</i> and provides Jubula with additional and/or more precise information about a specific org.eclipse.gef.EditPart. The granularity of your Identifier classes will depend on the class hierarchy of the EditParts in the AUT . For example, if many of the EditParts share a common superclass, then you can write a single Identifier for that superclass that will be able to provide accessibility for all EditParts that inherit from that superclass. See <a href="node338.html#gefreference">4.3.3.3</a> for a sample implementation. <p> The next step is to create an Adapter Factory. This extension will provide Jubula with information regarding which Identifier to use for each Edit Part. <ol>
+        <li>Open the plugin.xml file for your accessibility plug-in and select the &#39;Extension&#39; tab (<a href="#extensionstab">4.1</a>). <p>
+            <div align="CENTER"><a name="extensionstab"></a><a name="6482"></a><table>
+                <caption align="BOTTOM"><strong>Figure 4.1:</strong> Plug-in Editor with Extensions tab selected</caption>
+                <tr>
+                  <td>
+                    <div align="CENTER"><img align="BOTTOM" alt="Image extensionstab" border="0" height="337" src="./extensionstab.png" width="493" /></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          <p>
+        <li>Add an instance of the <i>org.eclipse.core.runtime.adapters</i> extension. <li>Add a &#39;factory&#39; to the new extension for each type of GEF component for which you wish to provide accessibility. Each factory must provide adapters from the GEF component that implements <i>org.eclipse.gef.EditPart</i> to <i>org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier</i> (<a href="#factory">4.2</a>). <p>
+            <div align="CENTER"><a name="factory"></a><a name="6493"></a><table>
+                <caption align="BOTTOM"><strong>Figure 4.2:</strong> Plug-in Editor with defined Adapter Factory</caption>
+                <tr>
+                  <td>
+                    <div align="CENTER"><img align="BOTTOM" alt="Image factory" border="0" height="275" src="./factory.png" width="493" /></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          <p>
+        <li>Once you have defined your Adapter Factory, you will need to implement it. Your Adapter Factory, which must implement <i>org.eclipse.core.runtime.IAdapaterFactory</i>, provides appropriate instances of your created Identifiers for a given Edit Part. See <a href="node338.html#gefreference">4.3.3.3</a> for a sample implementation. <p>
+        <li>Once you have created your Identifiers and Adapter Factories, you can export your plug-in and copy it to the &#39;plugins&#39; directory of your AUT (<a href="#exportplugin">4.3</a>). <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>When starting your AUT after adding or replacing your accessibility plug-in, it is recommended that the AUT be started with the -clean parameter.</b></td>
+              </tr>
+            </table>
+          <p>
+            <div align="CENTER"><a name="exportplugin"></a><a name="6506"></a><table>
+                <caption align="BOTTOM"><strong>Figure 4.3:</strong> Exporting the Project to a Plug-in</caption>
+                <tr>
+                  <td>
+                    <div align="CENTER"><img align="BOTTOM" alt="Image exportplugin" border="0" height="516" src="./exportplugin.png" width="493" /></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          <p>
+      </ol>
     <p>
       <br />
       <hr />

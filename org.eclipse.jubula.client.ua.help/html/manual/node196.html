@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.19.3.3 Pausing a Test Suite or Test Job </title>
-    <meta content="3.19.3.3 Pausing a Test Suite or Test Job " name="description" />
+    <title>3.19.3.1 Starting a Test Suite or a Test Job </title>
+    <meta content="3.19.3.1 Starting a Test Suite or a Test Job " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,27 +10,31 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004193300000000000000"></a> <a name="PauseExec"></a><a name="4140"></a> <a name="4141"></a> <a name="4142"></a> <a name="4143"></a> <a name="4144"></a> <a name="4145"></a> <a name="4146"></a><br /><span class="arabic">3</span>.<span class="arabic">19</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Pausing a Test Suite or Test Job </h3>
+    <h3><a name="SECTION004193100000000000000"></a> <a name="4148"></a> <a name="4149"></a> <a name="4150"></a> <a name="4151"></a> <a name="4152"></a> <a name="4153"></a> <a name="4154"></a><br /><span class="arabic">3</span>.<span class="arabic">19</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Starting a Test Suite or a Test Job </h3>
+    <p> To start a Test Suite or a Test Job , you must: <ul>
+        <li>have started the AUT <a href="node194.html#startaut">3.19.2</a><li>have completed object mapping for the Test Suite or Test Suites <a href="node178.html#objectmappingtasks">3.18.1</a><li>have entered complete test data for your Test Suites , for the language you want the test to run in. </ul>
     <p>
-      <ol>
-        <li>To pause a test, click on the &quot;<i>pause test execution</i>&quot; button on the main toolbar. <p>
-            <br />
-            <div class="margin"><img align="BOTTOM" alt="Image pause" border="0" height="256" src="./pause.png" width="256" />&nbsp; pause test</div>
-            <br />
-        <li>To continue with the test, press the &quot;<i>Pause test execution</i>&quot; button again. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>You can opt to automatically pause the test execution when an error occurs via the toolbar <a href="node197.html#TasksPauseOnError">3.19.4</a>.</b></td>
-            </tr>
-          </table>
-          <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>If the client and AUT Agent are installed on the same machine, moving the mouse will disrupt the test. </b></td>
-            </tr>
-          </table>
-      </ol>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>Before starting a Test Suite or a Test Job , it is a good idea to review your preferences for the test results <a href="node228.html#testresprefs">3.22.8</a>.</b></td>
+        </tr>
+      </table>
     <p>
+      <dl>
+        <dt><strong>Starting a Test Suite :</strong><dd>You can start a Test Suite from the Test Suite Browser or from the Running AUT&#39;s View . Click on the arrow next to the &quot;<i>Start test execution</i>&quot; button and select a Test Suite to start from the list. <dt><strong>Starting a Test Job :</strong><dd>You can start a Test Job from the Test Suite Browser . Click on the arrow next to the &quot;<i>start test execution</i>&quot; button and select a Test Job to start from the list. </dl>
+    <p>
+      <br />
+      <div class="margin"><img align="BOTTOM" alt="Image startSuite" border="0" height="256" src="./startSuite.png" width="256" />&nbsp; start test</div>
+      <br />
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>The amount of Test Suites or Test Jobs in the list for the &quot;<i>start test</i>&quot; button depends on your selection. In the Running AUT&#39;s View , only Test Suites for the currently selected AUT will be shown. In the Test Suite Browser , if you have selected a Test Suite or a Test Job , only the selected item will be startable. </b></td>
+        </tr>
+      </table>
+    <p> When a test is running, you can view the progress of the test in the <i>Progress View</i>. This is especially useful if the ITE and the AUT are running on different machines: you can see how much longer the test will run without having to switch to the machine the AUT is running on. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>

@@ -1,25 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.4 Using the edit parameters dialog to add, edit and delete references</title>
-    <meta content="3.12.4 Using the edit parameters dialog to add, edit and delete references" name="description" />
+    <title>3.12.2 Entering concrete values as data in Test Cases </title>
+    <meta content="3.12.2 Entering concrete values as data in Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="editParametersDialogContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION004124000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">4</span> Using the edit parameters dialog to add, edit and delete references</a></h2><a name="TasksTestdataEditParams"></a><p><a name="2388"></a> <a name="2389"></a><p> You can use the edit parameters dialog to add, edit and delete parameters for a Test Case or a central test data set. This section is concerned with using the dialog for editing parameters in a Test Case . For editing parameters for a central test data set, see the section later <a href="node135.html#TasksCentralData">3.12.9</a>. <p> To edit the parameters for a Test Case : <ol>
-        <li>Open the edit parameters dialog by right-clicking on the root node in the Test Case Editor and selecting <table border="0" style="margin:0px;padding:0px;">
+  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION004122000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span> Entering concrete values as data in Test Cases </a></h2><a name="TasksTestdataConcrete"></a><p><a name="2402"></a> <a name="2403"></a><p>
+      <ul>
+        <li>In the Properties View for a Test Case , you can enter a <i>concrete value</i> as a parameter e.g. <tt>&quot;Hello&quot;</tt>. <li>This means that this particular parameter cannot be changed when you reuse its parent Test Case . <li>Enter concrete values for things that you expect to stay the same, like your choice of <i>operator</i> (i.e. matches, equals) or the click count. Deciding which data not to parametrize is an important decision is test creation. See the Best Practices section for more information on this <a href="node348.html#BPKeywordData">5.1.2</a>. <table>
             <tr>
-              <td bgcolor="#DDDDDD">Edit parameters</td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to get content assist in the Properties View for certain parameters. </b></td>
             </tr>
-          </table> from the context-sensitive menu. <li>In the dialog, you can see any parameters you have referenced for this Test Case , and what type of parameters they are. <li>From the dialog, you can add new parameters to the Test Case , edit existing parameters, and delete parameters. You can also change the order the parameters appear in. <li>Use the <i>lock</i> option to lock the parameters for this Test Case . This means that you cannot delete them, rename them or remove them in this Test Case . <table>
+          </table>
+        <li>Depending on your test structure, you may want to use concrete values for all the parameters in a keyword. If, for example, you have a keyword to open the &quot;<i>New Category</i>&quot; dialog from a menu, you will probably want to write the menupath as a concrete value. After all, this Test Case is designed to open this specific dialog, so the menupath is fixed. <table>
             <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>In the Properties View , you can only <i>add</i> references for parameters. To edit or delete references, you must use this dialog.</b></td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Any concrete values you enter into a Test Case are valid whenever you reuse this Test Case . If you change the concrete values in the original Test Case , all of the places you have reused it will change as well. </b></td>
             </tr>
-          </table>. </ol>
+          </table>
+      </ul>
     <p>
       <br />
       <hr />

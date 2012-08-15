@@ -1,22 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.2.4 Naming conventions for referenced parameters</title>
-    <meta content="5.2.4 Naming conventions for referenced parameters" name="description" />
+    <title>5.2.1 Naming conventions for Test Cases </title>
+    <meta content="5.2.1 Naming conventions for Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="editParametersDialogContextId"></a><h2><a name="SECTION00624000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Naming conventions for referenced parameters</a></h2><a name="BPParamNames"></a><p> Entering meaningful reference names for parameters in a Test Case helps the readability of your tests. If you are creating a utility module which doesn&#39;t as yet have a set function <a href="node344.html#BPKeywordsUtility">5.1.1.3</a>, then you should reference the parameter with a reasonably abstract name. <p> For example, if you are creating a Test Case that will select an entry from any combo box, you could name the parameter <i>=ENTRY</i> as the function of the Test Case is not set yet. <p> Once you have a keyword that executes a specific action, you should try to name the parameters according to what data they need. <p> If you have a keyword to select a language from the combo box in the login dialog, you could name the parameter <i>=LANGUAGE</i>. In combination with the Test Case name, this makes it easy to understand what a keyword does and what data it needs. <p> This is especially important in keywords which contain Test Cases with the same parameter names. If you have two <i>=TEXTPATH</i> parameters in your Test Cases , for example, you could name one of them <i>=TEXTPATH_TREE</i> and one of them <i>TEXTPATH_CONTEXTMENU</i> so that you and other testers using your keywords know what to enter where. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>Parameter names cannot contain spaces.</b></td>
-        </tr>
-      </table>
-    <p>
+  <body><a name="testcaseNewContextId"></a><h2><a name="SECTION00621000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Naming conventions for Test Cases </a></h2><a name="BPTestCaseNames"></a><p> You should name your Test Cases so that it is clear from the name what the Test Case does. Instead of vague or ambiguous names (e.g. Select), try and write names that describe the Test Case in terms of the action and the component it deals with. A few good examples are: <p>
+      <ul>
+        <li>Close Search Dialog with OK Button <li>Select Project Language from Combo Box <li>Fill in Project Wizard, containing: <ul>
+            <li>Enter Project Name in Wizard <li>Select Project Language from List <li>Select Default Language from Combo Box <li>Close Project Wizard with Finish Button </ul>
+      </ul>
+    <p> The Test Case names do not have to exhaustively describe the component, or where it is in the AUT - using categories for the different areas of your AUT saves you having to do this <a href="node356.html#BPCategories">5.3.1</a>. The aim with naming your Test Cases is to make your tests readable and easy to understand. <p> You do not have to write Test Case names in CamelCase or with underscores - Test Case names are not used in the test executor, so there is no problem if they have spaces in them. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
