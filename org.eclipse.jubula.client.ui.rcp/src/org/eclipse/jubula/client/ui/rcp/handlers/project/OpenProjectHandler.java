@@ -528,19 +528,20 @@ public class OpenProjectHandler extends AbstractProjectHandler {
         boolean cancelPressed = false;
         ProjectDialog dialog = null;
         List<IProjectPO> projList = checkAllAvailableProjects();
-
-        if (ProjectUIBP.getInstance().shouldPerformAutoProjectLoad()) {
-            project = ProjectUIBP.getMostRecentProjectData();
-        } else {
-            dialog = openProjectOpenDialog(projList);
-            if (dialog.getReturnCode() == Window.CANCEL) {
-                cancelPressed = true;
+        if (!projList.isEmpty()) {
+            if (ProjectUIBP.getInstance().shouldPerformAutoProjectLoad()) {
+                project = ProjectUIBP.getMostRecentProjectData();
             } else {
-                project = dialog.getSelection();
+                dialog = openProjectOpenDialog(projList);
+                if (dialog.getReturnCode() == Window.CANCEL) {
+                    cancelPressed = true;
+                } else {
+                    project = dialog.getSelection();
+                }
             }
-        }
-        if (!cancelPressed && !projList.isEmpty()) {
-            loadProject(project, projList);
+            if (!cancelPressed) {
+                loadProject(project, projList);
+            }
         }
         return null;
     }
