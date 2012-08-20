@@ -56,7 +56,9 @@
 	            </executions>
 	            <configuration>
 	              <supportedProjectTypes>
-	                <supportedProjectType>bundle</supportedProjectType>
+                    <supportedProjectType>eclipse-plugin</supportedProjectType>
+                    <supportedProjectType>eclipse-feature</supportedProjectType>
+                    <supportedProjectType>jar</supportedProjectType>
 	              </supportedProjectTypes>
 	            </configuration>
 	          </plugin>
@@ -75,7 +77,9 @@
 	            </executions>
 	            <configuration>
 	              <supportedProjectTypes>
-	                <supportedProjectType>bundle</supportedProjectType>
+	                <supportedProjectType>eclipse-plugin</supportedProjectType>
+                    <supportedProjectType>eclipse-feature</supportedProjectType>
+                    <supportedProjectType>jar</supportedProjectType>
 	              </supportedProjectTypes>
 	            </configuration>
 	          </plugin>
@@ -94,7 +98,9 @@
 	            </executions>
 	            <configuration>
 	              <supportedProjectTypes>
-	                <supportedProjectType>bundle</supportedProjectType>
+                    <supportedProjectType>eclipse-plugin</supportedProjectType>
+                    <supportedProjectType>eclipse-feature</supportedProjectType>
+                    <supportedProjectType>jar</supportedProjectType>
 	              </supportedProjectTypes>
 	            </configuration>
 	          </plugin>
