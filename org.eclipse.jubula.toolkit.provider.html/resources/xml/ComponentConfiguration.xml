@@ -173,6 +173,13 @@
             <property name="selector" value="p" />
         </componentClass>
     </toolkitComponent>
+    <toolkitComponent type="html.forms.label.Pre" visible="false">
+        <realizes>abstract.html.Label</realizes>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
+        <componentClass name="html.forms.label.Pre">
+            <property name="selector" value="pre" />
+        </componentClass>
+    </toolkitComponent>
     <toolkitComponent type="html.forms.select.List" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.select.ListImplClass</testerClass>
