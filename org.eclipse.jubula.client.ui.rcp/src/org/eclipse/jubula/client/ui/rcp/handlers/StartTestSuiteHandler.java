@@ -10,11 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.State;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -65,16 +67,18 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
             // Not a problem. We'll try later to use the current command
             // state to find out which Test Suite to start.
         }
+        
+        State lastStartedTestSuiteState = 
+            event.getCommand().getState(LAST_STARTED_TEST_SUITE);
+        State lastTestedRunningAutState = 
+            event.getCommand().getState(LAST_TESTED_RUNNING_AUT);
+        
         if (testSuiteToStartObj instanceof ITestSuitePO
                 && runningAutObj instanceof AutIdentifier) {
             testSuiteToStart = (ITestSuitePO)testSuiteToStartObj;
             runningAut = (AutIdentifier)runningAutObj;
             
         } else {
-            State lastStartedTestSuiteState = 
-                event.getCommand().getState(LAST_STARTED_TEST_SUITE);
-            State lastTestedRunningAutState = 
-                event.getCommand().getState(LAST_TESTED_RUNNING_AUT);
             if (lastStartedTestSuiteState != null
                     && lastTestedRunningAutState != null) {
 
@@ -82,10 +86,18 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
                     lastStartedTestSuiteState.getValue();
                 Object runningAutStateValue = 
                     lastTestedRunningAutState.getValue();
-                if (testSuiteStateValue instanceof ITestSuitePO
+                if (testSuiteStateValue instanceof String
                         && runningAutStateValue instanceof AutIdentifier) {
-                    testSuiteToStart = (ITestSuitePO)testSuiteStateValue;
-                    runningAut = (AutIdentifier)runningAutStateValue;
+                    String testSuiteGUIDtoStart = (String) testSuiteStateValue;
+                    List<ITestSuitePO> listOfTS = TestSuiteBP
+                            .getListOfTestSuites();
+                    for (ITestSuitePO ts : listOfTS) {
+                        if (testSuiteGUIDtoStart.equals(ts.getGuid())) {
+                            testSuiteToStart = ts;
+                            break;
+                        }
+                    }
+                    runningAut = (AutIdentifier) runningAutStateValue;
                 }
             }
         }
@@ -99,16 +111,11 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
                     runningAut, autoScreenshots);
 
             // Update command state
-            State lastStartedAutState = 
-                event.getCommand().getState(LAST_STARTED_TEST_SUITE);
-            State lastStartedAutConfigState = 
-                event.getCommand().getState(LAST_TESTED_RUNNING_AUT);
-            if (lastStartedAutState != null 
-                    && lastStartedAutConfigState != null) {
-                lastStartedAutState.setValue(testSuiteToStart);
-                lastStartedAutConfigState.setValue(runningAut);
+            if (lastStartedTestSuiteState != null 
+                    && lastTestedRunningAutState != null) {
+                lastStartedTestSuiteState.setValue(testSuiteToStart.getGuid());
+                lastTestedRunningAutState.setValue(runningAut);
             }
-
         }
 
         return null;
