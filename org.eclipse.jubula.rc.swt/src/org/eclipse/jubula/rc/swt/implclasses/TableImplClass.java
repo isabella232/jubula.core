@@ -1173,7 +1173,6 @@ public class TableImplClass extends AbstractControlImplClass
                     InputConstants.MOUSE_BUTTON_LEFT);
         }
         getRobot().type(editor, text);
-        // FIXME Andreas: do not leave with implizit ENTER. Use UTF-8 (later)
     }
     
 

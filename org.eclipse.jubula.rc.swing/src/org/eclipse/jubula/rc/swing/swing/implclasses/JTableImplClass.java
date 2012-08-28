@@ -981,48 +981,6 @@ public class JTableImplClass extends AbstractSwingImplClass
         }
         // Type the text in table NOT in editor (because editor didn't work in JUnitTest)
         getRobot().type(editor, text);
-        // FIXME Andreas: do not leave with implizit ENTER. Use UTF-8 (later)
-        // Leave the editor by typing "Enter".
-//        getRobot().keyType(editor, KeyEvent.VK_ENTER);
-//
-//        // Check if the editor is still editing. This happens if
-//        // the input text is invalid. Cancel the editing and
-//        // throw an exception.
-//        getEventThreadQueuer().invokeAndWait("isEditing", //$NON-NLS-1$
-//                new IRunnable() {
-//                    public Object run() throws StepExecutionException {
-//                        if (m_table.isEditing()) {
-//                            m_table.getCellEditor(cell.getRow(), cell.getCol())
-//                                    .cancelCellEditing();
-//                            throw new StepExecutionException(
-//                                "Text input into cell " + cell //$NON-NLS-1$
-//                                    + " failed. Is the text '" + text + "' invalid?", //$NON-NLS-1$ //$NON-NLS-2$
-//                                EventFactory.createActionError(
-//                                    TestErrorEvent.INPUT_FAILED));
-//                        }
-//                        return null;
-//                    }
-//                });
-//
-//        // If the underlying table model fires a data change event,
-//        // the table loses it's selection. So, reselect the cell if necessary.
-//        Boolean select = (Boolean) getEventThreadQueuer().invokeAndWait(
-//                "adjustSelection", //$NON-NLS-1$
-//                new IRunnable() {
-//                    public Object run() {
-//                        try {
-//                            Cell cell2 = getSelectedCell();
-//                            return cell.equals(cell2) ? Boolean.FALSE
-//                                    : Boolean.TRUE;
-//                        } catch (StepExecutionException e) {
-//                            return Boolean.TRUE;
-//                        }
-//                    }
-//                });
-//        if (Boolean.TRUE.equals(select)) {
-//            gdSelectCell(IndexConverter.toUserIndex(cell.getRow()),
-//                    IndexConverter.toUserIndex(cell.getCol()), 1);
-//        }
     }
 
 
