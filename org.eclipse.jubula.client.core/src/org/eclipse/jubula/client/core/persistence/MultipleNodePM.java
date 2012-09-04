@@ -29,9 +29,6 @@ import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
 import org.eclipse.jubula.client.core.datastructure.CompNameUsageMap;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -555,17 +552,13 @@ public class MultipleNodePM  extends PersistenceManager {
             getObjsToLock().add(m_newParent);
         }
         
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public MessageInfo execute(EntityManager sess) {
             EntityManager masterSession = 
                 GeneralStorage.getInstance().getMasterSession();
             IPersistentObject oldParent = m_oldParent;
             IPersistentObject newParent = m_newParent;
             INodePO node = m_node;
-            DataEventDispatcher eventDispatcher = 
-                DataEventDispatcher.getInstance();
             
             if (masterSession != sess) {
                 masterSession.detach(node);
@@ -574,7 +567,6 @@ public class MultipleNodePM  extends PersistenceManager {
                 node = sess.find(node.getClass(), node.getId());
             }
 
-            
             // remove from old parent
             if (oldParent instanceof ISpecObjContPO) {
                 ((ISpecObjContPO)oldParent).removeSpecObject(
@@ -596,11 +588,6 @@ public class MultipleNodePM  extends PersistenceManager {
             } else {
                 ((INodePO)newParent).addNode(node);
             }
-            
-            eventDispatcher.fireDataChangedListener(newParent, 
-                    DataState.StructureModified, UpdateState.notInEditor);
-            eventDispatcher.fireDataChangedListener(oldParent, 
-                    DataState.StructureModified, UpdateState.notInEditor);
             
             return null;
         }

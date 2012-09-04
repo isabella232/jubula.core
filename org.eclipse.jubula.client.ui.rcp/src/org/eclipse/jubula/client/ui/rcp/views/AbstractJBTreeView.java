@@ -21,9 +21,12 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IEntityManagerProvider;
@@ -343,4 +346,33 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         }
         return null;
     }
+    
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        DataChangedEvent previousEvent = null;
+        for (DataChangedEvent e : events) {
+            final DataState dataState = e.getDataState();
+            if (previousEvent != null
+                    && previousEvent.getDataState() == dataState
+                    && (dataState == DataState.StructureModified 
+                     || dataState == DataState.Deleted)) {
+                continue;
+            }
+            handleDataChanged(e.getPo(), dataState, e.getUpdateState());
+            previousEvent = e;
+        }
+    }
+    
+    /**
+     * handle a single data changed event
+     * 
+     * @param po
+     *            the changed po
+     * @param dataState
+     *            the data state
+     * @param updateState
+     *            the update state
+     */
+    protected abstract void handleDataChanged(final IPersistentObject po,
+            final DataState dataState, final UpdateState updateState);
 }

@@ -13,6 +13,10 @@ package org.eclipse.jubula.client.ui.rcp.controllers.dnd;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
@@ -48,9 +52,10 @@ public abstract class AbstractBrowserDndSupport {
      */
     protected static void doMove(List<INodePO> nodes, IPersistentObject target)
         throws PMException, ProjectDeletedException {
-
         // persist changes into database
         List<AbstractCmdHandle> cmds = new ArrayList<AbstractCmdHandle>();
+        List<DataChangedEvent> eventList = 
+                new ArrayList<DataChangedEvent>();
         for (INodePO nodeToMove : nodes) {
 
             // determine old parent
@@ -58,9 +63,18 @@ public abstract class AbstractBrowserDndSupport {
 
             // create command
             cmds.add(new MoveNodeHandle(nodeToMove, oldParent, target));
+            eventList.add(new DataChangedEvent(target, 
+                    DataState.StructureModified, UpdateState.notInEditor));
+            eventList.add(new DataChangedEvent(oldParent, 
+                    DataState.StructureModified, UpdateState.notInEditor));
         }
 
-        // execute commands in mastersession
+        
+        // execute commands in master session
         MultipleNodePM.getInstance().executeCommands(cmds);
+
+        // notify listener for updates
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                eventList.toArray(new DataChangedEvent[0]));
     }
 }

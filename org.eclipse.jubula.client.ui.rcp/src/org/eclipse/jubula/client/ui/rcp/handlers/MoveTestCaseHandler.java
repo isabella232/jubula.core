@@ -25,6 +25,9 @@ import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.CollectComponentNameUsersOp;
 import org.eclipse.jubula.client.core.datastructure.CompNameUsageMap;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -287,6 +290,9 @@ public class MoveTestCaseHandler extends AbstractHandler {
                 MultipleNodePM.getInstance().executeCommands(
                         commands, sess);
 
+            DataEventDispatcher.getInstance().fireDataChangedListener(
+                    newParent, DataState.StructureModified, UpdateState.all);
+            
             if (errorMessageInfo == null) {
                 GeneralStorage.getInstance().getMasterSession().refresh(
                         GeneralStorage.getInstance().getProject()

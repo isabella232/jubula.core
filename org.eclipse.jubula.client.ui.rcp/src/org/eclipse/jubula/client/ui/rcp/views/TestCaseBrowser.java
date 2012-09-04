@@ -21,8 +21,8 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
-import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -83,7 +83,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
     private CutTreeItemActionTCBrowser m_cutTreeItemAction;
     /** The action to paste TreeItems */
     private PasteTreeItemActionTCBrowser m_pasteTreeItemAction;
-    /** The actionlistener of the treeViewer */
+    /** The action listener of the treeViewer */
     private ActionListener m_actionListener;
     /** <code>m_doubleClickListener</code> */
     private final DoubleClickListener m_doubleClickListener = 
@@ -341,16 +341,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
     }
     
     /** {@inheritDoc} */
-    public void handleDataChanged(DataChangedEvent... events) {
-        for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState(),
-                    e.getUpdateState());
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
     public void handleDataChanged(final IPersistentObject po, 
         final DataState dataState, final UpdateState updateState) {
         
@@ -393,25 +383,28 @@ public class TestCaseBrowser extends AbstractJBTreeView
      * @param po The persistent object for which the structure has changed
      */
     private void handleDataStructureModified(final IPersistentObject po) {
-        
-        if (po instanceof INodePO) {  
-            getTreeViewer().getTree().getParent().setRedraw(false);
-            // retrieve tree state
-            Object[] expandedElements = getTreeViewer().getExpandedElements();
-            ISelection selection = getTreeViewer().getSelection();
-
-            // update elements
-            if (po instanceof IProjectPO) {
-                rebuildTree();
+        if (po instanceof INodePO) {
+            final TreeViewer tv = getTreeViewer();
+            try {
+                tv.getTree().getParent().setRedraw(false);
+                // retrieve tree state
+                Object[] expandedElements = tv.getExpandedElements();
+                ISelection selection = tv.getSelection();
+                
+                // update elements
+                if (po instanceof IProjectPO) {
+                    rebuildTree();
+                }
+                
+                // refresh tree viewer
+                tv.refresh();
+                
+                // restore tree state
+                tv.setExpandedElements(expandedElements);
+                tv.setSelection(selection);
+            } finally {
+                tv.getTree().getParent().setRedraw(true);
             }
-
-            // refresh treeview
-            getTreeViewer().refresh();
-
-            // restore tree state
-            getTreeViewer().setExpandedElements(expandedElements);
-            getTreeViewer().setSelection(selection);
-            getTreeViewer().getTree().getParent().setRedraw(true);
         }
     }
 
