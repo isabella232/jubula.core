@@ -9,10 +9,12 @@
   <name>Eclipse Jubula</name>
   <version>1.3.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  
   <properties>
     <tycho-version>0.15.0</tycho-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
   <profiles>
     <profile>
       <id>build-eclipse-org</id>
@@ -90,27 +92,11 @@
               </supportedProjectTypes>
             </configuration>
           </plugin>
-          <plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>tycho-p2-plugin</artifactId>
-            <version>${tycho-version}</version>
-            <executions>
-              <execution>
-                <id>p2-metadata</id>
-                <goals>
-                  <goal>p2-metadata</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-            <configuration>
-              <defaultP2Metadata>false</defaultP2Metadata>
-            </configuration>
-          </plugin>
         </plugins>
       </build>
     </profile>
   </profiles>
+  
   <modules>
     <module>../org.eclipse.jubula.tools</module>
     <module>../org.eclipse.jubula.communication</module>
@@ -120,5 +106,7 @@
     <module>../org.eclipse.jubula.releng.server</module>
     <module>../org.eclipse.jubula.releng.client</module>
   </modules>
+  
   <url>http://www.eclipse.org/jubula</url>
+  
 </project>
