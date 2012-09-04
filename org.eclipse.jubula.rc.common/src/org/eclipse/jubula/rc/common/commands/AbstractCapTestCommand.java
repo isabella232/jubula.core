@@ -232,7 +232,7 @@ public abstract class AbstractCapTestCommand implements ICommand {
             response.setReturnValue((String)returnValue);
         } catch (NoSuchMethodException nsme) {
             LOG.error("implementation class method not found", nsme); //$NON-NLS-1$
-            event = EventFactory.createConfigErrorEvent();
+            event = EventFactory.createUnsupportedActionError();
         } catch (IllegalAccessException iae) {
             LOG.error("Failed accessing implementation class method", iae); //$NON-NLS-1$
             event = EventFactory.createConfigErrorEvent();
