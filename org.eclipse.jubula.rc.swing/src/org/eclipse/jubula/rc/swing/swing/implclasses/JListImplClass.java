@@ -147,21 +147,23 @@ public class JListImplClass extends AbstractSwingImplClass
     }
 
     /**
-     * Verifies if the passed index or enumeration of indices is selected. The
-     * enumeration must be separated by <code>,</code>, e.g. <code>1, 3,6</code>.
-     * @param indexList The index or indices to verify
-     * @param isSelected Whether the index or indices should be selected or not.
+     * Verifies if the passed index is selected.
+     * 
+     * @param index The index to verify
+     * @param expectSelected Whether the index should be selected.
      */
-    public void gdVerifySelectedIndex(String indexList, boolean isSelected) {
+    public void gdVerifySelectedIndex(String index, boolean expectSelected) {
         int[] selected = getCheckedSelectedIndices();
-        int[] expected = parseIndices(indexList);
-        int[] implExpected = IndexConverter.toImplementationIndices(expected);
-        if (isSelected) {
-            Verifier.equals(implExpected.length, selected.length);
-        }
-        for (int i = 0; i < implExpected.length; i++) {
-            int index = implExpected[i];
-            Verifier.equals(index, selected[i], isSelected);
+        int implIndex = IndexConverter.toImplementationIndex(
+                Integer.parseInt(index));
+
+        boolean isSelected = ArrayUtils.contains(selected, implIndex);
+        if (expectSelected != isSelected) {
+            throw new StepExecutionException(
+                    "Selection check failed for index: " + index,  //$NON-NLS-1$
+                    EventFactory.createVerifyFailed(
+                            String.valueOf(expectSelected), 
+                            String.valueOf(isSelected)));
         }
     }
 
@@ -175,35 +177,15 @@ public class JListImplClass extends AbstractSwingImplClass
     }
 
     /**
-     * Verifies if the passed value or enumeration of values is selected. By
-     * default, the enumeration separator is <code>,</code>, but may be
-     * changed by <code>separator</code>.
-     * @param valueList The value or list of values to verify
-     * @param operator
-     *  The operator to use when comparing the expected and actual values.
-     *  @param isSelected if the value(s) should be selected or not.
+     * Verifies if the passed value is selected.
+     * 
+     * @param value The value to verify
+     * @param operator The operator to use when comparing the 
+     *                 expected and actual values.
+     *  @param isSelected if the value should be selected or not.
      */
-    public void gdVerifySelectedValue(String valueList, String operator,
+    public void gdVerifySelectedValue(String value, String operator,
             boolean isSelected) {
-
-        gdVerifySelectedValue(valueList, operator,
-            String.valueOf(VALUE_SEPARATOR), isSelected);
-    }
-
-
-    /**
-     * Verifies if the passed value or enumeration of values is selected. By
-     * default, the enumeration separator is <code>,</code>, but may be
-     * changed by <code>separator</code>.
-     * @param valueList The value or list of values to verify
-     * @param operator
-     *            The operator to use when comparing the expected and
-     *            actual values.
-     * @param separator The separator
-     * @param isSelected if the value(s) should be selected or not.
-     */
-    public void gdVerifySelectedValue(String valueList, String operator,
-            String separator, boolean isSelected) {
 
         final String[] current = m_listHelper.getSelectedValues(m_list);
         final ListSelectionVerifier listSelVerifier =
@@ -211,9 +193,9 @@ public class JListImplClass extends AbstractSwingImplClass
         for (int i = 0; i < current.length; i++) {
             listSelVerifier.addItem(i, current[i], true);
         }
-        listSelVerifier.verifySelection(valueList, operator, !isSelected,
-                isSelected);
+        listSelVerifier.verifySelection(value, operator, isSelected);
     }
+
 
     /**
      * Verifies if all selected elements of a list match a text.

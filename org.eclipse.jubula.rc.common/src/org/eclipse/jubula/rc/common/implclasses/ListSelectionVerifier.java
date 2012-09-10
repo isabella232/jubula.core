@@ -17,7 +17,6 @@ import java.util.List;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.utils.StringParsing;
 
 
 /**
@@ -34,8 +33,6 @@ public class ListSelectionVerifier {
         private String m_value;
         /** is this item selected */
         private boolean m_selected;
-        /** was this item matched */
-        private boolean m_visited = false;
         
         /**
          * set all data
@@ -45,20 +42,6 @@ public class ListSelectionVerifier {
         public SelectionItem(String value, boolean selected) {
             m_value = value;
             m_selected = selected;
-        }
-
-        /**
-         * @return the visited
-         */
-        public boolean isVisited() {
-            return m_visited;
-        }
-
-        /**
-         * @param visited the visited to set
-         */
-        public void setVisited(boolean visited) {
-            m_visited = visited;
         }
 
         /**
@@ -91,60 +74,41 @@ public class ListSelectionVerifier {
     
     /**
      * Verifies that a user supplied pattern is consisted with the currently
-     * selected items. Every pattern must match at least one item, every
-     * selected item must be matched by at least one pattern (if no additional
-     * selections are allowed).
+     * selected items.
      * 
      * @param patternString
-     *            Comma separated list of patterns
+     *            The pattern to match.
      * @param op
      *            the operation, i.e. equals or match
-     * @param allowAdditionalSelections
-     *            if true, more selection than matched by the pattern are allowed
-     * @param isSelected check for selection state
+     * @param isSelected The expected selection state.
+     * @throws StepExecutionException if <code>patternString</code> is expected 
+     *              to match a selected item and does not, or if 
+     *              <code>patternString</code> is expected not to match any 
+     *              selected item and does. 
      */
-    public void verifySelection(String patternString, String op,
-        boolean allowAdditionalSelections, boolean isSelected) {
-        String[] pattern = StringParsing.splitToArray(patternString,
-            TestDataConstants.VALUE_CHAR_DEFAULT,
-            TestDataConstants.ESCAPE_CHAR_DEFAULT);
-        for (int i = 0; i < pattern.length; ++i) {
-            boolean hit = false;
-            for (Iterator iter = m_itemList.iterator(); iter.hasNext();) {
-                SelectionItem item = (SelectionItem)iter.next();
+    public void verifySelection(String patternString, String op, 
+            boolean isSelected) throws StepExecutionException {
 
-                if (MatchUtil.getInstance().match(item.getValue(), pattern[i],
-                    op)) {
-                    if (item.isSelected() != isSelected) {
-                        throw new StepExecutionException(
-                            "Unselected element matches " //$NON-NLS-1$
-                                + patternString, EventFactory
-                                .createVerifyFailed(item.getValue(),
-                                    pattern[i], op));
-
-                    }
-                    item.setVisited(true);
-                    hit = true;
-                }
+        String hit = null;
+        for (Iterator iter = m_itemList.iterator(); 
+                hit == null && iter.hasNext();) {
+            SelectionItem item = (SelectionItem)iter.next();
+            String itemValue = item.getValue();
+            if (MatchUtil.getInstance().match(itemValue, patternString, op)) {
+                hit = itemValue;
             }
-            if (!hit && isSelected) {
-                throw new StepExecutionException("No list element matches " //$NON-NLS-1$
+
+        }
+        if (hit == null && isSelected) {
+            throw new StepExecutionException("No selected list element matches " //$NON-NLS-1$
+                + patternString, EventFactory.createVerifyFailed(
+                    this.toString(), patternString, op));
+        } else if (hit != null && !isSelected) {
+            throw new StepExecutionException("Selected list element matches " //$NON-NLS-1$
                     + patternString, EventFactory.createVerifyFailed(
-                        this.toString(), pattern[i], op));
-
-            }
+                        hit, patternString, op));
         }
-        if (!allowAdditionalSelections) {
-            for (Iterator iter = m_itemList.iterator(); iter.hasNext();) {
-                SelectionItem item = (SelectionItem)iter.next();
-                if (item.isSelected() && !item.isVisited()) {
-                    throw new StepExecutionException("More list element match", //$NON-NLS-1$
-                        EventFactory.createVerifyFailed(this.toString(), 
-                            patternString, op)); 
 
-                }
-            }
-        }
     }
 
     /**
