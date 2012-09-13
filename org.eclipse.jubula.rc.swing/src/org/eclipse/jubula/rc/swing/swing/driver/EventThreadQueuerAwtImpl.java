@@ -37,34 +37,7 @@ public class EventThreadQueuerAwtImpl implements IEventThreadQueuer {
     /** {@inheritDoc} */
     public Object invokeAndWait(String name, IRunnable runnable)
         throws StepExecutionException {
-        return invoke(name, runnable, true);
-    }
-    
-    /** {@inheritDoc} */
-    public Object invokeLater(String name, IRunnable runnable) 
-        throws StepExecutionException {
-        return invoke(name, runnable, false);
-    }
-    
-    /**
-     * Invokes the <code>runnable</code> in the Graphics API specific event
-     * queue asynchronous.
-     * 
-     * @param name
-     *            The name of this invocation.
-     * @param runnable
-     *            The runnable.
-     * @param now
-     *            whether it should be invoked 
-     *            now   (==true && inSync) or 
-     *            later (==false && aSync)
-     * @return The result returned by the runnable, maybe <code>null</code>.
-     * @throws StepExecutionException
-     *             If the invocation fails or if the runnable throws a
-     *             <code>StepExecutionException</code>.
-     */
-    private Object invoke(String name, IRunnable runnable, boolean now)
-        throws StepExecutionException {
+
         Validate.notNull(runnable, "runnable must not be null"); //$NON-NLS-1$
         
         RunnableWrapper wrapper = new RunnableWrapper(name, runnable);
@@ -72,11 +45,7 @@ public class EventThreadQueuerAwtImpl implements IEventThreadQueuer {
             if (SwingUtilities.isEventDispatchThread()) {
                 wrapper.run();
             } else {
-                if (now) {
-                    SwingUtilities.invokeAndWait(wrapper);
-                } else {
-                    SwingUtilities.invokeLater(wrapper);
-                }
+                SwingUtilities.invokeAndWait(wrapper);
             }
             
             StepExecutionException exception = wrapper.getException();
@@ -107,4 +76,13 @@ public class EventThreadQueuerAwtImpl implements IEventThreadQueuer {
         
         return wrapper.getResult();
     }
+    
+    /** {@inheritDoc} */
+    public void invokeLater(String name, Runnable runnable) 
+        throws StepExecutionException {
+ 
+        Validate.notNull(runnable, "runnable must not be null"); //$NON-NLS-1$
+        SwingUtilities.invokeLater(runnable);
+    }
+    
 }

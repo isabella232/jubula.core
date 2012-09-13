@@ -205,10 +205,9 @@ public abstract class AbstractSwingImplClass implements
             final Component comp = component;
             final Color col = border;
             getEventThreadQueuer().invokeLater(
-                    "highLight", new IRunnable() { //$NON-NLS-1$
-                        public Object run() {
+                    "highLight", new Runnable() { //$NON-NLS-1$
+                        public void run() {
                             m_highLighter.highLight(comp, col);
-                            return null;
                         }
                     });
         } catch (StepExecutionException bsee) {
@@ -223,10 +222,9 @@ public abstract class AbstractSwingImplClass implements
         try {
             final Component comp = component;
             getEventThreadQueuer().invokeLater(
-                    "lowLight", new IRunnable() { //$NON-NLS-1$
-                        public Object run() {
+                    "lowLight", new Runnable() { //$NON-NLS-1$
+                        public void run() {
                             m_highLighter.lowLight(comp);
-                            return null;
                         }
                     });
         } catch (StepExecutionException bsee) {

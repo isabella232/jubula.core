@@ -504,8 +504,8 @@ public abstract class MenuUtil extends MenuUtilBase {
         event.type = SWT.Selection;
         
         EVENT_THREAD_QUEUER.invokeLater(
-                "selectProgramatically", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {  
+                "selectProgramatically", new Runnable() { //$NON-NLS-1$
+                    public void run() {  
                         //if menuitem is checkbox or radiobutton set Selection
                         if ((menuItem.getStyle() & SWT.CHECK) == 0
                                 || (menuItem.getStyle() & SWT.RADIO) == 0) {
@@ -517,8 +517,6 @@ public abstract class MenuUtil extends MenuUtilBase {
                         }
 
                         menuItem.notifyListeners(SWT.Selection, event);
-                        
-                        return null;
                     }            
                 });
 

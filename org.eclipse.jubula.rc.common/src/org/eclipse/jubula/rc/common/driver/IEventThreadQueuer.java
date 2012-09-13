@@ -53,17 +53,17 @@ public interface IEventThreadQueuer {
     
     /**
      * Invokes the <code>runnable</code> in the Graphics API specific event
-     * queue asynchronous.
+     * queue asynchronous. The void return type is due to the asynchronous
+     * execution. This should prevent any confusion due to concurrency.
      * 
      * @param name
      *            The name of this invocation.
      * @param runnable
      *            The runnable.
-     * @return The result returned by the runnable, maybe <code>null</code>.
      * @throws StepExecutionException
      *             If the invocation fails or if the runnable throws a
      *             <code>StepExecutionException</code>.
      */
-    public Object invokeLater(String name, IRunnable runnable)
+    public void invokeLater(String name, Runnable runnable)
         throws StepExecutionException;
 }
