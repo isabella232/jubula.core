@@ -356,9 +356,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                 propDes.setCategory(P_TESTERROR_CAT);
                 addPropertyDescriptor(propDes);
             }
-        } else if (event.getId().equals(
-                TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR)
-            && event.getProps().keySet().contains(
+        } else if (event.getProps().keySet().contains(
                 TestErrorEvent.Property.DESCRIPTION_KEY)) {
             
             propDes = new PropertyDescriptor(new ComponentController() {

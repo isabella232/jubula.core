@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DurationFormatUtils;
@@ -283,12 +283,12 @@ public abstract class AbstractXMLReportGenerator {
             TestErrorEvent event = resultNode.getEvent();
             if (event != null) {
                 errorType.addText(I18n.getString(event.getId(), true));
-                Set keys = event.getProps().keySet();
-                if (event.getId().equals(
-                        TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR)) {
-                    String key = (String) event.getProps().get(
+                Map<Object, Object> eventProps = event.getProps();
+                if (eventProps.containsKey(
+                        TestErrorEvent.Property.DESCRIPTION_KEY)) {
+                    String key = (String) eventProps.get(
                             TestErrorEvent.Property.DESCRIPTION_KEY);
-                    Object[] args = (Object[]) event.getProps().get(
+                    Object[] args = (Object[]) eventProps.get(
                             TestErrorEvent.Property.PARAMETER_KEY);
                     args = args != null ? args : new Object[0];
                     Element mapEntry = error.addElement("description"); //$NON-NLS-1$
@@ -297,10 +297,14 @@ public abstract class AbstractXMLReportGenerator {
                                 .valueOf(I18n.getString(key, args)) : key);
                     }
                 } else {
-                    for (Object key : keys) {
-                        Element mapEntry = error.addElement((String) key);
-                        mapEntry.addText(String.valueOf(event.getProps().get(
-                                key)));
+                    for (Map.Entry<Object, Object> entry 
+                            : eventProps.entrySet()) {
+                        if (!TestErrorEvent.Property.DESCRIPTION_KEY.equals(
+                                entry.getKey())) {
+                            Element mapEntry = 
+                                    error.addElement((String) entry.getKey());
+                            mapEntry.addText(String.valueOf(entry.getValue()));
+                        }
                     }
                 }
             }

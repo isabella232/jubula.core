@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -300,33 +300,36 @@ public class TestresultSummaryBP {
             keyword.setStatusType(I18n.getString(node.getEvent().getId(),
                     true));
             
-            Set keys = node.getEvent().getProps().keySet();
-            if (node.getEvent().getId().equals(
-                TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR)) {
-                String key = (String)node.getEvent().getProps().get(
+            Map<Object, Object> eventProps = node.getEvent().getProps();
+            String descriptionKey = (String)node.getEvent().getProps().get(
                     TestErrorEvent.Property.DESCRIPTION_KEY);
+            if (descriptionKey != null) {
                 Object[] args = (Object[])node.getEvent().getProps().get(
                         TestErrorEvent.Property.PARAMETER_KEY);
                 //error description
-                if (key != null) {
-                    keyword.setStatusDescription(String.valueOf(I18n.getString(
-                            key, args)));
-                }
-            } else {
-                for (Object key : keys) {
-                    String value = String.valueOf(
-                            node.getEvent().getProps().get(key));
-                    if (key.equals(TestErrorEvent.Property.OPERATOR_KEY)) {
-                        keyword.setStatusOperator(value);
-                    }
-                    if (key.equals(TestErrorEvent.Property.PATTERN_KEY)) {
-                        keyword.setExpectedValue(value);
-                    }
-                    if (key.equals(TestErrorEvent.Property.ACTUAL_VALUE_KEY)) {
-                        keyword.setActualValue(value);
-                    }
-                }
+                keyword.setStatusDescription(String.valueOf(I18n.getString(
+                        descriptionKey, args)));
             }
+            
+            if (eventProps.containsKey(TestErrorEvent.Property.OPERATOR_KEY)) {
+                String value = String.valueOf(node.getEvent().getProps().get(
+                        TestErrorEvent.Property.OPERATOR_KEY));
+                keyword.setStatusOperator(value);
+            }
+            
+            if (eventProps.containsKey(TestErrorEvent.Property.PATTERN_KEY)) {
+                String value = String.valueOf(node.getEvent().getProps().get(
+                        TestErrorEvent.Property.PATTERN_KEY));
+                keyword.setExpectedValue(value);
+            }
+
+            if (eventProps.containsKey(
+                    TestErrorEvent.Property.ACTUAL_VALUE_KEY)) {
+                String value = String.valueOf(node.getEvent().getProps().get(
+                        TestErrorEvent.Property.ACTUAL_VALUE_KEY));
+                keyword.setActualValue(value);
+            }
+
             if (node.getScreenshot() != null) {
                 keyword.setImage(node.getScreenshot());
             }
