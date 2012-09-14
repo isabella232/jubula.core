@@ -133,12 +133,44 @@ public class EventFactory {
     
     
     /**
-     * @return A new error event with an action error ID.
+     * @return A new error event with a configuration error ID.
      */
     public static TestErrorEvent createConfigErrorEvent() {
         return new TestErrorEvent(TestErrorEvent.ID.CONFIGURATION_ERROR);
     }
+
+    /**
+     * Creates an event representing an error that occurred in the testing
+     * framework.
+     *
+     * @param descriptionKey
+     *      key of the error description
+     * @return
+     *      The event.
+     */
+    public static TestErrorEvent createConfigErrorEvent(String descriptionKey) {
+        return createConfigErrorEvent(descriptionKey, new Object[0]);
+    }
     
+    /**
+     * Creates an event representing an error that occurred in the testing
+     * framework.
+     *
+     * @param descriptionKey
+     *      key of the error description
+     * @param parameters
+     *      parameter of the error description
+     * @return
+     *      The event.
+     */
+    public static TestErrorEvent createConfigErrorEvent(
+            String descriptionKey, Object[] parameters) {
+        TestErrorEvent event = createConfigErrorEvent();
+        event.addProp(TestErrorEvent.Property.DESCRIPTION_KEY, descriptionKey);
+        event.addProp(TestErrorEvent.Property.PARAMETER_KEY, parameters);
+        return event;
+    }
+
     /**
      * @return A new error event with an action error ID.
      */
