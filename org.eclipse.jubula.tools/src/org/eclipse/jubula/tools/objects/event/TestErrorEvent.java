@@ -212,6 +212,11 @@ public class TestErrorEvent {
     public static final String CLIPBOARD_NOT_AVAILABLE = "TestErrorEvent.ClipboardNotAvailable"; //$NON-NLS-1$
 
     /**
+     * Unsupported parameter value.
+     */
+    public static final String UNSUPPORTED_PARAMETER_VALUE = "TestErrorEvent.UnsupportedParameterValue"; //$NON-NLS-1$
+
+    /**
      * Property keys
      */
     public static final class Property {
