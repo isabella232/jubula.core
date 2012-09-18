@@ -6,6 +6,7 @@ The embedded support for Chronon in \app{} lets you record debug information whi
 \begin{enumerate}
 \item You can activate the Chronon recording in \app{} by selecting:\\
 \bxmenu{Help}{Start Chronon Recorder}{}\\
+\bxwarn{Linux users: you must first comment Chronon in for the \ite{} in the .ini file by removing the hash signs from the two lines in the .ini file, and then restart \app{}. If you are starting \app{} from the command line with Chronon on Linux, please ensure that your current directory is the \app{} directory, otherwise \app{} will not start.}
 \item The Progress View will open and you will see the status of the recording. The progress bar continues to run once the recorder has started. The status changes from \bxname{starting} to \bxname{running}. When the recorder is running, you will be able to see the job running in the Progress View and also in the status bar. Do not stop the job -- this will stop the recording. 
 \item Once the recorder is running, your actions in \app{} are written to the recording file.
 \bxtipp{Bear in mind that any data contained within \app{} may be visible by our development team when analysing any Chronon files}. 
