@@ -16,8 +16,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.IWorkbenchPart;
@@ -36,30 +37,26 @@ public class MergeLogicalNameHandler extends AbstractMergeComponentNameHandler {
     public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof IJBEditor) {
-            IJBEditor editor = (IJBEditor)activePart;
+            final IJBEditor editor = (IJBEditor)activePart;
             if (editor.isDirty()) {
                 ErrorHandlingUtil.createMessageDialog(MessageIDs.I_SAVE_EDITOR);
                 return null;
             }
-   
-            // Get model objects from selection
-            Set<IComponentNamePO> compNames = getComponentNames(getSelection());
 
-            // Dialog
-            IComponentNamePO selectedCompNamePo = openDialog(compNames);
-            
-            if (selectedCompNamePo == null) {
-                // cancel operation
-                return null;
-            }
+            editor.getEditorHelper().doEditorOperation(new IEditorOperation() {
+                public void run(IPersistentObject workingPo) {
+                    // Get model objects from selection
+                    Set<IComponentNamePO> compNames = 
+                            getComponentNames(getSelection());
 
-            if (editor.getEditorHelper().requestEditableState() 
-                    != EditableState.OK) {
-
-                return null;
-            }
-
-            performOperation(editor, compNames, selectedCompNamePo);
+                    // Dialog
+                    IComponentNamePO selectedCompNamePo = openDialog(compNames);
+                    
+                    if (selectedCompNamePo != null) {
+                        performOperation(editor, compNames, selectedCompNamePo);
+                    }
+                }
+            });
             
         }
         

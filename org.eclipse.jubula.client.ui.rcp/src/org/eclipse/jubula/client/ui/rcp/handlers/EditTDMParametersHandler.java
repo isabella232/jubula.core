@@ -20,12 +20,13 @@ import org.eclipse.jubula.client.core.businessprocess.ParameterInterfaceBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.Parameter;
 import org.eclipse.jubula.client.ui.rcp.dialogs.EditParametersTDMDialog;
-import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
+import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -56,32 +57,26 @@ public class EditTDMParametersHandler extends AbstractEditParametersHandler {
         
         return null;
     }
-    
+
     /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) {
-        AbstractJBEditor editor = getEditorInEditableState();
-        if (editor != null) {
-            ITestDataCubePO tdc = getSelectedTestDataManager(event);
-            if (tdc != null) {
-                final JBEditorHelper.EditableState state = editor
-                        .getEditorHelper().getEditableState();
-                final AbstractEditParametersDialog dialog = 
-                    new EditParametersTDMDialog(getActiveShell(), tdc);
-                dialog.create();
-                DialogUtils.setWidgetNameForModalDialog(dialog);
-                dialog.open();
-                if (Window.OK == dialog.getReturnCode()) {
-                    performChanges(editor, tdc, dialog);
-                } else {
-                    if (state == JBEditorHelper.EditableState.NotChecked) {
-                        editor.getEditorHelper().resetEditableState();
+        final ITestDataCubePO tdc = getSelectedTestDataManager(event);
+        if (tdc != null) {
+            final IJBEditor editor = getEditor(event);
+            editor.getEditorHelper().doEditorOperation(new IEditorOperation() {
+                public void run(IPersistentObject workingPo) {
+                    final AbstractEditParametersDialog dialog = 
+                            new EditParametersTDMDialog(getActiveShell(), tdc);
+                    dialog.create();
+                    DialogUtils.setWidgetNameForModalDialog(dialog);
+                    if (dialog.open() == Window.OK) {
+                        performChanges(editor, tdc, dialog);
                     }
                 }
-            }
+            });
         }
         return null;
     }
-
     /**
      * @param editor
      *            the current editor
@@ -90,7 +85,7 @@ public class EditTDMParametersHandler extends AbstractEditParametersHandler {
      * @param dialog
      *            the edit parameters dialog
      */
-    private void performChanges(AbstractJBEditor editor, ITestDataCubePO tdc,
+    private void performChanges(IJBEditor editor, ITestDataCubePO tdc,
             AbstractEditParametersDialog dialog) {
         final List<Parameter> parameters = dialog.getParameters();
         boolean isModified = editParameters(tdc, parameters, editor
@@ -103,8 +98,6 @@ public class EditTDMParametersHandler extends AbstractEditParametersHandler {
             ded.firePropertyChanged(false);
             ded.fireDataChangedListener(tdc, 
                     DataState.StructureModified, UpdateState.onlyInEditor);
-        } else {
-            editor.getEditorHelper().resetEditableState();
         }
     }
 }

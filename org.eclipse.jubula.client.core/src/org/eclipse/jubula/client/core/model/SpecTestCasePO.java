@@ -21,7 +21,6 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.FindNodeParentOperation;
@@ -56,12 +55,6 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
      */
     private Boolean m_isInterfaceLocked = false;
     
-    /**
-     * <code>m_isReused</code> flag for lock of parameter(s)modification
-     */
-    private transient Boolean m_isReused = null;
-
-
     /**
      * only for Persistence (JPA / EclipseLink)
      */
@@ -248,24 +241,7 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
     public void setInterfaceLocked(Boolean isInterfaceLocked) {
         m_isInterfaceLocked = isInterfaceLocked;
     }
-
-    /**
-     * @return the isInterfaceLocked
-     */
-    @Transient
-    public Boolean isReused() {
-        setIsReused(NodePM.isReused(this, 
-            GeneralStorage.getInstance().getMasterSession()));
-        return m_isReused;
-    }
     
-    /**
-     * @param isReused the isReused to set
-     */
-    public void setIsReused(Boolean isReused) {
-        m_isReused = isReused;
-    }
-
     /**
      * Adds a parameter to the parameter list to call for each parameter of
      * specTestCase.

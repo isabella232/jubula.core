@@ -53,11 +53,6 @@ public interface INodePO extends ITimestampPO {
     public abstract void setComment(String comment);
     
     /**
-     * @return if Node respectively parentNode of Node is already reused
-     */
-    public abstract Boolean isReused();
-
-    /**
      * adds a childnode to an existent node
      * creation of reference to the parent node
      * @param childNode

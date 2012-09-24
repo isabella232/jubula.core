@@ -389,14 +389,6 @@ class CapPO extends ParamNodePO implements ICapPO {
         m_metaComponentType = metaComponentType;
     }
 
-    /** {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.model.NodePO#isInterfaceLocked()
-     */
-    @Transient
-    public Boolean isReused() {
-        return getParentNode().isReused();
-    }
-
     /**
      * {@inheritDoc}
      */

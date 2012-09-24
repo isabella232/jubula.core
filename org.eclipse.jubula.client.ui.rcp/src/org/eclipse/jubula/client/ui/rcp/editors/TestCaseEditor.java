@@ -419,7 +419,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
      */
     public void reOpenEditor(IPersistentObject node) throws PMException {
         m_objectMappingManager.clear();
-        ((ISpecTestCasePO)node).setIsReused(null);
         super.reOpenEditor(node);
         if (node instanceof ISpecTestCasePO) {
             CAPRecordedCommand.setRecSpecTestCase((ISpecTestCasePO)node);

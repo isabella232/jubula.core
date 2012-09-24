@@ -20,11 +20,12 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.ui.IWorkbenchPart;
@@ -45,21 +46,21 @@ public class NewLogicalNameHandler extends AbstractNewComponentNameHandler {
     public Object executeImpl(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof ObjectMappingMultiPageEditor) {
-            ObjectMappingMultiPageEditor omEditor = 
+            final ObjectMappingMultiPageEditor omEditor = 
                 (ObjectMappingMultiPageEditor)activePart;
-            IComponentNameMapper compNameMapper = 
-                omEditor.getEditorHelper().getEditSupport().getCompMapper();
-            // Show dialog
-            String newName = openDialog(compNameMapper);
-            if (newName != null) {
-                if (omEditor.getEditorHelper().requestEditableState() 
-                        != EditableState.OK) {
-                    
-                    return null;
-                }
-
-                performOperation(omEditor, newName);
-            }
+            omEditor.getEditorHelper().doEditorOperation(
+                    new IEditorOperation() {
+                        public void run(IPersistentObject workingPo) {
+                            IComponentNameMapper compNameMapper = 
+                                omEditor.getEditorHelper().getEditSupport()
+                                    .getCompMapper();
+                            // Show dialog
+                            String newName = openDialog(compNameMapper);
+                            if (newName != null) {
+                                performOperation(omEditor, newName);
+                            }
+                        }
+                    });
         }
         
         return null;

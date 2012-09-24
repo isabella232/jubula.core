@@ -20,16 +20,17 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.dialogs.EnterTestDataManagerDialog;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NewTestDataManagerDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPart;
@@ -44,24 +45,30 @@ public class AddNewTestDataManagerHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) {
+    public Object execute(final ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof CentralTestDataEditor) {
-            CentralTestDataEditor ctdEditor = (CentralTestDataEditor)activePart;
-            ISelection selection = HandlerUtil.getCurrentSelection(event);
-            if (ctdEditor.getEditorHelper().requestEditableState() 
-                    != EditableState.OK) {
-                return null;
-            }
+            final CentralTestDataEditor ctdEditor = 
+                    (CentralTestDataEditor)activePart;
 
-            // Show dialog
-            String newName = openDialog(HandlerUtil.getActiveShell(event),
-                    getSetOfUsedNames(ctdEditor));
-
-            if (newName != null) {
-                performOperation(ctdEditor, newName, selection);
-            }
+            ctdEditor.getEditorHelper().doEditorOperation(
+                    new IEditorOperation() {
+                        public void run(IPersistentObject workingPo) {
+                            ISelection selection = 
+                                    HandlerUtil.getCurrentSelection(event);
+        
+                            // Show dialog
+                            String newName = openDialog(
+                                    HandlerUtil.getActiveShell(event),
+                                    getSetOfUsedNames(ctdEditor));
+        
+                            if (newName != null) {
+                                performOperation(ctdEditor, newName, selection);
+                            }
+                        }
+                    });
         }
+
         return null;
     }
 

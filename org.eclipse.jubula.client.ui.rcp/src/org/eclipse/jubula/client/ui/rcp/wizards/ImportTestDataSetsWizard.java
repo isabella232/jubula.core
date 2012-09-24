@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.ui.rcp.wizards;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.ImportXLSTestdataWizardPage;
@@ -67,6 +69,19 @@ public class ImportTestDataSetsWizard extends Wizard implements IImportWizard {
         return m_importCSVData.finish(m_selection, m_ctde);
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (m_ctde != null && !m_ctde.isDirty()) {
+            try {
+                m_ctde.getEditorHelper().resetEditableState();
+                m_ctde.getEditorHelper().getEditSupport().reloadEditSession();
+            } catch (PMException e) {
+                PMExceptionHandler.handlePMExceptionForEditor(e, m_ctde);
+            }
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */

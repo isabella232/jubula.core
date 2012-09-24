@@ -19,7 +19,9 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
+import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.rename.AbstractRenameComponentNameHandler;
 import org.eclipse.ui.IEditorPart;
@@ -36,41 +38,49 @@ public class RenameLogicalNameHandler
     extends AbstractRenameComponentNameHandler {
 
     /** {@inheritDoc} */
-    public Object executeImpl(ExecutionEvent event) {
-        IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
+    public Object executeImpl(final ExecutionEvent event) {
+        final IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
         if (activeEditor instanceof ObjectMappingMultiPageEditor) {
             ObjectMappingMultiPageEditor omEditor = 
                 (ObjectMappingMultiPageEditor)activeEditor;
             final IComponentNameMapper compNamesMapper = 
                 omEditor.getEditorHelper().getEditSupport().getCompMapper();
-            IComponentNamePO compName = getSelectedComponentName();
+            final IComponentNamePO compName = getSelectedComponentName();
             if (compName != null) {
-                String newName = getNewName(event, compNamesMapper, compName);
-                if (newName != null
-                    && omEditor.getEditorHelper().requestEditableState() 
-                        == EditableState.OK) {
-                    
-                    rename(omEditor.getEditorHelper().getEditSupport()
-                            .getCompMapper(), 
-                        compName.getGuid(), 
-                        newName);
-                    
-                    omEditor.getEditorHelper().setDirty(true);
+                final JBEditorHelper editorHelper = omEditor.getEditorHelper();
+                editorHelper.doEditorOperation(new IEditorOperation() {
+                    public void run(IPersistentObject workingPo) {
+                        String newName = 
+                                getNewName(event, compNamesMapper, compName);
+                        if (newName != null) {
+                            
+                            rename(
+                                editorHelper.getEditSupport().getCompMapper(), 
+                                compName.getGuid(), 
+                                newName);
+                            
+                            editorHelper.setDirty(true);
 
-                    DataEventDispatcher.getInstance().fireDataChangedListener(
-                        compName, DataState.Renamed, UpdateState.onlyInEditor);
+                            DataEventDispatcher.getInstance()
+                                .fireDataChangedListener(compName, 
+                                        DataState.Renamed, 
+                                        UpdateState.onlyInEditor);
 
-                    // Issue a selection event to update properties view, if open.
-                    ISelectionProvider selectionProvider =
-                        activeEditor.getSite().getSelectionProvider();
-                    if (selectionProvider != null) {
-                        ISelection currentSelection = 
-                            selectionProvider.getSelection();
-                        selectionProvider.setSelection(
-                                StructuredSelection.EMPTY);
-                        selectionProvider.setSelection(currentSelection);
+                            // Issue a selection event to update properties 
+                            // view, if open.
+                            ISelectionProvider selectionProvider =
+                                activeEditor.getSite().getSelectionProvider();
+                            if (selectionProvider != null) {
+                                ISelection currentSelection = 
+                                    selectionProvider.getSelection();
+                                selectionProvider.setSelection(
+                                        StructuredSelection.EMPTY);
+                                selectionProvider.setSelection(
+                                        currentSelection);
+                            }
+                        }
                     }
-                }
+                });
             }
         }
         

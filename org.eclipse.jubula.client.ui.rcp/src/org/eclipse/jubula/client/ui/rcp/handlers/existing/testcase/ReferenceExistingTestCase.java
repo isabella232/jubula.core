@@ -23,21 +23,23 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.rcp.handlers.NewTestCaseHandlerTCEditor;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -51,32 +53,34 @@ public class ReferenceExistingTestCase
      */
     public Object executeImpl(ExecutionEvent event) {
         final AbstractTestCaseEditor tce = 
-            (AbstractTestCaseEditor)Plugin.getActiveEditor();
-        if (tce.getEditorHelper().requestEditableState() 
-                == JBEditorHelper.EditableState.OK) {
-            final INodePO editorNode = (INodePO)tce.getEditorHelper()
-                    .getEditSupport().getWorkVersion();
-            final INodePO node = (INodePO) getSelection().getFirstElement();
-            if (node == null) { // check for existing selection
-                return null;
+            (AbstractTestCaseEditor)HandlerUtil.getActiveEditor(event);
+
+        tce.getEditorHelper().doEditorOperation(new IEditorOperation() {
+            public void run(IPersistentObject workingPo) {
+                final INodePO editorNode = (INodePO)workingPo;
+                final INodePO node = (INodePO) getSelection().getFirstElement();
+                if (node == null) { // check for existing selection
+                    return;
+                }
+                ISelectionListener listener = 
+                        getSelectionListener(tce, editorNode, node);
+                ISpecTestCasePO specTC = null;
+                if (editorNode instanceof ISpecTestCasePO) {
+                    specTC = (ISpecTestCasePO)editorNode;
+                }
+                TestCaseTreeDialog dialog = new TestCaseTreeDialog(
+                        getActiveShell(), specTC, SWT.MULTI);
+                dialog.addSelectionListener(listener);
+                dialog.setHelpAvailable(true);
+                dialog.create();
+                DialogUtils.setWidgetNameForModalDialog(dialog);
+                Plugin.getHelpSystem().setHelp(dialog.getShell(),
+                        ContextHelpIds.TESTCASE_ADD_EXISTING);
+                dialog.open();
+                dialog.removeSelectionListener(listener);
             }
-            ISelectionListener listener = getSelectionListener(tce, editorNode,
-                    node);
-            ISpecTestCasePO specTC = null;
-            if (editorNode instanceof ISpecTestCasePO) {
-                specTC = (ISpecTestCasePO)editorNode;
-            }
-            TestCaseTreeDialog dialog = new TestCaseTreeDialog(
-                    getActiveShell(), specTC, SWT.MULTI);
-            dialog.addSelectionListener(listener);
-            dialog.setHelpAvailable(true);
-            dialog.create();
-            DialogUtils.setWidgetNameForModalDialog(dialog);
-            Plugin.getHelpSystem().setHelp(dialog.getShell(),
-                    ContextHelpIds.TESTCASE_ADD_EXISTING);
-            dialog.open();
-            dialog.removeSelectionListener(listener);
-        }
+        });
+
         return null;
     }
 
