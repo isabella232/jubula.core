@@ -1625,7 +1625,9 @@ public abstract class AbstractDataSetPage extends Page
                     getParamInterfaceObj(), getParamName(), this, SWT.NONE);
             control.addKeyListener(m_keyListener);
             control.setFocus();
-            control.addFocusListener(m_focusListener);
+            // FIXME: see https://bugs.eclipse.org/bugs/show_bug.cgi?id=390800
+//            control.addFocusListener(m_focusListener);
+            // end https://bugs.eclipse.org/bugs/show_bug.cgi?id=390800
             control.addListener(SWT.Selection, m_listener);
             m_oldValue = getRow().getText(getColumn());
             TextControlBP.setText(m_oldValue, control);
@@ -1664,6 +1666,12 @@ public abstract class AbstractDataSetPage extends Page
         private void activateEditor() {
             if (canModify()) {
                 m_editor.setEditor(createEditor());
+                // FIXME: see https://bugs.eclipse.org/bugs/show_bug.cgi?id=390800
+                Control editorCtrl = m_editor.getEditor();
+                if ((editorCtrl != null) && !editorCtrl.isDisposed()) {
+                		editorCtrl.addFocusListener(m_focusListener);
+                }
+                // end https://bugs.eclipse.org/bugs/show_bug.cgi?id=390800
                 TextControlBP.selectAll(m_editor.getEditor());
             }
         }
