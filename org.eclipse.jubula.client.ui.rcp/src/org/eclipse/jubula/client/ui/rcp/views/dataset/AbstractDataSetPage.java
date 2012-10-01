@@ -1741,23 +1741,28 @@ public abstract class AbstractDataSetPage extends Page
              * Handles the CR keys
              */
             private void handleCR() {
-                writeData();
-                TableItem rowItem = getRow();
-                final int col = getColumn();
-                rowItem.setText(col, TextControlBP.getText(
-                    m_editor.getEditor()));
-                m_editor.getEditor().dispose();
-                final int row = getTable().indexOf(getRow());
-                if (getTable().getColumnCount() > (col + 1)) {
-                    setSelection(row, col + 1);
-                    getTable().setSelection(row);
-                    setFocus();
-                } else if (getTable().getItemCount() 
-                        > (row + 1)) {
-                    setSelection(row + 1, 1);
-                    getTable().setSelection(row + 1);
-                } else {
-                    getAddButton().setFocus();
+                final Control editorControl = m_editor.getEditor();
+                if (!editorControl.isDisposed()) {
+                    writeData();
+                }
+                // writeData() may actually dispose the control during error
+                // handling, a new check is needed!
+                if (!editorControl.isDisposed()) {
+                    TableItem rowItem = getRow();
+                    final int col = getColumn();
+                    rowItem.setText(col, TextControlBP.getText(editorControl));
+                    editorControl.dispose();
+                    final int row = getTable().indexOf(getRow());
+                    if (getTable().getColumnCount() > (col + 1)) {
+                        setSelection(row, col + 1);
+                        getTable().setSelection(row);
+                        setFocus();
+                    } else if (getTable().getItemCount() > (row + 1)) {
+                        setSelection(row + 1, 1);
+                        getTable().setSelection(row + 1);
+                    } else {
+                        getAddButton().setFocus();
+                    }
                 }
             }
         }
