@@ -340,7 +340,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             
             getEditorHelper().resetEditableState();
             getEditorHelper().setDirty(false);
-            reOpenEditor(getEditorHelper().getEditSupport().getOriginal());
         } catch (IncompatibleTypeException pmce) {
             handlePMCompNameException(pmce);
         } catch (PMException e) {
