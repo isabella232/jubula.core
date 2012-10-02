@@ -1669,7 +1669,7 @@ public abstract class AbstractDataSetPage extends Page
                 // FIXME: see https://bugs.eclipse.org/bugs/show_bug.cgi?id=390800
                 Control editorCtrl = m_editor.getEditor();
                 if ((editorCtrl != null) && !editorCtrl.isDisposed()) {
-                		editorCtrl.addFocusListener(m_focusListener);
+                    editorCtrl.addFocusListener(m_focusListener);
                 }
                 // end https://bugs.eclipse.org/bugs/show_bug.cgi?id=390800
                 TextControlBP.selectAll(m_editor.getEditor());
