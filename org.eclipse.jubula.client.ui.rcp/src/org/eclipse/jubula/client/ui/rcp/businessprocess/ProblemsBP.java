@@ -809,7 +809,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
         for (IReusedProjectPO reused : project.getUsedProjects()) {
             boolean reusedProjectExists = false;
             try {
-                reusedProjectExists = (ProjectPM.loadProject(reused) != null);
+                reusedProjectExists = (ProjectPM.loadProjectFromMaster(reused) != null);
             } catch (JBException e) {
                 // Error while loading project; Project does not exist
                 // Do nothing
@@ -835,7 +835,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
         for (IReusedProjectPO reused : project.getUsedProjects()) {
             IProjectPO reusedProject = null;
             try {
-                reusedProject = ProjectPM.loadProject(reused);
+                reusedProject = ProjectPM.loadProjectFromMaster(reused);
                 if (reusedProject != null) { // not in DB
                     List<Locale> reusedLangList = reusedProject.getLangHelper()
                         .getLanguageList();
