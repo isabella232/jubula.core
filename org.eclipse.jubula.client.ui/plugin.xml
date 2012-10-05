@@ -38,6 +38,17 @@
      </command>
     <command commandId="org.eclipse.ui.file.refresh" style="push">
     </command>
+    <command
+          commandId="org.eclipse.jubula.client.ui.commands.ExportTestResults"
+          style="push">
+    </command>
+        </menuContribution>
+        <menuContribution
+            locationURI="popup:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
+    <command
+          commandId="org.eclipse.jubula.client.ui.commands.ExportTestResults"
+          style="push">
+    </command>
         </menuContribution>
         <menuContribution
 			locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
@@ -107,6 +118,10 @@
   <image
         commandId="org.eclipse.jubula.client.ui.commands.monitoring.OpenMonitoringReport"
         icon="icons/metrik.png">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.ExportTestResults"
+        icon="icons/exportTestResults.gif">
   </image>
     </extension>
     <extension point="org.eclipse.core.expressions.propertyTesters">
@@ -242,6 +257,10 @@
           categoryId="org.eclipse.jubula.client.ui.commands"
           id="org.eclipse.jubula.client.ui.commands.monitoring.OpenMonitoringReport"
           name="Open Monitoring Report">
+    </command>
+    <command
+          id="org.eclipse.jubula.client.ui.commands.ExportTestResults"
+          name="%ExportTestResultsCommandName">
     </command>
     </extension>
     <extension
