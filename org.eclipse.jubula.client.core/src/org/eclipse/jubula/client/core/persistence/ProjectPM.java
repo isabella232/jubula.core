@@ -272,7 +272,7 @@ public class ProjectPM extends PersistenceManager {
 
         EntityManager session = Persistor.instance().openSession();
         try {
-        		return loadProjectInSession(reused, session);
+            return loadProjectInSession(reused, session);
         } finally {
             Persistor.instance().dropSessionWithoutLockRelease(session);
         }
@@ -285,29 +285,30 @@ public class ProjectPM extends PersistenceManager {
      * @return the ProjectPO or null if no project in db 
      * @throws JBException in case of general db access errors (db disconnect, shutdown, etc)
      */
-    public static synchronized IProjectPO loadProjectFromMaster(IReusedProjectPO reused)
-        throws JBException {
+    public static synchronized IProjectPO loadProjectFromMaster(
+            IReusedProjectPO reused) throws JBException {
 
         EntityManager session = GeneralStorage.getInstance().getMasterSession();
 
         return loadProjectInSession(reused, session);
     }
 
-	/**
-	 * Loads the project in a session. This is shared code for detached in master session loading.
-	 * @param reused
+    /**
+     * Loads the project in a session. This is shared code for detached in 
+     * master session loading.
+     * @param reused
      *            The reused project information for this project.
-	 * @param session
-	 * 			Session context for db ops
-	 * @return the ProjectPO or null if no project in db 
-	 * @throws JBFatalAbortException
-	 * @throws OperationCanceledException
-	 * @throws JBException in case of general db access errors (db disconnect, shutdown, etc)
-	 */
-	private static IProjectPO loadProjectInSession(IReusedProjectPO reused,
-			EntityManager session) throws JBFatalAbortException,
-			OperationCanceledException, JBException {
-		try {
+     * @param session 
+     *            Session context for db ops
+     * @return the ProjectPO or null if no project in db 
+     * @throws JBFatalAbortException
+     * @throws OperationCanceledException
+     * @throws JBException in case of general db access errors (db disconnect, shutdown, etc)
+     */
+    private static IProjectPO loadProjectInSession(IReusedProjectPO reused,
+            EntityManager session) throws JBFatalAbortException,
+            OperationCanceledException, JBException {
+        try {
             Query query = session.createQuery("select project from ProjectPO as project" //$NON-NLS-1$
                     + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
                     + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
@@ -326,7 +327,7 @@ public class ProjectPM extends PersistenceManager {
             throw new JBException(e.getMessage(),
                 MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } 
-	}
+    }
 
     /**
      * Loads the project represented by the ReusedProjectPO into the master 
