@@ -809,7 +809,8 @@ public class ProblemsBP implements ICompletenessCheckListener,
         for (IReusedProjectPO reused : project.getUsedProjects()) {
             boolean reusedProjectExists = false;
             try {
-                reusedProjectExists = (ProjectPM.loadProjectFromMaster(reused) != null);
+                reusedProjectExists = 
+                        (ProjectPM.loadProjectFromMaster(reused) != null);
             } catch (JBException e) {
                 // Error while loading project; Project does not exist
                 // Do nothing
