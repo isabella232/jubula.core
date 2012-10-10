@@ -10,10 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.client.core.model.INodePO;
-
-
 
 /**
  * object for stack
@@ -44,6 +45,9 @@ public class ExecObject {
      * this is used for handling the RETRY event handler. 
      */
     private int m_retryCount = 0;
+    
+    /** mapping from parameter identifiers to parameter values */
+    private Map<String, String> m_parameters = new HashMap<String, String>();
     
     /**
      * constructor
@@ -175,5 +179,29 @@ public class ExecObject {
         return m_retryCount;
     }
     
+    /**
+     * Sets the value for the parameter with the given identifier to 
+     * <code>value</code> within the context of the receiver. If the receiver 
+     * already has a value for the given identifier, it is overwritten by the 
+     * new value.
+     * 
+     * @param identifier The identifier for the parameter. 
+     *                   See {@link IParamDescriptionPO#getUniqueId()}.
+     * @param value The new value to assign.
+     */
+    public void addParameter(String identifier, String value) {
+        m_parameters.put(identifier, value);
+    }
+
+    /**
+     * 
+     * @param parameterIdentifier The identifier for the parameter. See 
+     *                            {@link IParamDescriptionPO#getUniqueId()}.
+     * @return the current value for the parameter with the given identifier
+     *         within the context of the receiver.
+     */
+    public String getParameterValue(String parameterIdentifier) {
+        return m_parameters.get(parameterIdentifier);
+    }
     
 }

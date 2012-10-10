@@ -187,10 +187,11 @@ public abstract class ParamValueConverter {
      */
     public String getExecutionString(List<ExecObject> stack, 
         Locale locale) throws InvalidDataException {
+        
         StringBuilder builder = new StringBuilder();
         for (IParamValueToken token : getTokens()) {
             builder.append(token.getExecutionString(
-                new ArrayList<ExecObject>(stack), locale));
+                    new ArrayList<ExecObject>(stack), locale));
         }
         return builder.toString();
     }

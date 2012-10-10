@@ -218,39 +218,52 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             TestResultNode resultNode) {
         
         List<IParamDescriptionPO> parameterList = paramNode.getParameterList();
+        for (IParamDescriptionPO desc : parameterList) {
+            
+            List<ExecObject> execList = 
+                    TestExecution.getInstance().getTrav().getExecStackAsList();
+            ExecObject currentExecObj = execList.get(execList.size() - 1);
+            
+            resultNode.addParameter(new TestResultParameter(
+                    desc.getName(), CompSystemI18n.getString(desc.getType()), 
+                    currentExecObj.getParameterValue(desc.getUniqueId())));
+        }
+    }
+
+    /**
+     * Adds the parameters from the given Test Step to the given result node.
+     * 
+     * @param testStep The Test Step from which to copy the parameter info.
+     * @param resultNode The result node to which the parameter info will
+     *                   be copied.
+     */
+    private void addParameters(ICapPO testStep, 
+            TestResultNode resultNode) {
+        
+        List<IParamDescriptionPO> parameterList = testStep.getParameterList();
         String value = null;
         for (IParamDescriptionPO desc : parameterList) {
             ITDManager tdManager = null;
             try {
                 tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(
-                            paramNode);
+                            testStep);
             } catch (JBException e) {
-                log.error(Messages.TestDataNotAvailable + StringConstants.DOT, 
-                    e);
+                log.error(
+                        Messages.TestDataNotAvailable + StringConstants.DOT, e);
             }
             TestExecution te = TestExecution.getInstance();
+
             List <ExecObject> stackList = 
                 new ArrayList<ExecObject>(te.getTrav().getExecStackAsList());
-            int dataSetIndex = te.getTrav().getDataSetNumber();
 
-            // Special handling for Test Case References that are repeated 
-            // via Data Set. The test data manager for such References only has 
-            // information about a single Data Set, so we need to ignore the 
-            // actual current Data Set number.
-            if (tdManager.getDataSetCount() <= 1) {
-                dataSetIndex = 0;
-            }
-            
             // Special handling for Test Steps. Their test data manager has 
             // information about multiple Data Sets, but we are only interested 
             // in the first one.
-            if (paramNode instanceof ICapPO) {
-                dataSetIndex = 0;
-            }
+            int dataSetIndex = 0;
 
             if (tdManager.findColumnForParam(desc.getUniqueId()) == -1) {
-                IParameterInterfacePO referencedDataCube = paramNode
+                IParameterInterfacePO referencedDataCube = testStep
                         .getReferencedDataCube();
                 if (referencedDataCube != null) {
                     desc = referencedDataCube.getParameterForName(desc
@@ -259,10 +272,10 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             }
             ITestDataPO date = tdManager.getCell(dataSetIndex, desc);
             ParamValueConverter conv = new ModelParamValueConverter(
-                date.getValue(te.getLocale()), paramNode, te.getLocale(), desc);
+                date.getValue(te.getLocale()), testStep, te.getLocale(), desc);
             try {
-                value = 
-                    conv.getExecutionString(stackList, te.getLocale());
+                value = conv.getExecutionString(
+                        stackList, te.getLocale());
             } catch (InvalidDataException e) {
                 log.error(e.getMessage());
                 value = MessageIDs.getMessageObject(e.getErrorId()).
@@ -275,9 +288,9 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             } else {
                 value = StringConstants.EMPTY;
             }
+
             resultNode.addParameter(new TestResultParameter(
-                    desc.getName(), CompSystemI18n.getString(desc.getType()), 
-                    value));
+                    desc.getUniqueId(), desc.getType(), value));
         }
     }
 
