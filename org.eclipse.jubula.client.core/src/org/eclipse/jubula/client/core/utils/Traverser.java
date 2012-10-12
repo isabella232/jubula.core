@@ -22,6 +22,7 @@ import java.util.Vector;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.list.UnmodifiableList;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -46,7 +47,6 @@ import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.IncompleteDataException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
@@ -984,14 +984,9 @@ public class Traverser {
                     value = MessageIDs.getMessageObject(e.getErrorId()).
                         getMessage(new Object[] {});
                 }
-                if (value != null) {
-                    if (value.length() == 0) {
-                        value = TestDataConstants.EMPTY_SYMBOL;
-                    }
-                } else {
-                    value = StringConstants.EMPTY;
-                }
-                execObject.addParameter(desc.getUniqueId(), value);
+
+                execObject.addParameter(desc.getUniqueId(), 
+                        StringUtils.defaultString(value));
             }
         }
     }

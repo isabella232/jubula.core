@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
@@ -36,10 +37,9 @@ public class TestResultParametersDecorator extends
             TestResultNode testResult = (TestResultNode)element;
             StringBuilder paramValueBuilder = new StringBuilder();
             for (TestResultParameter parameter : testResult.getParameters()) {
-                String value = parameter.getValue();
-                if (value != null) {
-                    paramValueBuilder.append(value).append(SEPARATOR);
-                }
+                paramValueBuilder
+                    .append(StringUtils.defaultString(parameter.getValue()))
+                    .append(SEPARATOR);
             }
             if (paramValueBuilder.length() > 0) {
                 int builderLength = paramValueBuilder.length();

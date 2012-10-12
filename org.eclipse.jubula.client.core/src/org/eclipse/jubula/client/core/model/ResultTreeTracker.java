@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -21,7 +22,6 @@ import org.eclipse.jubula.client.core.utils.ExecObject;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -281,16 +281,10 @@ public class ResultTreeTracker implements IExecStackModificationListener {
                 value = MessageIDs.getMessageObject(e.getErrorId()).
                     getMessage(new Object[] {});
             }
-            if (value != null) {
-                if (value.length() == 0) {
-                    value = TestDataConstants.EMPTY_SYMBOL;
-                }
-            } else {
-                value = StringConstants.EMPTY;
-            }
 
             resultNode.addParameter(new TestResultParameter(
-                    desc.getUniqueId(), desc.getType(), value));
+                    desc.getUniqueId(), desc.getType(), 
+                    StringUtils.defaultString(value)));
         }
     }
 
