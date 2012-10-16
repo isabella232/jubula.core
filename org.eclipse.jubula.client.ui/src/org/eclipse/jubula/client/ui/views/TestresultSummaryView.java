@@ -625,8 +625,10 @@ public class TestresultSummaryView extends ViewPart implements
         //save sorting
         IMemento sortChild = memento.createChild(TAG_SORT);
         TableColumn sortCol = table.getSortColumn();
-        sortChild.putString(TAG_SORT_COL, sortCol.getText());
-        sortChild.putInteger(TAG_SORT_DIRECTION, table.getSortDirection());
+        if (sortCol != null) {
+            sortChild.putString(TAG_SORT_COL, sortCol.getText());
+            sortChild.putInteger(TAG_SORT_DIRECTION, table.getSortDirection());
+        }
     }
 
     /**
@@ -679,7 +681,7 @@ public class TestresultSummaryView extends ViewPart implements
                     String sortHeader = sortChild.getString(TAG_SORT_COL);
                     for (int i = 0; i < table.getColumnCount(); i++) {
                         TableColumn tblCol = table.getColumn(i);
-                        if (sortHeader.equals(tblCol.getText())) {
+                        if (tblCol.getText().equals(sortHeader)) {
                             //set sort column
                             table.setSortColumn(tblCol);
                             //set sort direction
