@@ -934,6 +934,7 @@ public class Traverser {
                     paramNode.getParameterList();
             String value = null;
             for (IParamDescriptionPO desc : parameterList) {
+                String descriptionId = desc.getUniqueId();
                 ITDManager tdManager = null;
                 try {
                     tdManager = 
@@ -985,7 +986,10 @@ public class Traverser {
                         getMessage(new Object[] {});
                 }
 
-                execObject.addParameter(desc.getUniqueId(), 
+                // It's important to use 'descriptionId' here instead of 
+                // 'desc.getUniqueId()', as 'desc' may have changed between
+                // its definition and here.
+                execObject.addParameter(descriptionId, 
                         StringUtils.defaultString(value));
             }
         }
